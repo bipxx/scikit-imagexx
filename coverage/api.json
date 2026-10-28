@@ -6758,11 +6758,14 @@
       "api": "segmentation.checkerboard_level_set",
       "kind": "callable",
       "signature": "(image_shape, square_size=5)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_level_set_public.py::test_level_set_native_public_contract",
+      "benchmark": "benchmarks/level_set.py",
+      "default_input_kind": "image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage"
     },
     {
       "api": "segmentation.clear_border",
@@ -6782,11 +6785,14 @@
       "api": "segmentation.disk_level_set",
       "kind": "callable",
       "signature": "(image_shape, *, center=None, radius=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_level_set_public.py::test_level_set_native_public_contract",
+      "benchmark": "benchmarks/level_set.py",
+      "default_input_kind": "image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage"
     },
     {
       "api": "segmentation.expand_labels",

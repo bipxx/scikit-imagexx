@@ -19,6 +19,12 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILES = ('windows', 'modern', 'minimum')
+# Match the trusted qualifier shipped with this stager, never a scope claimed
+# by an incoming archive. Historical literal envelopes below remain closed.
+CURRENT_PRODUCT_SCOPE = next(ast.literal_eval(node.value)
+    for node in ast.parse(Path(__file__).with_name('public_qualification.py').read_text(encoding='utf-8')).body
+    if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id == 'CURRENT_PRODUCT_SCOPE'
+                                           for target in node.targets))
 MAX_TREE_RUNTIME_SOURCE_PINS = {'src/max_tree.cpp': '1808c8581b465a96a5d5ee9cccd73ee269d17893877784933230173221f1e135',
  'include/skimagexx/max_tree.hpp': '60b33407a721e57b3629e671f0f822ab1dd344ccbaddfcf526a9e3f93ca9bd1c',
  'src/simd_max_tree_avx2.cpp': '2bdb72ade563581161038b8cf32260c6330e028e938590c7a382dc7c5fa92de4',
@@ -212,7 +218,7 @@ def qualification_scope_text(text, *, read_bytes=None, names=None, profile='mode
             and len(families) == 14 + len(suffix) and families[-len(suffix):] == suffix,
             'source TV/Bregman product/SDK scope incomplete')
     if current is not None:
-        require(current == 'current236' and read_bytes is not None and names is not None,
+        require(current == CURRENT_PRODUCT_SCOPE and read_bytes is not None and names is not None,
                 'current source scope requires authenticated install closure')
         # Reuse our trusted stdlib-only qualifier's project-specific install rules;
         # never execute the authenticated source archive or an extracted checkout.
@@ -230,7 +236,7 @@ def qualification_scope_text(text, *, read_bytes=None, names=None, profile='mode
 
 
 def validate_reconstruction_source(archive,snapshot,scope):
-    if scope['name'] not in ('reconstruction21','nmi22','h_extrema22','h_extrema23','current236'):return
+    if scope['name'] not in ('reconstruction21','nmi22','h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE):return
     tree=ast.parse(archive.read('tools/public_qualification.py'));declared={}
     for node in tree.body:
         if isinstance(node,ast.Assign):
@@ -247,7 +253,7 @@ def validate_reconstruction_source(archive,snapshot,scope):
 
 def validate_max_tree_source(archive, snapshot, scope):
     """Data-only source admission; old rank/TV/Bregman envelopes keep their scope."""
-    if scope['name'] not in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23','current236'):
+    if scope['name'] not in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE):
         return
     tree = ast.parse(archive.read('tools/public_qualification.py'))
     declared = {}
@@ -271,7 +277,7 @@ def validate_max_tree_source(archive, snapshot, scope):
 
 def validate_h_extrema_source(archive,snapshot,scope):
     """Closed source-only H lineage; no algorithm or candidate imports."""
-    if scope['name'] not in ('h_extrema22','h_extrema23','current236'):return
+    if scope['name'] not in ('h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE):return
     legacy=scope['name']=='h_extrema22'
     runtime=H_EXTREMA_LEGACY_RUNTIME_SOURCE_PINS if legacy else H_EXTREMA_RUNTIME_SOURCE_PINS
     frozen=H_EXTREMA_LEGACY_FROZEN_RAW_PINS if legacy else H_EXTREMA_FROZEN_RAW_PINS
@@ -318,7 +324,7 @@ def validate_h_extrema_source(archive,snapshot,scope):
 
 def validate_nmi_source(archive, snapshot, scope):
     """Authenticate the frozen NMI imports without executing scientific code."""
-    if scope['name'] not in ('nmi22','h_extrema23','current236'):
+    if scope['name'] not in ('nmi22','h_extrema23',CURRENT_PRODUCT_SCOPE):
         return
     tree = ast.parse(archive.read('tools/public_qualification.py'))
     declared = None
@@ -378,13 +384,13 @@ def validate_payload(path, qualification, profile, compare):
     require(len(product['members']) == scope['members'], 'complete product member census differs')
     require(len([n for n in product['members'] if n.startswith('skimagexx/_core.')
                  and n.endswith(('.so', '.pyd'))]) == 1, 'sole production core differs')
-    if scope['name'] == 'current236':
+    if scope['name'] == CURRENT_PRODUCT_SCOPE:
         cores = {n for n in product['members'] if n.startswith('skimagexx/_core.') and n.endswith(('.so', '.pyd'))}
         require(set(product['members']) == set(scope['install_members']) | cores, 'current staged install closure differs')
     sdk = {n: h for n, h in product['members'].items()
            if n.startswith(('include/skimagexx/', 'lib/cmake/skimagexx/', 'share/licenses/scikit-imagexx/'))
            or n in ('lib/skimagexx.lib', 'lib/libskimagexx.a')}
-    if scope['name'] == 'current236':
+    if scope['name'] == CURRENT_PRODUCT_SCOPE:
         require(set(sdk) == set(scope['SDK_members']), 'current staged SDK file closure differs')
     receipt = load(path / 'sdk.json')
     require(len(sdk) == scope['sdk'] and sdk == receipt['SDK_sha256'] == runtime['runtime']['sdk_sha256'],
@@ -439,8 +445,8 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
         validate_reconstruction_source(archive,q['source'],scope)
         validate_nmi_source(archive,q['source'],scope)
         validate_h_extrema_source(archive,q['source'],scope)
-    image_count = scope['image_count'] if scope['name'] == 'current236' else {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199,'reconstruction21':200,'nmi22':201,'h_extrema22':202,'h_extrema23':203}[scope['name']]
-    if scope['name'] == 'current236':
+    image_count = scope['image_count'] if scope['name'] == CURRENT_PRODUCT_SCOPE else {'rank14': 190, 'tv17': 191, 'bregman18': 192, 'max_tree19': 198, 'matrix20': 199,'reconstruction21':200,'nmi22':201,'h_extrema22':202,'h_extrema23':203}[scope['name']]
+    if scope['name'] == CURRENT_PRODUCT_SCOPE:
         require(expected['functions'] == scope['functions'] and expected['metadata_count'] == scope['metadata_count'],
                 'current exact registry contract differs')
     require(expected['image_count'] == image_count and expected['metadata_count'] == 3
@@ -448,19 +454,19 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
             f'genuine{image_count}+3 registry qualification required')
     require(('restoration.denoise_tv_chambolle' in expected['functions']) == (scope['name'] != 'rank14'),
             'qualified TV registry/source scope differs')
-    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23','current236')),
+    require(('restoration.denoise_tv_bregman' in expected['functions']) == (scope['name'] in ('bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE)),
             'qualified Bregman registry/source scope differs')
     max_tree = tuple('morphology.' + name for name in ('max_tree', 'max_tree_local_maxima',
                      'area_opening', 'area_closing', 'diameter_opening', 'diameter_closing'))
-    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23','current236')
+    require(all(expected['functions'].count(name) == 1 for name in max_tree) if scope['name'] in ('max_tree19', 'matrix20', 'reconstruction21', 'nmi22','h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE)
             else not any(name in expected['functions'] for name in max_tree),
             'qualified max-tree registry/source scope differs')
-    require(('morphology.reconstruction' in expected['functions'])==(scope['name'] in ('reconstruction21','nmi22','h_extrema22','h_extrema23','current236')),
+    require(('morphology.reconstruction' in expected['functions'])==(scope['name'] in ('reconstruction21','nmi22','h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE)),
             'source reconstruction scope/registry differs')
-    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] in ('matrix20','reconstruction21','nmi22','h_extrema22','h_extrema23','current236')),
+    require(('transform.matrix_transform' in expected['functions']) == (scope['name'] in ('matrix20','reconstruction21','nmi22','h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE)),
             'qualified matrix registry/source scope differs')
-    require(all(expected['functions'].count(n)==1 for n in H_EXTREMA_PATHS) if scope['name'] in ('h_extrema22','h_extrema23','current236') else not any(n in expected['functions'] for n in H_EXTREMA_PATHS), 'H-extrema registry missing/partial/downgraded')
-    require(expected['functions'].count(NMI_PATH) == 1 if scope['name'] in ('nmi22','h_extrema23','current236')
+    require(all(expected['functions'].count(n)==1 for n in H_EXTREMA_PATHS) if scope['name'] in ('h_extrema22','h_extrema23',CURRENT_PRODUCT_SCOPE) else not any(n in expected['functions'] for n in H_EXTREMA_PATHS), 'H-extrema registry missing/partial/downgraded')
+    require(expected['functions'].count(NMI_PATH) == 1 if scope['name'] in ('nmi22','h_extrema23',CURRENT_PRODUCT_SCOPE)
             else NMI_PATH not in expected['functions'], 'qualified NMI registry/source scope differs')
     state = load(checked(qout, 'state.json', q))
     require(state['source'] == q['source'] and state['profile'] == profile, 'qualified state differs')

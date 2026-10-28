@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
@@ -41,7 +41,9 @@ CLASSES = [(native,original,name) for native,original in MODULES for name in nat
 VALUE_CASES = [
     (native, original, name, dtype, shape)
     for native, original, name in FUNCTIONS
-    for dtype in (np.uint8, np.float32, np.float64)
+    # Shape constructors use one descriptor carrier, not image dtype cases.
+    for dtype in ((np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in LEVEL_SET_FUNCTIONS
+                  else (np.uint8, np.float32, np.float64))
     for shape in (((4, 5), (7, 19), (519, 521))
                   if ((native is xx.restoration and name == 'denoise_tv_bregman')
                       or (native is xx.morphology and name in ('max_tree','max_tree_local_maxima',
@@ -57,6 +59,21 @@ def test_registry_matches_per_function_tests():
     assert tested_classes==set(native_classes())
     assert set(class_metadata_providers())=={'util.FailedEstimationAccessError'}
     assert inspect.isclass(xx.util.FailedEstimationAccessError)
+
+
+def test_level_set_default_shape_adapter_and_exact_checker():
+    from skimagexx.coverage import level_set_default_error
+    image=np.zeros((3,7),np.uint8)
+    for api in LEVEL_SET_FUNCTIONS:
+        args,options=default_call(api,image)
+        assert args==(image.shape,) and options=={} and native_dtypes(api)==('uint8',)
+    expected=np.zeros(image.shape,np.int8);actual=expected.copy()
+    assert level_set_default_error(image.shape,actual,expected)==0.
+    assert level_set_default_error(image,actual,expected)==0.
+    with pytest.raises(AssertionError):level_set_default_error(image.shape,actual.astype(np.uint8),expected)
+    with pytest.raises(AssertionError):level_set_default_error(image.shape,np.asfortranarray(actual),expected)
+    actual[1,2]=1
+    with pytest.raises(AssertionError):level_set_default_error(image.shape,actual,expected)
 
 
 def test_unported_namespace_interchangeability():
