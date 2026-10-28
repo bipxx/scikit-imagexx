@@ -1,0 +1,407 @@
+name: compare-images-same-host
+on:
+  workflow_dispatch:
+    inputs:
+      baseline_run:
+        type: string
+        required: true
+        default: '40649386523'
+      baseline_revision:
+        type: string
+        required: true
+        default: '317658444d7de04c751fe92d912c60853054c0e6'
+      candidate_run:
+        type: string
+        required: true
+      candidate_revision:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTEST_ADDOPTS: ''
+  PYTEST_PLUGINS: ''
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BASELINE_RUN: ${{ inputs.baseline_run }}
+      BASELINE_REVISION: ${{ inputs.baseline_revision }}
+      CANDIDATE_RUN: ${{ inputs.candidate_run }}
+      CANDIDATE_REVISION: ${{ inputs.candidate_revision }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate successful CI products
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          assert os.environ['BASELINE_RUN'] == '40649386523'
+          assert os.environ['BASELINE_REVISION'] == '317658444d7de04c751fe92d912c60853054c0e6'
+          for role in ('baseline', 'candidate'):
+              run, revision = (os.environ[role.upper() + suffix] for suffix in ('_RUN', '_REVISION'))
+              assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[0-9a-f]{40}', revision)
+              base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+              def api(endpoint):
+                  raw = subprocess.check_output(['gh', 'api', base + endpoint])
+                  Path('results', role + '-' + endpoint.split('?')[0].split('/')[-1] + '.json').write_bytes(raw)
+                  return json.loads(raw)
+              record = api('runs/' + run)
+              assert str(record['id']) == run and record['head_sha'] == revision
+              assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+              assert record['path'] == '.github/workflows/ci.yml'
+              assert record['status'] == 'completed' and record['conclusion'] == 'success'
+              listing = api('runs/' + run + '/artifacts?per_page=100')
+              assert listing['total_count'] == len(listing['artifacts'])
+              matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
+              assert len(matches) == 1
+              item = matches[0]
+              assert not item['expired'] and 0 < item['size_in_bytes'] < 512 * 1024**2
+              assert item['workflow_run']['id'] == int(run) and item['workflow_run']['head_sha'] == revision
+              assert re.fullmatch('sha256:[0-9a-f]{64}', item['digest'])
+              if role == 'baseline':
+                  assert item['id'] == 12798648924
+                  assert item['digest'] == 'sha256:0179be5c3b7b3232b5c005bbfc4ded321a11f34e64207913b0a6382ea684265e'
+              Path('results', role + '-selection.json').write_text(json.dumps(item, indent=2) + '\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.baseline_revision }}
+          path: snapshots/baseline
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.candidate_revision }}
+          path: snapshots/candidate
+          fetch-depth: 1
+      - name: Download exact CI ZIPs and install both runtimes offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          for role in baseline candidate; do
+            id=$(python -c "import json; print(json.load(open('results/$role-selection.json'))['id'])")
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip" > "$RUNNER_TEMP/$role-prepared.zip"
+            ROLE="$role" python - <<'PY'
+          import ast, hashlib, json, os, re, stat, zipfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          def assert_existing_sources():
+              def read(role, name):
+                  return Path('snapshots', role, name).read_text(encoding='utf-8')
+              old, new = (ast.parse(read(role, 'python/skimagexx/_compare_images.py')) for role in ('baseline', 'candidate'))
+              # Only the two input preparation expressions may change in the frontend.
+              for output, image in (('first', 'img1'), ('second', 'img2')):
+                  before = [n for n in ast.walk(old) if isinstance(n, ast.Assign) and len(n.targets) == 1 and isinstance(n.targets[0], ast.Name) and n.targets[0].id == output]
+                  after = [n for n in ast.walk(new) if isinstance(n, ast.Assign) and len(n.targets) == 1 and isinstance(n.targets[0], ast.Name) and n.targets[0].id == output]
+                  assert len(before) == len(after) == 1
+                  expression = after[0].value
+                  assert isinstance(expression, ast.IfExp) and ast.unparse(expression.body) == image
+                  eligibility = ast.parse(f'{image}.flags.c_contiguous and {image}.dtype.isnative and {image}.flags.aligned and {image}.flags.owndata', mode='eval').body
+                  assert ast.dump(expression.test) == ast.dump(eligibility)
+                  assert ast.dump(expression.orelse) == ast.dump(before[0].value), 'original preparation fallback remains exact'
+                  after[0].value = expression.orelse
+              assert ast.dump(new) == ast.dump(old), 'public shape/conversion/method/protocol/provider/layout/scalar policy remains exact'
+              old, new = (read(role, 'src/compare_images.hpp') for role in ('baseline', 'candidate'))
+              for pattern in (r'enum class CompareMethod\s*\{[^}]*\};', r'struct CompareInput\s*\{[^}]*\};',
+                              r'struct CompareGrid\s*\{[^}]*\};', r'bool compare_images_into\([^;]+;'):
+                  left, right = (re.search(pattern, value) for value in (old, new))
+                  assert left and right
+                  assert re.sub(r'\s+', '', left.group()) == re.sub(r'\s+', '', right.group()), 'prepared input/grid/method/entry signature remains exact'
+          role = os.environ['ROLE']; folder = Path('snapshots', role, 'build')
+          selected = json.loads(Path('results', role + '-selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], role + '-prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results', role + '-archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and 'sha256:' + actual['sha256'] == selected['digest']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall(folder)
+          prepared = folder / 'prepared/ci-artifacts'
+          # latest_only baselines and prepare_only candidates need no standalone timing JSONs here.
+          manifest = json.loads((prepared / 'measurement.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          assert manifest['source']['revision'] == os.environ[role.upper() + '_REVISION']
+          assert len(manifest['wheels']) == 14
+          for family, count in (('inertia-tensor', 115), ('inertia-eigvals', 69), ('moments', 203), ('window', 179),
+                                ('lpi', 161), ('butterworth', 175), ('moments-derived', 155),
+                                ('normalized-layouts', 22), ('immutable-bytes', 134),
+                                ('moments-coords', 98), ('shannon-entropy', 61), ('rgb2yuv-storage', 37),
+                                ('block-reduce', 145), ('perimeter-crofton', 101), ('perimeter', 111), ('euler-number', 91),
+                                ('polygon', 86), ('mesh-surface-area', 89), ('profile-line', 93), ('blur-effect', 121), ('compare-images', 109),
+                                ('color-transforms-regression', 1848)):
+              for mode in ('normal', 'scalar'):
+                  tree = ET.fromstring((prepared / (family + '-' + mode + '.xml')).read_bytes())
+                  assert len(tree.findall('.//testcase')) == count
+                  assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+          for family, count in (('blur-effect-intake', 4), ('polygon-intake', 4), ('euler-number-intake', 4), ('block-reduce-integer-width', 9)):
+              tree = ET.fromstring((prepared / (family + '.xml')).read_bytes())
+              assert len(tree.findall('.//testcase')) == count
+              assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+          smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
+          assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
+          assert smoke['outcomes'] == {'passed': 1417} and len(smoke['results']) == 1417
+          assert smoke['implementations']['native-partial'] + smoke['implementations']['metadata'] == 239
+          if role == 'candidate':
+              old, new = (json.loads(Path('snapshots', r, 'build/prepared/ci-artifacts/measurement.json').read_bytes()) for r in ('baseline', 'candidate'))
+              for key in ('python', 'implementation', 'cache_tag', 'machine', 'system', 'dependency_libraries_sha256'):
+                  assert old['runtime'][key] == new['runtime'][key], key
+              assert {k: v for k, v in old['runtime']['versions'].items() if k not in ('scikit-imagexx', 'pytest')} == {k: v for k, v in new['runtime']['versions'].items() if k not in ('scikit-imagexx', 'pytest')}
+              for name in ('numpy', 'scipy', 'skimage'):
+                  assert old['runtime']['packages_sha256'][name] == new['runtime']['packages_sha256'][name], name
+              assert {k: v for k, v in old['wheels'].items() if v['name'] not in ('scikit-imagexx', 'pytest')} == {k: v for k, v in new['wheels'].items() if v['name'] not in ('scikit-imagexx', 'pytest')}
+              baseline_pytest = {'pytest-9.2.0-py3-none-any.whl': dict(name='pytest', version='9.2.0', sha256='07acdcf88ec174f907dc01af70bf52d49b014bbab03faeeade31c96b18c2e588')}
+              assert {n: v for n, v in old['wheels'].items() if v['name'] == 'pytest'} == baseline_pytest
+              assert old['runtime']['versions']['pytest'] == '9.2.0'
+              candidate_pytest = [(n, v) for n, v in new['wheels'].items() if v['name'] == 'pytest']
+              assert len(candidate_pytest) == 1
+              filename, record = candidate_pytest[0]
+              assert set(record) == {'name', 'version', 'sha256'} and record['name'] == 'pytest'
+              assert filename == 'pytest-' + record['version'] + '-py3-none-any.whl'
+              assert re.fullmatch('[0-9a-f]{64}', record['sha256'])
+              assert new['runtime']['versions']['pytest'] == record['version']
+              common = {'.github/workflows/ci.yml', 'benchmarks/coverage.py', 'benchmarks/rgb2yuv_storage.py', 'benchmarks/run.py',
+                        'benchmarks/provenance.py', 'tools/ci_measurement_artifacts.py',
+                        'tools/run_feature_tests.py', 'tests/inertia_tensor_cases.py', 'tests/test_inertia_tensor_public.py',
+                        'tests/inertia_eigvals_cases.py', 'tests/test_inertia_eigvals_public.py',
+                        'tests/moments_cases.py', 'tests/test_moments_public.py',
+                        'tests/moments_derived_cases.py', 'tests/test_moments_derived_public.py',
+                        'tests/window_cases.py', 'tests/test_window_public.py',
+                        'tests/lpi_filter_cases.py', 'tests/test_lpi_filter_public.py',
+                        'tests/butterworth_cases.py', 'tests/test_butterworth_public.py',
+                        'benchmarks/normalized_layouts_cases.json', 'tests/test_normalized_layouts_public.py',
+                        'tests/test_immutable_buffer_roots_public.py',
+                        'tests/moments_coords_cases.py', 'tests/test_moments_coords_public.py',
+                        'tests/shannon_entropy_cases.py', 'tests/test_shannon_entropy_public.py',
+                        'tests/rgb2yuv_storage_cases.py', 'tests/test_rgb2yuv_storage_public.py', 'tests/test_color_transforms.py',
+                        'tests/block_reduce_cases.py', 'tests/test_block_reduce_public.py',
+                        'tests/perimeter_crofton_cases.py', 'tests/test_perimeter_crofton_public.py',
+                        'benchmarks/profile_line.py', 'tests/profile_line_cases.py', 'tests/test_profile_line_public.py'}
+              for value in (old, new):
+                  assert common <= value['source']['files_sha256'].keys()
+              common |= {'benchmarks/compare_images.py', 'tests/compare_images_cases.py',
+                         'tests/test_compare_images_public.py', 'python/skimagexx/_compare_images_checks.py',
+                         'src/bind_compare_images.cpp', 'CMakeLists.txt'}
+              assert all(common <= value['source']['files_sha256'].keys() for value in (old, new))
+              mutable = {'python/skimagexx/_compare_images.py', 'src/compare_images.cpp',
+                         'src/compare_images.hpp', 'src/simd_compare_images_avx2.cpp', 'tests/test_compare_images_native.cpp'}
+              old_fixed, new_fixed = ({k: v for k, v in value['source']['files_sha256'].items()
+                                      if k not in mutable} for value in (old, new))
+              assert old_fixed == new_fixed, 'every other repository blob, including binding/CMake/science/harness/old54 tests, remains exact'
+              assert all(mutable <= value['source']['files_sha256'].keys() for value in (old, new))
+              assert_existing_sources()
+          PY
+            python -m venv "$RUNNER_TEMP/env-$role"
+            "$RUNNER_TEMP/env-$role/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links "snapshots/$role/build/prepared/wheels" -r "snapshots/$role/build/prepared/ci-artifacts/runtime-lock.txt" 2>&1 | tee "results/$role-offline-install.log"
+            "$RUNNER_TEMP/env-$role/bin/python" "snapshots/$role/tools/ci_measurement_artifacts.py" verify --wheel-dir "snapshots/$role/build/prepared/wheels" --artifact "snapshots/$role/build/prepared/ci-artifacts/measurement.json" 2>&1 | tee "results/$role-original-identity.log"
+          done
+      - name: Normalize only the test runner to the retained baseline wheel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from copy import deepcopy
+          import hashlib, json, shutil
+          from pathlib import Path
+          baseline = Path('snapshots/baseline/build/prepared')
+          original = json.loads((baseline / 'ci-artifacts/measurement.json').read_bytes())
+          filename, record = next((n, v) for n, v in original['wheels'].items() if v['name'] == 'pytest')
+          assert record == dict(name='pytest', version='9.2.0', sha256='07acdcf88ec174f907dc01af70bf52d49b014bbab03faeeade31c96b18c2e588')
+          normalized = []
+          for role in ('baseline', 'candidate'):
+              prepared = Path('snapshots', role, 'build/prepared')
+              target = prepared.parent / 'measurement-v2'; (target / 'wheels').mkdir(parents=True)
+              raw = (prepared / 'ci-artifacts/measurement.json').read_bytes(); value = json.loads(raw)
+              prior = {n: v for n, v in value['wheels'].items() if v['name'] == 'pytest'}
+              updated = deepcopy(value)
+              updated['wheels'] = {n: v for n, v in value['wheels'].items() if v['name'] != 'pytest'}
+              updated['wheels'][filename] = record
+              updated['runtime']['versions']['pytest'] = '9.2.0'
+              for name, item in updated['wheels'].items():
+                  source = baseline / 'wheels' / name if item['name'] == 'pytest' else prepared / 'wheels' / name
+                  assert hashlib.sha256(source.read_bytes()).hexdigest() == item['sha256']
+                  shutil.copyfile(source, target / 'wheels' / name)
+              lock = ''.join(f"{v['name']}=={v['version']} --hash=sha256:{v['sha256']}\n" for v in sorted(updated['wheels'].values(), key=lambda v: v['name']))
+              (target / 'runtime-lock.txt').write_text(lock, encoding='utf-8')
+              (target / 'pytest-lock.txt').write_text(f"pytest==9.2.0 --hash=sha256:{record['sha256']}\n", encoding='utf-8')
+              updated['lock_sha256'] = hashlib.sha256((target / 'runtime-lock.txt').read_bytes()).hexdigest()
+              (target / 'measurement.json').write_text(json.dumps(updated, indent=2) + '\n')
+              expected = deepcopy(updated); expected['wheels'] = value['wheels']; expected['runtime']['versions']['pytest'] = value['runtime']['versions']['pytest']; expected['lock_sha256'] = value['lock_sha256']
+              assert expected == value and (prepared / 'ci-artifacts/measurement.json').read_bytes() == raw
+              normalized.append(updated)
+              Path('results', role + '-normalization.json').write_text(json.dumps(dict(original_manifest_sha256=hashlib.sha256(raw).hexdigest(), normalized_manifest_sha256=hashlib.sha256((target / 'measurement.json').read_bytes()).hexdigest(), old_pytest=prior, new_pytest={filename: record}), indent=2) + '\n')
+              shutil.copyfile(target / 'measurement.json', Path('results', role + '-normalized-measurement.json'))
+              shutil.copyfile(target / 'runtime-lock.txt', Path('results', role + '-normalized-runtime-lock.txt'))
+          assert {n: v for n, v in normalized[0]['wheels'].items() if v['name'] != 'scikit-imagexx'} == {n: v for n, v in normalized[1]['wheels'].items() if v['name'] != 'scikit-imagexx'}
+          PY
+          for role in baseline candidate; do
+            "$RUNNER_TEMP/env-$role/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --force-reinstall --find-links "snapshots/$role/build/measurement-v2/wheels" -r "snapshots/$role/build/measurement-v2/pytest-lock.txt" 2>&1 | tee "results/$role-normalized-install.log"
+            "$RUNNER_TEMP/env-$role/bin/python" "snapshots/$role/tools/ci_measurement_artifacts.py" verify --wheel-dir "snapshots/$role/build/measurement-v2/wheels" --artifact "snapshots/$role/build/measurement-v2/measurement.json" 2>&1 | tee "results/$role-normalized-identity.log"
+          done
+      - name: Measure the fixed18 image comparison cases in ABBA order
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          for pass in 1-baseline 2-candidate 3-candidate 4-baseline; do
+            role=${pass#*-}; py="$RUNNER_TEMP/env-$role/bin/python"; output="$GITHUB_WORKSPACE/results/$pass"
+            mkdir "$output"
+            cd "$GITHUB_WORKSPACE/snapshots/$role"
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/measurement-v2/wheels --artifact build/measurement-v2/measurement.json 2>&1 | tee "$output/identity-before.log"
+            status=0
+            "$py" benchmarks/compare_images.py --threads 1 --repeat 7 --output "$output/compare-images.json" 2>&1 | tee "$output/compare-images.log" || status=$?
+            echo "$status" > "$output/benchmark-exit.txt"
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/measurement-v2/wheels --artifact build/measurement-v2/measurement.json 2>&1 | tee "$output/identity-after.log"
+            test "$status" -eq 0
+          done
+      - name: Check all four complete raw reports
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, math, runpy, statistics
+          from pathlib import Path
+          from datetime import datetime, timezone
+          deadline = datetime.fromisoformat('2026-10-28T09:53:11.706388+00:00')
+          expected = {(side, dtype, method) for side in (256, 1024)
+                      for dtype in ('uint8', 'float32', 'float64') for method in ('diff', 'blend', 'checkerboard')}
+          reports = []
+          for name in ('1-baseline', '2-candidate', '3-candidate', '4-baseline'):
+              source = Path('snapshots', name.split('-', 1)[1])
+              fingerprint = runpy.run_path(str(source / 'benchmarks/provenance.py'))['source_fingerprint'](source)
+              manifest_raw = (source / 'build/measurement-v2/measurement.json').read_bytes()
+              manifest = json.loads(manifest_raw)
+              import hashlib
+              identity = dict(status='verify', revision=manifest['source']['revision'], wheel_count=14,
+                              artifact_sha256=hashlib.sha256(manifest_raw).hexdigest())
+              for when in ('before', 'after'):
+                  assert json.loads(Path('results', name, 'identity-' + when + '.log').read_bytes()) == identity
+              report = json.loads(Path('results', name, 'compare-images.json').read_bytes())
+              meta, rows = report['metadata'], report['results']
+              assert all(meta[key] == value for key, value in fingerprint.items()) and meta['source_before'] == fingerprint
+              assert meta['repeat'] == 7 and meta['threads'] == 1 and meta['raw_samples'] == 252
+              assert meta['fallback_enabled'] is False and meta['avx2'] is True
+              assert meta['reference'] == '0.26.0' and meta['numpy'] == '1.24.4' and meta['scipy'] == '1.15.3'
+              assert meta['python'] == manifest['runtime']['python']
+              cores = [(n, v) for n, v in manifest['runtime']['packages_sha256']['skimagexx'].items() if n.endswith('.so')]
+              assert len(cores) == 1 and meta['core_sha256'] == cores[0][1]
+              assert meta['numpy_error_policy'] == dict(divide='warn', over='warn', under='ignore', invalid='warn')
+              assert meta['numpy_buffer_elements'] == 8192
+              assert meta['selected_apis'] == ['util.compare_images']
+              assert meta['harness_sha256'] == '72c627a9573cd3d6656f312a50bf38142ca939faf857bd7cff5de3d265ca8a32'
+              assert meta['reference_pool_limits'] == {n: '1' for n in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS', 'BLIS_NUM_THREADS')}
+              assert len(rows) == 18 and {(r['shape'][0], r['dtype'], r['method']) for r in rows} == expected
+              for row in rows:
+                  side, dtype, method = row['shape'][0], row['dtype'], row['method']
+                  assert row['case_id'] == f'side{side}:{dtype}:{method}'
+                  assert row['shape'] == [side, side] and row['api'] == 'util.compare_images' and row['n_tiles'] == [8, 8]
+                  assert row['backend'] == 'native' and row['threads'] == 1
+                  assert row['native_accepted'] is True and row['actual_C_returns'] == ['compare_images']
+                  assert row['max_abs_error'] == 0 and row['output_sha256'] == row['reference_sha256']
+                  assert len(row['output_sha256']) == 64 and int(row['output_sha256'], 16) >= 0
+                  assert len(row['input_sha256']) == 2 and all(len(d) == 64 and int(d, 16) >= 0 for d in row['input_sha256'])
+                  input_dtype = {'uint8': '|u1', 'float32': '<f4', 'float64': '<f8'}[dtype]
+                  output_dtype, itemsize = ('<f4', 4) if dtype == 'float32' else ('<f8', 8)
+                  assert row['input_dtype_str'] == [input_dtype, input_dtype]
+                  assert row['output_metadata'] == dict(dtype=output_dtype, metadata=None, shape=[side, side],
+                      strides=[side*itemsize, itemsize], own=True, writeable=True, base_type='NoneType')
+                  assert set(row['converted_inputs']) == {'img1', 'img2'}
+                  for index, image in enumerate(('img1', 'img2')):
+                      record = row['converted_inputs'][image]
+                      assert record == dict(dtype=output_dtype, metadata=None, shape=[side, side],
+                          strides=[side*itemsize, itemsize], own=True, writeable=True, base_type='NoneType', sha256=record['sha256'])
+                      assert len(record['sha256']) == 64 and int(record['sha256'], 16) >= 0
+                      if dtype != 'uint8': assert record['sha256'] == row['input_sha256'][index]
+                  assert row['sample_labels'] == ['scikit-image', 'current']
+                  assert list(map(len, row['samples_ms'])) == [7, 7] and len(row['loops']) == 2
+                  assert all(isinstance(n, int) and n > 0 for n in row['loops'])
+                  assert all(math.isfinite(v) and v > 0 for samples in row['samples_ms'] for v in samples)
+                  a, b = map(statistics.median, row['samples_ms'])
+                  assert (a, b, a / b) == (row['reference_ms'], row['cpp_ms'], row['speedup'])
+              reports.append({r['case_id']: r for r in rows})
+          assert all(r.keys() == reports[0].keys() for r in reports)
+          def gm(values):
+              return math.exp(statistics.mean(math.log(v) for v in values))
+          rows = []
+          for key, first in reports[0].items():
+              values = [r[key] for r in reports]
+              for field in ('shape', 'dtype', 'method', 'n_tiles', 'input_dtype_str', 'input_sha256',
+                            'converted_inputs', 'output_metadata', 'output_sha256', 'reference_sha256'):
+                  assert all(v[field] == first[field] for v in values), (key, field)
+              b0, c1, c2, b3 = values
+              rows.append(dict(case_id=key, dtype=first['dtype'], method=first['method'],
+                  direct_gain=math.sqrt(b0['cpp_ms'] * b3['cpp_ms'] / (c1['cpp_ms'] * c2['cpp_ms'])),
+                  normalized_gain=math.sqrt(c1['speedup'] * c2['speedup'] / (b0['speedup'] * b3['speedup'])),
+                  candidate_original=math.sqrt(c1['speedup'] * c2['speedup']),
+                  repeat_direct=max(c1['cpp_ms'], c2['cpp_ms']) < min(b0['cpp_ms'], b3['cpp_ms']),
+                  repeat_normalized=min(c1['speedup'], c2['speedup']) > max(b0['speedup'], b3['speedup']),
+                  original_repeat=min(c1['speedup'], c2['speedup']) > 1,
+                  baseline_cpp_ms=[b0['cpp_ms'], b3['cpp_ms']], candidate_cpp_ms=[c1['cpp_ms'], c2['cpp_ms']],
+                  candidate_original_passes=[c1['speedup'], c2['speedup']],
+                  added_ms=math.sqrt(c1['cpp_ms'] * c2['cpp_ms']) - math.sqrt(b0['cpp_ms'] * b3['cpp_ms'])))
+          completed = datetime.now(timezone.utc)
+          direct = gm(r['direct_gain'] for r in rows)
+          normalized = gm(r['normalized_gain'] for r in rows)
+          original = gm(r['candidate_original'] for r in rows)
+          targets = [r for r in rows if r['method'] in ('diff', 'blend')]
+          controls = [r for r in rows if r['method'] == 'checkerboard']
+          assert len(targets) == 12 and len(controls) == 6
+          method_original = {method: gm(r['candidate_original'] for r in rows if r['method'] == method)
+                             for method in ('diff', 'blend', 'checkerboard')}
+          keep = (direct > 1 and normalized > 1 and original > 1
+                  and method_original['diff'] > 1 and method_original['blend'] > 1
+                  and all(r['repeat_direct'] and r['repeat_normalized'] for r in targets)
+                  and all(r['original_repeat'] for r in controls) and completed < deadline)
+          summary = dict(status='KEEP' if keep else 'DISCARD', completed_utc=completed.isoformat(),
+              deadline_utc=deadline.isoformat(), completed_before_deadline=completed < deadline,
+              contract_sha256='4fae66de81eefb42a13a899c6a0a8e843f5aac8d5ab5f2e24818a1ba5679ecf8',
+              raw_samples=1008, direct_gain=direct, normalized_gain=normalized, candidate_original=original,
+              method_original=method_original,
+              target_repeat_wins=sum(r['repeat_direct'] and r['repeat_normalized'] for r in targets),
+              checker_original_repeat_wins=sum(r['original_repeat'] for r in controls),
+              direct_losses=[r['case_id'] for r in rows if r['direct_gain'] < 1],
+              normalized_losses=[r['case_id'] for r in rows if r['normalized_gain'] < 1],
+              balanced_original_losses=[r['case_id'] for r in rows if r['candidate_original'] < 1],
+              candidate_pass_original_losses={name: [r['case_id'] for r in report.values() if r['speedup'] < 1]
+                                              for name, report in zip(('2-candidate', '3-candidate'), reports[1:3])},
+              groups={name: dict(cases=len(group), direct_gain=gm(r['direct_gain'] for r in group),
+                  normalized_gain=gm(r['normalized_gain'] for r in group), candidate_original=gm(r['candidate_original'] for r in group))
+                  for name, group in [('targets_diff_blend', targets), ('checker_math_controls', controls)]
+                  + [(method, [r for r in rows if r['method'] == method]) for method in ('diff', 'blend', 'checkerboard')]
+                  + [(dtype, [r for r in rows if r['dtype'] == dtype]) for dtype in ('uint8', 'float32', 'float64')]},
+              controls_scope='Checker math is unchanged; shared frontend preparation changes also affect these public calls. Controls are not untouched code paths.',
+              rows=rows)
+          Path('results/comparison.json').write_text(json.dumps(summary, indent=2) + '\n')
+          print(json.dumps({k: v for k, v in summary.items() if k != 'rows'}, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: compare-images-same-host-minimum
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
