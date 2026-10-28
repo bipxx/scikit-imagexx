@@ -104,7 +104,11 @@ def validate(document):
         visiting.remove(name)
         visited.add(name)
 
-    for name in by_id:
+    for name, packet in by_id.items():
+        if 'superseded_by_active_packet' in packet:
+            replacement = packet['superseded_by_active_packet']
+            if not isinstance(replacement, str) or replacement not in by_id or replacement == name:
+                raise ValueError(f'{name}: invalid supersession target {replacement!r}')
         walk(name)
     active = [p for p in packets if p['state'] in ACTIVE]
     owners = {p['owner'] for p in active if p['owner'] != 'integrator'}
@@ -136,6 +140,7 @@ def ready_packets(document):
                 for p in document['packets'] if p['state'] in ACTIVE for path in p['owns']}
     return [p for p in document['packets']
             if p['state'] == 'queued'
+            and 'superseded_by_active_packet' not in p
             and (p['owns'] or p['kind'] == 'measurement')
             and not occupied.intersection(path.replace('\\', '/').casefold() for path in p['owns'])
             and all(dependency_ready(p, dep, by_id) for dep in p['depends_on'])]
