@@ -2212,13 +2212,13 @@ def current_metadata_artifact(tmp_path):
 
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
-def test_current_source_plan_derives_full_closure_and_labels_sdk23(profile):
+def test_current_source_plan_derives_full_closure_and_labels_required_sdk25(profile):
     result=q.plan(ROOT,profile,236)
     assert not result['blockers'] and result['readiness_only'] is True
     assert result['product_scope']=='current236' and result['registry']['image_count']==236
     assert result['product_members']==155 and result['SDK_members']==71
-    assert result['SDK_checks']==46 and 'legacy23' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==30
+    assert result['SDK_checks']==50 and 'current25 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==31
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2277,3 +2277,39 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         assert result['product_scope']=='current236' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
+
+
+@pytest.mark.parametrize('family',('colocalization','footprint_shapes'))
+@pytest.mark.parametrize('fault',('missing-target','missing-source'))
+def test_current_sdk25_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
+    if fault=='missing-target':
+        original=q.sdk_family_declarations
+        monkeypatch.setattr(q,'sdk_family_declarations',lambda text:[n for n in original(text) if n!=family])
+    else:
+        original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
+        monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',236)['blockers'])
+
+
+def test_current_sdk25_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes') and len(q.FAMILIES)==23
+    current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
+    old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
+    q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
+    with pytest.raises(q.QualificationError):q.validate_sdk_listing(old,scope=q.CURRENT_PRODUCT_SCOPE)
+    with pytest.raises(q.QualificationError):q.validate_sdk_listing(current)
+    assert 'test_profile_coordinates_public.py' in q.POST203_TESTS
+    assert len(q.runpy.run_path(str(ROOT/'tests/profile_coordinates_cases.py'))['cases']())==51
+    contract=q.current_contract(lambda n:(ROOT/n).read_bytes())
+    assert 'tests/test_profile_coordinates_public.py' in contract['required_selectors']
+
+
+def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
+    cmake=(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()
+    assert 'foreach(_current IN ITEMS colocalization footprint_shapes)' in cmake
+    assert 'target_link_libraries(${_current}_consumer PRIVATE skimagexx::skimagexx)' in cmake
+    for family in ('colocalization','footprint_shapes'):
+        source=(ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')).read_text()
+        assert '#include <skimagexx/'+family+'.hpp>' in source and '#include <skimagexx/image.hpp>' in source
+        assert '../src/' not in source and 'Python.h' not in source
+        assert 'get_num_threads()==1' in source and 'for(int workers:{1,4})' in source
