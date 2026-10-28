@@ -28,11 +28,11 @@ def test_isolated_one_product_transport_and_fixed_closure():
     assert timed.count('ci_measurement_artifacts.py verify') == 2
     assert not re.search(r'pytest|cmake|ctest|pip install|pip wheel|__module__|setup.py', timed)
     assert '--no-index --no-deps --only-binary=:all: --require-hashes' in WORKFLOW
-    assert "== 174" in SCRIPTS[1] and "== 82" in SCRIPTS[1]
-    assert "== 246" in SCRIPTS[1] and "== 3" in SCRIPTS[1]
+    assert "== 176" in SCRIPTS[1] and "== 83" in SCRIPTS[1]
+    assert "== 247" in SCRIPTS[1] and "== 3" in SCRIPTS[1]
     assert "'test_approximate_polygon_integration': len(factory_cases) * 2 + 23" in SCRIPTS[1]
     assert "'test_approximate_polygon_pipeline': len(factory_cases) * 2 + 12" in SCRIPTS[1]
-    assert 'dict(actual_files) == expected_files' in SCRIPTS[1] and '== 1445' in SCRIPTS[1]
+    assert 'dict(actual_files) == expected_files' in SCRIPTS[1] and '== 1447' in SCRIPTS[1]
     assert 'if: always()' in WORKFLOW and 'name: approximate-polygon-initial-minimum' in WORKFLOW
     assert 'lscpu > results/cpu.txt' in WORKFLOW
     assert "len(manifest['wheels']) - len(products) == 13" in SCRIPTS[1]
@@ -56,7 +56,7 @@ def test_actual_producer_authentication(tmp_path, monkeypatch, bad):
     elif bad == 'digest': item['digest']='sha256:'+'c'*64
     elif bad == 'expired': item['expired']=True
     elif bad == 'foreign-artifact': item['workflow_run']['head_sha']='c'*40
-    jobs=[dict(name='numpy-minimum',conclusion='success',steps=[]),dict(name='measure-minimum',conclusion='success',steps=[dict(name='Run python benchmarks/'+str(i),conclusion='skipped')for i in range(28)])]
+    jobs=[dict(name='numpy-minimum',conclusion='success',steps=[]),dict(name='measure-minimum',conclusion='success',steps=[dict(name='Run python benchmarks/'+str(i),conclusion='skipped')for i in range(29)])]
     if bad=='timing-ran':jobs[1]['steps'][0]['conclusion']='success'
     elif bad=='timing-missing':jobs[1]['steps'].pop()
     elif bad=='producer-job-failed':jobs[0]['conclusion']='failure'
@@ -185,9 +185,9 @@ def test_actual_source_derived_install_closure(tmp_path,monkeypatch,fault):
     import subprocess,zipfile
     monkeypatch.chdir(tmp_path)
     root=tmp_path/'snapshot';wheel_dir=root/'build/prepared/wheels';wheel_dir.mkdir(parents=True)
-    sdk={f'include/skimagexx/{i}.hpp'for i in range(82)}
-    members=sdk|{f'skimagexx/module{i}.py'for i in range(91)}
-    layout=dict(product_count=174,SDK_count=82,SDK_members=sorted(sdk),members_without_core=sorted(members))
+    sdk={f'include/skimagexx/{i}.hpp'for i in range(83)}
+    members=sdk|{f'skimagexx/module{i}.py'for i in range(92)}
+    layout=dict(product_count=176,SDK_count=83,SDK_members=sorted(sdk),members_without_core=sorted(members))
     actual_sdk=set(sdk);actual_members=members|{'skimagexx/_core.cpython-311-x86_64-linux-gnu.so'}
     if fault=='missing-sdk':actual_sdk.pop()
     elif fault=='foreign-sdk':actual_sdk.remove(next(iter(sdk)));actual_sdk.add('foreign.hpp')
@@ -245,7 +245,7 @@ def test_actual_current_install_projections_and_final_harness_bytes():
     module=runpy.run_path(str(ROOT/'tools/public_qualification.py'))
     for profile in module['PROFILES']:
         layout=module['current_install_layout'](read,names,profile)
-        assert (layout['product_count'],layout['SDK_count'])==(174,82)
+        assert (layout['product_count'],layout['SDK_count'])==(176,83)
     harness=(ROOT/'benchmarks/approximate_polygon.py').read_bytes().replace(b'\r\n',b'\n')
     contract=(ROOT/'coverage/contracts/approximate-polygon-benchmark.json').read_bytes()
     assert hashlib.sha256(harness).hexdigest()=='518c256877e5f0bf6708c94ac91901a6ace1676f1b243359fef95d65d9ffd29d'

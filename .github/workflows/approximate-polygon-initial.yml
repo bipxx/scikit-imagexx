@@ -78,7 +78,7 @@ jobs:
           required = {name: [j for j in jobs['jobs'] if j['name'] == name] for name in ('numpy-minimum', 'measure-minimum')}
           assert all(len(values) == 1 and values[0]['conclusion'] == 'success' for values in required.values())
           timing = [step for step in required['measure-minimum'][0]['steps'] if step['name'].startswith('Run python benchmarks/')]
-          assert len(timing) == 28 and all(step['conclusion'] == 'skipped' for step in timing)
+          assert len(timing) == 29 and all(step['conclusion'] == 'skipped' for step in timing)
 
           PY
       - uses: actions/checkout@v4
@@ -120,7 +120,7 @@ jobs:
           names = subprocess.check_output(['git', '-C', str(source_root), 'ls-files', '-z']).decode().split('\0')
           layout = runpy.run_path(str(source_root / 'tools/public_qualification.py'))['current_install_layout'](
               lambda name: (source_root / name).read_bytes(), [name for name in names if name], 'minimum')
-          assert layout['product_count'] == 174 and layout['SDK_count'] == 82
+          assert layout['product_count'] == 176 and layout['SDK_count'] == 83
           assert set(manifest['runtime']['sdk_sha256']) == set(layout['SDK_members'])
           products = [n for n, v in manifest['wheels'].items() if v['name'] == 'scikit-imagexx']
           assert len(products) == 1 and len(manifest['wheels']) - len(products) == 13
@@ -131,7 +131,7 @@ jobs:
               assert len(cores) == 1 and members == set(layout['members_without_core']) | cores
               assert len(members) == layout['product_count']
           inventory = json.loads(Path('snapshot/coverage/api.json').read_bytes())['entries']
-          assert sum(e['implementation'] == 'native-partial' for e in inventory) == 246
+          assert sum(e['implementation'] == 'native-partial' for e in inventory) == 247
           assert sum(e['implementation'] == 'metadata' for e in inventory) == 3
           frozen_cases = json.loads(Path('snapshot/coverage/contracts/approximate-polygon.json').read_bytes())['cases']
           factory_cases = runpy.run_path('snapshot/tests/approximate_polygon_contract.py')['cases']()
@@ -156,12 +156,12 @@ jobs:
               tree = ET.fromstring((prepared / name).read_bytes())
               assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
               focused_count += len(tree.findall('.//testcase'))
-          assert focused_count == 8788
+          assert focused_count == 9346
           smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
           assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
           assert set(smoke['outcomes']) == {'passed'}
-          assert smoke['implementations']['native-partial'] == 246 and smoke['implementations']['metadata'] == 3
-          assert smoke['outcomes']['passed'] == len(smoke['results']) == 1445
+          assert smoke['implementations']['native-partial'] == 247 and smoke['implementations']['metadata'] == 3
+          assert smoke['outcomes']['passed'] == len(smoke['results']) == 1447
           for name, expected in (('benchmarks/approximate_polygon.py', '518c256877e5f0bf6708c94ac91901a6ace1676f1b243359fef95d65d9ffd29d'), ('coverage/contracts/approximate-polygon-benchmark.json', '2d4ce2b90990d0d750787f2a0290598777fe846861bd80c0d5d664094e54fcbd')):
               assert manifest['source']['files_sha256'][name] == expected
               assert hashlib.sha256(Path('snapshot', name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected
