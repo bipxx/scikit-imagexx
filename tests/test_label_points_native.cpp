@@ -50,7 +50,7 @@ void exercise(const std::vector<std::size_t>& dimensions,
     std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO|FE_INVALID);
     const auto flags=std::fetestexcept(FE_ALL_EXCEPT),rounding=std::fegetround();
     const LabelPointsInput input{axes.data(),strides.data(),dimensions.data(),ndim,points,count};
-    label_points_into(input,output.data()+2,workers);
+    require(label_points_into(input,output.data()+2,workers));
     require(get_num_threads()==global);require(std::fegetround()==rounding);
     require(std::fetestexcept(FE_ALL_EXCEPT)==flags);require(storage==before);
     require(output[0]==sentinel&&output[1]==sentinel&&output[count+2]==sentinel&&output[count+3]==sentinel);
@@ -58,6 +58,42 @@ void exercise(const std::vector<std::size_t>& dimensions,
     std::uint64_t hash=1469598103934665603ULL;
     for(auto value:output)for(unsigned byte=0;byte<8;++byte){hash^=(value>>(8*byte))&255;hash*=1099511628211ULL;}
     stream.write(reinterpret_cast<const char*>(&hash),8);
+}
+void refusals(int workers) {
+    constexpr auto sentinel=std::uint64_t(0xa55aa55adeadbeefULL);
+    for(std::size_t rank=1;rank<=4;++rank)
+    for(std::size_t invalid_axis=0;invalid_axis<rank;++invalid_axis)
+    for(auto invalid:{std::int64_t(-1),std::int64_t(2)})
+    for(auto position:{std::size_t(0),std::size_t(2)})
+    for(auto stride:{std::ptrdiff_t(8),std::ptrdiff_t(-16)}) {
+        const auto slots=std::size_t(stride<0?-stride:stride)/8;
+        std::vector<std::size_t> dimensions(rank,2);
+        std::vector<std::vector<std::int64_t>> storage(rank,std::vector<std::int64_t>(1+2*slots,-77));
+        std::vector<const std::int64_t*> axes(rank);
+        std::vector<std::ptrdiff_t> strides(rank,stride);
+        for(std::size_t axis=0;axis<rank;++axis) {
+            auto* origin=storage[axis].data()+(stride<0?2*slots:0);axes[axis]=origin;
+            for(std::size_t point=0;point<3;++point) {
+                const auto value=axis==invalid_axis&&point==position?invalid:std::int64_t(point%2);
+                std::memcpy(reinterpret_cast<char*>(origin)+std::ptrdiff_t(point)*stride,&value,8);
+            }
+        }
+        const auto before=storage;const auto count=std::size_t(1)<<rank;
+        std::vector<std::uint64_t> output(count+4,sentinel);
+        const auto global=get_num_threads(),rounding=std::fegetround();
+        std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_INVALID|FE_DIVBYZERO);
+        const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
+        const LabelPointsInput input{axes.data(),strides.data(),dimensions.data(),rank,3,count};
+        require(!label_points_into(input,output.data()+2,workers));
+        require(output[0]==sentinel&&output[1]==sentinel&&output[count+2]==sentinel&&output[count+3]==sentinel);
+        require(storage==before&&get_num_threads()==global);
+        require(std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
+    }
+    const std::int64_t value=0;const std::int64_t* axes[]={&value,&value};
+    const std::ptrdiff_t strides[]={8,8};const std::size_t dimensions[]={0,5};
+    std::uint64_t output=sentinel;
+    require(!label_points_into({axes,strides,dimensions,2,1,0},&output,workers));
+    require(output==sentinel);
 }
 void fixtures(const std::string& path,int workers,std::ofstream& stream) {
     std::ifstream in(path,std::ios::binary);require(bool(in));const auto records=word(in);require(records==62);
@@ -99,6 +135,8 @@ int main(int argc,char** argv) {
             exercise({1},{{}},8,workers,stream);
         }
         if(argc==3)fixtures(argv[2],workers,stream);
+        // Refusal assertions add no bytes to the frozen valid-output stream.
+        refusals(workers);
     }
     require(std::fesetround(saved_round)==0);std::feclearexcept(FE_ALL_EXCEPT);set_num_threads(1);
     std::cout<<"label-points native "<<checks<<" checks PASS\n";

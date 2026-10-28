@@ -3,7 +3,6 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <cstdint>
-#include <cstring>
 #include <limits>
 #include <vector>
 
@@ -45,12 +44,6 @@ void bind_label_points(py::module_& module) {
             if (!axis) points = std::size_t(array.size());
             else if (std::size_t(array.size()) != points) return py::none();
             skimagexx::bindings::check_array_storage(array);
-            const auto* data = static_cast<const char*>(array.data());
-            for (std::size_t point = 0; point < points; ++point) {
-                std::int64_t value;
-                std::memcpy(&value, data + std::ptrdiff_t(point) * array.strides(0), sizeof(value));
-                if (value < 0 || std::uint64_t(value) >= dimensions[axis]) return py::none();
-            }
             axes.push_back(static_cast<const std::int64_t*>(array.data()));
             strides.push_back(array.strides(0));
             owners.push_back(std::move(array));
@@ -61,10 +54,12 @@ void bind_label_points(py::module_& module) {
         const skimagexx::detail::LabelPointsInput input{
             axes.data(), strides.data(), dimensions.data(), dimensions.size(), points, count};
         auto* destination = output.mutable_data();
+        bool accepted;
         {
             py::gil_scoped_release release;
-            skimagexx::detail::label_points_into(input, destination, workers);
+            accepted = skimagexx::detail::label_points_into(input, destination, workers);
         }
+        if (!accepted) return py::none();
         return output;
     }, py::arg("indices").noconvert(), py::arg("shape").noconvert(), py::arg("workers"));
 }
