@@ -32981,6 +32981,30 @@
         "client_families": 1,
         "client_checks": 2,
         "scope": "Assembled SDK from unchanged genuine SDK80 plus new header/math objects; no complete genuine SDK81 campaign."
+      },
+      "genuine_preparation": {
+        "run": 40758210302,
+        "source_sha": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+        "artifact": 12846458475,
+        "product_members": 172,
+        "SDK_members": 81,
+        "focused_checks": 8238,
+        "smoke_checks": 1443,
+        "skipped_timings": 27,
+        "root_admission": {
+          "path": "build/rolling-ball-kernels-genuine-release-v1/root-admission.json",
+          "sha256": "2842094151f5e7e63286a9e7ba7f927567f514bfbcad8884cef4681853cc6f46"
+        }
+      },
+      "installed_genuine_SDK_client": {
+        "manifest": {
+          "path": "build/rolling-genuine-sdk81-client-v1/handoff.json",
+          "sha256": "fc43987e4e4990e0a71d5ef3d8de168ca0a44ff68a6ddbecb6e82bb1205e8fa5"
+        },
+        "SDK_members": 81,
+        "client_families": 1,
+        "client_checks": 2,
+        "scope": "Actual genuine SDK81 untouched; one installed client only, not all26families or fullqualification."
       }
     },
     {
@@ -32993,7 +33017,7 @@
       ],
       "owner": "blur_integration_resume",
       "branch": "main",
-      "state": "preparing",
+      "state": "measured",
       "owns": [
         ".github/workflows/rolling-ball-kernels-initial.yml"
       ],
@@ -33005,7 +33029,7 @@
           "evidence_scope": "public_native"
         }
       },
-      "scope": "Single genuine minimum prepare-only run dispatched on exact245 source. All27 timing steps must skip. Artifact and scope admission required before12case168sample one-thread timing; not a full four-profile qualification.",
+      "scope": "Initial one-worker12case original/current cohort:12wins,GM11.956836614x; all168samples/fullrawreports preserved, root independently recomputed medians and12coordinate oracles. Not priorCPP or library-wide speedup/fullqualification.",
       "genuine_preparation": {
         "run": 40758210302,
         "source_sha": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
@@ -33017,6 +33041,21 @@
         "expected_focused_checks": 8238,
         "expected_smoke_checks": 1443,
         "timing_dispatched": false
+      },
+      "performance": {
+        "run": 40760482122,
+        "product_source": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+        "publication": "benchmarks/rolling-ball-kernels-minimum-initial.json",
+        "publication_sha256": "31cc3cd60d5045a6667881d1bf1d6cc9794d8efe554d4d0d240c3e97e8be2c66",
+        "raw_samples": 168,
+        "cases": 12,
+        "wins": 12,
+        "losses": 0,
+        "geometric_mean": 11.956836613517565,
+        "root_review": {
+          "path": "build/rolling-ball-kernels-initial-v1/root-recomputation.json",
+          "sha256": "7fbcae47d8d1835d790bfa6f5ec5e6f83fa74908bc533c2969a0d04b2d439b4d"
+        }
       }
     },
     {
@@ -33040,13 +33079,13 @@
       "depends_on": [
         "montage-shared"
       ],
-      "state": "preparing",
+      "state": "measuring",
       "source_merged": false,
       "freeze_sha": "6fa8b9dafb3d42a05c7427040b0989b30d01a15a",
       "freeze_utc": "2026-10-28T19:54:15.637024Z",
       "deadline_utc": "2026-10-28T21:54:15.637024Z",
       "variant_limit": 1,
-      "scope": "New fixed raw32-bit stride2 AVX2 variant: six modes FIRST ATTEMPT each28,716 grouped checks/4,264 calls,71 frozen outputs and old stream exact, sanitizer endpoints and integer SIMD codegen pass. Root production review passed. Genuine producer active; artifact/closure admission and root-only fixed ABBA timing pending. Closed constant-size-copy v1 remains DISCARD/unmerged. No speed credit from correctness.",
+      "scope": "Genuine pair admitted:172wheel81SDK,8238focused1443smoke27timingsskipped; all13deps/Python/publicheaders unchanged. Only Montage object plus new SIMD object differ. Root single fixed ABBA dispatch live; no timing outcome or source merge yet.",
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -33062,8 +33101,20 @@
       "genuine_preparation": {
         "run": 40758988448,
         "source_sha": "e66770d55ea7c342ef763b9c842bb4fa1939f6ad",
+        "artifact": 12848346695,
         "prepare_only": true,
-        "timing_dispatched": false
+        "timing_dispatched": true,
+        "review": {
+          "path": "build/montage-stride2-simd-prepare-v1/pair-review.json",
+          "sha256": "7a222efb9335d3c734c3617fd909ce680fb569a793857fb3b64b9e796045a226"
+        }
+      },
+      "measurement": {
+        "run": 40761382968,
+        "controller": "827d5026f60441046036be91be2e211d079b1771",
+        "root_POSTs": 1,
+        "raw_samples_expected": 504,
+        "decision": "pending"
       }
     },
     {
