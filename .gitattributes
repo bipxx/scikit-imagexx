@@ -627,3 +627,4 @@ benchmarks/approximate-polygon-minimum-initial.json -text
 coverage/contracts/montage-public-repeatability.json -text
 benchmarks/montage-public-repeatability.json -text
 benchmarks/subdivide-polygon-minimum-initial.json -text
+benchmarks/montage-row-owned-same-host.json -text
