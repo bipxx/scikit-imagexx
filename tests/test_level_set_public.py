@@ -14,8 +14,10 @@ import zlib
 import pytest
 if __package__:
     from .level_set_contract import APIS, UNASSESSED, cases, fixture
+    from .level_set_reference import reference_observation
 else:
     from level_set_contract import APIS, UNASSESSED, cases, fixture
+    from level_set_reference import reference_observation
 
 CASES=cases()
 MATRIX=Path(__file__).parents[1]/'coverage/contracts/level-set.json'
@@ -114,7 +116,7 @@ def test_level_set_native_public_contract(spec,workers):
     from skimagexx.coverage import native_functions
     if spec['api'] not in native_functions():pytest.skip('Prospective contract only: no native level-set implementation registered')
     import numpy as np
-    record=json.loads(MATRIX.read_bytes());expected=next(r for r in record['original_observations'][np.__version__] if r['id']==spec['id'])
+    record=json.loads(MATRIX.read_bytes());expected=reference_observation(record,spec['id'],np)
     previous=xx.get_num_threads();xx.set_num_threads(workers);fallback=xx.set_fallback_enabled(False)
     try:
         candidate=getattr(xx.segmentation,spec['api'].split('.')[-1])

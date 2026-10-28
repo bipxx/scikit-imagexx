@@ -14,9 +14,11 @@ from skimagexx import _level_set as implementation
 if __package__:
     from .level_set_contract import cases
     from .test_level_set_public import observe
+    from .level_set_reference import reference_observation
 else:
     from level_set_contract import cases
     from test_level_set_public import observe
+    from level_set_reference import reference_observation
 
 CASES=cases()
 MATRIX=Path(__file__).parents[1]/'coverage/contracts/level-set.json'
@@ -47,7 +49,7 @@ def test_level_set_pipeline(spec,workers,monkeypatch,tmp_path):
     import skimage.segmentation as public
     import skimage.segmentation.morphsnakes as original
     record=json.loads(MATRIX.read_bytes())
-    expected=next(row for row in record['original_observations'][np.__version__] if row['id']==spec['id'])
+    expected=reference_observation(record,spec['id'],np)
     name=spec['api'].split('.')[-1];candidate=getattr(implementation,name)
     calls=[];accepted=[];forbidden=[];snapshots=[]
     core=implementation._core;get_workers=core.get_num_threads
