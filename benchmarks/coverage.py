@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error
+from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -156,6 +156,10 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'measure.blur_effect' in apis:
+        provider_frontiers['measure.blur_effect'] = ('Owned ordered uniform and Sobel sampling; literal conversion, clamps, cropped reductions and final reducer remain providers. Exact scalar words are checked before timing; benchmarks/blur_effect.py is the canonical rank1/2/3 and h_size cohort.')
+    if 'util.compare_images' in apis:
+        provider_frontiers['util.compare_images'] = ('Owned finite diff/blend/checkerboard arithmetic; literal img_as_float conversion and dtype/layout allocation metadata remain providers. Exceptional arithmetic and unassessed scalar promotion retain literal primitives. Exact public storage and words are checked before timing; benchmarks/compare_images.py is the canonical method/dtype cohort.')
     if 'measure.profile_line' in apis:
         provider_frontiers['measure.profile_line'] = profile_scope
     if 'measure.mesh_surface_area' in apis:
@@ -223,7 +227,11 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.profile_line':
+                    if api == 'measure.blur_effect':
+                        error = blur_default_error(call_args[0], actual, expected)
+                    elif api == 'util.compare_images':
+                        error = compare_default_error(call_args[0], actual, expected)
+                    elif api == 'measure.profile_line':
                         error = profile_default_error(call_args[0], actual, expected)
                     elif api == 'measure.mesh_surface_area':
                         error = mesh_default_error(call_args, actual, expected)

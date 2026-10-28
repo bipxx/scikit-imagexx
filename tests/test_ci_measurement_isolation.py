@@ -515,7 +515,9 @@ def test_measure_contracts_precede_freeze(stem):
 
 @pytest.mark.parametrize('api,checker_name', (('measure.perimeter_crofton', 'crofton_default_error'),
                                              ('measure.perimeter', 'perimeter_default_error'),
-                                             ('measure.euler_number', 'euler_default_error')))
+                                             ('measure.euler_number', 'euler_default_error'),
+                                             ('measure.blur_effect', 'blur_default_error'),
+                                             ('util.compare_images', 'compare_default_error')))
 def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_name):
     tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
     imports = [n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'skimagexx.coverage']
