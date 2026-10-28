@@ -31073,8 +31073,8 @@
         "segmentation.checkerboard_level_set",
         "segmentation.disk_level_set"
       ],
-      "owner": "profile_candidate_audit",
-      "branch": "feature/level-set-frontend-v1",
+      "owner": "integrator",
+      "branch": "main",
       "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
       "owns": [
         "src/bind_level_set.cpp",
@@ -31084,7 +31084,7 @@
       "depends_on": [
         "level-set-native"
       ],
-      "state": "implementing",
+      "state": "validating",
       "contract": {
         "case_manifest": "coverage/contracts/level-set.json",
         "uncovered_cases": [
@@ -31118,6 +31118,12 @@
         "public_native": {
           "status": "pending"
         }
+      },
+      "genuine_preparation": {
+        "run": 40673515438,
+        "source_sha": "0a24ac663257815c77f2d488b5a281b646c918bf",
+        "status": "in_progress",
+        "scope": "Current whole installed minimum product; prior component/overlay proofs remain bounded and full supported-profile acceptance is pending"
       }
     },
     {
@@ -31125,7 +31131,7 @@
       "kind": "measurement",
       "apis": [],
       "owner": "blur_benchmark",
-      "branch": "feature/level-set-measurement",
+      "branch": "main",
       "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
       "owns": [
         "benchmarks/level_set.py",
@@ -31168,7 +31174,39 @@
         "isolated_performance": {
           "status": "pending"
         }
-      }
+      },
+      "genuine_run": 40673515438,
+      "source_sha": "0a24ac663257815c77f2d488b5a281b646c918bf",
+      "measurement_gate": "Isolated measurement depends on genuine preparation success; all8fixed cases/112samples/worker1, no result yet"
+    },
+    {
+      "id": "map-array-reference",
+      "kind": "contract",
+      "apis": [
+        "util.map_array"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "feature/map-array-contract-v1",
+      "base_sha": "fde1488",
+      "owns": [
+        "tests/map_array_contract.py",
+        "tests/test_map_array_public.py",
+        "coverage/contracts/map-array.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": "coverage/contracts/map-array.json",
+        "uncovered_cases": [
+          "Prospective50case original-first packet; native pending. Short output mappings, partial overlaps and forged/unaligned storage excluded by source safety audit."
+        ]
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "pending"
+        }
+      },
+      "public_registration": false
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31544,7 +31582,6 @@
     "util.invert",
     "util.label_points",
     "util.lookfor",
-    "util.map_array",
     "util.montage",
     "util.random_noise",
     "util.regular_grid",
