@@ -2,11 +2,11 @@
 
 Reference: scikit-image 0.26.0.
 
-Phase-2 source registers 236 partial image APIs plus 3 metadata functions and 5 partial native classes. Recent increments add owned entropy, block sums, perimeter/Crofton, Euler, polygon and mesh arithmetic plus profile-line sampling, blur arithmetic and image comparisons alongside the existing filters and moment kernels. Per-function contracts, measured workloads and retained primitive-provider partitions are recorded in [the fast-run guide](FAST_RUN.md). Combined supported-profile wheel/SDK qualification remains at 203 image APIs; source counts, component checks and scoped performance results are separate from that qualification.
+Phase-2 source registers 243 partial image APIs, 3 metadata functions and 5 partial native classes. Montage adds prepared fill and tile copying after the prior color, filter, threshold, morphology and geometry increments. Current source requires 170 wheel files and 80 SDK files; component checks and source readiness are separate from genuine product qualification and measured performance. See the [fast-run guide](FAST_RUN.md) for current evidence and provider partitions.
 
-Qualified product: `ea35a2481880301b8ce7b4eb2d77665adb813ca2`, Actions run `40237475475`: four profiles, 828,304 XML checks with no failures/errors/skips, three Release products. The qualified composition includes reconstruction, normalized mutual information, H-extrema, the metrics SIMD increment and the bounded TV zero-scan change. This is partial per-function scope, not full API parity or performance acceptance.
+Latest qualified product: `4e657ee64fb71e4d707d32e9539fdb4d7cc528af`, Actions run `40710464380`: 241 image APIs across four profiles, 895,864 public XML checks with no failures, errors or skips, 200 installed-SDK checks and three Release products. The later 243-API source and SDK changes require fresh qualification. This remains partial per-function scope, not full API parity or library-wide performance acceptance.
 
-477 public callable names inventoried in 20 modules; 236 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 243 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -299,35 +299,35 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.LineModelND` | upstream-only | pending | pending |
 | `measure.RansacModelProtocol` | upstream-only | pending | pending |
 | `measure.approximate_polygon` | upstream-only | pending | pending |
-| `measure.block_reduce` | upstream-only | pending | pending |
+| `measure.block_reduce` | native-partial | yes (partial input contract) | yes |
 | `measure.blur_effect` | native-partial | yes (partial input contract) | yes |
 | `measure.centroid` | native-partial | yes (partial input contract) | yes |
-| `measure.euler_number` | upstream-only | pending | pending |
+| `measure.euler_number` | native-partial | yes (partial input contract) | yes |
 | `measure.find_contours` | upstream-only | pending | pending |
-| `measure.grid_points_in_poly` | upstream-only | pending | pending |
-| `measure.inertia_tensor` | upstream-only | pending | pending |
-| `measure.inertia_tensor_eigvals` | upstream-only | pending | pending |
+| `measure.grid_points_in_poly` | native-partial | yes (partial input contract) | yes |
+| `measure.inertia_tensor` | native-partial | yes (partial input contract) | yes |
+| `measure.inertia_tensor_eigvals` | native-partial | yes (partial input contract) | yes |
 | `measure.intersection_coeff` | native-partial | yes (partial input contract) | yes |
 | `measure.label` | native-partial | yes (partial input contract) | yes |
 | `measure.manders_coloc_coeff` | native-partial | yes (partial input contract) | yes |
 | `measure.manders_overlap_coeff` | native-partial | yes (partial input contract) | yes |
 | `measure.marching_cubes` | upstream-only | pending | pending |
-| `measure.mesh_surface_area` | upstream-only | pending | pending |
+| `measure.mesh_surface_area` | native-partial | yes (partial input contract) | yes |
 | `measure.moments` | native-partial | yes (partial input contract) | yes |
 | `measure.moments_central` | native-partial | yes (partial input contract) | yes |
-| `measure.moments_coords` | upstream-only | pending | pending |
-| `measure.moments_coords_central` | upstream-only | pending | pending |
+| `measure.moments_coords` | native-partial | yes (partial input contract) | yes |
+| `measure.moments_coords_central` | native-partial | yes (partial input contract) | yes |
 | `measure.moments_hu` | native-partial | yes (partial input contract) | yes |
 | `measure.moments_normalized` | native-partial | yes (partial input contract) | yes |
 | `measure.pearson_corr_coeff` | upstream-only | pending | pending |
-| `measure.perimeter` | upstream-only | pending | pending |
-| `measure.perimeter_crofton` | upstream-only | pending | pending |
-| `measure.points_in_poly` | upstream-only | pending | pending |
+| `measure.perimeter` | native-partial | yes (partial input contract) | yes |
+| `measure.perimeter_crofton` | native-partial | yes (partial input contract) | yes |
+| `measure.points_in_poly` | native-partial | yes (partial input contract) | yes |
 | `measure.profile_line` | native-partial | yes (partial input contract) | yes |
 | `measure.ransac` | upstream-only | pending | pending |
 | `measure.regionprops` | upstream-only | pending | pending |
 | `measure.regionprops_table` | upstream-only | pending | pending |
-| `measure.shannon_entropy` | upstream-only | pending | pending |
+| `measure.shannon_entropy` | native-partial | yes (partial input contract) | yes |
 | `measure.subdivide_polygon` | upstream-only | pending | pending |
 | `metrics.adapted_rand_error` | upstream-only | pending | pending |
 | `metrics.contingency_table` | upstream-only | pending | pending |
@@ -408,9 +408,9 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `restoration.wiener` | upstream-only | pending | pending |
 | `segmentation.active_contour` | upstream-only | pending | pending |
 | `segmentation.chan_vese` | upstream-only | pending | pending |
-| `segmentation.checkerboard_level_set` | upstream-only | pending | pending |
+| `segmentation.checkerboard_level_set` | native-partial | yes (partial input contract) | yes |
 | `segmentation.clear_border` | native-partial | yes (partial input contract) | yes |
-| `segmentation.disk_level_set` | upstream-only | pending | pending |
+| `segmentation.disk_level_set` | native-partial | yes (partial input contract) | yes |
 | `segmentation.expand_labels` | upstream-only | pending | pending |
 | `segmentation.felzenszwalb` | upstream-only | pending | pending |
 | `segmentation.find_boundaries` | upstream-only | pending | pending |
@@ -478,15 +478,15 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.img_as_ubyte` | native-partial | yes (partial input contract) | yes |
 | `util.img_as_uint` | native-partial | yes (partial input contract) | yes |
 | `util.invert` | native-partial | yes (partial input contract) | yes |
-| `util.label_points` | upstream-only | pending | pending |
+| `util.label_points` | native-partial | yes (partial input contract) | yes |
 | `util.lookfor` | upstream-only | pending | pending |
-| `util.map_array` | upstream-only | pending | pending |
-| `util.montage` | upstream-only | pending | pending |
+| `util.map_array` | native-partial | yes (partial input contract) | yes |
+| `util.montage` | native-partial | yes (partial input contract) | yes |
 | `util.random_noise` | upstream-only | pending | pending |
 | `util.regular_grid` | upstream-only | pending | pending |
-| `util.regular_seeds` | upstream-only | pending | pending |
+| `util.regular_seeds` | native-partial | yes (partial input contract) | yes |
 | `util.slice_along_axes` | upstream-only | pending | pending |
-| `util.unique_rows` | upstream-only | pending | pending |
+| `util.unique_rows` | native-partial | yes (partial input contract) | yes |
 | `util.view_as_blocks` | upstream-only | pending | pending |
 | `util.view_as_windows` | upstream-only | pending | pending |
 
