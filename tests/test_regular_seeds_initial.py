@@ -28,7 +28,8 @@ def test_isolated_one_product_transport_and_fixed_closure():
     assert '--no-index --no-deps --only-binary=:all: --require-hashes' in WORKFLOW
     assert "== 168" in SCRIPTS[1] and "== 79" in SCRIPTS[1]
     assert "== 242" in SCRIPTS[1] and "== 3" in SCRIPTS[1]
-    assert '(108 if' in SCRIPTS[1] and 'else 109)' in SCRIPTS[1]
+    assert 'expected_nodes = len(factory_cases) * 2 + 3' in SCRIPTS[1]
+    assert '== expected_nodes' in SCRIPTS[1]
     assert 'if: always()' in WORKFLOW and 'name: regular-seeds-initial-minimum' in WORKFLOW
     assert 'lscpu > results/cpu.txt' in WORKFLOW
     assert 'core.regular_seeds_apply' not in WORKFLOW  # no entry replacement
@@ -104,3 +105,16 @@ def test_actual_all_nine_report_and_loss_validation(bad):
         out=validator()(r,c,m,s)
         assert out['raw_samples']==126 and out['losses']==['0'] and len(out['wins'])==8
         assert out['geometric_mean']>1  # a loss must survive a favorable aggregate
+
+
+def test_frozen_factory_derives_both_109_node_censuses():
+    import runpy
+    cases = runpy.run_path(str(ROOT / 'tests/regular_seeds_contract.py'))['cases']()
+    frozen = json.loads((ROOT / 'coverage/contracts/regular-seeds.json').read_bytes())['cases']
+    assert [c['id'] for c in cases] == [c['id'] for c in frozen]
+    assert len(cases) == 53
+    # Execute the actual transport's arithmetic after the independent factory check.
+    node = next(n for n in ast.parse(SCRIPTS[1]).body if isinstance(n, ast.Assign) and isinstance(n.targets[0], ast.Name) and n.targets[0].id == 'expected_nodes')
+    ns = dict(factory_cases=cases)
+    exec(compile(ast.Module(body=[node], type_ignores=[]), 'actual-parity-count', 'exec'), ns)
+    assert ns['expected_nodes'] == 109

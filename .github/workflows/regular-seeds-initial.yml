@@ -85,7 +85,7 @@ jobs:
           set -euo pipefail
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/prepared.zip"
           python - <<'PY'
-          import hashlib, json, os, stat, zipfile
+          import hashlib, json, os, runpy, stat, zipfile
           import xml.etree.ElementTree as ET
           from pathlib import Path, PurePosixPath
           selected = json.loads(Path('results/selection.json').read_bytes())
@@ -115,9 +115,15 @@ jobs:
           inventory = json.loads(Path('snapshot/coverage/api.json').read_bytes())['entries']
           assert sum(e['implementation'] == 'native-partial' for e in inventory) == 242
           assert sum(e['implementation'] == 'metadata' for e in inventory) == 3
+          frozen_cases = json.loads(Path('snapshot/coverage/contracts/regular-seeds.json').read_bytes())['cases']
+          factory_cases = runpy.run_path('snapshot/tests/regular_seeds_contract.py')['cases']()
+          assert [c['id'] for c in factory_cases] == [c['id'] for c in frozen_cases]
+          assert len(factory_cases) == 53
+          # Public: manifest + two saved-profile checks. Pipeline: signature + two worker-boundary checks.
+          expected_nodes = len(factory_cases) * 2 + 3
           for name in ('regular-seeds-normal.xml', 'regular-seeds-scalar.xml', 'regular-seeds-pipeline-normal.xml', 'regular-seeds-pipeline-scalar.xml'):
               tree = ET.fromstring((prepared / name).read_bytes())
-              assert len(tree.findall('.//testcase')) == (108 if '-pipeline-' in name else 109)
+              assert len(tree.findall('.//testcase')) == expected_nodes
               assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
           smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
           assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
