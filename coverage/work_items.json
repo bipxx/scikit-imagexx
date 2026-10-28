@@ -32784,7 +32784,7 @@
           "status": "verified",
           "source_sha": "7667a9b64fff1fa1b4cc307d5efb6c8aa45788b7",
           "manifest": {
-            "path": "build/worktrees/rolling-ball-kernels-contract-v1/build/prospective-v1/handoff.json",
+            "path": "build/rolling-ball-kernels-contract-v1-private-v1/prospective-v1/handoff.json",
             "sha256": "0715e4639372dc3666b94c87e9bb8d3dcec57442d9b42f8184165c3fd4713970"
           }
         },
@@ -32792,7 +32792,7 @@
           "status": "verified",
           "source_sha": "5d550dd51f2790f231dd2eb741e6fa91a9566782",
           "manifest": {
-            "path": "build/worktrees/rolling-ball-kernels-contract-v1/build/capture-v1/handoff.json",
+            "path": "build/rolling-ball-kernels-contract-v1-private-v1/capture-v1/handoff.json",
             "sha256": "26bd9c4549507804886181c51db3bb15bb63eb09b4d1c192c25bdb7ca2fd9f35"
           },
           "passing_contract_checks": 100
@@ -32819,7 +32819,7 @@
       "depends_on": [
         "montage-shared"
       ],
-      "state": "preparing",
+      "state": "measured",
       "source_merged": false,
       "proofs": {
         "native_private": {
@@ -32837,10 +32837,25 @@
         "run": 40746039506,
         "source_sha": "894edfd7519404f3c4b341aa0124c96976b83486",
         "prepare_only": true,
-        "timing_dispatched": false
+        "timing_dispatched": true
       },
       "deadline_utc": "2026-10-28T20:27:56Z",
-      "scope": "One fixed constant-size-copy variant; same ABI/fill/row_run/binder/workers. Six modes1184calls each; old1056word streams exact prefix, unaligned and12byte fallback controls pass. Actual inline loads/stores observed, not a timing claim. Genuine producer is live; no retiming/variant changes after measurement."
+      "scope": "Closed single variant; all504 samples preserved. Target direct2.651x/normalized2.686x fails repeated3x and both original-win gates; incomplete-u8 fails .95 control floor. Candidate stays unmerged; no retune. All three initial losses and every new regression retained.",
+      "decision": "DISCARD",
+      "performance": {
+        "run": 40749112415,
+        "raw_samples": 504,
+        "direct_gain": 1.144594134542999,
+        "normalized_gain": 1.1210372176261814,
+        "candidate_original": 1.5489456613130863,
+        "decision": "DISCARD",
+        "publication": "benchmarks/montage-strided-copy-same-host.json",
+        "publication_sha256": "d1c77f7b06d7002d42908032103c620df397febc936fcd846798824efa8fa7c0",
+        "root_review": {
+          "path": "build/montage-strided-copy-same-host-v1/root-recomputation.json",
+          "sha256": "6b0c66943161e398f77fd80d58e80fa7ac9ca43fd9c033750c5266e019d70956"
+        }
+      }
     },
     {
       "id": "rolling-ball-kernels-native",
@@ -32869,7 +32884,7 @@
           "status": "verified",
           "source_sha": "5fab1373af89013982165aae3df1790eb53574d8",
           "manifest": {
-            "path": "build/worktrees/rolling-ball-kernels-native-v1/build/native-v1/handoff.json",
+            "path": "build/rolling-ball-kernels-native-v1-private-v1/native-v1/handoff.json",
             "sha256": "09a1dfb627971de40a4d2347d0c0bd50bd22036bcacab3af51efe00af5a693bc"
           },
           "native_contract_checks": 465816,
@@ -32904,7 +32919,7 @@
           "status": "verified",
           "source_sha": "1f77c543aae250193a744485587f1f29761b5a49",
           "manifest": {
-            "path": "build/worktrees/rolling-ball-kernels-frontend-v1/build/component-v1/handoff.json",
+            "path": "build/rolling-ball-kernels-frontend-v1-private-v1/component-v1/handoff.json",
             "sha256": "e68025be45ded5ed40356d596a1a87f9527777e3fb6d6a606c82672ce148e678"
           },
           "native_contract_checks": 448,
@@ -32948,7 +32963,7 @@
           "status": "verified",
           "source_sha": "13a8cd4a6f7acdd35a54e19eeeeff5a93f0aa4a0",
           "manifest": {
-            "path": "build/worktrees/rolling-ball-kernels-shared-v1/build/public-v2/handoff.json",
+            "path": "build/rolling-ball-kernels-shared-v1-private-v1/public-v2/handoff.json",
             "sha256": "421ba32386ab7cdc0a9de1eee74fb681fdf669d6e0094997c5654709dc4ed577"
           },
           "native_contract_checks": 504,
@@ -32978,7 +32993,7 @@
       ],
       "owner": "blur_integration_resume",
       "branch": "main",
-      "state": "performance_pending",
+      "state": "preparing",
       "owns": [
         ".github/workflows/rolling-ball-kernels-initial.yml"
       ],
@@ -32990,7 +33005,19 @@
           "evidence_scope": "public_native"
         }
       },
-      "scope": "12 frozen parameter-only workloads,168 samples,one worker; source and transport inert gates passed. Genuine prepare-only producer must pass before initial timing."
+      "scope": "Single genuine minimum prepare-only run dispatched on exact245 source. All27 timing steps must skip. Artifact and scope admission required before12case168sample one-thread timing; not a full four-profile qualification.",
+      "genuine_preparation": {
+        "run": 40758210302,
+        "source_sha": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+        "prepare_only": true,
+        "latest_only": true,
+        "minimum_only": true,
+        "expected_product_members": 172,
+        "expected_SDK_members": 81,
+        "expected_focused_checks": 8238,
+        "expected_smoke_checks": 1443,
+        "timing_dispatched": false
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -34908,5 +34935,10 @@
       "sha256": "320967753a787687cb68ebe165163471c4acf4a8fa16312b28842a1db627d147"
     },
     "scope": "Exact qualified product, not a certificate for all later main changes."
+  },
+  "rolling_source_retirement": {
+    "path": "build/rolling-source-retirement-v1.json",
+    "sha256": "fe44b7dba778ed8c632fdf1ddedbc8df29441d1b0d30b8c9b97c20235b54c87e",
+    "scope": "Six clean ancestor worktrees retired after reader release, entire ignored build directories preserved. Blocked Montage comparison folders and unmerged candidates untouched."
   }
 }
