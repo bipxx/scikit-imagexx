@@ -9,7 +9,7 @@ reported upstream fallback. Fallback is compatibility, not a native rewrite.
 For development, use the [phased fast-run guide](coverage/FAST_RUN.md) to run
 per-feature surface, compact parity and full contract tests without rebuilding.
 
-Every native public function has scoped parity tests. All 211 partially native
+Every native public function has scoped parity tests. All 247 partially native
 image API paths have benchmark harnesses against original scikit-image;
 measurements for newly integrated paths remain separately tracked.
 Measurements include **one-worker** runs and allocation,
@@ -28,23 +28,24 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. Public source now has **211 partially native
-image API paths and three metadata helpers**. The five footprint and three colocalization additions have
-focused public component tests; the qualified combined binary baseline remains
-203 image paths until full product acceptance. The
+The reference is scikit-image **0.26.0**. Public source now has **247 partially native
+image API paths and three metadata helpers**. Polygon approximation and subdivision
+have scoped component parity evidence; their latest combined release validation
+and initial performance measurements remain pending. The qualified combined binary baseline is
+**241 image APIs**. The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases and three public bilateral aliases of existing algorithms; 258 paths remain upstream-only.
-Four transform classes now have partial native coordinate/state implementations,
+rank.generic aliases and three public bilateral aliases of existing algorithms; 221 paths remain upstream-only.
+Five classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths
 across 29 exported classes; remaining classes, member contracts and runtime
 attributes still need implementation and assessment.
 This is not full scikit-image coverage.
 
-The [latest accepted qualification](coverage/evidence/public203-whole-product-admission.json) passes
-828,304 checks across Windows, modern/minimum Linux and Debug builds with normal
-and scalar dispatch, plus installed SDK client checks across 23 families.
+The [latest accepted qualification](coverage/evidence/public241-whole-product-admission.json) passes
+895,864 public checks across Windows, modern/minimum Linux and Debug builds with normal
+and scalar dispatch, plus 200 installed SDK checks across 25 families.
 The fixed corpora run with one and four native workers. TV-Chambolle and TV-Bregman
 have qualified partial C++ implementations alongside the accepted rank optimization.
 The [initial TV-Chambolle one-worker baseline](benchmarks/tv-chambolle-public-initial.md)
