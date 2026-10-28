@@ -553,3 +553,6 @@ src/bind_uniform_filter.cpp -text
 tests/test_blur_effect_intake.py -text
 src/uniform_filter.hpp -text
 tests/test_uniform_filter_native.cpp -text
+
+benchmarks/blur_effect.py -text
+tests/test_blur_benchmark.py -text
