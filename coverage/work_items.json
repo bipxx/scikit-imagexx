@@ -30951,6 +30951,209 @@
       "depends_on": [],
       "current_checkpoint": "Independentf07c18c2 actual-link PASS; Windows and minimum originalmodule closure verified, both correctednative387PASS; source reviewer path failure retained. Rootprofile numerical gates separate.",
       "next_action": "Admit exact module/native artifacts before root executes profile controls and full family parity."
+    },
+    {
+      "id": "level-set-reference",
+      "kind": "contract",
+      "apis": [],
+      "owner": "profile_candidate_audit",
+      "branch": "feature/level-set-contract-v1",
+      "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
+      "owns": [
+        "tests/level_set_contract.py",
+        "tests/test_level_set_public.py",
+        "coverage/contracts/level-set.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "contract": {
+        "case_manifest": "coverage/contracts/level-set.json",
+        "uncovered_cases": [
+          "Prospective work only; no implementation, parity acceptance, or speed claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "public_registration": false,
+      "target_apis": [
+        "segmentation.checkerboard_level_set",
+        "segmentation.disk_level_set"
+      ],
+      "proofs": {
+        "contract_reference": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "level-set-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "blur_benchmark",
+      "branch": "feature/level-set-native",
+      "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
+      "owns": [
+        "src/level_set.hpp",
+        "src/level_set.cpp",
+        "src/simd_level_set_avx2.cpp",
+        "tests/test_level_set_native.cpp"
+      ],
+      "depends_on": [
+        "level-set-reference"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": "coverage/contracts/level-set.json",
+        "uncovered_cases": [
+          "Prospective work only; no implementation, parity acceptance, or speed claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "public_registration": false,
+      "dependency_requirements": {
+        "level-set-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "level-set-public",
+      "kind": "public_binding",
+      "apis": [
+        "segmentation.checkerboard_level_set",
+        "segmentation.disk_level_set"
+      ],
+      "owner": "integrator",
+      "branch": "feature/level-set-public",
+      "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
+      "owns": [
+        "src/bind_level_set.cpp",
+        "python/skimagexx/_level_set.py"
+      ],
+      "depends_on": [
+        "level-set-native"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": "coverage/contracts/level-set.json",
+        "uncovered_cases": [
+          "Prospective work only; no implementation, parity acceptance, or speed claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "public_registration": false,
+      "dependency_requirements": {
+        "level-set-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "id": "level-set-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "blur_benchmark",
+      "branch": "feature/level-set-measurement",
+      "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
+      "owns": [
+        "benchmarks/level_set.py",
+        ".github/workflows/level-set-public-benchmark.yml"
+      ],
+      "depends_on": [
+        "level-set-public"
+      ],
+      "state": "queued",
+      "contract": {
+        "case_manifest": "coverage/contracts/level-set.json",
+        "uncovered_cases": [
+          "Prospective work only; no implementation, parity acceptance, or speed claim."
+        ]
+      },
+      "parity": {
+        "source_sha": null,
+        "artifact_sha256": null,
+        "runs": []
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [],
+        "regressions": []
+      },
+      "merge": {
+        "commit": null,
+        "main_commit": null
+      },
+      "public_registration": false,
+      "dependency_requirements": {
+        "level-set-public": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "pending"
+        }
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31266,8 +31469,6 @@
     "restoration.wiener",
     "segmentation.active_contour",
     "segmentation.chan_vese",
-    "segmentation.checkerboard_level_set",
-    "segmentation.disk_level_set",
     "segmentation.expand_labels",
     "segmentation.felzenszwalb",
     "segmentation.find_boundaries",
