@@ -556,3 +556,6 @@ tests/test_uniform_filter_native.cpp -text
 
 benchmarks/blur_effect.py -text
 tests/test_blur_benchmark.py -text
+
+tests/compare_images_cases.py -text
+tests/test_compare_images_public.py -text
