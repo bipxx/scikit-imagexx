@@ -1,0 +1,25 @@
+{
+  "schema": "regular-seeds-prospective-benchmark-v1",
+  "api": "util.regular_seeds",
+  "scope": "Nine shape/count/dtype constructor workloads frozen before original/native benchmark calls; all gains and losses retained. No full-library or prior-C++ gain claim.",
+  "original_python_source_sha256": "64fcce3556f0cbf8cafd05a54ea3545b65b18bdcabbee25b953a21ba06875581",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "raw_samples": 126,
+  "max_output_elements": 1000000,
+  "independent_oracle": "Use the explicit regular_grid provider's positive slices, normalize them against the shape, enumerate their cartesian product in C order in Python, and pack label+1 into a zeroed bytearray. uint8 labels wrap modulo256. No NumPy grid assignment or original regular_seeds call in the oracle.",
+  "timed_boundary": "Whole allocation-inclusive public call: regular_grid provider, np.zeros output allocation, owned grid label generation/scatter or literal reference assignment, temporary allocations and output destruction. Oracle, generation and parity guards remain outside timing.",
+  "provider_frontier": "NumPy regular_grid and zero allocation remain explicit providers; only label generation and scatter are owned. Actual shape/count/output dtype parameters, not image pixels. Ordinary builtin positive shapes, native integer/bool/exact float partitions only; no exceptional casts or protocols in timing.",
+  "cases": [
+    {"case_id":"tiny2d-i64","shape":[16,16],"n_points":16,"dtype":"int64"},
+    {"case_id":"dense2d-i32","shape":[512,512],"n_points":262144,"dtype":"int32"},
+    {"case_id":"sparse2d-i64","shape":[1000,1000],"n_points":100,"dtype":"int64"},
+    {"case_id":"dense3d-f32","shape":[64,64,64],"n_points":262144,"dtype":"float32"},
+    {"case_id":"sparse3d-f64","shape":[100,100,100],"n_points":125,"dtype":"float64"},
+    {"case_id":"dense2d-u8-wrap","shape":[512,512],"n_points":262144,"dtype":"uint8"},
+    {"case_id":"dense2d-f64","shape":[768,768],"n_points":589824,"dtype":"float64"},
+    {"case_id":"moderate3d-i32","shape":[96,96,96],"n_points":4096,"dtype":"int32"},
+    {"case_id":"sparse2d-f32","shape":[768,1024],"n_points":1024,"dtype":"float32"}
+  ]
+}
