@@ -62,7 +62,10 @@ def test_montage_public_exports(product):
 def test_montage_registered_public_frozen_contract(product,spec,workers,monkeypatch,tmp_path):
     np,xx,matrix=product
     from skimagexx import _montage as implementation
-    from .test_montage_pipeline import NATIVE_IDS
+    if __package__:
+        from .test_montage_pipeline import NATIVE_IDS
+    else:
+        from test_montage_pipeline import NATIVE_IDS
     import skimage.util as public
     import skimage.util._montage as original
     expected=next(r for r in matrix['original_observations'][np.__version__]if r['id']==spec['id'])
