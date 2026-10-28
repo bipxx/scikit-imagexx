@@ -1,0 +1,227 @@
+{
+  "schema": "rolling-ball-kernels-prospective-benchmark-v1",
+  "apis": [
+    "restoration.ball_kernel",
+    "restoration.ellipsoid_kernel"
+  ],
+  "scope": "One frozen, nonduplicated constructor-parameter cohort; no fake image or dtype grids. All raw wins and losses retained. No full-library or prior-C++ gain claim.",
+  "status": "prospective-before-constructor-generation-or-calls",
+  "original_source_version": "0.26.0",
+  "original_python_source_sha256": "5572c656ad2a6e48518ee7188c4cea96e7817405a941fbf76932268ddd8540f6",
+  "function_segment_sha256": {
+    "ball_kernel": "94238cd483eba493167343cff76c96309beeda669e53385f3850cc1001ef226e",
+    "ellipsoid_kernel": "81269f8617faf10f8a0db54bd1c2dd507fbfbd1f8d5496e0d0af49df344f0f02"
+  },
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "raw_samples": 168,
+  "max_output_elements": 1000000,
+  "expected_dtype": "float64",
+  "cases": [
+    {
+      "case_id": "ball-1d-fractional",
+      "api": "restoration.ball_kernel",
+      "parameters": {
+        "radius": 127.5,
+        "ndim": 1
+      },
+      "expected_output_shape": [
+        257
+      ],
+      "expected_elements": 257
+    },
+    {
+      "case_id": "ball-2d",
+      "api": "restoration.ball_kernel",
+      "parameters": {
+        "radius": 192,
+        "ndim": 2
+      },
+      "expected_output_shape": [
+        385,
+        385
+      ],
+      "expected_elements": 148225
+    },
+    {
+      "case_id": "ball-3d",
+      "api": "restoration.ball_kernel",
+      "parameters": {
+        "radius": 31,
+        "ndim": 3
+      },
+      "expected_output_shape": [
+        63,
+        63,
+        63
+      ],
+      "expected_elements": 250047
+    },
+    {
+      "case_id": "ball-4d",
+      "api": "restoration.ball_kernel",
+      "parameters": {
+        "radius": 8,
+        "ndim": 4
+      },
+      "expected_output_shape": [
+        17,
+        17,
+        17,
+        17
+      ],
+      "expected_elements": 83521
+    },
+    {
+      "case_id": "ball-5d-small",
+      "api": "restoration.ball_kernel",
+      "parameters": {
+        "radius": 3,
+        "ndim": 5
+      },
+      "expected_output_shape": [
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "expected_elements": 16807
+    },
+    {
+      "case_id": "ball-8d-small",
+      "api": "restoration.ball_kernel",
+      "parameters": {
+        "radius": 1,
+        "ndim": 8
+      },
+      "expected_output_shape": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "expected_elements": 6561
+    },
+    {
+      "case_id": "ellipsoid-2d-odd",
+      "api": "restoration.ellipsoid_kernel",
+      "parameters": {
+        "shape": [
+          255,
+          127
+        ],
+        "intensity": 64.0
+      },
+      "expected_output_shape": [
+        255,
+        127
+      ],
+      "expected_elements": 32385
+    },
+    {
+      "case_id": "ellipsoid-2d-even",
+      "api": "restoration.ellipsoid_kernel",
+      "parameters": {
+        "shape": [
+          256,
+          128
+        ],
+        "intensity": 32.0
+      },
+      "expected_output_shape": [
+        257,
+        129
+      ],
+      "expected_elements": 33153
+    },
+    {
+      "case_id": "ellipsoid-3d-odd",
+      "api": "restoration.ellipsoid_kernel",
+      "parameters": {
+        "shape": [
+          63,
+          31,
+          15
+        ],
+        "intensity": 12.5
+      },
+      "expected_output_shape": [
+        63,
+        31,
+        15
+      ],
+      "expected_elements": 29295
+    },
+    {
+      "case_id": "ellipsoid-3d-even",
+      "api": "restoration.ellipsoid_kernel",
+      "parameters": {
+        "shape": [
+          64,
+          32,
+          16
+        ],
+        "intensity": 64.0
+      },
+      "expected_output_shape": [
+        65,
+        33,
+        17
+      ],
+      "expected_elements": 36465
+    },
+    {
+      "case_id": "ellipsoid-4d-odd",
+      "api": "restoration.ellipsoid_kernel",
+      "parameters": {
+        "shape": [
+          15,
+          11,
+          9,
+          5
+        ],
+        "intensity": 10.0
+      },
+      "expected_output_shape": [
+        15,
+        11,
+        9,
+        5
+      ],
+      "expected_elements": 7425
+    },
+    {
+      "case_id": "ellipsoid-4d-even",
+      "api": "restoration.ellipsoid_kernel",
+      "parameters": {
+        "shape": [
+          16,
+          12,
+          10,
+          6
+        ],
+        "intensity": 2.5
+      },
+      "expected_output_shape": [
+        17,
+        13,
+        11,
+        7
+      ],
+      "expected_elements": 17017
+    }
+  ],
+  "case_selection": "One ball case for each requested rank 1/2/3/4/5/8, with bounded high-rank outputs; odd/even anisotropic ellipsoid requests in 2D/3D/4D. Requested shapes are not assumed to equal the odd output shapes.",
+  "independent_oracle": "C-order stdlib integer coordinates and explicit binary64 source arithmetic: divide then square for ellipsoid, sequential -0 sum below eight, eight-lane tree at eight, final +0, then source clip/sqrt/multiply/mask order. Preserve both ball square roots and compare distance to radius. No original constructor or NumPy meshgrid in the oracle.",
+  "timed_boundary": "Entire allocation-inclusive public constructor call, including preparation, coordinates/reductions, temporaries, fresh output and output destruction. No supplied pixels or fabricated dtype cohorts; oracle and parity/admission guards remain untimed.",
+  "provider_frontier": "Literal ceil/arange, shape asarray/floor/clip, scalar radius**2 promotion, dtype/axis preparation and fresh output allocation remain providers. C++ owns prepared coordinate arithmetic, exact reduction, square roots and masks. Native credit requires actual ball_kernel_apply/ellipsoid_kernel_apply C-return and native_result=True; refused/nonfinite/protocol routes remain explicit providers.",
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false
+}
