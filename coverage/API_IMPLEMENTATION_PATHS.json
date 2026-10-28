@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "c07117c9d5c7a476a5918e894683deccb9083b15bb2af3dbef2475d09162af2c",
+  "source_inventory_sha256": "c83764105c1dc6662147986392cf324c60ae09092d1b74c88b94c0d0f79ae4c8",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 236,
-      "upstream-only": 232
+      "native-partial": 238,
+      "upstream-only": 230
     },
     "kinds": {
       "callable": 448,
@@ -15839,22 +15839,24 @@
       "api": "segmentation.checkerboard_level_set",
       "kind": "callable",
       "signature": "(image_shape, square_size=5)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8"
+      ],
       "canonical_api": "segmentation.checkerboard_level_set",
       "identity_alias": false,
       "family": "point",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Fill alternating coordinate-block parity as binary level set",
+      "easiest_credible_path": "Audit/extend existing native implementation: Fill alternating coordinate-block parity as binary level set",
       "mandatory_route_dependencies": [
         "array",
         "pointwise"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze small exact parity grids and large volumes against pinned upstream, including square_size and N-D shape; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered square_size and N-D shape. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "square_size and N-D shape",
       "parity_cases_to_freeze": "small exact parity grids and large volumes",
       "numerical_policy": "Exact dtype, clipping, integer rounding, branch and warning behavior; predeclare dtype-aware floating tolerances, preserving any existing bitwise contract.",
@@ -15865,10 +15867,10 @@
         "kind": "compute",
         "specific_workload": "small exact parity grids and large volumes",
         "one_worker_recipe": "Contiguous and strided uint8/float32/float64 images; tiny/512x512/2048x2048; time public allocation and conversion as well as optional kernel-only diagnostic.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/level_set.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_level_set_public.py::test_level_set_native_public_contract",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -15915,22 +15917,24 @@
       "api": "segmentation.disk_level_set",
       "kind": "callable",
       "signature": "(image_shape, *, center=None, radius=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8"
+      ],
       "canonical_api": "segmentation.disk_level_set",
       "identity_alias": false,
       "family": "point",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Evaluate center/radius radial inclusion on image grid",
+      "easiest_credible_path": "Audit/extend existing native implementation: Evaluate center/radius radial inclusion on image grid",
       "mandatory_route_dependencies": [
         "array",
         "pointwise"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze even/odd shapes and fractional centers against pinned upstream, including default center/radius, dimension and strict boundary; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered default center/radius, dimension and strict boundary. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "default center/radius, dimension and strict boundary",
       "parity_cases_to_freeze": "even/odd shapes and fractional centers",
       "numerical_policy": "Exact dtype, clipping, integer rounding, branch and warning behavior; predeclare dtype-aware floating tolerances, preserving any existing bitwise contract.",
@@ -15941,10 +15945,10 @@
         "kind": "compute",
         "specific_workload": "even/odd shapes and fractional centers",
         "one_worker_recipe": "Contiguous and strided uint8/float32/float64 images; tiny/512x512/2048x2048; time public allocation and conversion as well as optional kernel-only diagnostic.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/level_set.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_level_set_public.py::test_level_set_native_public_contract",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

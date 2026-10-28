@@ -16,6 +16,12 @@ helper = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(helper)
 
 
+def level_set_family(tree):
+    """Load the actual adapter family for isolated AST execution."""
+    return next(ast.literal_eval(node.value) for node in tree.body if isinstance(node,ast.Assign)
+                and any(isinstance(target,ast.Name) and target.id=='LEVEL_SET_FUNCTIONS' for target in node.targets))
+
+
 def jobs(text):
     parts = re.split(r'^  ([\w-]+):\s*$', text.split('\njobs:', 1)[1], flags=re.M)
     return dict(zip(parts[1::2], parts[2::2]))
@@ -200,7 +206,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/mesh_surface_area.py --threads 1 --repeat 7 --output build/ci-mesh-surface-area.json',
         'python benchmarks/profile_line.py --threads 1 --repeat 7 --output build/ci-profile-line.json',
         'python benchmarks/blur_effect.py --threads 1 --repeat 7 --output build/ci-blur-effect.json',
-        'python benchmarks/compare_images.py --threads 1 --repeat 7 --output build/ci-compare-images.json']
+        'python benchmarks/compare_images.py --threads 1 --repeat 7 --output build/ci-compare-images.json',
+        'python benchmarks/level_set.py --threads 1 --repeat 7 --output build/ci-level-set.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -378,7 +385,7 @@ def test_derived_benchmark_has_five_actual_tensor_cases():
     family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
                   and any(isinstance(t, ast.Name) and t.id == 'DERIVED_MOMENTS_FUNCTIONS' for t in n.targets))
     dtype_function = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'native_dtypes')
-    namespace = {}
+    namespace = {'LEVEL_SET_FUNCTIONS':level_set_family(source)}
     exec(compile(ast.Module(body=[dtype_function], type_ignores=[]), '<supported default dtypes>', 'exec'), namespace)
     main = next(n for n in ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes()).body
                 if isinstance(n, ast.FunctionDef) and n.name == 'main')
@@ -399,7 +406,7 @@ def test_derived_benchmark_has_five_actual_tensor_cases():
               and any(isinstance(t, ast.Name) and t.id in ('case_size', 'case_dtype') for t in n.targets)]
     code = compile(ast.Module(body=labels, type_ignores=[]), '<actual input labels>', 'exec')
     for api in (*family, 'measure.moments'):
-        values = dict(api=api, DERIVED_MOMENTS_FUNCTIONS=family, COORDS_MOMENTS_FUNCTIONS=coords_family, size=1024, dtype='fixture dtype',
+        values = dict(api=api, LEVEL_SET_FUNCTIONS=level_set_family(source), DERIVED_MOMENTS_FUNCTIONS=family, COORDS_MOMENTS_FUNCTIONS=coords_family, size=1024, dtype='fixture dtype',
                       call_args=(SimpleNamespace(dtype=SimpleNamespace(name='actual dtype')),),
                       np=SimpleNamespace(dtype=lambda x: SimpleNamespace(name=x)))
         exec(code, values)
@@ -428,7 +435,7 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
     def import_numpy(name, *args, **kwargs):
         assert name == 'numpy'
         return SimpleNamespace(empty=lambda shape, dtype: Tensor(shape, dtype))
-    namespace = dict(DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
+    namespace = dict(LEVEL_SET_FUNCTIONS=level_set_family(tree), DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
                      COORDS_MOMENTS_FUNCTIONS=coords_family,
                      __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[function], type_ignores=[]), '<derived preparer>', 'exec'), namespace)
@@ -460,7 +467,7 @@ def test_coordinate_default_preparation_uses_actual_points(api, shape):
     def import_numpy(name, *args, **kwargs):
         assert name == 'numpy'
         return SimpleNamespace(empty=lambda shape, dtype: Points(shape, dtype))
-    namespace = dict(__builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
+    namespace = dict(LEVEL_SET_FUNCTIONS=level_set_family(tree), __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[family, function], type_ignores=[]), '<coordinate preparer>', 'exec'), namespace)
     (points,), options = namespace['default_call'](api, image)
     assert points is not image and points.shape == (shape[0], 2) and points.dtype is descriptor
@@ -476,7 +483,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 20 and all(condition in step for step in timed)
+    assert len(timed) == 21 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -492,14 +499,14 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 20 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/compare_images.py ' in timed[-1]
+    assert len(timed) == 21 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/level_set.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
 
 
-@pytest.mark.parametrize('stem', ('perimeter-crofton', 'perimeter', 'euler-number', 'mesh-surface-area'))
+@pytest.mark.parametrize('stem', ('perimeter-crofton', 'perimeter', 'euler-number', 'mesh-surface-area', 'level-set'))
 def test_measure_contracts_precede_freeze(stem):
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
     preparation = blocks['numpy-minimum']
@@ -538,3 +545,40 @@ def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_
     timing = next(n for n in ast.walk(main) if isinstance(n, ast.Call)
                   and isinstance(n.func, ast.Name) and n.func.id == 'measure')
     assert branch.lineno < timing.lineno
+
+
+def test_level_set_native_pipeline_gates_precede_freeze():
+    preparation=jobs((ROOT / '.github/workflows/ci.yml').read_text())['numpy-minimum']
+    for mode in ('normal','scalar'):
+        command=('python -m pytest -q tests/test_level_set_pipeline.py '
+                 '--junitxml=build/ci-artifacts/level-set-pipeline-'+mode+'.xml')
+        assert preparation.count(command)==1
+        assert preparation.index(command)<preparation.index('ci_measurement_artifacts.py freeze')
+    assert preparation.split('level-set-pipeline-scalar.xml',1)[1].startswith(
+        "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+
+
+@pytest.mark.parametrize('api', ('segmentation.checkerboard_level_set','segmentation.disk_level_set'))
+def test_level_set_benchmark_dispatches_exact_shape_checker(api):
+    tree=ast.parse((ROOT/'benchmarks/coverage.py').read_bytes())
+    imported={alias.name for node in tree.body if isinstance(node,ast.ImportFrom)
+              and node.module=='skimagexx.coverage' for alias in node.names}
+    assert {'LEVEL_SET_FUNCTIONS','level_set_default_error'}<=imported
+    coverage=ast.parse((ROOT/'python/skimagexx/coverage.py').read_bytes())
+    assignment=next(node for node in coverage.body if isinstance(node,ast.Assign)
+                    and any(isinstance(target,ast.Name) and target.id=='LEVEL_SET_FUNCTIONS' for target in node.targets))
+    names=ast.literal_eval(assignment.value)
+    assert set(names)=={'segmentation.checkerboard_level_set','segmentation.disk_level_set'}
+    main=next(node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=='main')
+    branch=next(node for node in ast.walk(main) if isinstance(node,ast.If)
+                and ast.unparse(node.test)=='api in LEVEL_SET_FUNCTIONS'
+                and any(isinstance(call,ast.Call) and isinstance(call.func,ast.Name)
+                        and call.func.id=='level_set_default_error' for call in ast.walk(node)))
+    assert eval(compile(ast.Expression(branch.test),'<level-set selector>','eval'),dict(api=api,LEVEL_SET_FUNCTIONS=names))
+    calls=[];shape=(3,19);actual=object();expected=object()
+    def checker(*args):
+        calls.append(args)
+        return 17.
+    namespace=dict(call_args=(shape,),actual=actual,expected=expected,level_set_default_error=checker)
+    exec(compile(ast.Module(body=branch.body,type_ignores=[]),'<level-set exact check>','exec'),namespace)
+    assert calls==[(shape,actual,expected)] and namespace['error']==17.
