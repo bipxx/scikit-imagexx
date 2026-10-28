@@ -33453,7 +33453,7 @@
           "status": "verified",
           "source_sha": "7f2b40fa5f12b5daa04299566bf1038f19246c3e",
           "manifest": {
-            "path": "build/worktrees/subdivide-polygon-contract-v1/build/capture-v1/handoff.json",
+            "path": "build/subdivide-polygon-contract-v1-private-v1/capture-v1/handoff.json",
             "sha256": "de2c976b7d7dfa0d9eb1f805f312cac35816fb3b9e98090e319bcc97f185832b"
           },
           "passing_contract_checks": 120
@@ -33487,7 +33487,7 @@
           "status": "verified",
           "source_sha": "2160fc9bb684d4f1e25d395bfa0b5476754f8023",
           "manifest": {
-            "path": "build/worktrees/subdivide-polygon-native-v1/build/native-v2/handoff.json",
+            "path": "build/subdivide-polygon-native-v1-private-v1/native-v2/handoff.json",
             "sha256": "9515fe32ec9ac2fb5fbd98673d7a4d0c81e987e28f512830e298b2b40ad4d18a"
           },
           "native_contract_checks": 173976,
@@ -33522,7 +33522,7 @@
           "status": "verified",
           "source_sha": "83520950ae34261f0968c73b345f2a27ae42c8cd",
           "manifest": {
-            "path": "build/worktrees/subdivide-polygon-frontend-v1/build/component-v1/handoff.json",
+            "path": "build/subdivide-polygon-frontend-v1-private-v1/component-v1/handoff.json",
             "sha256": "abd95efbb37628d60c70a8a2b546a75edc008dc84b4db4437134f52ff73b3bae"
           },
           "native_contract_checks": 544,
@@ -33561,7 +33561,7 @@
           "status": "verified",
           "source_sha": "f54e624963ed725bc76a7816e19bfc8332a3bb7c",
           "manifest": {
-            "path": "build/worktrees/subdivide-polygon-shared-v1/build/public-v1/handoff.json",
+            "path": "build/subdivide-polygon-shared-v1-private-v1/public-v1/handoff.json",
             "sha256": "5a1765a6155269bc37265650453f0153ce9696b0bcf466fe9a5d98e28114ebc9"
           },
           "native_contract_checks": 572,
@@ -35505,5 +35505,16 @@
     "path": "build/approximate-source-retirement-v1.json",
     "sha256": "d67ac3df0819d847e6672ac2b17e7ad7989466922d1fda45b39fff7c17fdf8ff",
     "scope": "Nine merged clean ancestor worktrees retired after allreaderrelease; entire ignored builds retained with ledger redirects. Activejobs/SDKs/unmergedcandidates and blockedfolders untouched."
+  },
+  "subdivide_source_retirement": {
+    "path": "build/subdivide-source-retirement-v1.json",
+    "sha256": "bf9f92ba6620e86bb9eb4c0f2048dbae582a0c6aeedfda8cefc7164902a01062",
+    "scope": "Four clean ancestor subdivision worktrees removed without force after reader release; entire ignored builds preserved. Proof hashes unchanged. Absolute historical convenience symlinks may dangle; these redirects are metadata only.",
+    "prefix_redirects": {
+      "build/worktrees/subdivide-polygon-contract-v1/build": "build/subdivide-polygon-contract-v1-private-v1",
+      "build/worktrees/subdivide-polygon-native-v1/build": "build/subdivide-polygon-native-v1-private-v1",
+      "build/worktrees/subdivide-polygon-frontend-v1/build": "build/subdivide-polygon-frontend-v1-private-v1",
+      "build/worktrees/subdivide-polygon-shared-v1/build": "build/subdivide-polygon-shared-v1-private-v1"
+    }
   }
 }
