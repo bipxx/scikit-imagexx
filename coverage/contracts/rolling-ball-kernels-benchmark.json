@@ -217,10 +217,10 @@
       "expected_elements": 17017
     }
   ],
-  "case_selection": "One ball case for each requested rank1/2/3/4/5/8, with bounded high-rank outputs; odd/even anisotropic ellipsoid requests in2D/3D/4D. Requested shapes are not assumed to equal the odd output shapes.",
+  "case_selection": "One ball case for each requested rank 1/2/3/4/5/8, with bounded high-rank outputs; odd/even anisotropic ellipsoid requests in 2D/3D/4D. Requested shapes are not assumed to equal the odd output shapes.",
   "independent_oracle": "Decode C-order integer coordinates independently in stdlib; reproduce the source binary64 arithmetic/reduction, clip, square roots and mask order. Final reduction details and native admission checks wait for approved ABI/source facts. Original kernels and NumPy meshgrid are forbidden in the oracle.",
   "timed_boundary": "Entire allocation-inclusive public constructor call, including preparation, coordinates/reductions, temporaries, fresh output and output destruction. No supplied pixels or fabricated dtype cohorts; oracle and parity/admission guards remain untimed.",
-  "provider_frontier": "Initial native descriptor/mean-reduction ownership is pending reviewed ABI. Do not label provider or refused calls as accepted native work.",
+  "provider_frontier": "Initial native descriptor and coordinate/reduction ownership is pending reviewed ABI. Do not label provider or refused calls as accepted native work.",
   "original_calls": 0,
   "native_calls": 0,
   "timings": false
