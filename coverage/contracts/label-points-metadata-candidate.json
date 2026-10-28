@@ -1,0 +1,106 @@
+{
+  "schema": "label-points-metadata-candidate-v1",
+  "candidate_base_revision": "5df3a0fb679d2649b50f0974e6d645a08a19958c",
+  "baseline_revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+  "baseline_run": 40724150045,
+  "baseline_artifact": 12833680393,
+  "baseline_zip_sha256": "38797cf494532e16da41f751062c57815de2d566d8ebf11f3b59be26ba4be536",
+  "baseline_scope": {
+    "product": 168,
+    "SDK": 79,
+    "image": 242,
+    "metadata": 3,
+    "dependencies": 13
+  },
+  "frozen_utc": "2026-10-28T17:39:29.511203+00:00",
+  "deadline_utc": "2026-10-28T19:39:29.511203+00:00",
+  "variants": 1,
+  "algorithm": "Binder metadata only: remove redundant owners vector; reserve known rank for four remaining vectors; borrow dtype once per axis. No math, output allocation, prelude, public/private signature, native header or SIMD change.",
+  "owned_files": [
+    "src/bind_label_points.cpp",
+    "coverage/contracts/label-points-metadata-candidate.json"
+  ],
+  "candidate_base_label_production_exact_to_measured910": [
+    "src/label_points.cpp",
+    "src/simd_label_points_avx2.cpp",
+    "src/label_points.hpp",
+    "include/skimagexx/label_points.hpp",
+    "python/skimagexx/_label_points.py",
+    "src/bind_label_points.cpp",
+    "benchmarks/label_points.py",
+    "coverage/contracts/label-points-benchmark.json"
+  ],
+  "base_binder_canonical_sha256": "c5f527ac24e0b2f33401217108dfd4158e2f54d41b69a3b0fad9af0cf634c698",
+  "measurement": {
+    "transport": "Genuine whole-product preparations, fresh same-host two offline runtimes, baseline/candidate/candidate/baseline",
+    "case_ids": [
+      "sparse-64x64-i64",
+      "dense-64x64-f64",
+      "sparse-1024x1024-i64",
+      "dense-1024x1024-f64",
+      "sparse-64x64x64-f32",
+      "dense-64x64x64-i64",
+      "duplicates-1024x1024-f64",
+      "strided-1024x1024-f32",
+      "strided-64x64x64-i64"
+    ],
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 504
+  },
+  "gates": {
+    "overall_direct_gt": 1.01,
+    "overall_normalized_gt": 1.01,
+    "target": "sparse-64x64-i64",
+    "target_each_candidate_pass_direct_gt": 1.05,
+    "target_each_candidate_pass_normalized_gt": 1.05,
+    "target_each_candidate_pass_original_gt": 1.0,
+    "balanced_cpp_controls": [
+      "dense-64x64-f64",
+      "sparse-1024x1024-i64",
+      "dense-1024x1024-f64",
+      "sparse-64x64x64-f32",
+      "dense-64x64x64-i64",
+      "duplicates-1024x1024-f64",
+      "strided-1024x1024-f32",
+      "strided-64x64x64-i64"
+    ],
+    "controls_each_balanced_direct_gte": 0.97,
+    "controls_each_balanced_normalized_gte": 0.97,
+    "preserved_original_cases": [
+      "dense-64x64-f64",
+      "sparse-1024x1024-i64",
+      "dense-1024x1024-f64",
+      "dense-64x64x64-i64",
+      "duplicates-1024x1024-f64",
+      "strided-1024x1024-f32",
+      "strided-64x64x64-i64"
+    ],
+    "preserved_each_candidate_pass_original_gt": 1.0,
+    "deadline": true,
+    "correctness": true,
+    "identities": true
+  },
+  "correctness": {
+    "changed_binder_TUs": 2,
+    "private_checks": 400,
+    "public_checks": 396,
+    "profiles": [
+      "minimum",
+      "modern"
+    ],
+    "modes": [
+      "normal",
+      "scalar"
+    ],
+    "original_specs": 48,
+    "old_observations_and_intake_rows_per_mode": 96,
+    "old_native_six_modes": "Reuse authenticated unchanged source/objects/word/FP evidence; no native TU compilation or numerical replay",
+    "original_calls": 0,
+    "new_environments": 0,
+    "whole_SDK_builds": 0,
+    "local_timings": 0
+  },
+  "reporting": "Retain all9 cases, initial8 losses, all original/CPP regressions, sparse3D mixed original result and exact scope. No stage causality or all-sparse/full-function speed claim. Closed zero-provider variant remains rejected and unchanged."
+}
