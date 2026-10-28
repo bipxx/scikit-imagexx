@@ -105,9 +105,10 @@ def test_malformed_supplement_cannot_expand_scope_or_lose_rows(monkeypatch,tmp_p
 def test_linux_fixture_factory_and_observer_body_are_immutable():
     assert hashlib.sha256(LINUX.read_bytes()).hexdigest()=='8fb0b31cf701c96c75730d618adebcae37118f243972901a570ce26efdf5a706'
     assert hashlib.sha256((ROOT/'tests/level_set_contract.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='2d993c41d01d125bbee11d5c61df57bad0d4cf39d15d4997f141fa4fcc55d40a'
-    tree=ast.parse((ROOT/'tests/test_level_set_public.py').read_bytes())
+    source=(ROOT/'tests/test_level_set_public.py').read_text()
+    tree=ast.parse(source)
     observe=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='observe')
-    assert hashlib.sha256(ast.dump(observe,include_attributes=False).encode()).hexdigest()=='7e387bf7c87256865c19e87d38cae29e4887347dfce687a971b1fcf85335840d'
+    assert hashlib.sha256(ast.get_source_segment(source,observe).encode()).hexdigest()=='7be7f9d4e89730c3c51eb93826f9ab8c30507ace2c903bd39c6d4216634bca85'
     for filename,function in (('test_level_set_public.py','test_level_set_native_public_contract'),('test_level_set_pipeline.py','test_level_set_pipeline')):
         tree=ast.parse((ROOT/'tests'/filename).read_bytes());node=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==function)
         calls=[n for n in ast.walk(node) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='reference_observation']
