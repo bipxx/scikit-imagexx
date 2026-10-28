@@ -1,0 +1,44 @@
+name: LevelSet Windows ORIGINAL ONLY two-case witness
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  reference:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13.16'
+      - name: Frozen original-only plan
+        shell: pwsh
+        run: python tools/level_set_windows_reference.py plan --output build/level-set-windows-reference
+      - name: Authenticate runtime only and call each frozen original case once
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/level_set_windows_reference.py all --output build/level-set-windows-reference
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: level-set-Windows-original-only-NEW-HOST
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            build/level-set-windows-reference/*.json
+            build/level-set-windows-reference/*.txt
+            build/level-set-windows-reference/*.stdout
+            build/level-set-windows-reference/*.stderr
