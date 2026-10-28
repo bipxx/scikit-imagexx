@@ -1,0 +1,217 @@
+{
+  "schema": "subdivide-polygon-prospective-benchmark-v1",
+  "status": "frozen-before-benchmark-fixture-generation-or-calls",
+  "apis": [
+    "measure.subdivide_polygon"
+  ],
+  "original_source_version": "0.26.0",
+  "original_python_source_sha256": "26a27d89545d158f6b542857297995639b251ed3af0428c8c86a56c84928aabe",
+  "function_segment_sha256": "31ae779c9a6c54f06aeb5798498bfe2adf73872f14621605a19405262cfc31ea",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "raw_samples": 196,
+  "max_points": 65537,
+  "max_backing_elements": 262148,
+  "expected_dtype": "float64",
+  "provider_frontier": "Owned both B-spline convolutions, increasing-tap arithmetic, even/odd interleave, circular closing and ordinary endpoint copies. NumPy closure detection, real-to-f64 normalization and allocation remain explicit providers; accepted calls never invoke SciPy convolution or the original whole function.",
+  "timed_boundary": "Whole registered public call including validation/preparation/normalization/allocation/destruction. All reference pools and global worker budget one. Exact independent oracle/reference/native bytes, descriptors, native ownership and full input/backing state checked before timing. Retain all196samples and every loss; no priorCPP or whole-library claim.",
+  "cases": [
+    {
+      "case_id": "open-degree1-256",
+      "api": "measure.subdivide_polygon",
+      "degree": 1,
+      "closed": false,
+      "preserve_ends": false,
+      "base_points": 256,
+      "points": 256,
+      "layout": "F",
+      "expected_output_shape": [
+        510,
+        2
+      ]
+    },
+    {
+      "case_id": "closed-degree1-256",
+      "api": "measure.subdivide_polygon",
+      "degree": 1,
+      "closed": true,
+      "preserve_ends": false,
+      "base_points": 256,
+      "points": 257,
+      "layout": "reverse-rows",
+      "expected_output_shape": [
+        513,
+        2
+      ]
+    },
+    {
+      "case_id": "open-degree2-4096",
+      "api": "measure.subdivide_polygon",
+      "degree": 2,
+      "closed": false,
+      "preserve_ends": true,
+      "base_points": 4096,
+      "points": 4096,
+      "layout": "reverse-rows",
+      "expected_output_shape": [
+        8192,
+        2
+      ]
+    },
+    {
+      "case_id": "closed-degree2-4096",
+      "api": "measure.subdivide_polygon",
+      "degree": 2,
+      "closed": true,
+      "preserve_ends": false,
+      "base_points": 4096,
+      "points": 4097,
+      "layout": "step-rows",
+      "expected_output_shape": [
+        8193,
+        2
+      ]
+    },
+    {
+      "case_id": "open-degree3-65536",
+      "api": "measure.subdivide_polygon",
+      "degree": 3,
+      "closed": false,
+      "preserve_ends": false,
+      "base_points": 65536,
+      "points": 65536,
+      "layout": "step-rows",
+      "expected_output_shape": [
+        131068,
+        2
+      ]
+    },
+    {
+      "case_id": "closed-degree3-65536",
+      "api": "measure.subdivide_polygon",
+      "degree": 3,
+      "closed": true,
+      "preserve_ends": false,
+      "base_points": 65536,
+      "points": 65537,
+      "layout": "step-columns",
+      "expected_output_shape": [
+        131073,
+        2
+      ]
+    },
+    {
+      "case_id": "open-degree4-256",
+      "api": "measure.subdivide_polygon",
+      "degree": 4,
+      "closed": false,
+      "preserve_ends": true,
+      "base_points": 256,
+      "points": 256,
+      "layout": "step-columns",
+      "expected_output_shape": [
+        510,
+        2
+      ]
+    },
+    {
+      "case_id": "closed-degree4-256",
+      "api": "measure.subdivide_polygon",
+      "degree": 4,
+      "closed": true,
+      "preserve_ends": false,
+      "base_points": 256,
+      "points": 257,
+      "layout": "C",
+      "expected_output_shape": [
+        513,
+        2
+      ]
+    },
+    {
+      "case_id": "open-degree5-4096",
+      "api": "measure.subdivide_polygon",
+      "degree": 5,
+      "closed": false,
+      "preserve_ends": false,
+      "base_points": 4096,
+      "points": 4096,
+      "layout": "C",
+      "expected_output_shape": [
+        8186,
+        2
+      ]
+    },
+    {
+      "case_id": "closed-degree5-4096",
+      "api": "measure.subdivide_polygon",
+      "degree": 5,
+      "closed": true,
+      "preserve_ends": false,
+      "base_points": 4096,
+      "points": 4097,
+      "layout": "F",
+      "expected_output_shape": [
+        8193,
+        2
+      ]
+    },
+    {
+      "case_id": "open-degree6-65536",
+      "api": "measure.subdivide_polygon",
+      "degree": 6,
+      "closed": false,
+      "preserve_ends": true,
+      "base_points": 65536,
+      "points": 65536,
+      "layout": "F",
+      "expected_output_shape": [
+        131068,
+        2
+      ]
+    },
+    {
+      "case_id": "closed-degree6-65536",
+      "api": "measure.subdivide_polygon",
+      "degree": 6,
+      "closed": true,
+      "preserve_ends": false,
+      "base_points": 65536,
+      "points": 65537,
+      "layout": "reverse-rows",
+      "expected_output_shape": [
+        131073,
+        2
+      ]
+    },
+    {
+      "case_id": "open-degree7-65536",
+      "api": "measure.subdivide_polygon",
+      "degree": 7,
+      "closed": false,
+      "preserve_ends": false,
+      "base_points": 65536,
+      "points": 65536,
+      "layout": "reverse-rows",
+      "expected_output_shape": [
+        131064,
+        2
+      ]
+    },
+    {
+      "case_id": "closed-degree7-65536",
+      "api": "measure.subdivide_polygon",
+      "degree": 7,
+      "closed": true,
+      "preserve_ends": false,
+      "base_points": 65536,
+      "points": 65537,
+      "layout": "step-rows",
+      "expected_output_shape": [
+        131073,
+        2
+      ]
+    }
+  ]
+}
