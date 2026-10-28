@@ -30965,7 +30965,7 @@
         "coverage/contracts/level-set.json"
       ],
       "depends_on": [],
-      "state": "contracting",
+      "state": "contracted",
       "contract": {
         "case_manifest": "coverage/contracts/level-set.json",
         "uncovered_cases": [
@@ -30996,7 +30996,13 @@
       ],
       "proofs": {
         "contract_reference": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "690ee2952da49c2762ab1906ed2bc3edab35c4cd",
+          "manifest": {
+            "path": "build/worktrees/level-set-contract-v1/build/level-set-original-v1/handoff.json",
+            "sha256": "f6d59acc31c74a7e8a4a638724cd54334cf0266f704982eb95845052b5b9b867"
+          },
+          "passing_contract_checks": 158
         }
       }
     },
@@ -31005,7 +31011,7 @@
       "kind": "private_kernel",
       "apis": [],
       "owner": "blur_benchmark",
-      "branch": "feature/level-set-native",
+      "branch": "feature/level-set-native-v1",
       "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
       "owns": [
         "src/level_set.hpp",
@@ -31016,11 +31022,11 @@
       "depends_on": [
         "level-set-reference"
       ],
-      "state": "queued",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/level-set.json",
         "uncovered_cases": [
-          "Prospective work only; no implementation, parity acceptance, or speed claim."
+          "Floating/fractional/protocol centers and exceptional input semantics remain frontend provider partitions; no public or performance acceptance."
         ]
       },
       "parity": {
@@ -31048,7 +31054,15 @@
       },
       "proofs": {
         "native_private": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "2e3fb7973a71eaf6e93f2d4ddc345511df8ba52b",
+          "manifest": {
+            "path": "build/worktrees/level-set-native-v1/build/native-v1/handoff.json",
+            "sha256": "88b60bc0a32a313014e607449e3618c2bdefdaa0bd213d7d89a2b4fc421f734a"
+          },
+          "native_contract_checks": 37874,
+          "native_pending": 0,
+          "scope": "Private integer-geometry partition only:80 frozen records,40 distinct inputs; no public registration or full API parity claim"
         }
       }
     },
@@ -31059,17 +31073,18 @@
         "segmentation.checkerboard_level_set",
         "segmentation.disk_level_set"
       ],
-      "owner": "integrator",
-      "branch": "feature/level-set-public",
+      "owner": "profile_candidate_audit",
+      "branch": "feature/level-set-frontend-v1",
       "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
       "owns": [
         "src/bind_level_set.cpp",
-        "python/skimagexx/_level_set.py"
+        "python/skimagexx/_level_set.py",
+        "tests/test_level_set_pipeline.py"
       ],
       "depends_on": [
         "level-set-native"
       ],
-      "state": "queued",
+      "state": "implementing",
       "contract": {
         "case_manifest": "coverage/contracts/level-set.json",
         "uncovered_cases": [
@@ -31114,16 +31129,16 @@
       "base_sha": "3d41cdf257188d55ae6d2720001fa65ff275607b",
       "owns": [
         "benchmarks/level_set.py",
-        ".github/workflows/level-set-public-benchmark.yml"
+        "tests/test_level_set_benchmark.py"
       ],
       "depends_on": [
         "level-set-public"
       ],
-      "state": "queued",
+      "state": "preparing",
       "contract": {
         "case_manifest": "coverage/contracts/level-set.json",
         "uncovered_cases": [
-          "Prospective work only; no implementation, parity acceptance, or speed claim."
+          "Harness preparation only until genuine public product proof exists; no timing or performance credit."
         ]
       },
       "parity": {

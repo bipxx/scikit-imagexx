@@ -9,6 +9,7 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
+#include <string>
 #include <vector>
 using namespace skimagexx;
 namespace {
@@ -131,6 +132,18 @@ template<class T>void packed_cancellation(PixelType type){
         save(output,status);
     }
 }
+template<class T>void packed_zero_sign(PixelType type){
+    for(auto shape:{std::array<std::size_t,4>{6,8,2,2},{6,18,2,2},{3,27,1,3},{512,1024,2,2}}){
+        const auto rows=shape[0],columns=shape[1],fy=shape[2],fx=shape[3];
+        const auto nr=rows/fy,nc=columns/fx;
+        std::vector<T> input(rows*columns,-T(0)),output(nr*nc+2,T(73));
+        const auto status=detail::block_reduce_sum({input.data(),type,false,{rows,columns}},
+            {fy,fx},output.data()+1,{nc*sizeof(T),sizeof(T)});
+        require(status==0&&output.front()==T(73)&&output.back()==T(73));
+        for(std::size_t i=1;i+1<output.size();++i)require(output[i]==T(0)&&!std::signbit(output[i]));
+        save(output,status);
+    }
+}
 void invalid_geometry(){
     const std::array<float,4> input{1,2,3,4};std::array<float,4> out{91,91,91,91};
     for(int kind:{0,1,2,3}){
@@ -171,5 +184,6 @@ int main(int argc,char**argv){
         exceptions<float>(PixelType::float32);exceptions<double>(PixelType::float64);
         half_segment_regression();
     }
+    for(int worker:workers){set_num_threads(worker);packed_zero_sign<float>(PixelType::float32);packed_zero_sign<double>(PixelType::float64);}
     set_num_threads(1);journal.close();std::cout<<checks<<" block sum controls PASS avx2="<<has_avx2()<<" workers="<<get_num_threads()<<'\n';
 }
