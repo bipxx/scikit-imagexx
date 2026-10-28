@@ -32370,6 +32370,154 @@
         "checks_executed": 2,
         "scope": "Actual untouched79-file genuine artifact SDK, one existing compiled client linked solely to genuine library; normal/scalar workers1/4. Not all26families/52checks or full profile acceptance."
       }
+    },
+    {
+      "id": "label-points-zero-provider-experiment",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.label_points"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "optimize/label-points-zero-provider-v1",
+      "base_sha": "910c31a609c157c28cbbe56933b8448b710af95e",
+      "owns": [
+        "coverage/contracts/label-points-zero-provider-candidate.json"
+      ],
+      "depends_on": [
+        "label-points-public"
+      ],
+      "state": "measured",
+      "source_merged": false,
+      "decision": "DISCARD",
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "168e6b736221a488aad74b821dcfe74dbc87470c",
+          "manifest": {
+            "path": "build/label-points-zero-provider-same-host-v1/final-review.json",
+            "sha256": "9eb3a65b01c6460d50edf2fb5f61b9725a31445ef12bfa527b6f7a8208ebafe6"
+          }
+        }
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/label-points-zero-provider-same-host.json"
+        ],
+        "cases": 9,
+        "raw_samples": 504,
+        "direct_gain": 0.9598642579197411,
+        "normalized_gain": 0.9543314329319028,
+        "original_speedup": 1.4642983501421007,
+        "baseline_original_speedup": 1.5343708690842075,
+        "scope": "Rejected complete bundle; all9 balanced direct losses and18 per-pass regressions retained. No stage attribution or general zero-allocation claim."
+      },
+      "root_recomputation": {
+        "path": "build/label-points-zero-provider-same-host-v1/root-recomputation.json",
+        "sha256": "3f6591f725837570264ad7641178cc071257ccac0f36d4edcb30cfd3204dbd43"
+      }
+    },
+    {
+      "id": "montage-reference",
+      "kind": "contract",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "blur_integration_resume",
+      "branch": "main",
+      "base_sha": "2d849e184b232a68d2b52c1ec7b3d7e8ddf866ff",
+      "owns": [
+        "coverage/contracts/montage.json",
+        "tests/montage_contract.py",
+        "tests/test_montage_public.py"
+      ],
+      "depends_on": [],
+      "state": "contracted",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "da56050c7758f9b0987b6cd272bb01472236d6ac",
+          "manifest": {
+            "path": "build/worktrees/montage-contract-v1/build/capture-v1/handoff.json",
+            "sha256": "074fed36cca1e92702486e8c389250042307c4020392b72d5df3d060c7697a79"
+          },
+          "passing_contract_checks": 116
+        }
+      },
+      "scope": "58 frozen cases per profile,116 once-only original calls;549 array blobs; NumPy mean/rescale/conversion providers explicit; no native or timing evidence."
+    },
+    {
+      "id": "montage-native",
+      "kind": "private_foundation",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "feature/montage-native-v1",
+      "base_sha": "15ecf51d2ef2d931933574b3bffba46577644e8b",
+      "owns": [
+        "include/skimagexx/montage.hpp",
+        "src/montage.hpp",
+        "src/montage.cpp",
+        "tests/test_montage_native.cpp"
+      ],
+      "depends_on": [
+        "montage-reference"
+      ],
+      "state": "implementing",
+      "scope": "Prepared POD fill and signed-stride byte tile transport; installed detail primitive; existing optional worker partition and libc SIMD paths."
+    },
+    {
+      "id": "montage-frontend",
+      "kind": "private_frontend",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "integrator",
+      "branch": "feature/montage-frontend-v1",
+      "base_sha": "e6bd19b46cbd801f93af2301fe91357b3d5d1410",
+      "owns": [
+        "python/skimagexx/_montage.py",
+        "src/bind_montage.cpp",
+        "tests/test_montage_pipeline.py"
+      ],
+      "depends_on": [
+        "montage-reference"
+      ],
+      "state": "implementing",
+      "scope": "Literal decorator/provider/mutation/error ordering; actual C-return and exact saved observation tests pending native leaf."
+    },
+    {
+      "id": "montage-shared",
+      "kind": "integration_preparation",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "blur_integration_resume",
+      "branch": "integrate/montage-shared",
+      "base_sha": "e6bd19b46cbd801f93af2301fe91357b3d5d1410",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/util.py",
+        "python/skimagexx/coverage.py",
+        "tests/test_montage_integration.py",
+        "benchmarks/montage.py",
+        "coverage/contracts/montage-benchmark.json"
+      ],
+      "depends_on": [
+        "montage-reference"
+      ],
+      "state": "implementing",
+      "scope": "Public wiring and prospective9workload initial benchmark; root owns shared inventory/qualification/ledger guards. No public registration accepted before private native proofs."
     }
   ],
   "unassigned_inventoried_apis": [
