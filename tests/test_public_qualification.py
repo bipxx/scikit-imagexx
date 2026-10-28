@@ -2313,3 +2313,74 @@ def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
         assert '#include <skimagexx/'+family+'.hpp>' in source and '#include <skimagexx/image.hpp>' in source
         assert '../src/' not in source and 'Python.h' not in source
         assert 'get_num_threads()==1' in source and 'for(int workers:{1,4})' in source
+
+
+@pytest.fixture
+def matrix_diagnostic_metadata(monkeypatch, tmp_path):
+    """Only inert Python metadata/getters; no NumPy import or native call."""
+    core, transform, wrapper, registered = synthetic_matrix_admission(monkeypatch)
+    source = tmp_path / 'unchanged_metadata.py'
+    text = "def _runtime_profile():\n    calls.append('natural')\n    corename='NotAudited'\n    return result\n"
+    source.write_text(text); namespace = dict(calls=[], result=None)
+    exec(compile(text, str(source), 'exec'), namespace)
+    wrapper.__file__ = str(source); wrapper._runtime_profile = namespace['_runtime_profile']
+    wrapper._FORCED_CPU = ('OPENBLAS_CORETYPE',); wrapper._PREFIX = 'numpy.core'
+    umath = tmp_path / 'umath.so'; umath.write_bytes(b'inert loop')
+    blas = tmp_path / 'blas.so'; blas.write_bytes(b'inert BLAS')
+    wrapper._RUNTIME_PINS = {(sys.modules['numpy'].__version__, q.sha(umath)): (q.sha(blas), 'fixture_corename')}
+    observations = []
+    class Getter:
+        def __init__(self, name, value): self.name, self.value = name, value
+        def __call__(self): observations.append(self.name); return self.value
+    library = types.SimpleNamespace(fixture_corename=Getter('corename', b'NotAudited'),
+        fixture_num_threads=Getter('num_threads', 8), fixture_config=Getter('config', b'USE64BITINT'))
+    wrapper._loaded_blas = lambda *_: (library, blas, lambda function: blas)
+    monkeypatch.setitem(sys.modules, 'numpy.core._multiarray_umath', types.SimpleNamespace(__file__=str(umath)))
+    monkeypatch.setitem(sys.modules, 'numpy._core._multiarray_umath', types.SimpleNamespace(__file__=str(umath)))
+    return (core, transform, wrapper, registered), namespace, observations, source
+
+
+@pytest.mark.parametrize('prefix', ('numpy.core', 'numpy._core'))
+def test_matrix_runtime_diagnostic_keeps_first_refusal_and_numpy_major_prefix(monkeypatch, tmp_path, matrix_diagnostic_metadata, prefix):
+    args, namespace, observed, source = matrix_diagnostic_metadata; wrapper = args[2]
+    wrapper._PREFIX = prefix; before = source.read_bytes(); code = wrapper._runtime_profile.__code__
+    path = tmp_path / 'decision.json'
+    with pytest.raises(q.QualificationError, match='unknown/interposed/unverifiable'):
+        q.matrix_admission(*args, diagnostic_path=path)
+    report = json.loads(path.read_text())
+    assert namespace['calls'] == ['natural'] and observed == ['corename', 'num_threads', 'config']
+    assert report['natural_profile'] is None and report['certificate_retried'] is False
+    assert report['first_refusal']['function'] == '_runtime_profile' and report['first_refusal']['line'] == 4
+    assert report['first_refusal']['locals']['corename'] == 'NotAudited'
+    assert report['post_attempt_read_only']['loaded_BLAS']['num_threads']['value'] == 8
+    assert wrapper._runtime_profile.__code__ is code and source.read_bytes() == before and sys.gettrace() is None
+
+
+def test_matrix_runtime_diagnostic_success_consumes_same_one_call(tmp_path, matrix_diagnostic_metadata):
+    args, namespace, observed, _ = matrix_diagnostic_metadata
+    namespace['result'] = sys.modules['numpy'].__version__; path = tmp_path / 'decision.json'
+    q.matrix_admission(*args, diagnostic_path=path)
+    report = json.loads(path.read_text())
+    assert namespace['calls'] == ['natural'] and report['natural_profile'] == namespace['result']
+    assert report['first_refusal'] is None and report['certificate_retried'] is False
+
+
+def test_matrix_runtime_diagnostic_post_read_failure_does_not_mask_refusal(tmp_path, matrix_diagnostic_metadata):
+    args, namespace, _, _ = matrix_diagnostic_metadata
+    def unavailable(*_): raise OSError('metadata unavailable')
+    args[2]._loaded_blas = unavailable; path = tmp_path / 'decision.json'
+    with pytest.raises(q.QualificationError, match='unknown/interposed/unverifiable'):
+        q.matrix_admission(*args, diagnostic_path=path)
+    report = json.loads(path.read_text())
+    assert namespace['calls'] == ['natural'] and report['natural_profile'] is None
+    assert report['post_attempt_read_only']['metadata_exception'] == dict(type='OSError', message='metadata unavailable')
+
+
+def test_matrix_runtime_diagnostic_restores_trace_and_preserves_natural_exception(tmp_path, matrix_diagnostic_metadata):
+    args, namespace, _, source = matrix_diagnostic_metadata
+    text = "def _runtime_profile():\n    calls.append('natural')\n    raise LookupError('natural metadata error')\n"
+    source.write_text(text); exec(compile(text, str(source), 'exec'), namespace)
+    args[2]._runtime_profile = namespace['_runtime_profile']
+    with pytest.raises(LookupError, match='natural metadata error'):
+        q.matrix_admission(*args, diagnostic_path=tmp_path / 'decision.json')
+    assert namespace['calls'] == ['natural'] and sys.gettrace() is None

@@ -1135,7 +1135,47 @@ def decisions_admission(core, rank, generic, wrapper, registered):
             'R7 generic star exports differ')
 
 
-def matrix_admission(core, transform, wrapper, registered):
+def matrix_runtime_diagnostic(wrapper, np, path):
+    """Record one natural metadata decision; later reads cannot admit a route."""
+    helper_path = ROOT / 'tools/matrix_runtime_certificate_probe.py'
+    spec = importlib.util.spec_from_file_location('qualification_matrix_trace', helper_path)
+    helper = importlib.util.module_from_spec(spec); spec.loader.exec_module(helper)
+    natural, events = helper.trace_natural_profile(wrapper)
+    refusals = [row for row in events if row['event'] == 'return' and row.get('return') is None
+                and row['function'] in ('_loaded_blas', '_authenticate_runtime', '_runtime_profile')]
+    receipt = dict(schema='matrix-admission-diagnostic-v1', scope='Actual admission metadata only; no arithmetic or acceptance credit',
+        natural_profile=natural, first_natural_trace=events,
+        first_refusal=refusals[0] if natural is None and refusals else None,
+        certificate_retried=False, helper_sha256=sha(helper_path), wrapper_sha256=sha(Path(wrapper.__file__)),
+        environment={name: os.environ.get(name) for name in (*wrapper._FORCED_CPU, 'LD_PRELOAD', 'LD_AUDIT',
+            'OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'BLIS_NUM_THREADS')})
+    dump(path, receipt)  # Preserve the first decision before any later metadata read.
+    post = {}; receipt['post_attempt_read_only'] = post
+    try:
+        import ctypes
+        umath = importlib.import_module(wrapper._PREFIX + '._multiarray_umath')
+        upath = Path(umath.__file__).resolve()
+        def file_record(name):
+            target = Path(name).resolve()
+            return dict(path=str(target), bytes=target.stat().st_size, sha256=sha(target))
+        post['UMATH'] = file_record(upath)
+        pin = wrapper._RUNTIME_PINS[(np.__version__, post['UMATH']['sha256'])]
+        loaded = wrapper._loaded_blas(upath, upath.read_bytes())
+        post['loaded_BLAS'] = None
+        if loaded is not None:
+            library, _, resolve = loaded; getters = {}; post['loaded_BLAS'] = getters
+            for name in ('corename', 'num_threads', 'config'):
+                symbol = pin[1].replace('corename', name); function = getattr(library, symbol)
+                function.argtypes = []; function.restype = ctypes.c_int if name == 'num_threads' else ctypes.c_char_p
+                getters[name] = dict(symbol=symbol, owner=file_record(resolve(function)), value=helper.safe_value(function()))
+    except Exception as error:
+        # Diagnostic reads cannot replace the natural refusal with another error.
+        post['metadata_exception'] = dict(type=type(error).__name__, message=str(error))
+    dump(path, receipt)
+    return natural
+
+
+def matrix_admission(core, transform, wrapper, registered, diagnostic_path=None):
     """Require the actual public core and natural certificate before fixtures."""
     require(tuple(registered).count(MATRIX_PATH)==1, 'missing/duplicate public matrix registry')
     require(wrapper._core is core, 'matrix alternate core worker state')
@@ -1159,7 +1199,9 @@ def matrix_admission(core, transform, wrapper, registered):
     require(str(inspect.signature(function))=='(coords, matrix)', 'matrix signature mismatch')
     require(tuple(transform.__all__).count('matrix_transform')==1, 'matrix star export differs')
     import numpy as np
-    require(wrapper._runtime_profile()==np.__version__,
+    natural = (wrapper._runtime_profile() if diagnostic_path is None
+               else matrix_runtime_diagnostic(wrapper, np, diagnostic_path))
+    require(natural==np.__version__,
             'matrix runtime is unforced but unknown/interposed/unverifiable; provider-only cannot qualify')
 
 
