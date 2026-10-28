@@ -1,0 +1,408 @@
+{
+  "schema": "regular-seeds-original-first-v1",
+  "api": "util.regular_seeds",
+  "native_implementation": "pending",
+  "reference_status": "prospective; no original calls",
+  "signature": "(ar_shape, n_points, dtype=<class 'int'>)",
+  "cases": [
+    {
+      "id": "ordinary2d",
+      "api": "util.regular_seeds",
+      "kind": "ordinary2d",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "ordinary1d",
+      "api": "util.regular_seeds",
+      "kind": "ordinary1d",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "ordinary3d",
+      "api": "util.regular_seeds",
+      "kind": "ordinary3d",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "ordinary4d",
+      "api": "util.regular_seeds",
+      "kind": "ordinary4d",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "thin-axis",
+      "api": "util.regular_seeds",
+      "kind": "thin-axis",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "reordered-axes",
+      "api": "util.regular_seeds",
+      "kind": "reordered-axes",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "sparse-large",
+      "api": "util.regular_seeds",
+      "kind": "sparse-large",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "one-seed",
+      "api": "util.regular_seeds",
+      "kind": "one-seed",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "full-grid",
+      "api": "util.regular_seeds",
+      "kind": "full-grid",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "excess-points",
+      "api": "util.regular_seeds",
+      "kind": "excess-points",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "approximate-count",
+      "api": "util.regular_seeds",
+      "kind": "approximate-count",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "shape-list",
+      "api": "util.regular_seeds",
+      "kind": "shape-list",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "shape-array",
+      "api": "util.regular_seeds",
+      "kind": "shape-array",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "shape-index-protocol",
+      "api": "util.regular_seeds",
+      "kind": "shape-index-protocol",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "empty-axis",
+      "api": "util.regular_seeds",
+      "kind": "empty-axis",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "scalar-shape",
+      "api": "util.regular_seeds",
+      "kind": "scalar-shape",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "negative-dimension",
+      "api": "util.regular_seeds",
+      "kind": "negative-dimension",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "float-dimension",
+      "api": "util.regular_seeds",
+      "kind": "float-dimension",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "zero-count",
+      "api": "util.regular_seeds",
+      "kind": "zero-count",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "negative-count",
+      "api": "util.regular_seeds",
+      "kind": "negative-count",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "negative-zero-step",
+      "api": "util.regular_seeds",
+      "kind": "negative-zero-step",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "numpy-count",
+      "api": "util.regular_seeds",
+      "kind": "numpy-count",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "fractional-count",
+      "api": "util.regular_seeds",
+      "kind": "fractional-count",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "none-count",
+      "api": "util.regular_seeds",
+      "kind": "none-count",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "grid-error-before-dtype",
+      "api": "util.regular_seeds",
+      "kind": "grid-error-before-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "dtype-error-before-zero-step",
+      "api": "util.regular_seeds",
+      "kind": "dtype-error-before-zero-step",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "shape-float-bad-dtype",
+      "api": "util.regular_seeds",
+      "kind": "shape-float-bad-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "int8",
+      "api": "util.regular_seeds",
+      "kind": "int8",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "uint8",
+      "api": "util.regular_seeds",
+      "kind": "uint8",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "int16",
+      "api": "util.regular_seeds",
+      "kind": "int16",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "uint16",
+      "api": "util.regular_seeds",
+      "kind": "uint16",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "int32",
+      "api": "util.regular_seeds",
+      "kind": "int32",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "uint32",
+      "api": "util.regular_seeds",
+      "kind": "uint32",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "int64",
+      "api": "util.regular_seeds",
+      "kind": "int64",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "uint64",
+      "api": "util.regular_seeds",
+      "kind": "uint64",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "bool",
+      "api": "util.regular_seeds",
+      "kind": "bool",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "float16",
+      "api": "util.regular_seeds",
+      "kind": "float16",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "float32",
+      "api": "util.regular_seeds",
+      "kind": "float32",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "float64",
+      "api": "util.regular_seeds",
+      "kind": "float64",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "complex64",
+      "api": "util.regular_seeds",
+      "kind": "complex64",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "complex128",
+      "api": "util.regular_seeds",
+      "kind": "complex128",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "signed-wrap",
+      "api": "util.regular_seeds",
+      "kind": "signed-wrap",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "unsigned-wrap",
+      "api": "util.regular_seeds",
+      "kind": "unsigned-wrap",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "half-overflow-warning",
+      "api": "util.regular_seeds",
+      "kind": "half-overflow-warning",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "half-overflow-raise",
+      "api": "util.regular_seeds",
+      "kind": "half-overflow-raise",
+      "policy": {
+        "over": "raise"
+      },
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "big-endian",
+      "api": "util.regular_seeds",
+      "kind": "big-endian",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "dtype-metadata",
+      "api": "util.regular_seeds",
+      "kind": "dtype-metadata",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "object-dtype",
+      "api": "util.regular_seeds",
+      "kind": "object-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "bytes-dtype",
+      "api": "util.regular_seeds",
+      "kind": "bytes-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "unicode-dtype",
+      "api": "util.regular_seeds",
+      "kind": "unicode-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "structured-dtype",
+      "api": "util.regular_seeds",
+      "kind": "structured-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "datetime-dtype",
+      "api": "util.regular_seeds",
+      "kind": "datetime-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    },
+    {
+      "id": "invalid-dtype",
+      "api": "util.regular_seeds",
+      "kind": "invalid-dtype",
+      "policy": {},
+      "prospective": "Original outcomes and native admission pending"
+    }
+  ],
+  "unassessed": [
+    "huge allocation failures",
+    "forged storage",
+    "concurrent mutation",
+    "longdouble or padded structured output bytes"
+  ],
+  "source": {
+    "version": "0.26.0",
+    "official_url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/util/_regular_grid.py",
+    "sha256": "64fcce3556f0cbf8cafd05a54ea3545b65b18bdcabbee25b953a21ba06875581",
+    "license": "third_party/scikit-image-LICENSE.txt"
+  },
+  "provider_boundary": "regular_grid remains an explicit provider; zero-fill/cartesian-grid labeling is the proposed native slice. No regular_grid native coverage claim.",
+  "observable_order": [
+    "regular_grid provider",
+    "np.zeros allocation/dtype",
+    "selected view size",
+    "np.arange",
+    "selected view shape",
+    "np.reshape",
+    "add one",
+    "grid assignment"
+  ],
+  "label_order": "1..actual selected-view size, selected-grid C order; never assume actual size equals requested n_points",
+  "performance_risk": "Keep whole-call sparse-large, dense/full-grid and uint8-wrap workload planning; explicit zero fill may lose to NumPy zeros/calloc. No measured performance yet.",
+  "original_observations": {}
+}
