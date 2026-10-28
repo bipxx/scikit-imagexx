@@ -16,7 +16,8 @@ void montage_into(const MontageInput& input,MontageGrid grid,
     // Reused for whole padding rows and the disjoint holes between tile spans.
     const auto fill_span=[&](unsigned char* start,std::size_t bytes) {
         if(!bytes)return;
-        if(zero){std::memset(start,0,bytes);return;}
+        if(bytes==1){*start=*fill;return;}
+        if(zero||pixel_bytes==1){std::memset(start,*fill,bytes);return;}
         std::memcpy(start,fill,pixel_bytes);
         for(std::size_t initialized=pixel_bytes;initialized<bytes;) {
             const auto n=std::min(initialized,bytes-initialized);

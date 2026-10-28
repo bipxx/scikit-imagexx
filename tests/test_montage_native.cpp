@@ -156,5 +156,21 @@ int main(int argc,char** argv){
     // BEGIN additive row-owned invocation; historical stream prefix unchanged
     for(int workers:{1,4})row_owned_controls(workers,stream);
     // END additive row-owned invocation
+    // BEGIN additive v2 exhaustive raw byte-fill controls
+    for(int workers:{1,4}){
+        std::vector<unsigned char> backing(105);
+        for(std::size_t i=0;i<backing.size();++i)backing[i]=static_cast<unsigned char>(i*37+11);
+        for(unsigned value=0;value<256;++value){
+            const std::vector<unsigned char> fill{static_cast<unsigned char>(value)};
+            const bool reverse=value%2;
+            const std::array<std::ptrdiff_t,4> strides=reverse?
+                std::array<std::ptrdiff_t,4>{-21,-7,-1,0}:
+                std::array<std::ptrdiff_t,4>{21,7,1,0};
+            exercise({5,3,7,1},strides,1,reverse?104:0,backing,{3,3,1},13,25,
+                     fill,workers,stream);
+        }
+        control({5,129,513,1},1,0,{3,3,3},false,workers,stream);
+    }
+    // END additive v2 exhaustive raw byte-fill controls
     check(bool(stream));std::cout<<"montage native cases="<<cases<<" checks="<<checks<<" PASS\n";
 }
