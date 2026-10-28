@@ -621,3 +621,4 @@ coverage/contracts/subdivide-polygon.json -text
 coverage/contracts/approximate-polygon-benchmark.json -text
 coverage/evidence/approximate-polygon-protocol-runtime-witness.json -text
 coverage/contracts/subdivide-polygon-benchmark.json -text
+tools/diagnostics/montage_wrapper_tax/* text eol=lf
