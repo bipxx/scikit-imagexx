@@ -40,7 +40,9 @@ def test_unknown_class_contract_is_explicit():
 
 def test_exception_metadata_provider_does_not_inflate_native_classes():
     assert registry.class_metadata_providers()==('util.FailedEstimationAccessError',)
-    assert len(registry.native_classes())==4
+    assert set(registry.native_classes())=={
+        'filters.LPIFilter2D','transform.ProjectiveTransform','transform.AffineTransform',
+        'transform.EuclideanTransform','transform.SimilarityTransform'}
     assert not set(registry.class_metadata_providers())&set(registry.native_classes())
     contract=registry.class_contract('util.FailedEstimationAccessError')
     assert contract['implementation']=='exception-metadata-provider'

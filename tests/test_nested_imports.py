@@ -104,7 +104,7 @@ def test_from_import_signature_and_policy():
         np.testing.assert_array_equal(actual,original(image,footprint))
 
 
-def test_native_rank_and_unported_nested_filter_keep_explicit_policy():
+def test_native_rank_and_unported_nested_filter_keep_explicit_policy(monkeypatch):
     from skimagexx.filters.rank import geometric_mean
     from skimage.filters.rank import geometric_mean as original
     from skimagexx import _rank
@@ -131,26 +131,33 @@ def test_native_rank_and_unported_nested_filter_keep_explicit_policy():
                 warnings.simplefilter('always');actual=native(image,footprint)
             assert not any(isinstance(w.message,xx.FallbackWarning) for w in notices)
             np.testing.assert_array_equal(actual,reference(image,footprint))
-    # Public lpi_filter is a real nested namespace; private _fft_based remains
-    # deliberately unavailable. filter_forward is still upstream-only.
-    namespace=importlib.import_module('skimagexx.filters.lpi_filter')
-    unported=namespace.filter_forward
-    unported_original=importlib.import_module('skimage.filters.lpi_filter').filter_forward
+    # filter_forward is now native. Use the current upstream-only plotting
+    # utility for policy checks, without making a plotting/numerical claim.
+    namespace=importlib.import_module('skimagexx.filters')
+    original_filters=importlib.import_module('skimage.filters')
+    unported=namespace.try_all_threshold
+    unported_original=original_filters.try_all_threshold
+    from skimagexx.coverage import native_functions
+    assert 'filters.try_all_threshold' not in native_functions()
     assert unported is not unported_original
     assert inspect.signature(unported)==inspect.signature(unported_original)
-    filter_image=image.astype(np.float64)
-    def impulse_response(row,column):
-        return np.exp(-row*row-column*column)
+    calls=[];sentinel=object()
+    def provider(value):
+        calls.append(value)
+        return sentinel
+    monkeypatch.setattr(original_filters,'try_all_threshold',provider)
     xx.set_fallback_enabled(False)
     with pytest.raises(NotImplementedError,match='fallback is disabled'):
-        unported(filter_image,impulse_response=impulse_response)
+        unported(image)
+    assert not calls
     xx.set_fallback_enabled(True)
-    with pytest.warns(xx.FallbackWarning,match=r'skimage\.filters\.lpi_filter\.filter_forward'):
-        actual=unported(filter_image,impulse_response=impulse_response)
-    np.testing.assert_array_equal(actual,unported_original(filter_image,impulse_response=impulse_response))
+    with pytest.warns(xx.FallbackWarning,match=r'skimage\.filters\.try_all_threshold'):
+        assert unported(image) is sentinel
+    assert len(calls)==1 and calls[0] is image
     xx.set_fallback_enabled(False)
     with pytest.raises(NotImplementedError,match='fallback is disabled'):
-        unported(filter_image,impulse_response=impulse_response)
+        unported(image)
+    assert len(calls)==1
 
 
 def test_deep_import_and_native_precedence():

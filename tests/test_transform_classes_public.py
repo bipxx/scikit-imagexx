@@ -47,7 +47,10 @@ def descriptor(array):
 
 def test_public_identity_registry_and_installed_backend():
     expected={f'transform.{name}' for name in contract.NAMES}
-    assert set(native_classes())==expected and not expected&set(native_functions())
+    assert set(native_classes())==expected|{'filters.LPIFilter2D'}
+    assert expected=={'transform.ProjectiveTransform','transform.AffineTransform',
+                     'transform.EuclideanTransform','transform.SimilarityTransform'}
+    assert not set(native_classes())&set(native_functions())
     assert implementation._core is xx._core
     assert Path(implementation.__file__).resolve().parent==Path(xx.__file__).resolve().parent
     assert not any(k.startswith('SKIMAGEXX_') and any(t in k for t in ('CANDIDATE','BACKEND','MODULE_DIR')) for k in os.environ)
