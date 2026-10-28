@@ -582,3 +582,5 @@ tests/profile_coordinates_golden.hpp -text
 src/resample.cpp -text
 src/resample_detail.hpp -text
 src/simd_resample_avx2.cpp -text
+
+benchmarks/profile-coordinates-same-host.json -text
