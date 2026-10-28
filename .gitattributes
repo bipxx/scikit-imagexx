@@ -591,3 +591,6 @@ benchmarks/map-array-minimum-initial.json -text
 benchmarks/map-array-small-same-host.json -text
 
 benchmarks/label-points-minimum-initial.json -text
+coverage/contracts/label-points-benchmark.json -text
+coverage/contracts/map-array-benchmark.json -text
+coverage/contracts/map-array-small-native-candidate.json -text
