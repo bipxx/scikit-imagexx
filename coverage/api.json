@@ -9097,7 +9097,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_label_points_public.py::test_label_points_native_public_contract",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/label_points.py"
     },
     {
       "api": "util.lookfor",

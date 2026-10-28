@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "043c694a58a3f8320c527945662b18d6b73baecbaf252ad5f69b794e83f53100",
+  "source_inventory_sha256": "4ce2c9488b13f02b5e2a769aa86e08a6c80aaef893155c3c237d06e9344d0cf2",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -18508,7 +18508,7 @@
         "kind": "compute",
         "specific_workload": "half-integer and coincident points",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": "benchmarks/coverage.py"
+        "existing_inventory_reference": "benchmarks/label_points.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
       "existing_inventory_parity_reference": "tests/test_label_points_public.py::test_label_points_native_public_contract",

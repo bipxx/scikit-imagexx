@@ -22,6 +22,29 @@ q = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(q)
 
 
+def test_inventory_evidence_routes_match_registered_source_without_scientific_imports():
+    # Run only the trusted route-table statements, not the scientific imports
+    # or inventory discovery. Missing feature routes must fail before builds.
+    tree = ast.parse((ROOT / 'tools/inventory.py').read_bytes())
+    statements = [node for node in tree.body
+                  if (isinstance(node, ast.Assign) and any(
+                      isinstance(target, ast.Name) and target.id == 'DEDICATED_EVIDENCE'
+                      for target in node.targets))
+                  or (isinstance(node, ast.For) and isinstance(node.target, ast.Tuple)
+                      and any(isinstance(target, ast.Name) and target.id == '_names'
+                              for target in node.target.elts))]
+    namespace = {}
+    exec(compile(ast.Module(body=statements, type_ignores=[]), '<inventory evidence routes>', 'exec'), namespace)
+    dedicated = namespace['DEDICATED_EVIDENCE']
+    entries = json.loads((ROOT / 'coverage/api.json').read_bytes())['entries']
+    fallback = ('tests/test_api.py::test_every_native_function', 'benchmarks/coverage.py')
+    for entry in entries:
+        if entry['implementation'] in ('native-partial', 'metadata'):
+            assert (entry['parity_test'], entry['benchmark']) == dedicated.get(entry['api'], fallback), entry['api']
+            for route in (entry['parity_test'], entry['benchmark']):
+                assert (ROOT / route.split('::', 1)[0]).is_file(), (entry['api'], route)
+
+
 @pytest.fixture
 def complete_nmi_fake_artifact(complete_reconstruction_fake_artifact, tmp_path):
     """Inert file-envelope metadata; never a compiled or accepted product."""
