@@ -1,5 +1,7 @@
 # Performance verification
 
+Current checkpoint (2026-10-28): main has **235 native-partial image APIs and three metadata helpers**; full supported-profile qualification remains **203 image APIs**. The inventory counts and workload totals below are historical checkpoints, not a freshly rerun current-library aggregate. Recent one-thread reports show strong wins for [entropy](shannon-entropy-minimum-initial.md), [perimeter](perimeter-minimum-initial.md), [Euler](euler-number-minimum-initial.md), [polygons](polygon-minimum-initial.md) and [mesh area](mesh-surface-area-minimum-initial.md). [Profile line](profile-line-minimum-initial.md) is slower overall: **4/18 wins, geometric mean 0.977475055x**. Its unchanged optimization candidate is awaiting isolated same-host measurement. Blur is parity-integrated but not measured.
+
 The current API inventory has 192 partially native image paths, three metadata
 helpers, four partially native transform classes and 277 upstream-only paths.
 Per-function tests and benchmark harnesses cover all 192 image paths; measured
