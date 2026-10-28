@@ -1,0 +1,28 @@
+{
+  "schema": "approximate-polygon-prospective-benchmark-v1",
+  "status": "frozen-before-benchmark-fixture-generation-or-calls",
+  "apis": ["measure.approximate_polygon"],
+  "original_source_version": "0.26.0",
+  "original_python_source_sha256": "26a27d89545d158f6b542857297995639b251ed3af0428c8c86a56c84928aabe",
+  "function_segment_sha256": "086f1d9030bfa69e166649b6c67ba211b597b62e9c0b87294f59a678d71db12e",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "raw_samples": 126,
+  "max_points": 65536,
+  "max_backing_elements": 262144,
+  "expected_dtype": "float64",
+  "provider_frontier": "Owned complete iterative RDP selection, projection/distances, strict split, first maximum and stack. NumPy scalar atan2/sin/cos, normalization/storage allocation and original-coordinate boolean gather remain explicit providers. No identity-only workloads or whole-original forwarding.",
+  "timed_boundary": "Whole registered public call including scalar providers, validation, normalization, scratch/output allocation and destruction. Reference pools and global workers fixed to one. Parity/oracle/ownership/input-state checks precede timing. Retain every raw sample and loss; no library-wide or prior-C++ gain claim.",
+  "cases": [
+    {"case_id":"collinear-256-C","api":"measure.approximate_polygon","geometry":"collinear","points":256,"layout":"C","tolerance":0.125},
+    {"case_id":"collinear-4096-F","api":"measure.approximate_polygon","geometry":"collinear","points":4096,"layout":"F","tolerance":0.125},
+    {"case_id":"collinear-65536-step","api":"measure.approximate_polygon","geometry":"collinear","points":65536,"layout":"step-rows","tolerance":0.125},
+    {"case_id":"zigzag-64-C","api":"measure.approximate_polygon","geometry":"zigzag","points":64,"layout":"C","tolerance":0.5},
+    {"case_id":"zigzag-512-reverse","api":"measure.approximate_polygon","geometry":"zigzag","points":512,"layout":"reverse-rows","tolerance":0.5},
+    {"case_id":"zigzag-2048-step","api":"measure.approximate_polygon","geometry":"zigzag","points":2048,"layout":"step-columns","tolerance":0.5},
+    {"case_id":"smooth-256-C","api":"measure.approximate_polygon","geometry":"smooth","points":256,"layout":"C","tolerance":0.05},
+    {"case_id":"smooth-4096-F","api":"measure.approximate_polygon","geometry":"smooth","points":4096,"layout":"F","tolerance":0.05},
+    {"case_id":"smooth-32768-C","api":"measure.approximate_polygon","geometry":"smooth","points":32768,"layout":"C","tolerance":0.05}
+  ]
+}
