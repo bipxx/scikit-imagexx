@@ -8,7 +8,7 @@
   "baseline_producer_run": 40778508940,
   "baseline_artifact": 12855199919,
   "baseline_artifact_sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96",
-  "hypothesis": "STRUCTURAL source mechanism: nonzero pixel_bytes1 uses dynamic memcpy doubling for fill spans. Replace only that path with memset of the exact raw fill byte. This is not measured stage attribution or an old-host causal claim.",
+  "hypothesis": "STRUCTURAL source mechanism: nonzero pixel_bytes1 uses dynamic memcpy doubling for larger fill spans and dynamic memcpy for one-byte gaps. Replace only one-byte spans with a raw store and larger one-byte-pattern spans with memset of the exact fill byte. No measured stage attribution or old-host causal claim.",
   "allowed_source_files": [
     "src/montage.cpp",
     "tests/test_montage_native.cpp"
@@ -26,8 +26,9 @@
     "Every closed report, decision and tolerance"
   ],
   "algorithm": [
-    "In the existing fill_span lambda replace only if(zero) with if(zero||pixel_bytes==1), and memset(start,0,bytes) with memset(start,*fill,bytes).",
-    "The existing if(!bytes)return remains first. For zero patterns *fill is exactly0; for pixel_bytes1 it is the entire raw byte pattern. No arithmetic, allocation, dispatch, scheduling, provider, ABI or other production change.",
+    "After the unchanged if(!bytes)return in fill_span, add only if(bytes==1){*start=*fill;return;}. Internal whole-pixel spans imply a one-byte span has a one-byte pixel; no new validation.",
+    "Replace only if(zero) with if(zero||pixel_bytes==1), and memset(start,0,bytes) with memset(start,*fill,bytes).",
+    "The existing zero-byte return remains first. For zero patterns *fill is exactly0; for pixel_bytes1 it is the entire raw byte pattern. No arithmetic, allocation, dispatch, scheduling, provider, ABI or other production change.",
     "All other production files and every other montage.cpp byte stay exact to parent6b. The original v1 contract is retained byte-exact."
   ],
   "simd_reuse": {
@@ -211,7 +212,7 @@
     }
   ],
   "risk": "For each nonempty fill span, typed fill is already valid and readable; when zero is true its first byte is0. The existing zero-byte early return prevents new reads for empty spans. Memset replicates precisely the one-byte pattern. Exhaustive raw-byte and immutable-prefix tests verify this narrow change.",
-  "sealed_by": "Root distinct focused v2 authorization; same final deadline and gates",
+  "sealed_by": "Root focused v2 authorization plus single-byte-span branch expansion, before native edits",
   "deadline_utc": "2026-10-29T00:59:41Z",
   "measurement_variance_rule": {
     "null_ratio_interval": [
@@ -262,8 +263,11 @@
       }
     ],
     "v1_total_fill_memcpy_calls": 2472,
-    "v2_expected_fill_memset_calls": 1284,
+    "v2_expected_fill_memset_calls": 132,
     "baseline4f_whole_fill_memcpy_calls": 19,
-    "note": "The128 unused spans are259 bytes, including256 unused tile bytes plus3 padding bytes. Source-level counts only; frozen codegen confirms initial/doubling memcpy calls and loop backedge, not their elapsed-time share."
-  }
+    "note": "The128 unused spans are259 bytes, including256 unused tile bytes plus3 padding bytes. Source-level counts only; frozen codegen confirms initial/doubling memcpy calls and loop backedge, not their elapsed-time share.",
+    "v2_expected_single_byte_stores": 1152,
+    "v2_source_function_calls_removed": 2340
+  },
+  "sealed_revision_utc": "2026-10-28T23:52:25.304818+00:00"
 }
