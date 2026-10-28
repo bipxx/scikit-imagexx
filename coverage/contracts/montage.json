@@ -1,0 +1,375 @@
+{
+  "schema": "montage-original-contract-v1",
+  "api": "util.montage",
+  "status": "prospective-frozen-before-original-calls",
+  "native_implementation": "pending",
+  "source_version": "0.26.0",
+  "source_canonical_lf_sha256": "c386560986cda3ba262beec03d1e08bcf55ef7219223031682289e747d526b66",
+  "decorator_canonical_lf_sha256": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1",
+  "signature": "(arr_in, fill='mean', rescale_intensity=False, grid_shape=None, padding_width=0, *, channel_axis=None)",
+  "cases": [
+    {
+      "id": "gray-square",
+      "api": "util.montage",
+      "kind": "gray-square",
+      "policy": {}
+    },
+    {
+      "id": "gray-incomplete",
+      "api": "util.montage",
+      "kind": "gray-incomplete",
+      "policy": {}
+    },
+    {
+      "id": "gray-one",
+      "api": "util.montage",
+      "kind": "gray-one",
+      "policy": {}
+    },
+    {
+      "id": "gray-strided",
+      "api": "util.montage",
+      "kind": "gray-strided",
+      "policy": {}
+    },
+    {
+      "id": "gray-fortran",
+      "api": "util.montage",
+      "kind": "gray-fortran",
+      "policy": {}
+    },
+    {
+      "id": "gray-readonly",
+      "api": "util.montage",
+      "kind": "gray-readonly",
+      "policy": {}
+    },
+    {
+      "id": "grid-row",
+      "api": "util.montage",
+      "kind": "grid-row",
+      "policy": {}
+    },
+    {
+      "id": "grid-column",
+      "api": "util.montage",
+      "kind": "grid-column",
+      "policy": {}
+    },
+    {
+      "id": "grid-extra",
+      "api": "util.montage",
+      "kind": "grid-extra",
+      "policy": {}
+    },
+    {
+      "id": "grid-too-small",
+      "api": "util.montage",
+      "kind": "grid-too-small",
+      "policy": {}
+    },
+    {
+      "id": "grid-zero",
+      "api": "util.montage",
+      "kind": "grid-zero",
+      "policy": {}
+    },
+    {
+      "id": "grid-negative",
+      "api": "util.montage",
+      "kind": "grid-negative",
+      "policy": {}
+    },
+    {
+      "id": "grid-fractional",
+      "api": "util.montage",
+      "kind": "grid-fractional",
+      "policy": {}
+    },
+    {
+      "id": "grid-wrong-length",
+      "api": "util.montage",
+      "kind": "grid-wrong-length",
+      "policy": {}
+    },
+    {
+      "id": "grid-array",
+      "api": "util.montage",
+      "kind": "grid-array",
+      "policy": {}
+    },
+    {
+      "id": "padding-one",
+      "api": "util.montage",
+      "kind": "padding-one",
+      "policy": {}
+    },
+    {
+      "id": "padding-numpy-int",
+      "api": "util.montage",
+      "kind": "padding-numpy-int",
+      "policy": {}
+    },
+    {
+      "id": "padding-negative",
+      "api": "util.montage",
+      "kind": "padding-negative",
+      "policy": {}
+    },
+    {
+      "id": "padding-float",
+      "api": "util.montage",
+      "kind": "padding-float",
+      "policy": {}
+    },
+    {
+      "id": "color-last-mean",
+      "api": "util.montage",
+      "kind": "color-last-mean",
+      "policy": {}
+    },
+    {
+      "id": "color-middle-mean",
+      "api": "util.montage",
+      "kind": "color-middle-mean",
+      "policy": {}
+    },
+    {
+      "id": "color-first-mean",
+      "api": "util.montage",
+      "kind": "color-first-mean",
+      "policy": {}
+    },
+    {
+      "id": "channel-axis-zero",
+      "api": "util.montage",
+      "kind": "channel-axis-zero",
+      "policy": {}
+    },
+    {
+      "id": "channel-tuple-one",
+      "api": "util.montage",
+      "kind": "channel-tuple-one",
+      "policy": {}
+    },
+    {
+      "id": "channel-tuple-many",
+      "api": "util.montage",
+      "kind": "channel-tuple-many",
+      "policy": {}
+    },
+    {
+      "id": "channel-out-of-range",
+      "api": "util.montage",
+      "kind": "channel-out-of-range",
+      "policy": {}
+    },
+    {
+      "id": "fill-color-vector",
+      "api": "util.montage",
+      "kind": "fill-color-vector",
+      "policy": {}
+    },
+    {
+      "id": "fill-color-scalar",
+      "api": "util.montage",
+      "kind": "fill-color-scalar",
+      "policy": {}
+    },
+    {
+      "id": "fill-color-short",
+      "api": "util.montage",
+      "kind": "fill-color-short",
+      "policy": {}
+    },
+    {
+      "id": "fill-array",
+      "api": "util.montage",
+      "kind": "fill-array",
+      "policy": {}
+    },
+    {
+      "id": "fill-nan",
+      "api": "util.montage",
+      "kind": "fill-nan",
+      "policy": {}
+    },
+    {
+      "id": "fill-inf",
+      "api": "util.montage",
+      "kind": "fill-inf",
+      "policy": {}
+    },
+    {
+      "id": "fill-bad-string",
+      "api": "util.montage",
+      "kind": "fill-bad-string",
+      "policy": {}
+    },
+    {
+      "id": "rescale-float",
+      "api": "util.montage",
+      "kind": "rescale-float",
+      "policy": {}
+    },
+    {
+      "id": "rescale-uint8",
+      "api": "util.montage",
+      "kind": "rescale-uint8",
+      "policy": {}
+    },
+    {
+      "id": "rescale-readonly",
+      "api": "util.montage",
+      "kind": "rescale-readonly",
+      "policy": {}
+    },
+    {
+      "id": "rescale-before-fill-error",
+      "api": "util.montage",
+      "kind": "rescale-before-fill-error",
+      "policy": {}
+    },
+    {
+      "id": "grid-error-before-rescale",
+      "api": "util.montage",
+      "kind": "grid-error-before-rescale",
+      "policy": {}
+    },
+    {
+      "id": "dtype-bool",
+      "api": "util.montage",
+      "kind": "dtype-bool",
+      "policy": {}
+    },
+    {
+      "id": "dtype-int8",
+      "api": "util.montage",
+      "kind": "dtype-int8",
+      "policy": {}
+    },
+    {
+      "id": "dtype-uint16",
+      "api": "util.montage",
+      "kind": "dtype-uint16",
+      "policy": {}
+    },
+    {
+      "id": "dtype-int64",
+      "api": "util.montage",
+      "kind": "dtype-int64",
+      "policy": {}
+    },
+    {
+      "id": "dtype-float16",
+      "api": "util.montage",
+      "kind": "dtype-float16",
+      "policy": {}
+    },
+    {
+      "id": "dtype-complex64",
+      "api": "util.montage",
+      "kind": "dtype-complex64",
+      "policy": {}
+    },
+    {
+      "id": "dtype-object",
+      "api": "util.montage",
+      "kind": "dtype-object",
+      "policy": {}
+    },
+    {
+      "id": "dtype-bytes",
+      "api": "util.montage",
+      "kind": "dtype-bytes",
+      "policy": {}
+    },
+    {
+      "id": "dtype-unicode",
+      "api": "util.montage",
+      "kind": "dtype-unicode",
+      "policy": {}
+    },
+    {
+      "id": "dtype-structured",
+      "api": "util.montage",
+      "kind": "dtype-structured",
+      "policy": {}
+    },
+    {
+      "id": "dtype-datetime",
+      "api": "util.montage",
+      "kind": "dtype-datetime",
+      "policy": {}
+    },
+    {
+      "id": "big-endian",
+      "api": "util.montage",
+      "kind": "big-endian",
+      "policy": {}
+    },
+    {
+      "id": "dtype-metadata",
+      "api": "util.montage",
+      "kind": "dtype-metadata",
+      "policy": {}
+    },
+    {
+      "id": "array-protocol",
+      "api": "util.montage",
+      "kind": "array-protocol",
+      "policy": {}
+    },
+    {
+      "id": "grid-protocol",
+      "api": "util.montage",
+      "kind": "grid-protocol",
+      "policy": {}
+    },
+    {
+      "id": "padding-protocol",
+      "api": "util.montage",
+      "kind": "padding-protocol",
+      "policy": {}
+    },
+    {
+      "id": "fill-protocol",
+      "api": "util.montage",
+      "kind": "fill-protocol",
+      "policy": {}
+    },
+    {
+      "id": "rank-error-before-grid",
+      "api": "util.montage",
+      "kind": "rank-error-before-grid",
+      "policy": {}
+    },
+    {
+      "id": "zero-images",
+      "api": "util.montage",
+      "kind": "zero-images",
+      "policy": {}
+    },
+    {
+      "id": "zero-height",
+      "api": "util.montage",
+      "kind": "zero-height",
+      "policy": {}
+    }
+  ],
+  "unassessed": [
+    "allocation failures and huge grids",
+    "forged storage",
+    "concurrent mutation",
+    "padded structured or longdouble bytes"
+  ],
+  "original_observations": {},
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false,
+  "proposed_native_boundary": "Prepared supported POD fill and sequential row-span tile copy into fresh output; decorator/asarray/grid conversion/mean/rescale and exceptional/non-POD routes remain explicit providers.",
+  "source_freeze": {
+    "tests/montage_contract.py": "b3f9074274261a9cd9694ac42efa51e8625edb497a0db97f8d6fcce7a9985239",
+    "tests/test_montage_public.py": "ae94d3f87e79539ce42457962aa75543f55987f580046e65647781eecb624aac"
+  }
+}
