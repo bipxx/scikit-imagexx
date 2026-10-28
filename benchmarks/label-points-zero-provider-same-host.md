@@ -110,7 +110,7 @@ Local bounded correctness evidence: all six native modes passed, with previous s
 
 | Proof | SHA-256 |
 |---|---:|
-| Combined raw publication | `ec92e2a8fc1a62e96930523f933d4dea0cd115c7fae0ed36f5aeccfc14169534` |
+| Combined raw publication | `dfd23658be58c6ef8dfa7d26eb3918bd2fb357bf2e298926d67ba6ac7141fe3c` |
 | Comparison ZIP | `659f5d829ca7c2f10569f395b05ef677ef4641c67f1557cc7454a483aba1d12a` |
 | Baseline ZIP | `38797cf494532e16da41f751062c57815de2d566d8ebf11f3b59be26ba4be536` |
 | Candidate ZIP | `6f7d6fcbd1506c2e61031d925575526ea8abf4c30c7770bf61a06aa04965cc08` |
