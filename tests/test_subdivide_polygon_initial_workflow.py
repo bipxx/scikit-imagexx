@@ -44,7 +44,7 @@ def test_fixed_transport_and_unchanged_admission_predicate():
         assert name+':\n        type: string\n        required: true'in WORKFLOW
     assert 'default:'not in WORKFLOW
     timed=WORKFLOW.split('      - name: Measure',1)[1].split('      - name:',1)[0]
-    assert timed.count("str(source/'benchmarks/subdivide_polygon.py'),'--threads','1','--repeat','7'")==1
+    assert timed.count("str(harness),'--source-root',str(source),'--threads','1','--repeat','7'")==1
     assert timed.count('result=delegate(*args,**kwargs)')==1
     assert 'sched_setaffinity'not in timed
     assert timed.count('ci_measurement_artifacts.py verify')==2
@@ -57,7 +57,9 @@ def test_fixed_transport_and_unchanged_admission_predicate():
     assert 'if: always()'in WORKFLOW and 'subdivide-polygon-initial-minimum'in WORKFLOW
     for name,pin in [('benchmarks/subdivide_polygon.py','101265e40bdd2c7026cdbb396f9670e2c07d5e32502be55de2411eea623faa38'),('coverage/contracts/subdivide-polygon-benchmark.json','2cdfe4191810ee7ae2de72a11fc921ced6edec72cb5ac282bdc4ae32780dd8da')]:
         assert pin in SCRIPTS[1]
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+        if name.startswith('coverage/'):
+            assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+    assert hashlib.sha256((ROOT/'benchmarks/subdivide_polygon.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='0bce058ebf921b7f80f3a1dac74632de3e2ab5e7a7ee08369339077cfbb53010'
     assert 'import numpy'not in SCRIPTS[2]and 'import scipy'not in SCRIPTS[2]
 
 
@@ -80,8 +82,8 @@ def fixture():
     source=dict(source_sha256='fixed',source_hash_schema='schema',source_hash_scope='scope')
     helpers=pure_helpers();masks=json.loads((ROOT/'coverage/contracts/subdivide-polygon.json').read_bytes())['subdivision_masks']
     apis=['measure.subdivide_polygon'];contract=dict(apis=apis,original_python_source_sha256='original',max_points=9,max_backing_elements=36,provider_frontier='owned',timed_boundary='wholecall',cases=[])
-    meta=dict(**source,source_before=deepcopy(source),threads=1,repeat=7,target_ms=19,raw_samples=196,reference_pool_limits={k:'1'for k in('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')},fallback_enabled=False,selected_apis=apis,numpy_error_policy=dict(divide='warn',over='warn',under='ignore',invalid='warn'),numpy_error_handler_type='NoneType',numpy_buffer_elements=8192,harness_sha256='h',original_source_sha256='original',core_sha256='core',python='3.11.17',numpy='1.24.4',scipy='1.15.3',reference='0.26.0',provider_frontier='owned wholecall')
-    manifest=dict(source=dict(files_sha256={'benchmarks/subdivide_polygon.py':'h'}),runtime=dict(python='3.11.17',packages_sha256={'skimagexx':{'_core.cpython-311-x86_64-linux-gnu.so':'core'}}))
+    meta=dict(**source,source_before=deepcopy(source),threads=1,repeat=7,target_ms=19,raw_samples=196,reference_pool_limits={k:'1'for k in('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')},fallback_enabled=False,selected_apis=apis,numpy_error_policy=dict(divide='warn',over='warn',under='ignore',invalid='warn'),numpy_error_handler_type='NoneType',numpy_buffer_elements=8192,harness_sha256='0bce058ebf921b7f80f3a1dac74632de3e2ab5e7a7ee08369339077cfbb53010',prepared_harness_sha256='101265e40bdd2c7026cdbb396f9670e2c07d5e32502be55de2411eea623faa38',original_source_sha256='original',core_sha256='core',python='3.11.17',numpy='1.24.4',scipy='1.15.3',reference='0.26.0',provider_frontier='owned wholecall')
+    manifest=dict(source=dict(files_sha256={'benchmarks/subdivide_polygon.py':'101265e40bdd2c7026cdbb396f9670e2c07d5e32502be55de2411eea623faa38'}),runtime=dict(python='3.11.17',packages_sha256={'skimagexx':{'_core.cpython-311-x86_64-linux-gnu.so':'core'}}))
     rows=[]
     for degree in range(1,8):
         for closed in(False,True):
@@ -98,7 +100,7 @@ def fixture():
     return dict(metadata=meta,results=rows),contract,manifest,source,helpers,masks
 
 
-@pytest.mark.parametrize('fault',[None,'source','threads','pool-key','pool-value','python','numpy','frontier','handler','policy','buffer','harness','core','sample-count','nan','loops','median','ratio','degree','closed','preserve','points','input-hash','oracle','output-shape','output-layout','output-own','input-stride','entry','module','accepted','backend','mask','missing-case'])
+@pytest.mark.parametrize('fault',[None,'source','threads','pool-key','pool-value','python','numpy','frontier','handler','policy','buffer','harness','prepared-harness','core','sample-count','nan','loops','median','ratio','degree','closed','preserve','points','input-hash','oracle','output-shape','output-layout','output-own','input-stride','entry','module','accepted','backend','mask','missing-case'])
 def test_actual_validator_rejects_mutations_and_retains_loss(fault):
     r,c,m,s,p,masks=fixture();row=r['results'][0]
     if fault=='source':r['metadata']['source_before']={}
@@ -112,6 +114,7 @@ def test_actual_validator_rejects_mutations_and_retains_loss(fault):
     elif fault=='policy':r['metadata']['numpy_error_policy']['invalid']='changed'
     elif fault=='buffer':r['metadata']['numpy_buffer_elements']=0
     elif fault=='harness':r['metadata']['harness_sha256']='changed'
+    elif fault=='prepared-harness':r['metadata']['prepared_harness_sha256']='changed'
     elif fault=='core':r['metadata']['core_sha256']='changed'
     elif fault=='sample-count':row['samples_ms'][0].pop()
     elif fault=='nan':row['samples_ms'][0][0]=float('nan')
@@ -175,9 +178,10 @@ def test_delegate_once_preserves_partial_returned_samples(tmp_path,monkeypatch,f
     (product/'build/prepared/ci-artifacts').mkdir(parents=True)
     (product/'coverage/contracts').mkdir(parents=True)
     runfile=product/'benchmarks/run.py';runfile.write_bytes(b'# inert measure module\n')
+    external=tmp_path/'external.py';external.write_bytes(b'# inert external harness\n')
     contract=dict(cases=[dict(case_id=str(i))for i in range(14)])
     (product/'coverage/contracts/subdivide-polygon-benchmark.json').write_text(json.dumps(contract))
-    manifest=dict(source=dict(revision='a'*40,files_sha256={'benchmarks/run.py':hashlib.sha256(runfile.read_bytes()).hexdigest()}))
+    manifest=dict(source=dict(revision='a'*40,files_sha256={'benchmarks/run.py':hashlib.sha256(runfile.read_bytes()).hexdigest(),'benchmarks/subdivide_polygon.py':'prepared'}))
     (product/'build/prepared/ci-artifacts/measurement.json').write_text(json.dumps(manifest))
     output=tmp_path/'results';output.mkdir()
     module=types.ModuleType('run');module.__file__=str(runfile);calls=[]
@@ -192,7 +196,7 @@ def test_delegate_once_preserves_partial_returned_samples(tmp_path,monkeypatch,f
         assert run_name=='__main__'and (output/'process-before.json').is_file()
         for _ in range(14):assert module.measure(reference,native,7,19)is timing
         (output/'subdivide-polygon.json').write_text('{}')
-    monkeypatch.setattr(sys,'argv',['launch.py',str(product),str(output)])
+    monkeypatch.setattr(sys,'argv',['launch.py',str(product),str(output),str(external)])
     monkeypatch.setattr(sys,'path',sys.path.copy())
     monkeypatch.setitem(sys.modules,'run',module)
     monkeypatch.setattr(runpy,'run_path',harness)

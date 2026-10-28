@@ -72,14 +72,18 @@ def main():
     parser.add_argument('--threads',type=int,choices=[1],default=1)
     parser.add_argument('--repeat',type=int,choices=[7],default=7)
     parser.add_argument('--output',type=Path,default=Path('build/ci-subdivide-polygon.json'))
+    parser.add_argument('--source-root',type=Path,default=None)
     args=parser.parse_args()
     from run import measure
     from provenance import source_fingerprint
     import hashlib,importlib,inspect,os,platform,sys
     from datetime import datetime,timezone
     import numpy as np,scipy,skimage,skimagexx as xx
-    root=Path(__file__).resolve().parents[1]
+    root=args.source_root.resolve()if args.source_root is not None else Path(__file__).resolve().parents[1]
+    prepared_harness=root/'benchmarks/subdivide_polygon.py'
+    prepared_harness_sha=hashlib.sha256(prepared_harness.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
     contract_raw=CONTRACT.read_bytes();contract=json.loads(contract_raw)
+    assert (root/'coverage/contracts/subdivide-polygon-benchmark.json').read_bytes()==contract_raw
     original=importlib.import_module('skimage.measure._polygon')
     public=importlib.import_module('skimage.measure')
     implementation=importlib.import_module('skimagexx._subdivide_polygon')
@@ -110,7 +114,7 @@ def main():
         def profile(frame,event,value):
             if event=='call'and frame.f_code is reference.__code__:reject()
             if event=='c_return'and value is entry:calls.append(value.__name__)
-            if event=='return'and frame.f_code is code:accepted.append(frame.f_locals.get('native_result')is True)
+            if event=='return'and frame.f_code is code:accepted.append(frame.f_locals.get('native_result')is not None)
         saved=[(module,module.approximate_polygon)for module in(public,original)]
         for module,_ in saved:module.approximate_polygon=reject
         sys.setprofile(profile)
@@ -137,7 +141,8 @@ def main():
     assert len(rows)==14 and sum(sum(map(len,r['samples_ms']))for r in rows)==196
     source_after=source_fingerprint(root)
     assert source_before==source_after and CONTRACT.read_bytes()==contract_raw and hashlib.sha256(core.read_bytes()).hexdigest()==core_hash
-    report=dict(metadata=dict(timestamp_utc=datetime.now(timezone.utc).isoformat(),platform=platform.platform(),cpu=platform.processor(),python=sys.version,numpy=np.__version__,scipy=scipy.__version__,reference=skimage.__version__,**source_after,source_before=source_before,core_path=str(core),core_sha256=core_hash,harness_sha256=hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),contract_sha256=hashlib.sha256(contract_raw).hexdigest(),original_source_sha256=contract['original_python_source_sha256'],threads=1,repeat=7,target_ms=19,raw_samples=196,reference_pool_limits=limits,fallback_enabled=False,avx2=xx.has_avx2(),numpy_error_policy=policy,numpy_error_handler_type=type(handler).__name__,numpy_buffer_elements=buffer,command=sys.argv,selected_apis=contract['apis'],provider_frontier=contract['provider_frontier']+' '+contract['timed_boundary']),results=rows)
+    assert hashlib.sha256(prepared_harness.read_bytes().replace(b'\r\n',b'\n')).hexdigest()==prepared_harness_sha
+    report=dict(metadata=dict(timestamp_utc=datetime.now(timezone.utc).isoformat(),platform=platform.platform(),cpu=platform.processor(),python=sys.version,numpy=np.__version__,scipy=scipy.__version__,reference=skimage.__version__,**source_after,source_before=source_before,core_path=str(core),core_sha256=core_hash,harness_sha256=hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),prepared_harness_sha256=prepared_harness_sha,contract_sha256=hashlib.sha256(contract_raw).hexdigest(),original_source_sha256=contract['original_python_source_sha256'],threads=1,repeat=7,target_ms=19,raw_samples=196,reference_pool_limits=limits,fallback_enabled=False,avx2=xx.has_avx2(),numpy_error_policy=policy,numpy_error_handler_type=type(handler).__name__,numpy_buffer_elements=buffer,command=sys.argv,selected_apis=contract['apis'],provider_frontier=contract['provider_frontier']+' '+contract['timed_boundary']),results=rows)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,indent=2)+'\n')
     lines=['# Subdivide polygon: one-thread comparison','',contract['provider_frontier'],'','| Case | Original ms | Current ms | Original/current |','|---|---:|---:|---:|']

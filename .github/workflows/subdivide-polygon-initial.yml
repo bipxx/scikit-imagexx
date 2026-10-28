@@ -38,6 +38,9 @@ jobs:
       ARTIFACT_ID: ${{ inputs.artifact_id }}
       ARTIFACT_SHA256: ${{ inputs.artifact_sha256 }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          path: controller
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11.17'
@@ -165,6 +168,25 @@ jobs:
           for name, expected in (('benchmarks/subdivide_polygon.py', '101265e40bdd2c7026cdbb396f9670e2c07d5e32502be55de2411eea623faa38'), ('coverage/contracts/subdivide-polygon-benchmark.json', '2cdfe4191810ee7ae2de72a11fc921ced6edec72cb5ac282bdc4ae32780dd8da')):
               assert manifest['source']['files_sha256'][name] == expected
               assert hashlib.sha256(Path('snapshot', name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected
+          executed = Path('controller/benchmarks/subdivide_polygon.py').read_bytes().replace(b'\r\n', b'\n')
+          prepared = Path('snapshot/benchmarks/subdivide_polygon.py').read_bytes().replace(b'\r\n', b'\n')
+          assert hashlib.sha256(executed).hexdigest() == '0bce058ebf921b7f80f3a1dac74632de3e2ab5e7a7ee08369339077cfbb53010'
+          assert hashlib.sha256(prepared).hexdigest() == '101265e40bdd2c7026cdbb396f9670e2c07d5e32502be55de2411eea623faa38'
+          assert Path('controller/coverage/contracts/subdivide-polygon-benchmark.json').read_bytes() == Path('snapshot/coverage/contracts/subdivide-polygon-benchmark.json').read_bytes()
+          inverse = executed
+          edits = [
+              (b"    parser.add_argument('--source-root',type=Path,default=None)\n", b''),
+              (b"    root=args.source_root.resolve()if args.source_root is not None else Path(__file__).resolve().parents[1]\n    prepared_harness=root/'benchmarks/subdivide_polygon.py'\n    prepared_harness_sha=hashlib.sha256(prepared_harness.read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()", b"    root=Path(__file__).resolve().parents[1]"),
+              (b"    assert (root/'coverage/contracts/subdivide-polygon-benchmark.json').read_bytes()==contract_raw\n", b''),
+              (b"frame.f_locals.get('native_result')is not None", b"frame.f_locals.get('native_result')is True"),
+              (b"    assert hashlib.sha256(prepared_harness.read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()==prepared_harness_sha\n", b''),
+              (b"prepared_harness_sha256=prepared_harness_sha,", b''),
+          ]
+          for after, before in edits:
+              assert inverse.count(after) == 1
+              inverse = inverse.replace(after, before, 1)
+          assert inverse == prepared, 'observer/root/provenance-only inverse must recover the entire immutable prepared harness'
+          Path('results/executed-harness-proof.json').write_text(json.dumps(dict(prepared_sha256=hashlib.sha256(prepared).hexdigest(),executed_sha256=hashlib.sha256(executed).hexdigest(),inverse_exact=True,scope='One observer predicate and source-root/provenance only; cases/helpers/timed calls untouched'),indent=2)+'\n')
           PY
           python -m venv "$RUNNER_TEMP/runtime"
           "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links snapshot/build/prepared/wheels -r snapshot/build/prepared/ci-artifacts/runtime-lock.txt 2>&1 | tee results/offline-install.log
@@ -181,12 +203,12 @@ jobs:
           cat > "$output/launch.py" <<'PY'
           import hashlib,json,runpy,sys,traceback,os
           from pathlib import Path
-          source,output=map(lambda x:Path(x).resolve(),sys.argv[1:])
+          source,output,harness=map(lambda x:Path(x).resolve(),sys.argv[1:])
           manifest=json.loads((source/'build/prepared/ci-artifacts/measurement.json').read_bytes())
           contract_path=source/'coverage/contracts/subdivide-polygon-benchmark.json'
           contract=json.loads(contract_path.read_bytes());case_ids=[x['case_id']for x in contract['cases']]
           assert len(case_ids)==14
-          initial=dict(status='STARTED',pid=os.getpid(),source_revision=manifest['source']['revision'],contract_sha256=hashlib.sha256(contract_path.read_bytes()).hexdigest())
+          initial=dict(status='STARTED',pid=os.getpid(),executed_harness_sha256=hashlib.sha256(harness.read_bytes().replace(b'\r\n',b'\n')).hexdigest(),prepared_harness_sha256=manifest['source']['files_sha256']['benchmarks/subdivide_polygon.py'],source_revision=manifest['source']['revision'],contract_sha256=hashlib.sha256(contract_path.read_bytes()).hexdigest())
           (output/'process-before.json').write_text(json.dumps(initial,indent=2)+'\n')
           completed=0;failure=None
           try:
@@ -203,7 +225,7 @@ jobs:
                   completed+=1
                   return result
               run.measure=retain_measure
-              sys.argv=[str(source/'benchmarks/subdivide_polygon.py'),'--threads','1','--repeat','7','--output',str(output/'subdivide-polygon.json')]
+              sys.argv=[str(harness),'--source-root',str(source),'--threads','1','--repeat','7','--output',str(output/'subdivide-polygon.json')]
               runpy.run_path(sys.argv[0],run_name='__main__')
               assert completed==14
           except BaseException as error:
@@ -214,7 +236,7 @@ jobs:
               (output/'process-after.json').write_text(json.dumps(final,indent=2)+'\n')
           PY
           status=0
-          "$py" "$output/launch.py" "$PWD" "$output" 2>&1 | tee "$output/subdivide-polygon.log" || status=$?
+          "$py" "$output/launch.py" "$PWD" "$output" "$GITHUB_WORKSPACE/controller/benchmarks/subdivide_polygon.py" 2>&1 | tee "$output/subdivide-polygon.log" || status=$?
           echo "$status" > "$output/benchmark-exit.txt"
           "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-after.log"
           test "$status" -eq 0
@@ -238,7 +260,8 @@ jobs:
               assert set(meta['numpy_error_policy'].values()) <= {'ignore', 'warn', 'raise', 'call', 'print', 'log'}
               assert meta['numpy_error_handler_type'] == 'NoneType'
               assert type(meta['numpy_buffer_elements']) is int and meta['numpy_buffer_elements'] > 0
-              assert meta['harness_sha256'] == manifest['source']['files_sha256']['benchmarks/subdivide_polygon.py']
+              assert meta['prepared_harness_sha256'] == manifest['source']['files_sha256']['benchmarks/subdivide_polygon.py'] == '101265e40bdd2c7026cdbb396f9670e2c07d5e32502be55de2411eea623faa38'
+              assert meta['harness_sha256'] == '0bce058ebf921b7f80f3a1dac74632de3e2ab5e7a7ee08369339077cfbb53010'
               assert meta['original_source_sha256'] == contract['original_python_source_sha256']
               cores = {v for k, v in manifest['runtime']['packages_sha256']['skimagexx'].items() if k.startswith('_core.') and k.endswith('.so')}
               assert cores == {meta['core_sha256']}
@@ -307,6 +330,8 @@ jobs:
               assert all(row[key] == value for key, value in item['timing'].items())
           contract_path = Path('snapshot/coverage/contracts/subdivide-polygon-benchmark.json')
           assert before['source_revision'] == after['source_revision'] == os.environ['PRODUCER_REVISION']
+          assert before['executed_harness_sha256'] == after['executed_harness_sha256'] == report['metadata']['harness_sha256']
+          assert before['prepared_harness_sha256'] == after['prepared_harness_sha256'] == report['metadata']['prepared_harness_sha256']
           assert before['contract_sha256'] == after['contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
           assert report['metadata']['contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
           expected_source = runpy.run_path('snapshot/benchmarks/provenance.py')['source_fingerprint'](Path('snapshot'))
