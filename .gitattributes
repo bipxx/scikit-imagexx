@@ -569,3 +569,6 @@ tests/test_compare_images_native.cpp -text
 python/skimagexx/_compare_images.py -text
 python/skimagexx/_compare_images_checks.py -text
 src/bind_compare_images.cpp -text
+
+benchmarks/compare_images.py -text
+tests/test_compare_images_benchmark.py -text
