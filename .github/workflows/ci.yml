@@ -508,6 +508,8 @@ jobs:
       - run: python benchmarks/level_set.py --threads 1 --repeat 7 --output build/ci-level-set.json
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/map_array.py --threads 1 --repeat 7 --output build/ci-map-array.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      - run: python benchmarks/label_points.py --threads 1 --repeat 7 --output build/ci-label-points.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
@@ -540,6 +542,7 @@ jobs:
             build/ci-compare-images.md
             build/ci-level-set.md
             build/ci-map-array.md
+            build/ci-label-points.md
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:
