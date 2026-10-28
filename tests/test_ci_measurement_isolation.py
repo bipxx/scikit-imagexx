@@ -705,3 +705,21 @@ def test_subdivide_registered_gates_and_metadata_preflight_are_separate():
     assert 'tests/test_subdivide_polygon_public.py::test_subdivide_polygon_saved_original_rows' in preparation
     assert 'tests/test_subdivide_polygon_benchmark.py' in preparation
     assert 'tests/test_subdivide_polygon_public.py --' not in preparation
+
+
+def test_historical_subdivision_harness_is_available_for_actual_inverse_guard_jobs():
+    blocks=jobs((ROOT / '.github/workflows/ci.yml').read_text())
+    target='4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'
+    probe="if ! git cat-file -e '"+target+"' 2>/dev/null; then"
+    fetch='git fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305'
+    for name in ('check','numpy-minimum'):
+        block=blocks[name]
+        assert block.count(probe)==1 and block.count(fetch)==1
+        assert block.index(probe)<block.index(fetch)<block.index('python -m pytest')
+        assert "git cat-file -e '"+target+"'\n" in block
+    assert '- run: python -m pytest -q\n' in blocks['check']
+    assert 'tests/test_subdivide_polygon_benchmark.py' in blocks['numpy-minimum']
+    # These jobs use selected numerical files or artifact-only measurements,
+    # and never collect the historical benchmark inverse guard.
+    for name in ('debug-gil','measure','measure-minimum'):
+        assert fetch not in blocks[name]
