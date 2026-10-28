@@ -58,11 +58,11 @@ def test_new_profiles_keep_correctness_gates_and_skip_only_old_timings():
     measure=workflow.split('  measure-minimum:',1)[1].split('  debug-gil:',1)[0]
     lines=measure.splitlines()
     timings=[(line,lines[i+1])for i,line in enumerate(lines)if line.strip().startswith('- run: python benchmarks/')]
-    assert len(timings)==18
-    assert all('!inputs.latest_only'in guard for command,guard in timings if 'benchmarks/profile_line.py'not in command)
-    newest=[guard for command,guard in timings if 'benchmarks/profile_line.py'in command]
+    assert len(timings)==19
+    assert all('!inputs.latest_only'in guard for command,guard in timings if 'benchmarks/blur_effect.py'not in command)
+    newest=[guard for command,guard in timings if 'benchmarks/blur_effect.py'in command]
     assert len(newest)==1 and '!inputs.prepare_only'in newest[0]and 'latest_only'not in newest[0]
     assert 'build/ci-profile-line.md'in measure
     phase3=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text(encoding='utf-8')
     assert phase3.count('tests/test_profile_line_public.py')==2
-    assert 'len(cases) == 2924'in phase3 and 'len(native) == 237'in phase3 and 'expected == 1409'in phase3
+    assert 'len(cases) == 3045'in phase3 and 'len(native) == 238'in phase3 and 'expected == 1413'in phase3

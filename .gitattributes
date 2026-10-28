@@ -545,3 +545,6 @@ python/skimagexx/_profile_line.py -text
 python/skimagexx/_profile_line_checks.py -text
 src/bind_profile_line.cpp -text
 benchmarks/profile-line-minimum-initial.json -text
+
+benchmarks/blur_effect.py -text
+tests/test_blur_benchmark.py -text
