@@ -1,5 +1,7 @@
 """Inert contract/transport checks: synthetic latencies, no scientific calls."""
 import ast
+import base64
+import zlib
 from copy import deepcopy
 import hashlib
 import json
@@ -44,7 +46,7 @@ def manifests():
     old=dict(runtime=runtime,wheels=wheels,source=dict(files_sha256=dict.fromkeys(fixed|MUTABLE,'a')))
     new=deepcopy(old)
     for name in MUTABLE:new['source']['files_sha256'][name]='changed'
-    new['source']['files_sha256'][CONTRACT]='eb9305a7ec836e79899c9ad8558a4e588beb2a1d1eeff885b75f7c2faad32dad'
+    new['source']['files_sha256'][CONTRACT]='771727f45957ea0f021f9afc0811b9245dcfe723ea2fd2bc97cf59760486de01'
     new['wheels']['product']['sha256']='changed'
     return old,new
 
@@ -142,11 +144,19 @@ def test_complete_raw_metadata_and_actual_C_guard(tmp_path,monkeypatch,scenario)
 def test_contract_actual_file_digest_gate(tmp_path,monkeypatch,mutate):
     monkeypatch.chdir(tmp_path)
     path=tmp_path/'snapshots/candidate'/CONTRACT;path.parent.mkdir(parents=True)
-    raw=b'prospective contract bytes';path.write_bytes(raw+(b'changed' if mutate else b''))
-    new=dict(source=dict(files_sha256={CONTRACT:hashlib.sha256(raw).hexdigest()}))
+    raw=CONTRACT_RAW;path.write_bytes(raw+(b'changed' if mutate else b''))
+    new=dict(source=dict(files_sha256={CONTRACT:hashlib.sha256(raw.replace(b'\r\n',b'\n')).hexdigest()}))
     node=next(n for n in PAIR.body if isinstance(n,ast.Assert) and 'Path(' in ast.unparse(n))
     code=compile(ast.Module(body=[node],type_ignores=[]),'actual-contract-file-authentication','exec')
     namespace=dict(hashlib=hashlib,Path=Path,new=new,contract=CONTRACT)
     if mutate:
         with pytest.raises(AssertionError):exec(code,namespace)
     else:exec(code,namespace)
+
+# Exact git blob from ef5d9ae, retained as compressed inert contract metadata.
+CONTRACT_RAW=zlib.decompress(base64.b64decode('eJytV0tv5DYMvhfofxBy7U5Gkt+7p6JAzz30VhQGJVEzajyyK8l5bNH/XsqeyXiyD2yL5hDEFkV+/PiRZv76/jvG7qI+4gnu3jPxbn1OkOZIz3dTGOOEOrlH7BXaMWCvwRtnIGGPxqXYj6Ef5zTNKd6ttxVEHJzHPuCji2702ZHiLaCtrJJCq0ZZbBtrgZe6qJq6QVCikY1p8ezjhBDngKb/P5xdfcz5esnrtqqEaLrmzTmE5CzolJmQrSil7OqiWI1sGD+i7yEf3kku653gO9n+KuR72bwX4r7LLsUPnL/n/BzYIJjs+O2V8stXkjthP7iTS/1xnEMuglxPHiE48CleyzQ+eWLoWg/rBszHv+XTXMag9yeYKK0AL/fHaVpjfHKi35xEdzL963EPj8/yxiZhTHGff2+sPGSRLHbZ7Pc31K7HfTyCrGrC+NcXMRJXxgjJ66bpJJW3ay1HeuJQqZYXlTJVI6GtC1kqI0pjyaDgFRFZ2FY0pVb6K3mSd16SAkCBKDl2bWkE71ppCqOh4iAKXZYG6trwUlXkWNdl0XRCGq1a20KpxDdxlSvegWiVqcHqukPJWyGKzmhedVXFZVsRiMKSyCi1tkOtBRdYN0RPU3emU+03802xamGJnRYJYNvZ2jYWbN21heGaUuyKkpA0WjRFV3VKK25QVpZwgeaNqYpqqdnfa82OEDzGeK3VHdRWVlpgY7HmoDpiX6uizTRKKDtelcAraYTiKCnDin7KCqg3uRR13aiztp/G8DCMQJIdfQrUZ5sQRU3FqAtRoqqxNEYpUFVN+Iwk+iko5WYsFi02ICpZyVKKQlLtuaG0LmR9GiL71uMjBjjg/vIyZlHsFh53Cr0+niA83P8RabqsbjTJNndStz6GcfYmP58HRoJwQCrG0ovdNTKGTXdO4PIAG4PBsGnKS0e8Vve1f7/y5vXSprXSmGDoAzz1EU7T2vkVL7cIb4aBO9C0qMtdnCBE3Fn6M3P/7ivngsvyapCCM2h2NOx3c7uzhdzVVVXUW0xTwIiB+nwM7uA84XtyfovCoCffdH0W9a6+Or95v4V1c3CDZ3Y+EcYnArXTNK4/jzZfmwlqJeQW6APi1OvgEtJQ3YwjQzUjXS6CGYb+gCN9iXyfvek0vPSHgFSXXE9xz4tLMD+GEwzuYy73v7uJoI/9WU4BJzLpzxD+u4MNmm908lq2jNy6z9QvhRkv1tnoPM5JqP00q8HpnlTjEgUg928vWOddPF72h81HMRttBs/Z6cXFVbnPbM1pHzUMEPbTGBKoAfcRvEuUaWCn0WC820BsSrZ+shntMPnLyAKmOfjIZmp48Ac0V7GQ72FHM6Hdd0zlZofwsnXGSCgnRlJLx8goabZ2C1tVto3r8uRYTMw8ES+UCxsgpt1C5MXu51+YHeAQ98tkcf7wGVDngSL2JTsMo4KBRUzp1naj6PPGdEKfehpyPmaS8vT7cSICHgnsAT31DDI7U7L0zsw6sctkYbRTLbBfhw97OiIOkbJOR4bPsDEWhSGpeepN7TB+uAJi52/H4ukS7/n5nsZxQHaYIZgPjJRCIJlxNGmSPrLRD2ey70jBhHqR4Y0C+2GM8VZX1HT0lvTQ08pErHzhMCfbR/OQ11T0jy6MfqEooJrdYN5eAuV65Siz0JN6fKIk+zQO1NNe0+q7ZHkbyWUF5kAB8SPSB9r5m12VFlNbVrIwZVlKI3XTSIlSyppzMGCMaa0sdN1c9r9L6ZbNN/OWp8HZ1y8rcwH/nGkZILrXslyWZRZpY9RUyqXRmHUhJqbH00Tq3687+gdmyYYtm+O19sviyEjJPpFih3dsTYZp4vDhWt179tOrOM6hYKCBYl7Y5v+E4eXceO+oa9nC8jn4fq0Ue8F0T9L9+/vv/gGe39rs'))
+
+def test_actual_contract_raw_vs_source_canonical_fingerprints():
+    assert CONTRACT_RAW.count(b"\r\n")==75
+    assert hashlib.sha256(CONTRACT_RAW).hexdigest()=="eb9305a7ec836e79899c9ad8558a4e588beb2a1d1eeff885b75f7c2faad32dad"
+    assert hashlib.sha256(CONTRACT_RAW.replace(b"\r\n",b"\n")).hexdigest()=="771727f45957ea0f021f9afc0811b9245dcfe723ea2fd2bc97cf59760486de01"

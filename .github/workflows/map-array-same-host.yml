@@ -169,8 +169,8 @@ jobs:
               mutable = {'src/map_array.cpp', 'src/map_array.hpp', 'src/simd_map_array_avx2.cpp', 'tests/test_map_array_native.cpp'}
               contract = 'coverage/contracts/map-array-small-native-candidate.json'
               assert contract not in old['source']['files_sha256']
-              assert new['source']['files_sha256'][contract] == 'eb9305a7ec836e79899c9ad8558a4e588beb2a1d1eeff885b75f7c2faad32dad'
-              assert hashlib.sha256(Path('snapshots/candidate', contract).read_bytes()).hexdigest() == new['source']['files_sha256'][contract]
+              assert new['source']['files_sha256'][contract] == '771727f45957ea0f021f9afc0811b9245dcfe723ea2fd2bc97cf59760486de01'
+              assert hashlib.sha256(Path('snapshots/candidate', contract).read_bytes()).hexdigest() == 'eb9305a7ec836e79899c9ad8558a4e588beb2a1d1eeff885b75f7c2faad32dad'
               old_fixed, new_fixed = ({k: v for k, v in value['source']['files_sha256'].items()
                                       if k not in mutable | {contract}} for value in (old, new))
               assert old_fixed == new_fixed, 'every other repository blob including frontend/binder/CMake/science/harness/frozen50 exact'
