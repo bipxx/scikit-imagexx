@@ -9175,11 +9175,15 @@
       "api": "util.unique_rows",
       "kind": "callable",
       "signature": "(ar)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_unique_rows_public.py::test_unique_rows_native_public_contract",
+      "benchmark": "benchmarks/coverage.py"
     },
     {
       "api": "util.view_as_blocks",

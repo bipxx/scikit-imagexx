@@ -31,7 +31,7 @@ NATIVE_FUNCTIONS = {
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
-    'util': ('label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
+    'util': ('unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
 
@@ -524,6 +524,21 @@ def blur_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def unique_rows_default_error(image, actual, expected):
+    """Exact byte-row output metadata/words; final NumPy gather stays literal."""
+    import numpy as np
+    assert type(actual) is type(expected) is np.ndarray
+    for value in (actual,expected):
+        assert value.dtype==image.dtype and value.dtype.metadata==image.dtype.metadata
+        assert value.ndim==2 and value.shape[1]==image.shape[1]
+    assert actual.shape==expected.shape and actual.shape[0]<=image.shape[0]
+    descriptor=lambda value:(value.strides,value.flags.owndata,value.flags.writeable,
+                             value.flags.c_contiguous,value.flags.f_contiguous,type(value.base))
+    assert descriptor(actual)==descriptor(expected)
+    assert actual.tobytes()==expected.tobytes()
+    return 0.
+
+
 def label_points_default_error(shape, actual, expected):
     """Exact uint64 label-mask words/storage for the actual output-shape arg."""
     import numpy as np
@@ -614,6 +629,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'util.unique_rows':
+        unique_rows_default_error(image,actual,expected)
+        return
     if api == 'util.label_points':
         label_points_default_error(image.shape,actual,expected)
         return
@@ -663,6 +681,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'util.unique_rows':
+        raise ValueError('Unique rows use exact metadata and words; call assert_default_parity')
     if api == 'util.label_points':
         raise ValueError('Label points use exact uint64 metadata and words; call assert_default_parity')
     if api == 'util.map_array':
