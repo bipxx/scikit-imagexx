@@ -20,7 +20,7 @@ void exercise(const std::array<std::size_t,4>& shape,const std::array<std::ptrdi
               std::size_t itemsize,std::size_t origin,const std::vector<unsigned char>& backing,
               MontageGrid grid,std::size_t out_rows,std::size_t out_columns,
               const std::vector<unsigned char>& fill,int workers,std::ofstream& stream,
-              const std::vector<unsigned char>* genuine=nullptr){
+              const std::vector<unsigned char>* genuine=nullptr,std::size_t output_offset=16){
     ++cases;const auto K=shape[0],H=shape[1],W=shape[2],C=shape[3];
     std::vector<unsigned char> expected(out_rows*out_columns*C*itemsize);
     // Output-centric independent oracle; kernel iterates source image rows.
@@ -47,20 +47,20 @@ void exercise(const std::array<std::size_t,4>& shape,const std::array<std::ptrdi
     for(int rounding:{FE_TONEAREST,FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO}){
         check(std::fesetround(rounding)==0);std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_INVALID|FE_DIVBYZERO);
         const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
-        std::vector<unsigned char> actual(expected.size()+32,0xa5);
-        montage_into(input,grid,fill.empty()?nullptr:fill.data(),{expected.empty()?nullptr:actual.data()+16,out_rows,out_columns},workers);
-        check(expected.empty()||std::memcmp(actual.data()+16,expected.data(),expected.size())==0);
-        check(std::all_of(actual.begin(),actual.begin()+16,[](auto value){return value==0xa5;}));
+        std::vector<unsigned char> actual(expected.size()+output_offset+16,0xa5);
+        montage_into(input,grid,fill.empty()?nullptr:fill.data(),{expected.empty()?nullptr:actual.data()+output_offset,out_rows,out_columns},workers);
+        check(expected.empty()||std::memcmp(actual.data()+output_offset,expected.data(),expected.size())==0);
+        check(std::all_of(actual.begin(),actual.begin()+output_offset,[](auto value){return value==0xa5;}));
         check(std::all_of(actual.end()-16,actual.end(),[](auto value){return value==0xa5;}));
         check(backing==before_input&&fill==before_fill);
         check(std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags&&get_num_threads()==global);
         std::uint64_t hash=1469598103934665603ULL;
-        for(std::size_t i=0;i<expected.size();++i){hash^=actual[i+16];hash*=1099511628211ULL;}
+        for(std::size_t i=0;i<expected.size();++i){hash^=actual[i+output_offset];hash*=1099511628211ULL;}
         stream.write(reinterpret_cast<const char*>(&hash),8);
     }
     std::fesetround(FE_TONEAREST);std::feclearexcept(FE_ALL_EXCEPT);
 }
-void control(std::array<std::size_t,4> shape,std::size_t itemsize,int layout,MontageGrid grid,bool zero,int workers,std::ofstream& stream){
+void control(std::array<std::size_t,4> shape,std::size_t itemsize,int layout,MontageGrid grid,bool zero,int workers,std::ofstream& stream,bool unaligned=false){
     std::array<std::ptrdiff_t,4> strides{};std::size_t step=itemsize;
     if(layout==1)for(std::size_t axis=0;axis<4;++axis){strides[axis]=std::ptrdiff_t(step);step*=shape[axis];}
     else for(std::size_t axis=4;axis-->0;){if(layout==2)step*=2;strides[axis]=std::ptrdiff_t(step);step*=shape[axis];}
@@ -70,7 +70,7 @@ void control(std::array<std::size_t,4> shape,std::size_t itemsize,int layout,Mon
     const bool empty=std::any_of(shape.begin(),shape.end(),[](auto value){return value==0;});
     std::ptrdiff_t low=0,high=0;
     if(!empty)for(std::size_t axis=0;axis<4;++axis){const auto extent=std::ptrdiff_t(shape[axis]-1)*strides[axis];low+=std::min(std::ptrdiff_t(0),extent);high+=std::max(std::ptrdiff_t(0),extent);}
-    const auto origin=std::size_t(-low);std::vector<unsigned char> backing(empty?0:std::size_t(high-low)+itemsize,0xda);
+    const auto origin=std::size_t(-low)+(unaligned?1:0);std::vector<unsigned char> backing(empty?0:std::size_t(high-low)+itemsize+(unaligned?1:0),0xda);
     for(std::size_t k=0;k<shape[0];++k)for(std::size_t y=0;y<shape[1];++y)for(std::size_t x=0;x<shape[2];++x)for(std::size_t c=0;c<shape[3];++c){
         const std::size_t values[]={k,y,x,c};std::size_t code=17;
         for(std::size_t axis=0;axis<4;++axis)code=code*37+(strides[axis]?values[axis]:0);
@@ -79,7 +79,7 @@ void control(std::array<std::size_t,4> shape,std::size_t itemsize,int layout,Mon
     }
     std::vector<unsigned char> fill(shape[3]*itemsize);
     if(!zero)for(std::size_t i=0;i<fill.size();++i)fill[i]=static_cast<unsigned char>(43+i*13);
-    exercise(shape,strides,itemsize,origin,backing,grid,(shape[1]+grid.padding)*grid.rows+grid.padding,(shape[2]+grid.padding)*grid.columns+grid.padding,fill,workers,stream);
+    exercise(shape,strides,itemsize,origin,backing,grid,(shape[1]+grid.padding)*grid.rows+grid.padding,(shape[2]+grid.padding)*grid.columns+grid.padding,fill,workers,stream,nullptr,unaligned?17:16);
 }
 void genuine(const char* path,int workers,std::ofstream& stream){
     std::ifstream f(path,std::ios::binary);check(bool(f));const auto count=word(f);
@@ -110,6 +110,15 @@ int main(int argc,char** argv){
             control({0,2,3,1},width,0,{0,0,0},false,workers,stream);
         }
         control({9,64,96,3},4,0,{3,3,1},false,workers,stream);
+    }
+    // Append controls after the complete old stream so its words stay intact.
+    for(int workers:{1,4}) {
+        for(std::size_t width:{1,2,4,8,16}) {
+            control({2,3,7,1},width,2,{1,2,1},false,workers,stream,true);
+            control({2,3,7,3},width,3,{1,2,1},false,workers,stream,true);
+            control({2,3,7,3},width,1,{1,2,1},false,workers,stream,true);
+        }
+        control({2,3,7,3},4,2,{1,2,1},false,workers,stream,true);
     }
     check(bool(stream));std::cout<<"montage native cases="<<cases<<" checks="<<checks<<" PASS\n";
 }
