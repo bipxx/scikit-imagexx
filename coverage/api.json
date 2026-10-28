@@ -8933,11 +8933,15 @@
       "api": "util.compare_images",
       "kind": "callable",
       "signature": "(image0, image1, *, method='diff', n_tiles=(8, 8))",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_compare_images_public.py",
+      "benchmark": "benchmarks/compare_images.py"
     },
     {
       "api": "util.crop",

@@ -800,7 +800,7 @@ img_as_int | Reuse native normalized signed-int16 conversion | input range error
 img_as_ubyte | Reuse native normalized uint8 conversion | signed negative clipping, precision warning, rounding and copy | negative signed input and 255-scale ties
 img_as_uint | Reuse native normalized uint16 conversion | input bit-depth scaling, signed negatives and rounding | uint8/uint64 and float threshold cases
 invert | Reuse native dtype-dependent range complement | bool, signed integer, unsigned, signed_float and NaNs | dtype extrema and both floating conventions
-compare_images | Reuse native difference/absolute blend and checkerboard coordinate selection | method, dtype promotion, n_tiles division and channel shape | exact small checkerboards and range extremes
+compare_images | Own typed subtraction/absolute value, add-then-half blend and direct checker coordinate selection; preserve conversion and metadata allocation | shape/conversion/method and tile protocol order; mixed dtype; K-order layout and dtype metadata; NumPy1.24 float32 zero-dimensional blend stays a literal provider | exact small checkerboards, negative/zero-step and remainder tiles, scalar promotion, mixed dtype and C/F/strided/metadata storage
 """, effort="S")
 add("util", "metadata", """
 FailedEstimationAccessError | Preserve owned AttributeError-compatible exception provider and inherited metadata | args/name/obj, notes, pickle, traceback and string/state behavior | construct/raise/catch/pickle exception lifecycle

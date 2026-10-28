@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('util.compare_images',),'tests/test_compare_images_public.py','benchmarks/compare_images.py'),
     (('measure.blur_effect',),'tests/test_blur_effect_public.py','benchmarks/blur_effect.py'),
     (('measure.profile_line',),'tests/test_profile_line_public.py','benchmarks/profile_line.py'),
     (('measure.points_in_poly','measure.grid_points_in_poly'),'tests/test_polygon_public.py','benchmarks/polygon.py'),
