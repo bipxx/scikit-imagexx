@@ -1,0 +1,541 @@
+{
+  "schema": "approximate-polygon-original-contract-v1",
+  "status": "prospective-freeze-no-original-calls",
+  "api": "measure.approximate_polygon",
+  "native_implementation": "pending",
+  "source_version": "0.26.0",
+  "source_url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/measure/_polygon.py",
+  "source_canonical_lf_sha256": "26a27d89545d158f6b542857297995639b251ed3af0428c8c86a56c84928aabe",
+  "function_segment_sha256": "086f1d9030bfa69e166649b6c67ba211b597b62e9c0b87294f59a678d71db12e",
+  "signature": "(coords, tolerance)",
+  "cases": [
+    {
+      "id": "open-zigzag",
+      "api": "measure.approximate_polygon",
+      "kind": "open-zigzag",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "closed-square",
+      "api": "measure.approximate_polygon",
+      "kind": "closed-square",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "closed-square-coarse",
+      "api": "measure.approximate_polygon",
+      "kind": "closed-square-coarse",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "collinear",
+      "api": "measure.approximate_polygon",
+      "kind": "collinear",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "outside-segment",
+      "api": "measure.approximate_polygon",
+      "kind": "outside-segment",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "repeated-endpoints",
+      "api": "measure.approximate_polygon",
+      "kind": "repeated-endpoints",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "all-identical",
+      "api": "measure.approximate_polygon",
+      "kind": "all-identical",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "duplicate-interior",
+      "api": "measure.approximate_polygon",
+      "kind": "duplicate-interior",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "empty-positive",
+      "api": "measure.approximate_polygon",
+      "kind": "empty-positive",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "singleton",
+      "api": "measure.approximate_polygon",
+      "kind": "singleton",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "two-points",
+      "api": "measure.approximate_polygon",
+      "kind": "two-points",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "threshold-below",
+      "api": "measure.approximate_polygon",
+      "kind": "threshold-below",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "threshold-equal",
+      "api": "measure.approximate_polygon",
+      "kind": "threshold-equal",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "threshold-above",
+      "api": "measure.approximate_polygon",
+      "kind": "threshold-above",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "first-max-tie",
+      "api": "measure.approximate_polygon",
+      "kind": "first-max-tie",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "float16",
+      "api": "measure.approximate_polygon",
+      "kind": "float16",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "float32",
+      "api": "measure.approximate_polygon",
+      "kind": "float32",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "int8",
+      "api": "measure.approximate_polygon",
+      "kind": "int8",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "int16",
+      "api": "measure.approximate_polygon",
+      "kind": "int16",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "int32",
+      "api": "measure.approximate_polygon",
+      "kind": "int32",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "int64",
+      "api": "measure.approximate_polygon",
+      "kind": "int64",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "uint8",
+      "api": "measure.approximate_polygon",
+      "kind": "uint8",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "uint64",
+      "api": "measure.approximate_polygon",
+      "kind": "uint64",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "complex64-error",
+      "api": "measure.approximate_polygon",
+      "kind": "complex64-error",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "object-numbers",
+      "api": "measure.approximate_polygon",
+      "kind": "object-numbers",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "fortran",
+      "api": "measure.approximate_polygon",
+      "kind": "fortran",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "reverse-rows",
+      "api": "measure.approximate_polygon",
+      "kind": "reverse-rows",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "reverse-columns",
+      "api": "measure.approximate_polygon",
+      "kind": "reverse-columns",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "step-rows",
+      "api": "measure.approximate_polygon",
+      "kind": "step-rows",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "step-columns",
+      "api": "measure.approximate_polygon",
+      "kind": "step-columns",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "readonly",
+      "api": "measure.approximate_polygon",
+      "kind": "readonly",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "big-endian-float",
+      "api": "measure.approximate_polygon",
+      "kind": "big-endian-float",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "signed-zero",
+      "api": "measure.approximate_polygon",
+      "kind": "signed-zero",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "dtype-metadata",
+      "api": "measure.approximate_polygon",
+      "kind": "dtype-metadata",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "nan-coordinates",
+      "api": "measure.approximate_polygon",
+      "kind": "nan-coordinates",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "inf-coordinates",
+      "api": "measure.approximate_polygon",
+      "kind": "inf-coordinates",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "nan-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "nan-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "zero-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "zero-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "negative-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "negative-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "negative-zero-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "negative-zero-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "negative-inf-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "negative-inf-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "list-zero",
+      "api": "measure.approximate_polygon",
+      "kind": "list-zero",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "none-zero",
+      "api": "measure.approximate_polygon",
+      "kind": "none-zero",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "coords-provider-positive",
+      "api": "measure.approximate_polygon",
+      "kind": "coords-provider-positive",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "coords-provider-zero",
+      "api": "measure.approximate_polygon",
+      "kind": "coords-provider-zero",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "tolerance-provider-positive",
+      "api": "measure.approximate_polygon",
+      "kind": "tolerance-provider-positive",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "tolerance-mutates-coordinates",
+      "api": "measure.approximate_polygon",
+      "kind": "tolerance-mutates-coordinates",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "list-positive",
+      "api": "measure.approximate_polygon",
+      "kind": "list-positive",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "vector-error",
+      "api": "measure.approximate_polygon",
+      "kind": "vector-error",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "three-columns-error",
+      "api": "measure.approximate_polygon",
+      "kind": "three-columns-error",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "scalar-error",
+      "api": "measure.approximate_polygon",
+      "kind": "scalar-error",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "none-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "none-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "array0d-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "array0d-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "array2-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "array2-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "float32-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "float32-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "moderate-257",
+      "api": "measure.approximate_polygon",
+      "kind": "moderate-257",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "int8-overflow",
+      "api": "measure.approximate_polygon",
+      "kind": "int8-overflow",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "invalid-raise",
+      "api": "measure.approximate_polygon",
+      "kind": "invalid-raise",
+      "policy": {
+        "invalid": "raise"
+      },
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "subclass-positive",
+      "api": "measure.approximate_polygon",
+      "kind": "subclass-positive",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    },
+    {
+      "id": "inf-tolerance",
+      "api": "measure.approximate_polygon",
+      "kind": "inf-tolerance",
+      "policy": {},
+      "max_points": 257,
+      "prospective": "Original observations and native admission pending"
+    }
+  ],
+  "max_points": 257,
+  "unassessed": [
+    "huge/adversarial chains or allocation failure",
+    "forged storage or concurrent mutation",
+    "longdouble and padded/structured coordinate representations"
+  ],
+  "source_freeze": {
+    "tests/approximate_polygon_contract.py": "6f79e5c91f761bd67b5499abc6842460ee132f347edce337c3168ea0252f821f",
+    "tests/test_approximate_polygon_public.py": "e08bfdfe6cdef0a0ad24a5b2ed3660fcaf02ea9d2fa678b429eb8221a2d58c4e"
+  },
+  "original_observations": {},
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false,
+  "source_semantics": [
+    "Literal tolerance<=0 returns the identical input before any shape access or conversion, including nonarrays.",
+    "Positive path allocates chain bool and dists float64 from coords.shape[0], marks endpoints, then processes an explicit stack left-subchain first.",
+    "dr/dc/subtractions/projection/squares preserve source scalar and array dtype arithmetic and its overflow/promotion/warnings.",
+    "Perpendicular admission is BOTH strict projected lengths>0; other points use minimum endpoint Euclidean distance.",
+    "Perpendicular distances retain arctan2/sin/cos order; squared-distance or geometric-cross-product substitutions are not presumed exact.",
+    "Split uses any(distance>tolerance), then argmax over the entire distance slice, first occurrence tie and actual NaN behavior.",
+    "Final coords[chain,:] preserves input scalar words/dtype and actual advanced-index layout/type. Closed/repeated endpoints remain represented, and positive outputs need not share the identity route.",
+    "Protocols and callback mutations are observed in source order; no frontend coercion or worker policy is frozen here."
+  ],
+  "capture_protocol": {
+    "authorization": "Root must review this prospective packet before any original approximate_polygon invocation.",
+    "profiles": {
+      "minimum": {
+        "python": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "numpy": "1.24.4",
+        "scipy": "1.15.3"
+      },
+      "modern": {
+        "python": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1"
+      }
+    },
+    "cases_per_profile": 60,
+    "calls_per_case": 1,
+    "total_target_original_calls": 120,
+    "journal": "Exclusive journal per profile; flush started before each call and completed raw observation immediately after it. On observer failure preserve diagnostics and stop; never replay originals to repair metadata.",
+    "verification": "Check pinned source/signature/factory/observer and versions before target calls. Append saved observations and profile provenance only. Offline check all raw array blobs; never recapture.",
+    "encoding": "Exact dtype/descr/metadata/shape/strides/ownership/base/alignment and words for POD arrays; object values encoded semantically without pointer bytes. Preserve identity/sharing, warnings, source errors, callback events, all input/backing words and NumPy error policy/handler/buffer restoration. No longdouble or padded representations."
+  },
+  "native_admission": "Pending source-reviewed captures. Cases exercise full iterative RDP selection, not merely identity or Python surface. Native arithmetic partition and ABI will be chosen separately, with explicit provider boundaries where necessary."
+}
