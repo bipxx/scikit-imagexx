@@ -76,6 +76,26 @@ def test_level_set_default_shape_adapter_and_exact_checker():
     with pytest.raises(AssertionError):level_set_default_error(image.shape,actual,expected)
 
 
+@pytest.mark.parametrize('dtype', (np.uint8,np.float32,np.float64))
+def test_label_points_default_geometry_and_exact_checker(dtype):
+    from skimagexx.coverage import label_points_default_error
+    image=np.zeros((258,260),dtype)
+    image[0,0]=image[1,2]=image[255,255]=image[256,257]=1
+    args,options=default_call('util.label_points',image)
+    assert args[1]==image.shape and options=={}
+    assert args[0].dtype==image.dtype
+    assert np.array_equal(args[0],np.array([[0,0],[1,2],[255,255]],dtype))
+    assert native_dtypes('util.label_points')==('uint8','float32','float64')
+    actual=xx.util.label_points(*args,**options)
+    expected=np.zeros(image.shape,np.uint64)
+    expected[0,0]=1;expected[1,2]=2;expected[255,255]=3
+    assert label_points_default_error(args[1],actual,expected)==0.
+    with pytest.raises(AssertionError):label_points_default_error(args[1],actual.astype(np.float64),expected)
+    with pytest.raises(AssertionError):label_points_default_error(args[1],np.asfortranarray(actual),expected)
+    actual[0,0]^=np.uint64(1)
+    with pytest.raises(AssertionError):label_points_default_error(args[1],actual,expected)
+
+
 def test_map_array_default_mapping_and_exact_checker():
     from skimagexx.coverage import map_array_default_error
     image=np.array([[0,1,127],[2,255,3]],np.uint8)
