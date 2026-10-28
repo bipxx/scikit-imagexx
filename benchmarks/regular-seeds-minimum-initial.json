@@ -1,0 +1,1174 @@
+{
+  "schema": "regular-seeds-minimum-initial-publication-v1",
+  "provenance": {
+  "scope": "Initial one-thread allocation-inclusive original/current comparison only; all gains and losses retained.",
+  "measured_source": "910c31a609c157c28cbbe56933b8448b710af95e",
+  "source_image_APIs": 242,
+  "source_registered_functions": 245,
+  "product_members": 168,
+  "SDK_members": 79,
+  "qualified_baseline": {
+    "source": "4e657ee64fb71e4d707d32e9539fdb4d7cc528af",
+    "image_APIs": 241,
+    "SDK_members": 71
+  },
+  "CPU": "AMD EPYC 9V74 80-Core Processor",
+  "threads": 1,
+  "rounds": 7,
+  "target_ms": 19,
+  "raw_samples": 126,
+  "result_run": 40728558127,
+  "result_run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40728558127",
+  "result_artifact": {
+    "run_id": 40728558127,
+    "workflow_revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+    "conclusion": "success",
+    "artifact_id": 12833992888,
+    "filename": "12833992888.zip",
+    "bytes": 219387,
+    "sha256": "7dec3949c34b0a4fedb3fe47f60dcfcb9a1adba610b4e28f56acc213839e2d94",
+    "members": 17,
+    "all_member_size_sha_crc_verified": true,
+    "downloads": 1
+  },
+  "producer_run": 40724150045,
+  "producer_artifact": {
+    "run_id": 40724150045,
+    "revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+    "artifact_id": 12833680393,
+    "name": "ci-performance-minimum",
+    "filename": "12833680393.zip",
+    "bytes": 84849657,
+    "sha256": "38797cf494532e16da41f751062c57815de2d566d8ebf11f3b59be26ba4be536",
+    "members": 88,
+    "duplicate_producer_downloads": 0,
+    "download_attempts": 1
+  },
+  "measurement_manifest_sha256": "a4a146e195c3735ffda0fa221f7f7a8e32081c616ae2525da3d03a2563ce0765",
+  "core_sha256": "ae226acb15af37f4b9f2968ef99d41b3bee2d85fe9f1f3e2ab9ad9384360168b",
+  "source_fingerprint": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+  "raw_report_sha256": "217966b243b27d934d2c1a1345d60951827e6f3c346f30774f9e8cc6475e9212",
+  "raw_summary_sha256": "e4c7fd7165d1439f3343836a79aaea3c1a029267e99fe3d3cb1f98de42e80d5e",
+  "raw_review_sha256": "f422297a920740f29906be9910bf4b98ff6d30c92448e099004fa0732bb67143",
+  "genuine_preparation_review": {
+    "path": "build/regular-seeds-genuine-release-v1/final-review.json",
+    "sha256": "b80b3db26e2da75708960ba0a12749741c98adb7f70a99865edae11a31c8134b"
+  },
+  "genuine_SDK_client": {
+    "path": "build/regular-seeds-genuine-sdk-client-v1/handoff.json",
+    "sha256": "47207306d45886a579fca18682e9bdce11fe37dd46054e653eb069b3f7dc5c32",
+    "families_executed": 1,
+    "checks_executed": 2,
+    "source_declared_families": 26,
+    "source_declared_checks": 52,
+    "full26family_campaign_pending": true
+  },
+  "provider_frontier": "Literal regular_grid preparation and np.zeros allocation/zero initialization remain explicit providers. Native label generation and selected-grid scatter are owned. Timed public calls include provider work, allocation and output destruction.",
+  "raw_json_policy": "Original report, summary and review bytes embedded verbatim, preserving every numeric lexeme and sample. No speed filtering or floating-point reserialization of those payloads."
+},
+  "raw_benchmark_report": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T16:46:47.363892+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/runtime/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "ae226acb15af37f4b9f2968ef99d41b3bee2d85fe9f1f3e2ab9ad9384360168b",
+    "harness_sha256": "5db8fb5751ba962440cc79cdf6990a6a447f97d3877b28893376c62cee9f22de",
+    "contract_sha256": "09c4dd70815a31667539904d582a3a9bcc736c4b82c956f78cadb184d416a3e3",
+    "original_source_sha256": "64fcce3556f0cbf8cafd05a54ea3545b65b18bdcabbee25b953a21ba06875581",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/regular_seeds.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/regular-seeds.json"
+    ],
+    "selected_apis": [
+      "util.regular_seeds"
+    ],
+    "provider_frontier": "Nine shape/count/dtype constructor workloads frozen before original/native benchmark calls; all gains and losses retained. No full-library or prior-C++ gain claim. Whole allocation-inclusive public call: regular_grid provider, np.zeros output allocation, owned grid label generation/scatter or literal reference assignment, temporary allocations and output destruction. Oracle, generation and parity guards remain outside timing. NumPy regular_grid and zero allocation remain explicit providers; only label generation and scatter are owned. Actual shape/count/output dtype parameters, not image pixels. Ordinary builtin positive shapes, native integer/bool/exact float partitions only; no exceptional casts or protocols in timing."
+  },
+  "results": [
+    {
+      "case_id": "tiny2d-i64",
+      "shape": [
+        16,
+        16
+      ],
+      "n_points": 16,
+      "dtype": "int64",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          2,
+          null,
+          4
+        ],
+        [
+          2,
+          null,
+          4
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          16,
+          16
+        ],
+        "strides": [
+          128,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d9bcce5e836781c1a6611f48a700ea2d3069f79aa2e4ed3ede144207a6423b61",
+      "reference_sha256": "d9bcce5e836781c1a6611f48a700ea2d3069f79aa2e4ed3ede144207a6423b61",
+      "oracle_sha256": "d9bcce5e836781c1a6611f48a700ea2d3069f79aa2e4ed3ede144207a6423b61",
+      "selected_count": 16,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.02020505128205128,
+      "cpp_ms": 0.01744147619047619,
+      "speedup": 1.1584484628132636,
+      "samples_ms": [
+        [
+          0.019628299145299146,
+          0.020159863247863247,
+          0.020363752136752136,
+          0.020313675213675216,
+          0.02025153846153846,
+          0.02020505128205128,
+          0.020029760683760684
+        ],
+        [
+          0.01744147619047619,
+          0.017457746031746033,
+          0.017538015873015872,
+          0.017478777777777777,
+          0.017419380952380954,
+          0.017352777777777776,
+          0.017275624338624337
+        ]
+      ],
+      "loops": [
+        117,
+        189
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense2d-i32",
+      "shape": [
+        512,
+        512
+      ],
+      "n_points": 262144,
+      "dtype": "int32",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<i4",
+        "dtype_metadata": null,
+        "shape": [
+          512,
+          512
+        ],
+        "strides": [
+          2048,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d4ddc71d11f7222bd670dabcd29832602b2db542e1070c882386de1ba5d5f082",
+      "reference_sha256": "d4ddc71d11f7222bd670dabcd29832602b2db542e1070c882386de1ba5d5f082",
+      "oracle_sha256": "d4ddc71d11f7222bd670dabcd29832602b2db542e1070c882386de1ba5d5f082",
+      "selected_count": 262144,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.1877565818181818,
+      "cpp_ms": 0.03777645098039215,
+      "speedup": 4.970201724763313,
+      "samples_ms": [
+        [
+          0.18746050909090908,
+          0.1877565818181818,
+          0.1906814727272727,
+          0.18667207272727274,
+          0.18967305454545452,
+          0.1891918,
+          0.18711745454545456
+        ],
+        [
+          0.03790749019607843,
+          0.03841818300653595,
+          0.03766275816993464,
+          0.03771701307189542,
+          0.03777645098039215,
+          0.0375901568627451,
+          0.03812775163398693
+        ]
+      ],
+      "loops": [
+        55,
+        153
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse2d-i64",
+      "shape": [
+        1000,
+        1000
+      ],
+      "n_points": 100,
+      "dtype": "int64",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          50,
+          null,
+          100
+        ],
+        [
+          50,
+          null,
+          100
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1000,
+          1000
+        ],
+        "strides": [
+          8000,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "c830691df00b8414dae731030ef6eb73ffd1b60dd05e40d1dfb781737097ff7b",
+      "reference_sha256": "c830691df00b8414dae731030ef6eb73ffd1b60dd05e40d1dfb781737097ff7b",
+      "oracle_sha256": "c830691df00b8414dae731030ef6eb73ffd1b60dd05e40d1dfb781737097ff7b",
+      "selected_count": 100,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.1142622,
+      "cpp_ms": 0.1110043090909091,
+      "speedup": 1.0293492291945423,
+      "samples_ms": [
+        [
+          0.11280296363636363,
+          0.11562603636363636,
+          0.1142622,
+          0.11454390909090909,
+          0.11311232727272727,
+          0.11374490909090909,
+          0.11576845454545455
+        ],
+        [
+          0.10957185454545454,
+          0.11177272727272727,
+          0.1110043090909091,
+          0.10953123636363636,
+          0.111843,
+          0.1119335090909091,
+          0.10924990909090909
+        ]
+      ],
+      "loops": [
+        55,
+        55
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense3d-f32",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "n_points": 262144,
+      "dtype": "float32",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          16384,
+          256,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "3844863de82bc98628d2de3cc21a4a9b70e5e53ba93399adc3d28e11a37de793",
+      "reference_sha256": "3844863de82bc98628d2de3cc21a4a9b70e5e53ba93399adc3d28e11a37de793",
+      "oracle_sha256": "3844863de82bc98628d2de3cc21a4a9b70e5e53ba93399adc3d28e11a37de793",
+      "selected_count": 262144,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.2245810980392157,
+      "cpp_ms": 0.14780107228915665,
+      "speedup": 1.5194821969887153,
+      "samples_ms": [
+        [
+          0.2249109019607843,
+          0.2245810980392157,
+          0.22377307843137256,
+          0.22564837254901962,
+          0.22388911764705882,
+          0.22572317647058823,
+          0.22408998039215686
+        ],
+        [
+          0.1479847108433735,
+          0.14780107228915665,
+          0.14896531325301204,
+          0.14751944578313253,
+          0.1470894096385542,
+          0.1481324096385542,
+          0.14737790361445785
+        ]
+      ],
+      "loops": [
+        51,
+        83
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse3d-f64",
+      "shape": [
+        100,
+        100,
+        100
+      ],
+      "n_points": 125,
+      "dtype": "float64",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          9,
+          null,
+          20
+        ],
+        [
+          9,
+          null,
+          20
+        ],
+        [
+          9,
+          null,
+          20
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          100,
+          100,
+          100
+        ],
+        "strides": [
+          80000,
+          800,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "23cc7c91620ebd5ef5df314f681efd83f63cd4afeb1b460bc8d100db74f3e5d1",
+      "reference_sha256": "23cc7c91620ebd5ef5df314f681efd83f63cd4afeb1b460bc8d100db74f3e5d1",
+      "oracle_sha256": "23cc7c91620ebd5ef5df314f681efd83f63cd4afeb1b460bc8d100db74f3e5d1",
+      "selected_count": 125,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.11793589361702128,
+      "cpp_ms": 0.11512595918367348,
+      "speedup": 1.024407479019261,
+      "samples_ms": [
+        [
+          0.13134740425531916,
+          0.11793589361702128,
+          0.11674393617021277,
+          0.11855595744680851,
+          0.11803474468085105,
+          0.11678014893617021,
+          0.11758346808510639
+        ],
+        [
+          0.11576444897959183,
+          0.11532116326530613,
+          0.11485208163265306,
+          0.1138254693877551,
+          0.11512595918367348,
+          0.11448277551020408,
+          0.11563161224489796
+        ]
+      ],
+      "loops": [
+        47,
+        49
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense2d-u8-wrap",
+      "shape": [
+        512,
+        512
+      ],
+      "n_points": 262144,
+      "dtype": "uint8",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          512,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d70581d57be8d1f541f82bdf47a2693b3f1735782cc2e6670fd69a89f89a661c",
+      "reference_sha256": "d70581d57be8d1f541f82bdf47a2693b3f1735782cc2e6670fd69a89f89a661c",
+      "oracle_sha256": "d70581d57be8d1f541f82bdf47a2693b3f1735782cc2e6670fd69a89f89a661c",
+      "selected_count": 262144,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.17505048387096772,
+      "cpp_ms": 0.04547040397350994,
+      "speedup": 3.8497675097179322,
+      "samples_ms": [
+        [
+          0.1753604516129032,
+          0.1737802258064516,
+          0.17549679032258064,
+          0.17301764516129034,
+          0.17363564516129032,
+          0.17505048387096772,
+          0.1759750806451613
+        ],
+        [
+          0.04541747682119205,
+          0.04602523178807947,
+          0.04547040397350994,
+          0.04539711258278145,
+          0.04586993377483444,
+          0.0454518940397351,
+          0.0456866821192053
+        ]
+      ],
+      "loops": [
+        62,
+        151
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense2d-f64",
+      "shape": [
+        768,
+        768
+      ],
+      "n_points": 589824,
+      "dtype": "float64",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          768,
+          768
+        ],
+        "strides": [
+          6144,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "c9e8efd08bfe90f47610c7f0b71d6cc45c57c448126f9b9ecc0ddd38735b3ac2",
+      "reference_sha256": "c9e8efd08bfe90f47610c7f0b71d6cc45c57c448126f9b9ecc0ddd38735b3ac2",
+      "oracle_sha256": "c9e8efd08bfe90f47610c7f0b71d6cc45c57c448126f9b9ecc0ddd38735b3ac2",
+      "selected_count": 589824,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.532445090909091,
+      "cpp_ms": 0.3231238157894737,
+      "speedup": 1.6478051597905037,
+      "samples_ms": [
+        [
+          0.5333390909090909,
+          0.532659,
+          0.5228203636363636,
+          0.532445090909091,
+          0.5365238181818183,
+          0.5314326363636364,
+          0.530380590909091
+        ],
+        [
+          0.32081515789473686,
+          0.3231238157894737,
+          0.32074923684210527,
+          0.3236764736842105,
+          0.32176655263157894,
+          0.32331857894736843,
+          0.3462398157894737
+        ]
+      ],
+      "loops": [
+        22,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "moderate3d-i32",
+      "shape": [
+        96,
+        96,
+        96
+      ],
+      "n_points": 4096,
+      "dtype": "int32",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          2,
+          null,
+          6
+        ],
+        [
+          2,
+          null,
+          6
+        ],
+        [
+          2,
+          null,
+          6
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<i4",
+        "dtype_metadata": null,
+        "shape": [
+          96,
+          96,
+          96
+        ],
+        "strides": [
+          36864,
+          384,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "f0a6dc002e6024f68dce166e264cdca43824fdeee4601cda113506c74b3fda44",
+      "reference_sha256": "f0a6dc002e6024f68dce166e264cdca43824fdeee4601cda113506c74b3fda44",
+      "oracle_sha256": "f0a6dc002e6024f68dce166e264cdca43824fdeee4601cda113506c74b3fda44",
+      "selected_count": 4096,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.07094402531645569,
+      "cpp_ms": 0.067705,
+      "speedup": 1.047840267579288,
+      "samples_ms": [
+        [
+          0.08977956962025317,
+          0.06972665822784811,
+          0.07149901265822785,
+          0.07332958227848102,
+          0.07094402531645569,
+          0.07043592405063291,
+          0.07045507594936709
+        ],
+        [
+          0.11951227272727272,
+          0.06593556060606061,
+          0.06750940909090909,
+          0.06813563636363637,
+          0.06704143939393939,
+          0.067705,
+          0.06843243939393939
+        ]
+      ],
+      "loops": [
+        79,
+        66
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse2d-f32",
+      "shape": [
+        768,
+        1024
+      ],
+      "n_points": 1024,
+      "dtype": "float32",
+      "api": "util.regular_seeds",
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "regular_seeds_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "grid_slices": [
+        [
+          13,
+          null,
+          28
+        ],
+        [
+          13,
+          null,
+          28
+        ]
+      ],
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          768,
+          1024
+        ],
+        "strides": [
+          4096,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "ffa48769af0aef2a323c02f353b191e334f38841f7326dd3bba35fcdedf048ab",
+      "reference_sha256": "ffa48769af0aef2a323c02f353b191e334f38841f7326dd3bba35fcdedf048ab",
+      "oracle_sha256": "ffa48769af0aef2a323c02f353b191e334f38841f7326dd3bba35fcdedf048ab",
+      "selected_count": 999,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.06329934482758622,
+      "cpp_ms": 0.059429709677419354,
+      "speedup": 1.0651128058873414,
+      "samples_ms": [
+        [
+          0.06367577586206896,
+          0.06365212068965517,
+          0.06329934482758622,
+          0.06303239655172414,
+          0.06357544827586208,
+          0.06317262068965518,
+          0.06178970689655172
+        ],
+        [
+          0.06023445161290323,
+          0.05981108064516129,
+          0.0597366129032258,
+          0.059429709677419354,
+          0.05903622580645161,
+          0.059044129032258065,
+          0.05918225806451613
+        ]
+      ],
+      "loops": [
+        58,
+        62
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+  "raw_workflow_summary": {
+  "status": "validated",
+  "raw_samples": 126,
+  "geometric_mean": 1.5909923753712534,
+  "wins": [
+    "tiny2d-i64",
+    "dense2d-i32",
+    "sparse2d-i64",
+    "dense3d-f32",
+    "sparse3d-f64",
+    "dense2d-u8-wrap",
+    "dense2d-f64",
+    "moderate3d-i32",
+    "sparse2d-f32"
+  ],
+  "losses": [],
+  "scope": "Initial original/current comparison only; every loss retained, no prior-C++ gain or full qualification claim."
+}
+,
+  "raw_independent_review": {
+  "status": "PASS_GENUINE_INITIAL_REGULAR_SEEDS_RAW_REVIEW",
+  "run": 40728558127,
+  "source": "910c31a609c157c28cbbe56933b8448b710af95e",
+  "producer_run": 40724150045,
+  "producer_artifact": {
+    "run_id": 40724150045,
+    "revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+    "artifact_id": 12833680393,
+    "name": "ci-performance-minimum",
+    "filename": "12833680393.zip",
+    "bytes": 84849657,
+    "sha256": "38797cf494532e16da41f751062c57815de2d566d8ebf11f3b59be26ba4be536",
+    "members": 88,
+    "duplicate_producer_downloads": 0,
+    "download_attempts": 1
+  },
+  "result_artifact": {
+    "run_id": 40728558127,
+    "workflow_revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+    "conclusion": "success",
+    "artifact_id": 12833992888,
+    "filename": "12833992888.zip",
+    "bytes": 219387,
+    "sha256": "7dec3949c34b0a4fedb3fe47f60dcfcb9a1adba610b4e28f56acc213839e2d94",
+    "members": 17,
+    "all_member_size_sha_crc_verified": true,
+    "downloads": 1
+  },
+  "raw_report_sha256": "217966b243b27d934d2c1a1345d60951827e6f3c346f30774f9e8cc6475e9212",
+  "raw_summary_sha256": "e4c7fd7165d1439f3343836a79aaea3c1a029267e99fe3d3cb1f98de42e80d5e",
+  "manifest_sha256": "a4a146e195c3735ffda0fa221f7f7a8e32081c616ae2525da3d03a2563ce0765",
+  "source_fingerprint": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+  "core_sha256": "ae226acb15af37f4b9f2968ef99d41b3bee2d85fe9f1f3e2ab9ad9384360168b",
+  "runtime": {
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "versions": {
+      "imageio": "2.38.1",
+      "iniconfig": "2.3.1",
+      "lazy-loader": "0.6",
+      "networkx": "3.6.1",
+      "numpy": "1.24.4",
+      "packaging": "26.3",
+      "pillow": "13.0.0",
+      "pluggy": "1.7.0",
+      "pygments": "2.21.0",
+      "pytest": "9.2.0",
+      "scikit-image": "0.26.0",
+      "scikit-imagexx": "0.1.0",
+      "scipy": "1.15.3",
+      "tifffile": "2026.3.3"
+    },
+    "machine": "x86_64",
+    "system": "Linux",
+    "dependency_libraries_sha256": {
+      "numpy": {
+        "libgfortran-040039e1.so.5.0.0": "47ab3b68295b0a3ce8990a448de7fab11abddbc160f8895972ca9aa712cf86d0",
+        "libquadmath-96973f99.so.0.0.0": "97cda85ddb5163e2da6e1edb4e1d6b557833a99a40eda079ae37e5039465b65d",
+        "libopenblas64_p-r0-15028c96.3.21.so": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9"
+      },
+      "scipy": {
+        "libgfortran-040039e1.so.5.0.0": "14afb3129b1a8b50bc40a3b0820c7f1152ea9bc10121aab152943f7057472886",
+        "libquadmath-96973f99-934c22de.so.0.0.0": "6ed5137f412781ad7863439fb543613f620b43c32b63292a0029246162f5bbc6",
+        "libgfortran-040039e1-0352e75f.so.5.0.0": "c6090048eccc763522c12ef016f81da6b627cb3a044f55cf0479a839c41c0980",
+        "libquadmath-96973f99.so.0.0.0": "934c22ded0e7d169c4d4678876c96051adf3d94545da962f60b41659b075da3b",
+        "libscipy_openblas-68440149.so": "3e739a2435af49d2d938749f316aa338c65f41c9ae6615406e7cf83feb662f46"
+      },
+      "skimage": {}
+    }
+  },
+  "SDK_packaged_members": 79,
+  "product_members": 168,
+  "SDK_execution_boundary": "One genuine recent_primitives family/two checks in separate472073receipt; producer itself ran0SDKclients. Full26families/52checks not executed.",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "raw_samples": 126,
+  "cases": 9,
+  "wins": 9,
+  "losses": 0,
+  "geometric_mean": 1.5909923753712534,
+  "all_cases": [
+    {
+      "case_id": "tiny2d-i64",
+      "shape": [
+        16,
+        16
+      ],
+      "n_points": 16,
+      "dtype": "int64",
+      "selected_count": 16,
+      "reference_ms": 0.02020505128205128,
+      "current_ms": 0.01744147619047619,
+      "ratio": 1.1584484628132636,
+      "added_ms": -0.0027635750915750885,
+      "win": true,
+      "output_sha256": "d9bcce5e836781c1a6611f48a700ea2d3069f79aa2e4ed3ede144207a6423b61",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "dense2d-i32",
+      "shape": [
+        512,
+        512
+      ],
+      "n_points": 262144,
+      "dtype": "int32",
+      "selected_count": 262144,
+      "reference_ms": 0.1877565818181818,
+      "current_ms": 0.03777645098039215,
+      "ratio": 4.970201724763313,
+      "added_ms": -0.14998013083778966,
+      "win": true,
+      "output_sha256": "d4ddc71d11f7222bd670dabcd29832602b2db542e1070c882386de1ba5d5f082",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "sparse2d-i64",
+      "shape": [
+        1000,
+        1000
+      ],
+      "n_points": 100,
+      "dtype": "int64",
+      "selected_count": 100,
+      "reference_ms": 0.1142622,
+      "current_ms": 0.1110043090909091,
+      "ratio": 1.0293492291945423,
+      "added_ms": -0.003257890909090899,
+      "win": true,
+      "output_sha256": "c830691df00b8414dae731030ef6eb73ffd1b60dd05e40d1dfb781737097ff7b",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "dense3d-f32",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "n_points": 262144,
+      "dtype": "float32",
+      "selected_count": 262144,
+      "reference_ms": 0.2245810980392157,
+      "current_ms": 0.14780107228915665,
+      "ratio": 1.5194821969887153,
+      "added_ms": -0.07678002575005904,
+      "win": true,
+      "output_sha256": "3844863de82bc98628d2de3cc21a4a9b70e5e53ba93399adc3d28e11a37de793",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "sparse3d-f64",
+      "shape": [
+        100,
+        100,
+        100
+      ],
+      "n_points": 125,
+      "dtype": "float64",
+      "selected_count": 125,
+      "reference_ms": 0.11793589361702128,
+      "current_ms": 0.11512595918367348,
+      "ratio": 1.024407479019261,
+      "added_ms": -0.002809934433347802,
+      "win": true,
+      "output_sha256": "23cc7c91620ebd5ef5df314f681efd83f63cd4afeb1b460bc8d100db74f3e5d1",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "dense2d-u8-wrap",
+      "shape": [
+        512,
+        512
+      ],
+      "n_points": 262144,
+      "dtype": "uint8",
+      "selected_count": 262144,
+      "reference_ms": 0.17505048387096772,
+      "current_ms": 0.04547040397350994,
+      "ratio": 3.8497675097179322,
+      "added_ms": -0.1295800798974578,
+      "win": true,
+      "output_sha256": "d70581d57be8d1f541f82bdf47a2693b3f1735782cc2e6670fd69a89f89a661c",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "dense2d-f64",
+      "shape": [
+        768,
+        768
+      ],
+      "n_points": 589824,
+      "dtype": "float64",
+      "selected_count": 589824,
+      "reference_ms": 0.532445090909091,
+      "current_ms": 0.3231238157894737,
+      "ratio": 1.6478051597905037,
+      "added_ms": -0.2093212751196173,
+      "win": true,
+      "output_sha256": "c9e8efd08bfe90f47610c7f0b71d6cc45c57c448126f9b9ecc0ddd38735b3ac2",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "moderate3d-i32",
+      "shape": [
+        96,
+        96,
+        96
+      ],
+      "n_points": 4096,
+      "dtype": "int32",
+      "selected_count": 4096,
+      "reference_ms": 0.07094402531645569,
+      "current_ms": 0.067705,
+      "ratio": 1.047840267579288,
+      "added_ms": -0.0032390253164556876,
+      "win": true,
+      "output_sha256": "f0a6dc002e6024f68dce166e264cdca43824fdeee4601cda113506c74b3fda44",
+      "independent_output_centric_oracle_exact": true
+    },
+    {
+      "case_id": "sparse2d-f32",
+      "shape": [
+        768,
+        1024
+      ],
+      "n_points": 1024,
+      "dtype": "float32",
+      "selected_count": 999,
+      "reference_ms": 0.06329934482758622,
+      "current_ms": 0.059429709677419354,
+      "ratio": 1.0651128058873414,
+      "added_ms": -0.0038696351501668613,
+      "win": true,
+      "output_sha256": "ffa48769af0aef2a323c02f353b191e334f38841f7326dd3bba35fcdedf048ab",
+      "independent_output_centric_oracle_exact": true
+    }
+  ],
+  "all_losses": [],
+  "before_after_and_original_identities": [
+    {
+      "status": "verify",
+      "revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+      "wheel_count": 14,
+      "artifact_sha256": "a4a146e195c3735ffda0fa221f7f7a8e32081c616ae2525da3d03a2563ce0765"
+    },
+    {
+      "status": "verify",
+      "revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+      "wheel_count": 14,
+      "artifact_sha256": "a4a146e195c3735ffda0fa221f7f7a8e32081c616ae2525da3d03a2563ce0765"
+    },
+    {
+      "status": "verify",
+      "revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+      "wheel_count": 14,
+      "artifact_sha256": "a4a146e195c3735ffda0fa221f7f7a8e32081c616ae2525da3d03a2563ce0765"
+    }
+  ],
+  "new_downloads": 1,
+  "new_dispatches": 0,
+  "duplicate_timings": 0,
+  "retiming": false,
+  "whole_product_qualification": false,
+  "scope": "One-thread, allocation-inclusive initial original/current comparison only. Every gain and loss retained; no previous-C++ improvement or library-wide superiority claim. Historical qualified baseline remains241 at4e; this measured source is242."
+}
+}
