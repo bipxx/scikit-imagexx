@@ -112,7 +112,10 @@ def test_returned_map_pickle_and_cross_aliases_are_preserved():
 
 def test_returned_arraymap_is_not_a_public_class_registration():
     assert all('ArrayMap' not in name for name in (*native_classes(),*class_metadata_providers()))
-    assert len(native_classes())==4 and class_metadata_providers()==('util.FailedEstimationAccessError',)
+    assert set(native_classes())=={
+        'filters.LPIFilter2D','transform.ProjectiveTransform','transform.AffineTransform',
+        'transform.EuclideanTransform','transform.SimilarityTransform'}
+    assert class_metadata_providers()==('util.FailedEstimationAccessError',)
     assert 'ArrayMap' not in xx.segmentation.__all__ and 'ArrayMap' not in xx.util.__all__
 
 

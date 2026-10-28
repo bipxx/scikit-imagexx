@@ -94,7 +94,9 @@ def test_own_only_alias_cannot_catch_compatibility_exception(monkeypatch):
 
 def test_resolver_caches_one_identity_and_exposes_no_kernel_claim():
     from skimagexx.coverage import native_classes,class_metadata_providers,class_contract
-    assert len(native_classes())==4
+    assert set(native_classes())=={
+        'filters.LPIFilter2D','transform.ProjectiveTransform','transform.AffineTransform',
+        'transform.EuclideanTransform','transform.SimilarityTransform'}
     assert class_metadata_providers()==('util.FailedEstimationAccessError',)
     facts=class_contract(class_metadata_providers()[0])
     assert facts['implementation']=='exception-metadata-provider'

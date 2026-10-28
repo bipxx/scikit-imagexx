@@ -9,7 +9,6 @@ import operator
 import warnings
 
 import numpy as np
-from scipy.signal import get_window
 
 from . import _core
 
@@ -109,6 +108,7 @@ def window(window_type, shape, warp_kwargs=None):
     if ndim <= 0:
         raise ValueError("Number of dimensions must be greater than zero")
     max_size = functools.reduce(max, shape)
+    from scipy.signal import get_window
     w = get_window(window_type, max_size, fftbins=False)
     w = np.reshape(w, (-1,) + (1,) * (ndim - 1))
 

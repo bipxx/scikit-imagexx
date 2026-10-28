@@ -1,9 +1,5 @@
 """Blur metric with owned uniform and Sobel sampling; NumPy reductions remain providers."""
 import numpy as np
-from scipy import ndimage as ndi
-from skimage.color import rgb2gray
-from skimage.util import img_as_float
-from skimage._shared.utils import _supported_float_type
 from . import _core
 
 try:
@@ -17,8 +13,10 @@ _EPSILON = np.spacing(np.float64(1))
 def _sobel(image, axis, owned):
     ndim = image.ndim
     if image.dtype.kind == 'f':
+        from skimage._shared.utils import _supported_float_type
         image = image.astype(_supported_float_type(image.dtype), copy=False)
     else:
+        from skimage.util import img_as_float
         image = img_as_float(image)
     output = np.zeros(image.shape, dtype=image.dtype)
     shape = [1] * ndim
@@ -43,6 +41,7 @@ def _sobel(image, axis, owned):
         with np.errstate(all='ignore'):
             ax_output = ax_output.astype(image.dtype, copy=False)
     else:
+        from scipy import ndimage as ndi
         ax_output = ndi.convolve(image, kernel, mode='reflect', cval=0.0)
     output += ax_output
     return output
@@ -58,8 +57,10 @@ def blur_effect(image, h_size=11, channel_axis=None, reduce_func=np.max):
         except TypeError:
             print('channel_axis must be an integer')
             raise
+        from skimage.color import rgb2gray
         image = rgb2gray(image)
     n_axes = image.ndim
+    from skimage.util import img_as_float
     image = img_as_float(image)
     shape = image.shape
     if n_axes and any(size == 0 for size in shape):
@@ -77,6 +78,7 @@ def blur_effect(image, h_size=11, channel_axis=None, reduce_func=np.max):
             filt_im = _core.uniform_filter1d(prepared, ax, int(h_size), workers)
         owned = filt_im is not None
         if not owned:
+            from scipy import ndimage as ndi
             filt_im = ndi.uniform_filter1d(image, h_size, axis=ax)
         im_sharp = np.abs(_sobel(image, ax, owned))
         im_blur = np.abs(_sobel(filt_im, ax, owned))

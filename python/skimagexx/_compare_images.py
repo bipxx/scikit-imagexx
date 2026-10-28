@@ -2,7 +2,6 @@
 import functools
 from itertools import product
 import numpy as np
-from skimage.util.dtype import img_as_float
 from . import _core
 
 
@@ -27,6 +26,7 @@ def _rename_image_params(func):
 def compare_images(image0, image1, *, method='diff', n_tiles=(8, 8)):
     if image1.shape != image0.shape:
         raise ValueError('Images must have the same shape.')
+    from skimage.util.dtype import img_as_float
     img1 = img_as_float(image0)
     img2 = img_as_float(image1)
     native_comparison = None
