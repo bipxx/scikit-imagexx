@@ -1,4 +1,5 @@
 #include <skimagexx/montage.hpp>
+#include "montage_simd.hpp"
 #include <skimagexx/image.hpp>
 #include <algorithm>
 #include <array>
@@ -50,6 +51,11 @@ void exercise(const std::array<std::size_t,4>& shape,const std::array<std::ptrdi
         std::vector<unsigned char> actual(expected.size()+32,0xa5);
         montage_into(input,grid,fill.empty()?nullptr:fill.data(),{expected.empty()?nullptr:actual.data()+16,out_rows,out_columns},workers);
         check(expected.empty()||std::memcmp(actual.data()+16,expected.data(),expected.size())==0);
+        std::vector<unsigned char> generic(expected.size()+32,0xa5);
+        montage_generic_into(input,grid,fill.empty()?nullptr:fill.data(),
+                             {expected.empty()?nullptr:generic.data()+16,out_rows,out_columns},workers);
+        check(actual==generic);
+
         check(std::all_of(actual.begin(),actual.begin()+16,[](auto value){return value==0xa5;}));
         check(std::all_of(actual.end()-16,actual.end(),[](auto value){return value==0xa5;}));
         check(backing==before_input&&fill==before_fill);
@@ -81,6 +87,28 @@ void control(std::array<std::size_t,4> shape,std::size_t itemsize,int layout,Mon
     if(!zero)for(std::size_t i=0;i<fill.size();++i)fill[i]=static_cast<unsigned char>(43+i*13);
     exercise(shape,strides,itemsize,origin,backing,grid,(shape[1]+grid.padding)*grid.rows+grid.padding,(shape[2]+grid.padding)*grid.columns+grid.padding,fill,workers,stream);
 }
+void stride2_control(std::size_t width,std::size_t alignment,int reverse,
+                     int workers,std::ofstream& stream,bool large=false){
+    const std::size_t images=large?8:2,height=large?128:3;
+    const auto span=width?(width-1)*8+4:0;
+    // Exact accessible endpoint: ASan must reject even one extra tail byte.
+    std::vector<unsigned char> backing(alignment+images*height*span,0xdb);
+    std::ptrdiff_t si=std::ptrdiff_t(height*span),sr=std::ptrdiff_t(span);
+    std::size_t origin=alignment;
+    if(reverse&1){origin+=(height-1)*span;sr=-sr;}
+    if(reverse&2){origin+=(images-1)*height*span;si=-si;}
+    const std::uint32_t payloads[]={0x7f800001u,0x7fc12345u,0xff800001u,0x80000000u,
+                                  0x00000001u,0x7f800000u,0xff800000u,0xffffffffu};
+    for(std::size_t k=0;k<images;++k)for(std::size_t r=0;r<height;++r)
+        for(std::size_t c=0;c<width;++c){
+            const auto offset=std::ptrdiff_t(origin)+std::ptrdiff_t(k)*si+std::ptrdiff_t(r)*sr+std::ptrdiff_t(c)*8;
+            const auto value=payloads[(k*3+r+c)%8];std::memcpy(backing.data()+offset,&value,4);
+        }
+    std::vector<unsigned char> fill(4);const std::uint32_t fill_word=0x7f800123u;
+    std::memcpy(fill.data(),&fill_word,4);
+    exercise({images,height,width,1},{si,sr,8,4},4,origin,backing,{2,images/2,1},
+             (height+1)*2+1,(width+1)*(images/2)+1,fill,workers,stream);
+}
 void genuine(const char* path,int workers,std::ofstream& stream){
     std::ifstream f(path,std::ios::binary);check(bool(f));const auto count=word(f);
     for(std::size_t record=0;record<count;++record){
@@ -110,6 +138,16 @@ int main(int argc,char** argv){
             control({0,2,3,1},width,0,{0,0,0},false,workers,stream);
         }
         control({9,64,96,3},4,0,{3,3,1},false,workers,stream);
+    }
+    // Append after the complete historical stream, preserving every old word.
+    for(int workers:{1,4}){
+        for(std::size_t width=0;width<=18;++width)
+            for(std::size_t alignment:{0,1,3,7})for(int reverse=0;reverse<4;++reverse)
+                stride2_control(width,alignment,reverse,workers,stream);
+        for(std::size_t width:{31,32,33,127,128,129})
+            for(std::size_t alignment:{0,1,3,7})for(int reverse=0;reverse<4;++reverse)
+                stride2_control(width,alignment,reverse,workers,stream);
+        stride2_control(129,3,3,workers,stream,true);
     }
     check(bool(stream));std::cout<<"montage native cases="<<cases<<" checks="<<checks<<" PASS\n";
 }

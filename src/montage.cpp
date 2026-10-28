@@ -4,7 +4,7 @@
 #include <cstring>
 
 namespace skimagexx::detail {
-void montage_into(const MontageInput& input,MontageGrid grid,
+void montage_generic_into(const MontageInput& input,MontageGrid grid,
                   const void* typed_channel_fill,MontageOutput output,int workers) {
     const auto channels=input.shape[3],pixel_bytes=channels*input.itemsize;
     const auto row_bytes=output.columns*pixel_bytes;
