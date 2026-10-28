@@ -346,6 +346,21 @@ def validate_nmi_source(archive, snapshot, scope):
                 'NMI source bytes differ: ' + name)
 
 
+def validate_frozen_controller(name, canonical, expected, scope):
+    """Invert only the reviewed 5b547 SDK metadata edits for current products."""
+    if scope == CURRENT_PRODUCT_SCOPE and name in (
+            'benchmarks/rank_statistics.py', 'benchmarks/rank_percentile.py',
+            'benchmarks/rank_bilateral.py', 'benchmarks/rank_decisions.py'):
+        added = b'from tools.rank_corpus_sdk_scope import validate_sdk_scope\n'
+        current = b';validate_sdk_scope(ROOT,capsule,runtime)\n'
+        original = b";assert len(runtime['runtime']['sdk_sha256'])==SDK_MEMBERS\n"
+        require(canonical.count(added) == 1 and canonical.count(current) == 1,
+                'current corpus SDK metadata edits differ: ' + name)
+        canonical = canonical.replace(added, b'').replace(current, original)
+    require(hashlib.sha256(canonical).hexdigest() == expected,
+            'frozen R4 controller pin differs: ' + name)
+
+
 def validate_payload(path, qualification, profile, compare):
     """Validate a staged tree without manufacturing accepted product pins."""
     source = path / 'source'
@@ -357,10 +372,11 @@ def validate_payload(path, qualification, profile, compare):
         require((source / name).read_bytes().replace(b'\r\n', b'\n')
                 == (ROOT / name).read_bytes().replace(b'\r\n', b'\n'),
                 'same-source controller differs: ' + name)
+    scope = qualification_scope(source, profile)
     for name, expected in cfg['source_text_sha256'].items():
         safe(name)
-        require(hashlib.sha256((source / name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected,
-                'frozen R4 controller pin differs: ' + name)
+        validate_frozen_controller(name, (source / name).read_bytes().replace(b'\r\n', b'\n'),
+                                   expected, scope['name'])
     corpus = load(source / 'coverage/contracts/rank-statistics-benchmark.json')
     require(corpus['case_contract_sha256'] == cfg['case_contract_sha256']
             and len(corpus['case_inventory']) == 1379, 'fixed1379 corpus differs')
@@ -380,7 +396,6 @@ def validate_payload(path, qualification, profile, compare):
             and all(wheels[n]['version'] == cfg['profiles'][profile][n] for n in ('numpy', 'scipy')),
             'reference runtime pins differ')
     product = wheels['scikit-imagexx']
-    scope = qualification_scope(source, profile)
     require(len(product['members']) == scope['members'], 'complete product member census differs')
     require(len([n for n in product['members'] if n.startswith('skimagexx/_core.')
                  and n.endswith(('.so', '.pyd'))]) == 1, 'sole production core differs')

@@ -970,3 +970,54 @@ def test_current_stager_rejects_missing_or_replaced_client_declaration(declarati
     text=text.replace("CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes')",'CURRENT_FAMILIES = '+declaration)
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include') for f in (ROOT/prefix).rglob('*') if f.is_file()]
     with pytest.raises(RuntimeError):p.qualification_scope_text(text,read_bytes=lambda n:(ROOT/n).read_bytes(),names=names)
+
+
+# Historical whole-controller pins immediately before the reviewed 5b547cfa
+# metadata-only edit; R4's value remains its unchanged comparison-contract pin.
+CURRENT_CORPUS_PRE_METADATA_PINS = {
+    'benchmarks/rank_statistics.py': '9131a5a249e1f015f810869a1d6d209e00821b865042b07db05ec2459e3c750a',
+    'benchmarks/rank_percentile.py': 'f6ca251c1bab7f9b6fba6c48ef2ab157f103874dd555ecc635f0519e67fe4faf',
+    'benchmarks/rank_bilateral.py': '02fcd2043dac50f71a809291b44bc65ea9cf284da1e7f4c06560c12ecea889d6',
+    'benchmarks/rank_decisions.py': 'eb050df4f682a1b28ca64449e26c627f8ef7a0de51b439dad0b7f5bbc10f63c7',
+}
+
+
+@pytest.mark.parametrize('name,expected',CURRENT_CORPUS_PRE_METADATA_PINS.items())
+def test_current_controller_exact_inverse_sdk_metadata_matches_historical_pin(name,expected):
+    canonical=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    p.validate_frozen_controller(name,canonical,expected,p.CURRENT_PRODUCT_SCOPE)
+    if name=='benchmarks/rank_statistics.py':
+        contract=json.loads((ROOT/'coverage/contracts/rank-statistics-comparison.json').read_text())
+        assert contract['source_text_sha256'][name]==expected
+
+
+@pytest.mark.parametrize('name,expected',CURRENT_CORPUS_PRE_METADATA_PINS.items())
+@pytest.mark.parametrize('fault',('extra-edit','missing-import','duplicate-import','missing-call','duplicate-call','changed-call'))
+def test_current_controller_inverse_rejects_any_unreviewed_edit(name,expected,fault):
+    canonical=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    added=b'from tools.rank_corpus_sdk_scope import validate_sdk_scope\n'
+    current=b';validate_sdk_scope(ROOT,capsule,runtime)\n'
+    if fault=='extra-edit':canonical+=b'# unreviewed controller edit\n'
+    elif fault=='missing-import':canonical=canonical.replace(added,b'')
+    elif fault=='duplicate-import':canonical=canonical.replace(added,added+added)
+    elif fault=='missing-call':canonical=canonical.replace(current,b'\n')
+    elif fault=='duplicate-call':canonical=canonical.replace(current,current+current)
+    else:canonical=canonical.replace(current,b';validate_sdk_scope(ROOT,capsule,other)\n')
+    with pytest.raises(RuntimeError):p.validate_frozen_controller(name,canonical,expected,p.CURRENT_PRODUCT_SCOPE)
+
+
+@pytest.mark.parametrize('scope',('rank14','h_extrema23'))
+def test_historical_controller_hash_validation_stays_literal(scope):
+    name='benchmarks/rank_statistics.py'
+    current=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    historical=current.replace(b'from tools.rank_corpus_sdk_scope import validate_sdk_scope\n',b'').replace(
+        b';validate_sdk_scope(ROOT,capsule,runtime)\n',b";assert len(runtime['runtime']['sdk_sha256'])==SDK_MEMBERS\n")
+    expected=CURRENT_CORPUS_PRE_METADATA_PINS[name]
+    p.validate_frozen_controller(name,historical,expected,scope)
+    with pytest.raises(RuntimeError):p.validate_frozen_controller(name,current,expected,scope)
+
+
+def test_current_inverse_is_not_applied_to_other_frozen_sources():
+    raw=b'from tools.rank_corpus_sdk_scope import validate_sdk_scope\n;validate_sdk_scope(ROOT,capsule,runtime)\n'
+    p.validate_frozen_controller('benchmarks/run.py',raw,hashlib.sha256(raw).hexdigest(),p.CURRENT_PRODUCT_SCOPE)
+    with pytest.raises(RuntimeError):p.validate_frozen_controller('benchmarks/run.py',raw+'#change'.encode(),hashlib.sha256(raw).hexdigest(),p.CURRENT_PRODUCT_SCOPE)
