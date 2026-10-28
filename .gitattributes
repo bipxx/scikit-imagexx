@@ -560,3 +560,5 @@ tests/test_blur_benchmark.py -text
 benchmarks/blur-effect-minimum-initial.json -text
 
 benchmarks/profile-sampling-same-host.json -text
+tests/compare_images_cases.py -text
+tests/test_compare_images_public.py -text
