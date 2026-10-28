@@ -31231,6 +31231,121 @@
         }
       },
       "public_registration": false
+    },
+    {
+      "id": "map-array-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "target_apis": [
+        "util.map_array"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "base_sha": "d0319ca",
+      "owns": [
+        "src/map_array.hpp",
+        "src/map_array.cpp",
+        "src/simd_map_array_avx2.cpp",
+        "tests/test_map_array_native.cpp"
+      ],
+      "depends_on": [
+        "map-array-reference"
+      ],
+      "state": "parity_passed",
+      "dependency_requirements": {
+        "map-array-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "4c43b23f2a3d51a671bddbdfd3a6c1a84f910f05",
+          "manifest": {
+            "path": "build/worktrees/map-array-native-v1/build/native-v1/handoff.json",
+            "sha256": "d52c5ee91af7e7061944d3233b39819cfbae22ebda44d3e1993851aec7d5bfc1"
+          },
+          "native_contract_checks": 65686,
+          "native_pending": 0,
+          "scope": "Six private native modes,74 frozen records; public product proof separate"
+        }
+      }
+    },
+    {
+      "id": "map-array-public",
+      "kind": "public_binding",
+      "apis": [],
+      "target_apis": [
+        "util.map_array"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "d0319ca",
+      "owns": [
+        "src/bind_map_array.cpp",
+        "python/skimagexx/_map_array.py",
+        "tests/test_map_array_pipeline.py"
+      ],
+      "depends_on": [
+        "map-array-native"
+      ],
+      "state": "validating",
+      "dependency_requirements": {
+        "map-array-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "public_registration": true,
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      },
+      "component_evidence": {
+        "manifest": {
+          "path": "build/worktrees/map-array-frontend-v1/build/map-array-public-v1/handoff.json",
+          "sha256": "f8abaa58e251f4d4f3d05b63034d5fd3082deab17b4db55e1af22303fa235d8d"
+        },
+        "checks": 428,
+        "scope": "Bounded overlay public/shared checks; not genuine rebuilt current product"
+      },
+      "genuine_preparation": {
+        "run": 40685511797,
+        "source_sha": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
+        "status": "in_progress"
+      }
+    },
+    {
+      "id": "map-array-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "util.map_array"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "base_sha": "d0319ca",
+      "owns": [
+        "benchmarks/map_array.py",
+        "tests/test_map_array_benchmark.py"
+      ],
+      "depends_on": [
+        "map-array-public"
+      ],
+      "state": "preparing",
+      "dependency_requirements": {
+        "map-array-public": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "pending"
+        }
+      },
+      "genuine_run": 40685511797,
+      "source_sha": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
+      "measurement_gate": "Genuine installed preparation must pass before isolated9case/126sample/oneworker timing. Retain every loss; no speed claim yet."
     }
   ],
   "unassigned_inventoried_apis": [
