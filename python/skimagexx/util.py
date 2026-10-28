@@ -5,12 +5,13 @@ from . import _core
 from ._compare_images import compare_images
 from ._map_array import map_array
 from ._label_points import label_points
+from ._unique_rows import unique_rows
 from ._compat import fallback, module_attribute, native_image
 
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []
 
-__all__ = ['label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64',
+__all__ = ['unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64',
            'img_as_ubyte', 'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits']
 
 _SUPPORTED = {np.bool_, np.uint8, np.int8, np.uint16, np.int16, np.uint32, np.int32,

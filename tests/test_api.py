@@ -76,6 +76,23 @@ def test_level_set_default_shape_adapter_and_exact_checker():
     with pytest.raises(AssertionError):level_set_default_error(image.shape,actual,expected)
 
 
+@pytest.mark.parametrize('dtype',(np.uint8,np.float32,np.float64))
+def test_unique_rows_default_exact_checker(dtype):
+    from skimagexx.coverage import unique_rows_default_error
+    image=np.array([[2,1],[0,3],[2,1],[1,0]],dtype=dtype)
+    args,options=default_call('util.unique_rows',image)
+    assert len(args)==1 and args[0] is image and options=={}
+    assert native_dtypes('util.unique_rows')==('uint8','float32','float64')
+    actual=xx.util.unique_rows(*args,**options)
+    expected=image[[1,3,0] if dtype==np.uint8 else [1,0,3]]
+    assert unique_rows_default_error(image,actual,expected)==0.
+    with pytest.raises(AssertionError):unique_rows_default_error(image,actual.astype(np.int64),expected)
+    with pytest.raises(AssertionError):unique_rows_default_error(image,np.asfortranarray(actual),expected)
+    with pytest.raises(AssertionError):unique_rows_default_error(image,actual[:,:1],expected)
+    changed=actual.copy();changed.flat[0]+=1
+    with pytest.raises(AssertionError):unique_rows_default_error(image,changed,expected)
+
+
 @pytest.mark.parametrize('dtype', (np.uint8,np.float32,np.float64))
 def test_label_points_default_geometry_and_exact_checker(dtype):
     from skimagexx.coverage import label_points_default_error
