@@ -1,0 +1,68 @@
+{
+  "schema": "montage-stride2-simd-candidate-v1",
+  "status": "prospective-before-source-edits-compilation-or-candidate-outputs",
+  "freeze_utc": "2026-10-28T19:54:15.637024+00:00",
+  "deadline_utc": "2026-10-28T21:54:15.637024+00:00",
+  "budget_hours": 2,
+  "variant_limit": 1,
+  "source_base": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+  "baseline_source": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+  "baseline_producer_run": 40758210302,
+  "baseline_admission": "pending; do not infer success",
+  "allowed_source_files": [
+    "src/montage.cpp",
+    "src/simd_montage_avx2.cpp",
+    "src/montage_simd.hpp",
+    "tests/test_montage_native.cpp",
+    "CMakeLists.txt"
+  ],
+  "contract_path": "coverage/contracts/montage-stride2-simd-candidate.json",
+  "harness_sha256_lf": "93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd",
+  "workloads_sha256_lf": "434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68",
+  "case_ids": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "gray-mean-f64",
+    "rgb-padded-u8",
+    "rgb-first-f32",
+    "gray-strided-reverse-f32",
+    "gray-fortran-f64"
+  ],
+  "target_case": "gray-strided-reverse-f32",
+  "preserved_original_wins": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "rgb-padded-u8",
+    "rgb-first-f32"
+  ],
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "raw_samples": 504,
+  "gate": {
+    "overall_direct_GM_gt": 1.05,
+    "overall_normalized_GM_gt": 1.05,
+    "target_each_candidate_pass_vs_balanced_baseline_direct_gt": 1.5,
+    "target_each_candidate_pass_vs_balanced_baseline_normalized_gt": 1.5,
+    "target_each_candidate_pass_original_gt": 1.0,
+    "each_other_eight_balanced_direct_gte": 0.97,
+    "each_other_eight_balanced_normalized_gte": 0.97,
+    "each_preserved_original_win_each_candidate_pass_gt": 1.0,
+    "all_identity_parity_and_deadline_required": true
+  },
+  "algorithm": "Only raw 4-byte single-channel positive stride8 row compaction: two unaligned 256-bit loads compact even words to eight contiguous output words. Vector block requires >=9 remaining logical pixels, scalar tail <=8. Runtime SIMD eligibility hoisted once; generic channel/fill/row paths unchanged. Negative row/image strides unchanged. Integer operations only. No extra allocation.",
+  "correctness": "All71 frozen successful outputs, unchanged old native prefix and six modes; tails/minimal spans/unaligned/reversed rows/images/FP words/flags/workers1,4. Existing public/private gates remain exact.",
+  "transport": "Genuine whole products; baseline producer pending admission and candidate prepare only after root review; fresh isolated same-host ABBA. Root dispatch only; no local timings/builds on timing host. Exact13 dependency wheels and source closure.",
+  "closed_v1": "Separate rejected experiment retained unchanged. No reuse as a measured candidate or retuning.",
+  "reporting": "Retain all9 cases, all504 samples, all old and new losses/regressions, exact product identities/deadline; whole-call only, no stage causal claim."
+}
