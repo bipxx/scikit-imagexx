@@ -79,7 +79,7 @@ def main():
         timing=measure(lambda:reference(shape,points,dtype=dtype),lambda:native(shape,points,dtype=dtype),args.repeat,19)
         assert xx.get_num_threads()==1 and np.geterr()==policy and np.geterrcall() is handler and np.getbufsize()==buffer
         rows.append(dict(**spec,api='util.regular_seeds',backend='native',threads=1,actual_C_returns=returns,native_accepted=True,
-            grid_slices=[[s.start,s.stop,s.step]for s in grid],**output,max_abs_error=0.0,**timing))
+            grid_slices=[[None if v is None else int(v)for v in(s.start,s.stop,s.step)]for s in grid],**output,max_abs_error=0.0,**timing))
         print(f"{spec['case_id']}: {timing['speedup']:.3f}x",flush=True)
     assert len(rows)==9 and all(list(map(len,row['samples_ms']))==[7,7]for row in rows)
     source_after=source_fingerprint(ROOT);assert source_before==source_after

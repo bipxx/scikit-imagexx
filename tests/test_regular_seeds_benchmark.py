@@ -87,6 +87,7 @@ def test_all_results_and_losses_retained_and_provider_frontier_explicit():
     text=SOURCE.read_text();contract=json.loads(load().CONTRACT.read_bytes())
     assert 'raw_samples=126'in text and 'repeat=7,target_ms=19'in text
     assert 'source_before==source_after'in text and 'CONTRACT.read_bytes()==contract_raw'in text
+    assert 'None if v is None else int(v)'in text
     assert "if row['speedup']"not in text and 'for row in rows:'in text
     assert 'all gains and losses retained'in contract['scope']
     assert 'output destruction'in contract['timed_boundary'] and 'np.zeros'in contract['timed_boundary']
