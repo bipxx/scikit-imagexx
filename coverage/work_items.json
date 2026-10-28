@@ -32033,6 +32033,188 @@
           "scope": "53 once-only original calls in each minimum/modern profile;43returns/10errors each, no native calls or performance credit"
         }
       }
+    },
+    {
+      "id": "regular-seeds-native",
+      "kind": "native",
+      "apis": [],
+      "target_apis": [
+        "util.regular_seeds"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "3c1b848b85b4011a7a9bd4861ac0f4b1b2770af9",
+      "owns": [
+        "src/regular_seeds.hpp",
+        "src/regular_seeds.cpp",
+        "src/simd_regular_seeds_avx2.cpp",
+        "tests/test_regular_seeds_native.cpp"
+      ],
+      "depends_on": [
+        "regular-seeds-reference"
+      ],
+      "state": "parity_passed",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "c5ec21505327f75bdb34cf73c797c4eb5ef54291",
+          "manifest": {
+            "path": "build/worktrees/regular-seeds-native-v1/build/native-v1/handoff.json",
+            "sha256": "927e38aafabc2491d0f208b2c1c6da43aee33561c5a870859aa97739f065967b"
+          },
+          "native_contract_checks": 62,
+          "native_pending": 0,
+          "scope": "Six native modes;62 saved complete outputs across31caseIDs/profile. Per-mode525,213,962 counter counts individual byte comparisons, not independent cases. Zero original recaptures."
+        }
+      }
+    },
+    {
+      "id": "regular-seeds-public",
+      "kind": "integration",
+      "apis": [],
+      "target_apis": [
+        "util.regular_seeds"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "a9e8416",
+      "owns": [
+        "python/skimagexx/_regular_seeds.py",
+        "src/bind_regular_seeds.cpp",
+        "tests/test_regular_seeds_pipeline.py",
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/util.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json"
+      ],
+      "depends_on": [
+        "regular-seeds-native"
+      ],
+      "state": "preparing",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "f708aa06b33840e3b52958a03018be1180843a3a",
+          "manifest": {
+            "path": "build/worktrees/regular-seeds-frontend-v1/build/regular-component-v1/handoff.json",
+            "sha256": "d76b426a1dd607b295e628422a6e5de3df300092f792f5a276d238ad246c18bf"
+          },
+          "native_contract_checks": 436,
+          "native_pending": 0,
+          "scope": "436 private pipeline checks,424 exact observations,248 actual C-return acceptances across2profiles/2dispatch modes/workers1and4; NumPy grid/zero allocation explicit."
+        },
+        "public_native": {
+          "status": "pending"
+        }
+      },
+      "component_evidence": {
+        "source_sha": "12cbdbfb7013cac13e8151afda66bbc158f6572b",
+        "manifest": {
+          "path": "build/worktrees/regular-seeds-integration-v1/build/public-v1/handoff.json",
+          "sha256": "40d59a040fbb44ff1af8ceff2e903c961b94be183f58247f663d433b5fb59101"
+        },
+        "public_shared_checks": 468,
+        "focused_nodes_per_mode": 4366,
+        "smoke_nodes": 1435,
+        "scope": "Bounded source overlay with actual builtin and genuine donor core; not a rebuilt whole product."
+      },
+      "genuine_preparation": {
+        "status": "not_dispatched",
+        "reason": "Complete installed recent-primitive SDK headers/client increment before next genuine build; no duplicate full preparation."
+      }
+    },
+    {
+      "id": "regular-seeds-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "util.regular_seeds"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "12cbdbfb7013cac13e8151afda66bbc158f6572b",
+      "owns": [
+        "benchmarks/regular_seeds.py",
+        "coverage/contracts/regular-seeds-benchmark.json",
+        "tests/test_regular_seeds_benchmark.py"
+      ],
+      "depends_on": [
+        "regular-seeds-public"
+      ],
+      "state": "preparing",
+      "proofs": {
+        "isolated_performance": {
+          "status": "pending"
+        }
+      },
+      "dependency_requirements": {
+        "regular-seeds-public": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "measurement_gate": "Frozen9-workload/126-sample whole-public one-worker comparison against original; keep every loss. No speed claim from untimed oracle prechecks."
+    },
+    {
+      "id": "unique-rows-tie-free-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.unique_rows"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "optimize/unique-rows-tie-free-v1",
+      "base_sha": "d8adeb419d72bf284f1b4a04ce20e32a9be52074",
+      "owns": [
+        "src/unique_rows.cpp",
+        "src/unique_rows.hpp",
+        "tests/test_unique_rows_native.cpp",
+        "coverage/contracts/unique-rows-tie-free-candidate.json"
+      ],
+      "depends_on": [
+        "unique-rows-reference"
+      ],
+      "state": "performance_pending",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "7aa059ddb1c2f196c3dbba9cf4d638ae1a761e67",
+          "manifest": {
+            "path": "build/worktrees/unique-rows-tie-free-v1/build/tie-free-v1/handoff.json",
+            "sha256": "81f211fcc97257aacedbee9b98855452d7e5a5506846c81d29d336e697ec5558"
+          },
+          "native_contract_checks": 56080,
+          "native_pending": 0
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "7aa059ddb1c2f196c3dbba9cf4d638ae1a761e67",
+          "manifest": {
+            "path": "build/unique-rows-tie-free-prepare-v1/final-review.json",
+            "sha256": "5f09b60b92175026810b68ebb13a6bde853d6af2a19c717bec928e78bec1901c"
+          },
+          "native_contract_checks": 428,
+          "native_pending": 0
+        },
+        "isolated_performance": {
+          "status": "pending"
+        }
+      },
+      "source_merged": false,
+      "genuine_preparation": {
+        "run": 40712229136,
+        "source_sha": "7aa059ddb1c2f196c3dbba9cf4d638ae1a761e67",
+        "artifact": 12828765895,
+        "status": "success",
+        "timing_calls": 0
+      },
+      "comparison": {
+        "run": 40716546947,
+        "controller": "2d6115f06daf47bff173deafe5bd3bb8395f18f7",
+        "status": "dispatched",
+        "deadline": "2026-10-28T16:57:38.559206+00:00"
+      },
+      "measurement_gate": "ONE frozen tie-free/minimum-index candidate: overall direct/normalized>1.02;read-only target each pass>1.20 and original win;preserve all8other original wins both passes plus balanced .97 floors;deadline/correctness/identity required. No KEEP or speed claim before raw review."
     }
   ],
   "unassigned_inventoried_apis": [
