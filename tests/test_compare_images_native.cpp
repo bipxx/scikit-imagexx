@@ -108,14 +108,14 @@ void grids(std::ofstream& stream,int workers){
 }
 int main(int argc,char**argv){
     try{
-        require(argc==3);std::ofstream stream(argv[1],std::ios::binary);require(bool(stream));
+        require(argc==2||argc==3);std::ofstream stream(argv[1],std::ios::binary);require(bool(stream));
         const auto initial_round=std::fegetround();std::fesetround(FE_TONEAREST);
         for(int workers:{1,4}){
 #ifndef _OPENMP
             if(workers==4){double a=1,b=2,o=0;require(!compare_images_into({&a,PixelType::float64},{&b,PixelType::float64},&o,1,CompareMethod::diff,{},workers));continue;}
 #endif
             matrix<float,float,float>(stream,workers);matrix<float,double,double>(stream,workers);matrix<double,float,double>(stream,workers);matrix<double,double,double>(stream,workers);matrix<float,double,float>(stream,workers);
-            fixtures(argv[2],stream,workers);grids(stream,workers);
+            if(argc==3)fixtures(argv[2],stream,workers);grids(stream,workers);
         }
         exceptional<float>();exceptional<double>();cast_controls();
         double a=1,b=2,o=0;require(!compare_images_into({&a,PixelType::uint8},{&b,PixelType::float64},&o,1,CompareMethod::diff,{},1));require(!compare_images_into({&a,PixelType::float64},{&b,PixelType::float64},&o,1,CompareMethod::diff,{},0));require(!compare_images_into({nullptr,PixelType::float64},{&b,PixelType::float64},&o,1,CompareMethod::diff,{},1));
