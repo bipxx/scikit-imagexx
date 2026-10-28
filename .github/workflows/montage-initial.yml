@@ -1,0 +1,232 @@
+name: montage-initial
+on:
+  workflow_dispatch:
+    inputs:
+      producer_run:
+        type: string
+        required: true
+      producer_revision:
+        type: string
+        required: true
+      artifact_id:
+        type: string
+        required: true
+      artifact_sha256:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PRODUCER_RUN: ${{ inputs.producer_run }}
+      PRODUCER_REVISION: ${{ inputs.producer_revision }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      ARTIFACT_SHA256: ${{ inputs.artifact_sha256 }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate the exact successful producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
+          assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
+          assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
+          base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+          def api(endpoint, name):
+              raw = subprocess.check_output(['gh', 'api', base + endpoint])
+              Path('results', name + '.json').write_bytes(raw)
+              return json.loads(raw)
+          record = api('runs/' + run, 'producer-run')
+          assert str(record['id']) == run and record['head_sha'] == revision
+          assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          assert record['path'] == '.github/workflows/ci.yml'
+          assert record['status'] == 'completed' and record['conclusion'] == 'success'
+          listing = api('runs/' + run + '/artifacts?per_page=100', 'producer-artifacts')
+          assert listing['total_count'] == len(listing['artifacts'])
+          matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
+          assert len(matches) == 1
+          selected = matches[0]
+          assert str(selected['id']) == artifact and selected['digest'] == 'sha256:' + digest
+          assert not selected['expired'] and 0 < selected['size_in_bytes'] < 512 * 1024**2
+          assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
+          Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.producer_revision }}
+          path: snapshot
+          fetch-depth: 1
+      - name: Install the authenticated product offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/prepared.zip"
+          python - <<'PY'
+          import hashlib, json, os, runpy, stat, zipfile
+          from collections import Counter
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          selected = json.loads(Path('results/selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], 'prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results/archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and actual['sha256'] == os.environ['ARTIFACT_SHA256']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall('snapshot/build')
+          prepared = Path('snapshot/build/prepared/ci-artifacts')
+          manifest = json.loads((prepared / 'measurement.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          Path('results/measurement.json').write_bytes((prepared / 'measurement.json').read_bytes())
+          Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
+          assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
+          assert len(manifest['wheels']) == 14
+          assert len(manifest['runtime']['sdk_sha256']) == 80
+          products = [n for n, v in manifest['wheels'].items() if v['name'] == 'scikit-imagexx']
+          assert len(products) == 1 and len(manifest['wheels']) - len(products) == 13
+          wheel = products[0]
+          with zipfile.ZipFile(Path('snapshot/build/prepared/wheels', wheel)) as z:
+              assert len([n for n in z.namelist() if not n.endswith('/')]) == 170
+          inventory = json.loads(Path('snapshot/coverage/api.json').read_bytes())['entries']
+          assert sum(e['implementation'] == 'native-partial' for e in inventory) == 243
+          assert sum(e['implementation'] == 'metadata' for e in inventory) == 3
+          frozen_cases = json.loads(Path('snapshot/coverage/contracts/montage.json').read_bytes())['cases']
+          factory_cases = runpy.run_path('snapshot/tests/montage_contract.py')['cases']()
+          assert [c['id'] for c in factory_cases] == [c['id'] for c in frozen_cases]
+          assert len(factory_cases) == 58
+          # Actual producer combines reference63, integration137 and pipeline122.
+          expected_files = {'test_montage_public': len(factory_cases) + 5,
+                            'test_montage_integration': len(factory_cases) * 2 + 21,
+                            'test_montage_pipeline': len(factory_cases) * 2 + 6}
+          for name in ('montage-normal.xml', 'montage-scalar.xml'):
+              tree = ET.fromstring((prepared / name).read_bytes())
+              cases = tree.findall('.//testcase')
+              assert len(cases) == sum(expected_files.values()) == 322
+              actual_files = Counter(case.attrib['classname'].rsplit('.', 1)[-1] for case in cases)
+              assert dict(actual_files) == expected_files
+              assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+          smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
+          assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
+          assert set(smoke['outcomes']) == {'passed'}
+          assert smoke['implementations']['native-partial'] == 243 and smoke['implementations']['metadata'] == 3
+          assert smoke['outcomes']['passed'] == len(smoke['results']) == 1439
+          for name, expected in (('benchmarks/montage.py', '93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd'), ('coverage/contracts/montage-benchmark.json', '434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68')):
+              assert manifest['source']['files_sha256'][name] == expected
+              assert hashlib.sha256(Path('snapshot', name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected
+          PY
+          python -m venv "$RUNNER_TEMP/runtime"
+          "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links snapshot/build/prepared/wheels -r snapshot/build/prepared/ci-artifacts/runtime-lock.txt 2>&1 | tee results/offline-install.log
+          "$RUNNER_TEMP/runtime/bin/python" snapshot/tools/ci_measurement_artifacts.py verify --wheel-dir snapshot/build/prepared/wheels --artifact snapshot/build/prepared/ci-artifacts/measurement.json 2>&1 | tee results/original-identity.log
+      - name: Measure nine unchanged montage public calls
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          output="$GITHUB_WORKSPACE/results"
+          cd snapshot
+          py="$RUNNER_TEMP/runtime/bin/python"
+          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-before.log"
+          status=0
+          "$py" benchmarks/montage.py --threads 1 --repeat 7 --output "$output/montage.json" 2>&1 | tee "$output/montage.log" || status=$?
+          echo "$status" > "$output/benchmark-exit.txt"
+          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-after.log"
+          test "$status" -eq 0
+      - name: Retain every result and loss
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json, math, runpy, statistics
+          from pathlib import Path
+          def validate_report(report, contract, manifest, expected_source):
+              meta = report['metadata']
+              assert meta['source_before'] == expected_source
+              assert {k: meta[k] for k in expected_source} == expected_source
+              assert meta['threads'] == 1 and meta['repeat'] == 7 and meta['target_ms'] == 19 and meta['raw_samples'] == 126
+              assert set(meta['reference_pool_limits'].values()) == {'1'} and meta['fallback_enabled'] is False
+              assert meta['selected_apis'] == ['util.montage']
+              assert meta['harness_sha256'] == manifest['source']['files_sha256']['benchmarks/montage.py']
+              assert meta['original_source_sha256'] == contract['original_python_source_sha256']
+              cores = {v for k, v in manifest['runtime']['packages_sha256']['skimagexx'].items() if k.startswith('_core.') and k.endswith('.so')}
+              assert cores == {meta['core_sha256']}
+              assert len(report['results']) == len(contract['cases']) == 9
+              samples = 0
+              for row, spec in zip(report['results'], contract['cases']):
+                  assert {k: row[k] for k in spec} == spec
+                  assert row['threads'] == 1 and row['native_accepted'] is True
+                  assert row['actual_C_returns'] == ['montage_apply'] and row['native_entry_module'] == 'skimagexx._core'
+                  assert row['max_abs_error'] == 0 and row['output_sha256'] == row['oracle_sha256']
+                  logical = list(spec['shape'])
+                  if spec['channel_axis'] is None:
+                      channels = 1; height, width = logical[1:]
+                  else:
+                      axis = spec['channel_axis'] % len(logical)
+                      channels = logical.pop(axis); logical.append(channels)
+                      height, width = logical[1:3]
+                  out_rows = (height + spec['padding']) * spec['grid'][0] + spec['padding']
+                  out_cols = (width + spec['padding']) * spec['grid'][1] + spec['padding']
+                  expected_shape = [out_rows, out_cols] + ([channels] if spec['channel_axis'] is not None else [])
+                  descriptor = row['output_metadata']
+                  dtype, itemsize = {'uint8': ('|u1', 1), 'uint16': ('<u2', 2), 'float32': ('<f4', 4), 'float64': ('<f8', 8)}[spec['dtype']]
+                  assert descriptor['dtype'] == dtype and descriptor['metadata'] is None
+                  assert descriptor['shape'] == expected_shape and math.prod(expected_shape) <= contract['max_output_elements']
+                  expected_strides = [out_cols * channels * itemsize, channels * itemsize]
+                  if spec['channel_axis'] is not None: expected_strides.append(itemsize)
+                  assert descriptor['strides'] == expected_strides and descriptor['writeable'] is True and descriptor['c'] is True
+                  assert descriptor['f'] is False
+                  assert descriptor['own'] is (spec['channel_axis'] is not None)
+                  assert descriptor['base_type'] == ('NoneType' if spec['channel_axis'] is not None else 'ndarray')
+                  assert list(map(len, row['samples_ms'])) == [7, 7]
+                  assert all(math.isfinite(v) and v > 0 for part in row['samples_ms'] for v in part)
+                  assert all(isinstance(v, int) and v > 0 for v in row['loops']) and len(row['loops']) == 2
+                  assert row['reference_ms'] == statistics.median(row['samples_ms'][0])
+                  assert row['cpp_ms'] == statistics.median(row['samples_ms'][1])
+                  assert row['speedup'] == row['reference_ms'] / row['cpp_ms']
+                  samples += sum(map(len, row['samples_ms']))
+              assert samples == 126
+              return dict(status='validated', raw_samples=samples, geometric_mean=math.exp(statistics.mean(math.log(x['speedup']) for x in report['results'])),
+                  wins=[x['case_id'] for x in report['results'] if x['speedup'] > 1], losses=[x['case_id'] for x in report['results'] if x['speedup'] < 1],
+                  scope='Initial original/current comparison only; every loss retained, no prior-C++ gain or full qualification claim.')
+          report = json.loads(Path('results/montage.json').read_bytes())
+          contract_path = Path('snapshot/coverage/contracts/montage-benchmark.json')
+          assert report['metadata']['contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
+          expected_source = runpy.run_path('snapshot/benchmarks/provenance.py')['source_fingerprint'](Path('snapshot'))
+          summary = validate_report(report, json.loads(contract_path.read_bytes()), json.loads(Path('snapshot/build/prepared/ci-artifacts/measurement.json').read_bytes()), expected_source)
+          Path('results/summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          print(json.dumps(summary, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: montage-initial-minimum
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
