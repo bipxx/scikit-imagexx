@@ -821,8 +821,11 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name)
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
-    scope = p.qualification_scope_text(text)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('h_extrema23', 120, 68, 23)
+    scope = p.qualification_scope(ROOT)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current236', 155, 71, 23)
+    # Historical literal envelopes remain independently closed.
+    legacy=p.qualification_scope_text(text.replace("CURRENT_PRODUCT_SCOPE = 'current236'\n",''))
+    assert (legacy['name'],legacy['members'],legacy['sdk'])==('h_extrema23',120,68)
     snapshot = {'files_sha256': {name: body_hash(raw) for name, raw in nmi_source_records.items()}}
     with nmi_source_archive(nmi_source_records) as archive:
         p.validate_nmi_source(archive, snapshot, scope)
@@ -929,3 +932,22 @@ def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
     else:s.proof['SDK_checks']=44
     s.reseal()
     with pytest.raises(RuntimeError):run(s)
+
+
+@pytest.mark.parametrize('profile',('windows','modern','minimum'))
+def test_current_stager_scope_uses_source_closure_and_exact236_registry(profile):
+    scope=p.qualification_scope(ROOT,profile)
+    assert scope['name']=='current236' and scope['members']==155 and scope['sdk']==71
+    assert scope['image_count']==236 and scope['metadata_count']==3 and len(scope['functions'])==239
+    assert len(scope['families'])==23 and 'legacy23' in scope['SDK_client_scope']
+    assert ('lib/skimagexx.lib' in scope['SDK_members']) == (profile=='windows')
+    text=(ROOT/'tools/public_qualification.py').read_text()
+    with pytest.raises(RuntimeError,match='authenticated install closure'):p.qualification_scope_text(text)
+
+
+@pytest.mark.parametrize('guard',('validate_reconstruction_source','validate_max_tree_source','validate_h_extrema_source','validate_nmi_source'))
+def test_current_stager_never_bypasses_historical_source_guards(guard):
+    class NoSource:
+        def read(self,*args):raise RuntimeError('inherited source guard reached')
+    with pytest.raises((RuntimeError,KeyError)):
+        getattr(p,guard)(NoSource(),{},dict(name='current236'))

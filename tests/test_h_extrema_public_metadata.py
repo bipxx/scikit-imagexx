@@ -249,13 +249,28 @@ def test_metadata_admission_rejects_missing_real_or_ordinary_ownership(monkeypat
 
 
 def test_combined_scope_and_physical_source_census_preserve_nmi_and_old_h():
-    scope=p.qualification_scope_text((ROOT/'tools/public_qualification.py').read_text())
+    text=(ROOT/'tools/public_qualification.py').read_text()
+    # Project the closed historical literals explicitly; current staging also
+    # requires its separate source-derived install layout.
+    declarations={'FAMILIES','PRODUCT_SCOPE','PRODUCT_MEMBERS','SDK_MEMBERS'}
+    legacy='\n'.join(ast.get_source_segment(text,n) for n in ast.parse(text).body
+        if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id in declarations for t in n.targets))
+    scope=p.qualification_scope_text(legacy)
     assert (scope['name'],scope['members'],scope['sdk'],len(scope['families']))==('h_extrema23',120,68,23)
     assert q.product_census('nmi22')==q.product_census('h_extrema22')==(118,67)
     assert q.FAMILIES[:-1]==q.NMI_FAMILIES and q.FAMILIES[-2:]==('normalized_mutual_information','h_extrema')
-    assert q.registry_expectation(ROOT)['image_count']==203
-    assert len(tuple((ROOT/'python/skimagexx').rglob('*.py')))==41
-    assert len(tuple((ROOT/'include/skimagexx').glob('*.hpp')))==56
+    current=p.qualification_scope(ROOT)
+    if current['name']=='h_extrema23':
+        assert q.registry_expectation(ROOT)['image_count']==203
+        assert len(tuple((ROOT/'python/skimagexx').rglob('*.py')))==41
+        assert len(tuple((ROOT/'include/skimagexx').glob('*.hpp')))==56
+    else:
+        contract=q.current_contract(lambda n:(ROOT/n).read_bytes())
+        assert len(contract['baseline_image_paths'])==203
+        assert q.registry_expectation(ROOT)['image_count']==len(contract['image_paths'])
+        assert current['name']==q.CURRENT_PRODUCT_SCOPE
+        assert len(tuple((ROOT/'python/skimagexx').rglob('*.py')))==sum(n.startswith('skimagexx/') and n.endswith('.py') for n in current['install_members'])
+        assert len(tuple((ROOT/'include/skimagexx').glob('*.hpp')))==sum(n.startswith('include/skimagexx/') and n.endswith('.hpp') for n in current['SDK_members'])
     assert len(q.sdk_family_declarations((ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()))>=23
     for name,want in q.NMI_IMPORTED_SOURCE_PINS.items():
         assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==want

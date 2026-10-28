@@ -532,8 +532,12 @@ def test_only_canonical_r5_and_source_derived_count_in_plan(tmp_path,monkeypatch
     (tmp_path/'benchmarks').mkdir()
     for name,_ in q.CORPORA.values():(tmp_path/'benchmarks'/name).touch()
     populate_corrected_max_tree_metadata(tmp_path)
-    assert not q.plan(tmp_path,'modern',987)['blockers']
-    assert q.plan(tmp_path,'modern',180)['blockers']==['explicit image count differs from source registry']
+    # Source counts are still reported, but an unmapped future generation may
+    # no longer get a green build plan merely because an explicit count agrees.
+    future=q.plan(tmp_path,'modern',987)
+    assert future['registry']['image_count']==987
+    assert any('current qualification readiness:' in x for x in future['blockers'])
+    assert 'explicit image count differs from source registry' in q.plan(tmp_path,'modern',180)['blockers']
     monkeypatch.setattr(q,'registry_expectation',lambda _: dict(functions=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)|set(q.H_EXTREMA_PATHS))+['filters.rank.generic.percentile'],image_count=987))
     assert any('must not register generic' in x for x in q.plan(tmp_path,'modern')['blockers'])
 
@@ -2171,3 +2175,105 @@ def test_stale_declared_inventory_blocks_prepare_before_environment_or_download(
     with pytest.raises(q.QualificationError, match='source inventory/registry mismatch.*' + SOURCE_INVENTORY_TEST_API):
         q.prepare(root / 'fresh', 'modern', 200)
     assert not any((root / 'fresh' / name).exists() for name in ('build-env', 'runtime-env', 'build-wheels', 'runtime-wheels', 'native-build'))
+
+
+@pytest.fixture
+def current_metadata_artifact(tmp_path):
+    """Inert independently enumerated package/install envelope; never imported."""
+    import tomllib
+    source = {name: (ROOT/name).read_bytes() for name in
+              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
+    for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information'):
+        source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
+    for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
+                 '_reconstruction','_h_extrema','_normalized_mutual_information'):
+        source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
+    licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
+    for name in licenses: source[name] = b'inert license '+name.encode()
+    entries = {n.removeprefix('python/'): raw for n,raw in source.items()
+               if n.startswith(('python/skimagexx/','include/'))}
+    for name in licenses:
+        dest = 'pocketfft-LICENSE.md' if name=='third_party/pocketfft/LICENSE.md' else Path(name).name
+        entries['share/licenses/scikit-imagexx/'+dest] = source[name]
+        entries['scikit_imagexx-0.1.0.dist-info/licenses/'+name] = source[name]
+    for name in ('skimagexxConfig.cmake','skimagexxConfigVersion.cmake','skimagexxTargets.cmake','skimagexxTargets-release.cmake'):
+        entries['lib/cmake/skimagexx/'+name] = b'inert cmake'
+    entries['lib/libskimagexx.a'] = b'NOT A STATIC LIBRARY'
+    entries['skimagexx/_core.synthetic.so'] = b'NOT A NATIVE LIBRARY'
+    entries['scikit_imagexx-0.1.0.dist-info/METADATA'] = b'Name: scikit-imagexx\nVersion: 0.1.0\n'
+    entries['scikit_imagexx-0.1.0.dist-info/WHEEL'] = b'inert wheel metadata'
+    product=tmp_path/'current-inert.whl';wheel(product,entries)
+    archive=tmp_path/'current-inert-source.zip';revision='c'*40
+    with zipfile.ZipFile(archive,'w') as output:
+        output.comment=revision.encode()
+        for name,raw in source.items():output.writestr(name,raw)
+    return product,archive,revision
+
+
+@pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
+def test_current_source_plan_derives_full_closure_and_labels_sdk23(profile):
+    result=q.plan(ROOT,profile,236)
+    assert not result['blockers'] and result['readiness_only'] is True
+    assert result['product_scope']=='current236' and result['registry']['image_count']==236
+    assert result['product_members']==155 and result['SDK_members']==71
+    assert result['SDK_checks']==46 and 'legacy23' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==30
+    names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
+           for p in (ROOT/prefix).rglob('*') if p.is_file()]
+    layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
+    assert ('lib/skimagexx.lib' in layout['SDK_members']) == (profile=='windows')
+    assert 'lib/cmake/skimagexx/skimagexxTargets-'+('debug' if profile=='debug' else 'release')+'.cmake' in layout['SDK_members']
+
+
+@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector'))
+def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypatch,fault):
+    if fault=='unknown-api':
+        registry=q.registry_expectation(ROOT)
+        registry['functions'].append('util.unmapped_next_api');registry['image_count']+=1
+        monkeypatch.setattr(q,'registry_expectation',lambda _:registry)
+    else:
+        groups=q.groups_for_source(ROOT)
+        if fault=='missing-group':groups.pop('public-post203')
+        else:groups['public-post203']=tuple(n for n in groups['public-post203'] if n!='test_compare_images_public.py')
+        monkeypatch.setattr(q,'groups_for_source',lambda _:groups)
+    assert any('current qualification readiness:' in b for b in q.plan(ROOT,'modern')['blockers'])
+
+
+@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','wrong-scope'))
+def test_current_contract_rejects_missing_api_or_selector(fault):
+    data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_text())
+    if fault=='missing-api-map':data['post203_contracts'].pop('util.compare_images')
+    elif fault=='missing-required-selector':data['required_selectors'].remove('tests/test_blur_effect_public.py')
+    else:data['scope']='h_extrema23'
+    with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
+
+
+@pytest.mark.parametrize('fault',('extra-package','changed-sdk-install','extra-install'))
+def test_current_layout_rejects_unassessed_install_rules(fault):
+    def read(name):
+        raw=(ROOT/name).read_bytes()
+        if fault=='extra-package' and name=='pyproject.toml':raw=raw.replace(b'wheel.packages = ["python/skimagexx"]',b'wheel.packages = ["python/skimagexx", "python/extra"]')
+        if fault=='changed-sdk-install' and name=='CMakeLists.txt':raw=raw.replace(b'install(DIRECTORY include/',b'install(DIRECTORY other-include/')
+        if fault=='extra-install' and name=='CMakeLists.txt':raw+=b'\ninstall(FILES unassessed.bin DESTINATION share/extra)\n'
+        return raw
+    with pytest.raises(q.QualificationError):q.current_install_layout(read,['python/skimagexx/__init__.py','include/skimagexx/image.hpp'],'modern')
+
+
+@pytest.mark.parametrize('fault',(None,'same-count-substitution','extra-file','source-bytes','wrong-profile'))
+def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata_artifact,tmp_path,fault):
+    product,source,revision=current_metadata_artifact
+    if fault in ('same-count-substitution','extra-file','source-bytes'):
+        with zipfile.ZipFile(product) as archive:entries={n:archive.read(n) for n in archive.namelist() if not n.endswith('/RECORD')}
+        if fault=='same-count-substitution':entries['skimagexx/extra.py']=entries.pop('skimagexx/__init__.py')
+        elif fault=='extra-file':entries['skimagexx/extra.py']=b'# extra'
+        else:entries['skimagexx/__init__.py']=b'# different source'
+        product=tmp_path/'changed.whl';wheel(product,entries)
+    kwargs=dict(scope=q.CURRENT_PRODUCT_SCOPE,profile='windows' if fault=='wrong-profile' else 'modern')
+    if fault:
+        with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
+    else:
+        result=q.inspect_wheel(product,source,revision,**kwargs)
+        assert result['product_scope']=='current236' and result['record_verified']
+        with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
+        assert q.product_census('h_extrema23')==(120,68)
