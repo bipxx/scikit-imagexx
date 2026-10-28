@@ -1,0 +1,165 @@
+{
+  "schema": "current-product-qualification-review-v1",
+  "run": 40699555780,
+  "source_revision": "12fa2aad017573ed58c2a6687551f183aa4140ca",
+  "expected_native_images": 241,
+  "registered_functions": 244,
+  "status": "completed",
+  "conclusion": "failure",
+  "profiles": {
+    "windows": {
+      "status": "passed",
+      "raw_review": "windows-raw-review.json",
+      "raw_review_sha256": "a7e1e402a7e855dae2d37efdb428dfbf1cdf1122d1c7e5ae22360b1fbefb7911",
+      "qualification_manifest_sha256": "0d775588a6d660b7f583cca0648275e20b0ba72486554f2b981ff16eefcaf71f",
+      "xml": {
+        "tests": 223966,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 159,
+        "SDK_members": 71
+      },
+      "sealed_records_rehashed": 26542,
+      "sealed_bytes_rehashed": 2530359767,
+      "stager": {
+        "artifact": 12823879681,
+        "sha256": "899cac07240f2d1305f98301109eebdfbc29aad32d8968c6bf4d3425a7a1220d",
+        "status": "staged-unaccepted",
+        "verified_files": 1823
+      },
+      "stager_required": true
+    },
+    "modern": {
+      "status": "passed",
+      "raw_review": "modern-raw-review.json",
+      "raw_review_sha256": "894c70681335ab43964601e195e254f340593647c4a73d9ca1690c970d620064",
+      "qualification_manifest_sha256": "43f4d5529c92133ac76d26ad827dce8c9f75cc85aaf841fa087886e9ec05a547",
+      "xml": {
+        "tests": 223966,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 159,
+        "SDK_members": 71
+      },
+      "sealed_records_rehashed": 26462,
+      "sealed_bytes_rehashed": 2016618142,
+      "stager": {
+        "artifact": 12823801944,
+        "sha256": "37e49ec0c68be61e491e9a5cb9dcc526524c7daf1d8459faae57c8a952bc7341",
+        "status": "staged-unaccepted",
+        "verified_files": 1837
+      },
+      "stager_required": true
+    },
+    "debug": {
+      "status": "passed",
+      "raw_review": "debug-raw-review.json",
+      "raw_review_sha256": "8b5604ade903aace4b2101c42e52e806ad9cc9bf9b5eb525c39fc48d086dae5d",
+      "qualification_manifest_sha256": "48c15e0cdb0229f6b901f98be2c87a64f54e2441baafe5bc885a81bd17fbb9d8",
+      "xml": {
+        "tests": 223966,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 159,
+        "SDK_members": 71
+      },
+      "sealed_records_rehashed": 26385,
+      "sealed_bytes_rehashed": 2890488757,
+      "stager": null,
+      "stager_required": false
+    },
+    "minimum": {
+      "status": "failed-before-product-preparation",
+      "raw_review": "minimum-raw-review.json",
+      "raw_review_sha256": "744460329b4eee905082920b745ba3074b763a1a64ba9726ecf6934faa4f4e70",
+      "tooling_xml": {
+        "tests": 2052,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test": "tests/test_level_set_reference_metadata.py::test_linux_fixture_factory_and_observer_body_are_immutable",
+      "failure": "The test compared a Python3.11 AST dump with a Python3.13-specific hash. The observer source was unchanged.",
+      "scientific_tests_executed": 0,
+      "SDK_checks": 0,
+      "qualification_manifest_present": false
+    }
+  },
+  "executed_public_xml_totals": {
+    "tests": 671898,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_total_checks": 150,
+  "frozen_corpora_validated": 36,
+  "sealed_records_rehashed": 79389,
+  "sealed_bytes_rehashed": 7437466666,
+  "retained_artifacts": [
+    {
+      "id": 12820094428,
+      "name": "public-qualification-minimum",
+      "bytes": 22180,
+      "sha256": "41b3ecfa99c25381d832e8437573436e4395bc2eb7abab7136c748d5f2746678"
+    },
+    {
+      "id": 12823801944,
+      "name": "rank-statistics-product-modern",
+      "bytes": 195744697,
+      "sha256": "37e49ec0c68be61e491e9a5cb9dcc526524c7daf1d8459faae57c8a952bc7341"
+    },
+    {
+      "id": 12823879681,
+      "name": "rank-statistics-product-windows",
+      "bytes": 194593811,
+      "sha256": "899cac07240f2d1305f98301109eebdfbc29aad32d8968c6bf4d3425a7a1220d"
+    },
+    {
+      "id": 12823879828,
+      "name": "public-qualification-debug",
+      "bytes": 1557355126,
+      "sha256": "670164afeb2fe56f873f752653b7fac5734e4ade120aa9051df3e08f4db89873"
+    },
+    {
+      "id": 12824495459,
+      "name": "public-qualification-modern",
+      "bytes": 1233972453,
+      "sha256": "2c1084b65a6b1418555eca868da0ddc39ab9e08127eb63b65b30d82f52b9f9ba"
+    },
+    {
+      "id": 12824772581,
+      "name": "public-qualification-windows",
+      "bytes": 1156458454,
+      "sha256": "e6de6539307501d763f34cf79025d73d9a74a03b4fcba73b86621e62275f936f"
+    }
+  ],
+  "downloads": "Each artifact retained once. Seals were independently rehashed once per completed product.",
+  "later_guard_fix": {
+    "commit": "4d8e2f6941a1dcb97cd2c3bd4b7762d15a868fe4",
+    "change": "Hash the exact LF-normalized observer source segment from immutable revision75bc34e; no observation or production change.",
+    "retained_CPython31114_metadata_passed": 31,
+    "retained_CPython3138_metadata_passed": 31,
+    "applied_to_this_campaign": false
+  },
+  "accepted": false,
+  "accepted_baseline_images": 203,
+  "accepted203_receipt_sha256": "35e777741d5b5369c01c2f8409006464f2b97090ae1e2144ec917a9185149edb",
+  "performance_claim": false,
+  "products_from_other_sources_mixed": false,
+  "boundary": "Modern, Debug and Windows passed this exact source. Minimum produced no product acceptance evidence. The old failure remains failed; later fixes and optimizations require a fresh source-pinned campaign."
+}
