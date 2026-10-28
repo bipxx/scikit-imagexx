@@ -574,3 +574,11 @@ benchmarks/compare_images.py -text
 tests/test_compare_images_benchmark.py -text
 
 benchmarks/compare-images-minimum-initial.json -text
+tests/profile_coordinates_cases.py -text
+tests/test_profile_coordinates_public.py -text
+
+tests/test_profile_coordinates_native.cpp -text
+tests/profile_coordinates_golden.hpp -text
+src/resample.cpp -text
+src/resample_detail.hpp -text
+src/simd_resample_avx2.cpp -text
