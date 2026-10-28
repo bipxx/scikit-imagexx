@@ -11,6 +11,8 @@ import runpy
 import statistics
 import struct
 import textwrap
+import sys
+import types
 import xml.etree.ElementTree as ET
 import pytest
 
@@ -42,7 +44,9 @@ def test_fixed_transport_and_unchanged_admission_predicate():
         assert name+':\n        type: string\n        required: true'in WORKFLOW
     assert 'default:'not in WORKFLOW
     timed=WORKFLOW.split('      - name: Measure',1)[1].split('      - name:',1)[0]
-    assert timed.count('benchmarks/subdivide_polygon.py --threads 1 --repeat 7')==1
+    assert timed.count("str(source/'benchmarks/subdivide_polygon.py'),'--threads','1','--repeat','7'")==1
+    assert timed.count('result=delegate(*args,**kwargs)')==1
+    assert 'sched_setaffinity'not in timed
     assert timed.count('ci_measurement_artifacts.py verify')==2
     assert not re.search(r'pytest|cmake|ctest|pip install|pip wheel|__module__|setup.py',timed)
     assert '--no-index --no-deps --only-binary=:all: --require-hashes'in WORKFLOW
@@ -155,3 +159,54 @@ def test_actual_279_node_gate_requires_both_modules(tmp_path,fault):
     if fault:
         with pytest.raises(AssertionError):exec(code,ns)
     else:exec(code,ns)
+
+
+def launcher_source():
+    start=WORKFLOW.index('          cat > "$output/launch.py" <<\'PY\'\n')
+    lines=WORKFLOW[start:].splitlines()[1:]
+    end=lines.index('          PY')
+    return '\n'.join(line[10:]for line in lines[:end])+'\n'
+
+
+@pytest.mark.parametrize('fail',[False,True])
+def test_delegate_once_preserves_partial_returned_samples(tmp_path,monkeypatch,fail):
+    source=launcher_source();ast.parse(source)
+    product=tmp_path/'product';(product/'benchmarks').mkdir(parents=True)
+    (product/'build/prepared/ci-artifacts').mkdir(parents=True)
+    (product/'coverage/contracts').mkdir(parents=True)
+    runfile=product/'benchmarks/run.py';runfile.write_bytes(b'# inert measure module\n')
+    contract=dict(cases=[dict(case_id=str(i))for i in range(14)])
+    (product/'coverage/contracts/subdivide-polygon-benchmark.json').write_text(json.dumps(contract))
+    manifest=dict(source=dict(revision='a'*40,files_sha256={'benchmarks/run.py':hashlib.sha256(runfile.read_bytes()).hexdigest()}))
+    (product/'build/prepared/ci-artifacts/measurement.json').write_text(json.dumps(manifest))
+    output=tmp_path/'results';output.mkdir()
+    module=types.ModuleType('run');module.__file__=str(runfile);calls=[]
+    timing=dict(reference_ms=1.,cpp_ms=2.,speedup=.5,samples_ms=[[1.]*7,[2.]*7],loops=[3,4],sample_labels=['scikit-image','current'])
+    reference,native=object(),object()
+    def measure(*args,**kwargs):
+        calls.append((args,kwargs))
+        if fail and len(calls)==2:raise ValueError('forced second measure failure')
+        return timing
+    module.measure=measure
+    def harness(path,run_name):
+        assert run_name=='__main__'and (output/'process-before.json').is_file()
+        for _ in range(14):assert module.measure(reference,native,7,19)is timing
+        (output/'subdivide-polygon.json').write_text('{}')
+    monkeypatch.setattr(sys,'argv',['launch.py',str(product),str(output)])
+    monkeypatch.setattr(sys,'path',sys.path.copy())
+    monkeypatch.setitem(sys.modules,'run',module)
+    monkeypatch.setattr(runpy,'run_path',harness)
+    if fail:
+        with pytest.raises(ValueError,match='forced second measure failure'):exec(compile(source,'actual-launcher','exec'),{})
+    else:exec(compile(source,'actual-launcher','exec'),{})
+    final=json.loads((output/'process-after.json').read_bytes())
+    journal=[json.loads(line)for line in(output/'returned-measures.jsonl').read_text().splitlines()]
+    assert final['status']==('FAILED'if fail else'COMPLETE')
+    assert final['completed_measures']==len(journal)==(1 if fail else 14)
+    assert len(calls)==(2 if fail else 14)
+    assert all(args==(reference,native,7,19)and not kwargs for args,kwargs in calls)
+    assert all(row['timing']==timing and row['status']=='PENDING_FINAL_HARNESS_VALIDATION'for row in journal)
+    assert [row['case_id']for row in journal]==[str(i)for i in range(len(journal))]
+    if fail:assert final['failure']['type']=='ValueError'and 'forced second measure failure'in final['failure']['traceback']
+    else:assert final['failure']is None and final['report_exists']is True
+    assert "item['timing']"in SCRIPTS[2]and "len(journal) == len(report['results']) == 14"in SCRIPTS[2]

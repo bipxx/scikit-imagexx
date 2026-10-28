@@ -178,8 +178,43 @@ jobs:
           cd snapshot
           py="$RUNNER_TEMP/runtime/bin/python"
           "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-before.log"
+          cat > "$output/launch.py" <<'PY'
+          import hashlib,json,runpy,sys,traceback,os
+          from pathlib import Path
+          source,output=map(lambda x:Path(x).resolve(),sys.argv[1:])
+          manifest=json.loads((source/'build/prepared/ci-artifacts/measurement.json').read_bytes())
+          contract_path=source/'coverage/contracts/subdivide-polygon-benchmark.json'
+          contract=json.loads(contract_path.read_bytes());case_ids=[x['case_id']for x in contract['cases']]
+          assert len(case_ids)==14
+          initial=dict(status='STARTED',pid=os.getpid(),source_revision=manifest['source']['revision'],contract_sha256=hashlib.sha256(contract_path.read_bytes()).hexdigest())
+          (output/'process-before.json').write_text(json.dumps(initial,indent=2)+'\n')
+          completed=0;failure=None
+          try:
+              sys.path.insert(0,str(source/'benchmarks'))
+              import run
+              assert hashlib.sha256(Path(run.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==manifest['source']['files_sha256']['benchmarks/run.py']
+              delegate=run.measure
+              def retain_measure(*args,**kwargs):
+                  global completed
+                  assert len(args)==4 and args[2:]==(7,19) and not kwargs
+                  result=delegate(*args,**kwargs)
+                  with(output/'returned-measures.jsonl').open('a')as stream:
+                      stream.write(json.dumps(dict(case_index=completed,case_id=case_ids[completed],status='PENDING_FINAL_HARNESS_VALIDATION',timing=result))+'\n');stream.flush()
+                  completed+=1
+                  return result
+              run.measure=retain_measure
+              sys.argv=[str(source/'benchmarks/subdivide_polygon.py'),'--threads','1','--repeat','7','--output',str(output/'subdivide-polygon.json')]
+              runpy.run_path(sys.argv[0],run_name='__main__')
+              assert completed==14
+          except BaseException as error:
+              failure=dict(type=type(error).__name__,text=str(error),traceback=traceback.format_exc())
+              raise
+          finally:
+              final=dict(initial,status='FAILED'if failure else'COMPLETE',completed_measures=completed,failure=failure,report_exists=(output/'subdivide-polygon.json').is_file(),unreturned_measure_samples='Unavailable if current measure fails; all previously returned timing dictionaries retained')
+              (output/'process-after.json').write_text(json.dumps(final,indent=2)+'\n')
+          PY
           status=0
-          "$py" benchmarks/subdivide_polygon.py --threads 1 --repeat 7 --output "$output/subdivide-polygon.json" 2>&1 | tee "$output/subdivide-polygon.log" || status=$?
+          "$py" "$output/launch.py" "$PWD" "$output" 2>&1 | tee "$output/subdivide-polygon.log" || status=$?
           echo "$status" > "$output/benchmark-exit.txt"
           "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-after.log"
           test "$status" -eq 0
@@ -187,7 +222,7 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import ast, hashlib, json, math, runpy, statistics, struct
+          import ast, hashlib, json, math, os, runpy, statistics, struct
           from pathlib import Path
           def validate_report(report, contract, manifest, expected_source, pure, frozen_masks):
               meta = report['metadata']
@@ -260,7 +295,19 @@ jobs:
                   wins=[x['case_id'] for x in report['results'] if x['speedup'] > 1], losses=[x['case_id'] for x in report['results'] if x['speedup'] < 1],
                   scope='Initial original/current comparison only; every loss retained, no prior-C++ gain or full qualification claim.')
           report = json.loads(Path('results/subdivide-polygon.json').read_bytes())
+          before = json.loads(Path('results/process-before.json').read_bytes())
+          after = json.loads(Path('results/process-after.json').read_bytes())
+          assert before['status'] == 'STARTED' and after['status'] == 'COMPLETE' and after['failure'] is None
+          assert before['pid'] == after['pid'] and after['completed_measures'] == 14 and after['report_exists'] is True
+          journal = [json.loads(line) for line in Path('results/returned-measures.jsonl').read_text().splitlines()]
+          assert len(journal) == len(report['results']) == 14
+          for index, (item, row) in enumerate(zip(journal, report['results'])):
+              assert item['case_index'] == index and item['case_id'] == row['case_id'] and item['status'] == 'PENDING_FINAL_HARNESS_VALIDATION'
+              assert set(item['timing']) == {'reference_ms','cpp_ms','speedup','samples_ms','loops','sample_labels'}
+              assert all(row[key] == value for key, value in item['timing'].items())
           contract_path = Path('snapshot/coverage/contracts/subdivide-polygon-benchmark.json')
+          assert before['source_revision'] == after['source_revision'] == os.environ['PRODUCER_REVISION']
+          assert before['contract_sha256'] == after['contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
           assert report['metadata']['contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
           expected_source = runpy.run_path('snapshot/benchmarks/provenance.py')['source_fingerprint'](Path('snapshot'))
           # Load only already-frozen pure stdlib functions; importing main is unnecessary.
