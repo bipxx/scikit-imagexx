@@ -589,3 +589,5 @@ benchmarks/level-set-minimum-initial.json -text
 tests/data/fft-angle-nearest.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 benchmarks/map-array-minimum-initial.json -text
 benchmarks/map-array-small-same-host.json -text
+
+benchmarks/label-points-minimum-initial.json -text
