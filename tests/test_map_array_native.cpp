@@ -75,6 +75,19 @@ void controls(std::ofstream& stream,int workers){
         // Empty mappings must zero every destination without a value read.
         exercise({0,1,top},{},{},width,bits,std::ptrdiff_t(width),std::ptrdiff_t(width),false,workers,stream);
     }
+    for(std::size_t width:{1u,2u,4u,8u,16u})for(unsigned bits:{8u,16u,32u,64u})
+        for(std::size_t size:{8u,9u}) {
+            std::vector<std::uint64_t> keys(size);
+            for(std::size_t k=0;k<size;++k)keys[k]=k%3==0?top-k:k*100003;
+            keys.back()=keys.front();const auto values=words(size,width);
+            for(std::size_t count:{3u,4u,5u,17u,263177u}) {
+                std::vector<std::uint64_t> indices(count);
+                for(std::size_t i=0;i<count;++i)indices[i]=i%3?keys[i%size]:top-19;
+                for(int stride:{-2,1,3})exercise(indices,keys,values,width,bits,
+                    -std::ptrdiff_t(width*2),std::ptrdiff_t(width)*stride,false,workers,stream);
+            }
+            exercise(keys,keys,values,width,bits,-std::ptrdiff_t(width*2),-std::ptrdiff_t(width*2),true,workers,stream);
+        }
     for(std::size_t width:{1u,2u,4u,8u,16u})for(bool sparse:{false,true}){
         std::vector<std::uint64_t> keys=sparse?std::vector<std::uint64_t>{0,top,top/2,1}:std::vector<std::uint64_t>{0,1,3,7};
         std::vector<std::uint64_t> indices(263177);for(std::size_t i=0;i<indices.size();++i)indices[i]=i%5==0?top:std::uint64_t(i%9);

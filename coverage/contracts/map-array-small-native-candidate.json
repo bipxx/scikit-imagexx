@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "status": "prospective_before_candidate_edits_or_outputs",
+  "baseline_revision": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
+  "measured_baseline_revision": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
+  "baseline_run": 40685511797,
+  "baseline_artifact": 12814229633,
+  "frozen_at": "2026-10-28T12:27:11.951171+00:00",
+  "deadline": "2026-10-28T14:27:11.951171+00:00",
+  "time_limit_hours": 2,
+  "variants": 1,
+  "owned_candidate_files": [
+    "src/map_array.hpp",
+    "src/map_array.cpp",
+    "src/simd_map_array_avx2.cpp",
+    "tests/test_map_array_native.cpp"
+  ],
+  "baseline_native_sha256": {
+    "src/map_array.hpp": "dd12067792cb798f0e0670a5b8035bd572a86324bd14df98f3051713f8174cbc",
+    "src/map_array.cpp": "04406aba140e984d10982d3dca50a13c44da66d04b5f30c6437912dcb8f8a4b1",
+    "src/simd_map_array_avx2.cpp": "29a18bd6afc69e2081139dc05955028506a3f14267089ecc101e67256769d9b8",
+    "tests/test_map_array_native.cpp": "61f5b88e8a489f6f7faf6983d0c98493418b7c173959bcb0de25ffc6ac07d535"
+  },
+  "harness_sha256": "a6f25c1e7fe60ab9a86cb38406a2a49054a052d1b0e29dc555545a1cb021667b",
+  "workload_contract_sha256": "360e96314eb6e4ddbbab566acd23790ab8e8dfe38e7a1525242132f980dc17b8",
+  "workload_contract": "coverage/contracts/map-array-benchmark.json",
+  "cases": 9,
+  "rounds": 7,
+  "target_ms": 19,
+  "workers": 1,
+  "paired_order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "total_raw_samples": 504,
+  "targets": [
+    "signed64-sparse-f64-256",
+    "signed64-sparse-f64-1024",
+    "strided-out-u8-f32-65536"
+  ],
+  "preserve_original_wins": [
+    "dense-u8-u16-64",
+    "dense-u8-u16-256",
+    "dense-u8-u16-1024",
+    "uint64-wide-c128-1024",
+    "strided-u16-u32-512"
+  ],
+  "keep_criteria": {
+    "direct_overall_geomean_strictly_greater": 1.03,
+    "normalized_overall_geomean_strictly_greater": 1.03,
+    "each_target_repeat_direct_geomean_strictly_greater": 1.03,
+    "each_target_repeat_normalized_geomean_strictly_greater": 1.03,
+    "preserve_all_five_original_wins": true,
+    "all_native_and_public_parity_gates": true,
+    "finish_before_deadline": true
+  },
+  "native_gates": [
+    "six normal/scalar/portable/sanitizer modes",
+    "all74 frozen profile returns unchanged",
+    "small-map8/9 boundary",
+    "all item widths and signed strides",
+    "aliases and duplicate last-wins",
+    "FP flags/rounding unchanged",
+    "workers1/4 global setting unchanged"
+  ],
+  "measurement_transport": "Approved genuine full-product baseline b08 and candidate wheels with exact baseline13dependencies; unchanged harness and genuine xx._core guard; parent dispatch only",
+  "report_all_original_wins_losses": true,
+  "no_local_timings": true,
+  "no_local_full_sdk_or_environment_rebuild": true,
+  "no_abi_binder_frontend_tolerance_changes": true,
+  "initial_freeze_main_revision": "ffaf4523d4442d2c7722e222600adaddd8f23c67",
+  "transport_base_correction": "Parent requested exact measured source before first compile/output; four owned baseline files identical, freeze clock unchanged. Candidate source already prospectively frozen, no build/output/timing yet."
+}
