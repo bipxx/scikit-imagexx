@@ -55,8 +55,12 @@ def compare_images(image0, image1, *, method='diff', n_tiles=(8, 8)):
             and img1.dtype.char in 'fd' and img2.dtype.char in 'fd'
             and not (np.__version__ == '1.24.4' and img1.ndim == 0
                      and img1.dtype.char == img2.dtype.char == 'f' and selected == 1)):
-        first = np.require(img1, dtype=img1.dtype.newbyteorder('='), requirements=('C', 'A', 'O'))
-        second = np.require(img2, dtype=img2.dtype.newbyteorder('='), requirements=('C', 'A', 'O'))
+        first = img1 if (img1.flags.c_contiguous and img1.dtype.isnative
+                         and img1.flags.aligned and img1.flags.owndata) else np.require(
+            img1, dtype=img1.dtype.newbyteorder('='), requirements=('C', 'A', 'O'))
+        second = img2 if (img2.flags.c_contiguous and img2.dtype.isnative
+                          and img2.flags.aligned and img2.flags.owndata) else np.require(
+            img2, dtype=img2.dtype.newbyteorder('='), requirements=('C', 'A', 'O'))
         direct_output = (img1.flags.c_contiguous and img2.flags.c_contiguous
                          and img1.dtype.isnative and img2.dtype.isnative
                          and img1.dtype.metadata is None and img2.dtype.metadata is None)

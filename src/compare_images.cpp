@@ -41,24 +41,33 @@ bool finite(CompareInput input,std::size_t count) {
 #endif
     return input.type==PixelType::float32?finite(static_cast<const float*>(input.data),count):finite(static_cast<const double*>(input.data),count);
 }
-template<class A,class B,class O>void span_typed(const A* first,const B* second,O* output,std::size_t count,CompareMethod method) {
+template<class T>bool finite_value(T value) {
+    using U=std::conditional_t<std::is_same_v<T,float>,std::uint32_t,std::uint64_t>;
+    const U exponent=std::is_same_v<T,float>?U(0x7f800000):U(0x7ff0000000000000ULL);
+    U bits;std::memcpy(&bits,&value,sizeof(T));return (bits&exponent)!=exponent;
+}
+template<class A,class B,class O>bool span_typed(const A* first,const B* second,O* output,std::size_t count,CompareMethod method) {
+    bool all_finite=true;
     for(std::size_t i=0;i<count;++i){
         if(method==CompareMethod::checkerboard){output[i]=O(first[i]);continue;}
-        const O left=O(first[i]),right=O(second[i]);
+        const A a=first[i];const B b=second[i];
+        all_finite&=finite_value(a)&finite_value(b);
+        const O left=O(a),right=O(b);
         const O middle=method==CompareMethod::blend?O(right+left):O(right-left);
         output[i]=method==CompareMethod::blend?O(O(.5)*middle):std::fabs(middle);
     }
+    return all_finite;
 }
-void span(CompareInput first,CompareInput second,void* output,std::size_t count,PixelType output_type,CompareMethod method) {
-    std::size_t done=0;
+bool span(CompareInput first,CompareInput second,void* output,std::size_t count,PixelType output_type,CompareMethod method) {
+    std::size_t done=0;bool all_finite=true;
 #ifdef SKIMAGEXX_AVX2
-    if(has_avx2())done=simd::compare_span(first.data,second.data,output,count,first.type,second.type,output_type,method);
+    if(has_avx2())done=simd::compare_span(first.data,second.data,output,count,first.type,second.type,output_type,method,all_finite);
 #endif
     const auto* a=static_cast<const unsigned char*>(first.data)+done*(first.type==PixelType::float32?4:8);
     const auto* b=static_cast<const unsigned char*>(second.data)+done*(second.type==PixelType::float32?4:8);
     auto* o=static_cast<unsigned char*>(output)+done*(output_type==PixelType::float32?4:8);
     count-=done;
-#define SELECT(A,B,O) span_typed(reinterpret_cast<const A*>(a),reinterpret_cast<const B*>(b),reinterpret_cast<O*>(o),count,method)
+#define SELECT(A,B,O) all_finite&=span_typed(reinterpret_cast<const A*>(a),reinterpret_cast<const B*>(b),reinterpret_cast<O*>(o),count,method)
     if(output_type==PixelType::float32){
         if(first.type==PixelType::float32){if(second.type==PixelType::float32)SELECT(float,float,float);else SELECT(float,double,float);}
         else {if(second.type==PixelType::float32)SELECT(double,float,float);else SELECT(double,double,float);}
@@ -67,6 +76,7 @@ void span(CompareInput first,CompareInput second,void* output,std::size_t count,
         else {if(second.type==PixelType::float32)SELECT(double,float,double);else SELECT(double,double,double);}
     }
 #undef SELECT
+    return all_finite;
 }
 CompareInput offset(CompareInput input,std::size_t index){input.data=static_cast<const unsigned char*>(input.data)+index*(input.type==PixelType::float32?4:8);return input;}
 }
@@ -94,13 +104,13 @@ bool compare_images_into(CompareInput first,CompareInput second,void* output,std
     // chunk; each OpenMP worker captures/restores its own established environment.
     {
         Capture caller(refused);if(!caller.ready())return false;
-        if(!finite(first,count)||!finite(second,count))return false;
+        if(method==CompareMethod::checkerboard&&(!finite(first,count)||!finite(second,count)))return false;
         const int team=count>=parallel_min?workers:1;
         const std::size_t units=method==CompareMethod::checkerboard?grid.rows:count;
         partition(units,team,[&](auto begin,auto end,auto){
             Capture worker(refused);if(!worker.ready())return;
             if(method!=CompareMethod::checkerboard){
-                span(offset(first,begin),offset(second,begin),static_cast<unsigned char*>(output)+begin*output_size,end-begin,output_type,method);return;
+                if(!span(offset(first,begin),offset(second,begin),static_cast<unsigned char*>(output)+begin*output_size,end-begin,output_type,method))refused.store(true);return;
             }
             const auto covered_rows=grid.row_tiles&&grid.column_tiles?grid.row_step*grid.row_tiles:0;
             for(auto row=begin;row<end;++row){

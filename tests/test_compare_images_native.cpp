@@ -106,6 +106,93 @@ void grids(std::ofstream& stream,int workers){
     }
 }
 }
+namespace fused_controls {
+std::size_t checks=0;std::ofstream journal;
+void check(bool value){if(!value)throw std::runtime_error("prospective fused control "+std::to_string(checks));++checks;}
+template<class T>constexpr PixelType tag(){return std::is_same_v<T,float>?PixelType::float32:PixelType::float64;}
+template<class T>void poison(T* p,unsigned pattern){
+    using U=std::conditional_t<std::is_same_v<T,float>,std::uint32_t,std::uint64_t>;
+    constexpr unsigned mantissa=std::is_same_v<T,float>?23:52;
+    constexpr U exponent=std::is_same_v<T,float>?U(0x7f800000):U(UINT64_C(0x7ff0000000000000));
+    U bits=exponent;
+    if(pattern%3==1)bits|=U(1);                    // signaling NaN
+    if(pattern%3==2)bits|=U(1)<<(mantissa-1);      // quiet NaN
+    if(pattern>=3)bits|=U(1)<<(sizeof(T)*8-1);     // both signs, including infinity
+    std::memcpy(p,&bits,sizeof(T));
+}
+template<class A,class B,class O>void reject(std::size_t n,std::size_t position,unsigned slot,
+    unsigned pattern,CompareMethod method,CompareGrid grid,int workers,int flags){
+    std::vector<A>a(n,A(.25));std::vector<B>b(n,B(.5));std::vector<O>output(n+2,O(-123));
+    if(slot==0||slot==2||slot==3)poison(a.data()+position,pattern);else poison(b.data()+position,pattern);
+    if(slot==2)poison(b.data()+position,pattern);
+    if(slot==3)poison(a.data(),pattern);
+    if(slot==4)poison(b.data(),pattern);
+    const auto saved_a=a;const auto saved_b=b;
+    std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(flags);const int entered=std::fetestexcept(FE_ALL_EXCEPT);
+    const bool accepted=compare_images_into({a.data(),tag<A>()},{b.data(),tag<B>()},output.data()+1,n,method,grid,workers);
+    check(!accepted);check(std::fetestexcept(FE_ALL_EXCEPT)==entered);
+    check(output.front()==O(-123)&&output.back()==O(-123));
+    check(std::memcmp(a.data(),saved_a.data(),n*sizeof(A))==0);
+    check(std::memcmp(b.data(),saved_b.data(),n*sizeof(B))==0);
+    journal.write(reinterpret_cast<const char*>(&accepted),sizeof(accepted));journal.write(reinterpret_cast<const char*>(&entered),sizeof(entered));
+}
+template<class A,class B>void pair(int workers){
+    using O=std::conditional_t<std::is_same_v<A,double>||std::is_same_v<B,double>,double,float>;
+    for(std::size_t n=1;n<=33;++n){
+        // All scalar tails modulo4/8 and several complete packet boundaries.
+        for(std::size_t position=0;position<n;++position)for(unsigned slot:{0u,1u})
+        for(unsigned pattern=0;pattern<6;++pattern)for(auto method:{CompareMethod::diff,CompareMethod::blend})
+        for(int flags:{0,FE_DIVBYZERO,FE_INVALID|FE_OVERFLOW,FE_UNDERFLOW|FE_INEXACT})
+            reject<A,B,O>(n,position,slot,pattern,method,{},workers,flags);
+    }
+    // Both operands and repeated hits must not cancel in the accumulated mask.
+    for(unsigned slot:{2u,3u,4u})for(auto method:{CompareMethod::diff,CompareMethod::blend})
+        reject<A,B,O>(33,16,slot,2,method,{},workers,FE_INVALID);
+    // Actual parallel threshold and each worker chunk/tail. Quiet NaNs require
+    // the finite mask even when arithmetic itself raises no exception.
+    const std::size_t n=263169;
+    for(std::size_t position:{std::size_t(0),n/4,n/4+1,n/2,n/2+1,3*n/4,3*n/4+1,n-1})
+    for(unsigned slot:{0u,1u})for(auto method:{CompareMethod::diff,CompareMethod::blend})
+        reject<A,B,O>(n,position,slot,2,method,{},workers,FE_DIVBYZERO);
+    // Preserve the existing whole-input checker admission, even for an unused
+    // nonfinite input. Checker output dtype remains the first input's dtype.
+    for(std::size_t count:{1u,4u,8u,17u}){
+        reject<A,B,A>(count,count-1,1,2,CompareMethod::checkerboard,{1,count,1,count,1,1},workers,FE_INVALID);
+        reject<A,B,A>(count,0,0,0,CompareMethod::checkerboard,{1,count,0,0,0,0},workers,FE_DIVBYZERO);
+    }
+    // Zero-sign rules are source-provable and were not fully covered by the
+    // old same-type diff-only exceptional cohort.
+    for(unsigned signs=0;signs<4;++signs)for(auto method:{CompareMethod::diff,CompareMethod::blend}){
+        std::vector<A>a(17,signs&1?A(-0.):A(0.));std::vector<B>b(17,signs&2?B(-0.):B(0.));std::vector<O>output(19,O(-123));
+        std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
+        check(compare_images_into({a.data(),tag<A>()},{b.data(),tag<B>()},output.data()+1,17,method,{},workers));
+        check(std::fetestexcept(FE_ALL_EXCEPT)==flags);check(output.front()==O(-123)&&output.back()==O(-123));
+        for(std::size_t i=1;i<=17;++i){check(output[i]==O(0.));check(std::signbit(output[i])==(method==CompareMethod::blend&&signs==3));}
+    }
+    // Exponent-zero finite values must not be rejected as nonfinite. The
+    // subtraction of equal representable subnormals is exactly positive zero.
+    const double tiny=(std::is_same_v<A,float>||std::is_same_v<B,float>)?double(std::numeric_limits<float>::denorm_min()):std::numeric_limits<double>::denorm_min();
+    for(std::size_t count:{1u,4u,8u,9u,17u,33u}){
+        std::vector<A>a(count,A(tiny));std::vector<B>b(count,B(tiny));std::vector<O>output(count+2,O(-123));
+        std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_INVALID);const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
+        check(compare_images_into({a.data(),tag<A>()},{b.data(),tag<B>()},output.data()+1,count,CompareMethod::diff,{},workers));
+        check(std::fetestexcept(FE_ALL_EXCEPT)==flags);check(output.front()==O(-123)&&output.back()==O(-123));
+        for(std::size_t i=1;i<=count;++i)check(output[i]==O(0.)&&!std::signbit(output[i]));
+    }
+}
+
+void run(const std::string& path){
+    journal.open(path+".fused-controls.bin",std::ios::binary);check(bool(journal));check(get_num_threads()==1);
+    for(int workers:{1,4}){
+#ifndef _OPENMP
+            if(workers!=1)continue;
+#endif
+            set_num_threads(workers);pair<float,float>(workers);pair<float,double>(workers);pair<double,float>(workers);pair<double,double>(workers);
+        }
+        set_num_threads(1);std::feclearexcept(FE_ALL_EXCEPT);check(get_num_threads()==1);
+    std::cout<<checks<<" prospective fused controls PASS\n";
+}
+}
 int main(int argc,char**argv){
     try{
         require(argc==2||argc==3);std::ofstream stream(argv[1],std::ios::binary);require(bool(stream));
@@ -122,6 +209,7 @@ int main(int argc,char**argv){
         require(!compare_images_into({&a,PixelType::float64},{&b,PixelType::float64},&o,1,CompareMethod::checkerboard,{1,1,0,1,1,1},1));
         require(compare_images_into({nullptr,PixelType::float64},{nullptr,PixelType::float32},nullptr,0,CompareMethod::diff,{},1));
         std::feclearexcept(FE_ALL_EXCEPT);std::fesetround(initial_round);require(get_num_threads()==1);
+        fused_controls::run(argv[1]);
         std::cout<<checks<<" Compare controls PASS avx2="<<has_avx2()<<" workers=1\n";
     }catch(const std::exception& exc){std::cerr<<exc.what()<<"\n";return 1;}
 }
