@@ -1,0 +1,269 @@
+{
+  "schema": "montage-row-owned-v2-candidate-v1",
+  "status": "SEALED_BEFORE_V2_NATIVE_EDITS_OR_OUTPUTS",
+  "created_utc": "2026-10-28T23:51:31.114204+00:00",
+  "variant_limit": 1,
+  "source_base": "6b22e64641a702c92873c376ff650cd8c8764d0d",
+  "baseline_source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "baseline_producer_run": 40778508940,
+  "baseline_artifact": 12855199919,
+  "baseline_artifact_sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96",
+  "hypothesis": "STRUCTURAL source mechanism: nonzero pixel_bytes1 uses dynamic memcpy doubling for fill spans. Replace only that path with memset of the exact raw fill byte. This is not measured stage attribution or an old-host causal claim.",
+  "allowed_source_files": [
+    "src/montage.cpp",
+    "tests/test_montage_native.cpp"
+  ],
+  "contract_path": "coverage/contracts/montage-row-owned-v2-candidate.json",
+  "header_change": {
+    "kind": "NONE",
+    "invariant": "Public header, ABI and all descriptors/invariants are byte-exact to parent6b; the previously authorized row-owned scheduling comment remains unchanged."
+  },
+  "unchanged": [
+    "All Python frontend/provider/decorator order and binder",
+    "Public structs/signatures and private montage.hpp forwarding header",
+    "All original captures/factories/observers/71 native fixture records",
+    "All nine benchmark cases/input generation/warmup/calibration/rounds/timed public boundary",
+    "Every closed report, decision and tolerance"
+  ],
+  "algorithm": [
+    "In the existing fill_span lambda replace only if(zero) with if(zero||pixel_bytes==1), and memset(start,0,bytes) with memset(start,*fill,bytes).",
+    "The existing if(!bytes)return remains first. For zero patterns *fill is exactly0; for pixel_bytes1 it is the entire raw byte pattern. No arithmetic, allocation, dispatch, scheduling, provider, ABI or other production change.",
+    "All other production files and every other montage.cpp byte stay exact to parent6b. The original v1 contract is retained byte-exact."
+  ],
+  "simd_reuse": {
+    "source": "61b4f79821b0c7fd0d224e2a12d4263d14308cb7:src/simd_montage_avx2.cpp",
+    "sha256_lf": "5368a5bffa49cc1c12f1eae2acff20fec1f2a28d272b72bef8f0d3c022132f57",
+    "change": "None in the proven 23-line function; no new kernel variant or expanded vector load span."
+  },
+  "correctness": {
+    "six_modes": [
+      "OpenMP normal",
+      "OpenMP scalar forced",
+      "portable normal",
+      "portable scalar forced",
+      "ASan+UBSan normal",
+      "ASan+UBSan scalar forced"
+    ],
+    "fixture_path": "build/montage-native-v1-private-v1/native-v1/genuine-montage.bin",
+    "fixture_sha256": "bd0a8406c5170271c6c984ae497db6dd14427fbe8894966dae5c1d9d402ec335",
+    "fixture_records": 71,
+    "old_stream_sha256": "5972841f30fb75800e85e1479e3a5539e31f831b19a44ed40b174d8b7b9dee2f",
+    "old_stream_bytes": 13824,
+    "old_case_worker_combinations": 432,
+    "must_preserve": "All v1 assertions, all four rounding modes/FP flags/global workers1,4/canaries/input mutation and full v1 stream prefix byte-exact in all six modes. No original calls.",
+    "real_additive_gaps": [
+      "Exhaustive raw fill bytes0 through255 in a padded/incomplete uint8 single-channel grid; alternating signed input strides",
+      "One uint8 single-channel nonzero fill above parallel threshold at workers1 and4"
+    ],
+    "test_scope": "Only append the new exhaustive byte-fill block after every v1 invocation, preserving the ENTIRE1728-word v1 stream prefix and immutable71 fixture records.",
+    "old_stream_words": 1728
+  },
+  "case_ids": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "gray-mean-f64",
+    "rgb-padded-u8",
+    "rgb-first-f32",
+    "gray-strided-reverse-f32",
+    "gray-fortran-f64"
+  ],
+  "target_case": "gray-strided-reverse-f32",
+  "preserved_original_wins": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "rgb-padded-u8",
+    "rgb-first-f32"
+  ],
+  "measurement": {
+    "status": "PROSPECTIVE_ONLY_ROOT_DISPATCH_AFTER_SOURCE_AND_GENUINE_PRODUCT_REVIEW",
+    "order": [
+      "A",
+      "B",
+      "B",
+      "A",
+      "B",
+      "A",
+      "A",
+      "B"
+    ],
+    "same_product_null_pairs": [
+      [
+        2,
+        3
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "threads": 1,
+    "reference_pools": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "cases": 9,
+    "raw_samples": 1008,
+    "affinity": "One initially permitted CPU selected once for all eight independent subprocess passes before imports.",
+    "harness_sha256_lf": "93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd",
+    "workloads_sha256": "434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68",
+    "source_products": "A exact admitted247 base; B one fresh genuine prepare-only product. Same13 dependency wheel hashes and runtime identities. No build/test on timing host.",
+    "retention": "All complete raw reports and losses retained; unchanged-measure launcher journals each returned dictionary outside timers, initial/final PID/affinity/exit/identity receipts. Unreturned current-measure samples unavailable.",
+    "estimators": "Balanced baseline is geometric mean of all four A pass medians. Direct=GM(A CPP)/GM(B CPP); normalized=GM(B original/CPP)/GM(A original/CPP); each candidate pass compared to the same balanced A.",
+    "deadline": "2026-10-29T00:59:41Z"
+  },
+  "gate": {
+    "overall_direct_GM_gt": 1.05,
+    "overall_normalized_GM_gt": 1.05,
+    "target_each_B_pass_vs_balanced_A_direct_gt": 1.5,
+    "target_each_B_pass_vs_balanced_A_normalized_gt": 1.5,
+    "target_each_B_pass_original_gt": 1.0,
+    "each_other_eight_balanced_direct_gte": 0.97,
+    "each_other_eight_balanced_normalized_gte": 0.97,
+    "each_preserved_original_win_each_B_pass_gt": 1.0,
+    "rgb_first_each_B_pass_direct_gte": 0.97,
+    "rgb_first_each_B_pass_normalized_gte": 0.97,
+    "all_source_identity_parity_FP_deadline_required": true
+  },
+  "logical_writes_not_hardware_traffic": [
+    {
+      "case_id": "gray-small-u8",
+      "output_bytes": 4096,
+      "occupied_tile_bytes": 4096,
+      "old_logical_output_writes": 8192,
+      "new_logical_output_writes": 4096,
+      "eliminated_logical_fill_bytes": 4096,
+      "hole_fill_bytes": 0
+    },
+    {
+      "case_id": "gray-incomplete-u8",
+      "output_bytes": 150544,
+      "occupied_tile_bytes": 114688,
+      "old_logical_output_writes": 265232,
+      "new_logical_output_writes": 150544,
+      "eliminated_logical_fill_bytes": 114688,
+      "hole_fill_bytes": 35856
+    },
+    {
+      "case_id": "gray-dense-f32",
+      "output_bytes": 1048576,
+      "occupied_tile_bytes": 1048576,
+      "old_logical_output_writes": 2097152,
+      "new_logical_output_writes": 1048576,
+      "eliminated_logical_fill_bytes": 1048576,
+      "hole_fill_bytes": 0
+    },
+    {
+      "case_id": "gray-large-u16",
+      "output_bytes": 1843200,
+      "occupied_tile_bytes": 1843200,
+      "old_logical_output_writes": 3686400,
+      "new_logical_output_writes": 1843200,
+      "eliminated_logical_fill_bytes": 1843200,
+      "hole_fill_bytes": 0
+    },
+    {
+      "case_id": "gray-mean-f64",
+      "output_bytes": 2728448,
+      "occupied_tile_bytes": 2064384,
+      "old_logical_output_writes": 4792832,
+      "new_logical_output_writes": 2728448,
+      "eliminated_logical_fill_bytes": 2064384,
+      "hole_fill_bytes": 664064
+    },
+    {
+      "case_id": "rgb-padded-u8",
+      "output_bytes": 451632,
+      "occupied_tile_bytes": 442368,
+      "old_logical_output_writes": 894000,
+      "new_logical_output_writes": 451632,
+      "eliminated_logical_fill_bytes": 442368,
+      "hole_fill_bytes": 9264
+    },
+    {
+      "case_id": "rgb-first-f32",
+      "output_bytes": 1051392,
+      "occupied_tile_bytes": 995328,
+      "old_logical_output_writes": 2046720,
+      "new_logical_output_writes": 1051392,
+      "eliminated_logical_fill_bytes": 995328,
+      "hole_fill_bytes": 56064
+    },
+    {
+      "case_id": "gray-strided-reverse-f32",
+      "output_bytes": 535612,
+      "occupied_tile_bytes": 524288,
+      "old_logical_output_writes": 1059900,
+      "new_logical_output_writes": 535612,
+      "eliminated_logical_fill_bytes": 524288,
+      "hole_fill_bytes": 11324
+    },
+    {
+      "case_id": "gray-fortran-f64",
+      "output_bytes": 1604768,
+      "occupied_tile_bytes": 1572864,
+      "old_logical_output_writes": 3177632,
+      "new_logical_output_writes": 1604768,
+      "eliminated_logical_fill_bytes": 1572864,
+      "hole_fill_bytes": 31904
+    }
+  ],
+  "risk": "For each nonempty fill span, typed fill is already valid and readable; when zero is true its first byte is0. The existing zero-byte early return prevents new reads for empty spans. Memset replicates precisely the one-byte pattern. Exhaustive raw-byte and immutable-prefix tests verify this narrow change.",
+  "sealed_by": "Root distinct focused v2 authorization; same final deadline and gates",
+  "deadline_utc": "2026-10-29T00:59:41Z",
+  "measurement_variance_rule": {
+    "null_ratio_interval": [
+      0.97,
+      1.0309278350515465
+    ],
+    "scope": "Each of the eight non-target controls independently, separately for direct and normalized metrics. Inspect both same-product null pairs B2/B3 and A6/A7.",
+    "direct_null_ratio": "Earlier CPP median / later CPP median for each same-product pair.",
+    "normalized_null_ratio": "Later original/CPP ratio / earlier original/CPP ratio for each same-product pair.",
+    "if_either_null_ratio_outside_interval": "Require worst observed A/B gain >=0.97 for THAT control and THAT metric. Otherwise UNRESOLVED_MEASUREMENT. No blanket null-band veto or relaxed floors.",
+    "worst_direct": "min(all four A CPP pass medians) / max(all four B CPP pass medians)",
+    "worst_normalized": "min(all four B original/CPP ratios) / max(all four A original/CPP ratios)",
+    "always_publish": "All direct/reference/normalized null ratios, all A/B pass values and both worst-pair gains for every control.",
+    "invariants": "All fixed balanced3% floors, RGB-first per-pass floors, target/global/original gates remain required. Large separated gains may pass despite observed null variance; do not label that measurement stable.",
+    "variant_limit": 1,
+    "automatic_reruns": 0
+  },
+  "parent_v1": {
+    "source": "6b22e64641a702c92873c376ff650cd8c8764d0d",
+    "contract_sha256": "64c10577317d77e6b39a206904f578b06db68ee2be3745d8a3d646100f184bdb",
+    "run": 40788962721,
+    "artifact": 12861315431,
+    "artifact_sha256": "6d3ebbe46b7a06e81f393548c5a9c222e2e462f50eb11dbb4a6f33efb1f80c73",
+    "decision": "UNRESOLVED_MEASUREMENT",
+    "fixed_incomplete_direct_gain": 0.86219209854783,
+    "fixed_incomplete_normalized_gain": 0.8724820749484824,
+    "preservation": "V1 source, sealed contract, decision and all raw data remain immutable. This is a distinct focused v2, not a retune or relabel of v1."
+  },
+  "confirmed_source_mechanism": {
+    "case_id": "gray-incomplete-u8",
+    "fill_byte": 17,
+    "pixel_bytes": 1,
+    "nonzero_fill_spans": [
+      {
+        "length": 1,
+        "count": 1152,
+        "v1_memcpy_calls": 1152
+      },
+      {
+        "length": 259,
+        "count": 128,
+        "v1_memcpy_calls": 1280
+      },
+      {
+        "length": 388,
+        "count": 4,
+        "v1_memcpy_calls": 40
+      }
+    ],
+    "v1_total_fill_memcpy_calls": 2472,
+    "v2_expected_fill_memset_calls": 1284,
+    "baseline4f_whole_fill_memcpy_calls": 19,
+    "note": "The128 unused spans are259 bytes, including256 unused tile bytes plus3 padding bytes. Source-level counts only; frozen codegen confirms initial/doubling memcpy calls and loop backedge, not their elapsed-time share."
+  }
+}
