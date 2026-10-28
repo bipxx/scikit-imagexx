@@ -1,0 +1,46 @@
+name: LPI inverse NEW HOST stage diagnostic
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  stages:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13.16'
+      - name: Frozen donor plan, no scientific import
+        shell: pwsh
+        run: python tools/lpi_inverse_stage_probe.py plan --output build/lpi-inverse-stage-probe
+      - name: Offline exact donor product and runtime; only four frozen cases in both modes
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/lpi_inverse_stage_probe.py all --output build/lpi-inverse-stage-probe
+      - name: Preserve NEW HOST stage arrays, frozen predicate failures, and receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lpi-inverse-stages-NEW-HOST
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            build/lpi-inverse-stage-probe/*.json
+            build/lpi-inverse-stage-probe/*.txt
+            build/lpi-inverse-stage-probe/*.stdout
+            build/lpi-inverse-stage-probe/*.stderr
+            build/lpi-inverse-stage-probe/observations/
