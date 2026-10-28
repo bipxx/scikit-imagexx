@@ -15,7 +15,7 @@ WHEEL_SHA = 'd8e5b19d884211222fcdf898218f224785bc23cbc433beb99c149f167449b34a'
 SOURCE_SHA = '28706c27e4329a0542743437392ecde26afcad38d6783cf3dc61384829bc949c'
 PREFIX = 'public-qualification/windows/'
 IDS = ('dtype-filter_inverse-uint8', 'dtype-filter_inverse-float64')
-STAGES = ('F', 'G', 'F_floor', 'floor_mask', 'reciprocal', 'gain_mask', 'F_clipped', 'product', 'IFFT', 'crop')
+STAGES = ('F_input', 'F', 'G_input', 'G', 'F_floor', 'floor_mask', 'reciprocal', 'gain_mask', 'F_clipped', 'product', 'IFFT', 'crop')
 H = lambda raw: hashlib.sha256(raw).hexdigest()
 
 
@@ -86,14 +86,22 @@ def observe(module, call, capture, completions, core=None):
     return_line = next(n.lineno for n in inverse.body if isinstance(n, ast.Return))
     previous, profile = sys.gettrace(), sys.getprofile()
     require(previous is None and profile is None, 'external observer would change diagnostic context')
-    owner, entry = (module, '_fft') if core is not None else (module.fft, 'ifftn')
-    real = getattr(owner, entry); failed_frames = set()
-    def fft(*args, **kwargs):
-        inverse_call = core is None or args[1] is False
-        if inverse_call: capture('product', args[0])
-        value = real(*args, **kwargs)
-        if inverse_call: capture('IFFT', value)
-        return value
+    owner = module if core is not None else module.fft
+    entries = ('_fft',) if core is not None else ('fftn', 'ifftn')
+    originals = {entry: getattr(owner, entry) for entry in entries}
+    failed_frames = set(); forward_calls = 0
+    def wrapped(entry):
+        def fft(*args, **kwargs):
+            nonlocal forward_calls
+            forward = args[1] is True if core is not None else entry == 'fftn'
+            if forward:
+                require(forward_calls < 2, 'unexpected additional forward transform')
+                capture(('F_input', 'G_input')[forward_calls], args[0]); forward_calls += 1
+            else: capture('product', args[0])
+            value = originals[entry](*args, **kwargs)
+            if not forward: capture('IFFT', value)
+            return value
+        return fft
     def trace(frame, event, value):
         if Path(frame.f_code.co_filename).resolve() != source: return None
         name = frame.f_code.co_name; local = frame.f_locals
@@ -113,10 +121,12 @@ def observe(module, call, capture, completions, core=None):
     def completed(frame, event, value):
         if event == 'c_return' and core is not None and getattr(value, '__module__', None) == core.__name__:
             if getattr(value, '__name__', '') in ('fft_r2c', 'fft_c2r', 'fft_c2c'): completions.append(value.__name__)
-    setattr(owner, entry, fft); sys.settrace(trace); sys.setprofile(completed)
+    for entry in entries: setattr(owner, entry, wrapped(entry))
+    sys.settrace(trace); sys.setprofile(completed)
     try: return call()
     finally:
-        sys.settrace(previous); sys.setprofile(profile); setattr(owner, entry, real)
+        sys.settrace(previous); sys.setprofile(profile)
+        for entry, real in originals.items(): setattr(owner, entry, real)
 
 
 def capture_array(folder, name, array):
@@ -226,7 +236,7 @@ def main(argv=None):
     if args.stage == 'plan':
         print(json.dumps(dict(donor_run=DONOR_RUN, donor_source=DONOR_SOURCE, artifact=ARTIFACT,
             artifact_sha256=ARTIFACT_SHA, wheel_sha256=WHEEL_SHA, source_sha256=SOURCE_SHA,
-            cases=4, modes=['normal', 'scalar'], new_host=True, public_acceptance=False, builds=0, timings=0))); return 0
+            cases=4, modes=['normal', 'scalar'], captured_stages=list(STAGES), new_host=True, public_acceptance=False, builds=0, timings=0))); return 0
     require(os.environ.get('GITHUB_ACTIONS') == 'true', 'fresh hosted probe only; no local runtime preparation')
     try:
         if args.stage == '_child':
