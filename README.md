@@ -30,8 +30,9 @@ input contract, raw samples and rejected trials.
 
 The reference is scikit-image **0.26.0**. Public source now has **247 partially native
 image API paths and three metadata helpers**. Polygon approximation and subdivision
-have scoped component parity evidence; their latest combined release validation
-and initial performance measurements remain pending. The qualified combined binary baseline is
+have scoped component parity evidence. Their combined minimum release preparation
+passes 9,346 focused and 1,447 smoke checks; full profile qualification and initial
+performance measurements remain pending. The qualified combined binary baseline is
 **241 image APIs**. The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
