@@ -1,0 +1,1276 @@
+{
+  "schema": "approximate-polygon-minimum-initial-publication-v1",
+  "provenance": {
+  "scope": "Initial allocation-inclusive one-worker comparison on one minimum-profile host; nine frozen ordinary finite float64 workloads, no library-wide superiority claim.",
+  "measured_source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "controller": "55c2865816d16f2bb0b8a08ba239ef5b68e66608",
+  "source_image_APIs": 247,
+  "registered_functions": 250,
+  "product_members": 176,
+  "SDK_members": 83,
+  "qualified_baseline": {
+    "source": "4e657ee64fb71e4d707d32e9539fdb4d7cc528af",
+    "image_APIs": 241,
+    "SDK_members": 71
+  },
+  "CPU": "AMD EPYC 7763 64-Core Processor",
+  "threads": 1,
+  "rounds": 7,
+  "target_ms": 19,
+  "raw_samples": 126,
+  "result_run": 40780548412,
+  "result_run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40780548412",
+  "result_artifact": {
+    "run_id": 40780548412,
+    "revision": "55c2865816d16f2bb0b8a08ba239ef5b68e66608",
+    "artifact_id": 12857011469,
+    "name": "approximate-polygon-initial-minimum",
+    "filename": "12857011469.zip",
+    "bytes": 228560,
+    "sha256": "fde9322b7d51685faa2f0e3232b14cff142015b8773b58f81b274d2e2d392892",
+    "members": 18,
+    "duplicate_producer_downloads": 0,
+    "download_attempts": 1
+  },
+  "result_artifact_download": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/12857011469/zip",
+  "producer_run": 40778508940,
+  "producer_artifact": {
+    "run_id": 40778508940,
+    "revision": "4f69eba77a262056459eaab1e0a39e53610e9305",
+    "artifact_id": 12855199919,
+    "name": "ci-performance-minimum",
+    "filename": "12855199919.zip",
+    "bytes": 84925032,
+    "sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96",
+    "members": 99,
+    "duplicate_producer_downloads": 0,
+    "download_attempts": 1
+  },
+  "measurement_manifest_sha256": "8bad06b682e97bc55e37e825b1316264e93f408703df8460f5164eb5143dd511",
+  "core_sha256": "144054dc3f7ed0251426f0a22292048c7b4510557d64f0aecfd0f50e53926cb6",
+  "source_fingerprint": "79b23a3c23a6685336c4acc9ecdf5f7d7262254a29b731417e4710739c809ccd",
+  "raw_report_sha256": "f3962a9d0cdd416ed523a731b5b1e51b9a71b16babd07c5965a424e66b230ca9",
+  "raw_summary_sha256": "83c0525811177b41f1a2ab1efacc31f7571c3e60b9f067581bf405957ddca53c",
+  "raw_review_sha256": "455b1601ae555d982bb03715833cf41b2bb2c9d81462fa996caeddd65b54e96a",
+  "root_recomputation_sha256": "5404f122fa77902b05902722dd5e6960373dfe2baa710150da907a1f4ba39fc2",
+  "wins": 9,
+  "losses": [],
+  "geometric_mean": 6.728133285482266,
+  "provider_frontier": "Owned complete iterative RDP selection, projection/distances, strict split, first maximum and stack. NumPy scalar atan2/sin/cos, normalization/storage allocation and original-coordinate boolean gather remain explicit providers. No identity-only workloads or whole-original forwarding. Whole registered public call including scalar providers, validation, normalization, scratch/output allocation and destruction. Reference pools and global workers fixed to one. Parity/oracle/ownership/input-state checks precede timing. Retain every raw sample and loss; no library-wide or prior-C++ gain claim.",
+  "input_word_portability": "The unchanged frozen reviewer failed exact reconstruction of three sine-input hashes on Windows. Six collinear/zigzag hashes matched there. The identical reviewer bytecode source passed all nine input and output checks under retained Linux stdlib/libm; no report, oracle, harness or frozen case was changed, and no timing/scientific call was repeated.",
+  "independent_reviewer_sha256": "e9f0e97993f856c250c973f17143c42e90aa75bcdee073f4b1555cc9b486cf6c",
+  "genuine_SDK_client": {
+    "path": "build/subdivide-genuine-sdk83-client-v2/handoff.json",
+    "sha256": "e275883cf9d6661a68e5fb0b8340a41843b690b277f556ae722ff945361426a2",
+    "client_families": 1,
+    "client_checks": 2,
+    "declared_families": 26,
+    "declared_checks": 52,
+    "full_campaign_executed": false
+  },
+  "producer_SDK_client_executions": 0
+},
+  "raw_benchmark_report": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T22:31:38.343479+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "79b23a3c23a6685336c4acc9ecdf5f7d7262254a29b731417e4710739c809ccd",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "79b23a3c23a6685336c4acc9ecdf5f7d7262254a29b731417e4710739c809ccd",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/runtime/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "144054dc3f7ed0251426f0a22292048c7b4510557d64f0aecfd0f50e53926cb6",
+    "harness_sha256": "518c256877e5f0bf6708c94ac91901a6ace1676f1b243359fef95d65d9ffd29d",
+    "contract_sha256": "2d4ce2b90990d0d750787f2a0290598777fe846861bd80c0d5d664094e54fcbd",
+    "original_source_sha256": "26a27d89545d158f6b542857297995639b251ed3af0428c8c86a56c84928aabe",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_error_handler_type": "NoneType",
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/approximate_polygon.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/approximate-polygon.json"
+    ],
+    "selected_apis": [
+      "measure.approximate_polygon"
+    ],
+    "provider_frontier": "Owned complete iterative RDP selection, projection/distances, strict split, first maximum and stack. NumPy scalar atan2/sin/cos, normalization/storage allocation and original-coordinate boolean gather remain explicit providers. No identity-only workloads or whole-original forwarding. Whole registered public call including scalar providers, validation, normalization, scratch/output allocation and destruction. Reference pools and global workers fixed to one. Parity/oracle/ownership/input-state checks precede timing. Retain every raw sample and loss; no library-wide or prior-C++ gain claim."
+  },
+  "results": [
+    {
+      "case_id": "collinear-256-C",
+      "api": "measure.approximate_polygon",
+      "geometry": "collinear",
+      "points": 256,
+      "layout": "C",
+      "tolerance": 0.125,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "79038bc269720dede11721ad296add1c95f31c2ef02300b2dd2a4914c7c2110b",
+      "reference_sha256": "79038bc269720dede11721ad296add1c95f31c2ef02300b2dd2a4914c7c2110b",
+      "oracle_sha256": "79038bc269720dede11721ad296add1c95f31c2ef02300b2dd2a4914c7c2110b",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "input_sha256": "ce3fd1fa224641ca285191124557290f9bda45ecd1df64f8d13346943ce7e0a9",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.052103666666666666,
+      "cpp_ms": 0.011456136752136753,
+      "speedup": 4.548100969286047,
+      "samples_ms": [
+        [
+          0.05330180158730159,
+          0.05260151587301587,
+          0.05059757142857143,
+          0.05101120634920635,
+          0.05258377777777778,
+          0.052103666666666666,
+          0.05144918253968254
+        ],
+        [
+          0.011785431623931622,
+          0.011347641025641026,
+          0.011125,
+          0.01184481623931624,
+          0.01195224358974359,
+          0.011456136752136753,
+          0.011317068376068377
+        ]
+      ],
+      "loops": [
+        126,
+        234
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "collinear-4096-F",
+      "api": "measure.approximate_polygon",
+      "geometry": "collinear",
+      "points": 4096,
+      "layout": "F",
+      "tolerance": 0.125,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "7424367ed034a0d499a036099af7ddd44c7673502650f6a1f0df595ae9bc6204",
+      "reference_sha256": "7424367ed034a0d499a036099af7ddd44c7673502650f6a1f0df595ae9bc6204",
+      "oracle_sha256": "7424367ed034a0d499a036099af7ddd44c7673502650f6a1f0df595ae9bc6204",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          4096,
+          2
+        ],
+        "strides": [
+          8,
+          32768
+        ],
+        "own": true,
+        "writeable": true,
+        "c": false,
+        "f": true,
+        "base_type": "NoneType"
+      },
+      "input_sha256": "76b49bb3da2954df5ae8b1bce8c806d905c7a3a79fac60acbb45f5e4f2d377a4",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.11972775324675325,
+      "cpp_ms": 0.057981167785234905,
+      "speedup": 2.064942080680933,
+      "samples_ms": [
+        [
+          0.11972775324675325,
+          0.12362184415584415,
+          0.11854592207792208,
+          0.12208975324675324,
+          0.11880849350649351,
+          0.12039212987012987,
+          0.11964735064935064
+        ],
+        [
+          0.059163201342281875,
+          0.05865028187919463,
+          0.05801276510067114,
+          0.05781212080536913,
+          0.05768537583892617,
+          0.057981167785234905,
+          0.05731965100671141
+        ]
+      ],
+      "loops": [
+        77,
+        149
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "collinear-65536-step",
+      "api": "measure.approximate_polygon",
+      "geometry": "collinear",
+      "points": 65536,
+      "layout": "step-rows",
+      "tolerance": 0.125,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d5a7cd74f73c1003405bd0588a7874589965ac01af0d7374583c7e92e9e29eec",
+      "reference_sha256": "d5a7cd74f73c1003405bd0588a7874589965ac01af0d7374583c7e92e9e29eec",
+      "oracle_sha256": "d5a7cd74f73c1003405bd0588a7874589965ac01af0d7374583c7e92e9e29eec",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          2
+        ],
+        "strides": [
+          32,
+          8
+        ],
+        "own": false,
+        "writeable": true,
+        "c": false,
+        "f": false,
+        "base_type": "ndarray"
+      },
+      "input_sha256": "4ebbc8c0585a22b71beee9292be53e60bed5dcdc5dfc49b6de304413cefefcc3",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.2098094615384616,
+      "cpp_ms": 0.9183848,
+      "speedup": 1.3173230453492497,
+      "samples_ms": [
+        [
+          1.285412076923077,
+          1.2551041538461538,
+          1.2098094615384616,
+          1.1923803846153844,
+          1.230893076923077,
+          1.2086195384615386,
+          1.2073625384615385
+        ],
+        [
+          0.9280971333333333,
+          0.9255797333333333,
+          0.9219428000000001,
+          0.9183848,
+          0.9094592666666668,
+          0.9070681333333332,
+          0.9096375999999999
+        ]
+      ],
+      "loops": [
+        13,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "zigzag-64-C",
+      "api": "measure.approximate_polygon",
+      "geometry": "zigzag",
+      "points": 64,
+      "layout": "C",
+      "tolerance": 0.5,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "237bbd6ec91c3fd84253c58889897e9b5f4e92b22600bcf3475314d3761df40b",
+      "reference_sha256": "237bbd6ec91c3fd84253c58889897e9b5f4e92b22600bcf3475314d3761df40b",
+      "oracle_sha256": "237bbd6ec91c3fd84253c58889897e9b5f4e92b22600bcf3475314d3761df40b",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "input_sha256": "237bbd6ec91c3fd84253c58889897e9b5f4e92b22600bcf3475314d3761df40b",
+      "max_abs_error": 0.0,
+      "reference_ms": 5.137272666666667,
+      "cpp_ms": 0.37453244736842106,
+      "speedup": 13.716495600748901,
+      "samples_ms": [
+        [
+          5.139797333333333,
+          5.137272666666667,
+          5.083591333333333,
+          5.168785,
+          5.098315666666667,
+          5.101915666666667,
+          5.144556
+        ],
+        [
+          0.38469078947368424,
+          0.3733773684210526,
+          0.37453244736842106,
+          0.39189728947368424,
+          0.37596407894736844,
+          0.3716491052631579,
+          0.3743940263157895
+        ]
+      ],
+      "loops": [
+        3,
+        38
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "zigzag-512-reverse",
+      "api": "measure.approximate_polygon",
+      "geometry": "zigzag",
+      "points": 512,
+      "layout": "reverse-rows",
+      "tolerance": 0.5,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          512,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "28795587f4064d2f475c3fb02c6688938cec22853476af33712e43c73eb34267",
+      "reference_sha256": "28795587f4064d2f475c3fb02c6688938cec22853476af33712e43c73eb34267",
+      "oracle_sha256": "28795587f4064d2f475c3fb02c6688938cec22853476af33712e43c73eb34267",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          512,
+          2
+        ],
+        "strides": [
+          -16,
+          8
+        ],
+        "own": false,
+        "writeable": true,
+        "c": false,
+        "f": false,
+        "base_type": "ndarray"
+      },
+      "input_sha256": "28795587f4064d2f475c3fb02c6688938cec22853476af33712e43c73eb34267",
+      "max_abs_error": 0.0,
+      "reference_ms": 42.688063,
+      "cpp_ms": 3.1942404,
+      "speedup": 13.364073349019066,
+      "samples_ms": [
+        [
+          42.675648,
+          42.590658,
+          42.688063,
+          42.916764,
+          42.72401,
+          42.438982,
+          42.768995
+        ],
+        [
+          3.2164502,
+          3.1681414,
+          3.2148934,
+          3.1773086,
+          3.1942404,
+          3.169614,
+          3.3110367999999997
+        ]
+      ],
+      "loops": [
+        1,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "zigzag-2048-step",
+      "api": "measure.approximate_polygon",
+      "geometry": "zigzag",
+      "points": 2048,
+      "layout": "step-columns",
+      "tolerance": 0.5,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2048,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "c76e1a957e2c8eaa3c523b5609cbe4b3cb11b206365a2f1e8726fd7c709a0404",
+      "reference_sha256": "c76e1a957e2c8eaa3c523b5609cbe4b3cb11b206365a2f1e8726fd7c709a0404",
+      "oracle_sha256": "c76e1a957e2c8eaa3c523b5609cbe4b3cb11b206365a2f1e8726fd7c709a0404",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2048,
+          2
+        ],
+        "strides": [
+          32,
+          16
+        ],
+        "own": false,
+        "writeable": true,
+        "c": false,
+        "f": false,
+        "base_type": "ndarray"
+      },
+      "input_sha256": "c76e1a957e2c8eaa3c523b5609cbe4b3cb11b206365a2f1e8726fd7c709a0404",
+      "max_abs_error": 0.0,
+      "reference_ms": 184.449531,
+      "cpp_ms": 15.724577,
+      "speedup": 11.730015440160967,
+      "samples_ms": [
+        [
+          184.819969,
+          184.449531,
+          184.581499,
+          183.96655,
+          184.589734,
+          184.338031,
+          183.608956
+        ],
+        [
+          15.727764,
+          15.55662,
+          15.549257,
+          16.090387,
+          15.724577,
+          15.393372,
+          15.987693
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "smooth-256-C",
+      "api": "measure.approximate_polygon",
+      "geometry": "smooth",
+      "points": 256,
+      "layout": "C",
+      "tolerance": 0.05,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          81,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "52279e804507e5f5c9c06cbe768c6e724d586b7977bd78f26ad1133f09ab0c6b",
+      "reference_sha256": "52279e804507e5f5c9c06cbe768c6e724d586b7977bd78f26ad1133f09ab0c6b",
+      "oracle_sha256": "52279e804507e5f5c9c06cbe768c6e724d586b7977bd78f26ad1133f09ab0c6b",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "input_sha256": "c6a78379d85f645c041f7980741fe2eddfa3d083485e402672440b2ff6542b6f",
+      "max_abs_error": 0.0,
+      "reference_ms": 6.8114465,
+      "cpp_ms": 0.4933135172413793,
+      "speedup": 13.807540766548964,
+      "samples_ms": [
+        [
+          6.995193,
+          6.8319105,
+          6.7364205,
+          6.7152355,
+          6.7885535,
+          6.8114465,
+          6.8755625
+        ],
+        [
+          0.4847525517241379,
+          0.4906923448275862,
+          0.48479572413793104,
+          0.4942545862068966,
+          0.49506958620689656,
+          0.4933135172413793,
+          0.49582375862068967
+        ]
+      ],
+      "loops": [
+        2,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "smooth-4096-F",
+      "api": "measure.approximate_polygon",
+      "geometry": "smooth",
+      "points": 4096,
+      "layout": "F",
+      "tolerance": 0.05,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          81,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "a407eb4e7aac8100106f2017916764d32204a88aa9b444b597fb8d22c221c5a5",
+      "reference_sha256": "a407eb4e7aac8100106f2017916764d32204a88aa9b444b597fb8d22c221c5a5",
+      "oracle_sha256": "a407eb4e7aac8100106f2017916764d32204a88aa9b444b597fb8d22c221c5a5",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          4096,
+          2
+        ],
+        "strides": [
+          8,
+          32768
+        ],
+        "own": true,
+        "writeable": true,
+        "c": false,
+        "f": true,
+        "base_type": "NoneType"
+      },
+      "input_sha256": "9c5dadb6a8464f06f793ccdd352838c53ead06cfa6f4926103ec71d589188cc1",
+      "max_abs_error": 0.0,
+      "reference_ms": 7.7450325,
+      "cpp_ms": 0.7031383478260869,
+      "speedup": 11.014948230238815,
+      "samples_ms": [
+        [
+          7.7450325,
+          7.7222145,
+          7.7380245,
+          7.805922,
+          7.759059,
+          7.8612065,
+          7.671574
+        ],
+        [
+          0.7031383478260869,
+          0.7096192608695652,
+          0.6916867391304348,
+          0.699665695652174,
+          0.706541695652174,
+          0.6995554782608695,
+          0.7048898695652174
+        ]
+      ],
+      "loops": [
+        2,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "smooth-32768-C",
+      "api": "measure.approximate_polygon",
+      "geometry": "smooth",
+      "points": 32768,
+      "layout": "C",
+      "tolerance": 0.05,
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "approximate_polygon_apply"
+      ],
+      "native_accepted": true,
+      "native_entry_module": "skimagexx._core",
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          81,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "447c4b042f77232d5f85d871fb70a80714b13daa3a36182e7d3396d9735c4df7",
+      "reference_sha256": "447c4b042f77232d5f85d871fb70a80714b13daa3a36182e7d3396d9735c4df7",
+      "oracle_sha256": "447c4b042f77232d5f85d871fb70a80714b13daa3a36182e7d3396d9735c4df7",
+      "input_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          32768,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "input_sha256": "aeb6c73eb9b8dcbb12f9f36a5dc1d3caa57bec1a54791c6368a27369774c44c1",
+      "max_abs_error": 0.0,
+      "reference_ms": 14.049125,
+      "cpp_ms": 2.011905875,
+      "speedup": 6.982993178048153,
+      "samples_ms": [
+        [
+          14.002159,
+          13.99791,
+          13.926113,
+          14.243662,
+          14.080664,
+          14.049125,
+          14.131921
+        ],
+        [
+          2.011905875,
+          1.98671025,
+          2.024058125,
+          2.018281,
+          1.975902375,
+          2.017722625,
+          1.9812875
+        ]
+      ],
+      "loops": [
+        1,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+  "raw_workflow_summary": {
+  "status": "validated",
+  "raw_samples": 126,
+  "geometric_mean": 6.728133285482267,
+  "wins": [
+    "collinear-256-C",
+    "collinear-4096-F",
+    "collinear-65536-step",
+    "zigzag-64-C",
+    "zigzag-512-reverse",
+    "zigzag-2048-step",
+    "smooth-256-C",
+    "smooth-4096-F",
+    "smooth-32768-C"
+  ],
+  "losses": [],
+  "scope": "Initial original/current comparison only; every loss retained, no prior-C++ gain or full qualification claim."
+}
+,
+  "raw_independent_review": {
+  "status": "PASS_INITIAL_SINGLE_HOST_COMPARISON",
+  "run": 40780548412,
+  "controller": "55c2865816d16f2bb0b8a08ba239ef5b68e66608",
+  "product_source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "artifact": {
+    "run_id": 40780548412,
+    "revision": "55c2865816d16f2bb0b8a08ba239ef5b68e66608",
+    "artifact_id": 12857011469,
+    "name": "approximate-polygon-initial-minimum",
+    "filename": "12857011469.zip",
+    "bytes": 228560,
+    "sha256": "fde9322b7d51685faa2f0e3232b14cff142015b8773b58f81b274d2e2d392892",
+    "members": 18,
+    "duplicate_producer_downloads": 0,
+    "download_attempts": 1
+  },
+  "manifest_sha256": "8bad06b682e97bc55e37e825b1316264e93f408703df8460f5164eb5143dd511",
+  "core_sha256": "144054dc3f7ed0251426f0a22292048c7b4510557d64f0aecfd0f50e53926cb6",
+  "SDK_members": 83,
+  "product_members": 176,
+  "source_image_paths": 247,
+  "registered_functions": 250,
+  "checks": {
+    "status": "validated",
+    "raw_samples": 126,
+    "geometric_mean": 6.728133285482267,
+    "wins": [
+      "collinear-256-C",
+      "collinear-4096-F",
+      "collinear-65536-step",
+      "zigzag-64-C",
+      "zigzag-512-reverse",
+      "zigzag-2048-step",
+      "smooth-256-C",
+      "smooth-4096-F",
+      "smooth-32768-C"
+    ],
+    "losses": [],
+    "scope": "Initial original/current comparison only; every loss retained, no prior-C++ gain or full qualification claim."
+  },
+  "raw_samples": 126,
+  "geometric_mean": 6.728133285482266,
+  "cases": [
+    {
+      "case_id": "collinear-256-C",
+      "reference_ms": 0.052103666666666666,
+      "cpp_ms": 0.011456136752136753,
+      "ratio": 4.548100969286047,
+      "added_ms": -0.04064752991452991
+    },
+    {
+      "case_id": "collinear-4096-F",
+      "reference_ms": 0.11972775324675325,
+      "cpp_ms": 0.057981167785234905,
+      "ratio": 2.064942080680933,
+      "added_ms": -0.061746585461518344
+    },
+    {
+      "case_id": "collinear-65536-step",
+      "reference_ms": 1.2098094615384616,
+      "cpp_ms": 0.9183848,
+      "ratio": 1.3173230453492497,
+      "added_ms": -0.2914246615384616
+    },
+    {
+      "case_id": "zigzag-64-C",
+      "reference_ms": 5.137272666666667,
+      "cpp_ms": 0.37453244736842106,
+      "ratio": 13.716495600748901,
+      "added_ms": -4.762740219298246
+    },
+    {
+      "case_id": "zigzag-512-reverse",
+      "reference_ms": 42.688063,
+      "cpp_ms": 3.1942404,
+      "ratio": 13.364073349019066,
+      "added_ms": -39.4938226
+    },
+    {
+      "case_id": "zigzag-2048-step",
+      "reference_ms": 184.449531,
+      "cpp_ms": 15.724577,
+      "ratio": 11.730015440160967,
+      "added_ms": -168.724954
+    },
+    {
+      "case_id": "smooth-256-C",
+      "reference_ms": 6.8114465,
+      "cpp_ms": 0.4933135172413793,
+      "ratio": 13.807540766548964,
+      "added_ms": -6.318132982758621
+    },
+    {
+      "case_id": "smooth-4096-F",
+      "reference_ms": 7.7450325,
+      "cpp_ms": 0.7031383478260869,
+      "ratio": 11.014948230238815,
+      "added_ms": -7.041894152173913
+    },
+    {
+      "case_id": "smooth-32768-C",
+      "reference_ms": 14.049125,
+      "cpp_ms": 2.011905875,
+      "ratio": 6.982993178048153,
+      "added_ms": -12.037219125
+    }
+  ],
+  "wins": [
+    "collinear-256-C",
+    "collinear-4096-F",
+    "collinear-65536-step",
+    "zigzag-64-C",
+    "zigzag-512-reverse",
+    "zigzag-2048-step",
+    "smooth-256-C",
+    "smooth-4096-F",
+    "smooth-32768-C"
+  ],
+  "losses": [],
+  "identities": [
+    {
+      "status": "verify",
+      "revision": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "wheel_count": 14,
+      "artifact_sha256": "8bad06b682e97bc55e37e825b1316264e93f408703df8460f5164eb5143dd511"
+    },
+    {
+      "status": "verify",
+      "revision": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "wheel_count": 14,
+      "artifact_sha256": "8bad06b682e97bc55e37e825b1316264e93f408703df8460f5164eb5143dd511"
+    },
+    {
+      "status": "verify",
+      "revision": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "wheel_count": 14,
+      "artifact_sha256": "8bad06b682e97bc55e37e825b1316264e93f408703df8460f5164eb5143dd511"
+    }
+  ],
+  "all_raw_members": {
+    "approximate-polygon.json": {
+      "bytes": 21718,
+      "sha256": "f3962a9d0cdd416ed523a731b5b1e51b9a71b16babd07c5965a424e66b230ca9"
+    },
+    "approximate-polygon.md": {
+      "bytes": 931,
+      "sha256": "39c56477e815047209aca4dd13e6e024379de2542b135060e013e6a0b348c5ac"
+    },
+    "approximate-polygon.log": {
+      "bytes": 321,
+      "sha256": "af7eea68c5ae3d0dd8ac36bb45a9a79c7d3a202a3d517be6a9628f1c565d6e9e"
+    },
+    "archive.json": {
+      "bytes": 104,
+      "sha256": "a936f3595384b8b07ee6de81998006d0e6a24a62eccef06eece92b0337c8dc65"
+    },
+    "benchmark-exit.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "cpu.txt": {
+      "bytes": 3189,
+      "sha256": "4476e601951bb5e5dc85ca4b9d2e3bc795bb83c0d4e62b8d9f2bdec6659b0e7a"
+    },
+    "identity-after.log": {
+      "bytes": 183,
+      "sha256": "6a4bcf29cd926e822f7f1454879b979df182395fe133db9a1e4f549f071743d2"
+    },
+    "identity-before.log": {
+      "bytes": 183,
+      "sha256": "6a4bcf29cd926e822f7f1454879b979df182395fe133db9a1e4f549f071743d2"
+    },
+    "measurement.json": {
+      "bytes": 526300,
+      "sha256": "8bad06b682e97bc55e37e825b1316264e93f408703df8460f5164eb5143dd511"
+    },
+    "offline-install.log": {
+      "bytes": 2743,
+      "sha256": "02ae1b733f05deb791c43ebd8a5b38528ffcad7565308372c4edcd0c57bae060"
+    },
+    "original-identity.log": {
+      "bytes": 183,
+      "sha256": "6a4bcf29cd926e822f7f1454879b979df182395fe133db9a1e4f549f071743d2"
+    },
+    "platform.txt": {
+      "bytes": 128,
+      "sha256": "a64b6d81308dc728b286592ae78f6594e185e6db8c474be3c8886f7694f38bb7"
+    },
+    "producer-artifacts.json": {
+      "bytes": 1418,
+      "sha256": "6fbc1a7a1e6e13d0733ac9c80c9dfe3ae989a6beb91172566f3708a7aa34aa11"
+    },
+    "producer-jobs.json": {
+      "bytes": 37567,
+      "sha256": "f27e1fe3c16476fa87d9155bdd751c613c3d47763575d4f8c637943de41235e6"
+    },
+    "producer-run.json": {
+      "bytes": 12146,
+      "sha256": "a9ab8bd1a3a62d53f4ef5d6595fc4dbe30075233fc470c3fc28440a8548b5990"
+    },
+    "runtime-lock.txt": {
+      "bytes": 1338,
+      "sha256": "9fabb8ae9efbe0d2bc5dae4deeec29fd854ea34f8526efdc3bd6337376729c61"
+    },
+    "selection.json": {
+      "bytes": 775,
+      "sha256": "fe5f84858b234e0b7f628c15cc3d2fcf25012dda18d006aa0dc5b75dbdee396e"
+    },
+    "summary.json": {
+      "bytes": 452,
+      "sha256": "83c0525811177b41f1a2ab1efacc31f7571c3e60b9f067581bf405957ddca53c"
+    }
+  },
+  "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           48 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  4\nOn-line CPU(s) list:                     0-3\nVendor ID:                               AuthenticAMD\nModel name:                              AMD EPYC 7763 64-Core Processor\nCPU family:                              25\nModel:                                   1\nThread(s) per core:                      2\nCore(s) per socket:                      2\nSocket(s):                               1\nStepping:                                1\nBogoMIPS:                                4890.85\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nVirtualization:                          AMD-V\nHypervisor vendor:                       Microsoft\nVirtualization type:                     full\nL1d cache:                               64 KiB (2 instances)\nL1i cache:                               64 KiB (2 instances)\nL2 cache:                                1 MiB (2 instances)\nL3 cache:                                32 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-3\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Vulnerable: Safe RET, no microcode\nVulnerability Spec store bypass:         Vulnerable\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Vulnerable: No microcode\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+  "timings_repeated": false,
+  "new_dispatches": 0,
+  "new_builds": 0,
+  "new_original_reference_calls": 0,
+  "scope": "Nine unchanged whole public one-worker calls on one fresh host, all126samples/losses retained. Not library-wide speed superiority or four-profile qualification; accepted full qualification remains241."
+}
+,
+  "raw_root_recomputation": {
+  "status": "PASS_ROOT_RAW_MEDIAN_IDENTITY_AND_ORACLE_HASH_RECOMPUTATION",
+  "run": 40780548412,
+  "source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "samples": 126,
+  "wins": 9,
+  "losses": 0,
+  "geometric_mean": 6.728133285482267,
+  "archive_sha256": "fde9322b7d51685faa2f0e3232b14cff142015b8773b58f81b274d2e2d392892",
+  "scope": "One minimum host/one worker whole public RDP cohort. Full input-word reconstruction was independently checked by unchanged frozen reviewer under retained Linux libm; Windows3sinehash reconstruction failure retained. No new scientific calls or timings.",
+  "rows": [
+    {
+      "case_id": "collinear-256-C",
+      "original_ms": 0.052103666666666666,
+      "current_ms": 0.011456136752136753,
+      "speedup": 4.548100969286047,
+      "added_ms": -0.04064752991452991
+    },
+    {
+      "case_id": "collinear-4096-F",
+      "original_ms": 0.11972775324675325,
+      "current_ms": 0.057981167785234905,
+      "speedup": 2.064942080680933,
+      "added_ms": -0.061746585461518344
+    },
+    {
+      "case_id": "collinear-65536-step",
+      "original_ms": 1.2098094615384616,
+      "current_ms": 0.9183848,
+      "speedup": 1.3173230453492497,
+      "added_ms": -0.2914246615384616
+    },
+    {
+      "case_id": "zigzag-64-C",
+      "original_ms": 5.137272666666667,
+      "current_ms": 0.37453244736842106,
+      "speedup": 13.716495600748901,
+      "added_ms": -4.762740219298246
+    },
+    {
+      "case_id": "zigzag-512-reverse",
+      "original_ms": 42.688063,
+      "current_ms": 3.1942404,
+      "speedup": 13.364073349019066,
+      "added_ms": -39.4938226
+    },
+    {
+      "case_id": "zigzag-2048-step",
+      "original_ms": 184.449531,
+      "current_ms": 15.724577,
+      "speedup": 11.730015440160967,
+      "added_ms": -168.724954
+    },
+    {
+      "case_id": "smooth-256-C",
+      "original_ms": 6.8114465,
+      "current_ms": 0.4933135172413793,
+      "speedup": 13.807540766548964,
+      "added_ms": -6.318132982758621
+    },
+    {
+      "case_id": "smooth-4096-F",
+      "original_ms": 7.7450325,
+      "current_ms": 0.7031383478260869,
+      "speedup": 11.014948230238815,
+      "added_ms": -7.041894152173913
+    },
+    {
+      "case_id": "smooth-32768-C",
+      "original_ms": 14.049125,
+      "current_ms": 2.011905875,
+      "speedup": 6.982993178048153,
+      "added_ms": -12.037219125
+    }
+  ]
+}
+,
+  "raw_genuine_SDK_client": {
+  "status": "PASS_ACTUAL_GENUINE_SDK83_CLIENT",
+  "source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "SDK_files": 83,
+  "client_families": 1,
+  "client_checks": 2,
+  "worker_budgets": [
+    1,
+    4
+  ],
+  "modes": [
+    "normal",
+    "scalar"
+  ],
+  "full_SDK_builds": 0,
+  "SDK_unchanged": true,
+  "SDK_library_sha256": "ee864e9b4ac85d229bdec6286f4314f77e1646f4d08e48d40a70e6d80d589389",
+  "client_source_sha256": "b584600d4985e5c1a0c8a0efd5fa0f32be322c2be1a9db54cfec5823d17782c7",
+  "client_binary_sha256": "d02d2c8eefa7f7a5f303095bee839b1324518b07dcc5daeb5a01c3c7e22b846e",
+  "scope": "Actual genuine SDK83 extracted byte-exactly from admitted minimum producer wheel; one downstream client only, not full26-family or four-profile qualification."
+}
+,
+  "raw_diagnostic_records": {
+  "cross-host-review-receipt.json": {
+    "encoding": "base64",
+    "bytes": 759,
+    "sha256": "56a39539b8debbb79686d0e6e2a46d4d649618acc0b27d3218f922b39bf78621",
+    "data": "ew0KICAic3RhdHVzIjogIklERU5USUNBTF9GUk9aRU5fUkVWSUVXRVJfUEFTU19PTl9MSU5VWCIsDQogICJyZXZpZXdlcl9zaGEyNTYiOiAiZTlmMGU5Nzk5M2Y4NTZjMjUwYzk3M2YxNzE0M2M0MmU5MGFhNzViY2RlZTA3M2Y0YjE1NTVjYzliNDg2Y2Y2YyIsDQogICJ3aW5kb3dzX2ZhaWx1cmVfc2hhMjU2IjogImFhMDNlZTM3YmEwMTMwOWVhNWYyNDNiM2VlZTRlYjQzZjU3YTI4MGM3ZDhlNmE3YTJiMzI2NTBjNjI5YzJiZTUiLA0KICAid2luZG93c19pbnB1dF9kaWFnbm9zdGljX3NoYTI1NiI6ICIzMDkyMjExMDQ0OTUxNjkzM2Y2ZTI0MjkxZGJkZTY5ODdlMmZlMDcyNGEyM2M0NDZiYWEwODY0YTNmOTYwNjg0IiwNCiAgImxpbnV4X3Jldmlld19zaGEyNTYiOiAiNDU1YjE2MDFhZTU1NWQ5ODJiYjAzNzE1ODMzY2Y0MWIyYmIyYzlkODE0NjJmYTk5NmNhZWRkZDY1YjU0ZTk2YSIsDQogICJjaGFuZ2UiOiAiTm8gcmV2aWV3ZXIgb3IgcmVzdWx0IGNoYW5nZXM7IGlkZW50aWNhbCBmcm96ZW4gc3RkbGliLW9ubHkgcHJvZ3JhbSBleGVjdXRlZCB1bmRlciByZXRhaW5lZCBMaW51eCBmb3IgdGhlIHRocmVlIHBsYXRmb3JtLWxpYm0gc2luZSBpbnB1dCBoYXNoZXMuIEFsbDEyNnNhbXBsZXMvaWRlbnRpdGllcy93b3JkcyB2YWxpZGF0ZWQuIiwNCiAgIm5ld19vcmlnaW5hbF9jYWxscyI6IDAsDQogICJuZXdfbmF0aXZlX2NhbGxzIjogMCwNCiAgIm5ld190aW1pbmdzIjogMCwNCiAgImFsbF9yZWFkZXJzX3JlbGVhc2VkIjogdHJ1ZQ0KfQ0K"
+  },
+  "windows-input-hash-diagnostic.json": {
+    "encoding": "base64",
+    "bytes": 3609,
+    "sha256": "30922110449516933f6e24291dbde6987e2fe0724a23c446baa0864a3f960684",
+    "data": "ew0KICAicGxhdGZvcm0iOiAid2luMzIiLA0KICAicm93cyI6IFsNCiAgICB7DQogICAgICAiY2FzZV9pZCI6ICJjb2xsaW5lYXItMjU2LUMiLA0KICAgICAgImdlb21ldHJ5IjogImNvbGxpbmVhciIsDQogICAgICAibGF5b3V0IjogIkMiLA0KICAgICAgImlucHV0X3NoYTI1NiI6ICJjZTNmZDFmYTIyNDY0MWNhMjg1MTkxMTI0NTU3MjkwZjliZGE0NWVjZDFkZjY0ZjhkMTMzNDY5NDNjZTdlMGE5IiwNCiAgICAgICJ3aW5kb3dzX3JlY29uc3RydWN0aW9uX3NoYTI1NiI6ICJjZTNmZDFmYTIyNDY0MWNhMjg1MTkxMTI0NTU3MjkwZjliZGE0NWVjZDFkZjY0ZjhkMTMzNDY5NDNjZTdlMGE5IiwNCiAgICAgICJleGFjdCI6IHRydWUNCiAgICB9LA0KICAgIHsNCiAgICAgICJjYXNlX2lkIjogImNvbGxpbmVhci00MDk2LUYiLA0KICAgICAgImdlb21ldHJ5IjogImNvbGxpbmVhciIsDQogICAgICAibGF5b3V0IjogIkYiLA0KICAgICAgImlucHV0X3NoYTI1NiI6ICI3NmI0OWJiM2RhMjk1NGRmNWFlOGIxYmNlOGM4MDZkOTA1YzdhM2E3OWZhYzYwYWNiYjQ1ZjVlNGYyZDM3N2E0IiwNCiAgICAgICJ3aW5kb3dzX3JlY29uc3RydWN0aW9uX3NoYTI1NiI6ICI3NmI0OWJiM2RhMjk1NGRmNWFlOGIxYmNlOGM4MDZkOTA1YzdhM2E3OWZhYzYwYWNiYjQ1ZjVlNGYyZDM3N2E0IiwNCiAgICAgICJleGFjdCI6IHRydWUNCiAgICB9LA0KICAgIHsNCiAgICAgICJjYXNlX2lkIjogImNvbGxpbmVhci02NTUzNi1zdGVwIiwNCiAgICAgICJnZW9tZXRyeSI6ICJjb2xsaW5lYXIiLA0KICAgICAgImxheW91dCI6ICJzdGVwLXJvd3MiLA0KICAgICAgImlucHV0X3NoYTI1NiI6ICI0ZWJiYzhjMDU4NWEyMmI3MWJlZWU5MjkyYmU1M2U2MGJlZDVkY2RjNWRmYzQ5YjZkZTMwNDQxM2NlZmVmY2MzIiwNCiAgICAgICJ3aW5kb3dzX3JlY29uc3RydWN0aW9uX3NoYTI1NiI6ICI0ZWJiYzhjMDU4NWEyMmI3MWJlZWU5MjkyYmU1M2U2MGJlZDVkY2RjNWRmYzQ5YjZkZTMwNDQxM2NlZmVmY2MzIiwNCiAgICAgICJleGFjdCI6IHRydWUNCiAgICB9LA0KICAgIHsNCiAgICAgICJjYXNlX2lkIjogInppZ3phZy02NC1DIiwNCiAgICAgICJnZW9tZXRyeSI6ICJ6aWd6YWciLA0KICAgICAgImxheW91dCI6ICJDIiwNCiAgICAgICJpbnB1dF9zaGEyNTYiOiAiMjM3YmJkNmVjOTFjM2ZkODQyNTNjNTg4ODk4OTdlOWI1ZjRlOTJiMjI2MDBiY2YzNDc1MzE0ZDM3NjFkZjQwYiIsDQogICAgICAid2luZG93c19yZWNvbnN0cnVjdGlvbl9zaGEyNTYiOiAiMjM3YmJkNmVjOTFjM2ZkODQyNTNjNTg4ODk4OTdlOWI1ZjRlOTJiMjI2MDBiY2YzNDc1MzE0ZDM3NjFkZjQwYiIsDQogICAgICAiZXhhY3QiOiB0cnVlDQogICAgfSwNCiAgICB7DQogICAgICAiY2FzZV9pZCI6ICJ6aWd6YWctNTEyLXJldmVyc2UiLA0KICAgICAgImdlb21ldHJ5IjogInppZ3phZyIsDQogICAgICAibGF5b3V0IjogInJldmVyc2Utcm93cyIsDQogICAgICAiaW5wdXRfc2hhMjU2IjogIjI4Nzk1NTg3ZjQwNjRkMmY0NzVjM2ZiMDJjNjY4ODkzOGNlYzIyODUzNDc2YWYzMzcxMmU0M2M3M2ViMzQyNjciLA0KICAgICAgIndpbmRvd3NfcmVjb25zdHJ1Y3Rpb25fc2hhMjU2IjogIjI4Nzk1NTg3ZjQwNjRkMmY0NzVjM2ZiMDJjNjY4ODkzOGNlYzIyODUzNDc2YWYzMzcxMmU0M2M3M2ViMzQyNjciLA0KICAgICAgImV4YWN0IjogdHJ1ZQ0KICAgIH0sDQogICAgew0KICAgICAgImNhc2VfaWQiOiAiemlnemFnLTIwNDgtc3RlcCIsDQogICAgICAiZ2VvbWV0cnkiOiAiemlnemFnIiwNCiAgICAgICJsYXlvdXQiOiAic3RlcC1jb2x1bW5zIiwNCiAgICAgICJpbnB1dF9zaGEyNTYiOiAiYzc2ZTFhOTU3ZTJjOGVhYTNjNTIzYjU2MDljYmU0YjNjYjExYjIwNjM2NWEyZjFlODcyNmZkN2M3MDlhMDQwNCIsDQogICAgICAid2luZG93c19yZWNvbnN0cnVjdGlvbl9zaGEyNTYiOiAiYzc2ZTFhOTU3ZTJjOGVhYTNjNTIzYjU2MDljYmU0YjNjYjExYjIwNjM2NWEyZjFlODcyNmZkN2M3MDlhMDQwNCIsDQogICAgICAiZXhhY3QiOiB0cnVlDQogICAgfSwNCiAgICB7DQogICAgICAiY2FzZV9pZCI6ICJzbW9vdGgtMjU2LUMiLA0KICAgICAgImdlb21ldHJ5IjogInNtb290aCIsDQogICAgICAibGF5b3V0IjogIkMiLA0KICAgICAgImlucHV0X3NoYTI1NiI6ICJjNmE3ODM3OWQ4NWY2NDVjMDQxZjc5ODA3NDFmZTJlZGRmYTNkMDgzNDg1ZTQwMjY3MjQ0MGIyZmY2NTQyYjZmIiwNCiAgICAgICJ3aW5kb3dzX3JlY29uc3RydWN0aW9uX3NoYTI1NiI6ICI4MmY5YjQ1MDU1NGJhM2M1Njc5Yjk2YjQxNmRhN2JlNmIwNDJlYzU2OTI0MzFmNzQwMzJmMWMyZDk3ZWIyNTMyIiwNCiAgICAgICJleGFjdCI6IGZhbHNlDQogICAgfSwNCiAgICB7DQogICAgICAiY2FzZV9pZCI6ICJzbW9vdGgtNDA5Ni1GIiwNCiAgICAgICJnZW9tZXRyeSI6ICJzbW9vdGgiLA0KICAgICAgImxheW91dCI6ICJGIiwNCiAgICAgICJpbnB1dF9zaGEyNTYiOiAiOWM1ZGFkYjZhODQ2NGYwNmY3OTNjY2RkMzUyODM4YzUzZWFkMDZjZmE2ZjQ5MjYxMDNlYzcxZDU4OTE4OGNjMSIsDQogICAgICAid2luZG93c19yZWNvbnN0cnVjdGlvbl9zaGEyNTYiOiAiNTIwNTZlODlhMTZlOWU5M2NhMzdlZjcxMzk1MzdkZmFmNTIyNTU3MTg0YTQxMDE4NmJmMGI1ODA3NzIwYWVhYyIsDQogICAgICAiZXhhY3QiOiBmYWxzZQ0KICAgIH0sDQogICAgew0KICAgICAgImNhc2VfaWQiOiAic21vb3RoLTMyNzY4LUMiLA0KICAgICAgImdlb21ldHJ5IjogInNtb290aCIsDQogICAgICAibGF5b3V0IjogIkMiLA0KICAgICAgImlucHV0X3NoYTI1NiI6ICJhZWI2YzczZWI5YjhkY2JiMTJmOWYzNmE1ZGMxZDNjYWE1N2JlYzFhNTQ3OTFjNjM2OGEyNzM2OTc3NGM0NGMxIiwNCiAgICAgICJ3aW5kb3dzX3JlY29uc3RydWN0aW9uX3NoYTI1NiI6ICJkYWE4ZDY2MTdjNzc3MjQ3ZjQ5NzlkMDFkMzJmZTA2OWJkNTAwZGI2MWE5ZWI5ODYxMjM1ODEyNmRiNzVhMWY5IiwNCiAgICAgICJleGFjdCI6IGZhbHNlDQogICAgfQ0KICBdLA0KICAic2NvcGUiOiAiTWV0YWRhdGEtb25seSBpbnB1dCB3b3JkIHJlY29uc3RydWN0aW9uOyBubyB0YXJnZXQvbmF0aXZlL29yaWdpbmFsIGNhbGxzIiwNCiAgImhvc3RlZF9zdW1tYXJ5Ijogew0KICAgICJzdGF0dXMiOiAidmFsaWRhdGVkIiwNCiAgICAicmF3X3NhbXBsZXMiOiAxMjYsDQogICAgImdlb21ldHJpY19tZWFuIjogNi43MjgxMzMyODU0ODIyNjcsDQogICAgIndpbnMiOiBbDQogICAgICAiY29sbGluZWFyLTI1Ni1DIiwNCiAgICAgICJjb2xsaW5lYXItNDA5Ni1GIiwNCiAgICAgICJjb2xsaW5lYXItNjU1MzYtc3RlcCIsDQogICAgICAiemlnemFnLTY0LUMiLA0KICAgICAgInppZ3phZy01MTItcmV2ZXJzZSIsDQogICAgICAiemlnemFnLTIwNDgtc3RlcCIsDQogICAgICAic21vb3RoLTI1Ni1DIiwNCiAgICAgICJzbW9vdGgtNDA5Ni1GIiwNCiAgICAgICJzbW9vdGgtMzI3NjgtQyINCiAgICBdLA0KICAgICJsb3NzZXMiOiBbXSwNCiAgICAic2NvcGUiOiAiSW5pdGlhbCBvcmlnaW5hbC9jdXJyZW50IGNvbXBhcmlzb24gb25seTsgZXZlcnkgbG9zcyByZXRhaW5lZCwgbm8gcHJpb3ItQysrIGdhaW4gb3IgZnVsbCBxdWFsaWZpY2F0aW9uIGNsYWltLiINCiAgfQ0KfQ0K"
+  },
+  "review.stderr": {
+    "encoding": "base64",
+    "bytes": 523,
+    "sha256": "aa03ee37ba01309ea5f243b3eee4eb43f57a280c7d8e6a7a2b32650c629c2be5",
+    "data": "VHJhY2ViYWNrIChtb3N0IHJlY2VudCBjYWxsIGxhc3QpOg0KICBGaWxlICJDOlxVc2Vyc1xIRVFcUHJvamVjdHNcc2Npa2l0LWltYWdleHhcYnVpbGRcYXBwcm94aW1hdGUtcG9seWdvbi1pbml0aWFsLXYxXHJldmlld19vbmNlLnB5IiwgbGluZSA4OSwgaW4gPG1vZHVsZT4NCiAgICBzdW1tYXJ5PXZhbGlkYXRlX3JlcG9ydChyZXBvcnQsY29udHJhY3QsbSxleHBlY3RlZF9zb3VyY2UpO2Fzc2VydCBzdW1tYXJ5PT1qc29uLmxvYWRzKHJhd1snc3VtbWFyeS5qc29uJ10pDQogIEZpbGUgIkM6XFVzZXJzXEhFUVxQcm9qZWN0c1xzY2lraXQtaW1hZ2V4eFxidWlsZFxhcHByb3hpbWF0ZS1wb2x5Z29uLWluaXRpYWwtdjFccmV2aWV3X29uY2UucHkiLCBsaW5lIDM4LCBpbiB2YWxpZGF0ZV9yZXBvcnQNCiAgICBhc3NlcnQgcm93WydpbnB1dF9zaGEyNTYnXSA9PSBleHBlY3RlZF9pbnB1dF9oYXNoDQogICAgICAgICAgIF5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXg0KQXNzZXJ0aW9uRXJyb3INCg=="
+  },
+  "linux-review.stderr": {
+    "encoding": "base64",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data": ""
+  },
+  "review-freeze.json": {
+    "encoding": "base64",
+    "bytes": 359,
+    "sha256": "be245b050984b73a037df62a3d2cd61bd84d09941d845042497054cab4d1b447",
+    "data": "ew0KICAicmV2aWV3ZXJfc2hhMjU2IjogImU5ZjBlOTc5OTNmODU2YzI1MGM5NzNmMTcxNDNjNDJlOTBhYTc1YmNkZWUwNzNmNGIxNTU1Y2M5YjQ4NmNmNmMiLA0KICAiY29udHJvbGxlciI6ICI1NWMyODY1ODE2ZDE2ZjJiYjBiOGEwOGJhMjM5ZWY1YjY4ZTY2NjA4IiwNCiAgInByb2R1Y2VyIjogIjRmNjllYmE3N2EyNjIwNTY0NTllYWFiMWUwYTM5ZTUzNjEwZTkzMDUiLA0KICAiYmVuY2htYXJrX2NvbnRyYWN0X3NoYTI1NiI6ICIyZDRjZTJiOTA5OTBkMGQ3NTA3ODdmMmEwMjkwNTk4Nzc3ZmU4NDY4NjFiZDgwYzBkNWQ2NjQwOTRlNTRmY2JkIiwNCiAgImJlZm9yZV90aW1pbmdfb3V0cHV0c19pbnNwZWN0ZWQiOiB0cnVlDQp9DQo="
+  },
+  "review_once.py": {
+    "encoding": "base64",
+    "bytes": 9552,
+    "sha256": "e9f0e97993f856c250c973f17143c42e90aa75bcdee073f4b1555cc9b486cf6c",
+    "data": "ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmltcG9ydCBhc3QsaGFzaGxpYixpbyxqc29uLG1hdGgsc3RhdGlzdGljcyxzdHJ1Y3Qsc3VicHJvY2Vzcyx6aXBmaWxlLHJlCm91dD1QYXRoKF9fZmlsZV9fKS5yZXNvbHZlKCkucGFyZW50O3Jvb3Q9b3V0LnBhcmVudHNbMV07c2hhPWxhbWJkYSBiOmhhc2hsaWIuc2hhMjU2KGIpLmhleGRpZ2VzdCgpCmRlZiB2YWxpZGF0ZV9yZXBvcnQocmVwb3J0LCBjb250cmFjdCwgbWFuaWZlc3QsIGV4cGVjdGVkX3NvdXJjZSk6CiAgICBtZXRhID0gcmVwb3J0WydtZXRhZGF0YSddCiAgICBhc3NlcnQgbWV0YVsnc291cmNlX2JlZm9yZSddID09IGV4cGVjdGVkX3NvdXJjZQogICAgYXNzZXJ0IHtrOiBtZXRhW2tdIGZvciBrIGluIGV4cGVjdGVkX3NvdXJjZX0gPT0gZXhwZWN0ZWRfc291cmNlCiAgICBhc3NlcnQgbWV0YVsndGhyZWFkcyddID09IDEgYW5kIG1ldGFbJ3JlcGVhdCddID09IDcgYW5kIG1ldGFbJ3RhcmdldF9tcyddID09IDE5IGFuZCBtZXRhWydyYXdfc2FtcGxlcyddID09IDEyNgogICAgYXNzZXJ0IHNldChtZXRhWydyZWZlcmVuY2VfcG9vbF9saW1pdHMnXS52YWx1ZXMoKSkgPT0geycxJ30gYW5kIG1ldGFbJ2ZhbGxiYWNrX2VuYWJsZWQnXSBpcyBGYWxzZQogICAgYXNzZXJ0IG1ldGFbJ3NlbGVjdGVkX2FwaXMnXSA9PSBjb250cmFjdFsnYXBpcyddCiAgICBhc3NlcnQgc2V0KG1ldGFbJ251bXB5X2Vycm9yX3BvbGljeSddKSA9PSB7J2RpdmlkZScsICdvdmVyJywgJ3VuZGVyJywgJ2ludmFsaWQnfQogICAgYXNzZXJ0IHNldChtZXRhWydudW1weV9lcnJvcl9wb2xpY3knXS52YWx1ZXMoKSkgPD0geydpZ25vcmUnLCAnd2FybicsICdyYWlzZScsICdjYWxsJywgJ3ByaW50JywgJ2xvZyd9CiAgICBhc3NlcnQgbWV0YVsnbnVtcHlfZXJyb3JfaGFuZGxlcl90eXBlJ10gPT0gJ05vbmVUeXBlJwogICAgYXNzZXJ0IHR5cGUobWV0YVsnbnVtcHlfYnVmZmVyX2VsZW1lbnRzJ10pIGlzIGludCBhbmQgbWV0YVsnbnVtcHlfYnVmZmVyX2VsZW1lbnRzJ10gPiAwCiAgICBhc3NlcnQgbWV0YVsnaGFybmVzc19zaGEyNTYnXSA9PSBtYW5pZmVzdFsnc291cmNlJ11bJ2ZpbGVzX3NoYTI1NiddWydiZW5jaG1hcmtzL2FwcHJveGltYXRlX3BvbHlnb24ucHknXQogICAgYXNzZXJ0IG1ldGFbJ29yaWdpbmFsX3NvdXJjZV9zaGEyNTYnXSA9PSBjb250cmFjdFsnb3JpZ2luYWxfcHl0aG9uX3NvdXJjZV9zaGEyNTYnXQogICAgY29yZXMgPSB7diBmb3IgaywgdiBpbiBtYW5pZmVzdFsncnVudGltZSddWydwYWNrYWdlc19zaGEyNTYnXVsnc2tpbWFnZXh4J10uaXRlbXMoKSBpZiBrLnN0YXJ0c3dpdGgoJ19jb3JlLicpIGFuZCBrLmVuZHN3aXRoKCcuc28nKX0KICAgIGFzc2VydCBjb3JlcyA9PSB7bWV0YVsnY29yZV9zaGEyNTYnXX0KICAgIGFzc2VydCBsZW4ocmVwb3J0WydyZXN1bHRzJ10pID09IGxlbihjb250cmFjdFsnY2FzZXMnXSkgPT0gOQogICAgc2FtcGxlcyA9IDAKICAgIGZvciByb3csIHNwZWMgaW4gemlwKHJlcG9ydFsncmVzdWx0cyddLCBjb250cmFjdFsnY2FzZXMnXSk6CiAgICAgICAgYXNzZXJ0IHtrOiByb3dba10gZm9yIGsgaW4gc3BlY30gPT0gc3BlYwogICAgICAgIGFzc2VydCByb3dbJ3RocmVhZHMnXSA9PSAxIGFuZCByb3dbJ25hdGl2ZV9hY2NlcHRlZCddIGlzIFRydWUKICAgICAgICBlbnRyeSA9ICdhcHByb3hpbWF0ZV9wb2x5Z29uX2FwcGx5JwogICAgICAgIGFzc2VydCBzcGVjWydhcGknXSA9PSAnbWVhc3VyZS5hcHByb3hpbWF0ZV9wb2x5Z29uJwogICAgICAgIGFzc2VydCByb3dbJ2FjdHVhbF9DX3JldHVybnMnXSA9PSBbZW50cnldIGFuZCByb3dbJ25hdGl2ZV9lbnRyeV9tb2R1bGUnXSA9PSAnc2tpbWFnZXh4Ll9jb3JlJwogICAgICAgIGFzc2VydCByb3dbJ21heF9hYnNfZXJyb3InXSA9PSAwIGFuZCByb3dbJ291dHB1dF9zaGEyNTYnXSA9PSByb3dbJ3JlZmVyZW5jZV9zaGEyNTYnXSA9PSByb3dbJ29yYWNsZV9zaGEyNTYnXQogICAgICAgIGNvdW50ID0gc3BlY1sncG9pbnRzJ10KICAgICAgICBhc3NlcnQgMyA8PSBjb3VudCA8PSBjb250cmFjdFsnbWF4X3BvaW50cyddIGFuZCBzcGVjWyd0b2xlcmFuY2UnXSA+IDAKICAgICAgICBnZW9tZXRyeSwgbGF5b3V0ID0gc3BlY1snZ2VvbWV0cnknXSwgc3BlY1snbGF5b3V0J10KICAgICAgICBpZiBnZW9tZXRyeSA9PSAnY29sbGluZWFyJzogdmFsdWVzID0gWyhmbG9hdChpKSwgZmxvYXQoMippKzMpKSBmb3IgaSBpbiByYW5nZShjb3VudCldCiAgICAgICAgZWxpZiBnZW9tZXRyeSA9PSAnemlnemFnJzogdmFsdWVzID0gWyhmbG9hdChpKSwgMS4gaWYgaSUyIGVsc2UgLTEuKSBmb3IgaSBpbiByYW5nZShjb3VudCldCiAgICAgICAgZWxzZToKICAgICAgICAgICAgYXNzZXJ0IGdlb21ldHJ5ID09ICdzbW9vdGgnCiAgICAgICAgICAgIHZhbHVlcyA9IFsoaSooMTYuKm1hdGgucGkvKGNvdW50LTEpKSwgbWF0aC5zaW4oaSooMTYuKm1hdGgucGkvKGNvdW50LTEpKSkpIGZvciBpIGluIHJhbmdlKGNvdW50KV0KICAgICAgICBpZiBsYXlvdXQgPT0gJ3JldmVyc2Utcm93cyc6IHZhbHVlcy5yZXZlcnNlKCkKICAgICAgICBleHBlY3RlZF9pbnB1dF9oYXNoID0gaGFzaGxpYi5zaGEyNTYoYicnLmpvaW4oc3RydWN0LnBhY2soJzxkZCcsICpwb2ludCkgZm9yIHBvaW50IGluIHZhbHVlcykpLmhleGRpZ2VzdCgpCiAgICAgICAgYXNzZXJ0IHJvd1snaW5wdXRfc2hhMjU2J10gPT0gZXhwZWN0ZWRfaW5wdXRfaGFzaAogICAgICAgIHN0cmlkZXMsIG93biwgYywgZiwgYmFzZSA9IHsKICAgICAgICAgICAgJ0MnOiAoWzE2LCA4XSwgVHJ1ZSwgVHJ1ZSwgRmFsc2UsICdOb25lVHlwZScpLAogICAgICAgICAgICAnRic6IChbOCwgY291bnQqOF0sIFRydWUsIEZhbHNlLCBUcnVlLCAnTm9uZVR5cGUnKSwKICAgICAgICAgICAgJ3JldmVyc2Utcm93cyc6IChbLTE2LCA4XSwgRmFsc2UsIEZhbHNlLCBGYWxzZSwgJ25kYXJyYXknKSwKICAgICAgICAgICAgJ3N0ZXAtcm93cyc6IChbMzIsIDhdLCBGYWxzZSwgRmFsc2UsIEZhbHNlLCAnbmRhcnJheScpLAogICAgICAgICAgICAnc3RlcC1jb2x1bW5zJzogKFszMiwgMTZdLCBGYWxzZSwgRmFsc2UsIEZhbHNlLCAnbmRhcnJheScpfVtsYXlvdXRdCiAgICAgICAgYXNzZXJ0IHJvd1snaW5wdXRfbWV0YWRhdGEnXSA9PSBkaWN0KGR0eXBlPSc8ZjgnLCBkdHlwZV9tZXRhZGF0YT1Ob25lLCBzaGFwZT1bY291bnQsIDJdLAogICAgICAgICAgICBzdHJpZGVzPXN0cmlkZXMsIG93bj1vd24sIHdyaXRlYWJsZT1UcnVlLCBjPWMsIGY9ZiwgYmFzZV90eXBlPWJhc2UpCiAgICAgICAgYXNzZXJ0IGNvdW50Kig0IGlmIGxheW91dCBpbiAoJ3N0ZXAtcm93cycsICdzdGVwLWNvbHVtbnMnKSBlbHNlIDIpIDw9IGNvbnRyYWN0WydtYXhfYmFja2luZ19lbGVtZW50cyddCiAgICAgICAgZGVzY3JpcHRvciA9IHJvd1snb3V0cHV0X21ldGFkYXRhJ10KICAgICAgICBzaGFwZSA9IGRlc2NyaXB0b3JbJ3NoYXBlJ10KICAgICAgICBhc3NlcnQgbGVuKHNoYXBlKSA9PSAyIGFuZCBzaGFwZVsxXSA9PSAyIGFuZCAyIDw9IHNoYXBlWzBdIDw9IGNvdW50CiAgICAgICAgYXNzZXJ0IGRlc2NyaXB0b3IgPT0gZGljdChkdHlwZT0nPGY4JywgZHR5cGVfbWV0YWRhdGE9Tm9uZSwgc2hhcGU9c2hhcGUsIHN0cmlkZXM9WzE2LCA4XSwKICAgICAgICAgICAgb3duPVRydWUsIHdyaXRlYWJsZT1UcnVlLCBjPVRydWUsIGY9RmFsc2UsIGJhc2VfdHlwZT0nTm9uZVR5cGUnKQogICAgICAgIGFzc2VydCBsaXN0KG1hcChsZW4sIHJvd1snc2FtcGxlc19tcyddKSkgPT0gWzcsIDddCiAgICAgICAgYXNzZXJ0IGFsbChtYXRoLmlzZmluaXRlKHYpIGFuZCB2ID4gMCBmb3IgcGFydCBpbiByb3dbJ3NhbXBsZXNfbXMnXSBmb3IgdiBpbiBwYXJ0KQogICAgICAgIGFzc2VydCBhbGwoaXNpbnN0YW5jZSh2LCBpbnQpIGFuZCB2ID4gMCBmb3IgdiBpbiByb3dbJ2xvb3BzJ10pIGFuZCBsZW4ocm93Wydsb29wcyddKSA9PSAyCiAgICAgICAgYXNzZXJ0IHJvd1sncmVmZXJlbmNlX21zJ10gPT0gc3RhdGlzdGljcy5tZWRpYW4ocm93WydzYW1wbGVzX21zJ11bMF0pCiAgICAgICAgYXNzZXJ0IHJvd1snY3BwX21zJ10gPT0gc3RhdGlzdGljcy5tZWRpYW4ocm93WydzYW1wbGVzX21zJ11bMV0pCiAgICAgICAgYXNzZXJ0IHJvd1snc3BlZWR1cCddID09IHJvd1sncmVmZXJlbmNlX21zJ10gLyByb3dbJ2NwcF9tcyddCiAgICAgICAgc2FtcGxlcyArPSBzdW0obWFwKGxlbiwgcm93WydzYW1wbGVzX21zJ10pKQogICAgYXNzZXJ0IHNhbXBsZXMgPT0gMTI2CiAgICByZXR1cm4gZGljdChzdGF0dXM9J3ZhbGlkYXRlZCcsIHJhd19zYW1wbGVzPXNhbXBsZXMsIGdlb21ldHJpY19tZWFuPW1hdGguZXhwKHN0YXRpc3RpY3MubWVhbihtYXRoLmxvZyh4WydzcGVlZHVwJ10pIGZvciB4IGluIHJlcG9ydFsncmVzdWx0cyddKSksCiAgICAgICAgd2lucz1beFsnY2FzZV9pZCddIGZvciB4IGluIHJlcG9ydFsncmVzdWx0cyddIGlmIHhbJ3NwZWVkdXAnXSA+IDFdLCBsb3NzZXM9W3hbJ2Nhc2VfaWQnXSBmb3IgeCBpbiByZXBvcnRbJ3Jlc3VsdHMnXSBpZiB4WydzcGVlZHVwJ10gPCAxXSwKICAgICAgICBzY29wZT0nSW5pdGlhbCBvcmlnaW5hbC9jdXJyZW50IGNvbXBhcmlzb24gb25seTsgZXZlcnkgbG9zcyByZXRhaW5lZCwgbm8gcHJpb3ItQysrIGdhaW4gb3IgZnVsbCBxdWFsaWZpY2F0aW9uIGNsYWltLicpCnJ1bj1qc29uLmxvYWRzKChvdXQvJ3J1bi5qc29uJykucmVhZF9ieXRlcygpKTtyZXRlbnRpb249anNvbi5sb2Fkcygob3V0LydyZXRlbnRpb24uanNvbicpLnJlYWRfYnl0ZXMoKSkKYXNzZXJ0IHJ1blsnaWQnXT09NDA3ODA1NDg0MTIgYW5kIHJ1blsnaGVhZF9zaGEnXT09JzU1YzI4NjU4MTZkMTZmMmJiMGI4YTA4YmEyMzllZjViNjhlNjY2MDgnYW5kIHJ1blsnc3RhdHVzJ109PSdjb21wbGV0ZWQnYW5kIHJ1blsnY29uY2x1c2lvbiddPT0nc3VjY2VzcycKYXNzZXJ0IHJ1blsncGF0aCddPT0nLmdpdGh1Yi93b3JrZmxvd3MvYXBwcm94aW1hdGUtcG9seWdvbi1pbml0aWFsLnltbCdhbmQgcnVuWydldmVudCddPT0nd29ya2Zsb3dfZGlzcGF0Y2gnCmpvYj1qc29uLmxvYWRzKChvdXQvJ21lYXN1cmVtZW50LWpvYi5qc29uJykucmVhZF9ieXRlcygpKTthc3NlcnQgam9iWyduYW1lJ109PSdtZWFzdXJlJ2FuZCBqb2JbJ2NvbmNsdXNpb24nXT09J3N1Y2Nlc3MnYW5kIGFsbChzWydjb25jbHVzaW9uJ109PSdzdWNjZXNzJ2ZvciBzIGluIGpvYlsnc3RlcHMnXSkKYXNzZXJ0IG5vdCBhbnkocmUuc2VhcmNoKHInXGIocHl0ZXN0fGNtYWtlfGN0ZXN0KVxiJyxzWyduYW1lJ10pZm9yIHMgaW4gam9iWydzdGVwcyddKQpwcmVwYXJlZD1yb290LydidWlsZC9zdWJkaXZpZGUyNDctZ2VudWluZS1yZWxlYXNlLXYxJztwcmlvcj1qc29uLmxvYWRzKChwcmVwYXJlZC8ncmV0ZW50aW9uLmpzb24nKS5yZWFkX2J5dGVzKCkpO3ByPWpzb24ubG9hZHMoKHByZXBhcmVkLydmaW5hbC1yZXZpZXcuanNvbicpLnJlYWRfYnl0ZXMoKSkKd2l0aCB6aXBmaWxlLlppcEZpbGUocHJlcGFyZWQvcHJpb3JbJ2ZpbGVuYW1lJ10pYXMgejptYW5pZmVzdD16LnJlYWQoJ3ByZXBhcmVkL2NpLWFydGlmYWN0cy9tZWFzdXJlbWVudC5qc29uJykKd2l0aCB6aXBmaWxlLlppcEZpbGUob3V0L3JldGVudGlvblsnZmlsZW5hbWUnXSlhcyB6OgogYXNzZXJ0IGxlbih6Lm5hbWVsaXN0KCkpPT1sZW4oc2V0KHoubmFtZWxpc3QoKSkpCiByYXc9e246ei5yZWFkKG4pZm9yIG4gaW4gei5uYW1lbGlzdCgpfQphc3NlcnQgcmF3WydiZW5jaG1hcmstZXhpdC50eHQnXS5zdHJpcCgpPT1iJzAnYW5kIHJhd1snbWVhc3VyZW1lbnQuanNvbiddPT1tYW5pZmVzdAptPWpzb24ubG9hZHMobWFuaWZlc3QpO2Fzc2VydCBzaGEocmF3WydydW50aW1lLWxvY2sudHh0J10pPT1tWydsb2NrX3NoYTI1NiddCmFzc2VydCBsZW4obVsnd2hlZWxzJ10pPT0xNCBhbmQgbGVuKG1bJ3J1bnRpbWUnXVsnc2RrX3NoYTI1NiddKT09ODMKc2VsZWN0aW9uPWpzb24ubG9hZHMocmF3WydzZWxlY3Rpb24uanNvbiddKTtkb3dubG9hZD1qc29uLmxvYWRzKHJhd1snYXJjaGl2ZS5qc29uJ10pCmFzc2VydCBzZWxlY3Rpb25bJ2lkJ109PTEyODU1MTk5OTE5IGFuZCBzZWxlY3Rpb25bJ3dvcmtmbG93X3J1biddWydpZCddPT00MDc3ODUwODk0MCBhbmQgc2VsZWN0aW9uWyd3b3JrZmxvd19ydW4nXVsnaGVhZF9zaGEnXT09JzRmNjllYmE3N2EyNjIwNTY0NTllYWFiMWUwYTM5ZTUzNjEwZTkzMDUnCmFzc2VydCBkb3dubG9hZD09ZGljdChieXRlcz1wcmlvclsnYnl0ZXMnXSxzaGEyNTY9cHJpb3JbJ3NoYTI1NiddKWFuZCBzZWxlY3Rpb25bJ2RpZ2VzdCddPT0nc2hhMjU2OicrcHJpb3JbJ3NoYTI1NiddCmFzc2VydCBqc29uLmxvYWRzKHJhd1sncHJvZHVjZXItcnVuLmpzb24nXSlbJ2hlYWRfc2hhJ109PW1bJ3NvdXJjZSddWydyZXZpc2lvbiddCmlkZW50aXRpZXM9W10KZm9yIG5hbWUgaW4oJ29yaWdpbmFsLWlkZW50aXR5LmxvZycsJ2lkZW50aXR5LWJlZm9yZS5sb2cnLCdpZGVudGl0eS1hZnRlci5sb2cnKToKIHJvd3M9W2pzb24ubG9hZHMobGluZVtsaW5lLmluZGV4KCd7InN0YXR1cyI6ICJ2ZXJpZnkiJyk6XSlmb3IgbGluZSBpbiByYXdbbmFtZV0uZGVjb2RlKCd1dGYtOC1zaWcnKS5zcGxpdGxpbmVzKClpZiAneyJzdGF0dXMiOiAidmVyaWZ5IidpbiBsaW5lXQogYXNzZXJ0IGxlbihyb3dzKT09MTtpZGVudGl0aWVzKz1yb3dzCmFzc2VydCBhbGwocj09aWRlbnRpdGllc1swXWZvciByIGluIGlkZW50aXRpZXMpYW5kIGlkZW50aXRpZXNbMF1bJ3JldmlzaW9uJ109PW1bJ3NvdXJjZSddWydyZXZpc2lvbiddYW5kIGlkZW50aXRpZXNbMF1bJ2FydGlmYWN0X3NoYTI1NiddPT1zaGEobWFuaWZlc3QpCmNvbnRyYWN0X3Jhdz1zdWJwcm9jZXNzLmNoZWNrX291dHB1dChbJ2dpdCcsJ3Nob3cnLG1bJ3NvdXJjZSddWydyZXZpc2lvbiddKyc6Y292ZXJhZ2UvY29udHJhY3RzL2FwcHJveGltYXRlLXBvbHlnb24tYmVuY2htYXJrLmpzb24nXSxjd2Q9cm9vdCk7Y29udHJhY3Q9anNvbi5sb2Fkcyhjb250cmFjdF9yYXcpCnJlcG9ydD1qc29uLmxvYWRzKHJhd1snYXBwcm94aW1hdGUtcG9seWdvbi5qc29uJ10pO21ldGE9cmVwb3J0WydtZXRhZGF0YSddO2Fzc2VydCBtZXRhWydjb250cmFjdF9zaGEyNTYnXT09c2hhKGNvbnRyYWN0X3JhdykKZXhwZWN0ZWRfc291cmNlPWRpY3Qoc291cmNlX3NoYTI1Nj1wclsnc291cmNlX2ZpbmdlcnByaW50J10sc291cmNlX2hhc2hfc2NoZW1hPSdjcHAtcHl0aG9uLWJ1aWxkLXBvc2l4LWxmLXYyJyxzb3VyY2VfaGFzaF9zY29wZT0nQ01ha2VMaXN0cy50eHQsIHB5cHJvamVjdC50b21sLCBzcmMvKiwgaW5jbHVkZS9za2ltYWdleHgvKiwgcHl0aG9uL3NraW1hZ2V4eC8qLnB5JykKc3VtbWFyeT12YWxpZGF0ZV9yZXBvcnQocmVwb3J0LGNvbnRyYWN0LG0sZXhwZWN0ZWRfc291cmNlKTthc3NlcnQgc3VtbWFyeT09anNvbi5sb2FkcyhyYXdbJ3N1bW1hcnkuanNvbiddKQphc3NlcnQgbWV0YVsnY29yZV9zaGEyNTYnXT09cHJbJ3NvbGVfaW5zdGFsbGVkX2NvcmUnXVsxXWFuZCBtZXRhWydweXRob24nXT09bVsncnVudGltZSddWydweXRob24nXQpmb3IgYSxiIGluIFsoJ251bXB5JywnbnVtcHknKSwoJ3NjaXB5Jywnc2NpcHknKSwoJ3JlZmVyZW5jZScsJ3NjaWtpdC1pbWFnZScpXTphc3NlcnQgbWV0YVthXT09bVsncnVudGltZSddWyd2ZXJzaW9ucyddW2JdCmRldGFpbHM9W107dG90YWw9MApmb3Igcm93IGluIHJlcG9ydFsncmVzdWx0cyddOgogc2FtcGxlcz1yb3dbJ3NhbXBsZXNfbXMnXTthc3NlcnQgcm93WydzYW1wbGVfbGFiZWxzJ109PVsnc2Npa2l0LWltYWdlJywnY3VycmVudCddO3JlZmVyZW5jZT1zb3J0ZWQoc2FtcGxlc1swXSlbM107Y3VycmVudD1zb3J0ZWQoc2FtcGxlc1sxXSlbM10KIGFzc2VydCByZWZlcmVuY2U9PXJvd1sncmVmZXJlbmNlX21zJ11hbmQgY3VycmVudD09cm93WydjcHBfbXMnXWFuZCByZWZlcmVuY2UvY3VycmVudD09cm93WydzcGVlZHVwJ10KIGRldGFpbHMuYXBwZW5kKGRpY3QoY2FzZV9pZD1yb3dbJ2Nhc2VfaWQnXSxyZWZlcmVuY2VfbXM9cmVmZXJlbmNlLGNwcF9tcz1jdXJyZW50LHJhdGlvPXJlZmVyZW5jZS9jdXJyZW50LGFkZGVkX21zPWN1cnJlbnQtcmVmZXJlbmNlKSk7dG90YWwrPXN1bShtYXAobGVuLHNhbXBsZXMpKQphc3NlcnQgdG90YWw9PTEyNiBhbmQgbGVuKGRldGFpbHMpPT05CmdtPW1hdGgucHJvZChyWydyYXRpbyddZm9yIHIgaW4gZGV0YWlscykqKigxLzkpO2Fzc2VydCBtYXRoLmlzY2xvc2UoZ20sc3VtbWFyeVsnZ2VvbWV0cmljX21lYW4nXSxyZWxfdG9sPTFlLTE0KQpjcHU9cmF3WydjcHUudHh0J10uZGVjb2RlKCd1dGYtOCcpO2Fzc2VydCAnTW9kZWwgbmFtZTonaW4gY3B1CnJldmlldz1kaWN0KHN0YXR1cz0nUEFTU19JTklUSUFMX1NJTkdMRV9IT1NUX0NPTVBBUklTT04nLHJ1bj1ydW5bJ2lkJ10sY29udHJvbGxlcj1ydW5bJ2hlYWRfc2hhJ10scHJvZHVjdF9zb3VyY2U9bVsnc291cmNlJ11bJ3JldmlzaW9uJ10sYXJ0aWZhY3Q9cmV0ZW50aW9uLG1hbmlmZXN0X3NoYTI1Nj1zaGEobWFuaWZlc3QpLGNvcmVfc2hhMjU2PW1ldGFbJ2NvcmVfc2hhMjU2J10sU0RLX21lbWJlcnM9ODMscHJvZHVjdF9tZW1iZXJzPTE3Nixzb3VyY2VfaW1hZ2VfcGF0aHM9MjQ3LHJlZ2lzdGVyZWRfZnVuY3Rpb25zPTI1MCxjaGVja3M9c3VtbWFyeSxyYXdfc2FtcGxlcz10b3RhbCxnZW9tZXRyaWNfbWVhbj1nbSxjYXNlcz1kZXRhaWxzLHdpbnM9W3JbJ2Nhc2VfaWQnXWZvciByIGluIGRldGFpbHMgaWYgclsncmF0aW8nXT4xXSxsb3NzZXM9W3JbJ2Nhc2VfaWQnXWZvciByIGluIGRldGFpbHMgaWYgclsncmF0aW8nXTwxXSxpZGVudGl0aWVzPWlkZW50aXRpZXMsYWxsX3Jhd19tZW1iZXJzPXtuOmRpY3QoYnl0ZXM9bGVuKGIpLHNoYTI1Nj1zaGEoYikpZm9yIG4sYiBpbiByYXcuaXRlbXMoKX0sY3B1PWNwdSx0aW1pbmdzX3JlcGVhdGVkPUZhbHNlLG5ld19kaXNwYXRjaGVzPTAsbmV3X2J1aWxkcz0wLG5ld19vcmlnaW5hbF9yZWZlcmVuY2VfY2FsbHM9MCxzY29wZT0nTmluZSB1bmNoYW5nZWQgd2hvbGUgcHVibGljIG9uZS13b3JrZXIgY2FsbHMgb24gb25lIGZyZXNoIGhvc3QsIGFsbDEyNnNhbXBsZXMvbG9zc2VzIHJldGFpbmVkLiBOb3QgbGlicmFyeS13aWRlIHNwZWVkIHN1cGVyaW9yaXR5IG9yIGZvdXItcHJvZmlsZSBxdWFsaWZpY2F0aW9uOyBhY2NlcHRlZCBmdWxsIHF1YWxpZmljYXRpb24gcmVtYWluczI0MS4nKQp3aXRoKG91dC8nZmluYWwtcmV2aWV3Lmpzb24nKS5vcGVuKCd4JylhcyBmOmpzb24uZHVtcChyZXZpZXcsZixpbmRlbnQ9Mik7Zi53cml0ZSgnXG4nKQpwcmludChqc29uLmR1bXBzKGRpY3Qoc3RhdHVzPXJldmlld1snc3RhdHVzJ10scmV2aWV3X3NoYTI1Nj1zaGEoKG91dC8nZmluYWwtcmV2aWV3Lmpzb24nKS5yZWFkX2J5dGVzKCkpLHdpbnM9bGVuKHJldmlld1snd2lucyddKSxsb3NzZXM9bGVuKHJldmlld1snbG9zc2VzJ10pLGdlb21ldHJpY19tZWFuPWdtLGNhc2VzPWRldGFpbHMpLGluZGVudD0yKSkK"
+  }
+}
+}
