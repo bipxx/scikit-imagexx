@@ -1,0 +1,6009 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-28T06:55:35.015025+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "source_sha256": "6362d53eeef8ebd0094b32f6f7dad0bc2cb4f2e25c891209d6534ba77a4207dc",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "6362d53eeef8ebd0094b32f6f7dad0bc2cb4f2e25c891209d6534ba77a4207dc",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "a78a1b158d74a9dd621f5ac296b38b3b7ee5c164509ef60209b68caf1b568c16",
+    "harness_sha256": "9b488a1bb6635a3c768aabeefb09f895fb63ff66d42e340ce7d01951ac82fc6d",
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "threads": 1,
+    "repeat": 7,
+    "raw_samples": 336,
+    "accepted_uniform_stages": 48,
+    "accepted_sparse_stages": 96,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "command": [
+      "benchmarks/blur_effect.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "build/ci-blur-effect.json"
+    ],
+    "selected_apis": [
+      "measure.blur_effect"
+    ],
+    "provider_frontier": "Twenty-four positive rank1/2/3 cases, uint8/float32/float64, default h_size11 plus h_size1 and21 controls. Seed2026 uint8 input is normalized by255 for float storage outside timing. Public conversion, uniform filtering, Sobel sampling, allocations, clamps, cropped sums, ratio and final default np.max are timed. Exact typed six-intermediate snapshots and public scalar metadata/words precede seven paired rounds; 48 accepted uniform and96 sparse stages are checked. h_size1 retains the ordered rolling recurrence. Literal NumPy clamps, cropped reductions and final reducer remain providers, including the installed NumPy EPSILON promotion rules. This first original/current comparison is not a prior-C++ gain or full-API qualification."
+  },
+  "results": [
+    {
+      "case_id": "4096:uint8:h11",
+      "shape": [
+        4096
+      ],
+      "dtype": "uint8",
+      "h_size": 11,
+      "axes": 1,
+      "pixels": 4096,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "ccc6fc80412de081ae996e336589213e89b13964af1a1a93bdb5411b555b76bb",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "59d4a1ba231920eb3a8ae498626a905683d6b0cb5ef40a6f33d74e94c193fe34"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "69e64bb636088696bf68b3197193b9658970e6f4163b867c628177d7fc8b1857"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "cfd318fb46f1aa627da4e34922d3de3ec23176fa82830cc2bc31be30da6da022"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6e7a6c8c3a8652bde79ce09cc26f01f4181eb64913315d3b5cef23808aaf2e22"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fdb479c5940de0e61f49e6e31510116e3ffe66039bcc5f156da715816d4d4b47"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "77d2854da22c1a309593015fd9cc3d372f936f038cd8e630a04ac96d62c3fad1"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "63c893e1384abe3f",
+      "reference_raw_hex": "63c893e1384abe3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.11684001724137931,
+      "cpp_ms": 0.08949163636363637,
+      "speedup": 1.305597058999086,
+      "samples_ms": [
+        [
+          0.11772662068965517,
+          0.11684001724137931,
+          0.11495955172413792,
+          0.11703775862068966,
+          0.11601662068965517,
+          0.11996612068965518,
+          0.1160903448275862
+        ],
+        [
+          0.09283185714285715,
+          0.08967075324675325,
+          0.09156511688311687,
+          0.08776767532467532,
+          0.08846087012987014,
+          0.08812031168831169,
+          0.08949163636363637
+        ]
+      ],
+      "loops": [
+        58,
+        77
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "4096:float32:h11",
+      "shape": [
+        4096
+      ],
+      "dtype": "float32",
+      "h_size": 11,
+      "axes": 1,
+      "pixels": 4096,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "6562e0f483cc75968d9b7b893a41154abfccc1365be1fa457730bfa55f6ca3f1",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "92071731a0e480778f0e166e56ea276c414f7b77befb01e9eca3d744faca8778"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b1ba34e24be230614277a8e316acab451bf848f377c26663e6dffe9d1461beea"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "3f67fbfb35d9bee423903a22f3c2c6f9b5a610442df43c8c6d05d9032a984037"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "216ad09de992635dbaa2b0888dee13646fa489ea0a71fdc4a7e628203fb96698"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a0a4c63b0515a8ad88f261ff60ad089f52eaf8d16aa3f4fc6c9726f5f59f5b68"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b652b346e0d27ae84a1c370f27c439b6f32f150bb1c351a41ba1d0f6756f08bd"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "be51f23d",
+      "reference_raw_hex": "be51f23d",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09959745833333333,
+      "cpp_ms": 0.08410310294117647,
+      "speedup": 1.1842304843733762,
+      "samples_ms": [
+        [
+          0.10123502777777778,
+          0.09864715277777777,
+          0.099255125,
+          0.09855409722222222,
+          0.10060729166666667,
+          0.10023338888888889,
+          0.09959745833333333
+        ],
+        [
+          0.08344948529411765,
+          0.08410310294117647,
+          0.08327407352941177,
+          0.08422770588235294,
+          0.08438057352941176,
+          0.0837390294117647,
+          0.08465714705882352
+        ]
+      ],
+      "loops": [
+        72,
+        68
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "4096:float64:h11",
+      "shape": [
+        4096
+      ],
+      "dtype": "float64",
+      "h_size": 11,
+      "axes": 1,
+      "pixels": 4096,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "79c6c7e4201ec6ee245291a6028b0df16a4483be2af3107e48dbac1ed6eb17cc",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b0bacfca6b5f14ed58f5fb1dd6a0f1045175c1f36ab435ecf408e84c94df4395"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "3814fd8629b3eb4e344f011b325046e468bef23858fce76b611c3c57e48e1797"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "793db630b91671a189d0b9fae2d904e190ff5f78a408870fbea7148b0adb1c05"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              4096
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "43fd5492f4aa9a509b98fb98b714439baee59de5919a7b1d77c5d96e7b2b24ba"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fdb479c5940de0e61f49e6e31510116e3ffe66039bcc5f156da715816d4d4b47"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "77d2854da22c1a309593015fd9cc3d372f936f038cd8e630a04ac96d62c3fad1"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "63c893e1384abe3f",
+      "reference_raw_hex": "63c893e1384abe3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.1088598,
+      "cpp_ms": 0.08746106,
+      "speedup": 1.2446659118926755,
+      "samples_ms": [
+        [
+          0.10885634545454546,
+          0.10857574545454546,
+          0.11083656363636363,
+          0.1093438,
+          0.1088598,
+          0.10894592727272728,
+          0.10790658181818182
+        ],
+        [
+          0.08656172,
+          0.08851402,
+          0.08724494,
+          0.08707388,
+          0.08746106,
+          0.08865982,
+          0.087968
+        ]
+      ],
+      "loops": [
+        55,
+        50
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "65536:uint8:h11",
+      "shape": [
+        65536
+      ],
+      "dtype": "uint8",
+      "h_size": 11,
+      "axes": 1,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "d1817a95d06e99fa435f2e65c202d0653401e81a0c952edd37fb3e375e1d9cb6",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ac02b44708092785eb4c588185a667c440d2a217d8b1bc2ea78a9948d2c8c86f"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "91f9b074cc766acacd0bf7954286df5b9a63ef4c073d649f25cde276055a91d2"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "1358cec2ca4c10b74c6485ed2d6a94e75ade97eca0ac17489a3afec08e7eefb0"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "36b1b8b4db783c4a5c527e782c04aec953d5f2e93882265b16a6e2964c217953"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "70eb1e5536fe576e909969fdd1165a79cb9235f67676c6fa4ab90dde387d09d3"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "15f2552ff0d8deee1f2b7d32b0498b65cd2804455605e11d110db2af5422f61a"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "db066d0ecaa3be3f",
+      "reference_raw_hex": "db066d0ecaa3be3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.008308875,
+      "cpp_ms": 0.6565304285714285,
+      "speedup": 1.5358143828824822,
+      "samples_ms": [
+        [
+          1.017923125,
+          1.00277,
+          1.005839625,
+          1.0064743125,
+          1.010416375,
+          1.008308875,
+          1.018935875
+        ],
+        [
+          0.6565304285714285,
+          0.654186,
+          0.6644974761904762,
+          0.6669921428571428,
+          0.6555284761904762,
+          0.6558027142857143,
+          0.6790047619047619
+        ]
+      ],
+      "loops": [
+        16,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "65536:float32:h11",
+      "shape": [
+        65536
+      ],
+      "dtype": "float32",
+      "h_size": 11,
+      "axes": 1,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d5a87a851c6de4cce10b8258f733a4eac60efb96aeb257ead79c332ddef255ce"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "06ad1fd15670e68a3de59d3517fa2cb9e53d06c0fb717efffb945f197933a510"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a0507de7c6acd4e3a845bd679088934fa0fa6b0ff0302fc951eff7d83aca2e44"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "507a6a5e521d2acb64fd9ae52ed48850200b9b7611a9aeb34316709342b557d6"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7657f1868abe49648baf17ce65a65744d5007ebd32425128bfac8d1f2839158c"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "612efa3da56bfd38e66e5fd76d2437f635abe913073b6c983d2624a7cac10b6a"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "501ef53d",
+      "reference_raw_hex": "501ef53d",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.8670251052631579,
+      "cpp_ms": 0.6045031904761905,
+      "speedup": 1.434277136867001,
+      "samples_ms": [
+        [
+          0.8634924736842106,
+          0.8651713157894737,
+          0.8699926842105263,
+          0.8736887368421052,
+          0.8670251052631579,
+          0.8739406315789474,
+          0.866527
+        ],
+        [
+          0.6024358571428572,
+          0.6045031904761905,
+          0.6080089047619047,
+          0.6023151904761905,
+          0.5996178095238095,
+          0.6049671904761905,
+          0.6045933333333334
+        ]
+      ],
+      "loops": [
+        19,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "65536:float64:h11",
+      "shape": [
+        65536
+      ],
+      "dtype": "float64",
+      "h_size": 11,
+      "axes": 1,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "70be96a44aa3cd4f1417e53c5fc75bd82c2aa33e492174ea75f4ed01bea5cb55"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e4947bef2667be0448c9d6e63f19da98a88b16b0d984388225dea674031236f1"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d449b1c5a040b0b4724af71ef8a46c22fca2d8f06afccfe24800996fc48cd280"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              65536
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "901d6c38607a54e3e6ab776f2f2725785d1941d7ace9c3453f657000437b502a"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "70eb1e5536fe576e909969fdd1165a79cb9235f67676c6fa4ab90dde387d09d3"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "15f2552ff0d8deee1f2b7d32b0498b65cd2804455605e11d110db2af5422f61a"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "db066d0ecaa3be3f",
+      "reference_raw_hex": "db066d0ecaa3be3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.97161625,
+      "cpp_ms": 0.6368080434782608,
+      "speedup": 1.5257600150478765,
+      "samples_ms": [
+        [
+          0.9719980625,
+          0.97361175,
+          0.9722309375,
+          0.9705853125,
+          0.97161625,
+          0.971021625,
+          0.9714065625
+        ],
+        [
+          0.6368080434782608,
+          0.6349609565217391,
+          0.6460252173913044,
+          0.6320204782608695,
+          0.63343,
+          0.649187304347826,
+          0.6474821304347826
+        ]
+      ],
+      "loops": [
+        16,
+        23
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "256x256:uint8:h11",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "uint8",
+      "h_size": 11,
+      "axes": 2,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "d1817a95d06e99fa435f2e65c202d0653401e81a0c952edd37fb3e375e1d9cb6",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fe0d264e13812852ff0c8e7273503e0d468e0f2456920759d799486df98a9588"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c3ad805b532c41efe5b53511ddf8ef6537a92e8ff8255671ab0905128943164d"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f71575eb57741aca0127f44b9007cb48a21af827bbf92eb954e9bb6bbf1a1104"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "1475d13b134024e72db62d618cd26037ec2b0cd27eb0396d7dc801f28807480a"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "19155bbd6f1227d86bcd8ed102c54d0e7f81c9a657df31b396884d7709c2d29a"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fbae3354a49cb58608fbf9b998628ff1e99c299bc157651cb10704a15496fadd"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8b958af8f25af997e56f0516e97150f6c86bf6091c96c854bd82be619728b5e2"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6e35324672d4d2a85f23ccae8b3f6eaf495107f59efded45072b60b36e455e33"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "1462ece60425802dcb860d1e63a1df04bc33eb7d39bbbf40439bfb51789cf3ab"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6129ede6310e4caff89c60596fbd8863565b7cbf5bf6ab77aa5d4ce7935dd036"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8bcede3009d4a586e71c5bad7adec2d402ed5d1ab4b8138b2c170e9eb1ea80b8"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e867f2b908a2535d8bff5895965e4cf8b69b8c83bb5c5c2c26877ac591bd50a0"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "3c157d9935f6be3f",
+      "reference_raw_hex": "3c157d9935f6be3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.969086,
+      "cpp_ms": 1.813421125,
+      "speedup": 1.6372843346026422,
+      "samples_ms": [
+        [
+          2.969086,
+          2.9430234,
+          2.972479,
+          2.9621138,
+          3.2872746,
+          2.952836,
+          2.9858532
+        ],
+        [
+          1.807682625,
+          1.8167135,
+          1.823516,
+          1.813421125,
+          1.823523625,
+          1.79920375,
+          1.786546125
+        ]
+      ],
+      "loops": [
+        5,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "256x256:float32:h11",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "h_size": 11,
+      "axes": 2,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c1b9ed1109b1c1b6dfa55dd6114bbf399581530526723684810d128593dba84a"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d81c564f385c8967829e85faab63da868b1166d352a0fabebe0a28b31f302267"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "3c7e2957091935299ee936821155e8e2a2dbe6c8920fca58a425da6d2a7bd270"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5592ca2e652d1a3830c5875ad6c79db060fa84fc831ee19194df37e8a10b9053"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "09e2b7ebac7b1503c7f7799c5a481d74487c3e12ad54f7689826a8af33a21da4"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "77c15f276e3eac9863d43638d9f145e6225001b7b97968c5b5c870504768274b"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4224de4af857bdda75a050da5e46f39d551bfa1562f83def33d3d980a3179cea"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "344cb676fea2860b7b044322f6de3fc691731d4e17834d6f8291a928a015f233"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fd3c853669aedfc973f8b212108a9316f365380f2adde66473432039dc5800fe"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ea10fb017568c954a72125a26817a2520c3c2bfcaf22605b8a9eb2fe4b0e4129"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "689afd569e789ed1b80b7f9c50bd3822f49b70b93b10128b33963773711f312e"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "74c78421bdbb5b62da4f02c8ca3223bc627932def2b846001100e6a02e22b820"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "aab1f73d",
+      "reference_raw_hex": "aab1f73d",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.4571851428571425,
+      "cpp_ms": 1.4228416363636365,
+      "speedup": 1.726956170004262,
+      "samples_ms": [
+        [
+          2.4572152857142857,
+          2.462012285714286,
+          2.434015,
+          2.425239285714286,
+          2.4232334285714288,
+          2.4571851428571425,
+          2.462490142857143
+        ],
+        [
+          1.4228416363636365,
+          1.417364181818182,
+          1.404618181818182,
+          1.445773818181818,
+          1.3939750909090909,
+          1.4235061818181818,
+          1.4395535454545454
+        ]
+      ],
+      "loops": [
+        7,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "256x256:float64:h11",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float64",
+      "h_size": 11,
+      "axes": 2,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "3a486e083e289f4bb32853ccecf659e98c1efdabb2224ea51b66dd0b89acf505"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b8c716b737911bf76e27de6aca912250ddf433a60379bb86473c27db921a72a6"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4d3af1232fbde88e5c2b51ac8e299565718b89caff996ea3798306ae0808b01c"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7857784b3e6a9272ee704d8fd8ea5b0f4e5e64af147e25b0ddb20d71caa8cf17"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "19155bbd6f1227d86bcd8ed102c54d0e7f81c9a657df31b396884d7709c2d29a"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fbae3354a49cb58608fbf9b998628ff1e99c299bc157651cb10704a15496fadd"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a0d48e9d4a8a59fbd7f0f46ef69004d89ea4e47bca9cb8559a8f69ff6104c832"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ba95fe5d0d6abf62ef8ec60779c22b435046e67c57b9543a98cb255840dc71e3"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "3636bbd306ff5d5f54046f51944e1c62e942a50712a40800b8d78e3e71685136"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c0cd6ef3c6a0fa0d361e3c6b9ca5796d55bd506b3eeee62c24cc3c818b3cd4bc"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8bcede3009d4a586e71c5bad7adec2d402ed5d1ab4b8138b2c170e9eb1ea80b8"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e867f2b908a2535d8bff5895965e4cf8b69b8c83bb5c5c2c26877ac591bd50a0"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "3c157d9935f6be3f",
+      "reference_raw_hex": "3c157d9935f6be3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.9310533333333333,
+      "cpp_ms": 1.5993093999999999,
+      "speedup": 1.8326993721998592,
+      "samples_ms": [
+        [
+          2.9897505,
+          2.9198166666666667,
+          2.9266668333333334,
+          2.9377865,
+          2.9310533333333333,
+          2.9506223333333335,
+          2.9259575
+        ],
+        [
+          1.5993093999999999,
+          1.6065371000000002,
+          1.6423893999999999,
+          1.5926034,
+          1.571393,
+          1.5913385,
+          1.6017991999999999
+        ]
+      ],
+      "loops": [
+        6,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "1024x1024:uint8:h11",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "uint8",
+      "h_size": 11,
+      "axes": 2,
+      "pixels": 1048576,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "f88d5ab4e9ac9d58950b3d4e90ef2b4fc37bcdeca354e93ff42966253ce90548",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ab5adc996e7402061424b7f569c8b876b7f7cd16acc6858c6f2f69d71c4ac842"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "baa664236c703397193196974242d44f2d09995abd5feb5a345c752632a5a874"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7eba11b66ffa93cebb8dbd6bdda1f3ec01b398ca4b465a4109c261af1f683c31"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "65546a8c715fdeedc53d36522751fc3379c28ab7167e099fd3b8a5edddb99e29"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e93746b288297fcb967deac694348ad25192ad15758f6a343e7a2c942399c0dd"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ec6a8f15bfb6c79dbb2475037a628756f8e4f5f0fbcdbb52ec3907a24e1201ea"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bf6277f840124b231565e490ae2803aefc2d45271c5d6bc4aae54d9b757b13f6"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9f795257044c8285f58fd38bdb5397231414afafa343e5f1fff13899b7d47edc"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "0dce2d9eca69d368fcdf8b34ceece7a2971a34f52801020a0bb911ef41ec2519"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d1e76915d295dfc6599d8c78a6e0cbf37aae063954213022cadd122d6ecd6990"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f3c2058397d2319bcdfcec8c33461baf16fd9d320fd736c6ce3239b687c10217"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a5344a1777c5300575cd1edca53d9cd87db3ab8246d61db68db7a7274f38c7fc"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "d0eb57165ec2be3f",
+      "reference_raw_hex": "d0eb57165ec2be3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 57.549962,
+      "cpp_ms": 41.926216,
+      "speedup": 1.372648607258046,
+      "samples_ms": [
+        [
+          57.115296,
+          58.003195,
+          57.268705,
+          57.549962,
+          57.995964,
+          57.438125,
+          57.739082
+        ],
+        [
+          41.88208,
+          41.78077,
+          41.926216,
+          42.644734,
+          45.587351,
+          41.696135,
+          42.600307
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "1024x1024:float32:h11",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float32",
+      "h_size": 11,
+      "axes": 2,
+      "pixels": 1048576,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "92f9d17518d89670d0e87292be9a27bb78b3ee570a11a49208c878017bd9f956"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5d007b50ae4ce4128f033ad07748bd5a9c0006f0afb81002afbf3a1e287b8285"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "cde11775ab0d01c30c322c21917ac5ca6b40b5004b9be1f1254d0df30da35ac1"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "60cfa904d109692dcd6941bcf0d3866d791a8108fb751308df497905b20eb5bc"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "18e50748a1aa5ae3891b6aa6dffd6d990d93b7fa34811db8d605faadac1f28d6"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "cc2b8e251ca3a34afb37eaca93b358adf4b428d7c1429ac20c9e7c8fb21c8529"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7b934491269775cedcbdc03c003c0ddfb4bcfc93f0661b9da8c63cf2852e47dc"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "acb637090a600aefe5f921260c080252d31352cbbe2b76468a3be1565eb4357f"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "efc152fdcce389881f63d16e58984adc798a16d902ac231657235d00a74cd0ee"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "137ee77091db49a8a17dd9eacf7fbcf543c66ade12ae8b46ca42bdf8edec2afb"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ad8f0bc601e9482fd9984af8f48d4e0a855f38b357cdd6ac18f300b077eaaef7"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "11f9ec2f0d34fb9f7bbbe2763d1c4598361cf1efb9f2e05cdd813248f4224de9"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "0913f63d",
+      "reference_raw_hex": "0913f63d",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 45.698997,
+      "cpp_ms": 25.360642,
+      "speedup": 1.8019653051369915,
+      "samples_ms": [
+        [
+          45.940685,
+          45.09389,
+          45.96387,
+          45.936539,
+          45.698997,
+          45.309469,
+          45.606621
+        ],
+        [
+          25.492148,
+          25.95845,
+          25.360642,
+          24.782963,
+          24.655525,
+          25.09043,
+          25.484345
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "1024x1024:float64:h11",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float64",
+      "h_size": 11,
+      "axes": 2,
+      "pixels": 1048576,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "3a3578ef45959711f4a474c7a55a0f9f722cd658fa068223ead278dda4c8ed50"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d5e0be653d6470c87b5280fa3ad6d644a5904afd8711d13c1a7d9288c3e71288"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bb992615ee1301a672837c59d5a14b8105dd7f1a6aad0697f9423d7acb62891e"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ff0d57fdc55251d830f64c1d4eee4920f732c1355565be0b20e97f2f61179fd1"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e93746b288297fcb967deac694348ad25192ad15758f6a343e7a2c942399c0dd"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ec6a8f15bfb6c79dbb2475037a628756f8e4f5f0fbcdbb52ec3907a24e1201ea"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "df727a3796ecd25f23ee6f34324b061339656d004fcccab516fa96b16f09e1d9"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c517b8edb62820df9786c347147d1e30f80761e5fbf756bc37d797e0bc8cf7cd"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "23c587873bc058cb5e7adf5a5685d76af10a98b8f8b816ae8907aa9ae5586584"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "540a1ff57004524d84c3e3434e3d5e8fc4646e0d8a4504bf530771468bf0cbd5"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f3c2058397d2319bcdfcec8c33461baf16fd9d320fd736c6ce3239b687c10217"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a5344a1777c5300575cd1edca53d9cd87db3ab8246d61db68db7a7274f38c7fc"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "d0eb57165ec2be3f",
+      "reference_raw_hex": "d0eb57165ec2be3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 53.736648,
+      "cpp_ms": 29.819823,
+      "speedup": 1.8020444990568858,
+      "samples_ms": [
+        [
+          54.240025,
+          54.109564,
+          53.565701,
+          53.714162,
+          53.736648,
+          53.85517,
+          53.556615
+        ],
+        [
+          30.226443,
+          29.755218,
+          29.997972,
+          29.76922,
+          30.250392,
+          29.819823,
+          29.675309
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "32x32x32:uint8:h11",
+      "shape": [
+        32,
+        32,
+        32
+      ],
+      "dtype": "uint8",
+      "h_size": 11,
+      "axes": 3,
+      "pixels": 32768,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "1ea4c58e6e44ef810b6409ff1fa0660ffee430f63f1b0b038cbe6a084c8ec910",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ebb1deb2f64bc088aed0e1739d5595cf97bd5536d666ce7f80d926e3a41f7d3b"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c984c051c7fa63e73824be3b8f33563782562b595de875b22dcb8d656200dee8"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "2d687db4f22cda2663d52fe85d41df8e93d9dcf81780b554fa5fff9ca2ceef07"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6d1684006305ead6fd3da5917ada40cf1c3489d2533bda45852dd55b82b668fa"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "28c62131950165e2ba1f36e6885717102b3ffdeda633116ec7ee70c97831059c"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "2776e6ee080bb99f95ea86ab465a01f048742e87a04560eb1a07469ddf558d23"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "eed415590a91cb9086534528e49803cf33e8465cb5291856533bd6f0c1567b4e"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "77645d25dbb65fc1723c4fa04e4ef658d55bb242d1710f9c35c103f9d2c8e1ae"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9c6e90f2a6737b24d437a1f613d7777853c7b0a43dbd05ce0ee3f9f9c4031166"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "40d63c0226fc4b81ab518864f50c8df5e0d2500432b0ee8c03876259c25b8234"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "db4683fba28dceca502fd37c6aa9607afb5329c28210a00f206795bd27ed3031"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "12e8b8b4bd92828dece1f189ce8f000204931916fcd6285c81051f3e224c98f1"
+          }
+        },
+        {
+          "axis": 2,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4449279446f5ae25d9a838c52a7ce4d19841168ab2cc5dc604ce0f01bddbbc14"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7ccbd4b058551625781c288bcb5f040eb7a08ab45a5813ff0ac616c2495c54b8"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "0ca1f378b223b03bfeedc416d92f8d727dae21b237fc6aa3452912a5ea6605a2"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9440deb1fbf081f5c2e3a9ee3a7be90478effdb40b6c21667b3711003801d833"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c58b545000696940180fd27cfc8a5ac5bdda5fa4e142c0b25240f51d0f988381"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bc0b3420c321a52d359d9ab214774118412fcd409a7a923d5ee6754c99bd82bc"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "ff0bc0f96473bf3f",
+      "reference_raw_hex": "ff0bc0f96473bf3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.7417095,
+      "cpp_ms": 2.912935,
+      "speedup": 1.2845152741135657,
+      "samples_ms": [
+        [
+          3.69476875,
+          3.74394525,
+          3.76952825,
+          3.7417095,
+          3.72687225,
+          3.71641375,
+          3.7496635
+        ],
+        [
+          2.9681845,
+          2.9509518333333333,
+          2.9109018333333334,
+          2.9235425,
+          2.8902643333333335,
+          2.912935,
+          2.9124676666666667
+        ]
+      ],
+      "loops": [
+        4,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "32x32x32:float32:h11",
+      "shape": [
+        32,
+        32,
+        32
+      ],
+      "dtype": "float32",
+      "h_size": 11,
+      "axes": 3,
+      "pixels": 32768,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "4c99f8097739f158215d2dbd9ef93cc33beb1a87a2fd2a1431282c56cf4553d6",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6467ec70534dcd72f58dbf6f53fe7d1ec7f06774ef2f87982f7b2d9d30762005"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6cd3cc303bbedbd6a836c31f056e02fcd5b04e089e32174c547bcf49359ffa8f"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "527f7aad9fb328a5b137ab43ad1708d86b3091b65e2b37d3139058cabe795ec7"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f8145eaa58d12bdd84090378f85b6cab7db4cf61418b79bea0c3b366d7132794"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7d591ec29796fd5afc331b7aaed63bc02217a05610fb5e10942f9b3483a1ff98"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d7599a2ed882b13400e157e1ae432ea8b7e839daf8771deaf21fb3f70c372b78"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bdb89fde714d038848d6e6f7e22bcb30c34f15be615e39743a16470ff018b8c7"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4f137538b85eb6c3992466f575bb9a32ea572ef2acc8cba5164395dc35f34b5e"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fcae81d57dd76d8699eb075b53a3d2afe3a65ea174f5f2394510d348dab4056e"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7104465f804c57ea85678c7fba7418431873e7b7e1ec96093c2b72e3cea645d6"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "02251807a7f1398e4c7a0d294f3200d7b69aedcbcbf4e893fe35403d11504885"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ac4e7a0aad7aee0e51a78975f933bb57e84c2e11a6dda342007bc2452174695b"
+          }
+        },
+        {
+          "axis": 2,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "0da05a4d5a3d66a023a8d2a8064a659f2490650ee5b852faeb007791a745d5a4"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "593b6968d562ede92675125ea965365b064c03b0cc48c69a68b860b00c191114"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ddd4372c35497f57ca89a3abdd87e578906559106768c945dfd83922258a8b77"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              4096,
+              128,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bfcda23b6d5986b43b3cfcf248e68ac816bc827d820e97d3e6c416901dadd611"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "2a1380abdf63ecaf62abdbaf7983aa6a2edb0a25b6f232861283c858393e2ad4"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f37bd8ab94f84162d38d2b77f0e83c09268a481b233290521c01c42cdba9adfd"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "2b9bfb3d",
+      "reference_raw_hex": "2b9bfb3d",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.365493,
+      "cpp_ms": 2.3984984285714286,
+      "speedup": 1.4031666478950013,
+      "samples_ms": [
+        [
+          3.3683174,
+          3.3203074,
+          3.3704464,
+          3.4303302,
+          3.3278284,
+          3.3511976,
+          3.365493
+        ],
+        [
+          2.4290312857142857,
+          2.382181,
+          2.3984984285714286,
+          2.384222714285714,
+          2.419418285714286,
+          2.3840438571428573,
+          2.413792714285714
+        ]
+      ],
+      "loops": [
+        5,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "32x32x32:float64:h11",
+      "shape": [
+        32,
+        32,
+        32
+      ],
+      "dtype": "float64",
+      "h_size": 11,
+      "axes": 3,
+      "pixels": 32768,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "da839641a1a99d44b9d5cd685faa69c129f4b652f67b143f4ecde3142b439199",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9e085729440d8940342aafc9bc0c7ba52e57e371334a4ca5bd30ee18c3e38a40"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4f15d670df7c0c578655738271a00e07e960a790bbcbc2168ef3ec0a240a5949"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "aa394791fd82eff3d580c62f5960185aa514ad4a5e8433b5b2e7c4a309a79f1f"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b744ec42e394be234e935d4077f89cdb332f5fd06be8befa17cdf047bfbeb5f9"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "28c62131950165e2ba1f36e6885717102b3ffdeda633116ec7ee70c97831059c"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "2776e6ee080bb99f95ea86ab465a01f048742e87a04560eb1a07469ddf558d23"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "0515b4d276cca566b36c25320a876a9813138eda116ce55336d95dd821f8bb9c"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "eda87518a079b33eedddc058f2d393a33869f13e37b3c5847578ffc3a39e6a81"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "23f1bd4f58d933b30f2c65c32bd1083585eb0ab9f955cf534e6f6353398ac295"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "35e99e6fb41b23c3c2a24773d207ef029748759497a0a926ce254349047ffc38"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "db4683fba28dceca502fd37c6aa9607afb5329c28210a00f206795bd27ed3031"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "12e8b8b4bd92828dece1f189ce8f000204931916fcd6285c81051f3e224c98f1"
+          }
+        },
+        {
+          "axis": 2,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c3a4f53cf9bdef23136552b814153be5660f0fc4a284505c62dcbcb9924bc95f"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "117a173627fa7a1173ad39a769d910c505685616a08495710797067d5ad0c7fa"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "2af25188a00b44bc4e9d31c7e32beeac240b310d6fb53f46efaad66b18cfbaa3"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              32,
+              32,
+              32
+            ],
+            "strides": [
+              8192,
+              256,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ef7d24a39386c111908bfbe667b91116dbafc931ac7be8f94e6108bc1a150295"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c58b545000696940180fd27cfc8a5ac5bdda5fa4e142c0b25240f51d0f988381"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5985686c9585985d329fdc6d406aca9b73b9a3d3bb9c98cd666bcfe7233ee5db"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "ff0bc0f96473bf3f",
+      "reference_raw_hex": "ff0bc0f96473bf3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.72626125,
+      "cpp_ms": 2.5247745714285714,
+      "speedup": 1.4758787941576905,
+      "samples_ms": [
+        [
+          3.71954125,
+          3.72626125,
+          3.783239,
+          3.74297375,
+          3.7297415,
+          3.7238675,
+          3.72350725
+        ],
+        [
+          2.5358498571428574,
+          2.4970817142857142,
+          2.5265988571428575,
+          2.4982021428571426,
+          2.552310285714286,
+          2.5247745714285714,
+          2.5003181428571426
+        ]
+      ],
+      "loops": [
+        4,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "64x64x64:uint8:h11",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "dtype": "uint8",
+      "h_size": 11,
+      "axes": 3,
+      "pixels": 262144,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "24d48f580469d5590ecf7459143081857e969027a686243a68daf7d6d051b586",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "510f4e643d91ccadf74d960fd8d5bf41a18aee085bbb25781baf76f322e539c8"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a23558987202a3cb103c49b96e0b154446efd79e0146cdb9f3559dbc376dee0f"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4cead3679007903dbbaa211eb0600ad329e1791d4e53b6fb46a5ae48a469c639"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "93a63f7f9a6930071124b5b1cc0c931f9b27da072c5780ba7b5cca8c194e8cae"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a9f62fa4f3925449bf5139225e3568319cd7d27cc3c096ff89a34ff8588e25d9"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a24a392f1a299ac9021676e647041ab5b210c41cb314fd57ec3dfeb8d1cb6dc6"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "1fa8b8951799d1a8d85dfe5e3863f986644db9c9f47e9e9b8fc30c0e0b60f5be"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a6fc2b1afddb9228f2ff290e1448e7065b4cd8d160717788b22e4061f26058da"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4f6972f14b51d66bf19519a0a67700a1699373166e034c7d4d0c14c4cc0e8195"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "29d0dcb62d8e03ca4ed5501022e90f031895b463037e8ec1c6beae430596c065"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b6b2d223ead118f6a83a7804b6f9d51efbae0297920799c3a50d1c4d8c3bbe48"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9a0e91c734f072536e84b40fc69fdf4c11d7367fb901ba0f816d82cb6dc435ed"
+          }
+        },
+        {
+          "axis": 2,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7a9319b45931cfd53522baa321457a135716ab8f6f096d3cc9c03e0f0e1de054"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4b81b5cc30ba8fff47ac44ae2540100fceddd7225038c0b6a7f12c999659f66f"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ee3c9bae9cdc07b25bb6dfc4add7f6f83183f6e3a3156f633d9dfca47e241540"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "1805633cae171d4da5d08b01f9930b2dc9fa7fbd1bac081d0b59d83ca68013fd"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e8359f1364c79de18655fba1a7a1dc0934f867ee44735f41a141d887c7ad59d7"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "858b19c2d022fa0d2bc935193192e813478659b8a0baee529236f1196107986d"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "b00358de4312bf3f",
+      "reference_raw_hex": "b00358de4312bf3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 28.523341,
+      "cpp_ms": 18.822686,
+      "speedup": 1.515370388689478,
+      "samples_ms": [
+        [
+          28.763581,
+          28.485344,
+          28.523341,
+          28.645555,
+          28.556982,
+          28.424443,
+          28.464512
+        ],
+        [
+          18.561764,
+          18.861883,
+          18.918068,
+          18.862044,
+          18.736215,
+          18.822686,
+          18.81288
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "64x64x64:float32:h11",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "dtype": "float32",
+      "h_size": 11,
+      "axes": 3,
+      "pixels": 262144,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "1e7875c2f5cba5d532e45edbc56a0b629eb3584509b9a2d8bf724b084666abec",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "407fa4a8247453e9a13261e65174a8956fc77e54a2e3eefd8a2143a9f5aa4b8a"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "dc3a4e0dd4d545106f6fced7a04f818a8352978e81e9b0991ea5b0eba3b7eace"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f7f03cd80b503314f2be5c9ed7a3147e605da4dd5a279db7a8691987d500836a"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f99c61357d75915b82b3981f6ed76b9361d310823008a9d87847711be1137ddc"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a1850574a22acb3628bf79490a3714112c3b70fee8b5aaf4638e44185fbbeb3c"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8c9584c910ae08a8883e1043ddd3c245b1bfa1f7984854989741b386ee51a61d"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7c720c2a6f347b843399481abe74c6aff2c1171469a5a72cb9dc9dbd848b4bbf"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5e4335aa8f5441a3f0f0252c0cebb3865430e05cd6c504e5fecf202b41b46bed"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "eb980c9d3cbed028664e13b1bb4a23bfd102eae02e512c9d30c8dbbbfa2edbf0"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "cf0014890290c8a912e9b6c10ea7602616825c27ead879c344e5ad9a9abdd1ab"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4ab491a3295947eb3abfb6b43e3ff44367089639195d4f4a8b0dd539a1878b76"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ec1eebabeec57b814ddd7801023858bb99a03eb5cffbc129fa6a26bef284e9fe"
+          }
+        },
+        {
+          "axis": 2,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "801203ebadb758a72f75ada2ec807ba3805e785593df3115346398a2f82d1fbd"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a5d76bcf74f244584e3c3ba5b135a79e95e187e4bd77f3ac707e58b1b4a9a2d1"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d203c81e0b437f256f39e0bea22ae329f351641885c34a3677b9749591a31ee0"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              16384,
+              256,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5bf3bbc0ce07a0f7feb5309cef0d79afcffc08af2a36b7984288ed1a2dd4d3df"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "48eb1757a99f369ffd2030a43096e1d6c91c4422d97ad616a8176a3e8a597a9c"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5f89f872ff3929cc551fa9fcc495287059bacdacc3fd627bdd247e0c1c7c29e1"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "1692f83d",
+      "reference_raw_hex": "1692f83d",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 23.864179,
+      "cpp_ms": 16.34361,
+      "speedup": 1.4601534789437582,
+      "samples_ms": [
+        [
+          24.500944,
+          23.628517,
+          23.568938,
+          23.976718,
+          23.864179,
+          23.61141,
+          24.138641
+        ],
+        [
+          16.34361,
+          16.496149,
+          16.345123,
+          16.197571,
+          16.108237,
+          16.246604,
+          16.395338
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "64x64x64:float64:h11",
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "dtype": "float64",
+      "h_size": 11,
+      "axes": 3,
+      "pixels": 262144,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "0e1ae3d5b116d39df54f4fe825d8983477750a21e4ea5b2b7d76145a4d593639",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "2d6b7ae9cdd78b475a2665c40874aa6d0c5952aa683eac1eff84d881850997a6"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bbdbd88dbcd315675bb6dff7205031d27d2eeab68dee1a4850e6c5d3f2bc69a6"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "81ed8bc9b1cc36b52a68e4cc559c2a67c9b9d3f3d0105491ccd96c277bf948d8"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d69748e0e3ccec4a56e65830f07fe07cc0502b88547b10be2e48916eb1248336"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "12e71083a48083b102f769a56e3b9bfbb0f359e1040debd4c9985398bab8a4c5"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a24a392f1a299ac9021676e647041ab5b210c41cb314fd57ec3dfeb8d1cb6dc6"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7c9118ccb6c8f9334cd0d151b50eb8cb351990589c29d1ae4fde01bcd30dbb7a"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b8f609b5d7ef40f8527951b8e1fcdab6349559b9d2d6b199fb105a5f4e767b7c"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c6b5613693e21c5becedeff0415cde8146980ad0c6ea1ff6da0a14541caa9ea6"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "20ff30e25a6eaaa4ce5ffdfe3ac6eb9984265f384c531c158454b2f3091db260"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b6b2d223ead118f6a83a7804b6f9d51efbae0297920799c3a50d1c4d8c3bbe48"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bc86889cc835d9fb4ae529dd74ef9f7a9252c23160a3ca9d7a4915228bc1311b"
+          }
+        },
+        {
+          "axis": 2,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6a962efbef495dd87662af03001a61a84d9b0e55c29196b2fa88ad7c942320eb"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "0118b5c188a8e1006f7ada7f48c584c500988a01da08a9f0f4c55342dfa7aafa"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "cd9edba7968dfc9e4840d84f1a0e76cda6b13c9ef180c17891641f24e7deff8e"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              64,
+              64,
+              64
+            ],
+            "strides": [
+              32768,
+              512,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "0dbf62486f7c6beea944fb220776a24304ab688d846fc4a0e0bfc76d8e536f64"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e8359f1364c79de18655fba1a7a1dc0934f867ee44735f41a141d887c7ad59d7"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "410960c7ca8a8123a509b36dcb5f7ca6019510d097bd96d035a5dda876624083"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "b80358de4312bf3f",
+      "reference_raw_hex": "b80358de4312bf3f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 28.352786,
+      "cpp_ms": 17.893243,
+      "speedup": 1.584552671642586,
+      "samples_ms": [
+        [
+          28.268068,
+          28.417692,
+          28.241629,
+          28.427367,
+          28.352786,
+          28.204303,
+          28.530241
+        ],
+        [
+          17.893243,
+          18.143557,
+          17.855736,
+          17.829466,
+          18.210688,
+          17.940062,
+          17.859442
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "256x256:uint8:h1",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "uint8",
+      "h_size": 1,
+      "axes": 2,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "d1817a95d06e99fa435f2e65c202d0653401e81a0c952edd37fb3e375e1d9cb6",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5aa01bf23663b02cfce657ab3b8da9e4fb25a443b7dc65e419ac1a4c718ce8c3"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c3ad805b532c41efe5b53511ddf8ef6537a92e8ff8255671ab0905128943164d"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5e4616f62ebe462be4e59d39ef9b79e2aa291355fbfb53726b83f531f5c3f45f"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "fc51f0c21465b68e90a04edfe2fceaa89bdbd5f01c31d6e1671ee0d0501f9a15"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "19155bbd6f1227d86bcd8ed102c54d0e7f81c9a657df31b396884d7709c2d29a"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "2ad0ee0d062f36af14be8affc76a935639605f6b2cfe457d4422727e52f67975"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "79ba6935ae89c27fb95b513c5fe9b4dd8f6debbd7a943716db4cabdcb9fbe17a"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6e35324672d4d2a85f23ccae8b3f6eaf495107f59efded45072b60b36e455e33"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "cb4902691fd29331994127039fe4af26b5dac96ea8f2a9b45c7aae61c8233fdb"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "563eeb72c6e718f685f7f80b0e8ac424f5683e8874f91f5274e36f51bf29f602"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8bcede3009d4a586e71c5bad7adec2d402ed5d1ab4b8138b2c170e9eb1ea80b8"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "a9f15bbbd686ef81a772d41c7ff920a8a6347140f7c302882cc8b1889d28a1a0"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "000000000000f03f",
+      "reference_raw_hex": "000000000000f03f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.9351448333333336,
+      "cpp_ms": 1.6681607777777778,
+      "speedup": 1.7595095583312748,
+      "samples_ms": [
+        [
+          2.9369291666666664,
+          2.9467371666666664,
+          2.9259878333333336,
+          2.9294028333333335,
+          2.9528915,
+          2.9351448333333336,
+          2.9270676666666664
+        ],
+        [
+          1.6681607777777778,
+          1.6730715555555555,
+          1.6333163333333331,
+          1.6803914444444445,
+          1.6691812222222222,
+          1.6578342222222222,
+          1.6663703333333333
+        ]
+      ],
+      "loops": [
+        6,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "256x256:float32:h1",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "h_size": 1,
+      "axes": 2,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d81c564f385c8967829e85faab63da868b1166d352a0fabebe0a28b31f302267"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d81c564f385c8967829e85faab63da868b1166d352a0fabebe0a28b31f302267"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "09e2b7ebac7b1503c7f7799c5a481d74487c3e12ad54f7689826a8af33a21da4"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "344cb676fea2860b7b044322f6de3fc691731d4e17834d6f8291a928a015f233"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "344cb676fea2860b7b044322f6de3fc691731d4e17834d6f8291a928a015f233"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              1024,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "689afd569e789ed1b80b7f9c50bd3822f49b70b93b10128b33963773711f312e"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "0000803f",
+      "reference_raw_hex": "0000803f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.399950571428571,
+      "cpp_ms": 1.3697306363636366,
+      "speedup": 1.7521332353344774,
+      "samples_ms": [
+        [
+          2.4258908571428575,
+          2.399950571428571,
+          2.396604,
+          2.4075461428571425,
+          2.3847362857142858,
+          2.354764285714286,
+          2.465998142857143
+        ],
+        [
+          1.3659468181818182,
+          1.3830888181818182,
+          1.3896496363636364,
+          1.3697306363636366,
+          1.3538168181818182,
+          1.3833765454545455,
+          1.3683896363636365
+        ]
+      ],
+      "loops": [
+        7,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "256x256:float64:h1",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float64",
+      "h_size": 1,
+      "axes": 2,
+      "pixels": 65536,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "233e07e11e5e236ceaa435cb210d1e80e1ba3e9f7e4cbac4a071d84e245a9983"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "b8c716b737911bf76e27de6aca912250ddf433a60379bb86473c27db921a72a6"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4bfacfcd10ff658836b85281570f52b22b78d6b4920ef66d07e8d22bec312dfe"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f47d58ee0761e47fb02b1c6cf3c19ae74f0a108d2de633d4ee99a49538b91299"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "19155bbd6f1227d86bcd8ed102c54d0e7f81c9a657df31b396884d7709c2d29a"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4b9e4bc808f41e00d93b373b0eed45757c4da4921102816084fc689b85c1f9e9"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "cfa37630d72cfbd7d7d7d61342d1d15bf43543bde07d4a7773c67edc8381a196"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ba95fe5d0d6abf62ef8ec60779c22b435046e67c57b9543a98cb255840dc71e3"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "66351d8a6eb70ecaae1858bccbcbff4ba4240c60465bb6fdd41971ef8e4e1ebb"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              256,
+              256
+            ],
+            "strides": [
+              2048,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ec3cd48f0c11c447ff8254305ae917cd5cd46c29978a4927663a6fc49951bd1f"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8bcede3009d4a586e71c5bad7adec2d402ed5d1ab4b8138b2c170e9eb1ea80b8"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5c2237beca29df9a56e485ddae4fdbd4bbc280df3882d71ca65d5af6b65c3bf2"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "000000000000f03f",
+      "reference_raw_hex": "000000000000f03f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.932399,
+      "cpp_ms": 1.5994756666666667,
+      "speedup": 1.8333501791316196,
+      "samples_ms": [
+        [
+          2.8946993333333335,
+          2.932399,
+          2.9422938333333333,
+          2.9260361666666665,
+          2.9067073333333333,
+          2.9353535,
+          2.937435
+        ],
+        [
+          1.578285,
+          1.6165312222222223,
+          1.600641888888889,
+          1.5994756666666667,
+          1.6228472222222223,
+          1.596817111111111,
+          1.5937826666666668
+        ]
+      ],
+      "loops": [
+        6,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "1024x1024:uint8:h21",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "uint8",
+      "h_size": 21,
+      "axes": 2,
+      "pixels": 1048576,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "|u1",
+      "input_sha256": "f88d5ab4e9ac9d58950b3d4e90ef2b4fc37bcdeca354e93ff42966253ce90548",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "629e6c1e99665212d1e02ea07c6837b19074b4d22db8ea2ca4a5e5d219b68635"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "baa664236c703397193196974242d44f2d09995abd5feb5a345c752632a5a874"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "35da4c370238023d1522d6c2090f524724dc6e2149d056978394ada360a71376"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5a7611380b852493a294e9fa800a986ce0e56fa4bb35722a417560c8b7541101"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e93746b288297fcb967deac694348ad25192ad15758f6a343e7a2c942399c0dd"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4e69db68faf64458944634b014302a410bab5c9f4988fdf8b4d234fd7c7626a2"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e3c98b5cb1824b71311dc8b70466ae0518d6cf457553e54f33b5c7267209d250"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9f795257044c8285f58fd38bdb5397231414afafa343e5f1fff13899b7d47edc"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "7bbf2cd66acc1b4e88b87d5695b3e565b6b21315b10bad838aec6a38a6135624"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5e1c3f4aa708c05d7609a96a610ad87db514de780a3b63c15998eeae150392a5"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f3c2058397d2319bcdfcec8c33461baf16fd9d320fd736c6ce3239b687c10217"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d5ef3b7511b31661b1095b18c9efcca057f5cbfa3a65d97918144f029f5f2707"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "37502a20e993b03f",
+      "reference_raw_hex": "37502a20e993b03f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 54.013537,
+      "cpp_ms": 40.707298,
+      "speedup": 1.3268760063613163,
+      "samples_ms": [
+        [
+          53.760839,
+          54.013537,
+          53.870913,
+          53.624134,
+          54.037804,
+          54.309283,
+          54.583051
+        ],
+        [
+          40.473036,
+          40.766277,
+          40.440799,
+          40.707298,
+          41.661809,
+          40.246788,
+          41.370594
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "1024x1024:float32:h21",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float32",
+      "h_size": 21,
+      "axes": 2,
+      "pixels": 1048576,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f4",
+      "input_sha256": "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e2286063b00bcf8ce98903fd48b9137d5a9a13def36aaa5c7799282fea70a450"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "5d007b50ae4ce4128f033ad07748bd5a9c0006f0afb81002afbf3a1e287b8285"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "8a246e249d04240d5407edc14510c2cd0895083572c848b698da2e2302c96a9e"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "896865678417e141ddf2dc77bf852cd7934a5666f674524f4d230631182e2143"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "18e50748a1aa5ae3891b6aa6dffd6d990d93b7fa34811db8d605faadac1f28d6"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e15a6a9f75f011006d2f6d38514e3a2d9fc123189eb0fc31745bfa3f2efd9c7b"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9b2e14369a4e0df22ca926355938a99d82010e8ba39318509b3c89716f194990"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "acb637090a600aefe5f921260c080252d31352cbbe2b76468a3be1565eb4357f"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "6b8fe126e27098efd3fd8e5c2d6f46155c8cefc396da6ca2278cbdc86747e42d"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              4096,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d3560ccc31a811f4c37e315ecd0dc84981069d88b49b23b425127affb87a1974"
+          },
+          "M1": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "ad8f0bc601e9482fd9984af8f48d4e0a855f38b357cdd6ac18f300b077eaaef7"
+          },
+          "M2": {
+            "type": "float32",
+            "dtype": "<f4",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4ed73b2ac320de4c1e68b53baf124a60d1ca75cbcb58c3eded25a423089be987"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float32",
+        "dtype": "<f4",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "2a9f843d",
+      "reference_raw_hex": "2a9f843d",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 44.280593,
+      "cpp_ms": 27.296963,
+      "speedup": 1.6221802037098414,
+      "samples_ms": [
+        [
+          43.685488,
+          44.280593,
+          44.123856,
+          43.962313,
+          44.747445,
+          44.289787,
+          45.40207
+        ],
+        [
+          26.897692,
+          27.22733,
+          27.298326,
+          27.468712,
+          27.28819,
+          27.830646,
+          27.296963
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "1024x1024:float64:h21",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float64",
+      "h_size": 21,
+      "axes": 2,
+      "pixels": 1048576,
+      "api": "measure.blur_effect",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": "<f8",
+      "input_sha256": "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5",
+      "intermediates": [
+        {
+          "axis": 0,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bfb305f6bf2dd278169856bfb66bd97c9c584c1af349d8918fd70f7ce300b97c"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d5e0be653d6470c87b5280fa3ad6d644a5904afd8711d13c1a7d9288c3e71288"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bf849b765ee723d0c6a00f746b3a3e6d5c3eec5d67e3ecaa519cfb933267efd0"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "0f1ac715ed8dfee0327fb333966387ffc0c95536657b5970dce0e47e534f00ad"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "e93746b288297fcb967deac694348ad25192ad15758f6a343e7a2c942399c0dd"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "4e69db68faf64458944634b014302a410bab5c9f4988fdf8b4d234fd7c7626a2"
+          }
+        },
+        {
+          "axis": 1,
+          "filt_im": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "9ac833d8e90744bd97d927964a7d2d5f9c9961634fd2a8230645bc825f5643dd"
+          },
+          "im_sharp": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "c517b8edb62820df9786c347147d1e30f80761e5fbf756bc37d797e0bc8cf7cd"
+          },
+          "im_blur": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "bff1a300e68af7c65cad7e680717a69081a2db3934c5c0a6d0481cfe675cfc73"
+          },
+          "T": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "shape": [
+              1024,
+              1024
+            ],
+            "strides": [
+              8192,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "82956d07c29aa8ad0089b7f4f3d0b5d7e4fc7e97a70c2ea6a3fd826a26b2dbab"
+          },
+          "M1": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "f3c2058397d2319bcdfcec8c33461baf16fd9d320fd736c6ce3239b687c10217"
+          },
+          "M2": {
+            "type": "float64",
+            "dtype": "<f8",
+            "shape": [],
+            "strides": [],
+            "own": true,
+            "writeable": true,
+            "base_type": "NoneType",
+            "sha256": "d5ef3b7511b31661b1095b18c9efcca057f5cbfa3a65d97918144f029f5f2707"
+          }
+        }
+      ],
+      "output_metadata": {
+        "type": "float64",
+        "dtype": "<f8",
+        "shape": [],
+        "strides": [],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_raw_hex": "37502a20e993b03f",
+      "reference_raw_hex": "37502a20e993b03f",
+      "actual_C_returns": [
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse",
+        "uniform_filter1d",
+        "correlate_sparse",
+        "correlate_sparse"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 55.481333,
+      "cpp_ms": 29.923505,
+      "speedup": 1.8541054264866366,
+      "samples_ms": [
+        [
+          55.582745,
+          55.39984,
+          55.584448,
+          55.371908,
+          55.620211,
+          55.481333,
+          55.376014
+        ],
+        [
+          29.923505,
+          30.125198,
+          29.817385,
+          29.905016,
+          30.404078,
+          29.348299,
+          30.319592
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}

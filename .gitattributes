@@ -556,3 +556,5 @@ tests/test_uniform_filter_native.cpp -text
 
 benchmarks/blur_effect.py -text
 tests/test_blur_benchmark.py -text
+
+benchmarks/blur-effect-minimum-initial.json -text
