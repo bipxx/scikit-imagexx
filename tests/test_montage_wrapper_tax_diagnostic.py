@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import unittest
+import tempfile
 
 ROOT=Path(__file__).resolve().parents[1]
 CODE=ROOT/'tools/diagnostics/montage_wrapper_tax'
@@ -32,6 +33,23 @@ class DiagnosticMetadata(unittest.TestCase):
         self.assertIn("timing_calls=0 if args.preflight_only",source)
         self.assertIn('assert output.tobytes()==expected',source)
         self.assertIn('assert adapter.identity(prepared)==identity',source)
+
+    def test_partial_batch_is_saved_before_a_later_check_fails(self):
+        tree=ast.parse((CODE/'run_diagnostic.py').read_text())
+        function=next(x for x in tree.body if isinstance(x,ast.FunctionDef)and x.name=='append_record')
+        namespace={'json':json}
+        exec(compile(ast.Module(body=[function],type_ignores=[]),'<journal-helper>','exec'),namespace)
+        with tempfile.TemporaryDirectory()as temporary:
+            journal=Path(temporary)/'diagnostic.jsonl'
+            with self.assertRaisesRegex(AssertionError,'forced later failure'):
+                namespace['append_record'](journal,dict(event='timing_batch',validation='pending_output_check',elapsed_ns=123))
+                raise AssertionError('forced later failure')
+            self.assertEqual(json.loads(journal.read_text()),dict(event='timing_batch',validation='pending_output_check',elapsed_ns=123))
+        body=next(x.body for x in ast.walk(tree)if isinstance(x,ast.For)and ast.unparse(x.target)=='(ordinal, (label, route))')
+        pending=next(i for i,x in enumerate(body)if isinstance(x,ast.Expr)and isinstance(x.value,ast.Call)and ast.unparse(x.value.func)=='append_record'and "'timing_batch'"in ast.unparse(x))
+        check=next(i for i,x in enumerate(body)if isinstance(x,ast.Assert)and ast.unparse(x.test)=='output.tobytes() == expected')
+        self.assertLess(pending,check)
+        self.assertIn("report['journal_sha256']=digest(journal)",(CODE/'run_diagnostic.py').read_text())
 
     def test_same_core_same_descriptor_null_controls(self):
         source=(CODE/'adapter.cpp').read_text()

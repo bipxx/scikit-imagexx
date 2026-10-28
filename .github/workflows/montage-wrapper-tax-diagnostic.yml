@@ -137,6 +137,7 @@ jobs:
           path: |
             bundle/*.log
             bundle/*.json
+            bundle/*.jsonl
           if-no-files-found: warn
   diagnose:
     needs: prepare-adapter
