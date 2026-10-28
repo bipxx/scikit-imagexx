@@ -526,7 +526,7 @@ def test_measure_contracts_precede_freeze(stem):
                                              ('measure.euler_number', 'euler_default_error'),
                                              ('measure.blur_effect', 'blur_default_error'),
                                              ('util.compare_images', 'compare_default_error'),
-                                             ('util.map_array', 'map_array_default_error')))
+                                             ('util.map_array', 'map_array_default_error'), ('util.label_points', 'label_points_default_error')))
 def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_name):
     tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
     imports = [n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'skimagexx.coverage']
@@ -535,21 +535,21 @@ def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_
     branch = next(n for n in ast.walk(main) if isinstance(n, ast.If)
                   and ast.unparse(n.test) == "api == " + repr(api))
     calls = []
-    image, actual, expected = object(), object(), object()
+    image, actual, expected = object(), object(), object(); shape = object()
     def checker(*args):
         calls.append(args)
         return 17.
     code = compile(ast.Module(body=branch.body, type_ignores=[]), '<Crofton checker route>', 'exec')
-    namespace = dict(call_args=(image,), actual=actual, expected=expected)
+    namespace = dict(call_args=(image, shape), actual=actual, expected=expected)
     namespace[checker_name] = checker
     exec(code, namespace)
-    assert calls == [(image, actual, expected)] and namespace['error'] == 17.
+    assert calls == [(shape if api == 'util.label_points' else image, actual, expected)] and namespace['error'] == 17.
     timing = next(n for n in ast.walk(main) if isinstance(n, ast.Call)
                   and isinstance(n.func, ast.Name) and n.func.id == 'measure')
     assert branch.lineno < timing.lineno
 
 
-@pytest.mark.parametrize('stem', ('level-set', 'map-array'))
+@pytest.mark.parametrize('stem', ('level-set', 'map-array', 'label-points'))
 def test_owned_native_pipeline_gates_precede_freeze(stem):
     preparation=jobs((ROOT / '.github/workflows/ci.yml').read_text())['numpy-minimum']
     for mode in ('normal','scalar'):
@@ -570,8 +570,8 @@ def test_map_array_phase3_preparation_keeps_both_selectors_and_exact_censuses():
         assert command.count('tests/test_map_array_public.py')==1
         assert command.count('tests/test_map_array_pipeline.py')==1
         assert 'public-'+mode+'.xml' in command
-    assert 'assert len(cases) == 3735' in workflow
-    assert 'len(native) == 242' in workflow and 'assert expected == 1423' in workflow
+    assert 'assert len(cases) == 3934' in workflow
+    assert 'len(native) == 243' in workflow and 'assert expected == 1427' in workflow
     contract=json.loads((ROOT/'coverage/contracts/map-array-benchmark.json').read_bytes())
     assert (contract['threads'],contract['repeat'],contract['target_ms'],contract['raw_samples'])==(1,7,19,126)
 

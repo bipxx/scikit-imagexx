@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, LEVEL_SET_FUNCTIONS
+from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -156,6 +156,13 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'util.label_points' in apis:
+        provider_frontiers['util.label_points'] = ('Coordinate mask constructor: default fixtures prepare '
+            'argwhere coordinates from the top-left256x256 carrier and cast to the declared coordinate dtype '
+            'before timers, with full carrier shape as output_shape. These are prepared coordinate cases, '
+            'not raw image inputs. Literal negative checks, rounding/casting and protocols remain NumPy '
+            'providers; ordinary zero-fill and ordered label scatter are owned C++. Exact uint64 words '
+            'and output storage are checked before timing; benchmarks/label_points.py is canonical.')
     if 'util.map_array' in apis:
         provider_frontiers['util.map_array'] = ('Typed integer lookup, mapping-value snapshots and output writes '
             'are owned C++. Literal reshape/view/shape assignment and dtype casts retain source callbacks, '
@@ -238,7 +245,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'util.map_array':
+                    if api == 'util.label_points':
+                        error = label_points_default_error(call_args[1], actual, expected)
+                    elif api == 'util.map_array':
                         error = map_array_default_error(call_args[0], actual, expected)
                     elif api in LEVEL_SET_FUNCTIONS:
                         error = level_set_default_error(call_args[0], actual, expected)

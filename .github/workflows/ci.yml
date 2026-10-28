@@ -293,6 +293,18 @@ jobs:
         run: python -m pytest -q tests/test_map_array_pipeline.py --junitxml=build/ci-artifacts/map-array-pipeline-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Label-points exact public contracts
+        run: python -m pytest -q tests/test_label_points_public.py --junitxml=build/ci-artifacts/label-points-normal.xml
+      - name: Label-points exact public contracts with SIMD disabled
+        run: python -m pytest -q tests/test_label_points_public.py --junitxml=build/ci-artifacts/label-points-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Label-points owned C entry and provider boundaries
+        run: python -m pytest -q tests/test_label_points_pipeline.py --junitxml=build/ci-artifacts/label-points-pipeline-normal.xml
+      - name: Label-points owned C entry with SIMD disabled
+        run: python -m pytest -q tests/test_label_points_pipeline.py --junitxml=build/ci-artifacts/label-points-pipeline-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Blur private zero-axis boundary guards
         run: python -m pytest -q tests/test_blur_effect_intake.py --junitxml=build/ci-artifacts/blur-effect-intake.xml
       - name: Immutable bytes storage parity
