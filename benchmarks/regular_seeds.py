@@ -56,6 +56,7 @@ def main():
     limits={n:os.environ[n] for n in ('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')};assert set(limits.values())=={'1'}
     xx.set_fallback_enabled(False);xx.set_num_threads(1)
     core=Path(xx._core.__file__);core_sha=hashlib.sha256(core.read_bytes()).hexdigest();source_before=source_fingerprint(ROOT)
+    native_entry=xx._core.regular_seeds_apply;assert inspect.isbuiltin(native_entry)
     policy,handler,buffer=np.geterr(),np.geterrcall(),np.getbufsize()
     reference_code,native_code=(inspect.unwrap(f).__code__ for f in(reference,native));rows=[]
     for spec in case_specs():
@@ -67,7 +68,7 @@ def main():
         saved=skimage.util.regular_seeds,original.regular_seeds
         def profile(frame,event,arg):
             if event=='call' and frame.f_code is reference_code:reject()
-            if event=='c_return' and getattr(arg,'__module__',None)==xx._core.__name__ and getattr(arg,'__name__',None)=='regular_seeds_apply':returns.append(arg.__name__)
+            if event=='c_return' and arg is native_entry:returns.append(arg.__name__)
             if event=='return' and frame.f_code is native_code:accepted.append(frame.f_locals.get('native_result') is True)
         skimage.util.regular_seeds=original.regular_seeds=reject;sys.setprofile(profile)
         try:actual=native(shape,points,dtype=dtype)
@@ -79,7 +80,7 @@ def main():
         timing=measure(lambda:reference(shape,points,dtype=dtype),lambda:native(shape,points,dtype=dtype),args.repeat,19)
         assert xx.get_num_threads()==1 and np.geterr()==policy and np.geterrcall() is handler and np.getbufsize()==buffer
         rows.append(dict(**spec,api='util.regular_seeds',backend='native',threads=1,actual_C_returns=returns,native_accepted=True,
-            grid_slices=[[None if v is None else int(v)for v in(s.start,s.stop,s.step)]for s in grid],**output,max_abs_error=0.0,**timing))
+            native_entry_module=native_entry.__module__,grid_slices=[[None if v is None else int(v)for v in(s.start,s.stop,s.step)]for s in grid],**output,max_abs_error=0.0,**timing))
         print(f"{spec['case_id']}: {timing['speedup']:.3f}x",flush=True)
     assert len(rows)==9 and all(list(map(len,row['samples_ms']))==[7,7]for row in rows)
     source_after=source_fingerprint(ROOT);assert source_before==source_after

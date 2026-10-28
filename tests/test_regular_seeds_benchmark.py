@@ -79,6 +79,8 @@ def test_actual_native_acceptance_whole_api_trap_and_parity_precede_timer():
     text=ast.unparse(main)
     assert "returns == ['regular_seeds_apply'] and accepted == [True]"in text
     assert "frame.f_locals.get('native_result') is True"in text
+    assert "event == 'c_return' and arg is native_entry"in text
+    assert 'native_entry_module=native_entry.__module__'in SOURCE.read_text()
     assert 'frame.f_code is reference_code'in text and 'original.regular_seeds = saved'in text
     assert 'original.regular_grid(shape, points)'in text
 
