@@ -1,0 +1,80 @@
+{
+  "schema": "montage-wrapper-simd-candidate-v1",
+  "status": "prospective-before-source-edits-compilation-or-candidate-outputs",
+  "freeze_utc": "2026-10-28T20:35:00.116019+00:00",
+  "deadline_utc": "2026-10-28T22:35:00.116019+00:00",
+  "budget_hours": 2,
+  "variant_limit": 1,
+  "source_base": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+  "baseline_source": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+  "baseline_producer_run": 40758210302,
+  "baseline_admission": "PASS: genuine run40758210302; retained artifact independently admitted",
+  "allowed_source_files": [
+    "src/montage.cpp",
+    "src/montage_wrapper.cpp",
+    "src/montage_simd.hpp",
+    "src/simd_montage_avx2.cpp",
+    "tests/test_montage_native.cpp",
+    "CMakeLists.txt"
+  ],
+  "contract_path": "coverage/contracts/montage-wrapper-simd-candidate.json",
+  "harness_sha256_lf": "93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd",
+  "workloads_sha256_lf": "434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68",
+  "case_ids": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "gray-mean-f64",
+    "rgb-padded-u8",
+    "rgb-first-f32",
+    "gray-strided-reverse-f32",
+    "gray-fortran-f64"
+  ],
+  "target_case": "gray-strided-reverse-f32",
+  "preserved_original_wins": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "rgb-padded-u8",
+    "rgb-first-f32"
+  ],
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "raw_samples": 504,
+  "gate": {
+    "overall_direct_GM_gt": 1.05,
+    "overall_normalized_GM_gt": 1.05,
+    "target_each_candidate_pass_vs_balanced_baseline_direct_gt": 1.5,
+    "target_each_candidate_pass_vs_balanced_baseline_normalized_gt": 1.5,
+    "target_each_candidate_pass_original_gt": 1.0,
+    "each_other_eight_balanced_direct_gte": 0.97,
+    "each_other_eight_balanced_normalized_gte": 0.97,
+    "each_preserved_original_win_each_candidate_pass_gt": 1.0,
+    "all_identity_parity_and_deadline_required": true,
+    "rgb_first_each_candidate_pass_direct_gte": 0.97,
+    "rgb_first_each_candidate_pass_normalized_gte": 0.97
+  },
+  "algorithm": "Rename ONLY original montage_into definition token to montage_generic_into; original body/includes/captures unchanged. New scalar wrapper TU defines unchanged publicmontage_into and forwards noneligible calls to generic; eligible singlechannel/itemsize4/positivecolumnstride8 calls exactgenericfill with shallow zero-image descriptor once, then fixed packedstride2 rowcopy. SIMD exactly23lines fromclosed e667, no algorithm retune. Publicheader/binder/Python unchanged. No allocation/duplicatefill.",
+  "correctness": "Sixmodes/all71savedreturns/unchangedhistoricalprefix, publicwrapper-vs-generic equivalence, exact-span tails/empty/FPflags/globalworkers1,4/actualSIMDcodegen. Existing frozen public/pipeline parity remains exact. No originals or localtimings.",
+  "transport": "Genuine whole products; baseline producer pending admission and candidate prepare only after root review; fresh isolated same-host ABBA. Root dispatch only; no local timings/builds on timing host. Exact13 dependency wheels and source closure.",
+  "closed_v1": "Both constant-size894 and stride2e667 experiments remain closed/rejected/private as appropriate; no retuning of either.",
+  "reporting": "Retain all9 cases, all504 samples, all old and new losses/regressions, exact product identities/deadline; whole-call only, no stage causal claim.",
+  "baseline_artifact_id": 12846458475,
+  "baseline_artifact_sha256": "d064c77793dbadd81c8de20e108f49467d19ffa59910fbccdd8609061cd42b89",
+  "pre_timing_code_generation_precondition": {
+    "source": "Inverse of exactlyone definitiontokenrename reproduces originalsrc/montage.cpp bytes.",
+    "local": "Compile original+renamedgeneric TUs with identical toolchain/options; entry/fillworker/copyworker instructions/registers/stackoffsets/memoryoperands/CFG identical after ONLYsymbolnames and function-relative/relocationtarget normalization. No local-vs-different-genuine-toolchain comparison.",
+    "genuine": "Repeat structuralgenericobject comparison across admittedgenuineproducts BEFOREtiming. Recordactualcorefunctionaddresses/alignment/placement, do not forceplacement.",
+    "normalization": "Only symbolrename and relocation/function-relative target identity. Do not normalize register allocation, stack offsets, instructions or CFG. Record relocationtypes/addends.",
+    "on_failure": "STOP and report. No quietrefactor/variant/flags/padding/objcopy/aliasmachinery."
+  }
+}
