@@ -33147,7 +33147,7 @@
           "status": "verified",
           "source_sha": "6cb143c16cc6d66cf177b9aa260753a5e54aeb7e",
           "manifest": {
-            "path": "build/worktrees/approximate-polygon-contract-v1/build/capture-v1/handoff.json",
+            "path": "build/approximate-polygon-contract-v1-private-v1/capture-v1/handoff.json",
             "sha256": "073f99bb75c00328ab02293d7205a956b045bc461b0796ab2c1e5a5c6123f173"
           },
           "passing_contract_checks": 120
@@ -33184,7 +33184,7 @@
           "status": "verified",
           "source_sha": "51eac357937cb64b1156653a32699274a07624ae",
           "manifest": {
-            "path": "build/worktrees/approximate-polygon-native-v1/build/native-v3/handoff.json",
+            "path": "build/approximate-polygon-native-v1-private-v1/native-v3/handoff.json",
             "sha256": "d7c7e076e879c96046eca137acf3dbf2d12898177fd7fa64cc717e82a9178261"
           },
           "native_contract_checks": 157428,
@@ -33219,7 +33219,7 @@
           "status": "verified",
           "source_sha": "b9711b9975d43bb0fc4718d7471de29412e698f9",
           "manifest": {
-            "path": "build/worktrees/approximate-polygon-frontend-v1/build/component-v1/handoff.json",
+            "path": "build/approximate-polygon-frontend-v1-private-v1/component-v1/handoff.json",
             "sha256": "001d741203f6bb44e138ea3d19d0c3058e53d0475deb869e3b51875cd438cc1f"
           },
           "native_contract_checks": 528,
@@ -33262,7 +33262,7 @@
           "status": "verified",
           "source_sha": "160427e353d336d8143ff7550760269c873c4555",
           "manifest": {
-            "path": "build/worktrees/approximate-polygon-shared-v1/build/public-v1/handoff.json",
+            "path": "build/approximate-polygon-shared-v1-private-v1/public-v1/handoff.json",
             "sha256": "de3e89a8cff6eb59f8068072e119caa094a14c60e4ea71d4f0494f5bed6715c1"
           },
           "native_contract_checks": 572,
@@ -33280,6 +33280,22 @@
         "client_families": 1,
         "client_checks": 2,
         "scope": "Assembled SDK82 from unchanged genuineSDK81+newheader/mathobjects, not genuine current or26families."
+      },
+      "genuine_preparation": {
+        "run": 40765084067,
+        "source_sha": "707e7ccb542d145f83a1f25ac4f6616068e35a51",
+        "conclusion": "failure",
+        "new_polygon_gate_passed": 267,
+        "new_polygon_gate_failed": 8,
+        "failure_artifact": 12849353092,
+        "failure_artifact_sha256": "8831c6a818c1f75a4d621f9d1c25b2c0d9bb005015dc182ffe7e56f026c2ef42",
+        "measurement_artifact_absent": true,
+        "initial_timing_dispatched": false,
+        "audit": {
+          "path": "build/approximate-polygon-genuine-release-v1/failure-source-audit.json",
+          "sha256": "55db13faa3730f1afb42e6f50cd3386b054d86ef803b669c899431ab3e9c2879"
+        },
+        "scope": "Two literal custom-tolerance IDs differ ONLY in exact callback float argument events;10 other fields identical. Installed literal body AST matches original. Runtime/CPU/libm cause unproven; fresh original witness required before any expectation change. No rerun or normalization."
       }
     },
     {
@@ -33291,7 +33307,7 @@
       ],
       "owner": "blur_integration_resume",
       "branch": "main",
-      "state": "performance_pending",
+      "state": "preparing",
       "owns": [
         ".github/workflows/approximate-polygon-initial.yml"
       ],
@@ -33303,7 +33319,23 @@
           "evidence_scope": "public_native"
         }
       },
-      "scope": "Nine frozen geometry/layout workloads,126samples,oneworker. Finalharness518c2568/contract2d4ce2b9 fixed before calls; controller73inert+root73CIguards passed. Genuine prepare-only artifact required before isolated initial timing."
+      "scope": "Initial one-thread9case126sample performance still pending. Genuine preparation failed8 exact protocol-event records/267 passed; no timing dispatch. Preserve failed product and120 frozen original observations; source/runtime audit pending strict fresh-original witness.",
+      "genuine_preparation": {
+        "run": 40765084067,
+        "source_sha": "707e7ccb542d145f83a1f25ac4f6616068e35a51",
+        "conclusion": "failure",
+        "new_polygon_gate_passed": 267,
+        "new_polygon_gate_failed": 8,
+        "failure_artifact": 12849353092,
+        "failure_artifact_sha256": "8831c6a818c1f75a4d621f9d1c25b2c0d9bb005015dc182ffe7e56f026c2ef42",
+        "measurement_artifact_absent": true,
+        "initial_timing_dispatched": false,
+        "audit": {
+          "path": "build/approximate-polygon-genuine-release-v1/failure-source-audit.json",
+          "sha256": "55db13faa3730f1afb42e6f50cd3386b054d86ef803b669c899431ab3e9c2879"
+        },
+        "scope": "Two literal custom-tolerance IDs differ ONLY in exact callback float argument events;10 other fields identical. Installed literal body AST matches original. Runtime/CPU/libm cause unproven; fresh original witness required before any expectation change. No rerun or normalization."
+      }
     },
     {
       "id": "montage-wrapper-simd-optimization",
@@ -33315,12 +33347,12 @@
       "owner": "blur_benchmark",
       "branch": "optimize/montage-wrapper-simd-v1",
       "base_sha": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
-      "state": "implementing",
+      "state": "preparing",
       "source_merged": false,
       "owns": [
         "src/montage.cpp",
-        "src/montage_dispatch.cpp",
-        "src/montage_dispatch.hpp",
+        "src/montage_wrapper.cpp",
+        "src/montage_simd.hpp",
         "src/simd_montage_avx2.cpp",
         "tests/test_montage_native.cpp",
         "CMakeLists.txt",
@@ -33332,7 +33364,25 @@
       "freeze_sha": "5e2515944f911e5d5b1c2c0ffc3279da2134aeb7",
       "freeze_utc": "2026-10-28T20:35:00.116019Z",
       "deadline_utc": "2026-10-28T22:35:00.116019Z",
-      "scope": "New separate wrapper variant, old generic definition rename only/body exact; public C++ entry optimized, header/binder/Python unchanged. Strict oldgeneric entry+workers machine-code equivalence after symbol normalization required beforetiming; stop onfailure. Prior fixed504sample gates plus RGB eachpass direct+normalized floor.97. Root dispatch only, no local timing."
+      "scope": "Separate wrapper variant first6modes each32980checks/4264wrapper+4264generic calls,all71frozenoutputs/historicalprefix exact. Strict like-toolchain3generic functions machine bytes/registers/stack/CFG/22relocations identical after onlysymbolrename. SDK/Python publicentry bothoptimized; binder/header unchanged. Genuine codegen pair and fixed504sample gates pending; no speed claim/source merge.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "61b4f79821b0c7fd0d224e2a12d4263d14308cb7",
+          "manifest": {
+            "path": "build/worktrees/montage-wrapper-simd-v1/build/wrapper-v1/handoff.json",
+            "sha256": "0a2f6001bceb28a81d839d68333d964d8552eefe63009f295fd0338b3d92c857"
+          },
+          "native_contract_checks": 197880,
+          "native_pending": 0
+        }
+      },
+      "genuine_preparation": {
+        "run": 40766081804,
+        "source_sha": "61b4f79821b0c7fd0d224e2a12d4263d14308cb7",
+        "prepare_only": true,
+        "timing_dispatched": false
+      }
     },
     {
       "id": "subdivide-polygon-reference",
@@ -33341,17 +33391,28 @@
         "measure.subdivide_polygon"
       ],
       "owner": "profile_candidate_audit",
-      "branch": "contract/subdivide-polygon-v1",
+      "branch": "main",
       "base_sha": "8413526a3e9148d1a586f583369b4d22ffaae206",
-      "state": "contracting",
-      "source_merged": false,
+      "state": "contracted",
+      "source_merged": true,
       "owns": [
         "tests/subdivide_polygon_contract.py",
         "tests/test_subdivide_polygon_public.py",
         "coverage/contracts/subdivide-polygon.json"
       ],
       "depends_on": [],
-      "scope": "Prospective60cases/max129input512outputpoints,degrees1..7 and fullconvolution semantics;64 fixture/observer checks perprofile. ZERO target original calls; rootreview/capture still required. No native implementation or parity acceptance."
+      "scope": "120once-only observations,47returns13errors eachprofile;570arrayblobs checked. Numerical words/layout/errors/events match;3complex warning-module differences retained. Native proposal/fullconvolution binaryaudit pending; no implementation acceptance.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "7f2b40fa5f12b5daa04299566bf1038f19246c3e",
+          "manifest": {
+            "path": "build/worktrees/subdivide-polygon-contract-v1/build/capture-v1/handoff.json",
+            "sha256": "de2c976b7d7dfa0d9eb1f805f312cac35816fb3b9e98090e319bcc97f185832b"
+          },
+          "passing_contract_checks": 120
+        }
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -35272,5 +35333,10 @@
     "path": "build/rolling-source-retirement-v1.json",
     "sha256": "fe44b7dba778ed8c632fdf1ddedbc8df29441d1b0d30b8c9b97c20235b54c87e",
     "scope": "Six clean ancestor worktrees retired after reader release, entire ignored build directories preserved. Blocked Montage comparison folders and unmerged candidates untouched."
+  },
+  "approximate_source_retirement": {
+    "path": "build/approximate-source-retirement-v1.json",
+    "sha256": "d67ac3df0819d847e6672ac2b17e7ad7989466922d1fda45b39fff7c17fdf8ff",
+    "scope": "Nine merged clean ancestor worktrees retired after allreaderrelease; entire ignored builds retained with ledger redirects. Activejobs/SDKs/unmergedcandidates and blockedfolders untouched."
   }
 }
