@@ -10,7 +10,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -323,6 +323,7 @@ def native_dtypes(api):
     # never image pixels or an image dtype. This is not dtype coverage.
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
+    if api == 'measure.approximate_polygon':return ('float64',)
     # These are actual prepared coordinate dtypes, not image-pixel parity.
     if api == 'util.label_points':return ('uint8','float32','float64')
     if api == 'util.map_array':return ('uint8',)
@@ -353,6 +354,10 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'measure.approximate_polygon':
+        import numpy as np
+        # Actual coordinate values: row position and the first image column.
+        return (np.column_stack((np.arange(image.shape[0],dtype=np.float64),image[:,0])), .5), {}
     if api == 'restoration.ball_kernel':
         return ((min(image.shape)-1)/2, image.ndim), {}
     if api == 'restoration.ellipsoid_kernel':
@@ -537,6 +542,21 @@ def blur_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def approximate_polygon_default_error(image, actual, expected):
+    """Exact selected coordinate words, metadata, layout and fresh output."""
+    import numpy as np
+    for value in (actual, expected):
+        assert type(value) is np.ndarray and value.dtype == np.dtype('float64')
+        assert value.dtype.metadata is None and value.ndim == 2 and value.shape[1] == 2
+        assert value.flags.owndata and value.flags.writeable and value.flags.aligned
+        assert value.flags.c_contiguous and value.base is None
+        assert not np.shares_memory(value, image)
+    assert actual is not expected and actual.shape == expected.shape
+    assert (actual.strides, actual.flags.f_contiguous) == (expected.strides, expected.flags.f_contiguous)
+    assert actual.tobytes() == expected.tobytes()
+    return 0.
+
+
 def rolling_kernel_default_error(api, shape, actual, expected):
     """Exact constructor geometry, Inf mask, storage and float64 words."""
     import numpy as np
@@ -689,6 +709,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'measure.approximate_polygon':
+        approximate_polygon_default_error(image,actual,expected)
+        return
     if api in ROLLING_KERNEL_FUNCTIONS:
         rolling_kernel_default_error(api,image.shape,actual,expected)
         return
@@ -750,6 +773,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'measure.approximate_polygon':
+        raise ValueError('Approximate polygon uses exact selected coordinate words and fresh layout; call assert_default_parity')
     if api in ROLLING_KERNEL_FUNCTIONS:
         raise ValueError('Rolling kernel constructors use exact Inf masks and words; call assert_default_parity')
     if api == 'util.montage':
