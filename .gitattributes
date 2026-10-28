@@ -596,4 +596,4 @@ coverage/contracts/map-array-benchmark.json -text
 coverage/contracts/map-array-small-native-candidate.json -text
 coverage/contracts/unique-rows-benchmark.json -text
 
-benchmarks/label-points-fused-same-host.json -text
+benchmarks/label-points-fused-same-host.json -text whitespace=cr-at-eol
