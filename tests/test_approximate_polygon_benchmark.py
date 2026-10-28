@@ -1,5 +1,6 @@
 """Bounded prospective RDP cohort: no image libraries or actual benchmark calls."""
 import importlib.util
+import ast
 import json
 from pathlib import Path
 import pytest
@@ -31,3 +32,23 @@ def test_independent_oracle_uses_endpoint_distance_outside_segment():
 
 def test_independent_oracle_handles_closed_and_repeated_endpoints():
     assert module.selection_oracle([(0.,0.),(1.,1.),(0.,0.),(1.,-1.),(0.,0.)],0.1)==[0,1,2,3,4]
+
+
+def test_runner_times_whole_public_calls_after_exact_ownership_checks():
+    tree=ast.parse((ROOT/'benchmarks/approximate_polygon.py').read_bytes())
+    main=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='main')
+    timer=next(n for n in ast.walk(main)if isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='measure')
+    assert [ast.unparse(n.body)for n in timer.args[:2]]==['reference(coordinates, tolerance)','native(coordinates, tolerance)']
+    checks=[n for n in ast.walk(main)if isinstance(n,ast.Assert)]
+    assert any("calls == ['approximate_polygon_apply']"in ast.unparse(n)and n.lineno<timer.lineno for n in checks)
+    assert any('a == b == c'in ast.unparse(n)and n.lineno<timer.lineno for n in checks)
+    assert any('backing_before == snapshot(owner)'in ast.unparse(n)and n.lineno>timer.lineno for n in checks)
+
+
+def test_oracle_elementary_math_provider_is_explicit_and_shared_selection_is_not_used():
+    tree=ast.parse((ROOT/'benchmarks/approximate_polygon.py').read_bytes())
+    main=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='main')
+    oracle=next(n for n in ast.walk(main)if isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='selection_oracle')
+    assert ast.unparse(oracle.args[-1])=='implementation._scalar_trig'
+    helper=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='selection_oracle')
+    assert not any(isinstance(n,ast.Name)and n.id in('xx','skimage','reference','_core')for n in ast.walk(helper))
