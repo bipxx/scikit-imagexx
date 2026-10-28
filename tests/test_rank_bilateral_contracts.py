@@ -230,22 +230,9 @@ def test_integrity_safe_scope_native0(frozen):
  assert frozen['cases']==[dict(id=k,function=n,parameters=json.loads(json.dumps(p))) for k,n,p in CASES]
  evidence=json.loads((ROOT/'coverage/evidence/rank-bilateral-fixture-assertion-migration.json').read_text())
  before=evidence['old_fixture_utf8'];current=Path(__file__).read_text()
- reuse=json.loads((ROOT/'coverage/evidence/rank-bilateral-fixture-reuse.json').read_text())
- assert text_sha(ROOT/'coverage/evidence/rank-bilateral-fixture-assertion-migration.json')==reuse['historical_migration_sha256']
- qualified=reuse['qualified_fixture_utf8']
- assert hashlib.sha256(qualified.encode()).hexdigest()==reuse['qualified_fixture_canonical_lf_sha256']==evidence['current_fixture_canonical_lf_sha256']
- signature='\ndef test_strict_pending_never_counts_forwarding(case,namespace,workers,frozen):'
- assertion="\n   assert actual==frozen['observations'][frozen['snapshots'][profile()][key]],(path,key)"
- assert current.count(signature)==current.count(assertion)==1
- inverse=current.replace(signature,signature.replace(',frozen', ''),1).replace(assertion,'\n   frozen=json.loads(MATRIX.read_text())'+assertion,1)
- restored=ast.parse(inverse);prior=ast.parse(qualified)
- assert len(restored.body)==len(prior.body)
- for actual,previous in zip(restored.body,prior.body):
-  if isinstance(previous,ast.FunctionDef) and previous.name=='test_integrity_safe_scope_native0':
-   assert isinstance(actual,ast.FunctionDef) and actual.name==previous.name
-   actual.body=copy.deepcopy(previous.body)
- assert ast.dump(restored)==ast.dump(prior),'fixture reuse changed more than its dependency and integrity proof'
- current=qualified
+ from tools.rank_bilateral_fixture_source import project_qualified_fixture
+ current,actual_fixture_sha256=project_qualified_fixture(ROOT)
+ assert actual_fixture_sha256==text_sha(Path(__file__))
  assert hashlib.sha256(before.replace('\r\n','\n').encode()).hexdigest()==frozen['fixture_source_sha256']['tests/test_rank_bilateral_contracts.py']==evidence['old_fixture_canonical_lf_sha256']
  assert hashlib.sha256(current.encode()).hexdigest()==evidence['current_fixture_canonical_lf_sha256']
  old=ast.parse(before);new=ast.parse(current)
