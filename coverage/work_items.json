@@ -33040,13 +33040,31 @@
       "depends_on": [
         "montage-shared"
       ],
-      "state": "implementing",
+      "state": "preparing",
       "source_merged": false,
       "freeze_sha": "6fa8b9dafb3d42a05c7427040b0989b30d01a15a",
       "freeze_utc": "2026-10-28T19:54:15.637024Z",
       "deadline_utc": "2026-10-28T21:54:15.637024Z",
       "variant_limit": 1,
-      "scope": "New raw32-bit stride2 AVX2 copy variant, no reuse/retune of closed constant-size v1. Vector loads only while at least9 pixels remain, scalar tail; no generic path/fill/ABI/provider changes. Six modes and source review before genuine preparation. Fixed one-worker ABBA504samples, target repeated direct/normalized>1.5 and both original wins, global>1.05, other8floors.97, six original wins preserved. Root timing dispatch only."
+      "scope": "New fixed raw32-bit stride2 AVX2 variant: six modes FIRST ATTEMPT each28,716 grouped checks/4,264 calls,71 frozen outputs and old stream exact, sanitizer endpoints and integer SIMD codegen pass. Root production review passed. Genuine producer active; artifact/closure admission and root-only fixed ABBA timing pending. Closed constant-size-copy v1 remains DISCARD/unmerged. No speed credit from correctness.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "e66770d55ea7c342ef763b9c842bb4fa1939f6ad",
+          "manifest": {
+            "path": "build/worktrees/montage-stride2-simd-v1/build/native-v1/handoff.json",
+            "sha256": "fb1d8148f6c9355a6b80e8ad425cfd68be61de3ba18df71c6c4229aa8f32702c"
+          },
+          "native_contract_checks": 172296,
+          "native_pending": 0
+        }
+      },
+      "genuine_preparation": {
+        "run": 40758988448,
+        "source_sha": "e66770d55ea7c342ef763b9c842bb4fa1939f6ad",
+        "prepare_only": true,
+        "timing_dispatched": false
+      }
     },
     {
       "id": "approximate-polygon-reference",
@@ -33055,7 +33073,7 @@
         "measure.approximate_polygon"
       ],
       "owner": "profile_candidate_audit",
-      "branch": "contract/approximate-polygon-v1",
+      "branch": "main",
       "base_sha": "09f4b8040a63d87593da2e3aa383f060dbe0a0c4",
       "owns": [
         "tests/approximate_polygon_contract.py",
@@ -33063,9 +33081,20 @@
         "coverage/contracts/approximate-polygon.json"
       ],
       "depends_on": [],
-      "state": "contracting",
-      "source_merged": false,
-      "scope": "Prospective bounded original-first polygon contract from retained0.26 source. Freeze fixture factory and observer before root review/capture authorization; no original calls, native implementation or acceptance yet."
+      "state": "contracted",
+      "source_merged": true,
+      "scope": "Exactly120 once-only original calls,60/profile;52 returns8 errors each. All60 full observation rows equal across profiles. Root independently verifies append-only authorized fields and570 exact array blobs. No native implementation, additional originals or speed claim.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "6cb143c16cc6d66cf177b9aa260753a5e54aeb7e",
+          "manifest": {
+            "path": "build/worktrees/approximate-polygon-contract-v1/build/capture-v1/handoff.json",
+            "sha256": "073f99bb75c00328ab02293d7205a956b045bc461b0796ab2c1e5a5c6123f173"
+          },
+          "passing_contract_checks": 120
+        }
+      }
     }
   ],
   "unassigned_inventoried_apis": [
