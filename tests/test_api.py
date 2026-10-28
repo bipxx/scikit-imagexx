@@ -76,6 +76,20 @@ def test_level_set_default_shape_adapter_and_exact_checker():
     with pytest.raises(AssertionError):level_set_default_error(image.shape,actual,expected)
 
 
+def test_map_array_default_mapping_and_exact_checker():
+    from skimagexx.coverage import map_array_default_error
+    image=np.array([[0,1,127],[2,255,3]],np.uint8)
+    args,options=default_call('util.map_array',image)
+    assert args[0] is image and options=={} and native_dtypes('util.map_array')==('uint8',)
+    actual=xx.util.map_array(*args,**options)
+    expected=np.array([[1,4,382],[7,766,10]],np.uint16)
+    assert map_array_default_error(image,actual,expected)==0.
+    with pytest.raises(AssertionError):map_array_default_error(image,actual.astype(np.float64),expected)
+    with pytest.raises(AssertionError):map_array_default_error(image,np.asfortranarray(actual),expected)
+    actual[0,1]^=np.uint16(1)
+    with pytest.raises(AssertionError):map_array_default_error(image,actual,expected)
+
+
 def test_unported_namespace_interchangeability():
     a = np.zeros((9, 11), dtype=bool)
     a[3:6, 4:7] = True
@@ -112,6 +126,12 @@ def test_every_native_function(native, original, name, dtype, shape):
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
+        if api == 'util.map_array':
+            args,options=default_call(api,a)
+            with pytest.raises(TypeError) as expected:getattr(original,name)(*args,**options)
+            with pytest.raises(TypeError) as actual:getattr(native,name)(*args,**options)
+            assert str(actual.value)==str(expected.value)
+            return
         if api == 'measure.moments_normalized':
             # Integer output cannot store the source's required low-order NaN.
             # Safe 4x4 geometry reaches that error; it is not numeric credit.

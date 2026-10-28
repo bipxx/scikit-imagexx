@@ -9109,11 +9109,13 @@
       "api": "util.map_array",
       "kind": "callable",
       "signature": "(input_arr, input_vals, output_vals, out=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_map_array_public.py::test_map_array_native_public_contract",
+      "benchmark": "benchmarks/map_array.py"
     },
     {
       "api": "util.montage",
