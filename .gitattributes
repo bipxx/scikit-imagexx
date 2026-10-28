@@ -584,3 +584,4 @@ src/resample_detail.hpp -text
 src/simd_resample_avx2.cpp -text
 
 benchmarks/profile-coordinates-same-host.json -text
+benchmarks/compare-images-fused-same-host.json -text
