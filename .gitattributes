@@ -586,3 +586,4 @@ src/simd_resample_avx2.cpp -text
 benchmarks/profile-coordinates-same-host.json -text
 benchmarks/compare-images-fused-same-host.json -text
 benchmarks/level-set-minimum-initial.json -text
+tests/data/fft-angle-nearest.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
