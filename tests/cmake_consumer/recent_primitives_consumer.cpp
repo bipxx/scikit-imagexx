@@ -10,6 +10,7 @@
 #include <skimagexx/montage.hpp>
 #include <skimagexx/rolling_ball_kernels.hpp>
 #include <skimagexx/approximate_polygon.hpp>
+#include <skimagexx/subdivide_polygon.hpp>
 #include <skimagexx/image.hpp>
 #include <array>
 #include <cfenv>
@@ -30,6 +31,10 @@ void stages(int workers){
     check((polygon_keep==std::array<std::uint8_t,3>{1,0,1}));
     check(approximate_polygon_select(polygon,0.5,polygon_keep.data(),polygon_distances.data(),workers));
     check((polygon_keep==std::array<std::uint8_t,3>{1,1,1}));
+    const double subdivision_points[]={0.,0.,4.,4.,8.,0.};
+    std::array<double,8> subdivision{};
+    check(subdivide_polygon_into({subdivision_points,3,2,1},2,false,false,subdivision.data(),workers));
+    check((subdivision==std::array<double,8>{1.,1.,3.,3.,5.,3.,7.,1.}));
     const RegularSeedsAxis grid_axes[]={{0,2,2,3},{1,1,2,1}};
     const RegularSeedsGrid grid{grid_axes,2,4,12};std::array<std::uint32_t,12> seeds;
     seeds.fill(99);regular_seeds_assign(grid,seeds.data(),RegularSeedsType::u32,workers);
