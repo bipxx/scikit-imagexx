@@ -1,0 +1,27 @@
+{
+  "schema": "unique-rows-prospective-benchmark-v1",
+  "api": "util.unique_rows",
+  "scope": "Nine real N-by-D row workloads frozen before generation or original/native calls; all gains and losses retained. No image carrier, full-library or prior-C++ gain claim.",
+  "original_python_source_sha256": "72d88a45b800ed9adae7ec80e7c80aba9d1f92c3ee3d21d8731fcefc753bd751",
+  "seed": 2026,
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "raw_samples": 126,
+  "max_rows": 65536,
+  "max_input_elements": 1048576,
+  "independent_oracle": "Decode each logical fixed-width row as opaque bytes, sorted(set(rows)) in unsigned byte order, and first occurrence index per exact byte row. Preserve floating raw words including signed zero; do not perform numeric row sorting or NumPy unique.",
+  "timed_boundary": "Whole public call: contiguous preparation/copy if needed, row view, native byte equality/sort and first indices, literal final NumPy advanced-index gather, allocations and output destruction. Generation, oracle and parity guards are outside timers.",
+  "provider_frontier": "Final NumPy advanced-index gather remains an explicit dtype/layout transfer provider. Ordinary exact fixed dtype ndarrays only; protocols, objects, exceptional/empty shapes and longdouble padding are outside timing.",
+  "cases": [
+    {"case_id":"u8-short-small-unique","kind":"unique","shape":[256,2],"dtype":"uint8","layout":"C","unique_pool":256,"row_width_bytes":2},
+    {"case_id":"u8-short-large-unique","kind":"unique","shape":[65536,2],"dtype":"uint8","layout":"C","unique_pool":65536,"row_width_bytes":2},
+    {"case_id":"f32-coordinates-large-unique","kind":"unique","shape":[65536,3],"dtype":"float32","layout":"C","unique_pool":65536,"row_width_bytes":12},
+    {"case_id":"f64-coordinates-duplicates","kind":"duplicates","shape":[65536,3],"dtype":"float64","layout":"C","unique_pool":4096,"row_width_bytes":24},
+    {"case_id":"u8-wide32-common-prefix","kind":"prefix","shape":[32768,32],"dtype":"uint8","layout":"C","unique_pool":32768,"row_width_bytes":32},
+    {"case_id":"f64-wide64-all-equal","kind":"equal","shape":[16384,8],"dtype":"float64","layout":"C","unique_pool":1,"row_width_bytes":64},
+    {"case_id":"f32-strided-duplicates","kind":"duplicates","shape":[16384,4],"dtype":"float32","layout":"row-and-column-step2","unique_pool":1024,"row_width_bytes":16},
+    {"case_id":"f64-fortran-duplicates","kind":"duplicates","shape":[8192,8],"dtype":"float64","layout":"F","unique_pool":2048,"row_width_bytes":64},
+    {"case_id":"u8-readonly-duplicates","kind":"duplicates","shape":[65536,4],"dtype":"uint8","layout":"readonly","unique_pool":256,"row_width_bytes":4}
+  ]
+}
