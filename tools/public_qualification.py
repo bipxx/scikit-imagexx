@@ -291,7 +291,7 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current238'
+CURRENT_PRODUCT_SCOPE = 'current239'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes')
 CURRENT_SDK_CLIENT_SCOPE = 'current25 required installed clients (23 legacy plus colocalization and footprint_shapes); source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
@@ -389,7 +389,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py')
+POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py')
 
 
 def groups_for_source(root):

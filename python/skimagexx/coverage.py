@@ -31,7 +31,7 @@ NATIVE_FUNCTIONS = {
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
-    'util': ('compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
+    'util': ('map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
 
@@ -321,6 +321,7 @@ def native_dtypes(api):
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
+    if api == 'util.map_array':return ('uint8',)
     if api == 'measure.moments_normalized':return ('float32','float64')
     if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential'):
         return ('uint8',)
@@ -348,6 +349,11 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'util.map_array':
+        import numpy as np
+        keys=np.arange(256,dtype=np.uint8)
+        values=np.arange(256,dtype=np.uint16)*np.uint16(3)+np.uint16(1)
+        return (image,keys,values), {}
     if api in LEVEL_SET_FUNCTIONS:
         return (image.shape,), {}
     if api == 'util.compare_images':
@@ -510,6 +516,19 @@ def blur_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def map_array_default_error(image, actual, expected):
+    """Exact mapped output bytes/storage; default input is real uint8 pixels."""
+    import numpy as np
+    assert type(actual) is type(expected) is np.ndarray
+    assert actual.shape==expected.shape==image.shape
+    assert actual.dtype==expected.dtype and actual.dtype.metadata==expected.dtype.metadata
+    descriptor=lambda value:(value.strides,value.flags.owndata,value.flags.writeable,
+                             value.flags.c_contiguous,value.flags.f_contiguous,type(value.base))
+    assert descriptor(actual)==descriptor(expected)
+    assert actual.tobytes()==expected.tobytes()
+    return 0.
+
+
 def compare_default_error(image, actual, expected):
     """Validate exact default image-comparison metadata and words."""
     from ._compare_images_checks import default_error
@@ -573,6 +592,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'util.map_array':
+        map_array_default_error(image,actual,expected)
+        return
     if api in LEVEL_SET_FUNCTIONS:
         level_set_default_error(image,actual,expected)
         return
@@ -616,6 +638,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'util.map_array':
+        raise ValueError('Map arrays use exact metadata and words; call assert_default_parity')
     if api in LEVEL_SET_FUNCTIONS:
         raise ValueError('Level sets use exact int8 metadata and words; call assert_default_parity')
     if api == 'util.compare_images':
