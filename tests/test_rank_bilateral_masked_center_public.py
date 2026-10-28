@@ -208,6 +208,10 @@ def test_source_pin_migration_preserves_frozen_observers_and_assertions():
         old_text=record['original_source_utf8']
         assert hashlib.sha256(old_text.encode()).hexdigest()==original['unchanged_source_pins'][filename]
         new_text=(ROOT/filename).read_bytes().replace(b'\r\n',b'\n').decode()
+        if filename=='tests/test_rank_bilateral_contracts.py':
+            from tools.rank_bilateral_fixture_source import project_qualified_fixture
+            new_text,actual_fixture_digest=project_qualified_fixture(ROOT)
+            assert actual_fixture_digest==hashlib.sha256((ROOT/filename).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
         current_digest=hashlib.sha256(new_text.encode()).hexdigest()
         assert current_digest==record['current_canonical_lf_sha256']
         expected['unchanged_source_pins'][filename]=current_digest

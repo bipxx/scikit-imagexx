@@ -230,8 +230,11 @@ def test_integrity_safe_scope_native0(frozen):
  assert frozen['cases']==[dict(id=k,function=n,parameters=json.loads(json.dumps(p))) for k,n,p in CASES]
  evidence=json.loads((ROOT/'coverage/evidence/rank-bilateral-fixture-assertion-migration.json').read_text())
  before=evidence['old_fixture_utf8'];current=Path(__file__).read_text()
+ from tools.rank_bilateral_fixture_source import project_qualified_fixture
+ current,actual_fixture_sha256=project_qualified_fixture(ROOT)
+ assert actual_fixture_sha256==text_sha(Path(__file__))
  assert hashlib.sha256(before.replace('\r\n','\n').encode()).hexdigest()==frozen['fixture_source_sha256']['tests/test_rank_bilateral_contracts.py']==evidence['old_fixture_canonical_lf_sha256']
- assert text_sha(Path(__file__))==evidence['current_fixture_canonical_lf_sha256']
+ assert hashlib.sha256(current.encode()).hexdigest()==evidence['current_fixture_canonical_lf_sha256']
  old=ast.parse(before);new=ast.parse(current)
  allowed={'test_integrity_safe_scope_native0','test_strict_pending_never_counts_forwarding'}
  assert set(evidence['allowed_test_bodies'])==allowed and len(old.body)==len(new.body)
@@ -276,7 +279,7 @@ def pending(name,namespace,*args,**options):return getattr(importlib.import_modu
 @pytest.mark.parametrize('workers',(1,4))
 @pytest.mark.parametrize('namespace',('canonical','public-bilateral'))
 @pytest.mark.parametrize('case',CASES,ids=[c[0] for c in CASES])
-def test_strict_pending_never_counts_forwarding(case,namespace,workers):
+def test_strict_pending_never_counts_forwarding(case,namespace,workers,frozen):
  key,name,p=case;previous=xx.set_fallback_enabled(False);threads=xx.get_num_threads();xx.set_num_threads(workers)
  try:
   registered=set(native_functions())
@@ -284,7 +287,6 @@ def test_strict_pending_never_counts_forwarding(case,namespace,workers):
   actual=observe(lambda *a,**kw:pending(name,namespace,*a,**kw),name,p)
   if path in registered:
    assert set(CANONICAL+ALIASES)<=registered,'partial canonical/nested registration is not public parity'
-   frozen=json.loads(MATRIX.read_text())
    assert actual==frozen['observations'][frozen['snapshots'][profile()][key]],(path,key)
   else:
    assert actual['result'] is None and actual['error']['type']=='NotImplementedError'

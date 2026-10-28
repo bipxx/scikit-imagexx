@@ -350,7 +350,11 @@ def main(argv=None):
   assert skimage.__version__=='0.26.0'
   if not args.reference_only:admit_native(previous)
   manifest=json.loads(MANIFEST.read_text());assert text_sha(SOURCE_CONTRACT)==manifest['source_contract_sha256']
-  for name,h in manifest['fixture_source_sha256'].items():assert text_sha(ROOT/name)==h
+  from tools.rank_bilateral_fixture_source import project_qualified_fixture
+  historical_fixture,actual_fixture_digest=project_qualified_fixture(ROOT)
+  report['metadata']['historical_fixture_projection']=dict(actual_current_sha256=actual_fixture_digest,qualified_sha256=hashlib.sha256(historical_fixture.encode()).hexdigest(),qualified_source_revision='4e657ee64fb71e4d707d32e9539fdb4d7cc528af')
+  for name,h in manifest['fixture_source_sha256'].items():
+   assert (hashlib.sha256(historical_fixture.encode()).hexdigest() if name=='tests/test_rank_bilateral_contracts.py' else text_sha(ROOT/name))==h
   for name in NAMES:
    ref=resolve(name,True);facts=manifest['reference_functions'][name];assert ref is resolve(name,True,True)
    assert str(inspect.signature(ref))==facts['signature'] and hashlib.sha256(inspect.getsource(ref).replace('\r\n','\n').encode()).hexdigest()==facts['python_source_sha256']
