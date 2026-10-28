@@ -922,7 +922,8 @@
       ]
     }
   ]
-},
+}
+,
 "candidate_first": {
   "metadata": {
     "timestamp_utc": "2026-10-28T17:23:47.822495+00:00",
@@ -1846,7 +1847,8 @@
       ]
     }
   ]
-},
+}
+,
 "candidate_second": {
   "metadata": {
     "timestamp_utc": "2026-10-28T17:23:57.687401+00:00",
@@ -2770,7 +2772,8 @@
       ]
     }
   ]
-},
+}
+,
 "baseline_last": {
   "metadata": {
     "timestamp_utc": "2026-10-28T17:24:07.481415+00:00",
@@ -3694,7 +3697,8 @@
       ]
     }
   ]
-},
+}
+,
 "comparison": {
   "status": "DISCARD",
   "completed_utc": "2026-10-28T17:24:09.336947+00:00",
@@ -4037,4 +4041,5 @@
     }
   ]
 }
+
 }
