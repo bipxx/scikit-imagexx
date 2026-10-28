@@ -1,0 +1,170 @@
+{
+  "run": 40686116976,
+  "source_revision": "75bc34e5bb978361baeea8340dbeae2491c42086",
+  "expected_native_images": 239,
+  "registered_functions": 242,
+  "status": "completed",
+  "conclusion": "failure",
+  "profiles": {
+    "windows": {
+      "raw_review": "windows-raw-review.json",
+      "sha256": "cc4a93b9d90641253933e7fc234da56b9a845ea0a7f30497efa0b0527c9220da",
+      "qualification_manifest_passed": false,
+      "xml": {
+        "tests": 222988,
+        "failures": 16,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "corpora": 12,
+      "sealed_records_rehashed": 26128,
+      "sealed_bytes_rehashed": 2508779935,
+      "source_derived_closure": {
+        "product_members": 157,
+        "SDK_members": 71
+      },
+      "failed_commands": [
+        {
+          "label": "normal-public-post203",
+          "returncode": 1
+        },
+        {
+          "label": "actual-inventory",
+          "returncode": 1
+        },
+        {
+          "label": "scalar-public-post203",
+          "returncode": 1
+        }
+      ]
+    },
+    "modern": {
+      "raw_review": "modern-raw-review.json",
+      "sha256": "7f13b8f4b9a3b9360da9320418594591f70de5c8a3f803a6c643d70254d2f881",
+      "qualification_manifest_passed": false,
+      "xml": {
+        "tests": 222988,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "corpora": 12,
+      "sealed_records_rehashed": 26037,
+      "sealed_bytes_rehashed": 2009964385,
+      "source_derived_closure": {
+        "product_members": 157,
+        "SDK_members": 71
+      },
+      "failed_commands": [
+        {
+          "label": "actual-inventory",
+          "returncode": 1
+        }
+      ]
+    },
+    "minimum": {
+      "raw_review": "minimum-raw-review.json",
+      "sha256": "d75a578df285829f5d037f35b51d39889161f3b70ec2dd5e8c6f5df09827cbd0",
+      "qualification_manifest_passed": false,
+      "xml": {
+        "tests": 222988,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "corpora": 12,
+      "sealed_records_rehashed": 28112,
+      "sealed_bytes_rehashed": 2061562253,
+      "source_derived_closure": {
+        "product_members": 157,
+        "SDK_members": 71
+      },
+      "failed_commands": [
+        {
+          "label": "actual-inventory",
+          "returncode": 1
+        }
+      ]
+    },
+    "debug": {
+      "raw_review": "debug-raw-review.json",
+      "sha256": "5d038b5a1be610ca6b2246cbba0acb8d501943d811a1653529ea8f974287876a",
+      "qualification_manifest_passed": false,
+      "xml": {
+        "tests": 222988,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "corpora": 12,
+      "sealed_records_rehashed": 25970,
+      "sealed_bytes_rehashed": 2864998255,
+      "source_derived_closure": {
+        "product_members": 157,
+        "SDK_members": 71
+      },
+      "failed_commands": [
+        {
+          "label": "actual-inventory",
+          "returncode": 1
+        }
+      ]
+    }
+  },
+  "xml_totals": {
+    "tests": 891952,
+    "failures": 16,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_total_checks": 200,
+  "sealed_records_rehashed": 106247,
+  "sealed_bytes_rehashed": 9445304828,
+  "accepted": false,
+  "performance_claim": false,
+  "other_source_products_mixed": false,
+  "all_profiles_metadata_failure": "actual-inventory six descriptor fields for two level-set APIs and util.map_array; actual native count239/metadata3 correct",
+  "windows_additional_failures": "16 LevelSet public/pipeline assertions only: 2 unique specs x workers1/4 x normal/scalar x public/pipeline; square-wide OverflowError text and radius-longdouble input ABI records differ from Linux freeze. No fresh original Windows witness yet; no production math verdict.",
+  "schema": "current239-qualification-v4-review-v1",
+  "review_sha256": "838ff918d7169133549f36f435f5b3d8324ec85a703f899c7bd62b3b05b3046e",
+  "retained_artifacts": [
+    {
+      "id": 12815918844,
+      "name": "public-qualification-modern",
+      "bytes": 1229709415,
+      "sha256": "58a0587688c2cb11b37d4610eae383af6db3ea7d6dc1b74e4fc075a42e0633fc",
+      "downloaded_once": true
+    },
+    {
+      "id": 12816893127,
+      "name": "public-qualification-debug",
+      "bytes": 1545746192,
+      "sha256": "1969e0ee825fec8931b167e7f590825c8ee6eaaf3b8d534f803d550e98c52e78",
+      "downloaded_once": true
+    },
+    {
+      "id": 12817296853,
+      "name": "public-qualification-minimum",
+      "bytes": 1268574300,
+      "sha256": "d9d98b32ae0091db251ddb6388528cbfec24e54310e968f8410795cc2263322e",
+      "downloaded_once": true
+    },
+    {
+      "id": 12818350704,
+      "name": "public-qualification-windows",
+      "bytes": 1150273123,
+      "sha256": "191a94b3ec6c76541897b2433ce5b4fb1c542a6ed7f12c2854a269f3fd3aae8c",
+      "downloaded_once": true
+    }
+  ],
+  "accepted_baseline_images": 203,
+  "accepted_baseline_receipt": {
+    "path": "coverage/evidence/public203-whole-product-admission.json",
+    "sha256": "35e777741d5b5369c01c2f8409006464f2b97090ae1e2144ec917a9185149edb"
+  },
+  "follow_up": "Inventory routes fixed in d6223f7 with prebuild route-table guard. Windows two-case original-only ABI witness must precede any platform reference supplement; no numerical tolerance or Linux golden change."
+}

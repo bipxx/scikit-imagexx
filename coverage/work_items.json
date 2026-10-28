@@ -31466,7 +31466,7 @@
       "depends_on": [
         "label-points-native"
       ],
-      "state": "validating",
+      "state": "parity_passed",
       "dependency_requirements": {
         "label-points-native": {
           "evidence_scope": "native_private"
@@ -31474,7 +31474,15 @@
       },
       "proofs": {
         "public_native": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "7463a7b4c24b3212aa57757a7bac3305f01fde9f",
+          "manifest": {
+            "path": "build/label-points-genuine-release-v1/final-review.json",
+            "sha256": "610a1765ded87028a94170dba604228428187f22e66f659c7e360a17a8bc33c8"
+          },
+          "native_contract_checks": 398,
+          "native_pending": 0,
+          "scope": "Genuine current240 minimum installed product; no full-platform promotion"
         }
       },
       "component_evidence": {
@@ -31497,6 +31505,11 @@
         "checks": 428,
         "tooling_checks": 903,
         "scope": "Public/shared bounded overlay; genuine rebuilt current240 product pending"
+      },
+      "genuine_preparation": {
+        "run": 40689772340,
+        "source_sha": "7463a7b4c24b3212aa57757a7bac3305f01fde9f",
+        "status": "success"
       }
     },
     {
@@ -31517,9 +31530,235 @@
       "depends_on": [
         "label-points-public"
       ],
-      "state": "preparing",
+      "state": "measured",
       "dependency_requirements": {
         "label-points-public": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "7463a7b4c24b3212aa57757a7bac3305f01fde9f",
+          "manifest": {
+            "path": "build/label-points-genuine-release-v1/final-review.json",
+            "sha256": "610a1765ded87028a94170dba604228428187f22e66f659c7e360a17a8bc33c8"
+          }
+        }
+      },
+      "measurement_gate": "Verified mixed/slow baseline; all126samples and8losses retained. Fused validation/scatter candidate is private until controlled KEEP gate.",
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/label-points-minimum-initial.json"
+        ],
+        "wins": 1,
+        "cases": 9,
+        "geometric_mean_speedup": 0.8024919524493702,
+        "regressions": [
+          "sparse-64x64-i64",
+          "dense-64x64-f64",
+          "sparse-1024x1024-i64",
+          "sparse-64x64x64-f32",
+          "dense-64x64x64-i64",
+          "duplicates-1024x1024-f64",
+          "strided-1024x1024-f32",
+          "strided-64x64x64-i64"
+        ]
+      }
+    },
+    {
+      "id": "map-array-small-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "owns": [
+        "src/map_array.cpp",
+        "src/map_array.hpp",
+        "src/simd_map_array_avx2.cpp",
+        "tests/test_map_array_native.cpp"
+      ],
+      "depends_on": [
+        "map-array-reference"
+      ],
+      "state": "measured",
+      "target_apis": [
+        "util.map_array"
+      ],
+      "dependency_requirements": {
+        "map-array-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ef5d9ae4647c844ab948a2a36ddfdb86de665ea3",
+          "manifest": {
+            "path": "build/worktrees/map-array-small-native-v1/build/small-native-v1/handoff.json",
+            "sha256": "67bb71414660e4d63fbe13f90336ac00f3e648577cde7b4062a8a2aa85aac5b6"
+          },
+          "native_contract_checks": 78886,
+          "native_pending": 0
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "ef5d9ae4647c844ab948a2a36ddfdb86de665ea3",
+          "manifest": {
+            "path": "build/map-array-small-same-host-v1/final-review.json",
+            "sha256": "30bdb80b974de26f80b3dbf215144a64e5164be2cca7e7330093fd6daf827118"
+          }
+        }
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/map-array-small-same-host.json"
+        ],
+        "direct_gain": 2.6079844539311927,
+        "normalized_gain": 2.6062539135063765,
+        "original_speedup": 3.3031838120701376,
+        "regressions": [
+          "dense-u8-u16-256 direct0.998309707x",
+          "signed64-sparse-f64-1024 original second-pass0.991050822x"
+        ]
+      }
+    },
+    {
+      "id": "unique-rows-reference",
+      "kind": "contract",
+      "apis": [
+        "util.unique_rows"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "owns": [
+        "tests/unique_rows_contract.py",
+        "tests/test_unique_rows_public.py",
+        "coverage/contracts/unique-rows.json"
+      ],
+      "depends_on": [],
+      "state": "contracted",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "494e6e64a5aa3be441e785c8c867d9da6cd6e0c2",
+          "manifest": {
+            "path": "build/worktrees/unique-rows-contract-v1/build/unique-rows-original-v1/handoff.json",
+            "sha256": "724a3bd1590c310d5ca26e559ed5321b8a49efc414f240041aee6269c281fb9a"
+          },
+          "passing_contract_checks": 104
+        }
+      }
+    },
+    {
+      "id": "unique-rows-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "owns": [
+        "src/unique_rows.hpp",
+        "src/unique_rows.cpp",
+        "src/simd_unique_rows_avx2.cpp",
+        "tests/test_unique_rows_native.cpp"
+      ],
+      "depends_on": [
+        "unique-rows-reference"
+      ],
+      "state": "parity_passed",
+      "dependency_requirements": {
+        "unique-rows-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "8e168412989054c5de94caf6994f867b2273bbc1",
+          "manifest": {
+            "path": "build/worktrees/unique-rows-native-v1/build/native-v1/handoff.json",
+            "sha256": "a6286385441270fcc1fcb9878e81ca9b44f09ad5b8deec8c5ae08a3e878040bb"
+          },
+          "native_contract_checks": 40240,
+          "native_pending": 0,
+          "scope": "Byte-row ordering/equality/first-index backend,86frozen returns,six modes; final NumPy gather is provider"
+        }
+      }
+    },
+    {
+      "id": "unique-rows-public",
+      "kind": "public_binding",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "owns": [
+        "src/bind_unique_rows.cpp",
+        "python/skimagexx/_unique_rows.py",
+        "tests/test_unique_rows_pipeline.py"
+      ],
+      "depends_on": [
+        "unique-rows-native"
+      ],
+      "state": "validating",
+      "public_registration": true,
+      "dependency_requirements": {
+        "unique-rows-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      },
+      "component_evidence": {
+        "manifest": {
+          "path": "build/worktrees/unique-rows-frontend-v1/build/unique-component-v1/handoff.json",
+          "sha256": "036c0419490ef514908e6c2d726a4c6d3ce7e02894783d8241fad03b74e4b568"
+        },
+        "checks": 428,
+        "exact_observations": 416,
+        "native_acceptances": 344
+      },
+      "shared_evidence": {
+        "manifest": {
+          "path": "build/worktrees/unique-rows-shared-v1/build/public-v1/handoff.json",
+          "sha256": "0d04cce5dcf744284755720cbde6a6919a5d17c06a6ffcf5474826df66cd57ab"
+        },
+        "checks": 460,
+        "tooling_checks": 904
+      },
+      "genuine_preparation": {
+        "run": 40695006125,
+        "source_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
+        "status": "in_progress"
+      }
+    },
+    {
+      "id": "unique-rows-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "owns": [
+        "benchmarks/unique_rows.py",
+        "tests/test_unique_rows_benchmark.py",
+        "coverage/contracts/unique-rows-benchmark.json"
+      ],
+      "depends_on": [
+        "unique-rows-public"
+      ],
+      "state": "preparing",
+      "dependency_requirements": {
+        "unique-rows-public": {
           "evidence_scope": "public_native"
         }
       },
@@ -31528,7 +31767,9 @@
           "status": "pending"
         }
       },
-      "measurement_gate": "Prospective harness first; genuine installed preparation then isolated one-worker original comparison; retain sparse allocation losses as well as wins"
+      "genuine_run": 40695006125,
+      "source_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
+      "measurement_gate": "Genuine installed preparation then isolated9workloads/126samples/oneworker; keep all losses; final NumPy gather provider explicit"
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31908,7 +32149,6 @@
     "util.regular_grid",
     "util.regular_seeds",
     "util.slice_along_axes",
-    "util.unique_rows",
     "util.view_as_blocks",
     "util.view_as_windows"
   ],
