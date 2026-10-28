@@ -144,6 +144,18 @@ def test_polygon_exact_default_checker_rejects_corruption(product, reason):
     from skimagexx.coverage import approximate_polygon_default_error
     image = np.zeros((3, 19))
     expected = np.array([[0., 0.], [2., 0.]])
+    # Matching dtype-tag regression: source-inverse guard retains this exact block.
+    if reason == 'metadata':
+        tagged = np.dtype('float64', metadata={'units': 'linear', 'source': 'parity'})
+        tagged_expected = expected.astype(tagged)
+        tagged_actual = tagged_expected.copy()
+        assert approximate_polygon_default_error(image, tagged_actual, tagged_expected) == 0.
+        lost = tagged_actual.view(np.dtype('float64')).copy()
+        corrupted = tagged_actual.view(np.dtype('float64', metadata={'units': 'changed'})).copy()
+        for mismatch in (lost, corrupted):
+            with pytest.raises(AssertionError):
+                approximate_polygon_default_error(image, mismatch, tagged_expected)
+    # End matching dtype-tag regression.
     actual = expected.copy()
     if reason == 'dtype': actual = actual.astype(np.float32)
     elif reason == 'word': actual[0, 0] = -0.
