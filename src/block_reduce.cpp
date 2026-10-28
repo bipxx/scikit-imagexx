@@ -71,7 +71,7 @@ std::uint16_t half_store(float value){
 template<class Input,class Acc,bool Boolean=false,bool Half=false>
 unsigned run(const BlockReduceInput& in,const std::vector<std::size_t>& factors,void* out,const std::vector<std::size_t>& strides,const Plan& p){
     if(!p.count)return 0;
-    constexpr bool real=std::is_floating_point_v<Acc>;const auto rank=in.shape.size();
+    const auto rank=in.shape.size();
     const auto* data=static_cast<const unsigned char*>(in.data);auto* output=static_cast<unsigned char*>(out);
     std::size_t half_segment=1;
     if constexpr(Half)for(std::size_t d=rank;d--;){
@@ -79,7 +79,7 @@ unsigned run(const BlockReduceInput& in,const std::vector<std::size_t>& factors,
     }
     const bool vectorized=has_avx2();(void)vectorized;std::atomic<unsigned> flags{0};
     partition(p.count,active_workers(p.input_count),[&](auto begin,auto end,auto){
-        Capture capture(real);if(!capture.valid()){flags.fetch_or(16u,std::memory_order_relaxed);return;}
+        Capture capture(std::is_floating_point_v<Acc>);if(!capture.valid()){flags.fetch_or(16u,std::memory_order_relaxed);return;}
         for(auto index=begin;index<end;){
             std::size_t rem=index,base=0,target=0;
             for(std::size_t d=rank;d--;){const auto coordinate=rem%p.blocks[d];rem/=p.blocks[d];base+=coordinate*factors[d]*p.strides[d];target+=coordinate*strides[d];}
@@ -116,13 +116,13 @@ unsigned run(const BlockReduceInput& in,const std::vector<std::size_t>& factors,
                 std::memcpy(output+target,&word,2);
             }else{
                 Acc sum=0;
-                if constexpr(real)sum=Acc(Acc(0)+pairwise<Acc>(0,p.volume,get));
+                if constexpr(std::is_floating_point_v<Acc>)sum=Acc(Acc(0)+pairwise<Acc>(0,p.volume,get));
                 else for(std::size_t i=0;i<p.volume;++i)sum+=get(i); // unsigned modular arithmetic, including signed input bits.
                 std::memcpy(output+target,&sum,sizeof(sum));
             }
             ++index;
         }
-        if constexpr(real)flags.fetch_or(capture.flags(),std::memory_order_relaxed);
+        if constexpr(std::is_floating_point_v<Acc>)flags.fetch_or(capture.flags(),std::memory_order_relaxed);
     });
     const auto result=flags.load(std::memory_order_relaxed);
     if(result&16u)throw std::runtime_error("cannot capture block sum floating environment");return result;
