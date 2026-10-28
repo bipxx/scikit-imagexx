@@ -292,8 +292,8 @@ PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
 CURRENT_PRODUCT_SCOPE = 'current242'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes')
-CURRENT_SDK_CLIENT_SCOPE = 'current25 required installed clients (23 legacy plus colocalization and footprint_shapes); source readiness is not qualification acceptance'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives')
+CURRENT_SDK_CLIENT_SCOPE = 'current26 required installed clients (23 legacy plus colocalization, footprint_shapes and recent prepared primitives); source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
@@ -676,8 +676,8 @@ def current_contract(read_bytes):
             and data.get('scope') == CURRENT_PRODUCT_SCOPE
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
-            and data.get('required_client_families') == list(CURRENT_FAMILIES[-2:])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp'],
+            and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)

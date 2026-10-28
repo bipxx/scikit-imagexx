@@ -822,7 +822,7 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
     scope = p.qualification_scope(ROOT)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current242', 160, 71, 25)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current242', 168, 79, 26)
     # Historical literal envelopes remain independently closed.
     legacy=p.qualification_scope_text(text.replace("CURRENT_PRODUCT_SCOPE = 'current242'\n",''))
     assert (legacy['name'],legacy['members'],legacy['sdk'])==('h_extrema23',120,68)
@@ -937,9 +937,9 @@ def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
 @pytest.mark.parametrize('profile',('windows','modern','minimum'))
 def test_current_stager_scope_uses_source_closure_and_exact242_registry(profile):
     scope=p.qualification_scope(ROOT,profile)
-    assert scope['name']=='current242' and scope['members']==160 and scope['sdk']==71
+    assert scope['name']=='current242' and scope['members']==168 and scope['sdk']==79
     assert scope['image_count']==242 and scope['metadata_count']==3 and len(scope['functions'])==245
-    assert len(scope['families'])==25 and 'current25 required' in scope['SDK_client_scope']
+    assert len(scope['families'])==26 and 'current26 required' in scope['SDK_client_scope']
     assert ('lib/skimagexx.lib' in scope['SDK_members']) == (profile=='windows')
     text=(ROOT/'tools/public_qualification.py').read_text()
     with pytest.raises(RuntimeError,match='authenticated install closure'):p.qualification_scope_text(text)
@@ -964,10 +964,10 @@ def test_current_stager_never_bypasses_historical_source_guards(guard):
         getattr(p,guard)(NoSource(),{},dict(name='current242'))
 
 
-@pytest.mark.parametrize('declaration',("FAMILIES + ('colocalization',)", "FAMILIES + ('colocalization','footprint_shapes','unmapped')", "FAMILIES + ['colocalization','footprint_shapes']", "('replacement',)"))
+@pytest.mark.parametrize('declaration',("FAMILIES + ('colocalization',)", "FAMILIES + ('colocalization','footprint_shapes')", "FAMILIES + ('colocalization','footprint_shapes','unmapped')", "FAMILIES + ['colocalization','footprint_shapes']", "('replacement',)"))
 def test_current_stager_rejects_missing_or_replaced_client_declaration(declaration):
     text=(ROOT/'tools/public_qualification.py').read_text()
-    text=text.replace("CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes')",'CURRENT_FAMILIES = '+declaration)
+    text=text.replace("CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives')",'CURRENT_FAMILIES = '+declaration)
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include') for f in (ROOT/prefix).rglob('*') if f.is_file()]
     with pytest.raises(RuntimeError):p.qualification_scope_text(text,read_bytes=lambda n:(ROOT/n).read_bytes(),names=names)
 

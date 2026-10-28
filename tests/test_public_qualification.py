@@ -2235,12 +2235,12 @@ def current_metadata_artifact(tmp_path):
 
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
-def test_current_source_plan_derives_full_closure_and_labels_required_sdk25(profile):
+def test_current_source_plan_derives_full_closure_and_labels_required_sdk26(profile):
     result=q.plan(ROOT,profile,242)
     assert not result['blockers'] and result['readiness_only'] is True
     assert result['product_scope']=='current242' and result['registry']['image_count']==242
-    assert result['product_members']==160 and result['SDK_members']==71
-    assert result['SDK_checks']==50 and 'current25 required' in result['SDK_client_scope']
+    assert result['product_members']==168 and result['SDK_members']==79
+    assert result['SDK_checks']==52 and 'current26 required' in result['SDK_client_scope']
     assert len(result['public_groups']['public-post203'])==41
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
@@ -2302,9 +2302,9 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         assert q.product_census('h_extrema23')==(120,68)
 
 
-@pytest.mark.parametrize('family',('colocalization','footprint_shapes'))
+@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives'))
 @pytest.mark.parametrize('fault',('missing-target','missing-source'))
-def test_current_sdk25_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
+def test_current_sdk26_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
     if fault=='missing-target':
         original=q.sdk_family_declarations
         monkeypatch.setattr(q,'sdk_family_declarations',lambda text:[n for n in original(text) if n!=family])
@@ -2314,8 +2314,8 @@ def test_current_sdk25_plan_blocks_missing_new_installed_client(monkeypatch,fami
     assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',242)['blockers'])
 
 
-def test_current_sdk25_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes') and len(q.FAMILIES)==23
+def test_current_sdk26_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives') and len(q.FAMILIES)==23
     current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
     old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
     q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
@@ -2329,13 +2329,18 @@ def test_current_sdk25_discovery_and_kept_coordinate_selector_are_separate_from_
 
 def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
     cmake=(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()
-    assert 'foreach(_current IN ITEMS colocalization footprint_shapes)' in cmake
+    assert 'foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives)' in cmake
     assert 'target_link_libraries(${_current}_consumer PRIVATE skimagexx::skimagexx)' in cmake
     for family in ('colocalization','footprint_shapes'):
         source=(ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')).read_text()
         assert '#include <skimagexx/'+family+'.hpp>' in source and '#include <skimagexx/image.hpp>' in source
         assert '../src/' not in source and 'Python.h' not in source
         assert 'get_num_threads()==1' in source and 'for(int workers:{1,4})' in source
+    source=(ROOT/'tests/cmake_consumer/recent_primitives_consumer.cpp').read_text()
+    for header in ('skimagexx/regular_seeds.hpp', 'skimagexx/unique_rows.hpp', 'skimagexx/label_points.hpp', 'skimagexx/map_array.hpp', 'skimagexx/level_set.hpp', 'skimagexx/compare_images.hpp', 'skimagexx/uniform_filter.hpp', 'skimagexx/profile_line.hpp'):
+        assert '#include <'+header+'>' in source
+    assert '../src/' not in source and 'Python.h' not in source
+    assert 'stages(get_num_threads())' in source and 'set_num_threads(1)' in source
 
 
 @pytest.fixture

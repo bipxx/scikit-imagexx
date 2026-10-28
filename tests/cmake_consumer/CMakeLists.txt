@@ -117,9 +117,9 @@ endif()
 include("${CMAKE_CURRENT_SOURCE_DIR}/h_extrema_source_oracle.cmake")
 add_test(NAME installed_h_extrema_consumer COMMAND h_extrema_consumer "${SKIMAGEXX_H_EXTREMA_SOURCE_ORACLE}")
 
-# Current qualification adds two installed staged-ABI clients; historical jobs
+# Current qualification adds three installed staged-ABI clients; historical jobs
 # still select their closed23 targets explicitly.
-foreach(_current IN ITEMS colocalization footprint_shapes)
+foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives)
     add_executable(${_current}_consumer ${_current}_consumer.cpp)
     target_link_libraries(${_current}_consumer PRIVATE skimagexx::skimagexx)
     if(MSVC)
