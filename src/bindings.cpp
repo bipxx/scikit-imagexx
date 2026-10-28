@@ -58,6 +58,7 @@ void bind_uniform_filter(pybind11::module_&);
 void bind_compare_images(pybind11::module_&);
 void bind_level_set(pybind11::module_&);
 void bind_map_array(pybind11::module_&);
+void bind_label_points(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -853,6 +854,7 @@ PYBIND11_MODULE(_core, m) {
     bind_compare_images(m);
     bind_level_set(m);
     bind_map_array(m);
+    bind_label_points(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);
