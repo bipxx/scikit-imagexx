@@ -1,0 +1,211 @@
+name: approximate-polygon-protocol-witness
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTHONOPTIMIZE: '0'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  witness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - uses: actions/checkout@v4
+        with:
+          ref: 707e7ccb542d145f83a1f25ac4f6616068e35a51
+          path: snapshot
+          fetch-depth: 1
+      - name: Authenticate failed product and separate dependency donor
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import hashlib, io, json, os, runpy, stat, subprocess, zipfile
+          from email.parser import BytesParser
+          from pathlib import Path, PurePosixPath
+          CAPSULES = {
+              'failed': dict(run=40765084067, revision='707e7ccb542d145f83a1f25ac4f6616068e35a51', artifact=12849353092, name='numpy-minimum-ciede2000', conclusion='failure', sha256='8831c6a818c1f75a4d621f9d1c25b2c0d9bb005015dc182ffe7e56f026c2ef42'),
+              'dependencies': dict(run=40758210302, revision='390dff892ad13c1f9b8cee0e76dce9a016f14c01', artifact=12846458475, name='ci-performance-minimum', conclusion='success', sha256='d064c77793dbadd81c8de20e108f49467d19ffa59910fbccdd8609061cd42b89')}
+          FAILED_VERSIONS = {'imageio':'2.38.1','iniconfig':'2.3.1','lazy-loader':'0.6','networkx':'3.6.1','numpy':'1.24.4','packaging':'26.3','pillow':'13.0.0','pluggy':'1.7.0','pygments':'2.21.0','pytest':'9.2.0','scikit-image':'0.26.0','scipy':'1.15.3','tifffile':'2026.3.3'}
+          out = Path('results'); base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+          def fetch(label, spec):
+              run = json.loads(subprocess.check_output(['gh','api',base+'runs/'+str(spec['run'])]))
+              listing = json.loads(subprocess.check_output(['gh','api',base+'runs/'+str(spec['run'])+'/artifacts?per_page=100']))
+              (out/(label+'-run.json')).write_text(json.dumps(run,indent=2)+'\n')
+              (out/(label+'-artifacts.json')).write_text(json.dumps(listing,indent=2)+'\n')
+              assert run['id']==spec['run'] and run['head_sha']==spec['revision'] and run['path']=='.github/workflows/ci.yml'
+              assert run['head_repository']['full_name']==os.environ['GITHUB_REPOSITORY'] and run['status']=='completed' and run['conclusion']==spec['conclusion']
+              assert listing['total_count']==len(listing['artifacts'])
+              matches=[a for a in listing['artifacts'] if a['id']==spec['artifact'] and a['name']==spec['name']]
+              assert len(matches)==1
+              artifact=matches[0]
+              assert not artifact['expired'] and artifact['digest']=='sha256:'+spec['sha256']
+              assert artifact['workflow_run']['id']==spec['run'] and artifact['workflow_run']['head_sha']==spec['revision'] and 0<artifact['size_in_bytes']<512*1024**2
+              path=Path(os.environ['RUNNER_TEMP'],label+'.zip')
+              with path.open('xb') as stream: subprocess.run(['gh','api',base+'artifacts/'+str(spec['artifact'])+'/zip'],stdout=stream,check=True)
+              assert path.stat().st_size==artifact['size_in_bytes'] and hashlib.sha256(path.read_bytes()).hexdigest()==spec['sha256']
+              with zipfile.ZipFile(path) as z:
+                  assert len(z.namelist())==len(set(z.namelist())) and sum(i.file_size for i in z.infolist())<2*1024**3
+                  for info in z.infolist():
+                      name=PurePosixPath(info.filename)
+                      assert not name.is_absolute() and '..' not in name.parts and '\\' not in info.filename and not stat.S_ISLNK(info.external_attr>>16)
+              return path
+          failed=fetch('failed',CAPSULES['failed']); donor=fetch('dependencies',CAPSULES['dependencies'])
+          wheels=Path('snapshot/build/protocol-witness/wheels'); wheels.mkdir(parents=True)
+          with zipfile.ZipFile(failed) as z:
+              products=[n for n in z.namelist() if n.endswith('.whl')]
+              assert len(products)==1
+              product=z.read(products[0]); product_name=PurePosixPath(products[0]).name
+          source=Path('snapshot'); names=subprocess.check_output(['git','-C',str(source),'ls-files','-z']).decode().split('\0')
+          layout=runpy.run_path(str(source/'tools/public_qualification.py'))['current_install_layout'](lambda n:(source/n).read_bytes(),[n for n in names if n],'minimum')
+          assert (layout['product_count'],layout['SDK_count'])==(174,82)
+          with zipfile.ZipFile(io.BytesIO(product)) as w:
+              members={n for n in w.namelist() if not n.endswith('/')}; core={n for n in members if n.startswith('skimagexx/_core.') and n.endswith('.so')}
+              assert len(members)==174 and len(core)==1 and members==set(layout['members_without_core'])|core
+              for member,original in layout['source_members'].items(): assert w.read(member).replace(b'\r\n',b'\n')==(source/original).read_bytes().replace(b'\r\n',b'\n')
+              metadata=BytesParser().parsebytes(w.read(next(n for n in members if n.endswith('.dist-info/METADATA'))))
+              assert metadata['Name']=='scikit-imagexx' and metadata['Version']=='0.1.0'
+              package={n.removeprefix('skimagexx/'):hashlib.sha256(w.read(n)).hexdigest() for n in members if n.startswith('skimagexx/')}
+              sdk={n:hashlib.sha256(w.read(n)).hexdigest() for n in layout['SDK_members']}
+          (wheels/product_name).write_bytes(product)
+          records={product_name:dict(name='scikit-imagexx',version='0.1.0',sha256=hashlib.sha256(product).hexdigest())}
+          with zipfile.ZipFile(donor) as z:
+              manifest=json.loads(z.read('prepared/ci-artifacts/measurement.json'))
+              assert manifest['source']['revision']==CAPSULES['dependencies']['revision']
+              dependencies={n:r for n,r in manifest['wheels'].items() if r['name']!='scikit-imagexx'}
+              assert len(dependencies)==13 and {r['name']:r['version'] for r in dependencies.values()}==FAILED_VERSIONS
+              for name,record in dependencies.items():
+                  raw=z.read('prepared/wheels/'+name); assert hashlib.sha256(raw).hexdigest()==record['sha256']
+                  (wheels/name).write_bytes(raw); records[name]=record
+          expected_packages={n:r for n,r in manifest['runtime']['packages_sha256'].items() if n!='skimagexx'}; expected_packages['skimagexx']=package
+          capsule=dict(scope='NEW HOST diagnostic only; donor dependencies are separately authenticated, not failed-host binary identity.',capsules=CAPSULES,wheels=records,packages=expected_packages,libraries=manifest['runtime']['dependency_libraries_sha256'],SDK=sdk)
+          (out/'capsule.json').write_text(json.dumps(capsule,indent=2)+'\n')
+          (out/'witness-lock.txt').write_text(''.join(r['name']+'=='+r['version']+' --hash=sha256:'+r['sha256']+'\n' for r in records.values()))
+          PY
+          python -m venv "$RUNNER_TEMP/runtime"
+          "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links snapshot/build/protocol-witness/wheels -r results/witness-lock.txt 2>&1 | tee results/offline-install.log
+      - name: Observe exactly two originals before importing the failed product
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$GITHUB_WORKSPACE/results"
+          cd snapshot
+          WITNESS_RESULTS="$output" "$RUNNER_TEMP/runtime/bin/python" -I -B - <<'PY'
+          import ast, hashlib, importlib, importlib.metadata, inspect, json, os, platform, runpy, sys
+          from pathlib import Path
+          IDS=('tolerance-provider-positive','tolerance-mutates-coordinates')
+          PINS={'tests/approximate_polygon_contract.py':'6f79e5c91f761bd67b5499abc6842460ee132f347edce337c3168ea0252f821f','tests/test_approximate_polygon_public.py':'e08bfdfe6cdef0a0ad24a5b2ed3660fcaf02ea9d2fa678b429eb8221a2d58c4e','coverage/contracts/approximate-polygon.json':'101bb58c8ceae38d0a5dd2d66a8cfa628d069e41e2ef4d30740bb5e5c59ee758'}
+          def capture_rows(specs, original_observe, load_frontend, save):
+              originals={}; candidates=[]
+              for spec in specs:
+                  save(dict(stage='before',target='original',id=spec['id']))
+                  row=original_observe(spec); originals[spec['id']]=row
+                  save(dict(stage='after',target='original',id=spec['id'],observation=row))
+              frontend_observe=load_frontend(originals)
+              for workers in (1,4):
+                  for spec in specs:
+                      save(dict(stage='before',target='frontend',id=spec['id'],workers=workers))
+                      row=frontend_observe(spec,workers); candidates.append(row)
+                      save(dict(stage='after',target='frontend',id=spec['id'],workers=workers,record=row))
+              return originals,candidates
+          def differences(a,b,path=''):
+              if type(a) is type(b) and isinstance(a,dict) and a.keys()==b.keys():
+                  return [d for k in a for d in differences(a[k],b[k],path+'/'+str(k))]
+              if type(a) is type(b) and isinstance(a,list) and len(a)==len(b):
+                  return [d for i in range(len(a)) for d in differences(a[i],b[i],path+'/'+str(i))]
+              return [] if a==b else [dict(path=path,expected=a,observed=b)]
+          root=Path.cwd(); out=Path(os.environ['WITNESS_RESULTS']); sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+          assert sys.version_info[:3]==(3,11,17) and not sys.flags.optimize
+          assert not os.environ.get('NPY_DISABLE_CPU_FEATURES') and not os.environ.get('SKIMAGEXX_DISABLE_SIMD')
+          assert all(hashlib.sha256((root/n).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin for n,pin in PINS.items())
+          sys.path.insert(0,str(root/'tests'))
+          frozen=runpy.run_path(str(root/'tests/test_approximate_polygon_public.py'))
+          np=frozen['scientific_profile'](); assert np.__version__=='1.24.4'
+          original=importlib.import_module('skimage.measure._polygon'); public=importlib.import_module('skimage.measure'); reference=original.approximate_polygon
+          assert hashlib.sha256(Path(original.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='26a27d89545d158f6b542857297995639b251ed3af0428c8c86a56c84928aabe'
+          assert 'skimagexx' not in sys.modules
+          gold_path=root/'coverage/contracts/approximate-polygon.json'; gold_raw_sha256=sha(gold_path)
+          assert gold_raw_sha256==PINS['coverage/contracts/approximate-polygon.json']
+          matrix=json.loads(gold_path.read_bytes()); assert sum(map(len,matrix['original_observations'].values()))==120
+          specs=[next(s for s in frozen['CASES'] if s['id']==name) for name in IDS]
+          gold={name:next(r for r in matrix['original_observations']['1.24.4'] if r['id']==name) for name in IDS}
+          capsule=json.loads((out/'capsule.json').read_bytes()); package_files=runpy.run_path(str(root/'tools/ci_measurement_artifacts.py'))['package_files']
+          def identity():
+              site=Path(importlib.metadata.distribution('scikit-imagexx').locate_file(''))
+              packages={name:package_files(site/name) for name in capsule['packages']}
+              libraries={name:package_files(site/(name+'.libs')) for name in capsule['libraries']}
+              return dict(packages=packages,libraries=libraries,SDK={n:sha(site/n) for n in capsule['SDK']},versions={r['name']:importlib.metadata.version(r['name']) for r in capsule['wheels'].values()})
+          def fp(): return dict(policy=np.geterr(),handler_type=type(np.geterrcall()).__name__,buffer_elements=np.getbufsize())
+          features=(np._core if hasattr(np,'_core') else np.core)._multiarray_umath.__cpu_features__
+          report=dict(scope='NEW HOST, not the original failure host. Diagnostic observations only; old120 gold unchanged; no parity or qualification promotion.',runtime=dict(python=sys.version,cache_tag=sys.implementation.cache_tag,numpy=np.__version__,platform=platform.platform(),libc=platform.libc_ver(),machine=platform.machine(),host=platform.node(),image={k:os.environ.get(k) for k in ('ImageOS','ImageVersion','RUNNER_OS','RUNNER_ARCH')},numpy_cpu_features={k:features[k] for k in ('SSE2','AVX','AVX2','FMA3','AVX512F','AVX512_SKX') if k in features},cpu_environment={k:os.environ.get(k) for k in ('NPY_DISABLE_CPU_FEATURES','NPY_ENABLE_CPU_FEATURES','SKIMAGEXX_DISABLE_SIMD')}),source_pins=PINS,gold_raw_sha256=gold_raw_sha256,qualified_baseline=241,loaded_origins=dict(numpy=np.__file__,numpy_core=(np._core if hasattr(np,'_core') else np.core)._multiarray_umath.__file__,scipy=importlib.import_module('scipy').__file__,skimage=importlib.import_module('skimage').__file__),original_source_sha256=sha(Path(original.__file__)),FP_before_originals=fp(),identity_before=identity())
+          assert report['identity_before']['packages']==capsule['packages'] and report['identity_before']['libraries']==capsule['libraries'] and report['identity_before']['SDK']==capsule['SDK']
+          assert report['identity_before']['versions']=={r['name']:r['version'] for r in capsule['wheels'].values()}
+          loaded={}
+          with (out/'journal.jsonl').open('x') as journal:
+              def save(row): journal.write(json.dumps(row,allow_nan=False)+'\n'); journal.flush()
+              def load_frontend(originals):
+                  report['originals']=originals; report['FP_before_product_import']=fp()
+                  (out/'original-records.json').write_text(json.dumps(originals,indent=2,allow_nan=False)+'\n')
+                  import skimagexx as xx
+                  report['FP_after_product_import']=fp(); report['product_import_FP_differences']=differences(report['FP_before_product_import'],report['FP_after_product_import'])
+                  implementation=importlib.import_module('skimagexx._approximate_polygon'); call=xx.measure.approximate_polygon; entry=xx._core.approximate_polygon_apply
+                  assert call is implementation.approximate_polygon and inspect.isbuiltin(entry) and entry.__module__=='skimagexx._core'
+                  loaded.update(xx=xx,workers=xx.get_num_threads(),fallback=xx.set_fallback_enabled(False))
+                  report['core_origin']=xx._core.__file__; report['native_entry_module']=entry.__module__
+                  def frontend_observe(spec,workers):
+                      xx.set_num_threads(workers); calls=[]; returns=[]; forwarded=[]; prior=sys.getprofile()
+                      def reject(*args,**kwargs): forwarded.append(True); raise AssertionError('protocol route forwarded to original')
+                      def profile(frame,event,value):
+                          if event=='call' and frame.f_code is reference.__code__: reject()
+                          if value is entry:
+                              if event=='c_call': calls.append(entry.__name__)
+                              elif event=='c_return': returns.append(entry.__name__)
+                      saved=[(module,module.approximate_polygon) for module in (public,original)]
+                      for module,_ in saved: module.approximate_polygon=reject
+                      sys.setprofile(profile)
+                      try: row=frozen['observe'](call,spec,np)
+                      finally:
+                          sys.setprofile(prior)
+                          for module,value in saved: module.approximate_polygon=value
+                      return dict(id=spec['id'],workers=workers,observation=row,C_calls=calls,C_returns=returns,forwarded=forwarded,worker_after=xx.get_num_threads(),FP_after=fp())
+                  return frontend_observe
+              try:
+                  originals,candidates=capture_rows(specs,lambda s:frozen['observe'](reference,s,np),load_frontend,save)
+                  report.update(originals=originals,candidates=candidates,original_vs_old={name:differences(gold[name],originals[name]) for name in IDS},frontend_vs_runtime_original=[dict(id=r['id'],workers=r['workers'],differences=differences(originals[r['id']],r['observation'])) for r in candidates])
+                  report['runtime_original_equal_all']=all(not r['differences'] for r in report['frontend_vs_runtime_original'])
+                  report['provider_routes_no_native_or_original_forwarding']=all(not r['C_calls'] and not r['C_returns'] and not r['forwarded'] and r['worker_after']==r['workers'] for r in candidates)
+              finally:
+                  if loaded:
+                      loaded['xx'].set_num_threads(loaded['workers']); loaded['xx'].set_fallback_enabled(loaded['fallback'])
+                  report['FP_final']=fp(); report['identity_after']=identity(); report['identity_unchanged']=report['identity_before']==report['identity_after']
+                  report['gold_raw_unchanged']=sha(gold_path)==gold_raw_sha256
+                  report['frozen_sources_unchanged']=all(hashlib.sha256((root/n).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin for n,pin in PINS.items())
+                  (out/'report.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+          assert report['identity_unchanged'] and report['frozen_sources_unchanged'] and report['gold_raw_unchanged']
+          assert report['runtime_original_equal_all'] and report['provider_routes_no_native_or_original_forwarding']
+          print(json.dumps(dict(scope=report['scope'],runtime_original_equal_all=report['runtime_original_equal_all'],original_calls=2,frontend_calls=4),indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: approximate-polygon-protocol-witness
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
