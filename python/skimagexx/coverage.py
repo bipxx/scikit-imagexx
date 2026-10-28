@@ -10,7 +10,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -323,7 +323,7 @@ def native_dtypes(api):
     # never image pixels or an image dtype. This is not dtype coverage.
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
-    if api == 'measure.approximate_polygon':return ('float64',)
+    if api in ('measure.approximate_polygon','measure.subdivide_polygon'):return ('float64',)
     # These are actual prepared coordinate dtypes, not image-pixel parity.
     if api == 'util.label_points':return ('uint8','float32','float64')
     if api == 'util.map_array':return ('uint8',)
@@ -354,6 +354,10 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'measure.subdivide_polygon':
+        import numpy as np
+        # Actual coordinate geometry; float64 is the default carrier only.
+        return (np.column_stack((np.arange(image.shape[0],dtype=np.float64),image[:,0])),), {'degree':2,'preserve_ends':False}
     if api == 'measure.approximate_polygon':
         import numpy as np
         # Actual coordinate values: row position and the first image column.
@@ -558,6 +562,13 @@ def approximate_polygon_default_error(image, actual, expected):
     return 0.
 
 
+def subdivide_polygon_default_error(image, actual, expected):
+    """Exact degree-two open-chain float64 words and fresh owning layout."""
+    approximate_polygon_default_error(image, actual, expected)
+    assert actual.shape == (2*(image.shape[0]-1),2)
+    return 0.
+
+
 def rolling_kernel_default_error(api, shape, actual, expected):
     """Exact constructor geometry, Inf mask, storage and float64 words."""
     import numpy as np
@@ -710,6 +721,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'measure.subdivide_polygon':
+        subdivide_polygon_default_error(image,actual,expected)
+        return
     if api == 'measure.approximate_polygon':
         approximate_polygon_default_error(image,actual,expected)
         return
@@ -774,6 +788,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'measure.subdivide_polygon':
+        raise ValueError('Subdivide polygon uses exact float64 words and fresh layout; call assert_default_parity')
     if api == 'measure.approximate_polygon':
         raise ValueError('Approximate polygon uses exact selected coordinate words and fresh layout; call assert_default_parity')
     if api in ROLLING_KERNEL_FUNCTIONS:
