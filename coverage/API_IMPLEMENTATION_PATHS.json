@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "c83764105c1dc6662147986392cf324c60ae09092d1b74c88b94c0d0f79ae4c8",
+  "source_inventory_sha256": "6d8e9bd712d2aafbadf26a8698b0334b7bc9b5093181fbdf98f6e8f68485469e",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 238,
-      "upstream-only": 230
+      "native-partial": 239,
+      "upstream-only": 229
     },
     "kinds": {
       "callable": 448,
@@ -18549,22 +18549,24 @@
       "api": "util.map_array",
       "kind": "callable",
       "signature": "(input_arr, input_vals, output_vals, out=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8"
+      ],
       "canonical_api": "util.map_array",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse native dense/sparse label lookup and output casting",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse native dense/sparse label lookup and output casting",
       "mandatory_route_dependencies": [
         "array",
         "histogram"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze sparse/wide keys and overlap cases against pinned upstream, including unsorted/duplicate input keys, missing keys, out shape/alias and large integers; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered unsorted/duplicate input keys, missing keys, out shape/alias and large integers. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "unsorted/duplicate input keys, missing keys, out shape/alias and large integers",
       "parity_cases_to_freeze": "sparse/wide keys and overlap cases",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -18575,10 +18577,10 @@
         "kind": "compute",
         "specific_workload": "sparse/wide keys and overlap cases",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/map_array.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_map_array_public.py::test_map_array_native_public_contract",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
