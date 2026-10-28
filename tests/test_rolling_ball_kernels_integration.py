@@ -49,7 +49,7 @@ def test_geometry_registered_public_frozen_contract(product,spec,workers,monkeyp
     import skimage.restoration._rolling_ball as original
     expected=next(r for r in matrix['original_observations'][np.__version__]if r['id']==spec['id'])
     name=spec['api'].split('.')[-1];call=getattr(xx.restoration,name);entry=getattr(implementation._core,name+'_apply')
-    codes={getattr(original,api.split('.')[-1]).__code__for api in APIS};calls=[];accepted=[]
+    codes={getattr(original,api.split('.')[-1]).__code__ for api in APIS};calls=[];accepted=[]
     previous,prior=xx.get_num_threads(),sys.getprofile()
     def reject(*a,**kw):raise AssertionError('registered rolling constructor forwarded to original whole API')
     def profile(frame,event,value):
@@ -90,7 +90,7 @@ def test_geometry_default_adapter_exact_words_and_inf_masks(product,api,shape,wo
     expected=np.empty(output_shape,np.float64);expected[...] = np.frombuffer(raw,np.float64).reshape(output_shape)
     name=api.split('.')[-1];call=getattr(xx.restoration,name);entry=getattr(implementation._core,name+'_apply')
     original=importlib.import_module('skimage.restoration._rolling_ball');public=importlib.import_module('skimage.restoration')
-    codes={getattr(original,a.split('.')[-1]).__code__for a in APIS};calls=[];accepted=[];prior=sys.getprofile();previous=xx.get_num_threads()
+    codes={getattr(original,a.split('.')[-1]).__code__ for a in APIS};calls=[];accepted=[];prior=sys.getprofile();previous=xx.get_num_threads()
     def reject(*a,**kw):raise AssertionError('default rolling constructor forwarded to original')
     def profile(frame,event,value):
         if event=='call'and frame.f_code in codes:reject()
