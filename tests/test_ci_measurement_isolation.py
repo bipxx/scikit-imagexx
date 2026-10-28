@@ -587,8 +587,9 @@ def test_map_array_phase3_preparation_keeps_both_selectors_and_exact_censuses():
         assert command.count('tests/test_map_array_public.py')==1
         assert command.count('tests/test_map_array_pipeline.py')==1
         assert 'public-'+mode+'.xml' in command
-    assert 'assert len(cases) == 4148' in workflow
-    assert 'len(native) == 244' in workflow and 'assert expected == 1431' in workflow
+    assert workflow.count('tests/test_regular_seeds_public.py tests/test_regular_seeds_pipeline.py') == 2
+    assert 'assert len(cases) == 4366' in workflow
+    assert 'len(native) == 245' in workflow and 'assert expected == 1435' in workflow
     contract=json.loads((ROOT/'coverage/contracts/map-array-benchmark.json').read_bytes())
     assert (contract['threads'],contract['repeat'],contract['target_ms'],contract['raw_samples'])==(1,7,19,126)
 
