@@ -1,0 +1,69 @@
+{
+  "schema": "montage-full-public-repeatability-v1",
+  "status": "PROSPECTIVE_DIAGNOSTIC_ONLY",
+  "scope": "Fresh host repeatability and drift of unchanged whole-public-call products. No old-host causal claim, candidate edit, acceptance gate, KEEP or DISCARD.",
+  "products": {
+    "A": {
+      "role": "baseline",
+      "revision": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+      "run": 40758210302,
+      "artifact": 12846458475,
+      "sha256": "d064c77793dbadd81c8de20e108f49467d19ffa59910fbccdd8609061cd42b89"
+    },
+    "B": {
+      "role": "candidate",
+      "revision": "61b4f79821b0c7fd0d224e2a12d4263d14308cb7",
+      "run": 40766081804,
+      "artifact": 12849749460,
+      "sha256": "c4420f7d4e95d4cb85ffcbd66e24ac7ee8c0f5684b8619b061663a2b98697989"
+    }
+  },
+  "order": [
+    "A",
+    "B",
+    "B",
+    "A",
+    "B",
+    "A",
+    "A",
+    "B"
+  ],
+  "same_product_null_pairs": [
+    [
+      2,
+      3
+    ],
+    [
+      6,
+      7
+    ]
+  ],
+  "case_ids": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "gray-mean-f64",
+    "rgb-padded-u8",
+    "rgb-first-f32",
+    "gray-strided-reverse-f32",
+    "gray-fortran-f64"
+  ],
+  "independent_subprocesses": 8,
+  "workers": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "samples_per_pass": 126,
+  "raw_samples": 1008,
+  "harness_sha256": "93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd",
+  "workload_sha256": "434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68",
+  "measure_sha256": "c28ce23805ab39ad55d806f42a227b6269b30927b36491f7f9a062e2ed4dd513",
+  "affinity": "Select the first initially permitted CPU once. All eight child processes set exactly that singleton affinity before scientific imports. No unpinned fallback.",
+  "retention": "Initial and final receipts per pass; each returned measure dictionary flushed outside timers with pending final harness validation. Unreturned current-measure samples cannot be recovered. Complete successful reports and all failure logs are retained.",
+  "pool_variables": [
+    "OPENBLAS_NUM_THREADS",
+    "MKL_NUM_THREADS",
+    "OMP_NUM_THREADS",
+    "BLIS_NUM_THREADS"
+  ]
+}
