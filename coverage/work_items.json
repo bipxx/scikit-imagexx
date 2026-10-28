@@ -33018,6 +33018,54 @@
         "expected_smoke_checks": 1443,
         "timing_dispatched": false
       }
+    },
+    {
+      "id": "montage-stride2-simd-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "optimize/montage-stride2-simd-v1",
+      "base_sha": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
+      "owns": [
+        "src/montage.cpp",
+        "src/simd_montage_avx2.cpp",
+        "src/montage_simd.hpp",
+        "tests/test_montage_native.cpp",
+        "CMakeLists.txt",
+        "coverage/contracts/montage-stride2-simd-candidate.json"
+      ],
+      "depends_on": [
+        "montage-shared"
+      ],
+      "state": "implementing",
+      "source_merged": false,
+      "freeze_sha": "6fa8b9dafb3d42a05c7427040b0989b30d01a15a",
+      "freeze_utc": "2026-10-28T19:54:15.637024Z",
+      "deadline_utc": "2026-10-28T21:54:15.637024Z",
+      "variant_limit": 1,
+      "scope": "New raw32-bit stride2 AVX2 copy variant, no reuse/retune of closed constant-size v1. Vector loads only while at least9 pixels remain, scalar tail; no generic path/fill/ABI/provider changes. Six modes and source review before genuine preparation. Fixed one-worker ABBA504samples, target repeated direct/normalized>1.5 and both original wins, global>1.05, other8floors.97, six original wins preserved. Root timing dispatch only."
+    },
+    {
+      "id": "approximate-polygon-reference",
+      "kind": "contract",
+      "apis": [
+        "measure.approximate_polygon"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "contract/approximate-polygon-v1",
+      "base_sha": "09f4b8040a63d87593da2e3aa383f060dbe0a0c4",
+      "owns": [
+        "tests/approximate_polygon_contract.py",
+        "tests/test_approximate_polygon_public.py",
+        "coverage/contracts/approximate-polygon.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "source_merged": false,
+      "scope": "Prospective bounded original-first polygon contract from retained0.26 source. Freeze fixture factory and observer before root review/capture authorization; no original calls, native implementation or acceptance yet."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -33252,7 +33300,6 @@
     "measure.EllipseModel",
     "measure.LineModelND",
     "measure.RansacModelProtocol",
-    "measure.approximate_polygon",
     "measure.block_reduce",
     "measure.blur_effect",
     "measure.centroid",
@@ -33704,9 +33751,9 @@
   },
   "execution_policy": {
     "active_workers": [
-      "astra_max_plan_audit",
-      "astra_max_api_paths",
-      "resize_api"
+      "blur_benchmark",
+      "profile_candidate_audit",
+      "blur_integration_resume"
     ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
@@ -33717,27 +33764,27 @@
     "implementation_goal_status": "active",
     "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
-      "astra_max_plan_audit",
-      "astra_max_api_paths",
-      "resize_api"
+      "blur_benchmark",
+      "profile_candidate_audit",
+      "blur_integration_resume"
     ],
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
-      "astra_max_plan_audit": [
-        "tv-positive-zero-comparison-successor"
+      "blur_benchmark": [
+        "montage-stride2-simd-optimization"
       ],
-      "astra_max_api_paths": [
-        "footprint-shapes-native-production"
+      "profile_candidate_audit": [
+        "approximate-polygon-reference"
       ],
-      "resize_api": [
-        "colocalization-native-production"
+      "blur_integration_resume": [
+        "rolling-ball-kernels-measurement"
       ]
     },
     "current_three_agent_packets": {
-      "astra_max_plan_audit": "tv-positive-zero-comparison-successor",
-      "astra_max_api_paths": "footprint-shapes-native-production",
-      "resize_api": "colocalization-native-production"
+      "blur_benchmark": "montage-stride2-simd-optimization",
+      "profile_candidate_audit": "approximate-polygon-reference",
+      "blur_integration_resume": "rolling-ball-kernels-measurement"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
