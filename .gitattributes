@@ -602,3 +602,5 @@ benchmarks/unique-rows-prefix-same-host.json -text
 coverage/evidence/current241-qualification-v5.json -text
 coverage/contracts/regular-seeds.json -text
 coverage/contracts/regular-seeds-benchmark.json -text
+
+benchmarks/unique-rows-tie-free-same-host.json -text
