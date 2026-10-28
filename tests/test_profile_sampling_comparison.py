@@ -35,7 +35,7 @@ COMMON = ('.github/workflows/ci.yml', 'benchmarks/coverage.py', 'benchmarks/rgb2
 
 
 def test_fresh_host_fixed_command_and_retention():
-    assert len(SCRIPTS) == 3
+    assert len(SCRIPTS) == 4
     for source in SCRIPTS:
         compile(source, 'workflow-inline', 'exec')
     assert "default: '40448470579'" in WORKFLOW
@@ -92,41 +92,45 @@ def pair_check(old, new):
          {'old': old, 'new': new})
 
 
-def manifest():
+def manifest(candidate=False):
     runtime = {k: 'same' for k in ('python', 'implementation', 'cache_tag', 'machine', 'system')}
     runtime.update(dependency_libraries_sha256={'numpy': {'blas.so': 'a'}},
-                   versions={'numpy': '1.24.4', 'scikit-imagexx': '0.1.0'},
+                   versions={'numpy': '1.24.4', 'scikit-imagexx': '0.1.0', 'pytest': '9.2.0' if candidate else '9.1.1'},
                    packages_sha256={k: {'source.py': 'a'} for k in ('numpy', 'scipy', 'skimage')})
     paths = (*COMMON, 'CMakeLists.txt', 'pyproject.toml', 'src/block_reduce.cpp',
              'src/block_reduce_internal.hpp', 'src/simd_block_reduce_avx2.cpp', 'src/resample.cpp', 'src/resample_detail.hpp', 'src/simd_resample_avx2.cpp', 'src/convert.cpp',
              'python/skimagexx/_block_reduce.py', 'python/skimagexx/_block_reduce_checks.py',
              'src/bind_block_reduce.cpp', 'tests/test_block_reduce_native.cpp')
-    wheels = {f'dep{i}.whl': {'name': f'dep{i}', 'sha256': 'a'} for i in range(13)}
-    wheels['native.whl'] = {'name': 'scikit-imagexx', 'sha256': 'a'}
+    wheels = {f'dep{i}.whl': {'name': f'dep{i}', 'version': '1', 'sha256': 'a'} for i in range(12)}
+    version, digest = ('9.2.0', '07acdcf88ec174f907dc01af70bf52d49b014bbab03faeeade31c96b18c2e588') if candidate else ('9.1.1', '37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c')
+    wheels['pytest-' + version + '-py3-none-any.whl'] = dict(name='pytest', version=version, sha256=digest)
+    wheels['native.whl'] = {'name': 'scikit-imagexx', 'version': '0.1.0', 'sha256': 'a'}
     return dict(runtime=runtime, wheels=wheels, source={'files_sha256': dict.fromkeys(paths, 'a')})
 
 
 def test_only_declared_simd_leaf_and_product_wheel_may_change():
-    old = manifest(); new = deepcopy(old)
+    old = manifest(); new = manifest(candidate=True)
     new['source']['files_sha256']['src/resample.cpp'] = 'b'
     new['wheels']['native.whl']['sha256'] = 'b'
     pair_check(old, new)
 
 
 @pytest.mark.parametrize('bad', ['frontend', 'policy', 'benchmark', 'other-kernel', 'build',
-                                 'public-cases', 'public-test', 'binder', 'ci', 'missing-mutable', 'missing-common', 'new-product-file', 'wheel', 'runtime'])
+                                 'public-cases', 'public-test', 'binder', 'ci', 'missing-mutable', 'missing-common', 'new-product-file', 'wheel', 'runtime', 'pytest-version', 'pytest-hash'])
 def test_other_product_policy_and_runtime_changes_reject(bad):
-    old = manifest(); new = deepcopy(old); paths = new['source']['files_sha256']
+    old = manifest(); new = manifest(candidate=True); paths = new['source']['files_sha256']
     names = {'frontend': 'python/skimagexx/_block_reduce.py', 'policy': 'python/skimagexx/_block_reduce_checks.py',
              'benchmark': 'benchmarks/coverage.py', 'other-kernel': 'src/convert.cpp',
              'build': 'CMakeLists.txt', 'public-cases': 'tests/block_reduce_cases.py',
              'public-test': 'tests/test_block_reduce_public.py', 'binder': 'src/bind_block_reduce.cpp',
              'ci': '.github/workflows/ci.yml', 'new-product-file': 'src/new.cpp'}
+    if bad == 'pytest-version': new['runtime']['versions']['pytest'] = '9.3.0'
+    if bad == 'pytest-hash': new['wheels']['pytest-9.2.0-py3-none-any.whl']['sha256'] = 'changed'
     if bad in names: paths[names[bad]] = 'changed'
     elif bad == 'missing-mutable': del paths['src/resample.cpp']
     elif bad == 'missing-common': del paths['benchmarks/run.py']
     elif bad == 'wheel': new['wheels']['dep0.whl']['sha256'] = 'changed'
-    else: new['runtime']['dependency_libraries_sha256']['numpy']['blas.so'] = 'changed'
+    elif bad == 'runtime': new['runtime']['dependency_libraries_sha256']['numpy']['blas.so'] = 'changed'
     with pytest.raises(AssertionError): pair_check(old, new)
 
 
@@ -190,9 +194,9 @@ def test_raw_reports_must_keep_every_case_sample_and_exact_native_result(tmp_pat
         folder = tmp_path / 'results' / name; folder.mkdir(parents=True)
         (folder / 'profile-line.json').write_text(json.dumps({'metadata': meta, 'results': rows}))
     if bad and not decision_loss:
-        with pytest.raises(AssertionError): exec(compile(SCRIPTS[2], 'report-check', 'exec'), {})
+        with pytest.raises(AssertionError): exec(compile(SCRIPTS[3], 'report-check', 'exec'), {})
     else:
-        exec(compile(SCRIPTS[2], 'report-check', 'exec'), {})
+        exec(compile(SCRIPTS[3], 'report-check', 'exec'), {})
         summary = json.loads((tmp_path / 'results/comparison.json').read_text())
         assert summary['status'] == ('DISCARD' if decision_loss else 'KEEP')
         if decision_loss:
@@ -252,3 +256,51 @@ def test_preparation_only_product_requires_all_fourteen_cohorts_and_color(tmp_pa
     if bad:
         with pytest.raises((AssertionError, FileNotFoundError)): exec(code, namespace)
     else: exec(code, namespace)
+
+
+@pytest.mark.parametrize('corrupt', [False, True])
+def test_normalization_copies_only_pytest_and_derived_lock(tmp_path, monkeypatch, corrupt):
+    import hashlib
+    import shutil
+    monkeypatch.chdir(tmp_path); (tmp_path / 'results').mkdir()
+    originals = {}
+    for role in ('baseline', 'candidate'):
+        prepared = tmp_path / 'snapshots' / role / 'build/prepared'
+        (prepared / 'wheels').mkdir(parents=True); (prepared / 'ci-artifacts').mkdir()
+        value = manifest(candidate=role == 'candidate')
+        for name, item in value['wheels'].items():
+            data = name.encode(); (prepared / 'wheels' / name).write_bytes(data)
+            item['sha256'] = hashlib.sha256(data).hexdigest()
+        value['source']['revision'] = role
+        value['lock_sha256'] = 'original-lock'
+        raw = json.dumps(value).encode(); (prepared / 'ci-artifacts/measurement.json').write_bytes(raw)
+        originals[role] = raw
+    baseline = tmp_path / 'snapshots/baseline/build/prepared'
+    old = json.loads(originals['baseline']); filename, record = next((n, v) for n, v in old['wheels'].items() if v['name'] == 'pytest')
+    if corrupt: (tmp_path / 'snapshots/candidate/build/prepared/wheels/dep0.whl').write_bytes(b'corrupt')
+    body = ast.parse(SCRIPTS[2]).body
+    start = next(i for i, n in enumerate(body) if isinstance(n, ast.Assign) and ast.unparse(n.targets[0]) == 'normalized')
+    code = compile(ast.Module(body[start:], type_ignores=[]), 'normalize-pytest', 'exec')
+    namespace = dict(baseline=baseline, filename=filename, record=record, deepcopy=deepcopy, hashlib=hashlib, json=json, shutil=shutil, Path=Path)
+    if corrupt:
+        with pytest.raises(AssertionError): exec(code, namespace)
+        return
+    exec(code, namespace)
+    for role in ('baseline', 'candidate'):
+        prepared = tmp_path / 'snapshots' / role / 'build/prepared'; target = prepared.parent / 'measurement-v2'
+        before = json.loads(originals[role]); after = json.loads((target / 'measurement.json').read_bytes())
+        assert (prepared / 'ci-artifacts/measurement.json').read_bytes() == originals[role]
+        assert after['source'] == before['source']
+        before['wheels'] = {n: v for n, v in before['wheels'].items() if v['name'] != 'pytest'}
+        before['wheels'][filename] = record; before['runtime']['versions']['pytest'] = '9.1.1'
+        before['lock_sha256'] = hashlib.sha256((target / 'runtime-lock.txt').read_bytes()).hexdigest()
+        assert after == before
+        assert {p.name for p in (target / 'wheels').iterdir()} == set(after['wheels'])
+        assert not (target / 'wheels/pytest-9.2.0-py3-none-any.whl').exists()
+        assert (target / 'wheels' / filename).read_bytes() == filename.encode()
+        assert (tmp_path / 'results' / (role + '-normalized-measurement.json')).read_bytes() == (target / 'measurement.json').read_bytes()
+    block = WORKFLOW.split('      - name: Normalize only', 1)[1].split('      - name: Measure', 1)[0]
+    assert '--no-index --no-deps --only-binary=:all: --require-hashes' in block
+    assert block.index('pip install') < block.index('ci_measurement_artifacts.py')
+    timed = WORKFLOW.split('      - name: Measure', 1)[1].split('      - name:', 1)[0]
+    assert timed.count('--artifact build/measurement-v2/measurement.json') == 2
