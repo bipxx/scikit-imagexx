@@ -105,8 +105,10 @@ def test_montage_default_adapter_exact_single_image(product,shape,dtype,workers)
     # A one-tile, unpadded montage is byte-for-byte the input in a fresh 3D base.
     owner=np.empty((*shape,1),dtype=image.dtype);owner[...,0]=image;expected=owner[...,0]
     entry=implementation._core.montage_apply;body=inspect.unwrap(implementation.montage).__code__
+    reference=inspect.unwrap(importlib.import_module('skimage.util._montage').montage).__code__
     prior=sys.getprofile();previous=xx.get_num_threads();calls=[];accepted=[]
     def profile(frame,event,value):
+        if event=='call'and frame.f_code is reference:raise AssertionError('default montage forwarded to original')
         if event=='c_return'and value is entry:calls.append('montage_apply')
         if event=='return'and frame.f_code is body:accepted.append(frame.f_locals.get('native_result')is True)
     try:
