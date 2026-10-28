@@ -32120,8 +32120,8 @@
         "scope": "Bounded source overlay with actual builtin and genuine donor core; not a rebuilt whole product."
       },
       "genuine_preparation": {
-        "status": "not_dispatched",
-        "reason": "Complete installed recent-primitive SDK headers/client increment before next genuine build; no duplicate full preparation."
+        "status": "ready_for_one_source_pinned_prepare_only_run",
+        "reason": "SDK public declarations/client and current tie-free successor relink passed; next genuine product must verify168product/79SDK members and26clients52checks. No performance or installed whole-product credit yet."
       }
     },
     {
@@ -32163,7 +32163,7 @@
         "util.unique_rows"
       ],
       "owner": "blur_benchmark",
-      "branch": "optimize/unique-rows-tie-free-v1",
+      "branch": "main",
       "base_sha": "d8adeb419d72bf284f1b4a04ce20e32a9be52074",
       "owns": [
         "src/unique_rows.cpp",
@@ -32174,7 +32174,7 @@
       "depends_on": [
         "unique-rows-reference"
       ],
-      "state": "performance_pending",
+      "state": "measured",
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -32197,10 +32197,15 @@
           "native_pending": 0
         },
         "isolated_performance": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "7aa059ddb1c2f196c3dbba9cf4d638ae1a761e67",
+          "manifest": {
+            "path": "build/unique-rows-tie-free-same-host-v1/final-review.json",
+            "sha256": "301c15ccd6b9274e70f538fde77b6ad36eef0a3fae69100cf7c56d124583da2f"
+          }
         }
       },
-      "source_merged": false,
+      "source_merged": true,
       "genuine_preparation": {
         "run": 40712229136,
         "source_sha": "7aa059ddb1c2f196c3dbba9cf4d638ae1a761e67",
@@ -32211,10 +32216,117 @@
       "comparison": {
         "run": 40716546947,
         "controller": "2d6115f06daf47bff173deafe5bd3bb8395f18f7",
-        "status": "dispatched",
+        "status": "KEEP_independently_reviewed_and_root_recomputed",
         "deadline": "2026-10-28T16:57:38.559206+00:00"
       },
-      "measurement_gate": "ONE frozen tie-free/minimum-index candidate: overall direct/normalized>1.02;read-only target each pass>1.20 and original win;preserve all8other original wins both passes plus balanced .97 floors;deadline/correctness/identity required. No KEEP or speed claim before raw review."
+      "measurement_gate": "KEEP under unchanged fixed gates/deadline. All9workloads beat original in BOTH passes, read-only target passes repeated>1.20 CPP and original wins. All504samples retained, including balanced all-equal CPP loss and3per-pass regression observations. Imported as5be435f with declaration move preserved; no full-platform acceptance claim.",
+      "decision": "KEEP",
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/unique-rows-tie-free-same-host.json"
+        ],
+        "cases": 9,
+        "raw_samples": 504,
+        "direct_gain": 1.1148852171381727,
+        "normalized_gain": 1.1116650438344513,
+        "original_speedup": 1.7553833264490128,
+        "baseline_original_speedup": 1.5790577712097458,
+        "wins": 9,
+        "both_candidate_passes_original_wins": 9,
+        "regressions": [],
+        "direct_regressions": [
+          "f64-wide64-all-equal"
+        ],
+        "normalized_regressions": [
+          "f64-wide64-all-equal"
+        ],
+        "per_pass_cpp_regressions": [
+          {
+            "case_id": "u8-short-small-unique",
+            "pass_number": 3,
+            "direct": 0.9931664322959466,
+            "normalized": 0.9894215775449944
+          },
+          {
+            "case_id": "u8-wide32-common-prefix",
+            "pass_number": 3,
+            "direct": 1.02093592986204,
+            "normalized": 0.9869975796895367
+          },
+          {
+            "case_id": "f64-wide64-all-equal",
+            "pass_number": 2,
+            "direct": 0.9923526216082068,
+            "normalized": 0.9972528429273548
+          }
+        ],
+        "scope": "Exact d8/7aa genuine products on one AMD EPYC7763 host; SDK71/product159, not the later SDK79/header publication."
+      }
+    },
+    {
+      "id": "recent-primitives-sdk-publication",
+      "kind": "interface",
+      "apis": [],
+      "target_apis": [
+        "util.regular_seeds",
+        "util.unique_rows",
+        "util.label_points",
+        "util.map_array",
+        "segmentation.checkerboard_level_set",
+        "segmentation.disk_level_set",
+        "util.compare_images",
+        "measure.blur_effect",
+        "measure.profile_line"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "12cbdbfb7013cac13e8151afda66bbc158f6572b",
+      "owns": [
+        "include/skimagexx/regular_seeds.hpp",
+        "include/skimagexx/unique_rows.hpp",
+        "include/skimagexx/label_points.hpp",
+        "include/skimagexx/map_array.hpp",
+        "include/skimagexx/level_set.hpp",
+        "include/skimagexx/compare_images.hpp",
+        "include/skimagexx/uniform_filter.hpp",
+        "include/skimagexx/profile_line.hpp",
+        "tests/cmake_consumer/recent_primitives_consumer.cpp"
+      ],
+      "depends_on": [
+        "regular-seeds-native"
+      ],
+      "state": "parity_passed",
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "10c0b50459bcc8e61bddd229412dfda7a45e7a9c",
+          "manifest": {
+            "path": "build/worktrees/recent-primitives-sdk-v1/build/sdk-v1/handoff.json",
+            "sha256": "ab80674df0be1dace187879cb9641c94b79b70185d4b21ede4b37e7df2d187a5"
+          }
+        }
+      },
+      "component_successor": {
+        "source_sha": "5be435f403a6a7d5781de7d44450d438ca7077ba",
+        "manifest": {
+          "path": "build/recent-primitives-sdk-tie-free-v2/handoff.json",
+          "sha256": "33fda4c7256c0e98c7331c064c8bd7f7ade069a545bbc3febb694c8a04fb7675"
+        }
+      },
+      "scope": "Eight self-contained installed prepared-primitive headers, exact declaration moves/private SIMD tails;208numeric CPP files unchanged in header increment. Tiny assembled relocated client normal/scalar and8header checks pass. A separate successor replaces exactly one UniqueRows archive member with measured7aa. Component evidence only; all historical products/receipts unchanged.",
+      "genuine_current_expected": {
+        "product_members": 168,
+        "SDK_members": 79,
+        "client_families": 26,
+        "client_checks_per_profile": 52,
+        "image_APIs": 242,
+        "registered_functions": 245
+      },
+      "genuine_product_acceptance": "pending"
     }
   ],
   "unassigned_inventoried_apis": [
@@ -32889,18 +33001,18 @@
   ],
   "static_member_note": "Four public model classes have scoped partial member/state implementations;284 static member paths across29 classes remain tracked individually. Provider metadata and reference-only contracts do not imply native numerical coverage.",
   "evidence_note": "Proofs are scoped and hash-bearing. Contract/reference success, strict rejection, expected failures, private adapters and unvalidated fixes cannot satisfy public-native or measurement gates. A frozen interface permits independent implementation, never acceptance.",
-  "snapshot_base_sha": "05e79eba67b05b4acccd47480ae917a833487b81",
+  "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 211,
+    "native_partial_image_names": 242,
     "metadata_names": 3,
-    "upstream_only_names": 258,
+    "upstream_only_names": 226,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current public source:211 partial image APIs,3metadata,4partialclasses,1exception,258upstream-only/477. Qualified binary baseline remains exactea35/run40237475475 with203 image APIs; eight phase2source additions have focused component parity, not combined-product or timing acceptance.",
-    "native_class_names": 4,
+    "note": "Current source0be9c67:242native-partial images,3metadata,5partial classes,1exception,226upstream-only of477. Latest full supported-profile admission is exact4e/run40710464380 with241image APIs,159wheel/71SDK members and25clients. Later main242/tie-free/SDK79 changes have scoped parity and require a new whole-product campaign.",
+    "native_class_names": 5,
     "exception_metadata_provider_names": 1,
-    "accepted_binary_image_names": 203
+    "accepted_binary_image_names": 241
   },
   "execution_policy": {
     "active_workers": [
@@ -34125,5 +34237,15 @@
       "build/worktrees/max-tree-compare-followup"
     ],
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
+  },
+  "latest_accepted_qualification": {
+    "source": "4e657ee64fb71e4d707d32e9539fdb4d7cc528af",
+    "run": 40710464380,
+    "image_paths": 241,
+    "receipt": {
+      "path": "coverage/evidence/public241-whole-product-admission.json",
+      "sha256": "320967753a787687cb68ebe165163471c4acf4a8fa16312b28842a1db627d147"
+    },
+    "scope": "Exact qualified product, not a certificate for all later main changes."
   }
 }

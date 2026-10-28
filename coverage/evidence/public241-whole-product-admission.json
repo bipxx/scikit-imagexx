@@ -1,0 +1,176 @@
+{
+  "schema": "root-public241-whole-product-admission-v1",
+  "source": "4e657ee64fb71e4d707d32e9539fdb4d7cc528af",
+  "run": 40710464380,
+  "passed": true,
+  "root_accepted": true,
+  "admitted_at_utc": "2026-10-28T16:06:44.928770+00:00",
+  "independent_verification": {
+    "path": "coverage/evidence/current241-qualification-v6.json",
+    "sha256": "a60aa8db8233ca672a61fd4072f8e099626813ea8c357c9572b22607ffd476ce"
+  },
+  "raw_reviews": [
+    {
+      "profile": "windows",
+      "path": "build/public241-qualification-v6/windows-raw-review.json",
+      "sha256": "0332e7646a3e5e8729329471e8819eb266ace43be70c43c32f42ceb98abfc241",
+      "qualification_manifest_sha256": "dce6c01f5df59da64edc0bf9477d79789f6ddacf9d21ad0cc2ab4b83cb8cd56e"
+    },
+    {
+      "profile": "modern",
+      "path": "build/public241-qualification-v6/modern-raw-review.json",
+      "sha256": "3a8037fd23c10ca6c357af176310e7984eee21d6e36b1ac8e3c3699028c6543d",
+      "qualification_manifest_sha256": "b8345a2d84db55eef222d3598ca758f96fd739ecaf88ec1143812c95fed3785a"
+    },
+    {
+      "profile": "minimum",
+      "path": "build/public241-qualification-v6/minimum-raw-review.json",
+      "sha256": "5db57e5041ada27761bd216892c39b07857ed577e47a80d711018acdeb445075",
+      "qualification_manifest_sha256": "27a88a8c539499139f8e03de81983bf8edd0b11e18f9c79e777cf7389982324a"
+    },
+    {
+      "profile": "debug",
+      "path": "build/public241-qualification-v6/debug-raw-review.json",
+      "sha256": "8ba5f0299bf34b846084fe206e534dc51c490fea9978d6b02ef717b64dccb4ab",
+      "qualification_manifest_sha256": "d387938454b9893fed3b100fece6decceb3e4be26d159216eb4f5984ff741d7f"
+    }
+  ],
+  "profiles": 4,
+  "XML_checks": 895864,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "SDK_checks": 200,
+  "frozen_corpora": 48,
+  "sealed_records_rehashed": 107910,
+  "sealed_bytes_rehashed": 9508155374,
+  "scope": {
+    "image_paths": 241,
+    "metadata_paths": 3,
+    "registered_functions": 244,
+    "wheel_members": 159,
+    "SDK_members": 71,
+    "SDK_families": 25,
+    "SDK_checks_per_profile": 50
+  },
+  "previous_admission": {
+    "path": "coverage/evidence/public203-whole-product-admission.json",
+    "sha256": "35e777741d5b5369c01c2f8409006464f2b97090ae1e2144ec917a9185149edb",
+    "image_paths": 203
+  },
+  "new_partial_paths": [
+    "filters.butterworth",
+    "filters.filter_forward",
+    "filters.filter_inverse",
+    "filters.wiener",
+    "filters.window",
+    "measure.block_reduce",
+    "measure.blur_effect",
+    "measure.centroid",
+    "measure.euler_number",
+    "measure.grid_points_in_poly",
+    "measure.inertia_tensor",
+    "measure.inertia_tensor_eigvals",
+    "measure.intersection_coeff",
+    "measure.manders_coloc_coeff",
+    "measure.manders_overlap_coeff",
+    "measure.mesh_surface_area",
+    "measure.moments",
+    "measure.moments_central",
+    "measure.moments_coords",
+    "measure.moments_coords_central",
+    "measure.moments_hu",
+    "measure.moments_normalized",
+    "measure.perimeter",
+    "measure.perimeter_crofton",
+    "measure.points_in_poly",
+    "measure.profile_line",
+    "measure.shannon_entropy",
+    "morphology.ellipse",
+    "morphology.footprint_from_sequence",
+    "morphology.octagon",
+    "morphology.octahedron",
+    "morphology.star",
+    "segmentation.checkerboard_level_set",
+    "segmentation.disk_level_set",
+    "util.compare_images",
+    "util.label_points",
+    "util.map_array",
+    "util.unique_rows"
+  ],
+  "Release_products": [
+    {
+      "profile": "windows",
+      "artifact_id": 12829539004,
+      "outer_sha256": "55204bae91cd2324a4b4f2559d008a138a4f6cad71779eb8201d1cb7a87dffd5",
+      "outer_bytes": 194694239,
+      "verified_files": 1829,
+      "qualification_manifest_sha256": "dce6c01f5df59da64edc0bf9477d79789f6ddacf9d21ad0cc2ab4b83cb8cd56e",
+      "admission": "accepted_by_this_root_receipt"
+    },
+    {
+      "profile": "modern",
+      "artifact_id": 12828956813,
+      "outer_sha256": "cea1b2e707bbf275a000200595d7994da158fa6dd3e7cb565bf3f897163523aa",
+      "outer_bytes": 195835361,
+      "verified_files": 1843,
+      "qualification_manifest_sha256": "b8345a2d84db55eef222d3598ca758f96fd739ecaf88ec1143812c95fed3785a",
+      "admission": "accepted_by_this_root_receipt"
+    },
+    {
+      "profile": "minimum",
+      "artifact_id": 12829617874,
+      "outer_sha256": "f89badb7b9ecf4fa7fb09ea81acb4cb6e67f4fb385f1fdb79913c8252113ad79",
+      "outer_bytes": 198570903,
+      "verified_files": 1843,
+      "qualification_manifest_sha256": "27a88a8c539499139f8e03de81983bf8edd0b11e18f9c79e777cf7389982324a",
+      "admission": "accepted_by_this_root_receipt"
+    }
+  ],
+  "retained_artifacts": [
+    {
+      "id": 12828287511,
+      "name": "public-qualification-modern",
+      "bytes": 1234253104,
+      "sha256": "8058d4debb62abba6e27b173448ac076a8f9c4a608af8d1d90f13ca9cfac4d1a"
+    },
+    {
+      "id": 12828956813,
+      "name": "rank-statistics-product-modern",
+      "bytes": 195835361,
+      "sha256": "cea1b2e707bbf275a000200595d7994da158fa6dd3e7cb565bf3f897163523aa"
+    },
+    {
+      "id": 12829539004,
+      "name": "rank-statistics-product-windows",
+      "bytes": 194694239,
+      "sha256": "55204bae91cd2324a4b4f2559d008a138a4f6cad71779eb8201d1cb7a87dffd5"
+    },
+    {
+      "id": 12829617874,
+      "name": "rank-statistics-product-minimum",
+      "bytes": 198570903,
+      "sha256": "f89badb7b9ecf4fa7fb09ea81acb4cb6e67f4fb385f1fdb79913c8252113ad79"
+    },
+    {
+      "id": 12829716773,
+      "name": "public-qualification-debug",
+      "bytes": 1557922489,
+      "sha256": "a64c944ddbcccd179bb56850321b6a6a6f09ca10bf0a9942575f725cb14dbced"
+    },
+    {
+      "id": 12830137184,
+      "name": "public-qualification-windows",
+      "bytes": 1156836420,
+      "sha256": "25bc08566cd3574a9039a3ae6fab08c20f5a239ee3abf37bddd8081765be2e7f"
+    },
+    {
+      "id": 12830485864,
+      "name": "public-qualification-minimum",
+      "bytes": 1273149217,
+      "sha256": "6c1f69c9e84ef3b97b20fe2f96173ddea24a266bb4130162949247c3b95f0603"
+    }
+  ],
+  "performance_claim": false,
+  "boundary": "Admission covers the four exact-source4e genuine products and their declared native-partial supported profiles. Current main242, later tie-free UniqueRows and SDK79/source-header publication require their own whole-product qualification. Existing failed campaigns and the original accepted203 receipt remain unchanged."
+}

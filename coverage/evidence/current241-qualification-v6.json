@@ -1,0 +1,181 @@
+{
+  "schema": "current-product-qualification-review-v1",
+  "run": 40710464380,
+  "source_revision": "4e657ee64fb71e4d707d32e9539fdb4d7cc528af",
+  "expected_native_images": 241,
+  "registered_functions": 244,
+  "status": "completed",
+  "conclusion": "success",
+  "profiles": {
+    "windows": {
+      "status": "passed",
+      "job": 122894039587,
+      "raw_review": "windows-raw-review.json",
+      "raw_review_sha256": "0332e7646a3e5e8729329471e8819eb266ace43be70c43c32f42ceb98abfc241",
+      "qualification_manifest_sha256": "dce6c01f5df59da64edc0bf9477d79789f6ddacf9d21ad0cc2ab4b83cb8cd56e",
+      "xml": {
+        "tests": 223966,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 159,
+        "SDK_members": 71
+      },
+      "sealed_records_rehashed": 26542,
+      "sealed_bytes_rehashed": 2530993593,
+      "stager": {
+        "artifact": 12829539004,
+        "sha256": "55204bae91cd2324a4b4f2559d008a138a4f6cad71779eb8201d1cb7a87dffd5",
+        "status": "staged-unaccepted",
+        "verified_files": 1829
+      },
+      "stager_required": true
+    },
+    "modern": {
+      "status": "passed",
+      "job": 122894039601,
+      "raw_review": "modern-raw-review.json",
+      "raw_review_sha256": "3a8037fd23c10ca6c357af176310e7984eee21d6e36b1ac8e3c3699028c6543d",
+      "qualification_manifest_sha256": "b8345a2d84db55eef222d3598ca758f96fd739ecaf88ec1143812c95fed3785a",
+      "xml": {
+        "tests": 223966,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 159,
+        "SDK_members": 71
+      },
+      "sealed_records_rehashed": 26454,
+      "sealed_bytes_rehashed": 2016952613,
+      "stager": {
+        "artifact": 12828956813,
+        "sha256": "cea1b2e707bbf275a000200595d7994da158fa6dd3e7cb565bf3f897163523aa",
+        "status": "staged-unaccepted",
+        "verified_files": 1843
+      },
+      "stager_required": true
+    },
+    "minimum": {
+      "status": "passed",
+      "job": 122894039686,
+      "raw_review": "minimum-raw-review.json",
+      "raw_review_sha256": "5db57e5041ada27761bd216892c39b07857ed577e47a80d711018acdeb445075",
+      "qualification_manifest_sha256": "27a88a8c539499139f8e03de81983bf8edd0b11e18f9c79e777cf7389982324a",
+      "xml": {
+        "tests": 223966,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 159,
+        "SDK_members": 71
+      },
+      "sealed_records_rehashed": 28529,
+      "sealed_bytes_rehashed": 2068659334,
+      "stager": {
+        "artifact": 12829617874,
+        "sha256": "f89badb7b9ecf4fa7fb09ea81acb4cb6e67f4fb385f1fdb79913c8252113ad79",
+        "status": "staged-unaccepted",
+        "verified_files": 1843
+      },
+      "stager_required": true
+    },
+    "debug": {
+      "status": "passed",
+      "job": 122894038935,
+      "raw_review": "debug-raw-review.json",
+      "raw_review_sha256": "8ba5f0299bf34b846084fe206e534dc51c490fea9978d6b02ef717b64dccb4ab",
+      "qualification_manifest_sha256": "d387938454b9893fed3b100fece6decceb3e4be26d159216eb4f5984ff741d7f",
+      "xml": {
+        "tests": 223966,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 50,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 159,
+        "SDK_members": 71
+      },
+      "sealed_records_rehashed": 26385,
+      "sealed_bytes_rehashed": 2891549834,
+      "stager": null,
+      "stager_required": false
+    }
+  },
+  "executed_public_xml_totals": {
+    "tests": 895864,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_total_checks": 200,
+  "frozen_corpora_validated": 48,
+  "sealed_records_rehashed": 107910,
+  "sealed_bytes_rehashed": 9508155374,
+  "retained_artifacts": [
+    {
+      "id": 12828287511,
+      "name": "public-qualification-modern",
+      "bytes": 1234253104,
+      "sha256": "8058d4debb62abba6e27b173448ac076a8f9c4a608af8d1d90f13ca9cfac4d1a"
+    },
+    {
+      "id": 12828956813,
+      "name": "rank-statistics-product-modern",
+      "bytes": 195835361,
+      "sha256": "cea1b2e707bbf275a000200595d7994da158fa6dd3e7cb565bf3f897163523aa"
+    },
+    {
+      "id": 12829539004,
+      "name": "rank-statistics-product-windows",
+      "bytes": 194694239,
+      "sha256": "55204bae91cd2324a4b4f2559d008a138a4f6cad71779eb8201d1cb7a87dffd5"
+    },
+    {
+      "id": 12829617874,
+      "name": "rank-statistics-product-minimum",
+      "bytes": 198570903,
+      "sha256": "f89badb7b9ecf4fa7fb09ea81acb4cb6e67f4fb385f1fdb79913c8252113ad79"
+    },
+    {
+      "id": 12829716773,
+      "name": "public-qualification-debug",
+      "bytes": 1557922489,
+      "sha256": "a64c944ddbcccd179bb56850321b6a6a6f09ca10bf0a9942575f725cb14dbced"
+    },
+    {
+      "id": 12830137184,
+      "name": "public-qualification-windows",
+      "bytes": 1156836420,
+      "sha256": "25bc08566cd3574a9039a3ae6fab08c20f5a239ee3abf37bddd8081765be2e7f"
+    },
+    {
+      "id": 12830485864,
+      "name": "public-qualification-minimum",
+      "bytes": 1273149217,
+      "sha256": "6c1f69c9e84ef3b97b20fe2f96173ddea24a266bb4130162949247c3b95f0603"
+    }
+  ],
+  "downloads": "Each artifact retained once. Every sealed record was independently rehashed once per profile.",
+  "all_required_gates_passed": true,
+  "eligible_for_parent_admission": true,
+  "whole_product_promotion_performed": false,
+  "accepted_baseline_images": 203,
+  "accepted203_receipt_sha256": "35e777741d5b5369c01c2f8409006464f2b97090ae1e2144ec917a9185149edb",
+  "performance_claim": false,
+  "products_from_other_sources_mixed": false,
+  "boundary": "All four profiles passed independent exact-source review. This report establishes readiness for parent admission; it does not modify the accepted203 receipt or authorize a performance claim."
+}
