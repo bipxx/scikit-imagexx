@@ -31289,7 +31289,7 @@
       "depends_on": [
         "map-array-native"
       ],
-      "state": "validating",
+      "state": "parity_passed",
       "dependency_requirements": {
         "map-array-native": {
           "evidence_scope": "native_private"
@@ -31298,7 +31298,15 @@
       "public_registration": true,
       "proofs": {
         "public_native": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
+          "manifest": {
+            "path": "build/map-array-genuine-release-v1/final-review.json",
+            "sha256": "457370fc23b0f667fe62851426b904b703c408f8f00a7e13da2d2c4754ecd08b"
+          },
+          "native_contract_checks": 412,
+          "native_pending": 0,
+          "scope": "Genuine installed minimum product; no full-profile promotion"
         }
       },
       "component_evidence": {
@@ -31312,7 +31320,7 @@
       "genuine_preparation": {
         "run": 40685511797,
         "source_sha": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
-        "status": "in_progress"
+        "status": "success"
       }
     },
     {
@@ -31332,7 +31340,7 @@
       "depends_on": [
         "map-array-public"
       ],
-      "state": "preparing",
+      "state": "measured",
       "dependency_requirements": {
         "map-array-public": {
           "evidence_scope": "public_native"
@@ -31340,12 +31348,35 @@
       },
       "proofs": {
         "isolated_performance": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
+          "manifest": {
+            "path": "build/map-array-genuine-release-v1/final-review.json",
+            "sha256": "457370fc23b0f667fe62851426b904b703c408f8f00a7e13da2d2c4754ecd08b"
+          }
         }
       },
       "genuine_run": 40685511797,
       "source_sha": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
-      "measurement_gate": "Genuine installed preparation must pass before isolated9case/126sample/oneworker timing. Retain every loss; no speed claim yet."
+      "measurement_gate": "Verified nine original/current public workloads and126samples/oneworker. Allfour losses retained; targeted optimization pending.",
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/map-array-minimum-initial.json"
+        ],
+        "wins": 5,
+        "cases": 9,
+        "geometric_mean_speedup": 1.35739061184,
+        "regressions": [
+          "signed64-sparse-f64-256",
+          "signed64-sparse-f64-1024",
+          "uint64-wide-c128-256",
+          "strided-out-u8-f32-65536"
+        ]
+      }
     }
   ],
   "unassigned_inventoried_apis": [
