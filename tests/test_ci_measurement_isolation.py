@@ -207,7 +207,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/profile_line.py --threads 1 --repeat 7 --output build/ci-profile-line.json',
         'python benchmarks/blur_effect.py --threads 1 --repeat 7 --output build/ci-blur-effect.json',
         'python benchmarks/compare_images.py --threads 1 --repeat 7 --output build/ci-compare-images.json',
-        'python benchmarks/level_set.py --threads 1 --repeat 7 --output build/ci-level-set.json']
+        'python benchmarks/level_set.py --threads 1 --repeat 7 --output build/ci-level-set.json',
+        'python benchmarks/map_array.py --threads 1 --repeat 7 --output build/ci-map-array.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -483,7 +484,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 21 and all(condition in step for step in timed)
+    assert len(timed) == 22 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -499,14 +500,14 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 21 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/level_set.py ' in timed[-1]
+    assert len(timed) == 22 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/map_array.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
 
 
-@pytest.mark.parametrize('stem', ('perimeter-crofton', 'perimeter', 'euler-number', 'mesh-surface-area', 'level-set'))
+@pytest.mark.parametrize('stem', ('perimeter-crofton', 'perimeter', 'euler-number', 'mesh-surface-area', 'level-set', 'map-array'))
 def test_measure_contracts_precede_freeze(stem):
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
     preparation = blocks['numpy-minimum']
@@ -524,7 +525,8 @@ def test_measure_contracts_precede_freeze(stem):
                                              ('measure.perimeter', 'perimeter_default_error'),
                                              ('measure.euler_number', 'euler_default_error'),
                                              ('measure.blur_effect', 'blur_default_error'),
-                                             ('util.compare_images', 'compare_default_error')))
+                                             ('util.compare_images', 'compare_default_error'),
+                                             ('util.map_array', 'map_array_default_error')))
 def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_name):
     tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
     imports = [n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'skimagexx.coverage']
@@ -547,15 +549,31 @@ def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_
     assert branch.lineno < timing.lineno
 
 
-def test_level_set_native_pipeline_gates_precede_freeze():
+@pytest.mark.parametrize('stem', ('level-set', 'map-array'))
+def test_owned_native_pipeline_gates_precede_freeze(stem):
     preparation=jobs((ROOT / '.github/workflows/ci.yml').read_text())['numpy-minimum']
     for mode in ('normal','scalar'):
-        command=('python -m pytest -q tests/test_level_set_pipeline.py '
-                 '--junitxml=build/ci-artifacts/level-set-pipeline-'+mode+'.xml')
+        command=('python -m pytest -q tests/test_'+stem.replace('-','_')+'_pipeline.py '
+                 '--junitxml=build/ci-artifacts/'+stem+'-pipeline-'+mode+'.xml')
         assert preparation.count(command)==1
         assert preparation.index(command)<preparation.index('ci_measurement_artifacts.py freeze')
-    assert preparation.split('level-set-pipeline-scalar.xml',1)[1].startswith(
+    assert preparation.split(stem+'-pipeline-scalar.xml',1)[1].startswith(
         "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+
+
+def test_map_array_phase3_preparation_keeps_both_selectors_and_exact_censuses():
+    workflow=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text()
+    commands=[line.strip() for line in workflow.splitlines()
+              if line.strip().startswith('python -m pytest -q tests/test_footprint_shapes_public.py')]
+    assert len(commands)==2
+    for mode,command in zip(('normal','scalar'),commands):
+        assert command.count('tests/test_map_array_public.py')==1
+        assert command.count('tests/test_map_array_pipeline.py')==1
+        assert 'public-'+mode+'.xml' in command
+    assert 'assert len(cases) == 3735' in workflow
+    assert 'len(native) == 242' in workflow and 'assert expected == 1423' in workflow
+    contract=json.loads((ROOT/'coverage/contracts/map-array-benchmark.json').read_bytes())
+    assert (contract['threads'],contract['repeat'],contract['target_ms'],contract['raw_samples'])==(1,7,19,126)
 
 
 @pytest.mark.parametrize('api', ('segmentation.checkerboard_level_set','segmentation.disk_level_set'))
