@@ -32602,15 +32602,21 @@
           "evidence_scope": "public_native"
         }
       },
-      "state": "preparing",
-      "scope": "Nine prospectively frozen real multi-image workloads,1worker/7rounds/126samples;44 inert transport guards pass. Exactec3 genuine minimum producer40740008474 live, before any timing. All four merged Montage WTs retired clean without force; proof/builds retained, active LP candidates protected.",
+      "state": "measuring",
+      "scope": "Exact ec3 genuine minimum preparation passes7778focused/1439smoke and170product/80SDK closure; no genuine SDK clients in producer. Initial9workload/126sample timing run40742758297 is live. Latest whole-profile qualification remains241.",
       "genuine_preparation": {
         "run": 40740008474,
         "source_sha": "ec3dba8e5eb73a0b02dffd70c501abe2adba923c",
         "prepare_only": true,
         "minimum_only": true,
         "latest_only": true,
-        "timing_dispatched": false
+        "timing_dispatched": false,
+        "status": "verified",
+        "artifact": 12840295821,
+        "manifest": {
+          "path": "build/montage-genuine-release-v1/final-review.json",
+          "sha256": "49ffae9a3283ff281f5b9607e410fefde5cd880abeeede6b0925c4e24ad84cdd"
+        }
       },
       "proofs": {
         "tooling": {
@@ -32625,7 +32631,15 @@
       "retirement_receipt": {
         "path": "build/montage-retirement-v1/retirement.json",
         "sha256": "31bd30d908e94168d309ff23042ff365f74fc799061b7bf9049c7444f90b2f4f"
-      }
+      },
+      "comparison": {
+        "run": 40742758297,
+        "controller": "d56b6e674e714d35d5b357c9ea152213401cd5a7",
+        "status": "running",
+        "source_merged": true,
+        "timing_host": "fresh artifact-only GitHub runner; no builds/tests"
+      },
+      "source_merged": true
     },
     {
       "id": "label-points-metadata-experiment",
@@ -32644,7 +32658,7 @@
       "depends_on": [
         "label-points-public"
       ],
-      "state": "preparing",
+      "state": "measuring",
       "source_merged": false,
       "proofs": {
         "native_private": {
@@ -32662,10 +32676,53 @@
         "run": 40738793434,
         "source_sha": "69e390dd5e48d5199c9a249fccafd83daa027d3c",
         "prepare_only": true,
-        "timing_dispatched": false
+        "timing_dispatched": false,
+        "status": "verified",
+        "artifact": 12839223780,
+        "manifest": {
+          "path": "build/label-points-metadata-prepare-v1/final-review.json",
+          "sha256": "ef84e337e65926847811c598e9d18c90b422a7485d0edfd962c23c9c8caf7795"
+        }
       },
       "deadline_utc": "2026-10-28T19:39:29.511203+00:00",
-      "scope": "One frozen binder-metadata-only variant, no numerical leaf/Python/output/harness changes.796 focused gates first-attempt pass; genuine producer pending. Closed zero-provider experiment stays discarded."
+      "scope": "One binder-only variant:796 focused gates and genuine7134focused/1435smoke pass; all13dependency wheels and79SDK payloads byte-exact to baseline910. Fixed504sample ABBA40742666831 is live; candidate unmerged and closed zero-provider stays discarded.",
+      "comparison": {
+        "run": 40742666831,
+        "controller": "d56b6e674e714d35d5b357c9ea152213401cd5a7",
+        "status": "running",
+        "source_merged": false,
+        "timing_host": "fresh artifact-only GitHub runner; no builds/tests"
+      }
+    },
+    {
+      "id": "rolling-ball-kernels-reference",
+      "kind": "contract",
+      "apis": [],
+      "target_apis": [
+        "restoration.ball_kernel",
+        "restoration.ellipsoid_kernel"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "feature/rolling-ball-kernels-contract-v1",
+      "base_sha": "7667a9b64fff1fa1b4cc307d5efb6c8aa45788b7",
+      "owns": [
+        "tests/rolling_ball_kernels_contract.py",
+        "tests/test_rolling_ball_kernels_public.py",
+        "coverage/contracts/rolling-ball-kernels.json"
+      ],
+      "depends_on": [],
+      "state": "contracting",
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "7667a9b64fff1fa1b4cc307d5efb6c8aa45788b7",
+          "manifest": {
+            "path": "build/worktrees/rolling-ball-kernels-contract-v1/build/prospective-v1/handoff.json",
+            "sha256": "0715e4639372dc3666b94c87e9bb8d3dcec57442d9b42f8184165c3fd4713970"
+          }
+        }
+      },
+      "scope": "50 prospective bounded specs, including5D/8D and singleton rank31/32/63/64.108 preflight checks; root reviewed before authorizing exactly100 once-only originals, currently capturing. No native code, ABI/rank cap, numerical acceptance or performance claim."
     }
   ],
   "unassigned_inventoried_apis": [
