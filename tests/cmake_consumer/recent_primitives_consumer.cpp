@@ -7,6 +7,7 @@
 #include <skimagexx/compare_images.hpp>
 #include <skimagexx/uniform_filter.hpp>
 #include <skimagexx/profile_line.hpp>
+#include <skimagexx/montage.hpp>
 #include <skimagexx/image.hpp>
 #include <array>
 #include <cfenv>
@@ -75,6 +76,17 @@ void stages(int workers){
     const double plane[]={1,2,3,4,5,6};const double points[]={0,1,0,2};std::array<double,2> sampled{};
     check(profile_sample({plane,PixelType::float64,2,3},points,2,sampled.data(),0,GaussianBorder::nearest,0.,workers));
     check((sampled==std::array<double,2>{1,6}));
+    const unsigned char tiles[]={1,2,3,4,5,6,7,8},fill[]={9,10};
+    std::array<unsigned char,42> montage{},expected_montage{};
+    for(std::size_t i=0;i<expected_montage.size();++i)expected_montage[i]=fill[i%2];
+    const unsigned char tile_order[]={3,4,1,2,7,8,5,6};
+    const std::size_t montage_columns[]={1,2,4,5};
+    for(std::size_t pixel=0;pixel<4;++pixel)
+        for(std::size_t channel=0;channel<2;++channel)
+            expected_montage[(7+montage_columns[pixel])*2+channel]=tile_order[pixel*2+channel];
+    montage_into({tiles+2,{2,1,2,2},{4,4,-2,1},1},{1,2,1},fill,{montage.data(),3,7},workers);
+    check(montage==expected_montage);
+
     check(get_num_threads()==global&&std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
 }
 }

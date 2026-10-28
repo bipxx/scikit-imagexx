@@ -211,7 +211,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/map_array.py --threads 1 --repeat 7 --output build/ci-map-array.json',
         'python benchmarks/label_points.py --threads 1 --repeat 7 --output build/ci-label-points.json',
         'python benchmarks/unique_rows.py --threads 1 --repeat 7 --output build/ci-unique-rows.json',
-        'python benchmarks/regular_seeds.py --threads 1 --repeat 7 --output build/ci-regular-seeds.json']
+        'python benchmarks/regular_seeds.py --threads 1 --repeat 7 --output build/ci-regular-seeds.json',
+        'python benchmarks/montage.py --threads 1 --repeat 7 --output build/ci-montage.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -487,7 +488,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 25 and all(condition in step for step in timed)
+    assert len(timed) == 26 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -503,8 +504,8 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 25 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/regular_seeds.py ' in timed[-1]
+    assert len(timed) == 26 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/montage.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -529,7 +530,8 @@ def test_measure_contracts_precede_freeze(stem):
                                              ('measure.euler_number', 'euler_default_error'),
                                              ('measure.blur_effect', 'blur_default_error'),
                                              ('util.compare_images', 'compare_default_error'),
-                                             ('util.map_array', 'map_array_default_error'), ('util.label_points', 'label_points_default_error'), ('util.unique_rows', 'unique_rows_default_error')))
+                                             ('util.map_array', 'map_array_default_error'), ('util.label_points', 'label_points_default_error'), ('util.unique_rows', 'unique_rows_default_error'),
+                                             ('util.montage', 'montage_default_error')))
 def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_name):
     tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
     imports = [n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'skimagexx.coverage']
@@ -543,7 +545,7 @@ def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_
         calls.append(args)
         return 17.
     code = compile(ast.Module(body=branch.body, type_ignores=[]), '<Crofton checker route>', 'exec')
-    namespace = dict(call_args=(image, shape), actual=actual, expected=expected)
+    namespace = dict(call_args=(image, shape), data=image, actual=actual, expected=expected)
     namespace[checker_name] = checker
     exec(code, namespace)
     assert calls == [(shape if api == 'util.label_points' else image, actual, expected)] and namespace['error'] == 17.
@@ -562,6 +564,19 @@ def test_owned_native_pipeline_gates_precede_freeze(stem):
         assert preparation.index(command)<preparation.index('ci_measurement_artifacts.py freeze')
     assert preparation.split(stem+'-pipeline-scalar.xml',1)[1].startswith(
         "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+
+
+def test_montage_frozen_rows_public_exports_and_native_entry_precede_freeze():
+    blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
+    preparation = blocks['numpy-minimum']
+    for mode in ('normal', 'scalar'):
+        command = ('python -m pytest -q tests/test_montage_public.py tests/test_montage_integration.py '
+                   'tests/test_montage_pipeline.py --junitxml=build/ci-artifacts/montage-' + mode + '.xml')
+        assert preparation.count(command) == 1
+        assert preparation.index(command) < preparation.index('ci_measurement_artifacts.py freeze')
+    assert preparation.split('montage-scalar.xml', 1)[1].startswith(
+        "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    assert 'build/ci-montage.md' in blocks['measure-minimum']
 
 
 def test_regular_seeds_default_checker_uses_actual_shape_and_requested_output_dtype():
@@ -588,8 +603,8 @@ def test_map_array_phase3_preparation_keeps_both_selectors_and_exact_censuses():
         assert command.count('tests/test_map_array_pipeline.py')==1
         assert 'public-'+mode+'.xml' in command
     assert workflow.count('tests/test_regular_seeds_public.py tests/test_regular_seeds_pipeline.py') == 2
-    assert 'assert len(cases) == 4366' in workflow
-    assert 'len(native) == 245' in workflow and 'assert expected == 1435' in workflow
+    assert 'assert len(cases) == 4688' in workflow
+    assert 'len(native) == 246' in workflow and 'assert expected == 1439' in workflow
     contract=json.loads((ROOT/'coverage/contracts/map-array-benchmark.json').read_bytes())
     assert (contract['threads'],contract['repeat'],contract['target_ms'],contract['raw_samples'])==(1,7,19,126)
 

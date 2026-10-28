@@ -18,6 +18,7 @@ for _names, _test, _benchmark in (
     (('segmentation.checkerboard_level_set','segmentation.disk_level_set'),
      'tests/test_level_set_public.py::test_level_set_native_public_contract','benchmarks/level_set.py'),
     (('util.map_array',),'tests/test_map_array_public.py::test_map_array_native_public_contract','benchmarks/map_array.py'),
+    (('util.montage',),'tests/test_montage_integration.py::test_montage_registered_public_frozen_contract','benchmarks/montage.py'),
     (('util.regular_seeds',),'tests/test_regular_seeds_public.py::test_regular_seeds_native_public_contract','benchmarks/regular_seeds.py'),
     (('util.unique_rows',),'tests/test_unique_rows_public.py::test_unique_rows_native_public_contract','benchmarks/unique_rows.py'),
     (('util.label_points',),'tests/test_label_points_public.py::test_label_points_native_public_contract','benchmarks/label_points.py'),

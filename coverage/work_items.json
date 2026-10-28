@@ -32443,7 +32443,7 @@
           "status": "verified",
           "source_sha": "da56050c7758f9b0987b6cd272bb01472236d6ac",
           "manifest": {
-            "path": "build/worktrees/montage-contract-v1/build/capture-v1/handoff.json",
+            "path": "build/montage-contract-v1-private-v1/capture-v1/handoff.json",
             "sha256": "074fed36cca1e92702486e8c389250042307c4020392b72d5df3d060c7697a79"
           },
           "passing_contract_checks": 116
@@ -32470,8 +32470,22 @@
       "depends_on": [
         "montage-reference"
       ],
-      "state": "implementing",
-      "scope": "Prepared POD fill and signed-stride byte tile transport; installed detail primitive; existing optional worker partition and libc SIMD paths."
+      "state": "parity_passed",
+      "scope": "Prepared POD fill and signed-stride byte tile transport; installed detail primitive; existing optional worker partition and libc SIMD paths.",
+      "source_merged": true,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "c073adae6596a8ee3c3fd8233ba68074ec43044a",
+          "manifest": {
+            "path": "build/worktrees/montage-native-v1/build/native-v1/handoff.json",
+            "sha256": "39f33f87cb31a764065f1685f4aff4b1d3c36a23cffc77ed5e65b5a38f579dab"
+          },
+          "native_contract_checks": 6336,
+          "native_pending": 0
+        }
+      },
+      "check_meaning": "6336 calls=132 independent record/control cases x2 workers x4rounding modes x6modes;56808 assertion counter total includes decoding/guards, not independent cases."
     },
     {
       "id": "montage-frontend",
@@ -32491,18 +32505,33 @@
       "depends_on": [
         "montage-reference"
       ],
-      "state": "implementing",
-      "scope": "Literal decorator/provider/mutation/error ordering; actual C-return and exact saved observation tests pending native leaf."
+      "state": "parity_passed",
+      "scope": "Literal decorator/provider/mutation/error ordering; actual C-return and exact saved observation tests pending native leaf.",
+      "source_merged": true,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "07656e5d0174b59842ba7592cbe4a6905ea80f54",
+          "manifest": {
+            "path": "build/worktrees/montage-frontend-v1/build/montage-component-v1/handoff.json",
+            "sha256": "304a1c625d1c162718d84de08a100d0bcb2f10657dbc9f547698c1f03210689b"
+          },
+          "native_contract_checks": 488,
+          "native_pending": 0
+        }
+      }
     },
     {
       "id": "montage-shared",
-      "kind": "integration_preparation",
-      "apis": [],
+      "kind": "integration",
+      "apis": [
+        "util.montage"
+      ],
       "target_apis": [
         "util.montage"
       ],
-      "owner": "blur_integration_resume",
-      "branch": "integrate/montage-shared",
+      "owner": "integrator",
+      "branch": "main",
       "base_sha": "e6bd19b46cbd801f93af2301fe91357b3d5d1410",
       "owns": [
         "CMakeLists.txt",
@@ -32514,10 +32543,107 @@
         "coverage/contracts/montage-benchmark.json"
       ],
       "depends_on": [
-        "montage-reference"
+        "montage-native",
+        "montage-frontend"
       ],
-      "state": "implementing",
-      "scope": "Public wiring and prospective9workload initial benchmark; root owns shared inventory/qualification/ledger guards. No public registration accepted before private native proofs."
+      "state": "parity_passed",
+      "scope": "Registered public frontend:568 component checks across4modes,464 exact frozen observations,276 saved-case C acceptances and72 native default-copy acceptances. Literal providers explicit. Genuine whole-product/parity and isolated timing still pending.",
+      "public_registration": true,
+      "source_merged": true,
+      "dependency_requirements": {
+        "montage-native": {
+          "evidence_scope": "native_private"
+        },
+        "montage-frontend": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "3725e49d835ca0919a82673aa5bda32ed86e7136",
+          "manifest": {
+            "path": "build/worktrees/montage-shared-v1/build/public-v2/handoff.json",
+            "sha256": "10b1709c70285c117b4251d8c787115528378afaf5dd8691a0072413c142983f"
+          },
+          "native_contract_checks": 568,
+          "native_pending": 0
+        }
+      },
+      "installed_SDK_component": {
+        "manifest": {
+          "path": "build/montage-installed-sdk-component-v1/handoff.json",
+          "sha256": "4a9f8d77a72b1130d90f894f3fc777e3c30c54a502ceeb432917fd3fb9e2b89f"
+        },
+        "SDK_members": 80,
+        "client_families": 1,
+        "client_checks": 2,
+        "scope": "Assembled SDK80, genuine910SDK79 donor untouched plus exactly one Montage header/member. Not genuine whole-product or26families/52checks acceptance."
+      }
+    },
+    {
+      "id": "montage-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "3725e49d835ca0919a82673aa5bda32ed86e7136",
+      "owns": [
+        ".github/workflows/montage-initial.yml"
+      ],
+      "depends_on": [
+        "montage-shared"
+      ],
+      "dependency_requirements": {
+        "montage-shared": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "state": "performance_pending",
+      "scope": "Nine prospectively frozen real multi-image workloads, one worker,7rounds/126samples. Artifact-only transport passes44 inert guards/actionlint; genuine preparation and timing pending."
+    },
+    {
+      "id": "label-points-metadata-experiment",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.label_points"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "optimize/label-points-metadata-v1",
+      "base_sha": "5df3a0fb679d2649b50f0974e6d645a08a19958c",
+      "owns": [
+        "src/bind_label_points.cpp",
+        "coverage/contracts/label-points-metadata-candidate.json"
+      ],
+      "depends_on": [
+        "label-points-public"
+      ],
+      "state": "preparing",
+      "source_merged": false,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "69e390dd5e48d5199c9a249fccafd83daa027d3c",
+          "manifest": {
+            "path": "build/worktrees/label-points-metadata-v1/build/metadata-v1/handoff.json",
+            "sha256": "b28a4987ba8478010cf0b05584827b42e0c10c350b4e584ecf1669f01b516162"
+          },
+          "native_contract_checks": 796,
+          "native_pending": 0
+        }
+      },
+      "genuine_preparation": {
+        "run": 40738793434,
+        "source_sha": "69e390dd5e48d5199c9a249fccafd83daa027d3c",
+        "prepare_only": true,
+        "timing_dispatched": false
+      },
+      "deadline_utc": "2026-10-28T19:39:29.511203+00:00",
+      "scope": "One frozen binder-metadata-only variant, no numerical leaf/Python/output/harness changes.796 focused gates first-attempt pass; genuine producer pending. Closed zero-provider experiment stays discarded."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -32892,7 +33018,6 @@
     "util.img_as_uint",
     "util.invert",
     "util.lookfor",
-    "util.montage",
     "util.random_noise",
     "util.regular_grid",
     "util.slice_along_axes",
@@ -33195,12 +33320,12 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 242,
+    "native_partial_image_names": 243,
     "metadata_names": 3,
-    "upstream_only_names": 226,
+    "upstream_only_names": 225,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current source0be9c67:242native-partial images,3metadata,5partial classes,1exception,226upstream-only of477. Latest full supported-profile admission is exact4e/run40710464380 with241image APIs,159wheel/71SDK members and25clients. Later main242/tie-free/SDK79 changes have scoped parity and require a new whole-product campaign.",
+    "note": "Current integrated source:243native-partial images,3metadata,5partial classes,1exception,225upstream-only of477. Exact4e/run40710464380 remains latest full acceptance at241images/159wheel71SDK/25clients. New Montage/SDK80 have component proof only pending genuine product and isolated benchmark.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
     "accepted_binary_image_names": 241

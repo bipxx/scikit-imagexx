@@ -9125,11 +9125,15 @@
       "api": "util.montage",
       "kind": "callable",
       "signature": "(arr_in, fill='mean', rescale_intensity=False, grid_shape=None, padding_width=0, *, channel_axis=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_montage_integration.py::test_montage_registered_public_frozen_contract",
+      "benchmark": "benchmarks/montage.py"
     },
     {
       "api": "util.random_noise",

@@ -14,6 +14,7 @@ import skimage
 import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
+from skimagexx.coverage import montage_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -156,6 +157,11 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'util.montage' in apis:
+        provider_frontiers['util.montage'] = ('Single-image batch adapter for shared defaults; owned POD channel fill '
+            'and signed-stride tile copy. NumPy mean, type conversion, output allocation and optional upstream '
+            'rescaling are explicit providers. Exact output dtype/storage/words checked before timing; '
+            'benchmarks/montage.py provides the canonical real multi-image cohort.')
     if 'util.regular_seeds' in apis:
         provider_frontiers['util.regular_seeds'] = ('Geometry/output-dtype adapter: actual image.shape, bounded n_points and '
             'requested output dtype; pixels are not API arguments. NumPy regular_grid and np.zeros are explicit '
@@ -255,7 +261,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'util.regular_seeds':
+                    if api == 'util.montage':
+                        error = montage_default_error(data,actual,expected)
+                    elif api == 'util.regular_seeds':
                         error = regular_seeds_default_error(call_args[0],options['dtype'],actual,expected)
                     elif api == 'util.unique_rows':
                         error = unique_rows_default_error(call_args[0], actual, expected)

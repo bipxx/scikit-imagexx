@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current242",
+  "scope": "current243",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -448,6 +448,7 @@
     "util.invert",
     "util.label_points",
     "util.map_array",
+    "util.montage",
     "util.regular_seeds",
     "util.unique_rows"
   ],
@@ -495,7 +496,8 @@
     "util.map_array": "tests/test_map_array_public.py",
     "util.label_points": "tests/test_label_points_public.py",
     "util.unique_rows": "tests/test_unique_rows_public.py",
-    "util.regular_seeds": "tests/test_regular_seeds_public.py"
+    "util.regular_seeds": "tests/test_regular_seeds_public.py",
+    "util.montage": "tests/test_montage_integration.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -538,7 +540,10 @@
     "tests/test_unique_rows_public.py",
     "tests/test_unique_rows_pipeline.py",
     "tests/test_regular_seeds_public.py",
-    "tests/test_regular_seeds_pipeline.py"
+    "tests/test_regular_seeds_pipeline.py",
+    "tests/test_montage_public.py",
+    "tests/test_montage_pipeline.py",
+    "tests/test_montage_integration.py"
   ],
   "SDK_scope": "current26 required installed clients (23 legacy plus colocalization, footprint_shapes and recent prepared primitives); source readiness is not qualification acceptance",
   "required_client_families": [
@@ -556,6 +561,7 @@
     "include/skimagexx/level_set.hpp",
     "include/skimagexx/compare_images.hpp",
     "include/skimagexx/uniform_filter.hpp",
-    "include/skimagexx/profile_line.hpp"
+    "include/skimagexx/profile_line.hpp",
+    "include/skimagexx/montage.hpp"
   ]
 }
