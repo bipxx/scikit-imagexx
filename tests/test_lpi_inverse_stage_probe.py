@@ -15,18 +15,21 @@ def test_observer_calls_existing_operations_once_and_restores_hooks(tmp_path, ca
         def __rtruediv__(self, value): events.append('reciprocal'); return Token()
         def __setitem__(self, key, value): events.append('clip')
         def __mul__(self, other): events.append('product'); return Token()
+    def forward_fft(*args): events.append('forward'); return Token()
     def real_fft(*args):
+        if len(args) > 1 and args[1] is True: return forward_fft(*args)
         events.append('ifft')
         if fail: raise RuntimeError('original FFT failure')
         return Token()
     tail = '_fft(G * F, False)' if candidate else 'fft.ifftn(G * F)'
-    text = ("def _prepare():\n    events.append('prepare')\n    return F0, G0\n"
+    prepare = '_fft(F0, True), _fft(G0, True)' if candidate else 'fft.fftn(F0), fft.fftn(G0)'
+    text = ("def _prepare():\n    events.append('prepare')\n    return " + prepare + "\n"
         "def _min_limit(x):\n    events.append('floor')\n    mask='floor-mask'\n"
         "def filter_inverse():\n    F, G = _prepare()\n    _min_limit(F)\n    F = 1 / F\n"
         "    mask='gain-mask'\n    F[mask] = F\n    return " + tail + "\n")
     source = tmp_path / 'unchanged.py'; source.write_text(text)
     module = types.ModuleType('inert_lpi'); module.__file__ = str(source)
-    module.__dict__.update(events=events, F0=Token(), G0=Token(), _fft=real_fft, fft=types.SimpleNamespace(ifftn=real_fft))
+    module.__dict__.update(events=events, F0=Token(), G0=Token(), _fft=real_fft, fft=types.SimpleNamespace(fftn=forward_fft, ifftn=real_fft))
     exec(compile(text, str(source), 'exec'), module.__dict__)
     code = module.filter_inverse.__code__; core = types.SimpleNamespace(__name__='inert_core') if candidate else None
     def capture(name, value):
@@ -37,9 +40,9 @@ def test_observer_calls_existing_operations_once_and_restores_hooks(tmp_path, ca
     else:
         result = p.observe(module, module.filter_inverse, capture, [], core)
         assert records['IFFT'] is records['crop'] is result and set(records) == set(p.STAGES)
-    assert events == ['prepare', 'floor', 'reciprocal', 'clip', 'product', 'ifft']
+    assert events == ['prepare', 'forward', 'forward', 'floor', 'reciprocal', 'clip', 'product', 'ifft']
     assert module.filter_inverse.__code__ is code and source.read_text() == text
-    assert module._fft is real_fft and module.fft.ifftn is real_fft
+    assert module._fft is real_fft and module.fft.ifftn is real_fft and module.fft.fftn is forward_fft
     assert sys.gettrace() is None and sys.getprofile() is None
 
 
@@ -94,6 +97,6 @@ def test_intermediate_type_mismatch_is_diagnostic_not_a_new_allowance(tmp_path):
             file = role + '-' + name + '.bin'; (tmp_path / file).write_bytes(b'logical words')
             stages[role][name] = dict(dtype='<f8' if role == 'original' else '>f8', shape=[1], file=file)
     result = p.compare_stages(tmp_path, stages, object())
-    assert result['first_bitwise_divergence'] == 'F'
+    assert result['first_bitwise_divergence'] == 'F_input'
     assert all(not r['same_dtype_shape'] for r in result['stages'])
     assert result['intermediate_differences_are_diagnostics_not_new_allowances'] is True
