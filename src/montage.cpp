@@ -1,5 +1,6 @@
 #include "montage.hpp"
 #include "execution.hpp"
+#include "montage_simd.hpp"
 #include <algorithm>
 #include <cstring>
 
@@ -34,6 +35,9 @@ void montage_into(const MontageInput& input,MontageGrid grid,
     const auto s_column=input.strides[2],s_channel=input.strides[3];
     const bool channel_run=channels==1||s_channel==std::ptrdiff_t(input.itemsize);
     const bool row_run=channel_run&&(width==1||s_column==std::ptrdiff_t(pixel_bytes));
+#ifdef SKIMAGEXX_AVX2
+    const bool stride2_simd=channels==1&&input.itemsize==4&&s_column==8&&has_avx2();
+#endif
     const auto copy_bytes=images*height*width*pixel_bytes;
     partition(images*height,copy_bytes>=parallel_min?workers:1,
               [&](auto begin,auto end,auto) {
@@ -44,6 +48,9 @@ void montage_into(const MontageInput& input,MontageGrid grid,
             auto* target=destination+(out_row*output.columns+out_column)*pixel_bytes;
             const auto* from=source+std::ptrdiff_t(image)*s_image+std::ptrdiff_t(row)*s_row;
             if(row_run){std::memcpy(target,from,width*pixel_bytes);continue;}
+#ifdef SKIMAGEXX_AVX2
+            if(stride2_simd){simd::montage_stride2_words32(from,target,width);continue;}
+#endif
             for(std::size_t column=0;column<width;++column) {
                 const auto* pixel=from+std::ptrdiff_t(column)*s_column;
                 auto* to=target+column*pixel_bytes;
