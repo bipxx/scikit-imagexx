@@ -61,6 +61,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <complex>
 #include <algorithm>
+#if defined(_MSC_VER) && defined(_M_X64)
+#include <cfenv>
+#include "../../src/fft_angle.hpp"
+#endif
 #if POCKETFFT_CACHE_SIZE!=0
 #include <array>
 #include <mutex>
@@ -343,6 +347,11 @@ template<typename T> class sincos_2pibyn
       {
       constexpr auto pi = 3.141592653589793238462643383279502884197L;
       Thigh ang = Thigh(0.25L*pi/n);
+#if defined(_MSC_VER) && defined(_M_X64)
+      if constexpr (std::is_same<Thigh, double>::value)
+        if (std::fegetround() == FE_TONEAREST)
+          ang = skimagexx::detail::fft_angle_nearest(n);
+#endif
       size_t nval = (n+2)/2;
       shift = 1;
       while((size_t(1)<<shift)*(size_t(1)<<shift) < nval) ++shift;
