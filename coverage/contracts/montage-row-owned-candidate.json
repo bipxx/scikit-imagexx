@@ -1,6 +1,6 @@
 {
   "schema": "montage-row-owned-candidate-v1",
-  "status": "PROSPECTIVE_AWAITING_ROOT_SEAL_BEFORE_NATIVE_EDITS",
+  "status": "SEALED_BEFORE_NATIVE_EDITS_OR_CANDIDATE_OUTPUTS",
   "created_utc": "2026-10-28T22:57:28.395437+00:00",
   "variant_limit": 1,
   "source_base": "4f69eba77a262056459eaab1e0a39e53610e9305",
@@ -32,7 +32,7 @@
     "Every closed report, decision and tolerance"
   ],
   "algorithm": [
-    "Early return for zero output bytes before reading fill/input. Positive output with no images or zero tile rows/columns becomes fill-only, preserving null input permissions.",
+    "Early return for zero output bytes before reading fill/input. Positive output with no images or zero input tile height/width becomes fill-only, preserving null input permissions.",
     "Compute byte-pattern zero flag once, snapshot workers supplied by caller, partition complete output rows using existing partition and parallel_min. No pool or validation changes.",
     "For each output row identify padding versus a tile row once. Fill full padding/unused rows. Within occupied rows copy active tile spans directly, fill leading/intertile/trailing holes only; each output byte is written once.",
     "Reuse a local fill-span operation across full rows and holes: zero memset or exact pixel-pattern memcpy doubling, always whole pixels and disjoint initialized spans. No floating loads/arithmetic.",
@@ -122,7 +122,7 @@
     "source_products": "A exact admitted247 base; B one fresh genuine prepare-only product. Same13 dependency wheel hashes and runtime identities. No build/test on timing host.",
     "retention": "All complete raw reports and losses retained; unchanged-measure launcher journals each returned dictionary outside timers, initial/final PID/affinity/exit/identity receipts. Unreturned current-measure samples unavailable.",
     "estimators": "Balanced baseline is geometric mean of all four A pass medians. Direct=GM(A CPP)/GM(B CPP); normalized=GM(B original/CPP)/GM(A original/CPP); each candidate pass compared to the same balanced A.",
-    "deadline": "Root must seal a concrete deadline before implementation/outputs; no dispatch authorized by this prospective file."
+    "deadline": "2026-10-29T00:59:41Z"
   },
   "gate": {
     "overall_direct_GM_gt": 1.05,
@@ -136,14 +136,6 @@
     "rgb_first_each_B_pass_direct_gte": 0.97,
     "rgb_first_each_B_pass_normalized_gte": 0.97,
     "all_source_identity_parity_FP_deadline_required": true
-  },
-  "proposed_stability_rule_awaiting_seal": {
-    "null_cpp_and_normalized_ratio_interval": [
-      0.97,
-      1.0309278350515465
-    ],
-    "scope": "Each case in both fixed same-product null pairs; report reference ratios too. If a CPP or normalized null ratio falls outside this interval, classify campaign UNRESOLVED_MEASUREMENT, never loosen floors or automatically rerun.",
-    "note": "This is a prospective blocking stability rule for root review, not retroactive adjudication of any earlier result."
   },
   "logical_writes_not_hardware_traffic": [
     {
@@ -228,5 +220,23 @@
       "hole_fill_bytes": 31904
     }
   ],
-  "risk": "Physical fill/copy scheduling changes only under unchanged stable/disjoint POD invariants; new row indexing, empty axes and unused-grid handling are the concrete correctness risks checked by immutable fixture/oracle streams. Speedup is unproven until same-host full-public measurement."
+  "risk": "Physical fill/copy scheduling changes only under unchanged stable/disjoint POD invariants; new row indexing, empty axes and unused-grid handling are the concrete correctness risks checked by immutable fixture/oracle streams. Speedup is unproven until same-host full-public measurement.",
+  "sealed_by": "Root instruction2026-10-28T22:59:41Z",
+  "deadline_utc": "2026-10-29T00:59:41Z",
+  "measurement_variance_rule": {
+    "null_ratio_interval": [
+      0.97,
+      1.0309278350515465
+    ],
+    "scope": "Each of the eight non-target controls independently, separately for direct and normalized metrics. Inspect both same-product null pairs B2/B3 and A6/A7.",
+    "direct_null_ratio": "Earlier CPP median / later CPP median for each same-product pair.",
+    "normalized_null_ratio": "Later original/CPP ratio / earlier original/CPP ratio for each same-product pair.",
+    "if_either_null_ratio_outside_interval": "Require worst observed A/B gain >=0.97 for THAT control and THAT metric. Otherwise UNRESOLVED_MEASUREMENT. No blanket null-band veto or relaxed floors.",
+    "worst_direct": "min(all four A CPP pass medians) / max(all four B CPP pass medians)",
+    "worst_normalized": "min(all four B original/CPP ratios) / max(all four A original/CPP ratios)",
+    "always_publish": "All direct/reference/normalized null ratios, all A/B pass values and both worst-pair gains for every control.",
+    "invariants": "All fixed balanced3% floors, RGB-first per-pass floors, target/global/original gates remain required. Large separated gains may pass despite observed null variance; do not label that measurement stable.",
+    "variant_limit": 1,
+    "automatic_reruns": 0
+  }
 }
