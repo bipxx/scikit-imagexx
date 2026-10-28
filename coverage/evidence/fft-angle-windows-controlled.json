@@ -1,0 +1,64 @@
+{
+  "schema": "fft-angle-windows-controlled-v1",
+  "run": 40685077347,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/40685077347",
+  "candidate": "08c83244c3cbc9f93b44a051b3a56452b4d5213e",
+  "controller": "59fc973967f85cf75cda1beef27002e23c331eca",
+  "artifact": {
+    "artifact": 12814985461,
+    "bytes": 765966,
+    "sha256": "4aa46c0c60b8f05ecb3c9eda169df431d48eb059c059f60c6ef6c1ef21ef7369",
+    "downloaded_once": true
+  },
+  "review_sha256": "0c0bb59cde42ec054c39f73c946c9994d49b57f959ea5af801ab1287be4c17db",
+  "source_sha256": {
+    "src/fft.cpp": "e22bf71ddee2c78f047cc86e1f0d14611086d0ecc0be8cd46d210f555b1ebbfc",
+    "src/simd_fft_avx2.cpp": "21418a5093dead3017aa978c8f7890e92f3f75cfe86f4e47327d29fad2029377",
+    "src/fft_impl.hpp": "49f867bd8335063f347d58b2ae0e3e74c1edb1d406e40c61249f99ec000340a2",
+    "src/fft_internal.hpp": "de440d5d4864c46d76ef70f7df41e0cad957c76fb0d429ac4906981153aae6c7",
+    "src/fft_angle.hpp": "e37030f12ad3977f3f6cc94912be42f991a4e46ea62d96b894a5d6268532cb06",
+    "third_party/pocketfft/pocketfft_openmp.h": "a6c48b090d540e0b9622c591c53eb60e9f466a17a152984d1f6eac9cc40626da"
+  },
+  "decision": {
+    "keep": true,
+    "same_host": true,
+    "baseline_reproduces_all8_failures": true,
+    "causal_claim_permitted": true,
+    "input_pairs_equal": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "deadline": "2026-10-28T13:18:17.547938+00:00",
+    "child_exits": {
+      "baseline-normal": 1,
+      "baseline-scalar": 1,
+      "candidate-normal": 0,
+      "candidate-scalar": 0
+    },
+    "experimental_overlay": true,
+    "whole_product_acceptance": false
+  },
+  "checks": {
+    "targets_fixed": 8,
+    "targets": 8,
+    "lpi_per_mode": 160,
+    "butterworth_per_mode": 174,
+    "modes": [
+      "normal",
+      "scalar"
+    ],
+    "workers": [
+      1,
+      4
+    ],
+    "authenticated_target_arrays": 384
+  },
+  "observation": "All candidate forward FFT, floor/masks, reciprocal, clipped filter and product target arrays are bitwise equal to the reference. Remaining inverse FFT differences meet the unchanged frozen public tolerances.",
+  "scope": "Same-host baseline/private compiled overlay correctness experiment; full installed product qualification and performance remain separate. Baseline failures, raw arrays and all cohort outcomes are retained in the artifact."
+}
