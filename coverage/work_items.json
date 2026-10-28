@@ -32001,6 +32001,38 @@
           "u8-readonly-duplicates"
         ]
       }
+    },
+    {
+      "id": "regular-seeds-reference",
+      "kind": "contract",
+      "apis": [
+        "util.regular_seeds"
+      ],
+      "target_apis": [
+        "util.regular_seeds"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "f499ce8",
+      "owns": [
+        "tests/regular_seeds_contract.py",
+        "tests/test_regular_seeds_public.py",
+        "coverage/contracts/regular-seeds.json"
+      ],
+      "depends_on": [],
+      "state": "contracted",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "3c1b848b85b4011a7a9bd4861ac0f4b1b2770af9",
+          "manifest": {
+            "path": "build/worktrees/regular-seeds-contract-v1/build/original-v1/handoff.json",
+            "sha256": "be36f2c5ac5b9d2d17a877f7cb052916cf173e2c39421bd3a33c1c7fb94f91f7"
+          },
+          "passing_contract_checks": 106,
+          "scope": "53 once-only original calls in each minimum/modern profile;43returns/10errors each, no native calls or performance credit"
+        }
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -32378,7 +32410,6 @@
     "util.montage",
     "util.random_noise",
     "util.regular_grid",
-    "util.regular_seeds",
     "util.slice_along_axes",
     "util.view_as_blocks",
     "util.view_as_windows"
