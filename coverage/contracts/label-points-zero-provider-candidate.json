@@ -1,0 +1,94 @@
+{
+  "schema": "label-points-zero-provider-candidate-v1",
+  "baseline_revision": "910c31a609c157c28cbbe56933b8448b710af95e",
+  "baseline_run": 40724150045,
+  "baseline_artifact": 12833680393,
+  "baseline_zip_sha256": "38797cf494532e16da41f751062c57815de2d566d8ebf11f3b59be26ba4be536",
+  "baseline_scope": {
+    "product_members": 168,
+    "sdk_members": 79,
+    "image_apis": 242,
+    "metadata_apis": 3,
+    "dependencies": 13
+  },
+  "frozen_utc": "2026-10-28T16:42:47.988490+00:00",
+  "deadline_utc": "2026-10-28T18:42:47.988490+00:00",
+  "variants": 1,
+  "algorithm": "Literal np.zeros at original prelude position, existing named typed-output C overload, reusable installed ordered-assign leaf; unchanged standalone into clear+assign; no refusal restoration.",
+  "allowed_files": [
+    "python/skimagexx/_label_points.py",
+    "src/bind_label_points.cpp",
+    "src/label_points.cpp",
+    "include/skimagexx/label_points.hpp",
+    "src/label_points.hpp",
+    "tests/test_label_points_native.cpp",
+    "tests/test_label_points_pipeline.py",
+    "tests/cmake_consumer/recent_primitives_consumer.cpp",
+    "benchmarks/label_points.py",
+    "coverage/contracts/label-points-zero-provider-candidate.json"
+  ],
+  "frozen_source_sha256": {
+    "python/skimagexx/_label_points.py": "5b523d333330f17ddc6a843d26bab81ab1f34b729c1a2a703d0f553394c63978",
+    "src/bind_label_points.cpp": "c5f527ac24e0b2f33401217108dfd4158e2f54d41b69a3b0fad9af0cf634c698",
+    "src/label_points.cpp": "71f2db4351cbd69afd809cea09aa44ff1f4a52edfbdaea2d485f59cb5faca39e",
+    "include/skimagexx/label_points.hpp": "84dbbd74a3f038b753087b78accc625440eae1470e4bd08eb27dc90471816741",
+    "src/label_points.hpp": "98620ff7a6c75f0d9a9a79a2f737c59c4ec8717eacdf6a32f120b85d1d0298cc",
+    "tests/test_label_points_native.cpp": "f06890ff33e1a92cda9eb4f3fbe6e53604121759ce90724ef247973137d3c488",
+    "tests/test_label_points_pipeline.py": "8c9d2d52bfd02161b2760e92591bec2534f60b7b7b9e0ef2aff2798d0769aaeb",
+    "tests/cmake_consumer/recent_primitives_consumer.cpp": "f5f24523f9e864fb87cb09209aecd07d55172909ad0eb7d397e5f591c8d25dcf",
+    "benchmarks/label_points.py": "903c46306ed0a3e7a57d21a32e794fb9b48fe6af7ea7b685d7cf3ea66b1d0850"
+  },
+  "measurement": {
+    "transport": "Genuine whole-product preparations, fresh same-host offline runtimes, baseline/candidate/candidate/baseline",
+    "case_ids": [
+      "sparse-64x64-i64",
+      "dense-64x64-f64",
+      "sparse-1024x1024-i64",
+      "dense-1024x1024-f64",
+      "sparse-64x64x64-f32",
+      "dense-64x64x64-i64",
+      "duplicates-1024x1024-f64",
+      "strided-1024x1024-f32",
+      "strided-64x64x64-i64"
+    ],
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 504,
+    "no_local_timings": true
+  },
+  "gates": {
+    "overall_direct_gt": 1.02,
+    "overall_normalized_gt": 1.02,
+    "targets": [
+      "sparse-64x64-i64",
+      "sparse-1024x1024-i64",
+      "sparse-64x64x64-f32"
+    ],
+    "target_each_candidate_pass_direct_gt": 1.05,
+    "target_each_candidate_pass_normalized_gt": 1.05,
+    "target_each_candidate_pass_original_gt": 1.0,
+    "preserved_original_cases": [
+      "dense-64x64-f64",
+      "dense-1024x1024-f64",
+      "dense-64x64x64-i64",
+      "duplicates-1024x1024-f64",
+      "strided-1024x1024-f32",
+      "strided-64x64x64-i64"
+    ],
+    "preserved_each_candidate_pass_original_gt": 1.0,
+    "other_cases_balanced_direct_gte": 0.97,
+    "other_cases_balanced_normalized_gte": 0.97,
+    "correctness": true,
+    "source_closure": true,
+    "deadline": true
+  },
+  "correctness": [
+    "48 frozen specs/two profiles/workers1,4, no reference regeneration",
+    "six native modes, unchanged into streams, new assign controls",
+    "private and public component gates four modes",
+    "existing actual C-return/oracle checks and public signature unchanged",
+    "unchanged case contract; benchmark ONLY descriptive ownership correction with exact inverse AST proof"
+  ],
+  "reporting": "Retain all9 cases, prior sparse original losses, new original losses and every balanced/per-pass CPP regression. No full-library or per-stage causality claim."
+}
