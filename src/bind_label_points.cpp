@@ -16,6 +16,8 @@ void bind_label_points(py::module_& module) {
         if (shape.size() == 0 || shape.size() > 32 || indices.size() != shape.size()) return py::none();
         std::vector<py::ssize_t> sizes;
         std::vector<std::size_t> dimensions;
+        sizes.reserve(shape.size());
+        dimensions.reserve(shape.size());
         std::size_t count = 1;
         for (const auto value : shape) {
             if (!PyLong_CheckExact(value.ptr())) return py::none();
@@ -31,22 +33,24 @@ void bind_label_points(py::module_& module) {
                 return py::none();
             count *= size;
         }
-        std::vector<py::array> owners;
         std::vector<const std::int64_t*> axes;
         std::vector<std::ptrdiff_t> strides;
+        axes.reserve(indices.size());
+        strides.reserve(indices.size());
         std::size_t points = 0;
+        // The immutable indices tuple owns each axis/base through this C call.
         for (std::size_t axis = 0; axis < indices.size(); ++axis) {
             if (!py::isinstance<py::array>(indices[axis])) return py::none();
             auto array = py::reinterpret_borrow<py::array>(indices[axis]);
-            if (array.ndim() != 1 || array.dtype().kind() != 'i'
-                    || array.itemsize() != 8 || !array.dtype().attr("isnative").cast<bool>())
+            const auto dtype = array.dtype();
+            if (array.ndim() != 1 || dtype.kind() != 'i'
+                    || array.itemsize() != 8 || !dtype.attr("isnative").cast<bool>())
                 return py::none();
             if (!axis) points = std::size_t(array.size());
             else if (std::size_t(array.size()) != points) return py::none();
             skimagexx::bindings::check_array_storage(array);
             axes.push_back(static_cast<const std::int64_t*>(array.data()));
             strides.push_back(array.strides(0));
-            owners.push_back(std::move(array));
         }
         // Newly allocated output cannot alias prepared coordinate buffers.
         auto output = count ? py::array_t<std::uint64_t>(sizes)
