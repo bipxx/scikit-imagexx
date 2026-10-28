@@ -86,6 +86,9 @@ jobs:
               if role == 'baseline':
                   assert item['id'] == 12814229633
                   assert item['digest'] == 'sha256:b006fa18d41fdb350d0e754829b13bad9a1fe09687df84f807e4a1ff72e5ee8d'
+              else:
+                  assert item['id'] == 12817505014
+                  assert item['digest'] == 'sha256:6899333059779e988b1e1cd8bb11a12aca98766c95b36e764277f13207787de6'
               Path('results', role + '-selection.json').write_text(json.dumps(item, indent=2) + '\n')
           PY
       - uses: actions/checkout@v4
