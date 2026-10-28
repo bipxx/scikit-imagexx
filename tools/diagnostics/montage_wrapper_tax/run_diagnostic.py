@@ -4,6 +4,11 @@ from pathlib import Path
 
 def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
+def append_record(path,record):
+    # Close after each record so completed work survives a later failure.
+    with path.open('a',encoding='utf-8')as stream:
+        stream.write(json.dumps(record)+'\n')
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source-root',required=True,type=Path)
@@ -33,6 +38,9 @@ def main():
     specs=fixture_module.case_specs();assert [x['case_id']for x in specs]==contract['case_ids']
     schedule=random.Random(contract['seed']);results=[]
     policy,handler,buffer=np.geterr(),np.geterrcall(),np.getbufsize()
+    journal=args.output.with_suffix('.jsonl');journal.parent.mkdir(parents=True,exist_ok=True)
+    with journal.open('x',encoding='utf-8')as stream:
+        stream.write(json.dumps(dict(event='diagnostic_start',contract_sha256=digest(folder/'diagnostic-contract.json'),core_sha256=digest(xx._core.__file__),adapter_binary_sha256=digest(adapter.__file__),affinity=affinity,pid=os.getpid(),preflight_only=args.preflight_only))+'\n')
     for index,case in enumerate(specs):
         image,options=fixture_module.fixture(case,np,index)
         logical=image[...,None]if case['channel_axis']is None else np.moveaxis(image,case['channel_axis'],-1)
@@ -53,6 +61,7 @@ def main():
         before=logical.tobytes(),typed_fill.tobytes()
         prepared=adapter.prepare(str(Path(xx._core.__file__).resolve()),logical,typed_fill,output,*case['grid'],case['padding'])
         identity=adapter.identity(prepared)
+        append_record(journal,dict(event='case_start',case_id=case['case_id'],identity=identity,oracle_sha256=hashlib.sha256(expected).hexdigest()))
         # Both paths use the same held descriptors/pointers and write the same
         # output object. Warmup and all byte comparisons are outside timing.
         for route in (0,1):
@@ -70,15 +79,22 @@ def main():
                         start=time.perf_counter_ns();adapter.call(prepared,route,loops);elapsed=time.perf_counter_ns()-start
                         # Includes one identical Python adapter crossing per batch;
                         # no allocation/oracle/public-Python call in timed region.
-                        records.append(dict(kind=kind,round=round_id,ordinal=ordinal,label=label,route=route,loops=loops,elapsed_ns=elapsed,ns_per_call=elapsed/loops))
+                        sample=dict(kind=kind,round=round_id,ordinal=ordinal,label=label,route=route,loops=loops,elapsed_ns=elapsed,ns_per_call=elapsed/loops,validation='pending_output_check')
+                        records.append(sample)
+                        append_record(journal,dict(event='timing_batch',case_id=case['case_id'],**sample))
                         assert output.tobytes()==expected
+                        sample['validation']='passed'
+                        append_record(journal,dict(event='batch_validated',case_id=case['case_id'],kind=kind,round=round_id,ordinal=ordinal))
         assert(logical.tobytes(),typed_fill.tobytes())==before
         assert adapter.identity(prepared)==identity and xx.get_num_threads()==1
         assert np.geterr()==policy and np.geterrcall()is handler and np.getbufsize()==buffer
+        append_record(journal,dict(event='case_validated',case_id=case['case_id'],sample_count=len(records)))
         results.append(dict(case_id=case['case_id'],identity=identity,input_shape=list(logical.shape),input_strides=list(logical.strides),dtype=logical.dtype.str,fill_sha256=hashlib.sha256(before[1]).hexdigest(),output_shape=list(output.shape),oracle_sha256=hashlib.sha256(expected).hexdigest(),samples=records))
     assert digest(xx._core.__file__)==contract['genuine_core_sha256']
     report=dict(status='PREFLIGHT_ONLY_PASS'if args.preflight_only else'DIAGNOSTIC_COMPLETE',case_count=len(results),oracle_route_checks=2*len(results),warmup_calls=2*len(results)*contract['warmup_calls_per_route'],raw_sample_count=sum(len(x['samples'])for x in results),timing_calls=0 if args.preflight_only else sum(len(x['samples'])for x in results),original_algorithm_calls=0,python=sys.version,scope=contract['scope'],decision='DIAGNOSTIC_ONLY_NO_KEEP_DISCARD',affinity=affinity,unpinned=affinity is None,pid=os.getpid(),contract_sha256=digest(folder/'diagnostic-contract.json'),adapter_binary_sha256=digest(adapter.__file__),core_sha256=digest(xx._core.__file__),results=results)
     args.output.parent.mkdir(parents=True,exist_ok=True)
+    append_record(journal,dict(event='diagnostic_complete',status=report['status'],raw_sample_count=report['raw_sample_count']))
+    report['journal_sha256']=digest(journal)
     args.output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 
 if __name__=='__main__':main()

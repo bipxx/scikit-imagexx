@@ -58,12 +58,13 @@
   "timed_boundary": "One adapter call crossing, GIL release/acquire and fixed-loop prepared native calls. No output allocation, destruction, NumPy provider or oracle inside interval; identical crossing overhead for both routes. This differs deliberately from the public performance benchmark.",
   "compile_after_review": "One C++17 PIC adapter TU against retained genuine SDK81 include and retained CPython3.11 headers, linked only as Python diagnostic module with -ldl; no libskimagexx.a link or product rebuild.",
   "host": "Fresh host, no builds/tests; source/core/dependency/SDK closure authentication reused from admitted whole-product workflow; one CPU chosen from initially permitted affinity set if API available, otherwise explicitly unpinned.",
-  "interpretation": "Compare paired absolute wrapper-minus-generic ns and spread against generic_A-minus-generic_B null. Retain all values; do not infer placement cause from residual or alter closed gates.",
+  "interpretation": "Noneligible controls compare wrapper versus the identical generic operation/address and isolate wrapper-route tax under this diagnostic boundary; the eligible strided target compares SIMD versus generic algorithms and is not a wrapper-tax estimate. Compare absolute paired ns with generic/generic null pairs; retain all values and do not alter closed decisions.",
   "workload_raw_sha256": "434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68",
   "adapter_sha256": "646d1ad29e49be90d8e523cde2881e4d075a74d343d98c9d5d66ae33f3bdd962",
-  "runner_sha256": "851855530a0682d860b41d5266154b9f873a2209385088b1709e12efe8e301a7",
+  "runner_sha256": "1d0d0a8703e88650ccc4ab65c5c4d25c33e071dd20d6d3ec3af53ca2752a0076",
   "pair_order": "Each of21 rounds randomizes wrapper/generic versus generic/null pair order, then randomizes route label order within each pair; one Random2026 stream across fixed9 cases.",
   "harness_sha256": "93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd",
   "hosted_python": "3.11.17",
-  "local_component_python": "3.11.14; component preflight only, not producer/timing equivalence"
+  "local_component_python": "3.11.14; component preflight only, not producer/timing equivalence",
+  "partial_retention": "Outside all clock intervals: exclusive initial JSONL header, case-start identity+oracle hash, each completed batch immediately saved pending output validation, validation marker after successful byte check; no retry/fsync. Native failure inside an unfinished batch cannot produce a completed batch time. Preserve prior journal records."
 }
