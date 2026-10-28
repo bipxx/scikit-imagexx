@@ -1,6 +1,7 @@
 """The executable plan must reject unsafe parallel ownership and invalid DAGs."""
 from copy import deepcopy
 import hashlib
+import json
 from pathlib import Path
 
 import pytest
@@ -194,3 +195,29 @@ def test_inspection_never_mutates_the_ledger():
     before = deepcopy(doc)
     ready_packets(doc)
     assert doc == before
+
+
+def test_actual_superseded_matrix_binding_is_not_ready_and_evidence_is_unchanged():
+    root = Path(__file__).resolve().parents[1]
+    document = json.loads((root / 'coverage/work_items.json').read_text())
+    before = deepcopy(document)
+    by_id = validate(document)
+    stale = by_id['matrix-transform-general-binding']
+    assert stale['state'] == 'queued'
+    assert stale['superseded_by_active_packet'] == 'matrix-transform-profile-binding'
+    assert stale not in ready_packets(document)
+    assert document == before
+
+
+def test_superseded_packet_does_not_hide_an_ordinary_ready_packet():
+    stale = dict(packet('old', owns=['src/old.cpp']), superseded_by_active_packet='replacement')
+    document = ledger(stale, packet('replacement', 'parity_passed'),
+                      packet('next', owns=['src/next.cpp'], depends=['replacement']))
+    assert [p['id'] for p in ready_packets(document)] == ['next']
+
+
+@pytest.mark.parametrize('target', ('missing', 'old', None))
+def test_invalid_supersession_target_is_rejected(target):
+    stale = dict(packet('old', owns=['src/old.cpp']), superseded_by_active_packet=target)
+    with pytest.raises(ValueError, match='invalid supersession target'):
+        validate(ledger(stale))
