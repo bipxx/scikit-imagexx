@@ -30999,7 +30999,7 @@
           "status": "verified",
           "source_sha": "690ee2952da49c2762ab1906ed2bc3edab35c4cd",
           "manifest": {
-            "path": "build/worktrees/level-set-contract-v1/build/level-set-original-v1/handoff.json",
+            "path": "build/level-set-contract-v1-private-v1/level-set-original-v1/handoff.json",
             "sha256": "f6d59acc31c74a7e8a4a638724cd54334cf0266f704982eb95845052b5b9b867"
           },
           "passing_contract_checks": 158
@@ -31057,7 +31057,7 @@
           "status": "verified",
           "source_sha": "2e3fb7973a71eaf6e93f2d4ddc345511df8ba52b",
           "manifest": {
-            "path": "build/worktrees/level-set-native-v1/build/native-v1/handoff.json",
+            "path": "build/level-set-native-v1-private-v1/native-v1/handoff.json",
             "sha256": "88b60bc0a32a313014e607449e3618c2bdefdaa0bd213d7d89a2b4fc421f734a"
           },
           "native_contract_checks": 37874,
@@ -31084,11 +31084,11 @@
       "depends_on": [
         "level-set-native"
       ],
-      "state": "validating",
+      "state": "parity_passed",
       "contract": {
         "case_manifest": "coverage/contracts/level-set.json",
         "uncovered_cases": [
-          "Prospective work only; no implementation, parity acceptance, or speed claim."
+          "Scoped genuine minimum product passed; complete current four-profile acceptance remains pending."
         ]
       },
       "parity": {
@@ -31108,7 +31108,7 @@
         "commit": null,
         "main_commit": null
       },
-      "public_registration": false,
+      "public_registration": true,
       "dependency_requirements": {
         "level-set-native": {
           "evidence_scope": "native_private"
@@ -31116,13 +31116,21 @@
       },
       "proofs": {
         "public_native": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "0a24ac663257815c77f2d488b5a281b646c918bf",
+          "manifest": {
+            "path": "build/level-set-genuine-release-v1/final-review.json",
+            "sha256": "88b91a92364516ec9ab88e6b755ecd6b16ed7fa04d96a734cebfc831f28ee285"
+          },
+          "native_contract_checks": 648,
+          "native_pending": 0,
+          "scope": "Installed minimum product, both dispatch modes, workers1/4; no four-profile promotion"
         }
       },
       "genuine_preparation": {
         "run": 40673515438,
         "source_sha": "0a24ac663257815c77f2d488b5a281b646c918bf",
-        "status": "in_progress",
+        "status": "success",
         "scope": "Current whole installed minimum product; prior component/overlay proofs remain bounded and full supported-profile acceptance is pending"
       }
     },
@@ -31140,11 +31148,11 @@
       "depends_on": [
         "level-set-public"
       ],
-      "state": "preparing",
+      "state": "measured",
       "contract": {
         "case_manifest": "coverage/contracts/level-set.json",
         "uncovered_cases": [
-          "Harness preparation only until genuine public product proof exists; no timing or performance credit."
+          "No Windows/modern/debug timing claim or full-profile promotion."
         ]
       },
       "parity": {
@@ -31157,8 +31165,13 @@
         "required_workers": [
           1
         ],
-        "raw_results": [],
-        "regressions": []
+        "raw_results": [
+          "benchmarks/level-set-minimum-initial.json"
+        ],
+        "regressions": [],
+        "wins": 8,
+        "cases": 8,
+        "geometric_mean_speedup": 22.845615241
       },
       "merge": {
         "commit": null,
@@ -31172,12 +31185,17 @@
       },
       "proofs": {
         "isolated_performance": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "0a24ac663257815c77f2d488b5a281b646c918bf",
+          "manifest": {
+            "path": "build/level-set-genuine-release-v1/final-review.json",
+            "sha256": "88b91a92364516ec9ab88e6b755ecd6b16ed7fa04d96a734cebfc831f28ee285"
+          }
         }
       },
       "genuine_run": 40673515438,
       "source_sha": "0a24ac663257815c77f2d488b5a281b646c918bf",
-      "measurement_gate": "Isolated measurement depends on genuine preparation success; all8fixed cases/112samples/worker1, no result yet"
+      "measurement_gate": "Verified isolated whole-call original/current comparison:8fixed cases,112samples,one worker; scoped minimum host only"
     },
     {
       "id": "map-array-reference",
@@ -31194,16 +31212,22 @@
         "coverage/contracts/map-array.json"
       ],
       "depends_on": [],
-      "state": "contracting",
+      "state": "contracted",
       "contract": {
         "case_manifest": "coverage/contracts/map-array.json",
         "uncovered_cases": [
-          "Prospective50case original-first packet; native pending. Short output mappings, partial overlaps and forged/unaligned storage excluded by source safety audit."
+          "50 frozen original-first cases in two profiles. Short output mappings, partial overlaps and forged/unaligned storage excluded by source safety audit. Public integration merged; genuine current product validation pending."
         ]
       },
       "proofs": {
         "contract_reference": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "8b043466dc14fb1c3b5c003774ffbe5c3c5d4a01",
+          "manifest": {
+            "path": "build/worktrees/map-array-contract-v1/build/map-array-original-v1/handoff.json",
+            "sha256": "432444d874767e631866ac1628352d525a2d62f9a2725225b6a2a27b68861c6b"
+          },
+          "passing_contract_checks": 100
         }
       },
       "public_registration": false
