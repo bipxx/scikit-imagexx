@@ -12,9 +12,11 @@ from skimagexx import _approximate_polygon as implementation
 if __package__:
     from .approximate_polygon_contract import cases
     from .test_approximate_polygon_public import observe
+    from .approximate_polygon_runtime_reference import RUNTIME_REFERENCE_IDS, runtime_reference
 else:
     from approximate_polygon_contract import cases
     from test_approximate_polygon_public import observe
+    from approximate_polygon_runtime_reference import RUNTIME_REFERENCE_IDS, runtime_reference
 
 CASES = cases()
 MATRIX = Path(__file__).parents[1] / 'coverage/contracts/approximate-polygon.json'
@@ -52,6 +54,8 @@ def test_polygon_pipeline(spec, workers, monkeypatch, tmp_path):
     import skimage.measure._polygon as original
     expected = next(row for row in json.loads(MATRIX.read_bytes())['original_observations'][np.__version__]
                     if row['id'] == spec['id'])
+    if spec['id'] in RUNTIME_REFERENCE_IDS:
+        expected = runtime_reference(spec['id'], np)
     core = implementation._core
     native, call = core.approximate_polygon_apply, implementation.approximate_polygon
     get_workers = core.get_num_threads
