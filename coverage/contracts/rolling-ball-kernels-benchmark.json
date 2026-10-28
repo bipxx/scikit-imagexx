@@ -218,9 +218,9 @@
     }
   ],
   "case_selection": "One ball case for each requested rank 1/2/3/4/5/8, with bounded high-rank outputs; odd/even anisotropic ellipsoid requests in 2D/3D/4D. Requested shapes are not assumed to equal the odd output shapes.",
-  "independent_oracle": "Decode C-order integer coordinates independently in stdlib; reproduce the source binary64 arithmetic/reduction, clip, square roots and mask order. Final reduction details and native admission checks wait for approved ABI/source facts. Original kernels and NumPy meshgrid are forbidden in the oracle.",
+  "independent_oracle": "C-order stdlib integer coordinates and explicit binary64 source arithmetic: divide then square for ellipsoid, sequential -0 sum below eight, eight-lane tree at eight, final +0, then source clip/sqrt/multiply/mask order. Preserve both ball square roots and compare distance to radius. No original constructor or NumPy meshgrid in the oracle.",
   "timed_boundary": "Entire allocation-inclusive public constructor call, including preparation, coordinates/reductions, temporaries, fresh output and output destruction. No supplied pixels or fabricated dtype cohorts; oracle and parity/admission guards remain untimed.",
-  "provider_frontier": "Initial native descriptor and coordinate/reduction ownership is pending reviewed ABI. Do not label provider or refused calls as accepted native work.",
+  "provider_frontier": "Literal ceil/arange, shape asarray/floor/clip, scalar radius**2 promotion, dtype/axis preparation and fresh output allocation remain providers. C++ owns prepared coordinate arithmetic, exact reduction, square roots and masks. Native credit requires actual ball_kernel_apply/ellipsoid_kernel_apply C-return and native_result=True; refused/nonfinite/protocol routes remain explicit providers.",
   "original_calls": 0,
   "native_calls": 0,
   "timings": false

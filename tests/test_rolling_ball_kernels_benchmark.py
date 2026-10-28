@@ -34,11 +34,14 @@ def test_ellipsoid_requested_even_shapes_are_not_output_shapes():
             assert list(output)==[value if value%2 else value+1 for value in requested]
 
 
-def test_draft_refuses_before_constructor_or_dependency_import(monkeypatch):
-    monkeypatch.setattr(sys,'argv',['rolling_ball_kernels.py'])
-    assert h.ADMISSION_READY is False
-    with pytest.raises(SystemExit,match='No constructor calls'):
-        h.main()
+def test_native_entry_names_and_inert_module_import():
+    import ast
+    assert h.ENTRIES=={'restoration.ball_kernel':'ball_kernel_apply','restoration.ellipsoid_kernel':'ellipsoid_kernel_apply'}
+    tree=ast.parse((ROOT/'benchmarks/rolling_ball_kernels.py').read_text())
+    top_imports=[name for node in tree.body if isinstance(node,ast.Import)for name in node.names]
+    assert not any(name.name in ('numpy','scipy','skimage','skimagexx')for name in top_imports)
+    main=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='main')
+    assert any(isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='measure'for n in ast.walk(main))
 
 
 def test_source_reduction_retains_tree_and_positive_zero():

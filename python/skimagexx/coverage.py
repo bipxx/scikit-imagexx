@@ -1,10 +1,11 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
+ROLLING_KERNEL_FUNCTIONS = ('restoration.ball_kernel', 'restoration.ellipsoid_kernel')
 COORDS_MOMENTS_FUNCTIONS = ('measure.moments_coords', 'measure.moments_coords_central')
 LEVEL_SET_FUNCTIONS = ('segmentation.checkerboard_level_set', 'segmentation.disk_level_set')
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman'),
+    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
@@ -321,6 +322,7 @@ def native_dtypes(api):
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
+    if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
     # These are actual prepared coordinate dtypes, not image-pixel parity.
     if api == 'util.label_points':return ('uint8','float32','float64')
     if api == 'util.map_array':return ('uint8',)
@@ -351,6 +353,10 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'restoration.ball_kernel':
+        return ((min(image.shape)-1)/2, image.ndim), {}
+    if api == 'restoration.ellipsoid_kernel':
+        return (image.shape, 2.), {}
     if api == 'util.montage':
         # One real grayscale image batch; the dedicated benchmark owns tiling workloads.
         import numpy as np
@@ -531,6 +537,24 @@ def blur_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def rolling_kernel_default_error(api, shape, actual, expected):
+    """Exact constructor geometry, Inf mask, storage and float64 words."""
+    import numpy as np
+    radius=(min(shape)-1)/2
+    desired=((2*int(np.ceil(radius))+1,)*len(shape) if api=='restoration.ball_kernel'
+             else tuple(2*max(dimension//2,1)+1 for dimension in shape))
+    assert api in ROLLING_KERNEL_FUNCTIONS
+    for value in (actual,expected):
+        assert type(value) is np.ndarray and value.dtype==np.dtype('float64')
+        assert value.dtype.metadata is None and value.shape==desired
+    descriptor=lambda value:(value.strides,value.flags.owndata,value.flags.writeable,
+                             value.flags.c_contiguous,value.flags.f_contiguous,type(value.base))
+    assert descriptor(actual)==descriptor(expected)
+    assert np.array_equal(np.isposinf(actual),np.isposinf(expected))
+    assert actual.tobytes()==expected.tobytes()
+    return 0.
+
+
 def montage_default_error(image, actual, expected):
     """Exact single-image batch dtype, layout, fresh storage and logical words."""
     import numpy as np
@@ -665,6 +689,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api in ROLLING_KERNEL_FUNCTIONS:
+        rolling_kernel_default_error(api,image.shape,actual,expected)
+        return
     if api == 'util.montage':
         montage_default_error(image,actual,expected)
         return
@@ -723,6 +750,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api in ROLLING_KERNEL_FUNCTIONS:
+        raise ValueError('Rolling kernel constructors use exact Inf masks and words; call assert_default_parity')
     if api == 'util.montage':
         raise ValueError('Montage uses exact dtype, layout and words; call assert_default_parity')
     if api == 'util.regular_seeds':

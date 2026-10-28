@@ -62,6 +62,7 @@ void bind_label_points(pybind11::module_&);
 void bind_unique_rows(pybind11::module_&);
 void bind_regular_seeds(pybind11::module_&);
 void bind_montage(pybind11::module_&);
+void bind_rolling_ball_kernels(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -861,6 +862,7 @@ PYBIND11_MODULE(_core, m) {
     bind_unique_rows(m);
     bind_regular_seeds(m);
     bind_montage(m);
+    bind_rolling_ball_kernels(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);
