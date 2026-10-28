@@ -588,6 +588,20 @@ def test_workflow_is_four_check_only_jobs_with_retained_failures():
     assert 'include-hidden-files: true' in text
     assert 'measure:' not in text
     assert 'source_revision' in text
+    preparation=text.split('      - name: Tooling guards before preparation',1)[1].split('      - name:',1)[0]
+    command=next(line for line in preparation.splitlines() if 'python -m pytest' in line)
+    assert command.count('tests/test_subdivide_polygon_public.py::test_subdivide_polygon_prospective_manifest')==1
+    assert command.count('tests/test_subdivide_polygon_public.py::test_subdivide_polygon_saved_original_rows')==1
+    assert command.count('tests/test_subdivide_polygon_benchmark.py')==1
+    assert 'tests/test_subdivide_polygon_public.py ' not in command
+    assert 'test_subdivide_polygon_fixture_without_original' not in command
+    assert 'test_subdivide_polygon_native_public_contract' not in command
+    target='4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'
+    probe="if ! git cat-file -e '"+target+"' 2>/dev/null; then"
+    fetch='git fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305'
+    assert preparation.count(probe)==1 and preparation.count(fetch)==1
+    assert preparation.index(probe)<preparation.index(fetch)<preparation.index('python -m pytest')
+    assert "git cat-file -e '"+target+"'\n" in preparation
 
 
 def test_fresh_child_tmp_path_fixture_creates_only_owned_parent(tmp_path,monkeypatch):

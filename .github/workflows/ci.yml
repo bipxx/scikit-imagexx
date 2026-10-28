@@ -47,6 +47,10 @@ jobs:
           git fetch --no-tags --depth=1 origin 52066265b89ceecf613c4a5f7d3b73c23b44d58d
           git cat-file -e '9f834bbff351ebbb66f98271bc30c07789495efb^{commit}'
           git cat-file -e '52066265b89ceecf613c4a5f7d3b73c23b44d58d:include/skimagexx/matrix_transform.hpp'
+          if ! git cat-file -e '4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py' 2>/dev/null; then
+            git fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
+          fi
+          git cat-file -e '4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -119,6 +123,14 @@ jobs:
       OMP_WAIT_POLICY: PASSIVE
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch exact historical subdivision harness metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! git cat-file -e '4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py' 2>/dev/null; then
+            git fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
+          fi
+          git cat-file -e '4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
