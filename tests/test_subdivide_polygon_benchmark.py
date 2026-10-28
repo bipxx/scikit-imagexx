@@ -53,3 +53,40 @@ def test_runner_times_whole_registered_calls_after_ownership_and_oracle():
     assert any("calls == ['subdivide_polygon_apply']"in ast.unparse(n)and n.lineno<timer.lineno for n in checks)
     assert any('a == b == c'in ast.unparse(n)and n.lineno<timer.lineno for n in checks)
     assert any('backing_before == snapshot(owner)'in ast.unparse(n)and n.lineno>timer.lineno for n in checks)
+
+
+def test_versioned_observer_uses_returned_array_or_none_and_preserves_math():
+    import subprocess
+    from types import SimpleNamespace
+    legacy=subprocess.check_output(['git','-C',str(ROOT),'show','4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'])
+    old=ast.parse(legacy);new=ast.parse((ROOT/'benchmarks/subdivide_polygon.py').read_bytes())
+    old_functions={n.name:n for n in old.body if isinstance(n,ast.FunctionDef)}
+    new_functions={n.name:n for n in new.body if isinstance(n,ast.FunctionDef)}
+    assert old_functions.keys()==new_functions.keys()
+    for name in old_functions.keys()-{'main'}:assert ast.dump(old_functions[name])==ast.dump(new_functions[name])
+    calls=lambda tree:[ast.dump(n)for n in ast.walk(tree)if isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='measure']
+    assert calls(old)==calls(new)
+    comparison=next(n for n in ast.walk(new)if isinstance(n,ast.Compare)and "frame.f_locals.get('native_result')"in ast.unparse(n))
+    assert ast.unparse(comparison)=="frame.f_locals.get('native_result') is not None"
+    code=compile(ast.Expression(comparison),'actual-acceptance-predicate','eval')
+    class ArrayLike:
+        def __bool__(self):raise AssertionError('must not ask ndarray truth value')
+    assert eval(code,{'frame':SimpleNamespace(f_locals={'native_result':ArrayLike()})})is True
+    assert eval(code,{'frame':SimpleNamespace(f_locals={'native_result':None})})is False
+
+
+def test_external_source_root_harness_inverse_is_exact():
+    import subprocess,textwrap,re
+    workflow=(ROOT/'.github/workflows/subdivide-polygon-initial.yml').read_text()
+    scripts=[textwrap.dedent(x)for x in re.findall(r"python - <<'PY'\n(.*?)          PY\n",workflow,re.S)]
+    nodes=ast.parse(scripts[1]).body
+    edits=next(n for n in nodes if isinstance(n,ast.Assign)and isinstance(n.targets[0],ast.Name)and n.targets[0].id=='edits')
+    loop=next(n for n in nodes if isinstance(n,ast.For)and ast.unparse(n.target)=='(after, before)')
+    executed=(ROOT/'benchmarks/subdivide_polygon.py').read_bytes().replace(b'\r\n',b'\n')
+    prepared=subprocess.check_output(['git','-C',str(ROOT),'show','4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'])
+    ns={'inverse':executed}
+    exec(compile(ast.Module(body=[edits,loop],type_ignores=[]),'actual-exact-harness-inverse','exec'),ns)
+    assert ns['inverse']==prepared
+    assert b"parser.add_argument('--source-root',type=Path,default=None)"in executed
+    assert b"(root/'coverage/contracts/subdivide-polygon-benchmark.json').read_bytes()==contract_raw"in executed
+    assert b'prepared_harness_sha256=prepared_harness_sha'in executed
