@@ -31377,6 +31377,147 @@
           "strided-out-u8-f32-65536"
         ]
       }
+    },
+    {
+      "id": "label-points-reference",
+      "kind": "contract",
+      "apis": [
+        "util.label_points"
+      ],
+      "target_apis": [
+        "util.label_points"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "81c4ced",
+      "owns": [
+        "tests/label_points_contract.py",
+        "tests/test_label_points_public.py",
+        "coverage/contracts/label-points.json"
+      ],
+      "depends_on": [],
+      "state": "contracted",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "06142b77305ff039f6ff5fd737d8d0bf28a9173a",
+          "manifest": {
+            "path": "build/worktrees/label-points-contract-v1/build/label-points-original-v1/handoff.json",
+            "sha256": "3998febc5087048d70b54d1f8a1f5cad464f3ca88307a063c94af6f664aa7952"
+          },
+          "passing_contract_checks": 96
+        }
+      }
+    },
+    {
+      "id": "label-points-native",
+      "kind": "private_kernel",
+      "apis": [],
+      "target_apis": [
+        "util.label_points"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "81c4ced",
+      "owns": [
+        "src/label_points.hpp",
+        "src/label_points.cpp",
+        "src/simd_label_points_avx2.cpp",
+        "tests/test_label_points_native.cpp"
+      ],
+      "depends_on": [
+        "label-points-reference"
+      ],
+      "state": "parity_passed",
+      "dependency_requirements": {
+        "label-points-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "27089bd7c181a9f1d955616dd8ac576b3199b899",
+          "manifest": {
+            "path": "build/worktrees/label-points-native-v1/build/native-v1/handoff.json",
+            "sha256": "8dc228f8c45ead30747f3db1d5d7a37956b4a834c240a7b9597573b8beaaf429"
+          },
+          "native_contract_checks": 44138,
+          "native_pending": 0,
+          "scope": "Six native modes;62 saved success records across three axis strides plus independent controls; integer zero-fill/ordered-scatter partition only"
+        }
+      }
+    },
+    {
+      "id": "label-points-public",
+      "kind": "public_binding",
+      "apis": [],
+      "target_apis": [
+        "util.label_points"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "81c4ced",
+      "owns": [
+        "src/bind_label_points.cpp",
+        "python/skimagexx/_label_points.py",
+        "tests/test_label_points_pipeline.py"
+      ],
+      "depends_on": [
+        "label-points-native"
+      ],
+      "state": "validating",
+      "dependency_requirements": {
+        "label-points-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "pending"
+        }
+      },
+      "component_evidence": {
+        "manifest": {
+          "path": "build/worktrees/label-points-frontend-v1/build/label-component-v1/handoff.json",
+          "sha256": "cf3d8d9d24b3acf5eb52cef7a00d43389107fd8988b561c224bc3610c894d307"
+        },
+        "checks": 400,
+        "exact_frozen_observations": 384,
+        "native_acceptances": 232,
+        "scope": "Private actual-builtin component; shared public integration and genuine installed product pending"
+      }
+    },
+    {
+      "id": "label-points-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "util.label_points"
+      ],
+      "owner": "blur_integration_resume",
+      "branch": "main",
+      "base_sha": "81c4ced",
+      "owns": [
+        "benchmarks/label_points.py",
+        "tests/test_label_points_benchmark.py",
+        "coverage/contracts/label-points-benchmark.json"
+      ],
+      "depends_on": [
+        "label-points-public"
+      ],
+      "state": "preparing",
+      "dependency_requirements": {
+        "label-points-public": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "pending"
+        }
+      },
+      "measurement_gate": "Prospective harness first; genuine installed preparation then isolated one-worker original comparison; retain sparse allocation losses as well as wins"
     }
   ],
   "unassigned_inventoried_apis": [
@@ -31750,7 +31891,6 @@
     "util.img_as_ubyte",
     "util.img_as_uint",
     "util.invert",
-    "util.label_points",
     "util.lookfor",
     "util.montage",
     "util.random_noise",
