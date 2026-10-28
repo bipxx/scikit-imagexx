@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error
+from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -156,6 +156,12 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    for api in apis:
+        if api in LEVEL_SET_FUNCTIONS:
+            provider_frontiers[api] = ('Shape-only constructor: the uint8 fixture is a descriptor carrier, '
+                'not image-pixel/dtype coverage. Integer geometry uses owned C++; protocols, floating '
+                'centers and exceptional geometry use literal NumPy primitives. Exact int8 metadata '
+                'and words are checked before timing; benchmarks/level_set.py is the canonical cohort.')
     if 'measure.blur_effect' in apis:
         provider_frontiers['measure.blur_effect'] = ('Owned ordered uniform and Sobel sampling; literal conversion, clamps, cropped reductions and final reducer remain providers. Exact scalar words are checked before timing; benchmarks/blur_effect.py is the canonical rank1/2/3 and h_size cohort.')
     if 'util.compare_images' in apis:
@@ -227,7 +233,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.blur_effect':
+                    if api in LEVEL_SET_FUNCTIONS:
+                        error = level_set_default_error(call_args[0], actual, expected)
+                    elif api == 'measure.blur_effect':
                         error = blur_default_error(call_args[0], actual, expected)
                     elif api == 'util.compare_images':
                         error = compare_default_error(call_args[0], actual, expected)
@@ -266,7 +274,9 @@ def main():
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
                     if api == 'measure.mesh_surface_area' and call_args[0].dtype.char not in ('f', 'd'):
                         backend = 'primitive-provider'
-                    results.append({'api': api, 'size': case_size, 'dtype': case_dtype,
+                    results.append({'api': api, 'size': case_size, 'dtype': 'shape-only' if api in LEVEL_SET_FUNCTIONS else case_dtype,
+                                    **({'input_shape': list(call_args[0]), 'default_input_kind': 'image-shape-only',
+                                        'descriptor_carrier_dtype': case_dtype} if api in LEVEL_SET_FUNCTIONS else {}),
                                     **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     **({'size_unit': 'points'} if api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',

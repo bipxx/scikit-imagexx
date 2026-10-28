@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current236",
+  "scope": "current238",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -427,7 +427,9 @@
     "morphology.white_tophat",
     "restoration.denoise_tv_bregman",
     "restoration.denoise_tv_chambolle",
+    "segmentation.checkerboard_level_set",
     "segmentation.clear_border",
+    "segmentation.disk_level_set",
     "segmentation.relabel_sequential",
     "transform.downscale_local_mean",
     "transform.integral_image",
@@ -483,7 +485,9 @@
     "morphology.octagon": "tests/test_footprint_shapes_public.py",
     "morphology.octahedron": "tests/test_footprint_shapes_public.py",
     "morphology.star": "tests/test_footprint_shapes_public.py",
-    "util.compare_images": "tests/test_compare_images_public.py"
+    "util.compare_images": "tests/test_compare_images_public.py",
+    "segmentation.checkerboard_level_set": "tests/test_level_set_public.py",
+    "segmentation.disk_level_set": "tests/test_level_set_public.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -516,7 +520,9 @@
     "tests/test_polygon_intake.py",
     "tests/test_color_transforms.py",
     "tests/test_dtype_aliases.py",
-    "tests/test_profile_coordinates_public.py"
+    "tests/test_profile_coordinates_public.py",
+    "tests/test_level_set_public.py",
+    "tests/test_level_set_pipeline.py"
   ],
   "SDK_scope": "current25 required installed clients (23 legacy plus colocalization and footprint_shapes); source readiness is not qualification acceptance",
   "required_client_families": [

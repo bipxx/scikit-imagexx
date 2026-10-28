@@ -1,10 +1,11 @@
 """Reviewed native dispatch entry points. Partial coverage is not full API parity."""
 COORDS_MOMENTS_FUNCTIONS = ('measure.moments_coords', 'measure.moments_coords_central')
+LEVEL_SET_FUNCTIONS = ('segmentation.checkerboard_level_set', 'segmentation.disk_level_set')
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman'),
-    'segmentation': ('clear_border','relabel_sequential'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
@@ -317,6 +318,9 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    # Only a descriptor-carrier projection: level sets consume image.shape,
+    # never image pixels or an image dtype. This is not dtype coverage.
+    if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api == 'measure.moments_normalized':return ('float32','float64')
     if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential'):
         return ('uint8',)
@@ -344,6 +348,8 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api in LEVEL_SET_FUNCTIONS:
+        return (image.shape,), {}
     if api == 'util.compare_images':
         return (image, image[::-1]), {}
     # Perimeter and Euler consume binary data; other API fixtures stay unchanged.
@@ -510,6 +516,21 @@ def compare_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def level_set_default_error(shape, actual, expected):
+    """Exact int8 words/storage for shape-only constructors, no input dtype."""
+    import numpy as np
+    if hasattr(shape,'shape'):shape=shape.shape
+    assert type(actual) is type(expected)
+    for value in (actual,expected):
+        assert value.dtype==np.dtype(np.int8) and value.shape==tuple(shape)
+    if isinstance(expected,np.ndarray):
+        descriptor=lambda value:(value.strides,value.flags.owndata,value.flags.writeable,
+                                 value.flags.c_contiguous,value.flags.f_contiguous,type(value.base))
+        assert descriptor(actual)==descriptor(expected)
+    assert actual.tobytes()==expected.tobytes()
+    return 0.
+
+
 def profile_default_error(image, actual, expected):
     """Validate exact profile output metadata and words without a tolerance."""
     from ._profile_line_checks import default_error
@@ -552,6 +573,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api in LEVEL_SET_FUNCTIONS:
+        level_set_default_error(image,actual,expected)
+        return
     if api == 'util.compare_images':
         compare_default_error(image, actual, expected)
         return
@@ -592,6 +616,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api in LEVEL_SET_FUNCTIONS:
+        raise ValueError('Level sets use exact int8 metadata and words; call assert_default_parity')
     if api == 'util.compare_images':
         raise ValueError('Comparisons use exact metadata and words; call assert_default_parity')
     if api == 'measure.blur_effect':

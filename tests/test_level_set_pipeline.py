@@ -94,3 +94,19 @@ def test_level_set_binding_rejects_invalid_worker_snapshot(workers):
         core.level_set_checkerboard((2,3),2,workers)
     with pytest.raises(ValueError,match='worker snapshot'):
         core.level_set_disk((2,3),(1,1),2.,workers)
+
+
+@pytest.mark.parametrize('name',('checkerboard_level_set','disk_level_set'))
+def test_level_set_maximum_rank_preserves_mgrid_error(name,monkeypatch):
+    maximum=(np._core if hasattr(np,'_core') else np.core).multiarray.MAXDIMS
+    shape=(1,)*maximum
+    with pytest.raises(ValueError) as original:
+        np.mgrid[[slice(size) for size in shape]]
+    def reject(*args,**kwargs):raise AssertionError('native admission or whole algorithm forwarding at mgrid rank limit')
+    import skimage.segmentation as public
+    import skimage.segmentation.morphsnakes as source
+    monkeypatch.setattr(implementation._core,'level_set_checkerboard',reject)
+    monkeypatch.setattr(implementation._core,'level_set_disk',reject)
+    monkeypatch.setattr(public,name,reject);monkeypatch.setattr(source,name,reject)
+    with pytest.raises(ValueError) as actual:getattr(implementation,name)(shape)
+    assert str(actual.value)==str(original.value)

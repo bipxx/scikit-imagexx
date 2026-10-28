@@ -7,6 +7,8 @@ from . import _component_consumers as _consumers
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []
 __all__ = ['clear_border','relabel_sequential']
+from ._level_set import checkerboard_level_set, disk_level_set
+__all__ += ['checkerboard_level_set','disk_level_set']
 
 
 @wraps(_consumers.clear_border)

@@ -1,11 +1,13 @@
 """Owned integer geometry with literal NumPy paths for other source cases."""
 import numpy as np
 from . import _core
+_MAX_DIMS = (np._core if hasattr(np, '_core') else np.core).multiarray.MAXDIMS
 
 
 def checkerboard_level_set(image_shape, square_size=5):
     native_result = None
     if (type(image_shape) in (tuple, list)
+            and len(image_shape) < _MAX_DIMS
             and all(type(size) is int and size >= 0 for size in image_shape)
             and type(square_size) in (int, bool)
             and -(1 << 63) <= square_size < (1 << 63) and square_size != 0):
@@ -33,6 +35,7 @@ def disk_level_set(image_shape, *, center=None, radius=None):
         radius = min(image_shape) * 3.0 / 8.0
     native_result = None
     if (type(image_shape) in (tuple, list)
+            and len(image_shape) < _MAX_DIMS
             and all(type(size) is int and size >= 0 for size in image_shape)
             and type(center) in (tuple, list)
             and len(center) in (1, len(image_shape))
