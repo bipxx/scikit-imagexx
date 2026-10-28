@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "6d8e9bd712d2aafbadf26a8698b0334b7bc9b5093181fbdf98f6e8f68485469e",
+  "source_inventory_sha256": "043c694a58a3f8320c527945662b18d6b73baecbaf252ad5f69b794e83f53100",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 239,
-      "upstream-only": 229
+      "native-partial": 240,
+      "upstream-only": 228
     },
     "kinds": {
       "callable": 448,
@@ -18478,22 +18478,26 @@
       "api": "util.label_points",
       "kind": "callable",
       "signature": "(coords, output_shape)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "util.label_points",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Round coordinates with exact tie rule and scatter sequential point IDs",
+      "easiest_credible_path": "Audit/extend existing native implementation: Round coordinates with exact tie rule and scatter sequential point IDs",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze half-integer and coincident points against pinned upstream, including duplicate pixel overwrite, bounds, N-D output_shape and rounding; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered duplicate pixel overwrite, bounds, N-D output_shape and rounding. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "duplicate pixel overwrite, bounds, N-D output_shape and rounding",
       "parity_cases_to_freeze": "half-integer and coincident points",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -18504,10 +18508,10 @@
         "kind": "compute",
         "specific_workload": "half-integer and coincident points",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/coverage.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_label_points_public.py::test_label_points_native_public_contract",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
