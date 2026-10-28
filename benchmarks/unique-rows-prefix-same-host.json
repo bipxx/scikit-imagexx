@@ -1,0 +1,4520 @@
+{
+"baseline_first": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T14:42:55.599869+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "f309d77013b500ee7cdf1e63f3a407466bcb5451ffd93dd6a27b7c900b9ccf45",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "f309d77013b500ee7cdf1e63f3a407466bcb5451ffd93dd6a27b7c900b9ccf45",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-baseline/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "fd52afb2ba6bad3a91dcf6e0adc5ee10f0754f664321d0746c9e13bb86b0d06b",
+    "harness_sha256": "6aa6dfe18b02214236f7cc1bcab5bacc09b301a343a9370f50a01e2f1ecb9cbf",
+    "contract_sha256": "1af9719b21d980ce68a34fd93e47eb537547caa89fa4df93a7e7ed658ac42674",
+    "original_source_sha256": "72d88a45b800ed9adae7ec80e7c80aba9d1f92c3ee3d21d8731fcefc753bd751",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/unique_rows.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/1-baseline/unique-rows.json"
+    ],
+    "selected_apis": [
+      "util.unique_rows"
+    ],
+    "provider_frontier": "Nine real N-by-D row workloads frozen before generation or original/native calls; all gains and losses retained. No image carrier, full-library or prior-C++ gain claim. Whole public call: contiguous preparation/copy if needed, row view, native byte equality/sort and first indices, literal final NumPy advanced-index gather, allocations and output destruction. Generation, oracle and parity guards are outside timers. Final NumPy advanced-index gather remains an explicit dtype/layout transfer provider. Ordinary exact fixed dtype ndarrays only; protocols, objects, exceptional/empty shapes and longdouble padding are outside timing."
+  },
+  "results": [
+    {
+      "case_id": "u8-short-small-unique",
+      "kind": "unique",
+      "shape": [
+        256,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 256,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            256,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "6df5de6e6099a6513a5e184db73424eacbc2a032e9682ea7ccaf7d39f62f2449"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "6f043a0dc3d9c516a3f7d310803930d59ceeb3aa3832f50ccd8a7600cbac2705"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "reference_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "oracle_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.01458520947176685,
+      "cpp_ms": 0.015086017793594307,
+      "speedup": 0.9668031465507017,
+      "samples_ms": [
+        [
+          0.014661409836065573,
+          0.014564537340619308,
+          0.014544311475409837,
+          0.01462280510018215,
+          0.01458520947176685,
+          0.014807834244080146,
+          0.014555947176684882
+        ],
+        [
+          0.01504218149466192,
+          0.015050562277580072,
+          0.015183983985765124,
+          0.015345055160142349,
+          0.014871478647686832,
+          0.01570897153024911,
+          0.015086017793594307
+        ]
+      ],
+      "loops": [
+        549,
+        562
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-short-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e79826764fff6c9fcbe1abf2c077a14ae360d556c8fe855d2d80382edd2e78bb"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "256ac7abef5a85aa5ee40f9e8478920ae605626bb9e5ddb1a2d18335a6246138"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "reference_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "oracle_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "max_abs_error": 0.0,
+      "reference_ms": 9.120315,
+      "cpp_ms": 13.24254,
+      "speedup": 0.6887134190268634,
+      "samples_ms": [
+        [
+          9.120315,
+          9.1828415,
+          9.201807,
+          9.0537515,
+          9.0622735,
+          9.0165105,
+          9.2333655
+        ],
+        [
+          13.286918,
+          13.307575,
+          13.243052,
+          13.139294,
+          13.167167,
+          13.192605,
+          13.24254
+        ]
+      ],
+      "loops": [
+        2,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-coordinates-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 12,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "8f46177ff69276001062297d5aa583a932173a4977c4bd5ffa29dae0781bb439"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "158371f6bddc23aa23501b64119b945d69e85cc87038e579e638155319c7e883"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          3
+        ],
+        "strides": [
+          12,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "reference_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "oracle_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "max_abs_error": 0.0,
+      "reference_ms": 11.236676,
+      "cpp_ms": 13.736922,
+      "speedup": 0.8179908133714379,
+      "samples_ms": [
+        [
+          11.35634,
+          11.210477,
+          11.236676,
+          11.383305,
+          11.268121,
+          11.157546,
+          11.21141
+        ],
+        [
+          13.770007,
+          13.717844,
+          13.736922,
+          13.757082,
+          13.795365,
+          13.73547,
+          13.703128
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-coordinates-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 4096,
+      "row_width_bytes": 24,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "bb63166085ff7e5744b936cdc7b1afdb3954678bf1ab25a06481c7b88189dcb1"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          4096
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "605855fd95caed9026404fdada7c15f800605626cc4ca752d4a0a20700d9ab3a"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          4096,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "reference_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "oracle_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "max_abs_error": 0.0,
+      "reference_ms": 14.035567,
+      "cpp_ms": 13.469102,
+      "speedup": 1.0420566270862008,
+      "samples_ms": [
+        [
+          13.849982,
+          13.958104,
+          13.960073,
+          14.035567,
+          14.037018,
+          14.08503,
+          14.070482
+        ],
+        [
+          13.5335,
+          13.469102,
+          13.441036,
+          13.570795,
+          13.471122,
+          13.461173,
+          13.376527
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-wide32-common-prefix",
+      "kind": "prefix",
+      "shape": [
+        32768,
+        32
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 32768,
+      "row_width_bytes": 32,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            32
+          ],
+          "strides": [
+            32,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b00d07a448ecb1f5241ea9ae2e8e56c5840e14859c9bd554463a02038f28c263"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          32768
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "483e6db870c5ec077c5f33a69b5e2d92837c147654738dfaa495c4159ba71b7d"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          32768,
+          32
+        ],
+        "strides": [
+          32,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "reference_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "oracle_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "max_abs_error": 0.0,
+      "reference_ms": 12.931403,
+      "cpp_ms": 6.6102425,
+      "speedup": 1.956267565070419,
+      "samples_ms": [
+        [
+          13.115512,
+          12.808923,
+          12.961534,
+          12.727221,
+          13.018615,
+          12.931403,
+          12.706725
+        ],
+        [
+          6.6145835,
+          6.571449,
+          6.581341,
+          6.6102425,
+          6.61221,
+          6.65239,
+          6.592215
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-wide64-all-equal",
+      "kind": "equal",
+      "shape": [
+        16384,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 1,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            8
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "955626315785fbbc8723e5d32833bcb8b44002e0c5076b57f284d1b963e19b1d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          1,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "reference_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "oracle_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6547735769230769,
+      "cpp_ms": 1.774131888888889,
+      "speedup": 0.3690670242859742,
+      "samples_ms": [
+        [
+          0.6543498846153846,
+          0.6498404230769231,
+          0.6547735769230769,
+          0.6462488461538461,
+          0.6776568076923077,
+          0.6834640384615385,
+          0.6590268846153846
+        ],
+        [
+          1.785644,
+          1.774131888888889,
+          1.763947111111111,
+          1.779416888888889,
+          1.7570425555555556,
+          1.7480214444444444,
+          1.809661111111111
+        ]
+      ],
+      "loops": [
+        26,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-strided-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        16384,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "row-and-column-step2",
+      "unique_pool": 1024,
+      "row_width_bytes": 16,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            4
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "203133976d510f21cdc74dd2829d29032102d0f109c34d2f0b138057e1ed974b"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            8
+          ],
+          "strides": [
+            32,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e7cbb1fb00a40305e81dca5c543299353dde453b8c7f35c947c0a6e46945612c"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1024
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "f20e42997f093d7c03d87796e735b24ad962a86087af848d0ab1ef9e51126c24"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          4
+        ],
+        "strides": [
+          16,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "reference_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "oracle_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.3619288571428574,
+      "cpp_ms": 2.9365656666666666,
+      "speedup": 0.8043167172978335,
+      "samples_ms": [
+        [
+          2.3505288571428573,
+          2.3687118571428574,
+          2.3776572857142857,
+          2.379998857142857,
+          2.333836428571429,
+          2.359633,
+          2.3619288571428574
+        ],
+        [
+          2.9237318333333335,
+          2.9516976666666666,
+          2.9594446666666667,
+          2.9365656666666666,
+          2.9258273333333333,
+          2.9466898333333336,
+          2.9235746666666667
+        ]
+      ],
+      "loops": [
+        7,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-fortran-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        8192,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "unique_pool": 2048,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            8192,
+            8
+          ],
+          "strides": [
+            8,
+            65536
+          ],
+          "own": true,
+          "writeable": true,
+          "c": false,
+          "f": true,
+          "base_type": "NoneType",
+          "sha256": "386c8d6cac46ee535278a6cc408491a67b52620aad10bf68cd0666ab89949d23"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          2048
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "c90603e986fe996ca7fad5bdd26301c5589a8e0bcce8cd780234609093f620eb"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2048,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "reference_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "oracle_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.6964587,
+      "cpp_ms": 1.579970909090909,
+      "speedup": 1.073727807416477,
+      "samples_ms": [
+        [
+          1.680701,
+          1.6964587,
+          1.7034933,
+          1.6748653999999998,
+          1.7008208,
+          1.6855671,
+          1.6997657
+        ],
+        [
+          1.6189065454545455,
+          1.5747786363636365,
+          1.579970909090909,
+          1.6002670909090908,
+          1.5646618181818182,
+          1.599663181818182,
+          1.5764027272727272
+        ]
+      ],
+      "loops": [
+        10,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-readonly-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "readonly",
+      "unique_pool": 256,
+      "row_width_bytes": 4,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "own": true,
+          "writeable": false,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b40c49b42f3f5e66f5580fed2863d974db226d470b7cd365abc356764e87051d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "2b2385c6c5033ff9f11e809d9dbbaf24c4435f636c43099ac06a0f41b9ada87c"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          4
+        ],
+        "strides": [
+          4,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "reference_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "oracle_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "max_abs_error": 0.0,
+      "reference_ms": 6.4335225,
+      "cpp_ms": 11.588736,
+      "speedup": 0.5551530814059444,
+      "samples_ms": [
+        [
+          6.393153,
+          6.440494,
+          6.403964,
+          6.412482,
+          6.446247,
+          6.4335225,
+          6.471758
+        ],
+        [
+          11.691745,
+          11.566856,
+          11.587672,
+          11.617046,
+          11.597176,
+          11.588736,
+          11.546896
+        ]
+      ],
+      "loops": [
+        2,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"candidate_first": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T14:43:04.324647+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "0f581e085a3ccc0397a1bcb7d5c836864d88c63c02bdf668000d54955c4124f0",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "0f581e085a3ccc0397a1bcb7d5c836864d88c63c02bdf668000d54955c4124f0",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-candidate/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "26194ffb2ce1c009a7743c5a4b2bf3a9f244d0a4fe3e39fd0a5d8480cce38d00",
+    "harness_sha256": "6aa6dfe18b02214236f7cc1bcab5bacc09b301a343a9370f50a01e2f1ecb9cbf",
+    "contract_sha256": "1af9719b21d980ce68a34fd93e47eb537547caa89fa4df93a7e7ed658ac42674",
+    "original_source_sha256": "72d88a45b800ed9adae7ec80e7c80aba9d1f92c3ee3d21d8731fcefc753bd751",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/unique_rows.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/2-candidate/unique-rows.json"
+    ],
+    "selected_apis": [
+      "util.unique_rows"
+    ],
+    "provider_frontier": "Nine real N-by-D row workloads frozen before generation or original/native calls; all gains and losses retained. No image carrier, full-library or prior-C++ gain claim. Whole public call: contiguous preparation/copy if needed, row view, native byte equality/sort and first indices, literal final NumPy advanced-index gather, allocations and output destruction. Generation, oracle and parity guards are outside timers. Final NumPy advanced-index gather remains an explicit dtype/layout transfer provider. Ordinary exact fixed dtype ndarrays only; protocols, objects, exceptional/empty shapes and longdouble padding are outside timing."
+  },
+  "results": [
+    {
+      "case_id": "u8-short-small-unique",
+      "kind": "unique",
+      "shape": [
+        256,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 256,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            256,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "6df5de6e6099a6513a5e184db73424eacbc2a032e9682ea7ccaf7d39f62f2449"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "6f043a0dc3d9c516a3f7d310803930d59ceeb3aa3832f50ccd8a7600cbac2705"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "reference_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "oracle_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.01468759402460457,
+      "cpp_ms": 0.008706590488771466,
+      "speedup": 1.686951286332642,
+      "samples_ms": [
+        [
+          0.014695360281195079,
+          0.01468759402460457,
+          0.0147571230228471,
+          0.014619657293497365,
+          0.01464979964850615,
+          0.014599439367311071,
+          0.014800666080843584
+        ],
+        [
+          0.008706590488771466,
+          0.008703029062087185,
+          0.008932426684280053,
+          0.008683435931307795,
+          0.008693083223249671,
+          0.008755170409511228,
+          0.008835624834874505
+        ]
+      ],
+      "loops": [
+        569,
+        757
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-short-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e79826764fff6c9fcbe1abf2c077a14ae360d556c8fe855d2d80382edd2e78bb"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "256ac7abef5a85aa5ee40f9e8478920ae605626bb9e5ddb1a2d18335a6246138"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "reference_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "oracle_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "max_abs_error": 0.0,
+      "reference_ms": 9.137647,
+      "cpp_ms": 7.172087,
+      "speedup": 1.2740569097948755,
+      "samples_ms": [
+        [
+          9.0418085,
+          9.153156,
+          9.1735005,
+          9.137647,
+          9.2493145,
+          9.1057005,
+          9.0761945
+        ],
+        [
+          7.1520975,
+          7.1895225,
+          7.172087,
+          7.1315775,
+          7.10384,
+          7.195711,
+          7.187713
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-coordinates-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 12,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "8f46177ff69276001062297d5aa583a932173a4977c4bd5ffa29dae0781bb439"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "158371f6bddc23aa23501b64119b945d69e85cc87038e579e638155319c7e883"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          3
+        ],
+        "strides": [
+          12,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "reference_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "oracle_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "max_abs_error": 0.0,
+      "reference_ms": 11.222169,
+      "cpp_ms": 7.530268,
+      "speedup": 1.4902748481196153,
+      "samples_ms": [
+        [
+          11.425004,
+          11.222169,
+          11.177073,
+          10.845352,
+          11.254366,
+          11.425255,
+          11.190876
+        ],
+        [
+          7.6286715,
+          7.58046,
+          7.382532,
+          7.4930375,
+          7.4762805,
+          7.530268,
+          7.5715045
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-coordinates-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 4096,
+      "row_width_bytes": 24,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "bb63166085ff7e5744b936cdc7b1afdb3954678bf1ab25a06481c7b88189dcb1"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          4096
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "605855fd95caed9026404fdada7c15f800605626cc4ca752d4a0a20700d9ab3a"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          4096,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "reference_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "oracle_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "max_abs_error": 0.0,
+      "reference_ms": 14.041226,
+      "cpp_ms": 13.284855,
+      "speedup": 1.0569348329357,
+      "samples_ms": [
+        [
+          14.03859,
+          14.280157,
+          13.990616,
+          13.951519,
+          14.138666,
+          14.041226,
+          14.07949
+        ],
+        [
+          13.388584,
+          13.309465,
+          13.267449,
+          13.231846,
+          13.215563,
+          13.284855,
+          13.292693
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-wide32-common-prefix",
+      "kind": "prefix",
+      "shape": [
+        32768,
+        32
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 32768,
+      "row_width_bytes": 32,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            32
+          ],
+          "strides": [
+            32,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b00d07a448ecb1f5241ea9ae2e8e56c5840e14859c9bd554463a02038f28c263"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          32768
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "483e6db870c5ec077c5f33a69b5e2d92837c147654738dfaa495c4159ba71b7d"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          32768,
+          32
+        ],
+        "strides": [
+          32,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "reference_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "oracle_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "max_abs_error": 0.0,
+      "reference_ms": 13.216431,
+      "cpp_ms": 6.618817,
+      "speedup": 1.9967965574512787,
+      "samples_ms": [
+        [
+          12.958959,
+          12.90756,
+          13.282673,
+          13.29899,
+          12.806366,
+          14.367267,
+          13.216431
+        ],
+        [
+          6.572203,
+          6.567675,
+          6.681088,
+          6.5755435,
+          6.692167,
+          6.618817,
+          6.67988
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-wide64-all-equal",
+      "kind": "equal",
+      "shape": [
+        16384,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 1,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            8
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "955626315785fbbc8723e5d32833bcb8b44002e0c5076b57f284d1b963e19b1d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          1,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "reference_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "oracle_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6671948000000001,
+      "cpp_ms": 0.10356668181818182,
+      "speedup": 6.442176077160653,
+      "samples_ms": [
+        [
+          0.66206276,
+          0.67174348,
+          0.6671948000000001,
+          0.6612039599999999,
+          0.67830764,
+          0.65949068,
+          0.69100176
+        ],
+        [
+          0.10291494545454545,
+          0.10185322727272728,
+          0.10356668181818182,
+          0.10271231818181818,
+          0.10483071818181819,
+          0.10802202727272726,
+          0.10366351818181818
+        ]
+      ],
+      "loops": [
+        25,
+        110
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-strided-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        16384,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "row-and-column-step2",
+      "unique_pool": 1024,
+      "row_width_bytes": 16,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            4
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "203133976d510f21cdc74dd2829d29032102d0f109c34d2f0b138057e1ed974b"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            8
+          ],
+          "strides": [
+            32,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e7cbb1fb00a40305e81dca5c543299353dde453b8c7f35c947c0a6e46945612c"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1024
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "f20e42997f093d7c03d87796e735b24ad962a86087af848d0ab1ef9e51126c24"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          4
+        ],
+        "strides": [
+          16,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "reference_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "oracle_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.346651857142857,
+      "cpp_ms": 1.9026203333333334,
+      "speedup": 1.2333789437809666,
+      "samples_ms": [
+        [
+          2.352859714285714,
+          2.384290714285714,
+          2.3551821428571427,
+          2.3453621428571427,
+          2.3437075714285713,
+          2.346651857142857,
+          2.3460168571428572
+        ],
+        [
+          1.9058546666666667,
+          1.916215888888889,
+          1.9002953333333332,
+          1.881727,
+          1.9026203333333334,
+          1.896928,
+          1.908392
+        ]
+      ],
+      "loops": [
+        7,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-fortran-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        8192,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "unique_pool": 2048,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            8192,
+            8
+          ],
+          "strides": [
+            8,
+            65536
+          ],
+          "own": true,
+          "writeable": true,
+          "c": false,
+          "f": true,
+          "base_type": "NoneType",
+          "sha256": "386c8d6cac46ee535278a6cc408491a67b52620aad10bf68cd0666ab89949d23"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          2048
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "c90603e986fe996ca7fad5bdd26301c5589a8e0bcce8cd780234609093f620eb"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2048,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "reference_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "oracle_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.6957122,
+      "cpp_ms": 1.6015105454545455,
+      "speedup": 1.0588205021895238,
+      "samples_ms": [
+        [
+          1.6761588,
+          1.679439,
+          1.7220167,
+          1.7029679,
+          1.6749665,
+          1.6957122,
+          1.7098016999999999
+        ],
+        [
+          1.5862752727272726,
+          1.613723,
+          1.623691090909091,
+          1.5998000909090908,
+          1.6015105454545455,
+          1.6503322727272727,
+          1.5886204545454545
+        ]
+      ],
+      "loops": [
+        10,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-readonly-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "readonly",
+      "unique_pool": 256,
+      "row_width_bytes": 4,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "own": true,
+          "writeable": false,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b40c49b42f3f5e66f5580fed2863d974db226d470b7cd365abc356764e87051d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "2b2385c6c5033ff9f11e809d9dbbaf24c4435f636c43099ac06a0f41b9ada87c"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          4
+        ],
+        "strides": [
+          4,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "reference_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "oracle_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "max_abs_error": 0.0,
+      "reference_ms": 6.37169,
+      "cpp_ms": 7.46251,
+      "speedup": 0.853826661538812,
+      "samples_ms": [
+        [
+          6.419630333333333,
+          6.37169,
+          6.353579666666667,
+          6.242942333333333,
+          6.418355333333333,
+          6.394211,
+          6.359666333333333
+        ],
+        [
+          7.429209,
+          7.46251,
+          7.4761305,
+          7.470583,
+          7.457055,
+          7.488104,
+          7.4362015
+        ]
+      ],
+      "loops": [
+        3,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"candidate_second": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T14:43:13.000071+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "0f581e085a3ccc0397a1bcb7d5c836864d88c63c02bdf668000d54955c4124f0",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "0f581e085a3ccc0397a1bcb7d5c836864d88c63c02bdf668000d54955c4124f0",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-candidate/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "26194ffb2ce1c009a7743c5a4b2bf3a9f244d0a4fe3e39fd0a5d8480cce38d00",
+    "harness_sha256": "6aa6dfe18b02214236f7cc1bcab5bacc09b301a343a9370f50a01e2f1ecb9cbf",
+    "contract_sha256": "1af9719b21d980ce68a34fd93e47eb537547caa89fa4df93a7e7ed658ac42674",
+    "original_source_sha256": "72d88a45b800ed9adae7ec80e7c80aba9d1f92c3ee3d21d8731fcefc753bd751",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/unique_rows.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/3-candidate/unique-rows.json"
+    ],
+    "selected_apis": [
+      "util.unique_rows"
+    ],
+    "provider_frontier": "Nine real N-by-D row workloads frozen before generation or original/native calls; all gains and losses retained. No image carrier, full-library or prior-C++ gain claim. Whole public call: contiguous preparation/copy if needed, row view, native byte equality/sort and first indices, literal final NumPy advanced-index gather, allocations and output destruction. Generation, oracle and parity guards are outside timers. Final NumPy advanced-index gather remains an explicit dtype/layout transfer provider. Ordinary exact fixed dtype ndarrays only; protocols, objects, exceptional/empty shapes and longdouble padding are outside timing."
+  },
+  "results": [
+    {
+      "case_id": "u8-short-small-unique",
+      "kind": "unique",
+      "shape": [
+        256,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 256,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            256,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "6df5de6e6099a6513a5e184db73424eacbc2a032e9682ea7ccaf7d39f62f2449"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "6f043a0dc3d9c516a3f7d310803930d59ceeb3aa3832f50ccd8a7600cbac2705"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "reference_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "oracle_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.0147797734375,
+      "cpp_ms": 0.008686219567690558,
+      "speedup": 1.70151966828874,
+      "samples_ms": [
+        [
+          0.014883268229166666,
+          0.0147797734375,
+          0.014674192708333334,
+          0.014612325520833334,
+          0.014788182291666667,
+          0.014814036458333334,
+          0.0141880078125
+        ],
+        [
+          0.008630803185437998,
+          0.008768241183162684,
+          0.008672328782707623,
+          0.008709539249146758,
+          0.008938599544937429,
+          0.008471037542662116,
+          0.008686219567690558
+        ]
+      ],
+      "loops": [
+        384,
+        879
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-short-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e79826764fff6c9fcbe1abf2c077a14ae360d556c8fe855d2d80382edd2e78bb"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "256ac7abef5a85aa5ee40f9e8478920ae605626bb9e5ddb1a2d18335a6246138"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "reference_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "oracle_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "max_abs_error": 0.0,
+      "reference_ms": 9.1342765,
+      "cpp_ms": 7.1539175,
+      "speedup": 1.2768216155693717,
+      "samples_ms": [
+        [
+          9.1287875,
+          9.210113,
+          9.042198,
+          9.144458,
+          9.1342765,
+          9.0486265,
+          9.1543205
+        ],
+        [
+          7.482109,
+          7.141967,
+          7.123926,
+          7.1278705,
+          7.199862,
+          7.1539175,
+          7.1696845
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-coordinates-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 12,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "8f46177ff69276001062297d5aa583a932173a4977c4bd5ffa29dae0781bb439"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "158371f6bddc23aa23501b64119b945d69e85cc87038e579e638155319c7e883"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          3
+        ],
+        "strides": [
+          12,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "reference_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "oracle_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "max_abs_error": 0.0,
+      "reference_ms": 11.302356,
+      "cpp_ms": 7.556386,
+      "speedup": 1.4957356598776188,
+      "samples_ms": [
+        [
+          11.227156,
+          11.295645,
+          11.454284,
+          11.321506,
+          11.302356,
+          11.256263,
+          11.386875
+        ],
+        [
+          7.6382495,
+          7.509332,
+          7.70543,
+          7.4882525,
+          7.556386,
+          7.4622455,
+          7.601427
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-coordinates-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 4096,
+      "row_width_bytes": 24,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "bb63166085ff7e5744b936cdc7b1afdb3954678bf1ab25a06481c7b88189dcb1"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          4096
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "605855fd95caed9026404fdada7c15f800605626cc4ca752d4a0a20700d9ab3a"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          4096,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "reference_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "oracle_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "max_abs_error": 0.0,
+      "reference_ms": 14.048262,
+      "cpp_ms": 13.121515,
+      "speedup": 1.0706280486666364,
+      "samples_ms": [
+        [
+          13.844516,
+          14.088866,
+          14.0365,
+          13.998673,
+          14.107982,
+          14.048262,
+          14.079219
+        ],
+        [
+          13.18305,
+          13.078084,
+          13.121515,
+          13.12112,
+          13.066413,
+          13.139368,
+          13.280948
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-wide32-common-prefix",
+      "kind": "prefix",
+      "shape": [
+        32768,
+        32
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 32768,
+      "row_width_bytes": 32,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            32
+          ],
+          "strides": [
+            32,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b00d07a448ecb1f5241ea9ae2e8e56c5840e14859c9bd554463a02038f28c263"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          32768
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "483e6db870c5ec077c5f33a69b5e2d92837c147654738dfaa495c4159ba71b7d"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          32768,
+          32
+        ],
+        "strides": [
+          32,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "reference_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "oracle_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "max_abs_error": 0.0,
+      "reference_ms": 13.066952,
+      "cpp_ms": 6.148845,
+      "speedup": 2.1251067476900136,
+      "samples_ms": [
+        [
+          13.080611,
+          12.804518,
+          13.066952,
+          12.966884,
+          12.662433,
+          13.262935,
+          13.455447
+        ],
+        [
+          6.162652,
+          6.154941333333333,
+          6.204418,
+          6.148845,
+          6.148781,
+          6.081062666666667,
+          6.131514333333333
+        ]
+      ],
+      "loops": [
+        1,
+        3
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-wide64-all-equal",
+      "kind": "equal",
+      "shape": [
+        16384,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 1,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            8
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "955626315785fbbc8723e5d32833bcb8b44002e0c5076b57f284d1b963e19b1d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          1,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "reference_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "oracle_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6295557857142857,
+      "cpp_ms": 0.10579584536082473,
+      "speedup": 5.950666432761496,
+      "samples_ms": [
+        [
+          0.6364716071428571,
+          0.6297631071428572,
+          0.6197872142857144,
+          0.625182,
+          0.6344627142857143,
+          0.6264513214285715,
+          0.6295557857142857
+        ],
+        [
+          0.10645847422680413,
+          0.10018329896907216,
+          0.10312446391752578,
+          0.10576791752577319,
+          0.10627446391752578,
+          0.10579909278350516,
+          0.10579584536082473
+        ]
+      ],
+      "loops": [
+        28,
+        97
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-strided-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        16384,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "row-and-column-step2",
+      "unique_pool": 1024,
+      "row_width_bytes": 16,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            4
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "203133976d510f21cdc74dd2829d29032102d0f109c34d2f0b138057e1ed974b"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            8
+          ],
+          "strides": [
+            32,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e7cbb1fb00a40305e81dca5c543299353dde453b8c7f35c947c0a6e46945612c"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1024
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "f20e42997f093d7c03d87796e735b24ad962a86087af848d0ab1ef9e51126c24"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          4
+        ],
+        "strides": [
+          16,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "reference_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "oracle_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.3437181428571425,
+      "cpp_ms": 1.9012354444444446,
+      "speedup": 1.232734299008398,
+      "samples_ms": [
+        [
+          2.3370035714285713,
+          2.33888,
+          2.374774142857143,
+          2.350703,
+          2.3653815714285713,
+          2.3331817142857143,
+          2.3437181428571425
+        ],
+        [
+          1.9050164444444444,
+          1.897949111111111,
+          1.8903123333333332,
+          1.9043643333333333,
+          1.8864183333333333,
+          1.9012354444444446,
+          1.926662
+        ]
+      ],
+      "loops": [
+        7,
+        9
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-fortran-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        8192,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "unique_pool": 2048,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            8192,
+            8
+          ],
+          "strides": [
+            8,
+            65536
+          ],
+          "own": true,
+          "writeable": true,
+          "c": false,
+          "f": true,
+          "base_type": "NoneType",
+          "sha256": "386c8d6cac46ee535278a6cc408491a67b52620aad10bf68cd0666ab89949d23"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          2048
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "c90603e986fe996ca7fad5bdd26301c5589a8e0bcce8cd780234609093f620eb"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2048,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "reference_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "oracle_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.69989,
+      "cpp_ms": 1.4531594545454547,
+      "speedup": 1.169789037729326,
+      "samples_ms": [
+        [
+          1.69989,
+          1.7290928,
+          1.7080503,
+          1.7168895,
+          1.6946828999999999,
+          1.6662265,
+          1.6975183999999999
+        ],
+        [
+          1.4518622727272728,
+          1.461548181818182,
+          1.4531594545454547,
+          1.4368773636363634,
+          1.4423507272727274,
+          1.4539214545454546,
+          1.4533425454545454
+        ]
+      ],
+      "loops": [
+        10,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-readonly-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "readonly",
+      "unique_pool": 256,
+      "row_width_bytes": 4,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "own": true,
+          "writeable": false,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b40c49b42f3f5e66f5580fed2863d974db226d470b7cd365abc356764e87051d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "2b2385c6c5033ff9f11e809d9dbbaf24c4435f636c43099ac06a0f41b9ada87c"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          4
+        ],
+        "strides": [
+          4,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "reference_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "oracle_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "max_abs_error": 0.0,
+      "reference_ms": 6.419698,
+      "cpp_ms": 7.4821735,
+      "speedup": 0.85799908275316,
+      "samples_ms": [
+        [
+          6.419698,
+          6.4236685,
+          6.37974,
+          6.386182,
+          6.423769,
+          6.4468895,
+          6.3715145
+        ],
+        [
+          7.4821735,
+          7.4878095,
+          7.511788,
+          7.552676,
+          7.448002,
+          7.4577125,
+          7.4182695
+        ]
+      ],
+      "loops": [
+        2,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"baseline_second": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T14:43:21.726147+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "f309d77013b500ee7cdf1e63f3a407466bcb5451ffd93dd6a27b7c900b9ccf45",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "f309d77013b500ee7cdf1e63f3a407466bcb5451ffd93dd6a27b7c900b9ccf45",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-baseline/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "fd52afb2ba6bad3a91dcf6e0adc5ee10f0754f664321d0746c9e13bb86b0d06b",
+    "harness_sha256": "6aa6dfe18b02214236f7cc1bcab5bacc09b301a343a9370f50a01e2f1ecb9cbf",
+    "contract_sha256": "1af9719b21d980ce68a34fd93e47eb537547caa89fa4df93a7e7ed658ac42674",
+    "original_source_sha256": "72d88a45b800ed9adae7ec80e7c80aba9d1f92c3ee3d21d8731fcefc753bd751",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/unique_rows.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/4-baseline/unique-rows.json"
+    ],
+    "selected_apis": [
+      "util.unique_rows"
+    ],
+    "provider_frontier": "Nine real N-by-D row workloads frozen before generation or original/native calls; all gains and losses retained. No image carrier, full-library or prior-C++ gain claim. Whole public call: contiguous preparation/copy if needed, row view, native byte equality/sort and first indices, literal final NumPy advanced-index gather, allocations and output destruction. Generation, oracle and parity guards are outside timers. Final NumPy advanced-index gather remains an explicit dtype/layout transfer provider. Ordinary exact fixed dtype ndarrays only; protocols, objects, exceptional/empty shapes and longdouble padding are outside timing."
+  },
+  "results": [
+    {
+      "case_id": "u8-short-small-unique",
+      "kind": "unique",
+      "shape": [
+        256,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 256,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            256,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "6df5de6e6099a6513a5e184db73424eacbc2a032e9682ea7ccaf7d39f62f2449"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "6f043a0dc3d9c516a3f7d310803930d59ceeb3aa3832f50ccd8a7600cbac2705"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "reference_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "oracle_sha256": "d93bf0591d37628e5f4aabec5c1969b05014fe5a19478ba3a1c7f2799e6dc84f",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.014997426160337552,
+      "cpp_ms": 0.015119398148148147,
+      "speedup": 0.9919327484721648,
+      "samples_ms": [
+        [
+          0.015799780590717297,
+          0.014632092827004218,
+          0.01486712658227848,
+          0.015266886075949367,
+          0.015422050632911393,
+          0.014997426160337552,
+          0.01482620253164557
+        ],
+        [
+          0.015921907407407405,
+          0.015093456018518518,
+          0.015158474537037036,
+          0.015064553240740741,
+          0.015165393518518519,
+          0.015119398148148147,
+          0.01478844675925926
+        ]
+      ],
+      "loops": [
+        237,
+        432
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-short-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 2,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e79826764fff6c9fcbe1abf2c077a14ae360d556c8fe855d2d80382edd2e78bb"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "256ac7abef5a85aa5ee40f9e8478920ae605626bb9e5ddb1a2d18335a6246138"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          2
+        ],
+        "strides": [
+          2,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "reference_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "oracle_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+      "max_abs_error": 0.0,
+      "reference_ms": 9.0936635,
+      "cpp_ms": 13.146709,
+      "speedup": 0.6917064567261663,
+      "samples_ms": [
+        [
+          9.209385,
+          9.2219595,
+          9.0936635,
+          9.0094965,
+          9.042652,
+          9.137994,
+          9.0880025
+        ],
+        [
+          13.146709,
+          13.349811,
+          13.310494,
+          13.120027,
+          13.070195,
+          13.173724,
+          13.113392
+        ]
+      ],
+      "loops": [
+        2,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-coordinates-large-unique",
+      "kind": "unique",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "unique_pool": 65536,
+      "row_width_bytes": 12,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "8f46177ff69276001062297d5aa583a932173a4977c4bd5ffa29dae0781bb439"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          65536
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "158371f6bddc23aa23501b64119b945d69e85cc87038e579e638155319c7e883"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          65536,
+          3
+        ],
+        "strides": [
+          12,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "reference_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "oracle_sha256": "6834ff448194e020c8d9cbba35636d150dbac19368de296d4880b8dd3f32be4d",
+      "max_abs_error": 0.0,
+      "reference_ms": 11.010468,
+      "cpp_ms": 13.692662,
+      "speedup": 0.8041144957788339,
+      "samples_ms": [
+        [
+          11.010468,
+          10.994416,
+          10.898111,
+          10.927484,
+          11.014966,
+          11.026621,
+          11.015419
+        ],
+        [
+          13.673798,
+          13.702274,
+          13.641749,
+          13.614532,
+          13.692662,
+          13.713862,
+          13.72569
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-coordinates-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 4096,
+      "row_width_bytes": 24,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "bb63166085ff7e5744b936cdc7b1afdb3954678bf1ab25a06481c7b88189dcb1"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          4096
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "605855fd95caed9026404fdada7c15f800605626cc4ca752d4a0a20700d9ab3a"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          4096,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "reference_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "oracle_sha256": "8df665fdb7659f65750b711872cb20da278d49a97af37e823c79b1d52e871591",
+      "max_abs_error": 0.0,
+      "reference_ms": 13.865812,
+      "cpp_ms": 13.434368,
+      "speedup": 1.032114945786806,
+      "samples_ms": [
+        [
+          13.82413,
+          13.884782,
+          13.956171,
+          13.837602,
+          13.868398,
+          13.865812,
+          13.758577
+        ],
+        [
+          13.39948,
+          13.497311,
+          13.444582,
+          13.44791,
+          13.310368,
+          13.434368,
+          13.351671
+        ]
+      ],
+      "loops": [
+        1,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-wide32-common-prefix",
+      "kind": "prefix",
+      "shape": [
+        32768,
+        32
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "unique_pool": 32768,
+      "row_width_bytes": 32,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            32
+          ],
+          "strides": [
+            32,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b00d07a448ecb1f5241ea9ae2e8e56c5840e14859c9bd554463a02038f28c263"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          32768
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "483e6db870c5ec077c5f33a69b5e2d92837c147654738dfaa495c4159ba71b7d"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          32768,
+          32
+        ],
+        "strides": [
+          32,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "reference_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "oracle_sha256": "bf45fed157e3f180fcd7acd448c36526778669587a45d08f46f1e70572818240",
+      "max_abs_error": 0.0,
+      "reference_ms": 12.55786,
+      "cpp_ms": 6.606291,
+      "speedup": 1.9008941628517424,
+      "samples_ms": [
+        [
+          12.522833,
+          12.440891,
+          12.783786,
+          12.55786,
+          12.767032,
+          12.508528,
+          12.594388
+        ],
+        [
+          6.605717,
+          6.5585175,
+          6.64053,
+          6.606291,
+          6.640237,
+          6.6006305,
+          6.6358755
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-wide64-all-equal",
+      "kind": "equal",
+      "shape": [
+        16384,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "unique_pool": 1,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            8
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "955626315785fbbc8723e5d32833bcb8b44002e0c5076b57f284d1b963e19b1d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          1,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "reference_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "oracle_sha256": "01b057f99b51892cc2531ba5f6d6d5887c82dd10bdbafc4012bc0ef77ccc3a67",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.6632229259259259,
+      "cpp_ms": 1.7633698,
+      "speedup": 0.3761110834074202,
+      "samples_ms": [
+        [
+          0.7182825185185185,
+          0.6608042222222222,
+          0.6632229259259259,
+          0.6792812222222222,
+          0.652782,
+          0.6634536296296296,
+          0.6565298148148149
+        ],
+        [
+          1.7664034,
+          1.7626876999999999,
+          1.7501984,
+          1.7288181,
+          1.7672907,
+          1.7635174,
+          1.7633698
+        ]
+      ],
+      "loops": [
+        27,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f32-strided-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        16384,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "row-and-column-step2",
+      "unique_pool": 1024,
+      "row_width_bytes": 16,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            16384,
+            4
+          ],
+          "strides": [
+            64,
+            8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "203133976d510f21cdc74dd2829d29032102d0f109c34d2f0b138057e1ed974b"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            8
+          ],
+          "strides": [
+            32,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e7cbb1fb00a40305e81dca5c543299353dde453b8c7f35c947c0a6e46945612c"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          1024
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "f20e42997f093d7c03d87796e735b24ad962a86087af848d0ab1ef9e51126c24"
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          4
+        ],
+        "strides": [
+          16,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "reference_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "oracle_sha256": "b5d49c9e8c7275d284d8b5e61af6083cba454370ebc13119b60826207a01c48f",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.340479,
+      "cpp_ms": 2.943871,
+      "speedup": 0.7950344970958306,
+      "samples_ms": [
+        [
+          2.340479,
+          2.342436125,
+          2.351544375,
+          2.365418875,
+          2.334523,
+          2.328980625,
+          2.3232405
+        ],
+        [
+          2.9379886666666666,
+          2.9356201666666664,
+          2.943871,
+          2.94782,
+          2.9332441666666664,
+          2.9624066666666664,
+          2.9580881666666663
+        ]
+      ],
+      "loops": [
+        8,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "f64-fortran-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        8192,
+        8
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "unique_pool": 2048,
+      "row_width_bytes": 64,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            8192,
+            8
+          ],
+          "strides": [
+            8,
+            65536
+          ],
+          "own": true,
+          "writeable": true,
+          "c": false,
+          "f": true,
+          "base_type": "NoneType",
+          "sha256": "386c8d6cac46ee535278a6cc408491a67b52620aad10bf68cd0666ab89949d23"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          2048
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "c90603e986fe996ca7fad5bdd26301c5589a8e0bcce8cd780234609093f620eb"
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "dtype_metadata": null,
+        "shape": [
+          2048,
+          8
+        ],
+        "strides": [
+          64,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "reference_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "oracle_sha256": "9b5e83b998de5b19a883ee209760fe28c1359d8f79096aaa61d119985aef00ba",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.6608175454545455,
+      "cpp_ms": 1.5741235454545455,
+      "speedup": 1.0550744573069493,
+      "samples_ms": [
+        [
+          1.660285818181818,
+          1.6904470909090907,
+          1.673892818181818,
+          1.6535483636363635,
+          1.6567964545454545,
+          1.6608175454545455,
+          1.6659539090909092
+        ],
+        [
+          1.6254934545454547,
+          1.5741235454545455,
+          1.5682580909090909,
+          1.5759995454545455,
+          1.6014266363636365,
+          1.5654401818181818,
+          1.5622342727272727
+        ]
+      ],
+      "loops": [
+        11,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "u8-readonly-duplicates",
+      "kind": "duplicates",
+      "shape": [
+        65536,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "readonly",
+      "unique_pool": 256,
+      "row_width_bytes": 4,
+      "api": "util.unique_rows",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "|u1",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "own": true,
+          "writeable": false,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b40c49b42f3f5e66f5580fed2863d974db226d470b7cd365abc356764e87051d"
+        }
+      ],
+      "actual_C_returns": [
+        "unique_rows_apply"
+      ],
+      "native_accepted": true,
+      "native_indices": {
+        "dtype": "<i8",
+        "dtype_metadata": null,
+        "shape": [
+          256
+        ],
+        "strides": [
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": true,
+        "base_type": "NoneType",
+        "sha256": "2b2385c6c5033ff9f11e809d9dbbaf24c4435f636c43099ac06a0f41b9ada87c"
+      },
+      "output_metadata": {
+        "dtype": "|u1",
+        "dtype_metadata": null,
+        "shape": [
+          256,
+          4
+        ],
+        "strides": [
+          4,
+          1
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "reference_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "oracle_sha256": "8808405eec6fbe306fe3369f88daed79dd5613ddbb5e801f632b01d6218c5f08",
+      "max_abs_error": 0.0,
+      "reference_ms": 6.363370333333333,
+      "cpp_ms": 11.510226,
+      "speedup": 0.5528449513791766,
+      "samples_ms": [
+        [
+          6.309918333333333,
+          6.320894333333333,
+          6.348975666666667,
+          6.383456,
+          6.373286666666667,
+          7.635623333333333,
+          6.363370333333333
+        ],
+        [
+          11.472548,
+          11.456944,
+          11.610752,
+          11.510226,
+          11.871886,
+          11.609369,
+          11.435295
+        ]
+      ],
+      "loops": [
+        3,
+        1
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"comparison": {
+  "status": "KEEP",
+  "completed_utc": "2026-10-28T14:43:23.492137+00:00",
+  "deadline_utc": "2026-10-28T15:55:39.787189+00:00",
+  "completed_before_deadline": true,
+  "contract_sha256": "2c4f2ed8fbeaca18d686e896ac9f6a24f612dc341331f12974ffd4f55c0468a2",
+  "raw_samples": 504,
+  "direct_gain": 1.851910810914108,
+  "normalized_gain": 1.8603851146929353,
+  "candidate_original": 1.549239046721457,
+  "target_repeat_wins": 3,
+  "preserved_original_repeat_wins": 4,
+  "float_controls_preserved": 2,
+  "direct_losses": [],
+  "normalized_losses": [],
+  "balanced_original_losses": [
+    "u8-readonly-duplicates"
+  ],
+  "candidate_pass_original_losses": {
+    "2-candidate": [
+      "u8-readonly-duplicates"
+    ],
+    "3-candidate": [
+      "u8-readonly-duplicates"
+    ]
+  },
+  "groups": {
+    "targets": {
+      "cases": 3,
+      "direct_gain": 3.63698172382475,
+      "normalized_gain": 3.620172978502193,
+      "candidate_original": 1.8907276023357924
+    },
+    "preserved_original_wins": {
+      "cases": 4,
+      "direct_gain": 1.173238782582637,
+      "normalized_gain": 1.1865429240840848,
+      "candidate_original": 1.4257187142285546
+    },
+    "remaining_float_loss_controls": {
+      "cases": 2,
+      "direct_gain": 1.676508664176099,
+      "normalized_gain": 1.6848139926509615,
+      "candidate_original": 1.3568186587644646
+    },
+    "duplicates": {
+      "cases": 4,
+      "direct_gain": 1.2595189287524517,
+      "normalized_gain": 1.2643044725463208,
+      "candidate_original": 1.0572553897394206
+    },
+    "equal": {
+      "cases": 1,
+      "direct_gain": 16.897416646740435,
+      "normalized_gain": 16.618369505019135,
+      "candidate_original": 6.191545924589353
+    },
+    "prefix": {
+      "cases": 1,
+      "direct_gain": 1.0358588633371268,
+      "normalized_gain": 1.0682285698830083,
+      "candidate_original": 2.059952872762846
+    },
+    "unique": {
+      "cases": 3,
+      "direct_gain": 1.7983751917580195,
+      "normalized_gain": 1.8054638707586304,
+      "candidate_original": 1.4776218283116243
+    },
+    "float32": {
+      "cases": 2,
+      "direct_gain": 1.676508664176099,
+      "normalized_gain": 1.6848139926509615,
+      "candidate_original": 1.3568186587644646
+    },
+    "float64": {
+      "cases": 3,
+      "direct_gain": 2.6108590295434966,
+      "normalized_gain": 2.61215818954253,
+      "candidate_original": 1.9425363412618712
+    },
+    "uint8": {
+      "cases": 4,
+      "direct_gain": 1.5043700624218344,
+      "normalized_gain": 1.515586891032532,
+      "candidate_original": 1.397103913840008
+    }
+  },
+  "controls_scope": "All9 results retained. Three targets repeat >1.10 against baseline geometric means; four prior original wins preserved bothpasses; two remaining float loss controls balanced direct/normalized >=.97. Whole bundle only, no stage causal claim.",
+  "rows": [
+    {
+      "case_id": "u8-short-small-unique",
+      "dtype": "uint8",
+      "layout": "C",
+      "kind": "unique",
+      "direct_gain": 1.7366611902647586,
+      "normalized_gain": 1.7300538279849567,
+      "candidate_original": 1.6942198184238018,
+      "repeat_direct": true,
+      "repeat_normalized": true,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        0.015086017793594307,
+        0.015119398148148147
+      ],
+      "candidate_cpp_ms": [
+        0.008706590488771466,
+        0.008686219567690558
+      ],
+      "candidate_original_passes": [
+        1.686951286332642,
+        1.70151966828874
+      ],
+      "added_ms": -0.006406299685126413
+    },
+    {
+      "case_id": "u8-short-large-unique",
+      "dtype": "uint8",
+      "layout": "C",
+      "kind": "unique",
+      "direct_gain": 1.842041597939962,
+      "normalized_gain": 1.8479037197020063,
+      "candidate_original": 1.2754385135676334,
+      "repeat_direct": true,
+      "repeat_normalized": true,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        13.24254,
+        13.146709
+      ],
+      "candidate_cpp_ms": [
+        7.172087,
+        7.1539175
+      ],
+      "candidate_original_passes": [
+        1.2740569097948755,
+        1.2768216155693717
+      ],
+      "added_ms": -6.031541009600407
+    },
+    {
+      "case_id": "f32-coordinates-large-unique",
+      "dtype": "float32",
+      "layout": "C",
+      "kind": "unique",
+      "direct_gain": 1.8181360423104849,
+      "normalized_gain": 1.8408883573791268,
+      "candidate_original": 1.493002757315341,
+      "repeat_direct": true,
+      "repeat_normalized": true,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        13.736922,
+        13.692662
+      ],
+      "candidate_cpp_ms": [
+        7.530268,
+        7.556386
+      ],
+      "candidate_original_passes": [
+        1.4902748481196153,
+        1.4957356598776188
+      ],
+      "added_ms": -6.171458449528557
+    },
+    {
+      "case_id": "f64-coordinates-duplicates",
+      "dtype": "float64",
+      "layout": "C",
+      "kind": "duplicates",
+      "direct_gain": 1.0188436457871817,
+      "normalized_gain": 1.0257315654918788,
+      "candidate_original": 1.0637594078332495,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        13.469102,
+        13.434368
+      ],
+      "candidate_cpp_ms": [
+        13.284855,
+        13.121515
+      ],
+      "candidate_original_passes": [
+        1.0569348329357,
+        1.0706280486666364
+      ],
+      "added_ms": -0.24879138163782777
+    },
+    {
+      "case_id": "u8-wide32-common-prefix",
+      "dtype": "uint8",
+      "layout": "C",
+      "kind": "prefix",
+      "direct_gain": 1.0358588633371268,
+      "normalized_gain": 1.0682285698830083,
+      "candidate_original": 2.059952872762846,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        6.6102425,
+        6.606291
+      ],
+      "candidate_cpp_ms": [
+        6.618817,
+        6.148845
+      ],
+      "candidate_original_passes": [
+        1.9967965574512787,
+        2.1251067476900136
+      ],
+      "added_ms": -0.22876178606898012
+    },
+    {
+      "case_id": "f64-wide64-all-equal",
+      "dtype": "float64",
+      "layout": "C",
+      "kind": "equal",
+      "direct_gain": 16.89741664674043,
+      "normalized_gain": 16.61836950501914,
+      "candidate_original": 6.191545924589353,
+      "repeat_direct": true,
+      "repeat_normalized": true,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        1.774131888888889,
+        1.7633698
+      ],
+      "candidate_cpp_ms": [
+        0.10356668181818182,
+        0.10579584536082473
+      ],
+      "candidate_original_passes": [
+        6.442176077160653,
+        5.950666432761496
+      ],
+      "added_ms": -1.6640673293592672
+    },
+    {
+      "case_id": "f32-strided-duplicates",
+      "dtype": "float32",
+      "layout": "row-and-column-step2",
+      "kind": "duplicates",
+      "direct_gain": 1.5459136366306876,
+      "normalized_gain": 1.5419719389576605,
+      "candidate_original": 1.2330565792669648,
+      "repeat_direct": true,
+      "repeat_normalized": true,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        2.9365656666666666,
+        2.943871
+      ],
+      "candidate_cpp_ms": [
+        1.9026203333333334,
+        1.9012354444444446
+      ],
+      "candidate_original_passes": [
+        1.2333789437809666,
+        1.232734299008398
+      ],
+      "added_ms": -1.0382883016197715
+    },
+    {
+      "case_id": "f64-fortran-duplicates",
+      "dtype": "float64",
+      "layout": "F",
+      "kind": "duplicates",
+      "direct_gain": 1.033766407577879,
+      "normalized_gain": 1.045625797970817,
+      "candidate_original": 1.112922556328321,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        1.579970909090909,
+        1.5741235454545455
+      ],
+      "candidate_cpp_ms": [
+        1.6015105454545455,
+        1.4531594545454547
+      ],
+      "candidate_original_passes": [
+        1.0588205021895238,
+        1.169789037729326
+      ],
+      "added_ms": -0.051511760824149766
+    },
+    {
+      "case_id": "u8-readonly-duplicates",
+      "dtype": "uint8",
+      "layout": "readonly",
+      "kind": "duplicates",
+      "direct_gain": 1.5456231356131382,
+      "normalized_gain": 1.5449705892440735,
+      "candidate_original": 0.8559103296668953,
+      "repeat_direct": true,
+      "repeat_normalized": true,
+      "original_repeat": false,
+      "baseline_cpp_ms": [
+        11.588736,
+        11.510226
+      ],
+      "candidate_cpp_ms": [
+        7.46251,
+        7.4821735
+      ],
+      "candidate_original_passes": [
+        0.853826661538812,
+        0.85799908275316
+      ],
+      "added_ms": -4.077079006876012
+    }
+  ]
+}
+
+}
