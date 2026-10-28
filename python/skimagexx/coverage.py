@@ -30,7 +30,7 @@ NATIVE_FUNCTIONS = {
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
-    'util': ('invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
+    'util': ('compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
 
@@ -344,6 +344,8 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'util.compare_images':
+        return (image, image[::-1]), {}
     # Perimeter and Euler consume binary data; other API fixtures stay unchanged.
     if api in ('measure.perimeter', 'measure.euler_number'):
         binary = (image > (127 if image.dtype.kind == 'u' else .5)).astype(image.dtype)
@@ -502,6 +504,12 @@ def blur_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def compare_default_error(image, actual, expected):
+    """Validate exact default image-comparison metadata and words."""
+    from ._compare_images_checks import default_error
+    return default_error(image, actual, expected)
+
+
 def profile_default_error(image, actual, expected):
     """Validate exact profile output metadata and words without a tolerance."""
     from ._profile_line_checks import default_error
@@ -544,6 +552,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'util.compare_images':
+        compare_default_error(image, actual, expected)
+        return
     if api == 'measure.blur_effect':
         blur_default_error(image, actual, expected)
         return
@@ -581,6 +592,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'util.compare_images':
+        raise ValueError('Comparisons use exact metadata and words; call assert_default_parity')
     if api == 'measure.blur_effect':
         raise ValueError('Blur uses exact scalar words; call assert_default_parity')
     if api == 'measure.profile_line':

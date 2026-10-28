@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "9e231da15fa7f362c8773567d9d0ad1f3c5b18a76105cd6ae1bbef6e4c6e6a0a",
+  "source_inventory_sha256": "c07117c9d5c7a476a5918e894683deccb9083b15bb2af3dbef2475d09162af2c",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 235,
-      "upstream-only": 233
+      "native-partial": 236,
+      "upstream-only": 232
     },
     "kinds": {
       "callable": 448,
@@ -18040,36 +18040,40 @@
       "api": "util.compare_images",
       "kind": "callable",
       "signature": "(image0, image1, *, method='diff', n_tiles=(8, 8))",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "util.compare_images",
       "identity_alias": false,
       "family": "point",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse native difference/absolute blend and checkerboard coordinate selection",
+      "easiest_credible_path": "Audit/extend existing native implementation: Own typed subtraction/absolute value, add-then-half blend and direct checker coordinate selection; preserve conversion and metadata allocation",
       "mandatory_route_dependencies": [
         "array",
         "pointwise"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze exact small checkerboards and range extremes against pinned upstream, including method, dtype promotion, n_tiles division and channel shape; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
-      "compatibility_hazards": "method, dtype promotion, n_tiles division and channel shape",
-      "parity_cases_to_freeze": "exact small checkerboards and range extremes",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered shape/conversion/method and tile protocol order; mixed dtype; K-order layout and dtype metadata; NumPy1.24 float32 zero-dimensional blend stays a literal provider. Select optimization from retained measured regressions; do not reimplement the accepted core.",
+      "compatibility_hazards": "shape/conversion/method and tile protocol order; mixed dtype; K-order layout and dtype metadata; NumPy1.24 float32 zero-dimensional blend stays a literal provider",
+      "parity_cases_to_freeze": "exact small checkerboards, negative/zero-step and remainder tiles, scalar promotion, mixed dtype and C/F/strided/metadata storage",
       "numerical_policy": "Exact dtype, clipping, integer rounding, branch and warning behavior; predeclare dtype-aware floating tolerances, preserving any existing bitwise contract.",
       "simd_strategy": "Reuse vector lanes for independent pixels; scalar tails and exceptional branches remain equivalent.",
       "optional_global_workers_strategy": "Partition disjoint pixel ranges above a measured threshold; default one and shared global budget.",
       "benchmark_plan": {
         "status": "proposal-not-measured-results",
         "kind": "compute",
-        "specific_workload": "exact small checkerboards and range extremes",
+        "specific_workload": "exact small checkerboards, negative/zero-step and remainder tiles, scalar promotion, mixed dtype and C/F/strided/metadata storage",
         "one_worker_recipe": "Contiguous and strided uint8/float32/float64 images; tiny/512x512/2048x2048; time public allocation and conversion as well as optional kernel-only diagnostic.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/compare_images.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_compare_images_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

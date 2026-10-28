@@ -558,3 +558,7 @@ benchmarks/blur_effect.py -text
 tests/test_blur_benchmark.py -text
 
 benchmarks/blur-effect-minimum-initial.json -text
+
+python/skimagexx/_compare_images.py -text
+python/skimagexx/_compare_images_checks.py -text
+src/bind_compare_images.cpp -text
