@@ -33300,7 +33300,7 @@
       "runtime_protocol_correction": {
         "source": "67f658d2ab1822fe3fc8895b63a821cd6ce5023d",
         "component": {
-          "path": "build/worktrees/approximate-polygon-runtime-reference-v1/build/component-v1/handoff.json",
+          "path": "build/approximate-polygon-runtime-reference-v1-private-v1/component-v1/handoff.json",
           "sha256": "f851e4ca73bd7dac57348f3013d53aedb246210b733ba21e44a4faa7acd80154"
         },
         "scientific_checks": 1100,
@@ -33363,7 +33363,7 @@
       "runtime_protocol_correction": {
         "source": "67f658d2ab1822fe3fc8895b63a821cd6ce5023d",
         "component": {
-          "path": "build/worktrees/approximate-polygon-runtime-reference-v1/build/component-v1/handoff.json",
+          "path": "build/approximate-polygon-runtime-reference-v1-private-v1/component-v1/handoff.json",
           "sha256": "f851e4ca73bd7dac57348f3013d53aedb246210b733ba21e44a4faa7acd80154"
         },
         "scientific_checks": 1100,
