@@ -31912,7 +31912,7 @@
         "util.unique_rows"
       ],
       "owner": "blur_benchmark",
-      "branch": "optimize/unique-rows-prefix-v1",
+      "branch": "main",
       "base_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
       "owns": [
         "src/unique_rows.cpp",
@@ -31927,8 +31927,8 @@
           "evidence_scope": "contract_reference"
         }
       },
-      "state": "performance_pending",
-      "source_merged": false,
+      "state": "measured",
+      "source_merged": true,
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -31953,7 +31953,12 @@
           "scope": "Genuine private-candidate minimum preparation only;107public+107pipeline each normal/scalar; no timing or full-platform credit"
         },
         "isolated_performance": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "d8adeb419d72bf284f1b4a04ce20e32a9be52074",
+          "manifest": {
+            "path": "build/unique-rows-prefix-same-host-v1/final-review.json",
+            "sha256": "a49aa03b2be0996d74818a1614147ea33fc40d2c305624b86884d958b43905af"
+          }
         }
       },
       "genuine_preparation": {
@@ -31963,7 +31968,39 @@
         "status": "success",
         "timing_calls": 0
       },
-      "measurement_gate": "Private candidate only: native and genuine preparation verified, same-host performance pending; no KEEP, speed claim, or source merge recorded."
+      "measurement_gate": "Fixed same-host ABBA KEEP: all 3 repeated targets, 4 preserved original wins, 2 float controls, overall direct/normalized gates and unchanged deadline pass. All 504 samples retained. Read-only uint8 duplicates remain slower than original (balanced .855910330x), and both per-pass C++ control regressions remain published. Source merged as 9939eba; no full-profile promotion.",
+      "decision": "KEEP",
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/unique-rows-prefix-same-host.json"
+        ],
+        "cases": 9,
+        "raw_samples": 504,
+        "direct_gain": 1.851910810914108,
+        "normalized_gain": 1.8603851146929353,
+        "original_speedup": 1.549239046721457,
+        "baseline_original_speedup": 0.8327517966499994,
+        "direct_regressions": [],
+        "normalized_regressions": [],
+        "regressions": [
+          "u8-readonly-duplicates"
+        ],
+        "per_pass_cpp_regressions": [
+          "u8-wide32-common-prefix: candidate pass2 direct .998405977",
+          "f64-fortran-duplicates: candidate pass2 direct .984723155, normalized .994795214"
+        ],
+        "initial_original_losses": [
+          "u8-short-large-unique",
+          "f32-coordinates-large-unique",
+          "f64-wide64-all-equal",
+          "f32-strided-duplicates",
+          "u8-readonly-duplicates"
+        ]
+      }
     }
   ],
   "unassigned_inventoried_apis": [
