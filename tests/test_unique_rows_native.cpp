@@ -84,6 +84,20 @@ void controls(std::ofstream& stream,int workers) {
         for(std::size_t row=0;row<count;++row)data[row*width+width-1]=static_cast<unsigned char>((count-row)%17);
         exercise(data,count,width,workers,stream);
     }
+    // Many equivalent sort keys: the representative must be the minimum
+    // original index, regardless of unstable within-chunk sort ordering.
+    for(std::size_t width:{1u,4u,8u,9u,16u,17u,32u,33u}) {
+        const auto count=std::size_t(65539);
+        std::vector<unsigned char> storage(count*width+1,0xa5);auto* data=storage.data()+1;
+        for(int pattern:{0,1,2}) {
+            for(std::size_t row=0;row<count;++row) {
+                const auto key=pattern==0?(count-row)%19:
+                    pattern==1?(row/(count/4)+row%3)%11:(row*17+row/7)%23;
+                data[row*width+width-1]=static_cast<unsigned char>(key);
+            }
+            exercise(data,count,width,workers,stream);
+        }
+    }
     for(std::size_t width:{1u,33u,65u}) {
         const auto count=std::size_t(263177);
         std::vector<unsigned char> rows(count*width,0xff);
