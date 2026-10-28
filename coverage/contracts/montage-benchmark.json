@@ -1,0 +1,183 @@
+{
+  "schema": "montage-prospective-benchmark-v1",
+  "api": "util.montage",
+  "scope": "Nine real image-batch fill/tiling workloads frozen before benchmark generation or calls; retain every gain and loss. No whole-library ownership claim.",
+  "original_python_source_sha256": "c386560986cda3ba262beec03d1e08bcf55ef7219223031682289e747d526b66",
+  "decorator_source_sha256": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "raw_samples": 126,
+  "seed": 2026,
+  "max_output_elements": 1000000,
+  "cases": [
+    {
+      "case_id": "gray-small-u8",
+      "shape": [
+        4,
+        32,
+        32
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "grid": [
+        2,
+        2
+      ],
+      "padding": 0,
+      "fill": 0,
+      "channel_axis": null
+    },
+    {
+      "case_id": "gray-incomplete-u8",
+      "shape": [
+        7,
+        128,
+        128
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "grid": [
+        3,
+        3
+      ],
+      "padding": 1,
+      "fill": 17,
+      "channel_axis": null
+    },
+    {
+      "case_id": "gray-dense-f32",
+      "shape": [
+        16,
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "grid": [
+        4,
+        4
+      ],
+      "padding": 0,
+      "fill": 0,
+      "channel_axis": null
+    },
+    {
+      "case_id": "gray-large-u16",
+      "shape": [
+        16,
+        240,
+        240
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "grid": [
+        4,
+        4
+      ],
+      "padding": 0,
+      "fill": 0,
+      "channel_axis": null
+    },
+    {
+      "case_id": "gray-mean-f64",
+      "shape": [
+        7,
+        192,
+        192
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "grid": [
+        3,
+        3
+      ],
+      "padding": 2,
+      "fill": "mean",
+      "channel_axis": null
+    },
+    {
+      "case_id": "rgb-padded-u8",
+      "shape": [
+        9,
+        128,
+        128,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "grid": [
+        3,
+        3
+      ],
+      "padding": 1,
+      "fill": [
+        1,
+        2,
+        3
+      ],
+      "channel_axis": -1
+    },
+    {
+      "case_id": "rgb-first-f32",
+      "shape": [
+        9,
+        3,
+        96,
+        96
+      ],
+      "dtype": "float32",
+      "layout": "channels-first",
+      "grid": [
+        3,
+        3
+      ],
+      "padding": 2,
+      "fill": [
+        1,
+        2,
+        3
+      ],
+      "channel_axis": 1
+    },
+    {
+      "case_id": "gray-strided-reverse-f32",
+      "shape": [
+        8,
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "strided-reverse",
+      "grid": [
+        2,
+        4
+      ],
+      "padding": 1,
+      "fill": 5,
+      "channel_axis": null
+    },
+    {
+      "case_id": "gray-fortran-f64",
+      "shape": [
+        12,
+        128,
+        128
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "grid": [
+        3,
+        4
+      ],
+      "padding": 1,
+      "fill": 0,
+      "channel_axis": null
+    }
+  ],
+  "independent_oracle": "Pack converted scalar/vector fill into a bytearray and overwrite image row spans at independently computed padded grid offsets. For the one float64 mean case, input values are exact small integers; use integer sums and Fraction-to-float for the exact rounded channel fill. No montage call or NumPy tile assignment in the oracle.",
+  "timed_boundary": "Whole public montage call, including decorator/prelude, mean provider where selected, fresh allocation, typed fill, tile copying, temporary allocations and output destruction. Input fixture generation, independent oracle and admission/parity guards remain outside timing.",
+  "provider_frontier": "Axis/asarray/grid/fill conversions and mean remain explicit providers. Rescale is not included in these timed workloads. Native credit requires actual montage_apply builtin C-return and frontend native_result=True, with original whole-montage forwarding trapped.",
+  "generation": "Seeded small nonnegative integer words cast to the actual dtype; genuine grayscale/color batches. Strided case uses an oversized owner sliced/reversed without materialization; Fortran and channels-first cases preserve their advertised layout.",
+  "status": "prospective-no-generation-or-measurement"
+}
