@@ -1,0 +1,26 @@
+{
+  "schema": "label-points-prospective-benchmark-v1",
+  "api": "util.label_points",
+  "scope": "Nine bounded coordinate workloads frozen before generation or original/native calls; all gains and losses retained. No full-library or prior-C++ performance claim.",
+  "original_python_source_sha256": "8c409baaf3527b3466c8d8e973e4482182bdf172e8486c33d91eb469403742b2",
+  "seed": 2026,
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 19,
+  "raw_samples": 126,
+  "max_output_elements": 1048576,
+  "timed_boundary": "Whole public call including literal negative check, NumPy round/int conversion/transpose, owned zero-fill/scatter, output allocation and output destruction. Coordinate generation, independent oracle and parity guards are outside timing.",
+  "independent_oracle": "Decode actual logical coordinate words; Python nearest-even round for finite exact quarter-grid values; reverse point order, first unseen flat offset wins, uint64 point+1 packed into a zero bytearray. No original/native labeler or NumPy round/index assignment used.",
+  "frontier": "Ordinary finite nonnegative exact ndarray coordinates and positive integer tuple shapes. Invalid/protocol/scalar/exceptional inputs remain outside this timing matrix; sparse allocation-cost losses are included.",
+  "cases": [
+    {"case_id":"sparse-64x64-i64","kind":"sparse","output_shape":[64,64],"coordinate_dtype":"int64","point_count":16,"coordinate_layout":"C"},
+    {"case_id":"dense-64x64-f64","kind":"dense","output_shape":[64,64],"coordinate_dtype":"float64","point_count":4096,"coordinate_layout":"C"},
+    {"case_id":"sparse-1024x1024-i64","kind":"sparse","output_shape":[1024,1024],"coordinate_dtype":"int64","point_count":16,"coordinate_layout":"C"},
+    {"case_id":"dense-1024x1024-f64","kind":"dense","output_shape":[1024,1024],"coordinate_dtype":"float64","point_count":1048576,"coordinate_layout":"C"},
+    {"case_id":"sparse-64x64x64-f32","kind":"sparse","output_shape":[64,64,64],"coordinate_dtype":"float32","point_count":32,"coordinate_layout":"C"},
+    {"case_id":"dense-64x64x64-i64","kind":"dense","output_shape":[64,64,64],"coordinate_dtype":"int64","point_count":262144,"coordinate_layout":"C"},
+    {"case_id":"duplicates-1024x1024-f64","kind":"duplicates","output_shape":[1024,1024],"coordinate_dtype":"float64","point_count":65536,"coordinate_layout":"C","duplicate_pool":4096},
+    {"case_id":"strided-1024x1024-f32","kind":"strided","output_shape":[1024,1024],"coordinate_dtype":"float32","point_count":65536,"coordinate_layout":"row-step2-column-reverse"},
+    {"case_id":"strided-64x64x64-i64","kind":"strided","output_shape":[64,64,64],"coordinate_dtype":"int64","point_count":32768,"coordinate_layout":"row-step2-column-reverse"}
+  ]
+}
