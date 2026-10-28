@@ -1,0 +1,232 @@
+{
+  "schema": "montage-row-owned-candidate-v1",
+  "status": "PROSPECTIVE_AWAITING_ROOT_SEAL_BEFORE_NATIVE_EDITS",
+  "created_utc": "2026-10-28T22:57:28.395437+00:00",
+  "variant_limit": 1,
+  "source_base": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "baseline_source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "baseline_producer_run": 40778508940,
+  "baseline_artifact": 12855199919,
+  "baseline_artifact_sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96",
+  "hypothesis": "STRUCTURAL ONLY: remove fills overwritten by occupied tiles; use one disjoint output-row partition; reduce per-image-row coordinate division; reuse the exact proven stride2 4-byte SIMD operation and scalar constant4-byte memcpy. No claim that helper-stack overhead caused old measurements.",
+  "allowed_source_files": [
+    "src/montage.cpp",
+    "src/montage_simd.hpp",
+    "src/simd_montage_avx2.cpp",
+    "CMakeLists.txt",
+    "tests/test_montage_native.cpp",
+    "include/skimagexx/montage.hpp"
+  ],
+  "contract_path": "coverage/contracts/montage-row-owned-candidate.json",
+  "header_change": {
+    "kind": "COMMENT_ONLY",
+    "old": "Fill precedes independent tile-row copies; image index follows grid C order.",
+    "new": "Each worker owns complete output rows; padding and unused tiles are filled,\n// while occupied tile spans are copied directly in grid C order.",
+    "invariant": "Every struct/signature/ABI token and all stable POD, disjointness, valid span, worker and no-FP/no-allocation requirements stay exact. SDK review permits only this header comment hash delta plus the archive; compare comment-stripped header token streams."
+  },
+  "unchanged": [
+    "All Python frontend/provider/decorator order and binder",
+    "Public structs/signatures and private montage.hpp forwarding header",
+    "All original captures/factories/observers/71 native fixture records",
+    "All nine benchmark cases/input generation/warmup/calibration/rounds/timed public boundary",
+    "Every closed report, decision and tolerance"
+  ],
+  "algorithm": [
+    "Early return for zero output bytes before reading fill/input. Positive output with no images or zero tile rows/columns becomes fill-only, preserving null input permissions.",
+    "Compute byte-pattern zero flag once, snapshot workers supplied by caller, partition complete output rows using existing partition and parallel_min. No pool or validation changes.",
+    "For each output row identify padding versus a tile row once. Fill full padding/unused rows. Within occupied rows copy active tile spans directly, fill leading/intertile/trailing holes only; each output byte is written once.",
+    "Reuse a local fill-span operation across full rows and holes: zero memset or exact pixel-pattern memcpy doubling, always whole pixels and disjoint initialized spans. No floating loads/arithmetic.",
+    "Preserve signed image/row/column/channel strides and unaligned POD reads. Contiguous rows use existing memcpy. Single-channel itemsize4 strided rows use fixed4-byte memcpy; eligible columnstride+8 AVX2 rows invoke the unchanged proven operation. Other POD widths/channels use existing exact byte copy routes.",
+    "Choose SIMD eligibility outside worker/row loops; the helper has no allocation, FP, private pool, Python or runtime-dispatch work. Scalar disable and portable builds retain the constant4-byte copy route."
+  ],
+  "simd_reuse": {
+    "source": "61b4f79821b0c7fd0d224e2a12d4263d14308cb7:src/simd_montage_avx2.cpp",
+    "sha256_lf": "5368a5bffa49cc1c12f1eae2acff20fec1f2a28d272b72bef8f0d3c022132f57",
+    "change": "None in the proven 23-line function; no new kernel variant or expanded vector load span."
+  },
+  "correctness": {
+    "six_modes": [
+      "OpenMP normal",
+      "OpenMP scalar forced",
+      "portable normal",
+      "portable scalar forced",
+      "ASan+UBSan normal",
+      "ASan+UBSan scalar forced"
+    ],
+    "fixture_path": "build/montage-native-v1-private-v1/native-v1/genuine-montage.bin",
+    "fixture_sha256": "bd0a8406c5170271c6c984ae497db6dd14427fbe8894966dae5c1d9d402ec335",
+    "fixture_records": 71,
+    "old_stream_sha256": "626f69665b71262ae55e93e530f2f4cdb2cfca6e4db6cd7ab6e837eedeb6768b",
+    "old_stream_bytes": 8448,
+    "old_case_worker_combinations": 264,
+    "must_preserve": "All old assertions and initial output stream prefix byte-exact in every mode. All four rounding modes/FP flags/global workers1,4/canaries/input mutation unchanged. No original calls.",
+    "real_additive_gaps": [
+      "Single-channel itemsize4 +8 stride SIMD exact-span tails, widths around8/9/16/17/32 boundaries",
+      "Misaligned positive/negative input rows with constant4-byte copy and vector unaligned loads",
+      "Fill pattern aliases input storage while output stays disjoint",
+      "More incomplete-grid/unused-row and nonzero padding patterns at worker row boundaries above parallel threshold"
+    ],
+    "test_scope": "Only additive cases after the historical old loop so its stream prefix remains exact; reuse current independent output-centric oracle. No new mirror of the row-owned algorithm."
+  },
+  "case_ids": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "gray-mean-f64",
+    "rgb-padded-u8",
+    "rgb-first-f32",
+    "gray-strided-reverse-f32",
+    "gray-fortran-f64"
+  ],
+  "target_case": "gray-strided-reverse-f32",
+  "preserved_original_wins": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "rgb-padded-u8",
+    "rgb-first-f32"
+  ],
+  "measurement": {
+    "status": "PROSPECTIVE_ONLY_ROOT_DISPATCH_AFTER_SOURCE_AND_GENUINE_PRODUCT_REVIEW",
+    "order": [
+      "A",
+      "B",
+      "B",
+      "A",
+      "B",
+      "A",
+      "A",
+      "B"
+    ],
+    "same_product_null_pairs": [
+      [
+        2,
+        3
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "threads": 1,
+    "reference_pools": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "cases": 9,
+    "raw_samples": 1008,
+    "affinity": "One initially permitted CPU selected once for all eight independent subprocess passes before imports.",
+    "harness_sha256_lf": "93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd",
+    "workloads_sha256": "434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68",
+    "source_products": "A exact admitted247 base; B one fresh genuine prepare-only product. Same13 dependency wheel hashes and runtime identities. No build/test on timing host.",
+    "retention": "All complete raw reports and losses retained; unchanged-measure launcher journals each returned dictionary outside timers, initial/final PID/affinity/exit/identity receipts. Unreturned current-measure samples unavailable.",
+    "estimators": "Balanced baseline is geometric mean of all four A pass medians. Direct=GM(A CPP)/GM(B CPP); normalized=GM(B original/CPP)/GM(A original/CPP); each candidate pass compared to the same balanced A.",
+    "deadline": "Root must seal a concrete deadline before implementation/outputs; no dispatch authorized by this prospective file."
+  },
+  "gate": {
+    "overall_direct_GM_gt": 1.05,
+    "overall_normalized_GM_gt": 1.05,
+    "target_each_B_pass_vs_balanced_A_direct_gt": 1.5,
+    "target_each_B_pass_vs_balanced_A_normalized_gt": 1.5,
+    "target_each_B_pass_original_gt": 1.0,
+    "each_other_eight_balanced_direct_gte": 0.97,
+    "each_other_eight_balanced_normalized_gte": 0.97,
+    "each_preserved_original_win_each_B_pass_gt": 1.0,
+    "rgb_first_each_B_pass_direct_gte": 0.97,
+    "rgb_first_each_B_pass_normalized_gte": 0.97,
+    "all_source_identity_parity_FP_deadline_required": true
+  },
+  "proposed_stability_rule_awaiting_seal": {
+    "null_cpp_and_normalized_ratio_interval": [
+      0.97,
+      1.0309278350515465
+    ],
+    "scope": "Each case in both fixed same-product null pairs; report reference ratios too. If a CPP or normalized null ratio falls outside this interval, classify campaign UNRESOLVED_MEASUREMENT, never loosen floors or automatically rerun.",
+    "note": "This is a prospective blocking stability rule for root review, not retroactive adjudication of any earlier result."
+  },
+  "logical_writes_not_hardware_traffic": [
+    {
+      "case_id": "gray-small-u8",
+      "output_bytes": 4096,
+      "occupied_tile_bytes": 4096,
+      "old_logical_output_writes": 8192,
+      "new_logical_output_writes": 4096,
+      "eliminated_logical_fill_bytes": 4096,
+      "hole_fill_bytes": 0
+    },
+    {
+      "case_id": "gray-incomplete-u8",
+      "output_bytes": 150544,
+      "occupied_tile_bytes": 114688,
+      "old_logical_output_writes": 265232,
+      "new_logical_output_writes": 150544,
+      "eliminated_logical_fill_bytes": 114688,
+      "hole_fill_bytes": 35856
+    },
+    {
+      "case_id": "gray-dense-f32",
+      "output_bytes": 1048576,
+      "occupied_tile_bytes": 1048576,
+      "old_logical_output_writes": 2097152,
+      "new_logical_output_writes": 1048576,
+      "eliminated_logical_fill_bytes": 1048576,
+      "hole_fill_bytes": 0
+    },
+    {
+      "case_id": "gray-large-u16",
+      "output_bytes": 1843200,
+      "occupied_tile_bytes": 1843200,
+      "old_logical_output_writes": 3686400,
+      "new_logical_output_writes": 1843200,
+      "eliminated_logical_fill_bytes": 1843200,
+      "hole_fill_bytes": 0
+    },
+    {
+      "case_id": "gray-mean-f64",
+      "output_bytes": 2728448,
+      "occupied_tile_bytes": 2064384,
+      "old_logical_output_writes": 4792832,
+      "new_logical_output_writes": 2728448,
+      "eliminated_logical_fill_bytes": 2064384,
+      "hole_fill_bytes": 664064
+    },
+    {
+      "case_id": "rgb-padded-u8",
+      "output_bytes": 451632,
+      "occupied_tile_bytes": 442368,
+      "old_logical_output_writes": 894000,
+      "new_logical_output_writes": 451632,
+      "eliminated_logical_fill_bytes": 442368,
+      "hole_fill_bytes": 9264
+    },
+    {
+      "case_id": "rgb-first-f32",
+      "output_bytes": 1051392,
+      "occupied_tile_bytes": 995328,
+      "old_logical_output_writes": 2046720,
+      "new_logical_output_writes": 1051392,
+      "eliminated_logical_fill_bytes": 995328,
+      "hole_fill_bytes": 56064
+    },
+    {
+      "case_id": "gray-strided-reverse-f32",
+      "output_bytes": 535612,
+      "occupied_tile_bytes": 524288,
+      "old_logical_output_writes": 1059900,
+      "new_logical_output_writes": 535612,
+      "eliminated_logical_fill_bytes": 524288,
+      "hole_fill_bytes": 11324
+    },
+    {
+      "case_id": "gray-fortran-f64",
+      "output_bytes": 1604768,
+      "occupied_tile_bytes": 1572864,
+      "old_logical_output_writes": 3177632,
+      "new_logical_output_writes": 1604768,
+      "eliminated_logical_fill_bytes": 1572864,
+      "hole_fill_bytes": 31904
+    }
+  ],
+  "risk": "Physical fill/copy scheduling changes only under unchanged stable/disjoint POD invariants; new row indexing, empty axes and unused-grid handling are the concrete correctness risks checked by immutable fixture/oracle streams. Speedup is unproven until same-host full-public measurement."
+}
