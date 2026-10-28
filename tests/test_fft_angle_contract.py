@@ -45,3 +45,10 @@ def test_source_literal_is_the_unchanged_upstream_baseline():
     source=(ROOT/'third_party/pocketfft/pocketfft_hdronly.h').read_bytes()
     assert hashlib.sha256(source).hexdigest()=='50f4ddbe60432325f560c706b6f1c49f9e0949fc7f20ae6499f2299e37d9790c'
     assert ('constexpr auto pi = '+a.PI_LITERAL+'L;').encode() in source
+
+
+def test_native_reference_fixture_is_the_exact_pre_candidate_freeze():
+    import hashlib
+    raw=(ROOT/'tests/data/fft-angle-nearest.txt').read_bytes()
+    assert hashlib.sha256(raw).hexdigest()=='665976258003c03c219ea4e221a096dcd19b5ef4a360be78fd7166b3419c04f1'
+    assert len(raw.splitlines())==363
