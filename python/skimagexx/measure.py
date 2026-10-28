@@ -70,3 +70,7 @@ __all__ += ['profile_line']
 from ._blur_effect import blur_effect
 
 __all__ += ['blur_effect']
+
+from ._approximate_polygon import approximate_polygon
+
+__all__ += ['approximate_polygon']
