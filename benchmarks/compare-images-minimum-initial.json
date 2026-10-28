@@ -1,0 +1,2053 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-28T07:31:26.981910+00:00",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "reference": "0.26.0",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "source_sha256": "68139f9a18e701bb5c926d39f1df0d6e421ad75d0d5417746189c1266ff10a1f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "68139f9a18e701bb5c926d39f1df0d6e421ad75d0d5417746189c1266ff10a1f",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "9d19ea2289b51c2124fa293f6076540f2b0dde82e729c9452515211faa900030",
+    "harness_sha256": "72c627a9573cd3d6656f312a50bf38142ca939faf857bd7cff5de3d265ca8a32",
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "threads": 1,
+    "repeat": 7,
+    "raw_samples": 252,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "command": [
+      "benchmarks/compare_images.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "build/ci-compare-images.json"
+    ],
+    "selected_apis": [
+      "util.compare_images"
+    ],
+    "provider_frontier": "Eighteen positive C-order 2D cases: sides256/1024, uint8/float32/float64, diff/blend/checkerboard with default8x8 tiles. Independent seed2026/2027 uint8 images; float normalization outside timing. Public decorator, conversion, method/tile validation, storage preparation, owned arithmetic, allocation and output destruction are timed. Untimed exact converted-input storage/words and public metadata/words precede seven paired rounds. Literal img_as_float remains an explicit conversion provider. Exceptional arithmetic and unassessed scalar promotion are outside this cohort. This first original/current comparison is not a prior-C++ gain or full supported-profile qualification."
+  },
+  "results": [
+    {
+      "case_id": "side256:uint8:diff",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "uint8",
+      "method": "diff",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "|u1",
+        "|u1"
+      ],
+      "input_sha256": [
+        "d1817a95d06e99fa435f2e65c202d0653401e81a0c952edd37fb3e375e1d9cb6",
+        "656d4407cdc0d2d1b52d8f0a8e4347ce00ee857b6045ce6ee8dd45091591766e"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "d4cd082997b08ed623c622ed3337f4d794bc3b1b6867faacb123bdbc04108900"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "0d778c31992bb026575d6ebe39582066fdcbbcc956792baa572a8cb9ce2db906"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          2048,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "9d0e4a671c64421ba69e8ae8f638ae7989b4608d5e9a84a9c69684b9fa4811f9",
+      "reference_sha256": "9d0e4a671c64421ba69e8ae8f638ae7989b4608d5e9a84a9c69684b9fa4811f9",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.11516718681318681,
+      "cpp_ms": 0.18658716393442623,
+      "speedup": 0.617229955076979,
+      "samples_ms": [
+        [
+          0.11516718681318681,
+          0.11482106593406594,
+          0.11523806593406594,
+          0.11535605494505495,
+          0.11494862637362638,
+          0.11442562637362638,
+          0.11532158241758242
+        ],
+        [
+          0.18776501639344262,
+          0.18557304918032785,
+          0.18658716393442623,
+          0.1887156393442623,
+          0.19816439344262293,
+          0.18565070491803276,
+          0.18595690163934425
+        ]
+      ],
+      "loops": [
+        91,
+        61
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:uint8:blend",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "uint8",
+      "method": "blend",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "|u1",
+        "|u1"
+      ],
+      "input_sha256": [
+        "d1817a95d06e99fa435f2e65c202d0653401e81a0c952edd37fb3e375e1d9cb6",
+        "656d4407cdc0d2d1b52d8f0a8e4347ce00ee857b6045ce6ee8dd45091591766e"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "d4cd082997b08ed623c622ed3337f4d794bc3b1b6867faacb123bdbc04108900"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "0d778c31992bb026575d6ebe39582066fdcbbcc956792baa572a8cb9ce2db906"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          2048,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "12ec0e995fceeeba083cd14e0bed19f0ecdd538b6f30783ccf6bf19ce86f0093",
+      "reference_sha256": "12ec0e995fceeeba083cd14e0bed19f0ecdd538b6f30783ccf6bf19ce86f0093",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.10948562857142857,
+      "cpp_ms": 0.16551945098039217,
+      "speedup": 0.6614668422528691,
+      "samples_ms": [
+        [
+          0.11004302857142857,
+          0.10925611428571429,
+          0.10939304285714287,
+          0.10948562857142857,
+          0.11081647142857143,
+          0.10960322857142857,
+          0.10866525714285714
+        ],
+        [
+          0.16952937254901962,
+          0.16473139215686275,
+          0.16551198039215687,
+          0.1660247254901961,
+          0.16776084313725492,
+          0.16499433333333335,
+          0.16551945098039217
+        ]
+      ],
+      "loops": [
+        70,
+        51
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:uint8:checkerboard",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "uint8",
+      "method": "checkerboard",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "|u1",
+        "|u1"
+      ],
+      "input_sha256": [
+        "d1817a95d06e99fa435f2e65c202d0653401e81a0c952edd37fb3e375e1d9cb6",
+        "656d4407cdc0d2d1b52d8f0a8e4347ce00ee857b6045ce6ee8dd45091591766e"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "d4cd082997b08ed623c622ed3337f4d794bc3b1b6867faacb123bdbc04108900"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "0d778c31992bb026575d6ebe39582066fdcbbcc956792baa572a8cb9ce2db906"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          2048,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "c1d7e869388487ced1e03876baee56a572b8617788caa6edb3fc9626713d0553",
+      "reference_sha256": "c1d7e869388487ced1e03876baee56a572b8617788caa6edb3fc9626713d0553",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.2879762051282051,
+      "cpp_ms": 0.1745569649122807,
+      "speedup": 1.6497548824415023,
+      "samples_ms": [
+        [
+          0.2879741538461539,
+          0.28672305128205133,
+          0.2841458205128205,
+          0.3290951538461539,
+          0.2879762051282051,
+          0.29011223076923076,
+          0.2886883076923077
+        ],
+        [
+          0.17435070175438597,
+          0.17470315789473687,
+          0.18722038596491228,
+          0.17192442105263156,
+          0.17435666666666666,
+          0.1745569649122807,
+          0.1752810350877193
+        ]
+      ],
+      "loops": [
+        39,
+        57
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:float32:diff",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "method": "diff",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f4",
+        "<f4"
+      ],
+      "input_sha256": [
+        "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3",
+        "61d8f354f1cd9c1f2b8d945233e9ed0c85d37765cb65d4dfba1f4acd7fa35d92"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            1024,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3"
+        },
+        "img2": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            1024,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "61d8f354f1cd9c1f2b8d945233e9ed0c85d37765cb65d4dfba1f4acd7fa35d92"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          1024,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "4851ecb4ab7e091b80525e109d4b7b2873309c0c33002dde21f980337088483b",
+      "reference_sha256": "4851ecb4ab7e091b80525e109d4b7b2873309c0c33002dde21f980337088483b",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.02479413076923077,
+      "cpp_ms": 0.05139542635658915,
+      "speedup": 0.48241901131834936,
+      "samples_ms": [
+        [
+          0.024859923076923078,
+          0.024846634615384618,
+          0.02479181923076923,
+          0.024710153846153847,
+          0.024843473076923077,
+          0.02475719230769231,
+          0.02479413076923077
+        ],
+        [
+          0.052015426356589144,
+          0.05116624031007752,
+          0.05151095348837209,
+          0.051874906976744184,
+          0.051082317829457366,
+          0.051085348837209305,
+          0.05139542635658915
+        ]
+      ],
+      "loops": [
+        260,
+        129
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:float32:blend",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "method": "blend",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f4",
+        "<f4"
+      ],
+      "input_sha256": [
+        "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3",
+        "61d8f354f1cd9c1f2b8d945233e9ed0c85d37765cb65d4dfba1f4acd7fa35d92"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            1024,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3"
+        },
+        "img2": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            1024,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "61d8f354f1cd9c1f2b8d945233e9ed0c85d37765cb65d4dfba1f4acd7fa35d92"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          1024,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "94583e3fe13d254cca7a5a48067a0d096bcbecfafc8bea52fcb03ee3ab289121",
+      "reference_sha256": "94583e3fe13d254cca7a5a48067a0d096bcbecfafc8bea52fcb03ee3ab289121",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.025780618357487923,
+      "cpp_ms": 0.06709616666666667,
+      "speedup": 0.38423384879147976,
+      "samples_ms": [
+        [
+          0.025617758454106278,
+          0.025632468599033814,
+          0.02640333333333333,
+          0.025908246376811595,
+          0.025780618357487923,
+          0.02573455072463768,
+          0.025942256038647343
+        ],
+        [
+          0.06689512037037036,
+          0.06723191666666667,
+          0.06678978703703704,
+          0.06731835185185185,
+          0.06709616666666667,
+          0.06689150925925925,
+          0.06726799074074075
+        ]
+      ],
+      "loops": [
+        207,
+        108
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:float32:checkerboard",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "method": "checkerboard",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f4",
+        "<f4"
+      ],
+      "input_sha256": [
+        "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3",
+        "61d8f354f1cd9c1f2b8d945233e9ed0c85d37765cb65d4dfba1f4acd7fa35d92"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            1024,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "36bcf6dff48b8ca4d4205f4fa611d6d211112fbe0cbb7320f778588a56cf1dc3"
+        },
+        "img2": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            1024,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "61d8f354f1cd9c1f2b8d945233e9ed0c85d37765cb65d4dfba1f4acd7fa35d92"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          1024,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "eb9da71114e4ddf8848abfb36abfcd6320803d6b4482d37021554106c403419f",
+      "reference_sha256": "eb9da71114e4ddf8848abfb36abfcd6320803d6b4482d37021554106c403419f",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.19808258333333334,
+      "cpp_ms": 0.0700748487394958,
+      "speedup": 2.8267286608025093,
+      "samples_ms": [
+        [
+          0.19852606666666667,
+          0.2001435,
+          0.19792701666666665,
+          0.19800426666666665,
+          0.19808258333333334,
+          0.1975112,
+          0.1985945
+        ],
+        [
+          0.07225131092436976,
+          0.06963057142857143,
+          0.06980486554621848,
+          0.07031142857142857,
+          0.07015235294117647,
+          0.06966507563025211,
+          0.0700748487394958
+        ]
+      ],
+      "loops": [
+        60,
+        119
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:float64:diff",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float64",
+      "method": "diff",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f8",
+        "<f8"
+      ],
+      "input_sha256": [
+        "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394",
+        "0e68a0bea89a6cccb60f74302c729354dedd68d852258a76af8488bd8284efea"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "0e68a0bea89a6cccb60f74302c729354dedd68d852258a76af8488bd8284efea"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          2048,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "c18d8398e15d258781577d155579cdc26315d03eeec6f790457cb49a6494419b",
+      "reference_sha256": "c18d8398e15d258781577d155579cdc26315d03eeec6f790457cb49a6494419b",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.04339576842105263,
+      "cpp_ms": 0.09018580851063829,
+      "speedup": 0.48118178611143325,
+      "samples_ms": [
+        [
+          0.04339576842105263,
+          0.04326352105263158,
+          0.043458121052631575,
+          0.04336867894736842,
+          0.04360624736842105,
+          0.043714199999999995,
+          0.04283862105263158
+        ],
+        [
+          0.08981471276595744,
+          0.09053505319148937,
+          0.0900122340425532,
+          0.09018580851063829,
+          0.09097591489361702,
+          0.09036617021276595,
+          0.08979681914893617
+        ]
+      ],
+      "loops": [
+        190,
+        94
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:float64:blend",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float64",
+      "method": "blend",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f8",
+        "<f8"
+      ],
+      "input_sha256": [
+        "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394",
+        "0e68a0bea89a6cccb60f74302c729354dedd68d852258a76af8488bd8284efea"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "0e68a0bea89a6cccb60f74302c729354dedd68d852258a76af8488bd8284efea"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          2048,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "9cabdaf79bca9820ceddcf78793460fddf5a59e79d245a23f29b6391af1eb288",
+      "reference_sha256": "9cabdaf79bca9820ceddcf78793460fddf5a59e79d245a23f29b6391af1eb288",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.039501457142857146,
+      "cpp_ms": 0.09047366355140186,
+      "speedup": 0.43660724670903506,
+      "samples_ms": [
+        [
+          0.03937422857142857,
+          0.03924438285714286,
+          0.039934211428571426,
+          0.039501457142857146,
+          0.03956629714285714,
+          0.039104,
+          0.039956542857142854
+        ],
+        [
+          0.09131456074766355,
+          0.09047366355140186,
+          0.09107766355140187,
+          0.08927196261682244,
+          0.08905732710280374,
+          0.09050549532710281,
+          0.0897867570093458
+        ]
+      ],
+      "loops": [
+        175,
+        107
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side256:float64:checkerboard",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float64",
+      "method": "checkerboard",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f8",
+        "<f8"
+      ],
+      "input_sha256": [
+        "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394",
+        "0e68a0bea89a6cccb60f74302c729354dedd68d852258a76af8488bd8284efea"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "fd81dab2a85b2f84edd133fb593257289a1c04930260f3ae03f59353495c6394"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "0e68a0bea89a6cccb60f74302c729354dedd68d852258a76af8488bd8284efea"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          256,
+          256
+        ],
+        "strides": [
+          2048,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "7d6f6b1cab90e1638bdaaadf4765fd29e428fa7ffb3c94503c1e67f4950e99c6",
+      "reference_sha256": "7d6f6b1cab90e1638bdaaadf4765fd29e428fa7ffb3c94503c1e67f4950e99c6",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.21246069491525424,
+      "cpp_ms": 0.10587798666666666,
+      "speedup": 2.006655978302077,
+      "samples_ms": [
+        [
+          0.212467,
+          0.2124004406779661,
+          0.21227705084745763,
+          0.22643762711864407,
+          0.21246069491525424,
+          0.21353296610169492,
+          0.2123629322033898
+        ],
+        [
+          0.10592125333333333,
+          0.10604770666666667,
+          0.10558354666666667,
+          0.10598468,
+          0.10475816,
+          0.10557646666666666,
+          0.10587798666666666
+        ]
+      ],
+      "loops": [
+        59,
+        75
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:uint8:diff",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "uint8",
+      "method": "diff",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "|u1",
+        "|u1"
+      ],
+      "input_sha256": [
+        "f88d5ab4e9ac9d58950b3d4e90ef2b4fc37bcdeca354e93ff42966253ce90548",
+        "a3735aeebbd0063d96325c87f0e012795b8ed1766bf7c5b82741a1e160ab8921"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "835864a02ca9dc1cc137b30125a85716e1b4a44154303f31f1858c14a4fcf658"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "62b5beb5400dc99cb0d46fc4c4cc2536d02cca1a35538d4928d87f4ce45a55b1"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "23e62c7978c3f6c7387b2015874acdf047a47af0bae70cc8d2cd4909359ac02f",
+      "reference_sha256": "23e62c7978c3f6c7387b2015874acdf047a47af0bae70cc8d2cd4909359ac02f",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 4.4167,
+      "cpp_ms": 6.5505505,
+      "speedup": 0.6742486757410694,
+      "samples_ms": [
+        [
+          4.4144945,
+          4.4167,
+          4.50295475,
+          4.3880995,
+          4.34547575,
+          4.43549075,
+          4.5212795
+        ],
+        [
+          6.5505505,
+          6.620666,
+          6.6022335,
+          6.491782,
+          6.549003,
+          6.5452025,
+          6.6346165
+        ]
+      ],
+      "loops": [
+        4,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:uint8:blend",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "uint8",
+      "method": "blend",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "|u1",
+        "|u1"
+      ],
+      "input_sha256": [
+        "f88d5ab4e9ac9d58950b3d4e90ef2b4fc37bcdeca354e93ff42966253ce90548",
+        "a3735aeebbd0063d96325c87f0e012795b8ed1766bf7c5b82741a1e160ab8921"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "835864a02ca9dc1cc137b30125a85716e1b4a44154303f31f1858c14a4fcf658"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "62b5beb5400dc99cb0d46fc4c4cc2536d02cca1a35538d4928d87f4ce45a55b1"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "7b8313d8ae1fbc9fe420a4d0183c847fcd8b8d6575403e9ed004a96011435d63",
+      "reference_sha256": "7b8313d8ae1fbc9fe420a4d0183c847fcd8b8d6575403e9ed004a96011435d63",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 1.693911625,
+      "cpp_ms": 3.0110615,
+      "speedup": 0.5625629449946472,
+      "samples_ms": [
+        [
+          1.735717375,
+          1.694062375,
+          1.62161225,
+          1.68640225,
+          1.65241275,
+          1.73268275,
+          1.693911625
+        ],
+        [
+          3.0110615,
+          2.977002,
+          3.0017661666666666,
+          3.0051145,
+          3.0570691666666665,
+          3.0313983333333336,
+          3.0403533333333335
+        ]
+      ],
+      "loops": [
+        8,
+        6
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:uint8:checkerboard",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "uint8",
+      "method": "checkerboard",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "|u1",
+        "|u1"
+      ],
+      "input_sha256": [
+        "f88d5ab4e9ac9d58950b3d4e90ef2b4fc37bcdeca354e93ff42966253ce90548",
+        "a3735aeebbd0063d96325c87f0e012795b8ed1766bf7c5b82741a1e160ab8921"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "835864a02ca9dc1cc137b30125a85716e1b4a44154303f31f1858c14a4fcf658"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "62b5beb5400dc99cb0d46fc4c4cc2536d02cca1a35538d4928d87f4ce45a55b1"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "5e30a1d8f176369921cc77fc4abe543a343387cbdf7d0d5be8a7bca118582345",
+      "reference_sha256": "5e30a1d8f176369921cc77fc4abe543a343387cbdf7d0d5be8a7bca118582345",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 5.187767666666667,
+      "cpp_ms": 3.3489536,
+      "speedup": 1.5490712282984949,
+      "samples_ms": [
+        [
+          5.202820333333333,
+          5.013294333333333,
+          5.187767666666667,
+          4.961272,
+          4.826355333333333,
+          5.24666,
+          5.308640333333333
+        ],
+        [
+          3.3489536,
+          3.6184528,
+          3.298187,
+          3.2848948,
+          3.4591762000000004,
+          3.3363728,
+          3.4944796
+        ]
+      ],
+      "loops": [
+        3,
+        5
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:float32:diff",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float32",
+      "method": "diff",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f4",
+        "<f4"
+      ],
+      "input_sha256": [
+        "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1",
+        "e99f79378eff68c6c2030813911e74e0ba26a088525641c8c226ccb610ebafb6"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            4096,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1"
+        },
+        "img2": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            4096,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "e99f79378eff68c6c2030813911e74e0ba26a088525641c8c226ccb610ebafb6"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          4096,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "701e05793463b6c966ce22345522e89b1d65e1fb5a53b81568ed65d563929a3c",
+      "reference_sha256": "701e05793463b6c966ce22345522e89b1d65e1fb5a53b81568ed65d563929a3c",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3260820588235294,
+      "cpp_ms": 0.687620947368421,
+      "speedup": 0.4742177504502602,
+      "samples_ms": [
+        [
+          0.33303876470588234,
+          0.3323,
+          0.33273829411764705,
+          0.3254204705882353,
+          0.3242366176470588,
+          0.3248634411764706,
+          0.3260820588235294
+        ],
+        [
+          0.7105023684210526,
+          0.7105688421052632,
+          0.687620947368421,
+          0.6843286315789474,
+          0.687417,
+          0.6804406315789474,
+          0.6884453684210525
+        ]
+      ],
+      "loops": [
+        34,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:float32:blend",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float32",
+      "method": "blend",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f4",
+        "<f4"
+      ],
+      "input_sha256": [
+        "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1",
+        "e99f79378eff68c6c2030813911e74e0ba26a088525641c8c226ccb610ebafb6"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            4096,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1"
+        },
+        "img2": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            4096,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "e99f79378eff68c6c2030813911e74e0ba26a088525641c8c226ccb610ebafb6"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          4096,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "eb4febeb1843559c01d45fff100cecaf66e06893eb61db1c4ccb9528054d739b",
+      "reference_sha256": "eb4febeb1843559c01d45fff100cecaf66e06893eb61db1c4ccb9528054d739b",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.3015262619047619,
+      "cpp_ms": 0.6938759523809525,
+      "speedup": 0.4345535550988769,
+      "samples_ms": [
+        [
+          0.29933509523809526,
+          0.3028868809523809,
+          0.29939471428571424,
+          0.3015262619047619,
+          0.3178277857142857,
+          0.30348492857142856,
+          0.2997984047619047
+        ],
+        [
+          0.6911742380952381,
+          0.6913530476190476,
+          0.6938759523809525,
+          0.694515,
+          0.778582,
+          0.6911670952380953,
+          0.7058125238095238
+        ]
+      ],
+      "loops": [
+        42,
+        21
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:float32:checkerboard",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float32",
+      "method": "checkerboard",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f4",
+        "<f4"
+      ],
+      "input_sha256": [
+        "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1",
+        "e99f79378eff68c6c2030813911e74e0ba26a088525641c8c226ccb610ebafb6"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            4096,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "67609f90ad95d620bd71de7145162f6a103cc1ef38f9b1964e8f783799ee73a1"
+        },
+        "img2": {
+          "dtype": "<f4",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            4096,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "e99f79378eff68c6c2030813911e74e0ba26a088525641c8c226ccb610ebafb6"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f4",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          4096,
+          4
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "9443bfc68e61d9c4bf36fd7e072cc23b3c9352e732d36bb21f1d539f359b5949",
+      "reference_sha256": "9443bfc68e61d9c4bf36fd7e072cc23b3c9352e732d36bb21f1d539f359b5949",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 2.4228596000000002,
+      "cpp_ms": 0.7383137777777777,
+      "speedup": 3.2816123346532584,
+      "samples_ms": [
+        [
+          2.7509402,
+          2.4171737999999996,
+          2.4137522000000002,
+          2.4228596000000002,
+          2.4240776,
+          2.4085402,
+          2.4260246000000003
+        ],
+        [
+          0.7383137777777777,
+          0.7362293333333334,
+          0.7404501666666666,
+          0.7420174444444445,
+          0.7308300555555555,
+          0.7487275,
+          0.7342240555555555
+        ]
+      ],
+      "loops": [
+        5,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:float64:diff",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float64",
+      "method": "diff",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f8",
+        "<f8"
+      ],
+      "input_sha256": [
+        "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5",
+        "b9f589b6e5949453d2518bd7500c8863435b0d996368f8326a7de6bcc4b5b6e3"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "b9f589b6e5949453d2518bd7500c8863435b0d996368f8326a7de6bcc4b5b6e3"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "dba3df98f326bfd90e1efdba46aaf9316ba9fdec7dce4cd470f96c02b4efebec",
+      "reference_sha256": "dba3df98f326bfd90e1efdba46aaf9316ba9fdec7dce4cd470f96c02b4efebec",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.82895535,
+      "cpp_ms": 1.6105249090909093,
+      "speedup": 0.5147112878048681,
+      "samples_ms": [
+        [
+          0.8476864000000001,
+          0.82895535,
+          0.8201235,
+          0.82025275,
+          0.8531536999999999,
+          0.8336414,
+          0.8246648000000001
+        ],
+        [
+          1.6140338181818181,
+          1.6105249090909093,
+          1.603070090909091,
+          1.6050183636363635,
+          1.6112768181818182,
+          1.6107442727272727,
+          1.610190818181818
+        ]
+      ],
+      "loops": [
+        20,
+        11
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:float64:blend",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float64",
+      "method": "blend",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f8",
+        "<f8"
+      ],
+      "input_sha256": [
+        "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5",
+        "b9f589b6e5949453d2518bd7500c8863435b0d996368f8326a7de6bcc4b5b6e3"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "b9f589b6e5949453d2518bd7500c8863435b0d996368f8326a7de6bcc4b5b6e3"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "3a9fe338e15cd227868d0f3d594428aca5224d3710fc2a16315e1109deadfbc8",
+      "reference_sha256": "3a9fe338e15cd227868d0f3d594428aca5224d3710fc2a16315e1109deadfbc8",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 0.52530375,
+      "cpp_ms": 1.6398404,
+      "speedup": 0.3203383390237245,
+      "samples_ms": [
+        [
+          0.52530375,
+          0.520518625,
+          0.5168055416666667,
+          0.5341361666666666,
+          0.5372112083333334,
+          0.5300762916666666,
+          0.524427875
+        ],
+        [
+          1.5940537,
+          1.6079557,
+          1.618178,
+          1.6414398000000001,
+          1.6467348,
+          1.6539166,
+          1.6398404
+        ]
+      ],
+      "loops": [
+        24,
+        10
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "side1024:float64:checkerboard",
+      "shape": [
+        1024,
+        1024
+      ],
+      "dtype": "float64",
+      "method": "checkerboard",
+      "n_tiles": [
+        8,
+        8
+      ],
+      "api": "util.compare_images",
+      "backend": "native",
+      "threads": 1,
+      "input_dtype_str": [
+        "<f8",
+        "<f8"
+      ],
+      "input_sha256": [
+        "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5",
+        "b9f589b6e5949453d2518bd7500c8863435b0d996368f8326a7de6bcc4b5b6e3"
+      ],
+      "converted_inputs": {
+        "img1": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "929132f112d8b5364b3373c9c6ddbb2b1c1b94d9b222379f396f15032183e1a5"
+        },
+        "img2": {
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1024,
+            1024
+          ],
+          "strides": [
+            8192,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "b9f589b6e5949453d2518bd7500c8863435b0d996368f8326a7de6bcc4b5b6e3"
+        }
+      },
+      "output_metadata": {
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "74728dcc83e16496af1198f59ec3a04247a40332f927f379d2aa752ee5152f8e",
+      "reference_sha256": "74728dcc83e16496af1198f59ec3a04247a40332f927f379d2aa752ee5152f8e",
+      "actual_C_returns": [
+        "compare_images"
+      ],
+      "native_accepted": true,
+      "max_abs_error": 0.0,
+      "reference_ms": 3.6960275,
+      "cpp_ms": 1.7117287142857143,
+      "speedup": 2.1592367231756766,
+      "samples_ms": [
+        [
+          3.43366825,
+          3.6181455,
+          3.48350075,
+          3.82082975,
+          3.80468075,
+          3.77565725,
+          3.6960275
+        ],
+        [
+          1.7117287142857143,
+          1.6729245714285714,
+          1.963094857142857,
+          1.6354025714285714,
+          1.6264562857142857,
+          1.7179907142857143,
+          1.7394517142857142
+        ]
+      ],
+      "loops": [
+        4,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
