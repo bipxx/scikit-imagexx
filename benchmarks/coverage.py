@@ -12,7 +12,7 @@ import warnings
 import numpy as np
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, LEVEL_SET_FUNCTIONS
+from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 
 
@@ -156,6 +156,11 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    if 'util.regular_seeds' in apis:
+        provider_frontiers['util.regular_seeds'] = ('Geometry/output-dtype adapter: actual image.shape, bounded n_points and '
+            'requested output dtype; pixels are not API arguments. NumPy regular_grid and np.zeros are explicit '
+            'providers; label generation/scatter are owned. Exact dtype/shape/storage/words checked before timing; '
+            'benchmarks/regular_seeds.py is canonical.')
     if 'util.unique_rows' in apis:
         provider_frontiers['util.unique_rows'] = ('Actual 2D row arrays use owned unsigned byte-row ordering, '
             'equality and first-input-index selection. NumPy contiguous preparation, string view and final '
@@ -250,7 +255,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'util.unique_rows':
+                    if api == 'util.regular_seeds':
+                        error = regular_seeds_default_error(call_args[0],options['dtype'],actual,expected)
+                    elif api == 'util.unique_rows':
                         error = unique_rows_default_error(call_args[0], actual, expected)
                     elif api == 'util.label_points':
                         error = label_points_default_error(call_args[1], actual, expected)
@@ -300,6 +307,9 @@ def main():
                     results.append({'api': api, 'size': case_size, 'dtype': 'shape-only' if api in LEVEL_SET_FUNCTIONS else case_dtype,
                                     **({'input_shape': list(call_args[0]), 'default_input_kind': 'image-shape-only',
                                         'descriptor_carrier_dtype': case_dtype} if api in LEVEL_SET_FUNCTIONS else {}),
+                                    **({'input_shape': list(call_args[0]),'n_points':call_args[1],
+                                        'default_input_kind':'shape-count-output-dtype-adapter',
+                                        'requested_output_dtype':str(options['dtype'])} if api=='util.regular_seeds' else {}),
                                     **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     **({'size_unit': 'points'} if api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',

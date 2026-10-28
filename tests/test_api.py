@@ -77,6 +77,24 @@ def test_level_set_default_shape_adapter_and_exact_checker():
 
 
 @pytest.mark.parametrize('dtype',(np.uint8,np.float32,np.float64))
+def test_regular_seeds_default_geometry_dtype_and_exact_checker(dtype):
+    from skimagexx.coverage import regular_seeds_default_error
+    image=np.zeros((3,7),dtype)
+    args,options=default_call('util.regular_seeds',image)
+    assert args==(image.shape,1) and options=={'dtype':image.dtype}
+    assert native_dtypes('util.regular_seeds')==('uint8','float32','float64')
+    actual=xx.util.regular_seeds(*args,**options)
+    expected=np.zeros(image.shape,dtype);expected[1,3]=1
+    assert regular_seeds_default_error(args[0],options['dtype'],actual,expected)==0.
+    wrong=actual.astype(np.int64)
+    with pytest.raises(AssertionError):regular_seeds_default_error(args[0],options['dtype'],wrong,expected)
+    with pytest.raises(AssertionError):regular_seeds_default_error(args[0],options['dtype'],np.asfortranarray(actual),expected)
+    with pytest.raises(AssertionError):regular_seeds_default_error((1,21),options['dtype'],actual,expected)
+    actual[0,0]=2
+    with pytest.raises(AssertionError):regular_seeds_default_error(args[0],options['dtype'],actual,expected)
+
+
+@pytest.mark.parametrize('dtype',(np.uint8,np.float32,np.float64))
 def test_unique_rows_default_exact_checker(dtype):
     from skimagexx.coverage import unique_rows_default_error
     image=np.array([[2,1],[0,3],[2,1],[1,0]],dtype=dtype)

@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current241",
+  "scope": "current242",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -448,6 +448,7 @@
     "util.invert",
     "util.label_points",
     "util.map_array",
+    "util.regular_seeds",
     "util.unique_rows"
   ],
   "metadata_paths": [
@@ -493,7 +494,8 @@
     "segmentation.disk_level_set": "tests/test_level_set_public.py",
     "util.map_array": "tests/test_map_array_public.py",
     "util.label_points": "tests/test_label_points_public.py",
-    "util.unique_rows": "tests/test_unique_rows_public.py"
+    "util.unique_rows": "tests/test_unique_rows_public.py",
+    "util.regular_seeds": "tests/test_regular_seeds_public.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -534,7 +536,9 @@
     "tests/test_label_points_public.py",
     "tests/test_label_points_pipeline.py",
     "tests/test_unique_rows_public.py",
-    "tests/test_unique_rows_pipeline.py"
+    "tests/test_unique_rows_pipeline.py",
+    "tests/test_regular_seeds_public.py",
+    "tests/test_regular_seeds_pipeline.py"
   ],
   "SDK_scope": "current25 required installed clients (23 legacy plus colocalization and footprint_shapes); source readiness is not qualification acceptance",
   "required_client_families": [
