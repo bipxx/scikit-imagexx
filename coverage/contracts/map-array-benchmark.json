@@ -1,0 +1,139 @@
+{
+  "schema": "map-array-first-benchmark-v1",
+  "api": "util.map_array",
+  "reference": "scikit-image==0.26.0",
+  "original_python_source_sha256": "aaca3e8ec753ab84d793a39e7aa71db991d5d39dd457cba96d11b4aba1f2cfe2",
+  "status": "Prospective fixed workloads; no performance claim",
+  "seed": 2026,
+  "cases": [
+    {
+      "case_id": "dense-u8-u16-64",
+      "kind": "dense",
+      "shape": [
+        64,
+        64
+      ],
+      "input_dtype": "uint8",
+      "output_dtype": "uint16",
+      "key_count": 257,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "dense-u8-u16-256",
+      "kind": "dense",
+      "shape": [
+        256,
+        256
+      ],
+      "input_dtype": "uint8",
+      "output_dtype": "uint16",
+      "key_count": 257,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "dense-u8-u16-1024",
+      "kind": "dense",
+      "shape": [
+        1024,
+        1024
+      ],
+      "input_dtype": "uint8",
+      "output_dtype": "uint16",
+      "key_count": 257,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "signed64-sparse-f64-256",
+      "kind": "signed-sparse",
+      "shape": [
+        256,
+        256
+      ],
+      "input_dtype": "int64",
+      "output_dtype": "float64",
+      "key_count": 6,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "signed64-sparse-f64-1024",
+      "kind": "signed-sparse",
+      "shape": [
+        1024,
+        1024
+      ],
+      "input_dtype": "int64",
+      "output_dtype": "float64",
+      "key_count": 6,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "uint64-wide-c128-256",
+      "kind": "wide",
+      "shape": [
+        256,
+        256
+      ],
+      "input_dtype": "uint64",
+      "output_dtype": "complex128",
+      "key_count": 6,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "uint64-wide-c128-1024",
+      "kind": "wide",
+      "shape": [
+        1024,
+        1024
+      ],
+      "input_dtype": "uint64",
+      "output_dtype": "complex128",
+      "key_count": 6,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "strided-u16-u32-512",
+      "kind": "strided-input",
+      "shape": [
+        512,
+        512
+      ],
+      "backing_shape": [
+        1024,
+        1024
+      ],
+      "input_dtype": "uint16",
+      "output_dtype": "uint32",
+      "key_count": 1025,
+      "preallocated_out": false
+    },
+    {
+      "case_id": "strided-out-u8-f32-65536",
+      "kind": "strided-output",
+      "shape": [
+        65536
+      ],
+      "output_backing_shape": [
+        131072
+      ],
+      "input_dtype": "uint8",
+      "output_dtype": "float32",
+      "key_count": 257,
+      "preallocated_out": true,
+      "output_stride_bytes": 8
+    }
+  ],
+  "repeat": 7,
+  "target_ms": 19,
+  "threads": 1,
+  "reference_pool_threads": 1,
+  "raw_samples": 126,
+  "oracle": "Independent Python last-key lookup dictionary of copied POD value words; missing keys produce zero words; no original or Cython map execution",
+  "generation": {
+    "dense": "permutation of uint8 keys0..255 followed by duplicate first key; uint16 values rng integers[1,65536); image rng integers[0,256)",
+    "signed-sparse": "keys[-2**55,-7,0,17,2**40,-7]; float64 values=rng integers[-4096,4097)/8; input choices[-2**55,-7,0,17,2**40,99,2**55]",
+    "wide": "uint64 keys[2**63+3,2**64-1,17,2**63+2**40,0,2**63+3]; complex128 values real=rng ints[-4096,4097)/8 imag=rng ints[-4096,4097)/16; input choices[0,17,2**63+3,2**64-1,2**63+2**40,2**63+5]",
+    "strided-input": "permutation uint16 keys0..1023 +duplicate first key; uint32 values rng integers[1,2**32); backing uint16 rng[0,2048) shape1024x1024, input backing[::2,::2]",
+    "strided-output": "permutation uint8 keys0..255 +duplicate first key; float32 values rng integers[-4096,4097)/8; uint8 image rng[0,256) length65536; separate reference/native backing[::2] initialized91.25/-37.5"
+  },
+  "scope": "Eight out=None calls include allocation and destruction; one preallocated strided-output call reuses output storage, so allocation is outside timing. All calls fully overwrite every logical output, and returned references are released inside the timing primitive. No input/value alias benchmark; those parity cases remain separate. Input/mapping/backing pixels unchanged; all original/current raw samples and losses retained."
+}
