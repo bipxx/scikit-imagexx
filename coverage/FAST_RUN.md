@@ -1,5 +1,10 @@
 # Phased fast run
 
+Current verified checkpoint (2026-10-28): 236 native-partial image APIs, three metadata helpers, and 232 upstream-only APIs. Full supported-profile qualification remains 203 image APIs. Latest isolated one-thread measurements against original scikit-image: profile line 23.9182x (18/18 faster), blur effect 1.5395x (24/24), and compare images 1.6558x (18/18). These are workload-specific geometric means, not a current-library aggregate. Profile and compare optimizations are merged; all raw samples and slower historical cases remain retained. See benchmarks/profile-coordinates-same-host.md, benchmarks/blur-effect-minimum-initial.md, and benchmarks/compare-images-fused-same-host.md.
+
+The current whole-product campaign has not passed: optional-provider imports, stale class assertions, current SDK corpus preflights, and one minimum-profile runtime-admission refusal block acceptance. The optional-import/current-census fix passed 996 targeted checks with 912 saved observations unchanged, but is not a fresh whole-product qualification. Current phase-3 selection contains 3,205 tests per mode; selection is not execution proof. Earlier checkpoints below remain historical.
+
+
 This is the short execution route, using the existing tests and evidence. All earlier raw results, failures, products and scoped admissions remain unchanged.
 
 Historical phase-1 Windows development run on the retained public203 wheel passed **1,286 checks in 4.68 seconds**: 477 surface checks, 206 function signatures, 602 supported-dtype numerical cases and one registry check. This is a bounded development result, not a new product qualification or performance benchmark. The selector's 17 regression tests also passed. Reports are retained locally in `build/feature-tests/`; that historical source had 266 upstream-only entries. The package no longer matches the current source registry.
