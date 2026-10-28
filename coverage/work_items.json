@@ -32602,8 +32602,8 @@
           "evidence_scope": "public_native"
         }
       },
-      "state": "measuring",
-      "scope": "Exact ec3 genuine minimum preparation passes7778focused/1439smoke and170product/80SDK closure; no genuine SDK clients in producer. Initial9workload/126sample timing run40742758297 is live. Latest whole-profile qualification remains241.",
+      "state": "measured",
+      "scope": "Initial Montage report published:6/9wins,GM1.188252972x,126samples. All3losses retained; strided-copy candidate separate. Genuine170/80 minimum source ec3 and one SDK client verified; full-profile qualification remains241.",
       "genuine_preparation": {
         "run": 40740008474,
         "source_sha": "ec3dba8e5eb73a0b02dffd70c501abe2adba923c",
@@ -32626,6 +32626,14 @@
             "path": "build/montage-initial-v1-private-v1/handoff.json",
             "sha256": "9387e451c3f1f8cc2c7b932d8fa34523629800e8993f41d961653c7e2466ddc7"
           }
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "ec3dba8e5eb73a0b02dffd70c501abe2adba923c",
+          "manifest": {
+            "path": "build/montage-initial-v1/final-review.json",
+            "sha256": "452d0267aac695f8c966dbf387e531858171808020ecfac8be749b780062876f"
+          }
         }
       },
       "retirement_receipt": {
@@ -32635,11 +32643,40 @@
       "comparison": {
         "run": 40742758297,
         "controller": "d56b6e674e714d35d5b357c9ea152213401cd5a7",
-        "status": "running",
+        "status": "independently_reviewed_and_root_recomputed",
         "source_merged": true,
         "timing_host": "fresh artifact-only GitHub runner; no builds/tests"
       },
-      "source_merged": true
+      "source_merged": true,
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/montage-minimum-initial.json"
+        ],
+        "cases": 9,
+        "raw_samples": 126,
+        "wins": 6,
+        "geometric_mean_speedup": 1.1882529720748498,
+        "regressions": [
+          "gray-mean-f64",
+          "gray-strided-reverse-f32",
+          "gray-fortran-f64"
+        ],
+        "scope": "Initial single-cohort original/current result. Strided reverse0.197910830x remains severe; no prior-C++ or whole-library claim."
+      },
+      "genuine_SDK_client": {
+        "source": "ec3dba8e5eb73a0b02dffd70c501abe2adba923c",
+        "manifest": {
+          "path": "build/montage-genuine-sdk80-client-v1/handoff.json",
+          "sha256": "040c77b4f39d1664bd07293666f2705ebd54de8d227c74edf91065ed3ad4122d"
+        },
+        "families_executed": 1,
+        "checks_executed": 2,
+        "scope": "Actual untouched genuine SDK80, one client compiled against actual archive, normal/scalar workers1/4. Producer itself executes0; not all26families/52checks."
+      }
     },
     {
       "id": "label-points-metadata-experiment",
@@ -32658,7 +32695,7 @@
       "depends_on": [
         "label-points-public"
       ],
-      "state": "measuring",
+      "state": "measured",
       "source_merged": false,
       "proofs": {
         "native_private": {
@@ -32670,6 +32707,14 @@
           },
           "native_contract_checks": 796,
           "native_pending": 0
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "69e390dd5e48d5199c9a249fccafd83daa027d3c",
+          "manifest": {
+            "path": "build/label-points-metadata-same-host-v1/final-review.json",
+            "sha256": "1b0c7e38f30965e538961de2b3272b0d1745f9419f61b8caa2c4e5ec3d038048"
+          }
         }
       },
       "genuine_preparation": {
@@ -32685,13 +32730,35 @@
         }
       },
       "deadline_utc": "2026-10-28T19:39:29.511203+00:00",
-      "scope": "One binder-only variant:796 focused gates and genuine7134focused/1435smoke pass; all13dependency wheels and79SDK payloads byte-exact to baseline910. Fixed504sample ABBA40742666831 is live; candidate unmerged and closed zero-provider stays discarded.",
+      "scope": "Rejected one binder-only metadata variant; all504 samples, initial losses and7per-pass CPP regressions published. No retune or source merge; candidate69 stays protected.",
       "comparison": {
         "run": 40742666831,
         "controller": "d56b6e674e714d35d5b357c9ea152213401cd5a7",
-        "status": "running",
+        "status": "independently_reviewed_and_root_recomputed",
         "source_merged": false,
         "timing_host": "fresh artifact-only GitHub runner; no builds/tests"
+      },
+      "decision": "DISCARD",
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/label-points-metadata-same-host.json"
+        ],
+        "cases": 9,
+        "raw_samples": 504,
+        "direct_gain": 1.0180873463306008,
+        "normalized_gain": 1.0136750402152657,
+        "original_speedup": 1.5246232579372172,
+        "target_repeat_passed": false,
+        "preserved_original_cases_passed": 6,
+        "preserved_original_cases_required": 7,
+        "cpp_controls_passed": 7,
+        "cpp_controls_required": 8,
+        "per_pass_cpp_regressions": 7,
+        "scope": "Overall gains pass but fixed target/preservation/control gates fail. Tiny and sparse1024 balanced original losses retained; sparse1024 baseline also below original on this host. No newly-lost same-host-win attribution."
       }
     },
     {
@@ -32703,7 +32770,7 @@
         "restoration.ellipsoid_kernel"
       ],
       "owner": "profile_candidate_audit",
-      "branch": "feature/rolling-ball-kernels-contract-v1",
+      "branch": "main",
       "base_sha": "7667a9b64fff1fa1b4cc307d5efb6c8aa45788b7",
       "owns": [
         "tests/rolling_ball_kernels_contract.py",
@@ -32711,7 +32778,7 @@
         "coverage/contracts/rolling-ball-kernels.json"
       ],
       "depends_on": [],
-      "state": "contracting",
+      "state": "contracted",
       "proofs": {
         "tooling": {
           "status": "verified",
@@ -32720,9 +32787,60 @@
             "path": "build/worktrees/rolling-ball-kernels-contract-v1/build/prospective-v1/handoff.json",
             "sha256": "0715e4639372dc3666b94c87e9bb8d3dcec57442d9b42f8184165c3fd4713970"
           }
+        },
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "5d550dd51f2790f231dd2eb741e6fa91a9566782",
+          "manifest": {
+            "path": "build/worktrees/rolling-ball-kernels-contract-v1/build/capture-v1/handoff.json",
+            "sha256": "26bd9c4549507804886181c51db3bb15bb63eb09b4d1c192c25bdb7ca2fd9f35"
+          },
+          "passing_contract_checks": 100
         }
       },
-      "scope": "50 prospective bounded specs, including5D/8D and singleton rank31/32/63/64.108 preflight checks; root reviewed before authorizing exactly100 once-only originals, currently capturing. No native code, ABI/rank cap, numerical acceptance or performance claim."
+      "scope": "100 once-only originals,50/profile; minimum36 returns14errors,modern37returns13errors;97array blobs and56offline checks/profile verified. Only3rank-frontier rows differ. No native implementation or numerical acceptance yet.",
+      "source_merged": true
+    },
+    {
+      "id": "montage-strided-copy-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "optimize/montage-strided-copy-v1",
+      "base_sha": "cfb3fd2af7beaf17f878a35c44f843ca23c951e2",
+      "owns": [
+        "src/montage.cpp",
+        "tests/test_montage_native.cpp",
+        "coverage/contracts/montage-strided-copy-candidate.json"
+      ],
+      "depends_on": [
+        "montage-shared"
+      ],
+      "state": "preparing",
+      "source_merged": false,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "894edfd7519404f3c4b341aa0124c96976b83486",
+          "manifest": {
+            "path": "build/worktrees/montage-strided-copy-v1/build/native-v1/handoff.json",
+            "sha256": "b99904ffe5f9e06e9909f1c5014e54f94a8594b84d7eec54801843632e0195da"
+          },
+          "native_contract_checks": 7104,
+          "native_pending": 0
+        }
+      },
+      "genuine_preparation": {
+        "run": 40746039506,
+        "source_sha": "894edfd7519404f3c4b341aa0124c96976b83486",
+        "prepare_only": true,
+        "timing_dispatched": false
+      },
+      "deadline_utc": "2026-10-28T20:27:56Z",
+      "scope": "One fixed constant-size-copy variant; same ABI/fill/row_run/binder/workers. Six modes1184calls each; old1056word streams exact prefix, unaligned and12byte fallback controls pass. Actual inline loads/stores observed, not a timing claim. Genuine producer is live; no retiming/variant changes after measurement."
     }
   ],
   "unassigned_inventoried_apis": [
