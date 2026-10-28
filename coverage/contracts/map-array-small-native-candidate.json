@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "prospective_before_candidate_edits_or_outputs",
-  "baseline_revision": "ffaf4523d4442d2c7722e222600adaddd8f23c67",
+  "baseline_revision": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
   "measured_baseline_revision": "b08aef5fb21cb7bfe87ffa04c35767eab1727d8e",
   "baseline_run": 40685511797,
   "baseline_artifact": 12814229633,
@@ -65,9 +65,11 @@
     "FP flags/rounding unchanged",
     "workers1/4 global setting unchanged"
   ],
-  "measurement_transport": "root-reviewed genuine full-product baseline/candidate wheels, unchanged public harness and actual xx._core C-return guard; no dispatch by native owner",
+  "measurement_transport": "Approved genuine full-product baseline b08 and candidate wheels with exact baseline13dependencies; unchanged harness and genuine xx._core guard; parent dispatch only",
   "report_all_original_wins_losses": true,
   "no_local_timings": true,
   "no_local_full_sdk_or_environment_rebuild": true,
-  "no_abi_binder_frontend_tolerance_changes": true
+  "no_abi_binder_frontend_tolerance_changes": true,
+  "initial_freeze_main_revision": "ffaf4523d4442d2c7722e222600adaddd8f23c67",
+  "transport_base_correction": "Parent requested exact measured source before first compile/output; four owned baseline files identical, freeze clock unchanged. Candidate source already prospectively frozen, no build/output/timing yet."
 }
