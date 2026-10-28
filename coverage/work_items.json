@@ -31934,7 +31934,7 @@
           "status": "verified",
           "source_sha": "d8adeb419d72bf284f1b4a04ce20e32a9be52074",
           "manifest": {
-            "path": "build/worktrees/unique-rows-prefix-v1/build/prefix-v1/handoff.json",
+            "path": "build/unique-rows-prefix-v1-private-v1/prefix-v1/handoff.json",
             "sha256": "b146e9a491cabf80fc6d5b749b679c4355f6961bbbaeb688640b94acd8174e12"
           },
           "native_contract_checks": 54640,
