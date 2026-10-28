@@ -32026,7 +32026,7 @@
           "status": "verified",
           "source_sha": "3c1b848b85b4011a7a9bd4861ac0f4b1b2770af9",
           "manifest": {
-            "path": "build/worktrees/regular-seeds-contract-v1/build/original-v1/handoff.json",
+            "path": "build/regular-seeds-contract-v1-private-v1/original-v1/handoff.json",
             "sha256": "be36f2c5ac5b9d2d17a877f7cb052916cf173e2c39421bd3a33c1c7fb94f91f7"
           },
           "passing_contract_checks": 106,
@@ -32059,7 +32059,7 @@
           "status": "verified",
           "source_sha": "c5ec21505327f75bdb34cf73c797c4eb5ef54291",
           "manifest": {
-            "path": "build/worktrees/regular-seeds-native-v1/build/native-v1/handoff.json",
+            "path": "build/regular-seeds-native-v1-private-v1/native-v1/handoff.json",
             "sha256": "927e38aafabc2491d0f208b2c1c6da43aee33561c5a870859aa97739f065967b"
           },
           "native_contract_checks": 62,
@@ -32097,7 +32097,7 @@
           "status": "verified",
           "source_sha": "f708aa06b33840e3b52958a03018be1180843a3a",
           "manifest": {
-            "path": "build/worktrees/regular-seeds-frontend-v1/build/regular-component-v1/handoff.json",
+            "path": "build/regular-seeds-frontend-v1-private-v1/regular-component-v1/handoff.json",
             "sha256": "d76b426a1dd607b295e628422a6e5de3df300092f792f5a276d238ad246c18bf"
           },
           "native_contract_checks": 436,
@@ -32119,7 +32119,7 @@
       "component_evidence": {
         "source_sha": "12cbdbfb7013cac13e8151afda66bbc158f6572b",
         "manifest": {
-          "path": "build/worktrees/regular-seeds-integration-v1/build/public-v1/handoff.json",
+          "path": "build/regular-seeds-integration-v1-private-v1/public-v1/handoff.json",
           "sha256": "40d59a040fbb44ff1af8ceff2e903c961b94be183f58247f663d433b5fb59101"
         },
         "public_shared_checks": 468,
@@ -32213,7 +32213,7 @@
           "status": "verified",
           "source_sha": "7aa059ddb1c2f196c3dbba9cf4d638ae1a761e67",
           "manifest": {
-            "path": "build/worktrees/unique-rows-tie-free-v1/build/tie-free-v1/handoff.json",
+            "path": "build/unique-rows-tie-free-v1-private-v1/tie-free-v1/handoff.json",
             "sha256": "81f211fcc97257aacedbee9b98855452d7e5a5506846c81d29d336e697ec5558"
           },
           "native_contract_checks": 56080,
@@ -32338,7 +32338,7 @@
           "status": "verified",
           "source_sha": "10c0b50459bcc8e61bddd229412dfda7a45e7a9c",
           "manifest": {
-            "path": "build/worktrees/recent-primitives-sdk-v1/build/sdk-v1/handoff.json",
+            "path": "build/recent-primitives-sdk-v1-private-v1/sdk-v1/handoff.json",
             "sha256": "ab80674df0be1dace187879cb9641c94b79b70185d4b21ede4b37e7df2d187a5"
           }
         }
