@@ -34,12 +34,18 @@ def test_label_points_pipeline(spec, workers, monkeypatch, tmp_path):
     previous = get_workers()
     old_profile = sys.getprofile()
     calls, returns, accepted, snapshots, forbidden = [], [], [], [], []
+    provider_order = []
+    zeros = np.zeros
+    def zero_provider(*args, **kwargs):
+        provider_order.append("zeros")
+        return zeros(*args, **kwargs)
     native_expected = expected['error'] is None and spec['id'] not in (
         'rank0-onepoint', 'shape-numpy-integers', 'protocol-order')
     def reject(*args, **kwargs):
         forbidden.append(True)
         raise AssertionError('original label_points forwarding or native output provider')
     def snapshot():
+        provider_order.append("workers")
         snapshots.append(get_workers())
         return snapshots[-1]
     def profile(frame, event, value):
@@ -54,8 +60,8 @@ def test_label_points_pipeline(spec, workers, monkeypatch, tmp_path):
             patch.setattr(public, 'label_points', reject)
             patch.setattr(original, 'label_points', reject)
             patch.setattr(core, 'get_num_threads', snapshot)
+            patch.setattr(np, 'zeros', zero_provider)
             if native_expected:
-                patch.setattr(np, 'zeros', reject)
                 patch.setattr(np, 'arange', reject)
             sys.setprofile(profile)
             try: actual = observe(implementation.label_points, spec, np)
@@ -64,6 +70,7 @@ def test_label_points_pipeline(spec, workers, monkeypatch, tmp_path):
         assert accepted == [native_expected]
         if native_expected:
             assert calls == returns == [STAGE] and snapshots == [workers]
+            assert provider_order == ["zeros", "workers"]
         else:
             assert len(calls) <= 1 and calls == returns
             assert snapshots == ([workers] if calls else [])
@@ -102,3 +109,24 @@ def test_label_points_object_callback_keeps_late_point_count(monkeypatch):
         with pytest.raises(ValueError, match='shape mismatch'):
             implementation.label_points(coords, (4, 5))
     assert coords.shape == (2, 3)
+
+
+@pytest.mark.parametrize('workers', (1, 4))
+def test_label_points_output_overload_assigns_without_clearing(workers):
+    output = np.full((2, 3), 99, dtype=np.uint64)
+    indices = (np.array([0, 1, 0], np.int64), np.array([1, 2, 1], np.int64))
+    result = implementation._core.label_points_apply(indices, output, workers)
+    assert result is output
+    assert output.tolist() == [[99, 3, 99], [99, 99, 2]]
+
+
+@pytest.mark.parametrize('kind', ('readonly', 'strided', 'wrong-dtype', 'big-endian'))
+def test_label_points_output_overload_refuses_unsupported_storage(kind):
+    output = np.zeros((2, 3), dtype=np.uint64)
+    if kind == 'readonly': output.flags.writeable = False
+    elif kind == 'strided': output = output[:, ::2]
+    elif kind == 'wrong-dtype': output = output.astype(np.int64)
+    elif kind == 'big-endian': output = output.astype('>u8')
+    before = output.tobytes()
+    assert implementation._core.label_points_apply((np.array([0], np.int64), np.array([1], np.int64)), output, 1) is None
+    assert output.tobytes() == before

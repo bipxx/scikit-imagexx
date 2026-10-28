@@ -110,6 +110,7 @@ def main():
     source_after=source_fingerprint(ROOT);assert source_before==source_after
     assert hashlib.sha256(core.read_bytes()).hexdigest()==core_sha and CONTRACT.read_bytes()==contract_raw
     scope=contract['scope']+' '+contract['timed_boundary']+' '+contract['frontier']
+    scope=scope.replace('owned zero-fill/scatter','NumPy zero-allocation provider and owned ordered scatter')
     report=dict(metadata=dict(timestamp_utc=datetime.now(timezone.utc).isoformat(),platform=platform.platform(),cpu=platform.processor(),python=sys.version,
         numpy=np.__version__,scipy=scipy.__version__,reference=skimage.__version__,**source_after,source_before=source_before,
         core_path=str(core),core_sha256=core_sha,harness_sha256=hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),

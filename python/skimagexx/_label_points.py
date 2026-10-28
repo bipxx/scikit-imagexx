@@ -14,16 +14,16 @@ def label_points(coords, output_shape):
     if np.any(coords < 0):
         raise ValueError('Coordinates should be positive and start from 0')
     np_indices = tuple(np.transpose(np.round(coords).astype(int, copy=False)))
+    labels = np.zeros(output_shape, dtype=np.uint64)
     native_result = None
     if (native_coords and type(output_shape) in (tuple, list)
             and output_shape and all(type(size) is int for size in output_shape)
             and coords.shape[0] == np_indices[0].size):
         native_result = _core.label_points_apply(
-            np_indices, tuple(output_shape), _core.get_num_threads())
+            np_indices, labels, _core.get_num_threads())
         if native_result is not None:
             return native_result
     # Reuse already prepared indices after refusal; do not repeat protocols,
     # warning-producing casts, rounding or the negative-coordinate check.
-    labels = np.zeros(output_shape, dtype=np.uint64)
     labels[np_indices] = np.arange(1, coords.shape[0] + 1)
     return labels

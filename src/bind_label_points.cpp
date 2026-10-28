@@ -9,8 +9,8 @@
 namespace py = pybind11;
 
 void bind_label_points(py::module_& module) {
-    module.def("label_points_apply", [](const py::tuple& indices,
-               const py::tuple& shape, int workers) -> py::object {
+    const auto apply = [](const py::tuple& indices, const py::tuple& shape,
+                          int workers, const py::object& prepared) -> py::object {
         if (workers < 1 || workers > 1024)
             throw py::value_error("label-points worker snapshot outside [1,1024]");
         if (shape.size() == 0 || shape.size() > 32 || indices.size() != shape.size()) return py::none();
@@ -31,6 +31,15 @@ void bind_label_points(py::module_& module) {
                 return py::none();
             count *= size;
         }
+        if (!prepared.is_none()) {
+            const auto output = py::reinterpret_borrow<py::array>(prepared);
+            if (!(output.flags() & py::array::c_style) || !output.writeable()
+                    || output.dtype().kind() != 'u' || output.itemsize() != 8
+                    || !output.dtype().attr("isnative").cast<bool>()
+                    || reinterpret_cast<std::uintptr_t>(output.data()) % alignof(std::uint64_t))
+                return py::none();
+            skimagexx::bindings::check_array_storage(output);
+        }
         std::vector<py::array> owners;
         std::vector<const std::int64_t*> axes;
         std::vector<std::ptrdiff_t> strides;
@@ -48,8 +57,10 @@ void bind_label_points(py::module_& module) {
             strides.push_back(array.strides(0));
             owners.push_back(std::move(array));
         }
-        // Newly allocated output cannot alias prepared coordinate buffers.
-        auto output = count ? py::array_t<std::uint64_t>(sizes)
+        // Public zeros output is fresh; the tuple entry allocates privately.
+        auto output = !prepared.is_none()
+            ? py::reinterpret_borrow<py::array_t<std::uint64_t>>(prepared)
+            : count ? py::array_t<std::uint64_t>(sizes)
             : py::array_t<std::uint64_t>(sizes, std::vector<py::ssize_t>(sizes.size(), 0));
         const skimagexx::detail::LabelPointsInput input{
             axes.data(), strides.data(), dimensions.data(), dimensions.size(), points, count};
@@ -57,9 +68,22 @@ void bind_label_points(py::module_& module) {
         bool accepted;
         {
             py::gil_scoped_release release;
-            accepted = skimagexx::detail::label_points_into(input, destination, workers);
+            accepted = prepared.is_none()
+                ? skimagexx::detail::label_points_into(input, destination, workers)
+                : skimagexx::detail::label_points_assign(input, destination, workers);
         }
         if (!accepted) return py::none();
         return output;
+    };
+    module.def("label_points_apply", [apply](const py::tuple& indices,
+               const py::tuple& shape, int workers) {
+        return apply(indices, shape, workers, py::none());
     }, py::arg("indices").noconvert(), py::arg("shape").noconvert(), py::arg("workers"));
+    module.def("label_points_apply", [apply](const py::tuple& indices,
+               const py::array& output, int workers) {
+        py::tuple shape(output.ndim());
+        for (py::ssize_t axis = 0; axis < output.ndim(); ++axis)
+            shape[axis] = output.shape(axis);
+        return apply(indices, shape, workers, output);
+    }, py::arg("indices").noconvert(), py::arg("output").noconvert(), py::arg("workers"));
 }

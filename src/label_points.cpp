@@ -7,7 +7,7 @@
 namespace skimagexx::detail {
 bool label_points_into(const LabelPointsInput& input,std::uint64_t* output,
                        int workers) {
-    if(!input.output_count)return input.point_count==0;
+    if(!input.output_count)return label_points_assign(input,output,workers);
     const bool vectorized=has_avx2();
     partition(input.output_count,input.output_count>=parallel_min?workers:1,
               [&](auto begin,auto end,auto) {
@@ -20,7 +20,13 @@ bool label_points_into(const LabelPointsInput& input,std::uint64_t* output,
 #endif
             std::fill_n(output+begin,end-begin,std::uint64_t(0));
     });
-    // partition has completed before any point store. Repeated destinations
+    return label_points_assign(input,output,workers);
+}
+bool label_points_assign(const LabelPointsInput& input,std::uint64_t* output,
+                         int workers) {
+    (void)workers;
+    if(!input.output_count)return input.point_count==0;
+    // Any constructor clear has completed before these ordered point stores. Repeated destinations
     // must see the same last assignment as the original ordered index array.
     const auto read=[](const std::int64_t* axis,std::ptrdiff_t stride,std::size_t point) {
         std::int64_t value;

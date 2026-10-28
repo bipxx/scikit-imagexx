@@ -22,5 +22,10 @@ struct LabelPointsInput {
 // literal provider; no partial output may escape. No floating arithmetic.
 bool label_points_into(const LabelPointsInput& input, std::uint64_t* output,
                        int workers);
+// Ordered assignment without clearing: other output elements remain unchanged.
+// The same prepared-input and private-refusal invariants apply. For constructor
+// semantics the caller supplies a zero-initialized output. No floating math.
+bool label_points_assign(const LabelPointsInput& input, std::uint64_t* output,
+                         int workers);
 }
 

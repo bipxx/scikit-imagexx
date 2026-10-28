@@ -55,6 +55,17 @@ void exercise(const std::vector<std::size_t>& dimensions,
     require(std::fetestexcept(FE_ALL_EXCEPT)==flags);require(storage==before);
     require(output[0]==sentinel&&output[1]==sentinel&&output[count+2]==sentinel&&output[count+3]==sentinel);
     require(std::equal(expected.begin(),expected.end(),output.begin()+2));
+    std::vector<std::uint64_t> assigned(count+4,sentinel);
+    std::fill_n(assigned.data()+2,count,std::uint64_t(0));
+    require(label_points_assign(input,assigned.data()+2,workers));
+    require(assigned==output);
+    require(storage==before&&get_num_threads()==global);
+    require(std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
+    // Assignment is reusable on preinitialized storage, without clearing it.
+    std::fill_n(assigned.data()+2,count,sentinel);
+    require(label_points_assign(input,assigned.data()+2,workers));
+    for(std::size_t destination=0;destination<count;++destination)
+        require(assigned[destination+2]==(expected[destination]?expected[destination]:sentinel));
     std::uint64_t hash=1469598103934665603ULL;
     for(auto value:output)for(unsigned byte=0;byte<8;++byte){hash^=(value>>(8*byte))&255;hash*=1099511628211ULL;}
     stream.write(reinterpret_cast<const char*>(&hash),8);
@@ -85,6 +96,7 @@ void refusals(int workers) {
         const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
         const LabelPointsInput input{axes.data(),strides.data(),dimensions.data(),rank,3,count};
         require(!label_points_into(input,output.data()+2,workers));
+        require(!label_points_assign(input,output.data()+2,workers));
         require(output[0]==sentinel&&output[1]==sentinel&&output[count+2]==sentinel&&output[count+3]==sentinel);
         require(storage==before&&get_num_threads()==global);
         require(std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);

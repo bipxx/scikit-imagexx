@@ -36,6 +36,9 @@ void stages(int workers){
     std::array<std::uint64_t,6> labels{};
     check(label_points_into({axes,axis_strides,dimensions,2,3,6},labels.data(),workers));
     check((labels==std::array<std::uint64_t,6>{0,3,0,0,0,2}));
+    labels.fill(99);
+    check(label_points_assign({axes,axis_strides,dimensions,2,3,6},labels.data(),workers));
+    check((labels==std::array<std::uint64_t,6>{99,3,99,99,99,2}));
     const std::int64_t invalid[]={2};const std::int64_t* bad_axes[]={invalid,column};
     std::array<std::uint64_t,6> discarded{};
     check(!label_points_into({bad_axes,axis_strides,dimensions,2,1,6},discarded.data(),workers));
