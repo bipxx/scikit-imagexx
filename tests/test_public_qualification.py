@@ -2236,12 +2236,12 @@ def current_metadata_artifact(tmp_path):
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk25(profile):
-    result=q.plan(ROOT,profile,241)
+    result=q.plan(ROOT,profile,242)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current241' and result['registry']['image_count']==241
-    assert result['product_members']==159 and result['SDK_members']==71
+    assert result['product_scope']=='current242' and result['registry']['image_count']==242
+    assert result['product_members']==160 and result['SDK_members']==71
     assert result['SDK_checks']==50 and 'current25 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==39
+    assert len(result['public_groups']['public-post203'])==41
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2297,7 +2297,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current241' and result['record_verified']
+        assert result['product_scope']=='current242' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2311,7 +2311,7 @@ def test_current_sdk25_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',241)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',242)['blockers'])
 
 
 def test_current_sdk25_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():

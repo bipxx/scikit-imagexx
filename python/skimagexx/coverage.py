@@ -31,7 +31,7 @@ NATIVE_FUNCTIONS = {
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
-    'util': ('unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
+    'util': ('regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
 
@@ -351,6 +351,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'util.regular_seeds':
+        # Geometry/output-dtype adapter: pixels are not constructor arguments.
+        return (image.shape,min(64,max(1,image.size//16))), {'dtype':image.dtype}
     if api == 'util.label_points':
         import numpy as np
         # 2D geometry adapter: all dtypes share the top-left 256x256 window.
@@ -524,6 +527,20 @@ def blur_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def regular_seeds_default_error(shape, dtype, actual, expected):
+    """Exact constructor shape, requested output dtype, storage and label words."""
+    import numpy as np
+    assert type(actual) is type(expected) is np.ndarray
+    for value in (actual,expected):
+        assert value.dtype==np.dtype(dtype) and value.dtype.metadata==np.dtype(dtype).metadata
+        assert value.shape==tuple(shape)
+    descriptor=lambda value:(value.strides,value.flags.owndata,value.flags.writeable,
+                             value.flags.c_contiguous,value.flags.f_contiguous,type(value.base))
+    assert descriptor(actual)==descriptor(expected)
+    assert actual.tobytes()==expected.tobytes()
+    return 0.
+
+
 def unique_rows_default_error(image, actual, expected):
     """Exact byte-row output metadata/words; final NumPy gather stays literal."""
     import numpy as np
@@ -629,6 +646,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'util.regular_seeds':
+        regular_seeds_default_error(image.shape,image.dtype,actual,expected)
+        return
     if api == 'util.unique_rows':
         unique_rows_default_error(image,actual,expected)
         return
@@ -681,6 +701,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'util.regular_seeds':
+        raise ValueError('Regular seeds use exact requested dtype, metadata and words; call assert_default_parity')
     if api == 'util.unique_rows':
         raise ValueError('Unique rows use exact metadata and words; call assert_default_parity')
     if api == 'util.label_points':

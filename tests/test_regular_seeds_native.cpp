@@ -69,10 +69,10 @@ void exercise(const std::vector<RegularSeedsAxis>& axes,std::size_t count,
 }
 }
 int main(int argc,char** argv){
-    if(argc!=4)throw std::runtime_error("usage: native output fixture-min fixture-modern");
+    if(argc!=2 && argc!=4)throw std::runtime_error("usage: native output [fixture-min fixture-modern]");
     std::ofstream stream(argv[1],std::ios::binary);require(bool(stream));
     for(int workers:{1,4}){
-        for(int file=2;file<4;++file){
+        for(int file=2;file<argc;++file){
             std::ifstream f(argv[file],std::ios::binary);require(bool(f));const auto records=word(f);
             for(std::size_t record=0;record<records;++record){
                 const auto type=RegularSeedsType(word(f));
