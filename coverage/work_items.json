@@ -31546,7 +31546,7 @@
           }
         }
       },
-      "measurement_gate": "Verified mixed/slow baseline; all126samples and8losses retained. Fused validation/scatter candidate is private until controlled KEEP gate.",
+      "measurement_gate": "Historical first original/current baseline retained: all126samples and8losses. Verified fused KEEP and all504same-host samples are recorded separately in label-points-fused-optimization; no full-platform promotion.",
       "performance": {
         "reference": "scikit-image==0.26.0",
         "required_workers": [
@@ -31707,7 +31707,7 @@
       "depends_on": [
         "unique-rows-native"
       ],
-      "state": "validating",
+      "state": "parity_passed",
       "public_registration": true,
       "dependency_requirements": {
         "unique-rows-native": {
@@ -31716,7 +31716,15 @@
       },
       "proofs": {
         "public_native": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
+          "manifest": {
+            "path": "build/unique-rows-genuine-release-v1/final-review.json",
+            "sha256": "35731f3466ff1eb09b133eaa3a16b766c85478bbdff4997e9b8be0c862193abb"
+          },
+          "native_contract_checks": 428,
+          "native_pending": 0,
+          "scope": "Genuine current241 minimum installed product:107public+107pipeline checks in both normal/scalar modes; final NumPy gather provider explicit; no full-platform qualification promotion"
         }
       },
       "component_evidence": {
@@ -31739,7 +31747,8 @@
       "genuine_preparation": {
         "run": 40695006125,
         "source_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
-        "status": "in_progress"
+        "status": "success",
+        "artifact": 12820230837
       }
     },
     {
@@ -31756,7 +31765,7 @@
       "depends_on": [
         "unique-rows-public"
       ],
-      "state": "preparing",
+      "state": "measured",
       "dependency_requirements": {
         "unique-rows-public": {
           "evidence_scope": "public_native"
@@ -31764,12 +31773,197 @@
       },
       "proofs": {
         "isolated_performance": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
+          "manifest": {
+            "path": "build/unique-rows-genuine-release-v1/final-review.json",
+            "sha256": "35731f3466ff1eb09b133eaa3a16b766c85478bbdff4997e9b8be0c862193abb"
+          }
         }
       },
       "genuine_run": 40695006125,
       "source_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
-      "measurement_gate": "Genuine installed preparation then isolated9workloads/126samples/oneworker; keep all losses; final NumPy gather provider explicit"
+      "measurement_gate": "Verified first one-worker original/current baseline:4of9wins,GM0.9103412328503812; all126samples and all5losses retained. Final NumPy row gather remains provider. No broad speed-superiority or full-platform qualification claim.",
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/unique-rows-minimum-initial.json"
+        ],
+        "wins": 4,
+        "cases": 9,
+        "raw_samples": 126,
+        "geometric_mean_speedup": 0.9103412328503812,
+        "regressions": [
+          "u8-short-large-unique",
+          "f32-coordinates-large-unique",
+          "f64-wide64-all-equal",
+          "f32-strided-duplicates",
+          "u8-readonly-duplicates"
+        ],
+        "scope": "One genuine minimum Linux host, source ecd2242e851641b137ec0a169623732b0ed5f8f8; whole public API including contiguous preparation, owned byte-sort/first-index backend and final literal NumPy gather"
+      }
+    },
+    {
+      "id": "label-points-fused-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.label_points"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "7463a7b4c24b3212aa57757a7bac3305f01fde9f",
+      "owns": [
+        "src/bind_label_points.cpp",
+        "src/label_points.cpp",
+        "src/label_points.hpp",
+        "tests/test_label_points_native.cpp",
+        "coverage/contracts/label-points-fused-candidate.json"
+      ],
+      "depends_on": [
+        "label-points-reference"
+      ],
+      "dependency_requirements": {
+        "label-points-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "state": "measured",
+      "decision": "KEEP",
+      "source_merged": true,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "fd8b792b82ac1e9635d5d1431776275f5dc882bc",
+          "manifest": {
+            "path": "build/worktrees/label-points-fused-v1/build/fused-v1/handoff.json",
+            "sha256": "2328162b422097a6521dade63804b6cb9ff7306d76744dcb7a4ef9988c5e54bd"
+          },
+          "native_contract_checks": 51178,
+          "native_pending": 0,
+          "scope": "Six native modes with62frozen outputs/old valid streams exact;400private and396public checks unchanged"
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "fd8b792b82ac1e9635d5d1431776275f5dc882bc",
+          "manifest": {
+            "path": "build/label-points-fused-prepare-v1/final-review.json",
+            "sha256": "ab3fed8305013067276be27a955bfaf9679fc1bcc2e4028be511545845b6cfcb"
+          },
+          "native_contract_checks": 398,
+          "native_pending": 0,
+          "scope": "Genuine candidate minimum installed preparation; frozen99public+100pipeline in each normal/scalar mode; not full-platform promotion"
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "fd8b792b82ac1e9635d5d1431776275f5dc882bc",
+          "manifest": {
+            "path": "build/label-points-same-host-v1/final-review.json",
+            "sha256": "74120d6950706a04c49451f87744d9ef574660ff29d5e2b13d0d3b48aaabb9ed"
+          }
+        }
+      },
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/label-points-fused-same-host.json"
+        ],
+        "cases": 9,
+        "raw_samples": 504,
+        "direct_gain": 1.6772776112776349,
+        "normalized_gain": 1.671533208462259,
+        "original_speedup": 1.3407042246212657,
+        "baseline_original_speedup": 0.8020805197490859,
+        "direct_regressions": [
+          "sparse-64x64-i64"
+        ],
+        "normalized_regressions": [
+          "sparse-64x64-i64"
+        ],
+        "regressions": [
+          "sparse-64x64-i64",
+          "sparse-1024x1024-i64",
+          "sparse-64x64x64-f32"
+        ],
+        "initial_original_losses": [
+          "sparse-64x64-i64",
+          "dense-64x64-f64",
+          "sparse-1024x1024-i64",
+          "sparse-64x64x64-f32",
+          "dense-64x64x64-i64",
+          "duplicates-1024x1024-f64",
+          "strided-1024x1024-f32",
+          "strided-64x64x64-i64"
+        ]
+      },
+      "measurement_gate": "Fixed same-host ABBA KEEP; overalldirect/norm>1.05,dense3Deachpass>1.10,oldoriginalwindense1024preserved,othercasefloor>=.97,deadlinepassed. Sparse64direct0.972269717/norm0.992781137 retained;3balanced sparse losses tooriginal remain. No all-workloads-faster or full-platform promotion."
+    },
+    {
+      "id": "unique-rows-prefix-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.unique_rows"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "optimize/unique-rows-prefix-v1",
+      "base_sha": "ecd2242e851641b137ec0a169623732b0ed5f8f8",
+      "owns": [
+        "src/unique_rows.cpp",
+        "tests/test_unique_rows_native.cpp",
+        "coverage/contracts/unique-rows-prefix-candidate.json"
+      ],
+      "depends_on": [
+        "unique-rows-reference"
+      ],
+      "dependency_requirements": {
+        "unique-rows-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "state": "performance_pending",
+      "source_merged": false,
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "d8adeb419d72bf284f1b4a04ce20e32a9be52074",
+          "manifest": {
+            "path": "build/worktrees/unique-rows-prefix-v1/build/prefix-v1/handoff.json",
+            "sha256": "b146e9a491cabf80fc6d5b749b679c4355f6961bbbaeb688640b94acd8174e12"
+          },
+          "native_contract_checks": 54640,
+          "native_pending": 0,
+          "scope": "Private prefix candidate:6native modes,all86frozen returns and old word/FP streams unchanged;428private+428public component checks"
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "d8adeb419d72bf284f1b4a04ce20e32a9be52074",
+          "manifest": {
+            "path": "build/unique-rows-prefix-prepare-v1/final-review.json",
+            "sha256": "703ffb54e37723256646183b8611543ebb6b8c503d8e431cd40df3c4b78b66f9"
+          },
+          "native_contract_checks": 428,
+          "native_pending": 0,
+          "scope": "Genuine private-candidate minimum preparation only;107public+107pipeline each normal/scalar; no timing or full-platform credit"
+        },
+        "isolated_performance": {
+          "status": "pending"
+        }
+      },
+      "genuine_preparation": {
+        "run": 40702637014,
+        "source_sha": "d8adeb419d72bf284f1b4a04ce20e32a9be52074",
+        "artifact": 12823857042,
+        "status": "success",
+        "timing_calls": 0
+      },
+      "measurement_gate": "Private candidate only: native and genuine preparation verified, same-host performance pending; no KEEP, speed claim, or source merge recorded."
     }
   ],
   "unassigned_inventoried_apis": [
