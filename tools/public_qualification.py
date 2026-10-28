@@ -1444,7 +1444,8 @@ def admission(out, state):
     max_tree_admission(xx._core, importlib.import_module('skimagexx.morphology'),
                        importlib.import_module('skimagexx._max_tree'), coverage.native_functions())
     matrix_admission(xx._core, importlib.import_module('skimagexx.transform'),
-                     importlib.import_module('skimagexx._matrix_transform'), coverage.native_functions())
+                     importlib.import_module('skimagexx._matrix_transform'), coverage.native_functions(),
+                     diagnostic_path=out / ('matrix-runtime-admission-' + str(os.getpid()) + '.json'))
     reconstruction_admission(xx._core,importlib.import_module('skimagexx.morphology'),
                              importlib.import_module('skimagexx._reconstruction'),coverage.native_functions())
     h_extrema_admission(xx._core,importlib.import_module('skimagexx.morphology'),

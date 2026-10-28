@@ -2384,3 +2384,19 @@ def test_matrix_runtime_diagnostic_restores_trace_and_preserves_natural_exceptio
     with pytest.raises(LookupError, match='natural metadata error'):
         q.matrix_admission(*args, diagnostic_path=tmp_path / 'decision.json')
     assert namespace['calls'] == ['natural'] and sys.gettrace() is None
+
+
+
+def test_actual_admission_entrypoint_passes_a_retained_diagnostic_path(tmp_path):
+    tree = ast.parse(inspect.getsource(q.admission))
+    call, = [n for n in ast.walk(tree) if isinstance(n, ast.Call)
+             and isinstance(n.func, ast.Name) and n.func.id == 'matrix_admission']
+    assert [k.arg for k in call.keywords] == ['diagnostic_path']
+    seen = []
+    ns = dict(matrix_admission=lambda *args, **kwargs: seen.append(kwargs['diagnostic_path']),
+        xx=types.SimpleNamespace(_core=object()),
+        importlib=types.SimpleNamespace(import_module=lambda _: object()),
+        coverage=types.SimpleNamespace(native_functions=lambda: ()),
+        out=tmp_path, os=types.SimpleNamespace(getpid=lambda: 1234))
+    exec(compile(ast.fix_missing_locations(ast.Module(body=[ast.Expr(value=call)], type_ignores=[])), '<actual admission call>', 'exec'), ns)
+    assert seen == [tmp_path / 'matrix-runtime-admission-1234.json']
