@@ -515,10 +515,15 @@
     "tests/test_euler_number_intake.py",
     "tests/test_polygon_intake.py",
     "tests/test_color_transforms.py",
-    "tests/test_dtype_aliases.py"
+    "tests/test_dtype_aliases.py",
+    "tests/test_profile_coordinates_public.py"
   ],
-  "SDK_scope": "legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified",
-  "not_client_qualified_headers": [
+  "SDK_scope": "current25 required installed clients (23 legacy plus colocalization and footprint_shapes); source readiness is not qualification acceptance",
+  "required_client_families": [
+    "colocalization",
+    "footprint_shapes"
+  ],
+  "required_client_headers": [
     "include/skimagexx/colocalization.hpp",
     "include/skimagexx/footprint_shapes.hpp"
   ]

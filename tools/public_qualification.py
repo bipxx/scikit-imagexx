@@ -292,6 +292,8 @@ PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
 CURRENT_PRODUCT_SCOPE = 'current236'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes')
+CURRENT_SDK_CLIENT_SCOPE = 'current25 required installed clients (23 legacy plus colocalization and footprint_shapes); source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
@@ -387,7 +389,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py')
+POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py')
 
 
 def groups_for_source(root):
@@ -633,15 +635,17 @@ def plan(root, profile, expected=None):
     for family in sorted(declared):
         if declarations.count(family) != 1:
             blockers.append('duplicate installed SDK client: ' + family)
-    for family in sorted(declared - set(FAMILIES) - LEGACY_SDK_FAMILIES):
+    families = CURRENT_FAMILIES if registry['image_count'] > 203 else FAMILIES
+    for family in sorted(declared - set(families) - LEGACY_SDK_FAMILIES):
         blockers.append('unknown installed SDK client: ' + family)
-    for family in FAMILIES:
-        if not (root / 'tests' / ('test_' + family + '_native.cpp')).is_file():
+    for family in families:
+        client = ('test_' + family + '_native.cpp') if family in FAMILIES else ('cmake_consumer/' + family + '_consumer.cpp')
+        if not (root / 'tests' / client).is_file():
             blockers.append('missing required SDK client source: ' + family)
         if family not in declared:
             blockers.append('missing required installed SDK client: ' + family)
     scope, product_members, sdk_members = PRODUCT_SCOPE, PRODUCT_MEMBERS, SDK_MEMBERS
-    SDK_scope = SDK_CLIENT_SCOPE
+    SDK_scope = CURRENT_SDK_CLIENT_SCOPE if registry['image_count'] > 203 else SDK_CLIENT_SCOPE
     if registry['image_count'] > 203:
         scope = CURRENT_PRODUCT_SCOPE
         try:
@@ -658,8 +662,8 @@ def plan(root, profile, expected=None):
             product_members = sdk_members = None
     return dict(schema=SCHEMA, profile=profile, profile_config=PROFILES[profile], registry=registry,
                 runtime_pins=runtime_pins(profile), build_pins=dict(BUILD, numpy=PROFILES[profile]['headers']),
-                public_groups=groups, corpora=CORPORA, SDK_families=FAMILIES, blockers=blockers,
-                product_scope=scope, product_members=product_members, SDK_members=sdk_members, SDK_checks=2*len(FAMILIES),
+                public_groups=groups, corpora=CORPORA, SDK_families=families, blockers=blockers,
+                product_scope=scope, product_members=product_members, SDK_members=sdk_members, SDK_checks=2*len(families),
                 SDK_client_scope=SDK_scope, readiness_only=True,
                 R7_target_counts=dict(image_count=190, metadata_count=3, registered_count=193),
                 count_semantics='image_count counts registered image paths including identity aliases, excludes metadata; registered_count adds metadata, neither is algorithm count',
@@ -671,8 +675,9 @@ def current_contract(read_bytes):
     require(data.get('schema') == 'current-public-qualification-v1'
             and data.get('scope') == CURRENT_PRODUCT_SCOPE
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
-    require(data.get('SDK_scope') == SDK_CLIENT_SCOPE
-            and data.get('not_client_qualified_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp'],
+    require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
+            and data.get('required_client_families') == list(CURRENT_FAMILIES[-2:])
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -1673,14 +1678,18 @@ def require_same_windows_toolchain(wheel, sdk_model):
 
 
 def validate_sdk_listing(listing, *, scope=PRODUCT_SCOPE):
-    product_census(scope)
-    families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': RECONSTRUCTION_FAMILIES, 'nmi22': NMI_FAMILIES, 'h_extrema22': H_EXTREMA_LEGACY_FAMILIES, 'h_extrema23': FAMILIES}[scope]
+    if scope == CURRENT_PRODUCT_SCOPE:
+        families = CURRENT_FAMILIES
+    else:
+        product_census(scope)
+        families = {'rank14': ORIGINAL_FAMILIES, 'tv17': TV_FAMILIES, 'bregman18': BREGMAN_FAMILIES, 'max_tree19': MAX_TREE_FAMILIES, 'matrix20': MATRIX_FAMILIES, 'reconstruction21': RECONSTRUCTION_FAMILIES, 'nmi22': NMI_FAMILIES, 'h_extrema22': H_EXTREMA_LEGACY_FAMILIES, 'h_extrema23': FAMILIES}[scope]
     require({row['name'] for row in listing['tests']} == {'installed_' + f + '_consumer' for f in families}
             and len(listing['tests']) == len(families), 'SDK test discovery differs/empty')
 
 
 def sdk(out, state, journal):
     prefix = out / 'relocated sdk'; prefix.mkdir(); record = json.loads((out / 'package.json').read_text())
+    families = CURRENT_FAMILIES if record.get('product_scope') == CURRENT_PRODUCT_SCOPE else FAMILIES
     for name, digest in record['SDK_sha256'].items():
         source = out / 'package' / name; require(sha(source) == digest, 'SDK changed before relocation')
         target = prefix / name; target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(source, target)
@@ -1713,19 +1722,19 @@ def sdk(out, state, journal):
                       '-DCMAKE_GENERATOR_INSTANCE='+selection['instance'],'-DCMAKE_MSVC_RUNTIME_LIBRARY='+selection['runtime']]
     must_run(journal, 'sdk-configure', configure, env)
     if os.name == 'nt':
-        sdk_toolchain=read_windows_toolchain(build,config,FAMILIES[0]+'_consumer')
+        sdk_toolchain=read_windows_toolchain(build,config,families[0]+'_consumer')
         require_same_windows_toolchain(wheel_toolchain,sdk_toolchain)
         dump(out/'windows-sdk-toolchain-verification.json',dict(wheel=wheel_toolchain,sdk=sdk_toolchain,matched=True))
-    must_run(journal, 'sdk-build', [cmake, '--build', build, '--config', config, '--parallel', '2', '--target', *[f + '_consumer' for f in FAMILIES]], env)
-    pattern = '^installed_(' + '|'.join(FAMILIES) + ')_consumer$'
+    must_run(journal, 'sdk-build', [cmake, '--build', build, '--config', config, '--parallel', '2', '--target', *[f + '_consumer' for f in families]], env)
+    pattern = '^installed_(' + '|'.join(families) + ')_consumer$'
     must_run(journal, 'sdk-list', [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--show-only=json-v1'], env)
     listing = json.loads((out / 'sdk-list.log').read_text())
-    validate_sdk_listing(listing)
+    validate_sdk_listing(listing, scope=record.get('product_scope', PRODUCT_SCOPE))
     for mode in ('normal','scalar'):
         code = journal.run('sdk-' + mode, [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--output-on-failure'], environment(scalar=mode == 'scalar'))
         require(code == 0, 'installed SDK client failed')
     verify_tree(prefix, record['SDK_sha256'])
-    dump(out / 'sdk.json', dict(families=FAMILIES, checks=2*len(FAMILIES), SDK_sha256=record['SDK_sha256'], scope=f'Relocated complete SDK,{len(FAMILIES)} independently linked installed clients normal/scalar; no source includes or Python dependency'))
+    dump(out / 'sdk.json', dict(families=families, checks=2*len(families), SDK_sha256=record['SDK_sha256'], scope=f'Relocated complete SDK,{len(families)} independently linked installed clients normal/scalar; no source includes or Python dependency'))
 
 
 def qualify(out):
@@ -1781,11 +1790,12 @@ def seal(out):
     records = {p.relative_to(out).as_posix(): dict(bytes=p.stat().st_size,sha256=sha(p)) for p in out.rglob('*') if p.is_file() and p.name != 'manifest.json'}
     for name, row in records.items():
         verify_record(out, name, row, state['interpreter_provenance'])
+    families = CURRENT_FAMILIES if state['expected'].get('image_count',0)>203 else FAMILIES
     proof = dict(schema=SCHEMA, source=state['source'], profile=state['profile'], passed=not failures, failures=failures,
                  build_identity=state['build_identity'],
                  interpreter_provenance=state['interpreter_provenance'],
-                 counts=counts, SDK_checks=2*len(FAMILIES), expected_registry=state['expected'], command_count=len(commands), records=records,
-                 SDK_client_scope=SDK_CLIENT_SCOPE if state['expected'].get('image_count',0)>203 else 'historical scoped installed clients',
+                 counts=counts, SDK_checks=2*len(families), expected_registry=state['expected'], command_count=len(commands), records=records,
+                 SDK_client_scope=CURRENT_SDK_CLIENT_SCOPE if state['expected'].get('image_count',0)>203 else 'historical scoped installed clients',
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
                  providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
                  supplemental='382 returned ArrayMap protocol cases use installed public returned class; no public class-count increase. Reverse-load cross-build diagnostics NOT run without separate authenticated matched-control evidence.')

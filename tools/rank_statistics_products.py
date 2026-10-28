@@ -176,10 +176,19 @@ def qualification_scope_text(text, *, read_bytes=None, names=None, profile='mode
     for node in module.body:
         if isinstance(node, ast.Assign):
             for target in node.targets:
-                if isinstance(target, ast.Name) and target.id in ('FAMILIES', 'PRODUCT_SCOPE', 'PRODUCT_MEMBERS', 'SDK_MEMBERS', 'CURRENT_PRODUCT_SCOPE'):
+                if isinstance(target, ast.Name) and target.id in ('FAMILIES', 'PRODUCT_SCOPE', 'PRODUCT_MEMBERS', 'SDK_MEMBERS', 'CURRENT_PRODUCT_SCOPE', 'CURRENT_FAMILIES'):
                     require(target.id not in values, 'duplicate source qualification literal')
-                    values[target.id] = ast.literal_eval(node.value)
+                    if target.id == 'CURRENT_FAMILIES':
+                        require(isinstance(node.value, ast.BinOp) and isinstance(node.value.op, ast.Add)
+                                and isinstance(node.value.left, ast.Name) and node.value.left.id == 'FAMILIES',
+                                'current client declaration must extend closed historical families')
+                        extension = ast.literal_eval(node.value.right)
+                        require(type(extension) is tuple, 'current client extension must be a tuple')
+                        values[target.id] = values['FAMILIES'] + extension
+                    else:
+                        values[target.id] = ast.literal_eval(node.value)
     current = values.pop('CURRENT_PRODUCT_SCOPE', None)
+    current_families = values.pop('CURRENT_FAMILIES', None)
     families = values.get('FAMILIES')
     require(type(families) is tuple and len(families) == len(set(families)), 'source SDK family identities differ')
     if set(values) == {'FAMILIES'}:
@@ -211,8 +220,8 @@ def qualification_scope_text(text, *, read_bytes=None, names=None, profile='mode
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
         contract = tool.current_contract(read_bytes)
         layout = tool.current_install_layout(read_bytes, names, profile)
-        require(tuple(families) == tool.FAMILIES, 'current installed SDK client scope differs')
-        return dict(name=current, families=list(families), members=layout['product_count'], sdk=layout['SDK_count'],
+        require(tuple(families) == tool.FAMILIES and current_families == tool.CURRENT_FAMILIES, 'current installed SDK client scope differs')
+        return dict(name=current, families=list(current_families), members=layout['product_count'], sdk=layout['SDK_count'],
                     image_count=len(contract['image_paths']), metadata_count=len(contract['metadata_paths']),
                     functions=sorted(contract['image_paths'] + contract['metadata_paths']),
                     install_members=layout['members_without_core'], SDK_members=layout['SDK_members'],
