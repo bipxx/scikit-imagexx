@@ -23,6 +23,7 @@ def test_frozen_transport_and_no_guard_or_harness_substitution():
     assert len(SCRIPTS)==3
     for script in SCRIPTS:compile(script,'workflow-inline','exec')
     assert '40702637014' in SCRIPTS[0] and '40712229136' in SCRIPTS[0]
+    assert '12828765895' in SCRIPTS[0] and 'b9f233f4b6ed05efe1b844ab19f1e4d8454d31f53dc56fa285e1860fb1321087' in SCRIPTS[0]
     assert '12823857042' in SCRIPTS[0] and '355736e04190ae6efa5eabd99659c5b4066ae0145eb1b049bb0f2e7177e130d7' in SCRIPTS[0]
     assert '7aa059ddb1c2f196c3dbba9cf4d638ae1a761e67' in SCRIPTS[0]
     timed=WORKFLOW.split('      - name: Measure',1)[1].split('      - name:',1)[0]
