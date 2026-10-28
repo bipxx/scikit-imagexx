@@ -625,3 +625,4 @@ tools/diagnostics/montage_wrapper_tax/* text eol=lf
 benchmarks/montage-wrapper-tax-diagnostic.json -text
 benchmarks/approximate-polygon-minimum-initial.json -text
 coverage/contracts/montage-public-repeatability.json -text
+benchmarks/montage-public-repeatability.json -text
