@@ -547,10 +547,11 @@ def approximate_polygon_default_error(image, actual, expected):
     import numpy as np
     for value in (actual, expected):
         assert type(value) is np.ndarray and value.dtype == np.dtype('float64')
-        assert value.dtype.metadata is None and value.ndim == 2 and value.shape[1] == 2
+        assert value.ndim == 2 and value.shape[1] == 2
         assert value.flags.owndata and value.flags.writeable and value.flags.aligned
         assert value.flags.c_contiguous and value.base is None
         assert not np.shares_memory(value, image)
+    assert actual.dtype.metadata == expected.dtype.metadata
     assert actual is not expected and actual.shape == expected.shape
     assert (actual.strides, actual.flags.f_contiguous) == (expected.strides, expected.flags.f_contiguous)
     assert actual.tobytes() == expected.tobytes()

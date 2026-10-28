@@ -135,6 +135,23 @@ def test_every_frozen_source_pin_rejects_changes(tmp_path, monkeypatch, changed)
 def test_consumer_inverse_preserves_full_assertions_native_ids_and_all_case_nodes(name):
     path='tests/'+name; source=(ROOT/path).read_text()
     baseline_source_sha256 = {'test_approximate_polygon_integration.py': 'd4fef85cc26ec8bfffacb2482d3ba85642171957e74821903cd750d961c69ef8', 'test_approximate_polygon_pipeline.py': 'affd7db0168941f0f1e818e77426365f10f298eb7ee009628bdb01fc870ae6c6'}
+    if name == 'test_approximate_polygon_integration.py':
+        metadata_regression = (
+            '    # Matching dtype-tag regression: source-inverse guard retains this exact block.\n'
+            "    if reason == 'metadata':\n"
+            "        tagged = np.dtype('float64', metadata={'units': 'linear', 'source': 'parity'})\n"
+            '        tagged_expected = expected.astype(tagged)\n'
+            '        tagged_actual = tagged_expected.copy()\n'
+            '        assert approximate_polygon_default_error(image, tagged_actual, tagged_expected) == 0.\n'
+            "        lost = tagged_actual.view(np.dtype('float64')).copy()\n"
+            "        corrupted = tagged_actual.view(np.dtype('float64', metadata={'units': 'changed'})).copy()\n"
+            '        for mismatch in (lost, corrupted):\n'
+            '            with pytest.raises(AssertionError):\n'
+            '                approximate_polygon_default_error(image, mismatch, tagged_expected)\n'
+            '    # End matching dtype-tag regression.\n'
+        )
+        assert source.count(metadata_regression) == 1
+        source = source.replace(metadata_regression, '', 1)
     restored='\n'.join(line for line in source.splitlines()
         if 'approximate_polygon_runtime_reference import' not in line
         and line.strip() not in ("if spec['id'] in RUNTIME_REFERENCE_IDS:","expected = runtime_reference(spec['id'], np)"))
