@@ -1,0 +1,4027 @@
+{
+"baseline_first": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T18:17:30.452535+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-baseline/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "ae226acb15af37f4b9f2968ef99d41b3bee2d85fe9f1f3e2ab9ad9384360168b",
+    "harness_sha256": "903c46306ed0a3e7a57d21a32e794fb9b48fe6af7ea7b685d7cf3ea66b1d0850",
+    "contract_sha256": "3fceb3b66c254f1330f30f779a34a042162c08cf59921bf1343b06376f450221",
+    "original_source_sha256": "8c409baaf3527b3466c8d8e973e4482182bdf172e8486c33d91eb469403742b2",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/label_points.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/1-baseline/label-points.json"
+    ],
+    "selected_apis": [
+      "util.label_points"
+    ],
+    "provider_frontier": "Nine bounded coordinate workloads frozen before generation or original/native calls; all gains and losses retained. No full-library or prior-C++ performance claim. Whole public call including literal negative check, NumPy round/int conversion/transpose, owned zero-fill/scatter, output allocation and output destruction. Coordinate generation, independent oracle and parity guards are outside timing. Ordinary finite nonnegative exact ndarray coordinates and positive integer tuple shapes. Invalid/protocol/scalar/exceptional inputs remain outside this timing matrix; sparse allocation-cost losses are included."
+  },
+  "results": [
+    {
+      "case_id": "sparse-64x64-i64",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b14406228a6b9ca4e1a46ceaf6348caa89df34a63261f46497983ff59e227c14"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "reference_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "oracle_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.013658129129129129,
+      "cpp_ms": 0.0143752734375,
+      "speedup": 0.9501126492314159,
+      "samples_ms": [
+        [
+          0.013882663663663664,
+          0.01345318018018018,
+          0.013983003003003003,
+          0.013658129129129129,
+          0.013882783783783784,
+          0.01333509009009009,
+          0.013419753753753753
+        ],
+        [
+          0.0144596875,
+          0.014734109375,
+          0.0143752734375,
+          0.014853359375,
+          0.0139691953125,
+          0.01356089453125,
+          0.013672625
+        ]
+      ],
+      "loops": [
+        333,
+        256
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64-f64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 4096,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            4096,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "f551ef5251b49c42848654769a7fa004e82c8a36fd597e73605fd514ff70e475"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "reference_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "oracle_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.06280746853146853,
+      "cpp_ms": 0.03232692307692308,
+      "speedup": 1.9428842139419173,
+      "samples_ms": [
+        [
+          0.06412876223776223,
+          0.06303293006993008,
+          0.06259316083916083,
+          0.06336908391608392,
+          0.06272858041958042,
+          0.06248743356643357,
+          0.06280746853146853
+        ],
+        [
+          0.03232692307692308,
+          0.032460736842105264,
+          0.03221614979757085,
+          0.03259767611336033,
+          0.03190361943319838,
+          0.03256798380566801,
+          0.03223663157894737
+        ]
+      ],
+      "loops": [
+        143,
+        247
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-1024x1024-i64",
+      "kind": "sparse",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "425e2c874d7e56bedee73793560060dc33e30d06156a44f6e6df7ace0e930f07"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "reference_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "oracle_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.15220096341463416,
+      "cpp_ms": 0.15702382857142858,
+      "speedup": 0.9692857752821856,
+      "samples_ms": [
+        [
+          0.16603996341463415,
+          0.15155304878048778,
+          0.15220096341463416,
+          0.15234158536585365,
+          0.15487364634146342,
+          0.1506190975609756,
+          0.14869658536585365
+        ],
+        [
+          0.15702382857142858,
+          0.15897777142857142,
+          0.15187388571428573,
+          0.1582205,
+          0.15684562857142856,
+          0.15525365714285716,
+          0.1586251142857143
+        ]
+      ],
+      "loops": [
+        82,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-1024x1024-f64",
+      "kind": "dense",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 1048576,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            1048576,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "208e503a59db50d957f55875c907f879143781add259ed9316431dcaa04bf291"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "reference_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "oracle_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "max_abs_error": 0.0,
+      "reference_ms": 19.627769,
+      "cpp_ms": 9.1057615,
+      "speedup": 2.1555329557006297,
+      "samples_ms": [
+        [
+          19.438364,
+          19.59098,
+          19.365767,
+          19.828034,
+          20.256488,
+          19.627769,
+          19.877467
+        ],
+        [
+          9.098488,
+          9.3183855,
+          9.018283,
+          9.133594,
+          9.0782305,
+          9.419921,
+          9.1057615
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-64x64x64-f32",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 32,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e3a35d196dcd4198f03f520a1e1021e117df6b90032ead08c15f3699c9c0c4ca"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "reference_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "oracle_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.05190473777777778,
+      "cpp_ms": 0.05653636231884058,
+      "speedup": 0.9180770684370805,
+      "samples_ms": [
+        [
+          0.05796204888888889,
+          0.05291600888888889,
+          0.05124745777777778,
+          0.052529106666666665,
+          0.05190473777777778,
+          0.05170841333333333,
+          0.05145251111111111
+        ],
+        [
+          0.05666210144927536,
+          0.057237311594202894,
+          0.055132855072463766,
+          0.05653636231884058,
+          0.05545940579710145,
+          0.05478967391304348,
+          0.05902145652173913
+        ]
+      ],
+      "loops": [
+        225,
+        138
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64x64-i64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 262144,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            262144,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "08e512be1e2041db2ed85e526a8404da0ce3a9f457c9ba904f4ac1de8d9e4938"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "reference_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "oracle_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.8535611666666667,
+      "cpp_ms": 0.9862731428571428,
+      "speedup": 2.893276763473617,
+      "samples_ms": [
+        [
+          2.8766941666666663,
+          2.8480473333333336,
+          2.8535611666666667,
+          2.8517058333333334,
+          2.8240638333333337,
+          2.8767495,
+          2.8746071666666664
+        ],
+        [
+          0.9862731428571428,
+          0.9868120714285715,
+          0.9914077857142857,
+          0.9964242142857144,
+          0.9704298571428571,
+          0.9766902142857143,
+          0.9748567857142857
+        ]
+      ],
+      "loops": [
+        6,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "duplicates-1024x1024-f64",
+      "kind": "duplicates",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 65536,
+      "coordinate_layout": "C",
+      "duplicate_pool": 4096,
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "d4c5249a96a851504418f3cb4e2b3c302115ee10bbbe881918c15c99e9265d6b"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "reference_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "oracle_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9358751999999999,
+      "cpp_ms": 0.4138926,
+      "speedup": 2.2611547053510983,
+      "samples_ms": [
+        [
+          0.9384526666666666,
+          0.9286929333333334,
+          1.0245025333333333,
+          0.9358751999999999,
+          0.9364889333333334,
+          0.9097841999999999,
+          0.9058869333333334
+        ],
+        [
+          0.44024863333333336,
+          0.47579126666666666,
+          0.40596436666666663,
+          0.4138926,
+          0.4116958,
+          0.4166247,
+          0.4078055
+        ]
+      ],
+      "loops": [
+        15,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-1024x1024-f32",
+      "kind": "strided",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 65536,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            -4
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "fed875d42814564c1c6140d722a952defb9e7c14171ec8ae578baeea296ae5f0"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            131072,
+            2
+          ],
+          "strides": [
+            8,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "faf023ae33546822a3f8bd1e835fa9c3a442e5edd8260402543b8a0028dcdd6f"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "reference_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "oracle_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.5554788333333334,
+      "cpp_ms": 2.099077625,
+      "speedup": 1.2174294094213562,
+      "samples_ms": [
+        [
+          2.5424095,
+          2.5554788333333334,
+          2.5909973333333336,
+          2.5265415,
+          2.5764016666666665,
+          2.4886071666666667,
+          2.590538
+        ],
+        [
+          2.08817075,
+          2.015805125,
+          2.162471375,
+          2.071497,
+          2.109869,
+          2.273343,
+          2.099077625
+        ]
+      ],
+      "loops": [
+        6,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-64x64x64-i64",
+      "kind": "strided",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 32768,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            3
+          ],
+          "strides": [
+            48,
+            -8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "c6a498c3338ad2aa464e9032ec3eec4f4d0e52929596808ec69057813057b365"
+        },
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "c0486f1f125a46abe2b787ae49c4df3a4bfb9cee2fb53491f4f53e0e50fba1fc"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "reference_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "oracle_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.1678307692307692,
+      "cpp_ms": 0.8526856666666667,
+      "speedup": 1.3695911809988235,
+      "samples_ms": [
+        [
+          1.2218798461538463,
+          1.1505183846153846,
+          1.1678307692307692,
+          1.2332125384615384,
+          1.1781825384615385,
+          1.098170923076923,
+          1.154364
+        ],
+        [
+          0.8312595,
+          0.8526856666666667,
+          0.8642451111111111,
+          0.8363472777777777,
+          0.8556823333333333,
+          0.821151,
+          0.893712
+        ]
+      ],
+      "loops": [
+        13,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"candidate_first": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T18:17:40.118265+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "c376b938b1f4d055699c8ed07462116deb90d37baa0dd9edba7c8c361698e5d8",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "c376b938b1f4d055699c8ed07462116deb90d37baa0dd9edba7c8c361698e5d8",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-candidate/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "de209fce9e8b3569d84f6741af7542105ecda7360eea1efc7fa78333fbb19f5e",
+    "harness_sha256": "903c46306ed0a3e7a57d21a32e794fb9b48fe6af7ea7b685d7cf3ea66b1d0850",
+    "contract_sha256": "3fceb3b66c254f1330f30f779a34a042162c08cf59921bf1343b06376f450221",
+    "original_source_sha256": "8c409baaf3527b3466c8d8e973e4482182bdf172e8486c33d91eb469403742b2",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/label_points.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/2-candidate/label-points.json"
+    ],
+    "selected_apis": [
+      "util.label_points"
+    ],
+    "provider_frontier": "Nine bounded coordinate workloads frozen before generation or original/native calls; all gains and losses retained. No full-library or prior-C++ performance claim. Whole public call including literal negative check, NumPy round/int conversion/transpose, owned zero-fill/scatter, output allocation and output destruction. Coordinate generation, independent oracle and parity guards are outside timing. Ordinary finite nonnegative exact ndarray coordinates and positive integer tuple shapes. Invalid/protocol/scalar/exceptional inputs remain outside this timing matrix; sparse allocation-cost losses are included."
+  },
+  "results": [
+    {
+      "case_id": "sparse-64x64-i64",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b14406228a6b9ca4e1a46ceaf6348caa89df34a63261f46497983ff59e227c14"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "reference_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "oracle_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.013266767379679145,
+      "cpp_ms": 0.013525442477876105,
+      "speedup": 0.9808749252662098,
+      "samples_ms": [
+        [
+          0.013427336898395722,
+          0.013686189839572193,
+          0.013430229946524064,
+          0.013076917112299465,
+          0.012994387700534758,
+          0.013266767379679145,
+          0.012429451871657754
+        ],
+        [
+          0.01369608849557522,
+          0.013525442477876105,
+          0.013802303834808259,
+          0.013305504424778762,
+          0.013413256637168143,
+          0.01329182005899705,
+          0.013547905604719765
+        ]
+      ],
+      "loops": [
+        374,
+        339
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64-f64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 4096,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            4096,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "f551ef5251b49c42848654769a7fa004e82c8a36fd597e73605fd514ff70e475"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "reference_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "oracle_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.06242659119496855,
+      "cpp_ms": 0.03172152777777778,
+      "speedup": 1.9679566391723704,
+      "samples_ms": [
+        [
+          0.06242659119496855,
+          0.062203654088050314,
+          0.061594584905660374,
+          0.06225803773584906,
+          0.06311492452830189,
+          0.06346809433962264,
+          0.06346236477987421
+        ],
+        [
+          0.03183102380952381,
+          0.031886761904761904,
+          0.03165799603174603,
+          0.03172152777777778,
+          0.03129322619047619,
+          0.03349255158730159,
+          0.030934654761904764
+        ]
+      ],
+      "loops": [
+        159,
+        252
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-1024x1024-i64",
+      "kind": "sparse",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "425e2c874d7e56bedee73793560060dc33e30d06156a44f6e6df7ace0e930f07"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "reference_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "oracle_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.14077119047619047,
+      "cpp_ms": 0.15113025,
+      "speedup": 0.931456081599749,
+      "samples_ms": [
+        [
+          0.17589942857142857,
+          0.15648590476190477,
+          0.1562933015873016,
+          0.13629247619047619,
+          0.14077119047619047,
+          0.13680550793650792,
+          0.13277650793650794
+        ],
+        [
+          0.16401316666666665,
+          0.15669013888888889,
+          0.16221255555555555,
+          0.15113025,
+          0.14848931944444443,
+          0.149821,
+          0.149506375
+        ]
+      ],
+      "loops": [
+        63,
+        72
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-1024x1024-f64",
+      "kind": "dense",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 1048576,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            1048576,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "208e503a59db50d957f55875c907f879143781add259ed9316431dcaa04bf291"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "reference_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "oracle_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "max_abs_error": 0.0,
+      "reference_ms": 19.73841,
+      "cpp_ms": 9.038103,
+      "speedup": 2.183910716662556,
+      "samples_ms": [
+        [
+          19.831184,
+          19.73841,
+          19.147604,
+          19.177019,
+          19.762417,
+          20.261662,
+          18.680408
+        ],
+        [
+          8.968482,
+          9.038103,
+          9.1852185,
+          8.8751875,
+          8.726734,
+          9.1695895,
+          9.1988195
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-64x64x64-f32",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 32,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e3a35d196dcd4198f03f520a1e1021e117df6b90032ead08c15f3699c9c0c4ca"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "reference_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "oracle_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.05293161988304093,
+      "cpp_ms": 0.05305707738095238,
+      "speedup": 0.9976354238849106,
+      "samples_ms": [
+        [
+          0.05934856140350877,
+          0.05519504678362573,
+          0.05261166081871345,
+          0.05293161988304093,
+          0.05276780701754386,
+          0.05280787719298246,
+          0.05312238596491228
+        ],
+        [
+          0.05666407738095238,
+          0.053294011904761907,
+          0.053360625,
+          0.052903285714285715,
+          0.0526345,
+          0.05296875595238095,
+          0.05305707738095238
+        ]
+      ],
+      "loops": [
+        171,
+        168
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64x64-i64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 262144,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            262144,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "08e512be1e2041db2ed85e526a8404da0ce3a9f457c9ba904f4ac1de8d9e4938"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "reference_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "oracle_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.9146638,
+      "cpp_ms": 0.9754371428571429,
+      "speedup": 2.9880590680222494,
+      "samples_ms": [
+        [
+          2.9251574,
+          2.8885967999999997,
+          2.9251394,
+          2.9175372000000004,
+          2.9146638,
+          2.8970226,
+          2.873136
+        ],
+        [
+          0.9744875,
+          0.9799655714285714,
+          0.9754371428571429,
+          0.9842277857142857,
+          0.9666585,
+          0.9664795714285714,
+          0.9877988571428572
+        ]
+      ],
+      "loops": [
+        5,
+        14
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "duplicates-1024x1024-f64",
+      "kind": "duplicates",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 65536,
+      "coordinate_layout": "C",
+      "duplicate_pool": 4096,
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "d4c5249a96a851504418f3cb4e2b3c302115ee10bbbe881918c15c99e9265d6b"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "reference_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "oracle_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.91593825,
+      "cpp_ms": 0.3990938333333333,
+      "speedup": 2.2950448578717704,
+      "samples_ms": [
+        [
+          0.933199375,
+          0.9373195625,
+          0.9205681875,
+          0.900163625,
+          0.91593825,
+          0.8905839375,
+          0.9138725
+        ],
+        [
+          0.418411,
+          0.4025703,
+          0.3965694,
+          0.3876487,
+          0.40417536666666665,
+          0.39876486666666666,
+          0.3990938333333333
+        ]
+      ],
+      "loops": [
+        16,
+        30
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-1024x1024-f32",
+      "kind": "strided",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 65536,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            -4
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "fed875d42814564c1c6140d722a952defb9e7c14171ec8ae578baeea296ae5f0"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            131072,
+            2
+          ],
+          "strides": [
+            8,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "faf023ae33546822a3f8bd1e835fa9c3a442e5edd8260402543b8a0028dcdd6f"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "reference_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "oracle_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.558775,
+      "cpp_ms": 2.154516,
+      "speedup": 1.1876333246074755,
+      "samples_ms": [
+        [
+          2.5475706666666667,
+          2.5974976666666665,
+          2.5407195,
+          2.5583475,
+          2.558775,
+          2.610198,
+          2.5709628333333336
+        ],
+        [
+          2.2329158571428573,
+          2.1337441428571426,
+          2.170611714285714,
+          2.0182735714285713,
+          2.154516,
+          2.2161,
+          2.130114428571429
+        ]
+      ],
+      "loops": [
+        6,
+        7
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-64x64x64-i64",
+      "kind": "strided",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 32768,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            3
+          ],
+          "strides": [
+            48,
+            -8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "c6a498c3338ad2aa464e9032ec3eec4f4d0e52929596808ec69057813057b365"
+        },
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "c0486f1f125a46abe2b787ae49c4df3a4bfb9cee2fb53491f4f53e0e50fba1fc"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "reference_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "oracle_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.1415499166666667,
+      "cpp_ms": 0.8178395882352941,
+      "speedup": 1.3958115174271075,
+      "samples_ms": [
+        [
+          1.1415499166666667,
+          1.1085430833333332,
+          1.100872,
+          1.1067538333333333,
+          1.1817903333333333,
+          1.1445981666666667,
+          1.2200186666666668
+        ],
+        [
+          0.7950297647058824,
+          0.8412563529411765,
+          0.8178395882352941,
+          0.8259654705882353,
+          0.8302404705882352,
+          0.8047273529411765,
+          0.8088368235294118
+        ]
+      ],
+      "loops": [
+        12,
+        17
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"candidate_second": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T18:17:49.870661+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "c376b938b1f4d055699c8ed07462116deb90d37baa0dd9edba7c8c361698e5d8",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "c376b938b1f4d055699c8ed07462116deb90d37baa0dd9edba7c8c361698e5d8",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-candidate/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "de209fce9e8b3569d84f6741af7542105ecda7360eea1efc7fa78333fbb19f5e",
+    "harness_sha256": "903c46306ed0a3e7a57d21a32e794fb9b48fe6af7ea7b685d7cf3ea66b1d0850",
+    "contract_sha256": "3fceb3b66c254f1330f30f779a34a042162c08cf59921bf1343b06376f450221",
+    "original_source_sha256": "8c409baaf3527b3466c8d8e973e4482182bdf172e8486c33d91eb469403742b2",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/label_points.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/3-candidate/label-points.json"
+    ],
+    "selected_apis": [
+      "util.label_points"
+    ],
+    "provider_frontier": "Nine bounded coordinate workloads frozen before generation or original/native calls; all gains and losses retained. No full-library or prior-C++ performance claim. Whole public call including literal negative check, NumPy round/int conversion/transpose, owned zero-fill/scatter, output allocation and output destruction. Coordinate generation, independent oracle and parity guards are outside timing. Ordinary finite nonnegative exact ndarray coordinates and positive integer tuple shapes. Invalid/protocol/scalar/exceptional inputs remain outside this timing matrix; sparse allocation-cost losses are included."
+  },
+  "results": [
+    {
+      "case_id": "sparse-64x64-i64",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b14406228a6b9ca4e1a46ceaf6348caa89df34a63261f46497983ff59e227c14"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "reference_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "oracle_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.014150739255014326,
+      "cpp_ms": 0.01392613569321534,
+      "speedup": 1.0161282043164646,
+      "samples_ms": [
+        [
+          0.01436833810888252,
+          0.014150739255014326,
+          0.013614315186246418,
+          0.014014409742120345,
+          0.013714103151862464,
+          0.014157885386819483,
+          0.014216679083094555
+        ],
+        [
+          0.014319085545722714,
+          0.01392613569321534,
+          0.013680362831858407,
+          0.013394961651917404,
+          0.013696442477876106,
+          0.014507460176991149,
+          0.01420474041297935
+        ]
+      ],
+      "loops": [
+        349,
+        339
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64-f64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 4096,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            4096,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "f551ef5251b49c42848654769a7fa004e82c8a36fd597e73605fd514ff70e475"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "reference_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "oracle_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.06367749375000001,
+      "cpp_ms": 0.032336896000000004,
+      "speedup": 1.9691900468740104,
+      "samples_ms": [
+        [
+          0.0643053625,
+          0.0629684125,
+          0.06498149375000001,
+          0.0633009125,
+          0.06367749375000001,
+          0.0678891375,
+          0.06281211875
+        ],
+        [
+          0.032336896000000004,
+          0.032649644,
+          0.033583796,
+          0.033726019999999995,
+          0.031719812,
+          0.032129468,
+          0.032121536
+        ]
+      ],
+      "loops": [
+        160,
+        250
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-1024x1024-i64",
+      "kind": "sparse",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "425e2c874d7e56bedee73793560060dc33e30d06156a44f6e6df7ace0e930f07"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "reference_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "oracle_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.152097,
+      "cpp_ms": 0.15396789855072465,
+      "speedup": 0.987848775177585,
+      "samples_ms": [
+        [
+          0.17601871875,
+          0.152097,
+          0.15187971875,
+          0.152443265625,
+          0.149506984375,
+          0.15615303125,
+          0.150446546875
+        ],
+        [
+          0.1574445507246377,
+          0.15471117391304348,
+          0.15227413043478263,
+          0.1554049420289855,
+          0.14991508695652173,
+          0.14998578260869566,
+          0.15396789855072465
+        ]
+      ],
+      "loops": [
+        64,
+        69
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-1024x1024-f64",
+      "kind": "dense",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 1048576,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            1048576,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "208e503a59db50d957f55875c907f879143781add259ed9316431dcaa04bf291"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "reference_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "oracle_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "max_abs_error": 0.0,
+      "reference_ms": 19.525722,
+      "cpp_ms": 9.0279185,
+      "speedup": 2.162815492851425,
+      "samples_ms": [
+        [
+          19.374097,
+          20.160031,
+          19.525722,
+          19.396509,
+          19.400538,
+          20.352583,
+          21.250085
+        ],
+        [
+          9.0273075,
+          9.0279185,
+          9.0294565,
+          9.0584155,
+          8.8273225,
+          9.1832095,
+          8.7145205
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-64x64x64-f32",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 32,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e3a35d196dcd4198f03f520a1e1021e117df6b90032ead08c15f3699c9c0c4ca"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "reference_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "oracle_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.05431006024096385,
+      "cpp_ms": 0.053952509803921564,
+      "speedup": 1.006627132608691,
+      "samples_ms": [
+        [
+          0.059626710843373495,
+          0.05431006024096385,
+          0.05488843373493976,
+          0.0537773734939759,
+          0.056176512048192774,
+          0.054157849397590364,
+          0.05307050602409639
+        ],
+        [
+          0.05722728104575163,
+          0.053904967320261434,
+          0.05381564705882353,
+          0.05236823529411765,
+          0.05438822875816993,
+          0.054161921568627446,
+          0.053952509803921564
+        ]
+      ],
+      "loops": [
+        166,
+        153
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64x64-i64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 262144,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            262144,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "08e512be1e2041db2ed85e526a8404da0ce3a9f457c9ba904f4ac1de8d9e4938"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "reference_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "oracle_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.8827673333333337,
+      "cpp_ms": 0.9799556666666667,
+      "speedup": 2.9417323980982815,
+      "samples_ms": [
+        [
+          2.9044296666666667,
+          2.8818438333333334,
+          2.8870118333333337,
+          2.8796163333333333,
+          2.8827673333333337,
+          2.8801941666666666,
+          2.8900658333333333
+        ],
+        [
+          0.9804592666666667,
+          0.9786691999999999,
+          0.9889058000000001,
+          0.9647478666666667,
+          0.9952095333333333,
+          0.9753904,
+          0.9799556666666667
+        ]
+      ],
+      "loops": [
+        6,
+        15
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "duplicates-1024x1024-f64",
+      "kind": "duplicates",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 65536,
+      "coordinate_layout": "C",
+      "duplicate_pool": 4096,
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "d4c5249a96a851504418f3cb4e2b3c302115ee10bbbe881918c15c99e9265d6b"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "reference_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "oracle_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9161788000000001,
+      "cpp_ms": 0.4151516896551724,
+      "speedup": 2.206853116172992,
+      "samples_ms": [
+        [
+          0.9386755999999999,
+          0.921484,
+          0.9120283333333333,
+          0.9055956,
+          0.9161788000000001,
+          0.9051267333333333,
+          0.9169221333333333
+        ],
+        [
+          0.4554734482758621,
+          0.4171803103448276,
+          0.4188845517241379,
+          0.4151516896551724,
+          0.4117743103448276,
+          0.41210837931034483,
+          0.4149015517241379
+        ]
+      ],
+      "loops": [
+        15,
+        29
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-1024x1024-f32",
+      "kind": "strided",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 65536,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            -4
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "fed875d42814564c1c6140d722a952defb9e7c14171ec8ae578baeea296ae5f0"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            131072,
+            2
+          ],
+          "strides": [
+            8,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "faf023ae33546822a3f8bd1e835fa9c3a442e5edd8260402543b8a0028dcdd6f"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "reference_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "oracle_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.5861411666666667,
+      "cpp_ms": 2.162285875,
+      "speedup": 1.1960218565765117,
+      "samples_ms": [
+        [
+          2.6696895,
+          2.5861411666666667,
+          2.6418055,
+          2.541035,
+          2.5692011666666663,
+          2.4611486666666664,
+          2.5948508333333336
+        ],
+        [
+          2.235560625,
+          2.26002775,
+          2.162285875,
+          2.148654,
+          2.116980875,
+          2.182452375,
+          2.093757375
+        ]
+      ],
+      "loops": [
+        6,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-64x64x64-i64",
+      "kind": "strided",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 32768,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            3
+          ],
+          "strides": [
+            48,
+            -8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "c6a498c3338ad2aa464e9032ec3eec4f4d0e52929596808ec69057813057b365"
+        },
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "c0486f1f125a46abe2b787ae49c4df3a4bfb9cee2fb53491f4f53e0e50fba1fc"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "reference_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "oracle_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.11861125,
+      "cpp_ms": 0.8401786842105263,
+      "speedup": 1.3313968457211014,
+      "samples_ms": [
+        [
+          1.084042125,
+          1.0808479375,
+          1.11861125,
+          1.1459261875,
+          1.088173,
+          1.12033575,
+          1.144603125
+        ],
+        [
+          0.8348987894736841,
+          0.8459800526315789,
+          0.832082947368421,
+          0.8445937894736841,
+          0.8656722105263158,
+          0.8097484736842105,
+          0.8401786842105263
+        ]
+      ],
+      "loops": [
+        16,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"baseline_last": {
+  "metadata": {
+    "timestamp_utc": "2026-10-28T18:17:59.636533+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu": "x86_64",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "9aec1fcc68689bbf3971c636aa4c67762c3d7ee794268bc8a70e63e3f22624e3",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "core_path": "/home/runner/work/_temp/env-baseline/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256": "ae226acb15af37f4b9f2968ef99d41b3bee2d85fe9f1f3e2ab9ad9384360168b",
+    "harness_sha256": "903c46306ed0a3e7a57d21a32e794fb9b48fe6af7ea7b685d7cf3ea66b1d0850",
+    "contract_sha256": "3fceb3b66c254f1330f30f779a34a042162c08cf59921bf1343b06376f450221",
+    "original_source_sha256": "8c409baaf3527b3466c8d8e973e4482182bdf172e8486c33d91eb469403742b2",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 19,
+    "raw_samples": 126,
+    "seed": 2026,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "avx2": true,
+    "numpy_error_policy": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "numpy_buffer_elements": 8192,
+    "command": [
+      "benchmarks/label_points.py",
+      "--threads",
+      "1",
+      "--repeat",
+      "7",
+      "--output",
+      "/home/runner/work/scikit-imagexx/scikit-imagexx/results/4-baseline/label-points.json"
+    ],
+    "selected_apis": [
+      "util.label_points"
+    ],
+    "provider_frontier": "Nine bounded coordinate workloads frozen before generation or original/native calls; all gains and losses retained. No full-library or prior-C++ performance claim. Whole public call including literal negative check, NumPy round/int conversion/transpose, owned zero-fill/scatter, output allocation and output destruction. Coordinate generation, independent oracle and parity guards are outside timing. Ordinary finite nonnegative exact ndarray coordinates and positive integer tuple shapes. Invalid/protocol/scalar/exceptional inputs remain outside this timing matrix; sparse allocation-cost losses are included."
+  },
+  "results": [
+    {
+      "case_id": "sparse-64x64-i64",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "b14406228a6b9ca4e1a46ceaf6348caa89df34a63261f46497983ff59e227c14"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "reference_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "oracle_sha256": "d3ff8cb801b0a6dad597a97fe137f29eb0340fdd493b754997c7ebb4ab5610e8",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.013849933333333333,
+      "cpp_ms": 0.01456648417721519,
+      "speedup": 0.9508082502843973,
+      "samples_ms": [
+        [
+          0.013849933333333333,
+          0.014074266666666667,
+          0.013678423188405796,
+          0.012947168115942029,
+          0.014070782608695652,
+          0.014241628985507246,
+          0.01378003188405797
+        ],
+        [
+          0.01456648417721519,
+          0.014320354430379746,
+          0.01457310759493671,
+          0.01447720253164557,
+          0.014740575949367089,
+          0.014210496835443039,
+          0.01474539240506329
+        ]
+      ],
+      "loops": [
+        345,
+        316
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64-f64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 4096,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            4096,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "f551ef5251b49c42848654769a7fa004e82c8a36fd597e73605fd514ff70e475"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64
+        ],
+        "strides": [
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "reference_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "oracle_sha256": "4b84e7d1a4ad1f823fef0f296353fc7ecb2600e515a75b68a9439dbc71bb7847",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.0632463782051282,
+      "cpp_ms": 0.03317848333333333,
+      "speedup": 1.9062468157363495,
+      "samples_ms": [
+        [
+          0.0632463782051282,
+          0.06325273717948718,
+          0.06284145512820513,
+          0.06315942307692307,
+          0.06497197435897437,
+          0.06323430128205128,
+          0.06349601282051281
+        ],
+        [
+          0.03317848333333333,
+          0.0332853125,
+          0.033481050000000005,
+          0.0328715375,
+          0.033155025000000005,
+          0.032990720833333334,
+          0.0333749375
+        ]
+      ],
+      "loops": [
+        156,
+        240
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-1024x1024-i64",
+      "kind": "sparse",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 16,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            16,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "425e2c874d7e56bedee73793560060dc33e30d06156a44f6e6df7ace0e930f07"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "reference_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "oracle_sha256": "5c6b44a4a6e8116ffb70e9a10dab48af92ac28600e58ff64dc7f9085bc2d189b",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.15371755223880598,
+      "cpp_ms": 0.16201384285714285,
+      "speedup": 0.9487927051662357,
+      "samples_ms": [
+        [
+          0.1755465223880597,
+          0.15446597014925373,
+          0.15596476119402986,
+          0.15276905970149254,
+          0.15266976119402986,
+          0.15371755223880598,
+          0.15327641791044774
+        ],
+        [
+          0.16411348571428572,
+          0.16201384285714285,
+          0.15894494285714286,
+          0.16253410000000001,
+          0.16000837142857144,
+          0.1628783285714286,
+          0.15894108571428572
+        ]
+      ],
+      "loops": [
+        67,
+        70
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-1024x1024-f64",
+      "kind": "dense",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 1048576,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            1048576,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "208e503a59db50d957f55875c907f879143781add259ed9316431dcaa04bf291"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "reference_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "oracle_sha256": "715e5efbe9c99bf57575feb4878999c481be53f06857f887f3944a144b2a5d7d",
+      "max_abs_error": 0.0,
+      "reference_ms": 19.909991,
+      "cpp_ms": 9.011848,
+      "speedup": 2.209312784680789,
+      "samples_ms": [
+        [
+          19.918648,
+          19.909991,
+          19.877511,
+          19.906746,
+          19.11394,
+          19.949296,
+          20.026833
+        ],
+        [
+          9.024442,
+          9.011848,
+          9.266345,
+          8.912156,
+          8.9389715,
+          8.997336,
+          9.1401535
+        ]
+      ],
+      "loops": [
+        1,
+        2
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "sparse-64x64x64-f32",
+      "kind": "sparse",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 32,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            32,
+            3
+          ],
+          "strides": [
+            12,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "e3a35d196dcd4198f03f520a1e1021e117df6b90032ead08c15f3699c9c0c4ca"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "reference_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "oracle_sha256": "93553c1d5d92cef7e3b845834fdf8dd14ba4ca170eb6cb396de5b580864b4d29",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.05415229878048781,
+      "cpp_ms": 0.05680117469879518,
+      "speedup": 0.9533658250493268,
+      "samples_ms": [
+        [
+          0.05951167682926829,
+          0.05496480487804878,
+          0.052214097560975614,
+          0.052871493902439025,
+          0.05415229878048781,
+          0.054290304878048784,
+          0.05295359756097561
+        ],
+        [
+          0.05877535542168675,
+          0.05738207228915663,
+          0.05689478313253012,
+          0.0556001265060241,
+          0.0550564578313253,
+          0.05680117469879518,
+          0.055117415662650604
+        ]
+      ],
+      "loops": [
+        164,
+        166
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "dense-64x64x64-i64",
+      "kind": "dense",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 262144,
+      "coordinate_layout": "C",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            262144,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "08e512be1e2041db2ed85e526a8404da0ce3a9f457c9ba904f4ac1de8d9e4938"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "reference_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "oracle_sha256": "cba52b6aacc5fd0203030d33793cfcea1b2094e2faed966a94b5d783a4972701",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.8562925,
+      "cpp_ms": 0.969715,
+      "speedup": 2.9454968727925213,
+      "samples_ms": [
+        [
+          2.8533018333333335,
+          2.8501543333333337,
+          2.87182,
+          2.8562925,
+          2.873241,
+          2.8131735,
+          2.8766675
+        ],
+        [
+          0.981098,
+          0.9682311666666666,
+          0.969715,
+          0.9738460555555555,
+          0.9715278333333334,
+          0.9694105,
+          0.9632769444444444
+        ]
+      ],
+      "loops": [
+        6,
+        18
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "duplicates-1024x1024-f64",
+      "kind": "duplicates",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float64",
+      "point_count": 65536,
+      "coordinate_layout": "C",
+      "duplicate_pool": 4096,
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "d4c5249a96a851504418f3cb4e2b3c302115ee10bbbe881918c15c99e9265d6b"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "reference_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "oracle_sha256": "49055148e0628ad968a61507b2175696bec819229cfc2f0fc3aca18394f3b769",
+      "max_abs_error": 0.0,
+      "reference_ms": 0.9006106875,
+      "cpp_ms": 0.40756292857142856,
+      "speedup": 2.2097463345274813,
+      "samples_ms": [
+        [
+          0.935641375,
+          0.9169025,
+          0.9006106875,
+          0.8912481875,
+          0.8916464375,
+          0.902886875,
+          0.890554375
+        ],
+        [
+          0.42538314285714285,
+          0.41274046428571426,
+          0.4064555,
+          0.40452117857142855,
+          0.4107235,
+          0.40428896428571426,
+          0.40756292857142856
+        ]
+      ],
+      "loops": [
+        16,
+        28
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-1024x1024-f32",
+      "kind": "strided",
+      "output_shape": [
+        1024,
+        1024
+      ],
+      "coordinate_dtype": "float32",
+      "point_count": 65536,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            2
+          ],
+          "strides": [
+            16,
+            -4
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "fed875d42814564c1c6140d722a952defb9e7c14171ec8ae578baeea296ae5f0"
+        },
+        {
+          "dtype": "<f4",
+          "dtype_metadata": null,
+          "shape": [
+            131072,
+            2
+          ],
+          "strides": [
+            8,
+            4
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "faf023ae33546822a3f8bd1e835fa9c3a442e5edd8260402543b8a0028dcdd6f"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          1024,
+          1024
+        ],
+        "strides": [
+          8192,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "reference_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "oracle_sha256": "7c0b64e67ab0da9dfce3e3a2163a59c061554a08c78adb5b6e60be55c70a2531",
+      "max_abs_error": 0.0,
+      "reference_ms": 2.629337,
+      "cpp_ms": 2.092328375,
+      "speedup": 1.2566559969345155,
+      "samples_ms": [
+        [
+          2.5701428333333336,
+          2.5616116666666664,
+          2.633221,
+          2.629337,
+          2.6336485,
+          2.6403728333333336,
+          2.5934496666666664
+        ],
+        [
+          2.11269275,
+          2.080051625,
+          2.04115375,
+          2.055291375,
+          2.0994005,
+          2.092328375,
+          2.12825825
+        ]
+      ],
+      "loops": [
+        6,
+        8
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    },
+    {
+      "case_id": "strided-64x64x64-i64",
+      "kind": "strided",
+      "output_shape": [
+        64,
+        64,
+        64
+      ],
+      "coordinate_dtype": "int64",
+      "point_count": 32768,
+      "coordinate_layout": "row-step2-column-reverse",
+      "api": "util.label_points",
+      "backend": "native",
+      "threads": 1,
+      "seed": 2026,
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            32768,
+            3
+          ],
+          "strides": [
+            48,
+            -8
+          ],
+          "own": false,
+          "writeable": true,
+          "c": false,
+          "f": false,
+          "base_type": "ndarray",
+          "sha256": "c6a498c3338ad2aa464e9032ec3eec4f4d0e52929596808ec69057813057b365"
+        },
+        {
+          "dtype": "<i8",
+          "dtype_metadata": null,
+          "shape": [
+            65536,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "own": true,
+          "writeable": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "sha256": "c0486f1f125a46abe2b787ae49c4df3a4bfb9cee2fb53491f4f53e0e50fba1fc"
+        }
+      ],
+      "actual_C_returns": [
+        "label_points_apply"
+      ],
+      "native_accepted": true,
+      "output_metadata": {
+        "dtype": "<u8",
+        "dtype_metadata": null,
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "strides": [
+          32768,
+          512,
+          8
+        ],
+        "own": true,
+        "writeable": true,
+        "c": true,
+        "f": false,
+        "base_type": "NoneType"
+      },
+      "output_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "reference_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "oracle_sha256": "90d6778622dfeec0daebac0402baa2bea0ab823ee476a8a32c9042bc0380371b",
+      "max_abs_error": 0.0,
+      "reference_ms": 1.095643076923077,
+      "cpp_ms": 0.8080926842105263,
+      "speedup": 1.355838381328097,
+      "samples_ms": [
+        [
+          1.0880087692307692,
+          1.0866184615384615,
+          1.0993253846153845,
+          1.095643076923077,
+          1.098311923076923,
+          1.1179618461538463,
+          1.0827373076923077
+        ],
+        [
+          0.8045423157894737,
+          0.8100595263157895,
+          0.8123823157894737,
+          0.8028375789473684,
+          0.8110418947368422,
+          0.8019601578947368,
+          0.8080926842105263
+        ]
+      ],
+      "loops": [
+        13,
+        19
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ]
+    }
+  ]
+}
+,
+"comparison": {
+  "status": "DISCARD",
+  "completed_utc": "2026-10-28T18:18:01.463172+00:00",
+  "deadline_utc": "2026-10-28T19:39:29.511203+00:00",
+  "completed_before_deadline": true,
+  "contract_sha256": "2276bdf9fc048b923613f9964c6a096169f7483d1babd9b95c802347cc75b3f9",
+  "raw_samples": 504,
+  "direct_gain": 1.0180873463306008,
+  "normalized_gain": 1.0136750402152657,
+  "candidate_original": 1.5246232579372172,
+  "target_repeat_wins": 0,
+  "cpp_controls_preserved": 7,
+  "target_original_repeat_wins": 0,
+  "preserved_original_repeat_wins": 6,
+  "direct_losses": [
+    "strided-1024x1024-f32"
+  ],
+  "normalized_losses": [
+    "dense-1024x1024-f64",
+    "strided-1024x1024-f32"
+  ],
+  "balanced_original_losses": [
+    "sparse-64x64-i64",
+    "sparse-1024x1024-i64"
+  ],
+  "candidate_pass_original_losses": {
+    "2-candidate": [
+      "sparse-64x64-i64",
+      "sparse-1024x1024-i64",
+      "sparse-64x64x64-f32"
+    ],
+    "3-candidate": [
+      "sparse-1024x1024-i64"
+    ]
+  },
+  "groups": {
+    "targets": {
+      "cases": 1,
+      "direct_gain": 1.0543732418204372,
+      "normalized_gain": 1.050381462398774,
+      "candidate_original": 0.9983459703278218
+    },
+    "preserved_original_wins": {
+      "cases": 7,
+      "direct_gain": 1.007298025949262,
+      "normalized_gain": 1.000622168116014,
+      "candidate_original": 1.719752445095575
+    },
+    "dense": {
+      "cases": 3,
+      "direct_gain": 1.008505369826821,
+      "normalized_gain": 1.0114099697271925,
+      "candidate_original": 2.3321598180532503
+    },
+    "duplicates": {
+      "cases": 1,
+      "direct_gain": 1.0090211148818529,
+      "normalized_gain": 1.0068063678101664,
+      "candidate_original": 2.250517028673882
+    },
+    "sparse": {
+      "cases": 3,
+      "direct_gain": 1.0530342806553334,
+      "normalized_gain": 1.0401698401641097,
+      "candidate_original": 0.9863761895077333
+    },
+    "strided": {
+      "cases": 2,
+      "direct_gain": 0.9860557380410787,
+      "normalized_gain": 0.9818026054817053,
+      "candidate_original": 1.2746441237732615
+    },
+    "float32": {
+      "cases": 2,
+      "direct_gain": 1.01410150694429,
+      "normalized_gain": 1.0159346367115425,
+      "candidate_original": 1.092862430249697
+    },
+    "float64": {
+      "cases": 3,
+      "direct_gain": 1.011437455976241,
+      "normalized_gain": 1.0084830007686123,
+      "candidate_original": 2.1274221952202175
+    },
+    "int64": {
+      "cases": 4,
+      "direct_gain": 1.0251120789031907,
+      "normalized_gain": 1.0164543388908844,
+      "candidate_original": 1.402628644312065
+    }
+  },
+  "initial_original_losses": [
+    "sparse-64x64-i64",
+    "dense-64x64-f64",
+    "sparse-1024x1024-i64",
+    "sparse-64x64x64-f32",
+    "dense-64x64x64-i64",
+    "duplicates-1024x1024-f64",
+    "strided-1024x1024-f32",
+    "strided-64x64x64-i64"
+  ],
+  "balanced_other_floor_failures": [
+    "strided-1024x1024-f32"
+  ],
+  "controls_scope": "One binder-only metadata candidate; overall direct and normalized GM>1.01; tiny sparse64 target each candidate pass direct/normalized>1.05 plus original win; preserve7 baseline repeated original wins and all other8 balanced direct/normalized>=.97. Numerical leaf/SDK/Python/harness unchanged. All9/504samples, sparse3D mixed original result and every loss retained; no stage attribution.",
+  "rows": [
+    {
+      "case_id": "sparse-64x64-i64",
+      "coordinate_dtype": "int64",
+      "kind": "sparse",
+      "direct_gain": 1.0543732418204372,
+      "normalized_gain": 1.050381462398774,
+      "candidate_original": 0.9983459703278218,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": false,
+      "baseline_cpp_ms": [
+        0.0143752734375,
+        0.01456648417721519
+      ],
+      "candidate_cpp_ms": [
+        0.013525442477876105,
+        0.01392613569321534
+      ],
+      "candidate_original_passes": [
+        0.9808749252662098,
+        1.0161282043164646
+      ],
+      "added_ms": -0.0007462361421862237
+    },
+    {
+      "case_id": "dense-64x64-f64",
+      "coordinate_dtype": "float64",
+      "kind": "dense",
+      "direct_gain": 1.0225492555092333,
+      "normalized_gain": 1.0229126588740627,
+      "candidate_original": 1.9685732464243895,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        0.03232692307692308,
+        0.03317848333333333
+      ],
+      "candidate_cpp_ms": [
+        0.03172152777777778,
+        0.032336896000000004
+      ],
+      "candidate_original_passes": [
+        1.9679566391723704,
+        1.9691900468740104
+      ],
+      "added_ms": -0.0007222015571845472
+    },
+    {
+      "case_id": "sparse-1024x1024-i64",
+      "coordinate_dtype": "int64",
+      "kind": "sparse",
+      "direct_gain": 1.0456059627248246,
+      "normalized_gain": 1.0002644547059683,
+      "candidate_original": 0.9592381087821858,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": false,
+      "baseline_cpp_ms": [
+        0.15702382857142858,
+        0.16201384285714285
+      ],
+      "candidate_cpp_ms": [
+        0.15113025,
+        0.15396789855072465
+      ],
+      "candidate_original_passes": [
+        0.931456081599749,
+        0.987848775177585
+      ],
+      "added_ms": -0.00695684647676062
+    },
+    {
+      "case_id": "dense-1024x1024-f64",
+      "coordinate_dtype": "float64",
+      "kind": "dense",
+      "direct_gain": 1.002842212639174,
+      "normalized_gain": 0.9959126281388635,
+      "candidate_original": 2.1733375101447163,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        9.1057615,
+        9.011848
+      ],
+      "candidate_cpp_ms": [
+        9.038103,
+        9.0279185
+      ],
+      "candidate_original_passes": [
+        2.183910716662556,
+        2.162815492851425
+      ],
+      "added_ms": -0.025673733243884556
+    },
+    {
+      "case_id": "sparse-64x64x64-f32",
+      "coordinate_dtype": "float32",
+      "kind": "sparse",
+      "direct_gain": 1.059168610594194,
+      "normalized_gain": 1.0711514673369862,
+      "candidate_original": 1.0021211933364764,
+      "repeat_direct": true,
+      "repeat_normalized": true,
+      "original_repeat": false,
+      "baseline_cpp_ms": [
+        0.05653636231884058,
+        0.05680117469879518
+      ],
+      "candidate_cpp_ms": [
+        0.05305707738095238,
+        0.053952509803921564
+      ],
+      "candidate_original_passes": [
+        0.9976354238849106,
+        1.006627132608691
+      ],
+      "added_ms": -0.0031656934607176487
+    },
+    {
+      "case_id": "dense-64x64x64-i64",
+      "coordinate_dtype": "int64",
+      "kind": "dense",
+      "direct_gain": 1.0002712850773599,
+      "normalized_gain": 1.0155981436624475,
+      "candidate_original": 2.96480524956234,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        0.9862731428571428,
+        0.969715
+      ],
+      "candidate_cpp_ms": [
+        0.9754371428571429,
+        0.9799556666666667
+      ],
+      "candidate_original_passes": [
+        2.9880590680222494,
+        2.9417323980982815
+      ],
+      "added_ms": -0.0002652337366498836
+    },
+    {
+      "case_id": "duplicates-1024x1024-f64",
+      "coordinate_dtype": "float64",
+      "kind": "duplicates",
+      "direct_gain": 1.0090211148818529,
+      "normalized_gain": 1.0068063678101664,
+      "candidate_original": 2.250517028673882,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        0.4138926,
+        0.40756292857142856
+      ],
+      "candidate_cpp_ms": [
+        0.3990938333333333,
+        0.4151516896551724
+      ],
+      "candidate_original_passes": [
+        2.2950448578717704,
+        2.206853116172992
+      ],
+      "added_ms": -0.0036719869327832
+    },
+    {
+      "case_id": "strided-1024x1024-f32",
+      "coordinate_dtype": "float32",
+      "kind": "strided",
+      "direct_gain": 0.9709519863978467,
+      "normalized_gain": 0.9635641807373879,
+      "candidate_original": 1.1918202103627744,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        2.099077625,
+        2.092328375
+      ],
+      "candidate_cpp_ms": [
+        2.154516,
+        2.162285875
+      ],
+      "candidate_original_passes": [
+        1.1876333246074755,
+        1.1960218565765117
+      ],
+      "added_ms": 0.0626971582313871
+    },
+    {
+      "case_id": "strided-64x64x64-i64",
+      "coordinate_dtype": "int64",
+      "kind": "strided",
+      "direct_gain": 1.0013944377732957,
+      "normalized_gain": 1.000386248680386,
+      "candidate_original": 1.3632237716250533,
+      "repeat_direct": false,
+      "repeat_normalized": false,
+      "original_repeat": true,
+      "baseline_cpp_ms": [
+        0.8526856666666667,
+        0.8080926842105263
+      ],
+      "candidate_cpp_ms": [
+        0.8178395882352941,
+        0.8401786842105263
+      ],
+      "candidate_original_passes": [
+        1.3958115174271075,
+        1.3313968457211014
+      ],
+      "added_ms": -0.0011558967237003115
+    }
+  ]
+}
+
+}
