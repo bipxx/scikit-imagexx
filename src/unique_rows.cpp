@@ -27,9 +27,7 @@ std::size_t unique_rows_indices(const UniqueRowsInput& input,
         if(raw_compare(0,std::int64_t(different))!=0)break;
     if(different==count){output[0]=0;return 1;}
     const auto sorted_unique=[&](const auto& compare) {
-        const auto less=[&](std::int64_t a,std::int64_t b) {
-            const auto order=compare(a,b);return order<0 || (order==0 && a<b);
-        };
+        const auto less=[&](std::int64_t a,std::int64_t b) {return compare(a,b)<0;};
         const auto chunks=input.row_count*bytes>=parallel_min?
             std::min<std::size_t>(std::size_t(workers),count):std::size_t(1);
         const auto block=count/chunks,extra=count%chunks;
@@ -50,8 +48,17 @@ std::size_t unique_rows_indices(const UniqueRowsInput& input,
                 if(middle<last)std::inplace_merge(output+boundary(first),
                     output+boundary(middle),output+boundary(last),less);
             }
-        const auto end=std::unique(output,output+count,[&](auto a,auto b) {return compare(a,b)==0;});
-        return std::size_t(end-output);
+        // Equal rows need no internal index ordering. Keep the first input
+        // occurrence by taking the minimum over each complete merged group.
+        std::size_t unique_count=0;
+        auto minimum=output[0];
+        for(std::size_t row=1;row<count;++row) {
+            const auto current=output[row];
+            if(compare(minimum,current)==0)minimum=std::min(minimum,current);
+            else {output[unique_count++]=minimum;minimum=current;}
+        }
+        output[unique_count++]=minimum;
+        return unique_count;
     };
     // Keep wide-row SIMD sorting untouched, without key allocation/loads.
     if(bytes>16)return sorted_unique(raw_compare);
