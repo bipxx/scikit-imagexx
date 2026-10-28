@@ -559,3 +559,9 @@ tests/test_blur_benchmark.py -text
 
 tests/profile_coordinates_cases.py -text
 tests/test_profile_coordinates_public.py -text
+
+tests/test_profile_coordinates_native.cpp -text
+tests/profile_coordinates_golden.hpp -text
+src/resample.cpp -text
+src/resample_detail.hpp -text
+src/simd_resample_avx2.cpp -text

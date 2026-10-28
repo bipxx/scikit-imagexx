@@ -139,4 +139,28 @@ std::size_t zoom_sample(const double* input,double* output,const detail::ZoomPla
                         std::size_t begin,std::size_t end) {
     return zoom_sample_typed(input,output,plan,begin,end,PixelType::float64,PixelType::float64);
 }
+std::size_t profile_coordinate_row(double start,double delta,double step,
+                                   std::size_t width,double* output){
+    std::size_t j=0;const auto first=_mm256_set1_pd(start);
+    const auto scale=_mm256_set1_pd(step==0.?delta:step),div=_mm256_set1_pd(double(width-1));
+    for(;width-j>=4;j+=4){
+        auto values=_mm256_setr_pd(double(j),double(j+1),double(j+2),double(j+3));
+        if(step==0.)values=_mm256_div_pd(values,div);
+        values=_mm256_mul_pd(values,scale);
+        _mm256_storeu_pd(output+j,_mm256_add_pd(values,first));
+    }
+    return j;
+}
+std::size_t profile_coordinate_single(const double* centers,double radius,
+                                      std::size_t count,double* output){
+    std::size_t i=0;const auto extent=_mm256_set1_pd(radius),zero=_mm256_setzero_pd();
+    for(;count-i>=4;i+=4){
+        const auto center=_mm256_loadu_pd(centers+i);
+        const auto start=_mm256_sub_pd(center,extent),stop=_mm256_add_pd(center,extent);
+        const auto delta=_mm256_sub_pd(stop,start);
+        const auto values=_mm256_mul_pd(zero,delta);
+        _mm256_storeu_pd(output+i,_mm256_add_pd(values,start));
+    }
+    return i;
+}
 } // namespace skimagexx::simd

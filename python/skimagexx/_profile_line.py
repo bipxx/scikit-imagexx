@@ -34,6 +34,13 @@ def _line_profile_coordinates(src, dst, linewidth=1):
     line_row = np.linspace(src_row, dst_row, length)
     col_width = (linewidth - 1) * np.sin(-theta) / 2
     row_width = (linewidth - 1) * np.cos(theta) / 2
+    if type(linewidth) is int and 0 < linewidth <= 1_000_000:
+        native_coordinates = _core.profile_coordinates(
+            line_row, line_col, linewidth, row_width, col_width,
+            _core.get_num_threads()
+        )
+        if native_coordinates is not None:
+            return native_coordinates
     perp_rows = np.stack([
         np.linspace(row_i - row_width, row_i + row_width, linewidth)
         for row_i in line_row

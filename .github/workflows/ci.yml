@@ -251,6 +251,12 @@ jobs:
         run: python -m pytest -q tests/test_profile_line_public.py --junitxml=build/ci-artifacts/profile-line-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Profile coordinate exact words and protocol parity
+        run: python -m pytest -q tests/test_profile_coordinates_public.py --junitxml=build/ci-artifacts/profile-coordinates-normal.xml
+      - name: Profile coordinate exact words and protocol parity with SIMD disabled
+        run: python -m pytest -q tests/test_profile_coordinates_public.py --junitxml=build/ci-artifacts/profile-coordinates-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Blur exact uniform and Sobel parity
         run: python -m pytest -q tests/test_blur_effect_public.py --junitxml=build/ci-artifacts/blur-effect-normal.xml
       - name: Blur exact uniform and Sobel parity with SIMD disabled

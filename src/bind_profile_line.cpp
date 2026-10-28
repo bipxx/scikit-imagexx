@@ -48,6 +48,33 @@ py::object sample(const py::array& image, const Array<double>& coordinates,
 }
 
 void bind_profile_line(py::module_& module) {
+    module.def("profile_coordinates", [](const Array<double>& rows,
+               const Array<double>& cols, py::ssize_t width,
+               double row_width, double col_width, int workers) -> py::object {
+        if (rows.ndim() != 1 || cols.ndim() != 1 || rows.size() != cols.size() ||
+            rows.size() == 0 || width <= 0)
+            throw py::value_error("profile grid requires matching nonempty center lines and positive width");
+        const auto length = rows.size();
+        py::array_t<double> output({py::ssize_t(2), length, width});
+        // Validate actual buffers after allocation, then keep fixed snapshots.
+        skimagexx::bindings::check_array_storage(rows);
+        skimagexx::bindings::check_array_storage(cols);
+        if (!Array<double>::check_(rows) || !Array<double>::check_(cols) ||
+            rows.ndim() != 1 || cols.ndim() != 1 || rows.size() != length || cols.size() != length ||
+            reinterpret_cast<std::uintptr_t>(rows.data()) % alignof(double) ||
+            reinterpret_cast<std::uintptr_t>(cols.data()) % alignof(double))
+            throw py::value_error("profile center lines changed or are unaligned at allocation");
+        const auto* row_data = rows.data(); const auto* col_data = cols.data();
+        auto* destination = output.mutable_data(); bool accepted;
+        {
+            py::gil_scoped_release release;
+            accepted = skimagexx::detail::profile_coordinates_into(row_data, col_data,
+                std::size_t(length), std::size_t(width), row_width, col_width, destination, workers);
+        }
+        if (!accepted) return py::none();
+        return output;
+    }, py::arg("rows").noconvert(), py::arg("cols").noconvert(),
+       py::arg("width"), py::arg("row_width"), py::arg("col_width"), py::arg("workers"));
     module.def("profile_sample", [](const py::array& image,
                const Array<double>& coordinates, int order, const std::string& mode,
                double cval, int workers) -> py::object {

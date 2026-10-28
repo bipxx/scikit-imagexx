@@ -103,6 +103,9 @@ def test_profile_coordinate_words_and_protocol(reference_runtime, spec, tmp_path
     (tmp_path/'candidate-coordinates.json').write_text(json.dumps(actual)+'\n')
     for name in ('result', 'error', 'warnings', 'events', 'prelude', 'state_unchanged'):
         assert actual[name] == reference[name], name
+    if spec['kind'] in ('ordinary', 'benchmark'):
+        assert actual['actual_C_returns'].count('profile_coordinates') == 1
+        assert actual['linspace_calls'] == 2
 
 
 def main():

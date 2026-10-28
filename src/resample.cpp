@@ -333,4 +333,55 @@ bool profile_sample(const ProfileInput& input,const double* coordinates,std::siz
         default:throw std::invalid_argument("unsupported prepared profile storage type");
     }
 }
+bool profile_coordinates_into(const double* rows,const double* cols,std::size_t length,
+    std::size_t width,double row_width,double col_width,double* output,int workers){
+    if(workers<1||workers>1024)throw std::invalid_argument("profile worker snapshot outside [1,1024]");
+#ifndef _OPENMP
+    if(workers!=1)throw std::invalid_argument("this build has no OpenMP support");
+#endif
+    if(!length||!width)throw std::invalid_argument("profile grid dimensions must be positive");
+    const auto count=size({2,length,width});
+    if(!rows||!cols||!output)throw std::invalid_argument("nonnull prepared profile grid buffers required");
+    if(width>UINT64_C(9007199254740992)||std::fegetround()!=FE_TONEAREST||
+       !profile_finite(rows,length)||!profile_finite(cols,length)||
+       !profile_finite(&row_width,1)||!profile_finite(&col_width,1))return false;
+    const int team=count>=parallel_min?workers:1;const bool vectorized=has_avx2();
+    std::vector<unsigned char> refused(static_cast<std::size_t>(team),0);
+    partition(length,team,[&](auto begin,auto end,auto worker){
+        std::fenv_t saved;if(std::feholdexcept(&saved)){refused[worker]=1;return;}
+        if(std::fegetround()!=FE_TONEAREST){refused[worker]=1;std::fesetenv(&saved);return;}
+        for(int axis=0;axis<2;++axis){
+            const auto* centers=axis?cols:rows;const auto radius=axis?col_width:row_width;
+            auto i=begin;
+#ifdef SKIMAGEXX_AVX2
+            if(vectorized&&width==1)i+=simd::profile_coordinate_single(centers+begin,radius,end-begin,output+axis*length+begin);
+#else
+            (void)vectorized;
+#endif
+            for(;i<end;++i){
+                const double start=centers[i]-radius,stop=centers[i]+radius,delta=stop-start;
+                const double div=double(width-1);double step=0.;
+                if(width>1)step=delta/div;
+                auto* destination=output+(std::size_t(axis)*length+i)*width;
+                std::size_t j=0;
+#ifdef SKIMAGEXX_AVX2
+                if(vectorized&&width>1)j=simd::profile_coordinate_row(start,delta,step,width,destination);
+#endif
+                for(;j<width;++j){
+                    double value=double(j);
+                    if(width==1)value*=delta;
+                    else if(step==0.){value/=div;value*=delta;}
+                    else value*=step;
+                    destination[j]=value+start;
+                }
+                if(width>1)destination[width-1]=stop;
+            }
+        }
+        refused[worker]=std::fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW)!=0;
+        std::fesetenv(&saved);
+    });
+    for(auto value:refused)if(value)return false;
+    return true;
+}
+
 }
