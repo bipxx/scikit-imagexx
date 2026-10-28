@@ -12,13 +12,15 @@ struct LabelPointsInput {
     std::size_t output_count;
 };
 // Boundary invariants: ndim >= 1; stable native int64 axis views, each with
-// point_count addressable elements at its signed BYTE stride; all indices
-// already satisfy 0 <= index < dimensions[axis]; output_count is the exact
+// point_count addressable elements at its signed BYTE stride; output_count is
+// the exact
 // addressable product. Output is disjoint, contiguous uint64 storage; labels
-// point+1 fit uint64, workers >= 1. Empty output implies no points.
+// point+1 fit uint64, workers >= 1. Output must remain private until acceptance.
 // Zero-fill may use independent workers; scatter stays in point order so the
-// last occurrence of a repeated coordinate wins. No floating arithmetic.
-void label_points_into(const LabelPointsInput& input, std::uint64_t* output,
+// last occurrence of a repeated coordinate wins. Bounds are checked once while
+// computing offsets. false means discard the ENTIRE private output and use the
+// literal provider; no partial output may escape. No floating arithmetic.
+bool label_points_into(const LabelPointsInput& input, std::uint64_t* output,
                        int workers);
 }
 
