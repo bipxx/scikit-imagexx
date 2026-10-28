@@ -8,10 +8,12 @@ import pytest
 if __package__:
     from .approximate_polygon_contract import API, cases
     from .test_approximate_polygon_public import observe
+    from .approximate_polygon_runtime_reference import RUNTIME_REFERENCE_IDS, runtime_reference
     from .test_approximate_polygon_pipeline import NATIVE_IDS
 else:
     from approximate_polygon_contract import API, cases
     from test_approximate_polygon_public import observe
+    from approximate_polygon_runtime_reference import RUNTIME_REFERENCE_IDS, runtime_reference
     from test_approximate_polygon_pipeline import NATIVE_IDS
 
 ROOT = Path(__file__).parents[1]
@@ -43,6 +45,8 @@ def test_polygon_registered_public_frozen_contract(product, spec, workers, monke
     import skimage.measure as public
     import skimage.measure._polygon as original
     expected = next(row for row in matrix['original_observations'][np.__version__] if row['id'] == spec['id'])
+    if spec['id'] in RUNTIME_REFERENCE_IDS:
+        expected = runtime_reference(spec['id'], np)
     call, entry = xx.measure.approximate_polygon, implementation._core.approximate_polygon_apply
     original_code = original.approximate_polygon.__code__
     calls, accepted = [], []
