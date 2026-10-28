@@ -76,7 +76,9 @@ def build(out, raw):
     # Frozen local reference text uses CRLF; preserve those exact pre-candidate bytes.
     refs = ''.join(rows).replace('\n','\r\n').encode(); p.require(H(refs) == REF_SHA, 'pre-candidate frozen363 refs differ')
     (out / 'angle-refs.txt').write_bytes(refs)
-    p.dump(out / 'source-freeze.json', dict(candidate=CANDIDATE, source=hashes, donor=retained, refs_sha256=REF_SHA))
+    p.dump(out / 'source-freeze.json', dict(candidate=CANDIDATE, source=hashes, donor=retained, refs_sha256=REF_SHA,
+        controller_revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+        controller_sha256=H(Path(__file__).read_bytes()), observer_sha256=H(Path(p.__file__).read_bytes())))
     commands = []
     def run(args, label):
         deadline(); commands.append(args); p.dump(out / 'build-commands.json', commands)
@@ -139,7 +141,8 @@ def child(out, role, mode):
     if role == 'candidate':
         sys.path.insert(0,str(out)); import _fft_angle_candidate as module
         p.require(Path(module.__file__).resolve()==out/'_fft_angle_candidate.pyd' and H(Path(module.__file__).read_bytes())==json.loads((out/'overlay.json').read_text())['sha256'], 'wrong overlay origin')
-    report = dict(new_host=True,experimental_overlay=role=='candidate',whole_product_acceptance=False,role=role,mode=mode,platform=platform.uname()._asdict(),runtime=runtime,targets=[],lpi=[],butterworth=[])
+    report = dict(new_host=True,experimental_overlay=role=='candidate',whole_product_acceptance=False,role=role,mode=mode,platform=platform.uname()._asdict(),runtime=runtime,
+        scalar_disabled=os.environ.get('SKIMAGEXX_DISABLE_SIMD'),has_avx2=xx.has_avx2(),cpu_policy={n:os.environ.get(n) for n in forcing},targets=[],lpi=[],butterworth=[])
     report_path=out/(role+'-'+mode+'.json'); old_workers=xx.get_num_threads(); old_fallback=xx.set_fallback_enabled(False)
     old_entries={name:getattr(xx._core,name) for name in ENTRIES}; old_profile=sys.getprofile()
     shell=__import__('skimagexx._lpi_filter',fromlist=['_lpi_filter'])
