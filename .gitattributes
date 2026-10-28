@@ -608,3 +608,5 @@ coverage/evidence/current241-qualification-v6.json -text
 coverage/evidence/public241-whole-product-admission.json -text
 benchmarks/regular-seeds-minimum-initial.json -text
 coverage/evidence/rank-bilateral-fixture-reuse.json -text
+
+benchmarks/label-points-zero-provider-same-host.json -text
