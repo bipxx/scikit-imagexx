@@ -31486,6 +31486,17 @@
         "exact_frozen_observations": 384,
         "native_acceptances": 232,
         "scope": "Private actual-builtin component; shared public integration and genuine installed product pending"
+      },
+      "public_registration": true,
+      "shared_evidence": {
+        "source_sha": "49647316f230f871f54d5cdb3a31f0a10016359a",
+        "manifest": {
+          "path": "build/worktrees/label-points-shared-v1/build/public-v1/handoff.json",
+          "sha256": "c57844cb4117369f6b40da005dba8538060cf270bfed8e2f9a866c2ce989f4c3"
+        },
+        "checks": 428,
+        "tooling_checks": 903,
+        "scope": "Public/shared bounded overlay; genuine rebuilt current240 product pending"
       }
     },
     {
