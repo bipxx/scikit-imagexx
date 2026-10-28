@@ -1,0 +1,57 @@
+name: Private FFT angle candidate NEW HOST
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  experiment:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13.16'
+      - name: Frozen private experiment plan
+        shell: pwsh
+        run: python tools/fft_angle_candidate_probe.py plan --output build/fft-angle-candidate-probe
+      - name: Locate installed host MSVC; tool enforces exact donor19.51 version
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          if ($LASTEXITCODE -ne 0 -or -not $vs) { throw 'MSVC host toolchain missing' }
+          "VSDEVCMD=$vs\Common7\Tools\VsDevCmd.bat" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Exact fa LTCG binder and SDK; two changed leaves and tiny init only
+        shell: cmd
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          call "%VSDEVCMD%" -arch=x64 -host_arch=x64
+          if errorlevel 1 exit /b %errorlevel%
+          python tools/fft_angle_candidate_probe.py all --output build/fft-angle-candidate-probe
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fft-angle-single-candidate-NEW-HOST
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            build/fft-angle-candidate-probe/*.json
+            build/fft-angle-candidate-probe/*.txt
+            build/fft-angle-candidate-probe/*.log
+            build/fft-angle-candidate-probe/*.stdout
+            build/fft-angle-candidate-probe/*.stderr
+            build/fft-angle-candidate-probe/observations/
