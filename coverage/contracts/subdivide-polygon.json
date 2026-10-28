@@ -1,0 +1,760 @@
+{
+  "schema": "subdivide-polygon-original-contract-v1",
+  "status": "prospective-freeze-no-original-calls",
+  "api": "measure.subdivide_polygon",
+  "native_implementation": "pending",
+  "source_version": "0.26.0",
+  "source_url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/measure/_polygon.py",
+  "source_canonical_lf_sha256": "26a27d89545d158f6b542857297995639b251ed3af0428c8c86a56c84928aabe",
+  "function_segment_sha256": "31ae779c9a6c54f06aeb5798498bfe2adf73872f14621605a19405262cfc31ea",
+  "signature": "(coords, degree=2, preserve_ends=False)",
+  "scipy_wrapper_pins": {
+    "1.15.3": {
+      "source": "1e2a03b3ba5a5c8d5c52ef605ac450e9990bea1ff1dbcab8352dd627838036f6",
+      "function": "d0b3b252beaada1b3254be3eb19dc15033a9914436e1c0d8dbb119e7b067572f"
+    },
+    "1.18.1": {
+      "source": "ae162c8d1c43ee90fae826ab9f9232425bf66042b84d97fcd808b270d9309a51",
+      "function": "829e541bc0dcbbbb53f9bab4e4ef1d5185b8eb3636a13fc74d3f15b9568dca31"
+    }
+  },
+  "subdivision_masks": {
+    "1": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "2": [
+      [
+        3,
+        1
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "3": [
+      [
+        1,
+        6,
+        1
+      ],
+      [
+        0,
+        4,
+        4
+      ]
+    ],
+    "4": [
+      [
+        5,
+        10,
+        1
+      ],
+      [
+        1,
+        10,
+        5
+      ]
+    ],
+    "5": [
+      [
+        1,
+        15,
+        15,
+        1
+      ],
+      [
+        0,
+        6,
+        20,
+        6
+      ]
+    ],
+    "6": [
+      [
+        7,
+        35,
+        21,
+        1
+      ],
+      [
+        1,
+        21,
+        35,
+        7
+      ]
+    ],
+    "7": [
+      [
+        1,
+        28,
+        70,
+        28,
+        1
+      ],
+      [
+        0,
+        8,
+        56,
+        56,
+        8
+      ]
+    ]
+  },
+  "cases": [
+    {
+      "id": "open-degree1",
+      "api": "measure.subdivide_polygon",
+      "kind": "open",
+      "degree": 1,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "open-degree2",
+      "api": "measure.subdivide_polygon",
+      "kind": "open",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "open-degree3",
+      "api": "measure.subdivide_polygon",
+      "kind": "open",
+      "degree": 3,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "open-degree4",
+      "api": "measure.subdivide_polygon",
+      "kind": "open",
+      "degree": 4,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "open-degree5",
+      "api": "measure.subdivide_polygon",
+      "kind": "open",
+      "degree": 5,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "open-degree6",
+      "api": "measure.subdivide_polygon",
+      "kind": "open",
+      "degree": 6,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "open-degree7",
+      "api": "measure.subdivide_polygon",
+      "kind": "open",
+      "degree": 7,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-degree1",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed",
+      "degree": 1,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-degree2",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-degree3",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed",
+      "degree": 3,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-degree4",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed",
+      "degree": 4,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-degree5",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed",
+      "degree": 5,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-degree6",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed",
+      "degree": 6,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-degree7",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed",
+      "degree": 7,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "preserved-degree3",
+      "api": "measure.subdivide_polygon",
+      "kind": "preserved",
+      "degree": 3,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "preserved-degree7",
+      "api": "measure.subdivide_polygon",
+      "kind": "preserved",
+      "degree": 7,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "closed-preserve",
+      "api": "measure.subdivide_polygon",
+      "kind": "closed-preserve",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "two-point-open-degree1",
+      "api": "measure.subdivide_polygon",
+      "kind": "two-point-open-degree1",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "two-point-open-degree7",
+      "api": "measure.subdivide_polygon",
+      "kind": "two-point-open-degree7",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "two-point-closed",
+      "api": "measure.subdivide_polygon",
+      "kind": "two-point-closed",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "singleton",
+      "api": "measure.subdivide_polygon",
+      "kind": "singleton",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "empty",
+      "api": "measure.subdivide_polygon",
+      "kind": "empty",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "all-identical",
+      "api": "measure.subdivide_polygon",
+      "kind": "all-identical",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "collinear",
+      "api": "measure.subdivide_polygon",
+      "kind": "collinear",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "near-closure",
+      "api": "measure.subdivide_polygon",
+      "kind": "near-closure",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "int32",
+      "api": "measure.subdivide_polygon",
+      "kind": "int32",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "uint8",
+      "api": "measure.subdivide_polygon",
+      "kind": "uint8",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "float16",
+      "api": "measure.subdivide_polygon",
+      "kind": "float16",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "float32",
+      "api": "measure.subdivide_polygon",
+      "kind": "float32",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "bool",
+      "api": "measure.subdivide_polygon",
+      "kind": "bool",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "big-endian-float",
+      "api": "measure.subdivide_polygon",
+      "kind": "big-endian-float",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "complex64",
+      "api": "measure.subdivide_polygon",
+      "kind": "complex64",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "complex-closed",
+      "api": "measure.subdivide_polygon",
+      "kind": "complex-closed",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "complex-preserved",
+      "api": "measure.subdivide_polygon",
+      "kind": "complex-preserved",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "object-numbers",
+      "api": "measure.subdivide_polygon",
+      "kind": "object-numbers",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "int64-large",
+      "api": "measure.subdivide_polygon",
+      "kind": "int64-large",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "fortran",
+      "api": "measure.subdivide_polygon",
+      "kind": "fortran",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "reverse-rows",
+      "api": "measure.subdivide_polygon",
+      "kind": "reverse-rows",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "reverse-columns",
+      "api": "measure.subdivide_polygon",
+      "kind": "reverse-columns",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "step-rows",
+      "api": "measure.subdivide_polygon",
+      "kind": "step-rows",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "step-columns",
+      "api": "measure.subdivide_polygon",
+      "kind": "step-columns",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "readonly",
+      "api": "measure.subdivide_polygon",
+      "kind": "readonly",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "dtype-metadata",
+      "api": "measure.subdivide_polygon",
+      "kind": "dtype-metadata",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "nan-coordinate",
+      "api": "measure.subdivide_polygon",
+      "kind": "nan-coordinate",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "inf-coordinate",
+      "api": "measure.subdivide_polygon",
+      "kind": "inf-coordinate",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "nan-closure",
+      "api": "measure.subdivide_polygon",
+      "kind": "nan-closure",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "degree-zero",
+      "api": "measure.subdivide_polygon",
+      "kind": "degree-zero",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "degree-eight",
+      "api": "measure.subdivide_polygon",
+      "kind": "degree-eight",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "degree-list",
+      "api": "measure.subdivide_polygon",
+      "kind": "degree-list",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "degree-none",
+      "api": "measure.subdivide_polygon",
+      "kind": "degree-none",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "degree-float",
+      "api": "measure.subdivide_polygon",
+      "kind": "degree-float",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "degree-bool",
+      "api": "measure.subdivide_polygon",
+      "kind": "degree-bool",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "degree-numpy",
+      "api": "measure.subdivide_polygon",
+      "kind": "degree-numpy",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "coords-list",
+      "api": "measure.subdivide_polygon",
+      "kind": "coords-list",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "coords-vector",
+      "api": "measure.subdivide_polygon",
+      "kind": "coords-vector",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "coords-three-columns",
+      "api": "measure.subdivide_polygon",
+      "kind": "coords-three-columns",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "preserve-array",
+      "api": "measure.subdivide_polygon",
+      "kind": "preserve-array",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "preserve-provider",
+      "api": "measure.subdivide_polygon",
+      "kind": "preserve-provider",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "invalid-degree-before-coords",
+      "api": "measure.subdivide_polygon",
+      "kind": "invalid-degree-before-coords",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    },
+    {
+      "id": "moderate-129",
+      "api": "measure.subdivide_polygon",
+      "kind": "moderate-129",
+      "degree": 2,
+      "policy": {},
+      "max_points": 129,
+      "max_output_points": 512,
+      "prospective": "Original output and native admission pending"
+    }
+  ],
+  "max_points": 129,
+  "max_output_points": 512,
+  "unassessed": [
+    "huge inputs or allocation failure",
+    "forged storage or concurrent mutation",
+    "longdouble or padded structured coordinate representations"
+  ],
+  "source_freeze": {
+    "tests/subdivide_polygon_contract.py": "0908c13f84eed80ed9db46e9ca3ce8b1ab7d10a5cf575088368769f4b858ad84",
+    "tests/test_subdivide_polygon_public.py": "45362389dda2aed9555b45f3d5581c5888808681724882ab038bcb64c8863f30"
+  },
+  "original_observations": {},
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false,
+  "source_semantics": [
+    "Degree membership in the literal mask dict precedes coordinate indexing; accepted key types follow actual dict equality/hash, not an assumed exact-int API.",
+    "Circular means np.all(coords[0,:]==coords[-1,:]); NaN endpoints are not equal. Circular path drops last input row and uses convolve2d same; open path uses valid. Both use wrap boundaries.",
+    "Two 1xL masks are np.array(mask,float)/(2**degree), then convolve2d(coords.T,mask,mode=method,boundary=wrap) and transpose back.",
+    "Output begins as fresh np.zeros((even.shape[1]+odd.shape[1],2)) with default float64; even goes to indices1::2 and odd to0::2. Complex convolution casts to this float output before any later stacking.",
+    "Circular output closes with out[0,:]; preserve_ends is evaluated only after convolution/interleave, and if true with open input stacks original endpoints. That late stack can promote dtype, e.g. complex endpoints; canonical dtype/storage will be observed, not generalized blindly.",
+    "Minimum SciPy wrapper coerces in1/in2 with np.asarray, validates 2D, applies valid-mode swap check and mode/boundary encoding, then calls _sigtools._convolve2d(...flip=1...). Modern additionally selects an array namespace and wraps its return.",
+    "Official minimum C allocates output dimensions from same/valid and accumulates each tap in increasing k with a zero-initialized sum; no output-column iterations occur for same width0, so singleton circular slicing does not enter modulo-zero wrap arithmetic. Compiler contraction/modern binary details remain unproven until implementation review.",
+    "Ordinary decimal-coordinate degree1..7 and dtype/layout cases target full weighted B-spline arithmetic. Endpoint identity/mutation, warnings/errors/FP state and exact output words/layout are prospective capture evidence."
+  ],
+  "provider_boundary": "Prospective target owns actual fixed-tap B-spline convolution/interleave after capture and arithmetic review. No native scope or ABI yet. Degree/closure/protocol/array conversion and exceptional dtype paths may remain explicit providers; do not claim ownership by forwarding whole subdivide_polygon or leaving both convolutions as the only backend.",
+  "capture_protocol": {
+    "authorization": "Root review required before any target subdivide_polygon call.",
+    "profiles": {
+      "minimum": {
+        "python": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "numpy": "1.24.4",
+        "scipy": "1.15.3"
+      },
+      "modern": {
+        "python": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1"
+      }
+    },
+    "cases_per_profile": 60,
+    "calls_per_case": 1,
+    "total_target_original_calls": 120,
+    "journal": "Exclusive per-profile journal; flush started before each call and completed raw observation immediately afterward. Stop and retain diagnostics on observer failure; no recapture.",
+    "source_verification": "Verify original function/signature, both SciPy wrapper source pins, package versions and frozen factory/observer before first target call. Append observations/provenance only.",
+    "encoding": "Exact numeric words/dtype/descr/metadata/shape/strides/ownership/base/alignment; object values semantic, no pointer bytes. Preserve input/backing state, late protocol mutation, warnings/errors/NumPy policy+handler+buffer restoration, identity/sharing. No padded/longdouble serialization."
+  }
+}
