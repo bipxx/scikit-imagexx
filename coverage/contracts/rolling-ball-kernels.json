@@ -1,0 +1,655 @@
+{
+  "schema": "rolling-ball-kernels-original-contract-v1",
+  "status": "prospective-freeze-no-original-calls",
+  "apis": [
+    "restoration.ball_kernel",
+    "restoration.ellipsoid_kernel"
+  ],
+  "native_implementation": "pending",
+  "source_version": "0.26.0",
+  "source_url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/restoration/_rolling_ball.py",
+  "source_canonical_lf_sha256": "5572c656ad2a6e48518ee7188c4cea96e7817405a941fbf76932268ddd8540f6",
+  "function_segment_sha256": {
+    "ball_kernel": "94238cd483eba493167343cff76c96309beeda669e53385f3850cc1001ef226e",
+    "ellipsoid_kernel": "81269f8617faf10f8a0db54bd1c2dd507fbfbd1f8d5496e0d0af49df344f0f02"
+  },
+  "signatures": {
+    "restoration.ball_kernel": "(radius, ndim)",
+    "restoration.ellipsoid_kernel": "(shape, intensity)"
+  },
+  "cases": [
+    {
+      "id": "ball-1d",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 2,
+        "ndim": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-2d",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 2,
+        "ndim": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-3d",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1,
+        "ndim": 3
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-4d",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1,
+        "ndim": 4
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-5d",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1,
+        "ndim": 5
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-8d",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1,
+        "ndim": 8
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-fractional",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1.5,
+        "ndim": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-half",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 0.5,
+        "ndim": 3
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-zero",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 0,
+        "ndim": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-negative-zero",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": -0.0,
+        "ndim": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-negative-quarter",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": -0.25,
+        "ndim": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-negative-one",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": -1,
+        "ndim": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-radius-f32",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1.5,
+        "ndim": 2,
+        "radius_type": "float32"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-radius-f64",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1.5,
+        "ndim": 2,
+        "radius_type": "float64"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-integer-scalars",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 2,
+        "ndim": 2,
+        "radius_type": "int64",
+        "ndim_type": "int64"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-rank-zero",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1,
+        "ndim": 0
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-rank-negative",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1,
+        "ndim": -1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-rank-float",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1,
+        "ndim": 2.0
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-rank31-zero",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 0,
+        "ndim": 31
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-rank32-zero",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 0,
+        "ndim": 32
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-rank63-zero",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 0,
+        "ndim": 63
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-rank64-zero",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 0,
+        "ndim": 64
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-radius-nan",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": "nan",
+        "ndim": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-radius-inf",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": "inf",
+        "ndim": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-error-before-index",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": "bad-radius",
+        "ndim": 2,
+        "ndim_protocol": true
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ball-protocol-order",
+      "api": "restoration.ball_kernel",
+      "params": {
+        "radius": 1.0,
+        "ndim": 2,
+        "radius_protocol": true,
+        "ndim_protocol": true
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-1d",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3
+        ],
+        "intensity": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-even",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          4,
+          6
+        ],
+        "intensity": 3
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-odd",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          5
+        ],
+        "intensity": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-3d",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          5,
+          7
+        ],
+        "intensity": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-4d",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-5d",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-8d",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-zero-axes",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          0,
+          0
+        ],
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-negative-axis",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          -3,
+          4
+        ],
+        "intensity": 2
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-fractional-shape",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3.5,
+          6.5
+        ],
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-int16-shape",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          5
+        ],
+        "intensity": 1,
+        "shape_type": "int16"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-f32-shape",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          5
+        ],
+        "intensity": 1,
+        "shape_type": "float32"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-intensity-zero",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          3
+        ],
+        "intensity": 0
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-intensity-negative-zero",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          3
+        ],
+        "intensity": -0.0
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-intensity-negative",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          5
+        ],
+        "intensity": -2.0
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-intensity-f32",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          5
+        ],
+        "intensity": 0.5,
+        "intensity_type": "float32"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-error-before-intensity",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [],
+        "intensity": 2.0,
+        "intensity_protocol": true
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-intensity-nan",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          3
+        ],
+        "intensity": "nan"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-intensity-inf",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          3
+        ],
+        "intensity": "inf"
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-nonnumeric-shape",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          "bad"
+        ],
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-scalar-shape",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": 3,
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-ragged-shape",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          [
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "intensity": 1
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-array-protocol",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          5
+        ],
+        "intensity": 1,
+        "shape_protocol": true
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    },
+    {
+      "id": "ellipsoid-intensity-protocol",
+      "api": "restoration.ellipsoid_kernel",
+      "params": {
+        "shape": [
+          3,
+          3
+        ],
+        "intensity": 2.0,
+        "intensity_protocol": true
+      },
+      "policy": {},
+      "max_successful_elements": 8192
+    }
+  ],
+  "max_successful_elements": 8192,
+  "unassessed": [
+    "huge allocations",
+    "forged storage",
+    "concurrent mutation",
+    "longdouble or padded/object output representations"
+  ],
+  "source_freeze": {
+    "tests/rolling_ball_kernels_contract.py": "29a4f3bf2e6c1d6c07d503633d5a3c064c4934f7722ba8c703efb06c6a6cb3b0",
+    "tests/test_rolling_ball_kernels_public.py": "8938e46cfa92969202d0fcb986b92ed3254a204b19b37b7f10874e0bb7c33c7b"
+  },
+  "original_observations": {},
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false,
+  "capture_protocol": {
+    "authorization": "Root review required before any target original function call.",
+    "profiles": {
+      "minimum": {
+        "python": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "numpy": "1.24.4",
+        "scipy": "1.15.3",
+        "skimage": "0.26.0"
+      },
+      "modern": {
+        "python": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "skimage": "0.26.0"
+      }
+    },
+    "cases_per_profile": 50,
+    "calls_per_case": 1,
+    "total_target_original_calls": 100,
+    "journal": "Exclusive per-profile journal.jsonl; flush a started row before each call and completed/error diagnostics immediately afterward. Never replay a target original to repair observer/metadata problems.",
+    "verification": "Check source/version/signature and exact factory/observer pins before first target call. No skimagexx import, native call, timing or environment creation in original capture. Preserve raw journals, source/license/context and initial precall freeze unchanged.",
+    "output_encoding": "Exact dtype/descr/metadata/shape/strides/base/ownership/alignment/words; nonfinite Python scalars tagged. No object/padded/longdouble bytes. Retain warnings, module/type/error text, protocol events, input before/after, pointers, sharing and NumPy error policy/handler/buffer restoration."
+  },
+  "native_admission": "Unassessed until frozen captures. Ordinary ranks1-4 prioritize implementation;5D/8D and31/32/63/64 zero-radius cases deliberately preserve the wider API/reduction frontier. No rank<=4 cap or ABI is frozen by this contract."
+}
