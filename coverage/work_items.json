@@ -32478,7 +32478,7 @@
           "status": "verified",
           "source_sha": "c073adae6596a8ee3c3fd8233ba68074ec43044a",
           "manifest": {
-            "path": "build/worktrees/montage-native-v1/build/native-v1/handoff.json",
+            "path": "build/montage-native-v1-private-v1/native-v1/handoff.json",
             "sha256": "39f33f87cb31a764065f1685f4aff4b1d3c36a23cffc77ed5e65b5a38f579dab"
           },
           "native_contract_checks": 6336,
@@ -32513,7 +32513,7 @@
           "status": "verified",
           "source_sha": "07656e5d0174b59842ba7592cbe4a6905ea80f54",
           "manifest": {
-            "path": "build/worktrees/montage-frontend-v1/build/montage-component-v1/handoff.json",
+            "path": "build/montage-frontend-v1-private-v1/montage-component-v1/handoff.json",
             "sha256": "304a1c625d1c162718d84de08a100d0bcb2f10657dbc9f547698c1f03210689b"
           },
           "native_contract_checks": 488,
@@ -32563,7 +32563,7 @@
           "status": "verified",
           "source_sha": "3725e49d835ca0919a82673aa5bda32ed86e7136",
           "manifest": {
-            "path": "build/worktrees/montage-shared-v1/build/public-v2/handoff.json",
+            "path": "build/montage-shared-v1-private-v1/public-v2/handoff.json",
             "sha256": "10b1709c70285c117b4251d8c787115528378afaf5dd8691a0072413c142983f"
           },
           "native_contract_checks": 568,
@@ -32602,8 +32602,30 @@
           "evidence_scope": "public_native"
         }
       },
-      "state": "performance_pending",
-      "scope": "Nine prospectively frozen real multi-image workloads, one worker,7rounds/126samples. Artifact-only transport passes44 inert guards/actionlint; genuine preparation and timing pending."
+      "state": "preparing",
+      "scope": "Nine prospectively frozen real multi-image workloads,1worker/7rounds/126samples;44 inert transport guards pass. Exactec3 genuine minimum producer40740008474 live, before any timing. All four merged Montage WTs retired clean without force; proof/builds retained, active LP candidates protected.",
+      "genuine_preparation": {
+        "run": 40740008474,
+        "source_sha": "ec3dba8e5eb73a0b02dffd70c501abe2adba923c",
+        "prepare_only": true,
+        "minimum_only": true,
+        "latest_only": true,
+        "timing_dispatched": false
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "249235112fa5ea52d31107cc710f61d136ad11e1",
+          "manifest": {
+            "path": "build/montage-initial-v1-private-v1/handoff.json",
+            "sha256": "9387e451c3f1f8cc2c7b932d8fa34523629800e8993f41d961653c7e2466ddc7"
+          }
+        }
+      },
+      "retirement_receipt": {
+        "path": "build/montage-retirement-v1/retirement.json",
+        "sha256": "31bd30d908e94168d309ff23042ff365f74fc799061b7bf9049c7444f90b2f4f"
+      }
     },
     {
       "id": "label-points-metadata-experiment",
