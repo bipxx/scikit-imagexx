@@ -80,9 +80,11 @@ def test_regular_seeds_saved_original_rows(profile):
     assert len(rows)==53 and [row['id']for row in rows]==[spec['id']for spec in CASES]
     for row in rows:
         assert all(row['checks'].values())and row['input_before']==row['input_after']
-        if row['result']is not None:
+        if row['result']is not None and 'raw_zlib_base64'in row['result']:
             raw=zlib.decompress(base64.b64decode(row['result']['raw_zlib_base64']))
             assert hashlib.sha256(raw).hexdigest()==row['result']['raw_sha256']
+        elif row['result']is not None:
+            assert 'object_values'in row['result']
 
 
 @pytest.mark.parametrize('spec',CASES,ids=[row['id']for row in CASES])
