@@ -615,3 +615,8 @@ benchmarks/montage-minimum-initial.json -text
 benchmarks/montage-strided-copy-same-host.json -text
 benchmarks/rolling-ball-kernels-minimum-initial.json -text
 benchmarks/montage-stride2-simd-same-host.json -text
+benchmarks/montage-wrapper-simd-same-host.json -text
+coverage/contracts/approximate-polygon.json -text
+coverage/contracts/subdivide-polygon.json -text
+coverage/contracts/approximate-polygon-benchmark.json -text
+coverage/evidence/approximate-polygon-protocol-runtime-witness.json -text

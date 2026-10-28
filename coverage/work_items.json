@@ -33296,6 +33296,22 @@
           "sha256": "55db13faa3730f1afb42e6f50cd3386b054d86ef803b669c899431ab3e9c2879"
         },
         "scope": "Two literal custom-tolerance IDs differ ONLY in exact callback float argument events;10 other fields identical. Installed literal body AST matches original. Runtime/CPU/libm cause unproven; fresh original witness required before any expectation change. No rerun or normalization."
+      },
+      "runtime_protocol_correction": {
+        "source": "67f658d2ab1822fe3fc8895b63a821cd6ce5023d",
+        "component": {
+          "path": "build/worktrees/approximate-polygon-runtime-reference-v1/build/component-v1/handoff.json",
+          "sha256": "f851e4ca73bd7dac57348f3013d53aedb246210b733ba21e44a4faa7acd80154"
+        },
+        "scientific_checks": 1100,
+        "checks_per_mode": 275,
+        "new_reference_calls": 8,
+        "metadata_guards": 16,
+        "witness_evidence": {
+          "path": "coverage/evidence/approximate-polygon-protocol-runtime-witness.json",
+          "sha256": "1d3af37061101f72bfd79b1813b40f9e064a052c9ebe3f333dad38f70c5f0948"
+        },
+        "scope": "TEST ONLY: exactly two cached current-runtime original provider rows per process; all fields exact, no rounding/skips,58othercases use frozen gold, all120originalcapture rows/production/NATIVE_IDS unchanged. Freshprepare still required."
       }
     },
     {
@@ -33307,7 +33323,7 @@
       ],
       "owner": "blur_integration_resume",
       "branch": "main",
-      "state": "preparing",
+      "state": "performance_pending",
       "owns": [
         ".github/workflows/approximate-polygon-initial.yml"
       ],
@@ -33319,7 +33335,7 @@
           "evidence_scope": "public_native"
         }
       },
-      "scope": "Initial one-thread9case126sample performance still pending. Genuine preparation failed8 exact protocol-event records/267 passed; no timing dispatch. Preserve failed product and120 frozen original observations; source/runtime audit pending strict fresh-original witness.",
+      "scope": "Initial9case126sample timing pending. Failed707 product/frozenoldgold retained; freshwitness proves original/provider frontend FULLrow equality onnewhost. Test-only exactruntime references pass1100checks/16metadata guards. No product promotion; one fresh corrected246prepare still required.",
       "genuine_preparation": {
         "run": 40765084067,
         "source_sha": "707e7ccb542d145f83a1f25ac4f6616068e35a51",
@@ -33335,6 +33351,22 @@
           "sha256": "55db13faa3730f1afb42e6f50cd3386b054d86ef803b669c899431ab3e9c2879"
         },
         "scope": "Two literal custom-tolerance IDs differ ONLY in exact callback float argument events;10 other fields identical. Installed literal body AST matches original. Runtime/CPU/libm cause unproven; fresh original witness required before any expectation change. No rerun or normalization."
+      },
+      "runtime_protocol_correction": {
+        "source": "67f658d2ab1822fe3fc8895b63a821cd6ce5023d",
+        "component": {
+          "path": "build/worktrees/approximate-polygon-runtime-reference-v1/build/component-v1/handoff.json",
+          "sha256": "f851e4ca73bd7dac57348f3013d53aedb246210b733ba21e44a4faa7acd80154"
+        },
+        "scientific_checks": 1100,
+        "checks_per_mode": 275,
+        "new_reference_calls": 8,
+        "metadata_guards": 16,
+        "witness_evidence": {
+          "path": "coverage/evidence/approximate-polygon-protocol-runtime-witness.json",
+          "sha256": "1d3af37061101f72bfd79b1813b40f9e064a052c9ebe3f333dad38f70c5f0948"
+        },
+        "scope": "TEST ONLY: exactly two cached current-runtime original provider rows per process; all fields exact, no rounding/skips,58othercases use frozen gold, all120originalcapture rows/production/NATIVE_IDS unchanged. Freshprepare still required."
       }
     },
     {
@@ -33347,7 +33379,7 @@
       "owner": "blur_benchmark",
       "branch": "optimize/montage-wrapper-simd-v1",
       "base_sha": "390dff892ad13c1f9b8cee0e76dce9a016f14c01",
-      "state": "preparing",
+      "state": "measured",
       "source_merged": false,
       "owns": [
         "src/montage.cpp",
@@ -33364,7 +33396,7 @@
       "freeze_sha": "5e2515944f911e5d5b1c2c0ffc3279da2134aeb7",
       "freeze_utc": "2026-10-28T20:35:00.116019Z",
       "deadline_utc": "2026-10-28T22:35:00.116019Z",
-      "scope": "Separate wrapper variant first6modes each32980checks/4264wrapper+4264generic calls,all71frozenoutputs/historicalprefix exact. Strict like-toolchain3generic functions machine bytes/registers/stack/CFG/22relocations identical after onlysymbolrename. SDK/Python publicentry bothoptimized; binder/header unchanged. Genuine codegen pair and fixed504sample gates pending; no speed claim/source merge.",
+      "scope": "Closed wrappervariant DISCARD: target11.27x andRGBrecovers;all9casesbeatoriginalbothpasses; global1.324xCPP/1.300xnormalized. ThreeotherCPPfloor failuresretained. Strictgenuinegenericcodegenpassed. Full504samples/10rawpayloads preserved. No61merge/retune/rerun; futureoptimizationpolicy optionaluserpreference pending, oldgatesunchanged.",
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -33382,6 +33414,22 @@
         "source_sha": "61b4f79821b0c7fd0d224e2a12d4263d14308cb7",
         "prepare_only": true,
         "timing_dispatched": false
+      },
+      "decision": "DISCARD",
+      "measurement": {
+        "run": 40770769989,
+        "raw_samples": 504,
+        "decision": "DISCARD",
+        "direct_gain": 1.3240735308510474,
+        "normalized_gain": 1.3001987450486434,
+        "candidate_original": 1.8267436968106072,
+        "all9_original_wins_both_passes": true,
+        "publication": "benchmarks/montage-wrapper-simd-same-host.json",
+        "publication_sha256": "7a915abc1b311de11aab1b4f3ad233e1f037092c88f4e8e275e58f2d75299dc4",
+        "root_review": {
+          "path": "build/montage-wrapper-simd-same-host-v1/root-recomputation.json",
+          "sha256": "947359d24e1f90a2ae69d4f027173e009d7117510007fe39d88d0326f5170c20"
+        }
       }
     },
     {
