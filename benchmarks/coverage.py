@@ -15,6 +15,7 @@ import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error
+from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -157,6 +158,13 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    for api in ROLLING_KERNEL_FUNCTIONS:
+        if api in apis:
+            provider_frontiers[api] = ('Geometry constructor: image shape supplies radius/rank or requested axes; '
+                'image pixels and carrier dtype are not API arguments. Float64 output, exact Inf masks, '
+                'words and ownership checked before timing. NumPy argument/axis/scalar-promotion/allocation '
+                'providers remain explicit; reductions, square roots, scaling and masks are owned. '
+                'benchmarks/rolling_ball_kernels.py is the canonical parameter-only cohort.')
     if 'util.montage' in apis:
         provider_frontiers['util.montage'] = ('Single-image batch adapter for shared defaults; owned POD channel fill '
             'and signed-stride tile copy. NumPy mean, type conversion, output allocation and optional upstream '
@@ -261,7 +269,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'util.montage':
+                    if api in ROLLING_KERNEL_FUNCTIONS:
+                        error = rolling_kernel_default_error(api,data.shape,actual,expected)
+                    elif api == 'util.montage':
                         error = montage_default_error(data,actual,expected)
                     elif api == 'util.regular_seeds':
                         error = regular_seeds_default_error(call_args[0],options['dtype'],actual,expected)
@@ -313,6 +323,11 @@ def main():
                     if api == 'measure.mesh_surface_area' and call_args[0].dtype.char not in ('f', 'd'):
                         backend = 'primitive-provider'
                     results.append({'api': api, 'size': case_size, 'dtype': 'shape-only' if api in LEVEL_SET_FUNCTIONS else case_dtype,
+                                    **({'default_input_kind':'shape-derived-constructor',
+                                        'descriptor_carrier_shape':list(data.shape),
+                                        'constructor_parameters':({'radius':call_args[0],'ndim':call_args[1]}
+                                            if api=='restoration.ball_kernel' else {'shape':list(call_args[0]),'intensity':call_args[1]}),
+                                        'requested_output_dtype':'float64'} if api in ROLLING_KERNEL_FUNCTIONS else {}),
                                     **({'input_shape': list(call_args[0]), 'default_input_kind': 'image-shape-only',
                                         'descriptor_carrier_dtype': case_dtype} if api in LEVEL_SET_FUNCTIONS else {}),
                                     **({'input_shape': list(call_args[0]),'n_points':call_args[1],

@@ -6560,11 +6560,13 @@
       "api": "restoration.ball_kernel",
       "kind": "callable",
       "signature": "(radius, ndim)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rolling_ball_kernels_integration.py::test_geometry_registered_public_frozen_contract",
+      "benchmark": "benchmarks/rolling_ball_kernels.py"
     },
     {
       "api": "restoration.calibrate_denoiser",
@@ -6658,11 +6660,13 @@
       "api": "restoration.ellipsoid_kernel",
       "kind": "callable",
       "signature": "(shape, intensity)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rolling_ball_kernels_integration.py::test_geometry_registered_public_frozen_contract",
+      "benchmark": "benchmarks/rolling_ball_kernels.py"
     },
     {
       "api": "restoration.estimate_sigma",

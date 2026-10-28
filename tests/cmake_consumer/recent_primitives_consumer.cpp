@@ -8,6 +8,7 @@
 #include <skimagexx/uniform_filter.hpp>
 #include <skimagexx/profile_line.hpp>
 #include <skimagexx/montage.hpp>
+#include <skimagexx/rolling_ball_kernels.hpp>
 #include <skimagexx/image.hpp>
 #include <array>
 #include <cfenv>
@@ -86,6 +87,17 @@ void stages(int workers){
             expected_montage[(7+montage_columns[pixel])*2+channel]=tile_order[pixel*2+channel];
     montage_into({tiles+2,{2,1,2,2},{4,4,-2,1},1},{1,2,1},fill,{montage.data(),3,7},workers);
     check(montage==expected_montage);
+
+    const double axis[]={-1,0,1};
+    const RollingAxis kernel_axes[]={{axis,3,1.},{axis,3,1.}};
+    const RollingGrid kernel_grid{kernel_axes,2,9};
+    const auto infinity=std::numeric_limits<double>::infinity();
+    std::array<double,9> kernel{};
+    check(ball_kernel_into(kernel_grid,1.,1.,kernel.data(),workers));
+    check((kernel==std::array<double,9>{infinity,0,infinity,0,1,0,infinity,0,infinity}));
+    check(ellipsoid_kernel_into(kernel_grid,2.,kernel.data(),workers));
+    check((kernel==std::array<double,9>{infinity,0,infinity,0,2,0,infinity,0,infinity}));
+    check(!ellipsoid_kernel_into(kernel_grid,infinity,kernel.data(),workers));
 
     check(get_num_threads()==global&&std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
 }

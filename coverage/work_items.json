@@ -32841,6 +32841,156 @@
       },
       "deadline_utc": "2026-10-28T20:27:56Z",
       "scope": "One fixed constant-size-copy variant; same ABI/fill/row_run/binder/workers. Six modes1184calls each; old1056word streams exact prefix, unaligned and12byte fallback controls pass. Actual inline loads/stores observed, not a timing claim. Genuine producer is live; no retiming/variant changes after measurement."
+    },
+    {
+      "id": "rolling-ball-kernels-native",
+      "kind": "native",
+      "apis": [],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "src/rolling_ball_kernels.cpp",
+        "src/simd_rolling_ball_kernels_avx2.cpp",
+        "include/skimagexx/rolling_ball_kernels.hpp",
+        "tests/test_rolling_ball_kernels_native.cpp"
+      ],
+      "depends_on": [
+        "rolling-ball-kernels-reference"
+      ],
+      "dependency_requirements": {
+        "rolling-ball-kernels-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "5fab1373af89013982165aae3df1790eb53574d8",
+          "manifest": {
+            "path": "build/worktrees/rolling-ball-kernels-native-v1/build/native-v1/handoff.json",
+            "sha256": "09a1dfb627971de40a4d2347d0c0bd50bd22036bcacab3af51efe00af5a693bc"
+          },
+          "native_contract_checks": 465816,
+          "native_pending": 0
+        }
+      },
+      "scope": "Six modes each77,636 grouped checks; identical full streams.69 exact frozen outputs plus4 nonfinite refusals. AVX2/scalar and workers1/4; no timing claim."
+    },
+    {
+      "id": "rolling-ball-kernels-frontend",
+      "kind": "frontend",
+      "apis": [],
+      "owner": "integrator",
+      "branch": "main",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "python/skimagexx/_rolling_ball_kernels.py",
+        "src/bind_rolling_ball_kernels.cpp",
+        "tests/test_rolling_ball_kernels_pipeline.py"
+      ],
+      "depends_on": [
+        "rolling-ball-kernels-native"
+      ],
+      "dependency_requirements": {
+        "rolling-ball-kernels-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "1f77c543aae250193a744485587f1f29761b5a49",
+          "manifest": {
+            "path": "build/worktrees/rolling-ball-kernels-frontend-v1/build/component-v1/handoff.json",
+            "sha256": "e68025be45ded5ed40356d596a1a87f9527777e3fb6d6a606c82672ce148e678"
+          },
+          "native_contract_checks": 448,
+          "native_pending": 0
+        }
+      },
+      "scope": "448 private checks across minimum/modern normal/scalar;400 exact frozen observations and268 actual native acceptances. Literal providers retain protocols, warning and rank behavior."
+    },
+    {
+      "id": "rolling-ball-kernels-shared",
+      "kind": "integration",
+      "apis": [
+        "restoration.ball_kernel",
+        "restoration.ellipsoid_kernel"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/restoration.py",
+        "python/skimagexx/coverage.py",
+        "tests/test_rolling_ball_kernels_integration.py"
+      ],
+      "depends_on": [
+        "rolling-ball-kernels-native",
+        "rolling-ball-kernels-frontend"
+      ],
+      "dependency_requirements": {
+        "rolling-ball-kernels-native": {
+          "evidence_scope": "native_private"
+        },
+        "rolling-ball-kernels-frontend": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "13a8cd4a6f7acdd35a54e19eeeeff5a93f0aa4a0",
+          "manifest": {
+            "path": "build/worktrees/rolling-ball-kernels-shared-v1/build/public-v2/handoff.json",
+            "sha256": "421ba32386ab7cdc0a9de1eee74fb681fdf669d6e0094997c5654709dc4ed577"
+          },
+          "native_contract_checks": 504,
+          "native_pending": 0
+        }
+      },
+      "scope": "504 bounded public checks across4 modes;400 exact observations,268 saved native acceptances and48 default acceptances.245 source image APIs; not genuine product or full qualification.",
+      "public_registration": true,
+      "installed_SDK_component": {
+        "manifest": {
+          "path": "build/rolling-kernels-installed-sdk-component-v1/handoff.json",
+          "sha256": "a0b3db07bc706f9b6d3627c863792aaedd71fef8704413ac8057cf937bb9b8ac"
+        },
+        "SDK_members": 81,
+        "client_families": 1,
+        "client_checks": 2,
+        "scope": "Assembled SDK from unchanged genuine SDK80 plus new header/math objects; no complete genuine SDK81 campaign."
+      }
+    },
+    {
+      "id": "rolling-ball-kernels-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "restoration.ball_kernel",
+        "restoration.ellipsoid_kernel"
+      ],
+      "owner": "blur_integration_resume",
+      "branch": "main",
+      "state": "performance_pending",
+      "owns": [
+        ".github/workflows/rolling-ball-kernels-initial.yml"
+      ],
+      "depends_on": [
+        "rolling-ball-kernels-shared"
+      ],
+      "dependency_requirements": {
+        "rolling-ball-kernels-shared": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "scope": "12 frozen parameter-only workloads,168 samples,one worker; source and transport inert gates passed. Genuine prepare-only producer must pass before initial timing."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -33139,14 +33289,12 @@
     "registration.optical_flow_ilk",
     "registration.optical_flow_tvl1",
     "registration.phase_cross_correlation",
-    "restoration.ball_kernel",
     "restoration.calibrate_denoiser",
     "restoration.cycle_spin",
     "restoration.denoise_bilateral",
     "restoration.denoise_invariant",
     "restoration.denoise_nl_means",
     "restoration.denoise_wavelet",
-    "restoration.ellipsoid_kernel",
     "restoration.estimate_sigma",
     "restoration.inpaint_biharmonic",
     "restoration.richardson_lucy",
@@ -33517,12 +33665,12 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 243,
+    "native_partial_image_names": 245,
     "metadata_names": 3,
-    "upstream_only_names": 225,
+    "upstream_only_names": 223,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current integrated source:243native-partial images,3metadata,5partial classes,1exception,225upstream-only of477. Exact4e/run40710464380 remains latest full acceptance at241images/159wheel71SDK/25clients. New Montage/SDK80 have component proof only pending genuine product and isolated benchmark.",
+    "note": "Current source:245 native-partial images,3 metadata,5 partial classes,1 exception,223 upstream-only of477. Exact4e/run40710464380 remains latest full acceptance at241. New constructors/SDK81 have scoped component proof; genuine preparation and timing pending.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
     "accepted_binary_image_names": 241

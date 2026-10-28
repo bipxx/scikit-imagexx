@@ -2,11 +2,11 @@
 
 Reference: scikit-image 0.26.0.
 
-Phase-2 source registers 243 partial image APIs, 3 metadata functions and 5 partial native classes. Montage adds prepared fill and tile copying after the prior color, filter, threshold, morphology and geometry increments. Current source requires 170 wheel files and 80 SDK files; component checks and source readiness are separate from genuine product qualification and measured performance. See the [fast-run guide](FAST_RUN.md) for current evidence and provider partitions.
+Phase-2 source registers 245 partial image APIs, 3 metadata functions and 5 partial native classes. Ball and ellipsoid constructors add owned reductions, square roots, scaling and masks after the prior color, filter, threshold, morphology and geometry increments. Current source requires 172 wheel files and 81 SDK files; component checks and source readiness are separate from genuine product qualification and measured performance. See the [fast-run guide](FAST_RUN.md) for current evidence and provider partitions.
 
-Latest qualified product: `4e657ee64fb71e4d707d32e9539fdb4d7cc528af`, Actions run `40710464380`: 241 image APIs across four profiles, 895,864 public XML checks with no failures, errors or skips, 200 installed-SDK checks and three Release products. The later 243-API source and SDK changes require fresh qualification. This remains partial per-function scope, not full API parity or library-wide performance acceptance.
+Latest qualified product: `4e657ee64fb71e4d707d32e9539fdb4d7cc528af`, Actions run `40710464380`: 241 image APIs across four profiles, 895,864 public XML checks with no failures, errors or skips, 200 installed-SDK checks and three Release products. The later 245-API source and SDK changes require fresh qualification. This remains partial per-function scope, not full API parity or library-wide performance acceptance.
 
-477 public callable names inventoried in 20 modules; 243 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 245 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -389,7 +389,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `registration.optical_flow_ilk` | upstream-only | pending | pending |
 | `registration.optical_flow_tvl1` | upstream-only | pending | pending |
 | `registration.phase_cross_correlation` | upstream-only | pending | pending |
-| `restoration.ball_kernel` | upstream-only | pending | pending |
+| `restoration.ball_kernel` | native-partial | yes (partial input contract) | yes |
 | `restoration.calibrate_denoiser` | upstream-only | pending | pending |
 | `restoration.cycle_spin` | upstream-only | pending | pending |
 | `restoration.denoise_bilateral` | upstream-only | pending | pending |
@@ -398,7 +398,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `restoration.denoise_tv_bregman` | native-partial | yes (partial input contract) | yes |
 | `restoration.denoise_tv_chambolle` | native-partial | yes (partial input contract) | yes |
 | `restoration.denoise_wavelet` | upstream-only | pending | pending |
-| `restoration.ellipsoid_kernel` | upstream-only | pending | pending |
+| `restoration.ellipsoid_kernel` | native-partial | yes (partial input contract) | yes |
 | `restoration.estimate_sigma` | upstream-only | pending | pending |
 | `restoration.inpaint_biharmonic` | upstream-only | pending | pending |
 | `restoration.richardson_lucy` | upstream-only | pending | pending |

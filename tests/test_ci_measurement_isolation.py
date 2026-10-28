@@ -212,7 +212,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/label_points.py --threads 1 --repeat 7 --output build/ci-label-points.json',
         'python benchmarks/unique_rows.py --threads 1 --repeat 7 --output build/ci-unique-rows.json',
         'python benchmarks/regular_seeds.py --threads 1 --repeat 7 --output build/ci-regular-seeds.json',
-        'python benchmarks/montage.py --threads 1 --repeat 7 --output build/ci-montage.json']
+        'python benchmarks/montage.py --threads 1 --repeat 7 --output build/ci-montage.json',
+        'python benchmarks/rolling_ball_kernels.py --threads 1 --repeat 7 --output build/ci-rolling-ball-kernels.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -390,7 +391,10 @@ def test_derived_benchmark_has_five_actual_tensor_cases():
     family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
                   and any(isinstance(t, ast.Name) and t.id == 'DERIVED_MOMENTS_FUNCTIONS' for t in n.targets))
     dtype_function = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'native_dtypes')
-    namespace = {'LEVEL_SET_FUNCTIONS':level_set_family(source)}
+    namespace = {'LEVEL_SET_FUNCTIONS':level_set_family(source),
+                 'ROLLING_KERNEL_FUNCTIONS':next(ast.literal_eval(n.value) for n in source.body
+                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
+                     and t.id == 'ROLLING_KERNEL_FUNCTIONS' for t in n.targets))}
     exec(compile(ast.Module(body=[dtype_function], type_ignores=[]), '<supported default dtypes>', 'exec'), namespace)
     main = next(n for n in ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes()).body
                 if isinstance(n, ast.FunctionDef) and n.name == 'main')
@@ -488,7 +492,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 26 and all(condition in step for step in timed)
+    assert len(timed) == 27 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -504,8 +508,8 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 26 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/montage.py ' in timed[-1]
+    assert len(timed) == 27 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/rolling_ball_kernels.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -603,8 +607,8 @@ def test_map_array_phase3_preparation_keeps_both_selectors_and_exact_censuses():
         assert command.count('tests/test_map_array_pipeline.py')==1
         assert 'public-'+mode+'.xml' in command
     assert workflow.count('tests/test_regular_seeds_public.py tests/test_regular_seeds_pipeline.py') == 2
-    assert 'assert len(cases) == 4688' in workflow
-    assert 'len(native) == 246' in workflow and 'assert expected == 1439' in workflow
+    assert 'assert len(cases) == 4918' in workflow
+    assert 'len(native) == 248' in workflow and 'assert expected == 1443' in workflow
     contract=json.loads((ROOT/'coverage/contracts/map-array-benchmark.json').read_bytes())
     assert (contract['threads'],contract['repeat'],contract['target_ms'],contract['raw_samples'])==(1,7,19,126)
 
@@ -633,3 +637,39 @@ def test_level_set_benchmark_dispatches_exact_shape_checker(api):
     namespace=dict(call_args=(shape,),actual=actual,expected=expected,level_set_default_error=checker)
     exec(compile(ast.Module(body=branch.body,type_ignores=[]),'<level-set exact check>','exec'),namespace)
     assert calls==[(shape,actual,expected)] and namespace['error']==17.
+
+
+def test_rolling_kernel_public_and_owned_pipeline_gates_precede_freeze():
+    preparation = jobs((ROOT / '.github/workflows/ci.yml').read_text())['numpy-minimum']
+    for mode in ('normal', 'scalar'):
+        command = ('python -m pytest -q tests/test_rolling_ball_kernels_integration.py '
+                   'tests/test_rolling_ball_kernels_pipeline.py --junitxml=build/ci-artifacts/'
+                   'rolling-ball-kernels-' + mode + '.xml')
+        assert preparation.count(command) == 1
+        assert preparation.index(command) < preparation.index('ci_measurement_artifacts.py freeze')
+    assert preparation.split('rolling-ball-kernels-scalar.xml', 1)[1].startswith(
+        "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+
+
+@pytest.mark.parametrize('api', ('restoration.ball_kernel', 'restoration.ellipsoid_kernel'))
+def test_rolling_kernel_benchmark_uses_exact_inf_aware_checker(api):
+    tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    branch = next(n for n in ast.walk(main) if isinstance(n, ast.If)
+                  and ast.unparse(n.test) == 'api in ROLLING_KERNEL_FUNCTIONS'
+                  and any(isinstance(c, ast.Call) and isinstance(c.func, ast.Name)
+                          and c.func.id == 'rolling_kernel_default_error' for c in ast.walk(n)))
+    calls = []
+    class Carrier:
+        shape = (3, 19)
+    actual, expected = object(), object()
+    def checker(*args):
+        calls.append(args)
+        return 17.
+    namespace = dict(api=api, data=Carrier(), actual=actual, expected=expected,
+                     rolling_kernel_default_error=checker)
+    exec(compile(ast.Module(body=branch.body, type_ignores=[]), '<rolling exact check>', 'exec'), namespace)
+    assert calls == [(api, Carrier.shape, actual, expected)] and namespace['error'] == 17.
+    timer = next(n for n in ast.walk(main) if isinstance(n, ast.Call)
+                 and isinstance(n.func, ast.Name) and n.func.id == 'measure')
+    assert branch.lineno < timer.lineno
