@@ -1,5 +1,9 @@
 # Performance verification
 
+Latest initial one-thread results from the admitted 247-API minimum product: [polygon approximation](approximate-polygon-minimum-initial.md) **9/9 wins, 6.73× geometric mean**, and [subdivision](subdivide-polygon-minimum-initial.md) **14/14 wins, 4.00×** versus original scikit-image. These are separate frozen cohorts, not a library-wide aggregate. All 322 samples, exact parity evidence, provider boundaries and prior failures are retained.
+
+The row-owned Montage candidate `6b22e64` passes six native modes and genuine preparation, but remains unmerged and unmeasured until run40788962721 is reviewed against its sealed gates. Its structural change avoids filling occupied pixels before copying them and uses direct scalar/SIMD four-byte copying. Full supported-profile qualification remains 241 APIs. Earlier checkpoint narratives below are historical.
+
 The [same-core Montage diagnostic](montage-wrapper-tax-diagnostic.md) is complete: all756 samples and1,532 journal events are verified. Its three previously failing controls show no positive median wrapper-route penalty on the pinned diagnostic host. This excludes no historical observations and does not establish the cause of the earlier allocation-inclusive regressions. Full-public repeatability and same-product controls are the next diagnostic step; no optimization is accepted from this narrower result.
 
 Genuine247 minimum preparation40778508940 passes9,346focused/1,447smoke checks and176product/83SDK closure, with all29timingsskipped. One actual SDK83 client separately passes normal/scalar modes with workers1/4. Initial RDP performance run40780548412 is pending; full four-profile qualification remains241.

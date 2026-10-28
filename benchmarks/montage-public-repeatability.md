@@ -1,6 +1,6 @@
 # Montage: full public repeatability diagnostic
 
-Eight independent processes measured the same nine full public workloads in **A B B A B A A B** order on one fresh host. The [JSON publication](montage-public-repeatability.json) retains all **1,008 samples**, **72 returned timing journals**, eight complete raw reports, initial/final process and identity receipts, CPU/source evidence, independent review and root recomputation.
+Eight independent processes measured the same nine full public workloads in **A B B A B A A B** order on one fresh host. The [JSON publication](montage-public-repeatability.json) retains all **1,008 samples**, eight journals containing **72 returned timing records**, eight complete raw reports, initial/final process and identity receipts, CPU/source evidence, independent review and root recomputation.
 
 This describes repeatability and drift of unchanged products. It does not establish the cause of observations on an earlier host, create a new acceptance test, or reopen any closed experiment. **All prior DISCARD decisions remain unchanged.**
 

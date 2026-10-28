@@ -1,5 +1,9 @@
 # Phased fast run
 
+**Latest measured checkpoint:** polygon approximation wins 9/9 at **6.73×**, and subdivision wins 14/14 at **4.00×**, on their separate one-thread minimum-host cohorts. Both use the admitted 247-API product; all raw samples and earlier failures are published in the [RDP](../benchmarks/approximate-polygon-minimum-initial.md) and [subdivision](../benchmarks/subdivide-polygon-minimum-initial.md) reports. Full four-profile qualification remains 241.
+
+**Montage work in progress:** the row-owned candidate removes overwritten fills and dynamic four-byte copies. Six native modes and genuine preparation pass; candidate source `6b22e64` remains unmerged pending run40788962721 and the fixed performance gates. Same-product variability and all earlier DISCARD results remain evidence, not permission to waive a regression floor. Earlier checkpoint paragraphs below retain their original source scopes.
+
 **Latest measured diagnosis:** the [same-core Montage diagnostic](../benchmarks/montage-wrapper-tax-diagnostic.md) retains 756 samples and shows no positive median wrapper-route penalty for the three failed controls on its pinned AMD EPYC 7763 host. The old allocation-inclusive regression cause is unresolved; a smaller stack frame is not a demonstrated fix. A separate full-public repeatability diagnostic is being prepared with unchanged products and same-product controls. Closed decisions remain unchanged.
 
 **Genuine 247 minimum preparation passes:** exact source `4f69eba`, run40778508940, has 9,346 focused checks, 1,447 smoke checks, 176 product/83 SDK files and all29 timings skipped. A relocated client from the actual SDK83 passes normal/scalar execution, each exercising workers1/4 (one family/two checks). This is distinct from the assembled SDK proof and does not extend four-profile qualification beyond241. First isolated RDP timing40780548412 is running; no speed claim yet.
