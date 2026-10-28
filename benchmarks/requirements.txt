@@ -1,9 +1,0 @@
-# Versions used for the recorded Windows / CPython 3.13 benchmark run.
-numpy==2.5.4
-scipy==1.18.1
-scikit-image==0.26.0
-pytest==9.1.1
-pybind11==3.1.0
-scikit-build-core==1.1.1
-cmake==4.4.4
-ninja==1.13.2
