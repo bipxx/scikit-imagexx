@@ -2236,12 +2236,12 @@ def current_metadata_artifact(tmp_path):
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk26(profile):
-    result=q.plan(ROOT,profile,246)
+    result=q.plan(ROOT,profile,247)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current246' and result['registry']['image_count']==246
-    assert result['product_members']==174 and result['SDK_members']==82
+    assert result['product_scope']=='current247' and result['registry']['image_count']==247
+    assert result['product_members']==176 and result['SDK_members']==83
     assert result['SDK_checks']==52 and 'current26 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==48
+    assert len(result['public_groups']['public-post203'])==50
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2297,7 +2297,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current246' and result['record_verified']
+        assert result['product_scope']=='current247' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2311,7 +2311,7 @@ def test_current_sdk26_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',246)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',247)['blockers'])
 
 
 def test_current_sdk26_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
@@ -2337,7 +2337,7 @@ def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
         assert '../src/' not in source and 'Python.h' not in source
         assert 'get_num_threads()==1' in source and 'for(int workers:{1,4})' in source
     source=(ROOT/'tests/cmake_consumer/recent_primitives_consumer.cpp').read_text()
-    for header in ('skimagexx/regular_seeds.hpp', 'skimagexx/unique_rows.hpp', 'skimagexx/label_points.hpp', 'skimagexx/map_array.hpp', 'skimagexx/level_set.hpp', 'skimagexx/compare_images.hpp', 'skimagexx/uniform_filter.hpp', 'skimagexx/profile_line.hpp', 'skimagexx/montage.hpp', 'skimagexx/rolling_ball_kernels.hpp', 'skimagexx/approximate_polygon.hpp'):
+    for header in ('skimagexx/regular_seeds.hpp', 'skimagexx/unique_rows.hpp', 'skimagexx/label_points.hpp', 'skimagexx/map_array.hpp', 'skimagexx/level_set.hpp', 'skimagexx/compare_images.hpp', 'skimagexx/uniform_filter.hpp', 'skimagexx/profile_line.hpp', 'skimagexx/montage.hpp', 'skimagexx/rolling_ball_kernels.hpp', 'skimagexx/approximate_polygon.hpp', 'skimagexx/subdivide_polygon.hpp'):
         assert '#include <'+header+'>' in source
     assert '../src/' not in source and 'Python.h' not in source
     assert 'stages(get_num_threads())' in source and 'set_num_threads(1)' in source

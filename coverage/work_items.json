@@ -33435,9 +33435,7 @@
     {
       "id": "subdivide-polygon-reference",
       "kind": "contract",
-      "apis": [
-        "measure.subdivide_polygon"
-      ],
+      "apis": [],
       "owner": "profile_candidate_audit",
       "branch": "main",
       "base_sha": "8413526a3e9148d1a586f583369b4d22ffaae206",
@@ -33460,6 +33458,127 @@
           },
           "passing_contract_checks": 120
         }
+      }
+    },
+    {
+      "kind": "native",
+      "owner": "profile_candidate_audit",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "src/subdivide_polygon.cpp",
+        "src/simd_subdivide_polygon_avx2.cpp",
+        "include/skimagexx/subdivide_polygon.hpp",
+        "tests/test_subdivide_polygon_native.cpp"
+      ],
+      "id": "subdivide-polygon-native",
+      "apis": [],
+      "branch": "main",
+      "depends_on": [
+        "subdivide-polygon-reference"
+      ],
+      "dependency_requirements": {
+        "subdivide-polygon-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "2160fc9bb684d4f1e25d395bfa0b5476754f8023",
+          "manifest": {
+            "path": "build/worktrees/subdivide-polygon-native-v1/build/native-v2/handoff.json",
+            "sha256": "9515fe32ec9ac2fb5fbd98673d7a4d0c81e987e28f512830e298b2b40ad4d18a"
+          },
+          "native_contract_checks": 173976,
+          "native_pending": 0
+        }
+      },
+      "scope": "Six corrected-v2 modes:28996 grouped assertions each,78 saved real records, finite/FP/refusal/real-parallel/SIMD controls. Initial odd-mask transcription failure preserved; no original recapture."
+    },
+    {
+      "kind": "frontend",
+      "owner": "blur_integration_resume",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "src/bind_subdivide_polygon.cpp",
+        "python/skimagexx/_subdivide_polygon.py",
+        "tests/test_subdivide_polygon_pipeline.py"
+      ],
+      "id": "subdivide-polygon-frontend",
+      "apis": [],
+      "branch": "main",
+      "depends_on": [
+        "subdivide-polygon-native"
+      ],
+      "dependency_requirements": {
+        "subdivide-polygon-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "83520950ae34261f0968c73b345f2a27ae42c8cd",
+          "manifest": {
+            "path": "build/worktrees/subdivide-polygon-frontend-v1/build/component-v1/handoff.json",
+            "sha256": "abd95efbb37628d60c70a8a2b546a75edc008dc84b4db4437134f52ff73b3bae"
+          },
+          "native_contract_checks": 544,
+          "native_pending": 0
+        }
+      },
+      "scope": "Four private component modes544checks/480 exact observations/312actual native accepts. Input normalization and unsupported SciPy provider paths explicit."
+    },
+    {
+      "kind": "integration",
+      "owner": "integrator",
+      "state": "parity_passed",
+      "source_merged": true,
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/measure.py",
+        "python/skimagexx/coverage.py",
+        "tests/test_subdivide_polygon_integration.py"
+      ],
+      "id": "subdivide-polygon-shared",
+      "apis": [
+        "measure.subdivide_polygon"
+      ],
+      "branch": "main",
+      "depends_on": [
+        "subdivide-polygon-frontend"
+      ],
+      "dependency_requirements": {
+        "subdivide-polygon-frontend": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "f54e624963ed725bc76a7816e19bfc8332a3bb7c",
+          "manifest": {
+            "path": "build/worktrees/subdivide-polygon-shared-v1/build/public-v1/handoff.json",
+            "sha256": "5a1765a6155269bc37265650453f0153ce9696b0bcf466fe9a5d98e28114ebc9"
+          },
+          "native_contract_checks": 572,
+          "native_pending": 0
+        }
+      },
+      "scope": "Four public component modes572checks/480exact observations/312saved-case native returns+64independent defaults. Source247/250registered,176wheel83SDK; genuine current qualification/performance pending.",
+      "public_registration": true,
+      "installed_SDK_component": {
+        "manifest": {
+          "path": "build/subdivide-installed-sdk-component-v1/handoff.json",
+          "sha256": "153aa15218e3798ce434be7eae13a37eb5bc083f35323996f06f5bf1d5c5a11c"
+        },
+        "SDK_members": 83,
+        "client_families": 1,
+        "client_checks": 2,
+        "scope": "Assembled SDK83 only, not genuine current product or all26families."
       }
     }
   ],
@@ -34133,12 +34252,12 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 246,
+    "native_partial_image_names": 247,
     "metadata_names": 3,
-    "upstream_only_names": 222,
+    "upstream_only_names": 221,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Current source246 image paths/3metadata/5partialclasses/1exception/222upstream-only of477. Exact4e/run40710464380 stays latest full241 qualification. Constructors have genuine minimum+isolated12case evidence; polygon has six native modes/private528/public572/assembledSDK82 proof, pending genuine release/performance.",
+    "note": "Source247image/3metadata/5partialclasses/1exception/221upstream-only of477. Exact4e/run40710464380 remains latest full241qualification. Subdivision component parity and assembledSDK83 passed; genuine preparation/performance pending.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
     "accepted_binary_image_names": 241

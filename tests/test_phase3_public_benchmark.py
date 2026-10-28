@@ -168,3 +168,13 @@ def test_prior_output_is_never_replaced(monkeypatch, tmp_path):
     output.write_bytes(b'original evidence')
     with pytest.raises(SystemExit): harness.main(['--check-only', '--output', str(output)])
     assert output.read_bytes() == b'original evidence'
+
+
+def test_subdivide_combined_selector_scope_and_exact_current_counts():
+    root = Path(__file__).resolve().parents[1]
+    text = (root / '.github/workflows/phase3-public-benchmark.yml').read_text()
+    assert text.count('tests/test_subdivide_polygon_integration.py') == 2
+    assert text.count('tests/test_subdivide_polygon_pipeline.py') == 2
+    assert 'tests/test_subdivide_polygon_public.py' not in text
+    assert 'assert len(cases) == 5472' in text
+    assert 'len(native) == 250' in text and 'assert expected == 1447' in text

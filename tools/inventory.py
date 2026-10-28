@@ -18,6 +18,7 @@ for _names, _test, _benchmark in (
     (('segmentation.checkerboard_level_set','segmentation.disk_level_set'),
      'tests/test_level_set_public.py::test_level_set_native_public_contract','benchmarks/level_set.py'),
     (('util.map_array',),'tests/test_map_array_public.py::test_map_array_native_public_contract','benchmarks/map_array.py'),
+    (('measure.subdivide_polygon',),'tests/test_subdivide_polygon_integration.py::test_subdivide_registered_public_frozen_contract','benchmarks/subdivide_polygon.py'),
     (('measure.approximate_polygon',),'tests/test_approximate_polygon_integration.py::test_polygon_registered_public_frozen_contract','benchmarks/approximate_polygon.py'),
     (('restoration.ball_kernel','restoration.ellipsoid_kernel'),'tests/test_rolling_ball_kernels_integration.py::test_geometry_registered_public_frozen_contract','benchmarks/rolling_ball_kernels.py'),
     (('util.montage',),'tests/test_montage_integration.py::test_montage_registered_public_frozen_contract','benchmarks/montage.py'),

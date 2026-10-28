@@ -5808,11 +5808,13 @@
       "api": "measure.subdivide_polygon",
       "kind": "callable",
       "signature": "(coords, degree=2, preserve_ends=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_subdivide_polygon_integration.py::test_subdivide_registered_public_frozen_contract",
+      "benchmark": "benchmarks/subdivide_polygon.py"
     },
     {
       "api": "metrics.adapted_rand_error",
