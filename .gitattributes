@@ -556,3 +556,8 @@ tests/test_uniform_filter_native.cpp -text
 
 benchmarks/blur_effect.py -text
 tests/test_blur_benchmark.py -text
+
+src/compare_images.hpp -text
+src/compare_images.cpp -text
+src/simd_compare_images_avx2.cpp -text
+tests/test_compare_images_native.cpp -text
