@@ -53,7 +53,7 @@ void exercise(const unsigned char* rows,std::size_t count,std::size_t width,int 
     save(stream,expected);
 }
 void controls(std::ofstream& stream,int workers) {
-    for(std::size_t width:{1u,2u,3u,7u,8u,15u,16u,17u,31u,32u,33u,63u,64u,65u,97u})
+    for(std::size_t width:{1u,2u,3u,7u,8u,9u,15u,16u,17u,31u,32u,33u,63u,64u,65u,97u})
         for(std::size_t count:{0u,1u,2u,3u,4u,7u,17u,65u})for(int kind:{0,1,2,3}) {
             std::vector<unsigned char> storage(count*width+3,0xab);auto* rows=storage.data()+1;
             for(std::size_t row=0;row<count;++row) {
@@ -65,6 +65,25 @@ void controls(std::ofstream& stream,int workers) {
             }
             exercise(rows,count,width,workers,stream);
         }
+    // Equal prefixes with a differing byte at/after the cache boundary.
+    // Every position participates, including the first and final byte.
+    for(std::size_t width:{7u,8u,9u,15u,16u,17u,31u,32u,33u}) {
+        for(std::size_t position=0;position<width;++position) {
+            std::vector<unsigned char> rows(13*width+1,0x81);auto* data=rows.data()+1;
+            for(std::size_t row=0;row<13;++row)data[row*width+position]=static_cast<unsigned char>((13-row)%5);
+            exercise(data,13,width,workers,stream);
+        }
+    }
+    // Prefix ties straddle worker chunks; stable first indices include the
+    // late single differing row after an otherwise all-equal linear prefix.
+    for(std::size_t width:{8u,9u,16u,17u,32u,33u}) {
+        const auto count=std::size_t(65539);
+        std::vector<unsigned char> rows(count*width+1,0xff);auto* data=rows.data()+1;
+        data[(count-1)*width+width-1]=0x7f;
+        exercise(data,count,width,workers,stream);
+        for(std::size_t row=0;row<count;++row)data[row*width+width-1]=static_cast<unsigned char>((count-row)%17);
+        exercise(data,count,width,workers,stream);
+    }
     for(std::size_t width:{1u,33u,65u}) {
         const auto count=std::size_t(263177);
         std::vector<unsigned char> rows(count*width,0xff);
@@ -106,7 +125,14 @@ int main(int argc,char** argv) {
             require(get_num_threads()==1);controls(stream,workers);
             for(int mode:{FE_TONEAREST,FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO}) {
                 require(std::fesetround(mode)==0);unsigned char rows[]={0xff,0,0x7f,0xff,0,0xff};
-                exercise(rows,3,2,workers,stream);require(std::fegetround()==mode);
+                exercise(rows,3,2,workers,stream);
+                for(std::size_t width:{8u,9u,16u,17u,32u,33u}) {
+                    std::vector<unsigned char> raw(7*width+1,0xff);auto* data=raw.data()+1;
+                    data[width-1]=0x7f;data[3*width+width-1]=0;
+                    exercise(data,7,width,workers,stream);
+                    require(std::fegetround()==mode);
+                }
+                require(std::fegetround()==mode);
             }
             if(argc==4){fixtures(argv[2],stream,workers);fixtures(argv[3],stream,workers);}
             require(get_num_threads()==1);
