@@ -32091,7 +32091,7 @@
       "depends_on": [
         "regular-seeds-native"
       ],
-      "state": "preparing",
+      "state": "parity_passed",
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -32105,7 +32105,15 @@
           "scope": "436 private pipeline checks,424 exact observations,248 actual C-return acceptances across2profiles/2dispatch modes/workers1and4; NumPy grid/zero allocation explicit."
         },
         "public_native": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "910c31a609c157c28cbbe56933b8448b710af95e",
+          "manifest": {
+            "path": "build/regular-seeds-genuine-release-v1/final-review.json",
+            "sha256": "b80b3db26e2da75708960ba0a12749741c98adb7f70a99865edae11a31c8134b"
+          },
+          "native_contract_checks": 436,
+          "native_pending": 0,
+          "scope": "Genuine minimum public109+pipeline109 in normal/scalar modes;7134focused/1435smoke/245functions overall. Source168product/79SDK; no full supported-profile promotion."
         }
       },
       "component_evidence": {
@@ -32120,8 +32128,13 @@
         "scope": "Bounded source overlay with actual builtin and genuine donor core; not a rebuilt whole product."
       },
       "genuine_preparation": {
-        "status": "ready_for_one_source_pinned_prepare_only_run",
-        "reason": "SDK public declarations/client and current tie-free successor relink passed; next genuine product must verify168product/79SDK members and26clients52checks. No performance or installed whole-product credit yet."
+        "status": "success",
+        "run": 40724150045,
+        "source": "910c31a609c157c28cbbe56933b8448b710af95e",
+        "artifact": 12833680393,
+        "artifact_sha256": "38797cf494532e16da41f751062c57815de2d566d8ebf11f3b59be26ba4be536",
+        "timing_calls": 0,
+        "SDK_client_executions_in_producer": 0
       }
     },
     {
@@ -32142,10 +32155,15 @@
       "depends_on": [
         "regular-seeds-public"
       ],
-      "state": "preparing",
+      "state": "measured",
       "proofs": {
         "isolated_performance": {
-          "status": "pending"
+          "status": "verified",
+          "source_sha": "910c31a609c157c28cbbe56933b8448b710af95e",
+          "manifest": {
+            "path": "build/regular-seeds-initial-v1/final-review.json",
+            "sha256": "f422297a920740f29906be9910bf4b98ff6d30c92448e099004fa0732bb67143"
+          }
         }
       },
       "dependency_requirements": {
@@ -32153,7 +32171,22 @@
           "evidence_scope": "public_native"
         }
       },
-      "measurement_gate": "Frozen9-workload/126-sample whole-public one-worker comparison against original; keep every loss. No speed claim from untimed oracle prechecks."
+      "measurement_gate": "Verified9of9original wins/126samples/oneworker on fresh artifact-only host. All raw medians/output/oracle/core/runtime/SDK/source identities pass. Small sparse margins retained; no full-profile qualification claim.",
+      "performance": {
+        "reference": "scikit-image==0.26.0",
+        "required_workers": [
+          1
+        ],
+        "raw_results": [
+          "benchmarks/regular-seeds-minimum-initial.json"
+        ],
+        "wins": 9,
+        "cases": 9,
+        "raw_samples": 126,
+        "geometric_mean_speedup": 1.5909923753712534,
+        "regressions": [],
+        "scope": "One initial original/current cohort on AMD EPYC9V74; no repeated-wins/prior-C++/whole-library claim. Grid and zero allocation providers explicit."
+      }
     },
     {
       "id": "unique-rows-tie-free-optimization",
@@ -32326,7 +32359,17 @@
         "image_APIs": 242,
         "registered_functions": 245
       },
-      "genuine_product_acceptance": "pending"
+      "genuine_product_acceptance": "pending",
+      "genuine_client_evidence": {
+        "source": "910c31a609c157c28cbbe56933b8448b710af95e",
+        "manifest": {
+          "path": "build/regular-seeds-genuine-sdk-client-v1/handoff.json",
+          "sha256": "47207306d45886a579fca18682e9bdce11fe37dd46054e653eb069b3f7dc5c32"
+        },
+        "families_executed": 1,
+        "checks_executed": 2,
+        "scope": "Actual untouched79-file genuine artifact SDK, one existing compiled client linked solely to genuine library; normal/scalar workers1/4. Not all26families/52checks or full profile acceptance."
+      }
     }
   ],
   "unassigned_inventoried_apis": [

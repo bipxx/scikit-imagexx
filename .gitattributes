@@ -607,3 +607,4 @@ benchmarks/unique-rows-tie-free-same-host.json -text
 coverage/evidence/current241-qualification-v6.json -text
 coverage/evidence/public241-whole-product-admission.json -text
 benchmarks/regular-seeds-minimum-initial.json -text
+coverage/evidence/rank-bilateral-fixture-reuse.json -text
