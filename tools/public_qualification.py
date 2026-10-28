@@ -30,6 +30,7 @@ import runpy
 import shutil
 import subprocess
 import sys
+import tomllib
 import venv
 import warnings
 import xml.etree.ElementTree as ET
@@ -289,6 +290,10 @@ H_EXTREMA_LEGACY_FAMILIES = FAMILIES[:21] + ('h_extrema',)
 PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
+# Historical envelopes above stay closed; current preparation selects this scope.
+CURRENT_PRODUCT_SCOPE = 'current236'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
+SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
     'include/skimagexx/tv_denoise.hpp', 'src/tv_chambolle.cpp', 'src/tv_reductions.cpp',
@@ -382,6 +387,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
+POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py')
 
 
 def groups_for_source(root):
@@ -391,6 +397,8 @@ def groups_for_source(root):
         groups['public-counts'] = ('test_rank_windowed_counts_pipeline.py',)
     if (Path(root) / 'tests/test_li_u16_pipeline.py').is_file():
         groups['public-Li-u16'] = ('test_li_u16_pipeline.py',)
+    if (Path(root) / CURRENT_SCOPE_CONTRACT).is_file():
+        groups['public-post203'] = POST203_TESTS
     return groups
 
 
@@ -632,13 +640,106 @@ def plan(root, profile, expected=None):
             blockers.append('missing required SDK client source: ' + family)
         if family not in declared:
             blockers.append('missing required installed SDK client: ' + family)
+    scope, product_members, sdk_members = PRODUCT_SCOPE, PRODUCT_MEMBERS, SDK_MEMBERS
+    SDK_scope = SDK_CLIENT_SCOPE
+    if registry['image_count'] > 203:
+        scope = CURRENT_PRODUCT_SCOPE
+        try:
+            contract = current_contract(lambda name: (root / name).read_bytes())
+            require(set(registry['functions']) == set(contract['image_paths']) | set(contract['metadata_paths'])
+                    and registry['image_count'] == len(contract['image_paths']), 'current registry has unmapped or stale image API scope')
+            require(set(groups.get('public-post203', ())) == set(POST203_TESTS), 'current dedicated qualification group missing/stale')
+            names = [p.relative_to(root).as_posix() for prefix in ('python/skimagexx', 'include')
+                     for p in (root / prefix).rglob('*') if p.is_file()]
+            layout = current_install_layout(lambda name: (root / name).read_bytes(), names, profile)
+            product_members, sdk_members = layout['product_count'], layout['SDK_count']
+        except (OSError, ValueError, KeyError, TypeError, QualificationError) as error:
+            blockers.append('current qualification readiness: ' + str(error))
+            product_members = sdk_members = None
     return dict(schema=SCHEMA, profile=profile, profile_config=PROFILES[profile], registry=registry,
                 runtime_pins=runtime_pins(profile), build_pins=dict(BUILD, numpy=PROFILES[profile]['headers']),
                 public_groups=groups, corpora=CORPORA, SDK_families=FAMILIES, blockers=blockers,
-                product_scope=PRODUCT_SCOPE, product_members=PRODUCT_MEMBERS, SDK_members=SDK_MEMBERS, SDK_checks=2*len(FAMILIES),
+                product_scope=scope, product_members=product_members, SDK_members=sdk_members, SDK_checks=2*len(FAMILIES),
+                SDK_client_scope=SDK_scope, readiness_only=True,
                 R7_target_counts=dict(image_count=190, metadata_count=3, registered_count=193),
                 count_semantics='image_count counts registered image paths including identity aliases, excludes metadata; registered_count adds metadata, neither is algorithm count',
                 exclusions='No full-library, private-adapter, portable/no-OpenMP/sanitizer or performance claim. No cross-build NaN guarantee.')
+
+
+def current_contract(read_bytes):
+    data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
+    require(data.get('schema') == 'current-public-qualification-v1'
+            and data.get('scope') == CURRENT_PRODUCT_SCOPE
+            and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
+    require(data.get('SDK_scope') == SDK_CLIENT_SCOPE
+            and data.get('not_client_qualified_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp'],
+            'current installed-client scope differs')
+    for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
+        values = data.get(key)
+        require(isinstance(values, list) and all(isinstance(n, str) and n for n in values)
+                and len(values) == len(set(values)), 'invalid current contract list: ' + key)
+    require(len(data['baseline_image_paths']) == 203
+            and set(data['baseline_image_paths']) <= set(data['image_paths'])
+            and not set(data['image_paths']) & set(data['metadata_paths']), 'current historical image/metadata boundary differs')
+    contracts = data.get('post203_contracts')
+    require(isinstance(contracts, dict) and set(contracts) == set(data['image_paths']) - set(data['baseline_image_paths']),
+            'unmapped current image API contracts')
+    require(all(isinstance(n, str) for n in contracts.values())
+            and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS},
+            'current qualification selector contract differs')
+    return data
+
+
+def current_install_layout(read_bytes, names, profile):
+    """The project's existing install rules, not a general CMake interpreter."""
+    require(profile in PROFILES, 'current install profile absent')
+    project = tomllib.loads(read_bytes('pyproject.toml').decode('utf-8'))
+    require(project['tool']['scikit-build']['wheel']['packages'] == ['python/skimagexx'],
+            'unassessed wheel package install rules')
+    cmake = read_bytes('CMakeLists.txt').decode('utf-8')
+    rules = (
+        r'install\(TARGETS\s+_core\s+LIBRARY\s+DESTINATION\s+skimagexx\s+RUNTIME\s+DESTINATION\s+skimagexx\)',
+        r'install\(DIRECTORY\s+include/\s+DESTINATION\s+\$\{CMAKE_INSTALL_INCLUDEDIR\}\)',
+        r'install\(TARGETS\s+skimagexx\s+EXPORT\s+skimagexxTargets\s+ARCHIVE\s+DESTINATION\s+\$\{CMAKE_INSTALL_LIBDIR\}\)',
+        r'install\(EXPORT\s+skimagexxTargets\s+NAMESPACE\s+skimagexx::\s+DESTINATION\s+\$\{CMAKE_INSTALL_LIBDIR\}/cmake/skimagexx\)',
+        r'install\(FILES\s+\$\{CMAKE_CURRENT_BINARY_DIR\}/skimagexxConfig.cmake\s+\$\{CMAKE_CURRENT_BINARY_DIR\}/skimagexxConfigVersion.cmake\s+DESTINATION\s+\$\{CMAKE_INSTALL_LIBDIR\}/cmake/skimagexx\)',
+    )
+    require(all(len(re.findall(rule, cmake)) == 1 for rule in rules), 'unassessed current SDK install rules')
+    sources = {n.removeprefix('python/'): n for n in names if n.startswith('python/skimagexx/')
+               and '__pycache__' not in PurePosixPath(n).parts and not n.endswith('/') and not n.endswith('.pyc')}
+    headers = {n: n for n in names if n.startswith('include/') and not n.endswith('/')}
+    require(sources and headers, 'current Python/header install closure absent')
+    sources.update(headers)
+    sdk = set(headers)
+    licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
+    require(licenses, 'current SDK license install rules absent')
+    require(len(re.findall(r'(?m)^\s*install\(', cmake)) == len(rules)+len(licenses),
+            'unassessed additional current install rule')
+    for files, rename in licenses:
+        files = files.split()
+        require(not rename or len(files) == 1, 'unassessed SDK license rename')
+        for name in files:
+            read_bytes(name)
+            destination = 'share/licenses/scikit-imagexx/' + (rename or PurePosixPath(name).name)
+            require(destination not in sources, 'duplicate SDK license install')
+            sources[destination] = name; sdk.add(destination)
+    config = PROFILES[profile]['config'].lower()
+    generated = {'lib/cmake/skimagexx/' + n for n in ('skimagexxConfig.cmake', 'skimagexxConfigVersion.cmake',
+                 'skimagexxTargets.cmake', 'skimagexxTargets-' + config + '.cmake')}
+    generated.add('lib/skimagexx.lib' if profile == 'windows' else 'lib/libskimagexx.a')
+    sdk.update(generated)
+    info = project['project']
+    dist = canonical(info['name']).replace('-', '_') + '-' + info['version'] + '.dist-info/'
+    metadata = {dist + name for name in ('METADATA', 'WHEEL', 'RECORD')}
+    for name in info['license-files']:
+        require(isinstance(name, str) and not any(c in name for c in '*?[]')
+                and not PurePosixPath(name).is_absolute() and '..' not in PurePosixPath(name).parts,
+                'unassessed wheel license install rule')
+        read_bytes(name); sources[dist + 'licenses/' + name] = name
+    members = set(sources) | generated | metadata
+    return dict(source_members=sources, SDK_members=sorted(sdk), members_without_core=sorted(members),
+                product_count=len(members)+1, SDK_count=len(sdk), config=config, profile=profile)
 
 
 def wheel_metadata(path):
@@ -677,23 +778,40 @@ def wheel_members(path):
 
 
 def product_census(scope=PRODUCT_SCOPE):
-    """Closed historical scopes; new production qualification requires h_extrema23."""
+    """Closed historical counts; current products use their source install closure."""
     census = {'rank14': (104, 59), 'tv17': (108, 62), 'bregman18': (110, 63), 'max_tree19': (112, 64), 'matrix20': (114, 65), 'reconstruction21': (116,66), 'nmi22': (118,67), 'h_extrema22': (118,67), 'h_extrema23': (120,68)}
     require(scope in census, 'unknown authenticated product scope')
     return census[scope]
 
 
-def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
+def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE, profile=None):
     require(wheel_metadata(wheel)['name'] == 'scikit-imagexx', 'not the product wheel')
     members = wheel_members(wheel)
-    product_count, sdk_count = product_census(scope)
+    requested_scope = scope
+    layout = None
+    if scope == CURRENT_PRODUCT_SCOPE:
+        require(profile in PROFILES, 'current wheel inspection requires profile')
+        with zipfile.ZipFile(source_archive) as archive:
+            layout = current_install_layout(archive.read, archive.namelist(), profile)
+            current_contract(archive.read)
+        product_count, sdk_count = layout['product_count'], layout['SDK_count']
+        scope = PRODUCT_SCOPE  # Retain every existing family/source admission below.
+    else:
+        product_count, sdk_count = product_census(scope)
     require(len(members) == product_count, f'expected complete{product_count}-member product')
     sdk = {n: v for n, v in members.items() if n.startswith(('include/', 'lib/', 'share/'))}
     require(len(sdk) == sdk_count, f'expected complete{sdk_count}-member SDK')
     cores = [n for n in members if n.startswith('skimagexx/_core.') and n.endswith(('.so', '.pyd'))]
     require(len(cores) == 1, 'require exactly one production core')
+    if layout is not None:
+        require(set(members) == set(layout['members_without_core']) | set(cores)
+                and set(sdk) == set(layout['SDK_members']), 'current source-derived product/SDK file closure differs')
+        require(cores[0].endswith('.pyd' if profile == 'windows' else '.so'), 'current core platform differs')
     with zipfile.ZipFile(wheel) as product, zipfile.ZipFile(source_archive) as source:
         require(source.comment.decode() == revision, 'source archive revision differs')
+        if layout is not None:
+            for destination, name in layout['source_members'].items():
+                require(source.read(name).replace(b'\r\n', b'\n') == product.read(destination).replace(b'\r\n', b'\n'), 'current installed source bytes differ: ' + name)
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
         require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22', 'h_extrema22', 'h_extrema23') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
@@ -721,7 +839,7 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE):
             require(set(mapping.values()) == actual, 'complete source Python/header file set differs')
             for name, destination in mapping.items():
                 require(source.read(name).replace(b'\r\n', b'\n') == product.read(destination).replace(b'\r\n', b'\n'), 'source bytes differ: ' + name)
-    return dict(source_revision=revision, source_archive_sha256=sha(source_archive), wheel_sha256=sha(wheel), product_scope=scope,
+    return dict(source_revision=revision, source_archive_sha256=sha(source_archive), wheel_sha256=sha(wheel), product_scope=requested_scope,
                 members_sha256=members, SDK_sha256=sdk, sole_core=cores[0], record_verified=True,
                 scope='Metadata-only complete product authentication; no algorithm or whole8 acceptance.')
 
@@ -927,7 +1045,7 @@ def prepare(out, profile, expected):
     dump(out / 'native-build-properties.json', dict(files=build_properties, config=PROFILES[profile]['config'],
          scope='Exact actual compile/cache properties retained; no comparison to unrelated private controls inferred.'))
     products = list(wheels.glob('*.whl')); require(len(products) == 1, 'require one exact complete wheel')
-    package_record = inspect_wheel(products[0], archive, source['revision'])
+    package_record = inspect_wheel(products[0], archive, source['revision'], scope=planning['product_scope'], profile=profile)
     package = out / 'package'; package.mkdir()
     with zipfile.ZipFile(products[0]) as z:
         for name in package_record['members_sha256']:
@@ -1667,6 +1785,7 @@ def seal(out):
                  build_identity=state['build_identity'],
                  interpreter_provenance=state['interpreter_provenance'],
                  counts=counts, SDK_checks=2*len(FAMILIES), expected_registry=state['expected'], command_count=len(commands), records=records,
+                 SDK_client_scope=SDK_CLIENT_SCOPE if state['expected'].get('image_count',0)>203 else 'historical scoped installed clients',
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
                  providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
                  supplemental='382 returned ArrayMap protocol cases use installed public returned class; no public class-count increase. Reverse-load cross-build diagnostics NOT run without separate authenticated matched-control evidence.')
@@ -1683,6 +1802,7 @@ def main(argv=None):
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
     parser.add_argument('--group', choices=['admission','inventory','returned-maps',*GROUPS])
+    parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()
     require(out.is_relative_to(ROOT / 'build'), 'outputs must be in ignored source build directory')
@@ -1691,7 +1811,7 @@ def main(argv=None):
     if args.stage == 'inspect-wheel':
         require(args.wheel is not None and args.source_archive is not None and args.source_revision is not None, 'inspect requires exact wheel/archive/revision')
         require(not out.exists(), 'choose fresh inspection output')
-        record = inspect_wheel(args.wheel, args.source_archive, args.source_revision); out.mkdir(parents=True); dump(out / 'inspection.json', record); return 0
+        record = inspect_wheel(args.wheel, args.source_archive, args.source_revision, scope=args.product_scope, profile=args.profile); out.mkdir(parents=True); dump(out / 'inspection.json', record); return 0
     if args.stage == 'verify':
         proof = json.loads((out / 'manifest.json').read_text())
         require(proof['schema'] == SCHEMA and source_state(ROOT) == proof['source'], 'manifest source/schema differs')
