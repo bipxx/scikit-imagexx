@@ -1561,6 +1561,10 @@ def create_capsule(out, family, state):
             shutil.copyfile(path, target)
         require(sha(target) == record['sha256'], 'capsule wheel copy changed')
     require(set(rows) == set(state['runtime_pins']) | {'scikit-imagexx'}, 'incomplete runtime closure')
+    product = json.loads((out / 'package.json').read_text())
+    if product['product_scope'] == CURRENT_PRODUCT_SCOPE:
+        dump(capsule / 'qualification-sdk-scope.json', dict(schema='rank-corpus-sdk-scope-v1',
+             scope=CURRENT_PRODUCT_SCOPE, profile=state['profile'], source_revision=state['source']['revision']))
     (capsule / 'runtime-freeze.txt').write_text('# Authenticated installed distribution metadata, not unconstrained pip output\n' + '\n'.join(n + '==' + r['version'] for n,r in sorted(rows.items())) + '\n')
     return capsule
 
