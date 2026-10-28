@@ -65,4 +65,4 @@ def test_ci_gates_precede_freeze_and_only_newest_timing_runs():
     assert 'build/ci-compare-images.md'in measure
     phase3=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text(encoding='utf-8')
     assert phase3.count('tests/test_compare_images_public.py')==2
-    assert 'len(cases) == 3154'in phase3 and 'len(native) == 239'in phase3 and 'expected == 1417'in phase3
+    assert 'len(cases) == 3205'in phase3 and 'len(native) == 239'in phase3 and 'expected == 1417'in phase3

@@ -65,4 +65,4 @@ def test_new_profiles_keep_correctness_gates_and_skip_only_old_timings():
     assert 'build/ci-profile-line.md'in measure
     phase3=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text(encoding='utf-8')
     assert phase3.count('tests/test_profile_line_public.py')==2
-    assert 'len(cases) == 3154'in phase3 and 'len(native) == 239'in phase3 and 'expected == 1417'in phase3
+    assert 'len(cases) == 3205'in phase3 and 'len(native) == 239'in phase3 and 'expected == 1417'in phase3

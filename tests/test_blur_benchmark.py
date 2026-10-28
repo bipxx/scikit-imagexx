@@ -71,4 +71,4 @@ def test_new_blur_keeps_all_gates_and_skips_only_old_timings():
     assert 'build/ci-blur-effect.md'in measure
     phase3=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text(encoding='utf-8')
     assert phase3.count('tests/test_blur_effect_public.py')==2
-    assert 'len(cases) == 3154'in phase3 and 'len(native) == 239'in phase3 and 'expected == 1417'in phase3
+    assert 'len(cases) == 3205'in phase3 and 'len(native) == 239'in phase3 and 'expected == 1417'in phase3
