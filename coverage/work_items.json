@@ -33323,7 +33323,7 @@
       ],
       "owner": "blur_integration_resume",
       "branch": "main",
-      "state": "performance_pending",
+      "state": "measured",
       "owns": [
         ".github/workflows/approximate-polygon-initial.yml"
       ],
@@ -33335,22 +33335,30 @@
           "evidence_scope": "public_native"
         }
       },
-      "scope": "Initial9case126sample timing pending. Failed707 product/frozenoldgold retained; freshwitness proves original/provider frontend FULLrow equality onnewhost. Test-only exactruntime references pass1100checks/16metadata guards. No product promotion; one fresh corrected246prepare still required.",
+      "scope": "Initial one-worker RDP 9-case cohort measured: 9/9 wins, GM 6.728133285x, 126 samples, all raw results/root recomputation published. Same immutable 4f genuine 176/83 product; no prior-C++ or whole-library claim. Prior 707 producer failure/runtime callback reference correction and Linux-vs-Windows sine-word review boundary remain preserved. Full qualified baseline 241 unchanged.",
       "genuine_preparation": {
-        "run": 40765084067,
-        "source_sha": "707e7ccb542d145f83a1f25ac4f6616068e35a51",
-        "conclusion": "failure",
-        "new_polygon_gate_passed": 267,
-        "new_polygon_gate_failed": 8,
-        "failure_artifact": 12849353092,
-        "failure_artifact_sha256": "8831c6a818c1f75a4d621f9d1c25b2c0d9bb005015dc182ffe7e56f026c2ef42",
-        "measurement_artifact_absent": true,
-        "initial_timing_dispatched": false,
-        "audit": {
-          "path": "build/approximate-polygon-genuine-release-v1/failure-source-audit.json",
-          "sha256": "55db13faa3730f1afb42e6f50cd3386b054d86ef803b669c899431ab3e9c2879"
+        "run": 40778508940,
+        "source_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
+        "artifact": 12855199919,
+        "artifact_sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96",
+        "status": "verified",
+        "prepare_only": true,
+        "minimum_only": true,
+        "latest_only": true,
+        "timing_dispatched": false,
+        "product_members": 176,
+        "SDK_members": 83,
+        "focused_checks": 9346,
+        "smoke_checks": 1447,
+        "skipped_timings": 29,
+        "manifest": {
+          "path": "build/subdivide247-genuine-release-v1/final-review.json",
+          "sha256": "5185f46d5241a483ab1bb17bb245be101a06ffd897bdd68a16f2fb49dfefd508"
         },
-        "scope": "Two literal custom-tolerance IDs differ ONLY in exact callback float argument events;10 other fields identical. Installed literal body AST matches original. Runtime/CPU/libm cause unproven; fresh original witness required before any expectation change. No rerun or normalization."
+        "root_admission": {
+          "path": "build/subdivide247-genuine-release-v1/root-admission.json",
+          "sha256": "383a5b1a36024d12346d7d88f8f0a72be5ccaeef358bff3a6ab487658e99866a"
+        }
       },
       "runtime_protocol_correction": {
         "source": "67f658d2ab1822fe3fc8895b63a821cd6ce5023d",
@@ -33367,6 +33375,67 @@
           "sha256": "1d3af37061101f72bfd79b1813b40f9e064a052c9ebe3f333dad38f70c5f0948"
         },
         "scope": "TEST ONLY: exactly two cached current-runtime original provider rows per process; all fields exact, no rounding/skips,58othercases use frozen gold, all120originalcapture rows/production/NATIVE_IDS unchanged. Freshprepare still required."
+      },
+      "prior_genuine_preparation_attempts": [
+        {
+          "run": 40765084067,
+          "source_sha": "707e7ccb542d145f83a1f25ac4f6616068e35a51",
+          "conclusion": "failure",
+          "new_polygon_gate_passed": 267,
+          "new_polygon_gate_failed": 8,
+          "failure_artifact": 12849353092,
+          "failure_artifact_sha256": "8831c6a818c1f75a4d621f9d1c25b2c0d9bb005015dc182ffe7e56f026c2ef42",
+          "measurement_artifact_absent": true,
+          "initial_timing_dispatched": false,
+          "audit": {
+            "path": "build/approximate-polygon-genuine-release-v1/failure-source-audit.json",
+            "sha256": "55db13faa3730f1afb42e6f50cd3386b054d86ef803b669c899431ab3e9c2879"
+          },
+          "scope": "Two literal custom-tolerance IDs differ ONLY in exact callback float argument events;10 other fields identical. Installed literal body AST matches original. Runtime/CPU/libm cause unproven; fresh original witness required before any expectation change. No rerun or normalization."
+        }
+      ],
+      "performance": {
+        "run": 40780548412,
+        "product_source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+        "publication": "benchmarks/approximate-polygon-minimum-initial.json",
+        "publication_sha256": "b5ce82f9dcc681a84d948328242f8eb3b19722bbe1862478a49c86646ba98f21",
+        "raw_samples": 126,
+        "cases": 9,
+        "wins": 9,
+        "losses": 0,
+        "geometric_mean": 6.728133285482267,
+        "root_review": {
+          "path": "build/approximate-polygon-initial-v1/root-recomputation.json",
+          "sha256": "5404f122fa77902b05902722dd5e6960373dfe2baa710150da907a1f4ba39fc2"
+        },
+        "independent_review": {
+          "path": "build/approximate-polygon-initial-v1/final-review.json",
+          "sha256": "455b1601ae555d982bb03715833cf41b2bb2c9d81462fa996caeddd65b54e96a"
+        },
+        "provider_portability": {
+          "path": "build/approximate-polygon-initial-v1/cross-host-review-receipt.json",
+          "sha256": "56a39539b8debbb79686d0e6e2a46d4d649618acc0b27d3218f922b39bf78621"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
+          "manifest": {
+            "path": "build/approximate-polygon-initial-v1/final-review.json",
+            "sha256": "455b1601ae555d982bb03715833cf41b2bb2c9d81462fa996caeddd65b54e96a"
+          }
+        }
+      },
+      "genuine_SDK_client": {
+        "source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+        "manifest": {
+          "path": "build/subdivide-genuine-sdk83-client-v2/handoff.json",
+          "sha256": "e275883cf9d6661a68e5fb0b8340a41843b690b277f556ae722ff945361426a2"
+        },
+        "families_executed": 1,
+        "checks_executed": 2,
+        "scope": "Actual untouched genuine SDK83 from admitted4f product, one client family normal/scalar with workers1/4. Separate from timing host and producer; not all26families/52checks or full four-profile qualification."
       }
     },
     {
@@ -33579,6 +33648,177 @@
         "client_families": 1,
         "client_checks": 2,
         "scope": "Assembled SDK83 only, not genuine current product or all26families."
+      }
+    },
+    {
+      "id": "subdivide-polygon-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "measure.subdivide_polygon"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "state": "measured",
+      "owns": [
+        ".github/workflows/subdivide-polygon-initial.yml"
+      ],
+      "depends_on": [
+        "subdivide-polygon-shared"
+      ],
+      "dependency_requirements": {
+        "subdivide-polygon-shared": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "scope": "Initial one-worker subdivision 14-case cohort measured: 14/14 wins, GM 4.000437801x, 196 samples. All 14 degree 1..7 open/closed cases, math, helpers and timed calls unchanged. Immutable genuine 4f/core144 product not rebuilt; externally corrected observer/source-root provenance separately pinned. Prior v1 failure has 0 samples; local normal driver receipt KeyError after prechecks and scalar receipt remain separate. Full qualification remains 241.",
+      "genuine_preparation": {
+        "run": 40778508940,
+        "source_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
+        "artifact": 12855199919,
+        "artifact_sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96",
+        "status": "verified",
+        "prepare_only": true,
+        "minimum_only": true,
+        "latest_only": true,
+        "timing_dispatched": false,
+        "product_members": 176,
+        "SDK_members": 83,
+        "focused_checks": 9346,
+        "smoke_checks": 1447,
+        "skipped_timings": 29,
+        "manifest": {
+          "path": "build/subdivide247-genuine-release-v1/final-review.json",
+          "sha256": "5185f46d5241a483ab1bb17bb245be101a06ffd897bdd68a16f2fb49dfefd508"
+        },
+        "root_admission": {
+          "path": "build/subdivide247-genuine-release-v1/root-admission.json",
+          "sha256": "383a5b1a36024d12346d7d88f8f0a72be5ccaeef358bff3a6ab487658e99866a"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
+          "manifest": {
+            "path": "build/subdivide-polygon-initial-v2/independent-review.json",
+            "sha256": "56c535800fb288f6f20b22d402cd92edf5cb8abe21941a30e7e74c7c9616e8bf"
+          }
+        }
+      },
+      "performance": {
+        "run": 40783931593,
+        "controller": "14df18060ee42410d7d3a377f49a15ee5899743f",
+        "product_source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+        "publication": "benchmarks/subdivide-polygon-minimum-initial.json",
+        "publication_sha256": "984e7e92d03474eae01c9f8759c3d50ec5566c6e73d8895de56bd8b540e0f229",
+        "raw_samples": 196,
+        "cases": 14,
+        "wins": 14,
+        "losses": 0,
+        "geometric_mean": 4.000437801167038,
+        "root_review": {
+          "path": "build/subdivide-polygon-initial-v2/root-recomputation.json",
+          "sha256": "265bb4970373a540c061eed701c39d64ff93f3adeb99f41ffc9b3e54bf84d67d"
+        },
+        "core_sha256": "144054dc3f7ed0251426f0a22292048c7b4510557d64f0aecfd0f50e53926cb6",
+        "prepared_harness_sha256": "101265e40bdd2c7026cdbb396f9670e2c07d5e32502be55de2411eea623faa38",
+        "executed_harness_sha256": "0bce058ebf921b7f80f3a1dac74632de3e2ab5e7a7ee08369339077cfbb53010",
+        "exact_six_edit_inverse": true,
+        "case_contract_sha256": "2cdfe4191810ee7ae2de72a11fc921ced6edec72cb5ac282bdc4ae32780dd8da"
+      },
+      "prior_failed_observer": {
+        "run": 40781858205,
+        "controller": "7a4679f52010d1c412df4208ce0a43999abac538",
+        "raw_samples": 0,
+        "output_parity_comparison_reached": false,
+        "manifest": {
+          "path": "build/subdivide-polygon-initial-v1/failure-review.json",
+          "sha256": "a25058a43e5697e2463b9495a2e9d6e7bdc370f6231b4986a92298f4b1c2c636"
+        },
+        "artifact": 12856898748,
+        "artifact_sha256": "df37fc4f027438bdb5bb70ef797ed9599a6dde043028c8f5b6b086b4ee333ebe",
+        "scope": "Preparedv1 observer incorrectly required ndarray native_result is singletonTrue; failed beforefirst timing. No outcome/gold/case/numerical change."
+      },
+      "observer_v2_preflight": {
+        "manifest": {
+          "path": "build/worktrees/subdivide-polygon-initial-v1/build/v2-preflight-v1/handoff.json",
+          "sha256": "14cfcf376e1896ba3ac629328dca36ca5ab8123280c81a25c6b6e07d3444a2cb"
+        },
+        "original_precheck_calls": 2,
+        "native_precheck_calls": 2,
+        "timing_calls": 0,
+        "normal": "All untimed harness checks passed before extra driver receipt KeyError; preserved and not replayed.",
+        "scalar": "Passed first-cohort sentinel receipt; no timing."
+      },
+      "genuine_SDK_client": {
+        "source": "4f69eba77a262056459eaab1e0a39e53610e9305",
+        "manifest": {
+          "path": "build/subdivide-genuine-sdk83-client-v2/handoff.json",
+          "sha256": "e275883cf9d6661a68e5fb0b8340a41843b690b277f556ae722ff945361426a2"
+        },
+        "families_executed": 1,
+        "checks_executed": 2,
+        "scope": "Actual untouched genuine SDK83 from admitted4f product, one client family normal/scalar with workers1/4. Separate from timing host and producer; not all26families/52checks or full four-profile qualification."
+      }
+    },
+    {
+      "id": "montage-row-owned-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "optimize/montage-row-owned-v1",
+      "base_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "state": "performance_pending",
+      "source_merged": false,
+      "source_sha": "6b22e64641a702c92873c376ff650cd8c8764d0d",
+      "owns": [
+        "src/montage.cpp",
+        "src/montage_simd.hpp",
+        "src/simd_montage_avx2.cpp",
+        "CMakeLists.txt",
+        "tests/test_montage_native.cpp",
+        "include/skimagexx/montage.hpp",
+        "coverage/contracts/montage-row-owned-candidate.json"
+      ],
+      "depends_on": [
+        "montage-shared"
+      ],
+      "freeze_sha": "5b0fb5ddd59936500cd19957a4f245c45e2e40f9",
+      "deadline_utc": "2026-10-29T00:59:41Z",
+      "variant_limit": 1,
+      "scope": "Private row-owned single-variant candidate 6b: native 6 modes passed; genuine preparation and fixed same-host performance admission pending. No acceptance/performance gain claimed. Canonical exclusive util.montage assignment stays montage-shared. All three prior Montage DISCARD packets/gates and raw losses remain unchanged; no claim that wrapper stack caused prior whole-call regressions.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "6b22e64641a702c92873c376ff650cd8c8764d0d",
+          "manifest": {
+            "path": "build/worktrees/montage-row-owned-v1/build/native-v1/handoff.json",
+            "sha256": "5e27a031360eb5e6aff23bc1ca9e3afad47eae6b24064bb6401eac451106ec86"
+          },
+          "native_contract_checks": 2592,
+          "native_pending": 0
+        }
+      },
+      "native_check_unit": "432 case/worker combinations per mode x6modes=2592;81000 assertion counter is not independent-case credit.",
+      "genuine_preparation": {
+        "source_sha": "6b22e64641a702c92873c376ff650cd8c8764d0d",
+        "status": "dispatched_prepare_only_not_admitted_here",
+        "prepare_only": true,
+        "minimum_only": true,
+        "latest_only": true,
+        "timing_dispatched": false,
+        "dispatch": {
+          "path": "build/montage-row-owned-prepare-v1/dispatch-request.json",
+          "sha256": "6ce0fbed2cbb64300411558cd46ce7d2f5401d7d5c1576a3e14df60c0d129a0e"
+        }
+      },
+      "performance": {
+        "status": "pending",
+        "scope": "Frozen candidate contract gates only; no measured or accepted speed credit."
       }
     }
   ],
@@ -34257,7 +34497,7 @@
     "upstream_only_names": 221,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Source247image/3metadata/5partialclasses/1exception/221upstream-only of477. Exact4e/run40710464380 remains latest full241qualification. Subdivision component parity and assembledSDK83 passed; genuine preparation/performance pending.",
+    "note": "Source247 image APIs +3metadata,5partialclasses/1exception and221upstream-only of477. RDP9/9 GM6.728133285x/126samples and subdivision14/14 GM4.000437801x/196samples measured on immutable genuine4f176wheel/83SDK product. Separate actual SDK83 client v2 onefamily/two checks; not full26family/52checks. Exact4e/run40710464380 remains latest full241qualification; private Montage row-owned6b performance remains pending.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
     "accepted_binary_image_names": 241
