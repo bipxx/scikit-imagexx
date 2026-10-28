@@ -18,7 +18,7 @@ for _names, _test, _benchmark in (
     (('segmentation.checkerboard_level_set','segmentation.disk_level_set'),
      'tests/test_level_set_public.py::test_level_set_native_public_contract','benchmarks/level_set.py'),
     (('util.map_array',),'tests/test_map_array_public.py::test_map_array_native_public_contract','benchmarks/map_array.py'),
-    (('util.unique_rows',),'tests/test_unique_rows_public.py::test_unique_rows_native_public_contract','benchmarks/coverage.py'),
+    (('util.unique_rows',),'tests/test_unique_rows_public.py::test_unique_rows_native_public_contract','benchmarks/unique_rows.py'),
     (('util.label_points',),'tests/test_label_points_public.py::test_label_points_native_public_contract','benchmarks/label_points.py'),
     (('util.compare_images',),'tests/test_compare_images_public.py','benchmarks/compare_images.py'),
     (('measure.blur_effect',),'tests/test_blur_effect_public.py','benchmarks/blur_effect.py'),

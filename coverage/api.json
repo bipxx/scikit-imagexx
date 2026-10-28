@@ -9183,7 +9183,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_unique_rows_public.py::test_unique_rows_native_public_contract",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/unique_rows.py"
     },
     {
       "api": "util.view_as_blocks",
