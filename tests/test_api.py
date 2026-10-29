@@ -6,6 +6,7 @@ import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS
+from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
 from skimage import transform as reference_transform
@@ -24,6 +25,7 @@ MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.uti
            (xx.exposure, reference_exposure), (xx.morphology,reference_morphology), (xx.transform,reference_transform),
            (xx.feature,reference_feature), (xx.metrics,reference_metrics), (xx.measure,reference_measure),
            (xx.segmentation,reference_segmentation), (xx.restoration,reference_restoration),
+           (xx.draw,reference_draw),
            (native_rank,reference_rank),(native_rank_generic,reference_rank_generic),
            (native_rank_bilateral,reference_rank_bilateral)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__
@@ -145,6 +147,72 @@ def test_map_array_default_mapping_and_exact_checker():
     with pytest.raises(AssertionError):map_array_default_error(image,np.asfortranarray(actual),expected)
     actual[0,1]^=np.uint16(1)
     with pytest.raises(AssertionError):map_array_default_error(image,actual,expected)
+
+
+@pytest.mark.parametrize('api',('draw.line','draw.rectangle','draw.disk','draw.ellipse'))
+@pytest.mark.parametrize('dtype',(np.uint8,np.float32,np.float64))
+def test_draw_default_shape_geometry_and_exact_checker(api,dtype):
+    from skimagexx.coverage import draw_default_error
+    import sys
+    # These labels carry only shapes; no input pixel or dtype becomes geometry.
+    image=np.full((3,7),17,dtype)
+    args,options=default_call(api,image)
+    other=np.zeros(image.shape,np.dtype(dtype,metadata={'ignored':'shape-only'}))
+    assert default_call(api,other)==(args,options)
+    assert native_dtypes(api)==('uint8','float32','float64')
+    if api=='draw.line':
+        assert args==(0,0,2,6)and options=={}
+        values=(np.array([0,0,1,1,1,2,2],np.intp),np.arange(7,dtype=np.intp))
+        expected=tuple(np.asarray(memoryview(v))for v in values)
+    elif api=='draw.rectangle':
+        assert args==((0,0),)and options=={'extent':(3,7)}
+        values=[np.broadcast_to(np.arange(3,dtype=np.intp),(7,3)).copy(),
+                np.broadcast_to(np.arange(7,dtype=np.intp)[:,None],(7,3)).copy()]
+        expected=values if np.__version__=='1.24.4'else tuple(values)
+    else:
+        if api=='draw.disk':
+            assert args==((1.,3.),1.5)and options=={'shape':(3,7)}
+            rows=np.repeat(np.arange(3,dtype=np.intp),3);columns=np.tile(np.arange(2,5,dtype=np.intp),3)
+        else:
+            assert args==(1.,3.,1.,7/3)and options=={'shape':(3,7)}
+            rows=np.ones(5,np.intp);columns=np.arange(1,6,dtype=np.intp)
+        owner=np.column_stack((rows,columns));expected=(owner[:,0],owner[:,1])
+    entry=getattr(xx._core,{'draw.line':'draw_line','draw.rectangle':'draw_rectangle',
+                          'draw.disk':'draw_ellipse','draw.ellipse':'draw_ellipse'}[api])
+    previous=sys.getprofile();returns=[]
+    def profile(frame,event,value):
+        if event=='c_return'and value is entry:returns.append(entry.__name__)
+    sys.setprofile(profile)
+    try:actual=getattr(xx.draw,api.split('.')[1])(*args,**options)
+    finally:sys.setprofile(previous)
+    assert returns==[entry.__name__]
+    assert draw_default_error(api,image,actual,expected)==0.
+    assert_default_parity(api,image.dtype,actual,expected,image=image)
+
+
+@pytest.mark.parametrize('api',('draw.line','draw.rectangle','draw.disk','draw.ellipse'))
+def test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions(api):
+    import base64,json,zlib
+    from pathlib import Path
+    from skimagexx.coverage import draw_default_error,parity_tolerance
+    matrix=json.loads((Path(__file__).parents[1]/'coverage/contracts/draw-coordinates.json').read_bytes())
+    case={'draw.line':'line/horizontal','draw.rectangle':'rectangle/end2d',
+          'draw.disk':'disk/ordinary','draw.ellipse':'ellipse/axes'}[api]
+    row=next(r for r in matrix['original_observations'][np.__version__]if r['id']==case)
+    def prepared():
+        values=[np.frombuffer(zlib.decompress(base64.b64decode(v['raw_zlib_base64'])),dtype=np.intp).reshape(v['shape']).copy()for v in row['result']['items']]
+        if api=='draw.line':return tuple(np.asarray(memoryview(v))for v in values)
+        if api=='draw.rectangle':return values if row['result']['container']=='list'else tuple(values)
+        owner=np.column_stack(values);return owner[:,0],owner[:,1]
+    image=np.empty((9,11),np.uint8);actual,expected=prepared(),prepared()
+    assert draw_default_error(api,image,actual,expected)==0.
+    # Existing dtype alias/metadata tests recurse over individual coordinates.
+    assert draw_default_error(api,image,actual[0],expected[0])==0.
+    with pytest.raises(AssertionError):draw_default_error(api,image,actual[0].astype(np.int32),expected[0])
+    with pytest.raises(AssertionError):draw_default_error(api,image,tuple(actual)if isinstance(actual,list)else list(actual),expected)
+    actual[0].flat[0]+=1
+    with pytest.raises(AssertionError):draw_default_error(api,image,actual,expected)
+    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)
 
 
 def test_unported_namespace_interchangeability():

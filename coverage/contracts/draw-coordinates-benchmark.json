@@ -1,0 +1,207 @@
+{
+  "schema": "draw-coordinates-benchmark-v1",
+  "status": "PROSPECTIVE_BEFORE_BENCHMARK_CALLS",
+  "reference_contract": "coverage/contracts/draw-coordinates.json",
+  "reference_contract_sha256": "944f5347959eb748808ba71bd08bc9344165a1e524f46de5318f59c1aca46f53",
+  "cases": [
+    {
+      "id": "line/tiny",
+      "api": "draw.line",
+      "args": [
+        0,
+        0,
+        7,
+        3
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line/long",
+      "api": "draw.line",
+      "args": [
+        -65536,
+        0,
+        65535,
+        32767
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "rectangle/tiny",
+      "api": "draw.rectangle",
+      "args": [
+        [
+          1,
+          2
+        ]
+      ],
+      "kwargs": {
+        "extent": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "id": "rectangle/2d",
+      "api": "draw.rectangle",
+      "args": [
+        [
+          0,
+          0
+        ]
+      ],
+      "kwargs": {
+        "extent": [
+          256,
+          384
+        ]
+      }
+    },
+    {
+      "id": "rectangle/3d",
+      "api": "draw.rectangle",
+      "args": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "kwargs": {
+        "extent": [
+          32,
+          32,
+          32
+        ]
+      }
+    },
+    {
+      "id": "disk/tiny",
+      "api": "draw.disk",
+      "args": [
+        [
+          4,
+          5
+        ],
+        3
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "disk/dense",
+      "api": "draw.disk",
+      "args": [
+        [
+          320,
+          320
+        ],
+        320
+      ],
+      "kwargs": {
+        "shape": [
+          640,
+          640
+        ]
+      }
+    },
+    {
+      "id": "disk/clipped",
+      "api": "draw.disk",
+      "args": [
+        [
+          0,
+          0
+        ],
+        256
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          512
+        ]
+      }
+    },
+    {
+      "id": "ellipse/tiny",
+      "api": "draw.ellipse",
+      "args": [
+        4,
+        5,
+        3,
+        2
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse/axes",
+      "api": "draw.ellipse",
+      "args": [
+        256,
+        512,
+        128,
+        256
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          1024
+        ]
+      }
+    },
+    {
+      "id": "ellipse/rotated",
+      "api": "draw.ellipse",
+      "args": [
+        256,
+        256,
+        128,
+        192
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          512
+        ],
+        "rotation": 0.37
+      }
+    },
+    {
+      "id": "ellipse/clipped",
+      "api": "draw.ellipse",
+      "args": [
+        0,
+        0,
+        128,
+        192
+      ],
+      "kwargs": {
+        "shape": [
+          256,
+          256
+        ],
+        "rotation": -0.37
+      }
+    }
+  ],
+  "native_entries": {
+    "draw.line": "draw_line",
+    "draw.rectangle": "draw_rectangle",
+    "draw.disk": "draw_ellipse",
+    "draw.ellipse": "draw_ellipse"
+  },
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_ms_per_function": 250,
+  "interbatch_sleep_ms": 0,
+  "raw_samples": 168,
+  "max_output_coordinate_elements": 1000000,
+  "method": "tools/montage_sustained.py:measure",
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "scope": "Twelve unchanged frozen geometries, whole public allocation-inclusive calls and output destruction; one worker, all raw samples and all gains/losses retained. No timing results or performance claims in this prospective packet.",
+  "dtype_scope": "Coordinate parameters and intp coordinate-array outputs; these are not uint8/float32/float64 pixel-image kernels.",
+  "provider_frontier": "C++ owns admitted Bresenham traversal, rectangle xy grid generation, ellipse strict-distance mask/prefix/emission. Literal NumPy rounding, clipping, bounding box, scalar modulo/trig and result-view/container construction remain explicit providers. Unsupported conversion/protocol/exceptional partitions are not benchmarked or credited as native.",
+  "precheck": "Each workload requires exact fresh-original words, dtype, shape, strides, container, base shape/strides/type, ownership/writeability/alignment and output aliases, plus traversal/grid/NumPy-predicate oracle; actual builtin C return and wrapper native_result witness with original whole APIs and compiled line trapped. Existing 176 frozen observations and 16 generic-default references remain untouched.",
+  "execution_authorization": "Source-only now. Root must authorize bounded first-cohort untimed calls, genuine whole-product preparation and isolated timing separately. No original/native calls or timers performed to author this packet."
+}

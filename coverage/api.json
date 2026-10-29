@@ -1042,21 +1042,29 @@
       "api": "draw.disk",
       "kind": "callable",
       "signature": "(center, radius, *, shape=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.ellipse",
       "kind": "callable",
       "signature": "(r, c, r_radius, c_radius, shape=None, rotation=0.0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.ellipse_perimeter",
@@ -1092,11 +1100,15 @@
       "api": "draw.line",
       "kind": "callable",
       "signature": "(r0, c0, r1, c1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.line_aa",
@@ -1162,11 +1174,15 @@
       "api": "draw.rectangle",
       "kind": "callable",
       "signature": "(start, end=None, extent=None, shape=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.rectangle_perimeter",

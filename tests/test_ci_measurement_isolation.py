@@ -393,7 +393,10 @@ def test_derived_benchmark_has_five_actual_tensor_cases():
     family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
                   and any(isinstance(t, ast.Name) and t.id == 'DERIVED_MOMENTS_FUNCTIONS' for t in n.targets))
     dtype_function = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'native_dtypes')
-    namespace = {'LEVEL_SET_FUNCTIONS':level_set_family(source),
+    namespace = {'DRAW_COORDINATE_FUNCTIONS':next(ast.literal_eval(n.value) for n in source.body
+                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
+                     and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
+                 'LEVEL_SET_FUNCTIONS':level_set_family(source),
                  'ROLLING_KERNEL_FUNCTIONS':next(ast.literal_eval(n.value) for n in source.body
                      if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
                      and t.id == 'ROLLING_KERNEL_FUNCTIONS' for t in n.targets))}
@@ -446,7 +449,10 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
     def import_numpy(name, *args, **kwargs):
         assert name == 'numpy'
         return SimpleNamespace(empty=lambda shape, dtype: Tensor(shape, dtype))
-    namespace = dict(LEVEL_SET_FUNCTIONS=level_set_family(tree), DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
+    namespace = dict(DRAW_COORDINATE_FUNCTIONS=next(ast.literal_eval(n.value) for n in tree.body
+                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
+                     and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
+                     LEVEL_SET_FUNCTIONS=level_set_family(tree), DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
                      COORDS_MOMENTS_FUNCTIONS=coords_family,
                      __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[function], type_ignores=[]), '<derived preparer>', 'exec'), namespace)
@@ -478,7 +484,10 @@ def test_coordinate_default_preparation_uses_actual_points(api, shape):
     def import_numpy(name, *args, **kwargs):
         assert name == 'numpy'
         return SimpleNamespace(empty=lambda shape, dtype: Points(shape, dtype))
-    namespace = dict(LEVEL_SET_FUNCTIONS=level_set_family(tree), __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
+    namespace = dict(DRAW_COORDINATE_FUNCTIONS=next(ast.literal_eval(n.value) for n in tree.body
+                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
+                     and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
+                     LEVEL_SET_FUNCTIONS=level_set_family(tree), __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[family, function], type_ignores=[]), '<coordinate preparer>', 'exec'), namespace)
     (points,), options = namespace['default_call'](api, image)
     assert points is not image and points.shape == (shape[0], 2) and points.dtype is descriptor
@@ -723,3 +732,32 @@ def test_historical_subdivision_harness_is_available_for_actual_inverse_guard_jo
     # and never collect the historical benchmark inverse guard.
     for name in ('debug-gil','measure','measure-minimum'):
         assert fetch not in blocks[name]
+
+
+
+def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_smoke():
+    preparation=jobs((ROOT/'.github/workflows/ci.yml').read_text())['numpy-minimum']
+    for mode in ('normal','scalar'):
+        command=('python -m pytest -q tests/test_draw_coordinates_public.py '
+                 'tests/test_draw_coordinates_integration.py --junitxml=build/ci-artifacts/'
+                 'draw-coordinates-'+mode+'.xml')
+        assert preparation.count(command)==1
+        assert preparation.index(command)<preparation.index('ci_measurement_artifacts.py freeze')
+        assert preparation.index(command)<preparation.index('tools/run_feature_tests.py --phase smoke')
+    assert preparation.split('draw-coordinates-scalar.xml',1)[1].startswith(
+        "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    assert 'tests/test_draw_coordinates_public.py::' not in preparation
+    assert '--phase smoke --report build/ci-artifacts/feature-smoke.json' in preparation
+    # The shared runner uses the actual inventoried routes: retain test_api's
+    # per-function cases and all four dedicated native-pipeline entries.
+    inventory=json.loads((ROOT/'coverage/api.json').read_bytes())
+    entries={entry['api']:entry for entry in inventory['entries']}
+    for api in ('draw.line','draw.rectangle','draw.disk','draw.ellipse'):
+        assert entries[api]['implementation']=='native-partial'
+        assert entries[api]['parity_test']=='tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline'
+    feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
+    assert "str(ROOT / 'tests/test_api.py')" in feature_source
+    contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
+    assert contract['scope']=='current251'
+    assert len(contract['image_paths'])==251 and len(contract['metadata_paths'])==3
+    assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py'}<=set(contract['required_selectors'])

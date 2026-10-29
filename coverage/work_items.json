@@ -34192,6 +34192,273 @@
       "frozen_corpora": 48,
       "performance_claim": false,
       "scope": "Admission applies only to exactf1 and its scoped partial API paths. Current-main Montage optimization is separately tested/measured, not whole-product-qualified by this receipt. Four drawing APIs remain private and are excluded. Earlier failed campaigns and accepted241/203 receipts remain unchanged."
+    },
+    {
+      "id": "draw-coordinates-reference",
+      "kind": "contract",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "00055e71f83328c844546e7f1a51a8225373695c",
+      "source_merged": true,
+      "state": "contracted",
+      "owns": [
+        "tests/draw_coordinates_contract.py",
+        "tests/draw_coordinates_observer.py",
+        "tests/test_draw_coordinates_public.py",
+        "coverage/contracts/draw-coordinates.json"
+      ],
+      "depends_on": [],
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "66ba10731bd100f467391acba6111a1c9423b357",
+          "manifest": {
+            "path": "build/draw-coordinate-capture-v1/handoff.json",
+            "sha256": "206ad917f914add37db23afb583bedfa09b991d603f64f20444ad954759e7613"
+          },
+          "passing_contract_checks": 176
+        }
+      },
+      "scope": "176 once-only original calls,75 returns/13 errors each NumPy profile;376 array blobs. Original observations remain unchanged.16 later default references separately recorded; no original recapture."
+    },
+    {
+      "id": "draw-coordinates-native",
+      "kind": "native",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "source_merged": true,
+      "state": "parity_passed",
+      "owns": [
+        "include/skimagexx/draw_coordinates.hpp",
+        "src/draw_coordinates.cpp",
+        "src/simd_draw_coordinates_avx2.cpp",
+        "tests/test_draw_coordinates_native.cpp",
+        "coverage/contracts/draw-coordinates-native-v1.json"
+      ],
+      "depends_on": [
+        "draw-coordinates-reference"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ec52c45db66acf5862a83938e4df00197b05b219",
+          "manifest": {
+            "path": "build/worktrees/draw-coordinates-native-v1/build/native-v1/handoff.json",
+            "sha256": "62e0b1c29d01eea78ca0f56284b7a96303a49625d4612b6d33579fd217911f9a"
+          },
+          "native_contract_checks": 7748648,
+          "native_pending": 0
+        }
+      },
+      "scope": "Six native modes with saved records, signed/zero strides, unaligned words, FTZ, FP state/refusal, scalar/OpenMP/portable/sanitizers; workers1/4 where supported. Dependent Bresenham serial; rectangle and ellipse independent loops SIMD/optional parallel. No performance claim."
+    },
+    {
+      "id": "draw-coordinates-frontend",
+      "kind": "frontend",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "source_merged": true,
+      "state": "parity_passed",
+      "owns": [
+        "python/skimagexx/_draw_coordinates.py",
+        "python/skimagexx/draw.py",
+        "tests/test_draw_coordinates_integration.py"
+      ],
+      "depends_on": [
+        "draw-coordinates-native"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "3a035e7c0e206de1aa4f25cd1f93bcd37d1f08c5",
+          "manifest": {
+            "path": "build/worktrees/draw-coordinate-frontend-v1/build/frontend-v1/handoff.json",
+            "sha256": "99c34f87359f4275f813d23bfaa3d90a09c01e36d3c73f2f0968dfd87ad6c04a"
+          },
+          "native_contract_checks": 1428,
+          "native_pending": 0
+        }
+      },
+      "scope": "Actual component357checks per mode/two profiles/normal+scalar,1408 saved-observation comparisons,544 actual C acceptances.68/88 saved IDs native,20 provider/errors; no full-domain native claim."
+    },
+    {
+      "id": "draw-coordinates-shared",
+      "kind": "integration",
+      "apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "source_merged": true,
+      "state": "performance_pending",
+      "public_registration": true,
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "src/bind_draw_coordinates.cpp",
+        "python/skimagexx/coverage.py",
+        "tests/test_api.py",
+        "coverage/api.json",
+        "benchmarks/coverage.py"
+      ],
+      "depends_on": [
+        "draw-coordinates-frontend"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-frontend": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "566c1fcdc50dc6cdc0bb2c7a9de0a0e56449b6f8",
+          "manifest": {
+            "path": "build/draw-coordinates-genuine-prepare-v1/handoff-with-preflight.json",
+            "sha256": "91d90cf2e457dda5dde23d15f2ed76b24b133d9a6ae84ffa8ed20f314046df3d"
+          },
+          "native_contract_checks": 904,
+          "native_pending": 0
+        }
+      },
+      "installed_SDK_component": {
+        "manifest": {
+          "path": "build/worktrees/draw-coordinates-sdk-client-v1/build/sdk-client-v1/handoff.json",
+          "sha256": "5585f220026878398dc6f5c7c6766113a90cbdd83f5eb738439b30b7abfebf22"
+        },
+        "SDK_members": 84,
+        "client_families": 1,
+        "client_checks": 2,
+        "scope": "Assembled84 only, not genuine full product or27family qualification."
+      },
+      "scope": "Four scoped drawing APIs now have true-core component/default proof and genuine251 minimum normal/scalar public/pipeline904checks; fullproduct178/SDK84, actualSDKclient andfullgenuinefirstcase preflight pass. Initial12caseperformance andfourprofile251qualification pending; acceptedbaseline247 remainsf1.",
+      "component_public_proof": {
+        "manifest": {
+          "path": "build/draw-coordinates-shared-v1/handoff.json",
+          "sha256": "e52064d26ed1e83c7b26a0d662f0cbc483c8da50e037ba813b6ead6626b5c09f"
+        },
+        "checks": 1428,
+        "profiles": 2,
+        "modes": 2,
+        "scope": "Earlier true4-entry component only."
+      },
+      "genuine_preparation": {
+        "run": 40816710252,
+        "source_sha": "566c1fcdc50dc6cdc0bb2c7a9de0a0e56449b6f8",
+        "artifact": 12873106882,
+        "artifact_sha256": "b5c1b0d20ee9ed5558ef3ed2a9089f2899c4d6265a5f10553726e61a6e39dc91",
+        "product_members": 178,
+        "SDK_members": 84,
+        "focused_checks": 10250,
+        "all_XML_checks": 13983,
+        "smoke_checks": 1463,
+        "skipped_timings": 29,
+        "manifest": {
+          "path": "build/draw-coordinates-genuine-prepare-v1/handoff-with-preflight.json",
+          "sha256": "91d90cf2e457dda5dde23d15f2ed76b24b133d9a6ae84ffa8ed20f314046df3d"
+        }
+      },
+      "genuine_SDK_client": {
+        "manifest": {
+          "path": "build/draw-coordinates-genuine-sdk84-client-v1/handoff.json",
+          "sha256": "72a1247b5f151185ef7f4c8aacf17eb91554ed728f03f3aabebcca8a0fcdcd42"
+        },
+        "SDK_members": 84,
+        "client_families": 1,
+        "client_checks": 2,
+        "workers": [
+          1,
+          4
+        ],
+        "scope": "Actual untouchedgenuine84 drawing client normal/scalar, notall27families."
+      }
+    },
+    {
+      "id": "draw-coordinates-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "main",
+      "source_merged": true,
+      "state": "preparing",
+      "owns": [
+        "benchmarks/draw_coordinates.py",
+        "coverage/contracts/draw-coordinates-benchmark.json",
+        "tests/test_draw_coordinates_benchmark.py"
+      ],
+      "depends_on": [
+        "draw-coordinates-shared"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-shared": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "benchmark_preflight": {
+        "manifest": {
+          "path": "build/draw-coordinate-benchmark-preflight-v1/handoff.json",
+          "sha256": "4cecbe7e3fa47a4de089b1e44f27feda46b6b02bff0d5328074f7e9c0480d94e"
+        },
+        "original_calls": 1,
+        "native_calls": 1,
+        "timed_batches": 0
+      },
+      "scope": "Genuine251 minimum prep andactualSDK84 plusrealfirstcasepreflight passed. All12 immutable cases, one worker/referencepool,7 rounds/168samples,>=100msaccepted and>=250mswarmup/function. Initialmeasurementpending; retainalllosses.",
+      "genuine_first_cohort_preflight": {
+        "manifest": {
+          "path": "build/draw-coordinates-genuine-preflight-v1/handoff.json",
+          "sha256": "2d3d9381492d0d1de471c1b925abaf50aa136ded1660978ca88c1793023b8b2c"
+        },
+        "original_calls": 1,
+        "native_calls": 1,
+        "timed_batches": 0
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -34280,19 +34547,15 @@
     "draw.bezier_curve",
     "draw.circle_perimeter",
     "draw.circle_perimeter_aa",
-    "draw.disk",
-    "draw.ellipse",
     "draw.ellipse_perimeter",
     "draw.ellipsoid",
     "draw.ellipsoid_stats",
-    "draw.line",
     "draw.line_aa",
     "draw.line_nd",
     "draw.polygon",
     "draw.polygon2mask",
     "draw.polygon_perimeter",
     "draw.random_shapes",
-    "draw.rectangle",
     "draw.rectangle_perimeter",
     "draw.set_color",
     "exposure.adjust_gamma",
