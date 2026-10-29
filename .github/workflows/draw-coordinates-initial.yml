@@ -1,0 +1,363 @@
+name: draw-coordinates-initial
+on:
+  workflow_dispatch:
+    inputs:
+      producer_run:
+        type: string
+        required: true
+      producer_revision:
+        type: string
+        required: true
+      artifact_id:
+        type: string
+        required: true
+      artifact_sha256:
+        type: string
+        required: true
+      execution_created_utc:
+        type: string
+        required: true
+      deadline_utc:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PRODUCER_RUN: ${{ inputs.producer_run }}
+      PRODUCER_REVISION: ${{ inputs.producer_revision }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      ARTIFACT_SHA256: ${{ inputs.artifact_sha256 }}
+      EXECUTION_CREATED_UTC: ${{ inputs.execution_created_utc }}
+      DEADLINE_UTC: ${{ inputs.deadline_utc }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate the exact successful producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
+          assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
+          assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
+          # Fail closed until the admitted genuine producer pins replace these sentinels.
+          expected = dict(run='TBD_RUN', revision='TBD_REVISION', artifact='TBD_ARTIFACT', sha256='TBD_SHA256', core_sha256='TBD_CORE_SHA256')
+          assert (run, revision, artifact, digest) == tuple(expected[k] for k in ('run', 'revision', 'artifact', 'sha256'))
+          assert re.fullmatch('[0-9a-f]{64}', expected['core_sha256'])
+          created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
+          deadline = datetime.fromisoformat(os.environ['DEADLINE_UTC'])
+          assert created.utcoffset() is not None and deadline.utcoffset() is not None
+          assert 0 < (deadline-created).total_seconds() <= 7200
+          assert created <= datetime.now(timezone.utc) < deadline
+          Path('results/execution-clock.json').write_text(json.dumps(dict(created_utc=created.isoformat(), deadline_utc=deadline.isoformat()), indent=2) + '\n')
+          Path('results/expected-product.json').write_text(json.dumps(expected, indent=2) + '\n')
+          base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+          def api(endpoint, name):
+              raw = subprocess.check_output(['gh', 'api', base + endpoint])
+              Path('results', name + '.json').write_bytes(raw)
+              return json.loads(raw)
+          record = api('runs/' + run, 'producer-run')
+          assert str(record['id']) == run and record['head_sha'] == revision
+          assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          assert record['path'] == '.github/workflows/ci.yml'
+          assert record['status'] == 'completed' and record['conclusion'] == 'success'
+          listing = api('runs/' + run + '/artifacts?per_page=100', 'producer-artifacts')
+          assert listing['total_count'] == len(listing['artifacts'])
+          matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
+          assert len(matches) == 1
+          selected = matches[0]
+          assert str(selected['id']) == artifact and selected['digest'] == 'sha256:' + digest
+          assert not selected['expired'] and 0 < selected['size_in_bytes'] < 512 * 1024**2
+          assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
+          Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
+          jobs = api('runs/' + run + '/jobs?filter=latest&per_page=100', 'producer-jobs')
+          assert jobs['total_count'] == len(jobs['jobs'])
+          required = {name: [j for j in jobs['jobs'] if j['name'] == name] for name in ('numpy-minimum', 'measure-minimum')}
+          assert all(len(values) == 1 and values[0]['conclusion'] == 'success' for values in required.values())
+          timing = [step for step in required['measure-minimum'][0]['steps'] if step['name'].startswith('Run python benchmarks/')]
+          assert len(timing) == 29 and all(step['conclusion'] == 'skipped' for step in timing)
+
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.producer_revision }}
+          path: snapshot
+          fetch-depth: 1
+      - name: Install the authenticated product offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/prepared.zip"
+          python - <<'PY'
+          import hashlib, json, os, re, runpy, stat, subprocess, zipfile
+          from collections import Counter
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          selected = json.loads(Path('results/selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], 'prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results/archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and actual['sha256'] == os.environ['ARTIFACT_SHA256']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall('snapshot/build')
+          prepared = Path('snapshot/build/prepared/ci-artifacts')
+          manifest = json.loads((prepared / 'measurement.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          Path('results/measurement.json').write_bytes((prepared / 'measurement.json').read_bytes())
+          Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
+          assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
+          assert len(manifest['wheels']) == 14
+          source_root = Path('snapshot')
+          names = subprocess.check_output(['git', '-C', str(source_root), 'ls-files', '-z']).decode().split('\0')
+          layout = runpy.run_path(str(source_root / 'tools/public_qualification.py'))['current_install_layout'](
+              lambda name: (source_root / name).read_bytes(), [name for name in names if name], 'minimum')
+          assert layout['product_count'] == 178 and layout['SDK_count'] == 84
+          assert len(runpy.run_path(str(source_root / 'tools/public_qualification.py'))['CURRENT_FAMILIES']) == 27
+          core_hashes = {v for k,v in manifest['runtime']['packages_sha256']['skimagexx'].items() if k.startswith('_core.') and k.endswith('.so')}
+          assert core_hashes == {json.loads(Path('results/expected-product.json').read_bytes())['core_sha256']}
+          assert set(manifest['runtime']['sdk_sha256']) == set(layout['SDK_members'])
+          products = [n for n, v in manifest['wheels'].items() if v['name'] == 'scikit-imagexx']
+          assert len(products) == 1 and len(manifest['wheels']) - len(products) == 13
+          wheel = products[0]
+          with zipfile.ZipFile(Path('snapshot/build/prepared/wheels', wheel)) as z:
+              members = {n for n in z.namelist() if not n.endswith('/')}
+              cores = {n for n in members if n.startswith('skimagexx/_core.') and n.endswith('.so')}
+              assert len(cores) == 1 and members == set(layout['members_without_core']) | cores
+              assert len(members) == layout['product_count']
+          inventory = json.loads(Path('snapshot/coverage/api.json').read_bytes())['entries']
+          assert sum(e['implementation'] == 'native-partial' for e in inventory) == 251
+          assert sum(e['implementation'] == 'metadata' for e in inventory) == 3
+          expected_files = {'test_draw_coordinates_public': 271,
+                            'test_draw_coordinates_integration': 181}
+          for name in ('draw-coordinates-normal.xml', 'draw-coordinates-scalar.xml'):
+              tree = ET.fromstring((prepared / name).read_bytes())
+              cases = tree.findall('.//testcase')
+              assert len(cases) == sum(expected_files.values()) == 452
+              actual_files = Counter(case.attrib['classname'].rsplit('.', 1)[-1] for case in cases)
+              assert dict(actual_files) == expected_files
+              assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+          minimum_source = Path('snapshot/.github/workflows/ci.yml').read_text().split('  numpy-minimum:', 1)[1].split('  measure:', 1)[0]
+          xml_names = re.findall(r'--junitxml=build/ci-artifacts/([^ ]+-(?:normal|scalar)\.xml)', minimum_source)
+          focused_names = [name for name in xml_names if not name.startswith('color-transforms-regression-')]
+          assert len(focused_names) == len(set(focused_names)) and len(focused_names) > 0
+          required_xml = ['approximate-polygon-normal.xml', 'approximate-polygon-scalar.xml', 'block-reduce-normal.xml', 'block-reduce-scalar.xml', 'blur-effect-normal.xml', 'blur-effect-scalar.xml', 'butterworth-normal.xml', 'butterworth-scalar.xml', 'color-transforms-regression-normal.xml', 'color-transforms-regression-scalar.xml', 'compare-images-normal.xml', 'compare-images-scalar.xml', 'draw-coordinates-normal.xml', 'draw-coordinates-scalar.xml', 'euler-number-normal.xml', 'euler-number-scalar.xml', 'immutable-bytes-normal.xml', 'immutable-bytes-scalar.xml', 'inertia-eigvals-normal.xml', 'inertia-eigvals-scalar.xml', 'inertia-tensor-normal.xml', 'inertia-tensor-scalar.xml', 'label-points-normal.xml', 'label-points-pipeline-normal.xml', 'label-points-pipeline-scalar.xml', 'label-points-scalar.xml', 'level-set-normal.xml', 'level-set-pipeline-normal.xml', 'level-set-pipeline-scalar.xml', 'level-set-scalar.xml', 'lpi-normal.xml', 'lpi-scalar.xml', 'map-array-normal.xml', 'map-array-pipeline-normal.xml', 'map-array-pipeline-scalar.xml', 'map-array-scalar.xml', 'mesh-surface-area-normal.xml', 'mesh-surface-area-scalar.xml', 'moments-coords-normal.xml', 'moments-coords-scalar.xml', 'moments-derived-normal.xml', 'moments-derived-scalar.xml', 'moments-normal.xml', 'moments-scalar.xml', 'montage-normal.xml', 'montage-scalar.xml', 'normalized-layouts-normal.xml', 'normalized-layouts-scalar.xml', 'perimeter-crofton-normal.xml', 'perimeter-crofton-scalar.xml', 'perimeter-normal.xml', 'perimeter-scalar.xml', 'polygon-normal.xml', 'polygon-scalar.xml', 'profile-coordinates-normal.xml', 'profile-coordinates-scalar.xml', 'profile-line-normal.xml', 'profile-line-scalar.xml', 'regular-seeds-normal.xml', 'regular-seeds-pipeline-normal.xml', 'regular-seeds-pipeline-scalar.xml', 'regular-seeds-scalar.xml', 'rgb2yuv-storage-normal.xml', 'rgb2yuv-storage-scalar.xml', 'rolling-ball-kernels-normal.xml', 'rolling-ball-kernels-scalar.xml', 'shannon-entropy-normal.xml', 'shannon-entropy-scalar.xml', 'subdivide-polygon-normal.xml', 'subdivide-polygon-scalar.xml', 'unique-rows-normal.xml', 'unique-rows-pipeline-normal.xml', 'unique-rows-pipeline-scalar.xml', 'unique-rows-scalar.xml', 'window-normal.xml', 'window-scalar.xml']
+          assert set(required_xml) <= set(xml_names)
+          focused_count = 0
+          for name in focused_names:
+              tree = ET.fromstring((prepared / name).read_bytes())
+              assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+              focused_count += len(tree.findall('.//testcase'))
+          assert focused_count > 0
+          smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
+          assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
+          assert set(smoke['outcomes']) == {'passed'}
+          assert smoke['implementations']['native-partial'] == 251 and smoke['implementations']['metadata'] == 3
+          assert smoke['outcomes']['passed'] == len(smoke['results']) > 0
+          Path('results/preparation-counts.json').write_text(json.dumps(dict(focused_XML_groups=len(focused_names), focused_tests=focused_count, smoke_tests=len(smoke['results']), drawing_per_mode=452, declared_SDK_client_families=27), indent=2) + '\n')
+          for name, expected in (('benchmarks/draw_coordinates.py', 'da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc'),
+                                 ('coverage/contracts/draw-coordinates-benchmark.json', 'd04381216399539976f9d006c724e65362eab757ebb9b50100f555691b273194'),
+                                 ('coverage/contracts/draw-coordinates.json', '944f5347959eb748808ba71bd08bc9344165a1e524f46de5318f59c1aca46f53'),
+                                 ('tools/montage_sustained.py', '29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d')):
+              assert manifest['source']['files_sha256'][name] == expected
+              assert hashlib.sha256(Path('snapshot', name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected
+          PY
+          python -m venv "$RUNNER_TEMP/runtime"
+          "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links snapshot/build/prepared/wheels -r snapshot/build/prepared/ci-artifacts/runtime-lock.txt 2>&1 | tee results/offline-install.log
+          "$RUNNER_TEMP/runtime/bin/python" snapshot/tools/ci_measurement_artifacts.py verify --wheel-dir snapshot/build/prepared/wheels --artifact snapshot/build/prepared/ci-artifacts/measurement.json 2>&1 | tee results/original-identity.log
+      - name: Measure twelve unchanged drawing public calls
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          output="$GITHUB_WORKSPACE/results"
+          export DRAW_OUTPUT="$output"
+          cd snapshot
+          py="$RUNNER_TEMP/runtime/bin/python"
+          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-before.log"
+          status=0
+          taskset -c 1 "$py" - <<'PY' 2>&1 | tee "$output/draw-coordinates.log" || status=$?
+          import json, os, runpy, sys
+          from pathlib import Path
+          output = Path(os.environ['DRAW_OUTPUT'])
+          def process():
+              return dict(pid=os.getpid(), affinity=sorted(os.sched_getaffinity(0)))
+          before = process(); assert before['affinity'] == [1]
+          (output/'process-before.json').write_text(json.dumps(before, indent=2)+'\n')
+          sys.argv = ['benchmarks/draw_coordinates.py', '--threads', '1', '--repeat', '7', '--pass-index', '1',
+                      '--deadline-utc', os.environ['DEADLINE_UTC'], '--output', str(output/'draw-coordinates.json')]
+          try:
+              runpy.run_path('benchmarks/draw_coordinates.py', run_name='__main__')
+          finally:
+              after = process()
+              (output/'process-after.json').write_text(json.dumps(after, indent=2)+'\n')
+              assert after == before
+          PY
+          echo "$status" > "$output/benchmark-exit.txt"
+          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-after.log"
+          test "$status" -eq 0
+      - name: Validate all samples, calibration journals and losses
+        shell: bash
+        run: |
+          python - <<'PY'
+          from datetime import datetime, timezone
+          import hashlib, json, math, os, re, runpy, statistics
+          from pathlib import Path
+          def validate_report(report, contract, reference, manifest, expected_source, journal, clock):
+              meta = report['metadata']
+              assert meta['source_before'] == expected_source
+              assert {k: meta[k] for k in expected_source} == expected_source
+              assert (meta['threads'], meta['repeat'], meta['target_ms'], meta['raw_samples']) == (1, 7, 100, 168)
+              assert meta['warmup_calibration_min_ms'] == 250 and meta['interbatch_sleep_ms'] == 0
+              assert meta['pass_index'] == 1 and datetime.fromisoformat(meta['deadline_utc']) == datetime.fromisoformat(clock['deadline_utc'])
+              assert datetime.fromisoformat(clock['created_utc']) <= datetime.fromisoformat(meta['timestamp_utc']) <= datetime.fromisoformat(clock['deadline_utc'])
+              assert set(meta['reference_pool_limits'].values()) == {'1'} and meta['fallback_enabled'] is False
+              assert meta['selected_apis'] == reference['apis'] and meta['dtype_scope'] == contract['dtype_scope']
+              assert set(meta['numpy_error_policy']) == {'divide', 'over', 'under', 'invalid'}
+              assert set(meta['numpy_error_policy'].values()) <= {'ignore', 'warn', 'raise', 'call', 'print', 'log'}
+              assert type(meta['numpy_buffer_elements']) is int and meta['numpy_buffer_elements'] > 0
+              assert meta['harness_sha256'] == manifest['source']['files_sha256']['benchmarks/draw_coordinates.py']
+              assert meta['method_sha256'] == contract['method_sha256']
+              assert meta['original_source_sha256'] == reference['source_canonical_lf_sha256']
+              assert meta['original_binary_sha256'] == reference['binary_sha256'][meta['numpy']]
+              assert (meta['numpy'], meta['scipy'], meta['reference']) == tuple(manifest['runtime']['versions'][k] for k in ('numpy', 'scipy', 'scikit-image'))
+              cores = {v for k,v in manifest['runtime']['packages_sha256']['skimagexx'].items() if k.startswith('_core.') and k.endswith('.so')}
+              assert cores == {meta['core_sha256']}
+              assert len(report['results']) == len(contract['cases']) == 12 and contract['cases'] == reference['benchmark_cases']
+              samples = 0; accepted_ns = []; used = 0
+              for index, (row, spec) in enumerate(zip(report['results'], contract['cases'])):
+                  assert row['case_id'] == spec['id'] and row['api'] == spec['api']
+                  assert row['parameters'] == dict(args=spec['args'], kwargs=spec['kwargs'])
+                  assert row['threads'] == 1 and row['native_accepted'] is True and row['backend'] == 'native'
+                  assert row['actual_C_returns'] == [contract['native_entries'][spec['api']]] and row['native_entry_module'] == 'skimagexx._core'
+                  assert row['max_abs_error'] == 0 and row['warnings'] == []
+                  output = row['output']; descriptors = output['arrays']; api = spec['api']
+                  dims = len(spec['args'][0]) if api == 'draw.rectangle' else 2
+                  assert len(descriptors) == dims
+                  assert output['container'] == ('list' if api == 'draw.rectangle' else 'tuple')
+                  assert output['output_aliases'] == [[a == b for b in range(dims)] for a in range(dims)]
+                  assert output['shared_bases'] == [[a == b or api != 'draw.line' for b in range(dims)] for a in range(dims)]
+                  total = 0
+                  for axis, descriptor in enumerate(descriptors):
+                      assert descriptor['dtype'] == '<i8' and descriptor['dtype_metadata'] is None
+                      assert descriptor['writeable'] is True and descriptor['aligned'] is True
+                      assert re.fullmatch('[0-9a-f]{64}', descriptor['sha256'])
+                      assert descriptor['sha256'] == output['reference_sha256'][axis] == output['oracle_sha256'][axis]
+                      shape = descriptor['shape']; total += math.prod(shape)
+                      if api == 'draw.rectangle':
+                          shape_expected = spec['kwargs']['extent'].copy(); shape_expected[0], shape_expected[1] = shape_expected[1], shape_expected[0]
+                          stride = 8; strides = []
+                          for extent in reversed(shape_expected): strides.insert(0, stride); stride *= extent
+                          assert shape == shape_expected and descriptor['strides'] == strides
+                          assert descriptor['own'] is True and descriptor['base_type'] == 'NoneType'
+                          assert descriptor['base_shape'] is None and descriptor['base_strides'] is None
+                          assert descriptor['c'] is True and descriptor['f'] is False
+                      elif api == 'draw.line':
+                          r0,c0,r1,c1 = spec['args']; count = max(abs(r1-r0), abs(c1-c0))+1
+                          assert shape == [count] and descriptor['strides'] == [8]
+                          assert descriptor['own'] is False and descriptor['base_type'] == 'memoryview'
+                          assert descriptor['base_shape'] == shape and descriptor['base_strides'] == [8]
+                          assert descriptor['c'] is True and descriptor['f'] is True
+                      else:
+                          assert len(shape) == 1 and shape[0] > 1 and shape == descriptors[0]['shape']
+                          assert descriptor['strides'] == [16] and descriptor['own'] is False
+                          assert descriptor['base_type'] == 'ndarray' and descriptor['base_shape'] == [shape[0], 2]
+                          assert descriptor['base_strides'] == [16, 8] and descriptor['c'] is False and descriptor['f'] is False
+                  assert total <= contract['max_output_coordinate_elements']
+                  assert row['sample_labels'] == ['scikit-image', 'current']
+                  assert list(map(len, row['samples_ms'])) == [7, 7] and list(map(len, row['loops'])) == [7, 7]
+                  assert all(math.isfinite(v) and v > 0 for part in row['samples_ms'] for v in part)
+                  assert all(type(v) is int and v > 0 for part in row['loops'] for v in part)
+                  assert row['reference_ms'] == statistics.median(row['samples_ms'][0]) and row['cpp_ms'] == statistics.median(row['samples_ms'][1])
+                  assert row['speedup'] == row['reference_ms']/row['cpp_ms']
+                  expected_order = [[0,1] if (i+index+1)%2 == 0 else [1,0] for i in range(7)]
+                  assert row['sample_order'] == expected_order
+                  records = [event for event in journal if event['case_index'] == index]
+                  assert records and records[-1]['event'] == 'measure_returned'
+                  returned = records[-1]; records = records[:-1]; used += len(records)+1
+                  timing_keys = ('reference_ms','cpp_ms','speedup','samples_ms','loops','sample_labels','warmup_elapsed_ns','sample_order','batch_records')
+                  assert returned['status'] == 'PENDING_FINAL_HARNESS_VALIDATION' and returned['case_id'] == spec['id']
+                  assert returned['timing'] == {k: row[k] for k in timing_keys}
+                  afters = []; warm = [0,0]; observed = []
+                  assert len(records)%2 == 0
+                  for before, after in zip(records[::2], records[1::2]):
+                      assert before['event'] == 'batch_before' and after['event'] == 'batch_after'
+                      keys = ('case_index','case_id','function','round','ordinal','loops')
+                      assert {k: before[k] for k in keys} == {k: after[k] for k in keys}
+                      assert after['case_id'] == spec['id'] and after['complete'] is True and after['failure'] is None
+                      assert type(after['elapsed_ns']) is int and after['elapsed_ns'] > 0
+                      function = after['function']; assert function in (0,1)
+                      assert type(after['loops']) is int and after['loops'] > 0
+                      accepted = before['requested_phase'] == 'sample' and after['elapsed_ns'] >= 100_000_000
+                      assert after['accepted'] is accepted
+                      assert after['phase'] == ('sample' if accepted else 'warmup' if before['requested_phase'] == 'warmup' else 'underlength-calibration')
+                      if before['requested_phase'] == 'warmup': warm[function] += after['elapsed_ns']
+                      if accepted:
+                          round_id = after['round']; ordinal = after['ordinal']
+                          assert function == expected_order[round_id][ordinal]
+                          assert row['loops'][function][round_id] == after['loops']
+                          assert row['samples_ms'][function][round_id] == after['elapsed_ns']/after['loops']/1e6
+                          accepted_ns.append(after['elapsed_ns']); observed.append((round_id, ordinal, function))
+                      afters.append(after)
+                  assert observed == [(i,j,f) for i,order in enumerate(expected_order) for j,f in enumerate(order)]
+                  assert afters == row['batch_records'] and warm == row['warmup_elapsed_ns'] and min(warm) >= 250_000_000
+                  samples += sum(map(len,row['samples_ms']))
+              assert samples == 168 and used == len(journal)
+              return dict(status='validated', raw_samples=samples, accepted_batch_ns_min=min(accepted_ns), accepted_batch_ns_max=max(accepted_ns),
+                  geometric_mean=math.exp(statistics.mean(math.log(x['speedup']) for x in report['results'])),
+                  wins=[x['case_id'] for x in report['results'] if x['speedup'] > 1], losses=[x['case_id'] for x in report['results'] if x['speedup'] < 1],
+                  ties=[x['case_id'] for x in report['results'] if x['speedup'] == 1],
+                  scope='Initial original/current comparison only; every loss retained, no prior-C++ gain, full-domain or full qualification claim.')
+          report = json.loads(Path('results/draw-coordinates.json').read_bytes())
+          contract_path = Path('snapshot/coverage/contracts/draw-coordinates-benchmark.json')
+          reference_path = Path('snapshot/coverage/contracts/draw-coordinates.json')
+          assert report['metadata']['execution_contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
+          assert report['metadata']['contract_sha256'] == hashlib.sha256(reference_path.read_bytes()).hexdigest()
+          expected_source = runpy.run_path('snapshot/benchmarks/provenance.py')['source_fingerprint'](Path('snapshot'))
+          journal = [json.loads(line) for line in Path('results/draw-coordinates.batches.jsonl').read_text().splitlines()]
+          clock = json.loads(Path('results/execution-clock.json').read_bytes())
+          assert datetime.now(timezone.utc) <= datetime.fromisoformat(clock['deadline_utc'])
+          before = json.loads(Path('results/process-before.json').read_bytes()); after = json.loads(Path('results/process-after.json').read_bytes())
+          assert before == after and before['affinity'] == [1] and type(before['pid']) is int and before['pid'] > 0
+          assert Path('results/benchmark-exit.txt').read_text().strip() == '0'
+          summary = validate_report(report, json.loads(contract_path.read_bytes()), json.loads(reference_path.read_bytes()),
+              json.loads(Path('snapshot/build/prepared/ci-artifacts/measurement.json').read_bytes()), expected_source, journal, clock)
+          Path('results/summary.json').write_text(json.dumps(summary, indent=2)+'\n')
+          print(json.dumps(summary, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: draw-coordinates-initial-minimum
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
