@@ -1,0 +1,55 @@
+{
+  "schema": "colocalization-f64-finite-correctness-v1",
+  "status": "FROZEN_BEFORE_NATIVE_EDITS_OR_CANDIDATE_OUTPUTS",
+  "created_utc": "2026-10-29T00:05:16.017365+00:00",
+  "source_base": "4f69eba77a262056459eaab1e0a39e53610e9305",
+  "variant_limit": 1,
+  "owned_source_files": [
+    "src/colocalization.cpp",
+    "src/simd_colocalization_avx2.cpp",
+    "tests/test_colocalization_native.cpp"
+  ],
+  "scope": "Correctness-only missing native-endian positive-affine step8 float64 finite-classification specialization. Integer-only runtime-guarded AVX2 plus memcpy uint64 scalar fallback; existing float32 and all generic fallback paths unchanged. No removed finite scans, changed stages/provider boundaries, floating operations, new validation/scheduling, API/ABI/header/CMake/binder/Python modifications.",
+  "admission": {
+    "dtype": "ColocType::float64",
+    "swapped": false,
+    "affine": true,
+    "positive_byte_step": 8,
+    "AVX2_vector_width": 4,
+    "AVX2_guard": "Existing has_avx2(), n>=4",
+    "tail": "Only complete four-word loads while n-i>=4; memcpy uint64 remainder. No overread/alignment precondition."
+  },
+  "classification": "(word &0x7ff0000000000000)==0x7ff0000000000000 is nonfinite. +/-0/subnormal/normal/max finite; +/-Inf/qNaN/sNaN nonfinite. Integer mask/equality/reduction only; all FEnv/rounding and input bytes unchanged.",
+  "native_checks": {
+    "modes": [
+      "OpenMP normal",
+      "OpenMP scalar forced",
+      "portable normal",
+      "portable scalar forced",
+      "ASan+UBSan normal",
+      "ASan+UBSan scalar forced"
+    ],
+    "workers": [
+      1,
+      4
+    ],
+    "portable_worker4": "Existing no-OpenMP refusal, unchanged policy",
+    "old_tests": "Entire existing native test functions/main sequence and initial full stdout prefix unchanged. Append f64 controls after old body/output.",
+    "new_controls": [
+      "f64 raw +/-0,subnormal min/max,normal min/max,Inf,qNaN/sNaN payloads",
+      "n=0 and four-lane boundaries/tails plus128/129,257",
+      "nonfinite first,four vector lanes,last tail",
+      "aligned/unaligned,native/swapped,reverse,step2 and genuine2D denseF",
+      "all four C floating rounding modes,preexisting divide and invalid flags unchanged",
+      "unchanged inputs,poisoned padding,provider refusal before writes/flag stores"
+    ]
+  },
+  "public_checks": "Reuse unchanged536case saved public corpus for both qualified NumPy profiles, ordinary worker1/4 representative cases and existing owner/FP/provider checks; no new original captures.",
+  "retained_source_sha256": {
+    "src/colocalization.cpp": "d72431ba71885997d2c43368bea75ce713b2a62b6b3e1be06ff52ad45145508f",
+    "src/simd_colocalization_avx2.cpp": "b47e814306d3964017f19727a310ba5e2736eb351ab3cc302d26235ea7c58d68",
+    "tests/test_colocalization_native.cpp": "025fac90d0e64aefc282e3e0e40090136d4431969c9e3ba93a9e4bbb0d2370b4"
+  },
+  "build": "Only affected TUs and tiny test/component links, retained SDK/env/donors. No whole SDK/environment build.",
+  "performance": "Unassessed. Historical40.170/18.425ms are whole-call observations, not measured scan time. Nine/four repeated scans are structural counts, not causality. No timings/POST/performance gate; root must prospectively review a separate performance scope later."
+}
