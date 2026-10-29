@@ -723,3 +723,32 @@ def test_historical_subdivision_harness_is_available_for_actual_inverse_guard_jo
     # and never collect the historical benchmark inverse guard.
     for name in ('debug-gil','measure','measure-minimum'):
         assert fetch not in blocks[name]
+
+
+
+def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_smoke():
+    preparation=jobs((ROOT/'.github/workflows/ci.yml').read_text())['numpy-minimum']
+    for mode in ('normal','scalar'):
+        command=('python -m pytest -q tests/test_draw_coordinates_public.py '
+                 'tests/test_draw_coordinates_integration.py --junitxml=build/ci-artifacts/'
+                 'draw-coordinates-'+mode+'.xml')
+        assert preparation.count(command)==1
+        assert preparation.index(command)<preparation.index('ci_measurement_artifacts.py freeze')
+        assert preparation.index(command)<preparation.index('tools/run_feature_tests.py --phase smoke')
+    assert preparation.split('draw-coordinates-scalar.xml',1)[1].startswith(
+        "\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    assert 'tests/test_draw_coordinates_public.py::' not in preparation
+    assert '--phase smoke --report build/ci-artifacts/feature-smoke.json' in preparation
+    # The shared runner uses the actual inventoried routes: retain test_api's
+    # per-function cases and all four dedicated native-pipeline entries.
+    inventory=json.loads((ROOT/'coverage/api.json').read_bytes())
+    entries={entry['api']:entry for entry in inventory['entries']}
+    for api in ('draw.line','draw.rectangle','draw.disk','draw.ellipse'):
+        assert entries[api]['implementation']=='native-partial'
+        assert entries[api]['parity_test']=='tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline'
+    feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
+    assert "str(ROOT / 'tests/test_api.py')" in feature_source
+    contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
+    assert contract['scope']=='current251'
+    assert len(contract['image_paths'])==251 and len(contract['metadata_paths'])==3
+    assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py'}<=set(contract['required_selectors'])
