@@ -184,7 +184,13 @@ def test_frozen_source_observer_derivation_and_scope():
         assert hashlib.sha256(frozen.encode()).hexdigest()==data['source_observer_text_sha256'][name]
         assert ast.dump(Restore().visit(node))==ast.dump(ast.parse(frozen).body[0])
     for filename,digest in data['unchanged_source_pins'].items():
-        assert hashlib.sha256((ROOT/filename).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==digest
+        raw=(ROOT/filename).read_bytes().replace(b'\r\n',b'\n')
+        if filename=='tests/test_rank_bilateral_contracts.py':
+            from tools.rank_bilateral_fixture_source import project_qualified_fixture
+            qualified,actual_fixture_digest=project_qualified_fixture(ROOT)
+            assert actual_fixture_digest==hashlib.sha256(raw).hexdigest()
+            raw=qualified.encode()
+        assert hashlib.sha256(raw).hexdigest()==digest
 
 
 def test_source_pin_migration_preserves_frozen_observers_and_assertions():

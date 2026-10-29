@@ -1,6 +1,6 @@
 """Montage with literal preparation and owned prepared-buffer fill/copy."""
+import functools
 import numpy as np
-from skimage._shared import utils
 from . import _core
 
 _INDEX_MAX = np.iinfo(np.intp).max
@@ -8,7 +8,19 @@ _PADDING_TYPES = (int, bool, np.int8, np.int16, np.int32, np.int64,
                   np.uint8, np.uint16, np.uint32, np.uint64)
 
 
-@utils.channel_as_last_axis(multichannel_output=False)
+def _channel_as_last_axis(function):
+    decorated = None
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        nonlocal decorated
+        if decorated is None:
+            from skimage._shared import utils
+            decorated = utils.channel_as_last_axis(multichannel_output=False)(function)
+        return decorated(*args, **kwargs)
+    return wrapper
+
+
+@_channel_as_last_axis
 def montage(arr_in, fill='mean', rescale_intensity=False, grid_shape=None,
             padding_width=0, *, channel_axis=None):
     # scikit-image0.26 _montage.py, BSD-3-Clause; see the retained upstream
