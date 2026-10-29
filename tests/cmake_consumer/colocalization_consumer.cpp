@@ -31,6 +31,10 @@ int main(){
             check(flags==0&&(product==std::array<std::uint8_t,6>{1,0,0,0,1,0}));
             const double values[]={1,2,3,4};const std::size_t four[]={4};const std::ptrdiff_t step[]={8};
             const ColocView real{values,values,sizeof(values),{four,1},{step,1},ColocType::float64,false};
+            check(coloc_all_finite(real));
+            const std::uint64_t exceptional[]={0,0x7ff0000000000001ULL,0,0};
+            const ColocView nonfinite{exceptional,exceptional,sizeof(exceptional),{four,1},{step,1},ColocType::float64,false};
+            check(!coloc_all_finite(nonfinite));
             for(auto profile:{ColocProfile::numpy_1244,ColocProfile::numpy_254}){
                 const auto integer=coloc_sum(first,{profile,8192});check(integer.type==ColocType::uint64&&integer.bits==3&&integer.fp_status==0);
                 const auto floating=coloc_sum(real,{profile,8192});double sum;std::memcpy(&sum,&floating.bits,sizeof(sum));
