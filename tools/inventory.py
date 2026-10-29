@@ -15,6 +15,8 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('draw.line','draw.rectangle','draw.disk','draw.ellipse'),
+     'tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline','benchmarks/draw_coordinates.py'),
     (('segmentation.checkerboard_level_set','segmentation.disk_level_set'),
      'tests/test_level_set_public.py::test_level_set_native_public_contract','benchmarks/level_set.py'),
     (('util.map_array',),'tests/test_map_array_public.py::test_map_array_native_public_contract','benchmarks/map_array.py'),
