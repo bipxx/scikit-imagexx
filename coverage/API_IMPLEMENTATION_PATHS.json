@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "1e29940d56a7671f6ad7a87dfcafb6751da27d61a6bc80ccccd83a368be42458",
+  "source_inventory_sha256": "d43a5db60ab4064b35632ddce3819dc22662004fa59eec858fb8845881dd46c4",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 247,
-      "upstream-only": 221
+      "native-partial": 251,
+      "upstream-only": 217
     },
     "kinds": {
       "callable": 448,
@@ -3701,22 +3701,26 @@
       "api": "draw.disk",
       "kind": "callable",
       "signature": "(center, radius, *, shape=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.disk",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Generate bounding-box pixels satisfying the radial interior test",
+      "easiest_credible_path": "Audit/extend existing native implementation: Generate bounding-box pixels satisfying the radial interior test",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze fractional centers and boundary radii against pinned upstream, including center floats, strict radius edge and shape clipping; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered center floats, strict radius edge and shape clipping. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "center floats, strict radius edge and shape clipping",
       "parity_cases_to_freeze": "fractional centers and boundary radii",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -3727,32 +3731,36 @@
         "kind": "compute",
         "specific_workload": "fractional centers and boundary radii",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/draw_coordinates.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "draw.ellipse",
       "kind": "callable",
       "signature": "(r, c, r_radius, c_radius, shape=None, rotation=0.0)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.ellipse",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Rotate bounding-box coordinates and test normalized quadratic interior",
+      "easiest_credible_path": "Audit/extend existing native implementation: Rotate bounding-box coordinates and test normalized quadratic interior",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze rotated thin/large ellipses against pinned upstream, including rotation, unequal radii, degenerate radii and clipping; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered rotation, unequal radii, degenerate radii and clipping. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "rotation, unequal radii, degenerate radii and clipping",
       "parity_cases_to_freeze": "rotated thin/large ellipses",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -3763,10 +3771,10 @@
         "kind": "compute",
         "specific_workload": "rotated thin/large ellipses",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/draw_coordinates.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -3881,22 +3889,26 @@
       "api": "draw.line",
       "kind": "callable",
       "signature": "(r0, c0, r1, c1)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.line",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Port Bresenham integer line with exact endpoint order",
+      "easiest_credible_path": "Audit/extend existing native implementation: Port Bresenham integer line with exact endpoint order",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze all octants and long diagonals against pinned upstream, including octants, reversed endpoints, degenerate point; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered octants, reversed endpoints, degenerate point. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "octants, reversed endpoints, degenerate point",
       "parity_cases_to_freeze": "all octants and long diagonals",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -3907,10 +3919,10 @@
         "kind": "compute",
         "specific_workload": "all octants and long diagonals",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/draw_coordinates.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -4134,22 +4146,26 @@
       "api": "draw.rectangle",
       "kind": "callable",
       "signature": "(start, end=None, extent=None, shape=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.rectangle",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Build coordinate mesh between normalized start/end or extent bounds",
+      "easiest_credible_path": "Audit/extend existing native implementation: Build coordinate mesh between normalized start/end or extent bounds",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze reversed corners and partially clipped boxes against pinned upstream, including end inclusivity, negative extent, shape clipping; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered end inclusivity, negative extent, shape clipping. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "end inclusivity, negative extent, shape clipping",
       "parity_cases_to_freeze": "reversed corners and partially clipped boxes",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -4160,10 +4176,10 @@
         "kind": "compute",
         "specific_workload": "reversed corners and partially clipped boxes",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/draw_coordinates.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
