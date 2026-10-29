@@ -1,5 +1,15 @@
 # Phased fast run
 
+Current source has **247 partial native image APIs, three metadata helpers and 221 upstream-only API names**. Full four-profile qualification remains **241 APIs**. Genuine minimum source `4f69eba` passes 9,346 focused and 1,447 smoke checks with 176 product/83 SDK files; the four-profile planner is clear for 26 SDK families and 52 checks per profile. These scopes are distinct.
+
+Phase 2 now targets the completed float64 colocalization classifier candidate: six native modes and 2,180 public component checks pass, but performance is unassessed. Three agents separately own its prospective 21-case benchmark, independent native review, and performance-contract/qualification review; the integrator alone dispatches and merges. After this one bounded comparison, freeze the coherent 247-API source and run the existing four-profile qualification, without waiting for later APIs or variants.
+
+Published one-thread results include RDP 9/9 at 6.73x and subdivision 14/14 at 4.00x on separate scoped cohorts. Montage v1, byte-fill v2 and the [sustained follow-up](../benchmarks/montage-sustained-same-host.md) remain closed UNRESOLVED_MEASUREMENT; the candidate stays unmerged. Existing failed experiments and raw observations remain unchanged.
+
+## Historical checkpoints (retained evidence)
+
+The paragraphs below retain earlier checkpoints and their original scopes; references to “current”, “next”, “pending” or live jobs inside this historical section describe their recorded checkpoint, not the live summary above.
+
 **Latest measured checkpoint:** polygon approximation wins 9/9 at **6.73×**, and subdivision wins 14/14 at **4.00×**, on their separate one-thread minimum-host cohorts. Both use the admitted 247-API product; all raw samples and earlier failures are published in the [RDP](../benchmarks/approximate-polygon-minimum-initial.md) and [subdivision](../benchmarks/subdivide-polygon-minimum-initial.md) reports. Full four-profile qualification remains 241.
 
 The [row-owned Montage byte-fill v2](../benchmarks/montage-row-owned-v2-same-host.md) is closed **UNRESOLVED_MEASUREMENT** and remains private. All fixed gates pass; incomplete-u8 gains are 1.355× direct / 1.348× normalized. The sole blocker is Fortran normalized-timing uncertainty: worst-pair gain 0.885140365 fails the unchanged 0.97 floor. Its B2 original/current loss 0.983922393 is retained. All 1,008 samples and 72 journals are published. V1 stays separately closed unresolved with its incomplete-u8 floor failures; no source merge or qualification increase follows either result.
@@ -68,10 +78,10 @@ Use `tools/run_feature_tests.py` to select existing tests and write one report. 
 | Phase selector | Scope | Meaning |
 |---|---|---|
 | `surface` | All 477 inventoried public API keys | Check the public surface. Presence/signature or declared compatibility behavior does not establish native numerical implementation. |
-| `smoke` (default) | Surface checks plus existing parity cases for the current source registry (239 native-partial image APIs and 3 metadata functions) | Compact worker-1 projection across supported `uint8`, `float32` and `float64` routes, using shape `3×19` or source-safe `7×19` where required. Unsupported dtype rejection tests remain in the full contracts; existing tolerances are unchanged. |
+| `smoke` (default) | Surface checks plus existing parity cases for the current source registry (247 native-partial image APIs and 3 metadata functions) | Compact worker-1 projection across supported `uint8`, `float32` and `float64` routes, using shape `3×19` or source-safe `7×19` where required. Unsupported dtype rejection tests remain in the full contracts; existing tolerances are unchanged. |
 | `contract` | Existing inventoried parity targets for the selected implemented APIs | Run their existing full contract matrices. Do not replace them with the compact smoke projection or weaken their assertions. |
 
-The current source has 229 upstream-only APIs pending native implementations: report them as numerical gaps, never numerical passes. An implemented API may also retain unsupported dtype, layout or parameter partitions; surface and smoke results do not close those gaps. Original-unsafe shapes remain blocked according to the existing tests; never use a generic small array to bypass source safety.
+The current source has 221 upstream-only APIs pending native implementations: report them as numerical gaps, never numerical passes. An implemented API may also retain unsupported dtype, layout or parameter partitions; surface and smoke results do not close those gaps. Original-unsafe shapes remain blocked according to the existing tests; never use a generic small array to bypass source safety.
 
 ```powershell
 python tools/run_feature_tests.py
@@ -94,7 +104,7 @@ For current-tree tests, use an installed build of the current revision, or an ex
 
 ## Phase 2: implement small groups
 
-Current action: implement Montage against its116 frozen original observations with independent native, frontend and shared integration ownership. The LabelPoints zero-provider experiment is DISCARD and remains unmerged; its [complete504-sample report](../benchmarks/label-points-zero-provider-same-host.md) is published. Keep baseline241 qualification separate from current243 source; batch the next full qualification after validated feature integration.
+Current action: complete the single frozen float64 colocalization performance comparison, merge only if its strict gates pass, then freeze the coherent 247-API source for the existing four-profile qualification. Keep full qualification at 241 until its actual products pass. Montage and LabelPoints failures stay closed and unmerged; no further unchanged reruns are planned.
 
 
 **Historical resume before the kept coordinate and fused-comparison changes:** Blur source and benchmark gates are merged; all six completed Blur/comparison worktrees are retired with their entire ignored builds preserved. Profile candidate `99fdb2a` passed genuine preparation and the [fixed same-host comparison](../benchmarks/profile-sampling-same-host.md), but is **DISCARDED and unmerged**: direct gain 1.036574193x, reference-normalized gain 1.009142040x, original/candidate 0.983057567x, and only 4/6 required repeat targets. All 1,008 samples and losses remain published. Both measurement runtimes use the exact baseline pytest wheel; the original preparation-only version drift and both expired/superseded contract records remain preserved. Fresh prospective coordinate holdouts will assess the two per-point Python linspace loops before any new candidate. The next `util.compare_images` packet has 54 frozen original-first specifications and 109 public nodes; all original rows match across profiles. Native arithmetic and the hot-swappable frontend are being implemented separately, with no coverage or performance credit yet.
