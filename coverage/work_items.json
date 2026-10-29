@@ -33772,7 +33772,7 @@
       "owner": "profile_candidate_audit",
       "branch": "optimize/montage-row-owned-v1",
       "base_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
-      "state": "performance_pending",
+      "state": "measured",
       "source_merged": false,
       "source_sha": "6b22e64641a702c92873c376ff650cd8c8764d0d",
       "owns": [
@@ -33790,7 +33790,7 @@
       "freeze_sha": "5b0fb5ddd59936500cd19957a4f245c45e2e40f9",
       "deadline_utc": "2026-10-29T00:59:41Z",
       "variant_limit": 1,
-      "scope": "Private row-owned single-variant candidate 6b: native 6 modes passed; genuine preparation and fixed same-host performance admission pending. No acceptance/performance gain claimed. Canonical exclusive util.montage assignment stays montage-shared. All three prior Montage DISCARD packets/gates and raw losses remain unchanged; no claim that wrapper stack caused prior whole-call regressions.",
+      "scope": "Closed v1 unresolved/private. Incomplete-u8 balanced direct0.86219209854783/normalized0.8724820749484824 fail fixed floors; source and raw data unchanged. Canonical public assignment remains montage-shared.",
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -33801,12 +33801,22 @@
           },
           "native_contract_checks": 2592,
           "native_pending": 0
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "6b22e64641a702c92873c376ff650cd8c8764d0d",
+          "manifest": {
+            "path": "build/montage-row-owned-same-host-v1/handoff.json",
+            "sha256": "1e8d84eebb2553d25a3aabcb931ad2bde33fb30eb5aacee969bb846def964e46"
+          },
+          "raw_samples": 1008,
+          "acceptance_pass": false
         }
       },
       "native_check_unit": "432 case/worker combinations per mode x6modes=2592;81000 assertion counter is not independent-case credit.",
       "genuine_preparation": {
         "source_sha": "6b22e64641a702c92873c376ff650cd8c8764d0d",
-        "status": "dispatched_prepare_only_not_admitted_here",
+        "status": "verified_prepare_only",
         "prepare_only": true,
         "minimum_only": true,
         "latest_only": true,
@@ -33814,12 +33824,107 @@
         "dispatch": {
           "path": "build/montage-row-owned-prepare-v1/dispatch-request.json",
           "sha256": "6ce0fbed2cbb64300411558cd46ce7d2f5401d7d5c1576a3e14df60c0d129a0e"
+        },
+        "review": {
+          "path": "build/montage-row-owned-prepare-v1/final-review.json",
+          "sha256": "5c451bf3be83bd18de15423980bc4aadb022132aaaad4f12cc317ae2473e6f48"
+        },
+        "run": 40785369226,
+        "artifact": 12860320404
+      },
+      "performance": {
+        "status": "UNRESOLVED_MEASUREMENT",
+        "run": 40788962721,
+        "raw_samples": 1008,
+        "publication": "benchmarks/montage-row-owned-same-host.json",
+        "source_merged": false,
+        "scope": "Closed; not accepted. Failed fixed floors and all null uncertainty retained."
+      },
+      "closed": true,
+      "decision": "UNRESOLVED_MEASUREMENT"
+    },
+    {
+      "id": "montage-row-owned-v2-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "optimize/montage-row-owned-v2",
+      "base_sha": "6b22e64641a702c92873c376ff650cd8c8764d0d",
+      "source_sha": "b5bd1df7e27099e528fb4c7db67e2cb0bf35abae",
+      "state": "measured",
+      "closed": true,
+      "decision": "UNRESOLVED_MEASUREMENT",
+      "source_merged": false,
+      "owns": [
+        "src/montage.cpp",
+        "tests/test_montage_native.cpp",
+        "coverage/contracts/montage-row-owned-v2-candidate.json"
+      ],
+      "depends_on": [
+        "montage-row-owned-optimization"
+      ],
+      "dependency_requirements": {
+        "montage-row-owned-optimization": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "deadline_utc": "2026-10-29T00:59:41Z",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "b5bd1df7e27099e528fb4c7db67e2cb0bf35abae",
+          "manifest": {
+            "path": "build/worktrees/montage-row-owned-v2/build/native-v1/handoff.json",
+            "sha256": "6bf1367392f6385133bde4df37f4988dc864e0865c6b157d108aab393eb77b90"
+          },
+          "native_contract_checks": 5676,
+          "native_pending": 0
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "b5bd1df7e27099e528fb4c7db67e2cb0bf35abae",
+          "manifest": {
+            "path": "build/montage-row-owned-v2-same-host-v1/handoff.json",
+            "sha256": "d9f702b9edb062700d5438602a6ec7dab2bcf022a334943a34fc007e2534677d"
+          },
+          "raw_samples": 1008,
+          "acceptance_pass": false
+        }
+      },
+      "native_check_unit": "946 case/worker combinations per mode\u00d76=5676;25,836 grouped assertions each mode, not independent-case credit.",
+      "genuine_preparation": {
+        "status": "verified_private_prepare_only",
+        "run": 40790763016,
+        "artifact": 12861613199,
+        "manifest": {
+          "path": "build/montage-row-owned-v2-prepare-v1/handoff.json",
+          "sha256": "4183b25293d5464dcb47dba2c5337a04752e8a0fbc2c25beffa1b71792ad0ed4"
         }
       },
       "performance": {
-        "status": "pending",
-        "scope": "Frozen candidate contract gates only; no measured or accepted speed credit."
-      }
+        "status": "UNRESOLVED_MEASUREMENT",
+        "run": 40792259128,
+        "artifact": 12861459608,
+        "publication": "benchmarks/montage-row-owned-v2-same-host.json",
+        "raw_samples": 1008,
+        "fixed_gates_pass": true,
+        "only_unresolved_metric": "gray-fortran-f64 normalized",
+        "worst_normalized": 0.8851403654694295,
+        "floor": 0.97,
+        "Fortran_B2_original_over_cpp": 0.9839223934030666,
+        "root_recomputation": {
+          "path": "build/montage-row-owned-v2-same-host-v1/root-recomputation.json",
+          "sha256": "e1ca4b429961c20b2030658c3a3d82f2100f77b8a3f47635c2392dc3a8ca97d4"
+        },
+        "batch_duration_audit": {
+          "path": "build/montage-row-owned-v2-same-host-v1/root-batch-duration-audit.json",
+          "sha256": "6619a385ff9318da1b6d367e54577d0513631cbab172745eb01401b9361de843"
+        }
+      },
+      "scope": "Distinct v2 private/closed unresolved. Incomplete-u8 direct1.355156165/normalized1.348046172; all fixed gates pass but Fortran normalized null/worst separation fails. No acceptance/source merge or four-profile qualification credit. Original v1 outcome and all prior decisions stay immutable."
     }
   ],
   "unassigned_inventoried_apis": [

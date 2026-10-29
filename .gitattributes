@@ -628,3 +628,4 @@ coverage/contracts/montage-public-repeatability.json -text
 benchmarks/montage-public-repeatability.json -text
 benchmarks/subdivide-polygon-minimum-initial.json -text
 benchmarks/montage-row-owned-same-host.json -text
+benchmarks/montage-row-owned-v2-same-host.json -text
