@@ -1,5 +1,11 @@
 # Complete scikit-image implementation plan
 
+Live checkpoint: **247 partial native image APIs and three metadata helpers; 241 APIs remain fully qualified across the four supported profiles.** The current phase-2 packet is the already-correctness-validated float64 colocalization classifier. Its one frozen 21-case, one-worker performance experiment is run 40798470833; no speed claim or source merge precedes its reviewed result. Then freeze the coherent source and execute the existing four-profile qualification without waiting for future features or optimization variants. See [the live phased execution summary](FAST_RUN.md) for current evidence and ownership.
+
+## Historical checkpoint narratives
+
+The following retained checkpoint narratives describe their original revisions. Their words “current”, “pending” and “next” are historical; use the live summary above to decide the next executable action.
+
 **Protocol portability fix:** fresh witness40768625616 reproduces the three callback-event differences in original scikit-image itself; all four frontend rows equal their two fresh original rows exactly. [Raw diagnostic evidence](evidence/approximate-polygon-protocol-runtime-witness.json) retains complete rows and identities. A test-only change now caches an exact same-runtime original for only the two custom-tolerance IDs; the other58cases, all120historic captures, native ownership checks and production code stay unchanged. Four275-node component modes pass(1,100checks), with exactly8new reference calls and16inert guards. A new genuine246prepare is required before timing or promotion.
 
 The [Montage wrapper experiment](../benchmarks/montage-wrapper-simd-same-host.md) remains DISCARD: strided11.27xCPP gain, recoveredRGB and all9original wins in both passes, but otherCPPfloors fail. All504samples and ten complete raw payloads are published. No unmerged optimization source is silently promoted; the optional future acceptance-priority question does not alter closed decisions.
