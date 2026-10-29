@@ -24,7 +24,7 @@ The [Montage copy correction](benchmarks/montage-word-copy-same-host.md) is merg
 
 The earlier [byte-fill v2](benchmarks/montage-row-owned-v2-same-host.md) and [sustained](benchmarks/montage-sustained-same-host.md) experiments retain their original UNRESOLVED_MEASUREMENT outcomes and raw evidence.
 
-[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) authenticates frozen source `f1f9c42`: modern and minimum profiles independently pass; the remaining profiles are not yet admitted. Qualified coverage remains 241. This campaign predates the newer Montage optimization on main. Earlier campaigns and failures remain retained; the corrected prebuild barrier passed 2,114 tests plus eight subtests.
+The [qualified baseline is now 247 partial image APIs](coverage/evidence/public247-whole-product-admission.json), at exact source `f1f9c42`: all four supported profiles pass 907,400 checks, 208 installed SDK checks and 48 corpora with no failures/errors/skips. The newer Montage optimization on main has separate correctness/performance evidence. Four drawing APIs remain private; their genuine 251-API preparation is [running at frozen source `566c1fc`](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), with all timings disabled. Earlier failed campaigns and raw artifacts remain unchanged.
 
 ## Supported parity surface
 
@@ -34,15 +34,13 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. Public source now has **247 partially native
-image API paths and three metadata helpers**. Polygon approximation and subdivision
-have scoped component parity evidence. Their combined minimum release preparation
-passes 9,346 focused and 1,447 smoke checks; full profile qualification remains
-pending. One-thread initial measurements give polygon
-approximation **6.73× (9/9 wins)** and subdivision **4.00× (14/14 wins)** versus
-scikit-image in their frozen cohorts. See the [RDP report](benchmarks/approximate-polygon-minimum-initial.md)
-and [subdivision report](benchmarks/subdivide-polygon-minimum-initial.md). The qualified combined binary baseline is
-**241 image APIs**. The
+The reference is scikit-image **0.26.0**. Public source has **247 partially native
+image API paths and three metadata helpers**. All247 paths are included in the
+qualified four-profile baseline at frozen `f1f9c42`; scope remains partial per API.
+Initial one-thread measurements give polygon approximation **6.73× (9/9 wins)** and
+subdivision **4.00× (14/14 wins)** versus scikit-image in their frozen cohorts.
+See the [RDP report](benchmarks/approximate-polygon-minimum-initial.md) and
+[subdivision report](benchmarks/subdivide-polygon-minimum-initial.md). The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
 rank.generic aliases and three public bilateral aliases of existing algorithms; 221 paths remain upstream-only.
@@ -53,9 +51,9 @@ across 29 exported classes; remaining classes, member contracts and runtime
 attributes still need implementation and assessment.
 This is not full scikit-image coverage.
 
-The [latest accepted qualification](coverage/evidence/public241-whole-product-admission.json) passes
-895,864 public checks across Windows, modern/minimum Linux and Debug builds with normal
-and scalar dispatch, plus 200 installed SDK checks across 25 families.
+The [latest accepted qualification](coverage/evidence/public247-whole-product-admission.json) passes
+907,400 public checks across Windows, modern/minimum Linux and Debug builds with normal
+and scalar dispatch, plus 208 installed SDK checks across 26 families.
 The fixed corpora run with one and four native workers. TV-Chambolle and TV-Bregman
 have qualified partial C++ implementations alongside the accepted rank optimization.
 The [initial TV-Chambolle one-worker baseline](benchmarks/tv-chambolle-public-initial.md)

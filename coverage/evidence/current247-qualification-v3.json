@@ -1,0 +1,188 @@
+{
+  "schema": "current-product-qualification-review-v1",
+  "run": 40808956338,
+  "source_revision": "f1f9c4219a0f38da3c5a884b96af44d54b416ff0",
+  "expected_native_images": 247,
+  "registered_functions": 250,
+  "status": "completed",
+  "conclusion": "success",
+  "profiles": {
+    "windows": {
+      "status": "passed",
+      "job": 123234473532,
+      "raw_review": "windows-raw-review.json",
+      "raw_review_sha256": "d68485d94f916c74f2959ad8b7be4abaaa57afe660a9e16bfe194004ff7d83d9",
+      "qualification_manifest_sha256": "e862730513b308de0571b4f8a37ba8d7d3b2ae066b3fde309a552f505c25aa90",
+      "xml": {
+        "tests": 226850,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 52,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 176,
+        "SDK_members": 83
+      },
+      "sealed_records_rehashed": 28645,
+      "sealed_bytes_rehashed": 2606541996,
+      "stager": {
+        "artifact": 12870584187,
+        "sha256": "7ef988844da39a26333ae94a178f5ece04d3774f9d3e71edfe054d0968150c84",
+        "status": "staged-unaccepted",
+        "verified_files": 2006
+      },
+      "stager_required": true
+    },
+    "modern": {
+      "status": "passed",
+      "job": 123234473324,
+      "raw_review": "modern-raw-review.json",
+      "raw_review_sha256": "12e16fd3246e2a15c334b262d83d055843d0b581416f3b82ffbff5a20bf66f43",
+      "qualification_manifest_sha256": "d2db50069a2fc6aaac56073edb689f2f5e00bda6f79b853332400cb43b3cf48b",
+      "xml": {
+        "tests": 226850,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 52,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 176,
+        "SDK_members": 83
+      },
+      "sealed_records_rehashed": 28574,
+      "sealed_bytes_rehashed": 2053393703,
+      "stager": {
+        "artifact": 12870630882,
+        "sha256": "2054ac8e2322c7b0d7ea8e1fcdbbe74901b33218a3a158d5a02ab8d42c09c146",
+        "status": "staged-unaccepted",
+        "verified_files": 2020
+      },
+      "stager_required": true
+    },
+    "minimum": {
+      "status": "passed",
+      "job": 123234473478,
+      "raw_review": "minimum-raw-review.json",
+      "raw_review_sha256": "444bba404f1a2e4ea3c6f824aa18c6894ac17fcc8d047e65e5e00c01a53b9dd3",
+      "qualification_manifest_sha256": "3f2d479da5e51b9ec7e6e32a6b0d2704ba800eb46d789bff4b2d66a60908ba7a",
+      "xml": {
+        "tests": 226850,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 52,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 176,
+        "SDK_members": 83
+      },
+      "sealed_records_rehashed": 30643,
+      "sealed_bytes_rehashed": 2105074715,
+      "stager": {
+        "artifact": 12871291133,
+        "sha256": "72f019e0d76995e5121fbb6bc7cd4276700ecee4d915121d36ebac66edc781e5",
+        "status": "staged-unaccepted",
+        "verified_files": 2020
+      },
+      "stager_required": true
+    },
+    "debug": {
+      "status": "passed",
+      "job": 123234473520,
+      "raw_review": "debug-raw-review.json",
+      "raw_review_sha256": "297e05404a0257f3faae958b0ceb03726f0fa5ec393669fbf19ea9ab97a9018f",
+      "qualification_manifest_sha256": "19edfb65886eeb51de16cce718b2ca08a9f382c12dcc71d8a5b30703e1f2b5fd",
+      "xml": {
+        "tests": 226850,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 52,
+      "frozen_corpora": 12,
+      "source_derived_closure": {
+        "product_members": 176,
+        "SDK_members": 83
+      },
+      "sealed_records_rehashed": 28497,
+      "sealed_bytes_rehashed": 2977142692,
+      "stager": null,
+      "stager_required": false
+    }
+  },
+  "executed_public_xml_totals": {
+    "tests": 907400,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_total_checks": 208,
+  "frozen_corpora_validated": 48,
+  "sealed_records_rehashed": 116359,
+  "sealed_bytes_rehashed": 9742153106,
+  "retained_artifacts": [
+    {
+      "id": 12870447282,
+      "name": "public-qualification-modern",
+      "bytes": 1261802269,
+      "sha256": "c88b8085afaafcb62cf888fe1993bca7fc6bb23cc5f0ff16dcfbc1a3b34bef6e"
+    },
+    {
+      "id": 12870584187,
+      "name": "rank-statistics-product-windows",
+      "bytes": 202111749,
+      "sha256": "7ef988844da39a26333ae94a178f5ece04d3774f9d3e71edfe054d0968150c84"
+    },
+    {
+      "id": 12870630882,
+      "name": "rank-statistics-product-modern",
+      "bytes": 203242921,
+      "sha256": "2054ac8e2322c7b0d7ea8e1fcdbbe74901b33218a3a158d5a02ab8d42c09c146"
+    },
+    {
+      "id": 12870892105,
+      "name": "public-qualification-minimum",
+      "bytes": 1300648609,
+      "sha256": "1926984928097cd377c51c8db9c63134f387e99e74f9fe63eaf1782285a0539a"
+    },
+    {
+      "id": 12871183631,
+      "name": "public-qualification-windows",
+      "bytes": 1189284673,
+      "sha256": "076e6ede0360070f5ce7cc487450e8055090be7f89e4fb327d53324bf8c42cd5"
+    },
+    {
+      "id": 12871291133,
+      "name": "rank-statistics-product-minimum",
+      "bytes": 205981250,
+      "sha256": "72f019e0d76995e5121fbb6bc7cd4276700ecee4d915121d36ebac66edc781e5"
+    },
+    {
+      "id": 12871502865,
+      "name": "public-qualification-debug",
+      "bytes": 1604241110,
+      "sha256": "a6faf0ac404711bed9da9e4db3501bc71fbfa5ae690170464a320a9669ab3b38"
+    }
+  ],
+  "downloads": "Seven verified artifacts retained once each. Debug required one root-authorized same-artifact transfer retry after a terminal TCP abort; original partial/stderr preserved. Every sealed record independently rehashed once per profile.",
+  "artifact_transport_retry": {
+    "artifact": 12871502865,
+    "attempts": 2,
+    "verified_retained_copies": 1,
+    "original_partial_bytes": 1590214656,
+    "original_partial_preserved": true
+  },
+  "all_required_gates_passed": true,
+  "eligible_for_parent_admission": true,
+  "whole_product_promotion_performed": false,
+  "accepted_baseline_images": 241,
+  "accepted203_receipt_sha256": "35e777741d5b5369c01c2f8409006464f2b97090ae1e2144ec917a9185149edb",
+  "performance_claim": false,
+  "products_from_other_sources_mixed": false,
+  "boundary": "All four profiles passed independent exact-source review. This report establishes readiness for parent admission; it does not modify the accepted241 or historical accepted203 receipt or authorize a performance claim."
+}

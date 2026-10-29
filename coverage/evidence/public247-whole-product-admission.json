@@ -1,0 +1,98 @@
+{
+  "schema": "root-public247-whole-product-admission-v1",
+  "source": "f1f9c4219a0f38da3c5a884b96af44d54b416ff0",
+  "run": 40808956338,
+  "passed": true,
+  "root_accepted": true,
+  "admitted_at_utc": "2026-10-29T04:12:19.249898+00:00",
+  "independent_verification": {
+    "path": "coverage/evidence/current247-qualification-v3.json",
+    "sha256": "4f887cc5deca92621810bbc19ff196f7f13024394cf02666f06e76ad452d645b"
+  },
+  "raw_reviews": [
+    {
+      "profile": "windows",
+      "path": "build/public-qualification247-v3/windows-raw-review.json",
+      "sha256": "d68485d94f916c74f2959ad8b7be4abaaa57afe660a9e16bfe194004ff7d83d9",
+      "qualification_manifest_sha256": "e862730513b308de0571b4f8a37ba8d7d3b2ae066b3fde309a552f505c25aa90"
+    },
+    {
+      "profile": "modern",
+      "path": "build/public-qualification247-v3/modern-raw-review.json",
+      "sha256": "12e16fd3246e2a15c334b262d83d055843d0b581416f3b82ffbff5a20bf66f43",
+      "qualification_manifest_sha256": "d2db50069a2fc6aaac56073edb689f2f5e00bda6f79b853332400cb43b3cf48b"
+    },
+    {
+      "profile": "minimum",
+      "path": "build/public-qualification247-v3/minimum-raw-review.json",
+      "sha256": "444bba404f1a2e4ea3c6f824aa18c6894ac17fcc8d047e65e5e00c01a53b9dd3",
+      "qualification_manifest_sha256": "3f2d479da5e51b9ec7e6e32a6b0d2704ba800eb46d789bff4b2d66a60908ba7a"
+    },
+    {
+      "profile": "debug",
+      "path": "build/public-qualification247-v3/debug-raw-review.json",
+      "sha256": "297e05404a0257f3faae958b0ceb03726f0fa5ec393669fbf19ea9ab97a9018f",
+      "qualification_manifest_sha256": "19edfb65886eeb51de16cce718b2ca08a9f382c12dcc71d8a5b30703e1f2b5fd"
+    }
+  ],
+  "profiles": 4,
+  "XML_checks": 907400,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "SDK_checks": 208,
+  "frozen_corpora": 48,
+  "sealed_records_rehashed": 116359,
+  "sealed_bytes_rehashed": 9742153106,
+  "scope": {
+    "image_paths": 247,
+    "metadata_paths": 3,
+    "registered_functions": 250,
+    "wheel_members": 176,
+    "SDK_members": 83,
+    "SDK_families": 26,
+    "SDK_checks_per_profile": 52
+  },
+  "previous_admission": {
+    "path": "coverage/evidence/public241-whole-product-admission.json",
+    "sha256": "320967753a787687cb68ebe165163471c4acf4a8fa16312b28842a1db627d147",
+    "image_paths": 241
+  },
+  "new_partial_paths": [
+    "measure.approximate_polygon",
+    "measure.subdivide_polygon",
+    "restoration.ball_kernel",
+    "restoration.ellipsoid_kernel",
+    "util.montage",
+    "util.regular_seeds"
+  ],
+  "controlled_stagers": [
+    {
+      "artifact": 12870584187,
+      "sha256": "7ef988844da39a26333ae94a178f5ece04d3774f9d3e71edfe054d0968150c84",
+      "status": "staged-unaccepted",
+      "verified_files": 2006
+    },
+    {
+      "artifact": 12870630882,
+      "sha256": "2054ac8e2322c7b0d7ea8e1fcdbbe74901b33218a3a158d5a02ab8d42c09c146",
+      "status": "staged-unaccepted",
+      "verified_files": 2020
+    },
+    {
+      "artifact": 12871291133,
+      "sha256": "72f019e0d76995e5121fbb6bc7cd4276700ecee4d915121d36ebac66edc781e5",
+      "status": "staged-unaccepted",
+      "verified_files": 2020
+    }
+  ],
+  "artifact_transport_retry": {
+    "artifact": 12871502865,
+    "attempts": 2,
+    "verified_retained_copies": 1,
+    "original_partial_bytes": 1590214656,
+    "original_partial_preserved": true
+  },
+  "performance_claim": false,
+  "boundary": "Admission applies only to exactf1 and its scoped partial API paths. Current-main Montage optimization is separately tested/measured, not whole-product-qualified by this receipt. Four drawing APIs remain private and are excluded. Earlier failed campaigns and accepted241/203 receipts remain unchanged."
+}

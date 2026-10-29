@@ -34139,6 +34139,59 @@
         "metric_variance_separation_pass": true
       },
       "scope": "One host, one worker, allocation-inclusive whole-public calls on matching eager frontends 4f and 9e. The whole row-owned plus eight-byte-copy bundle is measured; 518 current f1 overlay checks support integration, not current-wrapper performance. Historical outcomes remain unchanged; full supported-profile qualification remains 241 APIs."
+    },
+    {
+      "id": "public247-whole-product-admission",
+      "kind": "qualification",
+      "apis": [],
+      "target_apis": [
+        "measure.approximate_polygon",
+        "measure.subdivide_polygon",
+        "restoration.ball_kernel",
+        "restoration.ellipsoid_kernel",
+        "util.montage",
+        "util.regular_seeds"
+      ],
+      "owner": "integrator",
+      "branch": "main",
+      "base_sha": "4e657ee64fb71e4d707d32e9539fdb4d7cc528af",
+      "source_sha": "f1f9c4219a0f38da3c5a884b96af44d54b416ff0",
+      "state": "accepted",
+      "closed": true,
+      "source_merged": true,
+      "owns": [
+        "coverage/evidence/current247-qualification-v3.json",
+        "coverage/evidence/public247-whole-product-admission.json"
+      ],
+      "depends_on": [
+        "public-qualification-tooling"
+      ],
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "f1f9c4219a0f38da3c5a884b96af44d54b416ff0",
+          "manifest": {
+            "path": "coverage/evidence/public247-whole-product-admission.json",
+            "sha256": "e4d386927202874e8d81dad9161003deaf658cea69f9e3c9f94e576fab218b4e"
+          },
+          "native_contract_checks": 907400,
+          "native_pending": 0
+        }
+      },
+      "qualified_scope": {
+        "image_paths": 247,
+        "metadata_paths": 3,
+        "registered_functions": 250,
+        "wheel_members": 176,
+        "SDK_members": 83,
+        "SDK_families": 26,
+        "SDK_checks_per_profile": 52
+      },
+      "run": 40808956338,
+      "SDK_checks": 208,
+      "frozen_corpora": 48,
+      "performance_claim": false,
+      "scope": "Admission applies only to exactf1 and its scoped partial API paths. Current-main Montage optimization is separately tested/measured, not whole-product-qualified by this receipt. Four drawing APIs remain private and are excluded. Earlier failed campaigns and accepted241/203 receipts remain unchanged."
     }
   ],
   "unassigned_inventoried_apis": [

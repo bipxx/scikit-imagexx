@@ -1,6 +1,6 @@
 # Performance verification
 
-[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) authenticates frozen source `f1f9c42`: modern and minimum profiles independently pass; the remaining profiles are not yet admitted. Qualified coverage remains 241. This campaign predates the newer Montage optimization on main. Earlier campaigns and failures remain retained; the corrected prebuild barrier passed 2,114 tests plus eight subtests.
+The [qualified baseline is now 247 partial image APIs](../coverage/evidence/public247-whole-product-admission.json), at exact source `f1f9c42`: all four supported profiles pass 907,400 checks, 208 installed SDK checks and 48 corpora with no failures/errors/skips. The newer Montage optimization on main has separate correctness/performance evidence. Four drawing APIs remain private; their genuine 251-API preparation is [running at frozen source `566c1fc`](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), with all timings disabled. Earlier failed campaigns and raw artifacts remain unchanged.
 
 The accepted [Montage word-copy bundle](montage-word-copy-same-host.md) is merged at `6a107a7`: all nine workloads beat both the C++ baseline and original in all four candidate passes. One-thread geometric means are **1.69165× over C++** and **2.09435× over scikit-image**; the strided case gains 15.67738×. Both independent reviews verify all ten gates, uncertainty separation and all 1,008 samples. Exact source/runtime/wrapper boundaries are in the report.
 
