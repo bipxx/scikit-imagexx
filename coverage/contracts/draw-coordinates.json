@@ -30064,8 +30064,19 @@
     }
   ]
 },
+  "observer_migration": {
+    "original_capture_commit": "66ba107",
+    "original_test_file_sha256": "bca3c48e1b619e7bdfba40e38cf85e5873189ddcedf49c532bfe48d3df3398de",
+    "function_body_sha256": {
+      "scientific_profile": "2aa848dfeb1385a5461db9278197d13ccbd7a7fd07404e90a44440dd9e05b3b9",
+      "reference_runtime": "db55a27fb7d4ac5260d051dc263e0c3ff9f8eef0b900cf01ea684e1f1c14772e",
+      "encode": "b632835677bf6900d904be909bc24225eacddab0e81c4791c3b8fb1e08bd062b",
+      "observe": "76894148d3e638b19bdb9f7dac83be3c4e0d441564750042f40d9005aaee3d52"
+    },
+    "scope": "Only test guards/import placement changed; frozen observer function bodies byte-identical,176 saved observations and original capture provenance unchanged."
+  },
   "source_freeze": {
     "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
-    "tests/test_draw_coordinates_public.py": "bca3c48e1b619e7bdfba40e38cf85e5873189ddcedf49c532bfe48d3df3398de"
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549"
   }
 }
