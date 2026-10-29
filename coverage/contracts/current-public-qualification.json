@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current247",
+  "scope": "current251",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -454,7 +454,11 @@
     "util.regular_seeds",
     "util.unique_rows",
     "measure.approximate_polygon",
-    "measure.subdivide_polygon"
+    "measure.subdivide_polygon",
+    "draw.line",
+    "draw.rectangle",
+    "draw.disk",
+    "draw.ellipse"
   ],
   "metadata_paths": [
     "color.xyz_tristimulus_values",
@@ -505,7 +509,11 @@
     "restoration.ball_kernel": "tests/test_rolling_ball_kernels_integration.py",
     "restoration.ellipsoid_kernel": "tests/test_rolling_ball_kernels_integration.py",
     "measure.approximate_polygon": "tests/test_approximate_polygon_integration.py",
-    "measure.subdivide_polygon": "tests/test_subdivide_polygon_integration.py"
+    "measure.subdivide_polygon": "tests/test_subdivide_polygon_integration.py",
+    "draw.line": "tests/test_draw_coordinates_integration.py",
+    "draw.rectangle": "tests/test_draw_coordinates_integration.py",
+    "draw.disk": "tests/test_draw_coordinates_integration.py",
+    "draw.ellipse": "tests/test_draw_coordinates_integration.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -557,13 +565,16 @@
     "tests/test_approximate_polygon_integration.py",
     "tests/test_approximate_polygon_pipeline.py",
     "tests/test_subdivide_polygon_integration.py",
-    "tests/test_subdivide_polygon_pipeline.py"
+    "tests/test_subdivide_polygon_pipeline.py",
+    "tests/test_draw_coordinates_public.py",
+    "tests/test_draw_coordinates_integration.py"
   ],
-  "SDK_scope": "current26 required installed clients (23 legacy plus colocalization, footprint_shapes and recent prepared primitives); source readiness is not qualification acceptance",
+  "SDK_scope": "current27 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives and drawing coordinates); source readiness is not qualification acceptance",
   "required_client_families": [
     "colocalization",
     "footprint_shapes",
-    "recent_primitives"
+    "recent_primitives",
+    "draw_coordinates"
   ],
   "required_client_headers": [
     "include/skimagexx/colocalization.hpp",
@@ -579,6 +590,7 @@
     "include/skimagexx/montage.hpp",
     "include/skimagexx/rolling_ball_kernels.hpp",
     "include/skimagexx/approximate_polygon.hpp",
-    "include/skimagexx/subdivide_polygon.hpp"
+    "include/skimagexx/subdivide_polygon.hpp",
+    "include/skimagexx/draw_coordinates.hpp"
   ]
 }
