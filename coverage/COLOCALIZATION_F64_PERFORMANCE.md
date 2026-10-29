@@ -1,6 +1,6 @@
 # Colocalization f64 performance readiness
 
-One prospective experiment compares immutable genuine4f with private d496. Product delta is exactly two production C++ files, one native test and the prior correctness contract. Six native modes and2180 public checks already passed; no performance claim exists. Candidate still needs genuine minimum prepare-only admission.
+One prospective experiment compares immutable genuine4f with private d496. Product delta is exactly two production C++ files, one native test and the prior correctness contract. Six native modes and2180 public checks already passed; no performance claim exists. Candidate genuine minimum preparation40796949664 is now admitted (artifact12864821235, all13079 XML checks/1447smoke,29timing steps skipped); performance remains unassessed.
 
 Reuse all21 existing colocalization specs unchanged: four C-f64 targets (MCC/MOC1024虏 and64鲁),17 f32/binary/bool-mask/ROI/layout controls. Historical archive verifies the five named IC original wins in all four old passes; remaining16 original losses must stay visible. MCC/MOC memory latencies18.425/40.170ms are historical whole calls, not finite-scan stage times.
 
