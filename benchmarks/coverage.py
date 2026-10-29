@@ -14,7 +14,7 @@ import skimage
 import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
-from skimagexx.coverage import montage_default_error
+from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error
 from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error
 
 
@@ -276,7 +276,9 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api == 'measure.subdivide_polygon':
+                    if api in DRAW_COORDINATE_FUNCTIONS:
+                        error = draw_default_error(api,data,actual,expected)
+                    elif api == 'measure.subdivide_polygon':
                         error = subdivide_polygon_default_error(data,actual,expected)
                     elif api == 'measure.approximate_polygon':
                         error = approximate_polygon_default_error(data,actual,expected)
@@ -346,6 +348,9 @@ def main():
                                         'requested_output_dtype':str(options['dtype'])} if api=='util.regular_seeds' else {}),
                                     **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     **({'size_unit': 'points'} if api in COORDS_MOMENTS_FUNCTIONS else {}),
+                                    **({'input_shape':list(data.shape), 'default_input_kind':'coordinate-shape-carrier',
+                                        'descriptor_carrier_dtype':case_dtype, 'requested_output_dtype':'intp'}
+                                       if api in DRAW_COORDINATE_FUNCTIONS else {}),
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
                                     'output_dtype_metadata':dtype_metadata(actual), 'max_abs_error':
                                     error,
