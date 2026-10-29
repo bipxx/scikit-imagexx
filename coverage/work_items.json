@@ -34426,7 +34426,7 @@
       "owner": "blur_benchmark",
       "branch": "main",
       "source_merged": true,
-      "state": "preparing",
+      "state": "measured",
       "owns": [
         "benchmarks/draw_coordinates.py",
         "coverage/contracts/draw-coordinates-benchmark.json",
@@ -34449,7 +34449,7 @@
         "native_calls": 1,
         "timed_batches": 0
       },
-      "scope": "Genuine251 minimum prep andactualSDK84 plusrealfirstcasepreflight passed. All12 immutable cases, one worker/referencepool,7 rounds/168samples,>=100msaccepted and>=250mswarmup/function. Initialmeasurementpending; retainalllosses.",
+      "scope": "Initial genuine minimum-profile original/current cohort: 12 unchanged geometries, one worker/reference pool, 168 samples, 10 wins and 2 losses, GM 1.8740240708712834. No speed acceptance gate or KEEP claim. Source251 is integrated; full supported-profile qualification remains247.",
       "genuine_first_cohort_preflight": {
         "manifest": {
           "path": "build/draw-coordinates-genuine-preflight-v1/handoff.json",
@@ -34458,7 +34458,110 @@
         "original_calls": 1,
         "native_calls": 1,
         "timed_batches": 0
-      }
+      },
+      "source_sha": "566c1fcdc50dc6cdc0bb2c7a9de0a0e56449b6f8",
+      "integration_sha": "bb9825b64613d31b27fc8f423002099a91425a4f",
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "566c1fcdc50dc6cdc0bb2c7a9de0a0e56449b6f8",
+          "manifest": {
+            "path": "build/draw-coordinates-initial-v2/handoff.json",
+            "sha256": "4a72dfabb42a7a61242c8e8f4dca6647d4d62d65778031ac6f4e6b299dbb1617"
+          },
+          "raw_samples": 168,
+          "performance_acceptance_gate": false
+        }
+      },
+      "performance": {
+        "status": "INITIAL_MEASURED",
+        "run": 40820624189,
+        "artifact": 12874033039,
+        "publication": "benchmarks/draw-coordinates-minimum-initial.json",
+        "cases": 12,
+        "raw_samples": 168,
+        "geometric_mean": 1.8740240708712834,
+        "wins": [
+          "line/long",
+          "rectangle/tiny",
+          "rectangle/3d",
+          "disk/tiny",
+          "disk/dense",
+          "disk/clipped",
+          "ellipse/tiny",
+          "ellipse/axes",
+          "ellipse/rotated",
+          "ellipse/clipped"
+        ],
+        "losses": [
+          {
+            "case_id": "line/tiny",
+            "api": "draw.line",
+            "parameters": {
+              "args": [
+                0,
+                0,
+                7,
+                3
+              ],
+              "kwargs": {}
+            },
+            "reference_ms": 0.0017774043737820533,
+            "current_ms": 0.003484300264379675,
+            "speedup": 0.5101180262655958,
+            "added_current_ms": 0.0017068958905976216,
+            "added_current_us": 1.7068958905976217
+          },
+          {
+            "case_id": "rectangle/2d",
+            "api": "draw.rectangle",
+            "parameters": {
+              "args": [
+                [
+                  0,
+                  0
+                ]
+              ],
+              "kwargs": {
+                "extent": [
+                  256,
+                  384
+                ]
+              }
+            },
+            "reference_ms": 0.05431478962264151,
+            "current_ms": 0.05509068038277512,
+            "speedup": 0.9859161158522158,
+            "added_current_ms": 0.0007758907601336101,
+            "added_current_us": 0.7758907601336101
+          }
+        ],
+        "per_API_geometric_mean": {
+          "draw.disk": 2.4238572433061742,
+          "draw.ellipse": 2.522079733003113,
+          "draw.line": 1.0109897986981677,
+          "draw.rectangle": 1.471467552156007
+        },
+        "performance_acceptance_gate": false
+      },
+      "failed_attempts": [
+        {
+          "run": 40819506015,
+          "controller": "0ea3ab8dee068537012c8e596e4d79e526c83965",
+          "state": "FAILED_BEFORE_TARGET_CALLS",
+          "artifact": 12873781981,
+          "artifact_sha256": "b817a995d074fc87adb288e3612d5a8a47f20c4bfefc27f8332bd38b3596685d",
+          "original_image_calls": 0,
+          "native_image_calls": 0,
+          "raw_samples": 0,
+          "manifest": {
+            "path": "build/draw-coordinates-initial-v1/failure-handoff.json",
+            "sha256": "efb1b8fd54c081d8982694afac4299636f708e5d0123394ef4161cd64d183b5e"
+          },
+          "cause": "runpy.run_path did not add the benchmarks directory; importing provenance failed before scientific imports or target calls.",
+          "correction": "Only workflow sys.path.insert(0, str(Path(benchmarks).resolve())) before unchanged runpy; production source, driver, contracts, method, cases and original two-hour clock unchanged."
+        }
+      ]
     }
   ],
   "unassigned_inventoried_apis": [
