@@ -2,6 +2,7 @@
 ROLLING_KERNEL_FUNCTIONS = ('restoration.ball_kernel', 'restoration.ellipsoid_kernel')
 COORDS_MOMENTS_FUNCTIONS = ('measure.moments_coords', 'measure.moments_coords_central')
 LEVEL_SET_FUNCTIONS = ('segmentation.checkerboard_level_set', 'segmentation.disk_level_set')
+DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.ellipse')
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
@@ -322,6 +323,8 @@ def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
+    # Drawing labels are SHAPE carriers only; no image pixel dtype is consumed.
+    if api in DRAW_COORDINATE_FUNCTIONS:return ('uint8','float32','float64')
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
     if api in ('measure.approximate_polygon','measure.subdivide_polygon'):return ('float64',)
@@ -355,6 +358,14 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api in DRAW_COORDINATE_FUNCTIONS:
+        # Scalar geometry derived only from image.shape, not pixels or dtype.
+        rows,columns=image.shape
+        if api=='draw.line':return (0,0,rows-1,columns-1),{}
+        if api=='draw.rectangle':return ((0,0),),{'extent':image.shape}
+        center=((rows-1)/2,(columns-1)/2)
+        if api=='draw.disk':return (center,max(.5,min(rows,columns)/2)),{'shape':image.shape}
+        return (*center,max(.5,rows/3),max(.5,columns/3)),{'shape':image.shape}
     if api == 'measure.subdivide_polygon':
         import numpy as np
         # Actual coordinate geometry; float64 is the default carrier only.
@@ -515,6 +526,39 @@ def default_call(api, image):
         matrix=MATRICES['hed_from_rgb' if api.endswith('separate_stains') else 'rgb_from_hed']
         return (image,matrix), {}
     return (image,), {}
+
+
+def draw_default_error(api,image,actual,expected):
+    """Exact coordinate words and storage; dtype labels describe shape carriers.
+
+    Whole results validate container/order and pair relationships. Per-array
+    calls retain the existing generic dtype suites' recursive output checks.
+    """
+    import numpy as np
+    assert api in DRAW_COORDINATE_FUNCTIONS
+    if isinstance(expected,np.ndarray):
+        pairs=[(actual,expected)]
+    else:
+        assert type(actual)is type(expected)and type(expected)in(tuple,list)
+        assert len(actual)==len(expected)==2
+        pairs=list(zip(actual,expected))
+    for a,e in pairs:
+        assert type(a)is type(e)is np.ndarray
+        assert a.dtype==e.dtype==np.dtype(np.intp)and a.dtype.isnative and e.dtype.isnative
+        assert a.dtype.metadata is e.dtype.metadata is None
+        assert a.shape==e.shape and a.strides==e.strides
+        for flag in ('owndata','writeable','aligned','c_contiguous','f_contiguous'):
+            assert getattr(a.flags,flag)==getattr(e.flags,flag)
+        assert type(a.base)is type(e.base)
+        assert getattr(a.base,'shape',None)==getattr(e.base,'shape',None)
+        assert getattr(a.base,'strides',None)==getattr(e.base,'strides',None)
+        assert not np.shares_memory(a,image)
+        assert a.tobytes(order='C')==e.tobytes(order='C')
+    if not isinstance(expected,np.ndarray):
+        assert (actual[0]is actual[1])==(expected[0]is expected[1])
+        assert np.shares_memory(*actual)==np.shares_memory(*expected)
+        assert (actual[0].base is actual[1].base)==(expected[0].base is expected[1].base)
+    return 0.
 
 
 def moments_default_error(api, image, actual, expected):
@@ -722,6 +766,9 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api in DRAW_COORDINATE_FUNCTIONS:
+        draw_default_error(api,image,actual,expected)
+        return
     if api == 'measure.subdivide_polygon':
         subdivide_polygon_default_error(image,actual,expected)
         return
@@ -789,6 +836,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api in DRAW_COORDINATE_FUNCTIONS:
+        raise ValueError('Drawing uses exact intp words and storage; call assert_default_parity')
     if api == 'measure.subdivide_polygon':
         raise ValueError('Subdivide polygon uses exact float64 words and fresh layout; call assert_default_parity')
     if api == 'measure.approximate_polygon':
