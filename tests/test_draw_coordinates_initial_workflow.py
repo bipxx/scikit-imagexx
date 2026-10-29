@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import statistics
 import subprocess
+import sys
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -38,6 +39,83 @@ def test_recipe_is_admitted_offline_pinned_and_has_no_build_or_tests():
     assert "smoke['outcomes']['passed'] == len(smoke['results']) == 1463" in SCRIPTS[1]
     assert 'draw-coordinates.batches.jsonl' in SCRIPTS[2]
     assert 'da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc' in SCRIPTS[1]
+
+
+@pytest.mark.parametrize('include_path', (False, True), ids=('old-context-fails', 'fixed-context-imports'))
+def test_real_isolated_runpy_context_stops_after_provenance_before_numpy(tmp_path, include_path):
+    # These are the actual three source566 files, not fake scientific modules.
+    pins = {
+        'benchmarks/draw_coordinates.py': 'da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc',
+        'benchmarks/provenance.py': 'e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d',
+        'tools/montage_sustained.py': '29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d'}
+    snapshot = tmp_path/'source566'
+    for name, digest in pins.items():
+        data = (ROOT/name).read_bytes().replace(b'\r\n', b'\n')
+        assert hashlib.sha256(data).hexdigest() == digest
+        target = snapshot/name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+    launcher = re.search(r"          taskset -c 1 .*?<<'PY'.*?\n(.*?)          PY", WORKFLOW, re.S).group(1)
+    launcher = '\n'.join(line[10:] for line in launcher.splitlines())
+    tree = ast.parse(launcher)
+    path_node = next(n for n in ast.walk(tree) if isinstance(n, ast.Expr)
+                     and isinstance(n.value, ast.Call) and ast.unparse(n.value.func) == 'sys.path.insert')
+    run_node = next(n for n in ast.walk(tree) if isinstance(n, ast.Expr)
+                    and isinstance(n.value, ast.Call) and ast.unparse(n.value.func) == 'runpy.run_path')
+    statements = [ast.get_source_segment(launcher, path_node)] if include_path else []
+    statements.append(ast.get_source_segment(launcher, run_node))
+    actual_snippet = '\n'.join(statements)
+    child = tmp_path/'isolated_context.py'
+    child.write_text('''import ast, builtins, hashlib, json, runpy, sys
+from pathlib import Path
+driver = Path('benchmarks/draw_coordinates.py').resolve()
+tree = ast.parse(driver.read_bytes())
+main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+numpy_line = next(n.lineno for n in main.body if isinstance(n, ast.Import) and any(a.name == 'numpy' for a in n.names))
+for name in ('numpy', 'scipy', 'skimage', 'skimagexx'): assert name not in sys.modules
+scientific_imports = []
+original_import = builtins.__import__
+def guard(name, *args, **kwargs):
+    if name.split('.')[0] in ('numpy', 'scipy', 'skimage', 'skimagexx'):
+        scientific_imports.append(name)
+        raise AssertionError('Scientific import executed before intended stop')
+    return original_import(name, *args, **kwargs)
+builtins.__import__ = guard
+class ImportStop(Exception): pass
+proof = {}
+def trace(frame, event, arg):
+    if event == 'line' and frame.f_code.co_name == 'main' and frame.f_lineno == numpy_line and Path(frame.f_code.co_filename).resolve() == driver:
+        helper = sys.modules['provenance']
+        helper_path = Path(helper.__file__).resolve()
+        assert helper_path == Path('benchmarks/provenance.py').resolve()
+        assert frame.f_locals['source_fingerprint'] is helper.source_fingerprint
+        proof.update(helper_path=str(helper_path), helper_sha256=hashlib.sha256(helper_path.read_bytes()).hexdigest(), stopped_before_numpy=True)
+        raise ImportStop('After real provenance import, before NumPy import')
+    return trace
+sys.argv = [str(driver), '--deadline-utc', '2099-01-01T00:00:00+00:00', '--output', 'never-created.json']
+sys.settrace(trace)
+try:
+    exec(ACTUAL_SNIPPET)
+except ImportStop:
+    outcome = 'fixed-context-pass'
+except ModuleNotFoundError as error:
+    assert error.name == 'provenance'
+    outcome = 'old-context-missing-provenance'
+finally:
+    sys.settrace(None)
+assert not scientific_imports and not Path('never-created.json').exists() and not Path('never-created.batches.jsonl').exists()
+print(json.dumps(dict(outcome=outcome, proof=proof, scientific_imports=scientific_imports, image_calls=0, timed_batches=0)))
+'''.replace('ACTUAL_SNIPPET', repr(actual_snippet)), encoding='utf-8')
+    result = subprocess.run([sys.executable, '-I', '-B', str(child)], cwd=snapshot,
+                            capture_output=True, text=True, check=True)
+    (tmp_path/'context-result.json').write_text(result.stdout, encoding='utf-8')
+    (tmp_path/'context-stderr.txt').write_text(result.stderr, encoding='utf-8')
+    proof = json.loads(result.stdout)
+    assert proof['outcome'] == ('fixed-context-pass' if include_path else 'old-context-missing-provenance')
+    assert proof['image_calls'] == proof['timed_batches'] == 0 and proof['scientific_imports'] == []
+    if include_path:
+        assert proof['proof']['helper_sha256'] == pins['benchmarks/provenance.py']
+        assert proof['proof']['stopped_before_numpy'] is True
 
 
 @pytest.mark.parametrize('fault',(None,'unsealed','foreign-source','foreign-artifact','timing-ran','missing-job'))

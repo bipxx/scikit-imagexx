@@ -215,6 +215,7 @@ jobs:
           (output/'process-before.json').write_text(json.dumps(before, indent=2)+'\n')
           sys.argv = ['benchmarks/draw_coordinates.py', '--threads', '1', '--repeat', '7', '--pass-index', '1',
                       '--deadline-utc', os.environ['DEADLINE_UTC'], '--output', str(output/'draw-coordinates.json')]
+          sys.path.insert(0, str(Path('benchmarks').resolve()))
           try:
               runpy.run_path('benchmarks/draw_coordinates.py', run_name='__main__')
           finally:
