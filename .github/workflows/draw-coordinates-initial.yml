@@ -63,8 +63,8 @@ jobs:
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
           assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
-          # Fail closed until the admitted genuine producer pins replace these sentinels.
-          expected = dict(run='TBD_RUN', revision='TBD_REVISION', artifact='TBD_ARTIFACT', sha256='TBD_SHA256', core_sha256='TBD_CORE_SHA256')
+          # Exact admitted genuine producer; foreign products fail closed.
+          expected = dict(run='40816710252', revision='566c1fcdc50dc6cdc0bb2c7a9de0a0e56449b6f8', artifact='12873106882', sha256='b5c1b0d20ee9ed5558ef3ed2a9089f2899c4d6265a5f10553726e61a6e39dc91', core_sha256='9d46467577182c0481a86f3996e1e7d218a3da4a8f6f21a39d0c862736c83706')
           assert (run, revision, artifact, digest) == tuple(expected[k] for k in ('run', 'revision', 'artifact', 'sha256'))
           assert re.fullmatch('[0-9a-f]{64}', expected['core_sha256'])
           created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
@@ -130,6 +130,7 @@ jobs:
                   assert not stat.S_ISLNK(i.external_attr >> 16)
               z.extractall('snapshot/build')
           prepared = Path('snapshot/build/prepared/ci-artifacts')
+          assert hashlib.sha256((prepared / 'measurement.json').read_bytes()).hexdigest() == 'd52f16ab3b6c67424de930597daa3c17eb9bca60a624aa3e61699afcd45a9a2d'
           manifest = json.loads((prepared / 'measurement.json').read_bytes())
           assert manifest['schema'] == 'ci-offline-measurement-v1'
           Path('results/measurement.json').write_bytes((prepared / 'measurement.json').read_bytes())
@@ -176,12 +177,12 @@ jobs:
               tree = ET.fromstring((prepared / name).read_bytes())
               assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
               focused_count += len(tree.findall('.//testcase'))
-          assert focused_count > 0
+          assert focused_count == 10250
           smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
           assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
           assert set(smoke['outcomes']) == {'passed'}
           assert smoke['implementations']['native-partial'] == 251 and smoke['implementations']['metadata'] == 3
-          assert smoke['outcomes']['passed'] == len(smoke['results']) > 0
+          assert smoke['outcomes']['passed'] == len(smoke['results']) == 1463
           Path('results/preparation-counts.json').write_text(json.dumps(dict(focused_XML_groups=len(focused_names), focused_tests=focused_count, smoke_tests=len(smoke['results']), drawing_per_mode=452, declared_SDK_client_families=27), indent=2) + '\n')
           for name, expected in (('benchmarks/draw_coordinates.py', 'da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc'),
                                  ('coverage/contracts/draw-coordinates-benchmark.json', 'd04381216399539976f9d006c724e65362eab757ebb9b50100f555691b273194'),

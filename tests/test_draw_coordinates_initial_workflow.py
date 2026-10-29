@@ -16,10 +16,10 @@ SCRIPTS=re.findall(r"          python - <<'PY'\n(.*?)          PY",WORKFLOW,re.S
 SCRIPTS=['\n'.join(line[10:] for line in s.splitlines()) for s in SCRIPTS]
 
 
-def test_recipe_is_blocked_offline_pinned_and_has_no_build_or_tests():
+def test_recipe_is_admitted_offline_pinned_and_has_no_build_or_tests():
     assert len(SCRIPTS)==3
     for script in SCRIPTS:ast.parse(script)
-    assert "run='TBD_RUN'" in SCRIPTS[0] and "core_sha256='TBD_CORE_SHA256'" in SCRIPTS[0]
+    assert "run='40816710252'" in SCRIPTS[0] and "core_sha256='9d46467577182c0481a86f3996e1e7d218a3da4a8f6f21a39d0c862736c83706'" in SCRIPTS[0]
     assert "assert (run, revision, artifact, digest) ==" in SCRIPTS[0]
     assert 'execution_created_utc:' in WORKFLOW and 'deadline_utc:' in WORKFLOW
     assert '(deadline-created).total_seconds() <= 7200' in SCRIPTS[0]
@@ -33,8 +33,9 @@ def test_recipe_is_blocked_offline_pinned_and_has_no_build_or_tests():
     assert "['CURRENT_FAMILIES']) == 27" in SCRIPTS[1]
     assert "'test_draw_coordinates_public': 271" in SCRIPTS[1] and "'test_draw_coordinates_integration': 181" in SCRIPTS[1]
     assert '== 452' in SCRIPTS[1] and 'dict(actual_files) == expected_files' in SCRIPTS[1]
-    assert 'focused_count > 0' in SCRIPTS[1] and 'focused_count ==' not in SCRIPTS[1]
-    assert "smoke['outcomes']['passed'] == len(smoke['results']) > 0" in SCRIPTS[1]
+    assert 'focused_count == 10250' in SCRIPTS[1]
+    assert 'd52f16ab3b6c67424de930597daa3c17eb9bca60a624aa3e61699afcd45a9a2d' in SCRIPTS[1]
+    assert "smoke['outcomes']['passed'] == len(smoke['results']) == 1463" in SCRIPTS[1]
     assert 'draw-coordinates.batches.jsonl' in SCRIPTS[2]
     assert 'da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc' in SCRIPTS[1]
 
@@ -54,8 +55,8 @@ def test_actual_producer_and_clock_authentication(tmp_path,monkeypatch,fault):
     replies=[record,dict(total_count=1,artifacts=[item]),dict(total_count=len(jobs),jobs=jobs)]
     monkeypatch.setattr(subprocess,'check_output',lambda args:json.dumps(replies.pop(0)).encode())
     script=SCRIPTS[0]
-    if fault!='unsealed':
-        for a,b in [('TBD_RUN','123'),('TBD_REVISION','a'*40),('TBD_ARTIFACT','456'),('TBD_SHA256','b'*64),('TBD_CORE_SHA256','c'*64)]:script=script.replace(a,b)
+    for a,b in [('40816710252', '123'), ('566c1fcdc50dc6cdc0bb2c7a9de0a0e56449b6f8', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'), ('12873106882', '456'), ('b5c1b0d20ee9ed5558ef3ed2a9089f2899c4d6265a5f10553726e61a6e39dc91', 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'), ('9d46467577182c0481a86f3996e1e7d218a3da4a8f6f21a39d0c862736c83706', 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc')]:script=script.replace(a,b)
+    if fault=='unsealed':script=script.replace("run='123'","run='TBD_RUN'")
     # Replace only the imported wall clock with a deterministic pre-deadline clock.
     script=script.replace('from datetime import datetime, timezone','from datetime import datetime as real_datetime, timezone\nclass datetime(real_datetime):\n    @classmethod\n    def now(cls, tz): return cls(2026,10,29,1,tzinfo=tz)')
     if fault:
