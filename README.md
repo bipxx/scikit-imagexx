@@ -20,9 +20,11 @@ See the [Gabor image-filter report](benchmarks/gabor-image-initial.md) and the
 [current verification report](benchmarks/STATUS.md) for measured
 speedups, raw reports and remaining regressions on the recorded hosts.
 
-The [row-owned Montage byte-fill v2 experiment](benchmarks/montage-row-owned-v2-same-host.md) remains **UNRESOLVED_MEASUREMENT**, with its source private. All fixed gates pass and incomplete uint8 improves 1.355×/1.348×, but the unchanged Fortran normalized worst-pair floor fails (0.885× versus 0.97). All raw evidence and its individual original-library loss are retained; neither this result nor v1 expands the qualified 241-API baseline. The [sustained follow-up](benchmarks/montage-sustained-same-host.md) also remains unresolved: validated 100 ms batches retain uncertainty in three control workloads, so the candidate stays unmerged.
+The [Montage copy correction](benchmarks/montage-word-copy-same-host.md) is merged. Its nine-workload, one-thread comparison achieves **1.69× over the prior C++ baseline** and **2.09× over scikit-image**, with all nine cases winning and every strict control gate passing across 1,008 samples. The strided case improves 15.68× over C++. This measures the complete row-owned/SIMD/word-copy bundle with matching Python frontends; current-wrapper correctness has separate parity evidence.
 
-[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) is running at frozen source `f1f9c42`, with 247 partial native image APIs and 26 SDK families/52 checks per profile. Qualified coverage remains 241. Campaign 40801521012 failed on optional-provider import closure and a stale bilateral observer hash; all 96 failures and raw artifacts remain retained. The fixes preserve numerical code and frozen observations; the complete prebuild barrier passed 2,114 tests plus eight subtests. All four new profiles passed tooling and entered genuine qualification.
+The earlier [byte-fill v2](benchmarks/montage-row-owned-v2-same-host.md) and [sustained](benchmarks/montage-sustained-same-host.md) experiments retain their original UNRESOLVED_MEASUREMENT outcomes and raw evidence.
+
+[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) authenticates frozen source `f1f9c42`: modern and minimum profiles independently pass; the remaining profiles are not yet admitted. Qualified coverage remains 241. This campaign predates the newer Montage optimization on main. Earlier campaigns and failures remain retained; the corrected prebuild barrier passed 2,114 tests plus eight subtests.
 
 ## Supported parity surface
 

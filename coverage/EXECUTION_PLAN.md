@@ -1,6 +1,6 @@
 # Complete scikit-image implementation plan
 
-[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) is running at frozen source `f1f9c42`, with 247 partial native image APIs and 26 SDK families/52 checks per profile. Qualified coverage remains 241. Campaign 40801521012 failed on optional-provider import closure and a stale bilateral observer hash; all 96 failures and raw artifacts remain retained. The fixes preserve numerical code and frozen observations; the complete prebuild barrier passed 2,114 tests plus eight subtests. All four new profiles passed tooling and entered genuine qualification.
+[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) authenticates frozen source `f1f9c42`: modern and minimum profiles independently pass; the remaining profiles are not yet admitted. Qualified coverage remains 241. This campaign predates the newer Montage optimization on main. Earlier campaigns and failures remain retained; the corrected prebuild barrier passed 2,114 tests plus eight subtests.
 
 ## Historical checkpoint narratives
 

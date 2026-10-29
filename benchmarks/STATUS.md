@@ -1,8 +1,10 @@
 # Performance verification
 
-[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) is running at frozen source `f1f9c42`, with 247 partial native image APIs and 26 SDK families/52 checks per profile. Qualified coverage remains 241. Campaign 40801521012 failed on optional-provider import closure and a stale bilateral observer hash; all 96 failures and raw artifacts remain retained. The fixes preserve numerical code and frozen observations; the complete prebuild barrier passed 2,114 tests plus eight subtests. All four new profiles passed tooling and entered genuine qualification.
+[Four-profile qualification 40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338) authenticates frozen source `f1f9c42`: modern and minimum profiles independently pass; the remaining profiles are not yet admitted. Qualified coverage remains 241. This campaign predates the newer Montage optimization on main. Earlier campaigns and failures remain retained; the corrected prebuild barrier passed 2,114 tests plus eight subtests.
 
-The [float64 classifier comparison](colocalization-f64-same-host.md) is closed **DISCARD**: four targets gain 2.0-2.2x over current C++, but three normalized controls fail the unchanged 0.97 floor. All 1,176 samples and original-library losses are retained; source remains unmerged. The [Montage follow-up](montage-sustained-same-host.md) remains unresolved and unmerged. Published RDP/subdivision wins below retain their separate source/workload scope; none is a whole-library speed claim.
+The accepted [Montage word-copy bundle](montage-word-copy-same-host.md) is merged at `6a107a7`: all nine workloads beat both the C++ baseline and original in all four candidate passes. One-thread geometric means are **1.69165× over C++** and **2.09435× over scikit-image**; the strided case gains 15.67738×. Both independent reviews verify all ten gates, uncertainty separation and all 1,008 samples. Exact source/runtime/wrapper boundaries are in the report.
+
+The [float64 classifier comparison](colocalization-f64-same-host.md) remains DISCARD with its source unmerged. Earlier [Montage sustained results](montage-sustained-same-host.md) remain unresolved; their failures and raw data are unchanged. These scoped cohorts establish no whole-library win rate.
 
 ## Retained historical checkpoints
 
