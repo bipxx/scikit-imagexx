@@ -1,6 +1,6 @@
 # Complete scikit-image implementation plan
 
-Live checkpoint: **247 partial native image APIs and three metadata helpers; 241 APIs remain fully qualified across the four supported profiles.** The single float64 classifier experiment is closed DISCARD and remains unmerged. [Four-profile qualification 40800100531](https://github.com/bipxx/scikit-imagexx/actions/runs/40800100531) is running for exact coherent source `85d3875`, covering 26 SDK families/52 checks per profile. Keep the qualified count at 241 until all four actual products pass. See [the live phased summary](FAST_RUN.md) for evidence and next actions.
+Live checkpoint: **247 partial native image APIs and three metadata helpers; 241 APIs remain fully qualified.** The classifier experiment is closed DISCARD and unmerged. The first 247-API campaign failed prebuild on stale SDK-fixture and bilateral metadata-projection guards, before any product build. Both fixes preserve the historical contracts and pass 2,112 tooling tests plus eight subtests. [Fresh four-profile qualification 40801521012](https://github.com/bipxx/scikit-imagexx/actions/runs/40801521012) is running at exact source `8381037`; keep qualification at 241 until all four products pass. See [the live phased summary](FAST_RUN.md).
 
 ## Historical checkpoint narratives
 

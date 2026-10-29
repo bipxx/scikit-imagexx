@@ -1,6 +1,6 @@
 # Performance verification
 
-Current source has 247 partial native image APIs; [four-profile qualification 40800100531](https://github.com/bipxx/scikit-imagexx/actions/runs/40800100531) is running at exact source `85d3875`. Accepted full qualification remains 241 until all four actual products pass.
+Current source has 247 partial native image APIs; [fresh four-profile qualification 40801521012](https://github.com/bipxx/scikit-imagexx/actions/runs/40801521012) is running at exact source `8381037`. The [first campaign](https://github.com/bipxx/scikit-imagexx/actions/runs/40800100531) failed before product build on two stale metadata guards. Their exact fixes pass the full 2,112-test/8-subtest tooling barrier. Accepted full qualification remains 241 until all four actual products pass.
 
 The [float64 classifier comparison](colocalization-f64-same-host.md) is closed **DISCARD**: four targets gain 2.0-2.2x over current C++, but three normalized controls fail the unchanged 0.97 floor. All 1,176 samples and original-library losses are retained; source remains unmerged. The [Montage follow-up](montage-sustained-same-host.md) remains unresolved and unmerged. Published RDP/subdivision wins below retain their separate source/workload scope; none is a whole-library speed claim.
 

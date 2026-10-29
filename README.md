@@ -22,7 +22,7 @@ speedups, raw reports and remaining regressions on the recorded hosts.
 
 The [row-owned Montage byte-fill v2 experiment](benchmarks/montage-row-owned-v2-same-host.md) remains **UNRESOLVED_MEASUREMENT**, with its source private. All fixed gates pass and incomplete uint8 improves 1.355×/1.348×, but the unchanged Fortran normalized worst-pair floor fails (0.885× versus 0.97). All raw evidence and its individual original-library loss are retained; neither this result nor v1 expands the qualified 241-API baseline. The [sustained follow-up](benchmarks/montage-sustained-same-host.md) also remains unresolved: validated 100 ms batches retain uncertainty in three control workloads, so the candidate stays unmerged.
 
-[Four-profile qualification](https://github.com/bipxx/scikit-imagexx/actions/runs/40800100531) is running for the frozen 247-API source; the accepted four-profile baseline remains 241. The [float64 classifier experiment](benchmarks/colocalization-f64-same-host.md) is closed DISCARD: its target gains pass, but three control floors fail, so its code remains unmerged.
+[Fresh four-profile qualification](https://github.com/bipxx/scikit-imagexx/actions/runs/40801521012) is running for frozen source `8381037` with 247 image APIs; the accepted baseline remains 241. The first campaign failed before product build on two metadata guards, now fixed and verified by 2,112 tooling tests plus eight subtests. The [float64 classifier experiment](benchmarks/colocalization-f64-same-host.md) is closed DISCARD: its target gains pass, but three control floors fail, so its code remains unmerged.
 
 ## Supported parity surface
 
