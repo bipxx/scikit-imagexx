@@ -34,8 +34,8 @@ jobs:
       CANDIDATE_ARTIFACT_SHA256: ${{ inputs.candidate_artifact_sha256 }}
       BASELINE_RUN: '40778508940'
       BASELINE_REVISION: '4f69eba77a262056459eaab1e0a39e53610e9305'
-      CANDIDATE_RUN: '40790763016'
-      CANDIDATE_REVISION: 'b5bd1df7e27099e528fb4c7db67e2cb0bf35abae'
+      CANDIDATE_RUN: 'TBD_ROOT_AUTHENTICATED_PREPARE'
+      CANDIDATE_REVISION: '9e1edffc12a6c290f521194fcb2386753f8845f8'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,8 +53,8 @@ jobs:
           python - <<'PY'
           import json, os, re, subprocess
           from pathlib import Path
-          assert os.environ['CANDIDATE_RUN'] == '40790763016'
-          assert os.environ['CANDIDATE_REVISION'] == 'b5bd1df7e27099e528fb4c7db67e2cb0bf35abae'
+          assert os.environ['CANDIDATE_RUN'] == 'TBD_ROOT_AUTHENTICATED_PREPARE'
+          assert os.environ['CANDIDATE_REVISION'] == '9e1edffc12a6c290f521194fcb2386753f8845f8'
           assert os.environ['BASELINE_RUN'] == '40778508940'
           assert os.environ['BASELINE_REVISION'] == '4f69eba77a262056459eaab1e0a39e53610e9305'
           for role in ('baseline', 'candidate'):
@@ -100,13 +100,8 @@ jobs:
           fetch-depth: 1
       - uses: actions/checkout@v4
         with:
-          ref: 'b5bd1df7e27099e528fb4c7db67e2cb0bf35abae'
+          ref: '9e1edffc12a6c290f521194fcb2386753f8845f8'
           path: snapshots/candidate
-          fetch-depth: 1
-      - uses: actions/checkout@v4
-        with:
-          ref: '6b22e64641a702c92873c376ff650cd8c8764d0d'
-          path: snapshots/parent
           fetch-depth: 1
       - name: Download exact CI ZIPs and install both runtimes offline
         shell: bash
@@ -204,17 +199,17 @@ jobs:
               for name in ('numpy', 'scipy', 'skimage'):
                   assert old['runtime']['packages_sha256'][name] == new['runtime']['packages_sha256'][name], name
               assert {k: v for k, v in old['wheels'].items() if v['name'] != 'scikit-imagexx'} == {k: v for k, v in new['wheels'].items() if v['name'] != 'scikit-imagexx'}, 'all13 runtime dependency wheels exact; no normalization authorized'
-              contract = 'coverage/contracts/montage-row-owned-v2-candidate.json'
-              assert new['source']['files_sha256'][contract] == 'eb47b18e695a9f376a004a2490e5a62240933a1418b8f2520c6456b964fac01e'
-              assert hashlib.sha256(Path('snapshots/candidate', contract).read_bytes()).hexdigest() == 'eb47b18e695a9f376a004a2490e5a62240933a1418b8f2520c6456b964fac01e'
+              protocol = json.loads(Path('controller/coverage/contracts/montage-word-copy-measurement.json').read_bytes())
+              contract = protocol['acceptance_contract_path']
+              assert hashlib.sha256(Path('snapshots/candidate', contract).read_bytes()).hexdigest() == protocol['acceptance_contract_sha256']
               before, after = (value['source']['files_sha256'] for value in (old,new))
-              parent_contract = 'coverage/contracts/montage-row-owned-candidate.json'
-              assert new['source']['files_sha256'][parent_contract] == '64c10577317d77e6b39a206904f578b06db68ee2be3745d8a3d646100f184bdb'
-              assert hashlib.sha256(Path('snapshots/candidate', parent_contract).read_bytes()).hexdigest() == '64c10577317d77e6b39a206904f578b06db68ee2be3745d8a3d646100f184bdb'
-              added = {'src/montage_simd.hpp', 'src/simd_montage_avx2.cpp', parent_contract, contract}
-              allowed = added | {'src/montage.cpp', 'CMakeLists.txt', 'tests/test_montage_native.cpp', 'include/skimagexx/montage.hpp'}
+              added = {'src/montage_simd.hpp', 'src/simd_montage_avx2.cpp', contract}
+              allowed = set(protocol['source_delta_sha256'])
               assert set(after) - set(before) == added and not (set(before) - set(after))
               assert {n for n in after if before.get(n) != after[n]} == allowed
+              for name, pin in protocol['source_delta_sha256'].items():
+                  assert after[name] == pin
+                  assert hashlib.sha256(Path('snapshots/candidate', name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == pin
               old_cmake, new_cmake = (Path('snapshots', role, 'CMakeLists.txt').read_bytes().replace(b'\r\n', b'\n') for role in ('baseline', 'candidate'))
               lines = new_cmake.splitlines(keepends=True)
               registrations = [line for line in lines if b'simd_montage_avx2.cpp' in line]
@@ -223,23 +218,6 @@ jobs:
               old_comment = b'// Fill precedes independent tile-row copies; image index follows grid C order.'
               new_comment = b'// Each worker owns complete output rows; padding and unused tiles are filled,\n// while occupied tile spans are copied directly in grid C order.'
               assert new_header.count(new_comment) == 1 and new_header.replace(new_comment, old_comment) == old_header
-              parent = Path('snapshots/parent'); candidate = Path('snapshots/candidate')
-              old_leaf = (parent/'src/montage.cpp').read_text(); new_leaf = (candidate/'src/montage.cpp').read_text()
-              byte_branch = '        if(bytes==1){*start=*fill;return;}\n'
-              assert new_leaf.count(byte_branch) == 1
-              inverse_leaf = new_leaf.replace(byte_branch, '', 1).replace('if(zero||pixel_bytes==1){std::memset(start,*fill,bytes);return;}', 'if(zero){std::memset(start,0,bytes);return;}', 1)
-              assert inverse_leaf == old_leaf
-              production = lambda name: name in ('CMakeLists.txt', 'pyproject.toml') or name.startswith(('src/', 'include/', 'python/skimagexx/'))
-              names = [set(filter(production, subprocess.check_output(['git','-C',str(folder),'ls-files','-z']).decode().split('\0'))) for folder in (parent,candidate)]
-              assert names[0] == names[1]
-              for name in names[0] - {'src/montage.cpp'}:
-                  assert (parent/name).read_bytes().replace(b'\r\n',b'\n') == (candidate/name).read_bytes().replace(b'\r\n',b'\n'), name
-              old_test, new_test = (Path('snapshots', role, 'tests/test_montage_native.cpp').read_text() for role in ('baseline', 'candidate'))
-              inverse_v2_test = re.sub(r'    // BEGIN additive v2 exhaustive raw byte-fill controls\n.*?    // END additive v2 exhaustive raw byte-fill controls\n', '', new_test, flags=re.S)
-              assert inverse_v2_test == (parent/'tests/test_montage_native.cpp').read_text()
-              inverse = re.sub(r'// BEGIN additive row-owned controls\n.*?// END additive row-owned controls\n', '', inverse_v2_test, flags=re.S)
-              inverse = re.sub(r'    // BEGIN additive row-owned invocation; historical stream prefix unchanged\n.*?    // END additive row-owned invocation\n', '', inverse, flags=re.S)
-              assert inverse == old_test
               old_objects, new_objects = (json.loads(Path('results', role + '-SDK-objects.json').read_bytes()) for role in ('baseline', 'candidate'))
               assert len(old_objects) == 163 and len(new_objects) == 164
               assert set(new_objects) - set(old_objects) == {'simd_montage_avx2.cpp.o'} and not (set(old_objects) - set(new_objects))
@@ -264,13 +242,17 @@ jobs:
           python - <<'PY'
           import hashlib,json,os
           from pathlib import Path
-          path=Path('controller/coverage/contracts/montage-sustained-measurement.json')
-          assert hashlib.sha256(path.read_bytes()).hexdigest()=='8b02ed340dbae4e20cfd24aed970c53ad23e656f4aa19aaef8db08ef90e5ad86'
+          path=Path('controller/coverage/contracts/montage-word-copy-measurement.json')
+          assert hashlib.sha256(path.read_bytes()).hexdigest()=='60578ac1fd7a81313d9c704608f3af11c0d3044bb1b2d8531e63ee9f2bc4298f'
           c=json.loads(path.read_bytes())
           driver=Path('controller/tools/montage_sustained.py')
           assert hashlib.sha256(driver.read_bytes()).hexdigest()==c['driver_sha256']
-          source=json.loads(Path('snapshots/candidate/coverage/contracts/montage-row-owned-v2-candidate.json').read_bytes())
-          for field in ('gate','measurement_variance_rule','deadline_utc','case_ids','target_case','preserved_original_wins'):assert c[field]==source[field],field
+          raw=Path('snapshots/candidate',c['acceptance_contract_path']).read_bytes()
+          assert hashlib.sha256(raw).hexdigest()==c['acceptance_contract_sha256']
+          assert hashlib.sha256(raw.replace(b'\r\n',b'\n')).hexdigest()==c['acceptance_contract_canonical_sha256']
+          source=json.loads(raw)
+          assert source['preparation_isolation']['source_base']==c['products']['A']['revision']
+          assert source['variant_limit']==1 and c['variant_limit']==1 and c['automatic_reruns']==0
           for product in c['products'].values():
               item=json.loads(Path('results',product['role']+'-selection.json').read_bytes())
               assert item['id']==product['artifact'] and item['digest']=='sha256:'+product['sha256']
@@ -406,7 +388,7 @@ jobs:
           from datetime import datetime,timezone
           helper=runpy.run_path('controller/tools/montage_row_owned_comparison.py')['compare']
           summary=helper([dict(results=list(report.values())) for report in reports],contract,datetime.now(timezone.utc).isoformat())
-          summary.update(producer_revision='b5bd1df7e27099e528fb4c7db67e2cb0bf35abae',baseline_revision='4f69eba77a262056459eaab1e0a39e53610e9305',pids=pids,affinity=[cpu],all_identity_and_oracle_checks_pass=True,sealed_contract_sha256='8b02ed340dbae4e20cfd24aed970c53ad23e656f4aa19aaef8db08ef90e5ad86')
+          summary.update(producer_revision='9e1edffc12a6c290f521194fcb2386753f8845f8',baseline_revision='4f69eba77a262056459eaab1e0a39e53610e9305',pids=pids,affinity=[cpu],all_identity_and_oracle_checks_pass=True,sealed_contract_sha256='60578ac1fd7a81313d9c704608f3af11c0d3044bb1b2d8531e63ee9f2bc4298f')
           summary['controller']=json.loads(Path('results/controller.json').read_bytes())
           summary['FP_state_evidence']='Unchanged frozen harness asserts NumPy policy/handler/buffer and global workers before and after every measured case; this harness does not export separate FP values.'
           Path('results/comparison.json').write_text(json.dumps(summary,indent=2)+'\n')
@@ -415,7 +397,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: montage-sustained-same-host-raw
+          name: montage-word-copy-sustained-raw
           path: results/
           retention-days: 90
           include-hidden-files: true
