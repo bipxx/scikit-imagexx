@@ -34004,6 +34004,60 @@
         }
       },
       "scope": "Separate sustained sampler on unchanged247 products;1008>=100ms accepted batches,144warmgroups>=250ms,72returnedrecords checked. Same deadline/gates, oldv1/v2 unresolved outcomes unchanged. New uncertainty blocks merge; no further campaign/variant/retry or qualification credit."
+    },
+    {
+      "id": "colocalization-f64-finite-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "measure.intersection_coeff",
+        "measure.manders_coloc_coeff",
+        "measure.manders_overlap_coeff"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "optimize/colocalization-f64-finite-v1",
+      "base_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "source_sha": "d496dd179addc03ad13df30f6df4dde4f2b64328",
+      "state": "measured",
+      "closed": true,
+      "decision": "DISCARD",
+      "source_merged": false,
+      "owns": [
+        "src/colocalization.cpp",
+        "src/simd_colocalization_avx2.cpp",
+        "tests/test_colocalization_native.cpp",
+        "coverage/contracts/colocalization-f64-finite-candidate.json"
+      ],
+      "depends_on": [
+        "colocalization-native-production"
+      ],
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "d496dd179addc03ad13df30f6df4dde4f2b64328",
+          "manifest": {
+            "path": "build/colocalization-f64-same-host-v1/handoff.json",
+            "sha256": "e72b0fcd9bb8ff7cb070dbf9dc92294bc5c4e67adbbf4aa9197e7f0256615ae5"
+          },
+          "raw_samples": 1176,
+          "acceptance_pass": false
+        }
+      },
+      "performance": {
+        "status": "DISCARD",
+        "run": 40798470833,
+        "artifact": 12864643680,
+        "publication": "benchmarks/colocalization-f64-same-host.json",
+        "cases": 21,
+        "direct_gain": 1.1865356129743472,
+        "normalized_gain": 1.1653052262677428,
+        "failed_normalized_controls": [
+          "measure.intersection_coeff/future/memory",
+          "measure.manders_overlap_coeff/future/cache",
+          "measure.manders_overlap_coeff/future/cache-F"
+        ]
+      },
+      "scope": "Minimum genuine whole-public ABBA, one worker; three strict normalized control floors fail. No retuning or merge; full qualification remains241."
     }
   ],
   "unassigned_inventoried_apis": [
