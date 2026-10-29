@@ -94,6 +94,48 @@ void genuine(const char* path,int workers,std::ofstream& stream){
     }
     check(f.peek()==std::char_traits<char>::eof());
 }
+// BEGIN additive row-owned controls
+void stride_words32(std::size_t width,std::size_t height,std::size_t padding,
+                    bool reverse,int workers,std::ofstream& stream){
+    const std::array<std::size_t,4> shape{5,height,width,1};
+    const auto row_step=std::ptrdiff_t(width*8+3),image_step=std::ptrdiff_t(height)*row_step+5;
+    const auto sign=reverse?-1:1;
+    const std::array<std::ptrdiff_t,4> strides{sign*image_step,sign*row_step,sign*8,0};
+    std::ptrdiff_t low=0,high=0;
+    const bool empty=!height||!width;
+    if(!empty)for(std::size_t axis=0;axis<4;++axis){
+        const auto extent=std::ptrdiff_t(shape[axis]-1)*strides[axis];
+        low+=std::min(std::ptrdiff_t(0),extent);high+=std::max(std::ptrdiff_t(0),extent);
+    }
+    // First logical word is deliberately unaligned. The final selected word
+    // ends at the allocation boundary, including the SIMD lookahead tails.
+    const auto origin=std::size_t(1-low);
+    std::vector<unsigned char> backing(empty?0:std::size_t(high-low)+5);
+    for(std::size_t i=0;i<backing.size();++i)backing[i]=static_cast<unsigned char>(i*37+11);
+    const std::vector<unsigned char> fill{0x00,0x00,0x80,0x7f};
+    const MontageGrid grid{3,3,padding};
+    exercise(shape,strides,4,origin,backing,grid,(height+padding)*3+padding,
+             (width+padding)*3+padding,fill,workers,stream);
+}
+void row_owned_controls(int workers,std::ofstream& stream){
+    for(std::size_t width:{0,1,2,7,8,9,15,16,17,31,32,33,129})
+        for(std::size_t padding:{0,1,3})for(bool reverse:{false,true})
+            stride_words32(width,3,padding,reverse,workers,stream);
+    // Incomplete and wholly unused tile rows cross actual parallel chunks.
+    stride_words32(257,65,1,false,workers,stream);
+    stride_words32(257,65,3,true,workers,stream);
+    control({5,65,129,3},4,0,{3,3,3},false,workers,stream);
+    control({5,65,129,3},16,1,{3,3,2},true,workers,stream);
+    // Fill and input may alias each other; only the output must be disjoint.
+    for(bool zero:{false,true}){
+        std::vector<unsigned char> backing(240);
+        for(std::size_t i=0;i<backing.size();++i)backing[i]=static_cast<unsigned char>(i*13+43);
+        if(zero)std::fill_n(backing.begin(),8,0);
+        exercise({3,2,5,2},{80,40,8,4},4,0,backing,{2,2,2},10,16,
+                 backing,workers,stream);
+    }
+}
+// END additive row-owned controls
 }
 int main(int argc,char** argv){
     if(argc!=2&&argc!=3)throw std::runtime_error("usage: montage-native output [frozen-fixtures]");
@@ -110,6 +152,38 @@ int main(int argc,char** argv){
             control({0,2,3,1},width,0,{0,0,0},false,workers,stream);
         }
         control({9,64,96,3},4,0,{3,3,1},false,workers,stream);
+    }
+    // BEGIN additive row-owned invocation; historical stream prefix unchanged
+    for(int workers:{1,4})row_owned_controls(workers,stream);
+    // END additive row-owned invocation
+    // BEGIN additive v2 exhaustive raw byte-fill controls
+    for(int workers:{1,4}){
+        std::vector<unsigned char> backing(105);
+        for(std::size_t i=0;i<backing.size();++i)backing[i]=static_cast<unsigned char>(i*37+11);
+        for(unsigned value=0;value<256;++value){
+            const std::vector<unsigned char> fill{static_cast<unsigned char>(value)};
+            const bool reverse=value%2;
+            const std::array<std::ptrdiff_t,4> strides=reverse?
+                std::array<std::ptrdiff_t,4>{-21,-7,-1,0}:
+                std::array<std::ptrdiff_t,4>{21,7,1,0};
+            exercise({5,3,7,1},strides,1,reverse?104:0,backing,{3,3,1},13,25,
+                     fill,workers,stream);
+        }
+        control({5,129,513,1},1,0,{3,3,3},false,workers,stream);
+    }
+    // END additive v2 exhaustive raw byte-fill controls
+    // Literal8-byte copies must preserve raw words at signed/zero strides and
+    // unaligned addresses, including incomplete grids and real worker chunks.
+    for(int workers:{1,4})for(std::ptrdiff_t stride:{-17,-8,0,8,19}){
+        const std::size_t K=5,H=3,W=17;
+        const std::ptrdiff_t row=-400,image=1600;
+        const std::ptrdiff_t low=(H-1)*row+std::min(std::ptrdiff_t(0),std::ptrdiff_t(W-1)*stride);
+        const std::ptrdiff_t high=(K-1)*image+std::max(std::ptrdiff_t(0),std::ptrdiff_t(W-1)*stride);
+        std::vector<unsigned char> backing(std::size_t(high-low)+9);
+        for(std::size_t i=0;i<backing.size();++i)backing[i]=static_cast<unsigned char>(i*37+11);
+        exercise({K,H,W,1},{image,row,stride,0},8,std::size_t(1-low),backing,
+                 {3,3,1},13,55,{0,0,0,0,0,0,0xf0,0x7f},workers,stream);
+        control({5,129,513,1},8,1,{3,3,1},false,workers,stream);
     }
     check(bool(stream));std::cout<<"montage native cases="<<cases<<" checks="<<checks<<" PASS\n";
 }
