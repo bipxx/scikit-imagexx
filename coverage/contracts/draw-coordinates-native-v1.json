@@ -1,0 +1,51 @@
+{
+  "schema": "draw-coordinates-native-correctness-v1",
+  "status": "FROZEN_BEFORE_PRODUCTION_EDITS_OR_NATIVE_OUTPUTS",
+  "created_utc": "2026-10-29T02:10:22.404088+00:00",
+  "base": "e7e54b1",
+  "captured_contract": {
+    "path": "coverage/contracts/draw-coordinates.json",
+    "sha256": "acc20acd84f46e9a11f118dc27e0582eb5d3dd8a5e33a8d6016402dc575c4a1d",
+    "calls": 176,
+    "returns_per_profile": 75,
+    "errors_per_profile": 13,
+    "raw_root": "build/draw-coordinate-capture-v1"
+  },
+  "header_sha256": "9ce8a402b50cee888aab919ef175beb41b20232f16ad6e5af435f2ff248f7ae1",
+  "owned": [
+    "include/skimagexx/draw_coordinates.hpp",
+    "src/draw_coordinates.cpp",
+    "src/simd_draw_coordinates_avx2.cpp",
+    "tests/test_draw_coordinates_native.cpp"
+  ],
+  "source": "Official0.26 draw.py fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49;_draw.pyx fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4; retained once byB.",
+  "scope": {
+    "line": "Caller-prepared intptr endpoints with representable differences/doubled error and addressable exact output. Literal dependent Bresenham recurrence first.",
+    "rectangle": "Dynamic-rank integer start/lengths after literal NumPy prefix; defaultxy first2 shape axes swap. Exact-count C buffers, no vector-copy.",
+    "ellipse": "Prepared float64 shiftedcenter/radii/sin/cos/bbox/offsets from literal providers; finite positive radii, nearest FP, exact-double grid indices; preserve division-before-square and strict<1, noFMA. mask/count-prefix then source row-major emit; boolfalse discards private buffers.",
+    "providers": "All Python conversion/rounding/clipping/error/protocol/policy/profile/layout wrapping remains explicit. Zero/negative/nonfinite/unsupported scalar geometries use literal tail when not admitted. No arbitrary captured1M bound imposed.",
+    "workers": "Caller snapshots existing optional global workers; independent rectangle/ellipse loops partition, dependent line recurrence serial initially; no custompool/forcedparallelism."
+  },
+  "tests": {
+    "saved": "Export only prepared primitive inputs using existing factory; expected coordinates exclusively from immutable75savedreturns/profile, no original calls. Native subset requires declared admission; all other observations remain public-parity/provider rows.",
+    "independent": [
+      "Every line octant/tie/reversal/endpoint/point and negative origin; exact start/end ordering",
+      "ND rectanglexy grids, empty axes/rank0/rank1/3/4/dynamicrank; fresh outputs andcanaries",
+      "Ellipse strictboundary, fractional/rotated coefficients from frozenpreparedvalues, clipping/empty and negativeoffsets; mask/prefix/emit order",
+      "All vector tails and unaligned source-independent typed outputs; separate/interleaved elementstrides and canaries",
+      "Workers1,4; callerFPflag/rounding preservation, nonnearest/refusednonfinite/sNaN/zero/negative radius, exceptional arithmetic discardsoutput"
+    ],
+    "modes": [
+      "OpenMPnormal",
+      "OpenMPscalar",
+      "portable normal",
+      "portable scalar",
+      "ASan+UBSannormal",
+      "ASan+UBSanscalar"
+    ]
+  },
+  "build": "Only affectednewTUs and tiny links against retained SDK/env/image donors. No wholeSDK/env build.",
+  "timings": 0,
+  "original_calls": 0,
+  "POSTs": 0
+}
