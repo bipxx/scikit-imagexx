@@ -22,5 +22,11 @@
     "6b22e646:UNRESOLVED_MEASUREMENT",
     "b5bd1df:UNRESOLVED_MEASUREMENT"
   ],
-  "scope": "Concrete copy and write-volume bottlenecks only. No claim that the causes of all historical control regressions are known."
+  "scope": "Concrete copy and write-volume bottlenecks only. No claim that the causes of all historical control regressions are known.",
+  "preparation_isolation": {
+    "source_base": "4f69eba77a262056459eaab1e0a39e53610e9305",
+    "reason": "Exact eager frontend and unchanged dependencies match the retained genuine4f baseline; f1 adds a lazy public wrapper and would confound whole-call comparisons. Only six native/CMake/test files plus this prospective contract differ from4f. All six files are byte-exact to the f1-based c29dc44 native validation.",
+    "native_validation_source": "c29dc44",
+    "main_integration": "If performance accepted, integrate native files into current main and separately verify actual f1 frontend parity. Do not infer whole-product main qualification from this preparation."
+  }
 }
