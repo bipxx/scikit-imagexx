@@ -1,0 +1,26 @@
+{
+  "schema": "montage-word-copy-candidate-v1",
+  "status": "PROSPECTIVE_BEFORE_NEW_SOURCE_EDITS",
+  "base_source": "f1f9c4219a0f38da3c5a884b96af44d54b416ff0",
+  "kernel_parent": "b5bd1df7e27099e528fb4c7db67e2cb0bf35abae",
+  "created_utc": "2026-10-29T03:03:34.577138+00:00",
+  "problem": "The retained b5 Fortran-f64 code path calls runtime-length memcpy once per pixel (196608 calls for the frozen workload). The existing4-byte scalar specialization does not cover8-byte single-channel data.",
+  "change": "Reuse the reviewed row-owned b5 implementation and unchanged stride2 SIMD kernel; add one channels==1 && itemsize==8 route with literal8-byte memcpy per strided pixel. Preserve signed strides, byte alignment, raw words, FP state, worker semantics, public ABI and all frontend/provider code.",
+  "why_row_owned": "Avoid writing occupied output twice; preserve the exhaustive byte-fill correction. This does not establish the cause of earlier normalized measurement regressions.",
+  "validation": [
+    "Append signed/zero/unaligned8-byte single-channel stride cases; preserve entire b5 stream prefix and71 original fixture records",
+    "Native OpenMP, portable, ASan+UBSan, each normal/scalar; workers1/4",
+    "Object disassembly must show fixed8byte loads/stores for the new route, not per-pixel dynamic memcpy",
+    "Actual package parity and SDK client before isolated one-thread original/current measurement of all nine unchanged cases"
+  ],
+  "performance_policy": "No acceptance from aggregate speed or original wins alone. Preserve all historical failed/unresolved decisions. New source must meet the existing strict control floors; no threshold changes, automatic retries, or expanded framework.",
+  "variant_limit": 1,
+  "historical_results_unchanged": [
+    "894edfd:DISCARD",
+    "e66770d:DISCARD",
+    "61b4f798:DISCARD",
+    "6b22e646:UNRESOLVED_MEASUREMENT",
+    "b5bd1df:UNRESOLVED_MEASUREMENT"
+  ],
+  "scope": "Concrete copy and write-volume bottlenecks only. No claim that the causes of all historical control regressions are known."
+}
