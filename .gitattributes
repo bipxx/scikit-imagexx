@@ -632,3 +632,4 @@ benchmarks/montage-row-owned-v2-same-host.json -text
 benchmarks/montage-sustained-same-host.json -text
 
 benchmarks/colocalization-f64-same-host.json -text
+coverage/contracts/draw-coordinates.json -text
