@@ -1,0 +1,404 @@
+name: colocalization-f64-same-host
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_run:
+        type: string
+        required: true
+      candidate_artifact_id:
+        type: string
+        required: true
+      candidate_artifact_sha256:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTEST_ADDOPTS: ''
+  PYTEST_PLUGINS: ''
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  prepare-benchmark-tool:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      artifact_id: ${{ steps.tool.outputs.artifact-id }}
+      artifact_digest: ${{ steps.tool.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Fetch only the frozen benchmark tool wheel
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,json,urllib.request
+          from pathlib import Path
+          raw=Path('coverage/contracts/colocalization-f64-finite-performance-v2.json').read_bytes().replace(b'\r\n',b'\n')
+          assert hashlib.sha256(raw).hexdigest()=='58456c457bde8ddcac907620bf4fb928b541fc689dd160f154039e9cadd4416c'
+          tool=json.loads(raw)['benchmark_tools']['threadpoolctl']
+          folder=Path('benchmark-tool');folder.mkdir()
+          data=urllib.request.urlopen(tool['url']).read()
+          assert len(data)==tool['bytes'] and hashlib.sha256(data).hexdigest()==tool['sha256']
+          (folder/tool['filename']).write_bytes(data)
+          (folder/'receipt.json').write_text(json.dumps(tool,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        id: tool
+        with:
+          name: colocalization-benchmark-tool
+          path: benchmark-tool/
+          retention-days: 90
+          if-no-files-found: error
+  compare:
+    needs: prepare-benchmark-tool
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+      CANDIDATE_ARTIFACT_SHA256: ${{ inputs.candidate_artifact_sha256 }}
+      BASELINE_RUN: '40778508940'
+      BASELINE_REVISION: '4f69eba77a262056459eaab1e0a39e53610e9305'
+      CANDIDATE_RUN: ${{ inputs.candidate_run }}
+      CANDIDATE_REVISION: 'd496dd179addc03ad13df30f6df4dde4f2b64328'
+      TOOL_ARTIFACT_ID: ${{ needs.prepare-benchmark-tool.outputs.artifact_id }}
+      TOOL_ARTIFACT_DIGEST: ${{ needs.prepare-benchmark-tool.outputs.artifact_digest }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: controller
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate prepared benchmark-only tool
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results/benchmark-tool
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$TOOL_ARTIFACT_ID" > results/benchmark-tool-artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$TOOL_ARTIFACT_ID/zip" > "$RUNNER_TEMP/benchmark-tool.zip"
+          python - <<'PY'
+          import hashlib,json,os,zipfile
+          from pathlib import Path
+          raw=Path('controller/coverage/contracts/colocalization-f64-finite-performance-v2.json').read_bytes().replace(b'\r\n',b'\n')
+          assert hashlib.sha256(raw).hexdigest()=='58456c457bde8ddcac907620bf4fb928b541fc689dd160f154039e9cadd4416c'
+          tool=json.loads(raw)['benchmark_tools']['threadpoolctl']
+          item=json.loads(Path('results/benchmark-tool-artifact.json').read_bytes())
+          assert item['id']==int(os.environ['TOOL_ARTIFACT_ID']) and item['name']=='colocalization-benchmark-tool' and not item['expired']
+          assert item['workflow_run']['id']==int(os.environ['GITHUB_RUN_ID']) and item['workflow_run']['head_sha']==os.environ['GITHUB_SHA']
+          data=Path(os.environ['RUNNER_TEMP'],'benchmark-tool.zip').read_bytes()
+          digest='sha256:'+hashlib.sha256(data).hexdigest()
+          assert item['digest']==digest and os.environ['TOOL_ARTIFACT_DIGEST']==digest.removeprefix('sha256:')
+          with zipfile.ZipFile(Path(os.environ['RUNNER_TEMP'],'benchmark-tool.zip'))as z:
+              assert sorted(z.namelist())==sorted([tool['filename'],'receipt.json'])
+              wheel=z.read(tool['filename']);assert len(wheel)==tool['bytes'] and hashlib.sha256(wheel).hexdigest()==tool['sha256']
+              assert json.loads(z.read('receipt.json'))==tool
+              for name in z.namelist():Path('results/benchmark-tool',name).write_bytes(z.read(name))
+          PY
+      - name: Authenticate successful CI products
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          assert os.environ['CANDIDATE_REVISION'] == 'd496dd179addc03ad13df30f6df4dde4f2b64328'
+          assert os.environ['BASELINE_RUN'] == '40778508940'
+          assert os.environ['BASELINE_REVISION'] == '4f69eba77a262056459eaab1e0a39e53610e9305'
+          for role in ('baseline', 'candidate'):
+              run, revision = (os.environ[role.upper() + suffix] for suffix in ('_RUN', '_REVISION'))
+              assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[0-9a-f]{40}', revision)
+              base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+              def api(endpoint):
+                  raw = subprocess.check_output(['gh', 'api', base + endpoint])
+                  Path('results', role + '-' + endpoint.split('?')[0].split('/')[-1] + '.json').write_bytes(raw)
+                  return json.loads(raw)
+              record = api('runs/' + run)
+              assert str(record['id']) == run and record['head_sha'] == revision
+              assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+              assert record['path'] == '.github/workflows/ci.yml'
+              assert record['status'] == 'completed' and record['conclusion'] == 'success'
+              jobs = api('runs/' + run + '/jobs?per_page=100')
+              minimum = [job for job in jobs['jobs'] if job['name'] == 'measure-minimum']
+              assert len(minimum) == 1 and minimum[0]['conclusion'] == 'success'
+              timing = [step for step in minimum[0]['steps'] if step['name'].startswith('Run python benchmarks/')]
+              assert len(timing) == 29 and all(step['conclusion'] == 'skipped' for step in timing)
+              listing = api('runs/' + run + '/artifacts?per_page=100')
+              assert listing['total_count'] == len(listing['artifacts'])
+              matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
+              assert len(matches) == 1
+              item = matches[0]
+              assert not item['expired'] and 0 < item['size_in_bytes'] < 512 * 1024**2
+              assert item['workflow_run']['id'] == int(run) and item['workflow_run']['head_sha'] == revision
+              assert re.fullmatch('sha256:[0-9a-f]{64}', item['digest'])
+              if role == 'baseline':
+                  assert item['id'] == 12855199919
+                  assert item['digest'] == 'sha256:4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96'
+              else:
+                  assert re.fullmatch('[1-9][0-9]*', os.environ['CANDIDATE_ARTIFACT_ID'])
+                  assert re.fullmatch('[0-9a-f]{64}', os.environ['CANDIDATE_ARTIFACT_SHA256'])
+                  assert str(item['id']) == os.environ['CANDIDATE_ARTIFACT_ID']
+                  assert item['digest'] == 'sha256:' + os.environ['CANDIDATE_ARTIFACT_SHA256']
+              Path('results', role + '-selection.json').write_text(json.dumps(item, indent=2) + '\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: '4f69eba77a262056459eaab1e0a39e53610e9305'
+          path: snapshots/baseline
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: 'd496dd179addc03ad13df30f6df4dde4f2b64328'
+          path: snapshots/candidate
+          fetch-depth: 1
+      - name: Download exact CI ZIPs and install both runtimes offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          for role in baseline candidate; do
+            id=$(python -c "import json; print(json.load(open('results/$role-selection.json'))['id'])")
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip" > "$RUNNER_TEMP/$role-prepared.zip"
+            ROLE="$role" python - <<'PY'
+          import hashlib, io, json, os, re, stat, zipfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          role = os.environ['ROLE']; folder = Path('snapshots', role, 'build')
+          selected = json.loads(Path('results', role + '-selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], role + '-prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results', role + '-archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and 'sha256:' + actual['sha256'] == selected['digest']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall(folder)
+          prepared = folder / 'prepared/ci-artifacts'
+          # latest_only baselines and prepare_only candidates need no standalone timing JSONs here.
+          manifest = json.loads((prepared / 'measurement.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          assert manifest['source']['revision'] == os.environ[role.upper() + '_REVISION']
+          source = Path('snapshots',role)
+          for name,pin in manifest['source']['files_sha256'].items():
+              assert hashlib.sha256((source/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == pin, name
+          assert len(manifest['wheels']) == 14
+          assert len(manifest['runtime']['sdk_sha256']) == 83
+          products = [name for name, value in manifest['wheels'].items() if value['name'] == 'scikit-imagexx']
+          assert len(products) == 1 and len(manifest['wheels']) - len(products) == 13
+          for name, value in manifest['wheels'].items():
+              assert hashlib.sha256((folder / 'prepared/wheels' / name).read_bytes()).hexdigest() == value['sha256']
+          with zipfile.ZipFile(folder / 'prepared/wheels' / products[0]) as product:
+              assert len([n for n in product.namelist() if not n.endswith('/')]) == 176
+              static_names = [n for n in product.namelist() if n == 'lib/libskimagexx.a']
+              assert len(static_names) == 1
+              static = folder / 'prepared/sdk-static.a'; static.write_bytes(product.read(static_names[0]))
+              product_names = product.namelist()
+              core_names = [n for n in product_names if n.startswith('skimagexx/_core.') and n.endswith('.so')]
+              assert len(core_names) == 1
+              core_bytes = product.read(core_names[0])
+          import subprocess
+          objects = subprocess.check_output(['ar', 't', str(static)], text=True).splitlines()
+          assert objects and len(objects) == len(set(objects))
+          object_hashes = {name: hashlib.sha256(subprocess.check_output(['ar', 'p', str(static), name])).hexdigest() for name in objects}
+          Path('results', role + '-SDK-objects.json').write_text(json.dumps(object_hashes, indent=2) + '\n')
+          snapshot = Path('snapshots', role)
+          assert hashlib.sha256((snapshot / 'benchmarks/montage.py').read_bytes().replace(b'\r\n', b'\n')).hexdigest() == '93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd'
+          assert hashlib.sha256((snapshot / 'coverage/contracts/montage-benchmark.json').read_bytes()).hexdigest() == '434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68'
+          xml_counts = {}
+          for family, count in (('inertia-tensor', 115), ('inertia-eigvals', 69), ('moments', 203), ('window', 179),
+                                ('lpi', 161), ('butterworth', 175), ('moments-derived', 155),
+                                ('normalized-layouts', 22), ('immutable-bytes', 134),
+                                ('moments-coords', 98), ('shannon-entropy', 61), ('rgb2yuv-storage', 37),
+                                ('block-reduce', 145), ('perimeter-crofton', 101), ('perimeter', 111), ('euler-number', 91),
+                                ('polygon', 86), ('mesh-surface-area', 89), ('profile-line', 93), ('blur-effect', 121), ('compare-images', 109), ('profile-coordinates', 51),
+                                ('level-set', 161), ('level-set-pipeline', 163), ('map-array', 103), ('map-array-pipeline', 103), ('label-points', 99), ('label-points-pipeline', 100),
+                                ('unique-rows', 107), ('unique-rows-pipeline', 107), ('regular-seeds', 109), ('regular-seeds-pipeline', 109), ('montage', 322), ('rolling-ball-kernels', 230), ('approximate-polygon', 275), ('subdivide-polygon', 279), ('color-transforms-regression', 1848)):
+              for mode in ('normal', 'scalar'):
+                  name = family + '-' + mode + '.xml'
+                  tree = ET.fromstring((prepared / name).read_bytes())
+                  assert len(tree.findall('.//testcase')) == count
+                  assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+                  xml_counts[name] = count
+          for family, count in (('blur-effect-intake', 4), ('polygon-intake', 4), ('euler-number-intake', 4), ('block-reduce-integer-width', 9)):
+              tree = ET.fromstring((prepared / (family + '.xml')).read_bytes())
+              assert len(tree.findall('.//testcase')) == count
+              assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+              xml_counts[family + '.xml'] = count
+          guard = 'approximate-polygon-runtime-reference-guards.xml'
+          tree = ET.fromstring((prepared / guard).read_bytes())
+          assert len(tree.findall('.//testcase')) == 16
+          assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+          xml_counts[guard] = 16
+          assert {p.name for p in prepared.glob('*.xml')} == set(xml_counts) and sum(xml_counts.values()) == 13079
+          assert sum(count for name, count in xml_counts.items() if name.endswith(('-normal.xml', '-scalar.xml')) and not name.startswith('color-transforms-regression-')) == 9346
+          smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
+          assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
+          assert smoke['outcomes'] == {'passed': 1447} and len(smoke['results']) == 1447
+          assert smoke['implementations']['native-partial'] + smoke['implementations']['metadata'] == 250
+          assert smoke['implementations']['native-partial'] == 247 and smoke['implementations']['metadata'] == 3
+          if role == 'candidate':
+              old=json.loads(Path('snapshots/baseline/build/prepared/ci-artifacts/measurement.json').read_bytes())
+              new=manifest
+              for key in ('python','implementation','cache_tag','machine','system','dependency_libraries_sha256'):
+                  assert old['runtime'][key]==new['runtime'][key],key
+              assert {k:v for k,v in old['runtime']['versions'].items()if k!='scikit-imagexx'}=={k:v for k,v in new['runtime']['versions'].items()if k!='scikit-imagexx'}
+              for package in ('numpy','scipy','skimage'):assert old['runtime']['packages_sha256'][package]==new['runtime']['packages_sha256'][package]
+              assert {k:v for k,v in old['wheels'].items()if v['name']!='scikit-imagexx'}=={k:v for k,v in new['wheels'].items()if v['name']!='scikit-imagexx'},'13dependency wheels exact'
+              before,after=(v['source']['files_sha256']for v in (old,new))
+              allowed={'src/colocalization.cpp','src/simd_colocalization_avx2.cpp','tests/test_colocalization_native.cpp','coverage/contracts/colocalization-f64-finite-candidate.json'}
+              assert set(after)-set(before)=={'coverage/contracts/colocalization-f64-finite-candidate.json'} and not set(before)-set(after)
+              assert {name for name in after if before.get(name)!=after[name]}==allowed
+              a,b=(json.loads(Path('results',r+'-SDK-objects.json').read_bytes())for r in ('baseline','candidate'))
+              assert len(a)==len(b)==163 and a.keys()==b.keys()
+              assert {n for n in a if a[n]!=b[n]}=={'colocalization.cpp.o','simd_colocalization_avx2.cpp.o'}
+              assert old['runtime']['sdk_sha256'].keys()==new['runtime']['sdk_sha256'].keys()
+              assert [n for n in old['runtime']['sdk_sha256']if old['runtime']['sdk_sha256'][n]!=new['runtime']['sdk_sha256'][n]]==['lib/libskimagexx.a']
+              a,b=(v['runtime']['packages_sha256']['skimagexx']for v in (old,new))
+              assert a.keys()==b.keys()
+              changed=[n for n in a if a[n]!=b[n]]
+              assert len(changed)==1 and changed[0].startswith('_core.')and changed[0].endswith('.so')
+              Path('results/source-delta.json').write_text(json.dumps({n:[before.get(n),after.get(n)]for n in sorted(allowed)},indent=2)+'\n')
+          PY
+            python -m venv "$RUNNER_TEMP/env-$role"
+            "$RUNNER_TEMP/env-$role/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links "snapshots/$role/build/prepared/wheels" -r "snapshots/$role/build/prepared/ci-artifacts/runtime-lock.txt" 2>&1 | tee "results/$role-offline-install.log"
+            "$RUNNER_TEMP/env-$role/bin/python" -m pip install --no-index --no-deps --only-binary=:all: results/benchmark-tool/threadpoolctl-3.6.0-py3-none-any.whl 2>&1 | tee "results/$role-benchmark-tool-install.log"
+            "$RUNNER_TEMP/env-$role/bin/python" "snapshots/$role/tools/ci_measurement_artifacts.py" verify --wheel-dir "snapshots/$role/build/prepared/wheels" --artifact "snapshots/$role/build/prepared/ci-artifacts/measurement.json" 2>&1 | tee "results/$role-original-identity.log"
+          done
+      - name: Freeze independent colocalization method and one CPU
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,inspect,json,os,runpy
+          from pathlib import Path
+          raw=Path('controller/coverage/contracts/colocalization-f64-finite-performance-v2.json').read_bytes().replace(b'\r\n',b'\n')
+          assert hashlib.sha256(raw).hexdigest()=='58456c457bde8ddcac907620bf4fb928b541fc689dd160f154039e9cadd4416c'
+          c=json.loads(raw)
+          driver=Path('controller/tools/colocalization_f64_measure.py')
+          assert hashlib.sha256(driver.read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='8a1d7cfbf38677516fa03e97a36ef256010fcadcdc2b06418eb932030eeb2a3e'
+          sampler=Path('controller/tools/montage_sustained.py')
+          assert hashlib.sha256(sampler.read_bytes().replace(b'\r\n',b'\n')).hexdigest()==c['measurement']['method_source_driver_sha256']
+          measure=runpy.run_path(str(sampler))['measure']
+          assert hashlib.sha256(inspect.getsource(measure).encode()).hexdigest()==c['measurement']['method_sha256']
+          assert os.environ['CANDIDATE_REVISION']==c['products']['candidate']['revision']
+          for role,key in (('baseline','A'),('candidate','B')):
+              selected=json.loads(Path('results',role+'-selection.json').read_bytes())
+              expected=c['products'][role]
+              assert selected['id']==expected['artifact'] and selected['digest']=='sha256:'+expected['sha256']
+              assert selected['workflow_run']['id']==expected['run'] and selected['workflow_run']['head_sha']==expected['revision']
+          permitted=sorted(os.sched_getaffinity(0));assert permitted
+          Path('results/protocol.json').write_bytes(raw)
+          Path('results/affinity.json').write_text(json.dumps(dict(permitted=permitted,cpu=permitted[0]))+'\n')
+          Path('results/controller.json').write_text(json.dumps(dict(revision=os.environ['GITHUB_SHA'],driver_sha256='8a1d7cfbf38677516fa03e97a36ef256010fcadcdc2b06418eb932030eeb2a3e',method_sha256=c['measurement']['method_sha256']))+'\n')
+          PY
+          cat > results/launch.py <<'PY'
+          import json,os,runpy,sys,traceback
+          from pathlib import Path
+          source,output,cpu,label,role=sys.argv[1:];source=Path(source).resolve();output=Path(output).resolve();cpu=int(cpu)
+          output.mkdir(parents=True,exist_ok=True);os.sched_setaffinity(0,{cpu});assert os.sched_getaffinity(0)=={cpu}
+          driver=Path(os.environ['GITHUB_WORKSPACE'])/'controller/tools/colocalization_f64_measure.py'
+          manifest=json.loads((source/'build/prepared/ci-artifacts/measurement.json').read_bytes())
+          products=[n for n,v in manifest['wheels'].items()if v['name']=='scikit-imagexx'];assert len(products)==1
+          initial=dict(status='STARTED',pid=os.getpid(),affinity=[cpu],pass_label=label,role=role)
+          (output/'process-before.json').write_text(json.dumps(initial)+'\n');failure=None
+          try:
+              sys.argv=[str(driver),'--source-root',str(source),'--protocol',str(output.parent/'protocol.json'),'--wheel',str(source/'build/prepared/wheels'/products[0]),'--pass-index',label.split('-')[0],'--output',str(output/'colocalization.json')]
+              runpy.run_path(str(driver),run_name='__main__');assert os.sched_getaffinity(0)=={cpu}
+          except BaseException as error:
+              failure=dict(type=type(error).__name__,text=str(error),traceback=traceback.format_exc());raise
+          finally:
+              (output/'process-after.json').write_text(json.dumps(dict(initial,status='FAILED'if failure else'COMPLETE',affinity_after=sorted(os.sched_getaffinity(0)),failure=failure))+'\n')
+          PY
+      - name: Measure four whole-public passes in fixed ABBA order
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          cpu=$(python -c 'import json;print(json.load(open("results/affinity.json"))["cpu"])')
+          failed=0
+          for pass in 1-baseline 2-candidate 3-candidate 4-baseline; do
+            role=${pass#*-}; py="$RUNNER_TEMP/env-$role/bin/python"; output="$GITHUB_WORKSPACE/results/$pass"
+            mkdir "$output"
+            cd "$GITHUB_WORKSPACE/snapshots/$role"
+            before=0
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json > "$output/identity-before.log" 2>&1 || before=$?
+            echo "$before" > "$output/identity-before-exit.txt"
+            status=125
+            if [ "$before" -eq 0 ]; then
+              status=0
+              "$py" "$GITHUB_WORKSPACE/results/launch.py" "$PWD" "$output" "$cpu" "$pass" "$role" > "$output/colocalization.log" 2>&1 || status=$?
+            fi
+            echo "$status" > "$output/benchmark-exit.txt"
+            after=0
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json > "$output/identity-after.log" 2>&1 || after=$?
+            echo "$after" > "$output/identity-after-exit.txt"
+            if [ "$before" -ne 0 ] || [ "$status" -ne 0 ] || [ "$after" -ne 0 ]; then failed=1; fi
+          done
+          exit "$failed"
+      - name: Validate all samples and apply only the frozen gates
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,json,runpy
+          from pathlib import Path
+          driver=runpy.run_path('controller/tools/colocalization_f64_measure.py')
+          contract=json.loads(Path('results/protocol.json').read_bytes());cpu=json.loads(Path('results/affinity.json').read_bytes())['cpu']
+          reports=[];pids=[]
+          for name in ('1-baseline','2-candidate','3-candidate','4-baseline'):
+              folder=Path('results',name);role=name.split('-',1)[1];source=Path('snapshots',role)
+              for kind in ('benchmark','identity-before','identity-after'):assert (folder/(kind+'-exit.txt')).read_text().strip()=='0',name
+              manifest_raw=(source/'build/prepared/ci-artifacts/measurement.json').read_bytes();manifest=json.loads(manifest_raw)
+              identity=dict(status='verify',revision=manifest['source']['revision'],wheel_count=14,artifact_sha256=hashlib.sha256(manifest_raw).hexdigest())
+              for when in ('before','after'):assert json.loads((folder/('identity-'+when+'.log')).read_bytes())==identity
+              before=json.loads((folder/'process-before.json').read_bytes());after=json.loads((folder/'process-after.json').read_bytes())
+              assert before['status']=='STARTED' and after['status']=='COMPLETE' and after['failure']is None
+              assert before['pass_label']==after['pass_label']==name and before['role']==after['role']==role
+              assert before['affinity']==after['affinity']==after['affinity_after']==[cpu]
+              assert before['pid']==after['pid'];pids.append(after['pid'])
+              report=json.loads((folder/'colocalization.json').read_bytes())
+              events=[json.loads(line)for line in (folder/'colocalization.batches.jsonl').read_text().splitlines()]
+              driver['validate_report'](report,events,contract,int(name[0]))
+              meta=report['metadata'];fingerprint=runpy.run_path(str(source/'benchmarks/provenance.py'))['source_fingerprint'](source)
+              assert meta['source_before']==meta['source_after']==fingerprint
+              assert meta['python']==manifest['runtime']['python'] and meta['numpy']=='1.24.4' and meta['scipy']=='1.15.3' and meta['reference']=='0.26.0'
+              cores=[v for n,v in manifest['runtime']['packages_sha256']['skimagexx'].items()if n.endswith('.so')]
+              assert len(cores)==1 and meta['core_sha256']==cores[0] and meta['avx2']is True
+              assert meta['driver_sha256']=='8a1d7cfbf38677516fa03e97a36ef256010fcadcdc2b06418eb932030eeb2a3e' and meta['fallback_enabled']is False
+              reports.append(report)
+          assert len(set(pids))==4
+          for i in range(21):
+              baseline=reports[0]['checks'][i]
+              for report in reports:
+                  for key in ('input','reference','reference_warnings','reference_error','current','current_warnings','current_error','native_witness','admitted_stage_returns','provider_frontier'):
+                      assert report['checks'][i][key]==baseline[key],(i,key)
+          summary=driver['compare'](reports,contract)
+          summary.update(controller=json.loads(Path('results/controller.json').read_bytes()),pids=pids,affinity=[cpu],all_identities_and_parity_pass=True)
+          Path('results/comparison.json').write_text(json.dumps(summary,indent=2)+'\n')
+          print(json.dumps({k:v for k,v in summary.items()if k!='rows'},indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: colocalization-f64-same-host-raw
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error

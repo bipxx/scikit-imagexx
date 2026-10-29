@@ -1,0 +1,670 @@
+{
+  "schema": "colocalization-f64-finite-performance-v1",
+  "status": "SEALED_BEFORE_ANY_NEW_PERFORMANCE_TIMING",
+  "created_utc": "2026-10-29T00:52:00.194506+00:00",
+  "deadline_utc": "2026-10-29T02:52:00.194506+00:00",
+  "variant_limit": 1,
+  "automatic_reruns": 0,
+  "scope": "One minimum Linux whole-public one-thread comparison. No full-library, other-profile or isolated finite-scan causal claim.",
+  "products": {
+    "baseline": {
+      "revision": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "run": 40778508940,
+      "artifact": 12855199919,
+      "sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96",
+      "wheel_files": 176,
+      "sdk_files": 83,
+      "image_apis": 247,
+      "metadata_apis": 3
+    },
+    "candidate": {
+      "revision": "d496dd179addc03ad13df30f6df4dde4f2b64328",
+      "status": "PRIVATE_CORRECTNESS_VALIDATED_NOT_GENUINELY_PREPARED",
+      "preparation": "Root must dispatch one genuine minimum prepare-only product after review; authenticate exact run/artifact/digest before timing. No local overlay as measured product."
+    }
+  },
+  "allowed_product_source_delta": [
+    "src/colocalization.cpp",
+    "src/simd_colocalization_avx2.cpp",
+    "tests/test_colocalization_native.cpp",
+    "coverage/contracts/colocalization-f64-finite-candidate.json"
+  ],
+  "product_source_blob_sha256": {
+    "src/colocalization.cpp": {
+      "baseline": "d72431ba71885997d2c43368bea75ce713b2a62b6b3e1be06ff52ad45145508f",
+      "candidate": "24f82aa1cf608390b71c656133440e9c28429809a38c41a1b27cc345e14e6a11"
+    },
+    "src/simd_colocalization_avx2.cpp": {
+      "baseline": "b47e814306d3964017f19727a310ba5e2736eb351ab3cc302d26235ea7c58d68",
+      "candidate": "a6252566e0101367b561783d5889e9841d95b30e90921b3c4593b355794ba93e"
+    },
+    "tests/test_colocalization_native.cpp": {
+      "baseline": "025fac90d0e64aefc282e3e0e40090136d4431969c9e3ba93a9e4bbb0d2370b4",
+      "candidate": "8c7b84e3ec3da1dd1201ce9e3651079648968e5f2127c464024873959635020d"
+    },
+    "coverage/contracts/colocalization-f64-finite-candidate.json": {
+      "baseline": null,
+      "candidate": "690fee42e62e99bf8230b20d11d92653495c85029fa9bcc9ec738afda60372e0"
+    }
+  },
+  "correctness_handoff": {
+    "path": "build/worktrees/colocalization-f64-finite-v1/build/native-v1/handoff.json",
+    "sha256": "c780ddaac407575bd7d17f6334f553ba79ebd590c8a06dce77f2ae63aa6ff33b",
+    "native_modes": 6,
+    "public_checks": 2180,
+    "saved_corpus_executions": 2144
+  },
+  "case_specs": [
+    {
+      "id": "measure.intersection_coeff/future/tiny",
+      "api": "measure.intersection_coeff",
+      "family": "colocalization",
+      "tier": "tiny",
+      "dtype": "uint8",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "intersection_coeff/future/tiny",
+        "api": "intersection_coeff",
+        "group": "future",
+        "name": "tiny",
+        "shape": [
+          32,
+          32
+        ],
+        "layout": "C",
+        "dtype": "uint8",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.intersection_coeff/future/cache",
+      "api": "measure.intersection_coeff",
+      "family": "colocalization",
+      "tier": "cache",
+      "dtype": "uint8",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "intersection_coeff/future/cache",
+        "api": "intersection_coeff",
+        "group": "future",
+        "name": "cache",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "C",
+        "dtype": "uint8",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.intersection_coeff/future/memory",
+      "api": "measure.intersection_coeff",
+      "family": "colocalization",
+      "tier": "memory",
+      "dtype": "uint8",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "intersection_coeff/future/memory",
+        "api": "intersection_coeff",
+        "group": "future",
+        "name": "memory",
+        "shape": [
+          1024,
+          1024
+        ],
+        "layout": "C",
+        "dtype": "uint8",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.intersection_coeff/future/volume",
+      "api": "measure.intersection_coeff",
+      "family": "colocalization",
+      "tier": "volume",
+      "dtype": "uint8",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "intersection_coeff/future/volume",
+        "api": "intersection_coeff",
+        "group": "future",
+        "name": "volume",
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "layout": "C",
+        "dtype": "uint8",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.intersection_coeff/future/stepped",
+      "api": "measure.intersection_coeff",
+      "family": "colocalization",
+      "tier": "stepped",
+      "dtype": "uint8",
+      "layout": "step",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "intersection_coeff/future/stepped",
+        "api": "intersection_coeff",
+        "group": "future",
+        "name": "stepped",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "step",
+        "dtype": "uint8",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.intersection_coeff/future/masked",
+      "api": "measure.intersection_coeff",
+      "family": "colocalization",
+      "tier": "masked",
+      "dtype": "uint8",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "intersection_coeff/future/masked",
+        "api": "intersection_coeff",
+        "group": "future",
+        "name": "masked",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "C",
+        "dtype": "uint8",
+        "policy": "default",
+        "trace": false,
+        "roi": true
+      }
+    },
+    {
+      "id": "measure.manders_coloc_coeff/future/tiny",
+      "api": "measure.manders_coloc_coeff",
+      "family": "colocalization",
+      "tier": "tiny",
+      "dtype": "float32",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_coloc_coeff/future/tiny",
+        "api": "manders_coloc_coeff",
+        "group": "future",
+        "name": "tiny",
+        "shape": [
+          32,
+          32
+        ],
+        "layout": "C",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_coloc_coeff/future/cache",
+      "api": "measure.manders_coloc_coeff",
+      "family": "colocalization",
+      "tier": "cache",
+      "dtype": "float32",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_coloc_coeff/future/cache",
+        "api": "manders_coloc_coeff",
+        "group": "future",
+        "name": "cache",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "C",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_coloc_coeff/future/memory",
+      "api": "measure.manders_coloc_coeff",
+      "family": "colocalization",
+      "tier": "memory",
+      "dtype": "float64",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_coloc_coeff/future/memory",
+        "api": "manders_coloc_coeff",
+        "group": "future",
+        "name": "memory",
+        "shape": [
+          1024,
+          1024
+        ],
+        "layout": "C",
+        "dtype": "float64",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_coloc_coeff/future/volume",
+      "api": "measure.manders_coloc_coeff",
+      "family": "colocalization",
+      "tier": "volume",
+      "dtype": "float64",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_coloc_coeff/future/volume",
+        "api": "manders_coloc_coeff",
+        "group": "future",
+        "name": "volume",
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "layout": "C",
+        "dtype": "float64",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_coloc_coeff/future/stepped",
+      "api": "measure.manders_coloc_coeff",
+      "family": "colocalization",
+      "tier": "stepped",
+      "dtype": "float32",
+      "layout": "step",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_coloc_coeff/future/stepped",
+        "api": "manders_coloc_coeff",
+        "group": "future",
+        "name": "stepped",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "step",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_coloc_coeff/future/masked",
+      "api": "measure.manders_coloc_coeff",
+      "family": "colocalization",
+      "tier": "masked",
+      "dtype": "float32",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_coloc_coeff/future/masked",
+        "api": "manders_coloc_coeff",
+        "group": "future",
+        "name": "masked",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "C",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": true
+      }
+    },
+    {
+      "id": "measure.manders_overlap_coeff/future/tiny",
+      "api": "measure.manders_overlap_coeff",
+      "family": "colocalization",
+      "tier": "tiny",
+      "dtype": "float32",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_overlap_coeff/future/tiny",
+        "api": "manders_overlap_coeff",
+        "group": "future",
+        "name": "tiny",
+        "shape": [
+          32,
+          32
+        ],
+        "layout": "C",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_overlap_coeff/future/cache",
+      "api": "measure.manders_overlap_coeff",
+      "family": "colocalization",
+      "tier": "cache",
+      "dtype": "float32",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_overlap_coeff/future/cache",
+        "api": "manders_overlap_coeff",
+        "group": "future",
+        "name": "cache",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "C",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_overlap_coeff/future/memory",
+      "api": "measure.manders_overlap_coeff",
+      "family": "colocalization",
+      "tier": "memory",
+      "dtype": "float64",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_overlap_coeff/future/memory",
+        "api": "manders_overlap_coeff",
+        "group": "future",
+        "name": "memory",
+        "shape": [
+          1024,
+          1024
+        ],
+        "layout": "C",
+        "dtype": "float64",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_overlap_coeff/future/volume",
+      "api": "measure.manders_overlap_coeff",
+      "family": "colocalization",
+      "tier": "volume",
+      "dtype": "float64",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_overlap_coeff/future/volume",
+        "api": "manders_overlap_coeff",
+        "group": "future",
+        "name": "volume",
+        "shape": [
+          64,
+          64,
+          64
+        ],
+        "layout": "C",
+        "dtype": "float64",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_overlap_coeff/future/stepped",
+      "api": "measure.manders_overlap_coeff",
+      "family": "colocalization",
+      "tier": "stepped",
+      "dtype": "float32",
+      "layout": "step",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_overlap_coeff/future/stepped",
+        "api": "manders_overlap_coeff",
+        "group": "future",
+        "name": "stepped",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "step",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_overlap_coeff/future/masked",
+      "api": "measure.manders_overlap_coeff",
+      "family": "colocalization",
+      "tier": "masked",
+      "dtype": "float32",
+      "layout": "C",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_overlap_coeff/future/masked",
+        "api": "manders_overlap_coeff",
+        "group": "future",
+        "name": "masked",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "C",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": true
+      }
+    },
+    {
+      "id": "measure.intersection_coeff/future/cache-F",
+      "api": "measure.intersection_coeff",
+      "family": "colocalization",
+      "tier": "cache",
+      "dtype": "uint8",
+      "layout": "F",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "intersection_coeff/future/cache-F",
+        "api": "intersection_coeff",
+        "group": "future",
+        "name": "cache",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "F",
+        "dtype": "uint8",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_coloc_coeff/future/cache-F",
+      "api": "measure.manders_coloc_coeff",
+      "family": "colocalization",
+      "tier": "cache",
+      "dtype": "float32",
+      "layout": "F",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_coloc_coeff/future/cache-F",
+        "api": "manders_coloc_coeff",
+        "group": "future",
+        "name": "cache",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "F",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    },
+    {
+      "id": "measure.manders_overlap_coeff/future/cache-F",
+      "api": "measure.manders_overlap_coeff",
+      "family": "colocalization",
+      "tier": "cache",
+      "dtype": "float32",
+      "layout": "F",
+      "work_kind": "array_metric",
+      "fixture": {
+        "id": "manders_overlap_coeff/future/cache-F",
+        "api": "manders_overlap_coeff",
+        "group": "future",
+        "name": "cache",
+        "shape": [
+          256,
+          256
+        ],
+        "layout": "F",
+        "dtype": "float32",
+        "policy": "default",
+        "trace": false,
+        "roi": false
+      }
+    }
+  ],
+  "case_spec_sha256": "73c4a40646f8302a8fa8cded460e09de3baea3d3246641fd7948c9086b4019ed",
+  "target_ids": [
+    "measure.manders_coloc_coeff/future/memory",
+    "measure.manders_coloc_coeff/future/volume",
+    "measure.manders_overlap_coeff/future/memory",
+    "measure.manders_overlap_coeff/future/volume"
+  ],
+  "control_ids": [
+    "measure.intersection_coeff/future/tiny",
+    "measure.intersection_coeff/future/cache",
+    "measure.intersection_coeff/future/memory",
+    "measure.intersection_coeff/future/volume",
+    "measure.intersection_coeff/future/stepped",
+    "measure.intersection_coeff/future/masked",
+    "measure.manders_coloc_coeff/future/tiny",
+    "measure.manders_coloc_coeff/future/cache",
+    "measure.manders_coloc_coeff/future/stepped",
+    "measure.manders_coloc_coeff/future/masked",
+    "measure.manders_overlap_coeff/future/tiny",
+    "measure.manders_overlap_coeff/future/cache",
+    "measure.manders_overlap_coeff/future/stepped",
+    "measure.manders_overlap_coeff/future/masked",
+    "measure.intersection_coeff/future/cache-F",
+    "measure.manders_coloc_coeff/future/cache-F",
+    "measure.manders_overlap_coeff/future/cache-F"
+  ],
+  "preserved_original_wins": [
+    "measure.intersection_coeff/future/tiny",
+    "measure.intersection_coeff/future/cache",
+    "measure.intersection_coeff/future/memory",
+    "measure.intersection_coeff/future/volume",
+    "measure.intersection_coeff/future/cache-F"
+  ],
+  "gate": {
+    "each_target_each_candidate_pass_direct_gte": 1.05,
+    "each_target_each_candidate_pass_normalized_gte": 1.05,
+    "each_control_balanced_direct_gte": 0.97,
+    "each_control_balanced_normalized_gte": 0.97,
+    "each_preserved_original_win_each_candidate_pass_gt": 1.0,
+    "source_parity_FP_workers_deadline_required": true
+  },
+  "metrics": {
+    "balanced": "Geometric means of A1/A4 or B2/B3 median public-call latencies/ratios.",
+    "direct": "GM(A1.cpp_ms,A4.cpp_ms)/candidate.cpp_ms for each repeated target; GM(A1.cpp_ms,A4.cpp_ms)/GM(B2.cpp_ms,B3.cpp_ms) for balanced controls.",
+    "normalized": "Candidate(original_ms/cpp_ms)/GM(A1.original_ms/A1.cpp_ms,A4.original_ms/A4.cpp_ms); geometric mean of candidate ratios for balanced controls.",
+    "original": "original_ms/cpp_ms; require >1 for the five preserved original wins in both B passes.",
+    "policy": "No worst-pair/noise/null gating. All fixed gates must pass; retain every loss even if aggregate improves."
+  },
+  "measurement": {
+    "order": [
+      "A",
+      "B",
+      "B",
+      "A"
+    ],
+    "threads": 1,
+    "reference_pools": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_calibration_min_ms_per_function": 250,
+    "accepted_samples": 1176,
+    "cases_per_pass": 21,
+    "sampling": "Reuse exact reviewed sustained measure function; each accepted batch>=100ms, shorter attempts retained, no sleeps/cap1000, alternating(round+case+pass)%2.",
+    "method_path": "tools/montage_sustained.py::measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "method_source_driver_sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "timed_boundary": "Complete unchanged public APIs including orchestration, provider work, allocation and explicit output destruction; fixture generation/prechecks excluded.",
+    "affinity": "One initially permitted CPU fixed before scientific imports in all four independent processes.",
+    "fresh_host": "Two offline genuine-product runtimes with identical13 dependency wheels. No builds/pytest on timing host.",
+    "transport": "Minimally adapt authenticated artifact-only ABBA transport. Root sole POST after independent review.",
+    "deadline": "Separate two-hour clock above. No extension or automatic rerun."
+  },
+  "validation": {
+    "helpers_canonical_lf_sha256": {
+      "benchmarks/phase3_public.py": "3b8f959e80fc4c004487c22cf71662848f2a2fa370dfbe1058b863be2f4416d1",
+      "tests/colocalization_cases.py": "adbee581546e2031377853393b354be0dff41731eac920eb839c37b6c9f9db59",
+      "tests/footprint_shapes_cases.py": "e1ce05c037c5d6f34233908fd6f802c5d8617b3c0e150fa4ecb6ed4e495f0439",
+      "benchmarks/resize.py": "8f1937b80dd898a9c6140e2f1ad0527e3e4aad0e30df7381e706c5e9fb0a0e41",
+      "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+    },
+    "public_checks": "Reuse unchanged _check_case and _native_probe with actual core builtins, exact output snapshot/warnings/errors/input bytes, NumPy policy/handler/buffer and one-thread pools. Restore traps/profiling before timing.",
+    "identities": "Authenticate full source/wheel/runtime/SDK/core before and after every pass, all13 dependency wheels exact; API/provider/FP boundaries fixed.",
+    "samples": "Flush before/after batch and returned timing journals outside clocks, retain partial failures; reconcile all1176 raw samples/medians and84 returned records.",
+    "driver": "New external driver hash must be honestly recorded and frozen before root timing POST. Existing helper/case files remain unchanged; no monkeypatch of old measure.",
+    "untimed_originals": "Fresh original verification in genuine timing workflow permitted; no new frozen parity regeneration.",
+    "controls": "Ten f32 Manders workloads including C/F/step, bool MCC mask inputs and ROI; seven uint8 intersection binary controls C/F/step/masked. No added benchmark cases."
+  },
+  "historical_evidence": {
+    "report": "benchmarks/phase3-butterworth-legacy-same-host.md",
+    "raw_archive": "benchmarks/phase3-butterworth-legacy-same-host.zip",
+    "raw_archive_sha256": "715356006f7d2c6ecd65ff31d91d34c7d94e29a53ebe3674a68e1b89cbbcc2b0",
+    "preserved_win_passes": [
+      "1-baseline",
+      "2-candidate",
+      "3-candidate",
+      "4-baseline"
+    ],
+    "remaining_original_losses": 16,
+    "whole_call_memory_ms": {
+      "MCC": 18.425443803,
+      "MOC": 40.170018911
+    },
+    "caution": "Historical whole-call costs only; no claim that nine/four finite scans explain measured time or new speedup."
+  }
+}
