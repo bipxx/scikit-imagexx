@@ -633,3 +633,5 @@ benchmarks/montage-sustained-same-host.json -text
 
 benchmarks/colocalization-f64-same-host.json -text
 coverage/contracts/draw-coordinates.json -text
+
+benchmarks/montage-word-copy-same-host.json -text
