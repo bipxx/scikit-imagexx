@@ -1,10 +1,10 @@
 """Owned grid labels after the literal grid and output-allocation providers."""
 import numpy as np
-from skimage.util._regular_grid import regular_grid
 from . import _core
 
 
 def regular_seeds(ar_shape, n_points, dtype=int):
+    from skimage.util._regular_grid import regular_grid
     # scikit-image0.26 _regular_grid.py, BSD-3-Clause; retained upstream license
     # in third_party/scikit-image-LICENSE.txt. Grid errors precede allocation
     # errors. Keep calloc-backed zero initialization for sparse output grids.
