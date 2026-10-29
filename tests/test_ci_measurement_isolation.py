@@ -393,7 +393,10 @@ def test_derived_benchmark_has_five_actual_tensor_cases():
     family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
                   and any(isinstance(t, ast.Name) and t.id == 'DERIVED_MOMENTS_FUNCTIONS' for t in n.targets))
     dtype_function = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'native_dtypes')
-    namespace = {'LEVEL_SET_FUNCTIONS':level_set_family(source),
+    namespace = {'DRAW_COORDINATE_FUNCTIONS':next(ast.literal_eval(n.value) for n in source.body
+                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
+                     and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
+                 'LEVEL_SET_FUNCTIONS':level_set_family(source),
                  'ROLLING_KERNEL_FUNCTIONS':next(ast.literal_eval(n.value) for n in source.body
                      if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
                      and t.id == 'ROLLING_KERNEL_FUNCTIONS' for t in n.targets))}
@@ -446,7 +449,10 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
     def import_numpy(name, *args, **kwargs):
         assert name == 'numpy'
         return SimpleNamespace(empty=lambda shape, dtype: Tensor(shape, dtype))
-    namespace = dict(LEVEL_SET_FUNCTIONS=level_set_family(tree), DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
+    namespace = dict(DRAW_COORDINATE_FUNCTIONS=next(ast.literal_eval(n.value) for n in tree.body
+                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
+                     and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
+                     LEVEL_SET_FUNCTIONS=level_set_family(tree), DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
                      COORDS_MOMENTS_FUNCTIONS=coords_family,
                      __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[function], type_ignores=[]), '<derived preparer>', 'exec'), namespace)
@@ -478,7 +484,10 @@ def test_coordinate_default_preparation_uses_actual_points(api, shape):
     def import_numpy(name, *args, **kwargs):
         assert name == 'numpy'
         return SimpleNamespace(empty=lambda shape, dtype: Points(shape, dtype))
-    namespace = dict(LEVEL_SET_FUNCTIONS=level_set_family(tree), __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
+    namespace = dict(DRAW_COORDINATE_FUNCTIONS=next(ast.literal_eval(n.value) for n in tree.body
+                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
+                     and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
+                     LEVEL_SET_FUNCTIONS=level_set_family(tree), __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[family, function], type_ignores=[]), '<coordinate preparer>', 'exec'), namespace)
     (points,), options = namespace['default_call'](api, image)
     assert points is not image and points.shape == (shape[0], 2) and points.dtype is descriptor
