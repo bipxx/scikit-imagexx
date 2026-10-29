@@ -91,6 +91,8 @@ jobs:
                   assert re.fullmatch('[0-9a-f]{64}', os.environ['CANDIDATE_ARTIFACT_SHA256'])
                   assert str(item['id']) == os.environ['CANDIDATE_ARTIFACT_ID']
                   assert item['digest'] == 'sha256:' + os.environ['CANDIDATE_ARTIFACT_SHA256']
+                  product=json.loads(Path('controller/coverage/contracts/montage-word-copy-measurement.json').read_bytes())['products']['B']
+                  assert item['id']==product['artifact'] and item['digest']=='sha256:'+product['sha256']
               Path('results', role + '-selection.json').write_text(json.dumps(item, indent=2) + '\n')
           PY
       - uses: actions/checkout@v4
@@ -133,6 +135,11 @@ jobs:
           manifest = json.loads((prepared / 'measurement.json').read_bytes())
           assert manifest['schema'] == 'ci-offline-measurement-v1'
           assert manifest['source']['revision'] == os.environ[role.upper() + '_REVISION']
+          if role == 'candidate':
+              product=json.loads(Path('controller/coverage/contracts/montage-word-copy-measurement.json').read_bytes())['products']['B']
+              assert hashlib.sha256((prepared / 'measurement.json').read_bytes()).hexdigest()==product['manifest_sha256']
+              cores=[v for n,v in manifest['runtime']['packages_sha256']['skimagexx'].items()if n.startswith('_core.')and n.endswith('.so')]
+              assert cores==[product['core_sha256']]
           source = Path('snapshots',role)
           for name,pin in manifest['source']['files_sha256'].items():
               assert hashlib.sha256((source/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == pin, name
@@ -243,7 +250,7 @@ jobs:
           import hashlib,json,os
           from pathlib import Path
           path=Path('controller/coverage/contracts/montage-word-copy-measurement.json')
-          assert hashlib.sha256(path.read_bytes()).hexdigest()=='e8ab987745645414b14038955fe91732b0cb1070b828006c8b7c9a9830b65211'
+          assert hashlib.sha256(path.read_bytes()).hexdigest()=='beaefb89d5c826cb3a9a577c3cbeb97b4834afa740e4bf5c330a3b1e563096fd'
           c=json.loads(path.read_bytes())
           driver=Path('controller/tools/montage_sustained.py')
           assert hashlib.sha256(driver.read_bytes()).hexdigest()==c['driver_sha256']
@@ -388,7 +395,7 @@ jobs:
           from datetime import datetime,timezone
           helper=runpy.run_path('controller/tools/montage_row_owned_comparison.py')['compare']
           summary=helper([dict(results=list(report.values())) for report in reports],contract,datetime.now(timezone.utc).isoformat())
-          summary.update(producer_revision='9e1edffc12a6c290f521194fcb2386753f8845f8',baseline_revision='4f69eba77a262056459eaab1e0a39e53610e9305',pids=pids,affinity=[cpu],all_identity_and_oracle_checks_pass=True,sealed_contract_sha256='e8ab987745645414b14038955fe91732b0cb1070b828006c8b7c9a9830b65211')
+          summary.update(producer_revision='9e1edffc12a6c290f521194fcb2386753f8845f8',baseline_revision='4f69eba77a262056459eaab1e0a39e53610e9305',pids=pids,affinity=[cpu],all_identity_and_oracle_checks_pass=True,sealed_contract_sha256='beaefb89d5c826cb3a9a577c3cbeb97b4834afa740e4bf5c330a3b1e563096fd')
           summary['controller']=json.loads(Path('results/controller.json').read_bytes())
           summary['FP_state_evidence']='Unchanged frozen harness asserts NumPy policy/handler/buffer and global workers before and after every measured case; this harness does not export separate FP values.'
           Path('results/comparison.json').write_text(json.dumps(summary,indent=2)+'\n')

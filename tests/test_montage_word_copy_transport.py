@@ -72,3 +72,32 @@ def test_inline_transport_is_syntax_valid_artifact_only_and_keeps_journals():
     assert "if: always()" in text and "assert len(set(pids))==8" in text
     assert "all13 runtime dependency wheels exact; no normalization authorized" in text
     assert "['montage.cpp.o']" in text and "{'simd_montage_avx2.cpp.o'}" in text
+
+
+
+def test_admitted_candidate_pins_are_concrete_and_transport_enforced():
+    c=json.loads(PROTOCOL.read_bytes());b=c['products']['B'];text=WORKFLOW.read_text()
+    assert b['run']==40810420960 and b['artifact']==12870128574
+    assert b['sha256']=='57b947a2a0e5c840fd30d0d34ddb22cbc7488be24e82f480448793e9803cf333'
+    assert b['core_sha256']=='6b1a17576756e58f76c41a8c6d9e5f2255a972b24676b3b5e85f4f14aaccc023'
+    assert b['manifest_sha256']=='15fafa44a107e70185d172bd6ead08eda2cf600c20b956e867a3d843d04440e9'
+    assert 'TBD_' not in PROTOCOL.read_text() and 'TBD_' not in text
+    assert "cores==[product['core_sha256']]" in text
+    assert "item['id']==product['artifact'] and item['digest']=='sha256:'+product['sha256']" in text
+
+
+@pytest.mark.parametrize('fault',(None,'manifest','core'))
+def test_actual_manifest_core_guard_rejects_unadmitted_identity(tmp_path,monkeypatch,fault):
+    text=WORKFLOW.read_text();start=text.index("          if role == 'candidate':\n              product=")
+    end=text.index("          source = Path('snapshots',role)",start)
+    code='\n'.join(line[10:]for line in text[start:end].splitlines())
+    manifest={'runtime':{'packages_sha256':{'skimagexx':{'_core.synthetic.so':'expected-core'}}}}
+    raw=json.dumps(manifest).encode();prepared=tmp_path/'prepared';prepared.mkdir();(prepared/'measurement.json').write_bytes(raw)
+    protocol={'products':{'B':{'core_sha256':'expected-core','manifest_sha256':hashlib.sha256(raw).hexdigest()}}}
+    target=tmp_path/'controller/coverage/contracts/montage-word-copy-measurement.json';target.parent.mkdir(parents=True);target.write_text(json.dumps(protocol))
+    if fault=='manifest':(prepared/'measurement.json').write_bytes(raw+b' ')
+    elif fault=='core':manifest['runtime']['packages_sha256']['skimagexx']['_core.synthetic.so']='foreign-core'
+    monkeypatch.chdir(tmp_path);ns=dict(role='candidate',json=json,Path=Path,hashlib=hashlib,manifest=manifest,prepared=prepared)
+    if fault:
+        with pytest.raises(AssertionError):exec(compile(code,'actual-inline-manifest-guard','exec'),ns)
+    else:exec(compile(code,'actual-inline-manifest-guard','exec'),ns)

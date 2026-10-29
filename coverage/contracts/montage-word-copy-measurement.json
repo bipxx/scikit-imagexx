@@ -64,8 +64,11 @@
       "role": "candidate",
       "revision": "9e1edffc12a6c290f521194fcb2386753f8845f8",
       "run": 40810420960,
-      "artifact": "TBD_ROOT_AUTHENTICATED_ARTIFACT",
-      "sha256": "TBD_ROOT_AUTHENTICATED_SHA256"
+      "artifact": 12870128574,
+      "sha256": "57b947a2a0e5c840fd30d0d34ddb22cbc7488be24e82f480448793e9803cf333",
+      "core_sha256": "6b1a17576756e58f76c41a8c6d9e5f2255a972b24676b3b5e85f4f14aaccc023",
+      "manifest_sha256": "15fafa44a107e70185d172bd6ead08eda2cf600c20b956e867a3d843d04440e9",
+      "source_fingerprint": "5e1c8ba68b7e4af7032864b9aceea6e78521e9d08f4672aa93b37cdcf1fd0489"
     }
   },
   "acceptance_contract_sha256": "656682a6ab554547a0142749ce93877b7d39672f4dfb5f3efcde8c32b8c52fd2",
@@ -131,5 +134,10 @@
     "coverage/contracts/montage-word-copy-candidate.json": "e29f57fbdae3142d31389fe35d4ec54510ade4fdfd97a0d8fd5d9ad651c5ed52"
   },
   "preparation_scope": "Genuine CI minimum products only, 176 product members /83 SDK,247 images+3metadata;13 exact dependency wheels. Main f1 lazy wrappers and current251 drawing source are excluded.",
-  "preflight_required": "Root/B must authenticate candidate product and execute untimed first-feature checks before timing dispatch; no timers or whole-product promotion from that preflight."
+  "preflight_required": "Root/B must authenticate candidate product and execute untimed first-feature checks before timing dispatch; no timers or whole-product promotion from that preflight.",
+  "candidate_preparation_review": {
+    "path": "build/montage-word-copy-prepare-v1/final-review.json",
+    "sha256": "09245aa767617118b66039044379a8fededa74015b13dd592705eeeecbff2edf",
+    "scope": "Preparation only; SDK/untimed preflight and root timing authorization are independent prerequisites."
+  }
 }
