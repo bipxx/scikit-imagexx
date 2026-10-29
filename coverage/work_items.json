@@ -33925,6 +33925,85 @@
         }
       },
       "scope": "Distinct v2 private/closed unresolved. Incomplete-u8 direct1.355156165/normalized1.348046172; all fixed gates pass but Fortran normalized null/worst separation fails. No acceptance/source merge or four-profile qualification credit. Original v1 outcome and all prior decisions stay immutable."
+    },
+    {
+      "id": "montage-sustained-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "source_sha": "b5bd1df7e27099e528fb4c7db67e2cb0bf35abae",
+      "controller_sha": "d1b2953cfb595731db847579b7c63fc7a6bcd9cd",
+      "state": "measured",
+      "closed": true,
+      "decision": "UNRESOLVED_MEASUREMENT",
+      "source_merged": false,
+      "owns": [
+        "tools/montage_sustained.py",
+        "coverage/contracts/montage-sustained-measurement.json",
+        ".github/workflows/montage-sustained-same-host.yml"
+      ],
+      "depends_on": [
+        "montage-shared",
+        "montage-row-owned-v2-optimization"
+      ],
+      "dependency_requirements": {
+        "montage-shared": {
+          "evidence_scope": "public_native"
+        },
+        "montage-row-owned-v2-optimization": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "b5bd1df7e27099e528fb4c7db67e2cb0bf35abae",
+          "manifest": {
+            "path": "build/montage-sustained-same-host-v1/handoff.json",
+            "sha256": "09f6994bf3233a54abc0bbfc27ecd7dcb57686f4dc129735747973a755f411af"
+          },
+          "raw_samples": 1008,
+          "acceptance_pass": false
+        }
+      },
+      "performance": {
+        "status": "UNRESOLVED_MEASUREMENT",
+        "run": 40795200735,
+        "artifact": 12863532173,
+        "publication": "benchmarks/montage-sustained-same-host.json",
+        "fixed_gates_pass": true,
+        "unresolved_metrics": [
+          {
+            "case_id": "gray-small-u8",
+            "metric": "direct",
+            "worst_gain": 0.9485251631506202
+          },
+          {
+            "case_id": "rgb-padded-u8",
+            "metric": "direct",
+            "worst_gain": 0.8604009317570288
+          },
+          {
+            "case_id": "rgb-padded-u8",
+            "metric": "normalized",
+            "worst_gain": 0.891322398949133
+          },
+          {
+            "case_id": "gray-fortran-f64",
+            "metric": "normalized",
+            "worst_gain": 0.695140487540961
+          }
+        ],
+        "root_recomputation": {
+          "path": "build/montage-sustained-same-host-v1/root-recomputation.json",
+          "sha256": "38e2f30e85371607c9894a9c871f9208d38d5504266d5481ef53331f222d52c3"
+        }
+      },
+      "scope": "Separate sustained sampler on unchanged247 products;1008>=100ms accepted batches,144warmgroups>=250ms,72returnedrecords checked. Same deadline/gates, oldv1/v2 unresolved outcomes unchanged. New uncertainty blocks merge; no further campaign/variant/retry or qualification credit."
     }
   ],
   "unassigned_inventoried_apis": [
