@@ -1,10 +1,11 @@
 """Inert protocol/driver/transport checks: no scientific imports or timing."""
-import ast,copy,hashlib,importlib.util,json,statistics,unittest
+import ast,copy,hashlib,importlib.util,json,statistics,unittest,tempfile,sys
+from types import SimpleNamespace
 from pathlib import Path
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1]
 DRIVER=ROOT/'tools/colocalization_f64_measure.py'
-PROTOCOL=ROOT/'coverage/contracts/colocalization-f64-finite-performance.json'
+PROTOCOL=ROOT/'coverage/contracts/colocalization-f64-finite-performance-v2.json'
 WORKFLOW=ROOT/'.github/workflows/colocalization-f64-same-host.yml'
 
 
@@ -32,7 +33,8 @@ def fake_report(contract,pass_index=1):
         events.append(dict(event='case_validated',case_index=i))
         checks.append(dict(id=case,status='passed',reference={},current={},reference_warnings=[],current_warnings=[],reference_error=None,current_error=None,native_witness=dict(forward_attempts=0,c_returns=['coloc_sum']),admitted_stage_returns=1))
     events.append(dict(event='driver_complete',cases=21))
-    meta=dict(threads=1,repeat=7,target_ms=100,raw_samples=294,pass_index=pass_index,method_sha256=c['measurement']['method_sha256'],case_spec_sha256=c['case_spec_sha256'],helpers_sha256=c['validation']['helpers_canonical_lf_sha256'],protocol_sha256='4f455ef6489dc7207fa2982bdd1c0b7ca3f2412f225a7d0a5f12c1a6ca731885',completed_utc=c['created_utc'])
+    meta=dict(threads=1,repeat=7,target_ms=100,raw_samples=294,pass_index=pass_index,method_sha256=c['measurement']['method_sha256'],case_spec_sha256=c['case_spec_sha256'],helpers_sha256=c['validation']['helpers_canonical_lf_sha256'],protocol_sha256='58456c457bde8ddcac907620bf4fb928b541fc689dd160f154039e9cadd4416c',completed_utc=c['created_utc'],benchmark_tool_before=dict(name='threadpoolctl',version='3.6.0',module_sha256=c['benchmark_tools']['threadpoolctl']['module_sha256'],wheel_sha256=c['benchmark_tools']['threadpoolctl']['sha256']))
+    meta['benchmark_tool_after']=meta['benchmark_tool_before']
     return dict(status='COMPLETE',metadata=meta,results=rows,checks=checks),events
 
 
@@ -41,13 +43,16 @@ class ColocPerformanceTests(unittest.TestCase):
 
     def test_exact_frozen_cases_helpers_products_and_clock(self):
         c=self.c
-        self.assertEqual(hashlib.sha256(PROTOCOL.read_bytes().replace(b'\r\n',b'\n')).hexdigest(),'4f455ef6489dc7207fa2982bdd1c0b7ca3f2412f225a7d0a5f12c1a6ca731885')
+        self.assertEqual(hashlib.sha256(PROTOCOL.read_bytes().replace(b'\r\n',b'\n')).hexdigest(),'58456c457bde8ddcac907620bf4fb928b541fc689dd160f154039e9cadd4416c')
         self.assertEqual(len(c['case_specs']),21);self.assertEqual(len(c['target_ids']),4);self.assertEqual(len(c['control_ids']),17);self.assertEqual(len(c['preserved_original_wins']),5)
         self.assertEqual(hashlib.sha256(json.dumps(c['case_specs'],sort_keys=True).encode()).hexdigest(),c['case_spec_sha256'])
         for name,pin in c['validation']['helpers_canonical_lf_sha256'].items():
             # Sparse packet includes both pure case factories and the unchanged main closure.
             if (ROOT/name).exists():self.assertEqual(hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),pin)
         self.assertEqual(c['measurement']['accepted_samples'],21*14*4)
+        self.assertEqual(c['benchmark_tools']['threadpoolctl']['sha256'],'43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb')
+        old=ROOT/c['supersedes_before_any_timing']['path']
+        self.assertEqual(hashlib.sha256(old.read_bytes().replace(b'\r\n',b'\n')).hexdigest(),c['supersedes_before_any_timing']['sha256'])
         self.assertEqual(c['variant_limit'],1);self.assertEqual(c['automatic_reruns'],0)
         self.assertEqual((self.m.datetime.fromisoformat(c['deadline_utc'])-self.m.datetime.fromisoformat(c['created_utc'])).total_seconds(),7200)
         self.assertEqual(c['products']['candidate']['revision'],'d496dd179addc03ad13df30f6df4dde4f2b64328')
@@ -93,18 +98,34 @@ class ColocPerformanceTests(unittest.TestCase):
         self.assertIn("report.update(status='FAILED'",text)
         self.assertFalse(any(isinstance(n,ast.Import)and any(a.name in ('numpy','scipy','skimage','skimagexx')for a in n.names)for n in tree.body))
 
+    def test_benchmark_tool_identity_and_unchanged_v1_gate_fields(self):
+        old=json.loads((ROOT/self.c['supersedes_before_any_timing']['path']).read_bytes())
+        for key in ('gate','target_ids','control_ids','preserved_original_wins','case_specs','case_spec_sha256','deadline_utc','created_utc','allowed_product_source_delta'):
+            self.assertEqual(self.c[key],old[key])
+        with tempfile.TemporaryDirectory()as tmp:
+            path=Path(tmp)/'threadpoolctl.py';path.write_bytes(b'fixed tool bytes')
+            c=copy.deepcopy(self.c);c['benchmark_tools']['threadpoolctl']['module_sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+            module=SimpleNamespace(__file__=str(path),__version__='3.6.0')
+            with patch.dict(sys.modules,threadpoolctl=module):
+                actual=self.m.tool_identity(c);self.assertEqual(actual['version'],'3.6.0')
+                module.__version__='3.5.0'
+                with self.assertRaises(AssertionError):self.m.tool_identity(c)
+
     def test_workflow_inline_python_pins_and_no_builds(self):
         text=WORKFLOW.read_text();lines=text.splitlines();parsed=0
         for i,line in enumerate(lines):
             if line.strip().endswith("python - <<'PY'")or line.strip()=="cat > results/launch.py <<'PY'":
                 end=lines.index('          PY',i+1);ast.parse('\n'.join(row[10:]for row in lines[i+1:end]));parsed+=1
-        self.assertEqual(parsed,5)
+        self.assertEqual(parsed,7)
         pin=hashlib.sha256(DRIVER.read_bytes().replace(b'\r\n',b'\n')).hexdigest();self.assertIn(pin,text)
         self.assertIn('1-baseline 2-candidate 3-candidate 4-baseline',text)
         self.assertIn("if: always()",text)
         for forbidden in ('cmake --build','g++','pytest','pip wheel','worst_pair','measurement_variance_rule'):
             self.assertNotIn(forbidden,text)
         self.assertIn("{'colocalization.cpp.o','simd_colocalization_avx2.cpp.o'}",text)
+        self.assertIn('needs: prepare-benchmark-tool',text)
+        self.assertIn('results/benchmark-tool/threadpoolctl-3.6.0-py3-none-any.whl',text)
+        self.assertIn("meta['driver_sha256']",text)
         self.assertIn("driver['validate_report']",text);self.assertIn("driver['compare']",text)
 
 

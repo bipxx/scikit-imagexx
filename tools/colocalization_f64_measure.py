@@ -16,7 +16,9 @@ def validate_report(report,events,contract,pass_index):
     assert meta['threads']==1 and meta['repeat']==7 and meta['target_ms']==100 and meta['raw_samples']==294 and meta['pass_index']==pass_index
     assert meta['method_sha256']==contract['measurement']['method_sha256'] and meta['case_spec_sha256']==contract['case_spec_sha256']
     assert meta['helpers_sha256']==contract['validation']['helpers_canonical_lf_sha256']
-    assert meta['protocol_sha256']=='4f455ef6489dc7207fa2982bdd1c0b7ca3f2412f225a7d0a5f12c1a6ca731885'
+    tool=contract['benchmark_tools']['threadpoolctl']
+    assert meta['benchmark_tool_before']==meta['benchmark_tool_after']==dict(name='threadpoolctl',version=tool['version'],module_sha256=tool['module_sha256'],wheel_sha256=tool['sha256'])
+    assert meta['protocol_sha256']=='58456c457bde8ddcac907620bf4fb928b541fc689dd160f154039e9cadd4416c'
     assert [r['id']for r in rows]==[r['id']for r in checks]==[r['id']for r in contract['case_specs']]
     assert all(c['status']=='passed'and c['reference']==c['current']and c['reference_warnings']==c['current_warnings']and c['reference_error']is None and c['current_error']is None for c in checks)
     assert all(c['native_witness']['forward_attempts']==0 and c['native_witness']['c_returns']and c['admitted_stage_returns']>0 for c in checks)
@@ -73,6 +75,15 @@ def compare(reports,contract):
     return dict(decision='KEEP'if all(gates.values())else'DISCARD',completed_utc=completed,gates=gates,raw_samples=1176,overall_direct=gm(r['direct']for r in rows),overall_normalized=gm(r['normalized']for r in rows),rows=rows,scope=contract['scope'],note='All source/identity/parity/FP/sample validation must pass before this comparison; no new noise/null gates.')
 
 
+def tool_identity(contract):
+    import threadpoolctl
+    expected=contract['benchmark_tools']['threadpoolctl']
+    path=Path(threadpoolctl.__file__)
+    actual=dict(name='threadpoolctl',version=threadpoolctl.__version__,module_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),wheel_sha256=expected['sha256'])
+    assert actual['version']==expected['version'] and actual['module_sha256']==expected['module_sha256']
+    return actual
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-root',type=Path,required=True)
@@ -82,7 +93,7 @@ def main():
     parser.add_argument('--pass-index',type=int,choices=range(1,5),required=True)
     args=parser.parse_args()
     root=args.source_root.resolve();raw=args.protocol.read_bytes();contract=json.loads(raw)
-    assert hashlib.sha256(raw).hexdigest()=='4f455ef6489dc7207fa2982bdd1c0b7ca3f2412f225a7d0a5f12c1a6ca731885'
+    assert hashlib.sha256(raw).hexdigest()=='58456c457bde8ddcac907620bf4fb928b541fc689dd160f154039e9cadd4416c'
     assert not args.output.exists() and not sys.flags.optimize
     for name,pin in contract['validation']['helpers_canonical_lf_sha256'].items():
         assert hashlib.sha256((root/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
@@ -102,6 +113,7 @@ def main():
     report=dict(status='STARTED',metadata=dict(driver_sha256=hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),protocol_sha256=hashlib.sha256(raw).hexdigest(),method_sha256=contract['measurement']['method_sha256'],helpers_sha256=contract['validation']['helpers_canonical_lf_sha256'],case_spec_sha256=contract['case_spec_sha256'],pass_index=args.pass_index,threads=1,repeat=7,target_ms=100,raw_samples=294,scope=contract['scope']),checks=[],results=[])
     def save():args.output.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     save();emit(dict(event='driver_started',metadata=report['metadata'],pid=os.getpid()))
+    report['metadata']['benchmark_tool_before']=tool_identity(contract);save()
     runtime=helpers._runtime();xx=runtime.xx
     previous_workers=xx.get_num_threads();previous_fallback=xx.set_fallback_enabled(False);xx.set_num_threads(1)
     try:
@@ -130,6 +142,8 @@ def main():
             assert helpers.source_fingerprint(root)==before and args.protocol.read_bytes()==raw
             assert helpers._verify_wheel(runtime,args.wheel)==wheel
             assert hashlib.sha256(core.read_bytes()).hexdigest()==core_sha
+            report['metadata']['benchmark_tool_after']=tool_identity(contract)
+            assert report['metadata']['benchmark_tool_after']==report['metadata']['benchmark_tool_before']
             report['metadata'].update(source_after=before,completed_utc=datetime.now(timezone.utc).isoformat())
             report['status']='COMPLETE';save();emit(dict(event='driver_complete',cases=21))
     except BaseException as error:
