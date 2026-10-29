@@ -19,7 +19,8 @@ struct MontageOutput { void* data; std::size_t rows,columns; };
 // axes are supported; null storage is permitted only when no word is accessed.
 // Caller snapshots workers >= 1 once. No validation, allocation, conversion,
 // floating arithmetic, Python calls or global worker mutation occurs here.
-// Fill precedes independent tile-row copies; image index follows grid C order.
+// Each worker owns complete output rows; padding and unused tiles are filled,
+// while occupied tile spans are copied directly in grid C order.
 // No refcounted/object or padded/undefined-representation words are admitted.
 void montage_into(const MontageInput&,MontageGrid,const void* typed_channel_fill,
                   MontageOutput,int workers);
