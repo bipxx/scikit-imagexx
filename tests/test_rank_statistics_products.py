@@ -1021,3 +1021,37 @@ def test_current_inverse_is_not_applied_to_other_frozen_sources():
     raw=b'from tools.rank_corpus_sdk_scope import validate_sdk_scope\n;validate_sdk_scope(ROOT,capsule,runtime)\n'
     p.validate_frozen_controller('benchmarks/run.py',raw,hashlib.sha256(raw).hexdigest(),p.CURRENT_PRODUCT_SCOPE)
     with pytest.raises(RuntimeError):p.validate_frozen_controller('benchmarks/run.py',raw+'#change'.encode(),hashlib.sha256(raw).hexdigest(),p.CURRENT_PRODUCT_SCOPE)
+
+
+@pytest.mark.parametrize('fault', ('missing-import', 'duplicate-block', 'changed-call', 'changed-fixture-check', 'foreign-semantic-edit'))
+def test_current_bilateral_fixture_projection_rejects_unreviewed_changes(fault):
+    name='benchmarks/rank_bilateral.py'
+    canonical=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    added=b'  from tools.rank_bilateral_fixture_source import project_qualified_fixture\n'
+    start=canonical.index(added)
+    end=canonical.index(b'  for name in NAMES:',start)
+    projection=canonical[start:end]
+    assert projection.count(b'\n')==5
+    if fault=='missing-import':canonical=canonical.replace(added,b'',1)
+    elif fault=='duplicate-block':canonical=canonical.replace(projection,projection+projection,1)
+    elif fault=='changed-call':canonical=canonical.replace(b'project_qualified_fixture(ROOT)',b'project_qualified_fixture(OTHER_ROOT)',1)
+    elif fault=='changed-fixture-check':canonical=canonical.replace(b"else text_sha(ROOT/name))==h",b"else text_sha(ROOT/name))!=h",1)
+    else:canonical=canonical.replace(b'  for name in NAMES:',b'  for name in NAMES[:1]:',1)
+    assert canonical!=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    with pytest.raises(RuntimeError):
+        p.validate_frozen_controller(name,canonical,CURRENT_CORPUS_PRE_METADATA_PINS[name],p.CURRENT_PRODUCT_SCOPE)
+
+
+@pytest.mark.parametrize('scope', ('rank14','h_extrema23'))
+def test_bilateral_historical_scope_keeps_literal_controller_pin(scope):
+    name='benchmarks/rank_bilateral.py'
+    current=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    start=current.index(b'  from tools.rank_bilateral_fixture_source import project_qualified_fixture\n')
+    end=current.index(b'  for name in NAMES:',start)
+    historical=(current[:start]+b"  for name,h in manifest['fixture_source_sha256'].items():assert text_sha(ROOT/name)==h\n"+current[end:]).replace(
+        b'from tools.rank_corpus_sdk_scope import validate_sdk_scope\n',b'').replace(
+        b';validate_sdk_scope(ROOT,capsule,runtime)\n',b";assert len(runtime['runtime']['sdk_sha256'])==SDK_MEMBERS\n")
+    expected=CURRENT_CORPUS_PRE_METADATA_PINS[name]
+    assert hashlib.sha256(historical).hexdigest()==expected
+    p.validate_frozen_controller(name,historical,expected,scope)
+    with pytest.raises(RuntimeError):p.validate_frozen_controller(name,current,expected,scope)
