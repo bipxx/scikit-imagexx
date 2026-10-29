@@ -291,10 +291,19 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current247'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives')
-CURRENT_SDK_CLIENT_SCOPE = 'current26 required installed clients (23 legacy plus colocalization, footprint_shapes and recent prepared primitives); source readiness is not qualification acceptance'
+CURRENT_PRODUCT_SCOPE = 'current251'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates')
+CURRENT_SDK_CLIENT_SCOPE = 'current27 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives and drawing coordinates); source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
+DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
+DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
+    'src/simd_draw_coordinates_avx2.cpp', 'src/bind_draw_coordinates.cpp',
+    'python/skimagexx/_draw_coordinates.py', 'python/skimagexx/draw.py',
+    'tests/test_draw_coordinates_native.cpp', 'tests/test_draw_coordinates_public.py',
+    'tests/test_draw_coordinates_integration.py', 'tests/draw_coordinates_contract.py',
+    'tests/draw_coordinates_observer.py', 'coverage/contracts/draw-coordinates.json',
+    'coverage/contracts/draw-coordinates-native-v1.json',
+    'tests/cmake_consumer/draw_coordinates_consumer.cpp')
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
@@ -389,7 +398,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py')
+POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py')
 
 
 def groups_for_source(root):
@@ -648,6 +657,9 @@ def plan(root, profile, expected=None):
     SDK_scope = CURRENT_SDK_CLIENT_SCOPE if registry['image_count'] > 203 else SDK_CLIENT_SCOPE
     if registry['image_count'] > 203:
         scope = CURRENT_PRODUCT_SCOPE
+        for name in DRAW_SOURCE_PATHS:
+            if not (root / name).is_file():
+                blockers.append('missing required drawing source: ' + name)
         try:
             contract = current_contract(lambda name: (root / name).read_bytes())
             require(set(registry['functions']) == set(contract['image_paths']) | set(contract['metadata_paths'])
@@ -677,7 +689,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -715,6 +727,9 @@ def current_install_layout(read_bytes, names, profile):
                and '__pycache__' not in PurePosixPath(n).parts and not n.endswith('/') and not n.endswith('.pyc')}
     headers = {n: n for n in names if n.startswith('include/') and not n.endswith('/')}
     require(sources and headers, 'current Python/header install closure absent')
+    require('include/skimagexx/draw_coordinates.hpp' in headers
+            and 'skimagexx/_draw_coordinates.py' in sources and 'skimagexx/draw.py' in sources,
+            'current drawing install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
@@ -1399,6 +1414,30 @@ def max_tree_admission(core, morphology, wrapper, registered):
         require(str(inspect.signature(function)) == signatures[name], 'max-tree public signature differs: ' + name)
 
 
+def draw_admission(core, draw, wrapper, registered):
+    """New current251 metadata barrier; no drawing/provider function executes."""
+    require(all(tuple(registered).count(name) == 1 for name in DRAW_PATHS),
+            'drawing public registry missing/duplicate')
+    require(getattr(wrapper, '_core', None) is core and core.get_num_threads() == 1,
+            'drawing core/worker state differs')
+    for name in ('draw_line', 'draw_rectangle', 'draw_ellipse'):
+        entry = getattr(core, name, None)
+        require(inspect.isbuiltin(entry) and entry.__name__ == name
+                and entry.__module__ == core.__name__, 'missing owned drawing entry: ' + name)
+    signatures = {'line': '(r0, c0, r1, c1)',
+        'rectangle': '(start, end=None, extent=None, shape=None)',
+        'disk': '(center, radius, *, shape=None)',
+        'ellipse': '(r, c, r_radius, c_radius, shape=None, rotation=0.0)'}
+    for name, signature in signatures.items():
+        function = vars(draw).get(name)
+        require(callable(function) and function is vars(wrapper).get(name),
+                'drawing public wrapper identity differs: ' + name)
+        require(inspect.unwrap(function).__module__ == 'skimagexx._draw_coordinates'
+                and function.__name__ == name, 'drawing whole-API forwarding: ' + name)
+        require(str(inspect.signature(function)) == signature,
+                'drawing public signature differs: ' + name)
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -1452,6 +1491,9 @@ def admission(out, state):
                         importlib.import_module('skimagexx._h_extrema'),coverage.native_functions())
     nmi_admission(xx._core,importlib.import_module('skimagexx.metrics'),
                   importlib.import_module('skimagexx._normalized_mutual_information'),coverage.native_functions())
+    if record['product_scope'] == CURRENT_PRODUCT_SCOPE:
+        draw_admission(xx._core, importlib.import_module('skimagexx.draw'),
+                       importlib.import_module('skimagexx._draw_coordinates'), coverage.native_functions())
     require(all(name not in generic.__all__ and hasattr(generic, name) for name in ('sum', 'windowed_histogram')), 'nonstar own attrs contract changed')
     if state['profile'] == 'debug':
         require(getattr(xx._core, '_consumer_gil_assertions', False) is True, 'Debug GIL assertions missing')

@@ -23,7 +23,7 @@ def current_capsule(tmp_path):
     names = subprocess.check_output(['git', '-C', str(ROOT), 'ls-files'], text=True).splitlines()
     layout = q.current_install_layout(lambda n: (ROOT / n).read_bytes(), names, 'modern')
     # This capsule models current source install rules, not historical71 acceptance.
-    assert layout['SDK_count'] == 83
+    assert layout['SDK_count'] == 84
     runtime = dict(source=dict(revision='a' * 40, files_sha256=dict.fromkeys(names, 'inert-authenticated-source')),
                    runtime=dict(sdk_sha256=dict.fromkeys(layout['SDK_members'], 'inert-authenticated-sdk')))
     marker = dict(schema='rank-corpus-sdk-scope-v1', scope=c.CURRENT_PRODUCT_SCOPE,
@@ -41,17 +41,18 @@ def test_current_scope_uses_exact_source_derived_sdk_names(current_capsule, prof
     assert c.validate_sdk_scope(ROOT, capsule, runtime) == c.CURRENT_PRODUCT_SCOPE
 
 
-@pytest.mark.parametrize('fault', ('old68', 'old71', 'foreign-name', 'extra-name', 'wrong-profile', 'missing-marker', 'missing-marker-false68', 'revision'))
+@pytest.mark.parametrize('fault', ('old68', 'old71', 'old83', 'stale247', 'foreign-name', 'extra-name', 'wrong-profile', 'missing-marker', 'missing-marker-false68', 'revision'))
 def test_current_wrong_sdk_or_scope_cannot_pass(current_capsule, fault):
     capsule, runtime, marker = current_capsule; sdk = runtime['runtime']['sdk_sha256']
-    if fault in ('old68', 'old71', 'missing-marker-false68'):
+    if fault in ('old68', 'old71', 'old83', 'missing-marker-false68'):
         # Synthetic stale-size subsets; these are not historical SDK manifests.
-        historical_count = 71 if fault == 'old71' else 68
+        historical_count = {'old71':71, 'old83':83}.get(fault,68)
         for name in list(sdk)[historical_count:]: del sdk[name]
         assert len(sdk) == historical_count
     if fault == 'foreign-name': sdk['include/skimagexx/foreign.hpp'] = sdk.pop(next(iter(sdk)))
     if fault == 'extra-name': sdk['include/skimagexx/foreign.hpp'] = 'inert'
     if fault == 'wrong-profile': marker['profile'] = 'windows'
+    if fault == 'stale247': marker['scope'] = 'current247'
     if fault == 'revision': marker['source_revision'] = 'b' * 40
     if fault.startswith('missing-marker'): (capsule / c.MARKER).unlink()
     else: (capsule / c.MARKER).write_text(json.dumps(marker))
@@ -69,7 +70,7 @@ def test_marker_boundary_rejects_malformed_values(current_capsule, marker):
 def test_legacy68_is_preserved_and_wrong_legacy_count_rejected(tmp_path):
     runtime = dict(source=dict(files_sha256={}), runtime=dict(sdk_sha256=dict.fromkeys(map(str, range(68)), 'inert')))
     assert c.SDK_MEMBERS == 68 and c.validate_sdk_scope(ROOT, tmp_path, runtime) == 'h_extrema23'
-    for wrong_count in (67, 71, 83):
+    for wrong_count in (67, 71, 83, 84):
         runtime['runtime']['sdk_sha256'] = dict.fromkeys(map(str, range(wrong_count)), 'inert')
         with pytest.raises(AssertionError, match='original68'): c.validate_sdk_scope(ROOT, tmp_path, runtime)
 
