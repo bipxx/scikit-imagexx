@@ -1,6 +1,6 @@
 # Complete scikit-image implementation plan
 
-The [qualified baseline is now 247 partial image APIs](evidence/public247-whole-product-admission.json), at exact source `f1f9c42`: all four supported profiles pass 907,400 checks, 208 installed SDK checks and 48 corpora with no failures/errors/skips. The newer Montage optimization on main has separate correctness/performance evidence. Four drawing APIs remain private; their genuine 251-API preparation is [running at frozen source `566c1fc`](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), with all timings disabled. Earlier failed campaigns and raw artifacts remain unchanged.
+The [qualified baseline is247 partial image APIs](evidence/public247-whole-product-admission.json), at exact `f1f9c42`: four profiles,907,400 checks,208 installed SDK checks and48 corpora with no failures/errors/skips. Current main now declares251 APIs. The four drawing APIs pass [genuine minimum preparation40816710252](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), normal/scalar parity, an actual SDK84 client and untimed first-cohort validation; initial12-case one-thread timing is next. The newer Montage optimization has separate measured evidence. Earlier failures and raw artifacts remain unchanged.
 
 ## Historical checkpoint narratives
 

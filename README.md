@@ -9,7 +9,7 @@ reported upstream fallback. Fallback is compatibility, not a native rewrite.
 For development, use the [phased fast-run guide](coverage/FAST_RUN.md) to run
 per-feature surface, compact parity and full contract tests without rebuilding.
 
-Every native public function has scoped parity tests. All 247 partially native
+Every native public function has scoped parity tests. All 251 partially native
 image API paths have benchmark harnesses against original scikit-image;
 measurements for newly integrated paths remain separately tracked.
 Measurements include **one-worker** runs and allocation,
@@ -24,7 +24,7 @@ The [Montage copy correction](benchmarks/montage-word-copy-same-host.md) is merg
 
 The earlier [byte-fill v2](benchmarks/montage-row-owned-v2-same-host.md) and [sustained](benchmarks/montage-sustained-same-host.md) experiments retain their original UNRESOLVED_MEASUREMENT outcomes and raw evidence.
 
-The [qualified baseline is now 247 partial image APIs](coverage/evidence/public247-whole-product-admission.json), at exact source `f1f9c42`: all four supported profiles pass 907,400 checks, 208 installed SDK checks and 48 corpora with no failures/errors/skips. The newer Montage optimization on main has separate correctness/performance evidence. Four drawing APIs remain private; their genuine 251-API preparation is [running at frozen source `566c1fc`](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), with all timings disabled. Earlier failed campaigns and raw artifacts remain unchanged.
+The [qualified baseline is247 partial image APIs](coverage/evidence/public247-whole-product-admission.json), at exact `f1f9c42`: four profiles,907,400 checks,208 installed SDK checks and48 corpora with no failures/errors/skips. Current main now declares251 APIs. The four drawing APIs pass [genuine minimum preparation40816710252](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), normal/scalar parity, an actual SDK84 client and untimed first-cohort validation; initial12-case one-thread timing is next. The newer Montage optimization has separate measured evidence. Earlier failures and raw artifacts remain unchanged.
 
 ## Supported parity surface
 
@@ -34,7 +34,7 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. Public source has **247 partially native
+The reference is scikit-image **0.26.0**. Public source has **251 partially native
 image API paths and three metadata helpers**. All247 paths are included in the
 qualified four-profile baseline at frozen `f1f9c42`; scope remains partial per API.
 Initial one-thread measurements give polygon approximation **6.73× (9/9 wins)** and
@@ -43,7 +43,7 @@ See the [RDP report](benchmarks/approximate-polygon-minimum-initial.md) and
 [subdivision report](benchmarks/subdivide-polygon-minimum-initial.md). The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases and three public bilateral aliases of existing algorithms; 221 paths remain upstream-only.
+rank.generic aliases and three public bilateral aliases of existing algorithms; 217 paths remain upstream-only.
 Five classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths

@@ -2,11 +2,11 @@
 
 Reference: scikit-image 0.26.0.
 
-Source registers247 partial image APIs,3 metadata functions and5 partial native classes. The accepted four-profile baseline at exact f1f9c42 contains176 product files and83 SDK files. The newer Montage optimization has separate measured evidence; four drawing APIs remain private pending genuine preparation and12-case benchmarks. See the [fast-run guide](FAST_RUN.md) for current source and proof boundaries.
+Source registers251 partial image APIs,3 metadata functions and5 partial native classes. Four drawing APIs are merged after genuine minimum251 preparation with178 product/84 SDK files, normal/scalar public parity and an actual SDK84 client. One-thread12-case drawing measurement is next. The accepted four-profile baseline remains247 APIs at exactf1f9c42; source readiness and measured speed remain distinct.
 
 Latest qualified product: `f1f9c4219a0f38da3c5a884b96af44d54b416ff0`, [run40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338):247 partial image APIs across four profiles,907,400 public XML checks with no failures/errors/skips,208 installed-SDK checks and48 corpora. The [root admission](evidence/public247-whole-product-admission.json) preserves the earlier241/203 receipts. This is scoped per-function qualification, separate from whole-library speed or full API parity.
 
-477 public callable names inventoried in20 modules;247 have partially native image implementations and3 have metadata-only execution. Five partial native classes and one exception metadata provider are counted separately;221 names remain upstream-only. Per-function test/benchmark paths in api.json identify evidence routes, not automatic proof of parity or speed.
+477 public callable names inventoried in20 modules;251 have partially native image implementations and3 have metadata-only execution. Five partial native classes and one exception metadata provider are separate;217 names remain upstream-only. Per-function test/benchmark paths identify evidence routes, not automatic proof of parity or speed.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -97,19 +97,19 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `draw.bezier_curve` | upstream-only | pending | pending |
 | `draw.circle_perimeter` | upstream-only | pending | pending |
 | `draw.circle_perimeter_aa` | upstream-only | pending | pending |
-| `draw.disk` | upstream-only | pending | pending |
-| `draw.ellipse` | upstream-only | pending | pending |
+| `draw.disk` | native-partial | yes (partial input contract) | yes |
+| `draw.ellipse` | native-partial | yes (partial input contract) | yes |
 | `draw.ellipse_perimeter` | upstream-only | pending | pending |
 | `draw.ellipsoid` | upstream-only | pending | pending |
 | `draw.ellipsoid_stats` | upstream-only | pending | pending |
-| `draw.line` | upstream-only | pending | pending |
+| `draw.line` | native-partial | yes (partial input contract) | yes |
 | `draw.line_aa` | upstream-only | pending | pending |
 | `draw.line_nd` | upstream-only | pending | pending |
 | `draw.polygon` | upstream-only | pending | pending |
 | `draw.polygon2mask` | upstream-only | pending | pending |
 | `draw.polygon_perimeter` | upstream-only | pending | pending |
 | `draw.random_shapes` | upstream-only | pending | pending |
-| `draw.rectangle` | upstream-only | pending | pending |
+| `draw.rectangle` | native-partial | yes (partial input contract) | yes |
 | `draw.rectangle_perimeter` | upstream-only | pending | pending |
 | `draw.set_color` | upstream-only | pending | pending |
 | `exposure.adjust_gamma` | native-partial | yes (partial input contract) | yes |
