@@ -31,8 +31,8 @@ input contract, raw samples and rejected trials.
 The reference is scikit-image **0.26.0**. Public source now has **247 partially native
 image API paths and three metadata helpers**. Polygon approximation and subdivision
 have scoped component parity evidence. Their combined minimum release preparation
-passes 9,346 focused and 1,447 smoke checks; full profile qualification and initial
-performance coverage remain separate. One-thread initial measurements give polygon
+passes 9,346 focused and 1,447 smoke checks; full profile qualification remains
+pending. One-thread initial measurements give polygon
 approximation **6.73× (9/9 wins)** and subdivision **4.00× (14/14 wins)** versus
 scikit-image in their frozen cohorts. See the [RDP report](benchmarks/approximate-polygon-minimum-initial.md)
 and [subdivision report](benchmarks/subdivide-polygon-minimum-initial.md). The qualified combined binary baseline is
