@@ -1,0 +1,910 @@
+{
+  "schema": "draw-coordinates-original-first-v1",
+  "status": "PROSPECTIVE_FROZEN_BEFORE_ORIGINAL_CALLS",
+  "apis": [
+    "draw.line",
+    "draw.rectangle",
+    "draw.disk",
+    "draw.ellipse"
+  ],
+  "reference_version": "0.26.0",
+  "source_canonical_lf_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+  "compiled_source_sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4",
+  "official_source": {
+    "source": "PyPI0.26.0 sdist",
+    "sha256": "f5f970ab04efad85c24714321fcc91613fcb64ef2a892a13167df2f3e59199fa",
+    "path": "src/skimage/draw/_draw.pyx",
+    "license_sha256": "611d3207504dcb4a808df209d2e7c9b4f2e89fe690f84735c0d548160966b527",
+    "retained_prefix": "build/draw-coordinate-source-v1"
+  },
+  "function_segment_sha256": {
+    "_ellipse_in_shape": "fb37c68088eaf8fe41b6ea47efe780b70fe84a883eb60e5a85e6774621dafdfd",
+    "ellipse": "96bd83d3bed5c63275033dbcede310cd311c02f52fcf1814a8e24982be073c2d",
+    "disk": "3005ca9604a2071c394500d1433f9d4cf024f798604f24ede43454e6a861efd8",
+    "line": "13308872ded555c29728ceed78794a2c0f6e872343a1e13a9435ec7b3240424e",
+    "rectangle": "9803c98efb78432f8d5f193dd8784eba0577583d83bdcefe328fb0943a7eaa70",
+    "_rectangle_slice": "12e598f82e19d1554d106677c4ff6001a16e68250bc631b8e019ce33e50abce7"
+  },
+  "signatures": {
+    "draw.line": "(r0, c0, r1, c1)",
+    "draw.rectangle": "(start, end=None, extent=None, shape=None)",
+    "draw.disk": "(center, radius, *, shape=None)",
+    "draw.ellipse": "(r, c, r_radius, c_radius, shape=None, rotation=0.0)"
+  },
+  "binary_sha256": {
+    "1.24.4": "32673fec979236e2f83543ad289a8128059b96e6562a9ea30114c4e73c17139b",
+    "2.5.4": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4"
+  },
+  "native_implementation": "pending",
+  "original_calls": 0,
+  "cases": [
+    {
+      "id": "line/horizontal",
+      "api": "draw.line",
+      "kind": "horizontal",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/vertical",
+      "api": "draw.line",
+      "kind": "vertical",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/diagonal",
+      "api": "draw.line",
+      "kind": "diagonal",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/rising-shallow",
+      "api": "draw.line",
+      "kind": "rising-shallow",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/falling-shallow",
+      "api": "draw.line",
+      "kind": "falling-shallow",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/rising-steep",
+      "api": "draw.line",
+      "kind": "rising-steep",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/falling-steep",
+      "api": "draw.line",
+      "kind": "falling-steep",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/reverse-shallow",
+      "api": "draw.line",
+      "kind": "reverse-shallow",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/reverse-steep",
+      "api": "draw.line",
+      "kind": "reverse-steep",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/tie-half",
+      "api": "draw.line",
+      "kind": "tie-half",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/tie-reverse",
+      "api": "draw.line",
+      "kind": "tie-reverse",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/point",
+      "api": "draw.line",
+      "kind": "point",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/negative",
+      "api": "draw.line",
+      "kind": "negative",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/large-origin",
+      "api": "draw.line",
+      "kind": "large-origin",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/np-int32",
+      "api": "draw.line",
+      "kind": "np-int32",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/np-int64",
+      "api": "draw.line",
+      "kind": "np-int64",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/np-uint64",
+      "api": "draw.line",
+      "kind": "np-uint64",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/bool",
+      "api": "draw.line",
+      "kind": "bool",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/float-integral",
+      "api": "draw.line",
+      "kind": "float-integral",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/float-fractional",
+      "api": "draw.line",
+      "kind": "float-fractional",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/index-provider",
+      "api": "draw.line",
+      "kind": "index-provider",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "line/overflow-start",
+      "api": "draw.line",
+      "kind": "overflow-start",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/end2d",
+      "api": "draw.rectangle",
+      "kind": "end2d",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/extent2d",
+      "api": "draw.rectangle",
+      "kind": "extent2d",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/reverse-end",
+      "api": "draw.rectangle",
+      "kind": "reverse-end",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/negative-extent",
+      "api": "draw.rectangle",
+      "kind": "negative-extent",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/mixed-extent",
+      "api": "draw.rectangle",
+      "kind": "mixed-extent",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/zero-extent",
+      "api": "draw.rectangle",
+      "kind": "zero-extent",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/clipped",
+      "api": "draw.rectangle",
+      "kind": "clipped",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/clipped-away",
+      "api": "draw.rectangle",
+      "kind": "clipped-away",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/negative-unclipped",
+      "api": "draw.rectangle",
+      "kind": "negative-unclipped",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/end3d",
+      "api": "draw.rectangle",
+      "kind": "end3d",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/extent1d",
+      "api": "draw.rectangle",
+      "kind": "extent1d",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/extent4d",
+      "api": "draw.rectangle",
+      "kind": "extent4d",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/rank0",
+      "api": "draw.rectangle",
+      "kind": "rank0",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/float-half-even",
+      "api": "draw.rectangle",
+      "kind": "float-half-even",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/float-negative-half",
+      "api": "draw.rectangle",
+      "kind": "float-negative-half",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/np-int32",
+      "api": "draw.rectangle",
+      "kind": "np-int32",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/fortran-view",
+      "api": "draw.rectangle",
+      "kind": "fortran-view",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/negative-stride",
+      "api": "draw.rectangle",
+      "kind": "negative-stride",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/readonly",
+      "api": "draw.rectangle",
+      "kind": "readonly",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/missing",
+      "api": "draw.rectangle",
+      "kind": "missing",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/both",
+      "api": "draw.rectangle",
+      "kind": "both",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/mismatch",
+      "api": "draw.rectangle",
+      "kind": "mismatch",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/end-provider",
+      "api": "draw.rectangle",
+      "kind": "end-provider",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "rectangle/shape-short",
+      "api": "draw.rectangle",
+      "kind": "shape-short",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/ordinary",
+      "api": "draw.disk",
+      "kind": "ordinary",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/radius-one",
+      "api": "draw.disk",
+      "kind": "radius-one",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/radius-half",
+      "api": "draw.disk",
+      "kind": "radius-half",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/radius-zero",
+      "api": "draw.disk",
+      "kind": "radius-zero",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/negative-radius",
+      "api": "draw.disk",
+      "kind": "negative-radius",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/fractional-center",
+      "api": "draw.disk",
+      "kind": "fractional-center",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/fractional-radius",
+      "api": "draw.disk",
+      "kind": "fractional-radius",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/negative-center",
+      "api": "draw.disk",
+      "kind": "negative-center",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/clipped",
+      "api": "draw.disk",
+      "kind": "clipped",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/clipped-away",
+      "api": "draw.disk",
+      "kind": "clipped-away",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/shape-extra",
+      "api": "draw.disk",
+      "kind": "shape-extra",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/shape-zero",
+      "api": "draw.disk",
+      "kind": "shape-zero",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/np-float32",
+      "api": "draw.disk",
+      "kind": "np-float32",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/np-int32",
+      "api": "draw.disk",
+      "kind": "np-int32",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/center-array",
+      "api": "draw.disk",
+      "kind": "center-array",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/center-length1",
+      "api": "draw.disk",
+      "kind": "center-length1",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/center-length3",
+      "api": "draw.disk",
+      "kind": "center-length3",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/radius-provider",
+      "api": "draw.disk",
+      "kind": "radius-provider",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "disk/fp-raise-zero",
+      "api": "draw.disk",
+      "kind": "fp-raise-zero",
+      "policy": {
+        "divide": "raise",
+        "invalid": "raise"
+      },
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/axes",
+      "api": "draw.ellipse",
+      "kind": "axes",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/rotated",
+      "api": "draw.ellipse",
+      "kind": "rotated",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/rotation-negative",
+      "api": "draw.ellipse",
+      "kind": "rotation-negative",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/rotation-pi",
+      "api": "draw.ellipse",
+      "kind": "rotation-pi",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/rotation-halfpi",
+      "api": "draw.ellipse",
+      "kind": "rotation-halfpi",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/rotation-overpi",
+      "api": "draw.ellipse",
+      "kind": "rotation-overpi",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/fractional",
+      "api": "draw.ellipse",
+      "kind": "fractional",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/tiny",
+      "api": "draw.ellipse",
+      "kind": "tiny",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/zero-row-radius",
+      "api": "draw.ellipse",
+      "kind": "zero-row-radius",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/zero-both",
+      "api": "draw.ellipse",
+      "kind": "zero-both",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/negative-radius",
+      "api": "draw.ellipse",
+      "kind": "negative-radius",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/negative-center",
+      "api": "draw.ellipse",
+      "kind": "negative-center",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/clipped",
+      "api": "draw.ellipse",
+      "kind": "clipped",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/clipped-away",
+      "api": "draw.ellipse",
+      "kind": "clipped-away",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/shape-extra",
+      "api": "draw.ellipse",
+      "kind": "shape-extra",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/np-float32",
+      "api": "draw.ellipse",
+      "kind": "np-float32",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/np-int64",
+      "api": "draw.ellipse",
+      "kind": "np-int64",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/shape-list",
+      "api": "draw.ellipse",
+      "kind": "shape-list",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/shape-short",
+      "api": "draw.ellipse",
+      "kind": "shape-short",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/center-provider",
+      "api": "draw.ellipse",
+      "kind": "center-provider",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/rotation-provider",
+      "api": "draw.ellipse",
+      "kind": "rotation-provider",
+      "policy": {},
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/fp-call-zero",
+      "api": "draw.ellipse",
+      "kind": "fp-call-zero",
+      "policy": {
+        "divide": "call",
+        "invalid": "call"
+      },
+      "max_output_elements": 1000000
+    },
+    {
+      "id": "ellipse/shape-empty",
+      "api": "draw.ellipse",
+      "kind": "shape-empty",
+      "policy": {},
+      "max_output_elements": 1000000
+    }
+  ],
+  "case_counts": {
+    "draw.line": 22,
+    "draw.rectangle": 24,
+    "draw.disk": 19,
+    "draw.ellipse": 23
+  },
+  "max_output_elements": 1000000,
+  "unassessed": [
+    "forged storage/concurrent mutation",
+    "allocation failure or more than one million coordinate elements",
+    "line signed-size arithmetic overflow after argument conversion",
+    "nonfinite disk/ellipse geometry whose integer bounding box can overflow or allocate unbounded grids",
+    "longdouble, complex, object-array geometry and higher-order arbitrary protocols"
+  ],
+  "capture_protocol": {
+    "profiles": [
+      {
+        "numpy": "1.24.4",
+        "scipy": "1.15.3"
+      },
+      {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1"
+      }
+    ],
+    "requires_root_review_and_authorization": true,
+    "calls_per_case_per_profile": 1,
+    "prospective_total_calls": 176,
+    "journal": "Exclusive started/completed JSONL records flushed per once-only call before assembly. Stop and preserve on observer failure; never replay original calls to fix metadata.",
+    "append_only_fields": [
+      "original_observations",
+      "original_calls",
+      "capture_provenance"
+    ],
+    "original_output_bound": "Small safety-audited geometry only; sum of result array sizes <=1000000. Unsafe signed-size overflow and nonfinite bounding-box casts never invoked.",
+    "observed": "Exact coordinate words/order/container/dtype/shape/strides/base metadata/ownership/writeability/output pair and input aliases; warnings/errors/FP handlers; inputs and pointer/state restoration."
+  },
+  "first_increment_proposal": {
+    "not_admission_contract": true,
+    "line": "Ordinary signed-size integer coordinates with representable difference/error arithmetic and addressable bounded outputs; exact Bresenham traversal/endpoints. Python conversion/protocol errors preserve source boundary.",
+    "rectangle": "Ordinary integer or finite real geometry after literal rounding/clipping; owned dynamic-rank meshgrid coordinate generation, default xy first-two-axis swap. Do not flatten documented output.",
+    "disk_ellipse": "Ordinary finite f64 geometry and prepared literal bounding box/scalar NumPy modulo+trig; own strict-distance classification and ordered coordinate compaction. Initial other dtype/protocol/nonfinite and exceptional-FP routes remain explicit providers until proven; no blanket libm parity claim.",
+    "workers": "Existing global optional workers snapshot once; independent rectangle/ellipse spans useful. Line recurrence dependency needs exact design before parallel partition; no forced workerpool or speculative atomics.",
+    "coverage": "No native or performance credit from these prospective tests; full API breadth remains future work."
+  },
+  "source_semantics": {
+    "line": "Py_ssize_t conversion before arithmetic; steep dr>dc; error tie d>=0; original endpoint assigned explicitly; np.zeros-backed typed memoryview returned via np.asarray.",
+    "rectangle": "Missing/both end/extent errors before arithmetic; extent adds before min/max; np.round then astype(int), end-inclusive increment only without extent. Optional shape clipping after normalization. meshgrid defaultxy returns grids with profile container/type facts to capture.",
+    "disk": "Unpack center before ellipse call; radius passed twice; no separate squared-radius shortcut.",
+    "ellipse": "Build center/radii, rotation%=pi, bbox from cos/sin then ceil/floor.astype(int), optionalclip, shifted center; helper repeats modulo/trig, divides before squares, strictdistances<1, np.nonzero rowmajor; force writable then in-place offsets. Nonzero base layout must be captured, not replaced with claimed ownedC arrays."
+  },
+  "benchmark_cases": [
+    {
+      "id": "line/tiny",
+      "api": "draw.line",
+      "args": [
+        0,
+        0,
+        7,
+        3
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line/long",
+      "api": "draw.line",
+      "args": [
+        -65536,
+        0,
+        65535,
+        32767
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "rectangle/tiny",
+      "api": "draw.rectangle",
+      "args": [
+        [
+          1,
+          2
+        ]
+      ],
+      "kwargs": {
+        "extent": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "id": "rectangle/2d",
+      "api": "draw.rectangle",
+      "args": [
+        [
+          0,
+          0
+        ]
+      ],
+      "kwargs": {
+        "extent": [
+          256,
+          384
+        ]
+      }
+    },
+    {
+      "id": "rectangle/3d",
+      "api": "draw.rectangle",
+      "args": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "kwargs": {
+        "extent": [
+          32,
+          32,
+          32
+        ]
+      }
+    },
+    {
+      "id": "disk/tiny",
+      "api": "draw.disk",
+      "args": [
+        [
+          4,
+          5
+        ],
+        3
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "disk/dense",
+      "api": "draw.disk",
+      "args": [
+        [
+          320,
+          320
+        ],
+        320
+      ],
+      "kwargs": {
+        "shape": [
+          640,
+          640
+        ]
+      }
+    },
+    {
+      "id": "disk/clipped",
+      "api": "draw.disk",
+      "args": [
+        [
+          0,
+          0
+        ],
+        256
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          512
+        ]
+      }
+    },
+    {
+      "id": "ellipse/tiny",
+      "api": "draw.ellipse",
+      "args": [
+        4,
+        5,
+        3,
+        2
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse/axes",
+      "api": "draw.ellipse",
+      "args": [
+        256,
+        512,
+        128,
+        256
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          1024
+        ]
+      }
+    },
+    {
+      "id": "ellipse/rotated",
+      "api": "draw.ellipse",
+      "args": [
+        256,
+        256,
+        128,
+        192
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          512
+        ],
+        "rotation": 0.37
+      }
+    },
+    {
+      "id": "ellipse/clipped",
+      "api": "draw.ellipse",
+      "args": [
+        0,
+        0,
+        128,
+        192
+      ],
+      "kwargs": {
+        "shape": [
+          256,
+          256
+        ],
+        "rotation": -0.37
+      }
+    }
+  ],
+  "benchmark_protocol_proposal": {
+    "threads": 1,
+    "rounds": 7,
+    "target_ms": 100,
+    "warmup_ms_per_function": 250,
+    "scope": "Future fixed genuine whole-public calls including allocation/destruction and any declared providers; freeze actual timing protocol before measurement. No timings in this packet.",
+    "counts": 12,
+    "retain_all_losses": true
+  },
+  "original_observations": {},
+  "source_freeze": {
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/test_draw_coordinates_public.py": "bca3c48e1b619e7bdfba40e38cf85e5873189ddcedf49c532bfe48d3df3398de"
+  }
+}
