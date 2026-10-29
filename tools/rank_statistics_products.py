@@ -347,7 +347,7 @@ def validate_nmi_source(archive, snapshot, scope):
 
 
 def validate_frozen_controller(name, canonical, expected, scope):
-    """Invert only the reviewed 5b547 SDK metadata edits for current products."""
+    """Invert exact reviewed SDK and bilateral fixture metadata projections."""
     if scope == CURRENT_PRODUCT_SCOPE and name in (
             'benchmarks/rank_statistics.py', 'benchmarks/rank_percentile.py',
             'benchmarks/rank_bilateral.py', 'benchmarks/rank_decisions.py'):
@@ -357,6 +357,17 @@ def validate_frozen_controller(name, canonical, expected, scope):
         require(canonical.count(added) == 1 and canonical.count(current) == 1,
                 'current corpus SDK metadata edits differ: ' + name)
         canonical = canonical.replace(added, b'').replace(current, original)
+        if name == 'benchmarks/rank_bilateral.py':
+            projection = (
+                b'  from tools.rank_bilateral_fixture_source import project_qualified_fixture\n'
+                b'  historical_fixture,actual_fixture_digest=project_qualified_fixture(ROOT)\n'
+                b"  report['metadata']['historical_fixture_projection']=dict(actual_current_sha256=actual_fixture_digest,qualified_sha256=hashlib.sha256(historical_fixture.encode()).hexdigest(),qualified_source_revision='4e657ee64fb71e4d707d32e9539fdb4d7cc528af')\n"
+                b"  for name,h in manifest['fixture_source_sha256'].items():\n"
+                b"   assert (hashlib.sha256(historical_fixture.encode()).hexdigest() if name=='tests/test_rank_bilateral_contracts.py' else text_sha(ROOT/name))==h\n")
+            original_fixture = b"  for name,h in manifest['fixture_source_sha256'].items():assert text_sha(ROOT/name)==h\n"
+            require(canonical.count(projection) == 1,
+                    'current bilateral fixture metadata projection differs: ' + name)
+            canonical = canonical.replace(projection, original_fixture, 1)
     require(hashlib.sha256(canonical).hexdigest() == expected,
             'frozen R4 controller pin differs: ' + name)
 
