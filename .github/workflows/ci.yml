@@ -369,6 +369,12 @@ jobs:
         run: python -m pytest -q tests/test_subdivide_polygon_integration.py tests/test_subdivide_polygon_pipeline.py --junitxml=build/ci-artifacts/subdivide-polygon-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Drawing frozen public parity and prepared native pipelines
+        run: python -m pytest -q tests/test_draw_coordinates_public.py tests/test_draw_coordinates_integration.py --junitxml=build/ci-artifacts/draw-coordinates-normal.xml
+      - name: Drawing public parity and prepared pipelines with SIMD disabled
+        run: python -m pytest -q tests/test_draw_coordinates_public.py tests/test_draw_coordinates_integration.py --junitxml=build/ci-artifacts/draw-coordinates-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Blur private zero-axis boundary guards
         run: python -m pytest -q tests/test_blur_effect_intake.py --junitxml=build/ci-artifacts/blur-effect-intake.xml
       - name: Immutable bytes storage parity
