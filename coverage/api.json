@@ -1050,7 +1050,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.ellipse",
@@ -1064,7 +1064,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.ellipse_perimeter",
@@ -1108,7 +1108,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.line_aa",
@@ -1182,7 +1182,7 @@
       ],
       "execution_kind": "native",
       "parity_test": "tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline",
-      "benchmark": "benchmarks/coverage.py"
+      "benchmark": "benchmarks/draw_coordinates.py"
     },
     {
       "api": "draw.rectangle_perimeter",

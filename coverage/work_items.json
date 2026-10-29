@@ -34139,6 +34139,224 @@
         "metric_variance_separation_pass": true
       },
       "scope": "One host, one worker, allocation-inclusive whole-public calls on matching eager frontends 4f and 9e. The whole row-owned plus eight-byte-copy bundle is measured; 518 current f1 overlay checks support integration, not current-wrapper performance. Historical outcomes remain unchanged; full supported-profile qualification remains 241 APIs."
+    },
+    {
+      "id": "draw-coordinates-reference",
+      "kind": "contract",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "00055e71f83328c844546e7f1a51a8225373695c",
+      "source_merged": true,
+      "state": "contracted",
+      "owns": [
+        "tests/draw_coordinates_contract.py",
+        "tests/draw_coordinates_observer.py",
+        "tests/test_draw_coordinates_public.py",
+        "coverage/contracts/draw-coordinates.json"
+      ],
+      "depends_on": [],
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "66ba10731bd100f467391acba6111a1c9423b357",
+          "manifest": {
+            "path": "build/draw-coordinate-capture-v1/handoff.json",
+            "sha256": "206ad917f914add37db23afb583bedfa09b991d603f64f20444ad954759e7613"
+          },
+          "passing_contract_checks": 176
+        }
+      },
+      "scope": "176 once-only original calls,75 returns/13 errors each NumPy profile;376 array blobs. Original observations remain unchanged.16 later default references separately recorded; no original recapture."
+    },
+    {
+      "id": "draw-coordinates-native",
+      "kind": "native",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "feature/draw-coordinates-native-v1",
+      "source_merged": false,
+      "state": "parity_passed",
+      "owns": [
+        "include/skimagexx/draw_coordinates.hpp",
+        "src/draw_coordinates.cpp",
+        "src/simd_draw_coordinates_avx2.cpp",
+        "tests/test_draw_coordinates_native.cpp",
+        "coverage/contracts/draw-coordinates-native-v1.json"
+      ],
+      "depends_on": [
+        "draw-coordinates-reference"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-reference": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ec52c45db66acf5862a83938e4df00197b05b219",
+          "manifest": {
+            "path": "build/worktrees/draw-coordinates-native-v1/build/native-v1/handoff.json",
+            "sha256": "62e0b1c29d01eea78ca0f56284b7a96303a49625d4612b6d33579fd217911f9a"
+          },
+          "native_contract_checks": 7748648,
+          "native_pending": 0
+        }
+      },
+      "scope": "Six native modes with saved records, signed/zero strides, unaligned words, FTZ, FP state/refusal, scalar/OpenMP/portable/sanitizers; workers1/4 where supported. Dependent Bresenham serial; rectangle and ellipse independent loops SIMD/optional parallel. No performance claim."
+    },
+    {
+      "id": "draw-coordinates-frontend",
+      "kind": "frontend",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "feature/draw-coordinate-frontend-v1",
+      "source_merged": false,
+      "state": "parity_passed",
+      "owns": [
+        "python/skimagexx/_draw_coordinates.py",
+        "python/skimagexx/draw.py",
+        "tests/test_draw_coordinates_integration.py"
+      ],
+      "depends_on": [
+        "draw-coordinates-native"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-native": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "3a035e7c0e206de1aa4f25cd1f93bcd37d1f08c5",
+          "manifest": {
+            "path": "build/worktrees/draw-coordinate-frontend-v1/build/frontend-v1/handoff.json",
+            "sha256": "99c34f87359f4275f813d23bfaa3d90a09c01e36d3c73f2f0968dfd87ad6c04a"
+          },
+          "native_contract_checks": 1428,
+          "native_pending": 0
+        }
+      },
+      "scope": "Actual component357checks per mode/two profiles/normal+scalar,1408 saved-observation comparisons,544 actual C acceptances.68/88 saved IDs native,20 provider/errors; no full-domain native claim."
+    },
+    {
+      "id": "draw-coordinates-shared",
+      "kind": "integration",
+      "apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "integrator",
+      "branch": "integrate/draw-coordinates-v1",
+      "source_merged": false,
+      "state": "performance_pending",
+      "public_registration": true,
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "src/bind_draw_coordinates.cpp",
+        "python/skimagexx/coverage.py",
+        "tests/test_api.py",
+        "coverage/api.json",
+        "benchmarks/coverage.py"
+      ],
+      "depends_on": [
+        "draw-coordinates-frontend"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-frontend": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "d07ca339b6fc08dad9ebb6cf57d641f93c0fad8e",
+          "manifest": {
+            "path": "build/draw-coordinates-shared-v1/handoff.json",
+            "sha256": "e52064d26ed1e83c7b26a0d662f0cbc483c8da50e037ba813b6ead6626b5c09f"
+          },
+          "native_contract_checks": 1428,
+          "native_pending": 0
+        }
+      },
+      "installed_SDK_component": {
+        "manifest": {
+          "path": "build/worktrees/draw-coordinates-sdk-client-v1/build/sdk-client-v1/handoff.json",
+          "sha256": "5585f220026878398dc6f5c7c6766113a90cbdd83f5eb738439b30b7abfebf22"
+        },
+        "SDK_members": 84,
+        "client_families": 1,
+        "client_checks": 2,
+        "scope": "Assembled84 only, not genuine full product or27family qualification."
+      },
+      "scope": "Four drawing APIs/three real core entries only. Component core is natural skimagexx._core; other251 paths are source registration, not component execution. SDK84 is assembled and executes only one drawing client. Native math/frontend files unchanged after main Montage integration. Genuine whole product and12-case measurements pending."
+    },
+    {
+      "id": "draw-coordinates-measurement",
+      "kind": "measurement",
+      "apis": [],
+      "target_apis": [
+        "draw.line",
+        "draw.rectangle",
+        "draw.disk",
+        "draw.ellipse"
+      ],
+      "owner": "blur_benchmark",
+      "branch": "integrate/draw-coordinates-v1",
+      "source_merged": false,
+      "state": "preparing",
+      "owns": [
+        "benchmarks/draw_coordinates.py",
+        "coverage/contracts/draw-coordinates-benchmark.json",
+        "tests/test_draw_coordinates_benchmark.py"
+      ],
+      "depends_on": [
+        "draw-coordinates-shared"
+      ],
+      "dependency_requirements": {
+        "draw-coordinates-shared": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "benchmark_preflight": {
+        "manifest": {
+          "path": "build/draw-coordinate-benchmark-preflight-v1/handoff.json",
+          "sha256": "4cecbe7e3fa47a4de089b1e44f27feda46b6b02bff0d5328074f7e9c0480d94e"
+        },
+        "original_calls": 1,
+        "native_calls": 1,
+        "timed_batches": 0
+      },
+      "scope": "All12 immutable original benchmark specs; one worker/reference pool,7 rounds,>=100ms accepted batches,>=250ms warmup/function.168samples prospective; retain every loss. Driver/component preflight passed; genuine251 preparation and isolated timing pending."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -34227,19 +34445,15 @@
     "draw.bezier_curve",
     "draw.circle_perimeter",
     "draw.circle_perimeter_aa",
-    "draw.disk",
-    "draw.ellipse",
     "draw.ellipse_perimeter",
     "draw.ellipsoid",
     "draw.ellipsoid_stats",
-    "draw.line",
     "draw.line_aa",
     "draw.line_nd",
     "draw.polygon",
     "draw.polygon2mask",
     "draw.polygon_perimeter",
     "draw.random_shapes",
-    "draw.rectangle",
     "draw.rectangle_perimeter",
     "draw.set_color",
     "exposure.adjust_gamma",
