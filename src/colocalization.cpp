@@ -19,6 +19,7 @@
 #ifdef SKIMAGEXX_AVX2
 namespace skimagexx::simd {
 std::uint64_t coloc_bool_count(const unsigned char*,const unsigned char*,std::size_t);
+bool coloc_all_finite_f64(const unsigned char*,std::size_t);
 }
 #endif
 
@@ -319,6 +320,18 @@ bool coloc_all_finite(const ColocView& v) {
         for(std::size_t i=0;i<n;++i) {
             std::uint32_t word;std::memcpy(&word,data+4*i,4);
             nonfinite|=(word&0x7f800000u)==0x7f800000u;
+        }
+        return nonfinite==0;
+    }
+    if(v.type==Type::float64 && !v.swapped && input.affine && input.step==8) {
+        const auto* data=static_cast<const unsigned char*>(v.data);
+#ifdef SKIMAGEXX_AVX2
+        if(n>=4 && has_avx2())return simd::coloc_all_finite_f64(data,n);
+#endif
+        std::uint64_t nonfinite=0;
+        for(std::size_t i=0;i<n;++i) {
+            std::uint64_t word;std::memcpy(&word,data+8*i,8);
+            nonfinite|=(word&0x7ff0000000000000ULL)==0x7ff0000000000000ULL;
         }
         return nonfinite==0;
     }

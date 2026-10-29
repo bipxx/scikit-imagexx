@@ -347,6 +347,57 @@ void reject_before_write() {
     input.length=1;
     unsigned flags=99;coloc_square_into(input.value,order,{&untouched,sizeof(untouched)},flags);require(untouched==1 && flags==0);
 }
+std::uint64_t f64_cases=0;
+void finite_float64_bits() {
+    const struct {std::uint64_t word;bool finite;} cases[]={
+        {0,true},{0x8000000000000000ULL,true},{1,true},{0x8000000000000001ULL,true},
+        {0x000fffffffffffffULL,true},{0x800fffffffffffffULL,true},
+        {0x0010000000000000ULL,true},{0x8010000000000000ULL,true},
+        {0x7fefffffffffffffULL,true},{0xffefffffffffffffULL,true},
+        {0x7ff0000000000000ULL,false},{0xfff0000000000000ULL,false},
+        {0x7ff8123456789abcULL,false},{0xfff8123456789abcULL,false},
+        {0x7ff0000000000001ULL,false},{0xfff0000000000001ULL,false}};
+    std::fenv_t saved;require(std::fegetenv(&saved)==0);
+    for(int rounding:{FE_TONEAREST,FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO})for(int seeded:{FE_DIVBYZERO,FE_DIVBYZERO|FE_INVALID}) {
+        require(std::fesetround(rounding)==0);std::feclearexcept(FE_ALL_EXCEPT);
+        std::feraiseexcept(seeded);
+        for(int layout=0;layout<6;++layout)for(const std::size_t n:{0,1,2,3,4,5,7,8,9,12,15,16,17,31,32,33,127,128,129,257})for(const auto c:cases) {
+            std::vector<std::size_t> positions{n ? n-1:0};
+            if(!c.finite)for(std::size_t lane=0;lane<4 && lane<n;++lane)
+                if(lane!=positions[0])positions.push_back(lane);
+            for(auto position:positions) {
+                std::vector<std::uint64_t> storage(2*n+4,0xa5a5a5a5a5a5a5a5ULL);
+                auto* bytes=reinterpret_cast<unsigned char*>(storage.data());
+                auto* first=bytes+(layout==0 ? 8:1)+(layout==3 && n ? 8*(n-1):0);
+                const std::ptrdiff_t step=layout==3 ? -8:layout==4 ? 16:8;
+                for(std::size_t i=0;i<n;++i) {
+                    const auto word=i==position ? c.word:0x3ff0000000000000ULL;
+                    unsigned char encoded[8];std::memcpy(encoded,&word,8);
+                    for(std::size_t j=0;j<8;++j)first[std::ptrdiff_t(i)*step+std::ptrdiff_t(j)]=encoded[layout==2 ? 7-j:j];
+                }
+                const auto before=storage;
+                One view(n ? first:nullptr,n,ColocType::float64,8,layout==2);view.stride=step;
+                view.value.allocation=n ? storage.data():nullptr;view.value.allocation_bytes=n ? storage.size()*8:0;
+                // Nontrivial2D dense F order when divisible, singleton otherwise.
+                std::array<std::size_t,2> shape{n && n%3==0 ? 3u:1u,n && n%3==0 ? n/3:n};
+                std::array<std::ptrdiff_t,2> strides{8,8*std::ptrdiff_t(shape[0])};
+                if(layout==5){view.value.shape={shape.data(),2};view.value.strides={strides.data(),2};}
+                require(coloc_all_finite(view.value)==(!n || c.finite));++f64_cases;
+                require(std::fetestexcept(FE_ALL_EXCEPT)==seeded && std::fegetround()==rounding);
+                require(storage==before);
+                if(n && !c.finite && rounding==FE_TONEAREST) {
+                    std::vector<unsigned char> output(n*8+2,0x6d);const auto untouched=output;
+                    unsigned flags=99;bool refused=false;
+                    try{coloc_square_into(view.value,coloc_keep_order(view.value),{output.data()+1,n*8},flags);}
+                    catch(const ColocProviderRequired&){refused=true;}
+                    require(refused && output==untouched && flags==99 && storage==before);
+                    require(std::fetestexcept(FE_ALL_EXCEPT)==seeded && std::fegetround()==rounding);
+                }
+            }
+        }
+    }
+    require(std::fesetenv(&saved)==0);
+}
 }
 int main() {
     using namespace skimagexx;
@@ -359,4 +410,13 @@ int main() {
     }
     set_num_threads(1);
     std::cout<<"colocalization native controls="<<checks<<"; default worker=1; AVX2 available="<<has_avx2()<<'\n';
+    const auto old_checks=checks;
+    for(int workers:{1,4}) {
+#ifdef SKIMAGEXX_COLOC_PORTABLE
+        if(workers==4)continue;
+#endif
+        set_num_threads(workers);finite_float64_bits();
+    }
+    set_num_threads(1);
+    std::cout<<"f64 finite cases="<<f64_cases<<"; additive checks="<<checks-old_checks<<"; default worker=1\n";
 }
