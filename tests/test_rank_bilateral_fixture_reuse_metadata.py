@@ -73,3 +73,30 @@ def test_actual_benchmark_preflight_keeps_historical_pin_and_reports_current_has
             assert receipt["qualified_sha256"] != receipt["actual_current_sha256"]
     finally:
         sys.path.pop(0)
+
+
+@pytest.mark.parametrize('change_observer', (False, True))
+def test_actual_masked_center_guard_preserves_source_projection_and_observer_derivation(tmp_path, change_observer):
+    # Compile only the actual metadata guard and two uncalled observers. Their
+    # numerical globals are deliberately absent; no image/fixture call can run.
+    import inspect
+    import sys
+    path=ROOT/'tests/test_rank_bilateral_masked_center_public.py'
+    source=path.read_text(encoding='utf-8')
+    if change_observer:
+        assert source.count('np.arange(9,dtype=np.uint16)%4')==1
+        source=source.replace('np.arange(9,dtype=np.uint16)%4','np.arange(9,dtype=np.uint16)%5',1)
+        path=tmp_path/'changed_masked_observer.py';path.write_text(source,encoding='utf-8')
+    tree=ast.parse(source)
+    names={'source_observe','source_mask_feedback_observe','test_frozen_source_observer_derivation_and_scope'}
+    nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]
+    assert len(nodes)==3
+    namespace=dict(ROOT=ROOT,CASES=(None,)*396,ast=ast,hashlib=hashlib,json=json,inspect=inspect)
+    exec(compile(ast.Module(body=nodes,type_ignores=[]),str(path),'exec'),namespace)
+    sys.path.insert(0,str(ROOT))
+    try:
+        guard=namespace['test_frozen_source_observer_derivation_and_scope']
+        if change_observer:
+            with pytest.raises(AssertionError):guard()
+        else:guard()
+    finally:sys.path.pop(0)
