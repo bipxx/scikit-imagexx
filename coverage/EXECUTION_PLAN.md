@@ -1,6 +1,6 @@
 # Complete scikit-image implementation plan
 
-Live checkpoint: **247 partial native image APIs and three metadata helpers; 241 APIs remain fully qualified across the four supported profiles.** The current phase-2 packet is the already-correctness-validated float64 colocalization classifier. Its one frozen 21-case, one-worker performance experiment is run 40798470833; no speed claim or source merge precedes its reviewed result. Then freeze the coherent source and execute the existing four-profile qualification without waiting for future features or optimization variants. See [the live phased execution summary](FAST_RUN.md) for current evidence and ownership.
+Live checkpoint: **247 partial native image APIs and three metadata helpers; 241 APIs remain fully qualified across the four supported profiles.** The single float64 classifier experiment is closed DISCARD and remains unmerged. [Four-profile qualification 40800100531](https://github.com/bipxx/scikit-imagexx/actions/runs/40800100531) is running for exact coherent source `85d3875`, covering 26 SDK families/52 checks per profile. Keep the qualified count at 241 until all four actual products pass. See [the live phased summary](FAST_RUN.md) for evidence and next actions.
 
 ## Historical checkpoint narratives
 

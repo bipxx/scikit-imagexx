@@ -1,5 +1,13 @@
 # Performance verification
 
+Current source has 247 partial native image APIs; [four-profile qualification 40800100531](https://github.com/bipxx/scikit-imagexx/actions/runs/40800100531) is running at exact source `85d3875`. Accepted full qualification remains 241 until all four actual products pass.
+
+The [float64 classifier comparison](colocalization-f64-same-host.md) is closed **DISCARD**: four targets gain 2.0-2.2x over current C++, but three normalized controls fail the unchanged 0.97 floor. All 1,176 samples and original-library losses are retained; source remains unmerged. The [Montage follow-up](montage-sustained-same-host.md) remains unresolved and unmerged. Published RDP/subdivision wins below retain their separate source/workload scope; none is a whole-library speed claim.
+
+## Retained historical checkpoints
+
+The checkpoints below preserve their original revisions. Pending/running/next-action language inside these records is historical; use the live status above.
+
 Latest initial one-thread results from the admitted 247-API minimum product: [polygon approximation](approximate-polygon-minimum-initial.md) **9/9 wins, 6.73× geometric mean**, and [subdivision](subdivide-polygon-minimum-initial.md) **14/14 wins, 4.00×** versus original scikit-image. These are separate frozen cohorts, not a library-wide aggregate. All 322 samples, exact parity evidence, provider boundaries and prior failures are retained.
 
 The [row-owned Montage byte-fill v2](montage-row-owned-v2-same-host.md) is closed **UNRESOLVED_MEASUREMENT** and remains private. All fixed gates pass; incomplete-u8 gains are 1.355× direct / 1.348× normalized. The sole blocker is Fortran normalized-timing uncertainty: worst-pair gain 0.885140365 fails the unchanged 0.97 floor. Its B2 original/current loss 0.983922393 is retained. All 1,008 samples and 72 journals are published. V1 stays separately closed unresolved with its incomplete-u8 floor failures; no source merge or qualification increase follows either result.
