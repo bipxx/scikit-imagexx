@@ -34,7 +34,7 @@ jobs:
       CANDIDATE_ARTIFACT_SHA256: ${{ inputs.candidate_artifact_sha256 }}
       BASELINE_RUN: '40778508940'
       BASELINE_REVISION: '4f69eba77a262056459eaab1e0a39e53610e9305'
-      CANDIDATE_RUN: 'TBD_ROOT_AUTHENTICATED_PREPARE'
+      CANDIDATE_RUN: '40810420960'
       CANDIDATE_REVISION: '9e1edffc12a6c290f521194fcb2386753f8845f8'
     steps:
       - uses: actions/checkout@v4
@@ -53,7 +53,7 @@ jobs:
           python - <<'PY'
           import json, os, re, subprocess
           from pathlib import Path
-          assert os.environ['CANDIDATE_RUN'] == 'TBD_ROOT_AUTHENTICATED_PREPARE'
+          assert os.environ['CANDIDATE_RUN'] == '40810420960'
           assert os.environ['CANDIDATE_REVISION'] == '9e1edffc12a6c290f521194fcb2386753f8845f8'
           assert os.environ['BASELINE_RUN'] == '40778508940'
           assert os.environ['BASELINE_REVISION'] == '4f69eba77a262056459eaab1e0a39e53610e9305'
@@ -243,7 +243,7 @@ jobs:
           import hashlib,json,os
           from pathlib import Path
           path=Path('controller/coverage/contracts/montage-word-copy-measurement.json')
-          assert hashlib.sha256(path.read_bytes()).hexdigest()=='60578ac1fd7a81313d9c704608f3af11c0d3044bb1b2d8531e63ee9f2bc4298f'
+          assert hashlib.sha256(path.read_bytes()).hexdigest()=='e8ab987745645414b14038955fe91732b0cb1070b828006c8b7c9a9830b65211'
           c=json.loads(path.read_bytes())
           driver=Path('controller/tools/montage_sustained.py')
           assert hashlib.sha256(driver.read_bytes()).hexdigest()==c['driver_sha256']
@@ -388,7 +388,7 @@ jobs:
           from datetime import datetime,timezone
           helper=runpy.run_path('controller/tools/montage_row_owned_comparison.py')['compare']
           summary=helper([dict(results=list(report.values())) for report in reports],contract,datetime.now(timezone.utc).isoformat())
-          summary.update(producer_revision='9e1edffc12a6c290f521194fcb2386753f8845f8',baseline_revision='4f69eba77a262056459eaab1e0a39e53610e9305',pids=pids,affinity=[cpu],all_identity_and_oracle_checks_pass=True,sealed_contract_sha256='60578ac1fd7a81313d9c704608f3af11c0d3044bb1b2d8531e63ee9f2bc4298f')
+          summary.update(producer_revision='9e1edffc12a6c290f521194fcb2386753f8845f8',baseline_revision='4f69eba77a262056459eaab1e0a39e53610e9305',pids=pids,affinity=[cpu],all_identity_and_oracle_checks_pass=True,sealed_contract_sha256='e8ab987745645414b14038955fe91732b0cb1070b828006c8b7c9a9830b65211')
           summary['controller']=json.loads(Path('results/controller.json').read_bytes())
           summary['FP_state_evidence']='Unchanged frozen harness asserts NumPy policy/handler/buffer and global workers before and after every measured case; this harness does not export separate FP values.'
           Path('results/comparison.json').write_text(json.dumps(summary,indent=2)+'\n')

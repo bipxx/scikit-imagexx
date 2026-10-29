@@ -63,7 +63,7 @@
     "B": {
       "role": "candidate",
       "revision": "9e1edffc12a6c290f521194fcb2386753f8845f8",
-      "run": "TBD_ROOT_AUTHENTICATED_PREPARE",
+      "run": 40810420960,
       "artifact": "TBD_ROOT_AUTHENTICATED_ARTIFACT",
       "sha256": "TBD_ROOT_AUTHENTICATED_SHA256"
     }
