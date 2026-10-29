@@ -34058,6 +34058,87 @@
         ]
       },
       "scope": "Minimum genuine whole-public ABBA, one worker; three strict normalized control floors fail. No retuning or merge; full qualification remains241."
+    },
+    {
+      "id": "montage-word-copy-optimization",
+      "kind": "optimization",
+      "apis": [],
+      "target_apis": [
+        "util.montage"
+      ],
+      "owner": "profile_candidate_audit",
+      "branch": "main",
+      "base_sha": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "source_sha": "9e1edffc12a6c290f521194fcb2386753f8845f8",
+      "native_validation_sha": "c29dc44cba73e03d2fe2fbe621e2f3ea405f05cc",
+      "integration_sha": "6a107a7730baa2c4c6d64210ac52dfcea3a0ec44",
+      "state": "measured",
+      "closed": true,
+      "decision": "KEEP",
+      "source_merged": true,
+      "owns": [
+        "CMakeLists.txt",
+        "coverage/contracts/montage-word-copy-candidate.json",
+        "include/skimagexx/montage.hpp",
+        "src/montage.cpp",
+        "src/montage_simd.hpp",
+        "src/simd_montage_avx2.cpp",
+        "tests/test_montage_native.cpp"
+      ],
+      "depends_on": [
+        "montage-shared"
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "c29dc44cba73e03d2fe2fbe621e2f3ea405f05cc",
+          "manifest": {
+            "path": "build/montage-word-copy-native-private-v1/native-v1/terminal.json",
+            "sha256": "601b7d02998652cd525a9e844f0b49a9949791f1124c50726dc1ac584bb55e40"
+          },
+          "native_contract_checks": 157896,
+          "native_pending": 0,
+          "scope": "Six native modes, 26,316 assertion checks and 966 case-worker invocations each; these are component controls, not unique APIs."
+        },
+        "public_native": {
+          "status": "verified",
+          "source_sha": "9e1edffc12a6c290f521194fcb2386753f8845f8",
+          "manifest": {
+            "path": "build/montage-word-copy-prepare-v1/final-review.json",
+            "sha256": "09245aa767617118b66039044379a8fededa74015b13dd592705eeeecbff2edf"
+          },
+          "native_contract_checks": 644,
+          "native_pending": 0,
+          "scope": "Montage integration, pipeline and saved-reference selectors, 322 checks per normal/scalar mode; mixed metadata/provider/native scope, not full qualification."
+        },
+        "isolated_performance": {
+          "status": "verified",
+          "source_sha": "9e1edffc12a6c290f521194fcb2386753f8845f8",
+          "manifest": {
+            "path": "build/montage-word-copy-same-host-v1/performance-review-handoff.json",
+            "sha256": "42f6f4582e77de8193e97435d6a59a5350db68f62783bfe2931dfa019f2e07f3"
+          },
+          "raw_samples": 1008,
+          "acceptance_pass": true
+        }
+      },
+      "performance": {
+        "status": "KEEP",
+        "run": 40812393430,
+        "artifact": 12870992471,
+        "publication": "benchmarks/montage-word-copy-same-host.json",
+        "cases": 9,
+        "raw_samples": 1008,
+        "direct_gain": 1.691650780420397,
+        "normalized_gain": 1.6900421714794593,
+        "candidate_original_gain": 2.0943526822363974,
+        "direct_losses": [],
+        "normalized_losses": [],
+        "original_losses": [],
+        "all_fixed_gates_pass": true,
+        "metric_variance_separation_pass": true
+      },
+      "scope": "One host, one worker, allocation-inclusive whole-public calls on matching eager frontends 4f and 9e. The whole row-owned plus eight-byte-copy bundle is measured; 518 current f1 overlay checks support integration, not current-wrapper performance. Historical outcomes remain unchanged; full supported-profile qualification remains 241 APIs."
     }
   ],
   "unassigned_inventoried_apis": [
