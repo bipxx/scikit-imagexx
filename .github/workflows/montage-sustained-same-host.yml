@@ -1,0 +1,422 @@
+name: montage-sustained-same-host
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_artifact_id:
+        type: string
+        required: true
+      candidate_artifact_sha256:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTEST_ADDOPTS: ''
+  PYTEST_PLUGINS: ''
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+      CANDIDATE_ARTIFACT_SHA256: ${{ inputs.candidate_artifact_sha256 }}
+      BASELINE_RUN: '40778508940'
+      BASELINE_REVISION: '4f69eba77a262056459eaab1e0a39e53610e9305'
+      CANDIDATE_RUN: '40790763016'
+      CANDIDATE_REVISION: 'b5bd1df7e27099e528fb4c7db67e2cb0bf35abae'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: controller
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate successful CI products
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          assert os.environ['CANDIDATE_RUN'] == '40790763016'
+          assert os.environ['CANDIDATE_REVISION'] == 'b5bd1df7e27099e528fb4c7db67e2cb0bf35abae'
+          assert os.environ['BASELINE_RUN'] == '40778508940'
+          assert os.environ['BASELINE_REVISION'] == '4f69eba77a262056459eaab1e0a39e53610e9305'
+          for role in ('baseline', 'candidate'):
+              run, revision = (os.environ[role.upper() + suffix] for suffix in ('_RUN', '_REVISION'))
+              assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[0-9a-f]{40}', revision)
+              base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+              def api(endpoint):
+                  raw = subprocess.check_output(['gh', 'api', base + endpoint])
+                  Path('results', role + '-' + endpoint.split('?')[0].split('/')[-1] + '.json').write_bytes(raw)
+                  return json.loads(raw)
+              record = api('runs/' + run)
+              assert str(record['id']) == run and record['head_sha'] == revision
+              assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+              assert record['path'] == '.github/workflows/ci.yml'
+              assert record['status'] == 'completed' and record['conclusion'] == 'success'
+              jobs = api('runs/' + run + '/jobs?per_page=100')
+              minimum = [job for job in jobs['jobs'] if job['name'] == 'measure-minimum']
+              assert len(minimum) == 1 and minimum[0]['conclusion'] == 'success'
+              timing = [step for step in minimum[0]['steps'] if step['name'].startswith('Run python benchmarks/')]
+              assert len(timing) == 29 and all(step['conclusion'] == 'skipped' for step in timing)
+              listing = api('runs/' + run + '/artifacts?per_page=100')
+              assert listing['total_count'] == len(listing['artifacts'])
+              matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
+              assert len(matches) == 1
+              item = matches[0]
+              assert not item['expired'] and 0 < item['size_in_bytes'] < 512 * 1024**2
+              assert item['workflow_run']['id'] == int(run) and item['workflow_run']['head_sha'] == revision
+              assert re.fullmatch('sha256:[0-9a-f]{64}', item['digest'])
+              if role == 'baseline':
+                  assert item['id'] == 12855199919
+                  assert item['digest'] == 'sha256:4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96'
+              else:
+                  assert re.fullmatch('[1-9][0-9]*', os.environ['CANDIDATE_ARTIFACT_ID'])
+                  assert re.fullmatch('[0-9a-f]{64}', os.environ['CANDIDATE_ARTIFACT_SHA256'])
+                  assert str(item['id']) == os.environ['CANDIDATE_ARTIFACT_ID']
+                  assert item['digest'] == 'sha256:' + os.environ['CANDIDATE_ARTIFACT_SHA256']
+              Path('results', role + '-selection.json').write_text(json.dumps(item, indent=2) + '\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: '4f69eba77a262056459eaab1e0a39e53610e9305'
+          path: snapshots/baseline
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: 'b5bd1df7e27099e528fb4c7db67e2cb0bf35abae'
+          path: snapshots/candidate
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: '6b22e64641a702c92873c376ff650cd8c8764d0d'
+          path: snapshots/parent
+          fetch-depth: 1
+      - name: Download exact CI ZIPs and install both runtimes offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          for role in baseline candidate; do
+            id=$(python -c "import json; print(json.load(open('results/$role-selection.json'))['id'])")
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip" > "$RUNNER_TEMP/$role-prepared.zip"
+            ROLE="$role" python - <<'PY'
+          import hashlib, io, json, os, re, stat, zipfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          role = os.environ['ROLE']; folder = Path('snapshots', role, 'build')
+          selected = json.loads(Path('results', role + '-selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], role + '-prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results', role + '-archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and 'sha256:' + actual['sha256'] == selected['digest']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall(folder)
+          prepared = folder / 'prepared/ci-artifacts'
+          # latest_only baselines and prepare_only candidates need no standalone timing JSONs here.
+          manifest = json.loads((prepared / 'measurement.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          assert manifest['source']['revision'] == os.environ[role.upper() + '_REVISION']
+          source = Path('snapshots',role)
+          for name,pin in manifest['source']['files_sha256'].items():
+              assert hashlib.sha256((source/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == pin, name
+          assert len(manifest['wheels']) == 14
+          assert len(manifest['runtime']['sdk_sha256']) == 83
+          products = [name for name, value in manifest['wheels'].items() if value['name'] == 'scikit-imagexx']
+          assert len(products) == 1 and len(manifest['wheels']) - len(products) == 13
+          for name, value in manifest['wheels'].items():
+              assert hashlib.sha256((folder / 'prepared/wheels' / name).read_bytes()).hexdigest() == value['sha256']
+          with zipfile.ZipFile(folder / 'prepared/wheels' / products[0]) as product:
+              assert len([n for n in product.namelist() if not n.endswith('/')]) == 176
+              static_names = [n for n in product.namelist() if n == 'lib/libskimagexx.a']
+              assert len(static_names) == 1
+              static = folder / 'prepared/sdk-static.a'; static.write_bytes(product.read(static_names[0]))
+              product_names = product.namelist()
+              core_names = [n for n in product_names if n.startswith('skimagexx/_core.') and n.endswith('.so')]
+              assert len(core_names) == 1
+              core_bytes = product.read(core_names[0])
+          import subprocess
+          objects = subprocess.check_output(['ar', 't', str(static)], text=True).splitlines()
+          assert objects and len(objects) == len(set(objects))
+          object_hashes = {name: hashlib.sha256(subprocess.check_output(['ar', 'p', str(static), name])).hexdigest() for name in objects}
+          Path('results', role + '-SDK-objects.json').write_text(json.dumps(object_hashes, indent=2) + '\n')
+          snapshot = Path('snapshots', role)
+          assert hashlib.sha256((snapshot / 'benchmarks/montage.py').read_bytes().replace(b'\r\n', b'\n')).hexdigest() == '93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd'
+          assert hashlib.sha256((snapshot / 'coverage/contracts/montage-benchmark.json').read_bytes()).hexdigest() == '434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68'
+          xml_counts = {}
+          for family, count in (('inertia-tensor', 115), ('inertia-eigvals', 69), ('moments', 203), ('window', 179),
+                                ('lpi', 161), ('butterworth', 175), ('moments-derived', 155),
+                                ('normalized-layouts', 22), ('immutable-bytes', 134),
+                                ('moments-coords', 98), ('shannon-entropy', 61), ('rgb2yuv-storage', 37),
+                                ('block-reduce', 145), ('perimeter-crofton', 101), ('perimeter', 111), ('euler-number', 91),
+                                ('polygon', 86), ('mesh-surface-area', 89), ('profile-line', 93), ('blur-effect', 121), ('compare-images', 109), ('profile-coordinates', 51),
+                                ('level-set', 161), ('level-set-pipeline', 163), ('map-array', 103), ('map-array-pipeline', 103), ('label-points', 99), ('label-points-pipeline', 100),
+                                ('unique-rows', 107), ('unique-rows-pipeline', 107), ('regular-seeds', 109), ('regular-seeds-pipeline', 109), ('montage', 322), ('rolling-ball-kernels', 230), ('approximate-polygon', 275), ('subdivide-polygon', 279), ('color-transforms-regression', 1848)):
+              for mode in ('normal', 'scalar'):
+                  name = family + '-' + mode + '.xml'
+                  tree = ET.fromstring((prepared / name).read_bytes())
+                  assert len(tree.findall('.//testcase')) == count
+                  assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+                  xml_counts[name] = count
+          for family, count in (('blur-effect-intake', 4), ('polygon-intake', 4), ('euler-number-intake', 4), ('block-reduce-integer-width', 9)):
+              tree = ET.fromstring((prepared / (family + '.xml')).read_bytes())
+              assert len(tree.findall('.//testcase')) == count
+              assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+              xml_counts[family + '.xml'] = count
+          guard = 'approximate-polygon-runtime-reference-guards.xml'
+          tree = ET.fromstring((prepared / guard).read_bytes())
+          assert len(tree.findall('.//testcase')) == 16
+          assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
+          xml_counts[guard] = 16
+          assert {p.name for p in prepared.glob('*.xml')} == set(xml_counts) and sum(xml_counts.values()) == 13079
+          assert sum(count for name, count in xml_counts.items() if name.endswith(('-normal.xml', '-scalar.xml')) and not name.startswith('color-transforms-regression-')) == 9346
+          smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
+          assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
+          assert smoke['outcomes'] == {'passed': 1447} and len(smoke['results']) == 1447
+          assert smoke['implementations']['native-partial'] + smoke['implementations']['metadata'] == 250
+          assert smoke['implementations']['native-partial'] == 247 and smoke['implementations']['metadata'] == 3
+          if role == 'candidate':
+              old, new = (json.loads(Path('snapshots', r, 'build/prepared/ci-artifacts/measurement.json').read_bytes()) for r in ('baseline', 'candidate'))
+              for key in ('python', 'implementation', 'cache_tag', 'machine', 'system', 'dependency_libraries_sha256'):
+                  assert old['runtime'][key] == new['runtime'][key], key
+              assert {k: v for k, v in old['runtime']['versions'].items() if k != 'scikit-imagexx'} == {k: v for k, v in new['runtime']['versions'].items() if k != 'scikit-imagexx'}
+              for name in ('numpy', 'scipy', 'skimage'):
+                  assert old['runtime']['packages_sha256'][name] == new['runtime']['packages_sha256'][name], name
+              assert {k: v for k, v in old['wheels'].items() if v['name'] != 'scikit-imagexx'} == {k: v for k, v in new['wheels'].items() if v['name'] != 'scikit-imagexx'}, 'all13 runtime dependency wheels exact; no normalization authorized'
+              contract = 'coverage/contracts/montage-row-owned-v2-candidate.json'
+              assert new['source']['files_sha256'][contract] == 'eb47b18e695a9f376a004a2490e5a62240933a1418b8f2520c6456b964fac01e'
+              assert hashlib.sha256(Path('snapshots/candidate', contract).read_bytes()).hexdigest() == 'eb47b18e695a9f376a004a2490e5a62240933a1418b8f2520c6456b964fac01e'
+              before, after = (value['source']['files_sha256'] for value in (old,new))
+              parent_contract = 'coverage/contracts/montage-row-owned-candidate.json'
+              assert new['source']['files_sha256'][parent_contract] == '64c10577317d77e6b39a206904f578b06db68ee2be3745d8a3d646100f184bdb'
+              assert hashlib.sha256(Path('snapshots/candidate', parent_contract).read_bytes()).hexdigest() == '64c10577317d77e6b39a206904f578b06db68ee2be3745d8a3d646100f184bdb'
+              added = {'src/montage_simd.hpp', 'src/simd_montage_avx2.cpp', parent_contract, contract}
+              allowed = added | {'src/montage.cpp', 'CMakeLists.txt', 'tests/test_montage_native.cpp', 'include/skimagexx/montage.hpp'}
+              assert set(after) - set(before) == added and not (set(before) - set(after))
+              assert {n for n in after if before.get(n) != after[n]} == allowed
+              old_cmake, new_cmake = (Path('snapshots', role, 'CMakeLists.txt').read_bytes().replace(b'\r\n', b'\n') for role in ('baseline', 'candidate'))
+              lines = new_cmake.splitlines(keepends=True)
+              registrations = [line for line in lines if b'simd_montage_avx2.cpp' in line]
+              assert len(registrations) == 3 and b''.join(line for line in lines if line not in registrations) == old_cmake
+              old_header, new_header = (Path('snapshots', role, 'include/skimagexx/montage.hpp').read_bytes().replace(b'\r\n', b'\n') for role in ('baseline', 'candidate'))
+              old_comment = b'// Fill precedes independent tile-row copies; image index follows grid C order.'
+              new_comment = b'// Each worker owns complete output rows; padding and unused tiles are filled,\n// while occupied tile spans are copied directly in grid C order.'
+              assert new_header.count(new_comment) == 1 and new_header.replace(new_comment, old_comment) == old_header
+              parent = Path('snapshots/parent'); candidate = Path('snapshots/candidate')
+              old_leaf = (parent/'src/montage.cpp').read_text(); new_leaf = (candidate/'src/montage.cpp').read_text()
+              byte_branch = '        if(bytes==1){*start=*fill;return;}\n'
+              assert new_leaf.count(byte_branch) == 1
+              inverse_leaf = new_leaf.replace(byte_branch, '', 1).replace('if(zero||pixel_bytes==1){std::memset(start,*fill,bytes);return;}', 'if(zero){std::memset(start,0,bytes);return;}', 1)
+              assert inverse_leaf == old_leaf
+              production = lambda name: name in ('CMakeLists.txt', 'pyproject.toml') or name.startswith(('src/', 'include/', 'python/skimagexx/'))
+              names = [set(filter(production, subprocess.check_output(['git','-C',str(folder),'ls-files','-z']).decode().split('\0'))) for folder in (parent,candidate)]
+              assert names[0] == names[1]
+              for name in names[0] - {'src/montage.cpp'}:
+                  assert (parent/name).read_bytes().replace(b'\r\n',b'\n') == (candidate/name).read_bytes().replace(b'\r\n',b'\n'), name
+              old_test, new_test = (Path('snapshots', role, 'tests/test_montage_native.cpp').read_text() for role in ('baseline', 'candidate'))
+              inverse_v2_test = re.sub(r'    // BEGIN additive v2 exhaustive raw byte-fill controls\n.*?    // END additive v2 exhaustive raw byte-fill controls\n', '', new_test, flags=re.S)
+              assert inverse_v2_test == (parent/'tests/test_montage_native.cpp').read_text()
+              inverse = re.sub(r'// BEGIN additive row-owned controls\n.*?// END additive row-owned controls\n', '', inverse_v2_test, flags=re.S)
+              inverse = re.sub(r'    // BEGIN additive row-owned invocation; historical stream prefix unchanged\n.*?    // END additive row-owned invocation\n', '', inverse, flags=re.S)
+              assert inverse == old_test
+              old_objects, new_objects = (json.loads(Path('results', role + '-SDK-objects.json').read_bytes()) for role in ('baseline', 'candidate'))
+              assert len(old_objects) == 163 and len(new_objects) == 164
+              assert set(new_objects) - set(old_objects) == {'simd_montage_avx2.cpp.o'} and not (set(old_objects) - set(new_objects))
+              assert [n for n in sorted(old_objects) if old_objects[n] != new_objects[n]] == ['montage.cpp.o']
+              assert old['runtime']['sdk_sha256'].keys() == new['runtime']['sdk_sha256'].keys()
+              assert len(new['runtime']['sdk_sha256']) == 83
+              assert sorted(n for n in old['runtime']['sdk_sha256'] if old['runtime']['sdk_sha256'][n] != new['runtime']['sdk_sha256'][n]) == ['include/skimagexx/montage.hpp', 'lib/libskimagexx.a']
+              packages = [value['runtime']['packages_sha256']['skimagexx'] for value in (old,new)]
+              assert packages[0].keys() == packages[1].keys()
+              changed = [n for n in packages[0] if packages[0][n] != packages[1][n]]
+              assert len(changed) == 1 and changed[0].startswith('_core.') and changed[0].endswith('.so')
+              delta = {n: [before.get(n), after.get(n)] for n in sorted(before.keys() | after.keys()) if before.get(n) != after.get(n)}
+              Path('results/source-delta.json').write_text(json.dumps(delta, indent=2) + '\n')
+          PY
+            python -m venv "$RUNNER_TEMP/env-$role"
+            "$RUNNER_TEMP/env-$role/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links "snapshots/$role/build/prepared/wheels" -r "snapshots/$role/build/prepared/ci-artifacts/runtime-lock.txt" 2>&1 | tee "results/$role-offline-install.log"
+            "$RUNNER_TEMP/env-$role/bin/python" "snapshots/$role/tools/ci_measurement_artifacts.py" verify --wheel-dir "snapshots/$role/build/prepared/wheels" --artifact "snapshots/$role/build/prepared/ci-artifacts/measurement.json" 2>&1 | tee "results/$role-original-identity.log"
+          done
+      - name: Freeze sustained method and one CPU
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          path=Path('controller/coverage/contracts/montage-sustained-measurement.json')
+          assert hashlib.sha256(path.read_bytes()).hexdigest()=='8b02ed340dbae4e20cfd24aed970c53ad23e656f4aa19aaef8db08ef90e5ad86'
+          c=json.loads(path.read_bytes())
+          driver=Path('controller/tools/montage_sustained.py')
+          assert hashlib.sha256(driver.read_bytes()).hexdigest()==c['driver_sha256']
+          source=json.loads(Path('snapshots/candidate/coverage/contracts/montage-row-owned-v2-candidate.json').read_bytes())
+          for field in ('gate','measurement_variance_rule','deadline_utc','case_ids','target_case','preserved_original_wins'):assert c[field]==source[field],field
+          for product in c['products'].values():
+              item=json.loads(Path('results',product['role']+'-selection.json').read_bytes())
+              assert item['id']==product['artifact'] and item['digest']=='sha256:'+product['sha256']
+          permitted=sorted(os.sched_getaffinity(0));assert permitted
+          Path('results/dispatch-contract.json').write_bytes(path.read_bytes())
+          Path('results/affinity.json').write_text(json.dumps(dict(initial_permitted=permitted,cpu=permitted[0]))+'\n')
+          helper=Path('controller/tools/montage_row_owned_comparison.py')
+          Path('results/controller.json').write_text(json.dumps(dict(revision=os.environ['GITHUB_SHA'],helper_sha256=hashlib.sha256(helper.read_bytes()).hexdigest(),driver_sha256=c['driver_sha256'],method_sha256=c['method_sha256']))+'\n')
+          PY
+          cat > results/launch.py <<'PY'
+          import hashlib,json,os,runpy,sys,traceback
+          from pathlib import Path
+          source,output,cpu,label,role=sys.argv[1:];source=Path(source).resolve();output=Path(output).resolve();cpu=int(cpu)
+          output.mkdir(parents=True,exist_ok=True);os.sched_setaffinity(0,{cpu});assert os.sched_getaffinity(0)=={cpu}
+          protocol=output.parent/'dispatch-contract.json'
+          driver=Path(os.environ['GITHUB_WORKSPACE'])/'controller/tools/montage_sustained.py'
+          c=json.loads(protocol.read_bytes());assert hashlib.sha256(driver.read_bytes()).hexdigest()==c['driver_sha256']
+          initial=dict(status='STARTED',pid=os.getpid(),parent_pid=os.getppid(),affinity=[cpu],pass_label=label,role=role,argv=sys.argv,contract_sha256=hashlib.sha256(protocol.read_bytes()).hexdigest())
+          (output/'process-before.json').write_text(json.dumps(initial,indent=2)+'\n');failure=None
+          try:
+              sys.argv=[str(driver),'--source-root',str(source),'--protocol',str(protocol),'--pass-index',label.split('-')[0],'--threads','1','--repeat','7','--output',str(output/'montage.json')]
+              runpy.run_path(str(driver),run_name='__main__')
+              assert os.sched_getaffinity(0)=={cpu}
+          except BaseException as error:
+              failure=dict(type=type(error).__name__,text=str(error),traceback=traceback.format_exc());raise
+          finally:
+              journal=output/'montage.batches.jsonl'
+              completed=sum(json.loads(line)['event']=='measure_returned'for line in journal.read_text().splitlines())if journal.exists()else 0
+              (output/'process-after.json').write_text(json.dumps(dict(initial,status='FAILED'if failure else'COMPLETE',affinity_after=sorted(os.sched_getaffinity(0)),completed_measures=completed,failure=failure,report_exists=(output/'montage.json').exists()),indent=2)+'\n')
+          PY
+      - name: Measure eight unchanged full-public passes in frozen ABBA BAAB order
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          cpu=$(python -c 'import json;print(json.load(open("results/affinity.json"))["cpu"])')
+          failed=0
+          for pass in 1-baseline 2-candidate 3-candidate 4-baseline 5-candidate 6-baseline 7-baseline 8-candidate; do
+            role=${pass#*-}; py="$RUNNER_TEMP/env-$role/bin/python"; output="$GITHUB_WORKSPACE/results/$pass"
+            mkdir "$output"
+            cd "$GITHUB_WORKSPACE/snapshots/$role"
+            before=0
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json > "$output/identity-before.log" 2>&1 || before=$?
+            echo "$before" > "$output/identity-before-exit.txt"
+            status=125
+            if [ "$before" -eq 0 ]; then
+              status=0
+              "$py" "$GITHUB_WORKSPACE/results/launch.py" "$PWD" "$output" "$cpu" "$pass" "$role" > "$output/montage.log" 2>&1 || status=$?
+            fi
+            echo "$status" > "$output/benchmark-exit.txt"
+            after=0
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json > "$output/identity-after.log" 2>&1 || after=$?
+            echo "$after" > "$output/identity-after-exit.txt"
+            if [ "$before" -ne 0 ] || [ "$status" -ne 0 ] || [ "$after" -ne 0 ]; then failed=1; fi
+          done
+          exit "$failed"
+      - name: Validate raw reports and apply the exact sealed gates
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,json,math,runpy,statistics
+          from pathlib import Path
+          contract=json.loads(Path('results/dispatch-contract.json').read_bytes())
+          cpu=json.loads(Path('results/affinity.json').read_bytes())['cpu']
+          specs=json.loads(Path('snapshots/baseline/coverage/contracts/montage-benchmark.json').read_bytes())
+          expected={r['case_id']:r for r in specs['cases']}
+          order=['1-baseline','2-candidate','3-candidate','4-baseline','5-candidate','6-baseline','7-baseline','8-candidate']
+          reports=[];pids=[]
+          for name in order:
+              folder=Path('results',name);role=name.split('-',1)[1];source=Path('snapshots',role)
+              for kind in ('benchmark','identity-before','identity-after'):assert (folder/(kind+'-exit.txt')).read_text().strip()=='0',name
+              manifest_raw=(source/'build/prepared/ci-artifacts/measurement.json').read_bytes();manifest=json.loads(manifest_raw)
+              identity=dict(status='verify',revision=manifest['source']['revision'],wheel_count=14,artifact_sha256=hashlib.sha256(manifest_raw).hexdigest())
+              for when in ('before','after'):assert json.loads((folder/('identity-'+when+'.log')).read_bytes())==identity
+              before=json.loads((folder/'process-before.json').read_bytes());after=json.loads((folder/'process-after.json').read_bytes())
+              assert before['pass_label']==after['pass_label']==name and before['role']==after['role']==role
+              assert before['status']=='STARTED' and after['status']=='COMPLETE' and after['failure']is None
+              assert before['affinity']==after['affinity']==after['affinity_after']==[cpu]
+              assert before['pid']==after['pid'] and after['completed_measures']==9;pids.append(after['pid'])
+              report=json.loads((folder/'montage.json').read_bytes());meta=report['metadata'];rows=report['results']
+              fingerprint=runpy.run_path(str(source/'benchmarks/provenance.py'))['source_fingerprint'](source)
+              assert meta['source_before']==fingerprint and all(meta[k]==v for k,v in fingerprint.items())
+              assert meta['python']==manifest['runtime']['python'] and meta['numpy']=='1.24.4' and meta['scipy']=='1.15.3' and meta['reference']=='0.26.0'
+              assert meta['threads']==1 and meta['repeat']==7 and meta['target_ms']==100 and meta['raw_samples']==126
+              assert meta['harness_sha256']==contract['driver_sha256'] and meta['contract_sha256']==contract['workloads_sha256']
+              assert meta['fallback_enabled']is False and meta['avx2']is True and meta['selected_apis']==['util.montage']
+              assert meta['reference_pool_limits']=={k:'1'for k in ('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')}
+              cores=[v for n,v in manifest['runtime']['packages_sha256']['skimagexx'].items()if n.endswith('.so')]
+              assert len(cores)==1 and meta['core_sha256']==cores[0]
+              for key in ('scope','provider_frontier','timed_boundary'):assert meta[key]==specs[key]
+              assert meta['original_source_sha256']==specs['original_python_source_sha256']
+              assert meta['frozen_harness_sha256']==contract['frozen_harness_sha256'] and meta['method_sha256']==contract['method_sha256']
+              assert meta['measurement_protocol_sha256']==hashlib.sha256(Path('results/dispatch-contract.json').read_bytes()).hexdigest()
+              assert meta['warmup_calibration_min_ms']==250 and meta['interbatch_sleep_ms']==0
+              all_events=[json.loads(line)for line in (folder/'montage.batches.jsonl').read_text().splitlines()]
+              journal=[event for event in all_events if event['event']=='measure_returned']
+              before_events=[event for event in all_events if event['event']=='batch_before']
+              after_events=[event for event in all_events if event['event']=='batch_after']
+              assert len(before_events)==len(after_events)
+              for left,right in zip(before_events,after_events):
+                  assert all(left[k]==right[k]for k in ('case_index','case_id','function','round','ordinal','loops'))
+                  assert right['complete']is True and right['failure']is None
+                  assert right['accepted']==(left['requested_phase']=='sample'and right['elapsed_ns']>=100000000)
+              assert after_events==[event for row in rows for event in row['batch_records']]
+              assert [row['case_id']for row in rows]==contract['case_ids'] and len(journal)==9
+              for i,row in enumerate(rows):
+                  assert all(row[k]==v for k,v in expected[row['case_id']].items())
+                  assert row['api']=='util.montage' and row['backend']=='native' and row['threads']==1
+                  assert row['native_accepted']is True and row['actual_C_returns']==['montage_apply'] and row['native_entry_module']=='skimagexx._core'
+                  assert row['max_abs_error']==0 and row['output_sha256']==row['oracle_sha256']
+                  assert len(row['output_sha256'])==64 and int(row['output_sha256'],16)>=0
+                  assert row['sample_labels']==['scikit-image','current'] and list(map(len,row['samples_ms']))==[7,7]
+                  assert list(map(len,row['loops']))==[7,7] and all(type(v)is int and v>0 for part in row['loops']for v in part)
+                  assert all(v>=250000000 for v in row['warmup_elapsed_ns'])
+                  for fn in (0,1):
+                      accepted=[event for event in row['batch_records']if event['accepted']and event['function']==fn]
+                      assert [event['round']for event in accepted]==list(range(7))
+                      assert [event['loops']for event in accepted]==row['loops'][fn]
+                      assert all(event['elapsed_ns']>=100000000 for event in accepted)
+                      assert [event['elapsed_ns']/event['loops']/1e6 for event in accepted]==row['samples_ms'][fn]
+                      assert sum(event['elapsed_ns']for event in row['batch_records']if event['phase']=='warmup'and event['function']==fn)==row['warmup_elapsed_ns'][fn]
+                  assert all(math.isfinite(v)and v>0 for samples in row['samples_ms']for v in samples)
+                  a,b=map(statistics.median,row['samples_ms']);assert (a,b,a/b)==(row['reference_ms'],row['cpp_ms'],row['speedup'])
+                  item=journal[i];assert item['case_index']==i and item['case_id']==row['case_id'] and item['status']=='PENDING_FINAL_HARNESS_VALIDATION'
+                  assert all(row[k]==v for k,v in item['timing'].items())
+              reports.append({r['case_id']:r for r in rows})
+          assert len(set(pids))==8
+          for case_id in contract['case_ids']:
+              first=reports[0][case_id]
+              for field in ('output_metadata','output_sha256','oracle_sha256'):
+                  assert all(report[case_id][field]==first[field] for report in reports),(case_id,field)
+          from datetime import datetime,timezone
+          helper=runpy.run_path('controller/tools/montage_row_owned_comparison.py')['compare']
+          summary=helper([dict(results=list(report.values())) for report in reports],contract,datetime.now(timezone.utc).isoformat())
+          summary.update(producer_revision='b5bd1df7e27099e528fb4c7db67e2cb0bf35abae',baseline_revision='4f69eba77a262056459eaab1e0a39e53610e9305',pids=pids,affinity=[cpu],all_identity_and_oracle_checks_pass=True,sealed_contract_sha256='8b02ed340dbae4e20cfd24aed970c53ad23e656f4aa19aaef8db08ef90e5ad86')
+          summary['controller']=json.loads(Path('results/controller.json').read_bytes())
+          summary['FP_state_evidence']='Unchanged frozen harness asserts NumPy policy/handler/buffer and global workers before and after every measured case; this harness does not export separate FP values.'
+          Path('results/comparison.json').write_text(json.dumps(summary,indent=2)+'\n')
+          print(json.dumps({key:value for key,value in summary.items() if key!='rows'},indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: montage-sustained-same-host-raw
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error

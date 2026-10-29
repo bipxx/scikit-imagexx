@@ -1,0 +1,120 @@
+{
+  "case_ids": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "gray-mean-f64",
+    "rgb-padded-u8",
+    "rgb-first-f32",
+    "gray-strided-reverse-f32",
+    "gray-fortran-f64"
+  ],
+  "target_case": "gray-strided-reverse-f32",
+  "preserved_original_wins": [
+    "gray-small-u8",
+    "gray-incomplete-u8",
+    "gray-dense-f32",
+    "gray-large-u16",
+    "rgb-padded-u8",
+    "rgb-first-f32"
+  ],
+  "gate": {
+    "overall_direct_GM_gt": 1.05,
+    "overall_normalized_GM_gt": 1.05,
+    "target_each_B_pass_vs_balanced_A_direct_gt": 1.5,
+    "target_each_B_pass_vs_balanced_A_normalized_gt": 1.5,
+    "target_each_B_pass_original_gt": 1.0,
+    "each_other_eight_balanced_direct_gte": 0.97,
+    "each_other_eight_balanced_normalized_gte": 0.97,
+    "each_preserved_original_win_each_B_pass_gt": 1.0,
+    "rgb_first_each_B_pass_direct_gte": 0.97,
+    "rgb_first_each_B_pass_normalized_gte": 0.97,
+    "all_source_identity_parity_FP_deadline_required": true
+  },
+  "measurement_variance_rule": {
+    "null_ratio_interval": [
+      0.97,
+      1.0309278350515465
+    ],
+    "scope": "Each of the eight non-target controls independently, separately for direct and normalized metrics. Inspect both same-product null pairs B2/B3 and A6/A7.",
+    "direct_null_ratio": "Earlier CPP median / later CPP median for each same-product pair.",
+    "normalized_null_ratio": "Later original/CPP ratio / earlier original/CPP ratio for each same-product pair.",
+    "if_either_null_ratio_outside_interval": "Require worst observed A/B gain >=0.97 for THAT control and THAT metric. Otherwise UNRESOLVED_MEASUREMENT. No blanket null-band veto or relaxed floors.",
+    "worst_direct": "min(all four A CPP pass medians) / max(all four B CPP pass medians)",
+    "worst_normalized": "min(all four B original/CPP ratios) / max(all four A original/CPP ratios)",
+    "always_publish": "All direct/reference/normalized null ratios, all A/B pass values and both worst-pair gains for every control.",
+    "invariants": "All fixed balanced3% floors, RGB-first per-pass floors, target/global/original gates remain required. Large separated gains may pass despite observed null variance; do not label that measurement stable.",
+    "variant_limit": 1,
+    "automatic_reruns": 0
+  },
+  "deadline_utc": "2026-10-29T00:59:41Z",
+  "schema": "montage-sustained-measurement-v1",
+  "status": "SEALED_BEFORE_ANY_SUSTAINED_TIMING",
+  "created_utc": "2026-10-29T00:26:37.429576+00:00",
+  "products": {
+    "A": {
+      "role": "baseline",
+      "revision": "4f69eba77a262056459eaab1e0a39e53610e9305",
+      "run": 40778508940,
+      "artifact": 12855199919,
+      "sha256": "4918246748c2d7d263f26f8eb05bc65f299d2ba2caf9672a3fcd1683338feb96"
+    },
+    "B": {
+      "role": "candidate",
+      "revision": "b5bd1df7e27099e528fb4c7db67e2cb0bf35abae",
+      "run": 40790763016,
+      "artifact": 12861613199,
+      "sha256": "bb38655f7629dd4c1d51c20133508a2114180e271e672be15b3edbf211e6fa07"
+    }
+  },
+  "acceptance_contract_sha256": "eb47b18e695a9f376a004a2490e5a62240933a1418b8f2520c6456b964fac01e",
+  "driver_path": "tools/montage_sustained.py",
+  "driver_sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "workloads_sha256": "434d7540206cd2adcf3253bc097e36db7131a15b0c6054fa06b2c97fd5da3d68",
+  "frozen_harness_sha256": "93a0dc6c08da84a705880d7f01e751a47f11e12728aa3d28c19112da5d236bdd",
+  "legacy_measure_sha256": "c28ce23805ab39ad55d806f42a227b6269b30927b36491f7f9a062e2ed4dd513",
+  "closed_outcomes": {
+    "row_owned_v1": "UNRESOLVED_MEASUREMENT",
+    "row_owned_v2": "UNRESOLVED_MEASUREMENT"
+  },
+  "question": "Full-public timing variability under sustained batches and warm calibration; no reference-only or old-host causal claim.",
+  "variant_limit": 1,
+  "automatic_reruns": 0,
+  "measurement": {
+    "order": [
+      "A",
+      "B",
+      "B",
+      "A",
+      "B",
+      "A",
+      "A",
+      "B"
+    ],
+    "same_product_null_pairs": [
+      [
+        2,
+        3
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "threads": 1,
+    "reference_pools": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_calibration_min_ms_per_function": 250,
+    "raw_samples": 1008,
+    "affinity": "One initially permitted CPU fixed before imports for every independent process.",
+    "loop_policy": "No1000 cap. Grow loops after every under100ms attempt; keep all probes as calibration, accept exactly7 >=100ms batches/function.",
+    "order_policy": "Alternate function order by(round+case_index+pass_index)%2; each product has two passes of each starting order.",
+    "sleep_policy": "No interbatch sleep.",
+    "timed_boundary": "Full existing public API, allocation and explicit output destruction inside every timed loop.",
+    "evidence": "Every warmup/calibration/underlength/accepted batch records loops and elapsed_ns in flushed JSONL, plus returned full per-case timing records."
+  },
+  "validation_closure": "Explicit frozen main copied with exact inverse of5 approved parser/binding/measurement/metadata edits; all oracle/profiling/input/source/FP assertions unchanged. Unchanged frozen factory/oracle helpers imported directly from product93a source."
+}
