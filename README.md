@@ -20,7 +20,7 @@ See the [Gabor image-filter report](benchmarks/gabor-image-initial.md) and the
 [current verification report](benchmarks/STATUS.md) for measured
 speedups, raw reports and remaining regressions on the recorded hosts.
 
-The [row-owned Montage byte-fill v2 experiment](benchmarks/montage-row-owned-v2-same-host.md) remains **UNRESOLVED_MEASUREMENT**, with its source private. All fixed gates pass and incomplete uint8 improves 1.355×/1.348×, but the unchanged Fortran normalized worst-pair floor fails (0.885× versus 0.97). All raw evidence and its individual original-library loss are retained; neither this result nor v1 expands the qualified 241-API baseline.
+The [row-owned Montage byte-fill v2 experiment](benchmarks/montage-row-owned-v2-same-host.md) remains **UNRESOLVED_MEASUREMENT**, with its source private. All fixed gates pass and incomplete uint8 improves 1.355×/1.348×, but the unchanged Fortran normalized worst-pair floor fails (0.885× versus 0.97). All raw evidence and its individual original-library loss are retained; neither this result nor v1 expands the qualified 241-API baseline. The [sustained follow-up](benchmarks/montage-sustained-same-host.md) also remains unresolved: validated 100 ms batches retain uncertainty in three control workloads, so the candidate stays unmerged.
 
 ## Supported parity surface
 

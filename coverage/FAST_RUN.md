@@ -333,3 +333,5 @@ do not turn an unrelated failed broad suite into accepted product coverage.
 Run the full required supported-profile qualification before acceptance, including actual installed Python/C++ SDK interfaces, scalar/SIMD behavior, worker policy and source/runtime/product identity. Compact phase-1 checks accelerate diagnosis; they do not replace full contracts, profile gates or performance evidence. Report private parity, public-product acceptance and measured performance as separate states.
 
 The [execution plan](EXECUTION_PLAN.md) and machine queue retain detailed ownership and acceptance boundaries. This guide supplies the short command sequence; historical evidence stays authoritative only for its exact source and scope.
+
+Montage sustained follow-up is closed **UNRESOLVED_MEASUREMENT**: run 40795200735 passes all fixed gates and batch-length checks but fails the frozen uncertainty rule for three controls. See [the complete report](../benchmarks/montage-sustained-same-host.md). No further unchanged rerun or source merge follows this bounded investigation; the byte-fill correction remains private.
