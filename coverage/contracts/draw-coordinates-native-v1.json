@@ -5,11 +5,13 @@
   "base": "e7e54b1",
   "captured_contract": {
     "path": "coverage/contracts/draw-coordinates.json",
-    "sha256": "acc20acd84f46e9a11f118dc27e0582eb5d3dd8a5e33a8d6016402dc575c4a1d",
+    "sha256": "944f5347959eb748808ba71bd08bc9344165a1e524f46de5318f59c1aca46f53",
     "calls": 176,
     "returns_per_profile": 75,
     "errors_per_profile": 13,
-    "raw_root": "build/draw-coordinate-capture-v1"
+    "raw_root": "build/draw-coordinate-capture-v1",
+    "original_capture_sha256": "acc20acd84f46e9a11f118dc27e0582eb5d3dd8a5e33a8d6016402dc575c4a1d",
+    "metadata_successor": "68e4be3 observer/source-freeze-only migration; original_observations exact66ba107. Exporters stopped before fixture normalization/native outputs at the old pre-migration SHA assertion; failure retained."
   },
   "header_sha256": "9ce8a402b50cee888aab919ef175beb41b20232f16ad6e5af435f2ff248f7ae1",
   "owned": [
