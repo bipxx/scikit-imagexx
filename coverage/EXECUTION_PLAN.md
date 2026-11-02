@@ -1,6 +1,45 @@
 # Complete scikit-image implementation plan
 
-The [qualified baseline is247 partial image APIs](evidence/public247-whole-product-admission.json), at exact `f1f9c42`: four profiles,907,400 checks,208 installed SDK checks and48 corpora with no failures/errors/skips. Current main now declares251 APIs. The four drawing APIs pass [genuine minimum preparation40816710252](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), normal/scalar parity, an actual SDK84 client and untimed first-cohort validation; initial12-case one-thread timing is next. The newer Montage optimization has separate measured evidence. Earlier failures and raw artifacts remain unchanged.
+Current source has **251 native-partial image APIs and 217 upstream-only APIs**. The [qualified baseline](evidence/public247-whole-product-admission.json) remains 247 APIs at exact `f1f9c42`, with four supported profiles. [Drawing's initial one-thread benchmark](../benchmarks/draw-coordinates-minimum-initial.md) is complete: 10/12 wins, 1.874x geometric mean; tiny line and 2D rectangle retain losses. Full 251-API qualification is outstanding. Implementation remains paused; this planning revision does not launch work.
+
+## Execution policy: remove repeated work (2026-11-02)
+
+This section supersedes older operational instructions where they conflict. Historical checkpoints, failed experiments, raw evidence and exact-source acceptance boundaries remain unchanged. Use this live summary and the existing queue; do not create another state ledger or copy historical narratives into new plans.
+
+### Phases and exit conditions
+
+| Phase | Execute | Exit condition and reuse |
+|---|---|---|
+| 1. Reconcile once on resume | Read current source, existing receipts and unfinished packets; assign one owner per writable surface. | Name each packet's exact missing gate. Do not recapture references, rebuild products or replay tests just to refresh bookkeeping. |
+| 2. Implement a coherent family | Freeze header/cases early. Implement native code and Python/SDK integration in parallel against that interface; include inventory routes, exported headers and dependency declarations in the same increment. | Changed-family parity passes, with scalar/SIMD, relevant worker modes and explicit providers. Reuse frozen original observations within their valid runtime/platform scope. |
+| 3. Run the real setup barrier | Test the exact workflow launcher, import path, benchmark-only dependencies and workflow selectors. Run source-only portability checks with both retained interpreters. Run the actual complete prebuild selectors once for the frozen candidate. | Actual collected identities and expected scope agree; no known setup failures. Fix a narrow failure and rerun that check plus affected consumers; do not replay unrelated passing checks unless the fix changes their inputs. No new preflight framework or environment is required. |
+| 4. Freeze and prepare | Build a genuine product once for the intended source/profile. Combine already-ready compatible increments before freezing; do not delay indefinitely for an unfinished optimization. | Authentic product, installed family/SDK evidence and exact execution provenance. Reuse existing eligible products for measurements; preparation does not imply full qualification. |
+| 5. Qualify and measure | Run one four-profile campaign for the frozen cumulative release candidate. Separately measure each ready family using genuine prepared artifacts on isolated hosts, with one worker and the existing sampler/gates. | Keep release qualification and scoped performance claims separate. A changed source needs new affected evidence; a failed setup is fixed before a successor campaign. Never rerun an unchanged performance experiment for favorable noise. |
+| 6. Close promptly | Review once independently, merge/push the validated increment, update its existing record, then retire eligible worktrees. | Evidence links resolve, losses remain explicit, no completed source backlog. Preserve active packages, raw data, failed trials and protected paths. |
+
+Family performance may proceed after genuine preparation and installed-family validation without waiting for the full cumulative campaign. It proves only the measured product/family, and cannot advance whole-product qualified coverage. The full release campaign remains mandatory for that claim.
+
+### Reuse and rerun rules
+
+| Input/change | Required work | Work to avoid |
+|---|---|---|
+| Documentation or receipt correction only | Link/format/scope checks; recompute affected reported values from retained raw data if necessary. | Numerical reruns, package builds, repeated downloads or full archive rehashing solely for a new administrative receipt. |
+| Test/launcher/inventory change | Reproduce the failing context, test the fix and affected consumers; rerun the complete setup barrier if its selection, isolation or shared setup changed. | Treating source-AST checks as proof of the real launcher, or rebuilding unchanged numerical code to fix a counter. |
+| Native or frontend behavior change | Recompile affected translation units locally; rerun changed-family and dependent behavior tests, then prepare the exact genuine candidate for hosted claims. | New environments, full local SDK rebuilds, or whole-library campaigns for every private edit. |
+| Shared ABI, runtime, compiler policy or dependency change | Expand validation to the affected dependency closure; full supported-profile qualification before release acceptance. | Reusing incompatible products or calling a partial receipt whole-product proof. |
+| Immutable fixture/artifact | Decode once per appropriate test scope; authenticate once at receipt and reuse read-only content with its recorded digest and scope. | Per-case JSON parsing, repeated positive-envelope copies, duplicate downloads and independent reviewers rehashing unchanged multi-GB archives. |
+| Mutated fixture, new trust boundary or platform-sensitive observation | Fresh validation of the changed object; independent mutable negative fixtures; narrow original witness only where the old reference is invalid. | Global validator caches that conceal mutations, normalization that forces agreement, or wholesale golden recapture. |
+
+Use existing module/session fixtures for immutable test data. Keep mutation cases isolated and all assertions intact. Test-fixture deduplication is a small separate test-only packet; do not introduce a general production cache. Record observed test wall time and temporary bytes before/after from ordinary runs; do not claim estimated parsing traffic is physical I/O or proven saved time.
+
+### Immediate sequence after an explicit implementation resume
+
+1. Reconcile/publish pending drawing evidence and its existing records. Keep 247 qualified distinct from 251 source coverage.
+2. Finish the source audit of tiny-line boundary overhead; select one small evidence-backed candidate. Preserve native admission, error/protocol behavior and all frozen cases. The rectangle 1.4% loss in one cohort is not a proven bottleneck cause.
+3. Complete readiness checks and freeze one 251-API supported-profile campaign. Include any already-validated compatible fix before freezing; otherwise qualify the ready source while optimization continues separately.
+4. Continue the next coherent upstream-only family from the existing per-API roadmap. Prepare its contracts, SDK surface and benchmark together; add coverage only after actual parity evidence.
+
+Measure success by useful validated increments, setup-only failures, repeated fixture work and time to merge. Do not add another telemetry framework or use assertion counts as the progress metric.
 
 ## Historical checkpoint narratives
 
@@ -590,10 +629,10 @@ read-only dependencies, runtime handles, exit gate, and next handoff.
 
 | Role | First bounded packet after resume | Continuing lane |
 |---|---|---|
-| Root / integrator | Review the 199 candidate delta and checkpoint receipts; reconcile stale packets; authorize one exact candidate's qualification | Shared CMake/core/exports/SDK/registry wiring, final independent acceptance, prompt merge/push and safe cleanup. Delegate mechanical evidence verification; review code, scope, exceptions, and the verifier's receipt. |
-| Worker A | Finish the frozen TV comparison review/preflight using existing products; hand observation to the existing controller once running | Close measured regressions in metrics, TV, rank, resize, or labeling, one measured hypothesis at a time. A running remote job alone does not occupy this worker. |
-| Worker B | Review the threshold/Li native frontier and implement one justified missing contract partition | Native-partial breadth, simple draw/util/reduction APIs, and region statistics. Reuse shared primitives and obtain an independent reviewer before handoff. |
-| Worker C | Resolve reconstruction's reference/provider boundary and finish the smallest scalar native packet from the preserved draft | Neighborhood, morphology, connectivity, then a dependent family. During external waits, take an independent class/state or data/I/O contract packet from lane P. |
+| Root / integrator | Reconcile pending drawing publication and freeze the next ready release candidate | Own shared wiring, dispatch, acceptance and prompt merge/push; review the independent receipt without duplicating mechanical processing. |
+| Worker A | Audit/fix tiny-line overhead with one bounded hypothesis | Measured bottlenecks; retain controls and failed experiments. |
+| Worker B | Check 251-API qualification readiness and the exact launcher/setup barrier | Independent integration/product review; prepare the next family's contracts during remote waits. |
+| Worker C | Select the next coherent upstream-only family from the existing per-API roadmap | Own new native files and frozen header; root coordinates frontend/SDK wiring without overlapping edits. |
 
 Root assigns independent review to a worker who did not author the changed
 algorithm. Rotate reviews as packets finish; do not add a fourth worker or make
@@ -665,7 +704,7 @@ flowchart LR
     K --> P[Actual installed family parity and SDK]
     P --> Q[Exact cumulative product qualification]
     H --> M[Isolated original vs native measurement]
-    Q --> M
+    Q --> RLS[Whole-product release acceptance]
     M --> R[Retained regression and bottleneck packet]
     R --> K
 ```
@@ -688,7 +727,7 @@ Keep four distinct gates:
    qualification for the actual cumulative candidate. The family gate catches
    defects early; it does not replace this release gate. Unaffected private
    evidence may be referenced only with explicit identical dependency closure.
-4. **Performance gate:** consume the actual qualified artifacts and original
+4. **Performance gate:** consume genuine prepared, installed-family-validated artifacts and original
    0.26.0 in isolated one-worker roles. Verify the frozen corpus first, then time
    complete public calls. Retain every case, sample, regression and failed trial.
 
