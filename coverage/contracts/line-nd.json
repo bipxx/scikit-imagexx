@@ -1,0 +1,1143 @@
+{
+  "schema": "line-nd-prospective-contract-v1",
+  "api": "draw.line_nd",
+  "signature": "(start, stop, *, endpoint=False, integer=True)",
+  "original_source_sha256": "44a1b51878ec4f25cdf09da75891950dea2a1b7b2ba8fbaa99345e66c26cb7fe",
+  "numpy_linspace_source_sha256": {
+    "1.24.4": "35849b320cedb57fdec533fc360cca7595e349c28082af1caeed95ee2f975e71",
+    "2.5.4": "97925f5f2a271088cbff838a149a6312335d8dac80ac0314f0c85a31b442c1b5"
+  },
+  "cases": [
+    {
+      "id": "line-nd/1d-end-False-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0
+      ],
+      "stop": [
+        1
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/1d-end-False-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0
+      ],
+      "stop": [
+        1
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/1d-end-True-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0
+      ],
+      "stop": [
+        1
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/1d-end-True-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0
+      ],
+      "stop": [
+        1
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/2d-end-False-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/2d-end-False-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/2d-end-True-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/2d-end-True-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/3d-end-False-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/3d-end-False-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/3d-end-True-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/3d-end-True-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/4d-end-False-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/4d-end-False-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/4d-end-True-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/4d-end-True-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/8d-end-False-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4,
+        -3,
+        2,
+        5,
+        -1
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/8d-end-False-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4,
+        -3,
+        2,
+        5,
+        -1
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/8d-end-True-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4,
+        -3,
+        2,
+        5,
+        -1
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "line-nd/8d-end-True-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        3,
+        -2,
+        4,
+        -3,
+        2,
+        5,
+        -1
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/point-end-False-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        1.5,
+        -2.5
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/point-end-False-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        1.5,
+        -2.5
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/point-end-True-int-False",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        1.5,
+        -2.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/point-end-True-int-True",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        1.5,
+        -2.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/half-positive",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0.5
+      ],
+      "stop": [
+        4.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/half-descending",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        4.5
+      ],
+      "stop": [
+        0.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "line-nd/half-negative-phase",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        -3.5
+      ],
+      "stop": [
+        0.5
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/half-near-tie",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0.5000000000000001
+      ],
+      "stop": [
+        4.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/broadcast-start",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        -0.5
+      ],
+      "stop": [
+        2.5,
+        1.5
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/broadcast-stop",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        -0.5,
+        1.5
+      ],
+      "stop": [
+        3.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/fractional-float",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "stop": [
+        1.3,
+        4.6,
+        -2.1
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/dtype-float16",
+      "api": "draw.line_nd",
+      "kind": "dtype-float16",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        4.5,
+        3.5
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/dtype-float32",
+      "api": "draw.line_nd",
+      "kind": "dtype-float32",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        4.5,
+        3.5
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/dtype-float64",
+      "api": "draw.line_nd",
+      "kind": "dtype-float64",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        4.5,
+        3.5
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/dtype-int8",
+      "api": "draw.line_nd",
+      "kind": "dtype-int8",
+      "start": [
+        120
+      ],
+      "stop": [
+        -120
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/dtype-uint8",
+      "api": "draw.line_nd",
+      "kind": "dtype-uint8",
+      "start": [
+        5,
+        6
+      ],
+      "stop": [
+        1,
+        2
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/dtype-uint64",
+      "api": "draw.line_nd",
+      "kind": "dtype-uint64",
+      "start": [
+        1,
+        2
+      ],
+      "stop": [
+        5,
+        7
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/reverse",
+      "api": "draw.line_nd",
+      "kind": "reverse",
+      "start": [
+        1.5,
+        0.5,
+        -2.5
+      ],
+      "stop": [
+        4.5,
+        3.5,
+        1.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/readonly-unaligned",
+      "api": "draw.line_nd",
+      "kind": "readonly-unaligned",
+      "start": [
+        1.5,
+        0.5,
+        -2.5
+      ],
+      "stop": [
+        4.5,
+        3.5,
+        1.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/array-provider",
+      "api": "draw.line_nd",
+      "kind": "array-provider",
+      "start": [
+        1.5,
+        0.5,
+        -2.5
+      ],
+      "stop": [
+        4.5,
+        3.5,
+        1.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/scalar-float",
+      "api": "draw.line_nd",
+      "kind": "scalar",
+      "start": 0.5,
+      "stop": 3.5,
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/scalar-integer",
+      "api": "draw.line_nd",
+      "kind": "scalar",
+      "start": 0.5,
+      "stop": 3.5,
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-empty",
+      "api": "draw.line_nd",
+      "kind": "error-empty",
+      "start": [],
+      "stop": [],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-mismatch",
+      "api": "draw.line_nd",
+      "kind": "error-mismatch",
+      "start": [
+        0,
+        1
+      ],
+      "stop": [
+        1,
+        2,
+        3
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-nonnumeric",
+      "api": "draw.line_nd",
+      "kind": "error-nonnumeric",
+      "start": [
+        "a",
+        "b"
+      ],
+      "stop": [
+        "c",
+        "d"
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-nan",
+      "api": "draw.line_nd",
+      "kind": "error-nan",
+      "start": [
+        0.0,
+        0.0
+      ],
+      "stop": [
+        0.0,
+        0.0
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-inf",
+      "api": "draw.line_nd",
+      "kind": "error-inf",
+      "start": [
+        0.0,
+        0.0
+      ],
+      "stop": [
+        0.0,
+        0.0
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-bool",
+      "api": "draw.line_nd",
+      "kind": "error-bool",
+      "start": [
+        false,
+        true
+      ],
+      "stop": [
+        true,
+        false
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-missing-stop",
+      "api": "draw.line_nd",
+      "kind": "error-missing-stop",
+      "start": [
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        2
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/error-keyword",
+      "api": "draw.line_nd",
+      "kind": "error-keyword",
+      "start": [
+        0,
+        0
+      ],
+      "stop": [
+        1,
+        2
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/underflow-step",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0.0,
+        0.0
+      ],
+      "stop": [
+        4.2,
+        5e-324
+      ],
+      "options": {
+        "endpoint": false,
+        "integer": false
+      },
+      "policy": {
+        "under": "call"
+      },
+      "holdout": true
+    },
+    {
+      "id": "line-nd/signature-defaults",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        0,
+        1
+      ],
+      "stop": [
+        4,
+        3
+      ],
+      "options": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/signed-zero",
+      "api": "draw.line_nd",
+      "kind": "list",
+      "start": [
+        -0.0,
+        0.0
+      ],
+      "stop": [
+        0.0,
+        -0.0
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-nd/dtype-metadata",
+      "api": "draw.line_nd",
+      "kind": "metadata",
+      "start": [
+        1.5,
+        0.5
+      ],
+      "stop": [
+        4.5,
+        3.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": false
+      },
+      "policy": {},
+      "holdout": false
+    }
+  ],
+  "limits": {
+    "max_dimensions": 8,
+    "max_points": 512,
+    "max_output_elements": 4096
+  },
+  "source_freeze": {
+    "tests/line_nd_contract.py": "8128c0aa2495e1378d0a7cda30a2587f464c6317aeaeaf0473bc18bceab6696f",
+    "tests/line_nd_observer.py": "150916c43f1cb41492d810beba42f8e8f32f3ca4c0bd26ffdba273a8feac89d2",
+    "tests/test_line_nd_reference.py": "b68d41573d10765c42693615aeadc3c07bed32ccd3759e116f6a729f3e6c34a4",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/test_draw_coordinates_public.py": "90d3bacc0fc2c4a24ca76301bae8da865869f8713768273b4cc42c1d36e6f74e"
+  },
+  "source_audit": {
+    "pinned_file": "build/draw-line-nd-reference-v1/draw_nd.py",
+    "formula": "asarray(start),asarray(stop);npoints=int(ceil(max(abs(stop-start)))); endpointadds1; linspace(...,endpoint).T; rounddimsrange(len(start));finalastype(int);tuple(coords)",
+    "integer_arithmetic": "Subtraction/abs happensbeforefloatlinspace, retainingNumPydtype wrap. Explicitint8 120->-120 yieldsboundedwrapped16; uint8descending5/6->1/2 yieldsbounded252; uint64ascendingonly. No wideoverflow/underflow input admitted.",
+    "rounding": "Exactfirstcoord%1==.5 ANDsecond-first==+1 ANDlen>1 selectsfloor, otherwiseNumPyround(nearesteven). Descending-1 doesNOTselectfloor; neverrepairsourcebasedondocumentation.",
+    "broadcast": "Length1vsN vectors explicitlyassessed; integerlooproundsonlylen(start) dimensions beforefinalcast, so broadcast-start extraaxes gettruncatingcast.",
+    "point": "CoincidentendpointFalse createszero samples; endpointTrue createsone. _round_safe guardsindicesbylen>1. Emptyvector reduction/malformedbroadcast/string/bool/nonfinite count errors stopbeforelinspace; scalarintegerTruelen error occursafterboundedallocation.",
+    "ownership": "tuple iterationreturnsrowviews ofwholecoordinatearray; doNOTassumeindependentowningoutputs. Actualdtype/rowstrides/base-shapes/sharing/signedzero andscalarFalse tuple-of-scalars deferredtocapture.",
+    "numpy_line_stages": "Bothpinnedlinspace implementations inspectstepzero; underflowminoraxis togglesdivide-then-multiply association. Explicitunderflow-call case frozen; old/new NumPydtype preparation differs, actualwords/dtypesnotinferredfromresult_type.",
+    "allocation": "<=8dimensions; knownfinitevector range[-128,128], boundedtyped8bitwrap; <=512points and4096totalcoordinateelements. Floattoint coordinates safelyinside32bitnative-int too; no forgedbuffer/privateuncheckedindex. Peakcoordinate/round/casttemps boundedwellbelow128KiB.",
+    "errors": "ExpectedERRORCLASSES/MESSAGESNOTmanufactured; onlysource-visibleprecondition stages annotated beforecapture. Nonfiniteplaceholders materializedonlyinactualfixture; no line_nd/linspace/round/max calls inproducers."
+  },
+  "numerical_policy": {
+    "mode": "strict-source-profile",
+    "max_ulp": 0,
+    "rtol": 0,
+    "atol": 0,
+    "integers": "Exactnp.dtype(int) result andorder/duplicates",
+    "floating": "Preserveactualprofile-specificlinspace dtype andwords, signedzero, callback/warning/errororder andFPpolicy; no post-resultbudgetrelaxation",
+    "platform": "RetainedLinux64 runtimesonly; Windows/native-int andhardwarefloatingenvironment needtheirvalidscope"
+  },
+  "proposed_native_interface": {
+    "status": "DESIGN_ONLY_NOT_FROZEN_CPP_HEADER",
+    "prepare": "Typedfinitevectorgeometry retainingstart/stopdtype subtraction semantics, broadcastN, rounded_dims=len(start),npoints, endpoint/integer andobservedoutputdtype/profile",
+    "output": "Oneowningcoordinatebackingmatrix withtuple-rowview metadata/sharing peroriginal; scalarFalse andunassessedprotocol partitions explicit",
+    "computation": "Source-faithful linspace stageddivision/multiplication/addition andconditionalfloor/nearest-even, strictFP/noFMA. Nativeimplementation waitsoriginalcapture/independentreference; no std::round shortcut.",
+    "cpu_workers": "Independentcoordinate/point arithmetic maySIMD; optionalglobalworkers onlyafterequivalence/FPstate proof, default1/no newpool; no accelerationclaimyet"
+  },
+  "unassessed": [
+    "Unbounded dimension/output/allocation and inputvector length beyond8",
+    "Wide integer subtraction/abs overflow or unsigned underflow beyond explicitbounded8bit cases",
+    "Integercast outside native int range, nonfinite successful outputs and nonordinary rounding environment",
+    "Higher-rank broadcasting, arbitrary object/array subclasses/protocols and nonbool flag protocols",
+    "Forged storage/concurrent mutation and platform observations outside retainedLinux64 profiles",
+    "No original results, native implementation, registration or performance credit in prospective packet"
+  ],
+  "original_observations": {},
+  "original_provenance": {},
+  "original_calls": 0,
+  "native_implementation": "pending",
+  "next_gate": {
+    "owner": "root",
+    "trigger": "Independentlyreviewthisprospective54IDcase/safety/observer+bothrefusalintakes",
+    "action": "AuthorizeSEPARATEsafeonce-onlyoriginalcapturepacket perretainedprofile; recordstarted/completedjournals andactualrawoutputs/types/ownership/errors beforeanynativeimplementation. No realoriginalcalls inthispacket."
+  },
+  "task_closeout": {
+    "status": "prospective-intake-pending",
+    "reuse": "Existingdrawencoder/guard/runtime/sourceSDist; no newenv/build/benchmark/framework",
+    "next_plan_correction": "Stopafterintake/handoff; rootcapturesgate only. Freezeactualtupleviewstorage anddtypearithmetic beforeproposingnativecode."
+  }
+}
