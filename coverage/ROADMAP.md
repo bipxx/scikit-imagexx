@@ -19,6 +19,8 @@ and properties. This establishes no numerical parity: constructors, methods,
 properties, instance fields and runtime-generated attributes still need complete
 implementation classification, state/parity cases and appropriate benchmarks.
 
+The live [completion milestones and after-task waste review](EXECUTION_PLAN.md#remaining-work-and-completion-gates-2026-11-04) cover missing APIs, partial input domains, classes/runtime discovery, SDK usability, speed gaps and final release acceptance. Source coverage is 251 native-partial image APIs/217 upstream-only entries; the qualified baseline remains 247 at exact f1f9c42. Use the generated per-key routes for selection; older coverage counts and pending work below are historical.
+
 For every native entry:
 
 1. Capture upstream signature, dtype conversion, output/alias behavior, warnings,
@@ -31,6 +33,10 @@ For every native entry:
    representative shapes/dtypes, allocation costs, and recorded raw samples.
    Retain regressions; investigate them rather than removing adverse workloads.
 5. Update the registry, inventory, documented native input contract, and CI.
+
+## Historical coverage narrative
+
+This retained narrative describes earlier revisions. It is evidence context, not a dispatch queue; consult the live plan before implementing or measuring any item already completed later.
 
 Current native coverage includes N-D low-contrast detection with typed percentile interpolation, broadcast compression and SIMD selection; raw N-D local-block means with virtual padding, dtype/layout preservation and SIMD block reductions; N-D integral images with ordered prefix sums, modular integer arithmetic and physical-layout preservation, plus direct strided integral-window queries with exact corner order; N-D Laplace, Farid derivatives and Roberts cross filters with eroded masks.
 Other native coverage: RGB/gray and RGBA conversion, grayscale alpha expansion; N-D Gaussian, difference of Gaussians and unsharp masking; Sobel, Prewitt, and
@@ -73,7 +79,7 @@ plus packet/tail, signed-layout, branch and zero-weight regression cases. Other
 color algorithms and the rest of the API still need complete minimum-version
 coverage; these scoped passes do not establish whole-library compatibility.
 
-Next work:
+Historical next-work list (not current assignments):
 
 - Broaden color conversion input/option parity and address CIE76 scalar dispatch
   overhead. The current inventory has no entirely upstream-only color entries;

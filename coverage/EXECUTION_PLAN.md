@@ -1,6 +1,6 @@
 # Complete scikit-image implementation plan
 
-Current source has **251 native-partial image APIs and 217 upstream-only APIs**. The [qualified baseline](evidence/public247-whole-product-admission.json) remains 247 APIs at exact `f1f9c42`, with four supported profiles. [Drawing's initial one-thread benchmark](../benchmarks/draw-coordinates-minimum-initial.md) is complete: 10/12 wins, 1.874x geometric mean; tiny line and 2D rectangle retain losses. Full 251-API qualification is outstanding. Implementation remains paused; this planning revision does not launch work.
+Current source has **251 native-partial image APIs and 217 upstream-only APIs**. The [qualified baseline](evidence/public247-whole-product-admission.json) remains 247 APIs at exact `f1f9c42`, with four supported profiles. [Drawing's initial one-thread benchmark](../benchmarks/draw-coordinates-minimum-initial.md) is complete: 10/12 wins, 1.874x geometric mean; tiny line and 2D rectangle retain losses. Full 251-API qualification is outstanding. The user has requested continuation; this planning revision launches no implementation jobs.
 
 ## Execution policy: remove repeated work (2026-11-02)
 
@@ -32,14 +32,83 @@ Family performance may proceed after genuine preparation and installed-family va
 
 Use existing module/session fixtures for immutable test data. Keep mutation cases isolated and all assertions intact. Test-fixture deduplication is a small separate test-only packet; do not introduce a general production cache. Record observed test wall time and temporary bytes before/after from ordinary runs; do not claim estimated parsing traffic is physical I/O or proven saved time.
 
-### Immediate sequence after an explicit implementation resume
+### Immediate execution sequence
 
-1. Reconcile/publish pending drawing evidence and its existing records. Keep 247 qualified distinct from 251 source coverage.
+1. Reuse the published drawing evidence; reconcile any remaining record drift without repeating publication or measurements. Keep 247 qualified distinct from 251 source coverage.
 2. Finish the source audit of tiny-line boundary overhead; select one small evidence-backed candidate. Preserve native admission, error/protocol behavior and all frozen cases. The rectangle 1.4% loss in one cohort is not a proven bottleneck cause.
 3. Complete readiness checks and freeze one 251-API supported-profile campaign. Include any already-validated compatible fix before freezing; otherwise qualify the ready source while optimization continues separately.
 4. Continue the next coherent upstream-only family from the existing per-API roadmap. Prepare its contracts, SDK surface and benchmark together; add coverage only after actual parity evidence.
 
 Measure success by useful validated increments, setup-only failures, repeated fixture work and time to merge. Do not add another telemetry framework or use assertion counts as the progress metric.
+
+## Remaining work and completion gates (2026-11-04)
+
+This is the live route to completion, alongside the execution/reuse policy above. The user's continuation authorizes execution; this document update itself launches no builds, benchmarks or qualification jobs. Reconcile actual owners and handles before dispatch. Earlier checkpoint assignments are historical, including packet names still present in old operational fields.
+
+### Account for all work, not just new API names
+
+Use [the existing per-key routes](API_IMPLEMENTATION_PATHS.md), their [generated JSON](API_IMPLEMENTATION_PATHS.json), [the inventory](api.json), and [the task ledger](work_items.json). Do not duplicate 477 rows in another tracker. For each current packet identify public keys/member paths, uncovered contract partitions, native/provider ownership, prerequisites, affected SDK surface, parity command, benchmark or precise blocker, and next owner/gate. Attach new work to these records; never edit frozen observations to make a task appear finished.
+
+| Milestone | Work and easiest credible route | Deliverable / completion gate |
+|---|---|---|
+| M0: close the current checkpoint | Drawing benchmark is already published; reuse it. Investigate tiny-line Python/binding overhead with one bounded candidate. Check rectangle's small measured loss without asserting a cause. Complete source251 readiness and freeze a single ready cumulative candidate. | Exact-source four-profile result for251, explicit dispositions for both drawing losses, prompt merge/push of accepted increments. A qualification failure stays failed; fix its demonstrated cause before a successor. |
+| M1: close easy missing and partial contracts | Take independent W1 entries first: canonical aliases, direct draw/util/statistics loops and compositions of existing primitives. In parallel, extend dtype/layout/axis/output/error domains of the 251 partial entries. Implement only the smallest missing primitive. | Per-key advertised contract matrix, public parity with fallback disabled for native claims, installed C++ use, one-worker original comparison. A new registration is not full contract closure. |
+| M2: neighborhood and connectivity | W2 rolling histograms/order, boundaries, morphology, reconstruction, label/tree consumers; reuse existing queues/reductions when ordering and tie rules match. | Exact topology, labels, ties, exceptional values, output buffers and mutation behavior; shared primitive consumers regressions covered. |
+| M3: geometry and stateful classes | W3 resampling/coordinate primitives and narrowly selected QR/SVD/least-squares facilities. Cover constructors, methods, properties, inverse/composition, serialization where public, callbacks and fitted state. | All 29 inventoried classes and 284 static member paths assessed and implemented to their declared contracts; runtime-discovered members added. Python and actual SDK clients exercise solver computation, not only state metadata. |
+| M4: numerical backends and multiscale pipelines | W4 FFT, distance, wavelet, registration, feature and restoration routes. Choose a reviewed C++ backend only when the first consumer needs it; pin licenses, ABI/build profiles, normalization and global thread control. | Complete family parity and native ownership of required arithmetic; no hidden NumPy/SciPy image algorithm. Backend introduction receives affected portability/SDK coverage. |
+| M5: dependent solvers and segmentation | W5 graph, segmentation, models and iterative/stochastic pipelines over accepted primitives. Freeze convergence, event/tie/callback order and RNG state/draw semantics before optimization. | Exact discrete decisions and public state; declared floating policy, holdouts, native solver witnesses and complete public-call measurements. |
+| P: ecosystem and discovery, starting alongside M1 | Audit pinned 0.26.0 nested namespaces, noncallable exports, runtime properties/instance fields, lazy collections and generated attributes. Close codec/assets/offline/cache/plugin/estimator/GUI boundaries through explicit adapters and reviewed native backends where arithmetic is required. | Every discovered in-scope public path has an owner and executable compatibility check. Assets have hashes/licenses/cache behavior; external user protocols remain explicit. No numerical provider is credited as owned C++. |
+| M6: final product and performance closure | Drain remaining per-key gaps, then freeze the final cumulative source; qualify Python wheel and installed SDK on all supported profiles. Run actual backend-swap pipelines and finish per-API performance decisions against original. | The final acceptance matrix below passes; all known exclusions or unresolved targets remain visible and prevent an unqualified completion claim. |
+
+Milestones describe dependency order, not global barriers: M1-M5 start when the relevant prerequisite is ready. P stays active throughout. Do not wait until all217 upstream-only names are registered to revisit partial domains, stateful APIs, providers or speed losses. Discovery targets the pinned release; a later upstream release is a separate scope decision, not an endless moving target.
+
+### Three execution lanes, bounded work in progress
+
+- **Worker A:** one measured bottleneck or partial-contract closure, initially tiny line. Freeze the mechanism and target/control gates before timings; do not retry unchanged failed experiments.
+- **Worker B:** current cumulative qualification readiness and independent review. During remote waits, prepare the next family's original contract, SDK client or P-lane discovery; a remote job alone does not occupy the worker.
+- **Worker C:** one coherent missing family from the per-key roadmap. Own its new native files and frozen header; root coordinates shared frontend/registry/CMake/SDK integration.
+- **Root:** own shared wiring, dispatch, independent admission and merge/push. Rotate review to someone other than the author; do not repeat a reviewer's unchanged mechanical artifact processing. Before reassigning a file, finish or explicitly hand off its existing owner.
+
+One implementation packet per worker and at most one frozen handoff each; root drains at most two waiting integration candidates. Discovery and fixture improvements use an available lane, not an extra permanent agent. If a task blocks, name its dependency and take independent ready work. Reviewable validated increments merge promptly; a still-running optimization does not hold a ready qualification indefinitely.
+
+### Final acceptance matrix
+
+| Dimension | Required evidence before declaring complete |
+|---|---|
+| Inventory and ownership | All 477 current keys, 29 classes/284 static members and newly discovered pinned-release paths accounted for; aliases/metadata/assets separately classified. All required computation is owned C++ or a declared reviewed native backend. Partial scopes and numerical forwarding are open gaps. |
+| Hot-swappable Python | Same public imports/signatures/defaults, aliases, output types/dtypes/layout/ownership, warnings/errors and observable callbacks/state. Run representative complete pipelines with either backend, including classes, lazy objects and optional-provider availability. Every API/member has contract tests; a registry smoke test is insufficient. |
+| Installed C++ | Self-contained installed headers and relocated downstream clients call every exposed computational family and the required high-level behavior without Python algorithm providers. Primitive-only SDK support is labeled partial until required high-level composition/state is covered. |
+| CPU and workers | Portable scalar and dispatched SIMD parity for applicable paths; default one worker and optional global budgets verified, including nested/provider use. Benchmark small-call overhead and scaling separately. Serial ordered cores are justified explicitly; do not force unsafe parallelism or claim every operation vectorizes. |
+| Per-API performance | Every relevant canonical computational API has frozen representative one-worker public-call comparisons with original, genuine source/product/runtime identity, raw samples and slower cases. New optimizations also pass prospective prior-C++ controls. Targets/holdouts are fixed before candidate results; aliases reuse the kernel benchmark plus path-overhead checks. Metadata/I/O/state use relevant latency/cache behavior, not invented image throughput. |
+| Performance disposition | Close each demonstrated bottleneck with a tested mechanism. Rank work by absolute cost and representative impact. If a target remains unattainable, retain the failed evidence and obtain an explicit scope/target decision; no quiet waiver or aggregate average can turn a loss into completion. |
+| Release and delivery | All four supported profiles qualify the same final frozen source with actual public/SDK/corpus results. Publish source, build/install/usage instructions and performance limitations; merge/push accepted work and retire eligible worktrees under AGENTS.md. Earlier accepted products never qualify later code by implication. |
+
+### Review waste after every task
+
+A task is a bounded implementation, reference, review, setup, qualification, measurement or publication packet, not each test or sample. At every terminal outcome (accepted, failed, discarded, or handed off as blocked), its owner adds the following short closeout to the existing handoff/current checkpoint. Root reviews it before starting the next dependent task.
+
+```text
+Result / source / evidence: <link existing receipt; distinguish science from setup failure>
+Waste and reuse: <avoidable repetition/setup/drift; observed cost if already known, or unknown; what was reused>
+Next-plan change: <one concrete correction, owner and trigger; or reviewed, no change>
+```
+
+Keep this to a few lines. No fresh timing, reference capture, artifact download, test replay or environment is needed to fill it. A correctly rejected scientific candidate is useful evidence, not automatically waste. Unknown cost stays unknown; estimates stay labeled.
+
+For new/current packets, include this closeout requirement in their existing `acceptance` text and record details in their existing handoff or mutable `current_checkpoint`. Root updates the affected `next_gate`/`next_action` and the relevant phase/owner/rerun rule in this plan when a lesson changes execution. Do not invent another schema/validator or rewrite historical manifests. The existing `--packet` command exposes acceptance, but does not display all checkpoint/next-gate details; read the linked record when needed.
+
+If no plan change is warranted, record **reviewed, no change** in the existing task closeout; avoid a documentation-only commit for that entry alone. Reusable cross-project lessons go into the existing compilexx scikit-imagexx note only when there is a new lesson, not after every task. Include material plan changes in the same validated increment rather than deferring them to a periodic retrospective.
+
+| Waste signal | Immediate adjustment before the next expensive task |
+|---|---|
+| Same class of setup failure repeats | Stop another expensive dispatch; fix and test the actual failing entry point and affected consumers. Do not build a generic framework to handle a narrow launcher error. |
+| Proposed duplicate build/download/reference capture | State the changed source/dependency, invalid artifact or missing receipt that requires it; otherwise reuse the existing object. |
+| Stale routes/counts/SDK packaging | Fix the source of truth/generator and actual consumers together; derive scope from collection/manifests. Do not repair old raw results or infer success from counts. |
+| Repeated immutable fixture work | Use the existing appropriate scoped fixture; keep mutated negative cases fresh and all assertions intact. Demonstrate savings only from ordinary subsequent runs. |
+| Ready source waits on unrelated work or accumulating worktrees | Integrate the validated increment and schedule an exact-source checkpoint; safely retire only released clean ancestors, preserving proofs. |
+| A supposed optimization only shifts cost into conversion/allocation/provider work | Keep the allocation-inclusive public benchmark and prior-C++ controls; investigate the demonstrated boundary cost before another candidate. |
+
+First application of this loop: the plan review found stale 199-candidate/SDK-era assignments, unscheduled runtime discovery and a missing genuine-product dependency in the measurement diagram. These are corrected below. No new scientific result, performance gain or qualification credit follows this planning task.
 
 ## Historical checkpoint narratives
 
@@ -525,7 +594,9 @@ Use these documents together:
 - The appendix below retains the important historical checkpoints. Historical
   source labels, raw results, failures, and proof scopes must not be rewritten.
 
-## Accepted scope and frozen handoffs
+## Historical accepted scope and frozen handoffs
+
+This 199-path snapshot and its first-action instructions are historical. Use the live completion milestones and current per-key routes above; do not redispatch these completed checkpoints merely because their old labels say pending.
 
 | Inventory classification | Public keys | Meaning |
 |---|---:|---|
@@ -667,7 +738,7 @@ unplanned project.
 
 | Wave | Deliverable and easiest route | Release criterion |
 |---|---|---|
-| W0 — frozen checkpoint closure | Review/qualify the 199 candidate, measure qualified TV, classify threshold gaps, resolve reconstruction's entry boundary | Each checkpoint gets its true accepted/pending result; no invented new coverage. |
+| W0 — current checkpoint closure | Reuse drawing/Montage evidence, address measured drawing gaps, complete 251-source qualification readiness | Exact-source supported-profile result and explicit performance dispositions; do not repeat historical 199 work. |
 | W1 — cheap independent APIs and partial-contract closure | Existing native dtype/layout/keyword gaps; direct draw loops; util views/copies and conversions; basic statistics/moments; canonical alias reuse | Small public contracts with minimal new machinery, plus per-function timing. |
 | W2 — neighborhood, ordering, connectivity | Reuse histogram/reduction/boundary primitives; rolling windows; reconstruction queue; stable union-find/tree traversal; rank and morphology extensions | Exact topology/tie/output-buffer behavior and safe boundary handling; dependencies shared by later families. |
 | W3 — geometry, resampling, solvers, classes | Existing typed resampling/integral primitives; coordinate generation; C++ least-squares/SVD/QR where justified; common fitting/state layer | Full constructor/state/member behavior and actual solver paths, not class metadata alone. |
@@ -704,6 +775,7 @@ flowchart LR
     K --> P[Actual installed family parity and SDK]
     P --> Q[Exact cumulative product qualification]
     H --> M[Isolated original vs native measurement]
+    P --> M
     Q --> RLS[Whole-product release acceptance]
     M --> R[Retained regression and bottleneck packet]
     R --> K
@@ -813,8 +885,9 @@ These commands inspect the queue; they do not resume the goal or launch work:
 The checker catches cycles, malformed proofs, ownership conflicts and inventory
 accounting. It does not prove that a packet's state is current, that an agent is
 live, that a proof covers all arguments, or that a performance target was met.
-On resume, root reconciles the old packet states with the paused checkpoint map
-and the per-API roadmap before choosing any ready packet.
+Before dispatch, root reconciles old packet states with actual receipts and
+the per-API roadmap; ready does not mean unfinished. Every task closeout includes
+the waste review above before its next dependent task is selected.
 
 Follow [AGENTS.md](../AGENTS.md) after each validated merge. Remove an obsolete
 worktree only with `git worktree remove`, after confirming its commits are
