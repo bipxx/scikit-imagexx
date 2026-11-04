@@ -92,7 +92,17 @@ void controls() {
     std::int16_t labels[]={0,1,3,1};ComponentsView input{labels,PixelType::int16,false,false,{2,2},{4,2}};
     RegionPropsState state;require(prepare_regionprops_state(input,state));const auto original=state.labels.data;
     for(auto type:{PixelType::boolean,PixelType::float32,PixelType::float64}){auto bad=input;bad.type=type;require(!prepare_regionprops_state(bad,state));require(state.labels.data==original);}
-    for(int kind=0;kind<7;++kind){auto bad=input;if(kind==0)bad.swap=true;if(kind==1)bad.half=true;if(kind==2)bad.data=nullptr;if(kind==3)bad.shape={0,2};if(kind==4)bad.strides={2};if(kind==5)bad.strides[0]=std::numeric_limits<std::ptrdiff_t>::min();if(kind==6)bad.shape={std::size_t(PTRDIFF_MAX),2};require(!prepare_regionprops_state(bad,state));require(state.labels.data==original);}
+    for(int kind=0;kind<7;++kind) {
+        auto bad=input;
+        if(kind==0)bad.swap=true;
+        if(kind==1)bad.half=true;
+        if(kind==2)bad.data=nullptr;
+        if(kind==3)bad.shape={0,2};
+        if(kind==4){bad.strides.resize(1);bad.strides[0]=2;}
+        if(kind==5)bad.strides[0]=std::numeric_limits<std::ptrdiff_t>::min();
+        if(kind==6)bad.shape={std::size_t(PTRDIFF_MAX),2};
+        require(!prepare_regionprops_state(bad,state));require(state.labels.data==original);
+    }
     for(int budget:{1,4}) {
         std::vector<std::int16_t> large(4*65537,1);ComponentsView v{large.data(),PixelType::int16,false,false,{4,65537},{65537*2,2}};
         set_num_threads(budget);RegionPropsState prepared;require(prepare_regionprops_state(v,prepared));require(prepared.workers==budget);

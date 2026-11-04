@@ -28,6 +28,7 @@
   "source_freeze": {
     "include/skimagexx/regionprops_state.hpp": "aefe1c1203b3450e0200c38b74e8d4709fee3fe2d9bf654bfefa0c067e862919",
     "src/regionprops_state.cpp": "7ce79583c098da81f279d0aaaa6571733456829190059ee162d5c8215e75582d",
-    "tests/test_regionprops_state_native.cpp": "03c31731c2302f7d4b54c2955ca9ddb9c1ca8c58f742d2eb0fc7be2b07f46bea"
-  }
+    "tests/test_regionprops_state_native.cpp": "fe86c4f8f7083855678700af507a1a46fc05b7070de271c36f406cf5fa15acd2"
+  },
+  "test_compile_correction": "GCC13 -Werror=array-bounds false-positive for assigning one-element initializer_list to existing stridevector; use explicit resize(1)+element assignment, preserve malformed-vector guard and all warnings. First failed compile retained; header/nativeleaf unchanged."
 }
