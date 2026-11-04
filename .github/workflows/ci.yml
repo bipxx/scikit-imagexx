@@ -133,7 +133,7 @@ jobs:
           git cat-file -e '4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11.17'
       # Build isolation supplies NumPy2 headers; exercise the resulting wheel
       # with the declared minimum runtime, rather than rebuilding against1.x.
       - run: |
@@ -524,7 +524,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11.17'
       - uses: actions/download-artifact@v4
         with:
           name: numpy-minimum-ciede2000
