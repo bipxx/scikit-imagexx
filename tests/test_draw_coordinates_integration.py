@@ -78,3 +78,28 @@ def test_draw_captured_public_pipeline(spec,workers,monkeypatch):
         assert xx.get_num_threads()==workers
     finally:
         sys.setprofile(previous_profile);xx.set_num_threads(previous);xx.set_fallback_enabled(fallback)
+
+
+@pytest.mark.parametrize('coordinate_type',(int,'int64','uint64',bool))
+def test_draw_line_memoryview_owners_survive_public_return(coordinate_type):
+    import gc
+    import numpy as np
+    import skimagexx as xx
+    coordinate_type=getattr(np,coordinate_type)if isinstance(coordinate_type,str)else coordinate_type
+    stop=1 if coordinate_type is bool else 3
+    rows,columns=xx.draw.line(coordinate_type(0),coordinate_type(0),
+                              coordinate_type(stop),coordinate_type(stop))
+    assert isinstance(rows.base,memoryview)and isinstance(columns.base,memoryview)
+    row_owner=rows.base.obj;column_owner=columns.base.obj
+    assert row_owner is not column_owner
+    assert row_owner.flags.owndata and column_owner.flags.owndata
+    assert not rows.flags.owndata and not columns.flags.owndata
+    expected=np.arange(stop+1,dtype=np.intp)
+    assert np.array_equal(rows,expected)and np.array_equal(columns,expected)
+    del row_owner,column_owner
+    gc.collect()
+    rows[0]=-7
+    assert rows.base.obj[0]==-7 and columns[0]==0
+    del columns
+    gc.collect()
+    assert rows[-1]==stop

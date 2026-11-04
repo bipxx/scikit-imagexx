@@ -15,12 +15,18 @@ _INTEGER_TYPES=(int,bool,np.int8,np.int16,np.int32,np.int64,np.uint8,np.uint16,n
 
 def line(r0,c0,r1,c1):
     native_result=None
-    if all(type(value)in _INTEGER_TYPES for value in(r0,c0,r1,c1)):
+    if type(r0)is int and type(c0)is int and type(r1)is int and type(c1)is int:
+        if (-(1<<63)<=r0<(1<<63) and -(1<<63)<=c0<(1<<63)
+                and -(1<<63)<=r1<(1<<63) and -(1<<63)<=c1<(1<<63)):
+            native_result=_core.draw_line(r0,c0,r1,c1,_core.get_num_threads())
+            if native_result is not None:
+                return native_result
+    elif all(type(value)in _INTEGER_TYPES for value in(r0,c0,r1,c1)):
         prepared=tuple(int(value)for value in(r0,c0,r1,c1))
         if all(-(1<<63)<=value<(1<<63)for value in prepared):
             native_result=_core.draw_line(*prepared,_core.get_num_threads())
             if native_result is not None:
-                return tuple(np.asarray(memoryview(value))for value in native_result)
+                return native_result
     # Explicit provider for unassessed conversion/protocol/unsafe arithmetic
     # partitions, not forwarding of an admitted native line.
     from skimage.draw._draw import _line

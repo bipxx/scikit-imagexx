@@ -114,7 +114,10 @@ void bind_draw_coordinates(py::module_& module) {
             py::gil_scoped_release release;
             skimagexx::detail::draw_line_into(r0,c0,r1,c1,output,workers);
         }
-        return py::make_tuple(rows,columns);
+        // Match the original memoryview-backed outputs while avoiding Python
+        // generator and conversion dispatch on every public call.
+        return py::make_tuple(py::array(py::memoryview(rows)),
+                              py::array(py::memoryview(columns)));
     },py::arg("r0"),py::arg("c0"),py::arg("r1"),py::arg("c1"),py::arg("workers"));
 
     module.def("draw_rectangle",[](const py::array& top_left,const py::array& bottom_right,
