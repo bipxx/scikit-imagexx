@@ -104,7 +104,8 @@ def test_circle_aa_shape_storage_uses_saved_integer_clip(layout, reference, monk
     elif layout == 'negative-gap':
         shape = np.array([9, 99, 8], dtype=np.intp)[::-2]
     else:
-        shape = np.ndarray((2,), dtype=np.intp, buffer=bytearray(17), offset=1)
+        owner = np.zeros(17, dtype=np.uint8)
+        shape = np.ndarray((2,), dtype=np.intp, buffer=owner, offset=1)
         shape[:] = [8, 9]
     before = (shape.tobytes(), shape.strides, shape.ctypes.data)
     expected = next(r['result'] for r in reference['original_observations'][np.__version__]

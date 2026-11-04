@@ -2,6 +2,8 @@
 
 Known finite builtin-float tuples use the literal NumPy comparison/gather tail;
 no original circle algorithm is called. Unassessed shape protocols remain gaps.
+Integer ndarray shapes require the existing ndarray-backed storage policy;
+bytearray/external-buffer-backed shapes remain a real compatibility gap.
 BSD source attribution: third_party/scikit-image-LICENSE.txt.
 """
 import math
