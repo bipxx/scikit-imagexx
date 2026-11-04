@@ -7,12 +7,72 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "circle-perimeter-frontend-v1",
+      "kind": "binding_fragment",
+      "owner": "next_family_contract",
+      "branch": "feature/circle-perimeter-frontend-v1",
+      "base_sha": "8123d7924a9e2ec62f28cb21dadbe6e72f445354",
+      "state": "validating",
+      "apis": [],
+      "owns": [
+        "src/bind_circle_perimeter.cpp",
+        "python/skimagexx/_circle_perimeter.py",
+        "tests/test_circle_perimeter_public.py"
+      ],
+      "depends_on": [
+        "circle-perimeter-native-v1"
+      ],
+      "dependency_requirements": {
+        "circle-perimeter-native-v1": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "acceptance": "Actual builtin/public-saved parity, worker/ownership/state and explicitdtype/provider partitions; root shipping integration and SDK remain separate. Task closeout includes waste/reuse and next-plan correction.",
+      "current_checkpoint": "Initial7339component572checks pass; independentreview found uint64shape dtype erasure may change originalfloatpromotion. Add explicitproviderrefusal beforeapproval; fournew safe original-onlywitnesses separately authorized, old69golds unchanged.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Review corrected component plus uint64witness, wire actualexports/core/CMake/registry and installedSDK before APIcredit.",
+        "integration_destination": "main reviewed family integration"
+      }
+    },
+    {
+      "id": "regionprops-runtime-surface-discovery-v1",
+      "kind": "discovery",
+      "owner": "qualification251_readiness",
+      "branch": "discover/regionprops-runtime-surface-v1",
+      "base_sha": "dc50d07ce999172bf00b9e3ee995cfca43e231cf",
+      "state": "contracted",
+      "apis": [],
+      "owns": [
+        "coverage/contracts/regionprops-runtime-surface.json",
+        "tests/test_regionprops_runtime_surface.py"
+      ],
+      "depends_on": [],
+      "acceptance": "Source-only runtime discovery; no native/numerical/performance credit. Existingcloseout and affectedplan correction required.",
+      "current_checkpoint": "767ad64 merged after rootreview:44canonical fields/properties,61aliases,7data-modelmethods,5native routes and10proposed contract partitions;4metadata checks pass, no science.",
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "767ad64d1d22dad159db15213d6912e0b1e64ebd",
+          "manifest": {
+            "path": "build/regionprops-runtime-discovery-v1/handoff.json",
+            "sha256": "0e51c488104edc88e83cafe2230354c90e6ea6753e9cba3c7681e1bc1adc3213"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "root",
+        "action": "Freeze source-safe regionprops mask/bbox/state reference partition while preserving selectivecache, aliases/iteration and extra-property protocols.",
+        "integration_destination": "future regionprops/table native descriptor; static477/29class inventory unchanged"
+      }
+    },
+    {
       "id": "circle-perimeter-native-v1",
       "kind": "private_foundation",
       "owner": "next_family_contract",
       "branch": "feature/circle-perimeter-contract-v1",
       "base_sha": "b40350931e817a88245bbec277d1f7c3cadf816f",
-      "state": "implementing",
+      "state": "contracted",
       "apis": [],
       "owns": [
         "include/skimagexx/circle_perimeter.hpp",
@@ -28,7 +88,24 @@
         }
       },
       "acceptance": "Exact source-order/duplicates/clipping count/fill native proof against saved safe observations, relevant portable/sanitizer/worker checks; scoped only. Task closeout includes waste/reuse and next-plan correction.",
-      "current_checkpoint": "Native preparation arithmetic once at boundary, serial ordered recurrence and global worker snapshot; no newpool, no original recapture, no public/API coverage credit yet."
+      "current_checkpoint": "8123d792 native private increment independently reviewed;57safe-return IDs,114case-worker records per3modes, exactgoldwords/guard/sanitizer/FP invariants. No public/SDK/performance credit.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "8123d7924a9e2ec62f28cb21dadbe6e72f445354",
+          "native_contract_checks": 342,
+          "native_pending": 0,
+          "manifest": {
+            "path": "build/circle-perimeter-native-v1/handoff.json",
+            "sha256": "477553f8a2b7721ef76708f3bf42d5b9cf5c67bf0ba23796baad4d4eb796bc8a"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Correct and review frontenduint64shape dtype boundary; then root shipping/SDK integration.",
+        "integration_destination": "CMake/public Python and installedSDK after scope proof"
+      }
     },
     {
       "id": "draw-line-boundary-optimization-v1",
@@ -45,7 +122,7 @@
       "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
       "depends_on": [],
       "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
-      "current_checkpoint": "b2d4316 independently reviewed;1824 component checks pass with original rows/provider/worker/lifetime behavior. Identical-treecfb84 genuine minimum preparation41852799641 running; no timing or speed claim.",
+      "current_checkpoint": "Componentb2 independently reviewed1824checks. Genuinecfb prepare41852799641 FAILED at cross-host Python3.11.18vs3.11.17 runtime identity,29timings skipped; bothZIPs retained. CI2valuepin merged, newinterpreterinput0755818b prepare41856678370 running. Comparisoncontroller-only contextfix pending; no timing/acceptance.",
       "next_gate": {
         "owner": "tiny_line_implementation",
         "action": "Freeze prospective unchanged12case comparison and bounded existing-workflow mode; root authenticates genuine preparation and dispatches one isolated measurement.",
@@ -35363,13 +35440,13 @@
         "public251-qualification-v1"
       ],
       "next_family_contract": [
-        "circle-perimeter-native-v1"
+        "circle-perimeter-frontend-v1"
       ]
     },
     "current_three_agent_packets": {
       "tiny_line_implementation": "draw-line-boundary-optimization-v1",
       "qualification251_readiness": "public251-qualification-v1",
-      "next_family_contract": "circle-perimeter-native-v1"
+      "next_family_contract": "circle-perimeter-frontend-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",

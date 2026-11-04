@@ -87,6 +87,8 @@ One implementation packet per worker and at most one frozen handoff each; root d
 
 Before calling originals for a new family, inspect source-visible unsafe indexing, overflow and allocation preconditions. Classify known upstream-unsafe inputs separately before capture; preserve failed/partial journals and resume only uncalled safe IDs. Never replay completed original captures or manufacture expected results for an unsafe path.
 
+For cross-host preparation/verification, pin the same exact interpreter build policy on both jobs before dispatch. Floating minor-version selectors can resolve to different patches even in one campaign. A demonstrated interpreter input change requires a new prospective preparation; preserve the failed run and never weaken runtime identity to make it pass. Read hash conventions explicitly (raw bytes versus canonical source text) before review; use explicit UTF-8 and absolute retained interpreter paths in worktrees.
+
 ### Review waste after every task
 
 A task is a bounded implementation, reference, review, setup, qualification, measurement or publication packet, not each test or sample. At every terminal outcome (accepted, failed, discarded, or handed off as blocked), its owner adds the following short closeout to the existing handoff/current checkpoint. Root reviews it before starting the next dependent task.

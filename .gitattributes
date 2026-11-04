@@ -642,3 +642,4 @@ coverage/evidence/public247-whole-product-admission.json -text
 benchmarks/draw-coordinates-minimum-initial.json -text
 
 coverage/contracts/circle-perimeter.json -text
+coverage/contracts/regionprops-runtime-surface.json -text
