@@ -89,6 +89,8 @@ Before calling originals for a new family, inspect source-visible unsafe indexin
 
 For cross-host preparation/verification, pin the same exact interpreter build policy on both jobs before dispatch. Floating minor-version selectors can resolve to different patches even in one campaign. A demonstrated interpreter input change requires a new prospective preparation; preserve the failed run and never weaken runtime identity to make it pass. Read hash conventions explicitly (raw bytes versus canonical source text) before review; use explicit UTF-8 and absolute retained interpreter paths in worktrees.
 
+Before narrowing a contract or adding a defensive path for a suspected numerical mismatch, verify actual operation semantics with a source-safe bounded witness. Nominal dtype/result_type inference alone can be wrong for ufunc comparisons. Keep rejected hypotheses and failed diagnostics, and restore the unchanged implementation when evidence disproves the need for a guard.
+
 ### Review waste after every task
 
 A task is a bounded implementation, reference, review, setup, qualification, measurement or publication packet, not each test or sample. At every terminal outcome (accepted, failed, discarded, or handed off as blocked), its owner adds the following short closeout to the existing handoff/current checkpoint. Root reviews it before starting the next dependent task.
