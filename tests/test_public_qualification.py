@@ -145,7 +145,6 @@ def test_nmi_plan_requires_exact_sources_and_public_gate(tmp_path, monkeypatch, 
                                   q.RECONSTRUCTION_PATH, q.NMI_PATH} | set(q.MAX_TREE_PATHS) | set(q.H_EXTREMA_PATHS))
     monkeypatch.setattr(q, 'registry_expectation', lambda _: dict(
         functions=names, image_count=201, metadata_count=3, registered_count=204))
-    assert not q.plan(tmp_path, 'modern', 201)['blockers']
     (tmp_path / missing).unlink()
     assert 'missing required NMI source: ' + missing in q.plan(tmp_path, 'modern', 201)['blockers']
 
@@ -1067,6 +1066,27 @@ def synthetic_complete_plan(root):
     populate_corrected_max_tree_metadata(root)
 
 
+@pytest.mark.parametrize('image_count,counts', (
+    (191, {}),
+    (192, dict(metadata_count=3, registered_count=195)),
+    (198, dict(metadata_count=3, registered_count=201)),
+    (199, dict(metadata_count=3, registered_count=202)),
+    (200, dict(metadata_count=3, registered_count=203)),
+    (201, dict(metadata_count=3, registered_count=204)),
+), ids=('tv191', 'bregman192', 'max-tree198', 'matrix199', 'reconstruction200', 'nmi201'))
+def test_synthetic_complete_plan_positive_controls(tmp_path, monkeypatch, image_count, counts):
+    # These deterministic baselines need one check per registry shape, while
+    # every missing/corrupt-source case below keeps its own fresh tree and plan.
+    synthetic_complete_plan(tmp_path)
+    names = ['filters.rank.' + name for name in q.R5] + sorted(
+        q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH,
+                                  q.RECONSTRUCTION_PATH, q.NMI_PATH}
+        | set(q.MAX_TREE_PATHS) | set(q.H_EXTREMA_PATHS))
+    monkeypatch.setattr(q, 'registry_expectation', lambda _: dict(
+        functions=names, image_count=image_count, **counts))
+    assert not q.plan(tmp_path, 'modern', image_count)['blockers']
+
+
 @pytest.mark.parametrize('missing',q.R7_SOURCE_PATHS)
 def test_decisions_source_migration_and_public_paths_are_plan_blockers(tmp_path,monkeypatch,missing):
     synthetic_complete_plan(tmp_path)
@@ -1279,7 +1299,6 @@ def test_tv_source_and_registration_block_before_any_build(tmp_path,monkeypatch,
     synthetic_complete_plan(tmp_path)
     names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)|set(q.H_EXTREMA_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=191))
-    assert not q.plan(tmp_path,'modern',191)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required TV source: '+missing in q.plan(tmp_path,'modern',191)['blockers']
     names.remove(q.TV_PATH)
@@ -1393,7 +1412,6 @@ def test_bregman_sources_and_registry_block_before_build(tmp_path,monkeypatch,mi
     synthetic_complete_plan(tmp_path)
     names=['filters.rank.'+name for name in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)|set(q.H_EXTREMA_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda root:dict(functions=names,image_count=192,metadata_count=3,registered_count=195))
-    assert not q.plan(tmp_path,'modern',192)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required Bregman source: '+missing in q.plan(tmp_path,'modern',192)['blockers']
     names.remove(q.BREGMAN_PATH)
@@ -1544,7 +1562,6 @@ def test_matrix_source_closure_is_required_before_build(tmp_path,monkeypatch,mis
     synthetic_complete_plan(tmp_path)
     names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)|set(q.H_EXTREMA_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=199,metadata_count=3,registered_count=202))
-    assert not q.plan(tmp_path,'modern',199)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required matrix source: '+missing in q.plan(tmp_path,'modern',199)['blockers']
 
@@ -1800,7 +1817,6 @@ def test_max_tree_source_closure_blocks_before_build(tmp_path,monkeypatch,missin
     synthetic_complete_plan(tmp_path)
     names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)|set(q.H_EXTREMA_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=198,metadata_count=3,registered_count=201))
-    assert not q.plan(tmp_path,'modern',198)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required max-tree source: '+missing in q.plan(tmp_path,'modern',198)['blockers']
 
@@ -2025,7 +2041,6 @@ def test_reconstruction_plan_requires_all_source_and_genuine_tests(tmp_path,monk
     synthetic_complete_plan(tmp_path)
     names=['filters.rank.'+n for n in q.R5]+sorted(q.R6_PATHS|q.R7_PATHS|{q.TV_PATH,q.BREGMAN_PATH,q.MATRIX_PATH,q.RECONSTRUCTION_PATH,q.NMI_PATH}|set(q.MAX_TREE_PATHS)|set(q.H_EXTREMA_PATHS))
     monkeypatch.setattr(q,'registry_expectation',lambda _:dict(functions=names,image_count=200,metadata_count=3,registered_count=203))
-    assert not q.plan(tmp_path,'modern',200)['blockers']
     (tmp_path/missing).unlink()
     assert 'missing required reconstruction source: '+missing in q.plan(tmp_path,'modern',200)['blockers']
 
