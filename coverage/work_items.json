@@ -7,6 +7,262 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "regionprops-state-native-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "branch": "regionprops-state-native-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "include/skimagexx/regionprops_state.hpp",
+        "src/regionprops_state.cpp",
+        "tests/test_regionprops_state_native.cpp",
+        "coverage/contracts/regionprops-state-native-v1.json"
+      ],
+      "base_sha": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+      "depends_on": [
+        "regionprops-state-reference-v1"
+      ],
+      "acceptance": "Private geometry, masks and coordinates only. The construction-time worker policy is superseded by the reviewed budget/SDK successor. No full-class or public registration credit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
+      "current_checkpoint": {
+        "source": "5cfc22000739144238b56672c2d5c41c9b6fe5ff",
+        "receipt": "build/regionprops-state-native-v1/handoff.json",
+        "sha256": "8c540880391f4cc83274f239c7caa37ca5050ffcf4fb35b4ef47d9c3b3501065"
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "5cfc22000739144238b56672c2d5c41c9b6fe5ff",
+          "manifest": {
+            "path": "build/regionprops-state-native-v1/handoff.json",
+            "sha256": "8c540880391f4cc83274f239c7caa37ca5050ffcf4fb35b4ef47d9c3b3501065"
+          },
+          "native_contract_checks": 6442,
+          "native_pending": 0
+        }
+      },
+      "dependency_requirements": {
+        "regionprops-state-reference-v1": {
+          "evidence_scope": "contract_reference"
+        }
+      }
+    },
+    {
+      "id": "regionprops-state-frontend-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "regionprops-state-frontend-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "src/bind_regionprops_state.cpp",
+        "python/skimagexx/_regionprops_state.py",
+        "tests/test_regionprops_state_public.py",
+        "coverage/contracts/regionprops-state-frontend-v1.json"
+      ],
+      "base_sha": "5cfc22000739144238b56672c2d5c41c9b6fe5ff",
+      "depends_on": [
+        "regionprops-state-reference-v1",
+        "regionprops-state-native-v1"
+      ],
+      "acceptance": "Private component: 244 checks and 232 saved comparisons. Seven observed properties, 37 unassessed; distinct compatible backend subclass and remaining metadata, area, spacing and numerical providers stay explicit. Use the fixed-budget component successor for new wiring; no public registration credit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
+      "current_checkpoint": {
+        "source": "76150d1a9d3bfbcc612709d39f00b88a828388a6",
+        "receipt": "build/regionprops-state-frontend-v1/handoff.json",
+        "sha256": "e7af1b256004219fbfe984ccc48afd6e4e290a956b38765dc1541fa8c46e4454"
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "76150d1a9d3bfbcc612709d39f00b88a828388a6",
+          "manifest": {
+            "path": "build/regionprops-state-frontend-v1/handoff.json",
+            "sha256": "e7af1b256004219fbfe984ccc48afd6e4e290a956b38765dc1541fa8c46e4454"
+          },
+          "native_contract_checks": 244,
+          "native_pending": 0
+        }
+      },
+      "dependency_requirements": {
+        "regionprops-state-reference-v1": {
+          "evidence_scope": "contract_reference"
+        },
+        "regionprops-state-native-v1": {
+          "evidence_scope": "native_private"
+        }
+      }
+    },
+    {
+      "id": "regionprops-state-budget-sdk-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "branch": "integrate/regionprops-state-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "CMakeLists.txt",
+        "tests/test_component_consumers_native.cpp",
+        "tests/test_regionprops_state_native.cpp",
+        "src/regionprops_state.cpp",
+        "include/skimagexx/regionprops_state.hpp"
+      ],
+      "base_sha": "28a6790b2a393ab4a4ffcc062e4962693fb4e12b",
+      "depends_on": [
+        "regionprops-state-native-v1"
+      ],
+      "acceptance": "One current-global worker lookup per large mask. Linux normal/scalar SDK controls and MSVC leaf/client compilation passed. Windows CRT runtime linking and mask SIMD remain open. No genuine SDK87 or whole-product claim. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
+      "current_checkpoint": {
+        "source": "ea28aeb1d68aef5bb72b3ecf783407db09a7a9fd",
+        "receipt": "build/regionprops-state-sdk-integration-v1/handoff.json",
+        "sha256": "88a20794d7743f0d7e1d0946ce4c60a735e593c6c3c9dd15aa387d00f1412b38"
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "ea28aeb1d68aef5bb72b3ecf783407db09a7a9fd",
+          "manifest": {
+            "path": "build/regionprops-state-sdk-integration-v1/handoff.json",
+            "sha256": "88a20794d7743f0d7e1d0946ce4c60a735e593c6c3c9dd15aa387d00f1412b38"
+          },
+          "native_contract_checks": 1048605,
+          "native_pending": 0
+        }
+      },
+      "dependency_requirements": {
+        "regionprops-state-native-v1": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "read_dependencies": [
+        "build/regionprops-state-current-budget-independent-review-v1/review.json",
+        "build/regionprops-state-component-budget-v2/handoff.json"
+      ]
+    },
+    {
+      "id": "regionprops-state-benchmark-v1",
+      "kind": "tooling",
+      "owner": "qualification251_readiness",
+      "branch": "regionprops-state-benchmark-v1",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "benchmarks/regionprops_state.py",
+        "coverage/contracts/regionprops-state-benchmark.json",
+        "tests/test_regionprops_state_benchmark.py"
+      ],
+      "base_sha": "76150d1a9d3bfbcc612709d39f00b88a828388a6",
+      "depends_on": [
+        "regionprops-state-frontend-v1",
+        "regionprops-state-budget-sdk-v1"
+      ],
+      "acceptance": "Twelve frozen cases; CPU model, logical count and runtime AVX2 successor independently reviewed. Actual public binding, real first cohort and genuine preparation remain pending. No timings. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
+      "current_checkpoint": {
+        "source": "23fdaa7bcefed55f28006ab80e82642b860e0175",
+        "receipt": "build/regionprops-state-benchmark-v1/handoff-v2.json",
+        "sha256": "f49e1f07bc497598b618cf7034e08244a5cc1d6177373c2c848e586108886d15"
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "23fdaa7bcefed55f28006ab80e82642b860e0175",
+          "manifest": {
+            "path": "build/regionprops-state-benchmark-v1/handoff-v2.json",
+            "sha256": "f49e1f07bc497598b618cf7034e08244a5cc1d6177373c2c848e586108886d15"
+          }
+        }
+      },
+      "read_dependencies": [
+        "build/regionprops-state-independent-benchmark-review-v1/review-cpu-delta-v2.json"
+      ]
+    },
+    {
+      "id": "regionprops-state-shared-v1",
+      "kind": "implementation",
+      "owner": "integrator",
+      "branch": "integrate/regionprops-state-v1",
+      "state": "queued",
+      "apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/measure.py",
+        "python/skimagexx/coverage.py",
+        "tools/inventory.py",
+        "tools/public_qualification.py"
+      ],
+      "base_sha": "ea28aeb1d68aef5bb72b3ecf783407db09a7a9fd",
+      "depends_on": [
+        "regionprops-state-native-v1",
+        "regionprops-state-frontend-v1",
+        "regionprops-state-budget-sdk-v1",
+        "regionprops-state-benchmark-v1"
+      ],
+      "acceptance": "Compose reviewed private sources without overwriting the current-budget fix. Wire actual exports, defaults, registry, inventory, SDK87 and qualifier; preserve seven-property/37-unassessed, provider and distinct-type limitations. Run the real CLI first cohort once per profile: one original and one native call, stop at the real sampler call before its body, zero timed batches. Run the complete actual setup selection once after shared wiring freezes. Public-native proof and coverage credit require actual execution and independent review. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Independently review the point supplement, compose reviewed packets, then freeze exact changed selectors from the actual qualifier. Windows runtime and mask SIMD remain separate tracked gaps."
+      },
+      "dependency_requirements": {
+        "regionprops-state-native-v1": {
+          "evidence_scope": "native_private"
+        },
+        "regionprops-state-frontend-v1": {
+          "evidence_scope": "native_private"
+        },
+        "regionprops-state-budget-sdk-v1": {
+          "evidence_scope": "native_private"
+        },
+        "regionprops-state-benchmark-v1": {
+          "evidence_scope": "tooling",
+          "source_sha": "23fdaa7bcefed55f28006ab80e82642b860e0175"
+        }
+      }
+    },
+    {
+      "id": "regionprops-state-measurement-v1",
+      "kind": "measurement",
+      "owner": "integrator",
+      "branch": "integrate/regionprops-state-v1",
+      "state": "queued",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [],
+      "depends_on": [
+        "regionprops-state-shared-v1",
+        "regionprops-state-benchmark-v1"
+      ],
+      "dependency_requirements": {
+        "regionprops-state-shared-v1": {
+          "evidence_scope": "public_native"
+        },
+        "regionprops-state-benchmark-v1": {
+          "evidence_scope": "tooling",
+          "source_sha": "23fdaa7bcefed55f28006ab80e82642b860e0175"
+        }
+      },
+      "acceptance": "Blocked until exact composed public-native proof, real first cohort and genuine installed-family/SDK validation. Isolated one-worker comparison: 12 frozen cases, 168 samples. Retain slower cases, hardware and source identity. An initial baseline is not an optimization KEEP; platform/provider limits stay explicit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Do not dispatch timing from private component evidence. Publish the composed public-native proof, then genuinely prepare the exact candidate before isolated timing."
+      }
+    },
+    {
       "id": "regionprops-state-reference-v1",
       "kind": "contract_reference",
       "owner": "qualification251_readiness",
@@ -37,8 +293,8 @@
         }
       },
       "next_gate": {
-        "owner": "qualification251_readiness",
-        "action": "Native leaf underway: typedoriginal storage, sortedpositive labels/frozenbbox/initialcounts, freshmask/population/coords from cached-or-fresh mask. Publicclass/type/cache/spacing/aliases and unassessedproperties remain frontend/SDK/performance gates."
+        "owner": "integrator",
+        "action": "Native5c, frontend761, current-budget SDKea28 and CPU-metadata23fdaa7 are reviewed. Compose public registration, point supplement after review, defaults/routes, SDK87 and qualifier. Preserve seven observed/37 unassessed properties and type/provider limits. Run the real first cohort before timing and one frozen setup barrier. Windows CRT/runtime and mask SIMD remain open."
       }
     },
     {
@@ -35174,7 +35430,6 @@
     "measure.points_in_poly",
     "measure.profile_line",
     "measure.ransac",
-    "measure.regionprops",
     "measure.regionprops_table",
     "measure.shannon_entropy",
     "metrics.adapted_rand_error",
@@ -35610,7 +35865,7 @@
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
-    "launch_rule": "Reconcile actual agent/job status and receipts at every transition. Terminal packet assignments below are historical until explicitly reassigned; use followup_task to resume completed agents. Apply per-task waste closeout and update next gates before dependent work.",
+    "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
     "implementation_goal_status": "active",
     "mode": "executing-updated-plan",
@@ -35987,7 +36242,7 @@
         "whole_product_qualified": false
       }
     },
-    "assignment_note": "Historical ownership and dispatch maps are retained for provenance, not runnable assignments. Live sequence is coverage/EXECUTION_PLAN.md: root circle252 shipping/cumulative qualification; A line-AA implementation; B release review/partial contracts; C independent contract/native review. Bind each next packet and exclusive files before starting; terminal251/tiny-line actions must not be redispatched.",
+    "assignment_note": "Historical maps are provenance only. Current source253/qualified252; circle guard merged at eaa9d24c. Root next composes reviewed RegionProperties state/frontend/SDK87/benchmark. The three-worker staged ownership is in EXECUTION_PLAN.md. Bind exclusive files, prerequisites and retained receipts before dispatch; complete waste closeout before dependent work.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -36000,9 +36255,9 @@
       }
     },
     "current_review_assignments": {
-      "qualification251_readiness": "Known source-unsafe circle builtin short-tuple quarantine, no originalcalls or normalpath scope expansion.",
-      "next_family_contract": "RegionPropsSDK87/current-budget successor ea28 closed; Windowsruntime CRT compatibility and maskSIMD remain explicitgaps.",
-      "tiny_line_implementation": "252andlineAArawpublications closed; freefornext independentreview. Bind nextpacket/fileownership beforedispatch."
+      "tiny_line_implementation": "Planning audit complete; next review root-composed public exports and CLI. Point-witness author must not independently review that packet. Current-budget ea28/d0b review passed at 8a9b092; reuse it.",
+      "qualification251_readiness": "Planning/queue audit; CPU metadata successor23fdaa7 reviewed at7244322. Next address actual MSVC CRT link/runtime and mask-SIMD gaps separately from Linux success.",
+      "next_family_contract": "Planning/waste audit complete; next independently review point witness c06fed9, then composed RegionProperties source/launcher readiness. CPU-delta and circle reviews are closed; no redispatch."
     }
   },
   "parallel_review": {
@@ -36684,6 +36939,18 @@
       "archive_sha256": "8b092fa75ea7f8e7a9f242295f5cf526af3cf72acbb88212160d37379ba8f348",
       "preservation_index": "build/cleanup/h-windows-metadata-retirement-20261025/preservation-index.json",
       "member_rule": "Find the exact former workspace-relative path in preservation-index.json and read its member sha256/<record.sha256>; bytes and original manifests are unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/line-aa-integration-v1/build",
+      "retained_directory": "build/line-aa-integration-v1-private-v1",
+      "preservation_receipt": "build/merged-integration-retirement-20261104-v2.json",
+      "member_rule": "Whole ignored build directory moved intact after clean ancestor and reader-release checks; append the former relative member suffix. Frozen receipts unchanged; source recoverable by recorded Git commit."
+    },
+    {
+      "former_prefix": "build/worktrees/circle-perimeter-integration-v1/build",
+      "retained_directory": "build/circle-perimeter-integration-v1-private-v1",
+      "preservation_receipt": "build/merged-integration-retirement-20261104-v2.json",
+      "member_rule": "Whole ignored build directory moved intact after clean ancestor and reader-release checks; append the former relative member suffix. Frozen receipts unchanged; source recoverable by recorded Git commit."
     }
   ],
   "inventory_assessment_pending": {
