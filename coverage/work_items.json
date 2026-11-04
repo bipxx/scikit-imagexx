@@ -46,16 +46,26 @@
       "kind": "qualification",
       "owner": "qualification251_readiness",
       "branch": "qualify/current252-v1",
-      "state": "validating",
+      "state": "accepted",
       "apis": [],
       "owns": [],
       "base_sha": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
       "depends_on": [],
       "acceptance": "Exact-source four-profile successful public/SDK/corpus/seal/stager evidence, independent review and task waste closeout; no scope promotion from launch or planner.",
-      "current_checkpoint": "Dispatched ONCE41882408142 after immutable readiness8786b5c0 and remote exactref check. Expected252image/255registered,180product/85SDK,28families56SDKchecks/profile. Reused actual2160testcases+8subtests because selectedsource/setup unchanged;82mergedCIisolation checks pass. Actual qualification results pending; baseline247. Remotejobdoesnotoccupyworker; B can run independent references.",
+      "current_checkpoint": "Rootadmitted6fae252 from all4frozenprofiles:914344actualXML0fail/error/skip,224SDKchecks/48corpora/source180SDK85 and3Release stagers6199files. Raw35unique metadata payloads/44paths publishedonce;116538sealedrecords9.859GB hashedonce, no repeatedseals/downloads. Failed251 remainsfailed. Waste: reusedauthenticatedreceipts, correctedrootmetadata expectation ofhistoricalstaged-unaccepted status beforedecision; no numericalreplay.",
       "next_gate": {
         "owner": "root",
-        "action": "Observe existing41882408142; retain eachterminalartifactonce and review with frozen252reviewers. Never rerun failed251 or redispatch for observation lag."
+        "action": "Closed accepted252. Preserve frozenproducts and reviewreceipts; next cumulativecampaign follows readynewsource, never rerun failed251 or claim253qualified fromthisseal."
+      },
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+          "manifest": {
+            "path": "coverage/evidence/public252-whole-product-admission.json",
+            "sha256": "d4500a5730ae26486c3d444016dc7da2b5d5de9e0a46313b9a887edff19e20d1"
+          }
+        }
       }
     },
     {
@@ -63,7 +73,7 @@
       "kind": "public_integration",
       "owner": "tiny_line_implementation",
       "branch": "integrate/line-aa-v1",
-      "state": "validating",
+      "state": "parity_passed",
       "apis": [],
       "owns": [
         "tests/test_line_aa_default.py"
@@ -73,10 +83,22 @@
         "line-aa-frontend-v1"
       ],
       "acceptance": "Actual source-overlay default/export/checker parity from savedrows, no original replay; root independent review plus task closeout. Genuine full product remains a separate gate.",
-      "current_checkpoint": "A implementing default/registry/carrier/mixedweightdtype/alias/error checks in new sourceoverlays using unchanged2cores. Root5shippingfiles independently reviewed2125e90a; initial9casebenchmark reviewed901ed702 and realCLI firstcohorts passed. C prepares qualifier253 after actualinventory synchronization.",
+      "current_checkpoint": "71e7da3 actualdefaultshipping100checks/4modes withunchangedcores, saved diagonal+exactnegativeULP/dtype/alias controls,0neworiginals; source/rootwiring reviewed2125e90a. Canonicalmoderninventory deltaONLYlineAA; min3runtimeclassdescriptor differences preserved separately. Genuine28a CI41889026308 SUCCESS, SDK86client121/mode and9/9initialoneworkerreport published; full253qualification pending.",
       "next_gate": {
         "owner": "root",
-        "action": "Review proposed inventory and actualdefault proofs, regenerate sourceinventory/routes once, then synchronize qualifier and full launcher barrier before genuine253 preparation."
+        "action": "Scoped source integration accepted; full253cumulativequalification remains separate. Reusegenuine28aproduct, initialreport andproofs withouttiming/numericreplay."
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "71e7da3356d442a6d77488074461223ffae87dd5",
+          "native_contract_checks": 100,
+          "native_pending": 0,
+          "manifest": {
+            "path": "build/line-aa-default-shipping-v1/handoff.json",
+            "sha256": "a1986f6fc57b6db88d86468d6b1235504de366455abd45f95364865019de5f47"
+          }
+        }
       }
     },
     {
@@ -35276,7 +35298,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Fullgoalactive: accepted163partialimagepaths/303upstream-only; cleanupcomplete. Fourterminaloneworker campaigns underofflineverification. R4benchmarkPhase1 andR5nine-functionoriginalcontracts merged; R4public+consumerwhole7 assembling, privateR5kernels independent. No native/performancecount fromreference/tooling alone.",
+  "note": "Live source/qualified counts use inventory_snapshot and latest_accepted_qualification; canonical next actions are coverage/EXECUTION_PLAN.md. Historical packet numbers keep their original exact-source scope. Fullrewrite goal remains active.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -35568,15 +35590,15 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 252,
+    "native_partial_image_names": 253,
     "metadata_names": 3,
-    "upstream_only_names": 216,
+    "upstream_only_names": 215,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Main252 native-partial image APIs/3metadata/216upstream-only. Qualified247 remainsf1; live fourprofile252 campaign41882408142 source6fae. Circle initial8/8winsGM21.527x/112samples; lineAA remains private253 candidate with default/genuine/performance pending.",
+    "note": "Main253 native-partial image APIs/3metadata/215upstream-only; fullsupported-profile qualification252 at exact6fae. Line-AA genuinely prepared28a,9/9initialoneworkerwinsGM28.185764431/126samples,182product/86SDK; newer253needs cumulativequalification. RegionProperties7observed/37unassessed remains private/provider-partial, noAPIcredit.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
-    "accepted_binary_image_names": 247
+    "accepted_binary_image_names": 252
   },
   "execution_policy": {
     "active_workers": [
@@ -35600,15 +35622,11 @@
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
-      "tiny_line_implementation": [
-        "line-aa-default-shipping-v1"
-      ],
+      "tiny_line_implementation": [],
       "qualification251_readiness": [],
       "next_family_contract": []
     },
-    "current_three_agent_packets": {
-      "tiny_line_implementation": "line-aa-default-shipping-v1"
-    },
+    "current_three_agent_packets": {},
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -35954,16 +35972,18 @@
       "qualification": {
         "run": 41882408142,
         "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
-        "status": "in_progress",
-        "accepted": false,
-        "ref": "qualify/current252-v1"
+        "status": "terminal-success-root-admitted",
+        "accepted": true,
+        "image_paths": 252,
+        "admission": "coverage/evidence/public252-whole-product-admission.json"
       },
-      "circle_shipping": {
-        "run": 41876409255,
-        "source": "892c5aa70c5a9ca65f92b4060c407caf61b3af5c",
-        "status": "terminal-success",
-        "source_admitted_main": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
-        "performance_report": "benchmarks/circle-perimeter-minimum-initial.json",
+      "line_aa": {
+        "run": 41889026308,
+        "source": "28a6790b2a393ab4a4ffcc062e4962693fb4e12b",
+        "status": "terminal-success-scoped-shipping-admitted",
+        "product_members": 182,
+        "SDK_members": 86,
+        "performance_report": "benchmarks/line-aa-minimum-initial.json",
         "whole_product_qualified": false
       }
     },
@@ -35980,8 +36000,9 @@
       }
     },
     "current_review_assignments": {
-      "qualification251_readiness": "Independent RegionProperties first returned-state reference packet during remote252 qualification; reviewers/frozen252source preserved.",
-      "next_family_contract": "Private253 qualifier/product closure; wait root inventory synchronization before affected metadata tests."
+      "qualification251_readiness": "Known source-unsafe circle builtin short-tuple quarantine, no originalcalls or normalpath scope expansion.",
+      "next_family_contract": "RegionPropsSDK87/current-budget successor ea28 closed; Windowsruntime CRT compatibility and maskSIMD remain explicitgaps.",
+      "tiny_line_implementation": "252andlineAArawpublications closed; freefornext independentreview. Bind nextpacket/fileownership beforedispatch."
     }
   },
   "parallel_review": {
@@ -36798,14 +36819,14 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "4e657ee64fb71e4d707d32e9539fdb4d7cc528af",
-    "run": 40710464380,
-    "image_paths": 241,
+    "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+    "run": 41882408142,
+    "image_paths": 252,
     "receipt": {
-      "path": "coverage/evidence/public241-whole-product-admission.json",
-      "sha256": "320967753a787687cb68ebe165163471c4acf4a8fa16312b28842a1db627d147"
+      "path": "coverage/evidence/public252-whole-product-admission.json",
+      "sha256": "d4500a5730ae26486c3d444016dc7da2b5d5de9e0a46313b9a887edff19e20d1"
     },
-    "scope": "Exact qualified product, not a certificate for all later main changes."
+    "scope": "Exact whole qualified252 partial contracts,4profiles/914344XML/224SDK/48corpora/3Release stagers; not a certificate for newer253/class code or library-wide speed."
   },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",

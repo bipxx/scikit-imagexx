@@ -1119,11 +1119,16 @@
       "api": "draw.line_aa",
       "kind": "callable",
       "signature": "(r0, c0, r1, c1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_line_aa_public.py::test_line_aa_saved_public_pipeline",
+      "benchmark": "benchmarks/line_aa.py",
+      "default_input_kind": "coordinate-shape-only; dtype labels are descriptor carriers, not pixel or coordinate-argument dtype coverage"
     },
     {
       "api": "draw.line_nd",

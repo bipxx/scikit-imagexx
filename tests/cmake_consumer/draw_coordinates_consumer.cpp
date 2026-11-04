@@ -1,6 +1,9 @@
 // Installed SDK consumer only: no private source headers, Python or originals.
 #include <skimagexx/draw_coordinates.hpp>
 #include <skimagexx/image.hpp>
+#include <skimagexx/line_aa.hpp>
+#include <cstring>
+#include <limits>
 #include <algorithm>
 #include <array>
 #include <cfenv>
@@ -14,6 +17,37 @@ using namespace skimagexx::detail;
 namespace {
 std::size_t checks=0;
 void check(bool value){++checks;if(!value)throw std::runtime_error("installed drawing coordinate mismatch "+std::to_string(checks));}
+// Frozen half-tie and point words from pinned0.26 original observations.
+void line_aa(int workers){
+    const auto global=get_num_threads();
+    DrawLineAAGeometry geometry;
+    check(draw_line_aa_prepare(0,0,2,4,geometry));
+    constexpr std::array<std::intptr_t,11> expected_r{0,1,0,1,0,1,2,1,2,1,2};
+    constexpr std::array<std::intptr_t,11> expected_c{0,0,1,1,2,2,2,3,3,4,4};
+    constexpr std::array<std::uint64_t,11> expected_w{4607182418800017408ULL,4592271743275536696ULL,4603154276835920148ULL,4603154276835920148ULL,4592271743275536696ULL,4607182418800017408ULL,4592271743275536696ULL,4603154276835920148ULL,4603154276835920148ULL,4592271743275536696ULL,4607182418800017408ULL};
+    check(draw_line_aa_count(geometry,workers)==expected_r.size());
+    for(int step:{1,-2}){
+        std::array<std::intptr_t,23> rows,columns;rows.fill(999);columns.fill(999);
+        std::array<double,23> weights;weights.fill(-99.25);
+        const int start=step>0?1:21;
+        draw_line_aa_into(geometry,{rows.data()+start,columns.data()+start,step,step},weights.data()+start,step,workers);
+        for(int i=0;i<23;++i){
+            const int delta=i-start;const bool written=delta%step==0&&delta/step>=0&&delta/step<11;
+            if(written){const auto index=std::size_t(delta/step);std::uint64_t word;std::memcpy(&word,&weights[i],sizeof(word));check(rows[i]==expected_r[index]&&columns[i]==expected_c[index]&&word==expected_w[index]);}
+            else check(rows[i]==999&&columns[i]==999&&weights[i]==-99.25);
+        }
+    }
+    check(draw_line_aa_prepare(3,4,3,4,geometry)&&draw_line_aa_count(geometry,workers)==1);
+    std::intptr_t row=0,column=0;double weight=0;
+    draw_line_aa_into(geometry,{&row,&column,1,1},&weight,1,workers);
+    check(row==3&&column==4&&weight==1.0);
+    const auto prior=geometry;
+    for(const auto endpoints:{std::array<std::intptr_t,4>{std::numeric_limits<std::int32_t>::min(),0,0,0},{0,0,std::numeric_limits<std::int32_t>::max(),0},{0,0,46341,0},{0,0,32768,32768}}){
+        check(!draw_line_aa_prepare(endpoints[0],endpoints[1],endpoints[2],endpoints[3],geometry));
+        check(geometry.r0==prior.r0&&geometry.c0==prior.c0&&geometry.r1==prior.r1&&geometry.c1==prior.c1&&geometry.dr==prior.dr&&geometry.dc==prior.dc&&geometry.sign_r==prior.sign_r&&geometry.sign_c==prior.sign_c&&geometry.distance==prior.distance);
+    }
+    check(get_num_threads()==global);
+}
 void stages(int workers){
     const auto global=get_num_threads(),rounding=std::fegetround(),flags=std::fetestexcept(FE_ALL_EXCEPT);
     std::array<std::intptr_t,7> line_r,line_c;line_r.fill(999);line_c.fill(999);
@@ -70,9 +104,11 @@ void stages(int workers){
     check(get_num_threads()==global&&std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
 }
 }
-int main(){
+int main(int argc,char** argv){
+    check(argc==1||(argc==2&&std::string(argv[1])=="--line-aa-only"));
+    const bool line_aa_only=argc==2;
     check(get_num_threads()==1);
-    for(int workers:{1,4}){set_num_threads(workers);stages(workers);}
+    for(int workers:{1,4}){set_num_threads(workers);if(!line_aa_only)stages(workers);line_aa(workers);}
     set_num_threads(1);check(get_num_threads()==1);
-    std::cout<<"installed drawing SDK controls="<<checks<<"; workers=1,4; default=1\n";
+    std::cout<<"installed drawing SDK controls="<<checks<<"; workers=1,4; default=1; AVX2="<<has_avx2()<<"; line_aa_only="<<line_aa_only<<"\n";
 }
