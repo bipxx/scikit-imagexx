@@ -1,0 +1,37 @@
+{
+  "schema": "regionprops-state-frontend-v1",
+  "status": "PROSPECTIVE_TYPE_POLICY_FROZEN_BEFORE_COMPONENT_TESTS",
+  "reference_commit": "2f076368987ca4247e06109d23f459dbad98079a",
+  "native_commit": "5cfc22000739144238b56672c2d5c41c9b6fe5ff",
+  "type_policy": {
+    "original_qualified_type": [
+      "skimage.measure._regionprops",
+      "RegionProperties"
+    ],
+    "backend_qualified_type": [
+      "skimagexx._regionprops_state",
+      "RegionProperties"
+    ],
+    "relationship": "Distinct backend subclass of pinned original RegionProperties, same public class name. isinstance/subclass compatible; literal type identity is explicitly NOT claimed.",
+    "comparison": "Keep original goldens and raw observed qualified types unchanged. Compare all other captured row fields exactly. Assert the prospective original/backend pair separately, retaining actual raw rows; never canonicalize or rewrite type observations."
+  },
+  "owned_partition": "All22safe returned-list constructors plus7source-controlled errors from frozen29cases. C++enumerates sortedlabels/frozenboxes; no original regionprops/find_objects on admitted inputs. Native fresh image/current mask population/unshifted coords; original constructor/cache descriptors and unported properties remain explicit providers.",
+  "provider_partition": [
+    "OriginalRegionProperties.__init__, cached decorator, public mapping/alias/iterator scaffolding",
+    "Original area/spacing scalar normalization and scalar arithmetic; NumPy offset promotion and array allocations",
+    "Other44-property/intensity/extra_properties/lifecycle parts unassessed; whole-original provider only outside declared bounded admission"
+  ],
+  "layout_policy": "Owning boolean image allocated via empty_like(cropped,order=K), nativeCmask reordered into that layout. Owning unshifted coords filled into F-order intp array before literal NumPy offset addition. Exact recorded output flags/strides/bases/aliasing required.",
+  "lifetime_and_metadata": "Native state and RegionProperties retain original ndarray owner; nativeentry compares descriptor against frozenmetadata before reading. Fresh property with changed descriptor uses explicit pinned property-provider tail, not stale rawpointer. No concurrent mutation/forged-storage machinery.",
+  "test_scope": "Saved29cases for two retained profiles, normal/scalar processes, global1/4/defaultrestoration. Actual builtinCreturn/nonNone witnesses and forbidden original constructor algorithms, cache/input/mask mutation/layout/lifetimes. No new originals/SDKbuild/env/timing.",
+  "not_claimed": [
+    "Wholeclass arithmetic/typeidentity/nativeAPIcredit",
+    "Sharedexports/registry/CMake wiring",
+    "InstalledSDK/fullproduct qualification/benchmark speedup"
+  ],
+  "task_closeout": {
+    "result": "Prospective class/type and layout/provider policy frozen before component tests.",
+    "waste_and_reuse": "Reuses reviewed reference and nativeinterface; avoids bulkcopying44properties and disguising class identity.",
+    "next_plan_correction": "Implement only this bridge; if saved layout/cache/state cannot be preserved, report concrete blocker before broader class machinery."
+  }
+}
