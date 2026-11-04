@@ -31,6 +31,7 @@
       "implementation": "native-partial",
       "native_default_case_dtypes": [
         "uint8",
+        "float16",
         "float32",
         "float64"
       ],
@@ -1037,11 +1038,16 @@
       "api": "draw.circle_perimeter_aa",
       "kind": "callable",
       "signature": "(r, c, radius, shape=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_circle_perimeter_aa_public.py::test_circle_perimeter_aa_saved_public_pipeline",
+      "benchmark": "benchmarks/circle_perimeter_aa.py",
+      "default_input_kind": "fixed8x8 coordinate-geometry descriptor; dtype labels are carrier-only, not pixel or coordinate-argument dtype coverage"
     },
     {
       "api": "draw.disk",

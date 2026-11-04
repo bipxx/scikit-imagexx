@@ -382,16 +382,28 @@ jobs:
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: RegionProperties saved state and shipping defaults
-        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_state_benchmark.py --junitxml=build/ci-artifacts/regionprops-state-normal.xml
+        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_public_mutation_reference.py tests/test_regionprops_public_mutation_public.py tests/test_regionprops_state_benchmark.py --junitxml=build/ci-artifacts/regionprops-state-normal.xml
         env:
           SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-normal-rows
           SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-normal-rows
       - name: RegionProperties state contracts with SIMD disabled
-        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py --junitxml=build/ci-artifacts/regionprops-state-scalar.xml
+        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_public_mutation_public.py --junitxml=build/ci-artifacts/regionprops-state-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
           SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-scalar-rows
           SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-scalar-rows
+      - name: Anti-aliased circle saved public and shipping defaults
+        run: python -m pytest -q tests/test_circle_perimeter_aa_reference.py tests/test_circle_perimeter_aa_public.py tests/test_circle_perimeter_aa_default.py tests/test_circle_perimeter_aa_benchmark.py --junitxml=build/ci-artifacts/circle-perimeter-aa-normal.xml
+      - name: Anti-aliased circle contracts with SIMD disabled
+        run: python -m pytest -q tests/test_circle_perimeter_aa_public.py tests/test_circle_perimeter_aa_default.py --junitxml=build/ci-artifacts/circle-perimeter-aa-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Half stain saved public boundary and unchanged provider partitions
+        run: python -m pytest -q tests/test_combine_stains_half_reference.py tests/test_combine_stains_half_public.py tests/test_combine_stains_half_benchmark.py --junitxml=build/ci-artifacts/combine-stains-half-normal.xml
+      - name: Half stain contracts with SIMD disabled
+        run: python -m pytest -q tests/test_combine_stains_half_public.py --junitxml=build/ci-artifacts/combine-stains-half-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Drawing frozen public parity and prepared native pipelines
         run: python -m pytest -q tests/test_draw_coordinates_public.py tests/test_draw_coordinates_integration.py --junitxml=build/ci-artifacts/draw-coordinates-normal.xml
       - name: Drawing public parity and prepared pipelines with SIMD disabled
@@ -623,6 +635,10 @@ jobs:
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/regionprops_state.py --threads 1 --repeat 7 --output build/ci-regionprops-state.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+      - run: python benchmarks/circle_perimeter_aa.py --threads 1 --repeat 7 --output build/ci-circle-perimeter-aa.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+      - run: python benchmarks/stains.py --half-only --size 512 --threads 1 --repeat 7 --output build/ci-combine-stains-half.json
+        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
@@ -670,6 +686,12 @@ jobs:
             build/ci-regionprops-state.json
             build/ci-regionprops-state.md
             build/ci-regionprops-state.batches.jsonl
+            build/ci-circle-perimeter-aa.json
+            build/ci-circle-perimeter-aa.md
+            build/ci-circle-perimeter-aa.batches.jsonl
+            build/ci-combine-stains-half.json
+            build/ci-combine-stains-half.md
+            build/ci-combine-stains-half.batches.jsonl
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:

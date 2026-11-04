@@ -197,7 +197,7 @@ def alias(api, canonical, evidence):
 
 
 add("color", "point", """
-combine_stains | Reuse the existing native 3xK matrix/exponential core; normalize float16 inputs to float32 once at the boundary | float16-to-float32 preparation and version-dependent result promotion; preserve channel axis and clipping | float16 three-channel stain inputs with standard 3x3 and custom 3xK output widths
+combine_stains | Reuse the existing native 3xK core and reviewed half-to-float32 boundary; finish affected-domain timing and exceptional-value contracts | remaining half nonfinite/extreme values, warning and FP-callback behavior; retain version-dependent promotion and finite-case evidence | half zero/subnormal/NaN/Inf and supported error-policy cases with exact dtype, metadata, state and warning order
 convert_colorspace | Extend existing named-space routing through the native RGB hub | case-insensitive names, unsupported-space errors, intermediate dtype/range | all supported source/destination pairs including identity
 deltaE_cie76 | Reuse native Euclidean Lab difference with original promotion points | broadcast shapes, float32 intermediates, NaNs and extra channels | broadcast Lab tensors and near-zero differences
 deltaE_ciede2000 | Reuse native hue-adjusted CIEDE2000 formula | hue wrap, zero chroma, branch ties, weighting and cancellation | hue-wrap/achromatic pairs plus dense Lab images

@@ -235,7 +235,7 @@
     "skimage.measure._regionprops_utils": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
   },
   "source_closure": {
-    "python/skimagexx/_regionprops_state.py": "843b061bc1ba8042276b32ac42882dbb763efb8781d6ef428fc2a072fd7c4abf",
+    "python/skimagexx/_regionprops_state.py": "10c972d255babcf2bd3e613903c3279e8419542976d6859099ce5be15bdf5e51",
     "src/bind_regionprops_state.cpp": "002106b6a5877b2ec4c7d8ddc5f6bad0b3909af8cbf3d0b6bb75e7068d96a1f1",
     "src/regionprops_state.cpp": "fb9420245d5d34ede0ba9384b2c964163a317c04d7417679196ecd11c1e7f2b0",
     "include/skimagexx/regionprops_state.hpp": "768a01559e6ab5839bdb7b603fbbf9992bfe85d94e40419fdaa72eac1d14c1f8",

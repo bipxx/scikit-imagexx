@@ -23,7 +23,7 @@ def current_capsule(tmp_path):
     names = subprocess.check_output(['git', '-C', str(ROOT), 'ls-files'], text=True).splitlines()
     layout = q.current_install_layout(lambda n: (ROOT / n).read_bytes(), names, 'modern')
     # This capsule models current source install rules, not historical71 acceptance.
-    assert layout['SDK_count'] == 87
+    assert layout['SDK_count'] == 88
     runtime = dict(source=dict(revision='a' * 40, files_sha256=dict.fromkeys(names, 'inert-authenticated-source')),
                    runtime=dict(sdk_sha256=dict.fromkeys(layout['SDK_members'], 'inert-authenticated-sdk')))
     marker = dict(schema='rank-corpus-sdk-scope-v1', scope=c.CURRENT_PRODUCT_SCOPE,
@@ -41,12 +41,12 @@ def test_current_scope_uses_exact_source_derived_sdk_names(current_capsule, prof
     assert c.validate_sdk_scope(ROOT, capsule, runtime) == c.CURRENT_PRODUCT_SCOPE
 
 
-@pytest.mark.parametrize('fault', ('old68', 'old71', 'old83', 'old85', 'old86', 'stale247', 'foreign-name', 'extra-name', 'wrong-profile', 'missing-marker', 'missing-marker-false68', 'revision'))
+@pytest.mark.parametrize('fault', ('old68', 'old71', 'old83', 'old85', 'old86', 'old87', 'stale247', 'foreign-name', 'extra-name', 'wrong-profile', 'missing-marker', 'missing-marker-false68', 'revision'))
 def test_current_wrong_sdk_or_scope_cannot_pass(current_capsule, fault):
     capsule, runtime, marker = current_capsule; sdk = runtime['runtime']['sdk_sha256']
-    if fault in ('old68', 'old71', 'old83', 'old85', 'old86', 'missing-marker-false68'):
+    if fault in ('old68', 'old71', 'old83', 'old85', 'old86', 'old87', 'missing-marker-false68'):
         # Synthetic stale-size subsets; these are not historical SDK manifests.
-        historical_count = {'old71':71, 'old83':83, 'old85':85, 'old86':86}.get(fault,68)
+        historical_count = {'old71':71, 'old83':83, 'old85':85, 'old86':86, 'old87':87}.get(fault,68)
         for name in list(sdk)[historical_count:]: del sdk[name]
         assert len(sdk) == historical_count
     if fault == 'foreign-name': sdk['include/skimagexx/foreign.hpp'] = sdk.pop(next(iter(sdk)))

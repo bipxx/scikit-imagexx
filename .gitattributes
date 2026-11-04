@@ -664,3 +664,11 @@ coverage/contracts/regionprops-state-native-v1.json -text
 coverage/contracts/regionprops-state-frontend-v1.json -text
 coverage/contracts/regionprops-state-benchmark.json -text
 coverage/contracts/circle-perimeter-aa.json -text
+coverage/contracts/circle-perimeter-aa-native-v1.json -text
+coverage/contracts/circle-perimeter-aa-frontend-v1.json -text
+coverage/contracts/circle-perimeter-aa-benchmark.json -text
+coverage/contracts/combine-stains-half.json -text
+coverage/contracts/combine-stains-half-frontend-v1.json -text
+coverage/contracts/combine-stains-half-benchmark.json -text
+coverage/contracts/regionprops-public-mutation.json -text
+coverage/contracts/regionprops-public-mutation-frontend-v1.json -text
