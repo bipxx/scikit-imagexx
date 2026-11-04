@@ -1,6 +1,6 @@
 {
   "schema": "regionprops-state-frontend-v1",
-  "status": "PROSPECTIVE_TYPE_POLICY_FROZEN_BEFORE_COMPONENT_TESTS",
+  "status": "PASS_SCOPED_COMPONENT_FOUR_MODES_PENDING_INDEPENDENT_REVIEW",
   "reference_commit": "2f076368987ca4247e06109d23f459dbad98079a",
   "native_commit": "5cfc22000739144238b56672c2d5c41c9b6fe5ff",
   "type_policy": {
@@ -30,8 +30,66 @@
     "InstalledSDK/fullproduct qualification/benchmark speedup"
   ],
   "task_closeout": {
-    "result": "Prospective class/type and layout/provider policy frozen before component tests.",
-    "waste_and_reuse": "Reuses reviewed reference and nativeinterface; avoids bulkcopying44properties and disguising class identity.",
-    "next_plan_correction": "Implement only this bridge; if saved layout/cache/state cannot be preserved, report concrete blocker before broader class machinery."
+    "result": "Prospective distinct subclass bridge satisfies all29savedcases/two worker budgets across2profiles\u00d72runtime modes:244checks,232raw saved comparisons. Sevenproperties,cache/inputmutation/layout/storage/errors/aliases/FPstate/order match except separately asserted distinct class policy. Lifetime and metadata-change tails pass.",
+    "waste_and_reuse": "Reused reviewedleaf/reference, pinned originaldescriptor/cache scaffolding, existingowner guard object and genuineSDK85runtime archive, two retained environments. No44-propertycopy, golden rewriting, originalcapture, fullSDKbuild, environment or timings. One copiedrunner still checked old draw_regionprops_state attr beforetests (0tests/0constructorcalls,1.92s observed); preserved and correctedrunner versions. This is preventable substitution setupwork; replace scriptfield substitutions with explicit intake of actualexports before first invocation. No functional C++/Python correction/rebuild was needed after initialcomponent build.",
+    "next_plan_correction": "Root: independently review explicit subclass/provider policy and allrawrows, then decide sharedwiring; preservepartialtype/provider limits and require genuineSDK/fullproduct/parity/performance gates before any coverage/speed claim. Next componentrunner owner: verify actualschema/exports before invoking borrowedrunner. Existing252 frozenqualification remainsindependent.",
+    "receipt_policy": "Finalize paths/type labels/closeout beforehandingoffhash. Any later correction gets newversion; no in-place handedoff mutation."
+  },
+  "execution": {
+    "modes": {
+      "minimum/normal": {
+        "actual_XML": {
+          "tests": 61,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "raw_saved_rows": 58,
+        "default_workers_after": 1
+      },
+      "minimum/scalar": {
+        "actual_XML": {
+          "tests": 61,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "raw_saved_rows": 58,
+        "default_workers_after": 1
+      },
+      "modern/normal": {
+        "actual_XML": {
+          "tests": 61,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "raw_saved_rows": 58,
+        "default_workers_after": 1
+      },
+      "modern/scalar": {
+        "actual_XML": {
+          "tests": 61,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "raw_saved_rows": 58,
+        "default_workers_after": 1
+      }
+    },
+    "actual_XML_tests_total": 244,
+    "saved_comparisons_total": 232,
+    "new_original_calls": 0,
+    "fullSDKbuilds": 0,
+    "new_environments": 0,
+    "timings": 0,
+    "new_leaf_TUs": 1,
+    "new_binder_TUs": 2,
+    "new_initializer_TUs": 2,
+    "type_mapping": "Rawactual qualifiednames kept distinct; every other savedrow field compared exactly. Goldens unchanged.",
+    "native_witnesses": "ActualbuiltinCreturn/nonNone assertions for prepare/image/population/coords; originalregionprops/find_objects and originalimage/num_pixels/coords getters forbidden on saved admitted paths.",
+    "runtime_modes": "Scalar process uses actualSKIMAGEXX_DISABLE_SIMD=1 and has_avx2False assertion. Compiler auto-vectorization remains baseline; leaf compiler-scalar coverage is separate nativepacket.",
+    "metadata_control_warning": "NumPy2.5shape assignment in independent descriptor-mutation control emits DeprecationWarning; preserved, outside29savedcases."
   }
 }
