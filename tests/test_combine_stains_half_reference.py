@@ -57,8 +57,29 @@ def test_combine_stains_half_prospective_source_safety():
     assert matrix['native_implementation'] == 'pending'
     for spec in CASES:
         source_safe(spec)
-    for name, pin in matrix['source_freeze'].items():
-        assert hashlib.sha256((ROOT / name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == pin
+    # These3 complete files record historical capture context. Their old bytes
+    # and original pins stay immutable; live producer dependencies remain strict.
+    context_raw = (ROOT / 'coverage/contracts/combine-stains-half-source-context-v1.json').read_bytes()
+    assert hashlib.sha256(context_raw).hexdigest() == 'bdd55b52ecc3eb1fafb502b2762fd233c1853fb233e02d27a85e745d2c32e6f5'
+    context = json.loads(context_raw)
+    assert context['schema'] == 'combine-stains-half-source-context-v1'
+    assert context['reference_commit'] == '22c7d6addfeb36e82df4bda0814e2ca687349603'
+    assert context['reference_contract_sha256'] == hashlib.sha256(MATRIX.read_bytes()).hexdigest()
+    historical = {'python/skimagexx/coverage.py', 'tests/test_stains.py',
+                  'tests/test_combine_stains_half_reference.py'}
+    live = {'tests/combine_stains_half_contract.py', 'tests/combine_stains_half_observer.py',
+            'tests/draw_coordinates_observer.py'}
+    assert set(context['entries']) == historical
+    assert set(context['live_source_paths']) == live
+    assert set(matrix['source_freeze']) == historical | live
+    for name, entry in context['entries'].items():
+        assert entry['role'] == 'historical_capture_context' and entry['Git_revision'] == context['reference_commit']
+        archived = entry['text'].encode('utf-8')
+        assert len(archived) == entry['bytes']
+        assert hashlib.sha256(archived).hexdigest() == entry['raw_sha256']
+        assert hashlib.sha256(archived.replace(b'\r\n', b'\n')).hexdigest() == entry['source_freeze_canonical_lf_sha256'] == matrix['source_freeze'][name]
+    for name in live:
+        assert hashlib.sha256((ROOT / name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == matrix['source_freeze'][name]
 
 
 @pytest.mark.parametrize('spec', CASES, ids=[s['id'] for s in CASES])
