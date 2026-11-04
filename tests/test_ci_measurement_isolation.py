@@ -61,6 +61,12 @@ def test_minimum_only_and_debug_assertions_are_enforced():
     versions = [re.findall(r"python-version: '([^']+)'", blocks[name])
                 for name in ('numpy-minimum', 'measure-minimum')]
     assert versions == [['3.11.17'], ['3.11.17']]
+    # Strict Windows LevelSet lookup is pinned to this witnessed interpreter.
+    witnessed = json.loads((ROOT / 'coverage/contracts/level-set-windows.json').read_bytes())['abi']['python_version']
+    assert re.fullmatch(r'3\.13\.\d+', witnessed)
+    latest = [re.findall(r"python-version: '([^']+)'", blocks[name])
+              for name in ('check', 'measure', 'debug-gil')]
+    assert latest == [[witnessed], [witnessed], [witnessed]]
     condition = "if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only"
     assert all(condition in blocks[n] for n in ('check', 'debug-gil'))
     assert "if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only && !inputs.latest_only)" in blocks['measure']
@@ -75,6 +81,22 @@ def test_minimum_only_and_debug_assertions_are_enforced():
                  'test_resample_core.py', 'test_resample_typed.py', 'test_alpha_color.py', 'test_frangi.py'):
         assert debug.count('tests/' + name) == 2
     assert "SKIMAGEXX_DISABLE_SIMD: '1'" in debug and 'normal.xml' in debug and 'scalar.xml' in debug
+
+
+@pytest.mark.parametrize('job,replacement',(
+    ('check', '3.13'), ('measure', '3.13.17'), ('debug-gil', '3.13'),
+    ('numpy-minimum', '3.11'), ('measure-minimum', '3.11.18')))
+def test_runtime_python_pins_reject_floating_or_mismatched_interpreters(monkeypatch,job,replacement):
+    path = ROOT / '.github/workflows/ci.yml'
+    text = path.read_text()
+    block = jobs(text)[job]
+    changed, count = re.subn(r"python-version: '[^']+'", "python-version: '" + replacement + "'", block)
+    assert count == 1
+    mutated = text.replace(block, changed, 1)
+    original = Path.read_text
+    monkeypatch.setattr(Path, 'read_text', lambda self,*a,**kw: mutated if self == path else original(self,*a,**kw))
+    with pytest.raises(AssertionError):
+        test_minimum_only_and_debug_assertions_are_enforced()
 
 
 def test_debug_runtime_proof_rejects_release(monkeypatch):
