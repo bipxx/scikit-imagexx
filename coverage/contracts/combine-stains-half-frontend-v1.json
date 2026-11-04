@@ -2,7 +2,7 @@
   "schema_version": 1,
   "api": "color.combine_stains",
   "reference_commit": "22c7d6addfeb36e82df4bda0814e2ca687349603",
-  "status": "PASS_BOUNDED_HALF_PUBLIC_FRONTEND_PENDING_INDEPENDENT_REFERENCE_REVIEW",
+  "status": "PASS_BOUNDED_HALF_PUBLIC_FRONTEND_INDEPENDENT_REVIEW_PENDING",
   "algorithm": "Plain native-endian half combine_stains input only: oneboundaryastype(float32), thenunchangedexisting f32 preparation/promotion/matrixkernel. No PixelType/C++/workerbackend change.",
   "numerical_policy": {
     "rtol": 2e-06,
@@ -72,10 +72,10 @@
     }
   },
   "task_closeout": {
-    "status": "public-terminal-pass-independent-reference-review-barrier",
+    "status": "public-terminal-pass-independent-frontend-review-pending",
     "result": "51uniquepassingchecks/mode\u00d74=204finalcovered; initial204PASS, selfreviewexactmatrixnormcorrection reranONLY4changednodes/mode=16PASS and reused188unchanged nodes.96savedrow actualCreturn/onecast/preparedf32-result witnesses retained. No productionC++/matrixcore/backend change.",
     "evidence": "Frozen24originalobservations reused, exactdtype/metadata/layout/alias/state checks andexistingf32numericalbudget; core-reuse receiptbindsgenuine311d68/31364d, native stainclosure/bodyhelper unchanged vsdonors; no broaderwholeproduct claim",
-    "waste_and_reuse": "No candidatebuild orscientifictestfailure, no originalreplay/environment/timing/fullSDK. Reusedretainedgenuinefullcores viaonlytargetedentrycopy andsourceoverlays; no wholecontainerhash/download. Read-onlysetup initiallyattemptedmodernimport afterfind_specNone (metadataModuleNotFoundError, noalgorithmcall); narrowed toretainedfullcore. Anoverbroadmanifestprint includedlarge source/recordmaps andtruncatedoutput; correctedtoselectedrevision/core/sourcekeys. Avoid futureunbounded dictionaryprints andguardmissingmodule imports. Selfreviewfoundroundednormliteral inold-f32smoke test; correctedtoexactexistingnorm,16affectedchecks rerun/188reused. Futurecases computeactualmatrixnormfromstart.",
+    "waste_and_reuse": "No candidatebuild orscientifictestfailure, no originalreplay/environment/timing/fullSDK. Reusedretainedgenuinefullcores viaonlytargetedentrycopy andsourceoverlays; no wholecontainerhash/download. Read-onlysetup initiallyattemptedmodernimport afterfind_specNone (metadataModuleNotFoundError, noalgorithmcall); narrowed toretainedfullcore. Anoverbroadmanifestprint includedlarge source/recordmaps andtruncatedoutput; correctedtoselectedrevision/core/sourcekeys. Avoid futureunbounded dictionaryprints andguardmissingmodule imports. Selfreviewfoundroundednormliteral inold-f32smoke test; correctedtoexactexistingnorm,16affectedchecks rerun/188reused. Futurecases computeactualmatrixnormfromstart. Finaldiffreviewfoundmixednewline normalization churn incoverage.py; bytepreserving2substitution successor restoresbaseline lineendings withcanonicalLF/ASTexactequivalence, no numericalreplay. Futureeditexistingmixednewlinefiles bytewise andinspectdiffbeforetests.",
     "observed_cost": "Initialminimum normal command9.564stoolwall/2.65spytest; remaining3initialmodecommands max3.456stoolwall/1.84-1.95spytest. Normdelta4parallelcommands max4.838stoolwall/0.96-0.99spytest. Verificationcosts only, no performancemeasurement or waste-timing reruns.",
     "next_plan_correction": "Owner root/reviewer: acceptonlyafterindependentreferencePASS andfrontendreview; updatecurrentqualificationselectors/defaultdtype counts afterregistry/inventorysynchronization. Futureisolatedone-workerhalfbenchmark includescast+allocation, freezebeforetiming; no acceptedperformance advance fromthispacket. Keepother3halfAPIprovider expectations unchanged. No newfinite-scan orfullhalf-domain claim.",
     "scope": "Onlyboundedreference finitehalfcombine_stainscompatibility; nonfinite/extreme/overflowwarning/protocol/batchedmatrix behaviorunassessed. Existingmatrixkernel sourceunchanged; standaloneC++half type notintroduced.",
@@ -85,6 +85,13 @@
     "only_new_production_block": "Onehalf->float32 astype guard in_stain, onlycombine/plainndarray/nativehalf; strippingthisIf recoversENTIREbaseline color.pyAST exactly",
     "ast_baseline_recovery": true,
     "coverage_delta": "OneperAPI native_dtype branch andexactlyone prepared-f32single condition forcombinehalf only; negativepolicy tests forneighboringAPIs/float64",
-    "cpp_changes": false
+    "cpp_changes": false,
+    "line_endings": "Versionedsuccessor preservesbaseline coverage.py mixedlineendings; finalcanonicalLF/AST equalsalltestedoverlaybytes. No numericalrerun forbyte-only change."
+  },
+  "independent_reference_review": {
+    "path": "build/combine-stains-half-independent-reference-review-v1/review.json",
+    "sha256": "650d46cd32b87fa4a06b0ac0c6b2d1f3f8288dbc4ec4cdbfbfac4e0723def4a0",
+    "reviewer": "root",
+    "status": "PASS"
   }
 }
