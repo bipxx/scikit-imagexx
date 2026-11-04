@@ -1,0 +1,552 @@
+{
+  "schema": "regionprops-point-witness-v1",
+  "status": "PROSPECTIVE_FROZEN_BEFORE_ORIGINAL_CALLS",
+  "api": "measure.regionprops",
+  "signature": "(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)",
+  "cases": [
+    {
+      "dtype": "int64",
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-point/unit-2d-cache-on",
+      "shape": [
+        1,
+        1
+      ],
+      "values": [
+        1
+      ],
+      "cache": true,
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-point/unit-3d-cache-off",
+      "shape": [
+        1,
+        1,
+        1
+      ],
+      "values": [
+        1
+      ],
+      "cache": false,
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "layout": "c",
+      "spacing": null,
+      "offset": [
+        -2,
+        3
+      ],
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-point/embedded-2d-offset-cache-off",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cache": false,
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-point/embedded-3d-cache-on",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cache": true,
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    }
+  ],
+  "source_safety": "Four finite int64 2D/3D arrays at most24elements, exactlyonepositive label1, no source-unsafe casts/maxlabels/termination. Onlyordinary [-2,3] offset inone2Dcase; cacheon/off split. Reuse pinnedseven-property/fixedalias observer without modifying old29cases.",
+  "original_sources": {
+    "_regionprops.py": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+    "_regionprops_utils.py": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+  },
+  "type_policy": {
+    "original_qualified_type": [
+      "skimage.measure._regionprops",
+      "RegionProperties"
+    ],
+    "backend_qualified_type": [
+      "skimagexx._regionprops_state",
+      "RegionProperties"
+    ],
+    "relationship": "Distinct backend subclass of pinned original RegionProperties, same public class name. isinstance/subclass compatible; literal type identity is explicitly NOT claimed.",
+    "comparison": "Keep original goldens and raw observed qualified types unchanged. Compare all other captured row fields exactly. Assert the prospective original/backend pair separately, retaining actual raw rows; never canonicalize or rewrite type observations."
+  },
+  "original_call_budget": {
+    "per_profile": 4,
+    "total": 8,
+    "replays_allowed": 0
+  },
+  "original_observations": {},
+  "native_API_credit": 0,
+  "scope": "New ordinarysinglepixel geometry/storage witness only; no fullclass or wholeproduct promotion."
+}
