@@ -6,7 +6,7 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
@@ -326,7 +326,7 @@ def native_dtypes(api):
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
     # Drawing labels are SHAPE carriers only; no image pixel dtype is consumed.
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):return ('uint8','float32','float64')
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):return ('uint8','float32','float64')
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
     if api in ('measure.approximate_polygon','measure.subdivide_polygon'):return ('float64',)
@@ -365,6 +365,9 @@ def default_call(api, image):
         # Frozen 2D constructor case; carrier dtype is used for actual labels.
         labels = np.array([[0,3,3,0],[1,0,3,0],[1,1,0,0]], dtype=image.dtype)
         return (labels,), {'cache': True}
+    if api == 'draw.circle_perimeter_aa':
+        # Frozen radius2 in an interior8x8 geometry; dtype/pixels are not API inputs.
+        return (3,3,2), {'shape':(8,8)}
     if api == 'draw.line_aa':
         rows,columns=image.shape
         return (0,0,rows-1,columns-1),{}
@@ -548,15 +551,15 @@ def draw_default_error(api,image,actual,expected):
     calls retain the existing generic dtype suites' recursive output checks.
     """
     import numpy as np
-    assert (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa'))
+    assert (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa'))
     if isinstance(expected,np.ndarray):
-        expected_dtype=expected.dtype if api=='draw.line_aa' else np.dtype(np.intp)
+        expected_dtype=expected.dtype if api in ('draw.line_aa','draw.circle_perimeter_aa') else np.dtype(np.intp)
         assert expected_dtype in (np.dtype(np.intp),np.dtype(np.float64))
         pairs=[(actual,expected,expected_dtype)]
     else:
         assert type(actual)is type(expected)and type(expected)in(tuple,list)
-        assert len(actual)==len(expected)==(3 if api=='draw.line_aa' else 2)
-        pairs=[(a,e,np.dtype(np.float64 if api=='draw.line_aa' and i==2 else np.intp))for i,(a,e)in enumerate(zip(actual,expected))]
+        assert len(actual)==len(expected)==(3 if api in ('draw.line_aa','draw.circle_perimeter_aa') else 2)
+        pairs=[(a,e,np.dtype(np.float64 if api in ('draw.line_aa','draw.circle_perimeter_aa') and i==2 else np.intp))for i,(a,e)in enumerate(zip(actual,expected))]
     for a,e,dtype in pairs:
         assert type(a)is type(e)is np.ndarray
         assert a.dtype==e.dtype==dtype and a.dtype.isnative and e.dtype.isnative
@@ -834,7 +837,7 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
     if api == 'measure.regionprops':
         regionprops_default_error(image, actual, expected)
         return
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):
         draw_default_error(api,image,actual,expected)
         return
     if api == 'measure.subdivide_polygon':
@@ -906,7 +909,7 @@ def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
     if api == 'measure.regionprops':
         raise ValueError('RegionProperties uses exact property/storage checks; call assert_default_parity')
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):
         raise ValueError('Drawing uses exact coordinate/weight words and storage; call assert_default_parity')
     if api == 'measure.subdivide_polygon':
         raise ValueError('Subdivide polygon uses exact float64 words and fresh layout; call assert_default_parity')

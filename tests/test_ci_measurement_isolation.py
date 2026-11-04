@@ -795,3 +795,23 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     assert contract['scope']=='current254'
     assert len(contract['image_paths'])==254 and len(contract['metadata_paths'])==3
     assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py','tests/test_line_aa_reference.py','tests/test_line_aa_public.py','tests/test_line_aa_default.py'}<=set(contract['required_selectors'])
+
+
+def test_equivalent_descriptor_fixture_accepts_every_registered_dtype_before_build():
+    # Construction-domain intake only; actual NumPy equivalence stays in the
+    # scientific test. This catches a stale three-dtype whitelist pre-build.
+    tree = ast.parse((ROOT / 'tests/test_dtype_aliases.py').read_bytes())
+    alias = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == 'alias')
+
+    class Descriptor:
+        def newbyteorder(self, order):
+            assert order in ('>', '=')
+            return self
+
+    namespace = {'np': SimpleNamespace(dtype=lambda name: Descriptor())}
+    exec(compile(ast.Module(body=[alias], type_ignores=[]), '<dtype alias intake>', 'exec'), namespace)
+    inventory = json.loads((ROOT / 'coverage/api.json').read_bytes())
+    names = {dtype for entry in inventory['entries'] for dtype in entry['native_default_case_dtypes']}
+    assert names
+    for name in names:
+        assert isinstance(namespace['alias'](name), Descriptor)
