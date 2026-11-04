@@ -1,0 +1,902 @@
+{
+  "schema": "circle-perimeter-uint64-shape-witness-v1",
+  "status": "FOUR_NEW_ORIGINAL_OBSERVATIONS_SPECIFIC_BUG_HYPOTHESIS_NOT_REPRODUCED",
+  "reference_version": "0.26.0",
+  "api": "draw.circle_perimeter",
+  "cases": [
+    {
+      "id": "uint64-shape/tuple-2pow53-plus1",
+      "shape_kind": "tuple",
+      "r": 9007199254740992,
+      "c": 0,
+      "radius": 0,
+      "method": "bresenham default",
+      "shape_first_scalar": "numpy.uint64(2**53+1)",
+      "shape_second_scalar": 1
+    },
+    {
+      "id": "uint64-shape/ndarray-2pow53-plus1",
+      "shape_kind": "ndarray",
+      "r": 9007199254740992,
+      "c": 0,
+      "radius": 0,
+      "method": "bresenham default",
+      "shape": "numpy.array([2**53+1,1],dtype=uint64)"
+    }
+  ],
+  "source_canonical_lf_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+  "binary_sha256": {
+    "1.24.4": "32673fec979236e2f83543ad289a8128059b96e6562a9ea30114c4e73c17139b",
+    "2.5.4": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4"
+  },
+  "original_observations": {
+    "1.24.4": [
+      {
+        "id": "uint64-shape/tuple-2pow53-plus1",
+        "profile": "1.24.4",
+        "input_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  {
+                    "type": "uint64",
+                    "dtype": "<u8",
+                    "raw": "0100000000002000"
+                  },
+                  1
+                ]
+              }
+            }
+          ]
+        },
+        "input_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  {
+                    "type": "uint64",
+                    "dtype": "<u8",
+                    "raw": "0100000000002000"
+                  },
+                  1
+                ]
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "07db9b8c1579f929d8b44be979633ec2931a7f56c54d963ebff68c4eeb3e2a3a",
+              "raw_zlib_base64": "eJxjYAABBQYGMmkAHkABAQ=="
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+              "raw_zlib_base64": "eJxjYKAMAAAAQAAB"
+            }
+          ]
+        },
+        "error": null,
+        "warnings": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [],
+        "checks": {
+          "policy_unchanged": true,
+          "input_unchanged": true
+        },
+        "promotion": {
+          "array_dtype": "<i8",
+          "scalar_type": "uint64",
+          "scalar_dtype": "<u8",
+          "result_type_array_scalar": "int64",
+          "result_type_dtype_pair": "float64",
+          "numpy_less": true,
+          "exact_integer_less": true,
+          "coordinate_float_hex": "0x1.0000000000000p+53",
+          "boundary_float_hex": "0x1.0000000000000p+53"
+        }
+      },
+      {
+        "id": "uint64-shape/ndarray-2pow53-plus1",
+        "profile": "1.24.4",
+        "input_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "type": "ndarray",
+                "dtype": "<u8",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<u8"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  2
+                ],
+                "strides": [
+                  8
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "1b8f1e7a503d32989d7b97bdf2fdfd606b07164f8b747cdb917f734fe7cd418e",
+                "raw_zlib_base64": "eJxjZAABBQZGBggAAAFoACM="
+              }
+            }
+          ]
+        },
+        "input_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "type": "ndarray",
+                "dtype": "<u8",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<u8"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  2
+                ],
+                "strides": [
+                  8
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "1b8f1e7a503d32989d7b97bdf2fdfd606b07164f8b747cdb917f734fe7cd418e",
+                "raw_zlib_base64": "eJxjZAABBQZGBggAAAFoACM="
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "07db9b8c1579f929d8b44be979633ec2931a7f56c54d963ebff68c4eeb3e2a3a",
+              "raw_zlib_base64": "eJxjYAABBQYGMmkAHkABAQ=="
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+              "raw_zlib_base64": "eJxjYKAMAAAAQAAB"
+            }
+          ]
+        },
+        "error": null,
+        "warnings": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "checks": {
+          "policy_unchanged": true,
+          "input_unchanged": true
+        },
+        "promotion": {
+          "array_dtype": "<i8",
+          "scalar_type": "uint64",
+          "scalar_dtype": "<u8",
+          "result_type_array_scalar": "int64",
+          "result_type_dtype_pair": "float64",
+          "numpy_less": true,
+          "exact_integer_less": true,
+          "coordinate_float_hex": "0x1.0000000000000p+53",
+          "boundary_float_hex": "0x1.0000000000000p+53"
+        }
+      }
+    ],
+    "2.5.4": [
+      {
+        "id": "uint64-shape/tuple-2pow53-plus1",
+        "profile": "2.5.4",
+        "input_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  {
+                    "type": "uint64",
+                    "dtype": "<u8",
+                    "raw": "0100000000002000"
+                  },
+                  1
+                ]
+              }
+            }
+          ]
+        },
+        "input_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  {
+                    "type": "uint64",
+                    "dtype": "<u8",
+                    "raw": "0100000000002000"
+                  },
+                  1
+                ]
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "07db9b8c1579f929d8b44be979633ec2931a7f56c54d963ebff68c4eeb3e2a3a",
+              "raw_zlib_base64": "eJxjYAABBQYGMmkAHkABAQ=="
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+              "raw_zlib_base64": "eJxjYKAMAAAAQAAB"
+            }
+          ]
+        },
+        "error": null,
+        "warnings": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [],
+        "checks": {
+          "policy_unchanged": true,
+          "input_unchanged": true
+        },
+        "promotion": {
+          "array_dtype": "<i8",
+          "scalar_type": "uint64",
+          "scalar_dtype": "<u8",
+          "result_type_array_scalar": "float64",
+          "result_type_dtype_pair": "float64",
+          "numpy_less": true,
+          "exact_integer_less": true,
+          "coordinate_float_hex": "0x1.0000000000000p+53",
+          "boundary_float_hex": "0x1.0000000000000p+53"
+        }
+      },
+      {
+        "id": "uint64-shape/ndarray-2pow53-plus1",
+        "profile": "2.5.4",
+        "input_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "type": "ndarray",
+                "dtype": "<u8",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<u8"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  2
+                ],
+                "strides": [
+                  8
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "1b8f1e7a503d32989d7b97bdf2fdfd606b07164f8b747cdb917f734fe7cd418e",
+                "raw_zlib_base64": "eJxjZAABBQZGBggAAAFoACM="
+              }
+            }
+          ]
+        },
+        "input_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                9007199254740992,
+                0,
+                0
+              ]
+            },
+            {
+              "shape": {
+                "type": "ndarray",
+                "dtype": "<u8",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<u8"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  2
+                ],
+                "strides": [
+                  8
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "1b8f1e7a503d32989d7b97bdf2fdfd606b07164f8b747cdb917f734fe7cd418e",
+                "raw_zlib_base64": "eJxjZAABBQZGBggAAAFoACM="
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "07db9b8c1579f929d8b44be979633ec2931a7f56c54d963ebff68c4eeb3e2a3a",
+              "raw_zlib_base64": "eJxjYAABBQYGMmkAHkABAQ=="
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                8
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+              "raw_zlib_base64": "eJxjYKAMAAAAQAAB"
+            }
+          ]
+        },
+        "error": null,
+        "warnings": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "checks": {
+          "policy_unchanged": true,
+          "input_unchanged": true
+        },
+        "promotion": {
+          "array_dtype": "<i8",
+          "scalar_type": "uint64",
+          "scalar_dtype": "<u8",
+          "result_type_array_scalar": "float64",
+          "result_type_dtype_pair": "float64",
+          "numpy_less": true,
+          "exact_integer_less": true,
+          "coordinate_float_hex": "0x1.0000000000000p+53",
+          "boundary_float_hex": "0x1.0000000000000p+53"
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "1.24.4": {
+      "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+      "numpy": "1.24.4",
+      "skimage": "0.26.0",
+      "source_canonical_lf_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+      "binary_sha256": "32673fec979236e2f83543ad289a8128059b96e6562a9ea30114c4e73c17139b",
+      "original_calls_per_spec": 1,
+      "native_calls": 0,
+      "timings": false
+    },
+    "2.5.4": {
+      "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+      "numpy": "2.5.4",
+      "skimage": "0.26.0",
+      "source_canonical_lf_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+      "binary_sha256": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4",
+      "original_calls_per_spec": 1,
+      "native_calls": 0,
+      "timings": false
+    }
+  },
+  "capture": {
+    "original_calls_started_total": 4,
+    "completed_observations_total": 4,
+    "original_calls_per_case_per_profile": 1,
+    "original_calls_replayed": 0,
+    "candidate_calls": 0,
+    "native_calls": 0,
+    "timings": 0,
+    "pre_call_freeze_sha256": "2515ed85af0a1ad120a2954d5ec1ffccd9c226f5f7a0935fed9e0acf9ec0afc1",
+    "capture_script_sha256": "941ee82f2ead2dadca760c07c7fde94e263fdc793b8a73db9cb96b63a22703b0",
+    "capture_handoff_sha256": "f18adbe6e0b76c0c83c4ed6a404054914d0fe1560ce73ffdb874e0d39e0f028e",
+    "files": {
+      "1.24.4/journal.jsonl": {
+        "bytes": 5754,
+        "sha256": "0ce442d2ce3ed32dba2a2165204a319d48346bb855a23b885ae7e607f0281b00"
+      },
+      "1.24.4/observations.json": {
+        "bytes": 8705,
+        "sha256": "9cbfa5918e0ecb5590a621c29ffb5feefb117e4bc46bc7e50c74b7f365c491e5"
+      },
+      "1.24.4/provenance.json": {
+        "bytes": 376,
+        "sha256": "722d804a5d3a411b845c3f363fd0a2162116460f024c13791429435cd23b14f8"
+      },
+      "1.24.4/terminal.json": {
+        "bytes": 121,
+        "sha256": "47aa18aea5b42736d203333c302a13a7ef4db503fea5e92e17af29c979d5166c"
+      },
+      "2.5.4/journal.jsonl": {
+        "bytes": 5756,
+        "sha256": "9f156f2e37e418dfd26bf23f962d2ac13afe94600020f6e822882f944bca7d3b"
+      },
+      "2.5.4/observations.json": {
+        "bytes": 8707,
+        "sha256": "aaaab1e0fc5904bc51e7aacd5fb9a2a3aa71d7094c2f7b956421195e552c2d57"
+      },
+      "2.5.4/provenance.json": {
+        "bytes": 374,
+        "sha256": "4500fe7df832b30230d24388068841697388d5d683c74464fedbe8b77de35cab"
+      },
+      "2.5.4/terminal.json": {
+        "bytes": 120,
+        "sha256": "35a746d75b0eec3031c4d67b493a2edd59358795f01436c78a896cfdbe637ec3"
+      },
+      "pre-call-freeze.json": {
+        "bytes": 2455,
+        "sha256": "2515ed85af0a1ad120a2954d5ec1ffccd9c226f5f7a0935fed9e0acf9ec0afc1"
+      },
+      "capture_once.py": {
+        "bytes": 4078,
+        "sha256": "941ee82f2ead2dadca760c07c7fde94e263fdc793b8a73db9cb96b63a22703b0"
+      }
+    }
+  },
+  "findings": {
+    "both_profiles_both_shapes": "Return8duplicate centerpoints with exact owning intp arrays; no error/warning/input mutation/state-policy change.",
+    "direct_comparison": "int64[2**53] < uint64(2**53+1) is True on both profiles.",
+    "dtype_inference": "NumPy1.24.4 array/scalar result_type=int64; NumPy2.5.4 result_type=float64. Nominal dtype-pair result_type=float64 on both. Both operands float() hex strings are equal, yet actual mixed-integer comparison remains True.",
+    "hypothesis_disposition": "Proposed specific rounding/clipping mismatch is falsified by these witnesses. A result_type prediction alone does not prove the actual comparison loop or incorrect native integer clipping.",
+    "not_proved": "This does not establish full arbitrary uint64 shape-domain parity; no candidate was executed, and no other inputs were captured."
+  },
+  "coverage_limit": "These4neworiginal observations support prospective compatibility/native-admission tests only; no universal uint64 shape-domain or native/product/performance acceptance. Existing69circle records unchanged.",
+  "native_implementation": "not established by this original-only witness",
+  "task_closeout": {
+    "result": "Four authorized once-only originals completed; counterexample did not reproduce, and blocking inference was promptly retracted.",
+    "waste_and_reuse": "Reused pinned reference/runtime/encoder and existing source-safe radius0 logic. No old observation replay, native call, candidate build, new environment or timing. Incorrect confidence that result_type dictates comparison semantics triggered this bounded investigation; actual mixed comparison evidence corrected it. Calls are retained useful negative evidence, not relabeled as a bug proof. Cost unmeasured.",
+    "next_plan_change": "Before requiring a dtype-conversion guard, distinguish nominal promotion from the executed comparison semantics; use narrow source-safe evidence and stop when hypothesis is falsified. Root should avoid narrowing native support or rebuilding a candidate solely for this unproven issue."
+  }
+}
