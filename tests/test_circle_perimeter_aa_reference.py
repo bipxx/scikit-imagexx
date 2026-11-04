@@ -2,6 +2,7 @@
 import base64
 import hashlib
 import json
+import struct
 import zlib
 from pathlib import Path
 import pytest
@@ -67,7 +68,9 @@ def test_circle_perimeter_aa_saved_original_rows(profile):
     for spec, row in zip(CASES, rows):
         assert row['api'] == API and all(row['checks'].values())
         assert row['input_before'] == row['input_after']
-        assert not row['warnings'] or spec['kind'] in ('np-float-radius', 'scalar-array')
+        assert not row['warnings']
+        expected_events = ['r.__index__'] if spec['kind'] == 'provider-first' else ['r.__index__', 'c.__index__', 'radius.__index__'] if spec['kind'] == 'providers-all' else []
+        assert row['events'] == dict(container='list', items=expected_events)
         if row['error'] is None:
             result = row['result']
             assert result['container'] == 'tuple' and len(result['items']) == 3
@@ -76,6 +79,12 @@ def test_circle_perimeter_aa_saved_original_rows(profile):
             assert len({tuple(a['shape']) for a in arrays}) == 1
             assert sum(a['shape'][0] for a in arrays) <= MAX_OUTPUT_ELEMENTS
             assert all(a['own'] and a['writeable'] and a['base_type'] == 'NoneType' for a in arrays)
+            assert all(a['strides'] == ([8] if a['shape'][0] else [0]) for a in arrays)
+            if spec['id'] in ('circle-aa/radius-0', 'circle-aa/radius--3', 'circle-aa/radius--1'):
+                radius = spec['args'][2]
+                expected = ([radius, 0, radius, 0, -radius, 0, -radius, 0], [0, radius, 0, -radius, 0, radius, 0, -radius], [1.] * 8)
+                for array, values, format_code in zip(arrays, expected, ('q', 'q', 'd')):
+                    assert zlib.decompress(base64.b64decode(array['raw_zlib_base64'])) == struct.pack('<8' + format_code, *values)
             assert all(not pair[1] for pair in row['output_input_aliases'])
             for i, pair in enumerate(row['output_pair_aliases']):
                 assert pair[0] == (i // 3 == i % 3)
