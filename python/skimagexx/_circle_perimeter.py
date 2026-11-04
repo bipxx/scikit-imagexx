@@ -23,23 +23,23 @@ def _index(value):
 
 def circle_perimeter(r,c,radius,method='bresenham',shape=None):
     native_result=None
-    unsafe_short_tuple=type(shape)is tuple and len(shape)<2
     # Safe routes keep unknown object protocols untouched. Proven short tuples
     # must never enter that provider, even when a method protocol is present.
-    if (type(method)not in(str,np.str_)or(shape is not None and type(shape)not in(tuple,list,np.ndarray)))and not unsafe_short_tuple:
-        from skimage.draw._draw import _circle_perimeter
-        return _circle_perimeter(r,c,radius,method,shape)
+    if type(method)not in(str,np.str_)or(shape is not None and type(shape)not in(tuple,list,np.ndarray)):
+        if not(type(shape)is tuple and len(shape)<2):
+            from skimage.draw._draw import _circle_perimeter
+            return _circle_perimeter(r,c,radius,method,shape)
     # The Cython signature converts each argument before the next one and before
     # method validation. Keep callback/overflow order without replay on refusal.
     r=_index(r);c=_index(c);radius=_index(radius)
     if method=='bresenham':prepared_method=0
     elif method=='andres':prepared_method=1
     else:raise ValueError('Wrong method')
-    if unsafe_short_tuple:
-        raise NotImplementedError('draw.circle_perimeter: tuple shapes shorter than 2 entries are outside the assessed safe boundary')
     prepared_shape=shape
     if type(shape)in(tuple,list):
         if len(shape)<2 or any(type(value)not in _INTEGER_TYPES for value in shape[:2]):
+            if type(shape)is tuple and len(shape)<2:
+                raise NotImplementedError('draw.circle_perimeter: tuple shapes shorter than 2 entries are outside the assessed safe boundary')
             from skimage.draw._draw import _circle_perimeter
             return _circle_perimeter(r,c,radius,method,shape)
         prepared_shape=tuple(operator.index(value)for value in shape[:2])

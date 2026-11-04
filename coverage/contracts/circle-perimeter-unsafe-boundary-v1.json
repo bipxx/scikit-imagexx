@@ -64,9 +64,9 @@
     "invalid-method"
   ],
   "safe_provider_controls": "Originalprovider TRAPPED; frozen saved outputs/errors reconstructed for routecontrol only. Real ownedC++ executes onlyfourfrozen safe nativecases. No originalalgorithm replay.",
-  "safe_source_equivalence": "Afterremovingquarantineflag+guard andrestoring originalfirstprovider condition, wholefunction AST exactlymatchesbase. No numerical/core/dispatchfunction changes.",
+  "safe_source_equivalence": "Alloriginal top-levelconditions/statements unchanged. Additional checks exist ONLYinside already-selected providerfallback blocks. Remove earlyprovider nestedguard +late shorttuplequarantine and wholefunction AST equalsbase. No extraoperation/branch on existing nativehotpaths.",
   "source_freeze": {
-    "python/skimagexx/_circle_perimeter.py": "4f3dee63b947afd8b20f7ac314b1ce289db6e1afeddea6de5d3ff94306fe55db"
+    "python/skimagexx/_circle_perimeter.py": "a2c1ddd1682dd17ef6ba6db04624c66144530eb54a9477b0e5cf5d2b2f53ed49"
   },
   "remaining_open": [
     "Short/empty lists and ndarrays: no matching capturecrash evidence; notguessedquarantined, unsafe/error/parity domains stayunassessed.",
@@ -78,7 +78,7 @@
   "native_API_credit": 0,
   "task_closeout": {
     "result": "Narrowprovenexacttupleboundary andpre-error precedence frozenbeforetests.",
-    "waste_and_reuse": "Reused pinnedpyx/frozencrashjournals, existing _index/methodchecks, rawsafe controls andretainedcores; no newcapture/build/environment/timing.",
+    "waste_and_reuse": "Reused pinnedpyx/frozencrashjournals, existing _index/methodchecks, rawsafe controls andretainedcores; no newcapture/build/environment/timing. Firstcorrectguardcandidate52checks passed1.78s, thenrelocated guardintoexistingproviderfallbackblocks toavoid anynewnativehotpath checks; predecessorcommit/proof retained. No numeric changes ororiginalcalls.",
     "next_plan_correction": "Root reviews onlyboundary/sourceequivalence andaffected tests; no safealgorithm/performance rerun. Keep uncertainlist/ndarray/protocol domains explicitlyopen."
   }
 }
