@@ -329,6 +329,7 @@ def native_dtypes(api):
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
     if api in ('measure.approximate_polygon','measure.subdivide_polygon'):return ('float64',)
     # These are actual prepared coordinate dtypes, not image-pixel parity.
+    if api == 'color.combine_stains':return ('uint8','float16','float32','float64')
     if api == 'util.label_points':return ('uint8','float32','float64')
     if api == 'util.map_array':return ('uint8',)
     if api == 'measure.moments_normalized':return ('float32','float64')
@@ -947,7 +948,7 @@ def parity_tolerance(api, dtype, image=None, expected=None):
     if api=='transform.matrix_transform':return (0.,0.)
     if api in ('color.label2rgb','transform.integral_image','transform.integrate','filters.threshold_minimum','filters.threshold_multiotsu','filters.rank_order','filters.apply_hysteresis_threshold'):return (0.,0.)
     name = str(dtype)
-    single = name == 'float32'
+    single = name == 'float32' or (api == 'color.combine_stains' and name == 'float16')
     if api=='color.deltaE_ciede2000' and single:
         # atan2 provider differences of a few float32 ULPs are amplified by
         # chroma in the hue term, especially when the final distance is small.
