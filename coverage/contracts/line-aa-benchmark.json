@@ -1,0 +1,117 @@
+{
+  "schema": "line-aa-benchmark-v1",
+  "reference_contract_sha256": "41ca2e91d155f747b57490cd4b208e80e508fc0f5e49a06e3399f8a4efdcba54",
+  "cases": [
+    {
+      "id": "line-aa/tiny",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        7,
+        3
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/horizontal",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        0,
+        2048
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/vertical",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        2048,
+        0
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/diagonal",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/shallow",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        512,
+        2048
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/steep",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        2048,
+        512
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/reverse",
+      "api": "draw.line_aa",
+      "args": [
+        512,
+        2048,
+        0,
+        0
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/long",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        8192,
+        16384
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/translated",
+      "api": "draw.line_aa",
+      "args": [
+        1073741824,
+        -1073741824,
+        1073742336,
+        -1073739776
+      ],
+      "kwargs": {}
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 126,
+  "warmup_groups": 18,
+  "native_entry": "draw_line_aa",
+  "max_output_elements": 1000000,
+  "scope": "Initial descriptive allocation-inclusive public-call comparison, not an optimization KEEP decision or whole-library speed claim; every loss retained.",
+  "dtype_scope": "Integer endpoint parameters; two independent owning intp coordinate arrays and one independent owning float64 weight array; no image pixel dtype claim.",
+  "oracle_scope": "Exact live original output/storage, saved39-safe-return reference rows/profile and independent native geometry controls; no third algorithm oracle claimed."
+}
