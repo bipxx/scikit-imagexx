@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "api": "color.combine_stains",
+  "reference_commit": "22c7d6addfeb36e82df4bda0814e2ca687349603",
+  "status": "PASS_BOUNDED_HALF_PUBLIC_FRONTEND_INDEPENDENT_REVIEW_PENDING",
+  "algorithm": "Plain native-endian half combine_stains input only: oneboundaryastype(float32), thenunchangedexisting f32 preparation/promotion/matrixkernel. No PixelType/C++/workerbackend change.",
+  "numerical_policy": {
+    "rtol": 2e-06,
+    "atol": 2e-06,
+    "matrix_scale": "Existing max(1,maxcolumnabsnorm); unchangedpreparedfloat32 policy, exactstructure/actualdtype"
+  },
+  "ownership": "Callerhalfinput immutable; oneownedfloat32preparedbuffer passed toexistingcore; outputownC oraxisview peroriginal, noinput/matrixalias; dtype metadata drops onhalfcast",
+  "provider_limits": "Other3stainAPIhalf routes, image/matrix subclasses, non-nativehalf andhalf list remainexplicitproviders; no whole-arrayfinite scan. Nonfinite/extreme andarbitraryprotocol/batchedmatrix domainsunassessed.",
+  "native_dtypes": "Onlycombine_stainsaddsfloat16; parity_tolerancefloat16 mapsONLYthisAPItoexistingfloat32budget; neighboringAPIs/float64 retainexistingpolicy",
+  "scope": "SourcePython overlay andretained fullgenuinecores, notnewwholeproduct/SDKqualification orspeedclaim",
+  "public_proof": {
+    "modes": {
+      "minimum-normal": {
+        "nodes": 51,
+        "passed": 51,
+        "seconds": 2.611,
+        "actual_avx2": true,
+        "core_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/combine-stains-half-frontend-v1/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "saved_pipeline_nodes": 24,
+        "old_affected_combine_half_nodes": 2,
+        "original_calls": 0
+      },
+      "minimum-scalar": {
+        "nodes": 51,
+        "passed": 51,
+        "seconds": 1.821,
+        "actual_avx2": false,
+        "core_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/combine-stains-half-frontend-v1/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "saved_pipeline_nodes": 24,
+        "old_affected_combine_half_nodes": 2,
+        "original_calls": 0
+      },
+      "modern-normal": {
+        "nodes": 51,
+        "passed": 51,
+        "seconds": 1.941,
+        "actual_avx2": true,
+        "core_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/combine-stains-half-frontend-v1/site/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "saved_pipeline_nodes": 24,
+        "old_affected_combine_half_nodes": 2,
+        "original_calls": 0
+      },
+      "modern-scalar": {
+        "nodes": 51,
+        "passed": 51,
+        "seconds": 1.939,
+        "actual_avx2": false,
+        "core_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/combine-stains-half-frontend-v1/site/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "saved_pipeline_nodes": 24,
+        "old_affected_combine_half_nodes": 2,
+        "original_calls": 0
+      }
+    },
+    "total_passed_nodes": 204,
+    "unique_nodes": 51,
+    "saved_pipeline_native_witnesses": 96,
+    "witness": "Eachsavedpipeline node assertsactualbuiltinCreturn +ONEhalf.astype(float32) +_stain preparedf32/resultndarray, fallbackdenied andactualoriginalsourcecallsdenied",
+    "numerical": "Original24rawarrays/dtypes retainedunchanged; actualobserver encodesrawnativedtype bytes and comparesunderexisting2e-6matrixscaledbudget; structure exact, notuniversalbitwise arithmetic claim",
+    "old_consumers": "8oldf32nativeconsumercontrols+4savedreferencef32combinecontrols/mode; only2affectedoldcombinehalfzeroimage nodesexecuted, otheroldtestsnotreplayed",
+    "limits": "6other-stainhalfprovidercontrols +4subclass/endian/listobject-preservation nodes/mode; numericalproviderstubroutesdistinguishedfromrealnativepipeline",
+    "large": "2controls/mode at262145pixels (>execution.hpp parallel_min256*1024), budgets1/4/defaultrestore, exactanalyticallones/unchangedinput/disjointowningoutput",
+    "exact_policy_successor": {
+      "additional_executed_nodes": 16,
+      "unchanged_nodes_reused": 188,
+      "final_unique_passed_nodes": 204,
+      "scope": "Onlyoldf32smokefunction normcalculation changed; alloriginalsavedhalf pipeline/policy/type/provider/globalworker proofs unchanged"
+    }
+  },
+  "task_closeout": {
+    "status": "public-terminal-pass-independent-frontend-review-pending",
+    "result": "51uniquepassingchecks/mode\u00d74=204finalcovered; initial204PASS, selfreviewexactmatrixnormcorrection reranONLY4changednodes/mode=16PASS and reused188unchanged nodes.96savedrow actualCreturn/onecast/preparedf32-result witnesses retained. No productionC++/matrixcore/backend change.",
+    "evidence": "Frozen24originalobservations reused, exactdtype/metadata/layout/alias/state checks andexistingf32numericalbudget; core-reuse receiptbindsgenuine311d68/31364d, native stainclosure/bodyhelper unchanged vsdonors; no broaderwholeproduct claim",
+    "waste_and_reuse": "No candidatebuild orscientifictestfailure, no originalreplay/environment/timing/fullSDK. Reusedretainedgenuinefullcores viaonlytargetedentrycopy andsourceoverlays; no wholecontainerhash/download. Read-onlysetup initiallyattemptedmodernimport afterfind_specNone (metadataModuleNotFoundError, noalgorithmcall); narrowed toretainedfullcore. Anoverbroadmanifestprint includedlarge source/recordmaps andtruncatedoutput; correctedtoselectedrevision/core/sourcekeys. Avoid futureunbounded dictionaryprints andguardmissingmodule imports. Selfreviewfoundroundednormliteral inold-f32smoke test; correctedtoexactexistingnorm,16affectedchecks rerun/188reused. Futurecases computeactualmatrixnormfromstart. Finaldiffreviewfoundmixednewline normalization churn incoverage.py; bytepreserving2substitution successor restoresbaseline lineendings withcanonicalLF/ASTexactequivalence, no numericalreplay. Futureeditexistingmixednewlinefiles bytewise andinspectdiffbeforetests.",
+    "observed_cost": "Initialminimum normal command9.564stoolwall/2.65spytest; remaining3initialmodecommands max3.456stoolwall/1.84-1.95spytest. Normdelta4parallelcommands max4.838stoolwall/0.96-0.99spytest. Verificationcosts only, no performancemeasurement or waste-timing reruns.",
+    "next_plan_correction": "Owner root/reviewer: acceptonlyafterindependentreferencePASS andfrontendreview; updatecurrentqualificationselectors/defaultdtype counts afterregistry/inventorysynchronization. Futureisolatedone-workerhalfbenchmark includescast+allocation, freezebeforetiming; no acceptedperformance advance fromthispacket. Keepother3halfAPIprovider expectations unchanged. No newfinite-scan orfullhalf-domain claim.",
+    "scope": "Onlyboundedreference finitehalfcombine_stainscompatibility; nonfinite/extreme/overflowwarning/protocol/batchedmatrix behaviorunassessed. Existingmatrixkernel sourceunchanged; standaloneC++half type notintroduced.",
+    "readers": "Writer releasesafterfinalimmutablehandoff; source/core overlayandrawreferenceevidence retained"
+  },
+  "source_review": {
+    "only_new_production_block": "Onehalf->float32 astype guard in_stain, onlycombine/plainndarray/nativehalf; strippingthisIf recoversENTIREbaseline color.pyAST exactly",
+    "ast_baseline_recovery": true,
+    "coverage_delta": "OneperAPI native_dtype branch andexactlyone prepared-f32single condition forcombinehalf only; negativepolicy tests forneighboringAPIs/float64",
+    "cpp_changes": false,
+    "line_endings": "Versionedsuccessor preservesbaseline coverage.py mixedlineendings; finalcanonicalLF/AST equalsalltestedoverlaybytes. No numericalrerun forbyte-only change."
+  },
+  "independent_reference_review": {
+    "path": "build/combine-stains-half-independent-reference-review-v1/review.json",
+    "sha256": "650d46cd32b87fa4a06b0ac0c6b2d1f3f8288dbc4ec4cdbfbfac4e0723def4a0",
+    "reviewer": "root",
+    "status": "PASS"
+  }
+}

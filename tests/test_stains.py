@@ -126,10 +126,15 @@ def test_half_fallback_and_root_aliases(name):
     a=np.zeros((7,3),dtype='float16')
     matrix=original.hed_from_rgb if name=='separate_stains' else original.rgb_from_hed
     args=(a,matrix) if name in NAMES[:2] else (a,)
-    with pytest.raises(NotImplementedError): getattr(xx.color,name)(*args)
-    xx.set_fallback_enabled(True)
-    with pytest.warns(xx.FallbackWarning): actual=getattr(xx.color,name)(*args)
-    np.testing.assert_array_equal(actual,getattr(original,name)(*args))
+    if name=='combine_stains':
+        actual=xx.color.combine_stains(*args)
+        assert actual.dtype==np.float64
+        np.testing.assert_array_equal(actual,np.ones((7,3),dtype=np.float64))
+    else:
+        with pytest.raises(NotImplementedError): getattr(xx.color,name)(*args)
+        xx.set_fallback_enabled(True)
+        with pytest.warns(xx.FallbackWarning): actual=getattr(xx.color,name)(*args)
+        np.testing.assert_array_equal(actual,getattr(original,name)(*args))
     assert getattr(xx,name) is getattr(xx.color,name)
 
 
