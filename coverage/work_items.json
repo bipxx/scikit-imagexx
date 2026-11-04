@@ -7,6 +7,30 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "draw-line-nd-reference-v1",
+      "kind": "contract_reference",
+      "owner": "next_family_contract",
+      "branch": "draw-line-nd-reference-v1",
+      "state": "contracting",
+      "apis": [
+        "draw.line_nd"
+      ],
+      "owns": [
+        "tests/line_nd_contract.py",
+        "tests/line_nd_observer.py",
+        "tests/test_line_nd_reference.py",
+        "coverage/contracts/line-nd.json"
+      ],
+      "base_sha": "2afcb19a",
+      "depends_on": [],
+      "acceptance": "Freeze source-safe bounded public-call domains and test every prospective ID with originals refused before real capture. Stop at prospective handoff for independent review; no implementation, build, timing or native credit. Record result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
+      "current_checkpoint": "Next W1 missing API selected from the existing route; source/rounding and bounded allocation audit plus prospective test-first intake assigned. No real original calls authorized in this packet stage.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Review prospective source safety/cases and refused-original intake, then authorize only uncalled safe originals on retained profiles; no duplicate environments or broad inventory audit."
+      }
+    },
+    {
       "id": "regionprops-public-mutation-reference-v1",
       "kind": "contract_reference",
       "owner": "next_family_contract",
@@ -491,7 +515,7 @@
       "acceptance": "Compose reviewed private sources without overwriting the current-budget fix. Wire actual exports, defaults, registry, inventory, SDK87 and qualifier; preserve seven-property/37-unassessed, provider and distinct-type limitations. Run the real CLI first cohort once per profile: one original and one native call, stop at the real sampler call before its body, zero timed batches. Run the complete actual setup selection once after shared wiring freezes. Public-native proof and coverage credit require actual execution and independent review. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Compose metadata fixes, freeze successor, reuse three eligible CLI cohorts/run five remaining, then full actual setup once because isolation changed. Only then dispatch one genuine255 preparation."
+        "action": "Observe exact genuine255 run41927959780 at8d630b49 through terminal via A; no retry. Authenticate actual installed product/SDK and only3new isolated worker1 timing groups after preparation. Root combines retained readiness/CLI/setup evidence; separately require supported four-profile qualification and explicit main shipping projection."
       },
       "dependency_requirements": {
         "regionprops-state-native-v1": {
@@ -520,7 +544,7 @@
           }
         }
       },
-      "current_checkpoint": "Main253/qualified252 unchanged. Private255 has reviewed mutation552 correction, circle-AA and half route. fc2b setup2328 passes/1 historical-context failure retained; isolated failed node now passes at8c60955e. Writer/env/context composition and final-source setup remain open."
+      "current_checkpoint": "Final8d630b49 source readiness closed:2329setup+8subtests PASS, both retained-profile plans255/186/88/56, eight actualCLI cohorts (3reused/5new), independent source review26531090. Rootready build/candidate255-shipping-v1/root-ready-v3.json SHA39274a4ae93f0ade8ee6431b9a53254601f1ddba6d490bd2f1797ee8d09333be. No genuine255/SDK/speed or whole qualification credit yet."
     },
     {
       "id": "regionprops-state-measurement-v1",
@@ -549,9 +573,9 @@
       "acceptance": "Blocked until exact composed public-native proof, real first cohort and genuine installed-family/SDK validation. Isolated one-worker comparison: 12 frozen cases, 168 samples. Retain slower cases, hardware and source identity. An initial baseline is not an optimization KEEP; platform/provider limits stay explicit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "After final-source setup and genuine preparation, measure Region12/circle-AA8/half4 cases,336 total samples with worker1. Skip31 completed commands; preserve all losses and independent reviews."
+        "action": "Observe exact genuine255 run41927959780 at8d630b49 through terminal via A; no retry. Authenticate actual installed product/SDK and only3new isolated worker1 timing groups after preparation. Root combines retained readiness/CLI/setup evidence; separately require supported four-profile qualification and explicit main shipping projection."
       },
-      "current_checkpoint": "Failed254 run41910010504 remains unaccepted; no new timing credit. Reviewed Region benchmark has12 cases/168 samples; wrapper source-pin successor must bind corrected mutation source. Three-group255 timing awaits final setup/preparation."
+      "current_checkpoint": "Final8d630b49 source readiness closed:2329setup+8subtests PASS, both retained-profile plans255/186/88/56, eight actualCLI cohorts (3reused/5new), independent source review26531090. Rootready build/candidate255-shipping-v1/root-ready-v3.json SHA39274a4ae93f0ade8ee6431b9a53254601f1ddba6d490bd2f1797ee8d09333be. No genuine255/SDK/speed or whole qualification credit yet."
     },
     {
       "id": "regionprops-state-reference-v1",
@@ -35559,7 +35583,6 @@
     "draw.ellipse_perimeter",
     "draw.ellipsoid",
     "draw.ellipsoid_stats",
-    "draw.line_nd",
     "draw.polygon",
     "draw.polygon2mask",
     "draw.polygon_perimeter",
@@ -36145,7 +36168,7 @@
     "accepted_binary_image_names": 252
   },
   "execution_policy": {
-    "active_workers": [],
+    "active_workers": ["tiny_line_implementation", "qualification251_readiness", "next_family_contract"],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
@@ -36164,9 +36187,9 @@
     "worker_queues": {
       "tiny_line_implementation": [],
       "qualification251_readiness": [],
-      "next_family_contract": []
+      "next_family_contract": ["draw-line-nd-reference-v1"]
     },
-    "current_three_agent_packets": {},
+    "current_three_agent_packets": {"next_family_contract": "draw-line-nd-reference-v1"},
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -36509,6 +36532,15 @@
     },
     "resume_checkpoint": "2026-10-25: explicit updated-plan implementation resume; old network-revoked turns ended. Same three workers restarted through followup_task; no hosted campaign redispatched.",
     "latest_hosted_status": {
+      "candidate255": {
+        "run": 41927959780,
+        "source": "8d630b4910ed0caef2eb5f4de0d4a3a2aa6cda50",
+        "status": "in_progress",
+        "accepted": false,
+        "root_ready": "build/candidate255-shipping-v1/root-ready-v3.json",
+        "observation": "build/candidate255-genuine-minimum-v1",
+        "scope": "One genuine minimum preparation/three new worker1 timing groups;31 historical groups skipped without new credit; four-profile qualification remains separate."
+      },
       "qualification": {
         "run": 41882408142,
         "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
@@ -36536,7 +36568,7 @@
         "publication": "coverage/evidence/regionprops-state-minimum-preparation-failed-v1.json"
       }
     },
-    "assignment_note": "Plan refresh2026-11-04: completed frontend/reference/SDK reviews are not active implementation dispatches. A paused after3 CLI cohorts; B contextfix terminal; C plan review terminal, no blocker. Root composes metadata/freeze; subsequent A5 CLI routes/Bfinaldelta/Cmeasurement review are dependency-gated intentions, not live jobs. Reconcile roster before followup_task.",
+    "assignment_note": "2026-11-04: root source-ready8d630b49 and one genuine run41927959780 active. A owns exactrun watch/retention, B bounded retainedXML setup-cost diagnosis, C prospective draw.line_nd contract/intake. Eight CLI cohorts and finalsource setup/portability are terminalPASS; do not redispatch them. Shared integration remains root-owned.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -36549,9 +36581,9 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Paused: three CLI cohorts terminal; five unexecuted routes await final freeze.",
-      "qualification251_readiness": "Contextfix8c60955e complete; final composed metadata/source review is next after root freeze.",
-      "next_family_contract": "Mutation/writer and read-only remaining-plan reviews complete; next measurement review waits for eligible evidence. No active worker dispatch."
+      "tiny_line_implementation": "Observe/retain exact genuine255 run41927959780; no retry/localtiming/source changes.",
+      "qualification251_readiness": "Source/CLI reviews terminalPASS; diagnose setup cost from retained XML/source only, no replay.",
+      "next_family_contract": "Prospective draw.line_nd contract and original-refused intake in separateWT; realcapture gated on review."
     }
   },
   "parallel_review": {
