@@ -11,6 +11,8 @@
 - After each bounded task reaches a terminal outcome, record result/evidence, avoidable work and reuse, and the next-plan correction with owner/trigger (or "reviewed, no change") in its existing handoff/checkpoint. Distinguish useful rejected experiments from preventable setup or duplicate work. Use observed costs when available; do not rerun work merely to measure waste.
 - Before the next dependent task, update the affected action in `coverage/EXECUTION_PLAN.md` and existing operational task fields when the review changes execution. Include material process corrections in the validated increment; preserve historical evidence and use existing records rather than adding a reporting framework.
 
+- At a task transition, reconcile actual agent/job status and evidence before dispatch. Use `followup_task` to resume a completed agent; a queued message alone does not start work. Retire terminal dispatch instructions when updating the next gate.
+
 # Engineering judgment and simplicity
 
 - Match defensive complexity to a concrete risk. Address ordinary correctness issues and realistic concurrency or security risks within the agreed scope. Before adding substantial machinery for a speculative or very unlikely edge case, explain the failure scenario, evidence for its likelihood and impact, simpler alternatives, and estimated code and maintenance cost; obtain the user's approval before expanding scope. Do not use this rule to omit necessary input validation, standard security controls, or requirements already authorized.
