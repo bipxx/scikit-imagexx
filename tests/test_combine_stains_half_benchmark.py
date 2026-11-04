@@ -8,6 +8,20 @@ ROOT = Path(__file__).parents[1]
 
 def test_half_stain_selector_preserves_legacy_module_and_history():
     contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    archived = (ROOT/'coverage/contracts/combine-stains-legacy-benchmark-source-v1.json').read_bytes()
+    assert hashlib.sha256(archived).hexdigest() == '03c0890c5064660c0ddcb0d8a4b0990a5586ebbf2c66a6361faf48dbd38972aa'
+    baseline = json.loads(archived)
+    assert baseline['source_commit'] == 'cff831a1f7f4df65764d4a405ec00eab4efa57c0'
+    assert baseline['source_path'] == 'benchmarks/stains.py'
+    assert baseline['before_commit'] == '13ce8f08c7981ae4d62aa1140504c8e15b67dc96'
+    assert baseline['encoding'] == 'utf-8' and baseline['newline'] == 'LF'
+    source = baseline['source_text'].encode('utf-8')
+    assert b'\r' not in source
+    assert hashlib.sha256(source).hexdigest() == baseline['source_sha256'] == contract['legacy_stains_sha256']
+    # AST dumps contain interpreter schema fields. Parse both immutable baseline
+    # and reduced candidate here, so their equality tests code, not Python version.
+    original = ast.parse(source)
+    original_main = next(n for n in original.body if isinstance(n,ast.FunctionDef) and n.name == 'main')
     tree = ast.parse((ROOT/'benchmarks/stains.py').read_text(encoding='utf-8'))
     tree.body = [n for n in tree.body if not (isinstance(n,ast.FunctionDef) and n.name == '_half_main')]
     main = next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name == 'main')
@@ -23,8 +37,8 @@ def test_half_stain_selector_preserves_legacy_module_and_history():
             kept.append(node)
     assert arguments == 2 and branches == 1
     main.body = kept
-    assert hashlib.sha256(ast.dump(main,include_attributes=False).encode()).hexdigest() == contract['legacy_main_ast_sha256']
-    assert hashlib.sha256(ast.dump(tree,include_attributes=False).encode()).hexdigest() == contract['legacy_module_ast_sha256']
+    assert ast.dump(main,include_attributes=False) == ast.dump(original_main,include_attributes=False)
+    assert ast.dump(tree,include_attributes=False) == ast.dump(original,include_attributes=False)
     assert hashlib.sha256((ROOT/'benchmarks/stain-parameters.json').read_bytes()).hexdigest() == contract['legacy_report_sha256']
 
 
