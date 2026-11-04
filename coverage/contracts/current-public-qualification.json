@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current252",
+  "scope": "current253",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -248,6 +248,12 @@
     "color.yiq2rgb",
     "color.ypbpr2rgb",
     "color.yuv2rgb",
+    "draw.circle_perimeter",
+    "draw.disk",
+    "draw.ellipse",
+    "draw.line",
+    "draw.line_aa",
+    "draw.rectangle",
     "exposure.adjust_gamma",
     "exposure.adjust_log",
     "exposure.adjust_sigmoid",
@@ -366,6 +372,7 @@
     "filters.unsharp_mask",
     "filters.wiener",
     "filters.window",
+    "measure.approximate_polygon",
     "measure.block_reduce",
     "measure.blur_effect",
     "measure.centroid",
@@ -389,6 +396,7 @@
     "measure.points_in_poly",
     "measure.profile_line",
     "measure.shannon_entropy",
+    "measure.subdivide_polygon",
     "metrics.mean_squared_error",
     "metrics.normalized_mutual_information",
     "metrics.normalized_root_mse",
@@ -452,14 +460,7 @@
     "util.map_array",
     "util.montage",
     "util.regular_seeds",
-    "util.unique_rows",
-    "measure.approximate_polygon",
-    "measure.subdivide_polygon",
-    "draw.line",
-    "draw.rectangle",
-    "draw.disk",
-    "draw.ellipse",
-    "draw.circle_perimeter"
+    "util.unique_rows"
   ],
   "metadata_paths": [
     "color.xyz_tristimulus_values",
@@ -515,7 +516,8 @@
     "draw.rectangle": "tests/test_draw_coordinates_integration.py",
     "draw.disk": "tests/test_draw_coordinates_integration.py",
     "draw.ellipse": "tests/test_draw_coordinates_integration.py",
-    "draw.circle_perimeter": "tests/test_circle_perimeter_public.py"
+    "draw.circle_perimeter": "tests/test_circle_perimeter_public.py",
+    "draw.line_aa": "tests/test_line_aa_public.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -571,7 +573,10 @@
     "tests/test_draw_coordinates_public.py",
     "tests/test_draw_coordinates_integration.py",
     "tests/test_circle_perimeter_contract.py",
-    "tests/test_circle_perimeter_public.py"
+    "tests/test_circle_perimeter_public.py",
+    "tests/test_line_aa_reference.py",
+    "tests/test_line_aa_public.py",
+    "tests/test_line_aa_default.py"
   ],
   "SDK_scope": "current28 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates and circle perimeter); source readiness is not qualification acceptance",
   "required_client_families": [
@@ -597,6 +602,7 @@
     "include/skimagexx/approximate_polygon.hpp",
     "include/skimagexx/subdivide_polygon.hpp",
     "include/skimagexx/draw_coordinates.hpp",
-    "include/skimagexx/circle_perimeter.hpp"
+    "include/skimagexx/circle_perimeter.hpp",
+    "include/skimagexx/line_aa.hpp"
   ]
 }

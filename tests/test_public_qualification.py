@@ -2247,10 +2247,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','draw'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','draw'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2276,12 +2276,12 @@ def current_metadata_artifact(tmp_path):
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk28(profile):
-    result=q.plan(ROOT,profile,252)
+    result=q.plan(ROOT,profile,253)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current252' and result['registry']['image_count']==252
-    assert result['product_members']==180 and result['SDK_members']==85
+    assert result['product_scope']=='current253' and result['registry']['image_count']==253
+    assert result['product_members']==182 and result['SDK_members']==86
     assert result['SDK_checks']==56 and 'current28 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==54
+    assert len(result['public_groups']['public-post203'])==57
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2337,7 +2337,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current252' and result['record_verified']
+        assert result['product_scope']=='current253' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2351,7 +2351,7 @@ def test_current_sdk28_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',252)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',253)['blockers'])
 
 
 def test_current_sdk28_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
@@ -2472,7 +2472,7 @@ def test_actual_admission_entrypoint_passes_a_retained_diagnostic_path(tmp_path)
 
 @pytest.mark.parametrize('missing', ('include/skimagexx/draw_coordinates.hpp',
     'python/skimagexx/_draw_coordinates.py', 'python/skimagexx/draw.py'))
-def test_current252_layout_refuses_previous_sdk83_drawing_gap(missing):
+def test_current253_layout_refuses_previous_sdk83_drawing_gap(missing):
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     names.remove(missing)
@@ -2481,7 +2481,7 @@ def test_current252_layout_refuses_previous_sdk83_drawing_gap(missing):
 
 
 @pytest.mark.parametrize('fault', ('previous-scope','missing-map','missing-selector','missing-client','missing-header','circle-map','circle-selector','circle-client','circle-header'))
-def test_current252_drawing_contract_rejects_stale_or_incomplete_scope(fault):
+def test_current253_drawing_contract_rejects_stale_or_incomplete_scope(fault):
     data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
     if fault=='previous-scope':data['scope']='current251'
     elif fault=='missing-map':data['post203_contracts'].pop('draw.disk')
@@ -2497,7 +2497,7 @@ def test_current252_drawing_contract_rejects_stale_or_incomplete_scope(fault):
 
 def synthetic_draw_admission(monkeypatch):
     core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1)
-    for name in ('draw_line','draw_rectangle','draw_ellipse','draw_circle_perimeter'):
+    for name in ('draw_line','draw_rectangle','draw_ellipse','draw_circle_perimeter','draw_line_aa'):
         def entry(*a,**kw):raise AssertionError('metadata-only entry never executes')
         entry.__name__=name;entry.__module__=core.__name__;entry.synthetic_builtin=True
         setattr(core,name,entry)
@@ -2510,9 +2510,11 @@ def synthetic_draw_admission(monkeypatch):
     for function in functions.values():function.__module__='skimagexx._draw_coordinates'
     def circle_perimeter(r,c,radius,method='bresenham',shape=None):raise AssertionError('metadata-only wrapper never executes')
     circle_perimeter.__module__='skimagexx._circle_perimeter'
-    return (core,types.SimpleNamespace(**functions,circle_perimeter=circle_perimeter),
-            types.SimpleNamespace(_core=core,**functions),list(q.DRAW_PATHS)+['draw.circle_perimeter'],
-            types.SimpleNamespace(_core=core,circle_perimeter=circle_perimeter))
+    def line_aa(r0,c0,r1,c1):raise AssertionError('metadata-only wrapper never executes')
+    line_aa.__module__='skimagexx._line_aa'
+    return (core,types.SimpleNamespace(**functions,circle_perimeter=circle_perimeter,line_aa=line_aa),
+            types.SimpleNamespace(_core=core,**functions),list(q.DRAW_PATHS)+['draw.circle_perimeter','draw.line_aa'],
+            types.SimpleNamespace(_core=core,circle_perimeter=circle_perimeter),types.SimpleNamespace(_core=core,line_aa=line_aa))
 
 
 def test_draw_admission_metadata_never_executes_provider_or_native(monkeypatch):
@@ -2520,9 +2522,9 @@ def test_draw_admission_metadata_never_executes_provider_or_native(monkeypatch):
 
 
 @pytest.mark.parametrize('fault', ('registry','duplicate','core','workers','missing-entry','entry-owner',
-    'python-entry','forwarding','alias','signature','circle-registry','circle-core','circle-entry','circle-forwarding','circle-alias','circle-signature'))
+    'python-entry','forwarding','alias','signature','circle-registry','circle-core','circle-entry','circle-forwarding','circle-alias','circle-signature','aa-registry','aa-core','aa-entry','aa-forwarding','aa-alias','aa-signature'))
 def test_draw_admission_rejects_unowned_or_inexact_metadata(monkeypatch,fault):
-    core,draw,wrapper,registered,circle_wrapper=synthetic_draw_admission(monkeypatch)
+    core,draw,wrapper,registered,circle_wrapper,line_aa_wrapper=synthetic_draw_admission(monkeypatch)
     if fault=='registry':registered.remove('draw.disk')
     elif fault=='duplicate':registered.append('draw.line')
     elif fault=='core':wrapper._core=object()
@@ -2538,11 +2540,17 @@ def test_draw_admission_rejects_unowned_or_inexact_metadata(monkeypatch,fault):
     elif fault=='circle-entry':del core.draw_circle_perimeter
     elif fault=='circle-forwarding':draw.circle_perimeter.__module__='skimage.draw'
     elif fault=='circle-alias':draw.circle_perimeter=lambda *args:None
-    else:draw.circle_perimeter.__signature__=inspect.Signature()
-    with pytest.raises(q.QualificationError):q.draw_admission(core,draw,wrapper,registered,circle_wrapper)
+    elif fault=='circle-signature':draw.circle_perimeter.__signature__=inspect.Signature()
+    elif fault=='aa-registry':registered.remove('draw.line_aa')
+    elif fault=='aa-core':line_aa_wrapper._core=object()
+    elif fault=='aa-entry':del core.draw_line_aa
+    elif fault=='aa-forwarding':draw.line_aa.__module__='skimage.draw'
+    elif fault=='aa-alias':draw.line_aa=lambda *args:None
+    else:draw.line_aa.__signature__=inspect.Signature()
+    with pytest.raises(q.QualificationError):q.draw_admission(core,draw,wrapper,registered,circle_wrapper,line_aa_wrapper)
 
 
-def test_current252_drawing_admission_is_wired_before_generic_fixture_calls():
+def test_current253_drawing_admission_is_wired_before_generic_fixture_calls():
     tree=ast.parse(inspect.getsource(q.admission))
     barrier=next(n for n in ast.walk(tree) if isinstance(n,ast.If)
                  and ast.unparse(n.test)=="record['product_scope'] == CURRENT_PRODUCT_SCOPE")
@@ -2550,11 +2558,11 @@ def test_current252_drawing_admission_is_wired_before_generic_fixture_calls():
     call=barrier.body[0].value
     assert isinstance(call,ast.Call) and ast.unparse(call.func)=='draw_admission'
     assert [ast.unparse(a) for a in call.args]==['xx._core', "importlib.import_module('skimagexx.draw')",
-        "importlib.import_module('skimagexx._draw_coordinates')", 'coverage.native_functions()', "importlib.import_module('skimagexx._circle_perimeter')"]
+        "importlib.import_module('skimagexx._draw_coordinates')", 'coverage.native_functions()', "importlib.import_module('skimagexx._circle_perimeter')", "importlib.import_module('skimagexx._line_aa')"]
     source=inspect.getsource(q.admission)
 
 
-def test_current252_installed_drawing_client_is_public_header_only():
+def test_current253_installed_drawing_client_is_public_header_only():
     source=(ROOT/'tests/cmake_consumer/draw_coordinates_consumer.cpp').read_text()
     assert '#include <skimagexx/draw_coordinates.hpp>' in source
     assert '../src/' not in source and 'Python.h' not in source
@@ -2564,7 +2572,7 @@ def test_current252_installed_drawing_client_is_public_header_only():
 
 
 @pytest.mark.parametrize('missing',('include/skimagexx/circle_perimeter.hpp','python/skimagexx/_circle_perimeter.py'))
-def test_current252_layout_refuses_circle_perimeter_gap(missing):
+def test_current253_layout_refuses_circle_perimeter_gap(missing):
     names=[p.relative_to(ROOT).as_posix()for prefix in ('python/skimagexx','include')
            for p in(ROOT/prefix).rglob('*')if p.is_file()]
     names.remove(missing)
@@ -2572,10 +2580,30 @@ def test_current252_layout_refuses_circle_perimeter_gap(missing):
         q.current_install_layout(lambda name:(ROOT/name).read_bytes(),names,'modern')
 
 
-def test_current252_circle_installed_client_is_public_header_only():
+def test_current253_circle_installed_client_is_public_header_only():
     source=(ROOT/'tests/cmake_consumer/circle_perimeter_consumer.cpp').read_text()
     assert '#include <skimagexx/circle_perimeter.hpp>'in source
     assert '../src/'not in source and 'Python.h'not in source
     for name in ('prepare_circle_perimeter','circle_perimeter_count','circle_perimeter_fill'):
         assert name in source
     assert 'for(int workers:{1,4})'in source and 'set_num_threads(1)'in source
+
+
+@pytest.mark.parametrize('missing',('include/skimagexx/line_aa.hpp','python/skimagexx/_line_aa.py'))
+def test_current253_layout_refuses_line_aa_gap(missing):
+    names=[p.relative_to(ROOT).as_posix()for prefix in ('python/skimagexx','include')
+           for p in(ROOT/prefix).rglob('*')if p.is_file()]
+    names.remove(missing)
+    with pytest.raises(q.QualificationError,match='line-AA install closure'):
+        q.current_install_layout(lambda name:(ROOT/name).read_bytes(),names,'modern')
+
+
+@pytest.mark.parametrize('fault',('map','public','reference','default','header'))
+def test_current253_contract_refuses_line_aa_gap(fault):
+    data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
+    if fault=='map':data['post203_contracts'].pop('draw.line_aa')
+    elif fault=='header':data['required_client_headers'].remove('include/skimagexx/line_aa.hpp')
+    else:
+        selector={'public':'test_line_aa_public.py','reference':'test_line_aa_reference.py','default':'test_line_aa_default.py'}[fault]
+        data['required_selectors'].remove('tests/'+selector)
+    with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
