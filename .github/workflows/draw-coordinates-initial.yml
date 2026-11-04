@@ -20,6 +20,19 @@ on:
       deadline_utc:
         type: string
         required: true
+      candidate_run:
+        description: Optional exact prepare-only candidate; all four candidate fields are required together
+        type: string
+        required: false
+      candidate_revision:
+        type: string
+        required: false
+      candidate_artifact_id:
+        type: string
+        required: false
+      candidate_artifact_sha256:
+        type: string
+        required: false
 permissions:
   contents: read
   actions: read
@@ -45,7 +58,16 @@ jobs:
       ARTIFACT_SHA256: ${{ inputs.artifact_sha256 }}
       EXECUTION_CREATED_UTC: ${{ inputs.execution_created_utc }}
       DEADLINE_UTC: ${{ inputs.deadline_utc }}
+      CANDIDATE_RUN: ${{ inputs.candidate_run }}
+      CANDIDATE_REVISION: ${{ inputs.candidate_revision }}
+      CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+      CANDIDATE_ARTIFACT_SHA256: ${{ inputs.candidate_artifact_sha256 }}
     steps:
+      - uses: actions/checkout@v4
+        if: inputs.candidate_run != ''
+        with:
+          path: controller
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11.17'
@@ -57,7 +79,7 @@ jobs:
           lscpu > results/cpu.txt
           uname -a > results/platform.txt
           python - <<'PY'
-          import json, os, re, subprocess
+          import hashlib, json, os, re, subprocess
           from datetime import datetime, timezone
           from pathlib import Path
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
@@ -74,53 +96,94 @@ jobs:
           assert created <= datetime.now(timezone.utc) < deadline
           Path('results/execution-clock.json').write_text(json.dumps(dict(created_utc=created.isoformat(), deadline_utc=deadline.isoformat()), indent=2) + '\n')
           Path('results/expected-product.json').write_text(json.dumps(expected, indent=2) + '\n')
-          base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
-          def api(endpoint, name):
-              raw = subprocess.check_output(['gh', 'api', base + endpoint])
-              Path('results', name + '.json').write_bytes(raw)
-              return json.loads(raw)
-          record = api('runs/' + run, 'producer-run')
-          assert str(record['id']) == run and record['head_sha'] == revision
-          assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
-          assert record['path'] == '.github/workflows/ci.yml'
-          assert record['status'] == 'completed' and record['conclusion'] == 'success'
-          listing = api('runs/' + run + '/artifacts?per_page=100', 'producer-artifacts')
-          assert listing['total_count'] == len(listing['artifacts'])
-          matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
-          assert len(matches) == 1
-          selected = matches[0]
-          assert str(selected['id']) == artifact and selected['digest'] == 'sha256:' + digest
-          assert not selected['expired'] and 0 < selected['size_in_bytes'] < 512 * 1024**2
-          assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
-          Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
-          jobs = api('runs/' + run + '/jobs?filter=latest&per_page=100', 'producer-jobs')
-          assert jobs['total_count'] == len(jobs['jobs'])
-          required = {name: [j for j in jobs['jobs'] if j['name'] == name] for name in ('numpy-minimum', 'measure-minimum')}
-          assert all(len(values) == 1 and values[0]['conclusion'] == 'success' for values in required.values())
-          timing = [step for step in required['measure-minimum'][0]['steps'] if step['name'].startswith('Run python benchmarks/')]
-          assert len(timing) == 29 and all(step['conclusion'] == 'skipped' for step in timing)
-
+          def authenticate(run, revision, artifact, digest, prefix):
+              base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+              def api(endpoint, name):
+                  raw = subprocess.check_output(['gh', 'api', base + endpoint])
+                  Path('results', prefix + name + '.json').write_bytes(raw)
+                  return json.loads(raw)
+              record = api('runs/' + run, 'producer-run')
+              assert str(record['id']) == run and record['head_sha'] == revision
+              assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+              assert record['path'] == '.github/workflows/ci.yml'
+              def record_jobs():
+                  jobs = api('runs/' + run + '/jobs?filter=latest&per_page=100', 'producer-jobs')
+                  status = dict(workflow_status=record['status'], workflow_conclusion=record['conclusion'],
+                      source_producer=[j for j in jobs['jobs'] if j['name'] == 'numpy-minimum'],
+                      offline_verifier=[j for j in jobs['jobs'] if j['name'] == 'measure-minimum'])
+                  Path('results', prefix + 'producer-status.json').write_text(json.dumps(status, indent=2)+'\n')
+                  return jobs
+              if record['status'] != 'completed' or record['conclusion'] != 'success': record_jobs()
+              assert record['status'] == 'completed' and record['conclusion'] == 'success'
+              listing = api('runs/' + run + '/artifacts?per_page=100', 'producer-artifacts')
+              assert listing['total_count'] == len(listing['artifacts'])
+              matches = [a for a in listing['artifacts'] if a['name'] == 'ci-performance-minimum']
+              assert len(matches) == 1
+              selected = matches[0]
+              assert str(selected['id']) == artifact and selected['digest'] == 'sha256:' + digest
+              assert not selected['expired'] and 0 < selected['size_in_bytes'] < 512 * 1024**2
+              assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
+              Path('results', prefix + 'selection.json').write_text(json.dumps(selected, indent=2) + '\n')
+              jobs = record_jobs()
+              assert jobs['total_count'] == len(jobs['jobs'])
+              required = {name: [j for j in jobs['jobs'] if j['name'] == name] for name in ('numpy-minimum', 'measure-minimum')}
+              assert all(len(values) == 1 and values[0]['conclusion'] == 'success' for values in required.values())
+              timing = [step for step in required['measure-minimum'][0]['steps'] if step['name'].startswith('Run python benchmarks/')]
+              assert len(timing) == 29 and all(step['conclusion'] == 'skipped' for step in timing)
+          authenticate(run, revision, artifact, digest, '')
+          candidate = tuple(os.environ.get(k, '') for k in ('CANDIDATE_RUN', 'CANDIDATE_REVISION', 'CANDIDATE_ARTIFACT_ID', 'CANDIDATE_ARTIFACT_SHA256'))
+          assert not any(candidate) or all(candidate), 'candidate inputs are all-or-none'
+          if all(candidate):
+              raw = Path('controller/coverage/contracts/draw-line-boundary-comparison.json').read_bytes()
+              assert hashlib.sha256(raw).hexdigest() == '75529f3a4377f95d10be0374c8880eed349ea079931fe854d25dafac3e82a0df'
+              contract = json.loads(raw)
+              assert candidate == tuple(contract['candidate'][k] for k in ('run', 'revision', 'artifact', 'sha256'))
+              assert dict(run=run, revision=revision, artifact=artifact, sha256=digest, core_sha256=expected['core_sha256']) == contract['baseline']
+              assert re.fullmatch('[1-9][0-9]*', candidate[0]) and re.fullmatch('[1-9][0-9]*', candidate[2])
+              assert re.fullmatch('[0-9a-f]{64}', candidate[3])
+              Path('results/comparison-contract.json').write_bytes(raw)
+              authenticate(*candidate, 'candidate-')
           PY
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.producer_revision }}
           path: snapshot
           fetch-depth: 1
+      - uses: actions/checkout@v4
+        if: inputs.candidate_run != ''
+        with:
+          ref: ${{ inputs.candidate_revision }}
+          path: candidate_snapshot
+          fetch-depth: 1
       - name: Install the authenticated product offline
         shell: bash
         run: |
           set -euo pipefail
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/prepared.zip"
+          roles=baseline
+          if [ -n "$CANDIDATE_RUN" ]; then roles="baseline candidate"; fi
+          for role in $roles; do
+          export DRAW_ROLE="$role"
+          export DRAW_SNAPSHOT=snapshot
+          export DRAW_RUNTIME="$RUNNER_TEMP/runtime"
+          selected="$ARTIFACT_ID"
+          if [ "$role" = candidate ]; then
+            export DRAW_SNAPSHOT=candidate_snapshot
+            export DRAW_RUNTIME="$RUNNER_TEMP/runtime-candidate"
+            selected="$CANDIDATE_ARTIFACT_ID"
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$selected/zip" > "$RUNNER_TEMP/$role-prepared.zip"
           python - <<'PY'
           import hashlib, json, os, re, runpy, stat, subprocess, zipfile
           from collections import Counter
           import xml.etree.ElementTree as ET
           from pathlib import Path, PurePosixPath
-          selected = json.loads(Path('results/selection.json').read_bytes())
-          archive = Path(os.environ['RUNNER_TEMP'], 'prepared.zip')
+          role = os.environ['DRAW_ROLE']; prefix = '' if role == 'baseline' else 'candidate-'
+          snapshot = Path(os.environ['DRAW_SNAPSHOT'])
+          selected = json.loads(Path('results', prefix + 'selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], role + '-prepared.zip')
           actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
-          Path('results/archive.json').write_text(json.dumps(actual, indent=2) + '\n')
-          assert actual['bytes'] == selected['size_in_bytes'] and actual['sha256'] == os.environ['ARTIFACT_SHA256']
+          Path('results', prefix + 'archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and 'sha256:' + actual['sha256'] == selected['digest']
           with zipfile.ZipFile(archive) as z:
               names = z.namelist(); assert len(names) == len(set(names))
               assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
@@ -128,45 +191,50 @@ jobs:
                   p = PurePosixPath(i.filename)
                   assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
                   assert not stat.S_ISLNK(i.external_attr >> 16)
-              z.extractall('snapshot/build')
-          prepared = Path('snapshot/build/prepared/ci-artifacts')
-          assert hashlib.sha256((prepared / 'measurement.json').read_bytes()).hexdigest() == 'd52f16ab3b6c67424de930597daa3c17eb9bca60a624aa3e61699afcd45a9a2d'
+              z.extractall(snapshot / 'build')
+          prepared = snapshot / 'build/prepared/ci-artifacts'
+          if role == 'baseline':
+              assert hashlib.sha256((prepared / 'measurement.json').read_bytes()).hexdigest() == 'd52f16ab3b6c67424de930597daa3c17eb9bca60a624aa3e61699afcd45a9a2d'
           manifest = json.loads((prepared / 'measurement.json').read_bytes())
           assert manifest['schema'] == 'ci-offline-measurement-v1'
-          Path('results/measurement.json').write_bytes((prepared / 'measurement.json').read_bytes())
-          Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
-          assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
+          Path('results', prefix + 'measurement.json').write_bytes((prepared / 'measurement.json').read_bytes())
+          Path('results', prefix + 'runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
+          assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION' if role == 'baseline' else 'CANDIDATE_REVISION']
           assert len(manifest['wheels']) == 14
-          source_root = Path('snapshot')
+          source_root = snapshot
           names = subprocess.check_output(['git', '-C', str(source_root), 'ls-files', '-z']).decode().split('\0')
           layout = runpy.run_path(str(source_root / 'tools/public_qualification.py'))['current_install_layout'](
               lambda name: (source_root / name).read_bytes(), [name for name in names if name], 'minimum')
           assert layout['product_count'] == 178 and layout['SDK_count'] == 84
           assert len(runpy.run_path(str(source_root / 'tools/public_qualification.py'))['CURRENT_FAMILIES']) == 27
           core_hashes = {v for k,v in manifest['runtime']['packages_sha256']['skimagexx'].items() if k.startswith('_core.') and k.endswith('.so')}
-          assert core_hashes == {json.loads(Path('results/expected-product.json').read_bytes())['core_sha256']}
+          assert len(core_hashes) == 1 and all(re.fullmatch('[0-9a-f]{64}', h) for h in core_hashes)
+          if role == 'baseline':
+              assert core_hashes == {json.loads(Path('results/expected-product.json').read_bytes())['core_sha256']}
           assert set(manifest['runtime']['sdk_sha256']) == set(layout['SDK_members'])
           products = [n for n, v in manifest['wheels'].items() if v['name'] == 'scikit-imagexx']
           assert len(products) == 1 and len(manifest['wheels']) - len(products) == 13
           wheel = products[0]
-          with zipfile.ZipFile(Path('snapshot/build/prepared/wheels', wheel)) as z:
+          with zipfile.ZipFile(snapshot / 'build/prepared/wheels' / wheel) as z:
               members = {n for n in z.namelist() if not n.endswith('/')}
               cores = {n for n in members if n.startswith('skimagexx/_core.') and n.endswith('.so')}
               assert len(cores) == 1 and members == set(layout['members_without_core']) | cores
               assert len(members) == layout['product_count']
-          inventory = json.loads(Path('snapshot/coverage/api.json').read_bytes())['entries']
+          inventory = json.loads((snapshot / 'coverage/api.json').read_bytes())['entries']
           assert sum(e['implementation'] == 'native-partial' for e in inventory) == 251
           assert sum(e['implementation'] == 'metadata' for e in inventory) == 3
           expected_files = {'test_draw_coordinates_public': 271,
                             'test_draw_coordinates_integration': 181}
+          if role == 'candidate': expected_files['test_draw_coordinates_integration'] = 185
           for name in ('draw-coordinates-normal.xml', 'draw-coordinates-scalar.xml'):
               tree = ET.fromstring((prepared / name).read_bytes())
               cases = tree.findall('.//testcase')
-              assert len(cases) == sum(expected_files.values()) == 452
+              if role == 'baseline': assert len(cases) == sum(expected_files.values()) == 452
+              else: assert len(cases) == sum(expected_files.values()) == 456
               actual_files = Counter(case.attrib['classname'].rsplit('.', 1)[-1] for case in cases)
               assert dict(actual_files) == expected_files
               assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
-          minimum_source = Path('snapshot/.github/workflows/ci.yml').read_text().split('  numpy-minimum:', 1)[1].split('  measure:', 1)[0]
+          minimum_source = (snapshot / '.github/workflows/ci.yml').read_text().split('  numpy-minimum:', 1)[1].split('  measure:', 1)[0]
           xml_names = re.findall(r'--junitxml=build/ci-artifacts/([^ ]+-(?:normal|scalar)\.xml)', minimum_source)
           focused_names = [name for name in xml_names if not name.startswith('color-transforms-regression-')]
           assert len(focused_names) == len(set(focused_names)) and len(focused_names) > 0
@@ -177,43 +245,80 @@ jobs:
               tree = ET.fromstring((prepared / name).read_bytes())
               assert not any(tree.findall('.//' + tag) for tag in ('failure', 'error', 'skipped'))
               focused_count += len(tree.findall('.//testcase'))
-          assert focused_count == 10250
+          if role == 'baseline': assert focused_count == 10250
+          else: assert focused_count == 10258
           smoke = json.loads((prepared / 'feature-smoke.json').read_bytes())
           assert smoke['status'] == 'passed' and smoke['exit_code'] == 0
           assert set(smoke['outcomes']) == {'passed'}
           assert smoke['implementations']['native-partial'] == 251 and smoke['implementations']['metadata'] == 3
           assert smoke['outcomes']['passed'] == len(smoke['results']) == 1463
-          Path('results/preparation-counts.json').write_text(json.dumps(dict(focused_XML_groups=len(focused_names), focused_tests=focused_count, smoke_tests=len(smoke['results']), drawing_per_mode=452, declared_SDK_client_families=27), indent=2) + '\n')
+          Path('results', prefix + 'preparation-counts.json').write_text(json.dumps(dict(focused_XML_groups=len(focused_names), focused_tests=focused_count, smoke_tests=len(smoke['results']), drawing_per_mode=sum(expected_files.values()), declared_SDK_client_families=27), indent=2) + '\n')
           for name, expected in (('benchmarks/draw_coordinates.py', 'da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc'),
                                  ('coverage/contracts/draw-coordinates-benchmark.json', 'd04381216399539976f9d006c724e65362eab757ebb9b50100f555691b273194'),
                                  ('coverage/contracts/draw-coordinates.json', '944f5347959eb748808ba71bd08bc9344165a1e524f46de5318f59c1aca46f53'),
                                  ('tools/montage_sustained.py', '29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d')):
               assert manifest['source']['files_sha256'][name] == expected
-              assert hashlib.sha256(Path('snapshot', name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected
+              assert hashlib.sha256((snapshot / name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected
+          if role == 'candidate':
+              contract = json.loads(Path('results/comparison-contract.json').read_bytes())
+              before = json.loads(Path('snapshot/build/prepared/ci-artifacts/measurement.json').read_bytes())
+              for key in ('python', 'implementation', 'cache_tag', 'machine', 'system', 'dependency_libraries_sha256', 'sdk_sha256'):
+                  assert before['runtime'][key] == manifest['runtime'][key], key
+              assert {k:v for k,v in before['runtime']['versions'].items() if k != 'scikit-imagexx'} == {k:v for k,v in manifest['runtime']['versions'].items() if k != 'scikit-imagexx'}
+              for name in ('numpy', 'scipy', 'skimage'):
+                  assert before['runtime']['packages_sha256'][name] == manifest['runtime']['packages_sha256'][name], name
+              assert {k:v for k,v in before['wheels'].items() if v['name'] != 'scikit-imagexx'} == {k:v for k,v in manifest['wheels'].items() if v['name'] != 'scikit-imagexx'}
+              scope = contract['production_scope']
+              production = lambda source: {k:v for k,v in source.items() if k.startswith(tuple(scope['prefixes'])) or k in scope['files']}
+              old, new = (production(m['source']['files_sha256']) for m in (before, manifest))
+              assert old.keys() == new.keys() and len(old) == scope['count']
+              assert {k:new[k] for k in new if new[k] != old[k]} == contract['candidate_production_sha256']
+              assert all(hashlib.sha256((snapshot / k).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == v for k,v in new.items())
+              old_package, new_package = (m['runtime']['packages_sha256']['skimagexx'] for m in (before, manifest))
+              changed = {k for k in old_package.keys() | new_package.keys() if old_package.get(k) != new_package.get(k)}
+              assert changed == {'_draw_coordinates.py'} | {k for k in changed if k.startswith('_core.') and k.endswith('.so')}
+              assert len(changed) == 2
+              Path('results/product-pair-authenticated.json').write_text(json.dumps(dict(production_files=len(new), changed_production_files=contract['candidate_production_sha256'], dependency_wheels=13, SDK_members=84, product_members=178), indent=2)+'\n')
           PY
-          python -m venv "$RUNNER_TEMP/runtime"
-          "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links snapshot/build/prepared/wheels -r snapshot/build/prepared/ci-artifacts/runtime-lock.txt 2>&1 | tee results/offline-install.log
-          "$RUNNER_TEMP/runtime/bin/python" snapshot/tools/ci_measurement_artifacts.py verify --wheel-dir snapshot/build/prepared/wheels --artifact snapshot/build/prepared/ci-artifacts/measurement.json 2>&1 | tee results/original-identity.log
+          python -m venv "$DRAW_RUNTIME"
+          "$DRAW_RUNTIME/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links "$DRAW_SNAPSHOT/build/prepared/wheels" -r "$DRAW_SNAPSHOT/build/prepared/ci-artifacts/runtime-lock.txt" 2>&1 | tee "results/$role-offline-install.log"
+          "$DRAW_RUNTIME/bin/python" "$DRAW_SNAPSHOT/tools/ci_measurement_artifacts.py" verify --wheel-dir "$DRAW_SNAPSHOT/build/prepared/wheels" --artifact "$DRAW_SNAPSHOT/build/prepared/ci-artifacts/measurement.json" 2>&1 | tee "results/$role-original-identity.log"
+          done
       - name: Measure twelve unchanged drawing public calls
         shell: bash
         run: |
           set -euo pipefail
           unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
-          output="$GITHUB_WORKSPACE/results"
-          export DRAW_OUTPUT="$output"
-          cd snapshot
+          passes=1-baseline
+          if [ -n "$CANDIDATE_RUN" ]; then
+            passes="1-baseline 2-candidate 3-candidate 4-baseline 5-candidate 6-baseline 7-baseline 8-candidate"
+          fi
+          failed=0
+          for pass in $passes; do
+          role=${pass#*-}
+          snapshot=snapshot
           py="$RUNNER_TEMP/runtime/bin/python"
-          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-before.log"
+          if [ "$role" = candidate ]; then snapshot=candidate_snapshot; py="$RUNNER_TEMP/runtime-candidate/bin/python"; fi
+          output="$GITHUB_WORKSPACE/results"
+          if [ -n "$CANDIDATE_RUN" ]; then output="$output/$pass"; mkdir "$output"; fi
+          export DRAW_OUTPUT="$output" DRAW_PASS_INDEX="${pass%%-*}" DRAW_ROLE="$role"
+          cd "$GITHUB_WORKSPACE/$snapshot"
+          before=0
+          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json > "$output/identity-before.log" 2>&1 || before=$?
+          echo "$before" > "$output/identity-before-exit.txt"
+          status=125
+          if [ "$before" -eq 0 ]; then
           status=0
-          taskset -c 1 "$py" - <<'PY' 2>&1 | tee "$output/draw-coordinates.log" || status=$?
+          taskset -c 1 "$py" - <<'PY' > "$output/draw-coordinates.log" 2>&1 || status=$?
           import json, os, runpy, sys
           from pathlib import Path
           output = Path(os.environ['DRAW_OUTPUT'])
           def process():
-              return dict(pid=os.getpid(), affinity=sorted(os.sched_getaffinity(0)))
+              return dict(pid=os.getpid(), affinity=sorted(os.sched_getaffinity(0)),
+                          pass_index=int(os.environ['DRAW_PASS_INDEX']), role=os.environ['DRAW_ROLE'])
           before = process(); assert before['affinity'] == [1]
           (output/'process-before.json').write_text(json.dumps(before, indent=2)+'\n')
-          sys.argv = ['benchmarks/draw_coordinates.py', '--threads', '1', '--repeat', '7', '--pass-index', '1',
+          sys.argv = ['benchmarks/draw_coordinates.py', '--threads', '1', '--repeat', '7', '--pass-index', os.environ['DRAW_PASS_INDEX'],
                       '--deadline-utc', os.environ['DEADLINE_UTC'], '--output', str(output/'draw-coordinates.json')]
           sys.path.insert(0, str(Path('benchmarks').resolve()))
           try:
@@ -223,23 +328,29 @@ jobs:
               (output/'process-after.json').write_text(json.dumps(after, indent=2)+'\n')
               assert after == before
           PY
+          fi
           echo "$status" > "$output/benchmark-exit.txt"
-          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json 2>&1 | tee "$output/identity-after.log"
-          test "$status" -eq 0
+          after=0
+          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json > "$output/identity-after.log" 2>&1 || after=$?
+          echo "$after" > "$output/identity-after-exit.txt"
+          if [ "$before" -ne 0 ] || [ "$status" -ne 0 ] || [ "$after" -ne 0 ]; then failed=1; fi
+          done
+          exit "$failed"
       - name: Validate all samples, calibration journals and losses
+        if: always()
         shell: bash
         run: |
           python - <<'PY'
           from datetime import datetime, timezone
           import hashlib, json, math, os, re, runpy, statistics
           from pathlib import Path
-          def validate_report(report, contract, reference, manifest, expected_source, journal, clock):
+          def validate_report(report, contract, reference, manifest, expected_source, journal, clock, pass_index=1):
               meta = report['metadata']
               assert meta['source_before'] == expected_source
               assert {k: meta[k] for k in expected_source} == expected_source
               assert (meta['threads'], meta['repeat'], meta['target_ms'], meta['raw_samples']) == (1, 7, 100, 168)
               assert meta['warmup_calibration_min_ms'] == 250 and meta['interbatch_sleep_ms'] == 0
-              assert meta['pass_index'] == 1 and datetime.fromisoformat(meta['deadline_utc']) == datetime.fromisoformat(clock['deadline_utc'])
+              assert meta['pass_index'] == pass_index and datetime.fromisoformat(meta['deadline_utc']) == datetime.fromisoformat(clock['deadline_utc'])
               assert datetime.fromisoformat(clock['created_utc']) <= datetime.fromisoformat(meta['timestamp_utc']) <= datetime.fromisoformat(clock['deadline_utc'])
               assert set(meta['reference_pool_limits'].values()) == {'1'} and meta['fallback_enabled'] is False
               assert meta['selected_apis'] == reference['apis'] and meta['dtype_scope'] == contract['dtype_scope']
@@ -300,7 +411,7 @@ jobs:
                   assert all(type(v) is int and v > 0 for part in row['loops'] for v in part)
                   assert row['reference_ms'] == statistics.median(row['samples_ms'][0]) and row['cpp_ms'] == statistics.median(row['samples_ms'][1])
                   assert row['speedup'] == row['reference_ms']/row['cpp_ms']
-                  expected_order = [[0,1] if (i+index+1)%2 == 0 else [1,0] for i in range(7)]
+                  expected_order = [[0,1] if (i+index+pass_index)%2 == 0 else [1,0] for i in range(7)]
                   assert row['sample_order'] == expected_order
                   records = [event for event in journal if event['case_index'] == index]
                   assert records and records[-1]['event'] == 'measure_returned'
@@ -338,27 +449,97 @@ jobs:
                   wins=[x['case_id'] for x in report['results'] if x['speedup'] > 1], losses=[x['case_id'] for x in report['results'] if x['speedup'] < 1],
                   ties=[x['case_id'] for x in report['results'] if x['speedup'] == 1],
                   scope='Initial original/current comparison only; every loss retained, no prior-C++ gain, full-domain or full qualification claim.')
-          report = json.loads(Path('results/draw-coordinates.json').read_bytes())
-          contract_path = Path('snapshot/coverage/contracts/draw-coordinates-benchmark.json')
-          reference_path = Path('snapshot/coverage/contracts/draw-coordinates.json')
-          assert report['metadata']['execution_contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
-          assert report['metadata']['contract_sha256'] == hashlib.sha256(reference_path.read_bytes()).hexdigest()
-          expected_source = runpy.run_path('snapshot/benchmarks/provenance.py')['source_fingerprint'](Path('snapshot'))
-          journal = [json.loads(line) for line in Path('results/draw-coordinates.batches.jsonl').read_text().splitlines()]
-          clock = json.loads(Path('results/execution-clock.json').read_bytes())
-          assert datetime.now(timezone.utc) <= datetime.fromisoformat(clock['deadline_utc'])
-          before = json.loads(Path('results/process-before.json').read_bytes()); after = json.loads(Path('results/process-after.json').read_bytes())
-          assert before == after and before['affinity'] == [1] and type(before['pid']) is int and before['pid'] > 0
-          assert Path('results/benchmark-exit.txt').read_text().strip() == '0'
-          summary = validate_report(report, json.loads(contract_path.read_bytes()), json.loads(reference_path.read_bytes()),
-              json.loads(Path('snapshot/build/prepared/ci-artifacts/measurement.json').read_bytes()), expected_source, journal, clock)
+          def comparison_decision(reports, contract):
+              assert list(reports) == contract['sequence']
+              expected = contract['case_ids']
+              assert len(expected) == 12 and len(set(expected)) == 12
+              assert contract['target_case'] == expected[0] == 'line/tiny'
+              assert contract['control_case_ids'] == expected[1:]
+              for report in reports.values(): assert [r['case_id'] for r in report['results']] == expected
+              baseline = [report for name,report in reports.items() if name.endswith('-baseline')]
+              candidate = [report for name,report in reports.items() if name.endswith('-candidate')]
+              assert len(baseline) == len(candidate) == 4
+              gm = lambda values: math.exp(statistics.mean(math.log(x) for x in values))
+              rows = []
+              limits = contract['gates']
+              for index, case_id in enumerate(expected):
+                  direct = [a['results'][index]['cpp_ms']/b['results'][index]['cpp_ms'] for a in baseline for b in candidate]
+                  normalized = [b['results'][index]['speedup']/a['results'][index]['speedup'] for a in baseline for b in candidate]
+                  rows.append(dict(case_id=case_id, direct_pairs=direct, normalized_pairs=normalized,
+                      balanced_direct=gm(direct), balanced_normalized=gm(normalized),
+                      worst_direct=min(direct), worst_normalized=min(normalized),
+                      candidate_original_speedups=[r['results'][index]['speedup'] for r in candidate]))
+              target = rows[0]; controls = rows[1:]
+              gates = dict(
+                  target_balanced_direct=target['balanced_direct'] >= limits['target_balanced_direct_min'],
+                  target_balanced_normalized=target['balanced_normalized'] >= limits['target_balanced_normalized_min'],
+                  target_all_pairs_direct=target['worst_direct'] >= limits['target_all_pairs_direct_min'],
+                  target_all_pairs_normalized=target['worst_normalized'] >= limits['target_all_pairs_normalized_min'],
+                  controls_all_pairs_direct=all(r['worst_direct'] >= limits['controls_all_pairs_direct_min'] for r in controls),
+                  controls_all_pairs_normalized=all(r['worst_normalized'] >= limits['controls_all_pairs_normalized_min'] for r in controls),
+                  preserved_original_wins=all(all(v > limits['preserved_original_wins_each_candidate_min_exclusive'] for v in r['candidate_original_speedups']) for r in rows if r['case_id'] in contract['preserved_original_wins']))
+              assert set(contract['preserved_original_wins']) == set(expected)-{'line/tiny', 'rectangle/2d'}
+              return dict(decision='KEEP' if all(gates.values()) else 'DISCARD', gates=gates, cases=rows,
+                  raw_samples=contract['raw_samples_total'], variation_policy=contract['variation_policy'], scope=contract['scope'])
+
+          comparison = bool(os.environ.get('CANDIDATE_RUN'))
+          try:
+              clock = json.loads(Path('results/execution-clock.json').read_bytes())
+              assert datetime.now(timezone.utc) <= datetime.fromisoformat(clock['deadline_utc'])
+              comparison_contract = json.loads(Path('results/comparison-contract.json').read_bytes()) if comparison else None
+              sequence = comparison_contract['sequence'] if comparison else ['1-baseline']
+              reports = {}; summaries = {}; pids = []
+              if comparison: assert Path('results/product-pair-authenticated.json').is_file()
+              for name in sequence:
+                  index, role = name.split('-'); index = int(index)
+                  folder = Path('results', name) if comparison else Path('results')
+                  snapshot = Path('candidate_snapshot' if role == 'candidate' else 'snapshot')
+                  for kind in ('benchmark', 'identity-before', 'identity-after'):
+                      assert (folder/(kind+'-exit.txt')).read_text().strip() == '0'
+                  manifest_path = snapshot/'build/prepared/ci-artifacts/measurement.json'
+                  manifest_raw = manifest_path.read_bytes(); manifest = json.loads(manifest_raw)
+                  identity = dict(status='verify', revision=manifest['source']['revision'], wheel_count=14,
+                                  artifact_sha256=hashlib.sha256(manifest_raw).hexdigest())
+                  for when in ('before', 'after'):
+                      assert json.loads((folder/('identity-'+when+'.log')).read_bytes()) == identity
+                  report = json.loads((folder/'draw-coordinates.json').read_bytes())
+                  contract_path = snapshot/'coverage/contracts/draw-coordinates-benchmark.json'
+                  reference_path = snapshot/'coverage/contracts/draw-coordinates.json'
+                  assert report['metadata']['execution_contract_sha256'] == hashlib.sha256(contract_path.read_bytes()).hexdigest()
+                  assert report['metadata']['contract_sha256'] == hashlib.sha256(reference_path.read_bytes()).hexdigest()
+                  expected_source = runpy.run_path(str(snapshot/'benchmarks/provenance.py'))['source_fingerprint'](snapshot)
+                  journal = [json.loads(line) for line in (folder/'draw-coordinates.batches.jsonl').read_text().splitlines()]
+                  before = json.loads((folder/'process-before.json').read_bytes()); after = json.loads((folder/'process-after.json').read_bytes())
+                  assert before == after and before['affinity'] == [1] and type(before['pid']) is int and before['pid'] > 0
+                  assert before['pass_index'] == index and before['role'] == role
+                  pids.append(before['pid'])
+                  summaries[name] = validate_report(report, json.loads(contract_path.read_bytes()), json.loads(reference_path.read_bytes()),
+                      manifest, expected_source, journal, clock, pass_index=index)
+                  reports[name] = report
+              assert len(pids) == len(set(pids))
+              summary = comparison_decision(reports, comparison_contract) if comparison else summaries['1-baseline']
+              if comparison: summary['passes'] = summaries
+          except Exception as error:
+              if comparison:
+                  Path('results/summary.json').write_text(json.dumps(dict(decision='UNRESOLVED_MEASUREMENT', failure=type(error).__name__, detail=str(error)), indent=2)+'\n')
+              raise
           Path('results/summary.json').write_text(json.dumps(summary, indent=2)+'\n')
           print(json.dumps(summary, indent=2))
+          if comparison and summary['decision'] != 'KEEP': raise SystemExit(1)
+
           PY
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && inputs.candidate_run == ''
         with:
           name: draw-coordinates-initial-minimum
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.candidate_run != ''
+        with:
+          name: draw-line-boundary-comparison-minimum
           path: results/
           retention-days: 90
           include-hidden-files: true

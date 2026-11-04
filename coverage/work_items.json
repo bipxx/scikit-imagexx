@@ -7,12 +7,180 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "regionprops-state-reference-v1",
+      "kind": "contract_reference",
+      "owner": "qualification251_readiness",
+      "branch": "regionprops-state-reference-v1",
+      "state": "contracted",
+      "apis": [],
+      "owns": [
+        "coverage/contracts/regionprops-state-v1.json",
+        "tests/regionprops_state_contract.py",
+        "tests/regionprops_state_observer.py",
+        "tests/test_regionprops_state_reference.py"
+      ],
+      "base_sha": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+      "depends_on": [
+        "regionprops-runtime-surface-discovery-v1"
+      ],
+      "acceptance": "Source-safe once-only constructor/property capture plus exact saved checks and independent review. No native/fullclass credit; finalize paths/labels/closeout before immutable handoff.",
+      "current_checkpoint": "2f076368 independently reviewedcdcd4f1d:29calls/profile,22returns7errors,40objects/1020fixedproperty steps perprofile,32savedchecks. Captures58total/no replay; sourcebounds/currentarraywords/aliases/publiccache-mutation preserved. Initialborrowedcontroller apiKeyError preentry0calls retained; nextcapture must validate actualfixture/controller intake before originals. No numericalprovider creditednative.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "2f076368987ca4247e06109d23f459dbad98079a",
+          "passing_contract_checks": 32,
+          "manifest": {
+            "path": "build/regionprops-state-capture-v1/handoff.json",
+            "sha256": "8d7ed11771d61aa337da7490e12621c45387a4a7952f50f130cedb6fa7185025"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Native leaf underway: typedoriginal storage, sortedpositive labels/frozenbbox/initialcounts, freshmask/population/coords from cached-or-fresh mask. Publicclass/type/cache/spacing/aliases and unassessedproperties remain frontend/SDK/performance gates."
+      }
+    },
+    {
+      "id": "public252-qualification-v1",
+      "kind": "qualification",
+      "owner": "qualification251_readiness",
+      "branch": "qualify/current252-v1",
+      "state": "validating",
+      "apis": [],
+      "owns": [],
+      "base_sha": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+      "depends_on": [],
+      "acceptance": "Exact-source four-profile successful public/SDK/corpus/seal/stager evidence, independent review and task waste closeout; no scope promotion from launch or planner.",
+      "current_checkpoint": "Dispatched ONCE41882408142 after immutable readiness8786b5c0 and remote exactref check. Expected252image/255registered,180product/85SDK,28families56SDKchecks/profile. Reused actual2160testcases+8subtests because selectedsource/setup unchanged;82mergedCIisolation checks pass. Actual qualification results pending; baseline247. Remotejobdoesnotoccupyworker; B can run independent references.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Observe existing41882408142; retain eachterminalartifactonce and review with frozen252reviewers. Never rerun failed251 or redispatch for observation lag."
+      }
+    },
+    {
+      "id": "line-aa-default-shipping-v1",
+      "kind": "public_integration",
+      "owner": "tiny_line_implementation",
+      "branch": "integrate/line-aa-v1",
+      "state": "validating",
+      "apis": [],
+      "owns": [
+        "tests/test_line_aa_default.py"
+      ],
+      "base_sha": "bc848c2f",
+      "depends_on": [
+        "line-aa-frontend-v1"
+      ],
+      "acceptance": "Actual source-overlay default/export/checker parity from savedrows, no original replay; root independent review plus task closeout. Genuine full product remains a separate gate.",
+      "current_checkpoint": "A implementing default/registry/carrier/mixedweightdtype/alias/error checks in new sourceoverlays using unchanged2cores. Root5shippingfiles independently reviewed2125e90a; initial9casebenchmark reviewed901ed702 and realCLI firstcohorts passed. C prepares qualifier253 after actualinventory synchronization.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Review proposed inventory and actualdefault proofs, regenerate sourceinventory/routes once, then synchronize qualifier and full launcher barrier before genuine253 preparation."
+      }
+    },
+    {
+      "id": "line-aa-reference-v1",
+      "kind": "contract_reference",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/line-aa-reference-v1",
+      "state": "contracted",
+      "apis": [
+        "draw.line_aa"
+      ],
+      "owns": [
+        "tests/line_aa_contract.py",
+        "tests/line_aa_observer.py",
+        "tests/test_line_aa_reference.py",
+        "coverage/contracts/line-aa.json"
+      ],
+      "base_sha": "b10b9c65d4ad8fc0dc81b53716e17ba1a559d425",
+      "depends_on": [],
+      "acceptance": "Exact scoped proof and independent review; no registration/performance credit until public/genuine shipping gates. Close with result/source/evidence, waste/reuse and next-plan correction.",
+      "current_checkpoint": "ce8c490 independently reviewed and merged b019c3cc;96 original calls once,39returns9errors/profile,102saved checks. Source-safe bounds, exact three owning arrays/weights. Waste: reuse captures; aborted missing prospective-parent cherry-pick in private integration then applied9da+ce8 without science replay. Next/root: preserve complete prerequisite chain before composing commits.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "ce8c4905aa928495d98702e30f1bed12c1559b29",
+          "passing_contract_checks": 102,
+          "manifest": {
+            "path": "build/line-aa-reference-capture-v1/reference-handoff.json",
+            "sha256": "53af2de505844d779d4d8fc9267b1361238118a92e31a03a2de4b9d7a8d81e84"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "root",
+        "action": "Reference gate closed; reuse immutable observations for native/frontend/SDK and benchmark without recapture."
+      }
+    },
+    {
+      "id": "line-aa-native-v1",
+      "kind": "native_private",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/line-aa-native-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "owns": [
+        "include/skimagexx/line_aa.hpp",
+        "src/line_aa.cpp",
+        "tests/test_line_aa_native.cpp",
+        "coverage/contracts/line-aa-native-v1.json"
+      ],
+      "base_sha": "b10b9c65d4ad8fc0dc81b53716e17ba1a559d425",
+      "depends_on": [
+        "line-aa-reference-v1"
+      ],
+      "acceptance": "Exact scoped proof and independent review; no registration/performance credit until public/genuine shipping gates. Close with result/source/evidence, waste/reuse and next-plan correction.",
+      "current_checkpoint": "980c759 native review PASS989ed015; six modes2,088,858controls/720goldrecords/2160signed layouts. Literal sqrt/division then1.-distance; compilerSSE2 finish only, serial dependent recurrence. Component SDK86 client121controls/mode Linux/MSVC; genuine SDK/public/benchmark still pending. Waste: no fullSDK/env/original replay; reuse native object.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "980c7594fbb5219d6c936c76bf38ec4c6a8e52d5",
+          "manifest": {
+            "path": "build/worktrees/line-aa-native-v1/build/native-v1/handoff.json",
+            "sha256": "b55fc98fe51b5aca55445c7777e8f8ffc5c7654a52a5b77bbcc41319ae8ff233"
+          },
+          "native_contract_checks": 720,
+          "native_pending": 0
+        }
+      },
+      "next_gate": {
+        "owner": "root",
+        "action": "Private integration4faf1aee has build/SDK client wiring; finish public frontend, shipping inventory and genuine product before registration acceptance."
+      }
+    },
+    {
+      "id": "line-aa-frontend-v1",
+      "kind": "binding_fragment",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/line-aa-frontend-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "owns": [
+        "src/bind_line_aa.cpp",
+        "python/skimagexx/_line_aa.py",
+        "tests/test_line_aa_public.py"
+      ],
+      "base_sha": "b10b9c65d4ad8fc0dc81b53716e17ba1a559d425",
+      "depends_on": [
+        "line-aa-reference-v1",
+        "line-aa-native-v1"
+      ],
+      "acceptance": "Exact scoped proof and independent review; no registration/performance credit until public/genuine shipping gates. Close with result/source/evidence, waste/reuse and next-plan correction.",
+      "current_checkpoint": "9ff7128 independently reviewedf331fe3d;440checks across4modes,384savedrow-worker comparisons/312nativewitnesses/72preentryerrors. All39safe-successIDs native after once-only index;3owningarrays. BothrealCLI firstcohorts PASS1original+1native/profile,0timedbatches. Private shipping/default/inventory/genuine stillpending. Waste: preserve originalhandoff and immutablev2 path correction; finalize paths/closeout beforehandoff.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Commit component with exact public parity/native-return/ownership/lifetime/worker proofs; independent review before root shared integration."
+      }
+    },
+    {
       "id": "circle-perimeter-frontend-v1",
       "kind": "binding_fragment",
       "owner": "next_family_contract",
       "branch": "feature/circle-perimeter-frontend-v1",
       "base_sha": "8123d7924a9e2ec62f28cb21dadbe6e72f445354",
-      "state": "validating",
+      "state": "parity_passed",
       "apis": [],
       "owns": [
         "src/bind_circle_perimeter.cpp",
@@ -28,10 +196,10 @@
         }
       },
       "acceptance": "Actual builtin/public-saved parity, worker/ownership/state and explicitdtype/provider partitions; root shipping integration and SDK remain separate. Task closeout includes waste/reuse and next-plan correction.",
-      "current_checkpoint": "Initial7339component572checks pass; independentreview found uint64shape dtype erasure may change originalfloatpromotion. Add explicitproviderrefusal beforeapproval; fournew safe original-onlywitnesses separately authorized, old69golds unchanged.",
+      "current_checkpoint": "Circle source admitted and pushed main6fae255 after genuine892 product180/SDK85,14277XML/0failures and actualgenuineSDK1228controls per normal/scalar process. Initial8caseoneworker result8/8winsGM21.527045058/112samples published. Full252qualification41882408142 at6fae nowlive; baseline247 unchanged. Waste: reused preparedartifact once and actualSDK; no full localbuild/replay; publicationreceipt corrections preservedversioned.",
       "next_gate": {
         "owner": "root",
-        "action": "Review corrected component plus uint64witness, wire actualexports/core/CMake/registry and installedSDK before APIcredit.",
+        "action": "Root inspects genuine run41876409255 source/product/SDK85 and initial benchmark, independently reviews, then merges/pushes and freezes one cumulative four-profile qualification. No redispatch while live.",
         "integration_destination": "main reviewed family integration"
       }
     },
@@ -72,7 +240,7 @@
       "owner": "next_family_contract",
       "branch": "feature/circle-perimeter-contract-v1",
       "base_sha": "b40350931e817a88245bbec277d1f7c3cadf816f",
-      "state": "contracted",
+      "state": "parity_passed",
       "apis": [],
       "owns": [
         "include/skimagexx/circle_perimeter.hpp",
@@ -88,7 +256,7 @@
         }
       },
       "acceptance": "Exact source-order/duplicates/clipping count/fill native proof against saved safe observations, relevant portable/sanitizer/worker checks; scoped only. Task closeout includes waste/reuse and next-plan correction.",
-      "current_checkpoint": "8123d792 native private increment independently reviewed;57safe-return IDs,114case-worker records per3modes, exactgoldwords/guard/sanitizer/FP invariants. No public/SDK/performance credit.",
+      "current_checkpoint": "Circle source admitted and pushed main6fae255 after genuine892 product180/SDK85,14277XML/0failures and actualgenuineSDK1228controls per normal/scalar process. Initial8caseoneworker result8/8winsGM21.527045058/112samples published. Full252qualification41882408142 at6fae nowlive; baseline247 unchanged. Waste: reused preparedartifact once and actualSDK; no full localbuild/replay; publicationreceipt corrections preservedversioned.",
       "proofs": {
         "native_private": {
           "status": "verified",
@@ -102,8 +270,8 @@
         }
       },
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Correct and review frontenduint64shape dtype boundary; then root shipping/SDK integration.",
+        "owner": "root",
+        "action": "Root inspects genuine run41876409255 source/product/SDK85 and initial benchmark, independently reviews, then merges/pushes and freezes one cumulative four-profile qualification. No redispatch while live.",
         "integration_destination": "CMake/public Python and installedSDK after scope proof"
       }
     },
@@ -112,7 +280,7 @@
       "kind": "optimization",
       "owner": "tiny_line_implementation",
       "branch": "optimize/draw-line-boundary-v1",
-      "state": "preparing",
+      "state": "measured",
       "apis": [],
       "owns": [
         "python/skimagexx/_draw_coordinates.py",
@@ -122,10 +290,10 @@
       "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
       "depends_on": [],
       "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
-      "current_checkpoint": "Componentb2 independently reviewed1824checks. Genuinecfb prepare41852799641 FAILED at cross-host Python3.11.18vs3.11.17 runtime identity,29timings skipped; bothZIPs retained. CI2valuepin merged, newinterpreterinput0755818b prepare41856678370 running. Comparisoncontroller-only contextfix pending; no timing/acceptance.",
+      "current_checkpoint": "Terminal DISCARD41869540371:1344 samples, target direct1.981077x/normalized1.924067x, five controls fail frozen floors. Published benchmarks/draw-line-boundary-same-host.json and .md; b2 math remains unmerged. Waste review: preserve failed setup and all samples, no unchanged rerun/gate waiver; reuse artifacts and move lane to next contract.",
       "next_gate": {
         "owner": "tiny_line_implementation",
-        "action": "Freeze prospective unchanged12case comparison and bounded existing-workflow mode; root authenticates genuine preparation and dispatches one isolated measurement.",
+        "action": "Closed DISCARD. Keep candidate math unmerged and failed evidence intact; any future optimization needs a different evidence-backed mechanism and new prospective gates.",
         "integration_destination": "main only after fixed optimization gates pass"
       }
     },
@@ -134,13 +302,13 @@
       "kind": "qualification",
       "owner": "qualification251_readiness",
       "branch": "review/public251-readiness-current-v2",
-      "state": "validating",
+      "state": "measured",
       "apis": [],
       "owns": [],
       "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
       "depends_on": [],
-      "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
-      "current_checkpoint": "Readiness reused. Hosted41851693181 at frozen09943ff running; independent reviewer frozen before retrieval. Qualified baseline stays247."
+      "acceptance": "Completed failed-campaign observation/review only; measured state is not release acceptance. Future consumers require explicit successful exact-source qualification evidence, never default state readiness. Failed251 remains failed and qualified baseline247 unchanged.",
+      "current_checkpoint": "Terminal FAILED41851693181 at09943ff; all three Linux profiles pass, Windows16 strict reference lookup failures from3.13.16/3.13.17 drift plus missing SDK <string>. Failed evidence published in coverage/evidence/current251-qualification-v1-failed.json. Both causes fixed on main; accepted baseline247 unchanged. Waste review: do not rerun251; qualify the next ready cumulative source after actual launcher checks."
     },
     {
       "id": "circle-perimeter-contract-v1",
@@ -173,8 +341,8 @@
         }
       },
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Implement frozen ordered native count/fill interface in separate packet, reusing saved observations; no new original calls.",
+        "owner": "root",
+        "action": "Reference and native/frontend component gates completed; root now owns genuine circle252 shipping admission. Reuse saved originals and witnesses; no recapture.",
         "integration_destination": "installed C++ and Python binding after native proof"
       }
     },
@@ -34824,7 +34992,6 @@
     "draw.ellipse_perimeter",
     "draw.ellipsoid",
     "draw.ellipsoid_stats",
-    "draw.line_aa",
     "draw.line_nd",
     "draw.polygon",
     "draw.polygon2mask",
@@ -35401,15 +35568,15 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 247,
+    "native_partial_image_names": 252,
     "metadata_names": 3,
-    "upstream_only_names": 221,
+    "upstream_only_names": 216,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Source247 image APIs +3metadata,5partialclasses/1exception and221upstream-only of477. RDP9/9 GM6.728133285x/126samples and subdivision14/14 GM4.000437801x/196samples measured on immutable genuine4f176wheel/83SDK product. Separate actual SDK83 client v2 onefamily/two checks; not full26family/52checks. Exact4e/run40710464380 remains latest full241qualification; private Montage row-owned6b performance remains pending.",
+    "note": "Main252 native-partial image APIs/3metadata/216upstream-only. Qualified247 remainsf1; live fourprofile252 campaign41882408142 source6fae. Circle initial8/8winsGM21.527x/112samples; lineAA remains private253 candidate with default/genuine/performance pending.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
-    "accepted_binary_image_names": 241
+    "accepted_binary_image_names": 247
   },
   "execution_policy": {
     "active_workers": [
@@ -35421,7 +35588,7 @@
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
-    "launch_rule": "User resumed updated plan. Reconcile actual handles/receipts before assigning ready packets; old assignments are historical. Each task closes with waste review before dependent work.",
+    "launch_rule": "Reconcile actual agent/job status and receipts at every transition. Terminal packet assignments below are historical until explicitly reassigned; use followup_task to resume completed agents. Apply per-task waste closeout and update next gates before dependent work.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
     "implementation_goal_status": "active",
     "mode": "executing-updated-plan",
@@ -35434,19 +35601,13 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "tiny_line_implementation": [
-        "draw-line-boundary-optimization-v1"
+        "line-aa-default-shipping-v1"
       ],
-      "qualification251_readiness": [
-        "public251-qualification-v1"
-      ],
-      "next_family_contract": [
-        "circle-perimeter-frontend-v1"
-      ]
+      "qualification251_readiness": [],
+      "next_family_contract": []
     },
     "current_three_agent_packets": {
-      "tiny_line_implementation": "draw-line-boundary-optimization-v1",
-      "qualification251_readiness": "public251-qualification-v1",
-      "next_family_contract": "circle-perimeter-frontend-v1"
+      "tiny_line_implementation": "line-aa-default-shipping-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -35791,20 +35952,22 @@
     "resume_checkpoint": "2026-10-25: explicit updated-plan implementation resume; old network-revoked turns ended. Same three workers restarted through followup_task; no hosted campaign redispatched.",
     "latest_hosted_status": {
       "qualification": {
-        "run": 40200919182,
-        "source": "7417676bbb628e75feac1be49aac900bc5af7b15",
-        "status": "terminal-failure-all-four",
-        "accepted": false,
-        "raw": "build/genuine203-tv-zero-hosted/7417676/retained-v1"
-      },
-      "max_tree": {
-        "run": 40200431797,
+        "run": 41882408142,
+        "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
         "status": "in_progress",
-        "modern_preparation": "success",
-        "performance_accepted": false
+        "accepted": false,
+        "ref": "qualify/current252-v1"
+      },
+      "circle_shipping": {
+        "run": 41876409255,
+        "source": "892c5aa70c5a9ca65f92b4060c407caf61b3af5c",
+        "status": "terminal-success",
+        "source_admitted_main": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+        "performance_report": "benchmarks/circle-perimeter-minimum-initial.json",
+        "whole_product_qualified": false
       }
     },
-    "assignment_note": "apis records exclusive planning ownership, not native acceptance. Inventory classifications remain in api.json; all8 formerly unassigned active targets now belong to their concrete packet. Historical packets retain their original evidence states; only current_three_agent_packets dispatches the three resumed lanes.",
+    "assignment_note": "Historical ownership and dispatch maps are retained for provenance, not runnable assignments. Live sequence is coverage/EXECUTION_PLAN.md: root circle252 shipping/cumulative qualification; A line-AA implementation; B release review/partial contracts; C independent contract/native review. Bind each next packet and exclusive files before starting; terminal251/tiny-line actions must not be redispatched.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -35817,9 +35980,8 @@
       }
     },
     "current_review_assignments": {
-      "astra_max_plan_audit": "TVpositivezero artifact-onlyworkflow/publication/certificate source",
-      "astra_max_api_paths": "Public203maincompositiond434 validated andhandedoff; footprint/colocprivatefrozenhandoffs ready",
-      "resize_api": "Footprintsanitizer454gate source188352 handedoff; private4profilefoot/raw3profilecoloc accepted"
+      "qualification251_readiness": "Independent RegionProperties first returned-state reference packet during remote252 qualification; reviewers/frozen252source preserved.",
+      "next_family_contract": "Private253 qualifier/product closure; wait root inventory synchronization before affected metadata tests."
     }
   },
   "parallel_review": {

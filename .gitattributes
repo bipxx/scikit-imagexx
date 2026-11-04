@@ -644,7 +644,14 @@ benchmarks/draw-coordinates-minimum-initial.json -text
 coverage/contracts/circle-perimeter.json -text
 coverage/contracts/regionprops-runtime-surface.json -text
 coverage/contracts/circle-perimeter-uint64-shape-witness.json -text
-coverage/contracts/circle-perimeter-benchmark.json -text
+coverage/contracts/draw-line-boundary-comparison.json -text
+coverage/evidence/current251-qualification-v1-failed.json -text
+benchmarks/draw-line-boundary-same-host.json -text
 
 coverage/contracts/line-aa.json -text
+
+benchmarks/circle-perimeter-minimum-initial.json -text
+coverage/contracts/circle-perimeter-benchmark.json -text
+
 coverage/contracts/line-aa-benchmark.json -text
+coverage/contracts/regionprops-state-v1.json -text

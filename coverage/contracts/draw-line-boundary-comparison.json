@@ -1,0 +1,140 @@
+{
+  "schema": "draw-line-boundary-comparison-v1",
+  "status": "PROSPECTIVE_BEFORE_ANY_CANDIDATE_TIMING",
+  "baseline": {
+    "run": "40816710252",
+    "revision": "566c1fcdc50dc6cdc0bb2c7a9de0a0e56449b6f8",
+    "artifact": "12873106882",
+    "sha256": "b5c1b0d20ee9ed5558ef3ed2a9089f2899c4d6265a5f10553726e61a6e39dc91",
+    "core_sha256": "9d46467577182c0481a86f3996e1e7d218a3da4a8f6f21a39d0c862736c83706"
+  },
+  "candidate_production_sha256": {
+    "python/skimagexx/_draw_coordinates.py": "53bd74879d38cf61eab906f529ec56b3300195804a8dfff5b7b0ef0696ea7fea",
+    "src/bind_draw_coordinates.cpp": "da4b8cb4a8d5764e2132a3119bc9cb7045132df914116af1e049635c15beea4e"
+  },
+  "production_scope": {
+    "prefixes": [
+      "src/",
+      "include/",
+      "python/",
+      "cmake/"
+    ],
+    "files": [
+      "CMakeLists.txt",
+      "pyproject.toml"
+    ],
+    "count": 453
+  },
+  "driver": "benchmarks/draw_coordinates.py",
+  "driver_sha256": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+  "execution_contract": "coverage/contracts/draw-coordinates-benchmark.json",
+  "execution_contract_sha256": "d04381216399539976f9d006c724e65362eab757ebb9b50100f555691b273194",
+  "reference_contract": "coverage/contracts/draw-coordinates.json",
+  "reference_contract_sha256": "944f5347959eb748808ba71bd08bc9344165a1e524f46de5318f59c1aca46f53",
+  "method": "tools/montage_sustained.py:measure",
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "case_ids": [
+    "line/tiny",
+    "line/long",
+    "rectangle/tiny",
+    "rectangle/2d",
+    "rectangle/3d",
+    "disk/tiny",
+    "disk/dense",
+    "disk/clipped",
+    "ellipse/tiny",
+    "ellipse/axes",
+    "ellipse/rotated",
+    "ellipse/clipped"
+  ],
+  "target_case": "line/tiny",
+  "control_case_ids": [
+    "line/long",
+    "rectangle/tiny",
+    "rectangle/2d",
+    "rectangle/3d",
+    "disk/tiny",
+    "disk/dense",
+    "disk/clipped",
+    "ellipse/tiny",
+    "ellipse/axes",
+    "ellipse/rotated",
+    "ellipse/clipped"
+  ],
+  "preserved_original_wins": [
+    "line/long",
+    "rectangle/tiny",
+    "rectangle/3d",
+    "disk/tiny",
+    "disk/dense",
+    "disk/clipped",
+    "ellipse/tiny",
+    "ellipse/axes",
+    "ellipse/rotated",
+    "ellipse/clipped"
+  ],
+  "sequence": [
+    "1-baseline",
+    "2-candidate",
+    "3-candidate",
+    "4-baseline",
+    "5-candidate",
+    "6-baseline",
+    "7-baseline",
+    "8-candidate"
+  ],
+  "threads": 1,
+  "reference_pools": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_ms_per_function": 250,
+  "interbatch_sleep_ms": 0,
+  "raw_samples_per_pass": 168,
+  "raw_samples_total": 1344,
+  "warmup_groups_total": 192,
+  "gates": {
+    "target_balanced_direct_min": 1.2,
+    "target_balanced_normalized_min": 1.2,
+    "target_all_pairs_direct_min": 1.1,
+    "target_all_pairs_normalized_min": 1.1,
+    "controls_all_pairs_direct_min": 0.97,
+    "controls_all_pairs_normalized_min": 0.97,
+    "preserved_original_wins_each_candidate_min_exclusive": 1.0
+  },
+  "formulas": {
+    "direct": "baseline cpp_ms / candidate cpp_ms",
+    "normalized": "candidate speedup / baseline speedup",
+    "balanced": "geometric mean of all16 baseline-pass x candidate-pass ratios",
+    "all_pairs": "minimum over all16 baseline-pass x candidate-pass ratios"
+  },
+  "identity": "Both genuine CI prepare-only products; same exact13 scientific dependency wheels and package/library/runtime identity; production source differs only in the2 explicitly pinned files; same84SDK files and178 product members. Before/after offline identity per process, distinct PID, CPU1 affinity. All source/sample/output/calibration identities must pass before performance decision.",
+  "preparation_counts": {
+    "baseline": {
+      "public": 271,
+      "integration": 181,
+      "drawing_per_mode": 452,
+      "focused": 10250,
+      "smoke": 1463
+    },
+    "candidate": {
+      "public": 271,
+      "integration": 185,
+      "drawing_per_mode": 456,
+      "focused": 10258,
+      "smoke": 1463
+    }
+  },
+  "decision": "KEEP only when all identity, numerical, sample/journal, deadline and listed performance gates pass. Gate failure is DISCARD; missing/invalid/incomplete evidence is UNRESOLVED_MEASUREMENT. Retain every result/loss/failure. No unchanged retry, gate adjustment or deadline extension after results.",
+  "scope": "Incremental whole-public drawing-boundary comparison; target must materially beat prior C++ while all11 controls meet strict direct/normalized floors and10previous original wins persist. Remaining tiny-line or rectangle original losses stay open; neither aggregate nor KEEP establishes whole-library superiority.",
+  "candidate": {
+    "run": "41856678370",
+    "revision": "0755818b0b8416947a47a8ba074b8e2388af27a5",
+    "artifact": "13337554237",
+    "sha256": "eea9aaeb9396ab16a0432b11455de9241b3ad2101a06629351245cdff4adced5"
+  },
+  "variation_policy": {
+    "guard": "All16 baseline-pass x candidate-pass direct and normalized worst-pair floors are the chosen variation guard.",
+    "separate_variance_estimator": false,
+    "claim": "No separate variance estimator is implemented or claimed to have passed. All samples and adverse pairs remain retained; a failed floor fails the decision."
+  }
+}
