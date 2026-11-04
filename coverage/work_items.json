@@ -7,6 +7,44 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "regionprops-public-mutation-reference-v1",
+      "kind": "contract_reference",
+      "owner": "next_family_contract",
+      "branch": "regionprops-public-mutation-reference-v1",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "tests/regionprops_public_mutation_contract.py",
+        "tests/regionprops_public_mutation_observer.py",
+        "tests/test_regionprops_public_mutation_reference.py",
+        "coverage/contracts/regionprops-public-mutation.json"
+      ],
+      "base_sha": "484e6dd44367316444f757576eea36246e054a48",
+      "depends_on": [
+        "regionprops-state-reference-v1"
+      ],
+      "acceptance": "Public builtin label/slice assignment cache semantics; source-safe12-ID refused-constructor/fullaction intakes precede24 once-only originals. Preserve all oldfailed candidate diagnostics, no native/fullclass credit. Terminal closeout records waste/reuse and next-plan action before dependent work.",
+      "current_checkpoint": "Independentb89a995b PASS. Original cachepersists onassignment; bbox/coords usecurrent publicslice. Oldfixedbudget component fails11of12sequences/profile,1primedlabelcase matches. Oldpublicaliaspreflight0callfailure retained. No science/build/timing replay; identity/provider-tail correction underway before255.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "3b99d1e168b767c794be0ad8af76f278fa804cfd",
+          "passing_contract_checks": 6,
+          "manifest": {
+            "path": "build/regionprops-public-mutation-reference-v1/handoff.json",
+            "sha256": "f3a1b3da888ac5d3fddd8688b1f84435a03c4063e75f938dd4bc02364a2af43e"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Review minimal image/coords identity guard plus immutable constructor snapshot and literal provider-tail routing; cache decorators unchanged. Root includescorrectnessfixbeforegenuine255."
+      }
+    },
+    {
       "id": "circle-perimeter-aa-native-v1",
       "kind": "implementation",
       "owner": "next_family_contract",
