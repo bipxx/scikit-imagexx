@@ -14,6 +14,7 @@
 - At a task transition, reconcile actual agent/job status and evidence before dispatch. Use `followup_task` to resume a completed agent; a queued message alone does not start work. Retire terminal dispatch instructions when updating the next gate.
 
 - Finalize receipt paths, labels and closeout before handing off a hash. Handed-off bytes are immutable; corrections require a versioned successor with the predecessor retained. Review only the affected metadata delta and do not replay unchanged scientific evidence.
+- Inspect branch ancestry before merging a reference packet into main. If it descends from unfinished integration work, restore only its independently reviewed files after confirming their dependencies are already present; do not import the private implementation accidentally. A failed merge or check must stop dependent mutations. Commit only after conflict markers and index checks pass; verify the final shipping source projection against the validated candidate, especially after a reverted merge.
 
 # Engineering judgment and simplicity
 
