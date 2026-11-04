@@ -86,7 +86,7 @@ std::size_t regionprops_mask_into(const RegionPropsState& state,std::size_t inde
     const auto ndim=view.shape.size(),last=ndim-1,width=region.stop[last]-region.start[last];
     const auto height=region.stop[ndim-2]-region.start[ndim-2];
     const auto rows=height*(ndim==3?region.stop[0]-region.start[0]:1);
-    const auto workers=rows*width>=parallel_min?std::min(std::size_t(state.workers),rows):1;
+    const auto workers=std::min(std::size_t(active_workers(rows*width)),rows);
     std::vector<std::size_t> populations(workers,0);
     integer_type(view.type,[&](auto tag) {
         using T=decltype(tag);const auto label=static_cast<T>(region.label);
@@ -100,7 +100,9 @@ std::size_t regionprops_mask_into(const RegionPropsState& state,std::size_t inde
                 if(view.strides[last]==std::ptrdiff_t(sizeof(T))) {
                     // Caller-certified fresh mask, disjoint from label storage.
                     // Independent spans; OpenMP SIMD keeps integer comparison exact.
+                    #if defined(_OPENMP) && !defined(_MSC_VER)
                     #pragma omp simd reduction(+:found)
+                    #endif
                     for(std::size_t c=0;c<width;++c){const auto hit=word<T>(input+c*sizeof(T))==label;target[c]=std::uint8_t(hit);found+=hit;}
                 } else {
                     for(std::size_t c=0;c<width;++c){const auto hit=word<T>(input+std::ptrdiff_t(c)*view.strides[last])==label;target[c]=std::uint8_t(hit);found+=hit;}

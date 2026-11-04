@@ -103,7 +103,11 @@ void controls() {
         if(kind==6)bad.shape={std::size_t(PTRDIFF_MAX),2};
         require(!prepare_regionprops_state(bad,state));require(state.labels.data==original);
     }
-    for(int budget:{1,4}) {
+    for(int budget:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {
         std::vector<std::int16_t> large(4*65537,1);ComponentsView v{large.data(),PixelType::int16,false,false,{4,65537},{65537*2,2}};
         set_num_threads(budget);RegionPropsState prepared;require(prepare_regionprops_state(v,prepared));require(prepared.workers==budget);
         std::vector<std::uint8_t> mask(large.size());require(regionprops_mask_into(prepared,0,mask.data())==large.size());
@@ -114,8 +118,17 @@ void controls() {
 }
 }
 int main(int argc,char** argv) {
-    require(argc==2);require(sizeof(std::intptr_t)==8);
-    for(int budget:{1,4})frozen(argv[1],budget);
-    controls();set_num_threads(1);require(get_num_threads()==1);
-    std::cout<<"regionprops saved constructor records="<<records<<"; controls="<<checks<<"; workers=1,4/default1; fresh and cached masks; ordered coords\n";
+    require(argc==1||argc==2);require(sizeof(std::intptr_t)==8);
+    if(argc==2)for(int budget:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    })frozen(argv[1],budget);
+    controls();
+#ifndef _OPENMP
+    bool refused=false;try{set_num_threads(4);}catch(const std::invalid_argument&){refused=true;}
+    require(refused&&get_num_threads()==1);
+#endif
+    set_num_threads(1);require(get_num_threads()==1);
+    std::cout<<"regionprops saved constructor records="<<records<<"; controls="<<checks<<"; available worker controls/default1; fresh and cached masks; ordered coords\n";
 }

@@ -18,7 +18,7 @@ struct RegionPropsBounds {
 struct RegionPropsState {
     ComponentsView labels;
     std::vector<RegionPropsBounds> regions;
-    int workers=1;
+    int workers=1; // Constructor snapshot metadata; masks read the current budget.
 };
 // One typed entry validation: nonempty2D/3D native-endian eight integer dtypes,
 // no half/bool/float; representable signed byte spans/products/intp coordinates.
@@ -30,7 +30,8 @@ bool prepare_regionprops_state(const ComponentsView&,RegionPropsState&);
 // Frozen state and region index are internal invariants. Output is fresh,
 // disjoint contiguous uint8[product(stop-start)], canonical0/1. Returns CURRENT
 // population, which may differ from immutable initial_population after mutation.
-// Independent mask rows may use captured workers; ordered discovery stays serial.
+// Independent mask rows snapshot the current global budget per call; ordered
+// discovery stays serial. Later global-budget changes affect existing states.
 std::size_t regionprops_mask_into(const RegionPropsState&,std::size_t region,
                                  std::uint8_t* output);
 // Count current caller-owned mask before allocating coords, including cached
