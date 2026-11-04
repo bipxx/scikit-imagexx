@@ -1,0 +1,97 @@
+{
+  "schema": "root-public252-whole-product-admission-v1",
+  "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+  "run": 41882408142,
+  "passed": true,
+  "root_accepted": true,
+  "admitted_at_utc": "2026-11-04T19:21:20.892754+00:00",
+  "profiles": 4,
+  "XML_checks": 914344,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "SDK_checks": 224,
+  "frozen_corpora": 48,
+  "sealed_records_rehashed": 116538,
+  "sealed_bytes_rehashed": 9859015729,
+  "scope": {
+    "image_paths": 252,
+    "metadata_paths": 3,
+    "registered_functions": 255,
+    "wheel_members": 180,
+    "SDK_members": 85,
+    "SDK_families": 28,
+    "SDK_checks_per_profile": 56
+  },
+  "independent_verification": {
+    "aggregate_sha256": "e2c42dd18a4af36bef6ba392a3862a3f7b7eb783aa4ba2df38a759354f0995eb",
+    "raw_metadata_files_authenticated": 32,
+    "profile_seal_passes": 4,
+    "stage_only_passes": 3,
+    "additional_outer_or_seal_hash_passes": 0
+  },
+  "previous_admission": {
+    "path": "coverage/evidence/public247-whole-product-admission.json",
+    "sha256": "e4d386927202874e8d81dad9161003deaf658cea69f9e3c9f94e576fab218b4e",
+    "image_paths": 247
+  },
+  "new_partial_paths": [
+    "draw.circle_perimeter",
+    "draw.disk",
+    "draw.ellipse",
+    "draw.line",
+    "draw.rectangle"
+  ],
+  "raw_reviews": [
+    {
+      "profile": "windows",
+      "path": "build/public-qualification252-v1/windows-raw-review.json",
+      "sha256": "27f29b01987aa2f4a7d9af2818fdd122c977885c7e0ae20274a713e9c73cd353",
+      "qualification_manifest_sha256": "5246971d73c8a4dc5c57413924197919b4792ab7a2d2309d5253c22c3e195638"
+    },
+    {
+      "profile": "modern",
+      "path": "build/public-qualification252-v1/modern-raw-review.json",
+      "sha256": "49f2aeda6c08ab82f0d7153ac42fe274071f5047eda4cbb6987904866f7e93fa",
+      "qualification_manifest_sha256": "aa14139f24a291c02acd17bdd3dadc7b1dde2f3f4f098c561b62f8cfacefd7b6"
+    },
+    {
+      "profile": "minimum",
+      "path": "build/public-qualification252-v1/minimum-raw-review.json",
+      "sha256": "c0e1250c9a56215e044438be23e36d1453cf8878050956c92c8b53705c86818f",
+      "qualification_manifest_sha256": "c846dd9e3b71106a15a346dfb9569a7c9b01708d582be56b9d7396d269f91c36"
+    },
+    {
+      "profile": "debug",
+      "path": "build/public-qualification252-v1/debug-raw-review.json",
+      "sha256": "c8864e18fccfa932cb1083f16629b7981082be412b7f6496b3e767336a15a131",
+      "qualification_manifest_sha256": "c4f25b4db94a2b3bac2cfce58ca9dc7ca39f6b5cd842dcc3fd62b9f9614dbadb"
+    }
+  ],
+  "controlled_stagers": [
+    {
+      "profile": "windows",
+      "path": "build/public-qualification252-v1/windows-stager-review.json",
+      "sha256": "16f7a80772da20e78c85e3ee5beceb76f38ed9f589800417b634429c8607d034",
+      "verified_files": 2057,
+      "status": "authenticated-staged-product; historical staged-unaccepted payload unchanged"
+    },
+    {
+      "profile": "modern",
+      "path": "build/public-qualification252-v1/modern-stager-review.json",
+      "sha256": "3bca53813f23575e7eed56706078e6f071f05fe346d375e53eac91bbcfc3bb71",
+      "verified_files": 2071,
+      "status": "authenticated-staged-product; historical staged-unaccepted payload unchanged"
+    },
+    {
+      "profile": "minimum",
+      "path": "build/public-qualification252-v1/minimum-stager-review.json",
+      "sha256": "235fcdab2fc7be8cfd298ed3e2e01c4f30fd9e6c1368c76a77e7b17d42dc7be6",
+      "verified_files": 2071,
+      "status": "authenticated-staged-product; historical staged-unaccepted payload unchanged"
+    }
+  ],
+  "performance_claim": false,
+  "boundary": "Exact frozen6fae products and declared partial contracts only. No admission of newer253/RegionProperties work, complete high-level SDK/class coverage, or library-wide speed superiority. Failed251 and every rejected experiment remain unchanged.",
+  "waste_review": "Recomputed aggregate counts, source/runtime/core bindings and seven small review chains from retained receipts. No new image calls, tests, builds, downloads, outerZIP or profile-seal rehash. One profile-seal pass and one independent stage-file pass per required scope. Root next: publish unique raw metadata capsule and advance existing accepted-state pointer; then finish genuinely prepared253 while class work continues."
+}

@@ -655,3 +655,7 @@ coverage/contracts/circle-perimeter-benchmark.json -text
 
 coverage/contracts/line-aa-benchmark.json -text
 coverage/contracts/regionprops-state-v1.json -text
+coverage/evidence/current252-qualification-v1.json -text
+coverage/evidence/public252-whole-product-admission.json -text
+benchmarks/line-aa-minimum-initial.json -text
+coverage/contracts/circle-perimeter-unsafe-boundary-v1.json -text

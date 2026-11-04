@@ -1,0 +1,125 @@
+{
+  "schema": "circle-perimeter-unsafe-boundary-v1",
+  "status": "PASS_PROVEN_SHORT_TUPLE_QUARANTINE_FOUR_MODES",
+  "base_commit": "1a52cba58fcd31e21240762b8ad5f4067f7fc5d6",
+  "quarantine": {
+    "carrier": "exact builtin tuple",
+    "lengths": [
+      0,
+      1
+    ]
+  },
+  "exception": [
+    "builtins",
+    "NotImplementedError",
+    "draw.circle_perimeter: tuple shapes shorter than 2 entries are outside the assessed safe boundary"
+  ],
+  "source_provenance": {
+    "pyx_canonical_lf_sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4",
+    "evidence": "boundscheck=False/nonecheck=False/wraparound=False; _coords_inside_image eagerlyreads shape[0]andshape[1] for allradii aftermethodvalidation. Frozenfixtures short=(7,),empty=(). Two profiles have bresenham/shape-short startedwithoutcompletion/terminalprocess exit; no recapture.",
+    "crash_record": "coverage/contracts/circle-perimeter.json:capture_safety",
+    "unsafe_frozen_ids": [
+      "bresenham/shape-short",
+      "bresenham/shape-empty",
+      "andres/shape-short",
+      "andres/shape-empty"
+    ]
+  },
+  "prospective_tests": {
+    "unsafe_shapes": [
+      "()",
+      "(ShapeElement(),)"
+    ],
+    "radii": [
+      -3,
+      0,
+      4
+    ],
+    "methods": [
+      "bresenham",
+      "andres",
+      "np.str_(andres)"
+    ],
+    "known_method_errors": [
+      "unknown",
+      "bytes-bresenham",
+      "None",
+      "list-bresenham"
+    ],
+    "conversion_failures": [
+      "r/c/radius overflow",
+      "r/c/radius float"
+    ],
+    "callback_order": "Oneexisting _index perargumentinorder, thenknownmethodchecks; method callback not replayed; zero shapeelementprotocol/core/worker/provider calls for quarantinedrequests."
+  },
+  "safe_control_ids": [
+    "bresenham/clip",
+    "bresenham/shape-extra",
+    "andres/shape-list",
+    "andres/shape-negative-stride",
+    "bresenham/shape-float",
+    "bytes-method",
+    "none-method",
+    "list-method",
+    "invalid-method"
+  ],
+  "safe_provider_controls": "Originalprovider TRAPPED; frozen saved outputs/errors reconstructed for routecontrol only. Real ownedC++ executes onlyfourfrozen safe nativecases. No originalalgorithm replay.",
+  "safe_source_equivalence": "Alloriginal top-levelconditions/statements unchanged. Additional checks exist ONLYinside already-selected providerfallback blocks. Remove earlyprovider nestedguard +late shorttuplequarantine and wholefunction AST equalsbase. No extraoperation/branch on existing nativehotpaths.",
+  "source_freeze": {
+    "python/skimagexx/_circle_perimeter.py": "a2c1ddd1682dd17ef6ba6db04624c66144530eb54a9477b0e5cf5d2b2f53ed49"
+  },
+  "remaining_open": [
+    "Short/empty lists and ndarrays: no matching capturecrash evidence; notguessedquarantined, unsafe/error/parity domains stayunassessed.",
+    "Tuple subclasses/arbitrary shape/method protocols beyond no-replay quarantine remainunassessed.",
+    "Arithmetic overflow/unsafe radius/allocation/forged orconcurrentstorage domains unchanged."
+  ],
+  "parity_claim": "Explicitunsupported NEI is ours, not inventedoriginalerror or numericalparity. No sourceAPIcoverage increment.",
+  "original_calls": 0,
+  "native_API_credit": 0,
+  "task_closeout": {
+    "result": "Finalfallback-only quarantine passes52checks/profile/mode=208. Exacttuplelength0/1 never reachescore/provider/worker getter; conversion/methodprecedence andsinglecallbacks pass.72savedcontrolcomparisons unchanged; uncertaincarriers stayopen. No nativeAPIcredit.",
+    "waste_and_reuse": "Reused pinnedpyx/frozencrashjournals, existing _index/methodchecks, rawsafe controls andretainedcores; no newcapture/build/environment/timing. Firstcorrectguardcandidate52checks passed1.78s, thenrelocated guardintoexistingproviderfallbackblocks toavoid anynewnativehotpath checks; predecessorcommit/proof retained. No numeric changes ororiginalcalls.",
+    "next_plan_correction": "Root reviews onlyboundary/sourceequivalence andaffected tests; no safealgorithm/performance rerun. Keep uncertainlist/ndarray/protocol domains explicitlyopen. Startordinaryboundaryfixes at existingprovideredges toavoid upfrontnativehotpath checks; sourceAST equivalence beforetests helps catchscope/performance expansion. Keepinitial52check proof separate, notcounted asfinal208.",
+    "receipt_policy": "Paths/labels/closeout finalized beforehandoffhash; latercorrections require versionedreceipts."
+  },
+  "execution": {
+    "actual_XML_tests": 208,
+    "per_mode": {
+      "minimum/normal": {
+        "tests": 52,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "minimum/scalar": {
+        "tests": 52,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "modern/normal": {
+        "tests": 52,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "modern/scalar": {
+        "tests": 52,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "prevented_unsafe_requests": 72,
+    "saved_controls": 72,
+    "saved_real_native_controls": 32,
+    "saved_provider_stub_controls": 32,
+    "saved_known_method_error_controls": 8,
+    "quarantined_requests_core_provider_worker_calls": 0,
+    "new_original_calls": 0,
+    "builds": 0,
+    "environments": 0,
+    "timings": 0,
+    "prior_original_goldens_unchanged": true
+  }
+}
