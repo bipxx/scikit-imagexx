@@ -7,6 +7,41 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "circle-perimeter-aa-reference-v1",
+      "kind": "contract_reference",
+      "owner": "next_family_contract",
+      "branch": "region-circle-aa-reference-v1",
+      "state": "contracted",
+      "apis": [
+        "draw.circle_perimeter_aa"
+      ],
+      "owns": [
+        "tests/circle_perimeter_aa_contract.py",
+        "tests/circle_perimeter_aa_observer.py",
+        "tests/test_circle_perimeter_aa_reference.py",
+        "coverage/contracts/circle-perimeter-aa.json"
+      ],
+      "base_sha": "778441a5",
+      "depends_on": [],
+      "acceptance": "Source-safe prospective/controller intake before once-only original capture; exact words, types, storage, callback order and FP state retained. No native or performance credit. Terminal closeout records result/evidence, waste/reuse and next-plan correction before dependent work.",
+      "current_checkpoint": "Independent root review1e9ca624 passed:96 once-only original observations,41 returns/7 errors per profile; both48-ID refused-original intakes passed before capture. Six final saved checks reuse98 prospective passes. Signed Py_ssize_t squares/translation and unchecked shape indexing audited; all short shapes excluded. No build, new environment or timing; readers released.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "53fdaa285901cffd81520b1a34288a0da253d3dc",
+          "passing_contract_checks": 6,
+          "manifest": {
+            "path": "build/circle-perimeter-aa-reference-v1/handoff.json",
+            "sha256": "f483ea6bee65134488b7d9a2f55293e67be9dc703084ef48b19b9b23116eb899"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Independently review native54e78554 six-mode/source/codegen proof. Frontend may implement frozen typed interface; root shared wiring and genuine product/timing stay later gates."
+      }
+    },
+    {
       "id": "regionprops-point-witness-v1",
       "kind": "contract_reference",
       "owner": "tiny_line_implementation",
@@ -35303,7 +35338,6 @@
     "data.text",
     "data.vortex",
     "draw.bezier_curve",
-    "draw.circle_perimeter_aa",
     "draw.ellipse_perimeter",
     "draw.ellipsoid",
     "draw.ellipsoid_stats",
