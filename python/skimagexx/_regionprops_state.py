@@ -11,10 +11,18 @@ from . import _core
 
 
 class RegionProperties(_Provider):
+    def _current_native_geometry(self):
+        prepared = self.__dict__.get('_native_state')
+        # Public writes do not invalidate upstream caches. Refuse only the
+        # frozen native geometry; original property tails observe current state.
+        if (prepared is not None and self.label is self._native_initial_label
+                and self.slice is self._native_initial_slice):
+            return prepared
+        return None
     @property
     @_cached
     def image(self):
-        prepared = self.__dict__.get('_native_state')
+        prepared = self._current_native_geometry()
         if prepared is None:
             return _Provider.image.fget(self)
         output = np.empty_like(self._label_image[self.slice], dtype=bool, order='K', subok=False)
@@ -34,7 +42,7 @@ class RegionProperties(_Provider):
 
     @property
     def coords(self):
-        prepared = self.__dict__.get('_native_state')
+        prepared = self._current_native_geometry()
         if prepared is None:
             return _Provider.coords.fget(self)
         mask = self.image
@@ -81,5 +89,7 @@ def regionprops(label_image, intensity_image=None, cache=True, *, extra_properti
         region = RegionProperties(slices, label, label_image, None, cache, spacing=spacing, offset=offset_arr)
         region._native_state = prepared
         region._native_index = index
+        region._native_initial_label = region.label
+        region._native_initial_slice = region.slice
         result.append(region)
     return result
