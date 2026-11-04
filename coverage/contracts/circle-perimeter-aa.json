@@ -1,0 +1,1119 @@
+{
+  "schema_version": 1,
+  "api": "draw.circle_perimeter_aa",
+  "signature": "(r, c, radius, shape=None)",
+  "original_python_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+  "original_pyx_sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4",
+  "original_binary_sha256": {
+    "1.24.4": "32673fec979236e2f83543ad289a8128059b96e6562a9ea30114c4e73c17139b",
+    "2.5.4": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4"
+  },
+  "cases": [
+    {
+      "id": "circle-aa/radius--3",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        -3
+      ],
+      "safe_args": [
+        0,
+        0,
+        -3
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius--1",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        -1
+      ],
+      "safe_args": [
+        0,
+        0,
+        -1
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-0",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        0
+      ],
+      "safe_args": [
+        0,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-1",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1
+      ],
+      "safe_args": [
+        0,
+        0,
+        1
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-2",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        2
+      ],
+      "safe_args": [
+        0,
+        0,
+        2
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-3",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        3
+      ],
+      "safe_args": [
+        0,
+        0,
+        3
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-4",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        4
+      ],
+      "safe_args": [
+        0,
+        0,
+        4
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-5",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        5
+      ],
+      "safe_args": [
+        0,
+        0,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-7",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        7
+      ],
+      "safe_args": [
+        0,
+        0,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-8",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        8
+      ],
+      "safe_args": [
+        0,
+        0,
+        8
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-9",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        9
+      ],
+      "safe_args": [
+        0,
+        0,
+        9
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/radius-13",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        13
+      ],
+      "safe_args": [
+        0,
+        0,
+        13
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "circle-aa/radius-17",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        17
+      ],
+      "safe_args": [
+        0,
+        0,
+        17
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "circle-aa/radius-31",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        31
+      ],
+      "safe_args": [
+        0,
+        0,
+        31
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/positive-origin",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        7,
+        4
+      ],
+      "safe_args": [
+        5,
+        7,
+        4
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/negative-origin",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        -4,
+        -7,
+        5
+      ],
+      "safe_args": [
+        -4,
+        -7,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/translated",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        1073741824,
+        -1073741824,
+        7
+      ],
+      "safe_args": [
+        1073741824,
+        -1073741824,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/near-intp-limits",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        9223372036854775743,
+        -9223372036854775744,
+        7
+      ],
+      "safe_args": [
+        9223372036854775743,
+        -9223372036854775744,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "circle-aa/clip",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-tuple",
+      "args": [
+        4,
+        5,
+        5
+      ],
+      "safe_args": [
+        4,
+        5,
+        5
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          9
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/clip-away",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-tuple",
+      "args": [
+        -20,
+        -20,
+        3
+      ],
+      "safe_args": [
+        -20,
+        -20,
+        3
+      ],
+      "kwargs": {
+        "shape": [
+          4,
+          6
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/zero-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-tuple",
+      "args": [
+        0,
+        0,
+        3
+      ],
+      "safe_args": [
+        0,
+        0,
+        3
+      ],
+      "kwargs": {
+        "shape": [
+          0,
+          5
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/negative-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-tuple",
+      "args": [
+        0,
+        0,
+        3
+      ],
+      "safe_args": [
+        0,
+        0,
+        3
+      ],
+      "kwargs": {
+        "shape": [
+          -1,
+          6
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/extra-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-tuple",
+      "args": [
+        3,
+        4,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6,
+          7,
+          8
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/list-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-list",
+      "args": [
+        3,
+        4,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6,
+          7
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/array-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-intp",
+      "args": [
+        4,
+        5,
+        5
+      ],
+      "safe_args": [
+        4,
+        5,
+        5
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          9
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/reverse-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-reverse",
+      "args": [
+        4,
+        5,
+        5
+      ],
+      "safe_args": [
+        4,
+        5,
+        5
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          9
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/float-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-tuple",
+      "args": [
+        3,
+        4,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6.5,
+          7.5
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/uint64-shape",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "shape-uint64",
+      "args": [
+        4,
+        5,
+        5
+      ],
+      "safe_args": [
+        4,
+        5,
+        5
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          9
+        ]
+      },
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "circle-aa/np-int8",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-int8",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-int16",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-int16",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-int32",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-int32",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-int64",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-int64",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-uint8",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-uint8",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-uint16",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-uint16",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-uint32",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-uint32",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-uint64",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-uint64",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/bool",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "bool",
+      "args": [
+        false,
+        true,
+        true
+      ],
+      "safe_args": [
+        0,
+        1,
+        1
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/scalar-array",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "scalar-array",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/provider-first",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "provider-first",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/providers-all",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "providers-all",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/float-first",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "float-first",
+      "args": [
+        1.0,
+        2,
+        5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/np-float-radius",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "np-float-radius",
+      "args": [
+        1,
+        2,
+        5.5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/overflow-first",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "overflow-first",
+      "args": [
+        1267650600228229401496703205376,
+        2,
+        5
+      ],
+      "safe_args": [],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/overflow-last",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "overflow-last",
+      "args": [
+        1,
+        2,
+        1267650600228229401496703205376
+      ],
+      "safe_args": [],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/none-first",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "none-first",
+      "args": [
+        null,
+        2,
+        5
+      ],
+      "safe_args": [],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/missing",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "missing",
+      "args": [
+        1,
+        2
+      ],
+      "safe_args": [],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/unexpected-keyword",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "unexpected-keyword",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": [],
+      "kwargs": {
+        "method": "bresenham"
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/fp-raise",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        5
+      ],
+      "safe_args": [
+        0,
+        0,
+        5
+      ],
+      "kwargs": {},
+      "policy": {
+        "invalid": "raise",
+        "divide": "raise",
+        "over": "raise"
+      },
+      "holdout": false
+    }
+  ],
+  "unassessed": [
+    "All empty/short shape carriers: unchecked shape[0]/shape[1]; never call originals",
+    "Radius squares, negation, recurrence or origin translation outside signed intptr range",
+    "Arbitrary shape indexing/scalar protocols, object/complex/nonfinite shapes and conversions",
+    "Unbounded allocation, concurrent mutation, forged storage and allocation failure",
+    "Floating environment outside ordinary default rounding",
+    "No native, frontend, SIMD, worker or performance completion credit from reference observations"
+  ],
+  "source_freeze": {
+    "tests/circle_perimeter_aa_contract.py": "bad181d760b0fa0dea7930eafb7220abd760ce47a7b13810b6382479fc1d7c5f",
+    "tests/circle_perimeter_aa_observer.py": "36951219b6285fa186ee6c2908084dde231fd66864e05acd6b3c3d323c8d14e3",
+    "tests/test_circle_perimeter_aa_reference.py": "723e39decb3f7eabca5d22ef9fb955c320115eaecc34da3c473df6076ac57ed4",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/test_draw_coordinates_public.py": "90d3bacc0fc2c4a24ca76301bae8da865869f8713768273b4cc42c1d36e6f74e"
+  },
+  "max_output_elements": 4096,
+  "benchmark_cases": [
+    {
+      "id": "circle-aa/tiny",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        2
+      ],
+      "safe_args": [
+        0,
+        0,
+        2
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/zero",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        0
+      ],
+      "safe_args": [
+        0,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/cache",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        32
+      ],
+      "safe_args": [
+        0,
+        0,
+        32
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/long",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        4096
+      ],
+      "safe_args": [
+        0,
+        0,
+        4096
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/clipped",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        128,
+        128,
+        256
+      ],
+      "safe_args": [
+        128,
+        128,
+        256
+      ],
+      "kwargs": {
+        "shape": [
+          256,
+          256
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/clipped-away",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        -8192,
+        -8192,
+        128
+      ],
+      "safe_args": [
+        -8192,
+        -8192,
+        128
+      ],
+      "kwargs": {
+        "shape": [
+          64,
+          64
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/translated",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        1073741824,
+        -1073741824,
+        128
+      ],
+      "safe_args": [
+        1073741824,
+        -1073741824,
+        128
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/negative",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        -3
+      ],
+      "safe_args": [
+        0,
+        0,
+        -3
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    }
+  ],
+  "benchmark_max_output_elements": 1000000,
+  "weight_policy": {
+    "mode": "bitwise-float64-ordinary",
+    "max_ulp": 0,
+    "rtol": 0,
+    "atol": 0,
+    "association": "literal sqrt(radius*radius-c*c), then ceil(stored)-stored, then ordered 1-dceil/dceil",
+    "hardware_floating_environment": "not claimed outside ordinary default rounding"
+  },
+  "source_audit": {
+    "integer_type": "Py_ssize_t signed64 in both retained runtimes; not C-int",
+    "sources": [
+      "_draw.pyx::_circle_perimeter_aa",
+      "_draw.pyx::_coords_inside_image",
+      "draw.py::circle_perimeter_aa"
+    ],
+    "recurrence": "c advances; r nonincreasing; loop c<=radius-1; radicand positive <=radius squared; at most radius-1 iterations",
+    "count": "8 initial plus16 per loop; bound8+16*max(radius-1,0); zero and negative radii still emit8",
+    "order": "initial8 exact reflection order, then two ordered8-entry blocks; preserve duplicates and zero weights; clip stably after origin addition",
+    "shape": "unchecked first2 indices; all short or empty shape carriers excluded without original calls; only known builtin numeric tuple/list and actual NumPy intp/uint64 arrays length>=2 admitted",
+    "arithmetic": "radius<=32 in capture and4096 prospective benchmark; squaredradius, c*c, c+1, -radius and origin+neighbors explicitly signed64 safe",
+    "errors": "Known preentry missing/unknown keyword/None/oversized integer only; floats and controlled providers bounded even if converted or rejected"
+  },
+  "holdout_policy": "IDs marked before observation; no candidate-derived expectations",
+  "original_observations": {},
+  "original_provenance": {},
+  "native_implementation": "pending",
+  "task_closeout": {
+    "status": "prospective-intake-pending",
+    "evidence": "no original calls yet",
+    "waste_and_reuse": "Reuse pinned source, exact two successful runtimes and frozen draw encoder; no new environment or algorithm expectation generator",
+    "next_plan_correction": "Owner reference lane: every controller ID under original-refusal in both profiles before any original call; no unsafe originals"
+  }
+}
