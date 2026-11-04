@@ -7,11 +7,143 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "line-nd-native-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/line-nd-native-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "draw.line_nd"
+      ],
+      "owns": [
+        "include/skimagexx/line_nd.hpp",
+        "src/line_nd.cpp",
+        "tests/test_line_nd_native.cpp",
+        "coverage/contracts/line-nd-native-v1.json"
+      ],
+      "base_sha": "c5e6895faea77bf0b2bd58abe87d6d85b785597d",
+      "depends_on": [
+        "draw-line-nd-reference-v1"
+      ],
+      "acceptance": "Terminal closeout records result/source/evidence, avoidable waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work. No original recapture, full local SDK rebuild or hidden provider credit.",
+      "dependency_requirements": {
+        "draw-line-nd-reference-v1": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "provided_interfaces": {
+        "typed-core-v1": {
+          "state": "frozen",
+          "source_sha": "d00245ed4b653777c8c3bbf6e04c53ab8e116520",
+          "definition": "#pragma once\n#include <array>\n#include <cstddef>\n#include <cstdint>\n\nnamespace skimagexx::detail {\nenum class LineNDType { float16, float32, float64, int8, uint8, int64, uint64 };\nstruct LineNDVector {\n    const void* data;\n    std::size_t size;\n    std::ptrdiff_t stride; // bytes; signed, gapped and unaligned storage allowed\n    LineNDType type;\n};\nstruct LineNDFPEvents {\n    bool divide_underflow = false;\n    bool multiply_underflow = false;\n};\nstruct LineNDPlan {\n    std::size_t dimensions = 0, points = 0, rounded_dimensions = 0;\n    LineNDType precision = LineNDType::float64;\n    bool endpoint = false, integer = true, zero_step = false;\n    std::array<double, 8> start{}, stop{}, delta{}, step{};\n    LineNDFPEvents events{};\n};\n// Typed boundary: equal input dtypes; vectors of length1 broadcast, dimensions\n// 1..8. Caller proves complete native-endian byte spans and ordinary nearest\n// rounding. Read operands once, retaining original-dtype subtraction/abs for\n// count before linspace's floating conversion. Refuse unsupported/nonfinite,\n// unsafe extent/integer-cast domains without changing plan. Scalar form and\n// NumPy conversion/protocol/error/storage semantics remain the Python boundary.\nbool line_nd_prepare(LineNDVector start, LineNDVector stop, bool endpoint,\n                     bool integer, LineNDPlan& plan);\n// Caller owns a complete nonoverlapping output buffer. Steps are BYTES; usual\n// point-major backing uses point_step=D*itemsize, dimension_step=itemsize.\n// Integer outputs are intptr_t; floating outputs match plan.precision (half is\n// uint16 storage). All coordinates are emitted from prepared snapshots.\n// Worker limit is already snapshotted once by caller (global default1). Small\n// outputs remain serial. Independent coordinates permit optional thresholded\n// parallel/SIMD work; no private pools/global worker lookup here. Floating\n// status is reported as stage facts for caller's NumPy FP callback policy;\n// this entry never calls Python and restores the calling floating environment.\nLineNDFPEvents line_nd_into(const LineNDPlan&, void* output,\n                          std::ptrdiff_t point_step, std::ptrdiff_t dimension_step,\n                          int workers);\n}\n",
+          "sha256": "a9867fb742c713f229727736fdcbf6fcb1bc89bedc5e7e18b97ff527d9d1d069"
+        }
+      },
+      "current_checkpoint": "Author00db60ad final six modes180records/585487controls each PASS. Exact238array/6scalar payloads and FP/globalworker controls; cachedbounds unlock Clang width2 arithmetic SIMD. GCC arithmeticSIMD remainsopen. Handoff16d2d2e5 pendingrootindependentreview; header/PICsharedfrontend/SDK.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Review final native source/codegen and retained exact-word proofs once; no native acceptance from headerfreeze or claimed universal SIMD."
+      }
+    },
+    {
+      "id": "line-nd-frontend-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "branch": "line-nd-frontend-v1",
+      "state": "implementing",
+      "apis": [],
+      "target_apis": [
+        "draw.line_nd"
+      ],
+      "owns": [
+        "src/bind_line_nd.cpp",
+        "python/skimagexx/_line_nd.py",
+        "tests/test_line_nd_public.py",
+        "coverage/contracts/line-nd-frontend-v1.json"
+      ],
+      "base_sha": "c5e6895faea77bf0b2bd58abe87d6d85b785597d",
+      "depends_on": [
+        "draw-line-nd-reference-v1",
+        "line-nd-native-v1"
+      ],
+      "acceptance": "Terminal closeout records result/source/evidence, avoidable waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work. No original recapture, full local SDK rebuild or hidden provider credit.",
+      "dependency_requirements": {
+        "draw-line-nd-reference-v1": {
+          "evidence_scope": "contract_reference"
+        },
+        "line-nd-native-v1": {
+          "interface": "typed-core-v1"
+        }
+      },
+      "current_checkpoint": "Binding/frontend component under development against frozen header. Exact shared base/strides/scalars, dtype, FP/protocol/state, globalworker and actual C-return parity required; correct reference prose pin beforefinalfreeze.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Independently review component/public saved-reference proof and declared native/provider frontier before shared registration; no full-library claim."
+      }
+    },
+    {
+      "id": "draw-line-nd-benchmark-v1",
+      "kind": "benchmark_tooling",
+      "owner": "next_family_contract",
+      "branch": "draw-line-nd-benchmark-v1",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "draw.line_nd"
+      ],
+      "owns": [
+        "benchmarks/line_nd.py",
+        "coverage/contracts/line-nd-benchmark.json",
+        "tests/test_line_nd_benchmark.py"
+      ],
+      "base_sha": "c5e6895faea77bf0b2bd58abe87d6d85b785597d",
+      "depends_on": [
+        "draw-line-nd-reference-v1"
+      ],
+      "acceptance": "Terminal closeout records result/source/evidence, avoidable waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work. No original recapture, full local SDK rebuild or hidden provider credit.",
+      "current_checkpoint": "Prospective12cases/168samples/24warmgroups; max32769points/65538elements separately audited, source/refused checks15perruntime plus affected cached-original guard pass. Handoff7505f048 frombac68670 pending independentreview;0original/native/timing calls.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Review prospective benchmark once; actual CLI firstcohorts only after integrated eligible core, followed by genuine worker1 original comparison. Do not call prospective tooling measured."
+      }
+    },
+    {
+      "id": "line-nd-sdk-v1",
+      "kind": "integration",
+      "owner": "next_family_contract",
+      "branch": "line-nd-sdk-v1",
+      "state": "implementing",
+      "apis": [],
+      "target_apis": [
+        "draw.line_nd"
+      ],
+      "owns": [
+        "tests/cmake_consumer/line_nd_consumer.cpp",
+        "coverage/contracts/line-nd-sdk-v1.json"
+      ],
+      "base_sha": "c5e6895faea77bf0b2bd58abe87d6d85b785597d",
+      "depends_on": [
+        "line-nd-native-v1"
+      ],
+      "acceptance": "Terminal closeout records result/source/evidence, avoidable waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work. No original recapture, full local SDK rebuild or hidden provider credit.",
+      "dependency_requirements": {
+        "line-nd-native-v1": {
+          "interface": "typed-core-v1"
+        }
+      },
+      "current_checkpoint": "New installed client and assembled successor reuse reviewed SDK88; onlynewleaf/header/clientTU maybuild. Actual SDK census/proofs pending; preserve knownlocalMSVC/CRT runtime gap, no genuineSDK89 claim.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Review source/actual relocated installed component and exactCMake/install wiring; root integrates shared files after native/frontend gates. No repeat oldSDK build/authentication."
+      }
+    },
+    {
       "id": "draw-line-nd-reference-v1",
       "kind": "contract_reference",
       "owner": "next_family_contract",
       "branch": "draw-line-nd-reference-v1",
-      "state": "contracting",
+      "state": "contracted",
       "apis": [
         "draw.line_nd"
       ],
@@ -24,10 +156,22 @@
       "base_sha": "2afcb19a",
       "depends_on": [],
       "acceptance": "Freeze source-safe bounded public-call domains and test every prospective ID with originals refused before real capture. Stop at prospective handoff for independent review; no implementation, build, timing or native credit. Record result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
-      "current_checkpoint": "Next W1 missing API selected from the existing route; source/rounding and bounded allocation audit plus prospective test-first intake assigned. No real original calls authorized in this packet stage.",
+      "current_checkpoint": "108 originals once-only:54/profile,45returns9errors each. Independent data reviewd119974c and two-prose-only delta12d3162f pass. Corrected matrix7eceab83 atc5e6895f preserves all cases/policies/observations. No native/API/performance credit; do not recapture.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Review prospective source safety/cases and refused-original intake, then authorize only uncalled safe originals on retained profiles; no duplicate environments or broad inventory audit."
+        "action": "Publish corrected reviewed reference only; native/frontend/benchmark/SDK proceed against frozen interface. Reuse all original data; root shared integration comes after their scoped proofs."
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "c5e6895faea77bf0b2bd58abe87d6d85b785597d",
+          "passing_contract_checks": 5,
+          "original_calls": 108,
+          "manifest": {
+            "path": "build/draw-line-nd-reference-v1/handoff-layout-prose-v3.json",
+            "sha256": "6df204f2867ebf37fb725b98a4fbbb374a02645c0300cb06d7ef4d2b90f2f2e9"
+          }
+        }
       }
     },
     {
@@ -515,7 +659,7 @@
       "acceptance": "Compose reviewed private sources without overwriting the current-budget fix. Wire actual exports, defaults, registry, inventory, SDK87 and qualifier; preserve seven-property/37-unassessed, provider and distinct-type limitations. Run the real CLI first cohort once per profile: one original and one native call, stop at the real sampler call before its body, zero timed batches. Run the complete actual setup selection once after shared wiring freezes. Public-native proof and coverage credit require actual execution and independent review. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Observe exact genuine255 run41927959780 at8d630b49 through terminal via A; no retry. Authenticate actual installed product/SDK and only3new isolated worker1 timing groups after preparation. Root combines retained readiness/CLI/setup evidence; separately require supported four-profile qualification and explicit main shipping projection."
+        "action": "Dispatch one genuine successor at18b262f8 only after affected metadata on BOTH retained runtimes pass (closed26 checks). Reuse unchanged8dsetup and all8CLI cohorts; do not repeat unchanged local science/builds. Preserve failed41927959780; only3new timing groups, then separate four-profile qualification and main shipping projection."
       },
       "dependency_requirements": {
         "regionprops-state-native-v1": {
@@ -544,7 +688,7 @@
           }
         }
       },
-      "current_checkpoint": "Final8d630b49 source readiness closed:2329setup+8subtests PASS, both retained-profile plans255/186/88/56, eight actualCLI cohorts (3reused/5new), independent source review26531090. Rootready build/candidate255-shipping-v1/root-ready-v3.json SHA39274a4ae93f0ade8ee6431b9a53254601f1ddba6d490bd2f1797ee8d09333be. No genuine255/SDK/speed or whole qualification credit yet."
+      "current_checkpoint": "Genuine255 run41927959780 at8d failed one cross-Python AST-schema metadata guard (66otherspassed);no timings/preparation/SDK acceptance. Failed artifact retainedonce and public capsule published. Metadata-only successor18b262f8 has13affectedbenchmark/source-closure checksPASS per retained interpreter; production Git projection identical8d. Rootready-v4 SHA76b1cecd61be6a773b8157d80681a4cee534da6380555b52a9235223fbc5f733; no full18bsetup claim."
     },
     {
       "id": "regionprops-state-measurement-v1",
@@ -573,9 +717,9 @@
       "acceptance": "Blocked until exact composed public-native proof, real first cohort and genuine installed-family/SDK validation. Isolated one-worker comparison: 12 frozen cases, 168 samples. Retain slower cases, hardware and source identity. An initial baseline is not an optimization KEEP; platform/provider limits stay explicit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Observe exact genuine255 run41927959780 at8d630b49 through terminal via A; no retry. Authenticate actual installed product/SDK and only3new isolated worker1 timing groups after preparation. Root combines retained readiness/CLI/setup evidence; separately require supported four-profile qualification and explicit main shipping projection."
+        "action": "Dispatch one genuine successor at18b262f8 only after affected metadata on BOTH retained runtimes pass (closed26 checks). Reuse unchanged8dsetup and all8CLI cohorts; do not repeat unchanged local science/builds. Preserve failed41927959780; only3new timing groups, then separate four-profile qualification and main shipping projection."
       },
-      "current_checkpoint": "Final8d630b49 source readiness closed:2329setup+8subtests PASS, both retained-profile plans255/186/88/56, eight actualCLI cohorts (3reused/5new), independent source review26531090. Rootready build/candidate255-shipping-v1/root-ready-v3.json SHA39274a4ae93f0ade8ee6431b9a53254601f1ddba6d490bd2f1797ee8d09333be. No genuine255/SDK/speed or whole qualification credit yet."
+      "current_checkpoint": "Genuine255 run41927959780 at8d failed one cross-Python AST-schema metadata guard (66otherspassed);no timings/preparation/SDK acceptance. Failed artifact retainedonce and public capsule published. Metadata-only successor18b262f8 has13affectedbenchmark/source-closure checksPASS per retained interpreter; production Git projection identical8d. Rootready-v4 SHA76b1cecd61be6a773b8157d80681a4cee534da6380555b52a9235223fbc5f733; no full18bsetup claim."
     },
     {
       "id": "regionprops-state-reference-v1",
@@ -36186,10 +36330,10 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "tiny_line_implementation": [],
-      "qualification251_readiness": [],
-      "next_family_contract": ["draw-line-nd-reference-v1"]
+      "qualification251_readiness": ["line-nd-frontend-v1"],
+      "next_family_contract": ["line-nd-sdk-v1"]
     },
-    "current_three_agent_packets": {"next_family_contract": "draw-line-nd-reference-v1"},
+    "current_three_agent_packets": {"tiny_line_implementation":"line-nd-native-v1","qualification251_readiness":"line-nd-frontend-v1","next_family_contract":"line-nd-sdk-v1"},
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -36535,11 +36679,12 @@
       "candidate255": {
         "run": 41927959780,
         "source": "8d630b4910ed0caef2eb5f4de0d4a3a2aa6cda50",
-        "status": "in_progress",
+        "status": "terminal-failed-Python-AST-schema-metadata",
         "accepted": false,
         "root_ready": "build/candidate255-shipping-v1/root-ready-v3.json",
         "observation": "build/candidate255-genuine-minimum-v1",
-        "scope": "One genuine minimum preparation/three new worker1 timing groups;31 historical groups skipped without new credit; four-profile qualification remains separate."
+        "scope": "One genuine minimum preparation/three new worker1 timing groups;31 historical groups skipped without new credit; four-profile qualification remains separate.",
+        "publication": "coverage/evidence/current255-minimum-preparation-failed-v1.json"
       },
       "qualification": {
         "run": 41882408142,
@@ -36568,7 +36713,7 @@
         "publication": "coverage/evidence/regionprops-state-minimum-preparation-failed-v1.json"
       }
     },
-    "assignment_note": "2026-11-04: root source-ready8d630b49 and one genuine run41927959780 active. A owns exactrun watch/retention, B bounded retainedXML setup-cost diagnosis, C prospective draw.line_nd contract/intake. Eight CLI cohorts and finalsource setup/portability are terminalPASS; do not redispatch them. Shared integration remains root-owned.",
+    "assignment_note": "2026-11-04: failed genuine25541927959780 preserved; corrected18b metadata/source-closure checks13PASS per retained interpreter, nextone genuine successor pending. Aindependentbenchmarkreview after nativehandoff, Bfrontend, CSDK after prospectivebenchmarkhandoff; root shared integration/measurement and independent reviews. Setupdedup162bbe0c merged/pushed and cleanWT retired; blockedtmp retained.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -36581,9 +36726,9 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Observe/retain exact genuine255 run41927959780; no retry/localtiming/source changes.",
-      "qualification251_readiness": "Source/CLI reviews terminalPASS; diagnose setup cost from retained XML/source only, no replay.",
-      "next_family_contract": "Prospective draw.line_nd contract and original-refused intake in separateWT; realcapture gated on review."
+      "tiny_line_implementation": "Nativehandoff00db closed; independently review prospectivebenchmark, no original calls.",
+      "qualification251_readiness": "lineNDbinding/public parity against frozen typedinterface; test-cost increment merged.",
+      "next_family_contract": "lineNDinstalled client usingSDK88; prospectivebenchmark pendingrootreview."
     }
   },
   "parallel_review": {
