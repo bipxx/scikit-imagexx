@@ -1118,7 +1118,7 @@
     "computation": "Source-faithful linspace stageddivision/multiplication/addition andconditionalfloor/nearest-even, strictFP/noFMA. Nativeimplementation waitsoriginalcapture/independentreference; no std::round shortcut.",
     "cpu_workers": "Independentcoordinate/point arithmetic maySIMD; optionalglobalworkers onlyafterequivalence/FPstate proof, default1/no newpool; no accelerationclaimyet",
     "observed_geometry": "Normalize once at Python boundary to finite typed start/stop vectors, original integer subtract/abs dtype semantics, broadcast dimension, rounded_dims=len(start), npoints, endpoint/integer flags, and output dtype. Scalar/nonordinary/protocol/error partitions can remain explicit provider initially; native full API not claimed.",
-    "observed_layout": "Shared owning base plus distinct non-owning tuple rows: usual base points-by-dim C layout with interleaved row stride dim*itemsize; zero-point base[0,dim] stride0; integer one-point astype uses base[dim,1] strides[itemsize,itemsize] while float one-point retains points-by-dim. Preserve dtype metadata drop and all saved structural words.",
+    "observed_layout": "Shared owning base plus distinct non-owning tuple rows: floating vector base shape[points,dim] C-order; integer output astype base shape[dim,points] K/F-compatible (not just one-point), ordinary row stride dim*itemsize. Empty/one-point/dim1 degeneracies use exact saved base/row shape, strides and flags. Preserve dtype metadata drop and all saved structural words.",
     "implementation": "Strict NumPy-source arithmetic stages/no FMA, stepzero underflow divide-then-multiply branch, positive-unit half-tie floor only, nearest-even elsewhere; scalarFalse is tuple of float64 scalars. Store rows/base per observed metadata, not independent owning arrays. Existing validated global-budget convention; no workers/pool needed for tiny boundary; independent fill may SIMD after word/FP proof.",
     "separation": "Native/header design still pending independent reference review; existing proposed prepare/output descriptions are design sketches, not a published ABI."
   },
@@ -31630,7 +31630,7 @@
     "successful_results_equal_across_profiles": 45,
     "error_difference": "Only nonnumeric error module numpy.core._exceptions vs numpy._core._exceptions; exact unnormalized error triples retained.",
     "dtype": "IntegerTrue outputs int64; floating vector outputs f16/f32/f64 preserve typed inputs; ordinary lists float64; metadata input float32 output drops dtype metadata. Scalar integerFalse returns tuple of three numpy.float64 scalars.",
-    "storage": "All successful ndarray outputs writable aligned non-owning row views; rows distinct with shared ultimate base but no cross-row data overlap; empty rows stride0. Nondegenerate rows interleaved stride N*itemsize; integer one-point astype layout uses row-major N-by-1 base.",
+    "storage": "All successful ndarray outputs writable aligned non-owning distinct row views of a shared owning base, no cross-row data overlap or input alias. Floating vector base shape[points,dim] is C-order; integer output astype base shape[dim,points] preserves K/F-compatible layout, including ordinary nondegenerate cases. Actual degenerate/empty base and row strides are saved exactly; empty row strides0.",
     "state": "All input/pointer/FP policy checks passed; two exact underflow callbacks in frozen underflow case, two controlled __array__ callbacks in protocol case; no warnings."
   },
   "capture_integrity": {
