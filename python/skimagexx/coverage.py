@@ -12,7 +12,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -321,8 +321,6 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
-    if api == 'measure.regionprops':
-        return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
     # Drawing labels are SHAPE carriers only; no image pixel dtype is consumed.
@@ -360,11 +358,6 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
-    if api == 'measure.regionprops':
-        import numpy as np
-        # Frozen 2D constructor case; carrier dtype is used for actual labels.
-        labels = np.array([[0,3,3,0],[1,0,3,0],[1,1,0,0]], dtype=image.dtype)
-        return (labels,), {'cache': True}
     if api == 'draw.line_aa':
         rows,columns=image.shape
         return (0,0,rows-1,columns-1),{}
@@ -781,59 +774,8 @@ def block_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
-def regionprops_default_error(image, actual, expected):
-    """Exact seven-property state/storage check for the tiny default labels."""
-    import numpy as np
-    from ._regionprops_state import RegionProperties as backend
-    from skimage.measure._regionprops import RegionProperties as original
-    assert backend is not original and issubclass(backend, original)
-    assert (backend.__module__, backend.__qualname__) == ('skimagexx._regionprops_state', 'RegionProperties')
-    assert (original.__module__, original.__qualname__) == ('skimage.measure._regionprops', 'RegionProperties')
-    assert type(actual) is list and type(expected) is list and len(actual) == len(expected) == 2
-    assert all(type(region) is backend for region in actual)
-    assert all(type(region) is original for region in expected)
-
-    def snapshot(regions):
-        arrays = []
-
-        def value(item):
-            if isinstance(item, np.ndarray):
-                arrays.append(item)
-                base = item.base
-                return ('array', type(item).__name__, item.dtype.str, item.dtype.descr, item.dtype.metadata,
-                        item.shape, item.strides, bool(item.flags.owndata), bool(item.flags.writeable),
-                        bool(item.flags.aligned), bool(item.flags.c_contiguous), bool(item.flags.f_contiguous),
-                        type(base).__name__, getattr(base, 'shape', None), getattr(base, 'strides', None),
-                        item.tobytes(order='C'))
-            if isinstance(item, np.generic):
-                return ('scalar', type(item).__name__, item.dtype.str, item.tobytes())
-            if isinstance(item, slice):
-                return ('slice', item.start, item.stop, item.step)
-            if type(item) in (tuple, list):
-                return (type(item).__name__, tuple(value(v) for v in item))
-            assert item is None or type(item) in (int, float, bool, str)
-            return (type(item).__name__, item)
-
-        rows = []
-        for region in regions:
-            properties = tuple(getattr(region, name) for name in
-                               ('label', 'slice', 'bbox', 'image', 'coords', 'num_pixels', 'area'))
-            repeated = (region.image, region.coords)
-            rows.append((value(properties), value(repeated)))
-        aliases = [(a is b, bool(np.shares_memory(a, b)), a.base is b.base)
-                   for a in arrays for b in arrays]
-        input_aliases = [(a is image, bool(np.shares_memory(a, image))) for a in arrays]
-        return rows, aliases, input_aliases
-
-    assert snapshot(actual) == snapshot(expected), 'RegionProperties default property/storage mismatch'
-    return 0.0
-
-
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
-    if api == 'measure.regionprops':
-        regionprops_default_error(image, actual, expected)
-        return
     if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
         draw_default_error(api,image,actual,expected)
         return
@@ -904,8 +846,6 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
-    if api == 'measure.regionprops':
-        raise ValueError('RegionProperties uses exact property/storage checks; call assert_default_parity')
     if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
         raise ValueError('Drawing uses exact coordinate/weight words and storage; call assert_default_parity')
     if api == 'measure.subdivide_polygon':

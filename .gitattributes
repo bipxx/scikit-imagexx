@@ -660,13 +660,7 @@ coverage/evidence/public252-whole-product-admission.json -text
 benchmarks/line-aa-minimum-initial.json -text
 coverage/contracts/circle-perimeter-unsafe-boundary-v1.json -text
 coverage/contracts/regionprops-point-witness-v1.json -text
-<<<<<<< HEAD
 coverage/contracts/circle-perimeter-aa.json -text
 coverage/contracts/combine-stains-half.json -text
 coverage/evidence/regionprops-state-minimum-preparation-failed-v1.json -text
-=======
-coverage/contracts/regionprops-state-native-v1.json -text
-coverage/contracts/regionprops-state-frontend-v1.json -text
-coverage/contracts/regionprops-state-benchmark.json -text
->>>>>>> 3b99d1e168b767c794be0ad8af76f278fa804cfd
 coverage/contracts/regionprops-public-mutation.json -text

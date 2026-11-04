@@ -15,7 +15,7 @@ import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error
-from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error, regionprops_default_error
+from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error
 
 
 def select_apis(apis, modules=None, patterns=None):
@@ -278,8 +278,6 @@ def main():
                     assert xx.get_num_threads() == threads
                     if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
                         error = draw_default_error(api,data,actual,expected)
-                    elif api == 'measure.regionprops':
-                        error = regionprops_default_error(call_args[0], actual, expected)
                     elif api == 'measure.subdivide_polygon':
                         error = subdivide_polygon_default_error(data,actual,expected)
                     elif api == 'measure.approximate_polygon':

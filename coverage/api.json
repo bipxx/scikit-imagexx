@@ -5800,20 +5800,11 @@
       "api": "measure.regionprops",
       "kind": "callable",
       "signature": "(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)",
-      "implementation": "native-partial",
-      "native_default_case_dtypes": [
-        "int8",
-        "uint8",
-        "int16",
-        "uint16",
-        "int32",
-        "uint32",
-        "int64",
-        "uint64"
-      ],
-      "execution_kind": "native",
-      "parity_test": "tests/test_regionprops_state_public.py::test_regionprops_state_saved_rows_exact_except_declared_distinct_class",
-      "benchmark": "benchmarks/regionprops_state.py"
+      "implementation": "upstream-only",
+      "native_default_case_dtypes": [],
+      "execution_kind": "upstream",
+      "parity_test": null,
+      "benchmark": null
     },
     {
       "api": "measure.regionprops_table",
