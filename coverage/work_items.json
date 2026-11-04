@@ -7,6 +7,166 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "circle-perimeter-aa-native-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "branch": "region-circle-aa-native-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "draw.circle_perimeter_aa"
+      ],
+      "owns": [
+        "include/skimagexx/circle_perimeter_aa.hpp",
+        "src/circle_perimeter_aa.cpp",
+        "tests/test_circle_perimeter_aa_native.cpp",
+        "coverage/contracts/circle-perimeter-aa-native-v1.json"
+      ],
+      "base_sha": "53fdaa285901cffd81520b1a34288a0da253d3dc",
+      "depends_on": [
+        "circle-perimeter-aa-reference-v1"
+      ],
+      "dependency_requirements": {
+        "circle-perimeter-aa-reference-v1": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "acceptance": "Exact ordered geometry/weights; six retained native modes and independent source/codegen review. Serial recurrence, applicable SSE2 independent stores only; no public/performance credit. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "54e785542d29e2f2ba9af576049738c87faf9df1",
+          "native_contract_checks": 1757834,
+          "native_pending": 0,
+          "manifest": {
+            "path": "build/worktrees/region-circle-aa-native-v1/build/native-v1/handoff.json",
+            "sha256": "cc047d95fb514ca1977725c673c24e3bab7f7b43624722a219279ab478d1837e"
+          }
+        }
+      },
+      "current_checkpoint": "Independent native reviewe2cf9101 PASS:91 proofs;800 saved records/2400 layouts,0ULP. No replay or new original calls. Frontend/SDK/genuine product gates separate.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Compose reviewed frontend/SDK when ready; do not expose a header without its linked leaf."
+      }
+    },
+    {
+      "id": "circle-perimeter-aa-frontend-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "region-circle-aa-frontend-v1",
+      "state": "implementing",
+      "apis": [],
+      "target_apis": [
+        "draw.circle_perimeter_aa"
+      ],
+      "owns": [
+        "src/bind_circle_perimeter_aa.cpp",
+        "python/skimagexx/_circle_perimeter_aa.py",
+        "tests/test_circle_perimeter_aa_public.py",
+        "coverage/contracts/circle-perimeter-aa-frontend-v1.json"
+      ],
+      "base_sha": "54e785542d29e2f2ba9af576049738c87faf9df1",
+      "depends_on": [
+        "circle-perimeter-aa-native-v1"
+      ],
+      "dependency_requirements": {
+        "circle-perimeter-aa-native-v1": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "acceptance": "Saved48 rows, callback/error order and owning coordinate/weight arrays. All41 returns use native geometry, float-shape NumPy clip tail explicit. Unknown protocol/buffer domains remain gaps; no unsafe original calls. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
+      "current_checkpoint": "Author reports444 useful PASS,384 saved comparisons/328 native witnesses/56 errors across four modes; final immutable handoff and independent review pending. Initial bytearray-owner holdout failure retained; corrected intended unaligned test uses ndarray owner. External-buffer shape compatibility remains a real open gap.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Review final author receipt/source/retained proofs once; no numerical replay."
+      }
+    },
+    {
+      "id": "circle-perimeter-aa-sdk-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "branch": "integrate/circle-aa-sdk-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "draw.circle_perimeter_aa"
+      ],
+      "owns": [
+        "CMakeLists.txt",
+        "tests/cmake_consumer/draw_coordinates_consumer.cpp"
+      ],
+      "base_sha": "484e6dd44367316444f757576eea36246e054a48",
+      "depends_on": [
+        "circle-perimeter-aa-native-v1"
+      ],
+      "dependency_requirements": {
+        "circle-perimeter-aa-native-v1": {
+          "evidence_scope": "native_private"
+        }
+      },
+      "acceptance": "Existing drawing SDK family only; strict-FP leaf wiring and scoped downstream controls. Component assembledSDK88 is not a genuine product; source/receipt independent review required. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
+      "current_checkpoint": {
+        "source": "da8930177ee8cfb4f70d33095c7f5ce870574583",
+        "handoff": "build/circle-perimeter-aa-sdk-integration-v1/handoff.json",
+        "sha256": "f5d39c6acb82ac64823ae25c4561e82c0d84d6371e9abc6b7f5cd3343cdd4ff7",
+        "scope": "437 controls per normal/scalar mode, workers1/4/default1; reused leaf, changed client compilation only. Independent review pending."
+      },
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Independently review two-file SDK delta/proofs, then compose with frontend; no claimed genuineSDK88."
+      }
+    },
+    {
+      "id": "combine-stains-partial-route-audit-v1",
+      "kind": "tooling",
+      "owner": "next_family_contract",
+      "branch": "region-combine-stains-contract-audit-v1",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "color.combine_stains"
+      ],
+      "owns": [
+        "tools/generate_api_implementation_paths.py",
+        "coverage/API_IMPLEMENTATION_PATHS.json",
+        "coverage/API_IMPLEMENTATION_PATHS.md"
+      ],
+      "base_sha": "c63ce4882e5c98f30e4f96b874a98e87794346d6",
+      "depends_on": [],
+      "acceptance": "Source-backed one-route correction;476 other routes/class appendix unchanged. Do not reimplement already-covered3xK matrix core. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
+      "current_checkpoint": "Root review4c2b52ab passed;98ae588 merged. Current3input/Koutput core and tests already coverK0/1/2/3/7/17. Next actual gap finite float16 boundary promotion into existingfloat32 kernel; no new original/build/timing.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Freeze bounded half-input reference cases and refused-original controller intake before capture."
+      }
+    },
+    {
+      "id": "combine-stains-half-reference-v1",
+      "kind": "contract_reference",
+      "owner": "next_family_contract",
+      "branch": "combine-stains-half-reference-v1",
+      "state": "contracting",
+      "apis": [
+        "color.combine_stains"
+      ],
+      "owns": [
+        "tests/combine_stains_half_contract.py",
+        "tests/combine_stains_half_observer.py",
+        "tests/test_combine_stains_half_reference.py",
+        "coverage/contracts/combine-stains-half.json"
+      ],
+      "base_sha": "98ae588027f7645ef70a93772e941983cb0e4b8e",
+      "depends_on": [
+        "combine-stains-partial-route-audit-v1"
+      ],
+      "acceptance": "Finite native-endian float16 plain arrays/three input channels; prospective12 bounded cases formatrix/axis/layout/metadata domains, exact observed dtype/storage/state and existing numerical policy. Every original ID must pass refused-original controller intake first; capture safe observations once per retained runtime. No other stainAPI change. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Freeze and validate actual controller before safe once-only originals; independent reference review precedes boundary normalization."
+      }
+    },
+    {
       "id": "circle-perimeter-aa-reference-v1",
       "kind": "contract_reference",
       "owner": "next_family_contract",
@@ -21,7 +181,7 @@
         "tests/test_circle_perimeter_aa_reference.py",
         "coverage/contracts/circle-perimeter-aa.json"
       ],
-      "base_sha": "778441a5",
+      "base_sha": "778441a546a09989bc535aa49d7c0c094e0f66da",
       "depends_on": [],
       "acceptance": "Source-safe prospective/controller intake before once-only original capture; exact words, types, storage, callback order and FP state retained. No native or performance credit. Terminal closeout records result/evidence, waste/reuse and next-plan correction before dependent work.",
       "current_checkpoint": "Independent root review1e9ca624 passed:96 once-only original observations,41 returns/7 errors per profile; both48-ID refused-original intakes passed before capture. Six final saved checks reuse98 prospective passes. Signed Py_ssize_t squares/translation and unchecked shape indexing audited; all short shapes excluded. No build, new environment or timing; readers released.",
@@ -264,7 +424,7 @@
       "kind": "implementation",
       "owner": "integrator",
       "branch": "integrate/regionprops-state-v1",
-      "state": "queued",
+      "state": "preparing",
       "apis": [
         "measure.regionprops"
       ],
@@ -286,7 +446,7 @@
       "acceptance": "Compose reviewed private sources without overwriting the current-budget fix. Wire actual exports, defaults, registry, inventory, SDK87 and qualifier; preserve seven-property/37-unassessed, provider and distinct-type limitations. Run the real CLI first cohort once per profile: one original and one native call, stop at the real sampler call before its body, zero timed batches. Run the complete actual setup selection once after shared wiring freezes. Public-native proof and coverage credit require actual execution and independent review. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Independently review the point supplement, compose reviewed packets, then freeze exact changed selectors from the actual qualifier. Windows runtime and mask SIMD remain separate tracked gaps."
+        "action": "Observe known run41910010504 to terminal; retain exact artifact once, independently validate genuine installed family/SDK87 and12-case original timing before shipping admission. No redispatch."
       },
       "dependency_requirements": {
         "regionprops-state-native-v1": {
@@ -302,14 +462,27 @@
           "evidence_scope": "tooling",
           "source_sha": "23fdaa7bcefed55f28006ab80e82642b860e0175"
         }
-      }
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "484e6dd44367316444f757576eea36246e054a48",
+          "native_contract_checks": 156,
+          "native_pending": 0,
+          "manifest": {
+            "path": "build/regionprops-state-shipping-v1/root-ready-v2.json",
+            "sha256": "2e9f0e820653a218afd4705c8c60ab33be95e8b0ae2f2221b55939b640d3ad57"
+          }
+        }
+      },
+      "current_checkpoint": "156 actual-export defaults plus dedicated/generic real CLI first cohorts pass in both retained profiles. Complete setup2264 passing nodes reused;37 stale metadata failures+oldSDK86 negative rerun38PASS. Candidate484 only two test files differs from tested7d production. Hosted genuine preparation/12-case initial timing run41910010504 running, not accepted. Explicit7/37/provider/type/Windows gaps remain."
     },
     {
       "id": "regionprops-state-measurement-v1",
       "kind": "measurement",
       "owner": "integrator",
       "branch": "integrate/regionprops-state-v1",
-      "state": "queued",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "measure.regionprops"
@@ -331,8 +504,9 @@
       "acceptance": "Blocked until exact composed public-native proof, real first cohort and genuine installed-family/SDK validation. Isolated one-worker comparison: 12 frozen cases, 168 samples. Retain slower cases, hardware and source identity. An initial baseline is not an optimization KEEP; platform/provider limits stay explicit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Do not dispatch timing from private component evidence. Publish the composed public-native proof, then genuinely prepare the exact candidate before isolated timing."
-      }
+        "action": "Read the existing run; raw artifact retention/admission after terminal. Preserve all losses and keep baseline252 separate."
+      },
+      "current_checkpoint": "One authorized initial baseline is in hosted run41910010504, exact484e6dd4. Await terminal raw168samples/source/core/hardware and independent product/performance review. No optimization KEEP or whole-product qualification credit."
     },
     {
       "id": "regionprops-state-reference-v1",
@@ -35255,7 +35429,6 @@
     }
   ],
   "unassigned_inventoried_apis": [
-    "color.combine_stains",
     "color.convert_colorspace",
     "color.deltaE_cie76",
     "color.deltaE_ciede2000",
@@ -35948,11 +36121,18 @@
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
-      "tiny_line_implementation": [],
+      "tiny_line_implementation": [
+        "circle-perimeter-aa-frontend-v1"
+      ],
       "qualification251_readiness": [],
-      "next_family_contract": []
+      "next_family_contract": [
+        "combine-stains-half-reference-v1"
+      ]
     },
-    "current_three_agent_packets": {},
+    "current_three_agent_packets": {
+      "tiny_line_implementation": "circle-perimeter-aa-frontend-v1",
+      "next_family_contract": "combine-stains-half-reference-v1"
+    },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -36311,9 +36491,17 @@
         "SDK_members": 86,
         "performance_report": "benchmarks/line-aa-minimum-initial.json",
         "whole_product_qualified": false
+      },
+      "regionprops_state": {
+        "run": 41910010504,
+        "source": "484e6dd44367316444f757576eea36246e054a48",
+        "status": "in_progress",
+        "accepted": false,
+        "scope": "Genuine minimum preparation then12-case initial one-worker comparison; main253/qualified252 unchanged.",
+        "readiness": "build/regionprops-state-shipping-v1/root-ready-v2.json"
       }
     },
-    "assignment_note": "Historical maps are provenance only. Current source253/qualified252; circle guard merged at eaa9d24c. Root next composes reviewed RegionProperties state/frontend/SDK87/benchmark. The three-worker staged ownership is in EXECUTION_PLAN.md. Bind exclusive files, prerequisites and retained receipts before dispatch; complete waste closeout before dependent work.",
+    "assignment_note": "Live lanes: A circle-AA frontend; B closed native review/SDK component and next independent frontend review; C finite-half stain reference. Root monitors existing RegionProps run41910010504 and owns shared integration/admission. Historical maps are provenance only. No unchanged capture/build/timing redispatch; update waste/next gate before dependent work.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -36326,9 +36514,9 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Planning audit complete; next review root-composed public exports and CLI. Point-witness author must not independently review that packet. Current-budget ea28/d0b review passed at 8a9b092; reuse it.",
-      "qualification251_readiness": "Planning/queue audit; CPU metadata successor23fdaa7 reviewed at7244322. Next address actual MSVC CRT link/runtime and mask-SIMD gaps separately from Linux success.",
-      "next_family_contract": "Planning/waste audit complete; next independently review point witness c06fed9, then composed RegionProperties source/launcher readiness. CPU-delta and circle reviews are closed; no redispatch."
+      "tiny_line_implementation": "Circle-AA frontend author; independent review rotates to B after immutable handoff. No source edits in running RegionProps candidate.",
+      "qualification251_readiness": "Circle-AA native review closed; SDK88 component handoff ready for root independent review. Next independent frontend review after A seals receipt.",
+      "next_family_contract": "Finite half-input combine_stains reference producer; preserve24 once-only captures and actual profile-dependent promotion. No accepted matrix core rewrite."
     }
   },
   "parallel_review": {
