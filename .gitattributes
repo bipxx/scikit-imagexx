@@ -644,3 +644,4 @@ benchmarks/draw-coordinates-minimum-initial.json -text
 coverage/contracts/circle-perimeter.json -text
 coverage/contracts/regionprops-runtime-surface.json -text
 coverage/contracts/circle-perimeter-uint64-shape-witness.json -text
+coverage/contracts/circle-perimeter-benchmark.json -text

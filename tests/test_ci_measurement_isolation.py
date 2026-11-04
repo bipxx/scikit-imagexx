@@ -507,7 +507,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 29 and all(condition in step for step in timed)
+    assert len(timed) == 30 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -523,8 +523,8 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 29 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/subdivide_polygon.py ' in timed[-1]
+    assert len(timed) == 30 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/circle_perimeter.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -740,6 +740,10 @@ def test_historical_subdivision_harness_is_available_for_actual_inverse_guard_jo
 
 
 def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_smoke():
+    workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+    scalar_circle = workflow.split('      - name: Circle perimeter contracts with SIMD disabled', 1)[1].split('      - name:', 1)[0]
+    assert 'tests/test_circle_perimeter_public.py' in scalar_circle
+    assert "SKIMAGEXX_DISABLE_SIMD: '1'" in scalar_circle
     preparation=jobs((ROOT/'.github/workflows/ci.yml').read_text())['numpy-minimum']
     for mode in ('normal','scalar'):
         command=('python -m pytest -q tests/test_draw_coordinates_public.py '
@@ -762,6 +766,6 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
     assert "str(ROOT / 'tests/test_api.py')" in feature_source
     contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
-    assert contract['scope']=='current251'
-    assert len(contract['image_paths'])==251 and len(contract['metadata_paths'])==3
-    assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py'}<=set(contract['required_selectors'])
+    assert contract['scope']=='current252'
+    assert len(contract['image_paths'])==252 and len(contract['metadata_paths'])==3
+    assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py'}<=set(contract['required_selectors'])

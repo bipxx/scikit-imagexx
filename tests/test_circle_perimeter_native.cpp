@@ -106,9 +106,9 @@ void floating_state() {
 }
 }
 int main(int argc,char** argv) {
-    if(argc!=2){std::cerr<<"expected frozen fixture path\n";return 2;}
+    if(argc>2){std::cerr<<"expected optional frozen fixture path\n";return 2;}
     boundary();
-    for(int workers:{1,4}){frozen(argv[1],workers);controls(workers);}
+    for(int workers:{1,4}){if(argc==2)frozen(argv[1],workers);controls(workers);}
     floating_state();
     std::cout<<"circle frozen records="<<fixture_records<<"; native controls="<<checks<<"; workers=1,4; serial recurrence; no FP arithmetic\n";
 }

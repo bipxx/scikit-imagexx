@@ -6,7 +6,7 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
@@ -324,7 +324,7 @@ def native_dtypes(api):
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
     # Drawing labels are SHAPE carriers only; no image pixel dtype is consumed.
-    if api in DRAW_COORDINATE_FUNCTIONS:return ('uint8','float32','float64')
+    if (api in DRAW_COORDINATE_FUNCTIONS or api == 'draw.circle_perimeter'):return ('uint8','float32','float64')
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
     if api in ('measure.approximate_polygon','measure.subdivide_polygon'):return ('float64',)
@@ -358,6 +358,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'draw.circle_perimeter':
+        rows,columns=image.shape
+        return (rows//2,columns//2,max(0,min(rows,columns)//3)),{'shape':image.shape}
     if api in DRAW_COORDINATE_FUNCTIONS:
         # Scalar geometry derived only from image.shape, not pixels or dtype.
         rows,columns=image.shape
@@ -535,7 +538,7 @@ def draw_default_error(api,image,actual,expected):
     calls retain the existing generic dtype suites' recursive output checks.
     """
     import numpy as np
-    assert api in DRAW_COORDINATE_FUNCTIONS
+    assert (api in DRAW_COORDINATE_FUNCTIONS or api == 'draw.circle_perimeter')
     if isinstance(expected,np.ndarray):
         pairs=[(actual,expected)]
     else:
@@ -766,7 +769,7 @@ def block_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
-    if api in DRAW_COORDINATE_FUNCTIONS:
+    if (api in DRAW_COORDINATE_FUNCTIONS or api == 'draw.circle_perimeter'):
         draw_default_error(api,image,actual,expected)
         return
     if api == 'measure.subdivide_polygon':
@@ -836,7 +839,7 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
-    if api in DRAW_COORDINATE_FUNCTIONS:
+    if (api in DRAW_COORDINATE_FUNCTIONS or api == 'draw.circle_perimeter'):
         raise ValueError('Drawing uses exact intp words and storage; call assert_default_parity')
     if api == 'measure.subdivide_polygon':
         raise ValueError('Subdivide polygon uses exact float64 words and fresh layout; call assert_default_parity')

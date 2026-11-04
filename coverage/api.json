@@ -1022,11 +1022,16 @@
       "api": "draw.circle_perimeter",
       "kind": "callable",
       "signature": "(r, c, radius, method='bresenham', shape=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract",
+      "benchmark": "benchmarks/circle_perimeter.py",
+      "default_input_kind": "coordinate-shape-only; dtype labels are descriptor carriers, not pixel or coordinate-argument dtype coverage"
     },
     {
       "api": "draw.circle_perimeter_aa",
