@@ -13,6 +13,8 @@
 
 - At a task transition, reconcile actual agent/job status and evidence before dispatch. Use `followup_task` to resume a completed agent; a queued message alone does not start work. Retire terminal dispatch instructions when updating the next gate.
 
+- Finalize receipt paths, labels and closeout before handing off a hash. Handed-off bytes are immutable; corrections require a versioned successor with the predecessor retained. Review only the affected metadata delta and do not replay unchanged scientific evidence.
+
 # Engineering judgment and simplicity
 
 - Match defensive complexity to a concrete risk. Address ordinary correctness issues and realistic concurrency or security risks within the agreed scope. Before adding substantial machinery for a speculative or very unlikely edge case, explain the failure scenario, evidence for its likelihood and impact, simpler alternatives, and estimated code and maintenance cost; obtain the user's approval before expanding scope. Do not use this rule to omit necessary input validation, standard security controls, or requirements already authorized.
