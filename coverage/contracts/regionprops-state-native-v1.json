@@ -1,0 +1,33 @@
+{
+  "schema": "regionprops-state-native-v1",
+  "status": "FROZEN_BEFORE_BOUNDED_COMPILATION",
+  "reference_commit": "2f076368987ca4247e06109d23f459dbad98079a",
+  "reference_sha256": "63eaaf5a11a154ed0748a6a8df13ddb073777f67a7ae6929fd78588e5a24cfdb",
+  "interface": "ComponentsView borrowed immutable metadata/original retained pointer; sorted uint64 positive IDs with frozen constructor bbox/initial_population. Fresh mask returns current population. Cached/fresh caller mask population controls coordinate capacity. Absolute integer C-order coordinates only.",
+  "worker_policy": "prepare snapshots existing process-wide get_num_threads once; ordered constructor/coords serial, independent mask rows use existing partition aboveparallel_min, SIMD independent contiguous-last-axis spans. No private worker setting.",
+  "admission": "Once at typedprepare: nonempty2D/3D, eight native-endian integer dtypes, addressable actualowner storage supplied bycaller, signedbyte-span/product/coord-byte-count representability. Refusal returns false untouched; never calls numericalprovider.",
+  "covered_saved_constructor_cases_per_profile": 22,
+  "saved_profiles": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "native_comparison": "Saved label/bbox/initialnum_pixels/image and coords; remove saved offset exactly for unshifted integercoords. Cache-on inputmutation fresh-mask expectation explicitly reused from identical-input cache-off saved row. Cached mask retained independently; caller mutation of mask changes population/capacity.",
+  "frontend_gates": [
+    "7saved constructor errors including empty shapes/dtypes/spacing/offset and exact validation/error order",
+    "NumPy-owned array layouts/bases/scalar types and original input/storage lifetime",
+    "cache on-off/repeatreads/aliasidentity and public input/image mutations",
+    "coords offset dtype/promotion and finite ordinary spacing area types",
+    "getitem sixaliases/warnings/iteration-name projection/publiclist/returnedobject type",
+    "All unassessed properties, intensity/extra_properties, lifecycle/descriptors/privatecache remain outside nativepublicparity"
+  ],
+  "uncovered_original_cases": "7constructorerror cases perprofile are frontend/refusal gates; geometry nativecovers all22successful return cases including0regions. Cache/scalar/alias/FP state metadata remains savedreference only, notnativeclassparity.",
+  "native_or_public_api_credit": 0,
+  "new_original_calls": 0,
+  "full_SDK_builds": 0,
+  "timings": 0,
+  "source_freeze": {
+    "include/skimagexx/regionprops_state.hpp": "aefe1c1203b3450e0200c38b74e8d4709fee3fe2d9bf654bfefa0c067e862919",
+    "src/regionprops_state.cpp": "7ce79583c098da81f279d0aaaa6571733456829190059ee162d5c8215e75582d",
+    "tests/test_regionprops_state_native.cpp": "03c31731c2302f7d4b54c2955ca9ddb9c1ca8c58f742d2eb0fc7be2b07f46bea"
+  }
+}
