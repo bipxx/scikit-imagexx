@@ -23,16 +23,173 @@
     "formula": "storedfloat64 sqrt(radius*radius-c*c), ceil(stored)-stored, then1-dceil/dceil",
     "rounding": "ordinary default rounding only"
   },
-  "status": "interface-frozen-before-native-execution",
-  "native_proof": {},
+  "status": "PASS_PRIVATE_NATIVE_WORD_PARITY_SIX_MODES_NO_PUBLIC_OR_SPEED_CREDIT",
+  "native_proof": {
+    "six_modes": {
+      "portable": {
+        "normal": {
+          "saved_records": 80,
+          "controls": 175807,
+          "word_hash": "260049488990421059",
+          "actual_avx2": 0,
+          "stdout_sha256": "e9ab7d70be12d0b61fe928bd716b3de89b615ece1f432dae9e92bb7e60d473e8",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "scalar": {
+          "saved_records": 80,
+          "controls": 175807,
+          "word_hash": "260049488990421059",
+          "actual_avx2": 0,
+          "stdout_sha256": "e9ab7d70be12d0b61fe928bd716b3de89b615ece1f432dae9e92bb7e60d473e8",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "normal": {
+        "normal": {
+          "saved_records": 160,
+          "controls": 351555,
+          "word_hash": "16981048511602829571",
+          "actual_avx2": 1,
+          "stdout_sha256": "0b45f72f47d8725dedc0bda068eefc115dc167aa098917bb3e6de27a1cd3f0bb",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "scalar": {
+          "saved_records": 160,
+          "controls": 351555,
+          "word_hash": "16981048511602829571",
+          "actual_avx2": 0,
+          "stdout_sha256": "ddea6fafbdf43c9544265705249bdf81291f871246b1ab374d9c3d23c449ed1c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "sanitize": {
+        "normal": {
+          "saved_records": 160,
+          "controls": 351555,
+          "word_hash": "16981048511602829571",
+          "actual_avx2": 1,
+          "stdout_sha256": "0b45f72f47d8725dedc0bda068eefc115dc167aa098917bb3e6de27a1cd3f0bb",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "scalar": {
+          "saved_records": 160,
+          "controls": 351555,
+          "word_hash": "16981048511602829571",
+          "actual_avx2": 0,
+          "stdout_sha256": "ddea6fafbdf43c9544265705249bdf81291f871246b1ab374d9c3d23c449ed1c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "total_controls": 1757834,
+    "total_saved_records": 800,
+    "layouts_per_saved_record": 3,
+    "exact_saved_layout_comparisons": 2400,
+    "stride_layouts": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        2,
+        3,
+        2
+      ],
+      [
+        -2,
+        -3,
+        -2
+      ]
+    ],
+    "typed_reference_ids": 40,
+    "reference_profiles": 2,
+    "independent_controls": "Stable clipping vs uncut output, source-initial8 includingnegative/zero, finite[0,1]weights, signedstride sentinels, empty-nulloutput, unchangedpreparation refusals, integerlimits, prospectiveR4096 admission, worker1/4/defaultrestore; portablebudget4 refusal",
+    "scalar_scope": "Existing runtime dispatch trulydisabled beforeprocess(actualhas_avx2=0). Newleaf has same portable baseline compilerSIMD in both dispatchmodes; no customAVX2 backend claimed",
+    "cpp_inputs_sha256": {
+      "include/skimagexx/circle_perimeter_aa.hpp": "81e1ee26e1f60d59e967872d1ecc831b6f51ffc54b870747c154c3bcb431dbd6",
+      "src/circle_perimeter_aa.cpp": "cbb64a43af368e448ca7d962c1d579eac16ae2d49ca716bcec1e3842a688ca29",
+      "tests/test_circle_perimeter_aa_native.cpp": "db2f77bc8cc2ff88f716cc7504f5de265e02801d2a3305958b17c8609d76d838"
+    }
+  },
   "limitations": [
     "Typed integer shape partition only; float/uint/protocol/type/errors frontend classification remains frontend responsibility",
     "No public or speed credit; no full-domain contract completion",
     "No speculative parallel recurrence or new worker machinery"
   ],
   "task_closeout": {
-    "status": "prospective",
-    "reuse": "Existing compiler/runtime/SDKworker objects and saved original rows only; no recapture/env/fullSDK",
-    "next": "Native lane implements frozen interface, validates saved words/layout/guards and codegen before independent review"
+    "status": "native-terminal-pass-independent-review-pending",
+    "evidence": "Six retained native modes first-attempt PASS;1757834 controls,800 savedrecords,2400 exactlayoutcomparisons;0ULP/order/duplicates/clipping.40typed integer-shapeIDs/profile;7errors+1floatshape/profile excluded fromnativefixture expectations.",
+    "waste_and_reuse": "No failed build/test or preventable duplicate. Only newleaf+test TUs compiled pernormal/ASAN-UBSAN/portable mode. Reused priorauthenticated SDKworkerarchives andportableworkerobject withoutarchive rehash/rebuild, retainedcompiler/runtime, savedoriginalbytes; no originalcalls/env/fullSDK/timers. Compilerbuild subprocess packet observed8.53s toolwall, not a performance measurement.",
+    "useful_rejections": "Typed preparation rejects sourceoverflow/addressinvalid geometry withoutmutatingprepared; native tests distinguish this fromoriginalpublicexception parity",
+    "next_plan_correction": "Owner root/frontend lane; trigger independent reference+native review: bind frozenheader, boundarynormalize once, snapshots currentglobalworkers once, allocate3independentowningoutputs with emptystride0, route unassessedprotocol/shape domains explicitly. CompilethisTU strictFP/no-contraction and reuse savedrows; do notforceparallel recurrence orrerununchangednativeproofs.",
+    "scope": "Private nativeleaf only; source-safe typedinteger shape partition, no publichot-swap/fullcontract/performance completion credit",
+    "readers": "Writer released afterfinalimmutablehandoff; rootreference-drainbarrier observed"
+  },
+  "native_expected_ids": [
+    "circle-aa/radius--3",
+    "circle-aa/radius--1",
+    "circle-aa/radius-0",
+    "circle-aa/radius-1",
+    "circle-aa/radius-2",
+    "circle-aa/radius-3",
+    "circle-aa/radius-4",
+    "circle-aa/radius-5",
+    "circle-aa/radius-7",
+    "circle-aa/radius-8",
+    "circle-aa/radius-9",
+    "circle-aa/radius-13",
+    "circle-aa/radius-17",
+    "circle-aa/radius-31",
+    "circle-aa/positive-origin",
+    "circle-aa/negative-origin",
+    "circle-aa/translated",
+    "circle-aa/near-intp-limits",
+    "circle-aa/clip",
+    "circle-aa/clip-away",
+    "circle-aa/zero-shape",
+    "circle-aa/negative-shape",
+    "circle-aa/extra-shape",
+    "circle-aa/list-shape",
+    "circle-aa/array-shape",
+    "circle-aa/reverse-shape",
+    "circle-aa/uint64-shape",
+    "circle-aa/np-int8",
+    "circle-aa/np-int16",
+    "circle-aa/np-int32",
+    "circle-aa/np-int64",
+    "circle-aa/np-uint8",
+    "circle-aa/np-uint16",
+    "circle-aa/np-uint32",
+    "circle-aa/np-uint64",
+    "circle-aa/bool",
+    "circle-aa/scalar-array",
+    "circle-aa/provider-first",
+    "circle-aa/providers-all",
+    "circle-aa/fp-raise"
+  ],
+  "reference_contract_sha256": "d16096f78907b251aa15e7ec897ed7fc8cec8975f2cf6b91ae203133e6eadae6",
+  "fixture_profiles": {
+    "1.24.4": {
+      "records": 40,
+      "bytes": 59232,
+      "sha256": "87530d9eddfc5f71d6336d165cd86250328e7da50e8f310295093114bd55fce9"
+    },
+    "2.5.4": {
+      "records": 40,
+      "bytes": 59232,
+      "sha256": "87530d9eddfc5f71d6336d165cd86250328e7da50e8f310295093114bd55fce9"
+    }
+  },
+  "codegen": {
+    "vector_report_sha256": "1b40ccec44149cb36f8389b63102dcfba352e441c213253e1b5a23dc3e33d96e",
+    "disassembly_sha256": "156f0601c118ebcb41d1dff254e1f6a1eb55e0f919fa248f1f3757405e0dada8",
+    "undefined_symbols_sha256": "c61da9c47fd39284f04eb10b8b92257ec4e322fb92713b1342ce18e7e29eddc1",
+    "observed": "GCC SSE2 paddq pluspackedstores in independentunclipped row/columnblockloops; packedweightmoves; serialscalar sqrtsd/ceil/subtraction recurrence",
+    "limitations": "LinuxGCC baseline16byte SIMD evidence only; clippedstablecompaction anddependent recurrence scalar; Windows/compiler-specific SIMD unassessed",
+    "heap_allocation": false,
+    "global_worker_reads": false,
+    "private_pool": false,
+    "formula_reassociation": false
   }
 }
