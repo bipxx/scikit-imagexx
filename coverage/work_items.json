@@ -7,6 +7,56 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "draw-line-boundary-optimization-v1",
+      "kind": "optimization",
+      "owner": "tiny_line_implementation",
+      "branch": "optimize/draw-line-boundary-v1",
+      "state": "implementing",
+      "apis": [],
+      "owns": [
+        "python/skimagexx/_draw_coordinates.py",
+        "src/bind_draw_coordinates.cpp",
+        "tests/test_draw_coordinates_integration.py"
+      ],
+      "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
+      "depends_on": [],
+      "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
+      "current_checkpoint": "Reuse existing audit; minimal exact-int/binder conversion candidate, native leaf unchanged. Component parity pending; no speed claim."
+    },
+    {
+      "id": "public251-qualification-v1",
+      "kind": "qualification",
+      "owner": "qualification251_readiness",
+      "branch": "review/public251-readiness-current-v2",
+      "state": "validating",
+      "apis": [],
+      "owns": [],
+      "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
+      "depends_on": [],
+      "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
+      "current_checkpoint": "Readiness reused. Hosted41851693181 at frozen09943ff running; independent reviewer frozen before retrieval. Qualified baseline stays247."
+    },
+    {
+      "id": "circle-perimeter-contract-v1",
+      "kind": "contract_reference",
+      "owner": "next_family_contract",
+      "branch": "feature/circle-perimeter-contract-v1",
+      "state": "contracting",
+      "apis": [
+        "draw.circle_perimeter"
+      ],
+      "owns": [
+        "tests/circle_perimeter_contract.py",
+        "tests/circle_perimeter_observer.py",
+        "tests/test_circle_perimeter_contract.py",
+        "coverage/contracts/circle-perimeter.json"
+      ],
+      "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
+      "depends_on": [],
+      "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
+      "current_checkpoint": "Novel source-backed original-only contract for both methods before native implementation; no API credit."
+    },
+    {
       "id": "resize-range-foundation",
       "kind": "private_foundation",
       "apis": [],
@@ -34648,7 +34698,6 @@
     "data.text",
     "data.vortex",
     "draw.bezier_curve",
-    "draw.circle_perimeter",
     "draw.circle_perimeter_aa",
     "draw.ellipse_perimeter",
     "draw.ellipsoid",
@@ -35242,40 +35291,40 @@
   },
   "execution_policy": {
     "active_workers": [
-      "blur_benchmark",
-      "profile_candidate_audit",
-      "blur_integration_resume"
+      "tiny_line_implementation",
+      "qualification251_readiness",
+      "next_family_contract"
     ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
-    "launch_rule": "On explicit goal resume, choose a ready packet and an idle one of the three recorded workers; bind the exact followup_task handoff after checking capacity. While paused, inspection and review do not launch implementation.",
+    "launch_rule": "User resumed updated plan. Reconcile actual handles/receipts before assigning ready packets; old assignments are historical. Each task closes with waste review before dependent work.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
     "implementation_goal_status": "active",
     "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
-      "blur_benchmark",
-      "profile_candidate_audit",
-      "blur_integration_resume"
+      "tiny_line_implementation",
+      "qualification251_readiness",
+      "next_family_contract"
     ],
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
-      "blur_benchmark": [
-        "montage-wrapper-simd-optimization"
+      "tiny_line_implementation": [
+        "draw-line-boundary-optimization-v1"
       ],
-      "profile_candidate_audit": [
-        "subdivide-polygon-reference"
+      "qualification251_readiness": [
+        "public251-qualification-v1"
       ],
-      "blur_integration_resume": [
-        "approximate-polygon-measurement"
+      "next_family_contract": [
+        "circle-perimeter-contract-v1"
       ]
     },
     "current_three_agent_packets": {
-      "blur_benchmark": "montage-wrapper-simd-optimization",
-      "profile_candidate_audit": "subdivide-polygon-reference",
-      "blur_integration_resume": "approximate-polygon-measurement"
+      "tiny_line_implementation": "draw-line-boundary-optimization-v1",
+      "qualification251_readiness": "public251-qualification-v1",
+      "next_family_contract": "circle-perimeter-contract-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",

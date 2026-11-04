@@ -41,6 +41,8 @@ Use existing module/session fixtures for immutable test data. Keep mutation case
 
 Measure success by useful validated increments, setup-only failures, repeated fixture work and time to merge. Do not add another telemetry framework or use assertion counts as the progress metric.
 
+Live execution (2026-11-04): [four-profile 251 campaign 41851693181](https://github.com/bipxx/scikit-imagexx/actions/runs/41851693181) is running at frozen 09943ff. Tiny-line optimization and original-only circle-perimeter contracts have separate owners in the existing ledger. No new qualification or speed acceptance yet. Readiness reused the passing setup barrier without broad local replay.
+
 ## Remaining work and completion gates (2026-11-04)
 
 This is the live route to completion, alongside the execution/reuse policy above. The user's continuation authorizes execution; this document update itself launches no builds, benchmarks or qualification jobs. Reconcile actual owners and handles before dispatch. Earlier checkpoint assignments are historical, including packet names still present in old operational fields.
@@ -82,6 +84,8 @@ One implementation packet per worker and at most one frozen handoff each; root d
 | Per-API performance | Every relevant canonical computational API has frozen representative one-worker public-call comparisons with original, genuine source/product/runtime identity, raw samples and slower cases. New optimizations also pass prospective prior-C++ controls. Targets/holdouts are fixed before candidate results; aliases reuse the kernel benchmark plus path-overhead checks. Metadata/I/O/state use relevant latency/cache behavior, not invented image throughput. |
 | Performance disposition | Close each demonstrated bottleneck with a tested mechanism. Rank work by absolute cost and representative impact. If a target remains unattainable, retain the failed evidence and obtain an explicit scope/target decision; no quiet waiver or aggregate average can turn a loss into completion. |
 | Release and delivery | All four supported profiles qualify the same final frozen source with actual public/SDK/corpus results. Publish source, build/install/usage instructions and performance limitations; merge/push accepted work and retire eligible worktrees under AGENTS.md. Earlier accepted products never qualify later code by implication. |
+
+Before calling originals for a new family, inspect source-visible unsafe indexing, overflow and allocation preconditions. Classify known upstream-unsafe inputs separately before capture; preserve failed/partial journals and resume only uncalled safe IDs. Never replay completed original captures or manufacture expected results for an unsafe path.
 
 ### Review waste after every task
 
