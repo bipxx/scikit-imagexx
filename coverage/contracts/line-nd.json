@@ -1136,8 +1136,31 @@
     "action": "AuthorizeSEPARATEsafeonce-onlyoriginalcapturepacket perretainedprofile; recordstarted/completedjournals andactualrawoutputs/types/ownership/errors beforeanynativeimplementation. No realoriginalcalls inthispacket."
   },
   "task_closeout": {
-    "status": "prospective-intake-pending",
-    "reuse": "Existingdrawencoder/guard/runtime/sourceSDist; no newenv/build/benchmark/framework",
-    "next_plan_correction": "Stopafterintake/handoff; rootcapturesgate only. Freezeactualtupleviewstorage anddtypearithmetic beforeproposingnativecode."
+    "status": "PASS_PROSPECTIVE_INTAKE_ONLY_CAPTURE_GATE_PENDING",
+    "result": "54source-safeactualcontrollerIDs originals-refused inbothretainedprofiles;55PASS+2pending-original skips/profile.0realoriginal/nativecalls, no capturecontrollerwritten/executed.",
+    "evidence": {
+      "minimum": {
+        "passed": 55,
+        "skipped_capture_pending": 2,
+        "controller_ids": 54,
+        "seconds": 1.61,
+        "xml_sha256": "e10070a8f52d6d27ff9d912daf7f8b060ac33e0956db7c8ee92e5e525bf0a204"
+      },
+      "modern": {
+        "passed": 55,
+        "skipped_capture_pending": 2,
+        "controller_ids": 54,
+        "seconds": 1.605,
+        "xml_sha256": "2b8bcf985747bea497653b1c601dc85498e4e11a4485a5ac9ac12afffd5a47cc"
+      }
+    },
+    "waste_and_reuse": "Reusedpinned0.26drawsourcefromretainedSDist/runtime, exactknownscientificinterpreters, sharedencoder/ArrayProvider/original-draw guard andobserverpattern. No failedsetup/test, originalrecapture, build/env/benchmark orwholeinventoryaudit. Freshsmallinputfixtures areisolated forproducer/controller validation; no unnecessary cacheframework.",
+    "next_plan_correction": {
+      "owner": "root",
+      "trigger": "Reviewthisprospectivecommit/source-safety andboth54IDoriginal-refusalintakes",
+      "action": "Authorizeaseparatecapturepacket onlyafterreview. CaptureeachsafeIDonce/perprofile withstarted/completedjournals andactualraw words/dtypes/storage/scalarcontainers/errors/FPcallbacks. DoNOTassumeindependentowningoutputs orfixdescendingties/typedwrap semantics. Nativeheader/kernel awaitcaptured/independentlyreviewed facts."
+    },
+    "scope": "Prospectiveboundedvector/broadcast/scalar/errorpartition only; no registration/native/fullcontract/performancecredit. Otherclasses/unbounded/forged/concurrent/platformdomains explicitlyunassessed.",
+    "readers": "Writerreleasedafterimmutablehandoff; no activealgorithms/builds/benchmarks; source/rawmetadata retained"
   }
 }
