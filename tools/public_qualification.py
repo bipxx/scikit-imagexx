@@ -335,6 +335,7 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tests/combine_stains_half_contract.py', 'tests/combine_stains_half_observer.py',
     'tests/test_combine_stains_half_reference.py', 'tests/test_combine_stains_half_public.py',
     'coverage/contracts/combine-stains-half.json',
+    'coverage/contracts/combine-stains-half-source-context-v1.json',
     'coverage/contracts/combine-stains-half-frontend-v1.json')
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
@@ -1656,6 +1657,7 @@ def child(out, group):
     if group == 'public-post203':
         os.environ['SKIMAGEXX_REGIONPROPS_ROWS_DIR'] = str(out / (mode + '-regionprops-state-rows'))
         os.environ['SKIMAGEXX_POINT_ROWS_DIR'] = str(out / (mode + '-regionprops-point-rows'))
+        os.environ['SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR'] = str(out / (mode + '-regionprops-public-mutation-rows'))
     result=pytest.main(args)
     if group == 'public-Matrix' and result==0:validate_matrix_rows(out/(mode+'-matrix-routes.json'))
     return result

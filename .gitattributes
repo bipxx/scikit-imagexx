@@ -672,3 +672,4 @@ coverage/contracts/combine-stains-half-frontend-v1.json -text
 coverage/contracts/combine-stains-half-benchmark.json -text
 coverage/contracts/regionprops-public-mutation.json -text
 coverage/contracts/regionprops-public-mutation-frontend-v1.json -text
+coverage/contracts/combine-stains-half-source-context-v1.json -text

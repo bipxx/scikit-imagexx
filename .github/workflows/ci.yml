@@ -386,12 +386,14 @@ jobs:
         env:
           SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-normal-rows
           SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-normal-rows
+          SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR: build/ci-artifacts/regionprops-public-mutation-normal-rows
       - name: RegionProperties state contracts with SIMD disabled
         run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_public_mutation_public.py --junitxml=build/ci-artifacts/regionprops-state-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
           SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-scalar-rows
           SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-scalar-rows
+          SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR: build/ci-artifacts/regionprops-public-mutation-scalar-rows
       - name: Anti-aliased circle saved public and shipping defaults
         run: python -m pytest -q tests/test_circle_perimeter_aa_reference.py tests/test_circle_perimeter_aa_public.py tests/test_circle_perimeter_aa_default.py tests/test_circle_perimeter_aa_benchmark.py --junitxml=build/ci-artifacts/circle-perimeter-aa-normal.xml
       - name: Anti-aliased circle contracts with SIMD disabled
