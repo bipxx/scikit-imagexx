@@ -7,6 +7,43 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "regionprops-point-witness-v1",
+      "kind": "contract_reference",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/regionprops-point-witness-v1",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "tests/regionprops_point_contract.py",
+        "tests/test_regionprops_point_witness.py",
+        "coverage/contracts/regionprops-point-witness-v1.json"
+      ],
+      "base_sha": "330b8b797717cd6f991dfe0157f103eb0d3112f8",
+      "depends_on": [
+        "regionprops-state-reference-v1"
+      ],
+      "acceptance": "Source-safe supplemental point observations; raw storage, cache aliases and distinct original/backend types remain explicit. No API/full-class/performance credit. Every terminal task records result/evidence, waste/reuse and next-plan correction before dependent work.",
+      "current_checkpoint": "Independent review5982084 passed: eight original observations,32 candidate comparisons and five metadata checks. Wrong-runtime attempts made zero calls and remain retained. Reuse successful scientific runtime receipt paths; do not guess build/wheel interpreters. No science replay; readers released.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "c06fed9795e7766ed098edd3d5761bd0fb09d641",
+          "passing_contract_checks": 5,
+          "manifest": {
+            "path": "build/regionprops-point-witness-v1/handoff.json",
+            "sha256": "3e49ed633a6d5c4bb73560fe90a984914f9e50b4cf8b7dff634010448d27e6f5"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Include supplemental saved point tests in the composed state shipping/qualification selectors; no original recapture."
+      }
+    },
+    {
       "id": "regionprops-state-native-v1",
       "kind": "implementation",
       "owner": "qualification251_readiness",
