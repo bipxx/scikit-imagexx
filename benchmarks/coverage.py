@@ -276,7 +276,7 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if (api in DRAW_COORDINATE_FUNCTIONS or api == 'draw.circle_perimeter'):
+                    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
                         error = draw_default_error(api,data,actual,expected)
                     elif api == 'measure.subdivide_polygon':
                         error = subdivide_polygon_default_error(data,actual,expected)
@@ -349,8 +349,8 @@ def main():
                                     **({'input_shape': list(call_args[0].shape)} if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     **({'size_unit': 'points'} if api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     **({'input_shape':list(data.shape), 'default_input_kind':'coordinate-shape-carrier',
-                                        'descriptor_carrier_dtype':case_dtype, 'requested_output_dtype':'intp'}
-                                       if (api in DRAW_COORDINATE_FUNCTIONS or api == 'draw.circle_perimeter') else {}),
+                                        'descriptor_carrier_dtype':case_dtype, 'requested_output_dtype':('intp,intp,float64' if api=='draw.line_aa' else 'intp')}
+                                       if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')) else {}),
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
                                     'output_dtype_metadata':dtype_metadata(actual), 'max_abs_error':
                                     error,

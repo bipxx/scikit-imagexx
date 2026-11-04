@@ -16,6 +16,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
+    (('draw.line_aa',),'tests/test_line_aa_public.py::test_line_aa_saved_public_pipeline','benchmarks/line_aa.py'),
     (('draw.line','draw.rectangle','draw.disk','draw.ellipse'),
      'tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline','benchmarks/draw_coordinates.py'),
     (('segmentation.checkerboard_level_set','segmentation.disk_level_set'),
@@ -166,7 +167,7 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
-            elif path == 'draw.circle_perimeter':
+            elif path in ('draw.circle_perimeter','draw.line_aa'):
                 entries[-1]['default_input_kind']='coordinate-shape-only; dtype labels are descriptor carriers, not pixel or coordinate-argument dtype coverage'
             if module in ('filters.rank.generic','filters.rank.bilateral'):
                 canonical=getattr(importlib.import_module('skimage.filters.rank'),name)
