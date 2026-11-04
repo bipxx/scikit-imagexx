@@ -663,3 +663,4 @@ coverage/contracts/regionprops-point-witness-v1.json -text
 coverage/contracts/regionprops-state-native-v1.json -text
 coverage/contracts/regionprops-state-frontend-v1.json -text
 coverage/contracts/regionprops-state-benchmark.json -text
+coverage/contracts/circle-perimeter-aa.json -text
