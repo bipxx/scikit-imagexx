@@ -336,6 +336,7 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tests/test_combine_stains_half_reference.py', 'tests/test_combine_stains_half_public.py',
     'coverage/contracts/combine-stains-half.json',
     'coverage/contracts/combine-stains-half-source-context-v1.json',
+    'coverage/contracts/combine-stains-legacy-benchmark-source-v1.json',
     'coverage/contracts/combine-stains-half-frontend-v1.json')
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
