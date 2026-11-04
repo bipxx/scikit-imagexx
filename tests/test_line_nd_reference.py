@@ -58,8 +58,27 @@ def test_line_nd_saved_original_rows_without_replay(profile):
         pytest.skip('STOP: prospective intake only; separate root capture authorization required')
     rows = matrix['original_observations'][profile]
     assert len(rows) == 54 and [r['id'] for r in rows] == [s['id'] for s in CASES]
+    assert sum(row['error'] is not None for row in rows) == 9
     for row in rows:
         assert row['api'] == API and all(row['checks'].values())
+        assert not row['warnings']
+        assert not any(pair['same_object'] or pair['shares_memory'] for pair in row['output_input_aliases'])
+        if row['error'] is None:
+            assert row['result']['container'] == 'tuple'
+            items = row['result']['items']
+            if row['id'] == 'line-nd/scalar-float':
+                assert len(items) == 3
+                assert all(v['type'] == 'float64' and v['dtype'] == '<f8' and len(bytes.fromhex(v['raw'])) == 8 for v in items)
+            else:
+                assert items and all(v['type'] == 'ndarray' and not v['own'] and v['writeable'] and v['aligned'] and v['base_type'] == 'ndarray' for v in items)
+                assert all(pair['same_base'] and (pair['same_object'] == (pair['first'] == pair['second'])) for pair in row['output_pair_aliases'])
+        events = row['events']['items']
+        if row['id'] == 'line-nd/underflow-step':
+            assert events == [dict(event='FP-handler',message='underflow',flags=4)]*2
+        elif row['id'] == 'line-nd/array-provider':
+            assert events == [dict(event='end.__array__',dtype=None,copy=None)]*2
+        else:
+            assert not events
         pending = [row]
         while pending:
             value = pending.pop()

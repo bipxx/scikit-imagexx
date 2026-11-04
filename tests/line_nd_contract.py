@@ -13,7 +13,7 @@ UNASSESSED = (
     'Integercast outside native int range, nonfinite successful outputs and nonordinary rounding environment',
     'Higher-rank broadcasting, arbitrary object/array subclasses/protocols and nonbool flag protocols',
     'Forged storage/concurrent mutation and platform observations outside retainedLinux64 profiles',
-    'No original results, native implementation, registration or performance credit in prospective packet')
+    'Historical prospective packet has no original results; later captured results provide reference only, never native implementation, registration or performance credit')
 
 
 def cases():
