@@ -436,7 +436,7 @@
       "kind": "implementation",
       "owner": "integrator",
       "branch": "integrate/regionprops-state-v1",
-      "state": "preparing",
+      "state": "parity_passed",
       "apis": [
         "measure.regionprops"
       ],
@@ -458,7 +458,7 @@
       "acceptance": "Compose reviewed private sources without overwriting the current-budget fix. Wire actual exports, defaults, registry, inventory, SDK87 and qualifier; preserve seven-property/37-unassessed, provider and distinct-type limitations. Run the real CLI first cohort once per profile: one original and one native call, stop at the real sampler call before its body, zero timed batches. Run the complete actual setup selection once after shared wiring freezes. Public-native proof and coverage credit require actual execution and independent review. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Observe known run41910010504 to terminal; retain exact artifact once, independently validate genuine installed family/SDK87 and12-case original timing before shipping admission. No redispatch."
+        "action": "Finish reviewed public-state mutation fix, freeze coherent255 and realfirstcohorts/fullsetup once, then one fresh genuine preparation. Never redispatchfailed484 or relabeloldfailedrecords."
       },
       "dependency_requirements": {
         "regionprops-state-native-v1": {
@@ -487,14 +487,14 @@
           }
         }
       },
-      "current_checkpoint": "156 actual-export defaults plus dedicated/generic real CLI first cohorts pass in both retained profiles. Complete setup2264 passing nodes reused;37 stale metadata failures+oldSDK86 negative rerun38PASS. Candidate484 only two test files differs from tested7d production. Hosted genuine preparation/12-case initial timing run41910010504 running, not accepted. Explicit7/37/provider/type/Windows gaps remain."
+      "current_checkpoint": "Hosted41910010504 terminalFAILED at dtype-alias fixture:14KeyErrors/4176passes,0timings. Focused genuineRegion147normal/145scalar passed; no preparation/SDK/speed admission. Raw once-retained5.8MB artifact and compact failedpublication preserved. General aliasconstructor repair passes16affected cases with failedcompiledwheel plus4half controls; source-only dtype-intake guard passes. Separately newpubliclabel/slice diagnostic fails11/12sequences/profile; minimalidentity/provider-tail fix underway beforecoherent255."
     },
     {
       "id": "regionprops-state-measurement-v1",
       "kind": "measurement",
       "owner": "integrator",
       "branch": "integrate/regionprops-state-v1",
-      "state": "preparing",
+      "state": "queued",
       "apis": [],
       "target_apis": [
         "measure.regionprops"
@@ -516,9 +516,9 @@
       "acceptance": "Blocked until exact composed public-native proof, real first cohort and genuine installed-family/SDK validation. Isolated one-worker comparison: 12 frozen cases, 168 samples. Retain slower cases, hardware and source identity. An initial baseline is not an optimization KEEP; platform/provider limits stay explicit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Read the existing run; raw artifact retention/admission after terminal. Preserve all losses and keep baseline252 separate."
+        "action": "Finish reviewed public-state mutation fix, freeze coherent255 and realfirstcohorts/fullsetup once, then one fresh genuine preparation. Never redispatchfailed484 or relabeloldfailedrecords."
       },
-      "current_checkpoint": "One authorized initial baseline is in hosted run41910010504, exact484e6dd4. Await terminal raw168samples/source/core/hardware and independent product/performance review. No optimization KEEP or whole-product qualification credit."
+      "current_checkpoint": "Hosted41910010504 terminalFAILED at dtype-alias fixture:14KeyErrors/4176passes,0timings. Focused genuineRegion147normal/145scalar passed; no preparation/SDK/speed admission. Raw once-retained5.8MB artifact and compact failedpublication preserved. General aliasconstructor repair passes16affected cases with failedcompiledwheel plus4half controls; source-only dtype-intake guard passes. Separately newpubliclabel/slice diagnostic fails11/12sequences/profile; minimalidentity/provider-tail fix underway beforecoherent255."
     },
     {
       "id": "regionprops-state-reference-v1",
@@ -36507,10 +36507,11 @@
       "regionprops_state": {
         "run": 41910010504,
         "source": "484e6dd44367316444f757576eea36246e054a48",
-        "status": "in_progress",
+        "status": "terminal-failed-dtype-alias-fixture",
         "accepted": false,
         "scope": "Genuine minimum preparation then12-case initial one-worker comparison; main253/qualified252 unchanged.",
-        "readiness": "build/regionprops-state-shipping-v1/root-ready-v2.json"
+        "readiness": "build/regionprops-state-shipping-v1/root-ready-v2.json",
+        "publication": "coverage/evidence/regionprops-state-minimum-preparation-failed-v1.json"
       }
     },
     "assignment_note": "Live lanes: A circle-AA frontend; B closed native review/SDK component and next independent frontend review; C finite-half stain reference. Root monitors existing RegionProps run41910010504 and owns shared integration/admission. Historical maps are provenance only. No unchanged capture/build/timing redispatch; update waste/next gate before dependent work.",
@@ -36526,9 +36527,9 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Circle-AA frontend author; independent review rotates to B after immutable handoff. No source edits in running RegionProps candidate.",
-      "qualification251_readiness": "Circle-AA native review closed; SDK88 component handoff ready for root independent review. Next independent frontend review after A seals receipt.",
-      "next_family_contract": "Finite half-input combine_stains reference producer; preserve24 once-only captures and actual profile-dependent promotion. No accepted matrix core rewrite."
+      "tiny_line_implementation": "AA96default checks closed; actualCLI gates prepared, waiting finalmutationfix/sourcefreeze. No polling or repeateddefaulttests.",
+      "qualification251_readiness": "Failed419 publication closed; independently reviewing new mutationreference, thenfix. No science/build rerun.",
+      "next_family_contract": "Public RegionProperties label/slice mutation reference and minimal identity/provider-tail correction; current255Python frozen fornewsource overlays. Half benchmark source independently passed."
     }
   },
   "parallel_review": {
@@ -37261,9 +37262,9 @@
     ]
   },
   "latest_cleanup": {
-    "path": "coverage/evidence/max-tree-consumer-worktree-retirement.json",
-    "bytes": 1776,
-    "sha256": "3cd95e43cdcff6dda8cf10621c1dc135accbd2e7ea29c095efc6210242132e4a"
+    "path": "build/retired-source-worktrees-20261104-v3.json",
+    "sha256": "173465dd90338210a6f458dba53fd061628e25339dc9046eb3858a99d7ce070e",
+    "scope": "Four clean merged source WTs retired with reader release; only ignored caches removed. No proof/package/build directory deleted. Active255/native/frontend/SDK and blockedcache paths retained."
   },
   "post_cursor_cleanup": {
     "proofs": [
