@@ -1,0 +1,22 @@
+{
+  "schema": "circle-perimeter-aa-frontend-v1",
+  "status": "PROSPECTIVE_FROZEN_BEFORE_COMPONENT_TESTS",
+  "native_interface_commit": "e795570c",
+  "native_implementation": "54e785542d29e2f2ba9af576049738c87faf9df1",
+  "reference_commit": "53fdaa285901cffd81520b1a34288a0da253d3dc",
+  "public_signature": "(r, c, radius, shape=None)",
+  "conversion": "operator.index once/r,c,radius order and immediatePy_ssize bounds; signatureerrors remainliteralPython. No externalshape protocols executed forunassessedgaps.",
+  "native_integer_clip_IDs": 40,
+  "native_recurrence_IDs": 41,
+  "provider_tail_IDs": [
+    "circle-aa/float-shape"
+  ],
+  "provider_tail": "Knownfinitebuiltin-float tuple usesexistingnativeentryunclipped, then literalNumPycomparison/gather. No originalcirclealgorithmfallback; geometryprepare once onselectedroute.",
+  "quarantine": "Onlysource-proven builtinshorttuples namedunsafequarantine, afterendpointconversions. Otherunsupportedshape/carrier/numericdomains explicitNotImpl gaps withoutupstreamcalls orparitycredit.",
+  "output": "ThreefreshindependentowningCcontiguous intp/intp/f64 arrays, emptystride0; words/order/duplicates/zeroweights andmetadata exact.",
+  "workers": "Wrappergetteronce pernativeadmittedcall, default1/global1/4/restoration; count/filldependentrecurrence serial, no customparallel/SIMDclaim.",
+  "frozen_weight_policy": "Bitwise0ULP literal sqrt/ceil/subtraction underordinaryrounding; no newgoldens/relaxation.",
+  "test_scope": "All48savedrows/profile\u00d7workers1/4; lifetime/quota/storage/gappedinput/overflow/unsafequarantine controls; no originals/timing/fullSDK/env.",
+  "shared_export_registry_gate": "Rootownsactualdrawexport/CMake/registry; privatecomponentcall is notshippingcredit.",
+  "native_public_API_credit": 0
+}
