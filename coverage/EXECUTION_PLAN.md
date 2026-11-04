@@ -43,7 +43,7 @@ Use existing module/session fixtures for immutable test data. Keep mutation case
 
 Measure success by useful validated increments, setup-only failures, repeated fixture work and time to merge. Do not add another telemetry framework or use assertion counts as the progress metric.
 
-Live execution (2026-11-04): main252 is pushed; four-profile252 campaign41882408142 is live at frozen6fae255. A owns line-AA shipping/default proofs, C owns its253 qualifier closure after inventory synchronization, and B starts one RegionProperties returned-state reference partition during remote waits. Three released clean ancestor worktrees were retired; raw artifacts/packages remain. Source circle admission does not promote qualified247.
+Live execution (2026-11-04): main252 is pushed; four-profile252 campaign41882408142 is live at frozen6fae255. A owns line-AA shipping/default proofs, C owns its253 qualifier closure after inventory synchronization, and B implements RegionProperties state primitives from the now-reviewed seven-property reference partition during remote waits. Three released clean ancestor worktrees were retired; raw artifacts/packages remain. Source circle admission does not promote qualified247.
 
 
 ## Remaining work and completion gates (2026-11-04)

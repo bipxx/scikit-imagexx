@@ -652,3 +652,5 @@ coverage/contracts/line-aa.json -text
 
 benchmarks/circle-perimeter-minimum-initial.json -text
 coverage/contracts/circle-perimeter-benchmark.json -text
+
+coverage/contracts/regionprops-state-v1.json -text

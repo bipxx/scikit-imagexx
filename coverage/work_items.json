@@ -7,6 +7,41 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "regionprops-state-reference-v1",
+      "kind": "contract_reference",
+      "owner": "qualification251_readiness",
+      "branch": "regionprops-state-reference-v1",
+      "state": "contracted",
+      "apis": [],
+      "owns": [
+        "coverage/contracts/regionprops-state-v1.json",
+        "tests/regionprops_state_contract.py",
+        "tests/regionprops_state_observer.py",
+        "tests/test_regionprops_state_reference.py"
+      ],
+      "base_sha": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
+      "depends_on": [
+        "regionprops-runtime-surface-discovery-v1"
+      ],
+      "acceptance": "Source-safe once-only constructor/property capture plus exact saved checks and independent review. No native/fullclass credit; finalize paths/labels/closeout before immutable handoff.",
+      "current_checkpoint": "2f076368 independently reviewedcdcd4f1d:29calls/profile,22returns7errors,40objects/1020fixedproperty steps perprofile,32savedchecks. Captures58total/no replay; sourcebounds/currentarraywords/aliases/publiccache-mutation preserved. Initialborrowedcontroller apiKeyError preentry0calls retained; nextcapture must validate actualfixture/controller intake before originals. No numericalprovider creditednative.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "2f076368987ca4247e06109d23f459dbad98079a",
+          "passing_contract_checks": 32,
+          "manifest": {
+            "path": "build/regionprops-state-capture-v1/handoff.json",
+            "sha256": "8d7ed11771d61aa337da7490e12621c45387a4a7952f50f130cedb6fa7185025"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Native leaf underway: typedoriginal storage, sortedpositive labels/frozenbbox/initialcounts, freshmask/population/coords from cached-or-fresh mask. Publicclass/type/cache/spacing/aliases and unassessedproperties remain frontend/SDK/performance gates."
+      }
+    },
+    {
       "id": "public252-qualification-v1",
       "kind": "qualification",
       "owner": "qualification251_readiness",
