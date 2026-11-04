@@ -1,0 +1,66 @@
+{
+  "schema": "line-aa-native-v1",
+  "status": "PROSPECTIVE_BEFORE_CANDIDATE_NATIVE_OUTPUTS",
+  "reference": "coverage/contracts/line-aa.json",
+  "reference_sha256": "41ca2e91d155f747b57490cd4b208e80e508fc0f5e49a06e3399f8a4efdcba54",
+  "source_sha256": {
+    "include/skimagexx/line_aa.hpp": "19ee5ef8e73db563f5666048fc3414ee65b7b6a98370c9ed231724c64f1a3710",
+    "src/line_aa.cpp": "e8810d32318bff1cfec23ad5c660fa68298dfca669ba59d3722c350d1e139592",
+    "tests/test_line_aa_native.cpp": "c40bd0735a476c11376b4a55334d1b05930ef40bb3aad301bdaaea1d65002cf0"
+  },
+  "numeric_policy": "All coordinate andfloat64weights words exact; ULP0; literal sqrt andorderedfabs/division followed bystored64-bit1.-distance. Defaultordinary IEEErounding, no broadfenv claim.",
+  "admission": "Sourceint32 endpoint\u00b11headroom and signedint32 squared\u0394sum, proved once beforearithmetic/narrowing; unsuccessfulprepare leaves geometryunchanged.",
+  "count_fill": "One preparedgeometry/sqrt; sharedserial recurrence for exactcount andfill, same orderedsidepixel emissions. ExistingDrawCoordinatePair plusseparateweights pointer/signedstep; caller validates freshdisjoint spans/capacity once.",
+  "controls": {
+    "saved_native_ids": 36,
+    "profiles": 2,
+    "signed_stride_cases": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        2,
+        3,
+        2
+      ],
+      [
+        -2,
+        -3,
+        -2
+      ]
+    ],
+    "dense_endpoint_values": [
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "dense_geometries_per_budget": 6561,
+    "independent_oracle": "Boundingbox pixels with absoluteintegerline determinant <sqrt(dr\u00b2+dc\u00b2); weights1-abs(det)/sqrt, exactwords. Verified againstall36cachedoriginalrows beforecandidatecompile.",
+    "budgets": [
+      1,
+      4
+    ],
+    "portable_multiworker": "Existingglobalworker setter refuses4; serialleaf itself createsnopool."
+  },
+  "modes": [
+    "openmp-normal",
+    "openmp-forcedscalar",
+    "portable-normal",
+    "portable-forcedscalar",
+    "sanitize-normal",
+    "sanitize-forcedscalar"
+  ],
+  "SIMD": "Dependent recurrence staysserial; independentfinal1.-distance pass permits baselinecompilerSIMD. No speculativecustomAVX2 path ornewpool beforemeasurement.",
+  "new_original_calls": 0,
+  "new_environments": 0,
+  "new_full_SDK_builds": 0,
+  "timings": 0
+}
