@@ -22,16 +22,16 @@ jobs:
         include:
           - os: windows-latest
             profile: windows
-            python: '3.13'
+            python: '3.13.16'
           - os: ubuntu-24.04
             profile: modern
-            python: '3.13'
+            python: '3.13.16'
           - os: ubuntu-24.04
             profile: minimum
-            python: '3.11'
+            python: '3.11.17'
           - os: ubuntu-24.04
             profile: debug
-            python: '3.13'
+            python: '3.13.16'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     env:

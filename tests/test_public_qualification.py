@@ -584,6 +584,12 @@ def test_tool_does_not_import_or_call_timing_code():
 def test_workflow_is_four_check_only_jobs_with_retained_failures():
     text=(ROOT/'.github/workflows/public-qualification.yml').read_text()
     assert text.count('profile: ')==4
+    import re
+    witnessed=json.loads((ROOT/'coverage/contracts/level-set-windows.json').read_bytes())['abi']['python_version']
+    assert re.fullmatch(r'3\.13\.\d+',witnessed)
+    rows=re.findall(r"profile: ([\w-]+)\n\s+python: '([^']+)'",text)
+    assert len(rows)==4 and dict(rows)==dict(windows=witnessed,modern=witnessed,minimum='3.11.17',debug=witnessed)
+    assert text.count('python-version: ${{ matrix.python }}')==1
     assert 'fail-fast: false' in text and 'if: always()' in text
     assert 'include-hidden-files: true' in text
     assert 'measure:' not in text
@@ -602,6 +608,26 @@ def test_workflow_is_four_check_only_jobs_with_retained_failures():
     assert preparation.count(probe)==1 and preparation.count(fetch)==1
     assert preparation.index(probe)<preparation.index(fetch)<preparation.index('python -m pytest')
     assert "git cat-file -e '"+target+"'\n" in preparation
+
+
+@pytest.mark.parametrize('profile,replacement',(
+    ('windows','3.13'),('modern','3.13.17'),('minimum','3.11'),('debug','3.13.17'),
+    ('setup','3.13')))
+def test_workflow_rejects_floating_or_mismatched_python_selection(monkeypatch,profile,replacement):
+    import re
+    path=ROOT/'.github/workflows/public-qualification.yml'
+    text=path.read_text()
+    if profile=='setup':
+        mutated=text.replace('python-version: ${{ matrix.python }}',"python-version: '"+replacement+"'")
+    else:
+        pattern=r"(profile: "+profile+r"\n\s+python: )'[^']+'"
+        mutated,count=re.subn(pattern,lambda match:match.group(1)+"'"+replacement+"'",text)
+        assert count==1
+    assert mutated!=text
+    original=Path.read_text
+    monkeypatch.setattr(Path,'read_text',lambda self,*a,**kw:mutated if self==path else original(self,*a,**kw))
+    with pytest.raises(AssertionError):
+        test_workflow_is_four_check_only_jobs_with_retained_failures()
 
 
 def test_fresh_child_tmp_path_fixture_creates_only_owned_parent(tmp_path,monkeypatch):
