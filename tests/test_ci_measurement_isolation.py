@@ -57,6 +57,10 @@ def test_timing_commands_only_on_fresh_artifact_hosts():
 
 def test_minimum_only_and_debug_assertions_are_enforced():
     blocks = jobs((ROOT / '.github/workflows/ci.yml').read_text())
+    # Offline identity includes the full interpreter patch version, not only ABI.
+    versions = [re.findall(r"python-version: '([^']+)'", blocks[name])
+                for name in ('numpy-minimum', 'measure-minimum')]
+    assert versions == [['3.11.17'], ['3.11.17']]
     condition = "if: github.event_name != 'workflow_dispatch' || !inputs.minimum_only"
     assert all(condition in blocks[n] for n in ('check', 'debug-gil'))
     assert "if: github.event_name != 'workflow_dispatch' || (!inputs.minimum_only && !inputs.prepare_only && !inputs.latest_only)" in blocks['measure']
