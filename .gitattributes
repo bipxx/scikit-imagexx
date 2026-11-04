@@ -649,3 +649,5 @@ coverage/evidence/current251-qualification-v1-failed.json -text
 benchmarks/draw-line-boundary-same-host.json -text
 
 coverage/contracts/line-aa.json -text
+
+benchmarks/circle-perimeter-minimum-initial.json -text
