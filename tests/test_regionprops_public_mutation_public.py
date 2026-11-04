@@ -103,7 +103,7 @@ def test_regionprops_public_mutation_saved_pipeline(spec,workers,reference,monke
         folder.mkdir(parents=True,exist_ok=True)
         row = dict(actual=actual,native_C_returns=returns,geometry_native_accepted=geometry,
                    original_property_tails=tails,workers=workers,scope='Changedgeometry usesexplicitproviderproperties, notnativegeometrycredit')
-        with (folder/(spec['id'].split('/')[-1]+'-workers'+str(workers)+'.json')).open('x',encoding='utf-8') as output:
+        with (folder/(spec['id'].split('/')[-1]+'-workers'+str(workers)+'.json')).open('w',encoding='utf-8') as output:
             json.dump(row,output,indent=2,allow_nan=False)
             output.write('\n')
     finally:
