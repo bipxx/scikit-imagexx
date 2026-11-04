@@ -1,6 +1,6 @@
 {
   "schema": "regionprops-state-native-v1",
-  "status": "FROZEN_BEFORE_BOUNDED_COMPILATION",
+  "status": "PASS_THREE_LEAF_MODES_REFERENCE_GEOMETRY_ONLY",
   "reference_commit": "2f076368987ca4247e06109d23f459dbad98079a",
   "reference_sha256": "63eaaf5a11a154ed0748a6a8df13ddb073777f67a7ae6929fd78588e5a24cfdb",
   "interface": "ComponentsView borrowed immutable metadata/original retained pointer; sorted uint64 positive IDs with frozen constructor bbox/initial_population. Fresh mask returns current population. Cached/fresh caller mask population controls coordinate capacity. Absolute integer C-order coordinates only.",
@@ -30,5 +30,33 @@
     "src/regionprops_state.cpp": "7ce79583c098da81f279d0aaaa6571733456829190059ee162d5c8215e75582d",
     "tests/test_regionprops_state_native.cpp": "fe86c4f8f7083855678700af507a1a46fc05b7070de271c36f406cf5fa15acd2"
   },
-  "test_compile_correction": "GCC13 -Werror=array-bounds false-positive for assigning one-element initializer_list to existing stridevector; use explicit resize(1)+element assignment, preserve malformed-vector guard and all warnings. First failed compile retained; header/nativeleaf unchanged."
+  "test_compile_correction": "GCC13 -Werror=array-bounds false-positive for assigning one-element initializer_list to existing stridevector; use explicit resize(1)+element assignment, preserve malformed-vector guard and all warnings. First failed compile retained; header/nativeleaf unchanged.",
+  "execution": {
+    "modes": [
+      "normal-O3-OpenMP",
+      "compiler-scalar-O3-no-loop-or-SLP-vectorization",
+      "ASan-UBSan-OpenMP"
+    ],
+    "saved_records_per_mode": 88,
+    "fixture_records": 44,
+    "profiles": 2,
+    "worker_budgets": [
+      1,
+      4
+    ],
+    "controls_per_mode": 6442,
+    "default_workers_restored": 1,
+    "mask_vectorization": "GCC13 normal compiler report contains16-byte vectorized mask spans; scalar report empty. No performance/speedup claim.",
+    "runtime": "Linked unchanged authenticated genuineSDK85 staticarchive for existing worker runtime, only2newtranslationunits compiled per mode.",
+    "new_original_calls": 0,
+    "timings": 0,
+    "new_environments": 0,
+    "full_SDK_builds": 0
+  },
+  "task_closeout": {
+    "result": "All22saved successful constructor cases/profile project to44finitegeometry fixtures;88records and6442controls per normal/compiler-scalar/sanitizer mode pass, including inputmutation/frozenbbox and independent cached-mask currentpopulation. No publicclass/nativeAPIcredit.",
+    "waste_and_reuse": "Reused ComponentsView/PixelType/signedstride metadata and existing worker partition, source-audited savedreference and unchanged genuineSDK85 runtime archive. Only nativeleaf+test compiled. First strictGCC13 testcompile failed on valid one-element vector initializer assignment false-positive; preserved firstlog and rewrote test as resize+assignment, no compiler-warning waiver. Observed firsttool wall6.79s; no productmath/headerfix, originals, SDKbuild, environments or timing.",
+    "next_plan_correction": "Root: independently review reference and leaf before sharedregistration. Frontend owner: retain original NumPy storage, validate/normalize once, allocatecoords using CURRENT cached/fresh mask population, preserve public cache/alias/scalar/offset/spacing/error contracts. Keep seven constructorerrors and all otherproperties explicitly gated; benchmark genuine shipped product before speed/admission claims.",
+    "receipt_policy": "Final exactpaths/closeout before handoffhash; any later correction must use newversion preserving predecessor."
+  }
 }
