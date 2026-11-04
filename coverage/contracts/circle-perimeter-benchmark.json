@@ -1,0 +1,96 @@
+{
+  "schema": "circle-perimeter-benchmark-v1",
+  "reference_contract_sha256": "a7d8f24519c02f93d5a4077d8316f5e92f2180a19695d4360da7decf843ef65c",
+  "cases": [
+    {
+      "id": "bresenham/tiny",
+      "api": "draw.circle_perimeter",
+      "r": 4,
+      "c": 5,
+      "radius": 1,
+      "method": "bresenham",
+      "shape": null
+    },
+    {
+      "id": "bresenham/cache",
+      "api": "draw.circle_perimeter",
+      "r": 512,
+      "c": 512,
+      "radius": 256,
+      "method": "bresenham",
+      "shape": null
+    },
+    {
+      "id": "bresenham/long",
+      "api": "draw.circle_perimeter",
+      "r": 0,
+      "c": 0,
+      "radius": 32768,
+      "method": "bresenham",
+      "shape": null
+    },
+    {
+      "id": "bresenham/clipped",
+      "api": "draw.circle_perimeter",
+      "r": 0,
+      "c": 0,
+      "radius": 1024,
+      "method": "bresenham",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "andres/tiny",
+      "api": "draw.circle_perimeter",
+      "r": 4,
+      "c": 5,
+      "radius": 1,
+      "method": "andres",
+      "shape": null
+    },
+    {
+      "id": "andres/cache",
+      "api": "draw.circle_perimeter",
+      "r": 512,
+      "c": 512,
+      "radius": 256,
+      "method": "andres",
+      "shape": null
+    },
+    {
+      "id": "andres/long",
+      "api": "draw.circle_perimeter",
+      "r": 0,
+      "c": 0,
+      "radius": 32768,
+      "method": "andres",
+      "shape": null
+    },
+    {
+      "id": "andres/clipped",
+      "api": "draw.circle_perimeter",
+      "r": 0,
+      "c": 0,
+      "radius": 1024,
+      "method": "andres",
+      "shape": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 112,
+  "warmup_groups": 16,
+  "native_entry": "draw_circle_perimeter",
+  "scope": "Initial descriptive allocation-inclusive public-call comparison, not an optimization KEEP decision or whole-library speed claim; every loss retained.",
+  "dtype_scope": "Integer coordinate/radius parameters and intp coordinate outputs; no image pixel dtype claim.",
+  "output_bound": "At most16*(radius+1) coordinate elements per nonnegative-radius case, separate from small reference observer quota.",
+  "oracle_scope": "Exact live original output/storage plus frozen57-case native proof and symmetry/bounds controls; no separate third algorithm oracle claimed."
+}

@@ -2,11 +2,9 @@
 
 Reference: scikit-image 0.26.0.
 
-Source registers251 partial image APIs,3 metadata functions and5 partial native classes. Four drawing APIs are merged after genuine minimum251 preparation with178 product/84 SDK files, normal/scalar public parity and an actual SDK84 client. One-thread12-case drawing measurement is next. The accepted four-profile baseline remains247 APIs at exactf1f9c42; source readiness and measured speed remain distinct.
+This generated table describes source declarations. See the [execution plan](EXECUTION_PLAN.md) for the exact qualified source, accepted evidence and remaining gates.
 
-Latest qualified product: `f1f9c4219a0f38da3c5a884b96af44d54b416ff0`, [run40808956338](https://github.com/bipxx/scikit-imagexx/actions/runs/40808956338):247 partial image APIs across four profiles,907,400 public XML checks with no failures/errors/skips,208 installed-SDK checks and48 corpora. The [root admission](evidence/public247-whole-product-admission.json) preserves the earlier241/203 receipts. This is scoped per-function qualification, separate from whole-library speed or full API parity.
-
-477 public callable names inventoried in20 modules;251 have partially native image implementations and3 have metadata-only execution. Five partial native classes and one exception metadata provider are separate;217 names remain upstream-only. Per-function test/benchmark paths identify evidence routes, not automatic proof of parity or speed.
+477 public callable names inventoried in 20 modules; 252 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -95,7 +93,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `data.text` | upstream-only | pending | pending |
 | `data.vortex` | upstream-only | pending | pending |
 | `draw.bezier_curve` | upstream-only | pending | pending |
-| `draw.circle_perimeter` | upstream-only | pending | pending |
+| `draw.circle_perimeter` | native-partial | yes (partial input contract) | yes |
 | `draw.circle_perimeter_aa` | upstream-only | pending | pending |
 | `draw.disk` | native-partial | yes (partial input contract) | yes |
 | `draw.ellipse` | native-partial | yes (partial input contract) | yes |

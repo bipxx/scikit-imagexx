@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
     (('draw.line','draw.rectangle','draw.disk','draw.ellipse'),
      'tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline','benchmarks/draw_coordinates.py'),
     (('segmentation.checkerboard_level_set','segmentation.disk_level_set'),
@@ -163,6 +164,10 @@ def inventory():
                             'execution_kind': execution_kind(path) if path in native else 'upstream',
                             'parity_test': evidence[0] if path in native else None,
                             'benchmark': evidence[1] if path in native else None})
+            if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
+                entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
+            elif path == 'draw.circle_perimeter':
+                entries[-1]['default_input_kind']='coordinate-shape-only; dtype labels are descriptor carriers, not pixel or coordinate-argument dtype coverage'
             if module in ('filters.rank.generic','filters.rank.bilateral'):
                 canonical=getattr(importlib.import_module('skimage.filters.rank'),name)
                 if value is not canonical:raise ValueError(f'Rank alias identity changed: {path}')
@@ -195,6 +200,7 @@ def main():
     class_count=sum(e['implementation']=='native-class-partial' for e in entries)
     exception_count=sum(e['implementation']=='exception-metadata-provider' for e in entries)
     lines = ['# API implementation inventory', '', f'Reference: scikit-image {skimage.__version__}.', '',
+             'This generated table describes source declarations. See the [execution plan](EXECUTION_PLAN.md) for the exact qualified source, accepted evidence and remaining gates.', '',
              f'{len(entries)} public callable names inventoried in {len(MODULES)} modules; '
              f'{kernels} have partially native image implementations and {metadata} '
              f'{"has" if metadata == 1 else "have"} metadata-only execution. '

@@ -651,3 +651,4 @@ benchmarks/draw-line-boundary-same-host.json -text
 coverage/contracts/line-aa.json -text
 
 benchmarks/circle-perimeter-minimum-initial.json -text
+coverage/contracts/circle-perimeter-benchmark.json -text

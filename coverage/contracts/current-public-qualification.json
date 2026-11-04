@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current251",
+  "scope": "current252",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -458,7 +458,8 @@
     "draw.line",
     "draw.rectangle",
     "draw.disk",
-    "draw.ellipse"
+    "draw.ellipse",
+    "draw.circle_perimeter"
   ],
   "metadata_paths": [
     "color.xyz_tristimulus_values",
@@ -513,7 +514,8 @@
     "draw.line": "tests/test_draw_coordinates_integration.py",
     "draw.rectangle": "tests/test_draw_coordinates_integration.py",
     "draw.disk": "tests/test_draw_coordinates_integration.py",
-    "draw.ellipse": "tests/test_draw_coordinates_integration.py"
+    "draw.ellipse": "tests/test_draw_coordinates_integration.py",
+    "draw.circle_perimeter": "tests/test_circle_perimeter_public.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -567,14 +569,17 @@
     "tests/test_subdivide_polygon_integration.py",
     "tests/test_subdivide_polygon_pipeline.py",
     "tests/test_draw_coordinates_public.py",
-    "tests/test_draw_coordinates_integration.py"
+    "tests/test_draw_coordinates_integration.py",
+    "tests/test_circle_perimeter_contract.py",
+    "tests/test_circle_perimeter_public.py"
   ],
-  "SDK_scope": "current27 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives and drawing coordinates); source readiness is not qualification acceptance",
+  "SDK_scope": "current28 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates and circle perimeter); source readiness is not qualification acceptance",
   "required_client_families": [
     "colocalization",
     "footprint_shapes",
     "recent_primitives",
-    "draw_coordinates"
+    "draw_coordinates",
+    "circle_perimeter"
   ],
   "required_client_headers": [
     "include/skimagexx/colocalization.hpp",
@@ -591,6 +596,7 @@
     "include/skimagexx/rolling_ball_kernels.hpp",
     "include/skimagexx/approximate_polygon.hpp",
     "include/skimagexx/subdivide_polygon.hpp",
-    "include/skimagexx/draw_coordinates.hpp"
+    "include/skimagexx/draw_coordinates.hpp",
+    "include/skimagexx/circle_perimeter.hpp"
   ]
 }
