@@ -7,11 +7,35 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "circle-perimeter-native-v1",
+      "kind": "private_foundation",
+      "owner": "next_family_contract",
+      "branch": "feature/circle-perimeter-contract-v1",
+      "base_sha": "b40350931e817a88245bbec277d1f7c3cadf816f",
+      "state": "implementing",
+      "apis": [],
+      "owns": [
+        "include/skimagexx/circle_perimeter.hpp",
+        "src/circle_perimeter.cpp",
+        "tests/test_circle_perimeter_native.cpp"
+      ],
+      "depends_on": [
+        "circle-perimeter-contract-v1"
+      ],
+      "dependency_requirements": {
+        "circle-perimeter-contract-v1": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "acceptance": "Exact source-order/duplicates/clipping count/fill native proof against saved safe observations, relevant portable/sanitizer/worker checks; scoped only. Task closeout includes waste/reuse and next-plan correction.",
+      "current_checkpoint": "Native preparation arithmetic once at boundary, serial ordered recurrence and global worker snapshot; no newpool, no original recapture, no public/API coverage credit yet."
+    },
+    {
       "id": "draw-line-boundary-optimization-v1",
       "kind": "optimization",
       "owner": "tiny_line_implementation",
       "branch": "optimize/draw-line-boundary-v1",
-      "state": "implementing",
+      "state": "preparing",
       "apis": [],
       "owns": [
         "python/skimagexx/_draw_coordinates.py",
@@ -21,7 +45,12 @@
       "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
       "depends_on": [],
       "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
-      "current_checkpoint": "Reuse existing audit; minimal exact-int/binder conversion candidate, native leaf unchanged. Component parity pending; no speed claim."
+      "current_checkpoint": "b2d4316 independently reviewed;1824 component checks pass with original rows/provider/worker/lifetime behavior. Identical-treecfb84 genuine minimum preparation41852799641 running; no timing or speed claim.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Freeze prospective unchanged12case comparison and bounded existing-workflow mode; root authenticates genuine preparation and dispatches one isolated measurement.",
+        "integration_destination": "main only after fixed optimization gates pass"
+      }
     },
     {
       "id": "public251-qualification-v1",
@@ -41,7 +70,7 @@
       "kind": "contract_reference",
       "owner": "next_family_contract",
       "branch": "feature/circle-perimeter-contract-v1",
-      "state": "contracting",
+      "state": "contracted",
       "apis": [
         "draw.circle_perimeter"
       ],
@@ -54,7 +83,23 @@
       "base_sha": "09943fff81581ae759915de75f26f82792b7e16b",
       "depends_on": [],
       "acceptance": "Scoped parity evidence plus task closeout: result/source, waste/reuse and next-plan correction or reviewed/no change; no claim from plans alone.",
-      "current_checkpoint": "Novel source-backed original-only contract for both methods before native implementation; no API credit."
+      "current_checkpoint": "Referenceb403509 merged after independent review;138 safe completed observations,140starts, no replay;154saved guards. Four unsafe shapeIDs perprofile remain explicit; no native credit.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "b40350931e817a88245bbec277d1f7c3cadf816f",
+          "passing_contract_checks": 154,
+          "manifest": {
+            "path": "build/circle-perimeter-capture-v1/handoff.json",
+            "sha256": "773d964d3ba4b7c038f6c7005b5b34dc136432d13ab3ff345d064d7aef016688"
+          }
+        }
+      },
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Implement frozen ordered native count/fill interface in separate packet, reusing saved observations; no new original calls.",
+        "integration_destination": "installed C++ and Python binding after native proof"
+      }
     },
     {
       "id": "resize-range-foundation",
@@ -35318,13 +35363,13 @@
         "public251-qualification-v1"
       ],
       "next_family_contract": [
-        "circle-perimeter-contract-v1"
+        "circle-perimeter-native-v1"
       ]
     },
     "current_three_agent_packets": {
       "tiny_line_implementation": "draw-line-boundary-optimization-v1",
       "qualification251_readiness": "public251-qualification-v1",
-      "next_family_contract": "circle-perimeter-contract-v1"
+      "next_family_contract": "circle-perimeter-native-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",

@@ -640,3 +640,5 @@ coverage/evidence/current247-qualification-v3.json -text
 coverage/evidence/public247-whole-product-admission.json -text
 
 benchmarks/draw-coordinates-minimum-initial.json -text
+
+coverage/contracts/circle-perimeter.json -text
