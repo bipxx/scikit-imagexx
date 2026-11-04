@@ -17,6 +17,7 @@ DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
     (('draw.line_aa',),'tests/test_line_aa_public.py::test_line_aa_saved_public_pipeline','benchmarks/line_aa.py'),
+    (('measure.regionprops',),'tests/test_regionprops_state_public.py::test_regionprops_state_saved_rows_exact_except_declared_distinct_class','benchmarks/regionprops_state.py'),
     (('draw.line','draw.rectangle','draw.disk','draw.ellipse'),
      'tests/test_draw_coordinates_integration.py::test_draw_captured_public_pipeline','benchmarks/draw_coordinates.py'),
     (('segmentation.checkerboard_level_set','segmentation.disk_level_set'),

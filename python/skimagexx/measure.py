@@ -78,3 +78,7 @@ __all__ += ['approximate_polygon']
 from ._subdivide_polygon import subdivide_polygon
 
 __all__ += ['subdivide_polygon']
+
+from ._regionprops_state import regionprops
+
+__all__ += ['regionprops']

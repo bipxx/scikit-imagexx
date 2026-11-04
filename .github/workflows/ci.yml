@@ -370,9 +370,9 @@ jobs:
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Circle perimeter frozen public and native witness contracts
-        run: python -m pytest -q tests/test_circle_perimeter_public.py --junitxml=build/ci-artifacts/circle-perimeter-normal.xml
+        run: python -m pytest -q tests/test_circle_perimeter_public.py tests/test_circle_perimeter_unsafe_boundary.py --junitxml=build/ci-artifacts/circle-perimeter-normal.xml
       - name: Circle perimeter contracts with SIMD disabled
-        run: python -m pytest -q tests/test_circle_perimeter_public.py --junitxml=build/ci-artifacts/circle-perimeter-scalar.xml
+        run: python -m pytest -q tests/test_circle_perimeter_public.py tests/test_circle_perimeter_unsafe_boundary.py --junitxml=build/ci-artifacts/circle-perimeter-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Anti-aliased line saved public and shipping defaults
@@ -381,6 +381,17 @@ jobs:
         run: python -m pytest -q tests/test_line_aa_reference.py tests/test_line_aa_public.py tests/test_line_aa_default.py --junitxml=build/ci-artifacts/line-aa-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: RegionProperties saved state and shipping defaults
+        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_state_benchmark.py --junitxml=build/ci-artifacts/regionprops-state-normal.xml
+        env:
+          SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-normal-rows
+          SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-normal-rows
+      - name: RegionProperties state contracts with SIMD disabled
+        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py --junitxml=build/ci-artifacts/regionprops-state-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+          SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-scalar-rows
+          SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-scalar-rows
       - name: Drawing frozen public parity and prepared native pipelines
         run: python -m pytest -q tests/test_draw_coordinates_public.py tests/test_draw_coordinates_integration.py --junitxml=build/ci-artifacts/draw-coordinates-normal.xml
       - name: Drawing public parity and prepared pipelines with SIMD disabled
@@ -609,6 +620,8 @@ jobs:
       - run: python benchmarks/circle_perimeter.py --threads 1 --repeat 7 --output build/ci-circle-perimeter.json
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/line_aa.py --threads 1 --repeat 7 --output build/ci-line-aa.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      - run: python benchmarks/regionprops_state.py --threads 1 --repeat 7 --output build/ci-regionprops-state.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
@@ -654,6 +667,9 @@ jobs:
             build/ci-line-aa.json
             build/ci-line-aa.md
             build/ci-line-aa.batches.jsonl
+            build/ci-regionprops-state.json
+            build/ci-regionprops-state.md
+            build/ci-regionprops-state.batches.jsonl
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:

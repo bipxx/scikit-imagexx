@@ -243,7 +243,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/approximate_polygon.py --threads 1 --repeat 7 --output build/ci-approximate-polygon.json',
         'python benchmarks/subdivide_polygon.py --threads 1 --repeat 7 --output build/ci-subdivide-polygon.json',
         'python benchmarks/circle_perimeter.py --threads 1 --repeat 7 --output build/ci-circle-perimeter.json',
-        'python benchmarks/line_aa.py --threads 1 --repeat 7 --output build/ci-line-aa.json']
+        'python benchmarks/line_aa.py --threads 1 --repeat 7 --output build/ci-line-aa.json',
+        'python benchmarks/regionprops_state.py --threads 1 --repeat 7 --output build/ci-regionprops-state.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -531,7 +532,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 31 and all(condition in step for step in timed)
+    assert len(timed) == 32 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -547,8 +548,8 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 31 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/line_aa.py ' in timed[-1]
+    assert len(timed) == 32 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1] and 'benchmarks/regionprops_state.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -576,7 +577,8 @@ def test_measure_contracts_precede_freeze(stem):
                                              ('measure.blur_effect', 'blur_default_error'),
                                              ('util.compare_images', 'compare_default_error'),
                                              ('util.map_array', 'map_array_default_error'), ('util.label_points', 'label_points_default_error'), ('util.unique_rows', 'unique_rows_default_error'),
-                                             ('util.montage', 'montage_default_error')))
+                                             ('util.montage', 'montage_default_error'),
+                                             ('measure.regionprops', 'regionprops_default_error')))
 def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_name):
     tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
     imports = [n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'skimagexx.coverage']
@@ -790,6 +792,6 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
     assert "str(ROOT / 'tests/test_api.py')" in feature_source
     contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
-    assert contract['scope']=='current253'
-    assert len(contract['image_paths'])==253 and len(contract['metadata_paths'])==3
+    assert contract['scope']=='current254'
+    assert len(contract['image_paths'])==254 and len(contract['metadata_paths'])==3
     assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py','tests/test_line_aa_reference.py','tests/test_line_aa_public.py','tests/test_line_aa_default.py'}<=set(contract['required_selectors'])

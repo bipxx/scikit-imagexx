@@ -67,7 +67,7 @@ def test_regionprops_state_saved_rows_exact_except_declared_distinct_class(spec,
         if spec['rejection']is None or spec['rejection']=='spacing':assert returns.count('prepare')==1 and any(witnesses)
         else:assert not returns
         if actual['regions']:assert set(returns)=={'prepare','image','population','coords'}and all(witnesses)
-        folder=Path(os.environ['SKIMAGEXX_REGIONPROPS_ROWS_DIR']);folder.mkdir(parents=True,exist_ok=True)
+        folder=Path(os.environ.get('SKIMAGEXX_REGIONPROPS_ROWS_DIR', ROOT / 'build' / 'regionprops-state-rows'));folder.mkdir(parents=True,exist_ok=True)
         (folder/(spec['id'].split('/')[-1]+'-workers'+str(workers)+'.json')).write_text(json.dumps(actual,indent=2,allow_nan=False)+'\n')
     finally:sys.setprofile(old_profile);xx.set_num_threads(old)
 
