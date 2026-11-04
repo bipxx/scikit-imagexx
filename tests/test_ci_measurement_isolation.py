@@ -241,7 +241,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/montage.py --threads 1 --repeat 7 --output build/ci-montage.json',
         'python benchmarks/rolling_ball_kernels.py --threads 1 --repeat 7 --output build/ci-rolling-ball-kernels.json',
         'python benchmarks/approximate_polygon.py --threads 1 --repeat 7 --output build/ci-approximate-polygon.json',
-        'python benchmarks/subdivide_polygon.py --threads 1 --repeat 7 --output build/ci-subdivide-polygon.json']
+        'python benchmarks/subdivide_polygon.py --threads 1 --repeat 7 --output build/ci-subdivide-polygon.json',
+        'python benchmarks/circle_perimeter.py --threads 1 --repeat 7 --output build/ci-circle-perimeter.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 

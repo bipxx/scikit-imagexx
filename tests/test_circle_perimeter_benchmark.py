@@ -20,6 +20,11 @@ def test_circle_benchmark_cases_and_bound_are_prospective():
     assert contract['warmup_groups'] == 16 and contract['target_ms'] == 100
     method = json.loads((ROOT/'coverage/contracts/draw-coordinates-benchmark.json').read_bytes())
     assert contract['method_sha256'] == method['method_sha256']
+    workflow = (ROOT/'.github/workflows/ci.yml').read_text()
+    measure_job = workflow.split('  measure-minimum:', 1)[1].split('  debug-gil:', 1)[0]
+    for name in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS', 'BLIS_NUM_THREADS'):
+        assert name+": '1'" in measure_job
+
 
 
 def test_circle_benchmark_module_import_has_no_scientific_side_effects(monkeypatch):

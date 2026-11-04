@@ -524,6 +524,7 @@ jobs:
     env:
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
       OMP_WAIT_POLICY: PASSIVE
     steps:
