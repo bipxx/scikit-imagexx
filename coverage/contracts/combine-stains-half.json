@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "api": "color.combine_stains",
+  "signature": "(stains, conv_matrix, *, channel_axis=-1)",
+  "original_source_sha256": {
+    "colorconv": "fc5f49ac194c229325f21ddbe4c49f7df4307b9627dfbb5fcd2825133144fdfe",
+    "utils": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1",
+    "dtype": "d4f99f88966e4d0dbbe80a3c0b8acb3890644cc5fbfb707ba9b5a90e9119e627"
+  },
+  "cases": [
+    {
+      "id": "combine-half/standard-f32",
+      "api": "color.combine_stains",
+      "layout": "c",
+      "matrix": "standard",
+      "matrix_dtype": "float32",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/standard-f64",
+      "api": "color.combine_stains",
+      "layout": "c",
+      "matrix": "standard",
+      "matrix_dtype": "float64",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/custom-k0",
+      "api": "color.combine_stains",
+      "layout": "c",
+      "matrix": "k0",
+      "matrix_dtype": "float32",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/custom-k1",
+      "api": "color.combine_stains",
+      "layout": "c",
+      "matrix": "k1",
+      "matrix_dtype": "float32",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/custom-k7",
+      "api": "color.combine_stains",
+      "layout": "c",
+      "matrix": "k7",
+      "matrix_dtype": "float32",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "combine-half/channel-zero",
+      "api": "color.combine_stains",
+      "layout": "planar",
+      "matrix": "standard",
+      "matrix_dtype": "float64",
+      "channel_axis": 0,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/reverse",
+      "api": "color.combine_stains",
+      "layout": "reverse",
+      "matrix": "standard",
+      "matrix_dtype": "float64",
+      "channel_axis": -1,
+      "policy": {
+        "all": "raise"
+      },
+      "holdout": true
+    },
+    {
+      "id": "combine-half/fortran",
+      "api": "color.combine_stains",
+      "layout": "f",
+      "matrix": "standard",
+      "matrix_dtype": "float32",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/readonly-unaligned",
+      "api": "color.combine_stains",
+      "layout": "readonly-unaligned",
+      "matrix": "standard",
+      "matrix_dtype": "float64",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/empty",
+      "api": "color.combine_stains",
+      "layout": "empty",
+      "matrix": "standard",
+      "matrix_dtype": "float32",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "combine-half/pixel",
+      "api": "color.combine_stains",
+      "layout": "pixel",
+      "matrix": "standard",
+      "matrix_dtype": "float64",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "combine-half/dtype-metadata",
+      "api": "color.combine_stains",
+      "layout": "metadata",
+      "matrix": "standard",
+      "matrix_dtype": "float32",
+      "channel_axis": -1,
+      "policy": {},
+      "holdout": false
+    }
+  ],
+  "source_freeze": {
+    "tests/combine_stains_half_contract.py": "006ef69f6fbfcda52156997d72869cd68878861f47e9aa976222056469371433",
+    "tests/combine_stains_half_observer.py": "ab191e1a50cbd90a4f7e07b207cf834508a2e82a6830eebb36e9a0208d90d5ca",
+    "tests/test_combine_stains_half_reference.py": "10da6ae4b59d970841248c12aec912eb9265024aedad6fa05868b243665b50e1",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "python/skimagexx/coverage.py": "cbc6ea90b835a27bf2e5e9cf03e61175e428123badbe69e6033a1553a5cd32f1",
+    "tests/test_stains.py": "127a0cb32d18e95e542b3912fc85a8e56679d8e8bb4de43674277ad92a17bcc9"
+  },
+  "numerical_policy": {
+    "prepared_input": "float32",
+    "rtol": 2e-06,
+    "atol": 2e-06,
+    "matrix_scale": "multiply atol by max(1,max(sum(abs(matrix),axis=0))); empty matrix scale1",
+    "provenance": "Unchanged float32 branch of coverage.parity_tolerance plus tests/test_stains.py::compare",
+    "structural": "Exact observed dtype/metadata/shape/layout/container/errors/warnings/input-state and alias rules; raw original words retained, not universally bitwise candidate arithmetic",
+    "no_relaxation": "Policy frozen before original or candidate observations; no float16-labelled weaker budget"
+  },
+  "max_input_elements": 24,
+  "max_output_elements": 64,
+  "source_audit": {
+    "scope": "ONLYfinite plainnative-endianfloat16 inputs with3channels; numeric2D3xK float32/64matrix",
+    "prepare": "Original_prepare_colorarray->_supported_float_type explicitlyhalf->float32;img_as_float32 float cast without scaling; convertedmetadata/layoutobserved ratherthanassumed",
+    "formula": "-(prepared_stains*(-np.log(1e-6)))@conv_matrix; exp; clip0..1; channelaxis wrapper movesinputto-last/outputback",
+    "safety": "Atmost24halfinputs,21matrixcoefficients,56outputelements; |input|<=.75, |matrix|<=1, adjust<14 => |exponent|<=31.5; finitefloat32 no exp overflow/underflow; validNumPyownedallocations/views, no forgedspans",
+    "layout": "C/F, planaraxis0, negativepixel/channelsteps, readonlyunaligned, empty,pixel, inputdtype metadata; exactoriginaloutputlayout/metadatarecorded",
+    "calls": "Bothcomplete12ID actualobserver/controller intakes with originals/native refused MUSTpass before once-onlyoriginals; no candidate expectations"
+  },
+  "unassessed": [
+    "Other stain APIs remain unchanged; no native/public completion credit from reference",
+    "Nonfinite or extreme half values, overflow/underflow warnings and hardware floating environment",
+    "Non-native endian, image/matrix subclasses, object/complex/protocol providers",
+    "Rank1/batched/broadcast matrices and malformed channel axes/shapes",
+    "Concurrent mutation, forged storage, allocation failure or unbounded allocation"
+  ],
+  "original_observations": {},
+  "original_provenance": {},
+  "native_implementation": "pending",
+  "task_closeout": {
+    "status": "prospective",
+    "reuse": "Reuseoldsourcepins/runtimes/encoder and currentf32policy; no newenv/build/benchmark",
+    "next_plan_correction": "Referenceowner completesbothoriginal-refusalintakes before safeonce-onlyoriginals; root/implementation lane waits independentreference review"
+  }
+}
