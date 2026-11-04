@@ -1,0 +1,1161 @@
+{
+  "schema": "regionprops-runtime-surface-discovery-v1",
+  "reference_version": "0.26.0",
+  "status": "SOURCE_DISCOVERY_ONLY_NO_NUMERICAL_OR_NATIVE_ACCEPTANCE",
+  "entry_points": [
+    "measure.regionprops",
+    "measure.regionprops_table"
+  ],
+  "runtime_type": "skimage.measure._regionprops.RegionProperties",
+  "existing_static_inventory": {
+    "path": "coverage/api.json",
+    "class_count": 29,
+    "static_member_count": 284,
+    "reused_scope": "Static public descriptors and custom data-model methods, including inherited members. This record adds returned runtime surface discovery only; generated477 inventory and routes unchanged.",
+    "RegionProperties_exported_class_entry": false
+  },
+  "source_provenance": {
+    "origin": "Previously retained official PyPI0.26.0 sdist; no new download or environment",
+    "sdist_sha256": "f5f970ab04efad85c24714321fcc91613fcb64ef2a892a13167df2f3e59199fa",
+    "license": "third_party/scikit-image-LICENSE.txt",
+    "files": {
+      "_regionprops.py": {
+        "archive_path": "scikit_image-0.26.0/src/skimage/measure/_regionprops.py",
+        "canonical_lf_sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007"
+      },
+      "_regionprops_utils.py": {
+        "archive_path": "scikit_image-0.26.0/src/skimage/measure/_regionprops_utils.py",
+        "canonical_lf_sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+      },
+      "test_regionprops.py": {
+        "archive_path": "scikit_image-0.26.0/tests/skimage/measure/test_regionprops.py",
+        "canonical_lf_sha256": "3ea741a5e92a7c3438a2dd92d9c25366b06e765ce94e05dac22645e40223c29e"
+      }
+    }
+  },
+  "summary": {
+    "canonical": 44,
+    "property_descriptors": 42,
+    "public_instance_fields": 2,
+    "deprecated_aliases": 61,
+    "alias_targets_and_iterated_with_intensity": 41,
+    "intensity_required": 12,
+    "cached_descriptors": 15,
+    "only_2d_descriptors": 6,
+    "custom_data_model_methods": 7
+  },
+  "properties": [
+    {
+      "name": "area",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "mask_bbox",
+      "source_line": 456,
+      "body_sha256": "1378f88960900ca666cc8629c7e7ddbee51b8ebcb7b55f8229ec284bbe0b8310"
+    },
+    {
+      "name": "area_bbox",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "mask_bbox",
+      "source_line": 473,
+      "body_sha256": "d4fcd1194fab47d09edefee3bc87e3710518e69c1eaf5282301cba5045b24b64"
+    },
+    {
+      "name": "area_convex",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image_convex"
+      ],
+      "route": "convex_feret",
+      "source_line": 482,
+      "body_sha256": "b4c8b7c1cdae842c993180541fd90d13182b62c78ed90160412a6653938a1e8f"
+    },
+    {
+      "name": "area_filled",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image_filled"
+      ],
+      "route": "fill_topology",
+      "source_line": 543,
+      "body_sha256": "e99040529e00d9158abc9e5d7356a0cb858905660ebf21e5449861d51b3b7ffd"
+    },
+    {
+      "name": "axis_major_length",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "inertia_tensor_eigvals"
+      ],
+      "route": "moments_axes",
+      "source_line": 619,
+      "body_sha256": "81ff901958eda8c6f0bba9c035ff60361500fec6d47ee780078814f8ae7a3fd2"
+    },
+    {
+      "name": "axis_minor_length",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "inertia_tensor_eigvals"
+      ],
+      "route": "moments_axes",
+      "source_line": 632,
+      "body_sha256": "62115b09f94aef5a011662624a889b2b71551a4f937b4ac87736d9f2efe18c4f"
+    },
+    {
+      "name": "bbox",
+      "kind": "property",
+      "table_dtype": "int",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "slice"
+      ],
+      "route": "mask_bbox",
+      "source_line": 460,
+      "body_sha256": "750d36e9ba296f84551ed2aacb7d3a8f827b0d8e66a1e2aa5ee26a864940dd3b"
+    },
+    {
+      "name": "centroid",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "coords_scaled"
+      ],
+      "route": "mask_bbox",
+      "source_line": 477,
+      "body_sha256": "12bd62730481f1a4b00ac53e4ec2e50ae8c40123eb50f9afbc8a8a1dc02f4227"
+    },
+    {
+      "name": "centroid_local",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "moments"
+      ],
+      "route": "moments_axes",
+      "source_line": 584,
+      "body_sha256": "0d5f3b04d95aa46150c42abcf727012ba9522b329358c564c87faf61c8090aa4"
+    },
+    {
+      "name": "centroid_weighted",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "centroid_weighted_local",
+        "slice"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 707,
+      "body_sha256": "2a867aadc81cc79b420784c313fb6cbca6e23281d2dd8d2e34efde49e2bcdd7f"
+    },
+    {
+      "name": "centroid_weighted_local",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "moments_weighted"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 715,
+      "body_sha256": "841beb3b41ddb938261fd93ce4e2264dc01eef0f10d85b980ccd979ab732a9c3"
+    },
+    {
+      "name": "coords",
+      "kind": "property",
+      "table_dtype": "object",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image",
+        "slice"
+      ],
+      "route": "mask_bbox",
+      "source_line": 499,
+      "body_sha256": "7c23b9c99615f8b2bd32eddb1bac1a7a1a5ef9b65975779795680f07ccca4a94"
+    },
+    {
+      "name": "coords_scaled",
+      "kind": "property",
+      "table_dtype": "object",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": false,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "slice"
+      ],
+      "route": "mask_bbox",
+      "source_line": 493,
+      "body_sha256": "a170e2b41dfc7fe1fc80c7ba83d578814881f285c543b8024641c93f4d97b1a4"
+    },
+    {
+      "name": "eccentricity",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": true,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "inertia_tensor_eigvals"
+      ],
+      "route": "moments_axes",
+      "source_line": 506,
+      "body_sha256": "37c77faea60996f9de59a4410ece3cea4c398223e9177b904dd28fe63ec427c2"
+    },
+    {
+      "name": "equivalent_diameter_area",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "area"
+      ],
+      "route": "mask_bbox",
+      "source_line": 513,
+      "body_sha256": "c13e412670e9461079806357b1f08a45181da10b2fa9425fa995d521d7340a16"
+    },
+    {
+      "name": "euler_number",
+      "kind": "property",
+      "table_dtype": "int",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "fill_topology",
+      "source_line": 517,
+      "body_sha256": "a54480d04c347eefaaee6b423eafbb7ad50211752beed463e3c31d7dd2bf8adb"
+    },
+    {
+      "name": "extent",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "area",
+        "area_bbox"
+      ],
+      "route": "mask_bbox",
+      "source_line": 525,
+      "body_sha256": "b9b58801a9d7e3f253c7835aae60642ea6db7c41a5c8aaf409fe9da05b0f090d"
+    },
+    {
+      "name": "feret_diameter_max",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image_convex"
+      ],
+      "route": "convex_feret",
+      "source_line": 529,
+      "body_sha256": "a721da8405c7f6b60fb74b67fbfe0f0feaca1ab69831cf77f04593226c0b59b9"
+    },
+    {
+      "name": "image",
+      "kind": "property",
+      "table_dtype": "object",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "label",
+        "slice"
+      ],
+      "route": "mask_bbox",
+      "source_line": 554,
+      "body_sha256": "36ef88eb3f4c8c4cf6ec3a97f947e472126ae627f040cf169bc9c9b9a14734b5"
+    },
+    {
+      "name": "image_convex",
+      "kind": "property",
+      "table_dtype": "object",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "convex_feret",
+      "source_line": 487,
+      "body_sha256": "fac91336e0a074b3eb906eb23470bccce4b8edfa09142c46f8cbc04023ab831e"
+    },
+    {
+      "name": "image_filled",
+      "kind": "property",
+      "table_dtype": "object",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "fill_topology",
+      "source_line": 548,
+      "body_sha256": "aaefa09fab7c41ae0ebc1d9a34d3a820fec95c46f2b084a102b93118079aaf7a"
+    },
+    {
+      "name": "image_intensity",
+      "kind": "property",
+      "table_dtype": "object",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "slice"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 570,
+      "body_sha256": "fee7e9b61053dca525a2eeccd6935eebbd13d741ad5c14b128b4fb18e4f2dbe8"
+    },
+    {
+      "name": "inertia_tensor",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image",
+        "moments_central"
+      ],
+      "route": "moments_axes",
+      "source_line": 559,
+      "body_sha256": "e39fb2ac91da41a2c2b8d231759755afc461d9f4d3d02d9f4f4e7b0ca0a3dc9e"
+    },
+    {
+      "name": "inertia_tensor_eigvals",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image",
+        "inertia_tensor"
+      ],
+      "route": "moments_axes",
+      "source_line": 565,
+      "body_sha256": "656ee5c1f79746688cbd216b2e10cb9faca10a7800a4a903e08e3222eaf861b4"
+    },
+    {
+      "name": "intensity_max",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "image_intensity"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 596,
+      "body_sha256": "b674ccdf5619945a7cf8926a6b7101450258610cd00bbb626a9c7e488631c38e"
+    },
+    {
+      "name": "intensity_mean",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "image_intensity"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 601,
+      "body_sha256": "2404121f5023112dcd9eb872eab161261491da89f04a02577fef77910e444fea"
+    },
+    {
+      "name": "intensity_median",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": false,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "image_intensity"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 605,
+      "body_sha256": "028430fc70d5b999b214bd070a4e368ad04b641058f1729b99a50c680fe67bfd"
+    },
+    {
+      "name": "intensity_min",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "image_intensity"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 609,
+      "body_sha256": "b0760ffda90eede32849eac6510b1715446fd825dc3ba2d9fcb8e701f879329e"
+    },
+    {
+      "name": "intensity_std",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "image_intensity"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 614,
+      "body_sha256": "096a09ebc3d2b06111afd27c84f17a877f759ec2850aa58315da244660e5ea61"
+    },
+    {
+      "name": "label",
+      "kind": "instance_field",
+      "table_dtype": "int",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [],
+      "route": "mask_bbox",
+      "source_line": null,
+      "body_sha256": null
+    },
+    {
+      "name": "moments",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "moments_axes",
+      "source_line": 647,
+      "body_sha256": "390f75d43615e61308cc5af9620c36e2282c3d971aa16418a3c5dae6a2591398"
+    },
+    {
+      "name": "moments_central",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "centroid_local",
+        "image"
+      ],
+      "route": "moments_axes",
+      "source_line": 653,
+      "body_sha256": "b884a37360d77b0210e9b1829a8d5351ac98a500a321ed1f04ca034421db7241"
+    },
+    {
+      "name": "moments_hu",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": true,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "moments_normalized"
+      ],
+      "route": "moments_axes",
+      "source_line": 664,
+      "body_sha256": "2f2d71485459efe0ca529bd941dc49ab1869a9954f88f539797d987c6bb056af"
+    },
+    {
+      "name": "moments_normalized",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "moments_central"
+      ],
+      "route": "moments_axes",
+      "source_line": 671,
+      "body_sha256": "709acd9d4fc6aa9fae6727512fbd465166ab2ee3baec7708924beabd0b24dc36"
+    },
+    {
+      "name": "moments_weighted",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [],
+      "route": "intensity_weighted",
+      "source_line": 728,
+      "body_sha256": "fcb0d7422eb88b84cea4ffee6f5223016e6a93c35c398c40b33abcd2ac3afaa8"
+    },
+    {
+      "name": "moments_weighted_central",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "centroid_weighted_local"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 744,
+      "body_sha256": "40e3965150e0fbb462540eddaab382a05d0430e776c418ff5df828cc056be187"
+    },
+    {
+      "name": "moments_weighted_hu",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": true,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "moments_weighted_normalized"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 763,
+      "body_sha256": "72290e92103c25897e25f6e4e0aaf491641a31c405fa2925ad4fce116b7b3244"
+    },
+    {
+      "name": "moments_weighted_normalized",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": true,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "moments_weighted_central"
+      ],
+      "route": "intensity_weighted",
+      "source_line": 778,
+      "body_sha256": "1392172a507cf5176e433c26d8b010e10b4f8da81bc7090b8648d813a3550f9e"
+    },
+    {
+      "name": "num_pixels",
+      "kind": "property",
+      "table_dtype": "int",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": true,
+      "iterated_with_intensity": false,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "mask_bbox",
+      "source_line": 451,
+      "body_sha256": "5703b64e65c93ebaa6e6f0f8ea484a3447b2458d6c951f34fcf1fb384754eb34"
+    },
+    {
+      "name": "orientation",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": true,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "inertia_tensor"
+      ],
+      "route": "moments_axes",
+      "source_line": 678,
+      "body_sha256": "86212e6e9d8bc6d25c143ae09ea81e666045a0ea31819ef6d27471a03d1a0401"
+    },
+    {
+      "name": "perimeter",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": true,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "fill_topology",
+      "source_line": 690,
+      "body_sha256": "a8653886dc5f66774219a137882721502e3197285488f6c4665caad91a436ff6"
+    },
+    {
+      "name": "perimeter_crofton",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": true,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "image"
+      ],
+      "route": "fill_topology",
+      "source_line": 697,
+      "body_sha256": "f0e601ba89673b26f667c2483c76e56bcd661b541e4964b5de60c0bff3e36b3e"
+    },
+    {
+      "name": "slice",
+      "kind": "instance_field",
+      "table_dtype": "object",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [],
+      "route": "mask_bbox",
+      "source_line": null,
+      "body_sha256": null
+    },
+    {
+      "name": "solidity",
+      "kind": "property",
+      "table_dtype": "float",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": true,
+      "iterated_without_intensity": true,
+      "canonical_dependencies": [
+        "area",
+        "area_convex"
+      ],
+      "route": "convex_feret",
+      "source_line": 703,
+      "body_sha256": "63bb414ee51718f6dd17033f7b02e330bae38e3d028a4f02ad63ba5d882237d1"
+    }
+  ],
+  "aliases": {
+    "Area": "area",
+    "BoundingBox": "bbox",
+    "BoundingBoxArea": "area_bbox",
+    "bbox_area": "area_bbox",
+    "CentralMoments": "moments_central",
+    "Centroid": "centroid",
+    "ConvexArea": "area_convex",
+    "convex_area": "area_convex",
+    "ConvexImage": "image_convex",
+    "convex_image": "image_convex",
+    "Coordinates": "coords",
+    "Eccentricity": "eccentricity",
+    "EquivDiameter": "equivalent_diameter_area",
+    "equivalent_diameter": "equivalent_diameter_area",
+    "EulerNumber": "euler_number",
+    "Extent": "extent",
+    "FeretDiameter": "feret_diameter_max",
+    "FeretDiameterMax": "feret_diameter_max",
+    "FilledArea": "area_filled",
+    "filled_area": "area_filled",
+    "FilledImage": "image_filled",
+    "filled_image": "image_filled",
+    "HuMoments": "moments_hu",
+    "Image": "image",
+    "InertiaTensor": "inertia_tensor",
+    "InertiaTensorEigvals": "inertia_tensor_eigvals",
+    "IntensityImage": "image_intensity",
+    "intensity_image": "image_intensity",
+    "Label": "label",
+    "LocalCentroid": "centroid_local",
+    "local_centroid": "centroid_local",
+    "MajorAxisLength": "axis_major_length",
+    "major_axis_length": "axis_major_length",
+    "MaxIntensity": "intensity_max",
+    "max_intensity": "intensity_max",
+    "MeanIntensity": "intensity_mean",
+    "mean_intensity": "intensity_mean",
+    "MinIntensity": "intensity_min",
+    "min_intensity": "intensity_min",
+    "std_intensity": "intensity_std",
+    "MinorAxisLength": "axis_minor_length",
+    "minor_axis_length": "axis_minor_length",
+    "Moments": "moments",
+    "NormalizedMoments": "moments_normalized",
+    "Orientation": "orientation",
+    "Perimeter": "perimeter",
+    "CroftonPerimeter": "perimeter_crofton",
+    "Slice": "slice",
+    "Solidity": "solidity",
+    "WeightedCentralMoments": "moments_weighted_central",
+    "weighted_moments_central": "moments_weighted_central",
+    "WeightedCentroid": "centroid_weighted",
+    "weighted_centroid": "centroid_weighted",
+    "WeightedHuMoments": "moments_weighted_hu",
+    "weighted_moments_hu": "moments_weighted_hu",
+    "WeightedLocalCentroid": "centroid_weighted_local",
+    "weighted_local_centroid": "centroid_weighted_local",
+    "WeightedMoments": "moments_weighted",
+    "weighted_moments": "moments_weighted",
+    "WeightedNormalizedMoments": "moments_weighted_normalized",
+    "weighted_moments_normalized": "moments_weighted_normalized"
+  },
+  "intensity_required": [
+    "centroid_weighted",
+    "centroid_weighted_local",
+    "image_intensity",
+    "intensity_max",
+    "intensity_mean",
+    "intensity_median",
+    "intensity_min",
+    "intensity_std",
+    "moments_weighted",
+    "moments_weighted_central",
+    "moments_weighted_hu",
+    "moments_weighted_normalized"
+  ],
+  "noniterated_canonical": [
+    "coords_scaled",
+    "intensity_median",
+    "num_pixels"
+  ],
+  "custom_data_model_methods": [
+    "__init__",
+    "__getattr__",
+    "__setattr__",
+    "__iter__",
+    "__getitem__",
+    "__eq__",
+    "__repr__"
+  ],
+  "private_helper_methods": [
+    "_image_intensity_double"
+  ],
+  "source_witnesses": {
+    "PROPS": {
+      "source": "PROPS = {\n    'Area': 'area',\n    'BoundingBox': 'bbox',\n    'BoundingBoxArea': 'area_bbox',\n    'bbox_area': 'area_bbox',\n    'CentralMoments': 'moments_central',\n    'Centroid': 'centroid',\n    'ConvexArea': 'area_convex',\n    'convex_area': 'area_convex',\n    # 'ConvexHull',\n    'ConvexImage': 'image_convex',\n    'convex_image': 'image_convex',\n    'Coordinates': 'coords',\n    'Eccentricity': 'eccentricity',\n    'EquivDiameter': 'equivalent_diameter_area',\n    'equivalent_diameter': 'equivalent_diameter_area',\n    'EulerNumber': 'euler_number',\n    'Extent': 'extent',\n    # 'Extrema',\n    'FeretDiameter': 'feret_diameter_max',\n    'FeretDiameterMax': 'feret_diameter_max',\n    'FilledArea': 'area_filled',\n    'filled_area': 'area_filled',\n    'FilledImage': 'image_filled',\n    'filled_image': 'image_filled',\n    'HuMoments': 'moments_hu',\n    'Image': 'image',\n    'InertiaTensor': 'inertia_tensor',\n    'InertiaTensorEigvals': 'inertia_tensor_eigvals',\n    'IntensityImage': 'image_intensity',\n    'intensity_image': 'image_intensity',\n    'Label': 'label',\n    'LocalCentroid': 'centroid_local',\n    'local_centroid': 'centroid_local',\n    'MajorAxisLength': 'axis_major_length',\n    'major_axis_length': 'axis_major_length',\n    'MaxIntensity': 'intensity_max',\n    'max_intensity': 'intensity_max',\n    'MeanIntensity': 'intensity_mean',\n    'mean_intensity': 'intensity_mean',\n    'MinIntensity': 'intensity_min',\n    'min_intensity': 'intensity_min',\n    'std_intensity': 'intensity_std',\n    'MinorAxisLength': 'axis_minor_length',\n    'minor_axis_length': 'axis_minor_length',\n    'Moments': 'moments',\n    'NormalizedMoments': 'moments_normalized',\n    'Orientation': 'orientation',\n    'Perimeter': 'perimeter',\n    'CroftonPerimeter': 'perimeter_crofton',\n    # 'PixelIdxList',\n    # 'PixelList',\n    'Slice': 'slice',\n    'Solidity': 'solidity',\n    # 'SubarrayIdx'\n    'WeightedCentralMoments': 'moments_weighted_central',\n    'weighted_moments_central': 'moments_weighted_central',\n    'WeightedCentroid': 'centroid_weighted',\n    'weighted_centroid': 'centroid_weighted',\n    'WeightedHuMoments': 'moments_weighted_hu',\n    'weighted_moments_hu': 'moments_weighted_hu',\n    'WeightedLocalCentroid': 'centroid_weighted_local',\n    'weighted_local_centroid': 'centroid_weighted_local',\n    'WeightedMoments': 'moments_weighted',\n    'weighted_moments': 'moments_weighted',\n    'WeightedNormalizedMoments': 'moments_weighted_normalized',\n    'weighted_moments_normalized': 'moments_weighted_normalized',\n}",
+      "canonical_lf_sha256": "d1f90b26b152007cecdca033ba63ac78c4654001d94dedc5e6f3ba35ffde695e"
+    },
+    "COL_DTYPES": {
+      "source": "COL_DTYPES = {\n    'area': float,\n    'area_bbox': float,\n    'area_convex': float,\n    'area_filled': float,\n    'axis_major_length': float,\n    'axis_minor_length': float,\n    'bbox': int,\n    'centroid': float,\n    'centroid_local': float,\n    'centroid_weighted': float,\n    'centroid_weighted_local': float,\n    'coords': object,\n    'coords_scaled': object,\n    'eccentricity': float,\n    'equivalent_diameter_area': float,\n    'euler_number': int,\n    'extent': float,\n    'feret_diameter_max': float,\n    'image': object,\n    'image_convex': object,\n    'image_filled': object,\n    'image_intensity': object,\n    'inertia_tensor': float,\n    'inertia_tensor_eigvals': float,\n    'intensity_max': float,\n    'intensity_mean': float,\n    'intensity_median': float,\n    'intensity_min': float,\n    'intensity_std': float,\n    'label': int,\n    'moments': float,\n    'moments_central': float,\n    'moments_hu': float,\n    'moments_normalized': float,\n    'moments_weighted': float,\n    'moments_weighted_central': float,\n    'moments_weighted_hu': float,\n    'moments_weighted_normalized': float,\n    'num_pixels': int,\n    'orientation': float,\n    'perimeter': float,\n    'perimeter_crofton': float,\n    'slice': object,\n    'solidity': float,\n}",
+      "canonical_lf_sha256": "867f07a49216b8a4c88afadae04419c42c0c96e03bf95613e2491ecd78ba0297"
+    },
+    "_require_intensity_image": {
+      "source": "_require_intensity_image = (\n    'image_intensity',\n    'intensity_max',\n    'intensity_mean',\n    'intensity_median',\n    'intensity_min',\n    'intensity_std',\n    'moments_weighted',\n    'moments_weighted_central',\n    'centroid_weighted',\n    'centroid_weighted_local',\n    'moments_weighted_hu',\n    'moments_weighted_normalized',\n)",
+      "canonical_lf_sha256": "815306d2c79904b09d2d6ea720f0b17e5217ff509b43c11161c24feea4821fa6"
+    },
+    "RegionProperties": {
+      "source": "class RegionProperties:\n    \"\"\"Provides properties of a labeled image region.\n\n    Please refer to `skimage.measure.regionprops` for more information\n    on the available region properties.\n\n    Examples\n    --------\n    >>> RegionProperties(\n    ...     slice=(slice(0, 2), slice(0, 4)),\n    ...     label=2,\n    ...     label_image=np.array([[0, 1, 1, 2, 0], [2, 2, 2, 2, 0]]),\n    ...     intensity_image=None,\n    ...     cache_active=False,\n    ... )\n    <RegionProperties: label=2, bbox=(0, 0, 2, 4)>\n    \"\"\"\n\n    def __init__(\n        self,\n        slice,\n        label,\n        label_image,\n        intensity_image,\n        cache_active,\n        *,\n        extra_properties=None,\n        spacing=None,\n        offset=None,\n    ):\n        if intensity_image is not None:\n            ndim = label_image.ndim\n            if not (\n                intensity_image.shape[:ndim] == label_image.shape\n                and intensity_image.ndim in [ndim, ndim + 1]\n            ):\n                raise ValueError(\n                    'Label and intensity image shapes must match,'\n                    ' except for channel (last) axis.'\n                )\n            multichannel = label_image.shape < intensity_image.shape\n        else:\n            multichannel = False\n\n        self.label = label\n        if offset is None:\n            offset = np.zeros((label_image.ndim,), dtype=int)\n        self._offset = np.array(offset)\n\n        self._slice = slice\n        self.slice = slice\n        self._label_image = label_image\n        self._intensity_image = intensity_image\n\n        self._cache_active = cache_active\n        self._cache = {}\n        self._ndim = label_image.ndim\n        self._multichannel = multichannel\n        self._spatial_axes = tuple(range(self._ndim))\n        if spacing is None:\n            spacing = np.full(self._ndim, 1.0)\n        self._spacing = _normalize_spacing(spacing, self._ndim)\n        self._pixel_area = np.prod(self._spacing)\n\n        self._extra_properties = {}\n        if extra_properties is not None:\n            for func in extra_properties:\n                name = func.__name__\n                if hasattr(self, name):\n                    msg = (\n                        f\"Extra property '{name}' is shadowed by existing \"\n                        f\"property and will be inaccessible. Consider \"\n                        f\"renaming it.\"\n                    )\n                    warn(msg)\n            self._extra_properties = {func.__name__: func for func in extra_properties}\n\n    def __getattr__(self, attr):\n        if attr == \"__setstate__\":\n            # When deserializing this object with pickle, `__setstate__`\n            # is accessed before any other attributes like `self._intensity_image`\n            # are available which leads to a RecursionError when trying to\n            # access them later on in this function. So guard against this by\n            # provoking the default AttributeError (gh-6465).\n            return self.__getattribute__(attr)\n\n        if self._intensity_image is None and attr in _require_intensity_image:\n            raise AttributeError(\n                f\"Attribute '{attr}' unavailable when `intensity_image` \"\n                f\"has not been specified.\"\n            )\n        if attr in self._extra_properties:\n            func = self._extra_properties[attr]\n            n_args = _infer_number_of_required_args(func)\n            # determine whether func requires intensity image\n            if n_args == 2:\n                if self._intensity_image is not None:\n                    if self._multichannel:\n                        multichannel_list = [\n                            func(self.image, self.image_intensity[..., i])\n                            for i in range(self.image_intensity.shape[-1])\n                        ]\n                        return np.stack(multichannel_list, axis=-1)\n                    else:\n                        return func(self.image, self.image_intensity)\n                else:\n                    raise AttributeError(\n                        f'intensity image required to calculate {attr}'\n                    )\n            elif n_args == 1:\n                return func(self.image)\n            else:\n                raise AttributeError(\n                    f'Custom regionprop function\\'s number of arguments must '\n                    f'be 1 or 2, but {attr} takes {n_args} arguments.'\n                )\n        elif attr in PROPS and attr.lower() == attr:\n            if (\n                self._intensity_image is None\n                and PROPS[attr] in _require_intensity_image\n            ):\n                raise AttributeError(\n                    f\"Attribute '{attr}' unavailable when `intensity_image` \"\n                    f\"has not been specified.\"\n                )\n            warn(\n                f\"`RegionProperties.{attr}` is deprecated starting in \"\n                \"version 0.26 and will be removed in version 2.0. Use \"\n                f\"`RegionProperties.{PROPS[attr]}` instead. \",\n                category=FutureWarning,\n                stacklevel=2,\n            )\n            # retrieve deprecated property (excluding old CamelCase ones)\n            return getattr(self, PROPS[attr])\n\n        # Fallback to default behavior, potentially raising an attribute error\n        return self.__getattribute__(attr)\n\n    def __setattr__(self, name, value):\n        if name in PROPS:\n            super().__setattr__(PROPS[name], value)\n        else:\n            super().__setattr__(name, value)\n\n    @property\n    @_cached\n    def num_pixels(self):\n        return np.sum(self.image)\n\n    @property\n    @_cached\n    def area(self):\n        return np.sum(self.image) * self._pixel_area\n\n    @property\n    def bbox(self):\n        \"\"\"\n        Returns\n        -------\n        A tuple of the bounding box's start coordinates for each dimension,\n        followed by the end coordinates for each dimension.\n        \"\"\"\n        return tuple(\n            [self.slice[i].start for i in range(self._ndim)]\n            + [self.slice[i].stop for i in range(self._ndim)]\n        )\n\n    @property\n    def area_bbox(self):\n        return self.image.size * self._pixel_area\n\n    @property\n    def centroid(self):\n        return tuple(self.coords_scaled.mean(axis=0))\n\n    @property\n    @_cached\n    def area_convex(self):\n        return np.sum(self.image_convex) * self._pixel_area\n\n    @property\n    @_cached\n    def image_convex(self):\n        from ..morphology.convex_hull import convex_hull_image\n\n        return convex_hull_image(self.image)\n\n    @property\n    def coords_scaled(self):\n        indices = np.argwhere(self.image)\n        object_offset = np.array([self.slice[i].start for i in range(self._ndim)])\n        return (object_offset + indices) * self._spacing + self._offset\n\n    @property\n    def coords(self):\n        indices = np.argwhere(self.image)\n        object_offset = np.array([self.slice[i].start for i in range(self._ndim)])\n        return object_offset + indices + self._offset\n\n    @property\n    @only2d\n    def eccentricity(self):\n        l1, l2 = self.inertia_tensor_eigvals\n        if l1 == 0:\n            return 0\n        return sqrt(1 - l2 / l1)\n\n    @property\n    def equivalent_diameter_area(self):\n        return (2 * self._ndim * self.area / PI) ** (1 / self._ndim)\n\n    @property\n    def euler_number(self):\n        if self._ndim not in [2, 3]:\n            raise NotImplementedError(\n                'Euler number is implemented for 2D and 3D images only'\n            )\n        return euler_number(self.image, self._ndim)\n\n    @property\n    def extent(self):\n        return self.area / self.area_bbox\n\n    @property\n    def feret_diameter_max(self):\n        identity_convex_hull = np.pad(\n            self.image_convex, 2, mode='constant', constant_values=0\n        )\n        if self._ndim == 2:\n            coordinates = np.vstack(\n                find_contours(identity_convex_hull, 0.5, fully_connected='high')\n            )\n        elif self._ndim == 3:\n            coordinates, _, _, _ = marching_cubes(identity_convex_hull, level=0.5)\n        distances = pdist(coordinates * self._spacing, 'sqeuclidean')\n        return sqrt(np.max(distances))\n\n    @property\n    def area_filled(self):\n        return np.sum(self.image_filled) * self._pixel_area\n\n    @property\n    @_cached\n    def image_filled(self):\n        structure = np.ones((3,) * self._ndim)\n        return ndi.binary_fill_holes(self.image, structure)\n\n    @property\n    @_cached\n    def image(self):\n        return self._label_image[self.slice] == self.label\n\n    @property\n    @_cached\n    def inertia_tensor(self):\n        mu = self.moments_central\n        return _moments.inertia_tensor(self.image, mu, spacing=self._spacing)\n\n    @property\n    @_cached\n    def inertia_tensor_eigvals(self):\n        return _moments.inertia_tensor_eigvals(self.image, T=self.inertia_tensor)\n\n    @property\n    @_cached\n    def image_intensity(self):\n        if self._intensity_image is None:\n            raise AttributeError('No intensity image specified.')\n        image = (\n            self.image\n            if not self._multichannel\n            else np.expand_dims(self.image, self._ndim)\n        )\n        return self._intensity_image[self.slice] * image\n\n    def _image_intensity_double(self):\n        return self.image_intensity.astype(np.float64, copy=False)\n\n    @property\n    def centroid_local(self):\n        M = self.moments\n        M0 = M[(0,) * self._ndim]\n\n        def _get_element(axis):\n            return (0,) * axis + (1,) + (0,) * (self._ndim - 1 - axis)\n\n        return np.asarray(\n            tuple(M[_get_element(axis)] / M0 for axis in range(self._ndim))\n        )\n\n    @property\n    def intensity_max(self):\n        vals = self.image_intensity[self.image]\n        return np.max(vals, axis=0).astype(np.float64, copy=False)\n\n    @property\n    def intensity_mean(self):\n        return np.mean(self.image_intensity[self.image], axis=0)\n\n    @property\n    def intensity_median(self):\n        return np.median(self.image_intensity[self.image], axis=0)\n\n    @property\n    def intensity_min(self):\n        vals = self.image_intensity[self.image]\n        return np.min(vals, axis=0).astype(np.float64, copy=False)\n\n    @property\n    def intensity_std(self):\n        vals = self.image_intensity[self.image]\n        return np.std(vals, axis=0)\n\n    @property\n    def axis_major_length(self):\n        if self._ndim == 2:\n            l1 = self.inertia_tensor_eigvals[0]\n            return 4 * sqrt(l1)\n        elif self._ndim == 3:\n            # equivalent to _inertia_eigvals_to_axes_lengths_3D(ev)[0]\n            ev = self.inertia_tensor_eigvals\n            l2 = 10 * (ev[0] + ev[1] - ev[2])\n            return sqrt(max(0, l2))\n        else:\n            raise ValueError(\"axis_major_length only available in 2D and 3D\")\n\n    @property\n    def axis_minor_length(self):\n        if self._ndim == 2:\n            l2 = self.inertia_tensor_eigvals[-1]\n            return 4 * sqrt(l2)\n        elif self._ndim == 3:\n            # equivalent to _inertia_eigvals_to_axes_lengths_3D(ev)[-1]\n            ev = self.inertia_tensor_eigvals\n            l2 = 10 * (-ev[0] + ev[1] + ev[2])\n            # numerical errors can lead to small negative values\n            return sqrt(max(0, l2))\n        else:\n            raise ValueError(\"axis_minor_length only available in 2D and 3D\")\n\n    @property\n    @_cached\n    def moments(self):\n        M = _moments.moments(self.image.astype(np.uint8), 3, spacing=self._spacing)\n        return M\n\n    @property\n    @_cached\n    def moments_central(self):\n        mu = _moments.moments_central(\n            self.image.astype(np.uint8),\n            self.centroid_local,\n            order=3,\n            spacing=self._spacing,\n        )\n        return mu\n\n    @property\n    @only2d\n    def moments_hu(self):\n        if any(s != 1.0 for s in self._spacing):\n            raise NotImplementedError('`moments_hu` supports spacing = (1, 1) only')\n        return _moments.moments_hu(self.moments_normalized)\n\n    @property\n    @_cached\n    def moments_normalized(self):\n        return _moments.moments_normalized(\n            self.moments_central, 3, spacing=self._spacing\n        )\n\n    @property\n    @only2d\n    def orientation(self):\n        a, b, b, c = self.inertia_tensor.flat\n        if a - c == 0:\n            if b < 0:\n                return PI / 4.0\n            else:\n                return -PI / 4.0\n        else:\n            return 0.5 * atan2(-2 * b, c - a)\n\n    @property\n    @only2d\n    def perimeter(self):\n        if len(np.unique(self._spacing)) != 1:\n            raise NotImplementedError('`perimeter` supports isotropic spacings only')\n        return perimeter(self.image, 4) * self._spacing[0]\n\n    @property\n    @only2d\n    def perimeter_crofton(self):\n        if len(np.unique(self._spacing)) != 1:\n            raise NotImplementedError('`perimeter` supports isotropic spacings only')\n        return perimeter_crofton(self.image, 4) * self._spacing[0]\n\n    @property\n    def solidity(self):\n        return self.area / self.area_convex\n\n    @property\n    def centroid_weighted(self):\n        ctr = self.centroid_weighted_local\n        return tuple(\n            idx + slc.start * spc\n            for idx, slc, spc in zip(ctr, self.slice, self._spacing)\n        )\n\n    @property\n    def centroid_weighted_local(self):\n        M = self.moments_weighted\n        M0 = M[(0,) * self._ndim]\n\n        def _get_element(axis):\n            return (0,) * axis + (1,) + (0,) * (self._ndim - 1 - axis)\n\n        return np.asarray(\n            tuple(M[_get_element(axis)] / M0 for axis in range(self._ndim))\n        )\n\n    @property\n    @_cached\n    def moments_weighted(self):\n        image = self._image_intensity_double()\n        if self._multichannel:\n            moments = np.stack(\n                [\n                    _moments.moments(image[..., i], order=3, spacing=self._spacing)\n                    for i in range(image.shape[-1])\n                ],\n                axis=-1,\n            )\n        else:\n            moments = _moments.moments(image, order=3, spacing=self._spacing)\n        return moments\n\n    @property\n    @_cached\n    def moments_weighted_central(self):\n        ctr = self.centroid_weighted_local\n        image = self._image_intensity_double()\n        if self._multichannel:\n            moments_list = [\n                _moments.moments_central(\n                    image[..., i], center=ctr[..., i], order=3, spacing=self._spacing\n                )\n                for i in range(image.shape[-1])\n            ]\n            moments = np.stack(moments_list, axis=-1)\n        else:\n            moments = _moments.moments_central(\n                image, ctr, order=3, spacing=self._spacing\n            )\n        return moments\n\n    @property\n    @only2d\n    def moments_weighted_hu(self):\n        if not (np.array(self._spacing) == np.array([1, 1])).all():\n            raise NotImplementedError('`moments_hu` supports spacing = (1, 1) only')\n        nu = self.moments_weighted_normalized\n        if self._multichannel:\n            nchannels = self._intensity_image.shape[-1]\n            return np.stack(\n                [_moments.moments_hu(nu[..., i]) for i in range(nchannels)],\n                axis=-1,\n            )\n        else:\n            return _moments.moments_hu(nu)\n\n    @property\n    @_cached\n    def moments_weighted_normalized(self):\n        mu = self.moments_weighted_central\n        if self._multichannel:\n            nchannels = self._intensity_image.shape[-1]\n            return np.stack(\n                [\n                    _moments.moments_normalized(\n                        mu[..., i], order=3, spacing=self._spacing\n                    )\n                    for i in range(nchannels)\n                ],\n                axis=-1,\n            )\n        else:\n            return _moments.moments_normalized(mu, order=3, spacing=self._spacing)\n\n    def __iter__(self):\n        props = PROP_VALS\n\n        if self._intensity_image is None:\n            unavailable_props = _require_intensity_image\n            props = props.difference(unavailable_props)\n\n        return iter(sorted(props))\n\n    def __getitem__(self, key):\n        if key in PROPS:\n            warn(\n                f\"`RegionProperties[{key!r}]` is deprecated starting in \"\n                \"version 0.26 and will be removed in version 2.0. Use \"\n                f\"`RegionProperties[{PROPS[key]!r}]` instead. \",\n                category=FutureWarning,\n                stacklevel=2,\n            )\n            key = PROPS[key]\n        return getattr(self, key)\n\n    def __eq__(self, other):\n        if not isinstance(other, RegionProperties):\n            return False\n\n        for key in PROP_VALS:\n            try:\n                # so that NaNs are equal\n                np.testing.assert_equal(\n                    getattr(self, key, None), getattr(other, key, None)\n                )\n            except AssertionError:\n                return False\n\n        return True\n\n    def __repr__(self):\n        cls_name = type(self).__qualname__\n        out = f\"<{cls_name}: label={self.label!r}, bbox={self.bbox}>\"\n        return out",
+      "canonical_lf_sha256": "77d45fe04c82acc20a4903656660306ecf89b183f7a158385a744f2375463ab9"
+    },
+    "_cached": {
+      "source": "def _cached(f):\n    @wraps(f)\n    def wrapper(obj):\n        cache = obj._cache\n        prop = f.__name__\n\n        if not obj._cache_active:\n            return f(obj)\n\n        if prop not in cache:\n            cache[prop] = f(obj)\n\n        return cache[prop]\n\n    return wrapper",
+      "canonical_lf_sha256": "451d56fa13a3de90579ae047f9195fa6506ef9f6fe1f640e2247bf71d44948b5"
+    },
+    "only2d": {
+      "source": "def only2d(method):\n    @wraps(method)\n    def func2d(self, *args, **kwargs):\n        if self._ndim > 2:\n            raise NotImplementedError(\n                f\"Property {method.__name__} is not implemented for 3D images\"\n            )\n        return method(self, *args, **kwargs)\n\n    return func2d",
+      "canonical_lf_sha256": "1373f7c90773bc1933026f7be739d5025057133e15fa5e2e5b10d851891b3769"
+    },
+    "regionprops_body": {
+      "source": "    if label_image.ndim not in (2, 3):\n        raise TypeError('Only 2-D and 3-D images supported.')\n\n    if not np.issubdtype(label_image.dtype, np.integer):\n        if np.issubdtype(label_image.dtype, bool):\n            raise TypeError(\n                'Non-integer image types are ambiguous: '\n                'use skimage.measure.label to label the connected '\n                'components of label_image, '\n                'or label_image.astype(np.uint8) to interpret '\n                'the True values as a single label.'\n            )\n        else:\n            raise TypeError('Non-integer label_image types are ambiguous')\n\n    if offset is None:\n        offset_arr = np.zeros((label_image.ndim,), dtype=int)\n    else:\n        offset_arr = np.asarray(offset)\n        if offset_arr.ndim != 1 or offset_arr.size != label_image.ndim:\n            raise ValueError(\n                'Offset should be an array-like of integers '\n                'of shape (label_image.ndim,); '\n                f'{offset} was provided.'\n            )\n\n    regions = []\n\n    objects = ndi.find_objects(label_image)\n    for i, sl in enumerate(objects):\n        if sl is None:\n            continue\n\n        label = i + 1\n\n        props = RegionProperties(\n            sl,\n            label,\n            label_image,\n            intensity_image,\n            cache,\n            spacing=spacing,\n            extra_properties=extra_properties,\n            offset=offset_arr,\n        )\n        regions.append(props)\n\n    return regions",
+      "canonical_lf_sha256": "b010877151f8fbf09a8d48bc8cbad33d3b4eb076947752deecff7eb0617e6a65"
+    },
+    "regionprops_table_body": {
+      "source": "    regions = regionprops(\n        label_image,\n        intensity_image=intensity_image,\n        cache=cache,\n        extra_properties=extra_properties,\n        spacing=spacing,\n    )\n    if extra_properties is not None:\n        properties = list(properties) + [prop.__name__ for prop in extra_properties]\n    if len(regions) == 0:\n        ndim = label_image.ndim\n        label_image = np.zeros((3,) * ndim, dtype=int)\n        label_image[(1,) * ndim] = 1\n        if intensity_image is not None:\n            intensity_image = np.zeros(\n                label_image.shape + intensity_image.shape[ndim:],\n                dtype=intensity_image.dtype,\n            )\n        regions = regionprops(\n            label_image,\n            intensity_image=intensity_image,\n            cache=cache,\n            extra_properties=extra_properties,\n            spacing=spacing,\n        )\n\n        out_d = _props_to_dict(regions, properties=properties, separator=separator)\n        return {k: v[:0] for k, v in out_d.items()}\n\n    return _props_to_dict(regions, properties=properties, separator=separator)",
+      "canonical_lf_sha256": "94aeea6506e3e4c1c10f820b9efe60e8d5693c353c6d2f7c8c722d54c3a1d6a1"
+    },
+    "_props_to_dict_body": {
+      "source": "    out = {}\n    n = len(regions)\n    for prop in properties:\n        r = regions[0]\n        # Copy the original property name so the output will have the\n        # user-provided property name in the case of deprecated names.\n        orig_prop = prop\n        # determine the current property name for any deprecated property.\n        prop = PROPS.get(prop, prop)\n        rp = getattr(r, prop)\n        if prop in COL_DTYPES:\n            dtype = COL_DTYPES[prop]\n        else:\n            func = r._extra_properties[prop]\n            dtype = _infer_regionprop_dtype(\n                func,\n                intensity=r._intensity_image is not None,\n                ndim=r.image.ndim,\n            )\n\n        # scalars and objects are dedicated one column per prop\n        # array properties are raveled into multiple columns\n        # for more info, refer to notes 1\n        if np.isscalar(rp) or prop in OBJECT_COLUMNS or dtype is np.object_:\n            column_buffer = np.empty(n, dtype=dtype)\n            for i in range(n):\n                column_buffer[i] = regions[i][prop]\n            out[orig_prop] = np.copy(column_buffer)\n        else:\n            # precompute property column names and locations\n            modified_props = []\n            locs = []\n            for ind in np.ndindex(np.shape(rp)):\n                modified_props.append(separator.join(map(str, (orig_prop,) + ind)))\n                locs.append(ind if len(ind) > 1 else ind[0])\n\n            # fill temporary column data_array\n            n_columns = len(locs)\n            column_data = np.empty((n, n_columns), dtype=dtype)\n            for k in range(n):\n                # we coerce to a numpy array to ensure structures like\n                # tuple-of-arrays expand correctly into columns\n                rp = np.asarray(regions[k][prop])\n                for i, loc in enumerate(locs):\n                    column_data[k, i] = rp[loc]\n\n            # add the columns to the output dictionary\n            for i, modified_prop in enumerate(modified_props):\n                out[modified_prop] = column_data[:, i]\n    return out",
+      "canonical_lf_sha256": "e55494ccbda4ec365d46a5fa74e3d449c839ef7fe233ebd6222082d892947f8f"
+    },
+    "_normalize_spacing": {
+      "source": "def _normalize_spacing(spacing, ndims):\n    \"\"\"Normalize spacing parameter.\n\n    The `spacing` parameter should be a sequence of numbers matching\n    the image dimensions. If `spacing` is a scalar, assume equal\n    spacing along all dimensions.\n\n    Parameters\n    ----------\n    spacing : Any\n        User-provided `spacing` keyword.\n    ndims : int\n        Number of image dimensions.\n\n    Returns\n    -------\n    spacing : array\n        Corrected spacing.\n\n    Raises\n    ------\n    ValueError\n        If `spacing` is invalid.\n\n    \"\"\"\n    spacing = np.array(spacing)\n    if spacing.shape == ():\n        spacing = np.broadcast_to(spacing, shape=(ndims,))\n    elif spacing.shape != (ndims,):\n        raise ValueError(\n            f\"spacing isn't a scalar nor a sequence of shape {(ndims,)}, got {spacing}.\"\n        )\n    if not all(isinstance(s, Real) for s in spacing):\n        raise TypeError(\n            f\"Element of spacing isn't float or integer type, got {spacing}.\"\n        )\n    if not all(np.isfinite(spacing)):\n        raise ValueError(\n            f\"Invalid spacing parameter. All elements must be finite, got {spacing}.\"\n        )\n    return spacing",
+      "canonical_lf_sha256": "5ae8ebb7da97f09b431279b0ec55c787b30d158fce05502d09609fef8c066cb1"
+    }
+  },
+  "constraints": {
+    "label_image": "Public regionprops supports2D/3D integer arrays, with separate bool/noninteger TypeError messages. Uses ndi.find_objects and label=i+1 for non-None slices; label0/background is ignored per pinned doc.",
+    "intensity": "None or matching spatial shape with same ndim or one final channel axis; constructor retains supplied arrays rather than copying. Individual property conversions and reductions differ.",
+    "spacing": "None becomes ones; scalar broadcasts; vector shape must match ndim; elements Real and finite. No positivity check in _normalize_spacing. Hu requires unit spacing; perimeter/Crofton require isotropic2D.",
+    "offset": "Entry normalizes np.asarray then checks rank1 and length ndim, not dtype; error text mentions integers without an integer-dtype test. Offset participates in coords/scaled coords but not every centroid path equally.",
+    "cache": "Only decorated getters cache lazily by property name when _cache_active. Source has no invalidation on backing-array or label/slice mutation; cached object identity and stale values are observable.",
+    "aliases": "Mapping accepts every PROPS key with FutureWarning; deprecated attributes use only lowercase PROPS keys. __setattr__ redirects all aliases to canonical names, subject to descriptor writability.",
+    "iteration": "Sorted set(PROPS.values()), not all44 canonical fields; removes intensity-required entries if no intensity. Extras and three newer canonical fields are not iterated.",
+    "extras": "Constructor probes hasattr for collisions before building name->function dict; one-shot iterables may be consumed twice. __getattr__ selects required arity1/2, stacks per-channel callbacks on last axis; other arities/missing intensity fail. No callback is executed by this discovery.",
+    "table": "Reuses region objects and splits fixed-size arrays by separator indices; variable-size objects stay object columns. Empty labels synthesize a one-pixel region then truncate columns. Extra dtype inference evaluates two synthetic masks and may generate random intensity.",
+    "protocols": "Custom getter/setter/iteration/item/equality/repr plus default pickling; __setstate__ getattr guard avoids recursion. Property equality can trigger evaluation/errors; arbitrary user __dict__ additions are not finitely enumerable."
+  },
+  "native_routes": {
+    "mask_bbox": {
+      "properties": [
+        "label",
+        "slice",
+        "bbox",
+        "image",
+        "num_pixels",
+        "area",
+        "area_bbox",
+        "coords",
+        "coords_scaled",
+        "centroid",
+        "extent",
+        "equivalent_diameter_area"
+      ],
+      "route": "One typed label bounding-box/index scan and lazily materialized per-label mask; reuse coordinate and moment reductions where semantics agree; retain original ordering and exposed state.",
+      "prerequisites": [
+        "typed label intake and strided scans",
+        "stable label ordering/positive-label bounds",
+        "mask allocation and Python lazy-object wrapper"
+      ]
+    },
+    "moments_axes": {
+      "properties": [
+        "centroid_local",
+        "moments",
+        "moments_central",
+        "moments_normalized",
+        "moments_hu",
+        "inertia_tensor",
+        "inertia_tensor_eigvals",
+        "axis_major_length",
+        "axis_minor_length",
+        "eccentricity",
+        "orientation"
+      ],
+      "route": "Compose existing native moments/inertia kernels after checking spacing/rounding contracts; small fixed eigen/axis formulas and lazy dependency cache.",
+      "prerequisites": [
+        "measure.moments",
+        "measure.moments_central",
+        "measure.moments_normalized",
+        "measure.moments_hu",
+        "measure.inertia_tensor",
+        "measure.inertia_tensor_eigvals",
+        "explicit floating/branch policy"
+      ]
+    },
+    "intensity_weighted": {
+      "properties": [
+        "image_intensity",
+        "intensity_max",
+        "intensity_mean",
+        "intensity_median",
+        "intensity_min",
+        "intensity_std",
+        "centroid_weighted",
+        "centroid_weighted_local",
+        "moments_weighted",
+        "moments_weighted_central",
+        "moments_weighted_hu",
+        "moments_weighted_normalized"
+      ],
+      "route": "Reuse masked typed reductions and moments per final-axis channel; preserve float64 conversion points and output channel-axis placement. Keep user callbacks explicit.",
+      "prerequisites": [
+        "mask/intensity channel admission",
+        "typed reductions and selection",
+        "native moment kernels",
+        "float64 conversion and nonfinite policy"
+      ]
+    },
+    "fill_topology": {
+      "properties": [
+        "image_filled",
+        "area_filled",
+        "euler_number",
+        "perimeter",
+        "perimeter_crofton"
+      ],
+      "route": "Reuse native Euler/perimeter primitives with exact connectivity/spacing; add existing-fill composition or bounded flood-fill primitive only where missing.",
+      "prerequisites": [
+        "measure.euler_number",
+        "measure.perimeter",
+        "measure.perimeter_crofton",
+        "n-dimensional hole-fill connectivity"
+      ]
+    },
+    "convex_feret": {
+      "properties": [
+        "image_convex",
+        "area_convex",
+        "solidity",
+        "feret_diameter_max"
+      ],
+      "route": "Implement/reuse reviewed 2D/3D convex-hull mask, then exact contour/marching-cube geometry and maximum pair distance; do not replace Feret definition with a bounding-box approximation.",
+      "prerequisites": [
+        "morphology.convex_hull_image",
+        "measure.find_contours",
+        "measure.marching_cubes",
+        "typed squared pair distances",
+        "convex mask/topology parity"
+      ]
+    }
+  },
+  "proposed_contract_partitions": [
+    {
+      "id": "label-boundary",
+      "cases": [
+        "2D/3D integer signed/unsigned labels",
+        "0D/1D/4D rejection before properties",
+        "bool versus float rejection messages",
+        "empty image/no positive labels, missing label IDs, disconnected equal labels",
+        "negative labels, high sparse labels and bounded allocation safety",
+        "C/F/sliced/negative strides and source alias lifetime"
+      ],
+      "gate": "Freeze source-safe original cases once before implementation; verify returned list order, labels, slices and original errors.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "property-values",
+      "cases": [
+        "every44canonical property on supported availability partitions",
+        "exact integer/coords/shape/container/discrete decisions",
+        "floating conditioning/tolerance and signed-zero/nonfinite branches",
+        "single-pixel, line/plane, ring/hole, disconnected, anisotropic and 3D masks"
+      ],
+      "gate": "Per-property native witness and oracle/reference parity; do not infer full properties from regionprops registration.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "intensity-channels",
+      "cases": [
+        "absent intensity and all12intensity-required properties",
+        "matching scalar intensity or last channel axis only",
+        "shape/ndim mismatch, zero/one/multiple channels",
+        "typed/strided/read-only, zero mass, NaN/inf intensity",
+        "float64 conversion points and axis placement for weighted properties"
+      ],
+      "gate": "Capture availability, output structure, warnings and callbacks; native per-channel reductions obey one global worker budget.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "spacing-offset",
+      "cases": [
+        "spacing None/scalar/vector/isotropic/anisotropic",
+        "finite zero/negative spacing: source does not reject positivity at normalization",
+        "wrong length, complex/nonnumeric, NaN/inf spacing",
+        "2D-only Hu unit spacing and perimeter isotropic restrictions",
+        "offset None/vector/wrong rank or length; source entry checks shape, not integer dtype",
+        "coords versus coords_scaled offset/spacing order and centroid variants"
+      ],
+      "gate": "Source-backed admission/error order and output policy; do not add stronger checks than original without an explicit scope decision.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "aliases-iteration",
+      "cases": [
+        "all61aliases via mapping access",
+        "lowercase deprecated attributes versus inaccessible CamelCase attributes",
+        "FutureWarning category/message/order",
+        "alias setattr redirection including label/slice; read-only descriptors",
+        "iteration41canonical alias targets with intensity; omit intensity-required entries without it",
+        "coords_scaled/intensity_median/num_pixels accessible but not yielded by __iter__"
+      ],
+      "gate": "Namespace/state parity distinct from property numerical results.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "lazy-cache-mutation",
+      "cases": [
+        "cache True/False, repeated property object identity",
+        "selective cached properties and dependency cache fill",
+        "mutate backing label/intensity, label/slice fields and cached result arrays",
+        "toggle _cache_active and stale values; source has no automatic invalidation",
+        "lifetime after external array references are deleted"
+      ],
+      "gate": "Preserve original lazy/cache/mutation behavior rather than eager recomputation or defensive copying.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "extra-properties",
+      "cases": [
+        "required positional arity1/2 versus0/3 and default arguments",
+        "no intensity error, scalar and multi-channel callback stacking",
+        "callback order, exceptions, warnings, input mutation and return objects",
+        "duplicate names/hasattr collision probing and accessible/inaccessible descriptors",
+        "list/tuple versus one-shot generator consumed by constructor and table",
+        "table dtype inference invokes callbacks on synthetic masks and random intensity"
+      ],
+      "gate": "Explicit Python ecosystem boundary; callbacks are never claimed as owned numerical solvers.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "table-materialization",
+      "cases": [
+        "scalar/fixed-array/object columns and dtype mappings",
+        "separator, multi-index flattening, requested deprecated output key preservation",
+        "extra-property column names and dynamic result shape/type",
+        "empty regions use synthetic one-pixel region then truncate output columns",
+        "no intensity, multichannel, 2D/3D and requested unavailable properties"
+      ],
+      "gate": "Reuse same RegionProperties core; independent table/state/callback tests and appropriate latency/cache benchmark.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "object-protocol",
+      "cases": [
+        "__getitem__,__iter__,__eq__,__repr__",
+        "equality handles NaN via np.testing.assert_equal but may evaluate properties/errors",
+        "default pickle/restore and __setstate__ getattr recursion guard",
+        "inherited object methods reused from static discovery, not counted again",
+        "arbitrary public __dict__ fields and extra callback return namespaces remain unbounded"
+      ],
+      "gate": "Freeze finite documented/observed member contracts; explicitly label runtime-generated domains unassessed.",
+      "status": "proposed-not-executed"
+    },
+    {
+      "id": "native-sdk-performance",
+      "cases": [
+        "relocated installed native client for each implemented property family",
+        "actual Python backend-swap pipeline including lazy classes/table",
+        "scalar/SIMD and worker1/multiple budgets preserving order",
+        "one-thread public latency for construction/cold/warm/cache-disabled/table workloads",
+        "allocation-inclusive original comparison retaining every loss"
+      ],
+      "gate": "Discovery is not parity/native/SDK/performance acceptance.",
+      "status": "proposed-not-executed"
+    }
+  ],
+  "unassessed": [
+    "Every numerical/output/error result: no original image call or capture performed.",
+    "Runtime extra_properties names, descriptors supplied by arbitrary subclasses/monkeypatches and arbitrary per-instance public fields.",
+    "Callback return object namespaces, mutation effects and generated table columns require bounded prospective reference cases.",
+    "Provider/runtime/platform/NumPy differences and hardware FP flags remain unmeasured.",
+    "Inherited object members are not rediscovered here; reuse static inventory.",
+    "Native backend selection, license/build/ABI and high-level SDK composition still required for convex/contour/marching/distance/fill consumers."
+  ],
+  "execution": {
+    "image_calls": 0,
+    "native_calls": 0,
+    "reference_captures": 0,
+    "timed_calls": 0,
+    "builds": 0,
+    "downloads": 0,
+    "POSTs": 0
+  },
+  "next_gate": {
+    "owner": "root",
+    "action": "Independent source-discovery review; select one bounded mask/bbox/state contract packet and original-only safe partition capture before native implementation.",
+    "integration_destination": "Future measure.regionprops/regionprops_table Python lazy wrapper and installed C++ region descriptor; no registration or API count changes now."
+  }
+}
