@@ -53,7 +53,7 @@ jobs:
           git cat-file -e '4f69eba77a262056459eaab1e0a39e53610e9305:benchmarks/subdivide_polygon.py'
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.13.16'
       - run: |
           python -m pip wheel ".[test]" cmake --wheel-dir build/wheels
       - run: |
@@ -466,7 +466,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.13.16'
       - uses: actions/download-artifact@v4
         with:
           name: parity-package-${{ matrix.os }}
@@ -658,7 +658,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.13.16'
       - name: Build actual Debug Python extension
         shell: bash
         run: |
