@@ -167,7 +167,7 @@ void admission() {
 
 int main(int argc, char** argv) {
     static_assert(sizeof(std::intptr_t) == 8, "frozen reference uses64-bit intp");
-    require(argc == 3 && get_num_threads() == 1);
+    require((argc == 1 || argc == 3) && get_num_threads() == 1);
     admission();
     for (int workers : {1, 4}) {
 #ifdef SKIMAGEXX_LINE_AA_PORTABLE
@@ -179,7 +179,7 @@ int main(int argc, char** argv) {
         }
 #endif
         set_num_threads(workers);
-        saved(argv[1], workers); saved(argv[2], workers);
+        if (argc == 3) { saved(argv[1], workers); saved(argv[2], workers); }
         for (std::intptr_t r0 = -4; r0 <= 4; ++r0)
             for (std::intptr_t c0 = -4; c0 <= 4; ++c0)
                 for (std::intptr_t r1 = -4; r1 <= 4; ++r1)
