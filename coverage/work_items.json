@@ -146,7 +146,7 @@
       "kind": "contract_reference",
       "owner": "next_family_contract",
       "branch": "combine-stains-half-reference-v1",
-      "state": "contracting",
+      "state": "contracted",
       "apis": [
         "color.combine_stains"
       ],
@@ -162,8 +162,20 @@
       ],
       "acceptance": "Finite native-endian float16 plain arrays/three input channels; prospective12 bounded cases formatrix/axis/layout/metadata domains, exact observed dtype/storage/state and existing numerical policy. Every original ID must pass refused-original controller intake first; capture safe observations once per retained runtime. No other stainAPI change. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Freeze and validate actual controller before safe once-only originals; independent reference review precedes boundary normalization."
+        "owner": "qualification251_readiness",
+        "action": "Independently review cff831a1 boundary/frontend source and retained204 checks, then root composes without changing existing matrix kernels or other stainAPIs."
+      },
+      "current_checkpoint": "Independent reference review650d46cd passed24 once-only observations after both12-ID refused-original intakes. Actual f32-matrix output differs by profile(f32 minimum/f64 modern); metadata drops,axis0base/emptystrides andexisting2e-6 policy retained. No new original/build/timing. Frontend cff831a1 reports204 unique checks with16 exactnorm metadata reruns; independent review pending.",
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "22c7d6addfeb36e82df4bda0814e2ca687349603",
+          "passing_contract_checks": 6,
+          "manifest": {
+            "path": "build/combine-stains-half-reference-v1/handoff.json",
+            "sha256": "4454a59a9a48e6a56113baab263c2e6b6f51edc511dc167923a3fec76ae8b005"
+          }
+        }
       }
     },
     {
