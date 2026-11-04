@@ -1,0 +1,3907 @@
+{
+  "schema": "regionprops-state-reference-v1",
+  "status": "PROSPECTIVE_FROZEN_BEFORE_ORIGINALS",
+  "api": "measure.regionprops",
+  "signature": "(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)",
+  "discovery_reused": "coverage/contracts/regionprops-runtime-surface.json",
+  "properties": [
+    "label",
+    "slice",
+    "bbox",
+    "image",
+    "coords",
+    "num_pixels",
+    "area"
+  ],
+  "aliases": {
+    "Label": "label",
+    "Slice": "slice",
+    "BoundingBox": "bbox",
+    "Image": "image",
+    "Coordinates": "coords",
+    "Area": "area"
+  },
+  "unassessed": [
+    "Other canonical properties and their aliases, intensity/channel behavior and tables",
+    "extra_properties callbacks, arbitrary array/protocol subclasses and concurrent mutation",
+    "pickle/equality/repr, object assignment/lifecycle, descriptor and private cache fields",
+    "huge/sparse maximum labels, allocation failure and nonordinary spacing/offset domains",
+    "native implementation, numerical parity or performance credit"
+  ],
+  "original_sources": {
+    "_regionprops.py": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+    "_regionprops_utils.py": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+  },
+  "cases": [
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/2d-cache-True",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": false,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/2d-cache-False",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/3d-cache-True",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": false,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/3d-cache-False",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": "empty",
+      "id": "regionprops-state/empty-2d",
+      "shape": [
+        0,
+        4
+      ],
+      "values": [],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": "empty",
+      "id": "regionprops-state/empty-3d",
+      "shape": [
+        2,
+        0,
+        3
+      ],
+      "values": [],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/background",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/one-label",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/negative-background",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        -1,
+        2,
+        0,
+        2,
+        -1,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int8",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/dtype-int8",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/dtype-uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int16",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/dtype-int16",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "uint16",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/dtype-uint16",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int32",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/dtype-int32",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "uint32",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/dtype-uint32",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "uint64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/dtype-uint64",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "fortran",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/fortran",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "transpose",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/transpose",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "reverse",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/reverse",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": [
+        2.0,
+        0.5
+      ],
+      "offset": [
+        -2,
+        3
+      ],
+      "offset_kind": "tuple",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/spacing-offset-2d",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": [
+        0.5,
+        2.0,
+        3.0
+      ],
+      "offset": [
+        1,
+        -2,
+        4
+      ],
+      "offset_kind": "array",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/spacing-offset-3d",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": [
+        0.5,
+        -1.25
+      ],
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": null,
+      "id": "regionprops-state/float-offset",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": true,
+      "rejection": null,
+      "id": "regionprops-state/input-mutation-cache-on",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ],
+        [
+          "mutate_input",
+          null
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "coords"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": false,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": true,
+      "rejection": null,
+      "id": "regionprops-state/input-mutation-cache-off",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ],
+        [
+          "mutate_input",
+          null
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "coords"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": "ndim",
+      "id": "regionprops-state/error-1d",
+      "shape": [
+        3
+      ],
+      "values": [
+        0,
+        1,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "float64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": "dtype",
+      "id": "regionprops-state/error-float-label",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "bool",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": "dtype",
+      "id": "regionprops-state/error-bool-label",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": null,
+      "offset": [
+        1
+      ],
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": "offset",
+      "id": "regionprops-state/error-offset",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    },
+    {
+      "dtype": "int64",
+      "cache": true,
+      "layout": "c",
+      "spacing": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "offset": null,
+      "offset_kind": "list",
+      "mutation": false,
+      "rejection": "spacing",
+      "id": "regionprops-state/error-spacing",
+      "shape": [
+        3,
+        4
+      ],
+      "values": [
+        0,
+        3,
+        3,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "access_sequence": [
+        [
+          "attr",
+          "label"
+        ],
+        [
+          "attr",
+          "slice"
+        ],
+        [
+          "attr",
+          "bbox"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "attr",
+          "num_pixels"
+        ],
+        [
+          "attr",
+          "area"
+        ],
+        [
+          "attr",
+          "image"
+        ],
+        [
+          "attr",
+          "coords"
+        ],
+        [
+          "item",
+          "label"
+        ],
+        [
+          "item",
+          "slice"
+        ],
+        [
+          "item",
+          "bbox"
+        ],
+        [
+          "item",
+          "image"
+        ],
+        [
+          "item",
+          "coords"
+        ],
+        [
+          "item",
+          "num_pixels"
+        ],
+        [
+          "item",
+          "area"
+        ],
+        [
+          "item",
+          "Label"
+        ],
+        [
+          "item",
+          "Slice"
+        ],
+        [
+          "item",
+          "BoundingBox"
+        ],
+        [
+          "item",
+          "Image"
+        ],
+        [
+          "item",
+          "Coordinates"
+        ],
+        [
+          "item",
+          "Area"
+        ],
+        [
+          "iter",
+          null
+        ],
+        [
+          "item",
+          "not_a_property"
+        ],
+        [
+          "attr",
+          "Area"
+        ]
+      ]
+    }
+  ],
+  "source_freeze": {
+    "tests/regionprops_state_contract.py": "004d681c397af81eaf8c31ee769b54e19d6797c59cc1b22a2987322d95371674",
+    "tests/regionprops_state_observer.py": "6d0cc0cc41e17efab7e976e97748b654b1f1b122c1301e17d9e8f63097a2949f",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "coverage/contracts/regionprops-runtime-surface.json": "83e1ef881dcd3598fb8c9c3e117d8e7a71a8f6dab1ac237126ca492e39b4a559"
+  },
+  "safety_audit": {
+    "label_inputs": "Plain NumPy arrays only;2D/3D up to24elements here (bound64), maximum positive label3, fixed integer dtypes. scipy.find_objects allocation proportional to small maxlabel; no arbitrary callbacks/intensity/extra_properties.",
+    "empty": "Both retained scipy.find_objects source implementations call input.max() before native call, so zero-size shapes raise ValueError safely, captured once as constructor errors.",
+    "accepted": "find_objects yields label order ascending, skips missing/nonpositive labels. Region image compares cropped input; bbox uses slice; coords argwhere+slice+offset. num_pixels/area onlysum and bounded finite spacing product.",
+    "spacing_offset": "Finite ordinary positive spacings; valid offset dims fixed; int and fractional offsets source-permitted. Invalid spacing/offset lengths raise source-controlled errors.",
+    "mutation": "After fixed first read sequence, mutate one input pixel belonging to current label, then reread only four selected properties. Record public cached-vs-fresh effects without reading private cache state.",
+    "iteration": "Only obtain and project property-name iterator; no getter evaluation for omitted properties.",
+    "source_binaries": "Observer pins original regionprops/normalization sources and scientific package versions, records actual scipy.ndimage._nd_image binary hash per profile. No cross-build ABI equality claim."
+  },
+  "storage_policy": "Exact scalar words, array dtype/shape/strides/ownership/layout/writeability/base metadata, per-step values/warnings/errors, alias identity/shares-memory and caller FP state. No normalization of NumPy profile differences.",
+  "native_credit": 0,
+  "original_observations": {},
+  "original_provenance": {},
+  "capture_policy": {
+    "calls_per_case_per_profile": 1,
+    "profiles": [
+      "1.24.4",
+      "2.5.4"
+    ],
+    "original_constructor_calls_per_profile": 29,
+    "journal": "started flushed before each constructor; completed row or observer_failed retained; never replay a started case"
+  },
+  "next_gate": "Independent source/reference review before any returned-object implementation; other44-property/state partitions remain discovery only."
+}
