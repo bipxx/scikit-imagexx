@@ -1,0 +1,1131 @@
+{
+  "schema": "draw-line-aa-reference-v1",
+  "status": "PROSPECTIVE_SOURCE_SAFE_BEFORE_ORIGINAL_AND_CANDIDATE_CALLS",
+  "api": "draw.line_aa",
+  "signature": "(r0, c0, r1, c1)",
+  "source_version": "0.26.0",
+  "original_python_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+  "original_pyx_sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4",
+  "original_binary_sha256": {
+    "1.24.4": "32673fec979236e2f83543ad289a8128059b96e6562a9ea30114c4e73c17139b",
+    "2.5.4": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4"
+  },
+  "source_safety": {
+    "argument_boundary": "Cython Py_ssize_t conversions finish beforebody; overflow-first/last, None, wrongarity/keyword are preentry rejection cases.",
+    "integer_core": "dc/dr and c/r are signed Cint. Endpoints and everyneighbor addition must fit int32 with \u00b11headroom; exactPythoninteger audit requires dc*dc+dr*dr<=INT_MAX before sqrt. Unsafe narrowing or squaredsum nevercalled.",
+    "termination": "For audited finite integer geometry, at leastone monotone coordinate advances each nonterminal iteration; respectiveendpoint check precedes advancement; \u2264dr+dc+1iterations and\u22643emissions/iteration.",
+    "capture_bound": "All successful captured lines have3*(dr+dc+1)*3<=4096total coordinate/weight elements. Conversionfixtures are finite smallsafe scalars or controlledproviders; no arbitraryusercode."
+  },
+  "weight_policy": {
+    "mode": "bitwise-float64-ordinary",
+    "max_ulp": 0,
+    "rtol": 0,
+    "atol": 0,
+    "association": "literal sqrt(dc*dc+dr*dr); fabs ordered additions/division; then1.-storedfloat64distance",
+    "hardware_floating_environment": "not claimed outside ordinary default rounding"
+  },
+  "native_implementation": "pending",
+  "native_expected_ids": [
+    "line-aa/point",
+    "line-aa/horizontal",
+    "line-aa/vertical",
+    "line-aa/diagonal",
+    "line-aa/antidiagonal",
+    "line-aa/down-right-shallow",
+    "line-aa/down-right-steep",
+    "line-aa/up-right-shallow",
+    "line-aa/up-right-steep",
+    "line-aa/down-left-shallow",
+    "line-aa/down-left-steep",
+    "line-aa/up-left-shallow",
+    "line-aa/up-left-steep",
+    "line-aa/reverse-shallow",
+    "line-aa/reverse-steep",
+    "line-aa/one-column",
+    "line-aa/one-row",
+    "line-aa/one-diagonal",
+    "line-aa/reverse-one",
+    "line-aa/half-tie",
+    "line-aa/reverse-half",
+    "line-aa/pythagoras",
+    "line-aa/nearly-axis",
+    "line-aa/medium",
+    "line-aa/translated",
+    "line-aa/near-int32-max",
+    "line-aa/near-int32-min",
+    "line-aa/np-int8",
+    "line-aa/np-int16",
+    "line-aa/np-int32",
+    "line-aa/np-int64",
+    "line-aa/np-uint8",
+    "line-aa/np-uint16",
+    "line-aa/np-uint32",
+    "line-aa/np-uint64",
+    "line-aa/bool"
+  ],
+  "unassessed": [
+    "C-int narrowing or neighbor overflow after successful Py_ssize_t conversion",
+    "dc*dc+dr*dr exceeding signed C-int range; never called for reference",
+    "unbounded outputs, allocation failure, concurrent mutation, forged storage",
+    "nonfinite/complex/object-array conversions and arbitrary user protocol effects",
+    "hardware floating-environment equivalence outside ordinary default rounding"
+  ],
+  "max_output_elements": 4096,
+  "cases": [
+    {
+      "id": "line-aa/point",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        3,
+        4,
+        3,
+        4
+      ],
+      "kwargs": {},
+      "safe_args": [
+        3,
+        4,
+        3,
+        4
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/horizontal",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        2,
+        1,
+        2,
+        8
+      ],
+      "kwargs": {},
+      "safe_args": [
+        2,
+        1,
+        2,
+        8
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/vertical",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        1,
+        2,
+        8,
+        2
+      ],
+      "kwargs": {},
+      "safe_args": [
+        1,
+        2,
+        8,
+        2
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/diagonal",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/antidiagonal",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        7,
+        7,
+        0
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        7,
+        7,
+        0
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/down-right-shallow",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        8,
+        14
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        8,
+        14
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/down-right-steep",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        13,
+        9
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        13,
+        9
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/up-right-shallow",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        2,
+        14
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        2,
+        14
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/up-right-steep",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        -3,
+        9
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        -3,
+        9
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/down-left-shallow",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        8,
+        -2
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        8,
+        -2
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/down-left-steep",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        13,
+        3
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        13,
+        3
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/up-left-shallow",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        2,
+        -2
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        2,
+        -2
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/up-left-steep",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        6,
+        -3,
+        3
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        6,
+        -3,
+        3
+      ],
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "line-aa/reverse-shallow",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        3,
+        8,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "safe_args": [
+        3,
+        8,
+        0,
+        0
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/reverse-steep",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        8,
+        3,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "safe_args": [
+        8,
+        3,
+        0,
+        0
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/one-column",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/one-row",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/one-diagonal",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/reverse-one",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "safe_args": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/half-tie",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/reverse-half",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        2,
+        4,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "safe_args": [
+        2,
+        4,
+        0,
+        0
+      ],
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "line-aa/pythagoras",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        3,
+        4
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        0,
+        3,
+        4
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/nearly-axis",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1,
+        31
+      ],
+      "kwargs": {},
+      "safe_args": [
+        0,
+        0,
+        1,
+        31
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/medium",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        5,
+        -3,
+        257,
+        126
+      ],
+      "kwargs": {},
+      "safe_args": [
+        5,
+        -3,
+        257,
+        126
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/translated",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        1073741824,
+        -1073741824,
+        1073741831,
+        -1073741821
+      ],
+      "kwargs": {},
+      "safe_args": [
+        1073741824,
+        -1073741824,
+        1073741831,
+        -1073741821
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/near-int32-max",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        2147483627,
+        2147483617,
+        2147483634,
+        2147483620
+      ],
+      "kwargs": {},
+      "safe_args": [
+        2147483627,
+        2147483617,
+        2147483634,
+        2147483620
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/near-int32-min",
+      "api": "draw.line_aa",
+      "kind": "ordinary",
+      "args": [
+        -2147483627,
+        -2147483617,
+        -2147483620,
+        -2147483614
+      ],
+      "kwargs": {},
+      "safe_args": [
+        -2147483627,
+        -2147483617,
+        -2147483620,
+        -2147483614
+      ],
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "line-aa/np-int8",
+      "api": "draw.line_aa",
+      "kind": "np-int8",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-int16",
+      "api": "draw.line_aa",
+      "kind": "np-int16",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-int32",
+      "api": "draw.line_aa",
+      "kind": "np-int32",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-int64",
+      "api": "draw.line_aa",
+      "kind": "np-int64",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-uint8",
+      "api": "draw.line_aa",
+      "kind": "np-uint8",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-uint16",
+      "api": "draw.line_aa",
+      "kind": "np-uint16",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-uint32",
+      "api": "draw.line_aa",
+      "kind": "np-uint32",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-uint64",
+      "api": "draw.line_aa",
+      "kind": "np-uint64",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "line-aa/bool",
+      "api": "draw.line_aa",
+      "kind": "bool",
+      "args": [
+        false,
+        true,
+        true,
+        false
+      ],
+      "safe_args": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/float-integral",
+      "api": "draw.line_aa",
+      "kind": "float-integral",
+      "args": [
+        1.0,
+        2.0,
+        5.0,
+        7.0
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/float-fractional",
+      "api": "draw.line_aa",
+      "kind": "float-fractional",
+      "args": [
+        1.5,
+        2.5,
+        5.5,
+        7.5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-float32",
+      "api": "draw.line_aa",
+      "kind": "np-float32",
+      "args": [
+        1.5,
+        2.5,
+        5.5,
+        7.5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/np-float64",
+      "api": "draw.line_aa",
+      "kind": "np-float64",
+      "args": [
+        1.5,
+        2.5,
+        5.5,
+        7.5
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/scalar-array",
+      "api": "draw.line_aa",
+      "kind": "scalar-array",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/provider-first",
+      "api": "draw.line_aa",
+      "kind": "provider-first",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/providers-all",
+      "api": "draw.line_aa",
+      "kind": "providers-all",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/overflow-first",
+      "api": "draw.line_aa",
+      "kind": "overflow-first",
+      "args": [
+        1267650600228229401496703205376,
+        2,
+        5,
+        7
+      ],
+      "safe_args": null,
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/overflow-last",
+      "api": "draw.line_aa",
+      "kind": "overflow-last",
+      "args": [
+        1,
+        2,
+        5,
+        1267650600228229401496703205376
+      ],
+      "safe_args": null,
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/none-first",
+      "api": "draw.line_aa",
+      "kind": "none-first",
+      "args": [
+        null,
+        2,
+        5,
+        7
+      ],
+      "safe_args": null,
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/missing",
+      "api": "draw.line_aa",
+      "kind": "missing",
+      "args": [
+        1,
+        2,
+        5
+      ],
+      "safe_args": null,
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "line-aa/unexpected-keyword",
+      "api": "draw.line_aa",
+      "kind": "unexpected-keyword",
+      "args": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "safe_args": null,
+      "kwargs": {
+        "shape": [
+          8,
+          9
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    }
+  ],
+  "holdout_ids": [
+    "line-aa/up-left-steep",
+    "line-aa/reverse-half",
+    "line-aa/near-int32-min",
+    "line-aa/np-uint64"
+  ],
+  "benchmark_cases": [
+    {
+      "id": "line-aa/tiny",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        7,
+        3
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/horizontal",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        0,
+        2048
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/vertical",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        2048,
+        0
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/diagonal",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/shallow",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        512,
+        2048
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/steep",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        2048,
+        512
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/reverse",
+      "api": "draw.line_aa",
+      "args": [
+        512,
+        2048,
+        0,
+        0
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/long",
+      "api": "draw.line_aa",
+      "args": [
+        0,
+        0,
+        8192,
+        16384
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "line-aa/translated",
+      "api": "draw.line_aa",
+      "args": [
+        1073741824,
+        -1073741824,
+        1073742336,
+        -1073739776
+      ],
+      "kwargs": {}
+    }
+  ],
+  "source_freeze": {
+    "tests/line_aa_contract.py": "b12b0ad03c262e5e6c80ba34809765e05a1a23606094f84ff781366000d1a7be",
+    "tests/line_aa_observer.py": "ea4407800e94be674e6fe07d4d5c93544fb4a49f19f9a3250bf5a2f58a6778fa",
+    "tests/test_line_aa_reference.py": "74b726bad88ef2d7796d7bf9d7d2ebf3c55d7d753ddc40d819ef219cb572030f",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549"
+  },
+  "original_observations": {},
+  "benchmark_max_output_elements": 1000000
+}
