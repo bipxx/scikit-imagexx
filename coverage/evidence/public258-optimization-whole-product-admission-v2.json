@@ -1,0 +1,189 @@
+{
+  "schema": "whole-public-product-admission-v1",
+  "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+  "run": 42009401281,
+  "passed": true,
+  "root_accepted": true,
+  "admitted_at_utc": "2026-11-05T11:22:30.305670+00:00",
+  "profiles": 4,
+  "XML_checks": 926968,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "SDK_checks": 248,
+  "frozen_corpora": 48,
+  "sealed_records_rehashed": 117647,
+  "sealed_bytes_rehashed": 10104270391,
+  "source_image_paths": 258,
+  "registered_functions": 261,
+  "prepared_members": {
+    "product": 193,
+    "SDK": 91
+  },
+  "scope": "Exact cf0 four-profile qualification of258 declared partial image contracts plus3metadata functions. Not full477API/classes/runtime/nativeownership completion. Performance is separately scoped to the fixed28cohort experiment;19original losses per candidate pass remain.",
+  "production_source_sha256": "20531fec1abf02fe04d827159775c56eaf9a03d2e0fc8da65a62dbd4e9441d02",
+  "independent_verification": {
+    "path": "build/regionprops-performance-v2-independent-admission-review-v1/review.json",
+    "sha256": "2a09b06111142ea0f0be23719f5dc5e2a603603f777e827d35d224a8f92e2f9f"
+  },
+  "root_aggregate": {
+    "path": "build/regionprops-performance-v2-qualification-v1/root-aggregate-v1.json",
+    "sha256": "f86222af6c3ad94147f7365e393cfe8e29da35695f007a328943c8707798187e"
+  },
+  "previous_admission": {
+    "path": "coverage/evidence/public258-whole-product-admission.json",
+    "sha256": "2f169132cb778f19343a52eb992c11a80f610dfca9a12e20368dffea5e03272f"
+  },
+  "new_partial_paths": [],
+  "extended_partial_paths": [
+    "measure.regionprops"
+  ],
+  "raw_reviews": [
+    {
+      "profile": "minimum",
+      "path": "build/regionprops-performance-v2-qualification-v1/minimum-raw-review.json",
+      "sha256": "eebd347b00734b82587818cccd2293374d00e64775bb90b3bbe3b1da4e8fdd0e",
+      "qualification_manifest_sha256": "a1e5cc38e52d948428b009e1f2df13d3a22823352e59a3fb1f471b0dcd07e543"
+    },
+    {
+      "profile": "modern",
+      "path": "build/regionprops-performance-v2-qualification-v1/modern-raw-review.json",
+      "sha256": "4c20acc9b560ff9ffb4ddc467bd5915b972835c61c4dad25a7b2bb9cfa104670",
+      "qualification_manifest_sha256": "8957bf243a66f03b4571baa0b976385b823cf9a09fda3fe9928843511463bdd6"
+    },
+    {
+      "profile": "windows",
+      "path": "build/regionprops-performance-v2-qualification-v1/windows-raw-review.json",
+      "sha256": "be7c22e36d320c024cf42452e4327868ab1c45deebc095202647f93fbcc7c722",
+      "qualification_manifest_sha256": "6678dce3ea4e11cba50412fec4dd1e84290ea8e9d342db84c3bafa0eae31badb"
+    },
+    {
+      "profile": "debug",
+      "path": "build/regionprops-performance-v2-qualification-v1/debug-raw-review.json",
+      "sha256": "8118292854442036bd80e076cf3061432a33ab1d1f50868a100d202dd217d489",
+      "qualification_manifest_sha256": "e81de62cec0e061021cfb803b9c9e371b84f5e51b415f978a77053a357d91262"
+    }
+  ],
+  "controlled_stagers": [
+    {
+      "profile": "minimum",
+      "path": "build/regionprops-performance-v2-qualification-v1/minimum-stager-review.json",
+      "sha256": "1df57bbe3d2d958cb7e0806a77d745f45734a29cfcdbf66014f88cbcd58906e3",
+      "verified_files": 2230,
+      "status": "Authenticated exact-source Release stager; staged payload bytes unchanged."
+    },
+    {
+      "profile": "modern",
+      "path": "build/regionprops-performance-v2-qualification-v1/modern-stager-review.json",
+      "sha256": "90ce1f13e0be3a19bff6f6082faf6c168e89f13b31373d376b9ecc7c28d9e863",
+      "verified_files": 2230,
+      "status": "Authenticated exact-source Release stager; staged payload bytes unchanged."
+    },
+    {
+      "profile": "windows",
+      "path": "build/regionprops-performance-v2-qualification-v1/windows-stager-review.json",
+      "sha256": "868e11a98b85f8c65038331d4f84f25a4fea2793b563c6f8ad7ec94320ffbdce",
+      "verified_files": 2216,
+      "status": "Authenticated exact-source Release stager; staged payload bytes unchanged."
+    }
+  ],
+  "retained_artifacts": [
+    {
+      "id": 13409450036,
+      "name": "rank-statistics-product-minimum",
+      "run": 42009401281,
+      "revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v2-qualification-v1\\13409450036.zip",
+      "bytes": 214939947,
+      "sha256": "513d70a849432750826d213e25b2c5bb47dee6e5a7cd79f5741b47d7c72c2e12",
+      "seconds": 16.72706410009414,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13409205281,
+      "name": "rank-statistics-product-modern",
+      "run": 42009401281,
+      "revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v2-qualification-v1\\13409205281.zip",
+      "bytes": 212216224,
+      "sha256": "a40b764343987613d123dac4db982317bcc4db000df3347b51b110aa913395b5",
+      "seconds": 19.79578040004708,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13408892171,
+      "name": "rank-statistics-product-windows",
+      "run": 42009401281,
+      "revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v2-qualification-v1\\13408892171.zip",
+      "bytes": 211131139,
+      "sha256": "89b0c28caced0fa2b4f2b61e188d4e7caa2626b6edddb246972ca84e382a5c12",
+      "seconds": 23.739844999974594,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13408677460,
+      "name": "public-qualification-debug",
+      "run": 42009401281,
+      "revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v2-qualification-v1\\13408677460.zip",
+      "bytes": 1672320561,
+      "sha256": "192aead2000528f80599594b387eead6c847a13f7735c483d12fa3bad0119f81",
+      "seconds": 116.97041860013269,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13408399563,
+      "name": "public-qualification-windows",
+      "run": 42009401281,
+      "revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v2-qualification-v1\\13408399563.zip",
+      "bytes": 1232026831,
+      "sha256": "fdfce8e95ea00594ef3849fd8c828beee888c4cadc3315b4b948ab158cbdff00",
+      "seconds": 130.5186006000731,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13408059070,
+      "name": "public-qualification-minimum",
+      "run": 42009401281,
+      "revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v2-qualification-v1\\13408059070.zip",
+      "bytes": 1335657988,
+      "sha256": "f18050bc15c03c1cbc396d437a49cecac2b1b669547b7e3ba694e74a6ba5a80e",
+      "seconds": 113.03143709991127,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13407949355,
+      "name": "public-qualification-modern",
+      "run": 42009401281,
+      "revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v2-qualification-v1\\13407949355.zip",
+      "bytes": 1297209427,
+      "sha256": "ef609698eeaafff6d087aa951d1dc6c3e840d65a1d915663fd58482d555a0091",
+      "seconds": 98.34991989983246,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "performance": {
+    "path": "coverage/evidence/regionprops-performance-v2-same-host-keep-v1.json",
+    "sha256": "130695f2910f48b9bb750c6f4a52ba6e6470c90c80303183ca6ffec3939aa618"
+  },
+  "shipping_projection": {
+    "path": "build/regionprops-performance-v2-shipping-projection-v1/applied-v1.json",
+    "sha256": "9e3d058ebf09c7d3be1cffeabe111756f9a8ecf2315251d56b86e11e64b8726a"
+  },
+  "closeout": {
+    "result": "Independent exactsource release admission and481production-member shipping equality;32namedpaths.",
+    "waste_and_reuse": "Reused existing reviewers with source locator delta;7archives downloaded once, seals read once, reviewer uses small receipts/metadata. No new science/build/timing. Reports/references and allfailedexperiments preserved.",
+    "next_plan_correction": "Root publishes validated source immediately; B next260 source/setup/genuine gate and A next measured scalar overhead candidate remain separate. No unchanged qualification rerun."
+  }
+}

@@ -26,6 +26,29 @@ void check_coords(const RegionPropsState& state,std::size_t r,const std::vector<
     regionprops_coords_into(state,r,mask.data(),out.data()+1);
     require(out.front()==guard && out.back()==guard);
     require(std::equal(expected.begin(),expected.end(),out.begin()+1));
+    const auto ndim=state.labels.shape.size();const auto& region=state.regions[r];
+    std::vector<std::size_t> shape(ndim);
+    for(std::size_t a=0;a<ndim;++a)shape[a]=region.stop[a]-region.start[a];
+    std::array<std::ptrdiff_t,3> steps{};std::size_t step=3;
+    for(std::size_t a=0;a<ndim;++a){steps[a]=std::ptrdiff_t(step);step*=shape[a];}
+    steps[0]=-steps[0];const auto origin=3+3*(shape[0]-1);
+    std::vector<std::uint8_t> strided(3*mask.size()+6,91);
+    for(std::size_t i=0;i<mask.size();++i) {
+        const auto p=position(i,shape);auto at=std::ptrdiff_t(origin);
+        for(std::size_t a=0;a<ndim;++a)at+=std::ptrdiff_t(p[a])*steps[a];
+        strided[std::size_t(at)]=mask[i];
+    }
+    const auto point_step=std::ptrdiff_t(-3*sizeof(std::intptr_t));
+    const auto dimension_step=std::ptrdiff_t(3*(n+1)*sizeof(std::intptr_t));
+    const auto output_origin=2+(n?n-1:0)*3;
+    std::vector<std::intptr_t> direct(3*(n+1)*ndim+4,guard);
+    std::vector<bool> written(direct.size(),false);
+    regionprops_coords_strided_into(state,r,strided.data()+origin,steps,direct.data()+output_origin,point_step,dimension_step);
+    for(std::size_t i=0;i<n;++i)for(std::size_t a=0;a<ndim;++a) {
+        const auto at=std::ptrdiff_t(output_origin)-std::ptrdiff_t(3*i)+std::ptrdiff_t(3*(n+1)*a);
+        require(direct[std::size_t(at)]==expected[i*ndim+a]);written[std::size_t(at)]=true;
+    }
+    for(std::size_t i=0;i<direct.size();++i)if(!written[i])require(direct[i]==guard);
 }
 std::vector<std::uint8_t> check_mask(const RegionPropsState& state,std::size_t r,const std::vector<std::uint8_t>& expected) {
     std::vector<std::uint8_t> guarded(expected.size()+6,91);
@@ -34,6 +57,24 @@ std::vector<std::uint8_t> check_mask(const RegionPropsState& state,std::size_t r
     require(std::all_of(guarded.end()-3,guarded.end(),[](auto v){return v==91;}));
     require(std::equal(expected.begin(),expected.end(),guarded.begin()+3));
     require(count==regionprops_mask_population(expected.data(),expected.size()));
+    const auto ndim=state.labels.shape.size();const auto& region=state.regions[r];
+    std::vector<std::size_t> shape(ndim);
+    for(std::size_t a=0;a<ndim;++a)shape[a]=region.stop[a]-region.start[a];
+    for(int layout:{1,3}) {
+        std::array<std::ptrdiff_t,3> steps{};std::size_t step=std::size_t(layout);
+        for(std::size_t a=0;a<ndim;++a){steps[a]=std::ptrdiff_t(step);step*=shape[a];}
+        if(layout==3)steps[0]=-steps[0];
+        const auto origin=3+(layout==3?3*(shape[0]-1):0);
+        std::vector<std::uint8_t> direct(std::size_t(layout)*expected.size()+6,91);
+        std::vector<bool> written(direct.size(),false);
+        require(regionprops_mask_strided_into(state,r,direct.data()+origin,steps)==count);
+        for(std::size_t i=0;i<expected.size();++i) {
+            const auto p=position(i,shape);auto at=std::ptrdiff_t(origin);
+            for(std::size_t a=0;a<ndim;++a)at+=std::ptrdiff_t(p[a])*steps[a];
+            require(direct[std::size_t(at)]==expected[i]);written[std::size_t(at)]=true;
+        }
+        for(std::size_t i=0;i<direct.size();++i)if(!written[i])require(direct[i]==91);
+    }
     return {guarded.begin()+3,guarded.end()-3};
 }
 void frozen(const char* path,int budget) {

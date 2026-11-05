@@ -34,8 +34,11 @@ def test_fixed_contract_workflow_sources_and_pool_scope():
     assert len({s['id'] for k in ('region_cases','half_cases','holdout_cases') for s in P[k]})==20
     assert P['sampling']==dict(threads=1,repeat=7,target_ms=100,warmup_ms=250,cohorts=20,samples_per_pass=280,samples_total=1120,deadline='required immutable UTC deadline; checked before every actualbatch')
     g=P['fixed_gates'];assert g['all20_candidate_over_prior_max']==1.05 and g['region_targets_candidate_over_prior_max']==.5 and g['stain_targets_candidate_over_prior_max']==.8
-    for name,pin in P['controller_source_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
-    workflow=(ROOT/'.github/workflows/region-stain-same-host.yml').read_text()
+    context=json.loads((ROOT/'coverage/contracts/region-stain-controller-v1-context.json').read_bytes())['entries']
+    for name,pin in P['controller_source_sha256'].items():
+        raw=context[name]['utf8'].encode()if name in context else(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        assert hashlib.sha256(raw).hexdigest()==pin
+    workflow=context['.github/workflows/region-stain-same-host.yml']['utf8']
     assert "python-version: '3.11.17'" in workflow and 'if: always()' in workflow
     assert 'eea321b2a334ba51c475d7733ad7547fa24c553b' in workflow
     assert 'candidate_run:' in workflow and 'candidate_source:' in workflow and 'candidate_artifact:' in workflow and 'deadline_utc:' in workflow

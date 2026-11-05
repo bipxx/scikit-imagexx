@@ -79,21 +79,23 @@ class RegionProperties(_Provider):
     def area_bbox(self):
         if type(self) is not RegionProperties or '_native_state' not in self.__dict__:
             return _Provider.area_bbox.fget(self)
-        count=self.image.size
-        pixel_area=self._pixel_area
-        native_result=_core.regionprops_state_scaled_count_f64(count,pixel_area)
-        if native_result is None:return count*pixel_area
-        value,status=native_result
-        assert status==0
-        return value
+        result=_core.regionprops_state_area_bbox_get(self)
+        if type(result) is tuple:
+            count,pixel_area=result
+            return count*pixel_area
+        native_result=result
+        return native_result
 
     @property
     def extent(self):
         if type(self) is not RegionProperties or '_native_state' not in self.__dict__:
             return _Provider.extent.fget(self)
-        first=self.area
-        denominator=self.area_bbox
-        return _extent(first,denominator)
+        result=_core.regionprops_state_extent_get(self)
+        if type(result) is tuple:
+            first,denominator=result
+            return _extent(first,denominator)
+        native_result=result
+        return native_result
 
     @property
     def coords(self):

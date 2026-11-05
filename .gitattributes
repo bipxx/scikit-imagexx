@@ -735,3 +735,9 @@ tests/fixtures/regionprops_scalar_native.bin -text
 coverage/contracts/regionprops-scalar-runtime-v1.json -text
 coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json -text
 benchmarks/regionprops-performance-v2-same-host/* -text
+coverage/contracts/regionprops-strided-native-v2.json -text
+coverage/contracts/regionprops-scalar-boundary-v2.json -text
+coverage/contracts/regionprops-performance-state-v2.json -text
+coverage/contracts/regionprops-performance-scalars-v2.json -text
+coverage/contracts/regionprops-performance-compare-v2.json -text
+coverage/contracts/region-stain-controller-v1-context.json -text

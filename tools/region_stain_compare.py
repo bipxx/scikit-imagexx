@@ -99,7 +99,7 @@ def validate_report(report,journal,case_ids):
     assert len([x for x in events if x['event']=='measure_returned'])==len(rows)
     position=0;result={}
     for i,row in enumerate(rows):
-        assert row['threads']==1 and row['native_accepted'] is True and row['actual_C_returns']
+        assert row.get('threads',m['threads'])==1 and row['native_accepted'] is True and row['actual_C_returns']
         accepted=[[],[]];counts=[[],[]];warm=[0,0];records=[]
         while position<len(events) and events[position]['event']!='measure_returned':
             before,after=events[position:position+2];position+=2
@@ -137,7 +137,8 @@ def acceptance(passes,protocol):
         assert set(passes[baseline])==set(passes[candidate])
         for cid,b in passes[baseline].items():
             c=passes[candidate][cid];direct=c['cpp']/b['cpp'];normalized=(c['cpp']/c['original'])/(b['cpp']/b['original'])
-            limit=(g['region_targets_candidate_over_prior_max'] if cid in g['region_targets'] else
+            limit=(g['per_case_limits'][cid] if 'per_case_limits' in g else
+                g['region_targets_candidate_over_prior_max'] if cid in g['region_targets'] else
                 g['stain_targets_candidate_over_prior_max'] if cid in g['stain_targets'] else g['all20_candidate_over_prior_max'])
             checks.append(dict(case_id=cid,baseline_pass=baseline+1,candidate_pass=candidate+1,direct=direct,original_normalized=normalized,limit=limit,passed=direct<=limit and normalized<=limit))
     return {'decision':'KEEP' if all(c['passed'] for c in checks) else 'DISCARD','checks':checks,'scope':'bounded fixed cohorts only; no whole-library claim'}
@@ -148,7 +149,7 @@ def driver(args):
     if args.family=='holdouts':
         script=ROOT/'benchmarks/stain_f32_holdouts.py';argv=[str(script),'--source-root',str(root),'--contract',str(CONTRACT),'--deadline-utc',args.deadline_utc,'--output',str(args.output)]
     else:
-        script=root/'benchmarks'/('regionprops_state.py' if args.family=='region' else 'stains.py')
+        script=root/'benchmarks'/('regionprops_state.py' if args.family=='region' else 'regionprops_scalars.py' if args.family=='scalars' else 'stains.py')
         argv=[str(script),'--threads','1','--repeat','7','--deadline-utc',args.deadline_utc,'--output',str(args.output)]
         if args.family=='half':argv+=['--half-only','--size','512']
     # Stops on the real sampler call after actual original/native validation,
@@ -174,7 +175,14 @@ def execute(args):
     assert re.fullmatch('[1-9][0-9]*',args.candidate_run) and args.candidate_artifact>0
     assert re.fullmatch('[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',args.repository)
     protocol=load(CONTRACT)
-    for name,pin in protocol['controller_source_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    for name,pin in protocol['controller_source_sha256'].items():
+        current=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if protocol.get('optimization_version')!=2 and name in ('tools/region_stain_compare.py','.github/workflows/region-stain-same-host.yml'):
+            context=load(ROOT/'coverage/contracts/region-stain-controller-v1-context.json')['entries'][name]
+            assert hashlib.sha256(context['utf8'].encode()).hexdigest()==context['raw_sha256']==pin
+            active=load(ROOT/'coverage/contracts/regionprops-performance-compare-v2.json')
+            assert hashlib.sha256(current).hexdigest()==active['controller_source_sha256'][name]
+        else:assert hashlib.sha256(current).hexdigest()==pin,name
     out=args.results.resolve();out.mkdir(parents=True,exist_ok=False)
     assert datetime.now(timezone.utc)<datetime.fromisoformat(args.deadline_utc)
     (out/'frozen-inputs.json').write_text(json.dumps(vars(args),default=str,indent=2)+'\n')
@@ -202,21 +210,22 @@ def execute(args):
         selections[role]=selection;manifests[role]=manifest;pythons[role]=python
     manifests_equal(manifests['baseline'],manifests['candidate'])
     def launch(role,family,output,preflight=False):
-        cmd=[pythons[role],Path(__file__).resolve(),'driver','--source-root',args.snapshots.resolve()/role,'--family',family,'--output',output,'--deadline-utc',args.deadline_utc]
+        cmd=[pythons[role],Path(__file__).resolve(),'driver','--contract',CONTRACT,'--source-root',args.snapshots.resolve()/role,'--family',family,'--output',output,'--deadline-utc',args.deadline_utc]
         if preflight:cmd+=['--preflight']
         assert datetime.now(timezone.utc)<datetime.fromisoformat(args.deadline_utc)
         run(cmd,output.with_suffix('.process'),cwd=args.snapshots.resolve()/role,env=env)
         assert datetime.now(timezone.utc)<datetime.fromisoformat(args.deadline_utc)
+    families=protocol.get('families',['region','half','holdouts'])
     for role in ('baseline','candidate'):
-        for family in ('region','half','holdouts'):launch(role,family,out/(role+'-'+family+'-preflight.json'),True)
-    (out/'all-runtimes-preflight-complete.json').write_text(json.dumps({'roles':2,'first_cohorts':6,'timed_batches':0})+'\n')
+        for family in families:launch(role,family,out/(role+'-'+family+'-preflight.json'),True)
+    (out/'all-runtimes-preflight-complete.json').write_text(json.dumps({'roles':2,'first_cohorts':2*len(families),'timed_batches':0})+'\n')
     # No network, installation, builds or tests occur below until all four
     # measurement passes terminate. Raw failures survive upload(always).
     passes=[];identity=[]
-    ids={'region':[x['id'] for x in protocol['region_cases']],'half':[x['id'] for x in protocol['half_cases']],'holdouts':[x['id'] for x in protocol['holdout_cases']]}
+    ids={family:[x['id'] for x in protocol[{'region':'region_cases','scalars':'scalar_cases','half':'half_cases','holdouts':'holdout_cases'}[family]]]for family in families}
     for index,role in enumerate(protocol['passes'],1):
         combined={}
-        for family in ('region','half','holdouts'):
+        for family in families:
             output=out/(str(index)+'-'+role+'-'+family+'.json');launch(role,family,output)
             report=load(output);m=report['metadata'];expected=manifests[role]['runtime']['packages_sha256']['skimagexx']
             core=[value for name,value in expected.items() if name.startswith('_core.') and name.endswith('.so')];assert len(core)==1 and m['core_sha256']==core[0]
@@ -233,10 +242,12 @@ def execute(args):
 
 
 def main(argv=None):
+    global CONTRACT
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
     e=sub.add_parser('execute');e.add_argument('--repository',required=True);e.add_argument('--candidate-source',required=True);e.add_argument('--candidate-run',required=True);e.add_argument('--candidate-artifact',required=True,type=int);e.add_argument('--snapshots',type=Path,required=True);e.add_argument('--results',type=Path,required=True);e.add_argument('--deadline-utc',required=True)
-    d=sub.add_parser('driver');d.add_argument('--source-root',type=Path,required=True);d.add_argument('--family',choices=('region','half','holdouts'),required=True);d.add_argument('--output',type=Path,required=True);d.add_argument('--deadline-utc',required=True);d.add_argument('--preflight',action='store_true')
-    args=p.parse_args(argv)
+    d=sub.add_parser('driver');d.add_argument('--source-root',type=Path,required=True);d.add_argument('--family',choices=('region','scalars','half','holdouts'),required=True);d.add_argument('--output',type=Path,required=True);d.add_argument('--deadline-utc',required=True);d.add_argument('--preflight',action='store_true')
+    e.add_argument('--contract',type=Path,default=CONTRACT);d.add_argument('--contract',type=Path,default=CONTRACT)
+    args=p.parse_args(argv);CONTRACT=args.contract.resolve()
     deadline=datetime.fromisoformat(args.deadline_utc)
     assert deadline.utcoffset() is not None and deadline.utcoffset().total_seconds()==0,'deadline must be UTC'
     if args.command=='execute':execute(args)

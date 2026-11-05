@@ -62,9 +62,9 @@ jobs:
       - run: python tools/diagnose_distance_precision.py
       - run: python tools/ci_measurement_artifacts.py inventory
       - name: Region scalar area bbox extent installed boundary normal
-        run: python -m pytest -q tests/test_regionprops_bbox_extent_reference.py tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalars_benchmark.py --junitxml=build/ci-artifacts/regionprops-scalars-normal.xml
+        run: python -m pytest -q tests/test_regionprops_bbox_extent_reference.py tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py tests/test_regionprops_scalars_benchmark.py --junitxml=build/ci-artifacts/regionprops-scalars-normal.xml
       - name: Region scalar area bbox extent installed boundary disabled
-        run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
+        run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Authenticate frozen original reconstruction source
@@ -394,9 +394,9 @@ jobs:
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Region scalar area bbox extent installed boundary normal
-        run: python -m pytest -q tests/test_regionprops_bbox_extent_reference.py tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalars_benchmark.py --junitxml=build/ci-artifacts/regionprops-scalars-normal.xml
+        run: python -m pytest -q tests/test_regionprops_bbox_extent_reference.py tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py tests/test_regionprops_scalars_benchmark.py --junitxml=build/ci-artifacts/regionprops-scalars-normal.xml
       - name: Region scalar area bbox extent installed boundary disabled
-        run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
+        run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: RegionProperties saved state and shipping defaults
