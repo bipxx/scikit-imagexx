@@ -1,0 +1,79 @@
+{
+  "verdict": "PASS_BOUNDED_PRESCOTT_SOURCE_AND_COMPONENT_EVIDENCE",
+  "source": "906ba318d4222f0030c5fc164469786a1d56dfcc",
+  "base": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+  "author_handoff": {
+    "path": "build/matrix-prescott-native-v1/handoff-v1.json",
+    "sha256": "2885e58ce0a6c3da33a519d1107fec4aaf9c56ad51a8f5d7ae6d16eb302bf83d"
+  },
+  "reviewer_authorship": "Reviewer did not author Prescott profile/native/wrapper/SDK changes. Older SkylakeX certificate work is immutable and reused, not accepted as new work here.",
+  "verification": {
+    "source-verification.json": {
+      "path": "build\\matrix-prescott-independent-review-v1\\source-verification.json",
+      "sha256": "13427699de36ab4380d16f52820cd365ac2481c098972191b9f8940aff95a162"
+    },
+    "proof-verification.json": {
+      "path": "build\\matrix-prescott-independent-review-v1\\proof-verification.json",
+      "sha256": "d88ffe6f0c938dba8508b4142c454b5970af83e09457b59048a5e8efdb8d6cb9"
+    },
+    "old-cpp-inverse.json": {
+      "path": "build\\matrix-prescott-independent-review-v1\\old-cpp-inverse.json",
+      "sha256": "2aba8be1b10b73d147c9bacd8a09d337ac6150a8588ed8950afab9fc81014370"
+    },
+    "verify_source.py": {
+      "path": "build\\matrix-prescott-independent-review-v1\\verify_source.py",
+      "sha256": "2a6621d44807363365a7ff5f8b1841358669d698ab2e503c3c13d0300cbd95d2"
+    },
+    "verify_proofs.py": {
+      "path": "build\\matrix-prescott-independent-review-v1\\verify_proofs.py",
+      "sha256": "169717f7578d8e0341e3d780cd23d879caac1a02ac527be14d6499ec62f3b28e"
+    }
+  },
+  "findings": [],
+  "source_review": {
+    "policy_association": "Profiles7GEMM/8GEMVN use ordered separate multiply/add with explicit+0/alpha1 association.9alignedGEMVT and10peeledGEMVT preserve originalAmod16 distinction; K5 finalcomponent4 tail sequence explicit. GenericK3..5 loops, no caseID/table lookup. Exact432 raw words cover48 admitted arithmetic cases, input/fixture word correspondence reconstructed.",
+    "oracle": "Root admitted96 vendor calls comprise48packing/copy calls+48arithmetic calls, not96 independent arithmetic cases. ALL48 saved arithmetic spec/output rows match retained oracle exactly; root ABI/layout/canary/raw identity admission reused, no vendor calls or binary rehash.",
+    "compatibility": "Four-fragment whole Python inverse exact4ac. Independently removed new profile predicates/branch/SSE guard to recover exact old CPP span/FP/FMA helpers, profiles1..6dot and entire old mapping body. Existing v1/v2 interfaces keep capability31/63 and refuse profiles7..10; old caller/status behavior retained.",
+    "runtime": "Only exactNP1.24.4 pinned554b ELF core membership addsPrescott. Existing actualUMATH/BLAS hash/loading/forcing/thread1 authentication unchanged; newruntime requires realbuiltin v3/name/module/interface matrix-transform-math-v3/cap1023. Unsupported versions/binaries/capabilities continue refusal. No forcedCPU qualification.",
+    "layout": "Prepared-profile selector observes original matrix address modulo16 BEFORE coefficient copy; original nonBLASable/noBLAS path preserved. Read-only input provenance/span/stride/disjoint output checks unchanged. Wrapper performs intake, existing C++ owns arithmetic; no original wholealgorithm forwarding for new profile.",
+    "FP_workers": "Ordered smallK nonFMA reductions, boundedfinite normal existing domain, signedzero association explicit. New profile independent MXCSRroundbits refusal plus inherited nearest/FTZ/DAZ/auth guards. Existing staged denominator guard/environment restore/partition/globalbudget unchanged. Analytic large131073row1/4 controls; no speculative pool or packedSIMD speed claim.",
+    "source_attribution": "UT Austin per-file BSD andOpenBLAS notices present. Final notice delta after first#include byteequivalent to compiled source; portable OpenMP test control subset documented, no invented final full replay."
+  },
+  "retained_evidence": {
+    "Git_source_pins": 16,
+    "small_proof_pins": 139,
+    "raw_cases": 48,
+    "raw_words": 432,
+    "native_runs": 4,
+    "native_checks_each": 262943,
+    "mapping_values_each": 524436,
+    "python_passes": 348,
+    "python_cases_per_profile_mode": 87,
+    "pure_unique_per_profile": 15,
+    "SDK_members": 173,
+    "SDK_scope": "assembledrelocatedSDK91+existingheader/oneleaf replacement; actualfind_package/headerdependency/map and normal/disabled scope, existingdefaultfamily reaches controls",
+    "MSVC": "3affectedTUsactualcompile exit0,6.041s; no Windows runtime",
+    "codegen": "Normalseparatearithmetic, noFMA; onepacked multiply recorded, no packed reduction/speed claim. Truecompiler-scalar retains no packed multiply. Runtime disable separate from compiler scalar."
+  },
+  "applicable_requirements": {
+    "instructions": "CurrentAGENTS Applying instructions read; exclusive ignored review directory, frozen906 only, no source mutation/cleanup/replays. Inputs/prerequisites verified from retainedsource/receipts. Acceptance/remaining gates recorded before closeout.",
+    "unmet_gates": [
+      "ROOT/A restore only16named paths into coherent current integration, preserve namespace/historical contexts; do not merge private4acancestry blindly.",
+      "SharedCMake strictFP includes -ffp-contract=off -fno-fast-math -frounding-math for changed GNU matrixTU; newselectors/requiredsources/defaultSDK closure and rawdata -text flags.",
+      "Actual genuineupdatedwholecore/SDK and installed public admission; privatecomponent not whole registration credit.",
+      "Exactsource supported fourprofile qualification. NaturalPrescott public runtime not observed by this packet; no claim it was.",
+      "Relevant original-public performance evidence remains separate; no performance gain or fullAPI/domain claim."
+    ]
+  },
+  "closeout": {
+    "result_evidence": "PASS bounded16source/139smallproof review; oldinverse and oracle row/word relationship independently derived. No concrete source blocker.",
+    "avoidable_work": "Three guessed artifact filenames/locations missed before exact author locators arrived; resolved with narrow inventory, no scientific work. Metadata verifier corrected actual exit_code key and reused-normal disabled stdout path, then reran only metadata assertions.",
+    "reuse": "Reused root96rawadmission/staticclosure/oldSDK identities and retainednative/Python/SDK/MSVC proof scopes. No builds/tests/original/vendor/timing/environment or archive/core/wheel hash replay.",
+    "observed_cost": "Source verification1.78s; proof metadata1.39s initially and corrected metadata pass retained toolhistory. Totalreview cost not separately measured.",
+    "next_owner_trigger": "ROOT independentadmission and A sole sharedintegration after this scopedPASS; freeze readybundle and execute genuine/release gates. Record same naturalhost/performance/provider limits in existing plan, not another campaign/backlog."
+  },
+  "readers_released": true,
+  "active_processes": 0,
+  "production_edits": 0,
+  "scientific_build_original_vendor_timing_calls": 0
+}

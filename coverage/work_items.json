@@ -36970,7 +36970,7 @@
       "kind": "implementation",
       "owner": "qualification251_readiness",
       "branch": "fix/matrix-transform-prescott-v1",
-      "state": "implementing",
+      "state": "parity_passed",
       "apis": [],
       "target_apis": [
         "transform.matrix_transform"
@@ -36984,10 +36984,10 @@
       "depends_on": [],
       "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
       "acceptance": "CloseobservedauthenticatedOpenBLAS0.3.21Prescottarithmetic viaexistingprofilearchitecture, exactsource/binaryclosure andboundedwitnesses; no corename-onlyallowlist orCPUforcing; preserveexistingprofiles/worker/SDK contracts. Independentreview+genuine supportedprofileacceptance required.",
-      "current_checkpoint": "Authenticated Prescott gap reproduced without CPU forcing. Direct capture96 calls complete once (48 copy/48 arithmetic), root raw admission retained; no replay. Native profiles7-10 match432 oracle words across normal/runtime-disabled/compiler-scalar/sanitizer modes. Targeted public/installed SDK/MSVC/source guards passed author scope; final source/context handoff pending.",
+      "current_checkpoint": "Frozen clean source906ba318d4222f0030c5fc164469786a1d56dfcc, handoff build/matrix-prescott-native-v1/handoff-v1.json SHA2885e58ce0a6c3da33a519d1107fec4aaf9c56ad51a8f5d7ae6d16eb302bf83d:16 named paths/139 small proofs. All48 captured cases432words match across four native modes;348 targeted public passes,15 unique pure nodes/profile, relocated assembledSDK91 normal/disabled and3TU MSVC compile-only. Independent C review PASS9241cd8a sealed and published in coverage/evidence/matrix-prescott-source-admission-v1.json; old wrapper and C++ inverse independently reconstructed. No naturalPrescott public host or speed claim.",
       "next_gate": {
-        "owner": "qualification251_readiness",
-        "action": "Seal final source and exact inverse/context successor preserving frozen old certificate/migration; root independently review then shared candidate integration by sole author. No vendor/original replay, unchanged campaign retry or corename-only waiver. Genuine exact-source supported-profile qualification remains."
+        "owner": "integrator",
+        "action": "A projects16 admitted exact paths from906ba318 into sole shared draw-batch candidate, preserving old certificates/arithmetic and adding GNU strict-rounding/source/selector/raw-attribute metadata. Root admits affected shared readiness then genuine exact-source preparation, supported release and explicit performance dispositions. No vendor/original replay or unchanged campaign retry."
       }
     }
   ],
