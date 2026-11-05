@@ -2275,10 +2275,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2300,6 +2300,21 @@ def current_metadata_artifact(tmp_path):
         output.comment=revision.encode()
         for name,raw in source.items():output.writestr(name,raw)
     return product,archive,revision
+
+
+def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
+    tree=ast.parse((ROOT/'tools/public_qualification.py').read_bytes())
+    function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='sdk')
+    predicate=next(n.test for n in ast.walk(function) if isinstance(n,ast.If)
+                   and 'tests/fixtures/bezier_curve_originals_v1.bin' in ast.unparse(n.test))
+    expression=compile(ast.Expression(predicate),'<actual SDK source extraction>','eval')
+    selected=('tests/fixtures/bezier_curve_originals_v1.bin','tests/matrix_prescott_controls.hpp',
+              'tests/fixtures/matrix_prescott_native.hpp','tests/cmake_consumer/CMakeLists.txt',
+              'tests/test_matrix_transform_native.cpp')
+    for name in selected:
+        assert (ROOT/name).is_file() and eval(expression,{'name':name})
+    for name in ('tests/fixtures/','python/skimagexx/draw.py','coverage/api.json','tests/fixtures/unassessed.bin'):
+        assert not eval(expression,{'name':name})
 
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))

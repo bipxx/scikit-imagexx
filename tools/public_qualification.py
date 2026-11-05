@@ -2110,7 +2110,8 @@ def sdk(out, state, journal):
     sdk_source = out / 'consumer source'; sdk_source.mkdir()
     with zipfile.ZipFile(out / 'source.zip') as archive:
         for name in archive.namelist():
-            if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')):
+            if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')
+                    or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
