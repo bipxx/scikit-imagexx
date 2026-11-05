@@ -1,0 +1,44 @@
+{
+  "verdict": "PASS_BOUNDED_FAMILY_SOURCE_AND_RETAINED_EVIDENCE",
+  "source_commit": "55462f45517c953548c583aa8c17d033a795d28e",
+  "author_handoff": {
+    "path": "build/draw-bezier-v1/handoff-family-v1.json",
+    "sha256": "0a3b44c3776fcae81008cd1fa1cc20158902ee8267835c67baa56bf546fe7dab"
+  },
+  "authentication": {
+    "path": "build\\draw-bezier-independent-family-review-v1\\authentication.json",
+    "sha256": "5e2c0c114d5ed1b6f3764a37f08df2cff8d12efc3f4a89eb225a05c744fad431",
+    "script_sha256": "2e3b7758a2392d7fa09d886b8c5db5cf1320996979dcd746410638182c79d133",
+    "named_Git_paths": 20,
+    "small_proofs_authenticated": 74
+  },
+  "reused_reviews": {
+    "source_safety": "3dd3a9d8be81b19e54ae64823053c776f4be2229d2c2a19b211a6b7905089a51",
+    "once_only_original_capture": "9533bb0aa660d09a4b562a75b0b7cea11d03154422666471470719458798335d"
+  },
+  "findings": [],
+  "review": {
+    "native": "Entire recurrence/prepare prefix exact48c. New fill snapshots stable input/output pointers and steps; contiguous branch copies ordered rows/columns independently, signed-stride branch unchanged indexing. Typed capacity/disjoint/alignment/lifetime preconditions documented. Default1/current1/4 and parallel threshold exercised. Normal packed copy instructions16; compiler-scalar0, no custom AVX2 or parallel recurrence claim. Trace macro compiled out in normal modes.",
+    "frontend": "Sequential six index conversions and PyFloat_AsDouble primitive before one global getter. Separate owning intp arrays including point/empty; native_result accepted nonNone and builtin C-return witnesses. Ordinary bounded builtin shape clipping owned; readonly/gapped/unknown shape uses explicit NumPy comparison/filter provider tail after raster. Short builtin shape quarantined NI, no unsafe original/error-parity claim. No whole-original computation forwarding.",
+    "reference_SDK": "Complete saved contract byte-structure exactea90. All28 success SDK records reconstructed from existing original compressed encodings:566 intp words/6800 fixture bytes. Runtime outputs match recorded assertions normal/disabled, controls525592 each. New installed header dependency and archive map resolve assembled SDK92,173->174members; immutable genuine SDK91 donor identity reused. No genuine92 claim.",
+    "public": "Four retained XMLs each68 nodes =272 (31 saved cases xworkers1/4 plus6 controls), no failed/error/skipped. Success complete observer equality and native/getter accepted; captured3 entry errors before getter/kernel. Actual public-compatible family wrapper+narrow core; shipping alias pending.",
+    "native_evidence": "Four retained final modes1838963 controls/28 saved records each. Normal executable reused runtime-disabled; true compiler-scalar leaf distinct no OpenMP. ASan leaf/unit instrumented, retained old SDK line/runtime not claimed scalar/sanitized. Actual MSVC affected TUs compile only, no Windows execution.",
+    "benchmark": "Twelve frozen prospective cases168 samples/24warmgroups if later run, actual original public vs native allocation-inclusive. Exact case list equals source-safety freeze; trace source prefix identical reviewed recurrence,12 successful finite/progress/cast traces retained (not quota alone). Factory scalar recipes15pure nodes/profile and12NumPy-only checker faults/profile retained; no algorithm calls in those tests. Exact intp word/layout/identity/nonsharing checker, including empty expected/self alias; cached original code/compiled entries trapped, real C-returns/nonNone/one getter, instrumentation restored before measure. Seven repeats100ms/250warm,workers/pools1,source/runtime/core/hardware/deadline pins present. No actual CLI/timing claim."
+  },
+  "remaining_scope": [
+    "Broader negative/nonfinite/subnormal/extreme/protocol/exceptional-FP partitions remain unassessed or explicit refusal/provider; no whole API closure.",
+    "Root shared registration/default/generic/source closure, actual shipping CLI first cohort, genuine input admission, one-thread original comparison and exact-source four-profile release gates remain pending."
+  ],
+  "authorship": "Reviewer authored earlier source-safety/capture reviews, not final native/frontend/SDK/benchmark implementation. Those prior immutable original facts reused; new family delta independently read.",
+  "closeout": {
+    "result_evidence": "PASS exact20 family paths/74small proofs; no concrete blocker. All retained counts derived/authenticated without replay.",
+    "avoidable_work": "One guessed underscore-vs-hyphen proof filename read missed; narrow existing directory lookup resolved. No build/test/numeric/original/timing replay.",
+    "reuse": "Reused closed safety/capture and genuine SDK donor identities; no archive/core/wheel rehash or new environments. New small proof authentication only.",
+    "cost": "Observed local authentication script2.60s; total review cost not measured, no rerun to measure it.",
+    "next_owner_trigger": "ROOT accept family-only delta then project named paths into current ready bundle and complete shared/genuine/performance/release gates; current full-scope gap route preserved. Reviewed, no change to prospective numerical policy or cases."
+  },
+  "leases_released": true,
+  "active_processes": 0,
+  "source_mutations": 0,
+  "build_test_original_timing_calls": 0
+}

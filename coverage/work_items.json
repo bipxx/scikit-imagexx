@@ -36918,7 +36918,7 @@
       "kind": "implementation",
       "owner": "tiny_line_implementation",
       "branch": "feature/draw-bezier-v1",
-      "state": "implementing",
+      "state": "parity_passed",
       "apis": [],
       "target_apis": [
         "draw.bezier_curve"
@@ -36934,16 +36934,16 @@
       "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
       "next_gate": {
         "owner": "tiny_line_implementation",
-        "action": "Sealfinitefamilykernel/frontend/SDK/currentprivateproofs+prospective12one-workerbenchcases; independentfamilydelta review usingcapturedtruth. Rootsharedwiring/genuine/performance/release follow; no moreoriginalcalls. Nativeordinaryclipowned, unknownshapeNumPy-tail explicitprovider."
+        "action": "Integrate reviewed20 named family paths into integrate/draw-batch-v1 as sole shared author; reuse2667 source-prebuild closure and execute affected new consumers. Root independently admits exact shared candidate before genuine preparation, CLI checks,12case168sample one-worker comparison and release."
       },
       "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
-      "current_checkpoint": "C++rational/extremumkernel andnativeclip implemented; SIMDfill16B proven, serialrecurrenceexplicit.31safeoriginalcases/profile (62calls/124events) independentlyadmitted9533bb0a; shortshapequarantined0calls. Native4modes1,838,963controls/mode/public272/assembledSDK92 normal+disabled passed scopedfamily; finalbenchmarkhandoffpending. Fourreferencefilesprojectedtomaintests, no nativecoveragecredit."
+      "current_checkpoint": "Final family55462f45517c953548c583aa8c17d033a795d28e independently reviewed PASS465fea03:20 source paths/74 small proofs; recurrence unchanged from safety-sealed48c,272 public checks, four native modes and assembled SDK92 evidence. References on main; shipping/genuine/performance/release remain open."
     },
     {
       "id": "draw-set-color-current-batch-v1",
       "kind": "implementation",
       "owner": "next_family_contract",
-      "branch": "fix/draw-set-color-integer-stage-v2",
+      "branch": "feature/draw-set-color-f32-v3",
       "state": "parity_passed",
       "apis": [],
       "target_apis": [
@@ -36960,17 +36960,17 @@
       "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Projectindependentlyadmitted75c863familyintoearliestreadycumulativecandidate; rootshipping/registry/SDK/genericmutation-awaredefaults compareimagecarriersnotNone. Source/installedgenuine+fixedone-worker6case84sampleoriginalcomparison andsupportedrelease remain; no newcaptures."
+        "action": "Project admitted15 family paths from2667158 into integrate/draw-batch-v1 by sole shared author. Compare independent fresh full-image mutation carriers and retain publicNone return. Reuse component evidence; execute affected shared guards before genuine preparation, eight-case112sample original comparison and supported release."
       },
       "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
-      "current_checkpoint": "F1fixed75c86322 independentlyROOTPASSfe7611ba:typedintegerstagepreservespreviousdomains, originalall52goldobjectsunchanged;172newstage+4pure actualXML, integernative4modes/SDK20x2/MSVCcompileonly. Rejectedc9/CD75/2originalholdouts retained. Fullshipping/genuine/speed/alltypes stillopen."
+      "current_checkpoint": "F32 successor2667158 independently source-reviewed by root: build/draw-set-color-independent-review-v3/review.json SHA bc32f7027f9c71fa6b9282d83c3f09ad4447f7e5da30992d1a02a4ec6fffc497. Author metadata verification157d4b03 authenticates14 source/296 smallproof pins,24 originals,172 public/8 pure, four native modes and assembled SDK22x2. Parent allcontractkeys including52+A2 observations unchanged. MSVC compile-only standalone exit receipt absent; no Windows runtime credit. Shared/genuine/performance gates remain."
     },
     {
       "id": "matrix-transform-prescott-release-fix-v1",
       "kind": "implementation",
       "owner": "qualification251_readiness",
       "branch": "fix/matrix-transform-prescott-v1",
-      "state": "contracting",
+      "state": "implementing",
       "apis": [],
       "target_apis": [
         "transform.matrix_transform"
@@ -36984,10 +36984,10 @@
       "depends_on": [],
       "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
       "acceptance": "CloseobservedauthenticatedOpenBLAS0.3.21Prescottarithmetic viaexistingprofilearchitecture, exactsource/binaryclosure andboundedwitnesses; no corename-onlyallowlist orCPUforcing; preserveexistingprofiles/worker/SDK contracts. Independentreview+genuine supportedprofileacceptance required.",
-      "current_checkpoint": "4acminimumjob failedinitialadmission beforepropertytests; artifact13449207856 retainedonce. StaticselectedELF/primarysourceclosure8f02;96directvendorcallsprospective, controller-v3 journal-integritycorrectionpending; ZEROvendorarithmetic/copycalled. FailedhostCPUIDwhyunknown, selectedPrescottauthenticated.",
+      "current_checkpoint": "Authenticated Prescott gap reproduced without CPU forcing. Direct capture96 calls complete once (48 copy/48 arithmetic), root raw admission retained; no replay. Native profiles7-10 match432 oracle words across normal/runtime-disabled/compiler-scalar/sanitizer modes. Targeted public/installed SDK/MSVC/source guards passed author scope; final source/context handoff pending.",
       "next_gate": {
         "owner": "qualification251_readiness",
-        "action": "Sealv3controllerzeroarithmeticpreflight; rootreview/GOforfrozen96calls; independentraw/sourcearithmeticreviewthenminimalnativeprofileimplementation+targetedparity/SDK/portability. No unchangedcampaignretry/waiver; preserveBezierworknowownedA."
+        "action": "Seal final source and exact inverse/context successor preserving frozen old certificate/migration; root independently review then shared candidate integration by sole author. No vendor/original replay, unchanged campaign retry or corename-only waiver. Genuine exact-source supported-profile qualification remains."
       }
     }
   ],
@@ -37662,7 +37662,11 @@
     "accepted_binary_image_names": 258
   },
   "execution_policy": {
-    "active_workers": ["next_family_contract", "qualification251_readiness", "tiny_line_implementation"],
+    "active_workers": [
+      "next_family_contract",
+      "qualification251_readiness",
+      "tiny_line_implementation"
+    ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
