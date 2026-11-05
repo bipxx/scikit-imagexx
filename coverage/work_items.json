@@ -36451,37 +36451,27 @@
         "draw.polygon2mask"
       ],
       "owner": "qualification251_readiness",
-      "state": "implementing",
-      "branch": "integrate/draw-polygon-v1",
+      "state": "preparing",
+      "branch": "integrate/draw-polygon-process-v2",
       "base_sha": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
-      "owns": [
-        "CMakeLists.txt",
-        "src/bindings.cpp",
-        "python/skimagexx/draw.py",
-        "python/skimagexx/coverage.py",
-        "coverage/api.json",
-        "coverage/API_IMPLEMENTATION_PATHS.json",
-        "coverage/API_IMPLEMENTATION_PATHS.md",
-        "coverage/README.md",
-        "tools/inventory.py",
-        "tools/ci_measurement_artifacts.py",
-        "tools/public_qualification.py",
-        ".github/workflows/ci.yml",
-        ".github/workflows/public-qualification.yml",
-        "benchmarks/draw_polygon.py",
-        "coverage/contracts/draw-polygon-benchmark-runtime-v1.json"
-      ],
+      "owns": [],
       "depends_on": [
         "draw-polygon-native-v1",
         "draw-polygon-frontend-v1",
         "draw-polygon-sdk-v1",
         "draw-polygon-benchmark-v1"
       ],
-      "current_checkpoint": "Baseexactcf0projection20531 verified BEFOREpolygon; independentcomponentsclosed. Derived195product92SDK/31families62checks/260images263functions/POST92. EXACT2inventoryrowschanged,29classes284membersunchanged. Currentdefault/checker5-file finitepeer705984PASS; actualexecution/sourcefreeze pending, CpreparesignoredactualCLIscaffoldonly.",
+      "current_checkpoint": "Process-onlybd16 peerPASS4eb4b65e/396actualprocesschecks; POST91+cold1=92requiredselectors, ordinaryadmission unchanged. Genuine42027790280SUCCESS: correctedcold90/normal91/disabled92/freeze137+consumerverify6/46PASS,39timersSKIPPED. Rootoneconsumer13414728898 authenticated14wheels195product92SDK/2264source/485prod/16882XML0bad/core dcb2/PF74f929. Strictcf0runtime13deps equal. Main83a qualified258 remains, no260ship/speedcredit.",
       "next_gate": {
-        "owner": "qualification251_readiness",
-        "action": "Freezeonlyreviewedsourceaftere25; newactivebenchmarkruntimecontext/pointer inverse preserves3163contract/cases/method. Completeactualaffectedbothprofileguards/currentIDreuse+default/dtype/aliasgates; rootGOforboundedactualCLI beforegenuine. No ad-hocreturnedobjectstubs/broadoriginalrecapture/fullSDK/env/timing."
-      }
+        "owner": "root",
+        "action": "A independentminimuminputmetadataadmission thenpromptfixedv3isolated28cohortcomparison vsqualifiedcf0, all1568samples/rawlosses/caps retained. New12polygonoriginalmeasurements andfourprofilereleasequalification remainbeforemain260projection. B preparesdispatchbyactualworkflowinputs, no uncontrolledretry orsourcepinrewrite. Failed42023725498 remainsfailed."
+      },
+      "frozen_source_paths": [
+        ".github/workflows/ci.yml",
+        "tools/public_qualification.py",
+        "tests/test_public_qualification.py",
+        "tests/test_ci_measurement_isolation.py"
+      ]
     },
     {
       "id": "regionprops-scalar-cost-diagnostic-v1",
@@ -36500,6 +36490,145 @@
       "next_gate": {
         "owner": "tiny_line_implementation",
         "action": "Independently reconstruct existing28samples/journals and seal diagnostic-only interpretation. Compare simplest attribute-key/dispatch changes preserving getter order/cache/FP policy; no original/timing retry. Separate realistic MXCSR guard correctness followup from overhead hypothesis."
+      }
+    },
+    {
+      "id": "regionprops-attribute-keys-v1",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "tiny_line_implementation",
+      "branch": "perf/regionprops-attribute-keys-v1",
+      "base_sha": "83a3cf99",
+      "state": "parity_passed",
+      "owns": [],
+      "depends_on": [
+        "regionprops-scalar-cost-diagnostic-v1",
+        "regionprops-performance-shared-v2"
+      ],
+      "acceptance": "Only immutable attribute-name handles; no cached values/signature/read-order/FP/fallback changes. Affected parity modes and actualMSVC binder compile; root peer before separately frozen isolated one-worker original/priorCPP comparison.",
+      "current_checkpoint": "54ca4bcb component independentlyPASS6b0353:48affectedchecks/tworuntimesnormal+runtime-disabled,actualMSVCbindercompile; capturednamekeys preservewholebinderinverse. No speedcredit. Composedfec18 andtrue mixedcores f14826a5; actual4CLIroutesPASS553bc8a1.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Preserve unmeasured component in coherent candidate; process-only setup successor first, then onegenuineproduct and fixedv3comparison versuscf0. No speculative CAPI dispatcher/cache."
+      },
+      "frozen_source_paths": [
+        "src/bind_regionprops_state.cpp",
+        "tests/test_regionprops_scalar_boundary_v2.py"
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "54ca4bcb156e728a0e1947b90a0b660321c8de6f",
+          "manifest": {
+            "path": "build/regionprops-attribute-keys-independent-review-v1/review.json",
+            "sha256": "6b0353f2f0257c41832d851d60b3851a7f34cefbde57cc93a199f55f0ff1f3d7"
+          },
+          "native_contract_checks": 48,
+          "native_pending": 0,
+          "scope": "Two existing getterentries only; truecompiler-scalar/performance/genuinepublicproduct notclaimed."
+        }
+      }
+    },
+    {
+      "id": "regionprops-mxcsr-rounding-v1",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "next_family_contract",
+      "base_sha": "83a3cf99",
+      "state": "parity_passed",
+      "owns": [],
+      "depends_on": [
+        "regionprops-performance-shared-v2"
+      ],
+      "acceptance": "Same polygon existingmask correction for independent SSE roundingbits; nearest-only contract preserved. Targeted scalar helpers refuse unchangedFP state in four modes, actualMSVC affectedTU compile, existing default unit integration. No framework/new providers/oldgoldreplay.",
+      "current_checkpoint": "7adf0b7a independentlyPASS40ac0d6e:47focusedcontrols each4modes,default8481rows127300checks,actualMSVC2TUcompile. ExistingmaskaddsSSEroundingbits only; oldhelpercounterexample retained. Composedfec18, no wholeproduct acceptance.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Reuse closed two-file correctnessproof in process-only coherent successor; genuine/four-profile acceptance remains. No oldfixture or directedmode replay for runner metadata changes."
+      },
+      "frozen_source_paths": [
+        "src/regionprops_state.cpp",
+        "tests/test_regionprops_scalar_native.cpp"
+      ],
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "7adf0b7a0d94fa5041ecc12e75bd02645a160b46",
+          "manifest": {
+            "path": "build/regionprops-scalar-mxcsr-independent-review-v1/review.json",
+            "sha256": "40ac0d6e155f58bbee657cbbc4dd3117fcf0c3d2bb990648285ef5ad73d690ce"
+          },
+          "native_contract_checks": 188,
+          "native_pending": 0,
+          "scope": "Nearest-only scalarhelpers2functions/fourfocusedmodes; Windowscompileonly."
+        }
+      }
+    },
+    {
+      "id": "regionprops-performance-comparison-v3",
+      "kind": "contract",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "tiny_line_implementation",
+      "state": "contracted",
+      "owns": [],
+      "frozen_source_paths": [
+        "coverage/contracts/regionprops-performance-compare-v3.json",
+        "tools/region_stain_compare.py",
+        "tests/test_region_stain_compare.py"
+      ],
+      "depends_on": [
+        "regionprops-attribute-keys-v1",
+        "regionprops-mxcsr-rounding-v1"
+      ],
+      "current_checkpoint": "Prospective20268c7e independentlyPASS14451428:exactcf0baselineartifact,28cases/4ABBA1568samples unchanged; two scalarwarmtargets.95 and26controls1.05 direct+normalizedeachpair. Engineversion2/configrevision3; no timing.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Authenticate one eligible coherent successor preparedproduct after processgroupfix, pin exactsource/runtime/artifact/deadline and reserveisolatedhost beforefixedcomparison. Preserve allfailedexperiments andeveryoriginal loss."
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-reference-v1",
+      "kind": "reference",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owner": "next_family_contract",
+      "state": "accepted",
+      "owns": [],
+      "depends_on": [],
+      "current_checkpoint": "51f3 captures independentlyPASSf568ac6d,4referencepaths mergedmain.24topctors72fget/48privateinit24getitem78imagewrapper48compute,342events;72arrays444words independentlymatchedrecipes,0errors/warn/FP. Integer3Di64/11otherf64;ownF/nonempty,ownemptyzero-strides/noalias. Only4newpurevalidatorsPASS, no26intake/old9replay. SourceWTretiredcleanancestor afterreaderrelease;14obsoletepycacheremoved, allrawproofs rootbuildprotected. No nativecoveragecredit;34otherpropertiesunassessed.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Freeze one minimaltypeddefinition inexistingRegionmodule preserving sourcephaseorder andcapturedoperands onunsupported suffix; no publiccoords scaling/wholegetterre-entry. Native/frontend/SDKparallelimplementation onlyafterheaderpeer. Use main/Git51f3; retiredreferenceWT no longerinput."
+      },
+      "frozen_source_paths": [
+        "coverage/contracts/regionprops-coords-scaled-prospective-v1.json",
+        "coverage/REGIONPROPS_COORDS_SCALED_REFERENCE_PROPOSAL.md",
+        "tests/test_regionprops_coords_scaled_reference.py",
+        "coverage/contracts/regionprops-coords-scaled-reference-v1.json"
+      ],
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "51f3a50045774d67ed8a789d31edb88b5c93d592",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-independent-capture-review-v1/review.json",
+            "sha256": "f568ac6df2b8ffdc0494e85108a861afb6041c3740d6eef7fec19510d9458d27"
+          },
+          "passing_contract_checks": 4,
+          "scope": "Original24sequences/72outputs andpure savedvalidators only; not C++native parity."
+        }
       }
     }
   ],
@@ -38482,15 +38611,15 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
-    "run": 41986546641,
+    "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+    "run": 42009401281,
     "image_paths": 258,
     "receipt": {
-      "path": "coverage/evidence/public258-whole-product-admission.json",
-      "sha256": "2f169132cb778f19343a52eb992c11a80f610dfca9a12e20368dffea5e03272f"
+      "path": "coverage/evidence/public258-optimization-whole-product-admission-v2.json",
+      "sha256": "34c2fdf2bb47dc6d5320c1ae9dec893e88c83015f2dd8b235b23eedb275c38cf"
     },
-    "scope": "All four supported profiles qualify exact258 declared PARTIAL image contracts plus3metadata functions, including bounded RegionProperties area/area_bbox/extent. This is not full477API/class/runtime/nativeownership/performance completion or later optimization acceptance.",
-    "production_source_sha256": "fe08560b60c91735060145f18982df31f13c759af2d9717eb96ed43ac4b8962d"
+    "scope": "Exact cf0 four-profile qualification of258 declared partial image contracts plus3metadata functions. Not full477API/classes/runtime/nativeownership completion. Performance is separately scoped to the fixed28cohort experiment;19original losses per candidate pass remain.",
+    "production_source_sha256": "20531fec1abf02fe04d827159775c56eaf9a03d2e0fc8da65a62dbd4e9441d02"
   },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",

@@ -1,0 +1,61 @@
+{
+  "schema": "failed-preparation-v1",
+  "result": "FAILED_SETUP_IMPORT_STATE",
+  "source": "fec18dee551db30deaa292a42f15f8b5fb2f5a2e",
+  "run": 42023725498,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42023725498",
+  "job": 127232613264,
+  "step": 90,
+  "passed_checks": 108,
+  "setup_errors": 30,
+  "failed_ids": [
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[0]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[1]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[2]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[3]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[4]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[5]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[6]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[7]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[8]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[9]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[10]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_frozen_fixture_builds_only_safe_mutable_columns[11]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_distinct_owning_output_is_accepted[False-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_distinct_owning_output_is_accepted[False-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_distinct_owning_output_is_accepted[True-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_distinct_owning_output_is_accepted[True-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-reference-False-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-reference-False-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-reference-True-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-reference-True-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-input-False-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-input-False-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-input-True-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[same-input-True-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[shared-reference-False-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[shared-reference-False-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[shared-reference-True-False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_original_or_input_alias_is_rejected_even_when_empty[shared-reference-True-True]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_coordinate_pair_cannot_reuse_one_array[False]",
+    "tests/test_draw_polygon_benchmark_intake.py::test_coordinate_pair_cannot_reuse_one_array[True]"
+  ],
+  "cause": "NumPy-only intake asserts a cold process, but CI grouped it with public/default modules that import scipy/skimage/skimagexx during collection. Qualification also mixed it into POST203 and its ordinary child admission imports the project first.",
+  "product_accepted": false,
+  "performance_accepted": false,
+  "timed_batches": 0,
+  "root_receipt": {
+    "path": "build/candidate260-genuine-minimum-v1/handoff-terminal-v1.json",
+    "sha256": "833d1e337d6dc1e5bacf399ae8359e3637499f40bc70b1840ae2ec10f2c8296d"
+  },
+  "diagnostic": {
+    "path": "build/candidate260-genuine-minimum-v1/failure-diagnostic-v1.json",
+    "sha256": "57560c749bbd9ae01ba2b6da6f29f898d6b1acef081c46e2adbfb7f96939a28b"
+  },
+  "fix_scope": "Separate existing Journal-run pytest process and visible normal/scalar XML group for cold intake; preserve ordinary product admission in its separate required group. CI adds fresh intake process and excludes that module from both broad suites. Keep every cold assertion and all30nodes.",
+  "closeout": {
+    "result": "Failed campaign retained; no source or speed promotion.108public/default checks passed, not a wholeproduct acceptance.",
+    "waste_and_reuse": "Full producer built once before setup failure. Source-only guards encoded an invalid combined command; local individual suites missed process composition. Reuse source/component/actualCLI proofs where unchanged; do not recapture originals or rerun old numerical loops for metadata. No ZIP download.",
+    "next_owner_trigger": "B process-only successor, actual revised installed commands + qualifier coldgroup preflight, affected science-refused guards; A independent peer, root then one new exact-source preparation."
+  }
+}
