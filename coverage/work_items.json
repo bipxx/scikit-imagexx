@@ -11,7 +11,7 @@
       "kind": "implementation",
       "owner": "next_family_contract",
       "branch": "integrate/ellipse-perimeter-v1",
-      "state": "validating",
+      "state": "measured",
       "apis": [],
       "target_apis": [
         "draw.ellipse_perimeter"
@@ -35981,7 +35981,7 @@
       "id": "regionprops-scalar-native-v1",
       "owner": "qualification251_readiness",
       "branch": "feature/regionprops-scalar-native-v1",
-      "state": "validating",
+      "state": "parity_passed",
       "owns": [
         "include/skimagexx/regionprops_state.hpp",
         "src/regionprops_state.cpp",
@@ -36000,10 +36000,23 @@
         }
       },
       "acceptance": "Saved scalarwords/FPevents and bounded independent controls, strictFP,normal/compiler-scalar/sanitizer plusactualMSVCcompile;callerfenv restored,oldgeometry/populationunchanged. Independent native review, scopedlimits andterminalresult/waste/reuse/nextplancorrection beforeconsumers accepted.",
-      "current_checkpoint": "Sourceaa3bfa34; normal/sanitizer andMSVCproofsclosed. Rootcode/proofreview foundexplicitOpenMP SIMD flag omission in claimed compiler-scalar mode. Correctonlythatmode with-fno-openmp-simd, preservev1 andnormal/sanitizer/MSVC. FrozenABI/PICunchanged.",
+      "current_checkpoint": "Sourceaa3bfa34/headerda553/PIC57b437; rootnativepeer aff39968 accepts normal/correctedcompiler-scalar-v2/sanitizer8481records127254controls each,MSVC2TUcompileonly. v1historicalscalarlabel superseded;normal/sanitizer/MSVC/source notrerun. Versionedhandoffv2 a35c1f68 explicitcanonicalLFsource/rawevidence. Oldgeometryinverseexact.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Review versioned corrected compiler-scalar proof, sourcecanonicalLF/rawproofhashscope, thenindependentnativeadmission. No replayunchangedproofs/fullSDK/originals/timing."
+        "action": "Native independentlyadmitted boundedf64math, reusablePIC unchanged. Composewithfrontend/SDKpeers; sharedstrictFP/newruntimecontext requiredbeforegenuineproduct. No fullclass/performancecredit; explicitomp scalarflagcorrection carriedforward."
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "aa3bfa34c8f7d92e7222606f7b9b5fec89d5fe2a",
+          "manifest": {
+            "path": "build/regionprops-scalar-native-independent-review-v1/review.json",
+            "sha256": "aff399680cefbe4e00a507f51918e0829b748eb636f8ebea8c8c5819b2f04225"
+          },
+          "native_contract_checks": 381762,
+          "native_pending": 0,
+          "scope": "Two f64 scalarhelpers only; normal/correctedcompiler-scalar/sanitizer, MSVCcompile-only; no wholeclass/SDK/product/speedclaim."
+        }
       }
     },
     {
@@ -36015,8 +36028,8 @@
       "base_sha": "acc15b102cb2a5fb7a77beb0b2875c0fd6a2274f",
       "id": "regionprops-bbox-extent-frontend-v1",
       "owner": "tiny_line_implementation",
-      "branch": "feature/regionprops-bbox-extent-frontend-v1",
-      "state": "implementing",
+      "branch": "frontend/regionprops-bbox-extent-v1",
+      "state": "parity_passed",
       "owns": [
         "python/skimagexx/_regionprops_state_class.py",
         "src/bind_regionprops_state.cpp",
@@ -36032,10 +36045,23 @@
         }
       },
       "acceptance": "Reuse28savedsequences, nativeC-return/providerdenial, scalarboxing/words/cache/currentimage/dependencyorder/FPcallbackphases inminimum/modern available/disabled worker1/4. Affectedoldarea/cache/aliascontrols;literalalready-evaluatedproviderfrontiers disclosed. Independentpeer, terminalwaste/reuse,nextgate beforeintegration; no neworiginal/environment/fullcore/timing.",
-      "current_checkpoint": "Frozenheaderda553/PIC57b437 released. Implementactualclassfile notlazybridge; bridgesourceunchanged/no warmoptimization. Prospectivepubliccasefreeze beforechangedbindercompile/link.",
+      "current_checkpoint": "Finale9837e4a/handoffv2 5be99e33 independentlyreviewed15fa2902:4modes52each208PASS/112savedsequenceequalities/16analyticcontrols/80oldgolds, realCreturns/providerdenial, exactFP/cache/state;MSVC1bindercompile0. Lazybridgeuntouched; explicitf64/providerfrontiers. No originals/timing.",
       "next_gate": {
-        "owner": "tiny_line_implementation",
-        "action": "Completeboundedfrontend and actualsavedrow modesusingreleasedleaf/retainedcoreobjects; freezehandoff forindependentreview. Scalarf64firstpartitiononly, remainingclass/domainsopen."
+        "owner": "integrator",
+        "action": "Composeacceptedfrontend/native/SDK throughAsole sharedintegration. Reuse4modeproofs whereinputsidentical; new8benchmark/currentcontext andactualfullproduct/SDK/qualification remainrequired. No originalrecapture/broadfamilysuitejustforcloseout."
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "e9837e4a9efa56d0c425bf9669f26b6ee9791a1b",
+          "manifest": {
+            "path": "build/regionprops-bbox-extent-independent-frontend-review-v1/review.json",
+            "sha256": "15fa2902333048b883bbe7aaead1cb345a714e11a04ab2af5c86a81d353ff8e8"
+          },
+          "native_contract_checks": 208,
+          "native_pending": 0,
+          "scope": "New bounded area/area_bbox/extent behavior onshippingPython+narrowtrueCcomponent, notgenuinefullproduct/class proof."
+        }
       }
     },
     {
@@ -36065,6 +36091,102 @@
       "next_gate": {
         "owner": "integrator",
         "action": "ReuseacceptedscopedSDKproofinsharedintegrationafter native/frontend peers; carrychangedconsumer/sourceclosure/strictFP/newruntimecontext. Genuineupdatedproduct/qualification/performance remainopen."
+      }
+    },
+    {
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "base_sha": "dca7c03dab19a4c6fe3a1e6879973590c51d273a",
+      "id": "regionprops-scalars-shared258-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "integrate/regionprops-scalar-v1",
+      "state": "implementing",
+      "owns": [
+        "CMakeLists.txt",
+        "tools/public_qualification.py",
+        ".github/workflows/ci.yml",
+        ".github/workflows/public-qualification.yml",
+        "coverage/contracts/current-public-qualification.json",
+        "coverage/contracts/regionprops-scalar-runtime-v1.json",
+        "benchmarks/regionprops_state.py",
+        "tests/test_regionprops_state_benchmark.py",
+        "tests/fixtures/regionprops_scalar_native.bin"
+      ],
+      "depends_on": [
+        "regionprops-scalar-native-v1",
+        "regionprops-bbox-extent-frontend-v1",
+        "regionprops-scalar-sdk-v1"
+      ],
+      "dependency_requirements": {
+        "regionprops-scalar-native-v1": {
+          "evidence_scope": "native_private"
+        },
+        "regionprops-bbox-extent-frontend-v1": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "acceptance": "Sole sharedwriter/finalfreeze. Current258 imagecount/193product91SDK31families62checks derivedactual, newPOST85selectors class-onlyextension. StrictFP/explicitcompiler-scalar andOpenMPunitfixture; newbenchmarksourcecontext, actualboth-profile prebuild/importrefusal/changedgenericconsumers; independentwiring+workflowpeer thenactualuntimedCLI rootGObeforegenuine. Terminalwaste/reuse/nextcorrection; no oldscience/timing replay.",
+      "current_checkpoint": "Rootnativeaff399/frontend15fa/SDK3a81peersclosed; sourcepartsrestored, strictFP+fixture configuredactualCMake0, changedold12contextmetadata3nodes\u00d72runtimesPASS peer7219008b. Asolewritertransfer; Bnew8casebenchfinalhandoffpending. CmissingSkylakeXcertificate separatelyassessed; main qualified257.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "RestoreB3benchmarkpaths byexactfinalcommit, wireboth-profile installed/publicnormal+disabled gates, latest_only8-casegroup/artifacts/deps andstrictmetadatafixtures. Freezeactualsource/completeaffectedprebuildclosure thenrequestrootGOforfirstcohortstoppedbeforemeasure. Nohosteddispatch/neworiginal/timing/fullSDK."
+      }
+    },
+    {
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "base_sha": "dca7c03dab19a4c6fe3a1e6879973590c51d273a",
+      "id": "regionprops-scalars-benchmark-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "branch": "benchmark/regionprops-scalars-v1",
+      "state": "validating",
+      "owns": [
+        "benchmarks/regionprops_scalars.py",
+        "coverage/contracts/regionprops-scalars-benchmark-v1.json",
+        "tests/test_regionprops_scalars_benchmark.py"
+      ],
+      "depends_on": [
+        "regionprops-scalar-native-v1",
+        "regionprops-bbox-extent-frontend-v1"
+      ],
+      "dependency_requirements": {
+        "regionprops-scalar-native-v1": {
+          "interface": "scalar-f64-v1"
+        },
+        "regionprops-bbox-extent-frontend-v1": {
+          "evidence_scope": "public_native"
+        }
+      },
+      "acceptance": "Prospective8publiccases constructor/getter/statecycle cache/layout scopes,112samples plan only; original/native identicalcalls/default1, strictCreturns/providers onlycandidate, oldCPPmodefixedEEA/no targetwaiver. Real-sourceprebuildscienceimportrefusalbothruntimes, exactmethod/closure/bodypins. No original/capture/timing/build now; independentpeer thenactualCLI+genuineproduct; terminalwaste/reuse/nextgate.",
+      "current_checkpoint": "Prospective622b1db2 3newpaths/8cases frozen;13purestdlibchecks/profilePASS0scientificimports/calls. Finalsource-body pinforreusedold12input_state preservespointer-onlycontextchange; cases/timedbodyunchanged. No old12driver/contract rewrites.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Freeze final3pathcommit/handoff withfunction-sourcepin/currentfrontendpins andaffectedmetadata delta. Rootindependentpeer thenAsharedwiring; no measurement untilgenuineproduct/readiness/isolatedhost gates."
+      }
+    },
+    {
+      "apis": [],
+      "target_apis": [
+        "transform.matrix_transform"
+      ],
+      "base_sha": "dca7c03dab19a4c6fe3a1e6879973590c51d273a",
+      "id": "matrix-numpy124-skylakex-certificate-v1",
+      "kind": "reference",
+      "owner": "next_family_contract",
+      "state": "contracting",
+      "owns": [],
+      "depends_on": [],
+      "acceptance": "Failedminimum41974178441 legitimateactualunforcedSkylakeX onexactNP1.24/BLAS554b. Freeze13F64function/helper/init comparison before reading newbytes, prove general arithmetic/driver equivalence tocertifiedCooperlake. No mappingwhitelist/forcedCPU/blindretry/newcapture unlessstaticproof genuinelyinsufficient androotreviewsboundedwitness. Terminalresult/evidence/waste/reuse/nextgate.",
+      "current_checkpoint": "Diagnosisff64c758 retainedselectedrange9.05MB/notfull605.9MBartifact. StageAprospective contracts d6bb357d +versionedhelper/tableclosure inputs; readonlyretainedexactELF and .21source reused. Initialregular/GEMVT/packing identities, dependency/helper/init auditstillrunning. No source/mapping/math/build/timing changes.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Seal falsifiableELFhelper/table/init evidence androotreview before smallestactualcertificate sourcechange. Keepfailedcampaign andunknownnaturalCPU refusal; no assumption otherbinarySkyproves554bSky."
       }
     }
   ],
@@ -37900,6 +38022,12 @@
       "retained_directory": "build/circle-perimeter-integration-v1-private-v1",
       "preservation_receipt": "build/merged-integration-retirement-20261104-v2.json",
       "member_rule": "Whole ignored build directory moved intact after clean ancestor and reader-release checks; append the former relative member suffix. Frozen receipts unchanged; source recoverable by recorded Git commit."
+    },
+    {
+      "former_prefix": "build/worktrees/regionprops-bbox-extent-reference-v1/build",
+      "retained_directory": "build/regionprops-bbox-extent-reference-retained-v1",
+      "preservation_receipt": "build/regionprops-bbox-extent-reference-retained-v1/source-retirement-v1.json",
+      "member_rule": "Wholeignoredproofdirectory moved intact aftercleanancestor+allreaderrelease checks;appendformer relative suffix;immutable handedoffbytes unchanged."
     }
   ],
   "inventory_assessment_pending": {

@@ -1,0 +1,288 @@
+{
+  "schema": "matrix-admission-diagnostic-v1",
+  "scope": "Actual admission metadata only; no arithmetic or acceptance credit",
+  "natural_profile": null,
+  "first_natural_trace": [
+    {
+      "function": "_unforced",
+      "event": "return",
+      "line": 86,
+      "source_context": [
+        "",
+        "def _unforced():",
+        "    import os",
+        "    return (not any(name in os.environ for name in _FORCED_CPU)",
+        "            and not any(os.environ.get(name) for name in ('LD_PRELOAD', 'LD_AUDIT')))"
+      ],
+      "locals": {},
+      "return": true
+    },
+    {
+      "function": "_loaded_blas",
+      "event": "return",
+      "line": 229,
+      "source_context": [
+        "        if not query(ctypes.cast(function, ctypes.c_void_p), ctypes.byref(info)) or not info.name:",
+        "            raise OSError('dladdr unavailable')",
+        "        return Path(os.fsdecode(info.name)).resolve()",
+        "    return library, None, resolve",
+        ""
+      ],
+      "locals": {},
+      "return": [
+        {
+          "type": "CDLL"
+        },
+        null,
+        {
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "function": "resolve",
+      "event": "return",
+      "line": 228,
+      "source_context": [
+        "        info = Info()",
+        "        if not query(ctypes.cast(function, ctypes.c_void_p), ctypes.byref(info)) or not info.name:",
+        "            raise OSError('dladdr unavailable')",
+        "        return Path(os.fsdecode(info.name)).resolve()",
+        "    return library, None, resolve"
+      ],
+      "locals": {},
+      "return": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so"
+    },
+    {
+      "function": "resolve",
+      "event": "return",
+      "line": 228,
+      "source_context": [
+        "        info = Info()",
+        "        if not query(ctypes.cast(function, ctypes.c_void_p), ctypes.byref(info)) or not info.name:",
+        "            raise OSError('dladdr unavailable')",
+        "        return Path(os.fsdecode(info.name)).resolve()",
+        "    return library, None, resolve"
+      ],
+      "locals": {},
+      "return": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so"
+    },
+    {
+      "function": "resolve",
+      "event": "return",
+      "line": 228,
+      "source_context": [
+        "        info = Info()",
+        "        if not query(ctypes.cast(function, ctypes.c_void_p), ctypes.byref(info)) or not info.name:",
+        "            raise OSError('dladdr unavailable')",
+        "        return Path(os.fsdecode(info.name)).resolve()",
+        "    return library, None, resolve"
+      ],
+      "locals": {},
+      "return": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so"
+    },
+    {
+      "function": "_authenticate_runtime",
+      "event": "return",
+      "line": 276,
+      "source_context": [
+        "        # Retain handles/functions and exact file identities. Metadata queries",
+        "        # are read-only; no per-call numeric calibration or vendor algorithms.",
+        "        identities = tuple((str(f), f.stat().st_size, f.stat().st_mtime_ns) for f in (upath, path))",
+        "        return key[0], pin[0], core, threads, library, identities",
+        "    except (OSError, AttributeError, ValueError, UnicodeError, struct.error):"
+      ],
+      "locals": {
+        "key": [
+          "1.24.4",
+          "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86"
+        ],
+        "pin": [
+          "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9",
+          "openblas_get_corename64_"
+        ],
+        "path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+        "origin": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+        "description": {
+          "bytes": 77,
+          "sha256": "f28bfae1ca165091ea67e23727b31a3cdb704acb9bf551de460fd5de2e322f09",
+          "hex": "4f70656e424c415320302e332e323120205553453634424954494e542044594e414d49435f41524348204e4f5f414646494e49545920536b796c616b6558204d41585f544852454144533d3634",
+          "ascii": "OpenBLAS 0.3.21  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64"
+        },
+        "identities": [
+          [
+            "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            6311456,
+            1793856611839188076
+          ],
+          [
+            "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+            32955056,
+            1793856611761188065
+          ]
+        ],
+        "n": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/__init__.py",
+        "u": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+      },
+      "return": [
+        "1.24.4",
+        "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9",
+        {
+          "type": "_FuncPtr"
+        },
+        {
+          "type": "_FuncPtr"
+        },
+        {
+          "type": "CDLL"
+        },
+        [
+          [
+            "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            6311456,
+            1793856611839188076
+          ],
+          [
+            "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+            32955056,
+            1793856611761188065
+          ]
+        ]
+      ]
+    },
+    {
+      "function": "_runtime_profile",
+      "event": "return",
+      "line": 308,
+      "source_context": [
+        "                return None",
+        "            driver = _windows_skylakex_driver(certificate)",
+        "            if driver is None:",
+        "                return None",
+        "            _RUNTIME_DRIVER = driver"
+      ],
+      "locals": {
+        "actual": {
+          "bytes": 8,
+          "sha256": "6e3af0dad59e7837116a05a955c735f528b5f4d51fd1541c6c0c771655670633",
+          "hex": "536b796c616b6558",
+          "ascii": "SkylakeX"
+        },
+        "corename": "SkylakeX",
+        "identities": [
+          [
+            "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            6311456,
+            1793856611839188076
+          ],
+          [
+            "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+            32955056,
+            1793856611761188065
+          ]
+        ],
+        "version": "1.24.4",
+        "digest": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9"
+      },
+      "return": null
+    }
+  ],
+  "first_refusal": {
+    "function": "_runtime_profile",
+    "event": "return",
+    "line": 308,
+    "source_context": [
+      "                return None",
+      "            driver = _windows_skylakex_driver(certificate)",
+      "            if driver is None:",
+      "                return None",
+      "            _RUNTIME_DRIVER = driver"
+    ],
+    "locals": {
+      "actual": {
+        "bytes": 8,
+        "sha256": "6e3af0dad59e7837116a05a955c735f528b5f4d51fd1541c6c0c771655670633",
+        "hex": "536b796c616b6558",
+        "ascii": "SkylakeX"
+      },
+      "corename": "SkylakeX",
+      "identities": [
+        [
+          "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+          6311456,
+          1793856611839188076
+        ],
+        [
+          "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          32955056,
+          1793856611761188065
+        ]
+      ],
+      "version": "1.24.4",
+      "digest": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9"
+    },
+    "return": null
+  },
+  "certificate_retried": false,
+  "helper_sha256": "c0be3406351a96d2324c07ed8292fa3ce0ae919831e8cdcc5f2f40d3953911f6",
+  "wrapper_sha256": "04d4438b7def68598d3dea57e4f2a6c0422053f2b9b1f19df56a90a3465f08b9",
+  "environment": {
+    "OPENBLAS_CORETYPE": null,
+    "NPY_DISABLE_CPU_FEATURES": null,
+    "NPY_ENABLE_CPU_FEATURES": null,
+    "MKL_DEBUG_CPU_TYPE": null,
+    "MKL_SERVICE_FORCE_INTEL": null,
+    "LD_PRELOAD": null,
+    "LD_AUDIT": null,
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1"
+  },
+  "post_attempt_read_only": {
+    "UMATH": {
+      "path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+      "bytes": 6311456,
+      "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86"
+    },
+    "loaded_BLAS": {
+      "corename": {
+        "symbol": "openblas_get_corename64_",
+        "owner": {
+          "path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "bytes": 32955056,
+          "sha256": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9"
+        },
+        "value": {
+          "bytes": 8,
+          "sha256": "6e3af0dad59e7837116a05a955c735f528b5f4d51fd1541c6c0c771655670633",
+          "hex": "536b796c616b6558",
+          "ascii": "SkylakeX"
+        }
+      },
+      "num_threads": {
+        "symbol": "openblas_get_num_threads64_",
+        "owner": {
+          "path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "bytes": 32955056,
+          "sha256": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9"
+        },
+        "value": 1
+      },
+      "config": {
+        "symbol": "openblas_get_config64_",
+        "owner": {
+          "path": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "bytes": 32955056,
+          "sha256": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9"
+        },
+        "value": {
+          "bytes": 77,
+          "sha256": "f28bfae1ca165091ea67e23727b31a3cdb704acb9bf551de460fd5de2e322f09",
+          "hex": "4f70656e424c415320302e332e323120205553453634424954494e542044594e414d49435f41524348204e4f5f414646494e49545920536b796c616b6558204d41585f544852454144533d3634",
+          "ascii": "OpenBLAS 0.3.21  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64"
+        }
+      }
+    }
+  }
+}

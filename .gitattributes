@@ -719,3 +719,6 @@ coverage/evidence/region-stain-warm-same-host-discard-v1.json -text
 benchmarks/ellipse-perimeter-minimum-initial.json -text
 benchmarks/ellipse-perimeter-minimum-initial.batches.jsonl -text
 coverage/evidence/current258-minimum-initial-performance-v1.json -text
+coverage/evidence/public258-minimum-initial-admission.log -text
+coverage/evidence/public258-minimum-matrix-runtime-diagnostic-v1.json -text
+coverage/evidence/public258-minimum-runtime-admission-failed-v1.json -text

@@ -1,0 +1,87 @@
+{
+  "decision": "FAILED_MINIMUM_NATURAL_MATRIX_RUNTIME_ADMISSION",
+  "source": "dca7c03dab19a4c6fe3a1e6879973590c51d273a",
+  "run": 41974178441,
+  "job": 127069103781,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41974178441/job/127069103781",
+  "failure": "initial-public-admission: matrix runtime unforced but unknown/interposed/unverifiable",
+  "observed_facts": {
+    "numpy": "1.24.4",
+    "UMATH_sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+    "BLAS_sha256": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9",
+    "BLAS_config": "OpenBLAS0.3.21 USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS64",
+    "actual_corename": "SkylakeX",
+    "actual_BLAS_threads": 1,
+    "CPUforcing_or_LDinterposition": false,
+    "natural_profile": null,
+    "cause": "Existing554bRuntimecoresonlyHaswell/Cooperlake/Zen. OutsideallowsetSkylakeX canonlyuseWindowsexactNP2.5ed4drivercertificate; thatqueryreturnsNoneonLinuxNP1.24bydesign. ActualCPUunassessed, no authbinaryfailure."
+  },
+  "classification": "Legitimate provenance/arithmeticscope refusal BEFORE newellipseadmission/numericaltests. No basis to waive/whitelist/forceCPU or retryunchanged. Missingterminalsealverify failure is downstreamsymptom.",
+  "evidence": [
+    {
+      "path": "coverage/evidence/public258-minimum-initial-admission.log",
+      "sha256": "03e9aeabf032ceda07fc61bea231d4f062b9810f5b049af8aec68f6c675f981f",
+      "bytes": 1439
+    },
+    {
+      "path": "coverage/evidence/public258-minimum-matrix-runtime-diagnostic-v1.json",
+      "sha256": "0405d2b3cfab216857b61482fe5637acd00626e8c57861eac569fe951cba50c8",
+      "bytes": 12011
+    }
+  ],
+  "diagnosis_handoff": {
+    "path": "build/candidate258-qualification-diagnosis-v1/diagnosis-handoff-v1.json",
+    "sha256": "ff64c7586e40adb3074ee00e1c5c31ce63db491f3cfd13d4427c10732e735fb7"
+  },
+  "artifact": {
+    "name": "public-qualification-minimum",
+    "id": 13391256846,
+    "outer_bytes": 605898185,
+    "outer_sha256_API_reused": "bb43c583e195db375fd4f101490322b774220230f878085f46816f5cfd756839",
+    "actual_member_log_bytes": 1439,
+    "actual_driver_diagnostic_bytes": 12011,
+    "selected_state_bytes": 265551,
+    "HTTP_range_transferred_total": 9047944,
+    "fullZIP_downloads": 0,
+    "bigZIP_orbinaryhashes": 0,
+    "root_sole_full_retainer": true
+  },
+  "artifact_auth_scope": "Selected ZIP members only, authenticated GitHub access and member extraction/CRC; outerdigest is API-reported, not localwhole-ZIPverification. No fullarchive downloaded/authenticated for thisdiagnosis.",
+  "other_profiles_at_publication": {
+    "status": "in_progress",
+    "conclusion": "",
+    "jobs": [
+      {
+        "id": 127069103624,
+        "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 127069103781,
+        "name": "qualify (ubuntu-24.04, minimum, 3.11.17)",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 127069103915,
+        "name": "qualify (ubuntu-24.04, modern, 3.13.16)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 127069103962,
+        "name": "qualify (windows-latest, windows, 3.13.16)",
+        "status": "in_progress",
+        "conclusion": ""
+      }
+    ]
+  },
+  "main_acceptance": "257 remains qualified; separate258 genuine minimum/ellipse performance scoped admission does notadmit failedwholecampaign.",
+  "next_gate": "Bounded readonly exact554bSkylakeX/Cooperlake F64kernel+driverinit equivalence audit beforeany mappingchange. No blindwhitelist/forcedCPU/unchanged qualificationretry; assess arithmetic beforedeclaring newdriver supported.",
+  "closeout": {
+    "result": "Concrete missing matrixCPUcertificate identified, failedminimum preserved; terminalseal failure isdownstreamsymptom.",
+    "waste_reuse": "Fetched9.05MBselectedranges vs605.90MBfullZIP; duplicatedcentraldirectoryfetch recorded, indexcached forsuccessorreads. Reused retainedELF/source beforeproposingneworiginalholdouts; nooriginal/math/build/timing in diagnosis.",
+    "next_owner_trigger": "C completesprospectiveboundedELFaudit; rootreviewbeforecodechange andsuccessorreadiness. ContinueindependentRegionpropertyimplementation."
+  }
+}
