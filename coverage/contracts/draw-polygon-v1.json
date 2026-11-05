@@ -1,0 +1,887 @@
+{
+  "schema": "draw-polygon-prospective-reference-v1",
+  "state": "PROSPECTIVE_FROZEN_NO_ORIGINAL_OR_NATIVE_CALLS",
+  "apis": [
+    "draw.polygon",
+    "draw.polygon2mask"
+  ],
+  "reference_version": "0.26.0",
+  "signatures": {
+    "draw.polygon": "(r, c, shape=None)",
+    "draw.polygon2mask": "(image_shape, polygon)"
+  },
+  "cases": [
+    {
+      "id": "draw.polygon/triangle-list",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": null,
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/rectangle-i32",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "int32",
+      "shape": [
+        6,
+        7
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/concave-reverse",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "carrier": "reverse",
+      "dtype": "float64",
+      "shape": null,
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/bowtie-strided",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "carrier": "strided",
+      "dtype": "float64",
+      "shape": [
+        6,
+        6
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/negative-clip",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          -2,
+          -3
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float32",
+      "shape": [
+        5,
+        6
+      ],
+      "readonly": true
+    },
+    {
+      "id": "draw.polygon/fully-negative",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          -4,
+          -3
+        ],
+        [
+          -2,
+          -3
+        ],
+        [
+          -2,
+          -1
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": null,
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/zero-shape",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        0,
+        6
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/epsilon-vertex",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          4.547473508864641e-13,
+          4.547473508864641e-13
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": [
+        5,
+        5
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/singleton",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          2,
+          3
+        ]
+      ],
+      "carrier": "scalar",
+      "dtype": "int64",
+      "shape": null,
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/collinear-duplicate",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        5,
+        6
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/empty",
+      "api": "draw.polygon",
+      "vertices": [],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": null,
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon/rank2-columns",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "rank2",
+      "dtype": "float64",
+      "shape": null,
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/triangle-list",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": [
+        6,
+        7
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/rectangle-f64-F",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "carrier": "F",
+      "dtype": "float64",
+      "shape": [
+        6,
+        7
+      ],
+      "readonly": true
+    },
+    {
+      "id": "draw.polygon2mask/concave-f32-C",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float32",
+      "shape": [
+        7,
+        8
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/negative-strided",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          -2,
+          -3
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "carrier": "strided",
+      "dtype": "float64",
+      "shape": [
+        5,
+        6
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/outside",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "int32",
+      "shape": [
+        3,
+        4
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/zero-shape",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        0,
+        6
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/epsilon-vertex",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          4.547473508864641e-13,
+          4.547473508864641e-13
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        4,
+        4
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/singleton",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          2,
+          3
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        4,
+        5
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/empty",
+      "api": "draw.polygon2mask",
+      "vertices": [],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        4,
+        5
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/three-columns",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          2,
+          0,
+          3
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        4,
+        5
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/negative-shape",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": [
+        -1,
+        5
+      ],
+      "readonly": false
+    },
+    {
+      "id": "draw.polygon2mask/rank1",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        0.0,
+        1.0,
+        2.0
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        4,
+        5
+      ],
+      "readonly": false
+    }
+  ],
+  "bounds_by_case": {
+    "draw.polygon/triangle-list": {
+      "max_classifier_calls": 20,
+      "max_output_pairs": 20,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 576,
+      "python_coordinate_list_items_upper_bound": 40
+    },
+    "draw.polygon/rectangle-i32": {
+      "max_classifier_calls": 20,
+      "max_output_pairs": 20,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 576,
+      "python_coordinate_list_items_upper_bound": 40
+    },
+    "draw.polygon/concave-reverse": {
+      "max_classifier_calls": 36,
+      "max_output_pairs": 36,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 832,
+      "python_coordinate_list_items_upper_bound": 72
+    },
+    "draw.polygon/bowtie-strided": {
+      "max_classifier_calls": 25,
+      "max_output_pairs": 25,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 656,
+      "python_coordinate_list_items_upper_bound": 50
+    },
+    "draw.polygon/negative-clip": {
+      "max_classifier_calls": 30,
+      "max_output_pairs": 30,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 736,
+      "python_coordinate_list_items_upper_bound": 60
+    },
+    "draw.polygon/fully-negative": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 256,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon/zero-shape": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 256,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon/epsilon-vertex": {
+      "max_classifier_calls": 16,
+      "max_output_pairs": 16,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 512,
+      "python_coordinate_list_items_upper_bound": 32
+    },
+    "draw.polygon/singleton": {
+      "max_classifier_calls": 1,
+      "max_output_pairs": 1,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 272,
+      "python_coordinate_list_items_upper_bound": 2
+    },
+    "draw.polygon/collinear-duplicate": {
+      "max_classifier_calls": 5,
+      "max_output_pairs": 5,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 336,
+      "python_coordinate_list_items_upper_bound": 10
+    },
+    "draw.polygon/empty": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": true,
+      "safety_basis": "r.min reduction fails before unchecked classifier",
+      "array_payload_bytes_upper_bound": 256,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon/rank2-columns": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": true,
+      "safety_basis": "Python unpack or typedmemoryview-rank error before loop",
+      "array_payload_bytes_upper_bound": 256,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon2mask/triangle-list": {
+      "max_classifier_calls": 20,
+      "max_output_pairs": 20,
+      "max_mask_elements": 42,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 618,
+      "python_coordinate_list_items_upper_bound": 40
+    },
+    "draw.polygon2mask/rectangle-f64-F": {
+      "max_classifier_calls": 20,
+      "max_output_pairs": 20,
+      "max_mask_elements": 42,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 618,
+      "python_coordinate_list_items_upper_bound": 40
+    },
+    "draw.polygon2mask/concave-f32-C": {
+      "max_classifier_calls": 36,
+      "max_output_pairs": 36,
+      "max_mask_elements": 56,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 888,
+      "python_coordinate_list_items_upper_bound": 72
+    },
+    "draw.polygon2mask/negative-strided": {
+      "max_classifier_calls": 30,
+      "max_output_pairs": 30,
+      "max_mask_elements": 30,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 766,
+      "python_coordinate_list_items_upper_bound": 60
+    },
+    "draw.polygon2mask/outside": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 12,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 268,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon2mask/zero-shape": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 256,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon2mask/epsilon-vertex": {
+      "max_classifier_calls": 16,
+      "max_output_pairs": 16,
+      "max_mask_elements": 16,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 528,
+      "python_coordinate_list_items_upper_bound": 32
+    },
+    "draw.polygon2mask/singleton": {
+      "max_classifier_calls": 1,
+      "max_output_pairs": 1,
+      "max_mask_elements": 20,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": false,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 292,
+      "python_coordinate_list_items_upper_bound": 2
+    },
+    "draw.polygon2mask/empty": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 20,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": true,
+      "safety_basis": "r.min reduction fails before unchecked classifier",
+      "array_payload_bytes_upper_bound": 276,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon2mask/three-columns": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 20,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": true,
+      "safety_basis": "Python unpack or typedmemoryview-rank error before loop",
+      "array_payload_bytes_upper_bound": 276,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon2mask/negative-shape": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 0,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": true,
+      "safety_basis": "equal nonempty finite bounded coordinate columns",
+      "array_payload_bytes_upper_bound": 256,
+      "python_coordinate_list_items_upper_bound": 0
+    },
+    "draw.polygon2mask/rank1": {
+      "max_classifier_calls": 0,
+      "max_output_pairs": 0,
+      "max_mask_elements": 20,
+      "max_vertex_storage_words": 32,
+      "expected_error_hint": true,
+      "safety_basis": "Python unpack or typedmemoryview-rank error before loop",
+      "array_payload_bytes_upper_bound": 276,
+      "python_coordinate_list_items_upper_bound": 0
+    }
+  },
+  "source_sha256": {
+    "draw.py": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+    "_draw.pyx": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4",
+    "geometry.pyx": "889ee7d70fccf6ef3dd70054e592e87a4dc0f48aa83755b53c7c0ec95d7256c8",
+    "geometry.pxd": "7188fa98f18e517eb226e4d8a11edbd2e35a8c9119861e132ccf515c8667959c",
+    "_polygon2mask.py": "63575285de3c5916f1a51aaf3c4bd444f3f1c0529a47483e458d75fdea4aa325"
+  },
+  "source_freeze": {
+    "tests/draw_polygon_contract.py": "98c2b66b57916924af13702d9a4e8ae4c5301e1de5ed74cbc302d88e56e0b8fe",
+    "tests/draw_polygon_observer.py": "b7882a23192fbb15b485cd065e5045c78ffa6cad7bb260efc03a14934ee2922b"
+  },
+  "borrowed_helper_methods": {
+    "module": "tests/draw_coordinates_observer.py",
+    "canonicalLF_function_sha256": {
+      "encode": "91e9040e3d448da89958c3cb0be0a0bfd2e531e07340cd9904755e2c600efb91",
+      "scientific_profile": "1823741df9322e1a40e774c96c1892bd9a3798765268ec699ba8977b43d746c9"
+    }
+  },
+  "source_provenance": {
+    "draw_sdist": "RetainedOfficial0.26.0PyPIsdist;build/draw-coordinate-source-v1/source-audit.json;sdistSHAf5f970ab04efad85c24714321fcc91613fcb64ef2a892a13167df2f3e59199fa",
+    "geometry": "Retainedpriorpoints/grid-in-polyprimarygeometry.pyx/.pxd same0.26",
+    "polygon2mask": "Retainedinstalled0.26files canonicalequalbothprofiles; pinactualwrapper+_draw+geometrybinaries atfuturemetadataentry"
+  },
+  "safety": {
+    "boundary": "Exactly24frozenrecipes,\u22648vertices, finite[-4,12], exact2builtinintshapes[-1,8]orNoneforpolygon. r/c equalnonempty exceptsafeempty reduction beforeCpointer.",
+    "clipping": "atleast1d\u2192r/c reductions\u2192min=int(max(0,min)),max=ceil(max);shape onlyclipsmax BEFOREorderedrow/columnrange. Everyvalidscan\u2264169pairs;mask\u226464bool;storage\u226432vertexwords. Allconversion/loops comfortablywithinPy_ssize_t bounds.",
+    "safe_errors": "Emptyreduce,rank2typedmemoryviewconversion,maskpurePythonunpack andnegativeallocation occurbeforeuncheckedclassifier; no guessederrorgoldens beforeactualcapture.",
+    "unsafe_exclusions": [
+      "ShortshapeTuple/list/ndarray (<2) notassumedPythonIndexError underboundscheckFalse; rejectedbeforefreeze/calls.",
+      "r/c mismatchespeciallyc>r reachesypuncheckedpointer; no capture.",
+      "NaN/Inf/overflow/huge shapes/customprotocols/ragged/object/complex notadmitted."
+    ],
+    "allocation_scope": "Arraypayload cap excludesPythonobject/allocator overhead; Pythoncoordinate lists have\u22642*scanentries (\u226472actualfrozen), vertices\u22648. No unbounded allocation orheap-byte claim."
+  },
+  "predicate_reuse": {
+    "match": "Existingpolygon_label literaldual-ray f64 classifier matchesupstreamgeometry.pyx operation/eps/labels onlywhenVIEW(x=c,y=r),QUERY(x=column,y=row). Source_drawcalls point_in_polygon(cptr,rptr,c_i,r_i).",
+    "not_drop_in": "Existinggrid_points_in_poly usesrow/columnqueryorder, notdirectfillroute. Neworderedcoordinateemission needed; preservelabel!=0 selection. polygon2maskscatterTrue producescanonical0/1 bytes, notgridraw2/3labels.",
+    "future": "Reuseclassifier+typedstrictFP facilities; independentpixelclassification/orderedemission onlyafteroriginalgoldfreeze. No speculativegeneralpolygonbackend orperformanceclaim."
+  },
+  "dtype_roles": "dtype selectsactualarraystorage only; list/scalarinputsarePythonobjects andno nominaldtypecoverage credited. _drawcastscontiguousf64 beforeclassification; observationswillrecordactualtypes/words/layout.",
+  "numerical_policy": "Exactorderedcoordinatewords/intpdtype/pairidentity/storage andboolmaskrawcanonicalbytes; exacterrors/warnings/FPcallbacks/inputbytes/descriptors/Numpypolicy. Hardwarefenvflagsandbroaderpoliciesunassessed.",
+  "original_observations": {
+    "1.24.4": [],
+    "2.5.4": []
+  },
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false,
+  "unassessed": [
+    "r/c unequal lengths: c longer than r can read unchecked yp memory; do not capture",
+    "nonfinite/huge vertices, overflow, empty-c nonempty-r, arbitrary protocols/ragged/object/complex inputs",
+    "shape shorter than2: unchecked compiled indexing is not a safe Python IndexError assumption",
+    "polygon2mask non2D image shapes and broad shape/dtype/error precedence",
+    "native arithmetic/SDK/SIMD/workers/performance, hardware fenv flags and broader floating policies"
+  ],
+  "next_gate": "Independentprospective safetyreview\u2192rootauthorizesactualNumPyfixture/controllerintake withoriginalrefused+metadata source/binarygate\u2192rootseparateonce-only24calls/profile GO. No retries; journalfreeze beforecalls; nativeimplementationonlyaftersavedgoldreview."
+}
