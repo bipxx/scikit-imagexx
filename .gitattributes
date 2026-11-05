@@ -673,3 +673,5 @@ coverage/evidence/current255-minimum-initial-performance-v1.json -text
 benchmarks/line-nd-minimum-initial.* -text
 coverage/evidence/current256-minimum-initial-performance-v1.json -text
 coverage/contracts/ellipsoid.json -text
+benchmarks/stain-parameters.json -text
+coverage/evidence/public256-windows-checkout-failed-v1.json -text

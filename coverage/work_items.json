@@ -7,6 +7,106 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "public256-qualification-v1",
+      "kind": "qualification",
+      "owner": "qualification251_readiness",
+      "state": "validating",
+      "apis": [],
+      "owns": [],
+      "base_sha": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+      "depends_on": [],
+      "acceptance": "All4profiles samefinalfrozen source,actualSDK/currentproduct/corpora/stagers andindependentrootadmission; partialprofile resultnotwholeproduct. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
+      "current_checkpoint": "Run41947826837: Windows126984318425 failedtooling4 rawreportCRLF beforebuild;3Linuxprofiles stillrunning/observed14973. Failedcapsulecoverage/evidence/public256-windows-checkout-failed-v1.json. One-linesuccessor7ef42284 reviewedroot9df5dee5; oldrun notrelabeled.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Continueexisting3jobsto terminal, auditallfailedchecks andretainexactevidence. Root thenfreezeone reviewed successorcampaign; no cancels/duplicates/identitywaivers."
+      }
+    },
+    {
+      "id": "regionprops-strided-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "optimize/regionprops-strided-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "include/skimagexx/regionprops_state.hpp",
+        "src/regionprops_state.cpp",
+        "src/bind_regionprops_state.cpp",
+        "tests/test_regionprops_state_native.cpp",
+        "tests/test_regionprops_strided_public.py",
+        "coverage/contracts/regionprops-strided-comparison-v1.json"
+      ],
+      "base_sha": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+      "depends_on": [],
+      "acceptance": "Directstridedmask/coords without sourcecache/mutation/order changes;12samehostcontrols allnewlatency<=1.05old and2largeFtargets>=2x. Fix prospective runtimeclosure guard beforegenuineprep; no sourcepin bypass. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
+      "current_checkpoint": "Sealed0b0415bc,3native modes88records/20722controls and4publiccomponentmodes564PASS. Initialcompiler-scalar flagmiss retained; trueportable-scalar successor replacesclaim. C independentreview active; no timings.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Review sealednewsource/proofs/comparisonroute independently; preserve oldsourceguard andbind newprospectiveclosure beforepreparation."
+      }
+    },
+    {
+      "id": "half-stain-f32-simd-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "branch": "optimize/half-stain-f32-simd-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "color.combine_stains"
+      ],
+      "owns": [
+        "src/stain.cpp",
+        "src/simd.hpp",
+        "src/simd_stain_avx2.cpp",
+        "tests/test_stain_f32_simd_native.cpp"
+      ],
+      "base_sha": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+      "depends_on": [],
+      "acceptance": "Fixed8cohort samehostoldCPP/originalcontrols: all4half+4legacy <=1.05oldlatency; standardf32/K7 >=1.25x oldCPP. Existingnumeric/FP/domain policy unchanged. Realpubliccandidate/consumer proofs requiredbeforetiming. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
+      "current_checkpoint": "Nativea99f9c65 independentlyPASS65c69b50;143proofs/7originalrows/8modes authenticated. Publiccandidatecore/performance unmeasured; oldf64loss remains.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Private public-core successor/relink plusaffectedstain dtype/axis/metadata/provider checks before8cohortmeasurement. No rebrandunchangedcore or gainclaim."
+      }
+    },
+    {
+      "id": "draw-ellipsoid-native-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/draw-ellipsoid-native-v1",
+      "state": "implementing",
+      "apis": [],
+      "target_apis": [
+        "draw.ellipsoid"
+      ],
+      "owns": [
+        "include/skimagexx/draw_ellipsoid.hpp",
+        "src/draw_ellipsoid.cpp",
+        "tests/test_draw_ellipsoid_native.cpp",
+        "coverage/contracts/ellipsoid-native-v1.json"
+      ],
+      "base_sha": "f046c677bcab248be0222cce63647b5daff625d7",
+      "depends_on": [
+        "draw-ellipsoid-reference-v1"
+      ],
+      "dependency_requirements": {
+        "draw-ellipsoid-reference-v1": {
+          "evidence_scope": "contract_reference"
+        }
+      },
+      "acceptance": "Own gridcount/coordinate generation/f64division-square-leftassociation andbool/levelset output. Typedheader frozen early; all19savedoutputs/profile exact, scalar/SIMD,globalbudget1/4/default1 andboundedlarge analyticholdout. Pythonprotocol/error/storageboundary separate; nofixturebranches. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
+      "current_checkpoint": "A dispatched after actualcaptureindependentreview; mgrid/arange gridsemantics sourceaudit precedes header/implementation.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Freeze typed interface and admissible domain, then affectednative TU/SDKarchive reuse proofs. No originalcalls or localtiming."
+      }
+    },
+    {
       "id": "draw-ellipsoid-reference-v1",
       "kind": "contract_reference",
       "owner": "integrator",
@@ -25,10 +125,21 @@
       "base_sha": "cdf40a0038c3d35bf6da7661ca94fdb86d6bc11f",
       "depends_on": [],
       "acceptance": "Prospective source-safe controller reviewed independently, original-refused intake in both retained profiles, then exactly-once original observations with append-only journal; complete result/dtype/layout/state/errors recorded. First partition only; unassessed domains remain. Terminal closeout result/evidence,waste/reuse,next-plan correction or reviewed/no change before dependent work.",
-      "current_checkpoint": "Prospective963fb7cb with28 bounded IDs;29pass+2saved-reference skips per retainedLinuxprofile, no original/native/timing calls. Handoffbc395c67; B independent review pending while hosted watcher continues. No API/native credit.",
+      "current_checkpoint": "Captured and independently reviewedf046c677:28IDs/profile,56once-onlycalls,19returns/9errors each;38returnedarrays verified and28complete rows equal acrossretainedprofiles. Capturereviewa272c867; referencesonly mergedmain46fcd6bf. No nativecoverage.",
       "next_gate": {
-        "owner": "qualification251_readiness",
-        "action": "Independent prospective source-safety/controller review only, without replay; hosted256gate notification takes priority. Root captures28IDs/profile once only after review."
+        "owner": "tiny_line_implementation",
+        "action": "Freeze source-faithful mgrid/arange typedinterface, then bounded nativecorrectness/SIMD/worker proofs; reusealloriginals, no recapture."
+      },
+      "proofs": {
+        "contract_reference": {
+          "status": "verified",
+          "source_sha": "f046c677bcab248be0222cce63647b5daff625d7",
+          "passing_contract_checks": 6,
+          "manifest": {
+            "path": "build/draw-ellipsoid-reference-v1/handoff-capture-v1.json",
+            "sha256": "6534c599812148a0f3091f0ff48c549e669b090e1251a5bd47fbf95a1630af3d"
+          }
+        }
       }
     },
     {
@@ -36368,7 +36479,11 @@
       "qualification251_readiness": [],
       "next_family_contract": []
     },
-    "current_three_agent_packets": {},
+    "current_three_agent_packets": {
+      "tiny_line_implementation": "draw-ellipsoid-native-v1",
+      "qualification251_readiness": "public256-qualification-v1",
+      "next_family_contract": "regionprops-strided-v1"
+    },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -36761,11 +36876,11 @@
       }
     },
     "current_review_assignments": {
-      "qualification251_readiness": "Own exact41946801050 observation; notify root when genuine installed-input gates pass; no duplicate dispatch or artifact download.",
-      "tiny_line_implementation": "One Region direct-strided mask/coords candidate fromeea, prospective12controls frozen before edits; no local timing amid builds/tests.",
-      "next_family_contract": "One float32 combine-stains exp8 candidate fromeea, prospective8cohorts fixed before edits; no local timing amid builds/tests."
+      "tiny_line_implementation": "Implement draw-ellipsoid-native-v1 fromreviewedreferences; freezegridsemantics/headerfirst. Regioncandidate sealed.",
+      "qualification251_readiness": "Observeold41947826837 remaining3profiles; EOLsuccessorone-linefix independentlyreviewed9df5dee5.",
+      "next_family_contract": "Independent Regionstridedcandidate review; ellipsoidactualcapture reviewcloseda272c867 andstainnative65c69b50 closed."
     },
-    "next_action": "B observes existing41947826837 four-profile campaign; root independently admits allactual gates and verifies explicit shipping source projection before merging256. Reuse admitted41946801050 minimum+ND reports. Region/stain candidates need independent parity and prospective samehost gates; ellipsoid originalcapture waits independent controller review.",
+    "next_action": "Finishallold41947826837 profiles/auditfailures, thenone exactreviewed256EOLsuccessor4profilecampaign. KeepadmittedND7266timings scoped/reused. C reviewsRegion; A implementsellipsoidnative; root stagesrealpublicoptimizationcore/guardclosure afterpeerreviews.",
     "current_checkpoint": {
       "main_image_names": 253,
       "qualified_image_names": 252,
@@ -36788,7 +36903,8 @@
       "candidate_run": 41946801050,
       "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41946801050",
       "candidate_qualification_run": 41947826837,
-      "candidate_evidence": "coverage/evidence/current256-minimum-initial-performance-v1.json"
+      "candidate_evidence": "coverage/evidence/current256-minimum-initial-performance-v1.json",
+      "candidate_qualification_status": "Windowsfailedsource-onlyCRLF beforebuild;other3oldprofilesrunning. Reviewedone-linesuccessor7ef422845b7ffea1e9c3336614d1c3965a9f8500 ready pendingremainingterminalaudits."
     }
   },
   "parallel_review": {
