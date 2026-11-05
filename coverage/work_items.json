@@ -36219,7 +36219,7 @@
       "current_checkpoint": "Savedreference295ef merged91c20247; independent actualcapture6f21412e PASS48once-onlyoriginals/96events,2new savedvalidators/profile4PASS. Cleanancestor/readersreleasedWT retired;21proofs/30207bytes preserved underredirect. No nativeownershipcredit.",
       "next_gate": {
         "owner": "tiny_line_implementation",
-        "action": "Freeze minimal typed interface over existingpolygon_label usingc,r classifier order, label!=0, boundedscan and exactsavederror/layout semantics; rootreview before native/frontend/SDK implementation lanes. No neworiginalcalls."
+        "action": "Roottypedd11f4d48 accepteded8f; implementnative newWT offmain72f9, reuseclassifierc,r andsinglelabels+rowprefix, no originals/fullSDKbuild. Numericboundsprovider/generalFP/protocoldomains remainfullcompletiongaps."
       }
     },
     {
@@ -36299,8 +36299,20 @@
       "owner": "qualification251_readiness",
       "branch": "integrate/regionprops-performance-v2",
       "base_sha": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
-      "state": "implementing",
-      "owns": [
+      "state": "measured",
+      "owns": [],
+      "depends_on": [
+        "regionprops-strided-native-v2",
+        "regionprops-scalar-boundary-v2",
+        "regionprops-strided-sdk-v2"
+      ],
+      "acceptance": "Fixedprospectivebuild/regionprops-performance-v2/prospective-v1.json:28cohorts/4ABBA1568samples,perpairpriorCPP+originalnormalized<=1.05 plusF/warmtargetreductions. Preserveallhistoricalfailures/contracts/reports. Rootgenuine/firstcohortGO and independentwiring before hostedtiming.",
+      "current_checkpoint": "Exactcf0 genuine42002481826 accepted193product91SDK/16634XML0bad/core52be/prod20531. Fixedcomparison42005721845 independentlyKEEP621abcf8:1568samples5016events/56checks112inequalities0fails. Eachcandidatepass9wins19lossesvsoriginal (Region9/12,scalar0/8,stain0/8);10rawCPPincreaseswithinfrozenlimits retained. Full4qualification42009401281 live; mainstillqualified6a/fe0856.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Complete exactcf0four-profile rawadmission beforemainproductionprojection; publishall1568samples/journals/all19losses now, no newtiming/noiserepeat. Scalarcostdiagnosis A read-only/prospectivequietdiagnostic separate; polygonsharedB notdelaythisrelease."
+      },
+      "frozen_source_paths": [
         "CMakeLists.txt",
         ".github/workflows/ci.yml",
         ".github/workflows/public-qualification.yml",
@@ -36310,17 +36322,184 @@
         "benchmarks/regionprops_scalars.py",
         "benchmarks/regionprops_state.py",
         "tests/test_region_stain_compare.py"
+      ]
+    },
+    {
+      "id": "draw-polygon-native-v1",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "base_sha": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
+      "owner": "tiny_line_implementation",
+      "state": "parity_passed",
+      "owns": [
+        "include/skimagexx/draw_polygon.hpp",
+        "src/draw_polygon.cpp",
+        "tests/test_draw_polygon_native.cpp",
+        "coverage/contracts/draw-polygon-native-v1.json"
       ],
       "depends_on": [
-        "regionprops-strided-native-v2",
-        "regionprops-scalar-boundary-v2",
-        "regionprops-strided-sdk-v2"
+        "draw-polygon-reference-v1"
       ],
-      "acceptance": "Fixedprospectivebuild/regionprops-performance-v2/prospective-v1.json:28cohorts/4ABBA1568samples,perpairpriorCPP+originalnormalized<=1.05 plusF/warmtargetreductions. Preserveallhistoricalfailures/contracts/reports. Rootgenuine/firstcohortGO and independentwiring before hostedtiming.",
-      "current_checkpoint": "Native/frontend/SDK independentpeersclosed; sharedsourcecontextsuccessors drafted, old119controller reusedwithoptionalcontract selector/historicalsourcecontext. No neworiginal/timing/fullproductbuild yet.",
+      "acceptance": "Roottypedreviewd11f4d48 accepteded8f; existing24referenceIDs/profile,17success/7sourceprefixerrors. Exactc,r classifierreuse, singlelabelsraster/rowprefix, scalar/SIMD/optionalworkers/default1/FENV/refusal/analyticparallelcontrols andactualMSVC. No neworiginal/fullSDK/core/env/timing; explicitnumericboundsprovider/generalcontractgapsstayopen.",
+      "current_checkpoint": "Nativeb8ae4e7a (bc14production/385fPIC) independentlyacceptede319ad96:17originalsuccessIDs\u00d7workers1/4 across4modes,1580041controls/mode;61+55+16smallproofs. OneMXCSRmask fix+portableUCRTtestdelta targeted16controls/mode, oldmath/golds reused. No platform/genuine/API/performancecredit.",
       "next_gate": {
         "owner": "qualification251_readiness",
-        "action": "Freeze exactnamedsource+strictsuccessorcontexts, both-profileaffectedpureguards, actualselectorclosure and rootfirstcohortproposal. RootseparateGO before neworiginalcalls; no hostdispatch untilgenuine readiness."
+        "action": "Restoreonlyaccepted4nativepaths into260candidate; strictFP/unit/exportsourceclosure andgenuineplatform/performance gates remain."
+      },
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "b8ae4e7a570adfe756c59082588b2a8215d520d0",
+          "manifest": {
+            "path": "build/draw-polygon-independent-native-review-v1/review-v3.json",
+            "sha256": "e319ad9625722b00037ccf8485fa02b9a217d4f89f5b1b3f65bc2961da227345"
+          },
+          "native_contract_checks": 136,
+          "native_pending": 0,
+          "scope": "17savedreturnIDs\u00d7workers1/4\u00d74modes; zero pending onlyinthisboundednativepartition. BroaderAPI/provider/FP/SDK/platform/genuine/performance completion remainsopen."
+        }
+      }
+    },
+    {
+      "id": "draw-polygon-frontend-v1",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "owner": "next_family_contract",
+      "state": "parity_passed",
+      "owns": [
+        "python/skimagexx/_draw_polygon.py",
+        "src/bind_draw_polygon.cpp",
+        "tests/test_draw_polygon_public.py",
+        "coverage/contracts/draw-polygon-frontend-v1.json",
+        "tests/test_draw_polygon_dtype_tag_reference.py",
+        "coverage/contracts/draw-polygon-dtype-tag-v1.json"
+      ],
+      "depends_on": [
+        "draw-polygon-native-v1"
+      ],
+      "base_sha": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
+      "current_checkpoint": "e25cae8b22997c4b2f36aef585bc4be8799de22b independent build/draw-polygon-independent-dtype-tag-review-v1/review.json SHA119463cc74ac04bfd25bc4fb29dab1048affa72b52acd5c2597ed7c7012cb31d. 350cstrictpolicy+a31dtype-preservation predecessors retained.17oldsuccess/7errors+4newtagonceoriginals; prior240unique260executions +32tagchecks; no broadgoldreplay.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Restoreonlyreviewednamedpaths in260sharedcandidate, bindfinalsourcecontext/export/default/dtype/alias/completeprebuildsetup andactualCLIbeforegenuine. No originalrecapture or unchangedtest/timing replay."
+      }
+    },
+    {
+      "id": "draw-polygon-sdk-v1",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "owner": "qualification251_readiness",
+      "state": "parity_passed",
+      "owns": [
+        "tests/cmake_consumer/draw_coordinates_consumer.cpp",
+        "tests/test_draw_polygon_sdk_scope.py"
+      ],
+      "depends_on": [
+        "draw-polygon-native-v1"
+      ],
+      "base_sha": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
+      "current_checkpoint": "a9fe6507b43dd1b940e3d5956629416c517ab8ac independent build/draw-polygon-independent-sdk-review-v1/review.json SHA657cab1c8c3248c6a5fed099b8fab801eba122b213ed1b845476926d4f2507e8. Fourmodes526515controls each; actualinstalledprefix/map/ar resolution/MSVCcompile. Existingdrawfamily defaultwired, no newfamily or genuineSDK92claim.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Restoreonlyreviewednamedpaths in260sharedcandidate, bindfinalsourcecontext/export/default/dtype/alias/completeprebuildsetup andactualCLIbeforegenuine. No originalrecapture or unchangedtest/timing replay."
+      }
+    },
+    {
+      "id": "draw-polygon-benchmark-v1",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "owner": "integrator",
+      "state": "contracted",
+      "owns": [
+        "benchmarks/draw_polygon.py",
+        "coverage/contracts/draw-polygon-benchmark-v1.json",
+        "tests/test_draw_polygon_benchmark.py",
+        "tests/test_draw_polygon_benchmark_intake.py"
+      ],
+      "depends_on": [
+        "draw-polygon-native-v1"
+      ],
+      "base_sha": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
+      "current_checkpoint": "31632334e8e6f3fd5a567b424e0e39eb3ac52631 independent build/draw-polygon-independent-benchmark-review-v1/review-v2.json SHA80f28f179d9a992b6e7c1a30acdad0f8d8e45c4068c4758b4b5f67a3ad1c54ad. 12prospectivecases168samples;15pureguards/profile byscopedreuse+30realNP-onlyintakes/profile. PeerF1checkeridentitygap fixedbeforeanyalgorithmcall, no actualtiming yet.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Restoreonlyreviewednamedpaths in260sharedcandidate, bindfinalsourcecontext/export/default/dtype/alias/completeprebuildsetup andactualCLIbeforegenuine. No originalrecapture or unchangedtest/timing replay."
+      }
+    },
+    {
+      "id": "draw-polygon-shared260-v1",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "owner": "qualification251_readiness",
+      "state": "implementing",
+      "branch": "integrate/draw-polygon-v1",
+      "base_sha": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/draw.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json",
+        "coverage/API_IMPLEMENTATION_PATHS.json",
+        "coverage/API_IMPLEMENTATION_PATHS.md",
+        "coverage/README.md",
+        "tools/inventory.py",
+        "tools/ci_measurement_artifacts.py",
+        "tools/public_qualification.py",
+        ".github/workflows/ci.yml",
+        ".github/workflows/public-qualification.yml",
+        "benchmarks/draw_polygon.py",
+        "coverage/contracts/draw-polygon-benchmark-runtime-v1.json"
+      ],
+      "depends_on": [
+        "draw-polygon-native-v1",
+        "draw-polygon-frontend-v1",
+        "draw-polygon-sdk-v1",
+        "draw-polygon-benchmark-v1"
+      ],
+      "current_checkpoint": "Baseexactcf0projection20531 verified BEFOREpolygon; independentcomponentsclosed. Derived195product92SDK/31families62checks/260images263functions/POST92. EXACT2inventoryrowschanged,29classes284membersunchanged. Currentdefault/checker5-file finitepeer705984PASS; actualexecution/sourcefreeze pending, CpreparesignoredactualCLIscaffoldonly.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Freezeonlyreviewedsourceaftere25; newactivebenchmarkruntimecontext/pointer inverse preserves3163contract/cases/method. Completeactualaffectedbothprofileguards/currentIDreuse+default/dtype/aliasgates; rootGOforboundedactualCLI beforegenuine. No ad-hocreturnedobjectstubs/broadoriginalrecapture/fullSDK/env/timing."
+      }
+    },
+    {
+      "id": "regionprops-scalar-cost-diagnostic-v1",
+      "kind": "diagnostic",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "tiny_line_implementation",
+      "state": "contracting",
+      "owns": [],
+      "depends_on": [
+        "regionprops-performance-shared-v2"
+      ],
+      "current_checkpoint": "Read-only8e3d530f source/selectedSDKassembly: warm3FENVcycles/region vsoriginal3scalarboxes too, no dominanceclaim. One2pair/28samplelocalquietdiagnostic build-only preparedusinggenuine52be/SDK91 andlocalPy3.11.14 (notproducer-runtimeclaim); no timing/productionchangesyet.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Reviewfrozenclient/SDKshim/protocol andreserve30squietlocalwindow withB/Cbeforetiming. Measurepublicwarm original/current andmatchedSDK/FENV-only3helpercycles, normalizeperregion/2regionsperpublicop. No speculativefastpath/cache/fusion until evidence; preserveFP/callback/evaluation semantics."
       }
     }
   ],
@@ -38346,5 +38525,12 @@
       "build/worktrees/ellipse-perimeter-reference-v1/build": "build/ellipse-perimeter-reference-retained-v1"
     },
     "scope": "Only obsolete clean ancestor source and ignored tests/__pycache__ removed through git worktree remove. Entire old build evidence moved within verified workspace before removal. No rawproof/receipt rewriting, no wholebuild deletion."
-  }
+  },
+  "known_followup_gaps": [
+    {
+      "scope": "legacydraw.ellipse_perimeter provider paths",
+      "finding": "Directwholeoriginalprovider branches bypass _compat fallback-disabled policy; inheritedpattern wasnotcopiedintonewpolygon.",
+      "next_owner_trigger": "Rootscheduleisolatedpolicyfix+sourcecontextsuccessor inlatercoherentrelease; no broadoldwrapperrewrite duringcurrentcf0qualification."
+    }
+  ]
 }

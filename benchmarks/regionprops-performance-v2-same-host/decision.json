@@ -1,0 +1,510 @@
+{
+  "decision": "KEEP",
+  "checks": [
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0182960369280003,
+      "original_normalized": 0.998368508702899,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9681054009863848,
+      "original_normalized": 0.9592359011614465,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.47508996687770816,
+      "original_normalized": 0.46846866237952034,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.3190294553258328,
+      "original_normalized": 0.3204171978805685,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.08971198678084248,
+      "original_normalized": 0.08866428895332219,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.3404085397458539,
+      "original_normalized": 0.34269469337401465,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.13956319592233019,
+      "original_normalized": 0.14137368704204253,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.22464680295308107,
+      "original_normalized": 0.22419580380566623,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/small3d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9164231054084562,
+      "original_normalized": 0.8996161171521575,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.07811600804598524,
+      "original_normalized": 0.07872957239652366,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.316930390499614,
+      "original_normalized": 0.31993940734190957,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.18093372156497245,
+      "original_normalized": 0.18131002489169162,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-ctor-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.8707832000518549,
+      "original_normalized": 0.87587768435443,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-ctor-f-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.19685786551208892,
+      "original_normalized": 0.20055542707865673,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-warm-c-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.5805276245065151,
+      "original_normalized": 0.5736092903842512,
+      "limit": 0.6666666666666666,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9492803161193855,
+      "original_normalized": 0.9667624188214289,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-f-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.06480143836230742,
+      "original_normalized": 0.06444011729960804,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/3d-warm-f-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.5775310863126,
+      "original_normalized": 0.5858864757302168,
+      "limit": 0.6666666666666666,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/pixel-cycle-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.8290898402622466,
+      "original_normalized": 0.8376249842317971,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/slice-cycle-3d-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.383889903758105,
+      "original_normalized": 0.38686054723191493,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0043785418564488,
+      "original_normalized": 0.9916168145405102,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0021149145869253,
+      "original_normalized": 0.9870271735802599,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0009644045563353,
+      "original_normalized": 1.018112656242582,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9975629772251806,
+      "original_normalized": 0.99723334305683,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9952510983961451,
+      "original_normalized": 1.0036349051417863,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.002903499962712,
+      "original_normalized": 1.0191605294615742,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9997353811341695,
+      "original_normalized": 0.9864612399655909,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9999180173184679,
+      "original_normalized": 1.001243189184789,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0040217073749593,
+      "original_normalized": 0.9969797588815669,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9484769225992249,
+      "original_normalized": 0.9409579401103967,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.46262728643363177,
+      "original_normalized": 0.46098456106906627,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.31522680376473505,
+      "original_normalized": 0.31657552908498826,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.0901623193804741,
+      "original_normalized": 0.09036743244560558,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.3427110972502835,
+      "original_normalized": 0.34523504374674996,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.1396102811670307,
+      "original_normalized": 0.13921563825765262,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.22658602113643314,
+      "original_normalized": 0.22499462329761685,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/small3d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.894518657599328,
+      "original_normalized": 0.8917167696142182,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.07770357544147354,
+      "original_normalized": 0.07800198788777173,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.31802560348586356,
+      "original_normalized": 0.3185788045476904,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.18117456155554423,
+      "original_normalized": 0.18159407615859421,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-ctor-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.8907232774936671,
+      "original_normalized": 0.8851368640746816,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-ctor-f-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.19822087880436853,
+      "original_normalized": 0.19712697822657652,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-warm-c-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.5839084059700621,
+      "original_normalized": 0.5868453960097593,
+      "limit": 0.6666666666666666,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9455176872710345,
+      "original_normalized": 0.9221736476416831,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-f-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.0643714155109642,
+      "original_normalized": 0.06387583851182294,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/3d-warm-f-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.5622929277233633,
+      "original_normalized": 0.5659819481387873,
+      "limit": 0.6666666666666666,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/pixel-cycle-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.8497958192251995,
+      "original_normalized": 0.8374368296849295,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/slice-cycle-3d-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.38687561780937735,
+      "original_normalized": 0.38306340190770277,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0051764803333147,
+      "original_normalized": 1.0037778879398729,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9982039259711643,
+      "original_normalized": 0.9753413973090521,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.001918731009488,
+      "original_normalized": 1.006244292095892,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.000928713934022,
+      "original_normalized": 0.9970457084064553,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.994409486036443,
+      "original_normalized": 0.9872093432312977,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0021561148675566,
+      "original_normalized": 0.9993920361287713,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9997673604146073,
+      "original_normalized": 0.9817629996488806,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9977187181433963,
+      "original_normalized": 0.9989842386234988,
+      "limit": 1.05,
+      "passed": true
+    }
+  ],
+  "scope": "bounded fixed cohorts only; no whole-library claim"
+}

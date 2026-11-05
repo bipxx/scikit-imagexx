@@ -734,3 +734,4 @@ coverage/contracts/regionprops-scalars-benchmark-v1.json -text
 tests/fixtures/regionprops_scalar_native.bin -text
 coverage/contracts/regionprops-scalar-runtime-v1.json -text
 coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json -text
+benchmarks/regionprops-performance-v2-same-host/* -text
