@@ -92,6 +92,13 @@ def checked_output(actual, expected, buffers, np):
     return row
 
 
+def require_prepared_source(manifest, root, revision, read_source):
+    # Rebind at the child-process boundary; the controller also verifies inputs.
+    assert set(manifest['source']) == {'revision', 'files_sha256'}
+    assert manifest['source']['revision'] == revision
+    assert read_source(root) == manifest['source']
+
+
 def main():
     raw_contract = CONTRACT.read_bytes(); contract = json.loads(raw_contract)
     assert contract['state'] == 'FROZEN_READY_FOR_ROOT_FIRST_COHORT', 'prospective: genuine source/input gate has not closed'
@@ -104,8 +111,8 @@ def main():
     parser.add_argument('--backend-role', choices=['native', 'prior-cpp'], default='native')
     parser.add_argument('--pass-index', type=int, choices=range(1, 5), required=True)
     parser.add_argument('--deadline-utc', required=True)
-    parser.add_argument('--input-audit', type=Path, required=True)
-    parser.add_argument('--input-audit-sha256', required=True)
+    parser.add_argument('--input-manifest', type=Path, required=True)
+    parser.add_argument('--input-manifest-sha256', required=True)
     parser.add_argument('--source-revision', required=True)
     parser.add_argument('--source-root', type=Path, required=True)
     parser.add_argument('--output', type=Path, default=Path('build/ci-regionprops-coords-scaled.json'))
@@ -118,19 +125,22 @@ def main():
     assert datetime.now(timezone.utc) < datetime.fromisoformat(args.deadline_utc)
     journal = args.output.with_suffix('.batches.jsonl')
     assert not args.output.exists() and not journal.exists()
-    audit_raw = args.input_audit.read_bytes()
-    assert hashlib.sha256(audit_raw).hexdigest() == args.input_audit_sha256
-    audit = json.loads(audit_raw)
-    assert audit['source']['revision'] == args.source_revision
-    assert audit['source']['full_source_manifest_exact'] and audit['project']['header_source_exact']
-    assert audit['project']['Python_source_exact'] and len(audit['wheels']) == 14
-    assert len(audit['runtime']['versions']) == 14
+    manifest_raw = args.input_manifest.read_bytes()
+    assert hashlib.sha256(manifest_raw).hexdigest() == args.input_manifest_sha256
+    manifest = json.loads(manifest_raw)
+    assert manifest['schema'] == 'ci-offline-measurement-v1'
+    assert len(manifest['wheels']) == len(manifest['runtime']['versions']) == 14
+    manifest_core = [pin for name,pin in manifest['runtime']['packages_sha256']['skimagexx'].items()
+                     if name.startswith('_core.') and name.endswith('.so')]
+    assert len(manifest_core) == 1
     if args.backend_role == 'prior-cpp':
         assert args.source_revision == contract['baseline']['source']
-        assert audit['project']['core_sha256'] == contract['baseline']['core_sha256']
+        assert manifest_core[0] == contract['baseline']['core_sha256']
     sys.path[:0] = [str(ROOT/'tools'), str(ROOT/'benchmarks')]
     from montage_sustained import measure
     from provenance import source_fingerprint
+    from ci_measurement_artifacts import source_state
+    require_prepared_source(manifest, args.source_root, args.source_revision, source_state)
     from regionprops_state import input_state, fixture as state_fixture, case_bounds as state_bounds
     for function in (input_state, state_fixture, state_bounds):
         assert hashlib.sha256(inspect.getsource(function).encode()).hexdigest() == contract['reused_state_method_sha256'][function.__name__]
@@ -142,9 +152,9 @@ def main():
     original = importlib.import_module('skimage.measure._regionprops')
     public = importlib.import_module('skimage.measure')
     owned = importlib.import_module('skimagexx._regionprops_state')
-    assert sys.version == audit['runtime']['python']
+    assert sys.version == manifest['runtime']['python']
     for name, version in [('numpy', np.__version__), ('scipy', scipy.__version__), ('scikit-image', skimage.__version__)]:
-        assert audit['runtime']['versions'][name] == version
+        assert manifest['runtime']['versions'][name] == version
     assert skimage.__version__ == '0.26.0'
     for name, pin in contract['original_source_sha256'].items():
         assert hashlib.sha256(Path(importlib.import_module(name).__file__).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == pin
@@ -153,9 +163,8 @@ def main():
     assert binary_sha == contract['original_binary_sha256'][np.__version__]
     assert hashlib.sha256(inspect.getsource(measure).encode()).hexdigest() == contract['method_sha256']
     before = source_fingerprint(args.source_root)
-    assert before['source_sha256'] == audit['source']['production_source_sha256']
     core = Path(xx._core.__file__); core_sha = hashlib.sha256(core.read_bytes()).hexdigest()
-    assert core_sha == audit['project']['core_sha256']
+    assert core_sha == manifest_core[0]
     pools = {name: os.environ[name] for name in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS', 'BLIS_NUM_THREADS')}
     assert set(pools.values()) == {'1'} and xx.get_num_threads() == 1
     xx.set_fallback_enabled(False)
@@ -247,6 +256,7 @@ def main():
         assert np.geterr() == policy and np.geterrcall() is handler and np.getbufsize() == buffer
         assert xx.get_num_threads() == 1 and input_state(image) == state and image.tobytes(order='C') == pixels
         rows.append(dict(case_id=spec['id'], parameters=spec, actual_C_returns=calls, phases=phase_rows,
+                         native_accepted=bool(entries) and spec['native_partition']=='f64',
                          worker_snapshots=worker_snapshots, constructor_types=constructors, validation=snapshot, **timing))
     assert sum(sum(map(len, row['samples_ms'])) for row in rows) == 84
     assert source_fingerprint(args.source_root) == before and CONTRACT.read_bytes() == raw_contract
@@ -256,7 +266,8 @@ def main():
         warmup_calibration_min_ms=250, raw_samples=84, reference_pool_limits=pools, cpu_model=cpu,
         logical_cpu_count=os.cpu_count(), avx2_available=bool(xx.has_avx2()), python=sys.version,
         numpy=np.__version__, scipy=scipy.__version__, reference=skimage.__version__, **before,
-        core_sha256=core_sha, original_binary_sha256=binary_sha, input_audit_sha256=args.input_audit_sha256,
+        core_sha256=core_sha, original_binary_sha256=binary_sha, input_manifest_sha256=args.input_manifest_sha256,
+        method_sha256=contract['method_sha256'], fallback_enabled=False,
         contract_sha256=hashlib.sha256(raw_contract).hexdigest(), scope=contract['scope']), results=rows)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2)+'\n')

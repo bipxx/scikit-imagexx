@@ -110,7 +110,7 @@ def test_original_normalized_gate_cannot_be_hidden_by_direct_gain():
     assert C.acceptance(data,P)['decision']=='DISCARD'
 
 
-def sample_report(tmp_path):
+def sample_report(tmp_path,pass_index=1):
     events=[];samples=[[],[]];counts=[[],[]];records=[]
     def emit(f,phase,r,o,ns):
         common=dict(case_index=0,case_id='case',function=f,round=r,ordinal=o,loops=1)
@@ -121,7 +121,7 @@ def sample_report(tmp_path):
     for f in (0,1):emit(f,'warmup',-1,f,250_000_000)
     orders=[]
     for r in range(7):
-        order=[0,1] if (r+1)%2==0 else [1,0];orders.append(order)
+        order=[0,1] if (r+pass_index)%2==0 else [1,0];orders.append(order)
         for o,f in enumerate(order):emit(f,'sample',r,o,100_000_000)
     row=dict(case_id='case',threads=1,native_accepted=True,actual_C_returns=['entry'],samples_ms=samples,loops=counts,batch_records=records,warmup_elapsed_ns=[250_000_000]*2,sample_order=orders,reference_ms=100.,cpp_ms=100.,speedup=1.)
     events.append(dict(event='measure_returned',case_index=0,case_id='case',timing=copy.deepcopy(row)))
@@ -167,3 +167,106 @@ def test_controller_rejects_non_UTC_before_any_execution(deadline,monkeypatch):
     monkeypatch.setattr(C,'execute',lambda args:pytest.fail('invaliddeadline reached controller execution'))
     with pytest.raises(AssertionError):
         C.main(['execute','--repository','bipxx/qupathxx','--candidate-source','0'*40,'--candidate-run','1','--candidate-artifact','1','--snapshots','unused','--results','unused','--deadline-utc',deadline])
+
+
+COORDS=ROOT/'coverage/contracts/regionprops-coords-scaled-compare-v1.json'
+
+
+def coords_passes():
+    protocol=json.loads(COORDS.read_bytes())
+    old={s['id']:dict(original=1.,cpp=1.)for s in protocol['coords_cases']}
+    new=copy.deepcopy(old)
+    for cid in protocol['fixed_gates']['target_ids']:new[cid]['cpp']=.8
+    return [copy.deepcopy(old),copy.deepcopy(new),copy.deepcopy(new),copy.deepcopy(old)],protocol
+
+
+def test_coords_six_case_protocol_and32_fixed_inequalities():
+    data,p=coords_passes();result=C.acceptance(data,p)
+    assert result['decision']=='KEEP' and len(result['checks'])==12
+    assert sum(len(row['limits'])for row in result['checks'])==32
+    benchmark=json.loads((ROOT/'coverage/contracts/regionprops-coords-scaled-benchmark-v1.json').read_bytes())
+    assert p['optimization_version']==2 and p['mode']=='coords-scaled' and p['families']==['coords-scaled']
+    assert p['coords_cases']==benchmark['cases'] and p['sampling']['samples_total']==336
+    assert p['sampling']['warmup_groups']==48
+    assert p['state'].startswith('PROSPECTIVE_')
+    assert hashlib.sha256((ROOT/'coverage/contracts/regionprops-coords-scaled-benchmark-v1.json').read_bytes()).hexdigest()==p['benchmark_contract_sha256']
+    for name,pin in p['controller_source_sha256'].items():
+        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+
+
+@pytest.mark.parametrize('case',range(6))
+@pytest.mark.parametrize('pair',(1,2))
+@pytest.mark.parametrize('fault',('direct','normalized'))
+def test_coords_every_control_each_pair_is_strict(case,pair,fault):
+    data,p=coords_passes();cid=p['coords_cases'][case]['id']
+    if fault=='direct':data[pair][cid]['cpp']=1.06
+    else:data[pair][cid]['original']=.5
+    assert C.acceptance(data,p)['decision']=='DISCARD'
+
+
+@pytest.mark.parametrize('target',(0,1))
+@pytest.mark.parametrize('pair',(1,2))
+@pytest.mark.parametrize('fault',('target-direct','target-original'))
+def test_coords_targets_have_separate_direct_and_original_caps(target,pair,fault):
+    data,p=coords_passes();cid=p['fixed_gates']['target_ids'][target]
+    data[pair][cid]=dict(cpp=.91,original=2.)if fault=='target-direct'else dict(cpp=.8,original=.8)
+    result=C.acceptance(data,p);assert result['decision']=='DISCARD'
+    check=next(c for c in result['checks']if c['case_id']==cid and c['candidate_pass']==pair+1)
+    assert sum(l['value']>l['limit']for l in check['limits'])==1
+
+
+def test_coords_target_normalized_control_is105_not90():
+    data,p=coords_passes()
+    for cid in p['fixed_gates']['target_ids']:
+        for i in (0,3):data[i][cid]=dict(cpp=.85,original=1.)
+        for i in (1,2):data[i][cid]=dict(cpp=.75,original=.85)
+    assert C.acceptance(data,p)['decision']=='KEEP'
+
+
+@pytest.mark.parametrize('role,partial',(('baseline',False),('candidate',False),('candidate',True)))
+def test_coords_report_preserves_provider_partition_and_actual_pass(tmp_path,role,partial):
+    report,path,events=sample_report(tmp_path,2);row=report['results'][0]
+    report['metadata'].update(backend_role='prior-cpp'if role=='baseline'else'native',pass_index=2)
+    candidate=role=='candidate';row['native_accepted']=candidate and not partial
+    row['actual_C_returns']=(['local','origin_into','multiply_f64']+([]if partial else['add_f64_into']))*2 if candidate else[]
+    row['worker_snapshots']=[1,1]if candidate else[]
+    row['phases']=[dict(index_owned=True,origin_owned=True,multiply_owned=not partial,add_owned=None if partial else True,native_accepted=not partial)]*2 if candidate else[]
+    path.write_text('\n'.join(map(json.dumps,events))+'\n')
+    policy=dict(role=role,pass_index=2,cases=[dict(native_partition='integer-provider'if partial else'f64')])
+    assert C.validate_report(report,path,['case'],policy)=={'case':dict(original=100.,cpp=100.)}
+    fault=copy.deepcopy(report);fault['results'][0]['native_accepted']=not row['native_accepted']
+    with pytest.raises(AssertionError):C.validate_report(fault,path,['case'],policy)
+    fault=copy.deepcopy(report);fault['metadata']['pass_index']=1
+    with pytest.raises(AssertionError):C.validate_report(fault,path,['case'],policy)
+
+
+def test_coords_driver_uses_common_controller_and_exact_forwarded_manifest(tmp_path,monkeypatch):
+    root=tmp_path/'prepared-source';manifest=root/'build/prepared/ci-artifacts/measurement.json'
+    manifest.parent.mkdir(parents=True);manifest.write_text('{}\n')
+    seen=[]
+    def inert_runpath(path,run_name):seen.append((path,list(C.sys.argv)))
+    monkeypatch.setattr(C.runpy,'run_path',inert_runpath)
+    args=types.SimpleNamespace(source_root=root,family='coords-scaled',source_revision='f'*40,role='baseline',pass_index=4,deadline_utc='2099-01-01T00:00:00+00:00',output=tmp_path/'none.json',preflight=False)
+    C.driver(args)
+    script,argv=seen[0]
+    assert script==str(ROOT/'benchmarks/regionprops_coords_scaled.py')
+    assert argv[argv.index('--backend-role')+1]=='prior-cpp' and argv[argv.index('--pass-index')+1]=='4'
+    assert argv[argv.index('--source-root')+1]==str(root)
+    assert argv[argv.index('--input-manifest')+1]==str(manifest)
+    assert argv[argv.index('--input-manifest-sha256')+1]==hashlib.sha256(manifest.read_bytes()).hexdigest()
+
+
+def test_coords_prospective_execute_refuses_before_api_or_output(tmp_path,monkeypatch):
+    monkeypatch.setattr(C,'CONTRACT',COORDS)
+    monkeypatch.setattr(C.subprocess,'check_output',lambda *a,**kw:pytest.fail('prospective execute reached API/Git'))
+    args=types.SimpleNamespace(candidate_source='f'*40,candidate_run='1',candidate_artifact=1,repository='bipxx/scikit-imagexx',results=tmp_path/'must-not-exist')
+    with pytest.raises(AssertionError,match='prospective comparison'):C.execute(args)
+    assert not args.results.exists()
+
+
+@pytest.mark.parametrize('name',('tools/region_stain_compare.py','.github/workflows/region-stain-same-host.yml'))
+def test_coords_legacy_exact_inverse_and_unrelated_mutation_rejected(name):
+    raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');projected=C.legacy_source(name,raw)
+    legacy=json.loads((ROOT/'coverage/contracts/regionprops-performance-compare-v2.json').read_bytes())
+    assert hashlib.sha256(projected).hexdigest()==legacy['controller_source_sha256'][name]
+    with pytest.raises(AssertionError):C.legacy_source(name,raw+b'\n#unrelated mutation\n')

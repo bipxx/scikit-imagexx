@@ -1,0 +1,191 @@
+{
+  "schema": "coords-scaled-same-host-compare-v1",
+  "optimization_version": 2,
+  "mode": "coords-scaled",
+  "state": "PROSPECTIVE_SOURCE_ONLY_GENUINE_AND_ROOT_ACTIVATION_PENDING",
+  "baseline": {
+    "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+    "run": "42002481826",
+    "artifact": 13403507497,
+    "bytes": 85519557,
+    "sha256": "e213203d7ebfe3353dcf2c6972c7b1b4c1b8d0ebb576052379ca713bf6c57e0e",
+    "core_sha256": "52be10566b69aed7755f93eba63523c303875695d9f579ebff5a16ac39bd0284"
+  },
+  "candidate": {
+    "source": "f1871b85b89e956c7017bb8600aec2f5ec8c3859",
+    "run": null,
+    "artifact": null,
+    "bytes": null,
+    "sha256": null
+  },
+  "families": [
+    "coords-scaled"
+  ],
+  "passes": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "pairs": [
+    [
+      0,
+      1
+    ],
+    [
+      3,
+      2
+    ]
+  ],
+  "coords_cases": [
+    {
+      "id": "regionprops-coords-scaled/tiny-c-off",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "cache": false,
+      "operation": "getters",
+      "pattern": "saved2d",
+      "max_label": 2,
+      "spacing": null,
+      "offset": null,
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/tiny-f-warm",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "saved2d",
+      "max_label": 2,
+      "spacing": null,
+      "offset": null,
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/medium2d-f-warm",
+      "shape": [
+        128,
+        192
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "checkerboard",
+      "max_label": 2,
+      "spacing": [
+        -0.5,
+        2.0
+      ],
+      "offset": [
+        -3,
+        4
+      ],
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/medium3d-f-warm",
+      "shape": [
+        16,
+        32,
+        32
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "checkerboard",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0,
+        1.25
+      ],
+      "offset": [
+        0,
+        -1,
+        2
+      ],
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "shape": [
+        128,
+        192
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "cache": true,
+      "operation": "constructor",
+      "pattern": "sparse",
+      "max_label": 8,
+      "spacing": null,
+      "offset": null,
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/integer3d-partial",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "int64",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "saved3d",
+      "max_label": 2,
+      "spacing": [
+        1,
+        2,
+        3
+      ],
+      "offset": [
+        1,
+        0,
+        -2
+      ],
+      "native_partition": "integer-provider"
+    }
+  ],
+  "sampling": {
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_ms": 250,
+    "cohorts": 6,
+    "samples_per_pass": 84,
+    "samples_total": 336,
+    "warmup_groups": 48
+  },
+  "fixed_gates": {
+    "all_case_direct_max": 1.05,
+    "all_case_original_normalized_max": 1.05,
+    "target_ids": [
+      "regionprops-coords-scaled/medium2d-f-warm",
+      "regionprops-coords-scaled/medium3d-f-warm"
+    ],
+    "target_direct_max": 0.9,
+    "target_vs_original_max": 0.9
+  },
+  "benchmark_contract_sha256": "bf65c50bb5133d003234fa74b7cf9a476a2590dfb0e2cdf91c94553825ea7172",
+  "controller_source_sha256": {
+    "tools/region_stain_compare.py": "c7097dbf4203e37c593d9e783c5510e09eb6529ced536dc0962bd2bb65809697",
+    ".github/workflows/region-stain-same-host.yml": "40d934e259dc7507e888d51fafed2db55074233e3cb3516c500125db4f8e3a33",
+    "benchmarks/regionprops_coords_scaled.py": "9876092b5bc6562a19055f006d7b710f182835549e874859a09586f454ed0f4c",
+    "coverage/contracts/regionprops-coords-scaled-controller-context-v1.json": "b5a0501e67d0c3f766c8c7506e52582e7bfabd42eaa401935f3f8f4c79416b10"
+  },
+  "activation": "Rootindependentlyauthenticates exactpreparedcandidate source/run/artifact/digest plus13dependencies/fullruntime/libequality; childcontrollerfills pendingselection andactivates bothchildcontracts, leavingpreparedsnapshots/manifests unchanged. No numericcalls fromthisprospectivepacket.",
+  "legacy": "Old28protocol/cases/method/gates bytesretained. Explicitnewfamily only; legacy source projectionexact to f187 predecessor beforeexistingv1/v2hashchecks."
+}

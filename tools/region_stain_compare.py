@@ -91,15 +91,29 @@ def manifests_equal(a,b):
     assert a['runtime']['versions']['numpy']=='1.24.4' and a['runtime']['versions']['scikit-image']=='0.26.0'
 
 
-def validate_report(report,journal,case_ids):
+def validate_report(report,journal,case_ids,coords=None):
     rows=report['results'];assert [r['case_id'] for r in rows]==case_ids
     m=report['metadata'];assert m['threads']==1 and m['repeat']==7 and m['target_ms']==100 and m['warmup_calibration_min_ms']==250
+    if coords:
+        assert m['backend_role']==('prior-cpp' if coords['role']=='baseline' else 'native')
+        assert m['pass_index']==coords['pass_index']
     assert set(m['reference_pool_limits'].values())=={'1'} and m['fallback_enabled'] is False
     events=[json.loads(s) for s in Path(journal).read_text().splitlines()]
     assert len([x for x in events if x['event']=='measure_returned'])==len(rows)
     position=0;result={}
     for i,row in enumerate(rows):
-        assert row.get('threads',m['threads'])==1 and row['native_accepted'] is True and row['actual_C_returns']
+        assert row.get('threads',m['threads'])==1
+        if coords:
+            partial=coords['cases'][i]['native_partition']=='integer-provider'
+            candidate=coords['role']=='candidate'
+            assert row['native_accepted'] is (candidate and not partial)
+            if candidate:
+                stages=['local','origin_into','multiply_f64']+([] if partial else ['add_f64_into'])
+                assert row['actual_C_returns']==stages*2 and row['worker_snapshots']==[1,1]
+                assert row['phases']==[dict(index_owned=True,origin_owned=True,multiply_owned=not partial,
+                    add_owned=None if partial else True,native_accepted=not partial)]*2
+            else:assert row['actual_C_returns']==[] and row['phases']==[] and row['worker_snapshots']==[]
+        else:assert row['native_accepted'] is True and row['actual_C_returns']
         accepted=[[],[]];counts=[[],[]];warm=[0,0];records=[]
         while position<len(events) and events[position]['event']!='measure_returned':
             before,after=events[position:position+2];position+=2
@@ -119,7 +133,8 @@ def validate_report(report,journal,case_ids):
         assert all(len(x)==7 for x in accepted) and min(warm)>=250_000_000
         expected_order=[[(f,round_id,ordinal) for ordinal,f in enumerate(order)] for round_id,order in enumerate(row['sample_order'])]
         assert [(x['function'],x['round'],x['ordinal']) for x in records if x['accepted']]==[x for group in expected_order for x in group]
-        assert row['sample_order']==[[0,1] if (round_id+i+1)%2==0 else [1,0] for round_id in range(7)]
+        pass_index=coords['pass_index'] if coords else 1
+        assert row['sample_order']==[[0,1] if (round_id+i+pass_index)%2==0 else [1,0] for round_id in range(7)]
         for f in (0,1):assert [x['round'] for x in records if x['accepted'] and x['function']==f]==list(range(7))
         med=[statistics.median(x) for x in accepted]
         assert all(math.isfinite(x) and x>0 for x in med)
@@ -133,6 +148,17 @@ def validate_report(report,journal,case_ids):
 def acceptance(passes,protocol):
     assert len(passes)==4;checks=[]
     g=protocol['fixed_gates']
+    if protocol.get('mode')=='coords-scaled':
+        ids=[s['id']for s in protocol['coords_cases']]
+        assert all(set(p)==set(ids)for p in passes)
+        for baseline,candidate in protocol['pairs']:
+            for cid in ids:
+                b,c=passes[baseline][cid],passes[candidate][cid]
+                direct=c['cpp']/b['cpp'];normalized=(c['cpp']/c['original'])/(b['cpp']/b['original']);original=c['cpp']/c['original']
+                limits=[dict(metric='direct',value=direct,limit=g['all_case_direct_max']),dict(metric='original_normalized',value=normalized,limit=g['all_case_original_normalized_max'])]
+                if cid in g['target_ids']:limits += [dict(metric='target_direct',value=direct,limit=g['target_direct_max']),dict(metric='target_vs_original',value=original,limit=g['target_vs_original_max'])]
+                checks.append(dict(case_id=cid,baseline_pass=baseline+1,candidate_pass=candidate+1,limits=limits,passed=all(x['value']<=x['limit']for x in limits)))
+        return dict(decision='KEEP'if all(x['passed']for x in checks)else'DISCARD',checks=checks,scope='six fixed property cohorts only; integer suffix is provider, no whole-library claim')
     for baseline,candidate in protocol['pairs']:
         assert set(passes[baseline])==set(passes[candidate])
         for cid,b in passes[baseline].items():
@@ -146,7 +172,14 @@ def acceptance(passes,protocol):
 
 def driver(args):
     root=args.source_root.resolve();sys.path[:0]=[str(root/'benchmarks'),str(root/'tools')]
-    if args.family=='holdouts':
+    if args.family=='coords-scaled':
+        script=ROOT/'benchmarks/regionprops_coords_scaled.py'
+        manifest=root/'build/prepared/ci-artifacts/measurement.json'
+        argv=[str(script),'--source-root',str(root),'--source-revision',args.source_revision,
+            '--backend-role','prior-cpp'if args.role=='baseline'else'native','--pass-index',str(args.pass_index),
+            '--input-manifest',str(manifest),'--input-manifest-sha256',hashlib.sha256(manifest.read_bytes()).hexdigest(),
+            '--threads','1','--repeat','7','--deadline-utc',args.deadline_utc,'--output',str(args.output)]
+    elif args.family=='holdouts':
         script=ROOT/'benchmarks/stain_f32_holdouts.py';argv=[str(script),'--source-root',str(root),'--contract',str(CONTRACT),'--deadline-utc',args.deadline_utc,'--output',str(args.output)]
     else:
         script=root/'benchmarks'/('regionprops_state.py' if args.family=='region' else 'regionprops_scalars.py' if args.family=='scalars' else 'stains.py')
@@ -170,13 +203,38 @@ def driver(args):
         args.output.with_suffix('.preflight.json').write_text(json.dumps({'actual_first_cohort_validated':True,'measure_calls_stopped_before_body':1,'timed_batches':0})+'\n')
 
 
+def legacy_source(name,current):
+    context=load(ROOT/'coverage/contracts/regionprops-coords-scaled-controller-context-v1.json')['entries'][name]
+    assert hashlib.sha256(current).hexdigest()==context['active_sha256']
+    for change in context['inverse']:
+        new,old=change['new'].encode(),change['old'].encode()
+        assert current.count(new)==1
+        current=current.replace(new,old,1)
+    assert hashlib.sha256(current).hexdigest()==context['predecessor_sha256']
+    return current
+
+
 def execute(args):
     assert re.fullmatch('[0-9a-f]{40}',args.candidate_source)
     assert re.fullmatch('[1-9][0-9]*',args.candidate_run) and args.candidate_artifact>0
     assert re.fullmatch('[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',args.repository)
     protocol=load(CONTRACT)
+    coords=protocol.get('mode')=='coords-scaled'
+    if coords:
+        assert protocol['state']=='FROZEN_READY_FOR_ROOT_FIRST_COHORT','prospective comparison inputs/activation pending'
+        expected=protocol['candidate']
+        assert (args.candidate_source,str(args.candidate_run),args.candidate_artifact)==(expected['source'],expected['run'],expected['artifact'])
+        assert protocol['families']==['coords-scaled'] and protocol['passes']==['baseline','candidate','candidate','baseline']
+        assert protocol['pairs']==[[0,1],[3,2]] and len(protocol['coords_cases'])==6
+        benchmark=ROOT/'coverage/contracts/regionprops-coords-scaled-benchmark-v1.json'
+        assert hashlib.sha256(benchmark.read_bytes()).hexdigest()==protocol['benchmark_contract_sha256']
+        benchmark_config=load(benchmark)
+        assert benchmark_config['state']=='FROZEN_READY_FOR_ROOT_FIRST_COHORT'
+        assert protocol['coords_cases']==benchmark_config['cases']
+        assert protocol['fixed_gates']=={key:benchmark_config['comparison'][key]for key in ('all_case_direct_max','all_case_original_normalized_max','target_ids','target_direct_max','target_vs_original_max')}
     for name,pin in protocol['controller_source_sha256'].items():
         current=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if not coords and name in ('tools/region_stain_compare.py','.github/workflows/region-stain-same-host.yml'):current=legacy_source(name,current)
         if protocol.get('optimization_version')!=2 and name in ('tools/region_stain_compare.py','.github/workflows/region-stain-same-host.yml'):
             context=load(ROOT/'coverage/contracts/region-stain-controller-v1-context.json')['entries'][name]
             assert hashlib.sha256(context['utf8'].encode()).hexdigest()==context['raw_sha256']==pin
@@ -197,6 +255,7 @@ def execute(args):
         artifact_id=protocol['baseline']['artifact'] if role=='baseline' else args.candidate_artifact
         record=api('runs/'+str(run_id),role+'-run.json');listing=api('runs/'+str(run_id)+'/artifacts?per_page=100',role+'-artifacts.json')
         selection=validate_selection(record,listing,role,sources[role],run_id,artifact_id,args.repository,protocol)
+        if coords and role=='candidate':assert selection['digest']=='sha256:'+protocol['candidate']['sha256'] and selection['size_in_bytes']==protocol['candidate']['bytes']
         if role=='candidate':validate_prepare_jobs(api('runs/'+str(run_id)+'/jobs?per_page=100','candidate-jobs.json'))
         archive=out/(role+'.zip')
         with archive.open('wb') as stream:subprocess.run(['gh','api','repos/'+args.repository+'/actions/artifacts/'+str(artifact_id)+'/zip'],stdout=stream,check=True)
@@ -209,29 +268,30 @@ def execute(args):
         run([python,root/'tools/ci_measurement_artifacts.py','verify','--wheel-dir',prepared/'wheels','--artifact',prepared/'ci-artifacts/measurement.json'],out/(role+'-verify-before'),cwd=root,env=env)
         selections[role]=selection;manifests[role]=manifest;pythons[role]=python
     manifests_equal(manifests['baseline'],manifests['candidate'])
-    def launch(role,family,output,preflight=False):
+    def launch(role,family,output,preflight=False,pass_index=1):
         cmd=[pythons[role],Path(__file__).resolve(),'driver','--contract',CONTRACT,'--source-root',args.snapshots.resolve()/role,'--family',family,'--output',output,'--deadline-utc',args.deadline_utc]
+        if family=='coords-scaled':cmd+=['--role',role,'--pass-index',str(pass_index),'--source-revision',sources[role]]
         if preflight:cmd+=['--preflight']
         assert datetime.now(timezone.utc)<datetime.fromisoformat(args.deadline_utc)
         run(cmd,output.with_suffix('.process'),cwd=args.snapshots.resolve()/role,env=env)
         assert datetime.now(timezone.utc)<datetime.fromisoformat(args.deadline_utc)
     families=protocol.get('families',['region','half','holdouts'])
     for role in ('baseline','candidate'):
-        for family in families:launch(role,family,out/(role+'-'+family+'-preflight.json'),True)
+        for family in families:launch(role,family,out/(role+'-'+family+'-preflight.json'),True,2 if coords and role=='candidate'else 1)
     (out/'all-runtimes-preflight-complete.json').write_text(json.dumps({'roles':2,'first_cohorts':2*len(families),'timed_batches':0})+'\n')
     # No network, installation, builds or tests occur below until all four
     # measurement passes terminate. Raw failures survive upload(always).
     passes=[];identity=[]
-    ids={family:[x['id'] for x in protocol[{'region':'region_cases','scalars':'scalar_cases','half':'half_cases','holdouts':'holdout_cases'}[family]]]for family in families}
+    ids={family:[x['id'] for x in protocol[{'region':'region_cases','scalars':'scalar_cases','half':'half_cases','holdouts':'holdout_cases','coords-scaled':'coords_cases'}[family]]]for family in families}
     for index,role in enumerate(protocol['passes'],1):
         combined={}
         for family in families:
-            output=out/(str(index)+'-'+role+'-'+family+'.json');launch(role,family,output)
+            output=out/(str(index)+'-'+role+'-'+family+'.json');launch(role,family,output,pass_index=index)
             report=load(output);m=report['metadata'];expected=manifests[role]['runtime']['packages_sha256']['skimagexx']
             core=[value for name,value in expected.items() if name.startswith('_core.') and name.endswith('.so')];assert len(core)==1 and m['core_sha256']==core[0]
             assert m['deadline_utc']==args.deadline_utc
             common={k:m[k] for k in ('cpu_model','logical_cpu_count','avx2_available','python','numpy','scipy','reference','method_sha256')}
-            identity.append(common);combined.update(validate_report(report,output.with_suffix('.batches.jsonl'),ids[family]))
+            identity.append(common);combined.update(validate_report(report,output.with_suffix('.batches.jsonl'),ids[family],dict(role=role,pass_index=index,cases=protocol['coords_cases'])if coords else None))
         passes.append(combined)
     assert all(x==identity[0] for x in identity)
     for role in ('baseline','candidate'):
@@ -245,13 +305,16 @@ def main(argv=None):
     global CONTRACT
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
     e=sub.add_parser('execute');e.add_argument('--repository',required=True);e.add_argument('--candidate-source',required=True);e.add_argument('--candidate-run',required=True);e.add_argument('--candidate-artifact',required=True,type=int);e.add_argument('--snapshots',type=Path,required=True);e.add_argument('--results',type=Path,required=True);e.add_argument('--deadline-utc',required=True)
-    d=sub.add_parser('driver');d.add_argument('--source-root',type=Path,required=True);d.add_argument('--family',choices=('region','scalars','half','holdouts'),required=True);d.add_argument('--output',type=Path,required=True);d.add_argument('--deadline-utc',required=True);d.add_argument('--preflight',action='store_true')
+    d=sub.add_parser('driver');d.add_argument('--source-root',type=Path,required=True);d.add_argument('--family',choices=('region','scalars','half','holdouts','coords-scaled'),required=True);d.add_argument('--output',type=Path,required=True);d.add_argument('--deadline-utc',required=True);d.add_argument('--preflight',action='store_true')
+    d.add_argument('--role',choices=('baseline','candidate'));d.add_argument('--pass-index',type=int,choices=range(1,5));d.add_argument('--source-revision')
     e.add_argument('--contract',type=Path,default=CONTRACT);d.add_argument('--contract',type=Path,default=CONTRACT)
     args=p.parse_args(argv);CONTRACT=args.contract.resolve()
     deadline=datetime.fromisoformat(args.deadline_utc)
     assert deadline.utcoffset() is not None and deadline.utcoffset().total_seconds()==0,'deadline must be UTC'
     if args.command=='execute':execute(args)
-    else:driver(args)
+    else:
+        if args.family=='coords-scaled':assert args.role and args.pass_index and re.fullmatch('[0-9a-f]{40}',args.source_revision or'')
+        driver(args)
 
 
 if __name__=='__main__':main()

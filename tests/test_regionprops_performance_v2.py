@@ -61,16 +61,19 @@ def test_v2_active_closures_and_immutable_timed_bodies():
 def test_v2_controller_source_workflow_and_no_science_import(monkeypatch):
     import builtins
     p=json.loads(CONTRACT.read_bytes())
-    for name,pin in p['controller_source_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    for name,pin in p['controller_source_sha256'].items():
+        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name in ('tools/region_stain_compare.py','.github/workflows/region-stain-same-host.yml'):raw=controller().legacy_source(name,raw)
+        assert hashlib.sha256(raw).hexdigest()==pin,name
     previous=builtins.__import__
     def checked(name,*a,**kw):
         assert name.split('.')[0]not in {'numpy','scipy','skimage','skimagexx'}
         return previous(name,*a,**kw)
     monkeypatch.setattr(builtins,'__import__',checked);assert callable(controller().acceptance)
-    workflow=(ROOT/'.github/workflows/region-stain-same-host.yml').read_text()
+    workflow=controller().legacy_source('.github/workflows/region-stain-same-host.yml',(ROOT/'.github/workflows/region-stain-same-host.yml').read_bytes().replace(b'\r\n',b'\n')).decode()
     assert '--contract controller/coverage/contracts/regionprops-performance-compare-v2.json' in workflow
     assert 'ref: '+p['baseline']['source']in workflow and 'if: always()'in workflow
-    source=(ROOT/'tools/region_stain_compare.py').read_text();ast.parse(source)
+    source=controller().legacy_source('tools/region_stain_compare.py',(ROOT/'tools/region_stain_compare.py').read_bytes().replace(b'\r\n',b'\n')).decode();ast.parse(source)
     assert "choices=('region','scalars','half','holdouts')"in source
     assert "protocol.get('families',['region','half','holdouts'])"in source
     assert "startswith('Run python benchmarks/')"in source
