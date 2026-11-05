@@ -7,6 +7,31 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "draw-ellipsoid-reference-v1",
+      "kind": "contract_reference",
+      "owner": "integrator",
+      "branch": "draw-ellipsoid-reference-v1",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "draw.ellipsoid"
+      ],
+      "owns": [
+        "tests/ellipsoid_contract.py",
+        "tests/ellipsoid_observer.py",
+        "tests/test_ellipsoid_reference.py",
+        "coverage/contracts/ellipsoid.json"
+      ],
+      "base_sha": "cdf40a0038c3d35bf6da7661ca94fdb86d6bc11f",
+      "depends_on": [],
+      "acceptance": "Prospective source-safe controller reviewed independently, original-refused intake in both retained profiles, then exactly-once original observations with append-only journal; complete result/dtype/layout/state/errors recorded. First partition only; unassessed domains remain. Terminal closeout result/evidence,waste/reuse,next-plan correction or reviewed/no change before dependent work.",
+      "current_checkpoint": "Prospective963fb7cb with28 bounded IDs;29pass+2saved-reference skips per retainedLinuxprofile, no original/native/timing calls. Handoffbc395c67; B independent review pending while hosted watcher continues. No API/native credit.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Independent prospective source-safety/controller review only, without replay; hosted256gate notification takes priority. Root captures28IDs/profile once only after review."
+      }
+    },
+    {
       "id": "line-nd-native-v1",
       "kind": "implementation",
       "owner": "tiny_line_implementation",
