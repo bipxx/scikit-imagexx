@@ -7,11 +7,74 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "region-stain-comparison-v1",
+      "kind": "benchmark_tooling",
+      "owner": "integrator",
+      "branch": "ci/region-stain-compare-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops",
+        "color.combine_stains"
+      ],
+      "owns": [
+        ".github/workflows/region-stain-same-host.yml",
+        "tools/region_stain_compare.py",
+        "benchmarks/stain_f32_holdouts.py",
+        "tests/test_region_stain_compare.py",
+        "coverage/contracts/region-stain-same-host-v1.json"
+      ],
+      "base_sha": "7ef422845b7ffea1e9c3336614d1c3965a9f8500",
+      "depends_on": [
+        "regionprops-strided-v1",
+        "half-stain-f32-simd-v1"
+      ],
+      "acceptance": "Fixed20cohortABBA1120samples, all12Region <=1.05old andtwoFtargets>=2x; all8stain<=1.05old,stdF32/K7>=1.25x. Actualgenuineinputauth/6CLIpreflight beforetiming, originals normalization andbothpairedpass gates/noaveragewaiver. Terminalcloseout: result/evidence,waste/reuse withobservedcostorunknown,nextowner/triggercorrection (or reviewed,nochange) beforedependentwork. No referencegoldrecapture/newenvironment/full localSDK rebuild or localtimingamidbuilds/tests.",
+      "current_checkpoint": "Controller119eb28b independently reviewed4b220e55; actual35-step prepare guard includes no-repeat timing. Prepared554/run41956997250 authenticated679526e4:189product/89SDK/15949XML;35timings skipped. Tooling published main0c5b4179. No performance samples or KEEP.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Check existing runs, freeze UTC deadline, dispatch controller119 with prepared554/run41956997250/artifact13383644202; six real CLI preflights before isolated20cohort1120sample ABBA. Reuse product; independent root admission and all losses retained."
+      }
+    },
+    {
+      "id": "draw-ellipsoid-shared257-v1",
+      "kind": "implementation",
+      "owner": "integrator",
+      "branch": "integrate/ellipsoid-v1",
+      "state": "validating",
+      "apis": [],
+      "target_apis": [
+        "draw.ellipsoid"
+      ],
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/draw.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json",
+        "tools/public_qualification.py",
+        "tests/cmake_consumer/CMakeLists.txt",
+        ".github/workflows/ci.yml",
+        ".github/workflows/public-qualification.yml"
+      ],
+      "base_sha": "7ef422845b7ffea1e9c3336614d1c3965a9f8500",
+      "depends_on": [
+        "draw-ellipsoid-native-v1",
+        "draw-ellipsoid-frontend-v1"
+      ],
+      "acceptance": "Sourceclosed191product/90SDK/30families60checks/78selectors/257image260functions; fullactualsource-onlybarrier and4untimedactualCLIcohorts, independentcode+workflowreviews, then genuine/wheel/SDK/12case168sample/4profile gates. Terminalcloseout: result/evidence,waste/reuse withobservedcostorunknown,nextowner/triggercorrection (or reviewed,nochange) beforedependentwork. No referencegoldrecapture/newenvironment/full localSDK rebuild or localtimingamidbuilds/tests.",
+      "current_checkpoint": "Exact5a98a9df independent workflow3ac867d4/codebd3ee7c2 PASS. Genuine41959757847 SUCCESS/watchfb78b202: installed input/immutability pass,35old timings skipped, newellipsoid only. Source191product/90SDK/30families60checks/78selectors/257images260functions;2417effective setup=2410unchanged+7affected, not final full replay. Raw admission/full qualification remain open.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Reuse genuine257; authenticate final artifact once and admit12case168sample ellipsoid results separately. Check matching runs then launch one four-profile campaign at exact5a98. Do not wait for unrelated optimization/publication; verify final source projection before shipping."
+      }
+    },
+    {
       "id": "draw-ellipsoid-frontend-v1",
       "kind": "implementation",
       "owner": "next_family_contract",
       "branch": "feature/ellipsoid-frontend-v1",
-      "state": "implementing",
+      "state": "parity_passed",
       "apis": [],
       "target_apis": [
         "draw.ellipsoid"
@@ -36,26 +99,26 @@
         }
       },
       "acceptance": "Savedcomplete28rows/profile:19C++successrecords/9ownedbuiltinboundaryerrors withoriginalproviderdenied; sourceaxis/errororder preserved. Scalar/SIMD,worker1/4/defaultrestore,realCreturn,storage/lifetime/dtype/FP/provider/frontier checks. Unsupportedcustom/nonfinite/nonpositive-spacing domains explicit, notfullcontractclaim. Terminalcloseout result/evidence,waste/reuse,nextowner/trigger beforedependentwork.",
-      "current_checkpoint": "C sourceaudit/implementation active against frozen3f000b6c header; eligible A PIC requiredbeforecomponentexecution. No sharedregistry/CMake edits/newreferencecalls/fullSDKbuild/timing.",
+      "current_checkpoint": "Frontend9ea260components +780c1b6e largebuiltinintcapfix20routingchecks independentlyPASS241e838f. ActualtinyNumPywitness65e provedint64overflow/objectdifferences; originalrows unchanged, hugeints provider-preserved.",
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Implementownedboundary thenreuseeligibleA nativePIC+existingobjects forbothprofile componentproofs; earlyheaderchanges coordinated. SDK/sharedintegration/genuine/performance separate."
+        "owner": "integrator",
+        "action": "Component/reference gates closed and reused in exact5a98 genuine41959757847 SUCCESS. No recapture/reimplementation/repreparation. Root raw-result admission and one same-source four-profile campaign remain; final production projection before shipping."
       }
     },
     {
       "id": "public256-qualification-v1",
       "kind": "qualification",
       "owner": "qualification251_readiness",
-      "state": "validating",
+      "state": "measured",
       "apis": [],
       "owns": [],
       "base_sha": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
       "depends_on": [],
       "acceptance": "All4profiles samefinalfrozen source,actualSDK/currentproduct/corpora/stagers andindependentrootadmission; partialprofile resultnotwholeproduct. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
-      "current_checkpoint": "Run41947826837: Windows126984318425 failedtooling4 rawreportCRLF beforebuild;3Linuxprofiles stillrunning/observed14973. Failedcapsulecoverage/evidence/public256-windows-checkout-failed-v1.json. One-linesuccessor7ef42284 reviewedroot9df5dee5; oldrun notrelabeled.",
+      "current_checkpoint": "TERMINALFAILURE all4profiles41947826837. WindowscheckoutCRLF beforebuild; all3Linuxsame21failures perdispatch (8diagnosticregex/12Regionfloatdtypeexpectation/1realwildcardeagerimport). Compactfullaudit evidence/public256-whole-product-failed-v1.json. Bfix8882635f/root26144416 actual110scopedchecks, zeroCPPchange.",
       "next_gate": {
-        "owner": "qualification251_readiness",
-        "action": "Continueexisting3jobsto terminal, auditallfailedchecks andretainexactevidence. Root thenfreezeone reviewed successorcampaign; no cancels/duplicates/identitywaivers."
+        "owner": "integrator",
+        "action": "Terminalfailed outcome retained; no unchanged rerun. Fixes are composed into5a98 and genuine257 succeeded. Next one same-source257 four-profile campaign after duplicate check; do not relabel256."
       }
     },
     {
@@ -79,10 +142,10 @@
       "base_sha": "eea321b2a334ba51c475d7733ad7547fa24c553b",
       "depends_on": [],
       "acceptance": "Directstridedmask/coords without sourcecache/mutation/order changes;12samehostcontrols allnewlatency<=1.05old and2largeFtargets>=2x. Fix prospective runtimeclosure guard beforegenuineprep; no sourcepin bypass. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
-      "current_checkpoint": "Sealed0b0415bc independentlyreviewed9354a909;3native88records/20722controls each and4public564PASS. Trueportable-scalar successor valid, oldOpenMPflagmiss retained. Sourceclosure/comparisoncontract binding andgenuine/samehosttiming remainopen.",
+      "current_checkpoint": "Sealed0b0415bc independentlyreviewed9354a909;3native88records/20722controls each and4public564PASS. Trueportable-scalar successor valid, oldOpenMPflagmiss retained. Sourceclosure/comparisoncontract binding andgenuine/samehosttiming remainopen. Successor binding/public-core preparation554/run41956997250 authenticated679526e4; comparison unmeasured.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Bindprospectivecontractpath+changedCPPsourceguard withoutbypass, prepareeligibleprivatecandidate andrunfixed12oldCPP/original controls onisolatedhost; no performanceclaimyet."
+        "action": "Reuse prepared554 with reviewed controller119; six real CLI preflights then fixed20cohortABBA1120samples before acceptance. Keep all baseline losses and unchanged holdouts."
       }
     },
     {
@@ -104,10 +167,10 @@
       "base_sha": "eea321b2a334ba51c475d7733ad7547fa24c553b",
       "depends_on": [],
       "acceptance": "Fixed8cohort samehostoldCPP/originalcontrols: all4half+4legacy <=1.05oldlatency; standardf32/K7 >=1.25x oldCPP. Existingnumeric/FP/domain policy unchanged. Realpubliccandidate/consumer proofs requiredbeforetiming. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
-      "current_checkpoint": "Nativea99f9c65 independentlyPASS65c69b50;143proofs/7originalrows/8modes authenticated. Publiccandidatecore/performance unmeasured; oldf64loss remains.",
+      "current_checkpoint": "Nativea99f9c65 independentlyPASS65c69b50;143proofs/7originalrows/8modes authenticated. Publiccandidatecore/performance unmeasured; oldf64loss remains. Successor binding/public-core preparation554/run41956997250 authenticated679526e4; comparison unmeasured.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Private public-core successor/relink plusaffectedstain dtype/axis/metadata/provider checks before8cohortmeasurement. No rebrandunchangedcore or gainclaim."
+        "action": "Reuse prepared554 with reviewed controller119; six real CLI preflights then fixed20cohortABBA1120samples before acceptance. Keep all baseline losses and unchanged holdouts."
       }
     },
     {
@@ -115,7 +178,7 @@
       "kind": "implementation",
       "owner": "tiny_line_implementation",
       "branch": "feature/ellipsoid-native-v1",
-      "state": "implementing",
+      "state": "parity_passed",
       "apis": [],
       "target_apis": [
         "draw.ellipsoid"
@@ -136,10 +199,10 @@
         }
       },
       "acceptance": "Own gridcount/coordinate generation/f64division-square-leftassociation andbool/levelset output. Typedheader frozen early; all19savedoutputs/profile exact, scalar/SIMD,globalbudget1/4/default1 andboundedlarge analyticholdout. Pythonprotocol/error/storageboundary separate; nofixturebranches. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
-      "current_checkpoint": "Typedheader3f000b6c frozen; A nativegrid/arange/coordinate implementation active, Cfrontendparallel againstsameinterface. Originalcaptures retainedoutside retiredreferenceWT.",
+      "current_checkpoint": "Native860+MSVCb9bed8c7 independentlyPASS74173b53;38savedarrays exact,3modes1203495controls each, actualGNU-EPunchanged/MSVCcompile. Typedheader3funchanged; no sourcegoldreplay.",
       "next_gate": {
-        "owner": "tiny_line_implementation",
-        "action": "Freeze typed interface and admissible domain, then affectednative TU/SDKarchive reuse proofs. No originalcalls or localtiming."
+        "owner": "integrator",
+        "action": "Component/reference gates closed and reused in exact5a98 genuine41959757847 SUCCESS. No recapture/reimplementation/repreparation. Root raw-result admission and one same-source four-profile campaign remain; final production projection before shipping."
       },
       "provided_interfaces": {
         "typed-core-v1": {
@@ -171,8 +234,8 @@
       "acceptance": "Prospective source-safe controller reviewed independently, original-refused intake in both retained profiles, then exactly-once original observations with append-only journal; complete result/dtype/layout/state/errors recorded. First partition only; unassessed domains remain. Terminal closeout result/evidence,waste/reuse,next-plan correction or reviewed/no change before dependent work.",
       "current_checkpoint": "Captured and independently reviewedf046c677:28IDs/profile,56once-onlycalls,19returns/9errors each;38returnedarrays verified and28complete rows equal acrossretainedprofiles. Capturereviewa272c867; referencesonly mergedmain46fcd6bf. No nativecoverage.",
       "next_gate": {
-        "owner": "tiny_line_implementation",
-        "action": "Freeze source-faithful mgrid/arange typedinterface, then bounded nativecorrectness/SIMD/worker proofs; reusealloriginals, no recapture."
+        "owner": "integrator",
+        "action": "Component/reference gates closed and reused in exact5a98 genuine41959757847 SUCCESS. No recapture/reimplementation/repreparation. Root raw-result admission and one same-source four-profile campaign remain; final production projection before shipping."
       },
       "proofs": {
         "contract_reference": {
@@ -229,7 +292,7 @@
       "current_checkpoint": "Corrected native95f5c84 includes explicit legacy/weak scalar promotion. Independent review7facd32b passes; six modes184records/586331controls each. GCC arithmetic SIMD remains a declared gap; no speed claim. Initial typed-core-v1 definition is historical; corrected header at4cd652de includes LineNDScalarPromotion and is the integrated interface at7266ba32.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Exact7266 genuine minimum and12/12 ND initial comparisons admitted, evidence/current256-minimum-initial-performance-v1.json. Reuse components/originals/timings. Next actual4profile41947826837 admission and reviewed final shipping source projection; no duplicate dispatch."
+        "action": "Exact7266 genuine minimum and12ND comparisons admitted; reuse all components/originals/timings. Full256 failed all4profiles, audit retained. Next qualify cumulative257 at5a98 once, preserving scope and final shipping projection; no duplicate ND measurements."
       }
     },
     {
@@ -265,7 +328,7 @@
       "current_checkpoint": "Frontend99183baf passes484 component nodes and440 complete observer equalities; independent reviewfb655dff passes. Actual once-import scalar capability and native-return/storage/FP witnesses retained.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Exact7266 genuine minimum and12/12 ND initial comparisons admitted, evidence/current256-minimum-initial-performance-v1.json. Reuse components/originals/timings. Next actual4profile41947826837 admission and reviewed final shipping source projection; no duplicate dispatch."
+        "action": "Exact7266 genuine minimum and12ND comparisons admitted; reuse all components/originals/timings. Full256 failed all4profiles, audit retained. Next qualify cumulative257 at5a98 once, preserving scope and final shipping projection; no duplicate ND measurements."
       }
     },
     {
@@ -288,10 +351,10 @@
         "draw-line-nd-reference-v1"
       ],
       "acceptance": "Terminal closeout records result/source/evidence, avoidable waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work. No original recapture, full local SDK rebuild or hidden provider credit.",
-      "current_checkpoint": "Prospective benchmarkbac68670 independently reviewedbb3edeca;12cases/168samples. Integrated dedicated/generic four CLI cohorts closed. No lineND timings yet.",
+      "current_checkpoint": "Exact7266/run41946801050 admitted:12/12 one-worker wins, GM2.547376061x/168samples; coverage/evidence/current256-minimum-initial-performance-v1.json. Full256 campaign failed; no timing replay.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Exact7266 genuine minimum and12/12 ND initial comparisons admitted, evidence/current256-minimum-initial-performance-v1.json. Reuse components/originals/timings. Next actual4profile41947826837 admission and reviewed final shipping source projection; no duplicate dispatch."
+        "action": "Exact7266 genuine minimum and12ND comparisons admitted; reuse all components/originals/timings. Full256 failed all4profiles, audit retained. Next qualify cumulative257 at5a98 once, preserving scope and final shipping projection; no duplicate ND measurements."
       }
     },
     {
@@ -321,7 +384,7 @@
       "current_checkpoint": "SDKac159cbe corrected installed89-file client passes524772controls in each normal/scalar mode; independent root review550b8330 passes. Genuine four-profileSDK29 still pending.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Exact7266 genuine minimum and12/12 ND initial comparisons admitted, evidence/current256-minimum-initial-performance-v1.json. Reuse components/originals/timings. Next actual4profile41947826837 admission and reviewed final shipping source projection; no duplicate dispatch."
+        "action": "Exact7266 genuine minimum and12ND comparisons admitted; reuse all components/originals/timings. Full256 failed all4profiles, audit retained. Next qualify cumulative257 at5a98 once, preserving scope and final shipping projection; no duplicate ND measurements."
       }
     },
     {
@@ -345,7 +408,7 @@
       "current_checkpoint": "Corrected primary54-case/profile reference mergedmain e0f84a05;108 once-only observations retained. Separate actual NumPy-promotion holdout58fe50cc preserves version-dependent outputs without rewriting original matrix.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Exact7266 genuine minimum and12/12 ND initial comparisons admitted, evidence/current256-minimum-initial-performance-v1.json. Reuse components/originals/timings. Next actual4profile41947826837 admission and reviewed final shipping source projection; no duplicate dispatch."
+        "action": "Exact7266 genuine minimum and12ND comparisons admitted; reuse all components/originals/timings. Full256 failed all4profiles, audit retained. Next qualify cumulative257 at5a98 once, preserving scope and final shipping projection; no duplicate ND measurements."
       },
       "proofs": {
         "contract_reference": {
@@ -395,7 +458,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -439,7 +502,7 @@
       "current_checkpoint": "Independent native reviewe2cf9101 PASS:91 proofs;800 saved records/2400 layouts,0ULP. No replay or new original calls. Frontend/SDK/genuine product gates separate.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -471,7 +534,7 @@
       "current_checkpoint": "Frontend review b48bdd44 complete:444 useful passes,384 saved comparisons/328 native witnesses/56 errors; default96 checks complete. Bytearray-owner failure stays retained; external-buffer shape compatibility remains open. Three CLI cohorts complete, five routes across candidate families remain unexecuted.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -501,7 +564,7 @@
       "current_checkpoint": "Independent SDK review7c781765 complete; assembled SDK88 component437 controls per mode reuse the reviewed native leaf. Genuine installed product/SDK evidence remains open.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -525,7 +588,7 @@
       "current_checkpoint": "Finite-half reference, frontend204 checks and benchmark plan are independently reviewed. Original3xK semantics and legacy kernels remain unchanged. Nonfinite/extreme/FP-callback and broader provider partitions remain open.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -550,7 +613,7 @@
       "acceptance": "Finite native-endian float16 plain arrays/three input channels; prospective12 bounded cases formatrix/axis/layout/metadata domains, exact observed dtype/storage/state and existing numerical policy. Every original ID must pass refused-original controller intake first; capture safe observations once per retained runtime. No other stainAPI change. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       },
       "current_checkpoint": "Reference review650d46cd and frontend reviewd9bd81a7 complete;204 scoped passes retained. Context-only fix8c60955e repairs historical pin handling with one metadata node passing, unchanged original matrix/24 gold observations.",
       "proofs": {
@@ -597,7 +660,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -634,7 +697,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -939,7 +1002,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification uses reviewed257 at5a98 after successful genuine preparation; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -17697,7 +17760,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -17719,7 +17782,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -26706,7 +26769,7 @@
             "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
             "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
           },
-          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs×7paired rounds×3profiles; one worker, all regressions retained."
+          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs\u00d77paired rounds\u00d73profiles; one worker, all regressions retained."
         }
       }
     },
@@ -31994,7 +32057,7 @@
           },
           "native_contract_checks": 184,
           "native_pending": 0,
-          "scope": "184 actual installed C++SDK consumer tests:23families×normal/scalar×4profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
+          "scope": "184 actual installed C++SDK consumer tests:23families\u00d7normal/scalar\u00d74profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
         }
       }
     },
@@ -35157,7 +35220,7 @@
           "acceptance_pass": false
         }
       },
-      "native_check_unit": "946 case/worker combinations per mode×6=5676;25,836 grouped assertions each mode, not independent-case credit.",
+      "native_check_unit": "946 case/worker combinations per mode\u00d76=5676;25,836 grouped assertions each mode, not independent-case credit.",
       "genuine_preparation": {
         "status": "verified_private_prepare_only",
         "run": 40790763016,
@@ -36524,9 +36587,9 @@
       "next_family_contract": []
     },
     "current_three_agent_packets": {
-      "tiny_line_implementation": "draw-ellipsoid-native-v1",
-      "qualification251_readiness": "public256-qualification-v1",
-      "next_family_contract": "draw-ellipsoid-frontend-v1"
+      "tiny_line_implementation": "draw-ellipsoid-shared257-v1",
+      "qualification251_readiness": "draw-ellipsoid-shared257-v1",
+      "next_family_contract": "draw-ellipsoid-shared257-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -36907,7 +36970,7 @@
         "publication": "coverage/evidence/regionprops-state-minimum-preparation-failed-v1.json"
       }
     },
-    "assignment_note": "2026-11-04: failed genuine25541927959780 preserved; corrected18b metadata/source-closure checks13PASS per retained interpreter, nextone genuine successor pending. Aindependentbenchmarkreview after nativehandoff, Bfrontend, CSDK after prospectivebenchmarkhandoff; root shared integration/measurement and independent reviews. Setupdedup162bbe0c merged/pushed and cleanWT retired; blockedtmp retained.",
+    "assignment_note": "Current planning assignments are closed; reconcile live roster before starting next work with followup_task. Root owns source admission/delivery; one named owner owns shared integration. Historical assignments elsewhere are provenance, not dispatch instructions.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -36920,11 +36983,11 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Implement draw-ellipsoid-native-v1 fromreviewedreferences; freezegridsemantics/headerfirst. Regioncandidate sealed.",
-      "qualification251_readiness": "Observeold41947826837 remaining3profiles; EOLsuccessorone-linefix independentlyreviewed9df5dee5.",
-      "next_family_contract": "Ellipsoidfrontendimplementation against3f000b6c; Regionreviewclosed9354a909. Stain/Regiongenuine/performance remainrootnextgates."
+      "tiny_line_implementation": "Plan review complete; ellipse-perimeter prospectivef07d5311 ready for independent safety review before capture/native work.",
+      "qualification251_readiness": "Plan/current gates review complete; next assigned257 qualification watch or prospective review, not a live job claim.",
+      "next_family_contract": "Plan route review complete; controller119 peer4b220 closed; next assigned comparison watch after root dispatch, no self-acceptance."
     },
-    "next_action": "Finishallold41947826837 profiles/auditfailures, thenone exactreviewed256EOLsuccessor4profilecampaign. KeepadmittedND7266timings scoped/reused. C reviewsRegion; A implementsellipsoidnative; root stagesrealpublicoptimizationcore/guardclosure afterpeerreviews.",
+    "next_action": "Reuse successful257 genuine41959757847 at5a98: root final raw admission and one same-source4profile campaign after checking existing runs. Separately reuse prepared554/run419569/artifact13383644202 with reviewed controller119/peer4b220; freeze deadline,6realpreflights then isolated1120samples. NextAPI independent prospective ellipse-perimeter safety review before any capture. Per-task waste review updates affected next action before dependent work.",
     "current_checkpoint": {
       "main_image_names": 253,
       "qualified_image_names": 252,
@@ -36932,7 +36995,7 @@
       "prepared_run": 41938456869,
       "candidate_source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
       "candidate_image_names": 256,
-      "candidate_status": "Genuine256 minimum and12ND initial cases admitted; full4profile41947826837 running. Not whole-product qualified or shipped.",
+      "candidate_status": "Exact7266 genuine minimum/12ND cases admitted; full41947826837 terminalFAILED all4profiles. Preserved historical scope, not whole-qualified or shipped.",
       "performance_evidence": "coverage/evidence/current255-minimum-initial-performance-v1.json",
       "readiness_reviews": [
         {
@@ -36948,7 +37011,15 @@
       "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41946801050",
       "candidate_qualification_run": 41947826837,
       "candidate_evidence": "coverage/evidence/current256-minimum-initial-performance-v1.json",
-      "candidate_qualification_status": "Windowsfailedsource-onlyCRLF beforebuild;other3oldprofilesrunning. Reviewedone-linesuccessor7ef422845b7ffea1e9c3336614d1c3965a9f8500 ready pendingremainingterminalaudits."
+      "candidate_qualification_status": "All4FAILED41947826837; retained audit coverage/evidence/public256-whole-product-failed-v1.json. Checkout+shared assertion/provider fixes reviewed and composed into257; do not repeat old campaign.",
+      "next_release_source": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "next_release_expected_images": 257,
+      "next_release_expected_product": 191,
+      "next_release_expected_SDK": 90,
+      "optimization_prepare_source": "55465253ea03d5239a4a1d3b499ea236ebf948c1",
+      "optimization_prepare_run": 41956997250,
+      "optimization_prepare_status": "Authenticated189/89 product679526e4,15949XML/13deps exactEEA;35timings skipped. Corrected controller119 peer4b220 closed, published main0c5b. Reuse product for6realpreflights and fixedABBA; no samples or KEEP yet.",
+      "next_release_status": "Exact5a98 genuine41959757847 SUCCESS, installed-input/immutability and new timing command pass; raw results not yet independently admitted; same-source4profile campaign next after duplicate check."
     }
   },
   "parallel_review": {
