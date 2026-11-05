@@ -7,6 +7,42 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "draw-ellipsoid-frontend-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "branch": "feature/ellipsoid-frontend-v1",
+      "state": "implementing",
+      "apis": [],
+      "target_apis": [
+        "draw.ellipsoid"
+      ],
+      "owns": [
+        "src/bind_draw_ellipsoid.cpp",
+        "python/skimagexx/_draw_ellipsoid.py",
+        "tests/test_draw_ellipsoid_public.py",
+        "coverage/contracts/ellipsoid-frontend-v1.json"
+      ],
+      "base_sha": "f046c677bcab248be0222cce63647b5daff625d7",
+      "depends_on": [
+        "draw-ellipsoid-reference-v1",
+        "draw-ellipsoid-native-v1"
+      ],
+      "dependency_requirements": {
+        "draw-ellipsoid-reference-v1": {
+          "evidence_scope": "contract_reference"
+        },
+        "draw-ellipsoid-native-v1": {
+          "interface": "typed-core-v1"
+        }
+      },
+      "acceptance": "Savedcomplete28rows/profile:19C++successrecords/9ownedbuiltinboundaryerrors withoriginalproviderdenied; sourceaxis/errororder preserved. Scalar/SIMD,worker1/4/defaultrestore,realCreturn,storage/lifetime/dtype/FP/provider/frontier checks. Unsupportedcustom/nonfinite/nonpositive-spacing domains explicit, notfullcontractclaim. Terminalcloseout result/evidence,waste/reuse,nextowner/trigger beforedependentwork.",
+      "current_checkpoint": "C sourceaudit/implementation active against frozen3f000b6c header; eligible A PIC requiredbeforecomponentexecution. No sharedregistry/CMake edits/newreferencecalls/fullSDKbuild/timing.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Implementownedboundary thenreuseeligibleA nativePIC+existingobjects forbothprofile componentproofs; earlyheaderchanges coordinated. SDK/sharedintegration/genuine/performance separate."
+      }
+    },
+    {
       "id": "public256-qualification-v1",
       "kind": "qualification",
       "owner": "qualification251_readiness",
@@ -43,10 +79,10 @@
       "base_sha": "eea321b2a334ba51c475d7733ad7547fa24c553b",
       "depends_on": [],
       "acceptance": "Directstridedmask/coords without sourcecache/mutation/order changes;12samehostcontrols allnewlatency<=1.05old and2largeFtargets>=2x. Fix prospective runtimeclosure guard beforegenuineprep; no sourcepin bypass. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
-      "current_checkpoint": "Sealed0b0415bc,3native modes88records/20722controls and4publiccomponentmodes564PASS. Initialcompiler-scalar flagmiss retained; trueportable-scalar successor replacesclaim. C independentreview active; no timings.",
+      "current_checkpoint": "Sealed0b0415bc independentlyreviewed9354a909;3native88records/20722controls each and4public564PASS. Trueportable-scalar successor valid, oldOpenMPflagmiss retained. Sourceclosure/comparisoncontract binding andgenuine/samehosttiming remainopen.",
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Review sealednewsource/proofs/comparisonroute independently; preserve oldsourceguard andbind newprospectiveclosure beforepreparation."
+        "owner": "integrator",
+        "action": "Bindprospectivecontractpath+changedCPPsourceguard withoutbypass, prepareeligibleprivatecandidate andrunfixed12oldCPP/original controls onisolatedhost; no performanceclaimyet."
       }
     },
     {
@@ -78,7 +114,7 @@
       "id": "draw-ellipsoid-native-v1",
       "kind": "implementation",
       "owner": "tiny_line_implementation",
-      "branch": "feature/draw-ellipsoid-native-v1",
+      "branch": "feature/ellipsoid-native-v1",
       "state": "implementing",
       "apis": [],
       "target_apis": [
@@ -100,10 +136,18 @@
         }
       },
       "acceptance": "Own gridcount/coordinate generation/f64division-square-leftassociation andbool/levelset output. Typedheader frozen early; all19savedoutputs/profile exact, scalar/SIMD,globalbudget1/4/default1 andboundedlarge analyticholdout. Pythonprotocol/error/storageboundary separate; nofixturebranches. Each terminal packet records result/evidence, waste/reuse with observed cost or unknown and next owner/trigger correction (or reviewed,no change), before dependent work. No original recapture/full local SDK build/new environment or timing alongside builds/tests.",
-      "current_checkpoint": "A dispatched after actualcaptureindependentreview; mgrid/arange gridsemantics sourceaudit precedes header/implementation.",
+      "current_checkpoint": "Typedheader3f000b6c frozen; A nativegrid/arange/coordinate implementation active, Cfrontendparallel againstsameinterface. Originalcaptures retainedoutside retiredreferenceWT.",
       "next_gate": {
         "owner": "tiny_line_implementation",
         "action": "Freeze typed interface and admissible domain, then affectednative TU/SDKarchive reuse proofs. No originalcalls or localtiming."
+      },
+      "provided_interfaces": {
+        "typed-core-v1": {
+          "state": "frozen",
+          "source_sha": "3f000b6c930a20cf6921c205d06e600ca10a2798",
+          "definition": "#pragma once\n#include <array>\n#include <cstddef>\n#include <cstdint>\n#include <vector>\n\nnamespace skimagexx::detail {\nconstexpr std::size_t ellipsoid_max_elements = 16*1024*1024;\nstruct DrawEllipsoidPlan {\n    std::array<std::size_t,3> shape{};\n    std::size_t count = 0;\n    std::array<double,3> axes{},spacing{},low{},high{};\n    // Owned source-ordered ((index*spacing + low)/axis)^2, independently\n    // reusable across voxels. No borrowed operands/dense coordinate grids.\n    std::array<std::vector<double>,3> squared;\n};\n// Native scalar boundary: three finite positive double axes/spacings in\n// [2^-128,2^128], ordinary nearest rounding; count<=ellipsoid_max_elements.\n// Refusal leaves plan unchanged; Python scalar/protocol/error/truth and FP\n// policy handling are separate frontend gates. Prepared shape may be EVEN.\n// Stages: ceil(-axis-spacing), floor((axis+spacing)+1), parity low shift;\n// exact arange probe with second=(low+spacing), effective_step=second-low;\n// zero-missing correction from maximum negative probe value; mgrid uses the\n// NOMINAL spacing, not the probe's effective step, and fresh ceil shape.\nbool draw_ellipsoid_prepare(const std::array<double,3>& axes,\n    const std::array<double,3>& spacing,DrawEllipsoidPlan& output);\n// Caller owns aligned/disjoint contiguous C output of plan.count elements.\n// Bool is canonical uint8 0/1. Per voxel: (x_square+y_square)+z_square, then\n// <=1 for bool OR subtract1 for levelset, no reassociation/FMA. The caller\n// snapshots the existing global budget once (global default1); independent\n// row spans optionally parallelize only past existing execution threshold.\nvoid draw_ellipsoid_bool_into(const DrawEllipsoidPlan&,std::uint8_t*,int workers);\nvoid draw_ellipsoid_levelset_into(const DrawEllipsoidPlan&,double*,int workers);\n}\n",
+          "sha256": "b870303427f509cb1016ced6a75bea6c47bbc64e6a8154e669bf3e8240a150b5"
+        }
       }
     },
     {
@@ -36482,7 +36526,7 @@
     "current_three_agent_packets": {
       "tiny_line_implementation": "draw-ellipsoid-native-v1",
       "qualification251_readiness": "public256-qualification-v1",
-      "next_family_contract": "regionprops-strided-v1"
+      "next_family_contract": "draw-ellipsoid-frontend-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -36878,7 +36922,7 @@
     "current_review_assignments": {
       "tiny_line_implementation": "Implement draw-ellipsoid-native-v1 fromreviewedreferences; freezegridsemantics/headerfirst. Regioncandidate sealed.",
       "qualification251_readiness": "Observeold41947826837 remaining3profiles; EOLsuccessorone-linefix independentlyreviewed9df5dee5.",
-      "next_family_contract": "Independent Regionstridedcandidate review; ellipsoidactualcapture reviewcloseda272c867 andstainnative65c69b50 closed."
+      "next_family_contract": "Ellipsoidfrontendimplementation against3f000b6c; Regionreviewclosed9354a909. Stain/Regiongenuine/performance remainrootnextgates."
     },
     "next_action": "Finishallold41947826837 profiles/auditfailures, thenone exactreviewed256EOLsuccessor4profilecampaign. KeepadmittedND7266timings scoped/reused. C reviewsRegion; A implementsellipsoidnative; root stagesrealpublicoptimizationcore/guardclosure afterpeerreviews.",
     "current_checkpoint": {
@@ -37762,5 +37806,10 @@
       "build/worktrees/subdivide-polygon-frontend-v1/build": "build/subdivide-polygon-frontend-v1-private-v1",
       "build/worktrees/subdivide-polygon-shared-v1/build": "build/subdivide-polygon-shared-v1-private-v1"
     }
+  },
+  "ellipsoid_reference_retirement": {
+    "path": "build/draw-ellipsoid-reference-v1/source-retirement-v1.json",
+    "sha256": "97740c40b3af72403f8ba5d7c726ac34ed117c275aa2466d4db74cc12acc0c23",
+    "scope": "Cleanmergedf046sourceWTremovedwith11obsoleteignoredtestcachefiles/117349logicalbytes afterA/Creaderrelease. Proofs/journals outsideWT preserved;4sourcefiles main/Git, no frozenreceipt rewrites."
   }
 }
