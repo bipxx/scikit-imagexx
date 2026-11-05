@@ -152,6 +152,8 @@ def test_certificate_raw_hash_and_size_precede_parsing(tmp_path, monkeypatch):
 def test_failed_after_blocks_before_fixture_import(tmp_path, monkeypatch, experiment):
     experiment['root_after_admission'] = None
     path = tmp_path/'experiment.json'; path.write_text(json.dumps(experiment), encoding='utf-8')
+    # This synthetic unit starts after execution-context authentication.
+    monkeypatch.setattr(a, 'authenticate_dependencies', lambda: None)
     monkeypatch.setattr(a, 'verify_controller_checkout', lambda _: None)
     monkeypatch.setattr(t, 'factory', lambda *_: pytest.fail('fixture import before admission'))
     with pytest.raises(RuntimeError, match='AFTER'):
@@ -270,10 +272,55 @@ def test_child_environment_inverse_preserves_transport_and_claims():
 def test_optimized_python_rejected_before_inherited_guards():
     env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
     result = subprocess.run([sys.executable, '-B', '-O', '-c',
-        "import sys;sys.path.insert(0,sys.argv[1]);import tools.tv_positive_zero_artifacts", str(ROOT)],
+        "import sys;sys.path.insert(0,sys.argv[1]);from tools import tv_positive_zero_artifacts as a;a.load_experiment(None,None)", str(ROOT)],
         capture_output=True, text=True, env=env)
     assert result.returncode != 0 and 'optimized Python cannot execute comparison guards' in result.stderr
     assert 'numpy' not in result.stdout
+
+
+def test_metadata_import_does_not_read_execution_dependencies(monkeypatch):
+    original = Path.read_bytes
+    target = ROOT / 'tools/rank_statistics_products.py'
+
+    def read(path):
+        if path == target:
+            pytest.fail('execution dependency read during metadata import')
+        return original(path)
+
+    monkeypatch.setattr(Path, 'read_bytes', read)
+    module = load('_tv_zero_import_boundary_metadata', 'tools/tv_positive_zero_artifacts.py')
+    assert module.PLAN_SHA256 == a.PLAN_SHA256
+
+
+@pytest.mark.parametrize('fault', ('changed', 'missing'))
+def test_execution_dependency_pins_stay_strict(monkeypatch, fault):
+    target = 'tools/rank_statistics_products.py'
+
+    def text_sha(path):
+        name = path.relative_to(ROOT).as_posix()
+        if name == target:
+            if fault == 'missing':
+                raise FileNotFoundError(target)
+            return '0'*64
+        return a.PLAN['dependency_pins'][name]['canonical_lf_sha256']
+
+    monkeypatch.setattr(a, 'text_sha', text_sha)
+    error = FileNotFoundError if fault == 'missing' else RuntimeError
+    with pytest.raises(error, match=target):
+        a.authenticate_dependencies()
+
+
+def test_execution_dependencies_precede_checkout_and_fixture(tmp_path, monkeypatch):
+    path = tmp_path/'experiment.json'; path.write_text('{}')
+
+    def deny():
+        raise RuntimeError('frozen execution dependency rejected')
+
+    monkeypatch.setattr(a, 'authenticate_dependencies', deny)
+    monkeypatch.setattr(a, 'verify_controller_checkout', lambda _: pytest.fail('checkout before dependency authentication'))
+    monkeypatch.setattr(a, 'validate_experiment', lambda *_: pytest.fail('experiment/fixture before dependency authentication'))
+    with pytest.raises(RuntimeError, match='frozen execution dependency rejected'):
+        a.load_experiment(path, a.sha(path), 'c'*40)
 
 
 def test_new_controller_exact_byte_attributes_and_no_scientific_imports():
