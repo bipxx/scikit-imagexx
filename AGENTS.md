@@ -1,3 +1,10 @@
+# Applying these instructions
+
+- At task entry and before editing a new area, read the applicable `AGENTS.md` instructions, including any more specific instructions in that area. Treat them as execution requirements; resolve conflicts using instruction priority and the user's current scope.
+- Put the relevant requirements into the existing task's acceptance criteria and handoff. When delegating, give the worker its file ownership, applicable rules and required evidence; require its closeout to identify any unmet requirement. Do not create a second checklist or reporting system.
+- Before a dependent action, verify its actual prerequisites from source, retained evidence and live handles. If a rule was missed or a required check failed, stop dependent actions, correct the affected work and rerun only invalidated checks. Preserve the failure and explain any material effect to the user; do not silently waive a requirement or claim completion.
+- Before commit, merge, push or task closeout, check the applicable requirements against the actual diff and evidence. Report the concrete result, validation and remaining gates. Documentation-only tasks require document checks; they do not authorize implementation or expensive scientific reruns.
+
 # Repository workflow
 
 - Merge and push validated, reviewable increments back to `main` promptly; do not accumulate completed feature work in worktrees.
