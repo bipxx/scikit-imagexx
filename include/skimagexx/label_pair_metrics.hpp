@@ -1,0 +1,53 @@
+#pragma once
+#include <cstddef>
+#include <cstdint>
+#include <vector>
+
+namespace skimagexx::detail {
+inline constexpr std::size_t label_pair_max_samples=std::size_t{1}<<20;
+inline constexpr std::int64_t label_pair_max_label=(std::int64_t{1}<<20)-1;
+
+// One boundary supplies stable, native aligned int64 buffers in logical C
+// order. Original reshape/conversion/protocol/shape-error order is a frontend
+// responsibility. Different image shapes with equal flattened size are valid
+// for contingency_table, while the two metric APIs check shape first.
+struct LabelPairInput {
+    const std::int64_t* truth=nullptr;
+    const std::int64_t* test=nullptr;
+    std::size_t count=0;
+    const std::int64_t* ignored_truth_labels=nullptr;
+    std::size_t ignored_count=0;
+    bool normalize=false;
+};
+
+// Logical CSR values, not a SciPy class/storage ABI. Unique row/column pairs
+// are sorted lexicographically. Ignored truth labels retain explicit zero
+// entries; both shape maxima include ignored positions. Normalization divides
+// each source pixel weight BEFORE duplicate coalescing, never integer_count/N.
+// Fresh vectors own their storage and do not alias input. Initial public CSR
+// class/index-width/storage packaging remains an explicit SciPy provider until
+// original observations establish its exact profile-dependent metadata.
+struct LabelPairCsr {
+    std::size_t rows=0,columns=0,total_samples=0,kept_samples=0;
+    std::vector<std::int64_t> indptr,indices;
+    std::vector<double> data;
+    // SDK-local IEEE status: invalid1/divide2/overflow4/underflow8.
+    // Delivery through NumPy policy/callback/warning hooks is frontend work.
+    unsigned normalization_fp_status=0;
+};
+
+// Declaration-only prospective interface. Refuse count0, excessive sizes,
+// negative/out-of-bound coordinates or malformed typed spans without changing
+// output. First finite partition: count<=2^20, labels in[0,2^20-1], at most64
+// ignored labels. Normalization requires nearest/gradual-underflow environment
+// and restores caller FP state; unnormalized integer counts need no FP change.
+// workers0 snapshots the existing global budget once (default1); an already
+// captured positive budget is used directly. Ordered pair aggregation remains
+// serial; only applicable independent preparation/fill spans may parallelize.
+bool label_pair_counts(const LabelPairInput&,LabelPairCsr&,int workers=0);
+
+// No generic sparse engine or native reduction/log claim in this first freeze.
+// Adapted Rand dot/scalar stages and VI sparse products/log2/reductions remain
+// explicit unclosed ownership gates. Captured CSR/FP/order facts are required
+// before a successor introduces their typed interfaces or advertises ownership.
+}

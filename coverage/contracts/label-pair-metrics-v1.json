@@ -1,0 +1,840 @@
+{
+  "schema": "label-pair-metrics-v1",
+  "status": "PROSPECTIVE_PRECAPTURE_NOT_NATIVE_PARITY",
+  "apis": [
+    "metrics.contingency_table",
+    "metrics.adapted_rand_error",
+    "metrics.variation_of_information"
+  ],
+  "reference_version": "0.26.0",
+  "cases": [
+    {
+      "id": "contingency_table/duplicates",
+      "api": "metrics.contingency_table",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {}
+    },
+    {
+      "id": "contingency_table/normalize-ignore",
+      "api": "metrics.contingency_table",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "policy": {},
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "sparse_type": "array"
+    },
+    {
+      "id": "contingency_table/allignored-normalize",
+      "api": "metrics.contingency_table",
+      "truth": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {
+        "all": "call"
+      },
+      "ignore": [
+        1
+      ],
+      "normalize": true
+    },
+    {
+      "id": "contingency_table/unequal-shapes-flat-match",
+      "api": "metrics.contingency_table",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        3,
+        2
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {}
+    },
+    {
+      "id": "contingency_table/readonly-reversed",
+      "api": "metrics.contingency_table",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "reverse-readonly",
+      "policy": {}
+    },
+    {
+      "id": "contingency_table/empty",
+      "api": "metrics.contingency_table",
+      "truth": [],
+      "test": [],
+      "shape": [
+        0,
+        2
+      ],
+      "test_shape": [
+        0,
+        2
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {}
+    },
+    {
+      "id": "contingency_table/negative",
+      "api": "metrics.contingency_table",
+      "truth": [
+        -1,
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {}
+    },
+    {
+      "id": "contingency_table/bad-sparse-type",
+      "api": "metrics.contingency_table",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "sparse_type": "coo"
+    },
+    {
+      "id": "adapted_rand_error/perfect",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "policy": {}
+    },
+    {
+      "id": "adapted_rand_error/split-alpha0",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "test": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "alpha": 0.0,
+      "ignore": []
+    },
+    {
+      "id": "adapted_rand_error/merge-alpha1",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "test": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "alpha": 1.0,
+      "ignore": []
+    },
+    {
+      "id": "adapted_rand_error/quarter-alpha",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "uint64",
+      "layout": "gapped",
+      "policy": {},
+      "alpha": 0.25
+    },
+    {
+      "id": "adapted_rand_error/singleton",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        1
+      ],
+      "test": [
+        1
+      ],
+      "shape": [
+        1
+      ],
+      "test_shape": [
+        1
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {
+        "all": "call"
+      }
+    },
+    {
+      "id": "adapted_rand_error/table-array",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "table": "counts-array"
+    },
+    {
+      "id": "adapted_rand_error/table-matrix",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "table": "counts-matrix"
+    },
+    {
+      "id": "adapted_rand_error/bad-alpha",
+      "api": "metrics.adapted_rand_error",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "alpha": -0.1
+    },
+    {
+      "id": "variation_of_information/perfect",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "policy": {}
+    },
+    {
+      "id": "variation_of_information/split",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "test": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {}
+    },
+    {
+      "id": "variation_of_information/merge-F",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "test": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "policy": {}
+    },
+    {
+      "id": "variation_of_information/ignore",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "gapped",
+      "policy": {},
+      "ignore": [
+        0
+      ]
+    },
+    {
+      "id": "variation_of_information/allignored",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {
+        "all": "call"
+      },
+      "ignore": [
+        1
+      ]
+    },
+    {
+      "id": "variation_of_information/table-normalized",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "table": "normalized-array"
+    },
+    {
+      "id": "variation_of_information/table-raw-counts",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "table": "counts-array"
+    },
+    {
+      "id": "variation_of_information/table-with-None-images",
+      "api": "metrics.variation_of_information",
+      "truth": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "test": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "shape": [
+        2,
+        3
+      ],
+      "test_shape": [
+        2,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "policy": {},
+      "table": "normalized-array",
+      "images_none": true
+    }
+  ],
+  "max_pixels": 64,
+  "max_label": 8,
+  "original_observations": {},
+  "original_calls": 0,
+  "native_calls": 0,
+  "timed_batches": 0,
+  "source_freeze": {
+    "include/skimagexx/label_pair_metrics.hpp": "4c5697551e4e3402bd7a946b850112d113246faaa383b863eba5031e79bf72c5",
+    "tests/label_pair_metrics_contract.py": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27",
+    "tests/label_pair_metrics_observer.py": "a3416e63c7da69fc00591cb811207c75583d580bad1b7ac3f4669588351becda",
+    "tests/test_label_pair_metrics_reference.py": "6a329bb183c5c320a61eadf05010ed8ca8dce11e09c37940b716faeb342af224"
+  },
+  "upstream_sources": {
+    "skimage/metrics/_contingency_table.py": "e334f4ec16ac3c2bd9fb0c533e8ca454029c914c8649d5322b6f0cc5adbdbf62",
+    "skimage/metrics/_adapted_rand_error.py": "cdb0b245288e1b3dd00b36152dd9c20e91edbe1d99a07c8210a2907beb872640",
+    "skimage/metrics/_variation_of_information.py": "29fd36256b803934fa37963dbe4b22507152b927b3ac7bfb2b05a973c6552da8",
+    "skimage/_shared/utils.py": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1"
+  },
+  "retained_sdist": {
+    "path": "build\\draw-coordinate-source-v1\\scikit_image-0.26.0.tar.gz",
+    "digest_reused_not_rehashed": true,
+    "provenance": "build/draw-coordinate-source-v1/source-audit.json"
+  },
+  "source_sensitive_order": {
+    "contingency": [
+      "im_test.reshape(-1) then im_true.reshape(-1)",
+      "isin(true,ignore,invert=True).astype(float)",
+      "optional in-place data divide by count_nonzero(data)",
+      "csr_array coordinate constructor including ignored explicitzero pairs/maxima",
+      "optional csr_matrix conversion; validate sparse_type after construction"
+    ],
+    "normalization": "per-pixel divide before duplicate coalescing; no count/N shortcut",
+    "adapted_rand": [
+      "shape check only if both image arguments notNone",
+      "build unnormalized CSRarray iftableNone elseuseprovidedtable",
+      "validate alpha AFTER table construction",
+      "data dot data minus sum; row sums then column sums; row dot/row sum then column dot/column sum",
+      "precision division then recall then weightedfscore then1-fscore; scalar/container types captured"
+    ],
+    "VI_supplied_table": "check_shape_equality is unconditional; None images are not silently accepted",
+    "variation": [
+      "build normalized contingency only iftableNone; suppliedtable is usedwithout renormalization",
+      "row/column marginals",
+      "invert_nonzero row then column and construct diagonalarrays",
+      "left sparseproduct xlogx/reduction then right sparseproduct xlogx/reduction",
+      "array([h1g0.sum(),h0g1.sum()]) in that order"
+    ]
+  },
+  "safety": {
+    "plain_images": "Allliteral images\u226464int elements, maxlabel8. Negative -1 andempty recipes exercise checked SciPy coordinate/inferred-shape errors; no uncheckedcompiledindex helper.",
+    "CSR_fixtures": "Valid direct CSR triplets only: shape2x3, indptr[0,2,4],4finite nonnegative f64data, all indices0..2. Noncanonical sorting andexplicitzero states observed without computing/caching metadata flags.",
+    "FP": "Onlysource-defined zero-denominator/allignored warnings/callbacks atboundedsize; ordered raw eventcapture. No nonfinite inputs/hugeallocations/customstorage.",
+    "quota": "Proposed24original topcalls/profile48total, contingent on root independent source/intake review and explicitGO. No capture authorized by thiscontract."
+  },
+  "comparison_policy": {
+    "arrays": "Exact dtype/shape/strides/flags/base metadata/rawwords, CSRclass/data/indices/indptr/explicitzeros/shape/alias, scalar/container/error/warning/policy/event order.",
+    "floating": "Rawsourcewords first, ordinary0ULP intended. No ULP allowance selected from candidate output; native VIlog/reduction policy remainsunclosed until capturedsource/profile facts.",
+    "mutation": "Before andafter all image/table/argument states captured. No input-equality assumption or silent canonicalization; table caches read without evaluating caching properties."
+  },
+  "initial_typed_interface": {
+    "header": "include/skimagexx/label_pair_metrics.hpp",
+    "entry": "skimagexx::detail::label_pair_counts",
+    "count_max": 1048576,
+    "label_max": 1048575,
+    "indices": "logical signedint64; publicSciPy indexdtype/ownership remainsstructuralprovider",
+    "workers": "Once existingglobalbudget snapshot ifworkers0; default1, positivealreadycapturedbudget useddirectly. Orderedaggregationserial, independent spans SIMD/optionalparallel only where justified.",
+    "reductions": "No native Rand/VI reduction/log claim yet; explicitnextgate, never hiddenwholeAPIcredit."
+  },
+  "unassessed": [
+    "Huge labels, overflow/allocation failures and arbitrary external protocols.",
+    "Malformed CSR internals, arbitrary sparse formats, complex/NaN/negative table values.",
+    "Broad float/object label conversion, unbounded arrays and concurrent mutation.",
+    "General native reductions/log2 and SciPy CSR class/index/storage packaging remain unclosed ownership gates.",
+    "Shape-mismatch/error precedence combinations beyond this first finite recipe set."
+  ],
+  "capture_gate": "Rootindependent source-sensitive review plus bothretainedprofileoriginal-refused fixture intakes, thenexplicitonce-onlycaptureGO. No native implementation, SDK/build/timing/registry change in thispacket."
+}
