@@ -1,0 +1,910 @@
+{
+  "schema": "regionprops-coords-scaled-prospective-v1",
+  "status": "SOURCE_ONLY_REFERENCE_PROPOSAL_NOT_INTAKE_OR_CAPTURED",
+  "reference": "scikit-image0.26.0",
+  "api": "measure.regionprops",
+  "canonical_property": "coords_scaled",
+  "discovery_reused": {
+    "path": "coverage/contracts/regionprops-runtime-surface.json",
+    "sha256": "83e1ef881dcd3598fb8c9c3e117d8e7a71a8f6dab1ac237126ca492e39b4a559",
+    "entry": {
+      "name": "coords_scaled",
+      "kind": "property",
+      "table_dtype": "object",
+      "requires_intensity": false,
+      "only_2d": false,
+      "cached": false,
+      "iterated_with_intensity": false,
+      "iterated_without_intensity": false,
+      "canonical_dependencies": [
+        "image",
+        "slice"
+      ],
+      "route": "mask_bbox",
+      "source_line": 493,
+      "body_sha256": "a170e2b41dfc7fe1fc80c7ba83d578814881f285c543b8024641c93f4d97b1a4"
+    },
+    "canonical_total": 44,
+    "already_assessed": [
+      "label",
+      "slice",
+      "bbox",
+      "image",
+      "coords",
+      "num_pixels",
+      "area",
+      "area_bbox",
+      "extent"
+    ],
+    "remaining_before_this_partition": 35,
+    "credit": "Nonefromthissourceproposal; coords_scaledcurrentlyinheritedliteraloriginalprovider, notowned/assessed."
+  },
+  "source": {
+    "path": "build/regionprops-runtime-source-v1/_regionprops.py",
+    "canonicalLF_sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+    "utils_path": "build/regionprops-runtime-source-v1/_regionprops_utils.py",
+    "utils_canonicalLF_sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21",
+    "property_source": "def coords_scaled(self):\n        indices = np.argwhere(self.image)\n        object_offset = np.array([self.slice[i].start for i in range(self._ndim)])\n        return (object_offset + indices) * self._spacing + self._offset",
+    "property_source_segment_sha256": "a170e2b41dfc7fe1fc80c7ba83d578814881f285c543b8024641c93f4d97b1a4",
+    "aliases": [],
+    "cached": false,
+    "iterated": false,
+    "license": "third_party/scikit-image-LICENSE.txt"
+  },
+  "semantics": {
+    "constructor": "_offset=np.array(offset); _spacing=_normalize_spacing(spacing,ndim), defaultspacingnp.full(ndim,1.0); _pixel_area product executesatctor butnewpropertyneverreadsarea/area_bbox/moments.",
+    "read_order": [
+      "self.image (cachedorcurrentmask)",
+      "np.argwhere(mask): canonical C logicalnonzeroorder",
+      "self.slice[i].start for i range(self._ndim), constructarray",
+      "object_offset+indices integerarrayaddition",
+      "multiplyresult byself._spacing",
+      "addself._offset"
+    ],
+    "cache_mutation": "coords_scaleduncached; cachestatusbelongsimage. Eachpropertyreadmakesnewufuncresult; primedimagepersistsafterlabelpixel/publicslicechange, cachedmaskeditsvisible; currentpublicsliceoriginsstillusedwithcachedmask. Canonicalgetitemdelegatesgetattr withnoPROPSdeprecatedaliaswarning.",
+    "return": "Exactnp.ndarray shape(population,ndim); dtype/words/strides/flags/base/owningandemptylayout remainUNASSESSEDuntilactualcapture. Integer spacing mayyieldintegerdtype; nevercastallinputs tofloat64 byname.",
+    "not_equivalent": "coords alreadyadds_offset; coords*spacing wouldincorrectlyscaleoffset. Reuseunshiftednativecoordinateemissionbeforeoffset, notpubliccoordsfinalarray."
+  },
+  "cases": [
+    {
+      "id": "regionprops-coords-scaled/plain2d-c-off",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "cache": false,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": null,
+      "spacing_kind": "default",
+      "offset": null,
+      "offset_kind": "default",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/plain2d-f-on",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "F",
+      "cache": true,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": null,
+      "spacing_kind": "default",
+      "offset": null,
+      "offset_kind": "default",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/negative-anisotropic2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint8",
+      "order": "F",
+      "cache": false,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": [
+        -0.5,
+        2.0
+      ],
+      "spacing_kind": "tuple-f64",
+      "offset": [
+        -3,
+        4
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/scalar-spacing2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int32",
+      "order": "C",
+      "cache": true,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": 2.0,
+      "spacing_kind": "scalar-f64",
+      "offset": [
+        1,
+        -2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/fractional3d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "uint16",
+      "order": "C",
+      "cache": false,
+      "label_1_points": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        3,
+        3
+      ],
+      "spacing": [
+        0.3,
+        0.5,
+        1.25
+      ],
+      "spacing_kind": "tuple-f64",
+      "offset": [
+        0,
+        -1,
+        2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/integer-spacing3d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "int64",
+      "order": "F",
+      "cache": true,
+      "label_1_points": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        3,
+        3
+      ],
+      "spacing": [
+        1,
+        2,
+        3
+      ],
+      "spacing_kind": "tuple-int",
+      "offset": [
+        1,
+        0,
+        -2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/float32-spacing-offset2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int32",
+      "order": "C",
+      "cache": false,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "spacing_kind": "array-f32",
+      "offset": [
+        0.25,
+        -0.5
+      ],
+      "offset_kind": "array-f32",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/pixel-mutation-unprimed2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "cache": false,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "spacing_kind": "tuple-f64",
+      "offset": [
+        1,
+        -2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "set-label-pixel",
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/primed-pixel-mutation2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "F",
+      "cache": true,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "spacing_kind": "tuple-f64",
+      "offset": [
+        1,
+        -2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "prime",
+          "image"
+        ],
+        [
+          "set-label-pixel",
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/cached-mask-edit2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "cache": true,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "spacing_kind": "tuple-f64",
+      "offset": [
+        1,
+        -2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "prime",
+          "image"
+        ],
+        [
+          "set-primed-mask",
+          [
+            [
+              0,
+              0
+            ],
+            false
+          ]
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/primed-public-slice-shift2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "cache": true,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "spacing_kind": "tuple-f64",
+      "offset": [
+        1,
+        -2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "prime",
+          "image"
+        ],
+        [
+          "set-public-slice",
+          [
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled/empty-current-mask2d",
+      "api": "measure.regionprops",
+      "property": "coords_scaled",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "cache": false,
+      "label_1_points": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "label_2_point": [
+        3,
+        4
+      ],
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "spacing_kind": "tuple-f64",
+      "offset": [
+        1,
+        -2
+      ],
+      "offset_kind": "tuple-int",
+      "selected_region_index": 0,
+      "sequence": [
+        [
+          "set-label-pixel",
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "set-label-pixel",
+          [
+            [
+              1,
+              2
+            ],
+            0
+          ]
+        ],
+        [
+          "set-label-pixel",
+          [
+            [
+              2,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ],
+        [
+          "item",
+          "coords_scaled"
+        ],
+        [
+          "attr",
+          "coords_scaled"
+        ]
+      ],
+      "FP_policy": {
+        "all": "warn"
+      }
+    }
+  ],
+  "prospective_budget": {
+    "runtime_profiles": [
+      "1.24.4",
+      "2.5.4"
+    ],
+    "constructors_per_profile": 12,
+    "new_property_reads_per_profile": 36,
+    "top_level_original_calls_total": 24,
+    "new_property_reads_total": 72,
+    "dependency_image_primes_per_profile": 3,
+    "source_bounds": {
+      "max_input_elements": 64,
+      "maximum_label": 2,
+      "regions_per_constructor": 2,
+      "selected_region": 0,
+      "max_selected_population": 4,
+      "max_bbox_elements": 8,
+      "max_coordinate_elements_per_property_read": 12,
+      "max_coordinate_payload_bytes_per_read": 96,
+      "finite_absolute_output_upper_bound": 20,
+      "integer_intermediates": "Allindices/origins/spacing/offset bounded\u22644, noint64overflow; float32/f64finiteordinaryproducts neverunder/overflow.",
+      "declared_writes": "Onlyexplicitlabelpixelwrites/cachedmaskedit/publicslicereassignment; validateexpecteddeclaredmutation, neverassertbefore==afterforwritingcases."
+    }
+  },
+  "reference_method": {
+    "first_gate": "Rootindependentproposalreview, thenactualfactory/observer/all12ID original-refusedintakeeachprofile beforeANYcaptureGO. No suchintakeexecutedhere.",
+    "capture_gate": "SeparateROOTGO exactly12newIDs/profile withstart+completejournals; once-only/preservefailures; reusepinnedregionprops_state_observer.reference_runtime andencode, notold7propertyrecapture.",
+    "observations": "Readonlyvalues/protocol/FP/inputdescriptor/events/aliases/returnlayout/words pernewpropertyread; primeimage recordsmetadata/action only, no duplicatedoldimagegold. Compareattr/item/repeatedoutput identity/base/shares includingempty; sourcewarn/callbackstate capturedphasewise.",
+    "numerical_policy": "Rawexactwords/dtypes/storage/state first; no toleranceoroutputdtypeprediction fromnominalresult_type. Bothprofilesactualpromotionneeded."
+  },
+  "typed_route_sketch": {
+    "reuse": [
+      "RegionPropsState/frozenbbox/current_native_geometry guard",
+      "currentimage cache andregionprops_mask_population",
+      "regionprops_coords_strided_into C-logicalwalk+signedmaskstride conventions, unshiftedabsoluteintegercoordinates",
+      "existingexactFPnearest/gradualguard includingreviewed7adfMXCSRsuccessor whenadmitted"
+    ],
+    "smallest_new_work": "Extendexistingcoordinateemitter withf64scaled-outputleaf (separate multiplythenadd, noFMA), using caller-validatedfloat64spacing/offsetandowningoutputstrides. No moments/reduction/classifierneeded. FirstboundednormalFPdomainonly; sourceboundarytakesdtype/byteorder/layout/capacityonce.",
+    "illustrative_signature": "bool regionprops_scaled_coords_f64_into(state,index,stable_mask,mask_byte_strides,spacing[3],offset[3],double*output,point_byte_step,dimension_byte_step); finalABI notfrozenuntilreferencesreviewed.",
+    "interface_invariants": "Population=countfromCURRENT/cachedmask; exactlypopulation*ndim outputelements, disjointaddressablefreshallocation, noinitialpopulationcapacity. Actualsourcepromotedoutputdtype mustbef64 beforeusingtypedf64leaf. Currentlabel/sliceidentitychangeusesexplicitoriginaldescriptorfrontieruntilseparatelyowned.",
+    "SIMD_workers": "Independentcoordinate multiply/add canuseexistingcompilerSIMD withffp-contractoff; serialorderedmaskwalk reused. Small\u226412elementpartitiondoesnotjustifythreadpool/parallelprefix. Global1/4 budgets respected; largerindependentwork onlyusesexistingexecutorafterbenchmarkevidence, no forcedparallelism."
+  },
+  "remaining_frontier": [
+    "Allother34canonicalproperties, aliases/tables/intensity/extra_properties andwholeclasslifecycle remainunassessed.",
+    "Integer/float32/mixed-spacingoffsetoutputpromotion andnon-f64results mustbecaptured; no blanketfloat64nativepromise.",
+    "Nonfinite/extremespacingoffset, FPreportingunderflow/overflow/callback/print/log stages; currentproposalnormalfiniteonly.",
+    "Customprotocols/ndarraysubclasses/privatefieldmutation/concurrentmaskmutation/inputstorageinvalidations; publiclabelchange andotherpublicslicegeometries beyondonecachedsameextentwitness.",
+    "Native implementation/parity/performance/SDK/genuineproduct/registration credit: none inthispacket."
+  ],
+  "next_gate": "Rootreviewsource-onlyproposal+12IDs; authorizedfactory/observerintakepacketthenindependentpeer/separateROOTGO for24constructors/72propertyreads. No captureorimplementationperformed."
+}
