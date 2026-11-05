@@ -1,4 +1,4 @@
-"""Prospective stdlib guards; no original/scientific/native image execution."""
+"""Saved reference and prospective stdlib guards; no original/native execution."""
 import ast
 import copy
 import hashlib
@@ -18,8 +18,8 @@ def test_draw_polygon_frozen_source_and_scope():
     data=json.loads(MATRIX.read_bytes());assert data['cases']==cases()and len(cases())==24
     assert len({s['id']for s in cases()})==24 and {a:sum(s['api']==a for s in cases())for a in APIS}==dict.fromkeys(APIS,12)
     assert data['bounds_by_case']=={s['id']:source_safe(s)for s in cases()}
-    assert data['original_calls']==data['native_calls']==0 and data['timings']is False
-    assert data['original_observations']=={'1.24.4':[],'2.5.4':[]}
+    assert data['original_calls']==48 and data['native_calls']==0 and data['timings']is False
+    assert set(data['original_observations'])=={'1.24.4','2.5.4'}
     assert data['unassessed']==list(UNASSESSED)
     for path,pin in data['source_freeze'].items():assert hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
     text=(ROOT/data['borrowed_helper_methods']['module']).read_text();tree=ast.parse(text)
@@ -92,3 +92,46 @@ def test_draw_polygon_predicate_reuse_and_safety_are_explicit():
     assert 'Shortshape'in data['safety']['unsafe_exclusions'][0]
     observer=ast.parse((ROOT/'tests/draw_polygon_observer.py').read_bytes())
     assert len([n for n in ast.walk(observer)if isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='call'])==1
+
+
+@pytest.mark.parametrize('version',['1.24.4','2.5.4'])
+def test_draw_polygon_saved_original_records(version):
+    # Decode only retained words. No NumPy, original calls, or image algorithms.
+    import base64
+    import math
+    import zlib
+    data=json.loads(MATRIX.read_bytes());rows=data['original_observations'][version]
+    assert [row['id']for row in rows]==[spec['id']for spec in cases()]
+    assert len(rows)==24 and sum(row['error']is None for row in rows)==17
+    assert sum(row['error']is not None for row in rows)==7
+    def check_payload(value):
+        if isinstance(value,dict):
+            if value.get('type')=='ndarray':
+                raw=zlib.decompress(base64.b64decode(value['raw_zlib_base64']))
+                assert hashlib.sha256(raw).hexdigest()==value['raw_sha256']
+                itemsize=1 if value['dtype']=='|b1'else int(value['dtype'][2:])
+                assert len(raw)==math.prod(value['shape'])*itemsize
+            for child in value.values():check_payload(child)
+        elif isinstance(value,list):
+            for child in value:check_payload(child)
+    for spec,row in zip(cases(),rows):
+        assert row['api']==spec['api'] and all(row['checks'].values())
+        assert row['inputs_before']==row['inputs_after'] and row['warnings']==row['FP_events']==[]
+        assert row['call_accounting']['top_level_api']==spec['api'] and row['call_accounting']['top_level_calls']==1
+        check_payload(row)
+        if row['error']is None:
+            outputs=row['result']['items']if spec['api']==APIS[0]else[row['result']]
+            assert all(a['type']=='ndarray'and a['own']and a['writeable']and a['aligned']and a['base_type']=='NoneType'for a in outputs)
+            if spec['api']==APIS[0]:
+                assert row['result']['container']=='tuple'and len(outputs)==2
+                assert all(a['dtype']=='<i8'and len(a['shape'])==1 for a in outputs)
+                assert outputs[0]['shape']==outputs[1]['shape'] and outputs[0]['shape'][0]<=data['bounds_by_case'][spec['id']]['max_output_pairs']
+                assert row['output_pair_aliases'][1][0]is False
+            else:
+                assert outputs[0]['dtype']=='|b1'and outputs[0]['shape']==spec['shape']
+                raw=zlib.decompress(base64.b64decode(outputs[0]['raw_zlib_base64']));assert set(raw)<={0,1}
+        else:assert row['error'][0:2]==['builtins','ValueError']
+    capture=data['original_capture'][version]
+    assert capture['top_level_original_calls']==24 and capture['journal_events']==48 and capture['returns']==17 and capture['errors']==7
+    assert capture['runtime']['numpy']==version and capture['dependent_polygon_calls']==10
+    assert rows==data['original_observations']['1.24.4']
