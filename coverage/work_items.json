@@ -7,6 +7,31 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "draw-ellipse-perimeter-reference-v1",
+      "kind": "reference",
+      "owner": "tiny_line_implementation",
+      "branch": "reference/ellipse-perimeter-v1",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "draw.ellipse_perimeter"
+      ],
+      "owns": [
+        "tests/ellipse_perimeter_contract.py",
+        "tests/ellipse_perimeter_observer.py",
+        "tests/test_ellipse_perimeter_reference.py",
+        "coverage/contracts/ellipse-perimeter.json"
+      ],
+      "base_sha": "1a2872bee5f186e43f54a4d3cf5e1e1eb1ecaf97",
+      "depends_on": [],
+      "acceptance": "Independent source-safe prospective then original captures once/profile; exact callback/errors/dtypes/storage/order and unchangedFP/input. Terminalcloseout outcome/evidence,reuse/waste,nextowner/trigger beforedependentwork. No native credit or fullAPI claim.",
+      "current_checkpoint": "0741be2f:58originalcalls exactlyonce,23returns6errors/profile;29rows identical,92arrays including8zeroD. Prospectivepeer8c743011, rootactualcapturepeer1137c193,6savedvalidationnodes reused. Native/SDK/timing absent; broaderrotation/unsafe/provider partitions remain.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Freeze typed nativeheader/kernel domain/order/0D boundary on reviewedsource. Reuse all58originals; no recapture. Native/frontend/SDK components separate, fullrotation Bezier dependency staysopen."
+      }
+    },
+    {
       "id": "region-stain-comparison-v1",
       "kind": "benchmark_tooling",
       "owner": "integrator",
@@ -30,7 +55,7 @@
         "half-stain-f32-simd-v1"
       ],
       "acceptance": "Fixed20cohortABBA1120samples, all12Region <=1.05old andtwoFtargets>=2x; all8stain<=1.05old,stdF32/K7>=1.25x. Actualgenuineinputauth/6CLIpreflight beforetiming, originals normalization andbothpairedpass gates/noaveragewaiver. Terminalcloseout: result/evidence,waste/reuse withobservedcostorunknown,nextowner/triggercorrection (or reviewed,nochange) beforedependentwork. No referencegoldrecapture/newenvironment/full localSDK rebuild or localtimingamidbuilds/tests.",
-      "current_checkpoint": "TERMINALDISCARD41962343215/controller119, notsetupfailure. Root retained13386505806/APIsha77253632 once and reconstructed1120samples/40checks: ONLYtiny2d-constructor fails direct1.065462 firstpair and normalized1.059337 secondpair (limit1.05); alltargetgatespass. All6realpreflights andbefore/afterverify closed. IndependentBrawreviewpending; sourceunmerged.",
+      "current_checkpoint": "TERMINALDISCARD41962343215/controller119, notsetupfailure. Root retained13386505806/APIsha77253632 once and reconstructed1120samples/40checks: ONLYtiny2d-constructor fails direct1.065462 firstpair and normalized1.059337 secondpair (limit1.05); alltargetgatespass. All6realpreflights andbefore/afterverify closed. IndependentBrawreviewPASS1aaf3343; sourceunmerged.",
       "next_gate": {
         "owner": "integrator",
         "action": "Preserve DISCARD/allraw; publish after independent raw review. Diagnose recurring lazyprovider self-import vs changed nativeconstructor traversal with same prepared core before successor. Source difference is hypothesis, not proven causal attribution. No unchanged retry/waiver; localtiming only when captures/builds/tests idle."
@@ -37022,7 +37047,7 @@
       "next_release_status": "Genuine257 scoped minimum/ellipsoid admitted49e102a3 peer5c375a58,12winsGM16.775025x; exactfull41962339458 running. No wholeproduct qualification or shipping yet.",
       "next_release_qualification_run": 41962339458,
       "optimization_comparison_run": 41962343215,
-      "optimization_comparison_status": "TERMINALDISCARD fixedcontrols, notsetup;1120samples40checks independentlyrootreconstructed;Bpeerpending. Sourceprivate, allbaseline lossesretained."
+      "optimization_comparison_status": "TERMINALDISCARD fixedcontrols, notsetup;1120samples40checks independentlyrootreconstructed;BpeerPASS1aaf3343. Sourceprivate, allbaseline lossesretained."
     }
   },
   "parallel_review": {

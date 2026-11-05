@@ -680,6 +680,8 @@ benchmarks/ellipsoid-minimum-initial.batches.jsonl -text
 benchmarks/region-stain-same-host-v1/*.json -text
 benchmarks/region-stain-same-host-v1/*.jsonl -text
 coverage/evidence/current257-minimum-initial-performance-v1.json -text
+coverage/contracts/ellipse-perimeter.json -text
+coverage/evidence/region-stain-same-host-discard-v1.json -text
 coverage/evidence/public256-windows-checkout-failed-v1.json -text
 coverage/evidence/public256-whole-product-failed-v1.json -text
 coverage/contracts/region-stain-same-host-v1.json -text

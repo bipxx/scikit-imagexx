@@ -1,0 +1,368 @@
+{
+  "decision": "DISCARD",
+  "source": "55465253ea03d5239a4a1d3b499ea236ebf948c1",
+  "baseline_source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+  "controller": "119eb28b9fddd40b60af2669eeea3ce95e3beafc",
+  "run": 41962343215,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41962343215",
+  "failure_class": "fixed scientific acceptance gates rejected candidate, not setup failure",
+  "scope": "Fixed two optimization candidates only; all losses retained. No scientific rerun or product build; prior authenticated wheel/SDK inputs reused. Sampler journal verifier reused; acceptance math independently reconstructed. No whole-library or full-profile acceptance.",
+  "worker_count": 1,
+  "cohorts": 20,
+  "passes": 4,
+  "samples": 1120,
+  "preflights": 6,
+  "gates": 40,
+  "failed_checks": [
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0654615600679553,
+      "original_normalized": 1.0401423815907334,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0444812585752008,
+      "original_normalized": 1.0593370912462143,
+      "limit": 1.05,
+      "passed": false
+    }
+  ],
+  "all_four_target_gates_pass_in_each_pair": true,
+  "candidate_wins_against_original_per_candidate_pass": [
+    13,
+    13
+  ],
+  "runtime": {
+    "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0"
+  },
+  "retention": {
+    "artifact": 13386505806,
+    "name": "region-stain-same-host",
+    "run": 41962343215,
+    "bytes": 170840783,
+    "sha256": "772536322c5efbad869cececcc9106298ee768bd3f0e00b1269fa6506f70e675",
+    "download_seconds": 10.844510700087994,
+    "digest_matches_actual_GitHub_artifact": true,
+    "exit_code": 0
+  },
+  "raw_reports": [
+    {
+      "path": "benchmarks/region-stain-same-host-v1/1-baseline-region.batches.jsonl",
+      "sha256": "d75d21ec00dc93befedf04d791c6b433731e084208c80d29bdd114a293bbd096",
+      "bytes": 188753,
+      "artifact": 13386505806,
+      "member": "results/1-baseline-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/1-baseline-half.batches.jsonl",
+      "sha256": "d79f153b7614e6cb306f8e90cde55a7bde3911fd0d1eff1e1382bb1d59e703ae",
+      "bytes": 60841,
+      "artifact": 13386505806,
+      "member": "results/1-baseline-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/1-baseline-holdouts.batches.jsonl",
+      "sha256": "f69712690981efa2fcce652f2be6f2a707dff9eb8481131bb48f1cc1faaac12b",
+      "bytes": 58930,
+      "artifact": 13386505806,
+      "member": "results/1-baseline-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/2-candidate-region.batches.jsonl",
+      "sha256": "f079b385c990301ac1050769dafa69d3550e7208bb9c39f7276a5b26475673e9",
+      "bytes": 191826,
+      "artifact": 13386505806,
+      "member": "results/2-candidate-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/2-candidate-half.batches.jsonl",
+      "sha256": "70af1739133224fdba3b311a28b7d0610113533a28a94aed0909aa7ed405d02c",
+      "bytes": 59508,
+      "artifact": 13386505806,
+      "member": "results/2-candidate-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/2-candidate-holdouts.batches.jsonl",
+      "sha256": "48c8199f55c99016d9d6e8ee4ce19719385d5cf9e6788897f19a74b774f4c304",
+      "bytes": 58319,
+      "artifact": 13386505806,
+      "member": "results/2-candidate-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/3-candidate-region.batches.jsonl",
+      "sha256": "b43219b7ec09e78e0dc66502236ec88e244b6c29c30e1c9f3c732d1d139fbf2f",
+      "bytes": 189648,
+      "artifact": 13386505806,
+      "member": "results/3-candidate-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/3-candidate-half.batches.jsonl",
+      "sha256": "95ff24cd4023018ab84fe2b6a6649915ecc7cc97aaa5e7fc53f263a19b265e1a",
+      "bytes": 60152,
+      "artifact": 13386505806,
+      "member": "results/3-candidate-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/3-candidate-holdouts.batches.jsonl",
+      "sha256": "f9f6a7222122a328277855db460adc98039d89dcda85be27befc069a7d5d41bc",
+      "bytes": 58303,
+      "artifact": 13386505806,
+      "member": "results/3-candidate-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/4-baseline-region.batches.jsonl",
+      "sha256": "2e1488ece0ae44105bbeb41efbd8d57e9c29ffa3f802abc90b42f6fc9acbb89a",
+      "bytes": 190216,
+      "artifact": 13386505806,
+      "member": "results/4-baseline-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/4-baseline-half.batches.jsonl",
+      "sha256": "6fb4b2080980c5d75207e5042738959801362fcb3c077aef9c5264ef55ce2feb",
+      "bytes": 60218,
+      "artifact": 13386505806,
+      "member": "results/4-baseline-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/4-baseline-holdouts.batches.jsonl",
+      "sha256": "125566ef9cd34a38c6b53e61ece32209a4691f1cde228c8f6638773de691b6e6",
+      "bytes": 58875,
+      "artifact": 13386505806,
+      "member": "results/4-baseline-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/decision.json",
+      "sha256": "0b6385de3afcf301e7e9fba5777dac0bef9ba42ce4924c7c7625b591bb6eb460",
+      "bytes": 10070,
+      "artifact": 13386505806,
+      "member": "results/decision.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/frozen-inputs.json",
+      "sha256": "e6a989751ecc48475d655bce9c4278475bc9f95feec02927d3bed2f20cf0f846",
+      "bytes": 394,
+      "artifact": 13386505806,
+      "member": "results/frozen-inputs.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/all-runtimes-preflight-complete.json",
+      "sha256": "8a4d2b68c2f78cc1bf7cc50817210f24fec548c860ee97292f92d083c1538c53",
+      "bytes": 53,
+      "artifact": 13386505806,
+      "member": "results/all-runtimes-preflight-complete.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/timing-samples.json",
+      "sha256": "a8f24969ef10f03e0f55257c204838b26eb6ddd98edfa92980a36fba65143299",
+      "bytes": 223444,
+      "projection_of_artifact_reports": [
+        {
+          "path": "benchmarks/region-stain-same-host-v1/1-baseline-region.json",
+          "sha256": "42f44258e3f3ad459474b43ee69764cfe2bb1ec07c7d2923c63bfbfc46c1d491",
+          "bytes": 887856,
+          "artifact": 13386505806,
+          "member": "results/1-baseline-region.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/1-baseline-half.json",
+          "sha256": "2be971e1986f166ad68d2bddf216e03a6a46a273d20ce4a59d02efd287be8abd",
+          "bytes": 48155,
+          "artifact": 13386505806,
+          "member": "results/1-baseline-half.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/1-baseline-holdouts.json",
+          "sha256": "de4db65f13533ea511b483e74147e04ec895b03b1d5bf249c1b56efbef95b47f",
+          "bytes": 45370,
+          "artifact": 13386505806,
+          "member": "results/1-baseline-holdouts.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/2-candidate-region.json",
+          "sha256": "d280e301dafc20b323c5318de8bbafecb53ae8dd1cf7d226cbd8987b2f68fa3c",
+          "bytes": 889582,
+          "artifact": 13386505806,
+          "member": "results/2-candidate-region.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/2-candidate-half.json",
+          "sha256": "f230a2e28214ca4fd58339c5f939eb0471f79a77170a0c2accba5b82835c2a44",
+          "bytes": 47322,
+          "artifact": 13386505806,
+          "member": "results/2-candidate-half.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/2-candidate-holdouts.json",
+          "sha256": "db50f6b1e5c3c80adf126c9d35c22d8560b814527d3ee145d70d9620fd1cd084",
+          "bytes": 45014,
+          "artifact": 13386505806,
+          "member": "results/2-candidate-holdouts.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/3-candidate-region.json",
+          "sha256": "45025c2500e050d6052cd42be7d2fab8f801a26c658727c5c3973a3f8a816f18",
+          "bytes": 888360,
+          "artifact": 13386505806,
+          "member": "results/3-candidate-region.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/3-candidate-half.json",
+          "sha256": "40b85914dcf5262f2f7edb1c96b2bd8197f36d4aeec90dfac0c85b605e8aef5a",
+          "bytes": 47695,
+          "artifact": 13386505806,
+          "member": "results/3-candidate-half.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/3-candidate-holdouts.json",
+          "sha256": "3554577d5eb981251aef8124a3d11b16fb42b898bfd91fe52fc36ff0a07d12ef",
+          "bytes": 44998,
+          "artifact": 13386505806,
+          "member": "results/3-candidate-holdouts.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/4-baseline-region.json",
+          "sha256": "4c4608a7ed6104f0d281f5ba58d06773520eadda9d4241d3997a29ad04d3b30d",
+          "bytes": 888739,
+          "artifact": 13386505806,
+          "member": "results/4-baseline-region.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/4-baseline-half.json",
+          "sha256": "32fbb2ceee1a4ea164b40dbeff1d5064d8bb2caef635c7c214eb33f83e79d5b6",
+          "bytes": 47807,
+          "artifact": 13386505806,
+          "member": "results/4-baseline-half.json"
+        },
+        {
+          "path": "benchmarks/region-stain-same-host-v1/4-baseline-holdouts.json",
+          "sha256": "5ed01cfefdd44f7c944294bc0320d5772011de75258a780ac7539b9b81bc4a35",
+          "bytes": 45329,
+          "artifact": 13386505806,
+          "member": "results/4-baseline-holdouts.json"
+        }
+      ]
+    }
+  ],
+  "root_reconstruction": {
+    "path": "build/region-stain-same-host-v1/verification-v1.json",
+    "sha256": "723babfaafb0dc007826b4e6c3da91f7ed305b4497479d1d05d54c27023c4b62"
+  },
+  "root_analyzer": {
+    "path": "build/region-stain-same-host-v1/analyze_v1.py",
+    "sha256": "d9dfd5aed36f1e74c3f65d65532c78f0c0b42f21bf3d4154b393f7e81a34135a"
+  },
+  "independent_review": {
+    "path": "build/region-stain-independent-performance-review-v1/review.json",
+    "sha256": "1aaf33430795260d84385b8f4a06a1fc4a93f9961703afbee01986c70af7c5e3"
+  },
+  "watcher": {
+    "path": "build/region-stain-same-host-v1/watch-v1/handoff.json",
+    "sha256": "4b7fdaabfe71ef946a71776741b6d5e4e801eacef40279cf10fcc39dd15aff20"
+  },
+  "whole_product_qualified": false,
+  "source_merged": false,
+  "closeout": {
+    "result": "Independent raw reconstruction confirms DISCARD with2tinyconstructor control failures; targets passing cannot waive them.",
+    "waste_reuse": "Useful rejected experiment, not setup waste. Reused authenticated baseline/candidate products; one final170MBarchive retained with actualAPI digest, no new originals/build/SDK/env/retry. Beforepublication, removed redundant5MB fullpublicreport copies; published everytimingsample/rawjournal plusboundeddecisiondata whilefullparitypayloads remain inauthenticatedarchive. No scientific replay.",
+    "next_plan_change": "Preserve failed source/results; diagnose same-core recurring provider-self-import versus changed native traversal after local capture/test/build activity stops. Preserve wildcard-import correctness and alias patches. No threshold relaxation, favorable-noise retry or silent partial promotion."
+  },
+  "raw_report_locators": [
+    {
+      "path": "benchmarks/region-stain-same-host-v1/1-baseline-region.json",
+      "sha256": "42f44258e3f3ad459474b43ee69764cfe2bb1ec07c7d2923c63bfbfc46c1d491",
+      "bytes": 887856,
+      "artifact": 13386505806,
+      "member": "results/1-baseline-region.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/1-baseline-half.json",
+      "sha256": "2be971e1986f166ad68d2bddf216e03a6a46a273d20ce4a59d02efd287be8abd",
+      "bytes": 48155,
+      "artifact": 13386505806,
+      "member": "results/1-baseline-half.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/1-baseline-holdouts.json",
+      "sha256": "de4db65f13533ea511b483e74147e04ec895b03b1d5bf249c1b56efbef95b47f",
+      "bytes": 45370,
+      "artifact": 13386505806,
+      "member": "results/1-baseline-holdouts.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/2-candidate-region.json",
+      "sha256": "d280e301dafc20b323c5318de8bbafecb53ae8dd1cf7d226cbd8987b2f68fa3c",
+      "bytes": 889582,
+      "artifact": 13386505806,
+      "member": "results/2-candidate-region.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/2-candidate-half.json",
+      "sha256": "f230a2e28214ca4fd58339c5f939eb0471f79a77170a0c2accba5b82835c2a44",
+      "bytes": 47322,
+      "artifact": 13386505806,
+      "member": "results/2-candidate-half.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/2-candidate-holdouts.json",
+      "sha256": "db50f6b1e5c3c80adf126c9d35c22d8560b814527d3ee145d70d9620fd1cd084",
+      "bytes": 45014,
+      "artifact": 13386505806,
+      "member": "results/2-candidate-holdouts.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/3-candidate-region.json",
+      "sha256": "45025c2500e050d6052cd42be7d2fab8f801a26c658727c5c3973a3f8a816f18",
+      "bytes": 888360,
+      "artifact": 13386505806,
+      "member": "results/3-candidate-region.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/3-candidate-half.json",
+      "sha256": "40b85914dcf5262f2f7edb1c96b2bd8197f36d4aeec90dfac0c85b605e8aef5a",
+      "bytes": 47695,
+      "artifact": 13386505806,
+      "member": "results/3-candidate-half.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/3-candidate-holdouts.json",
+      "sha256": "3554577d5eb981251aef8124a3d11b16fb42b898bfd91fe52fc36ff0a07d12ef",
+      "bytes": 44998,
+      "artifact": 13386505806,
+      "member": "results/3-candidate-holdouts.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/4-baseline-region.json",
+      "sha256": "4c4608a7ed6104f0d281f5ba58d06773520eadda9d4241d3997a29ad04d3b30d",
+      "bytes": 888739,
+      "artifact": 13386505806,
+      "member": "results/4-baseline-region.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/4-baseline-half.json",
+      "sha256": "32fbb2ceee1a4ea164b40dbeff1d5064d8bb2caef635c7c214eb33f83e79d5b6",
+      "bytes": 47807,
+      "artifact": 13386505806,
+      "member": "results/4-baseline-half.json"
+    },
+    {
+      "path": "benchmarks/region-stain-same-host-v1/4-baseline-holdouts.json",
+      "sha256": "5ed01cfefdd44f7c944294bc0320d5772011de75258a780ac7539b9b81bc4a35",
+      "bytes": 45329,
+      "artifact": 13386505806,
+      "member": "results/4-baseline-holdouts.json"
+    }
+  ]
+}

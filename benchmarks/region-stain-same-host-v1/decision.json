@@ -1,0 +1,366 @@
+{
+  "decision": "DISCARD",
+  "checks": [
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0654615600679553,
+      "original_normalized": 1.0401423815907334,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0121201596482927,
+      "original_normalized": 0.9777708355056699,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.56417312820936,
+      "original_normalized": 0.5549597740877676,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.38022411395499045,
+      "original_normalized": 0.3834483944827092,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.10689136014515166,
+      "original_normalized": 0.10637738875389602,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.4050784343003241,
+      "original_normalized": 0.38690088862126704,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.15272716027804936,
+      "original_normalized": 0.15962893571806225,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.3447260030796185,
+      "original_normalized": 0.34011785128129907,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/small3d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9672114065176378,
+      "original_normalized": 0.9370628438594091,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.08421639902643449,
+      "original_normalized": 0.08328235388200662,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.3540530698954054,
+      "original_normalized": 0.359744605561607,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.21781830910525907,
+      "original_normalized": 0.21453435489818454,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.47554360932793266,
+      "original_normalized": 0.4794145462521344,
+      "limit": 0.8,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0010827537880636,
+      "original_normalized": 1.000055137868205,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.42421406440830434,
+      "original_normalized": 0.42550722577162403,
+      "limit": 0.8,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.5718902315694511,
+      "original_normalized": 0.56892332550471,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.22919966638422928,
+      "original_normalized": 0.22733261299066376,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.30451507762288166,
+      "original_normalized": 0.3333724402164813,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9969994969191444,
+      "original_normalized": 1.004500934258592,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0073478212413114,
+      "original_normalized": 1.0133929160808937,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0444812585752008,
+      "original_normalized": 1.0593370912462143,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0027253629220194,
+      "original_normalized": 1.0053121208219054,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.5590433541151375,
+      "original_normalized": 0.5610447771508885,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.380505734589287,
+      "original_normalized": 0.378998243046996,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.10800611586616868,
+      "original_normalized": 0.10941192165288091,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.40578461476576666,
+      "original_normalized": 0.44152096213551917,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.1545360654197688,
+      "original_normalized": 0.15458636056451097,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.34865346804366687,
+      "original_normalized": 0.3909090365101386,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/small3d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9390771083356,
+      "original_normalized": 0.9404085801302343,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.08491730351827373,
+      "original_normalized": 0.08829962062418023,
+      "limit": 0.5,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.3543763534457389,
+      "original_normalized": 0.3767453869709609,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.2127144745358955,
+      "original_normalized": 0.21253669240780199,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.47256511827691794,
+      "original_normalized": 0.4775574649104705,
+      "limit": 0.8,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9912086696697034,
+      "original_normalized": 0.9860767424185888,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.4245921349609809,
+      "original_normalized": 0.4375188598806828,
+      "limit": 0.8,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.5837946435366119,
+      "original_normalized": 0.590959853006023,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.2208427342713655,
+      "original_normalized": 0.22007367242319756,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.30641401878906505,
+      "original_normalized": 0.2805529037597155,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9939825165167436,
+      "original_normalized": 0.9557593024682779,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9855461832234319,
+      "original_normalized": 0.910469947501184,
+      "limit": 1.05,
+      "passed": true
+    }
+  ],
+  "scope": "bounded fixed cohorts only; no whole-library claim"
+}

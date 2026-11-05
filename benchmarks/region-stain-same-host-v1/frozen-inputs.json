@@ -1,0 +1,10 @@
+{
+  "command": "execute",
+  "repository": "bipxx/scikit-imagexx",
+  "candidate_source": "55465253ea03d5239a4a1d3b499ea236ebf948c1",
+  "candidate_run": "41956997250",
+  "candidate_artifact": 13383644202,
+  "snapshots": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshots",
+  "results": "/home/runner/work/scikit-imagexx/scikit-imagexx/results",
+  "deadline_utc": "2026-11-05T04:30:00Z"
+}
