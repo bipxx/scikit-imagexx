@@ -713,3 +713,6 @@ coverage/contracts/ellipsoid-sdk-v1.json -text
 tests/cmake_consumer/ellipsoid_source_oracle.bin -text
 coverage/contracts/ellipsoid-benchmark.json -text
 coverage/contracts/regionprops-state-lazy-runtime-v1.json -text
+benchmarks/region-stain-warm-same-host-v1/*.json -text
+benchmarks/region-stain-warm-same-host-v1/*.jsonl -text
+coverage/evidence/region-stain-warm-same-host-discard-v1.json -text

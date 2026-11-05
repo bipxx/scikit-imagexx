@@ -1,0 +1,304 @@
+{
+  "decision": "DISCARD",
+  "source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
+  "baseline_source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+  "controller": "119eb28b9fddd40b60af2669eeea3ce95e3beafc",
+  "run": 41969983206,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41969983206",
+  "failure_class": "Fixed scientific normalized gate rejected changed-source candidate; setup/preflight/identity gates passed",
+  "scope": "Second bounded Region/stain optimization comparison. No threshold change, priorCPP/librarywide superiority, full-profile acceptance or partial promotion. First DISCARD decision remains immutable.",
+  "worker_count": 1,
+  "cohorts": 20,
+  "passes": 4,
+  "samples": 1120,
+  "preflights": 6,
+  "gates": 40,
+  "failed_checks": [
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0005524840756397,
+      "original_normalized": 1.082979862542564,
+      "limit": 1.05,
+      "passed": false
+    }
+  ],
+  "tiny_constructor_checks": [
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0156383799376374,
+      "original_normalized": 1.011625629857022,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0079712453665928,
+      "original_normalized": 0.9995533234590239,
+      "limit": 1.05,
+      "passed": true
+    }
+  ],
+  "all_four_target_gates_pass_in_each_pair": true,
+  "runtime": {
+    "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0"
+  },
+  "source_runtime_core_identities": {
+    "baseline": {
+      "core_sha256": "c15aac0446bbdd5dbd0f7eddc0954f86c53586207bd31a6a93f09a765218ad01",
+      "source_sha256": "0123d8453eabc7263945c1de22cd337103d7e7d6ffbd2583b35e0a200d8cbdb4",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2"
+    },
+    "candidate": {
+      "core_sha256": "f200f44d58be306ece196b9be5c972c1a48f799c083cb10637f11dc3da17d8e5",
+      "source_sha256": "f2854891e0d2b72ea9c4456be5987be32082e82b7c30b7fdfde94bc4a6abf781",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2"
+    }
+  },
+  "retention": {
+    "artifact": 13389417631,
+    "name": "region-stain-same-host",
+    "run": 41969983206,
+    "candidate_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
+    "bytes": 170844084,
+    "sha256": "5383d4cb67967afbba7264a2180c6bdbb1ab83013c45898822d8167e23237d34",
+    "actual_API_digest_exact": true,
+    "downloads": 1
+  },
+  "retained_archive_locator": "build/region-stain-warm-same-host-v1/retained-v1/13389417631.zip",
+  "raw_reports": [
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/1-baseline-half.batches.jsonl",
+      "sha256": "da44a73b38dd755c335dd3ec3cd247bfe17db9afa7a6fa78a8abbb1aa460171f",
+      "bytes": 59520,
+      "artifact": 13389417631,
+      "member": "results/1-baseline-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/1-baseline-holdouts.batches.jsonl",
+      "sha256": "91a0454aad1d22000223aa790fc7a0b05b38f0dbe04be7672b25d3e14b34458f",
+      "bytes": 59551,
+      "artifact": 13389417631,
+      "member": "results/1-baseline-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/1-baseline-region.batches.jsonl",
+      "sha256": "e8f5e06609ea9b0032d5962f85779841e52f22ec25df41cf7b46171e251d70ff",
+      "bytes": 193122,
+      "artifact": 13389417631,
+      "member": "results/1-baseline-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/2-candidate-half.batches.jsonl",
+      "sha256": "7ba7b5b25749308697459862c19f48791ee53a31b876a2839fcc1412e226e98b",
+      "bytes": 60223,
+      "artifact": 13389417631,
+      "member": "results/2-candidate-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/2-candidate-holdouts.batches.jsonl",
+      "sha256": "d3f108df9174271ad8787ae23967c92b413cf5b25da07fc4677f08eaf11bc598",
+      "bytes": 58295,
+      "artifact": 13389417631,
+      "member": "results/2-candidate-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/2-candidate-region.batches.jsonl",
+      "sha256": "fd228ad8115d9783e443335c6ceda9d3405e758ba4f4d1e21a436375a04bcf71",
+      "bytes": 193275,
+      "artifact": 13389417631,
+      "member": "results/2-candidate-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/3-candidate-half.batches.jsonl",
+      "sha256": "84532ef9622ef10765263991849f150f6e0fdc6a5e2b3b42e60b7e79ac1ff717",
+      "bytes": 59557,
+      "artifact": 13389417631,
+      "member": "results/3-candidate-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/3-candidate-holdouts.batches.jsonl",
+      "sha256": "dd6e49cc8693cfbf984190726827d4fccd1c46d40dce461e4dbd8151f9966fa2",
+      "bytes": 58970,
+      "artifact": 13389417631,
+      "member": "results/3-candidate-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/3-candidate-region.batches.jsonl",
+      "sha256": "ac3f41480781089fb6afb12315785ee5482a4dde27d51709ceabac9a0390c0ba",
+      "bytes": 193242,
+      "artifact": 13389417631,
+      "member": "results/3-candidate-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/4-baseline-half.batches.jsonl",
+      "sha256": "db230437a101515c9c4f21a6552a4b526deac5265515e5ea75f168e9c3a2a570",
+      "bytes": 60920,
+      "artifact": 13389417631,
+      "member": "results/4-baseline-half.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/4-baseline-holdouts.batches.jsonl",
+      "sha256": "6d467ed7e27643fbda1bd085101ed8fd9cdba8720fdb45b765f573838d5cf6de",
+      "bytes": 58223,
+      "artifact": 13389417631,
+      "member": "results/4-baseline-holdouts.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/4-baseline-region.batches.jsonl",
+      "sha256": "c794a84826b9414c97f08279f8da135f505b473fc91fba967ddd92e3f5f1561a",
+      "bytes": 187438,
+      "artifact": 13389417631,
+      "member": "results/4-baseline-region.batches.jsonl"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/all-runtimes-preflight-complete.json",
+      "sha256": "8a4d2b68c2f78cc1bf7cc50817210f24fec548c860ee97292f92d083c1538c53",
+      "bytes": 53,
+      "artifact": 13389417631,
+      "member": "results/all-runtimes-preflight-complete.json"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/decision.json",
+      "sha256": "624db4aa2dc0a45645aa17bbfc775a6844d9943e2fd4afe1188daf326050536b",
+      "bytes": 10074,
+      "artifact": 13389417631,
+      "member": "results/decision.json"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/frozen-inputs.json",
+      "sha256": "bd54ca6b1401528bd288de7952bcdbabe46bf8cba445062beca1636bf3532230",
+      "bytes": 394,
+      "artifact": 13389417631,
+      "member": "results/frozen-inputs.json"
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/README.md",
+      "sha256": "c7c0c2bdcea3e80385201c5d127c5cee55886f1c7cea1e24ed815a955eeada83",
+      "bytes": 5051
+    },
+    {
+      "path": "benchmarks/region-stain-warm-same-host-v1/timing-samples.json",
+      "sha256": "04c8d5fb10a433b627e9ff3c2c9a026d011fb8fe93403c287defa5461885d329",
+      "bytes": 99408
+    }
+  ],
+  "full_report_locators": [
+    {
+      "artifact": 13389417631,
+      "member": "results/1-baseline-region.json",
+      "sha256": "839c6ac50ef7881f82514513fab9aec01d05a70f24c53cbdc60ed1e00cc03e8b",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/1-baseline-half.json",
+      "sha256": "7a8c3b725ac8e19e921557450822095327bfc77d23c7e7ce3ad1bc4cde1506d8",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/1-baseline-holdouts.json",
+      "sha256": "ccc5185ed4ad3d63124eea6e3114ada75f125da7afc0384f45a7bbc4f1b20fa9",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/2-candidate-region.json",
+      "sha256": "e2530cb392e90c1653e0517053f77df907e98e3c60db232579703a65e6e6bd47",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/2-candidate-half.json",
+      "sha256": "322bcee5eb3bcf5e24df82553d87981d3d311e332266ec3d24117517f337ce64",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/2-candidate-holdouts.json",
+      "sha256": "dbc7833d495648f519dbea943becb7d65462d6a572a171c98e3b9073ab5a4240",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/3-candidate-region.json",
+      "sha256": "9c9cd3f519403ee4c71e387fa290a09c65675e7ce1ec02566bb7ad814d65292f",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/3-candidate-half.json",
+      "sha256": "47baf4200caea8186d51b3a4a9d3052f49b5cd79e5c8fdd71c8fc9331505464c",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/3-candidate-holdouts.json",
+      "sha256": "3ae84b6da9f7187ed98ecd044558326b6332b7078e2172fbdb5775ebdffeec60",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/4-baseline-region.json",
+      "sha256": "eabf22ff31086e550ac8edaafdb2558475ff601001ccae81248eacebed1ee403",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/4-baseline-half.json",
+      "sha256": "7fc23b9f0e6366f60d40714f348148a3c332ed54106380cbf664216d51c30df3",
+      "published_full_body": false
+    },
+    {
+      "artifact": 13389417631,
+      "member": "results/4-baseline-holdouts.json",
+      "sha256": "ef33422910fe141e80915a2eaabb1357af02f44c0148b86032415f23f03a1ae4",
+      "published_full_body": false
+    }
+  ],
+  "root_reconstruction": {
+    "path": "build/region-stain-warm-same-host-v1/verification-v1.json",
+    "scope": "Already completed rawreconstruction reused; not rerun for publication"
+  },
+  "root_analyzer": {
+    "path": "build/region-stain-warm-same-host-v1/analyze_v1.py"
+  },
+  "independent_review": {
+    "path": "build/region-stain-warm-independent-performance-review-v1/review-v2.json",
+    "sha256": "e9e9764e9d7790a70484618ec58cd7735c7b51df930c6f1e79c8c8d281ab7948"
+  },
+  "watcher": {
+    "path": "build/region-stain-warm-same-host-v1/watch-v1/handoff-v1.json"
+  },
+  "diagnosis": {
+    "solefailure_component": "Pair1 CPPcandidate/prior1.000552484 passesdirect; originalcandidate/prior.923888355 givesnormalized1.082979863. Pair2passes.",
+    "underlying_reference_timing_cause": "UNKNOWN; observed dispersion is not CPU/noise causation",
+    "existing_double_SIMD": "Float64output route retains existing double-output SIMD; newfloat/float-only branch ineligible. Relevant old sourcebodies unchanged, machine-code/layout equality unclaimed.",
+    "future_diagnostic": "Proposed original-only diagnostic was not started and does not authorize unchanged acceptance rerun."
+  },
+  "first_decision": {
+    "path": "coverage/evidence/region-stain-same-host-discard-v1.json",
+    "status": "Unchanged historical DISCARD"
+  },
+  "whole_product_qualified": false,
+  "source_merged": false,
+  "closeout": {
+    "result": "Second DISCARD published withall1120samples/12exactjournals/40gates; tinyconstructorfixed butsolef64matrix normalizedfailure retained. Rootpublication review/commit pending.",
+    "waste_reuse": "Useful rejected changed-source experiment; reused one retained170844084B archive and closedindependentreview. Publishedcompacttimingprojection whilevalidationpayloads remainonce inartifact; no newtiming/diagnostic/build/download/original/env/core/wheel hash.",
+    "observed_cost": "No new scientific work; publication bytecount inhandoff, no extra measurement ofwaste.",
+    "next_plan_change": "Root preserve bothDISCARDs and denominator diagnosis/unknownmechanism inexistingplan, review andcommit these named publicationfiles. No averagewaiver/favorable-noise retry/partialpromotion; anysinglecausaldiagnostic requires separateexplicitauthorization."
+  }
+}
