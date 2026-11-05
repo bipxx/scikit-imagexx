@@ -22,7 +22,9 @@ struct LabelPairInput {
 
 // Logical CSR values, not a SciPy class/storage ABI. Unique row/column pairs
 // are sorted lexicographically. Ignored truth labels retain explicit zero
-// entries; both shape maxima include ignored positions. Normalization divides
+// entries before normalization; all-ignored normalization instead follows the
+// source 0/0 weights and reports invalid status. Both shape maxima include
+// ignored positions. Normalization divides
 // each source pixel weight BEFORE duplicate coalescing, never integer_count/N.
 // Fresh vectors own their storage and do not alias input. Initial public CSR
 // class/index-width/storage packaging remains an explicit SciPy provider until

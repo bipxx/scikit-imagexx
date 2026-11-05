@@ -768,7 +768,7 @@
   "native_calls": 0,
   "timed_batches": 0,
   "source_freeze": {
-    "include/skimagexx/label_pair_metrics.hpp": "4c5697551e4e3402bd7a946b850112d113246faaa383b863eba5031e79bf72c5",
+    "include/skimagexx/label_pair_metrics.hpp": "56c95395c530a878f9d5d0bb34b11a70e7a0ab5bee8b4341d010023c3883f747",
     "tests/label_pair_metrics_contract.py": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27",
     "tests/label_pair_metrics_observer.py": "476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc",
     "tests/test_label_pair_metrics_reference.py": "5e3f3081fa2428a3224466d97ebdfd705bde6d28da07ba77e24f76e08460a2e8"
@@ -789,7 +789,7 @@
       "im_test.reshape(-1) then im_true.reshape(-1)",
       "isin(true,ignore,invert=True).astype(float)",
       "optional in-place data divide by count_nonzero(data)",
-      "csr_array coordinate constructor including ignored explicitzero pairs/maxima",
+      "csr_array coordinate constructor preserves all observed pairs/maxima, including explicitzero weights or allignored normalizedNaN weights; no eliminate_zeros",
       "optional csr_matrix conversion; validate sparse_type after construction"
     ],
     "normalization": "per-pixel divide before duplicate coalescing; no count/N shortcut",
