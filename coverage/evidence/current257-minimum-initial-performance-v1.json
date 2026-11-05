@@ -1,0 +1,99 @@
+{
+  "source": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+  "run": 41959757847,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41959757847",
+  "admitted_scope": "Exact minimum product and12 initial ellipsoid public-call one-worker workloads only; no fullAPI parity, wholeproduct qualification, priorCPP optimizationKEEP or librarywide speed claim. Recorded output agreement is reconstructed from authenticated unchanged strict preflight assertions and raw metadata, not new algorithm execution.",
+  "prepared_members": {
+    "product": 191,
+    "SDK": 90,
+    "XML": 16226
+  },
+  "worker_count": 1,
+  "cases": 12,
+  "samples": 168,
+  "wins": 12,
+  "losses": 0,
+  "geometric_mean_original_over_cpp": 16.77502517367362,
+  "minimum_accepted_batch_ns": 104944829,
+  "minimum_warmup_group_ns": 259731318,
+  "runtime": {
+    "source_sha256": "7b8d916c2ac671fccf33d0183125665db89898e295715f58d17c2f8c65c62a2e",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "core_sha256": "d8868c9a4c80c0722099da586d7a35a1fcfa398dfbfced38cc3950c06c0a9217",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39"
+  },
+  "production_source_sha256": "7b8d916c2ac671fccf33d0183125665db89898e295715f58d17c2f8c65c62a2e",
+  "core_sha256": "d8868c9a4c80c0722099da586d7a35a1fcfa398dfbfced38cc3950c06c0a9217",
+  "reports": [
+    {
+      "path": "benchmarks/ellipsoid-minimum-initial.json",
+      "sha256": "16e5e29199d70103bf1499aba23a3fb27e1e3c9b082fa665bb3e486565efa246",
+      "bytes": 144759,
+      "artifact": 13385122593,
+      "member": "ci-ellipsoid.json",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/ellipsoid-minimum-initial.md",
+      "sha256": "45259edb12d2dd2c97a306aed0996bfadedb15dec0ab60f9716502d548357a7c",
+      "bytes": 1427,
+      "artifact": 13385122593,
+      "member": "ci-ellipsoid.md",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/ellipsoid-minimum-initial.batches.jsonl",
+      "sha256": "dab2c5bebf5deb52d8c93490476ec63e4af6293f14c62a35089cf802ffee07bf",
+      "bytes": 195140,
+      "artifact": 13385122593,
+      "member": "ci-ellipsoid.batches.jsonl",
+      "unchanged_raw_bytes": true
+    }
+  ],
+  "root_admission": {
+    "path": "build/candidate257-genuine-minimum-v1/root-admission-v1.json",
+    "sha256": "49e102a39ed9c1814b0a115a41a7f47825926edf7ae1145b42e7400d6f322627"
+  },
+  "input_auth": {
+    "path": "build/candidate257-genuine-minimum-v1/input-auth-v1/audit.json",
+    "sha256": "940a44aba85e786ccc4a8ecb17e4296ad1f5a357e0a12ee938aa87ee4ad5800e"
+  },
+  "metric_verification": {
+    "path": "build/candidate257-genuine-minimum-v1/reports-v1/verification.json",
+    "sha256": "5253c64293892842aecf3f6c616a9c875efd910771f7bcfe36d630d70b919119"
+  },
+  "independent_review": {
+    "path": "build/candidate257-independent-minimum-review-v1/review.json",
+    "sha256": "5c375a582f49e9f27f1abd0d7403c48f91b88d9ca9fbe7a29b2f50346141f722"
+  },
+  "retention": {
+    "artifact": 13385122593,
+    "artifact_name": "ci-performance-minimum",
+    "run": 41959757847,
+    "bytes": 85499595,
+    "sha256": "f38ba768a118835969020a103b441da542e539bf0b5dc22012f408c896b944c4",
+    "download_seconds": 6.658252299996093,
+    "exit_code": 0,
+    "prior_wrong_role_artifact": 13385516637,
+    "waste": "Producer selected first from ID order; retained85MB producer archive lacks timing reports. Correct role resolved from exact workflow upload name, no package auth repeated."
+  },
+  "full_qualification": {
+    "run": 41962339458,
+    "accepted": false,
+    "accepted_baseline": 252
+  },
+  "whole_product_qualified": false,
+  "closeout": {
+    "result": "Scoped minimum/initial ellipsoid results independently admitted;12wins/168samples. Full257 campaign and shipping remain open.",
+    "waste_reuse": "Reused existing stdlib verifier; no new originals/build/env/timing. Preventable wrong-role85MBproducer download before selecting upload by exact workflow name; preserved both archives, no duplicate wheel authentication.",
+    "next_plan_change": "Root verifies artifact name/upload role from frozen workflow and actual member layout before download; C reviews bounded receipts/raw samples without rehashing archives; full257 watcher continues."
+  }
+}

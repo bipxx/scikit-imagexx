@@ -1,0 +1,5713 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-05T03:21:45.442897+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "source_sha256": "7b8d916c2ac671fccf33d0183125665db89898e295715f58d17c2f8c65c62a2e",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "core_sha256": "d8868c9a4c80c0722099da586d7a35a1fcfa398dfbfced38cc3950c06c0a9217",
+    "numpy_binary_sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_calibration_min_ms": 250,
+    "raw_samples": 168,
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "fallback_enabled": false,
+    "deadline_utc": "2026-11-05T04:21:17.963863+00:00",
+    "contract_sha256": "fcd999168769335fadc22367b61bdd980971cb667fac4576a2be5579c5277d64",
+    "harness_sha256": "d1a1625e4ffb159d1fb3c3d32cda01d64b96684455e77dfc78209999ec794103",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "scope": "Twelve bounded ordinaryscalar one-worker initial ellipsoid comparisons only. Larger970k geometry is prospective safe allocation audit, not captured/reference/native credit. Originalpublic0.26 is oracle; no third mathematical oracle claimed."
+  },
+  "results": [
+    {
+      "case_id": "ellipsoid-bench/unit-levelset-False",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/unit-levelset-False",
+        "api": "draw.ellipsoid",
+        "axes": [
+          1,
+          1,
+          1
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": false
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          5,
+          5,
+          5
+        ],
+        "max_output_elements": 125,
+        "max_probe_elements": 15,
+        "max_dense_grid_elements": 375,
+        "conservative_peak_working_bytes": 10120
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "|b1",
+            "dtype_metadata": null,
+            "shape": [
+              5,
+              5,
+              5
+            ],
+            "strides": [
+              25,
+              5,
+              1
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "c932e9e5690deef6502352de160903ee09488063ad20cbc0a175c50cfd7209af"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09495265622423743,
+      "cpp_ms": 0.004984556474541225,
+      "speedup": 19.04936912826869,
+      "samples_ms": [
+        [
+          0.09502516584158416,
+          0.09487370189925681,
+          0.09495265622423743,
+          0.09483782095709571,
+          0.0952206834295136,
+          0.09482086341059602,
+          0.09498625803792252
+        ],
+        [
+          0.004984556474541225,
+          0.005036517207004161,
+          0.005002844004554611,
+          0.004988572715012833,
+          0.004974818852210124,
+          0.004936196132716182,
+          0.004944894583226028
+        ]
+      ],
+      "loops": [
+        [
+          1212,
+          1211,
+          1213,
+          1212,
+          1213,
+          1208,
+          1213
+        ],
+        [
+          23214,
+          23072,
+          22834,
+          22987,
+          23053,
+          23117,
+          23298
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        285289567,
+        357600261
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 196598,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 585,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 56024953,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1201,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113979405,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1212,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115088611,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 43694,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2632,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 13102513,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23101,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114444667,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23214,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115853924,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23043,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114155463,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 23214,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115711494,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 1212,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115170501,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 1211,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114892053,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 23072,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116202525,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 22834,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114234940,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 1213,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115177572,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 1212,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114943439,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 22987,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114672321,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 23053,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114684499,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 1213,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115502689,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 1208,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114543603,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 23117,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114110046,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 23298,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115206154,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "ellipsoid-bench/unit-levelset-False",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 1213,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115218331,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/unit-levelset-True",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/unit-levelset-True",
+        "api": "draw.ellipsoid",
+        "axes": [
+          1,
+          1,
+          1
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": true
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          5,
+          5,
+          5
+        ],
+        "max_output_elements": 125,
+        "max_probe_elements": 15,
+        "max_dense_grid_elements": 375,
+        "conservative_peak_working_bytes": 10120
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              5,
+              5,
+              5
+            ],
+            "strides": [
+              200,
+              40,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "71f38fc03683ba0355a3f4ac35fed0f7039d8e8c548795ebcd8787123c53ef6c"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09464737653814602,
+      "cpp_ms": 0.0048669909551986475,
+      "speedup": 19.446795239479332,
+      "samples_ms": [
+        [
+          0.09497193585526316,
+          0.09475069777043765,
+          0.0945341647446458,
+          0.09473383566146261,
+          0.09437952306425042,
+          0.09464737653814602,
+          0.09443966694078948
+        ],
+        [
+          0.0048669909551986475,
+          0.004842784121206992,
+          0.004868041142038994,
+          0.004891380968506604,
+          0.004872846072051381,
+          0.0048272377865344685,
+          0.004860098472128946
+        ]
+      ],
+      "loops": [
+        [
+          1216,
+          1211,
+          1214,
+          1217,
+          1214,
+          1219,
+          1216
+        ],
+        [
+          23660,
+          23629,
+          23747,
+          23624,
+          23511,
+          23601,
+          23824
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        302336714,
+        355492600
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 151021,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 762,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 72087516,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1216,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115208647,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1214,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114889530,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 50144,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2294,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 11228014,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23496,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115188618,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23458,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114789202,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23502,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114236622,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 1216,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115485874,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 23660,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115153006,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 23629,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114430146,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 1211,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114743095,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 1214,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114764476,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 23747,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115601373,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 23624,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115553984,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 1217,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115291078,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 1214,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114576741,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 23511,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114565484,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 23601,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113927639,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 1219,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115375152,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 1216,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114838635,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "ellipsoid-bench/unit-levelset-True",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 23824,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115786986,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/tiny-fractional-levelset-False",
+        "api": "draw.ellipsoid",
+        "axes": [
+          0.125,
+          0.25,
+          0.5
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": false
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          3,
+          3,
+          3
+        ],
+        "max_output_elements": 27,
+        "max_probe_elements": 9,
+        "max_dense_grid_elements": 81,
+        "conservative_peak_working_bytes": 2232
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "|b1",
+            "dtype_metadata": null,
+            "shape": [
+              3,
+              3,
+              3
+            ],
+            "strides": [
+              9,
+              3,
+              1
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "325b366ec0a819e5df87bfe72206d6492cdb94c8ad08257caf12ae8782121868"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09848575879828327,
+      "cpp_ms": 0.004565836796896648,
+      "speedup": 21.570144352339316,
+      "samples_ms": [
+        [
+          0.09896646503178928,
+          0.09802121582115218,
+          0.0989521737649063,
+          0.09844376526225279,
+          0.09838963387510692,
+          0.09878125149700599,
+          0.09848575879828327
+        ],
+        [
+          0.004568102291783119,
+          0.0045670724925521355,
+          0.0045623405345300025,
+          0.004555468957035744,
+          0.004567926005149535,
+          0.004552113322211631,
+          0.004565836796896648
+        ]
+      ],
+      "loops": [
+        [
+          1101,
+          1163,
+          1174,
+          1163,
+          1169,
+          1169,
+          1165
+        ],
+        [
+          25046,
+          25175,
+          25181,
+          25207,
+          25245,
+          25176,
+          25263
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        311570294,
+        360234514
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 151522,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 759,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 75624463,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1155,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114472027,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1161,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 121322282,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 35863,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3207,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 14656942,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 25163,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115403673,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 25075,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114735834,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 25133,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115402202,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 25046,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114412690,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 1101,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 108962078,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 1163,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113998674,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 25175,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114976050,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 25181,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114884297,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 1174,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116169852,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 1163,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114490099,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 25207,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114829706,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 25245,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115317292,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 1169,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115017482,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 1169,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115475283,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 25176,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114604005,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 25263,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115346735,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-False",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 1165,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114735909,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/tiny-fractional-levelset-True",
+        "api": "draw.ellipsoid",
+        "axes": [
+          0.125,
+          0.25,
+          0.5
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": true
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          3,
+          3,
+          3
+        ],
+        "max_output_elements": 27,
+        "max_probe_elements": 9,
+        "max_dense_grid_elements": 81,
+        "conservative_peak_working_bytes": 2232
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              3,
+              3,
+              3
+            ],
+            "strides": [
+              72,
+              24,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "9c4ad697ba4a8fc317dc5769ca5f6ab6a2c1389b648a89e3ff570f89c80cbc35"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.09848412596401028,
+      "cpp_ms": 0.004617343248138459,
+      "speedup": 21.32917582068767,
+      "samples_ms": [
+        [
+          0.09872447048759624,
+          0.09840883090128756,
+          0.09843622840034216,
+          0.10015302395209581,
+          0.09824187728459531,
+          0.09860601366353544,
+          0.09848412596401028
+        ],
+        [
+          0.004581233284588512,
+          0.004618635900091623,
+          0.005054593333333334,
+          0.004612554017229255,
+          0.004628806794480988,
+          0.004617343248138459,
+          0.004614300839121532
+        ]
+      ],
+      "loops": [
+        [
+          1169,
+          1165,
+          1169,
+          1169,
+          1149,
+          1171,
+          1167
+        ],
+        [
+          24618,
+          25103,
+          24900,
+          22752,
+          24932,
+          24845,
+          24907
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        306692264,
+        360887030
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 148268,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 776,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 76244775,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1171,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115356439,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1168,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114942782,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 32738,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3513,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 16505308,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 24477,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114074489,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 24676,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114925497,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 24692,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115348998,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 1169,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115408906,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 24618,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112780801,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 25103,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115941617,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 1165,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114646288,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 1169,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115071951,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 24900,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 125859374,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 22752,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 104944829,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 1169,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117078885,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 1149,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112879917,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 24932,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115405411,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 24845,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114717893,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 1171,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115467642,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 1167,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114930975,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "ellipsoid-bench/tiny-fractional-levelset-True",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 24907,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114928391,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+        "api": "draw.ellipsoid",
+        "axes": [
+          1.1,
+          2.2,
+          3.3
+        ],
+        "spacing": [
+          0.3,
+          0.6,
+          1.2
+        ],
+        "levelset": false
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          10,
+          9,
+          8
+        ],
+        "max_output_elements": 720,
+        "max_probe_elements": 27,
+        "max_dense_grid_elements": 2160,
+        "conservative_peak_working_bytes": 57816
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "|b1",
+            "dtype_metadata": null,
+            "shape": [
+              10,
+              9,
+              8
+            ],
+            "strides": [
+              72,
+              8,
+              1
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "944ba48e7b32430e1f6eb12fee683e624ac78ac0e4ee500c37dbc6b3fa4a0e54"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.1225031460554371,
+      "cpp_ms": 0.005333745796056021,
+      "speedup": 22.96756364842522,
+      "samples_ms": [
+        [
+          0.12237652598091199,
+          0.1223925085106383,
+          0.12265969787234043,
+          0.12180239658848614,
+          0.12267859470899471,
+          0.1225031460554371,
+          0.12263487007454739
+        ],
+        [
+          0.005329537067926976,
+          0.005325944202428399,
+          0.005324963645625898,
+          0.0053867898319211,
+          0.005333745796056021,
+          0.005353536153239646,
+          0.005364453821804302
+        ]
+      ],
+      "loops": [
+        [
+          943,
+          940,
+          940,
+          938,
+          945,
+          938,
+          939
+        ],
+        [
+          21582,
+          21578,
+          21593,
+          21597,
+          21349,
+          21561,
+          21482
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        299946238,
+        361507569
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 200514,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 574,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 70560658,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 936,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113908725,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 945,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115276341,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 37815,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3042,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 16167923,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21638,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115266557,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21588,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115050550,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21579,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114984724,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 21582,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115022069,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 943,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115401064,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 940,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115048958,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 21578,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114923224,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 21593,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114981940,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 940,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115300116,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 938,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114250648,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 21597,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116338500,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 21349,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113870139,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 945,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115931272,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 938,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114907951,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 21561,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115427593,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 21482,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115239197,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 939,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115154143,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+        "api": "draw.ellipsoid",
+        "axes": [
+          1.1,
+          2.2,
+          3.3
+        ],
+        "spacing": [
+          0.3,
+          0.6,
+          1.2
+        ],
+        "levelset": true
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          10,
+          9,
+          8
+        ],
+        "max_output_elements": 720,
+        "max_probe_elements": 27,
+        "max_dense_grid_elements": 2160,
+        "conservative_peak_working_bytes": 57816
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              10,
+              9,
+              8
+            ],
+            "strides": [
+              576,
+              64,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "3aaca6023fc195b4b759405365a9b3bf9ed72ca96192eb7e8e17a0da79951ab0"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.1225076153028693,
+      "cpp_ms": 0.005098653059417338,
+      "speedup": 24.027446832569773,
+      "samples_ms": [
+        [
+          0.12279932059447983,
+          0.12221798292422625,
+          0.12245819128586609,
+          0.12226151914893618,
+          0.1225076153028693,
+          0.12411927156549521,
+          0.12345464724919093
+        ],
+        [
+          0.005091693959435626,
+          0.005098653059417338,
+          0.0050896252272223455,
+          0.005090123611418456,
+          0.005138737617846235,
+          0.00526445218945487,
+          0.00514830345616846
+        ]
+      ],
+      "loops": [
+        [
+          942,
+          937,
+          941,
+          940,
+          941,
+          939,
+          927
+        ],
+        [
+          22680,
+          22586,
+          22555,
+          22595,
+          22593,
+          22380,
+          21845
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        306744743,
+        360885388
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 183640,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 627,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 76810215,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 939,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114664795,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 942,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115086093,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 34461,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3338,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 17114482,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 22430,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113893363,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 22648,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114882464,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 22672,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114960618,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 942,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115676960,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 22680,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115479619,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 22586,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115158178,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 937,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114518250,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 941,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115233158,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 22555,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114796497,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 22595,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115011343,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 940,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114925828,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 941,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115279666,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 22593,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116099499,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 22380,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117818440,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 939,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116547996,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 927,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114442458,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 21845,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112464689,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/anisotropic-levelset-False",
+        "api": "draw.ellipsoid",
+        "axes": [
+          8,
+          12,
+          16
+        ],
+        "spacing": [
+          0.5,
+          1.0,
+          2.0
+        ],
+        "levelset": false
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          34,
+          27,
+          19
+        ],
+        "max_output_elements": 17442,
+        "max_probe_elements": 80,
+        "max_dense_grid_elements": 52326,
+        "conservative_peak_working_bytes": 1396000
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "|b1",
+            "dtype_metadata": null,
+            "shape": [
+              34,
+              27,
+              19
+            ],
+            "strides": [
+              513,
+              19,
+              1
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "7c0ba5c4e22a51098a3859c48bb41f9d21f732e328345be3f4682578dcbae060"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.20580838543516874,
+      "cpp_ms": 0.01832243485186365,
+      "speedup": 11.232589287347643,
+      "samples_ms": [
+        [
+          0.20565788623853212,
+          0.20571966607142858,
+          0.20627648214285713,
+          0.20608348924731185,
+          0.20597396958855096,
+          0.20426984257602862,
+          0.20580838543516874
+        ],
+        [
+          0.01841040764849471,
+          0.01840477317112214,
+          0.018318789246279405,
+          0.01832243485186365,
+          0.01830075035845149,
+          0.01832282336091661,
+          0.018266743189421696
+        ]
+      ],
+      "loops": [
+        [
+          545,
+          560,
+          560,
+          558,
+          559,
+          559,
+          563
+        ],
+        [
+          6145,
+          6247,
+          6249,
+          6278,
+          6277,
+          6284,
+          6277
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        320230954,
+        272469206
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 272620,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 422,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 87147933,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 557,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115944720,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 553,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116865681,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 52597,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2187,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 40149204,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 6265,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115866325,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 6219,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116401080,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 6145,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113131955,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 545,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112083548,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 560,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115203013,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 6247,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114974618,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 6249,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114474114,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 560,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115514830,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 558,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114994587,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 6278,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115028246,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 6277,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114873810,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 559,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115139449,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 559,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114186842,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 6284,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115140622,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 6277,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114660347,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-False",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 563,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115870121,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/anisotropic-levelset-True",
+        "api": "draw.ellipsoid",
+        "axes": [
+          8,
+          12,
+          16
+        ],
+        "spacing": [
+          0.5,
+          1.0,
+          2.0
+        ],
+        "levelset": true
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          34,
+          27,
+          19
+        ],
+        "max_output_elements": 17442,
+        "max_probe_elements": 80,
+        "max_dense_grid_elements": 52326,
+        "conservative_peak_working_bytes": 1396000
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              34,
+              27,
+              19
+            ],
+            "strides": [
+              4104,
+              152,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "5ba808ca1d9452856a8132557db99b03fdce0c6a19454d36d19ba273eb261f37"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.20425303736654804,
+      "cpp_ms": 0.011357004156769598,
+      "speedup": 17.984763811572474,
+      "samples_ms": [
+        [
+          0.20494435815602838,
+          0.20425303736654804,
+          0.2038139060283688,
+          0.20461397345132745,
+          0.20383357015985792,
+          0.20440694336283186,
+          0.20356171580817053
+        ],
+        [
+          0.011416384007116734,
+          0.011338243398848522,
+          0.01133898176082027,
+          0.011355372769397614,
+          0.011382502863349131,
+          0.011357004156769598,
+          0.011382016294686943
+        ]
+      ],
+      "loops": [
+        [
+          564,
+          562,
+          564,
+          565,
+          563,
+          565,
+          563
+        ],
+        [
+          10117,
+          10074,
+          10143,
+          10143,
+          10128,
+          10104,
+          10126
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        315928624,
+        259731318
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 274813,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 419,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 85876158,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 562,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116091585,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 557,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113686068,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 43574,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2640,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 30129111,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 10077,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114939847,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 10083,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114618786,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 564,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115588618,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 10117,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115499557,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 10074,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114221464,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 562,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114790207,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 564,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114951043,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 10143,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115011292,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 10143,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115177546,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 565,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115606895,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 563,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114758300,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 10128,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115281989,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 10104,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114751170,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 565,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115489923,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 563,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114605246,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "ellipsoid-bench/anisotropic-levelset-True",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 10126,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115254297,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/medium-levelset-False",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/medium-levelset-False",
+        "api": "draw.ellipsoid",
+        "axes": [
+          12,
+          16,
+          20
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": false
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          27,
+          35,
+          43
+        ],
+        "max_output_elements": 40635,
+        "max_probe_elements": 105,
+        "max_dense_grid_elements": 121905,
+        "conservative_peak_working_bytes": 3251640
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "|b1",
+            "dtype_metadata": null,
+            "shape": [
+              27,
+              35,
+              43
+            ],
+            "strides": [
+              1505,
+              43,
+              1
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "189797f1072fb6236e3168e6a52d222d7ece269b9522c893b4751fd3b792b9f6"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.34121254142011836,
+      "cpp_ms": 0.0331968752886836,
+      "speedup": 10.278453572900986,
+      "samples_ms": [
+        [
+          0.3407276231454006,
+          0.3403280177514793,
+          0.34121254142011836,
+          0.3417346982248521,
+          0.3410558783382789,
+          0.34367799112426034,
+          0.3415733283582089
+        ],
+        [
+          0.03323141331403763,
+          0.03320087864778966,
+          0.0331968752886836,
+          0.03312769206349206,
+          0.03323676497695852,
+          0.033117754695174806,
+          0.033193693636625395
+        ]
+      ],
+      "loops": [
+        [
+          337,
+          338,
+          338,
+          338,
+          337,
+          338,
+          335
+        ],
+        [
+          3455,
+          3461,
+          3464,
+          3465,
+          3472,
+          3461,
+          3473
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        327391593,
+        288692837
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 406395,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 283,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 96976786,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 336,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114287430,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 339,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115720982,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 65316,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1761,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 58657405,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3453,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114670782,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3463,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115299334,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 3455,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114814533,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 337,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114825209,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 338,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115030870,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 3461,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114908241,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 3464,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114993976,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 338,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115329839,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 338,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115506328,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 3465,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114787453,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 3472,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115398048,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 337,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114935831,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 338,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116163161,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 3461,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114620549,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 3473,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115281698,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 8,
+          "case_id": "ellipsoid-bench/medium-levelset-False",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 335,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114427065,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/medium-levelset-True",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/medium-levelset-True",
+        "api": "draw.ellipsoid",
+        "axes": [
+          12,
+          16,
+          20
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": true
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          27,
+          35,
+          43
+        ],
+        "max_output_elements": 40635,
+        "max_probe_elements": 105,
+        "max_dense_grid_elements": 121905,
+        "conservative_peak_working_bytes": 3251640
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              27,
+              35,
+              43
+            ],
+            "strides": [
+              12040,
+              344,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "702c857d7a29f28d13b966e015c853c08942dde47cc9356baf3cd1e39771f080"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 0.33454524347826087,
+      "cpp_ms": 0.019830927376229084,
+      "speedup": 16.869873865771563,
+      "samples_ms": [
+        [
+          0.33454524347826087,
+          0.33451264825581395,
+          0.33493591569767445,
+          0.3352209970930233,
+          0.33446118895348836,
+          0.3353412005813954,
+          0.3338116967930029
+        ],
+        [
+          0.019830927376229084,
+          0.019882982068965518,
+          0.019619520228215767,
+          0.019759113954281815,
+          0.01984217213537193,
+          0.019839412353347137,
+          0.019796950319130584
+        ]
+      ],
+      "loops": [
+        [
+          345,
+          344,
+          344,
+          344,
+          344,
+          344,
+          343
+        ],
+        [
+          5797,
+          5800,
+          5784,
+          5862,
+          5821,
+          5796,
+          5797
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        286224208,
+        273556360
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 697243,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 165,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 55155379,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 345,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115572605,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 344,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114798981,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 51436,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2236,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 44915824,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5725,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113895615,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5781,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114693485,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 345,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115418109,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 5797,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114959886,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 5800,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115321296,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 344,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115072351,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 344,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115217955,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 5784,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113479305,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 5862,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115827926,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 344,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115316023,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 344,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115054649,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 5821,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115501284,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 5796,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114989234,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 344,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115357373,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 343,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114497412,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 9,
+          "case_id": "ellipsoid-bench/medium-levelset-True",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 5797,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114762921,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/large-levelset-False",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/large-levelset-False",
+        "api": "draw.ellipsoid",
+        "axes": [
+          48,
+          48,
+          48
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": false
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          99,
+          99,
+          99
+        ],
+        "max_output_elements": 970299,
+        "max_probe_elements": 297,
+        "max_dense_grid_elements": 2910897,
+        "conservative_peak_working_bytes": 77626296
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "|b1",
+            "dtype_metadata": null,
+            "shape": [
+              99,
+              99,
+              99
+            ],
+            "strides": [
+              9801,
+              99,
+              1
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "6c8e44eac0e6164a3bfa490a2e5635e25ec0a9ac65946846125c3eed0d61c7ef"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 6.094402789473684,
+      "cpp_ms": 0.688980406060606,
+      "speedup": 8.845538618898825,
+      "samples_ms": [
+        [
+          6.113804947368421,
+          6.132644631578947,
+          6.094402789473684,
+          6.069211684210527,
+          6.12842747368421,
+          6.06285547368421,
+          6.069182105263158
+        ],
+        [
+          0.6887494071856288,
+          0.6891352994011976,
+          0.6985430479041916,
+          0.688980406060606,
+          0.6900596526946108,
+          0.6714153652694611,
+          0.6711276511627907
+        ]
+      ],
+      "loops": [
+        [
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19
+        ],
+        [
+          167,
+          167,
+          167,
+          165,
+          167,
+          167,
+          172
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        322340897,
+        339103974
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 10152647,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 72398636,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 122541638,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117247976,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 736330,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 157,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 108172348,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 167,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115061650,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 167,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115133646,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 167,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115021151,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116162294,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116520248,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 167,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115085595,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 167,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116656689,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115793653,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115315022,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 165,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113681767,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 167,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115239962,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116440122,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115194254,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 167,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112126366,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 172,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115433956,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 10,
+          "case_id": "ellipsoid-bench/large-levelset-False",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115314460,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "ellipsoid-bench/large-levelset-True",
+      "api": "draw.ellipsoid",
+      "parameters": {
+        "id": "ellipsoid-bench/large-levelset-True",
+        "api": "draw.ellipsoid",
+        "axes": [
+          48,
+          48,
+          48
+        ],
+        "spacing": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "levelset": true
+      },
+      "bounds": {
+        "axis_upper_bounds": [
+          99,
+          99,
+          99
+        ],
+        "max_output_elements": 970299,
+        "max_probe_elements": 297,
+        "max_dense_grid_elements": 2910897,
+        "conservative_peak_working_bytes": 77626296
+      },
+      "threads": 1,
+      "backend": "native",
+      "actual_C_returns": [
+        "draw_ellipsoid"
+      ],
+      "native_accepted": true,
+      "global_worker_snapshots": [
+        "get_num_threads"
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              99,
+              99,
+              99
+            ],
+            "strides": [
+              78408,
+              792,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "c1a3c323759eaab7329ba166bfa58287cdc7c2224cd14ac4f0bb71f65db9e668"
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "error": null,
+      "warnings": [],
+      "max_abs_error": 0.0,
+      "reference_ms": 6.1140788,
+      "cpp_ms": 0.35883904984423676,
+      "speedup": 17.038499022483677,
+      "samples_ms": [
+        [
+          6.047351684210526,
+          6.103203349999999,
+          6.0461331052631575,
+          6.1140788,
+          6.1303887368421055,
+          6.207371631578948,
+          6.128980894736842
+        ],
+        [
+          0.36029557632398757,
+          0.35836689687499995,
+          0.3627845202492212,
+          0.35831487697160885,
+          0.3592916105919003,
+          0.35883904984423676,
+          0.35877683800623056
+        ]
+      ],
+      "loops": [
+        [
+          19,
+          20,
+          19,
+          20,
+          19,
+          19,
+          19
+        ],
+        [
+          321,
+          320,
+          321,
+          317,
+          321,
+          321,
+          321
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        344354443,
+        325738756
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 7247456,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 16,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 95703366,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 120271189,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 121132432,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 436890,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 264,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 94807272,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 321,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114941053,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 322,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115553541,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114899682,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 321,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115654880,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 320,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114677407,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 122064067,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114876529,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 321,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116453831,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 317,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113585816,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 122281576,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116477386,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 321,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115332607,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 321,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115187335,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117940061,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116450637,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 11,
+          "case_id": "ellipsoid-bench/large-levelset-True",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 321,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115167365,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    }
+  ]
+}

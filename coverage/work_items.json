@@ -11,7 +11,7 @@
       "kind": "benchmark_tooling",
       "owner": "integrator",
       "branch": "ci/region-stain-compare-v1",
-      "state": "parity_passed",
+      "state": "measured",
       "apis": [],
       "target_apis": [
         "measure.regionprops",
@@ -30,10 +30,10 @@
         "half-stain-f32-simd-v1"
       ],
       "acceptance": "Fixed20cohortABBA1120samples, all12Region <=1.05old andtwoFtargets>=2x; all8stain<=1.05old,stdF32/K7>=1.25x. Actualgenuineinputauth/6CLIpreflight beforetiming, originals normalization andbothpairedpass gates/noaveragewaiver. Terminalcloseout: result/evidence,waste/reuse withobservedcostorunknown,nextowner/triggercorrection (or reviewed,nochange) beforedependentwork. No referencegoldrecapture/newenvironment/full localSDK rebuild or localtimingamidbuilds/tests.",
-      "current_checkpoint": "Controller119eb28b independently reviewed4b220e55; actual35-step prepare guard includes no-repeat timing. Prepared554/run41956997250 authenticated679526e4:189product/89SDK/15949XML;35timings skipped. Tooling published main0c5b4179. No performance samples or KEEP.",
+      "current_checkpoint": "TERMINALDISCARD41962343215/controller119, notsetupfailure. Root retained13386505806/APIsha77253632 once and reconstructed1120samples/40checks: ONLYtiny2d-constructor fails direct1.065462 firstpair and normalized1.059337 secondpair (limit1.05); alltargetgatespass. All6realpreflights andbefore/afterverify closed. IndependentBrawreviewpending; sourceunmerged.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Check existing runs, freeze UTC deadline, dispatch controller119 with prepared554/run41956997250/artifact13383644202; six real CLI preflights before isolated20cohort1120sample ABBA. Reuse product; independent root admission and all losses retained."
+        "action": "Preserve DISCARD/allraw; publish after independent raw review. Diagnose recurring lazyprovider self-import vs changed nativeconstructor traversal with same prepared core before successor. Source difference is hypothesis, not proven causal attribution. No unchanged retry/waiver; localtiming only when captures/builds/tests idle."
       }
     },
     {
@@ -63,10 +63,10 @@
         "draw-ellipsoid-frontend-v1"
       ],
       "acceptance": "Sourceclosed191product/90SDK/30families60checks/78selectors/257image260functions; fullactualsource-onlybarrier and4untimedactualCLIcohorts, independentcode+workflowreviews, then genuine/wheel/SDK/12case168sample/4profile gates. Terminalcloseout: result/evidence,waste/reuse withobservedcostorunknown,nextowner/triggercorrection (or reviewed,nochange) beforedependentwork. No referencegoldrecapture/newenvironment/full localSDK rebuild or localtimingamidbuilds/tests.",
-      "current_checkpoint": "Exact5a98a9df independent workflow3ac867d4/codebd3ee7c2 PASS. Genuine41959757847 SUCCESS/watchfb78b202: installed input/immutability pass,35old timings skipped, newellipsoid only. Source191product/90SDK/30families60checks/78selectors/257images260functions;2417effective setup=2410unchanged+7affected, not final full replay. Raw admission/full qualification remain open.",
+      "current_checkpoint": "Exact5a98 genuine41959757847 scoped rootadmission49e102a3 independentlyPASS5c375a58:191product/90SDK/16226XML0bad,12/12ellipsoidwins GM16.775025x/168samples,35oldtimingsskipped. Public evidence/current257-minimum-initial-performance-v1.json. Actualfull25741962339458 running, wholequalified252/main253 remain; finalshipping projection open.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Reuse genuine257; authenticate final artifact once and admit12case168sample ellipsoid results separately. Check matching runs then launch one four-profile campaign at exact5a98. Do not wait for unrelated optimization/publication; verify final source projection before shipping."
+        "action": "Publish reviewed scoped raw ellipsoid evidence once. B observes existing41962339458; fullqualification requires actual4profile SDK/corpus/product admission before final source projection/shipping. Reuse all minimum/reference/timing proofs; no new benchmark for noise."
       }
     },
     {
@@ -145,7 +145,7 @@
       "current_checkpoint": "Sealed0b0415bc independentlyreviewed9354a909;3native88records/20722controls each and4public564PASS. Trueportable-scalar successor valid, oldOpenMPflagmiss retained. Sourceclosure/comparisoncontract binding andgenuine/samehosttiming remainopen. Successor binding/public-core preparation554/run41956997250 authenticated679526e4; comparison unmeasured.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Reuse prepared554 with reviewed controller119; six real CLI preflights then fixed20cohortABBA1120samples before acceptance. Keep all baseline losses and unchanged holdouts."
+        "action": "Combined actualcomparison41962343215 is DISCARD on tinyRegionconstructor controls; no silent partial promotion. Reuse1120rawsamples and prepared554 product, review exact source scopes and diagnose failed mechanism before proposing a bounded successor; no unchanged-noise retry."
       }
     },
     {
@@ -170,7 +170,7 @@
       "current_checkpoint": "Nativea99f9c65 independentlyPASS65c69b50;143proofs/7originalrows/8modes authenticated. Publiccandidatecore/performance unmeasured; oldf64loss remains. Successor binding/public-core preparation554/run41956997250 authenticated679526e4; comparison unmeasured.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Reuse prepared554 with reviewed controller119; six real CLI preflights then fixed20cohortABBA1120samples before acceptance. Keep all baseline losses and unchanged holdouts."
+        "action": "Combined actualcomparison41962343215 is DISCARD on tinyRegionconstructor controls; no silent partial promotion. Reuse1120rawsamples and prepared554 product, review exact source scopes and diagnose failed mechanism before proposing a bounded successor; no unchanged-noise retry."
       }
     },
     {
@@ -36987,7 +36987,7 @@
       "qualification251_readiness": "Plan/current gates review complete; next assigned257 qualification watch or prospective review, not a live job claim.",
       "next_family_contract": "Plan route review complete; controller119 peer4b220 closed; next assigned comparison watch after root dispatch, no self-acceptance."
     },
-    "next_action": "Reuse successful257 genuine41959757847 at5a98: root final raw admission and one same-source4profile campaign after checking existing runs. Separately reuse prepared554/run419569/artifact13383644202 with reviewed controller119/peer4b220; freeze deadline,6realpreflights then isolated1120samples. NextAPI independent prospective ellipse-perimeter safety review before any capture. Per-task waste review updates affected next action before dependent work.",
+    "next_action": "B observes actual full25741962339458 and independently reviews rootraw comparisonDISCARD41962343215. C independently reviews scoped257 ellipsoid admission. A captures ONLYapproved29ellipseIDs/profile once after8c743011 safetyPASS; rootGO given. Root publishes reviewed evidence and diagnoses tinyconstructor recurring-self-import versus native-traversal cause before new optimization.",
     "current_checkpoint": {
       "main_image_names": 253,
       "qualified_image_names": 252,
@@ -37019,7 +37019,10 @@
       "optimization_prepare_source": "55465253ea03d5239a4a1d3b499ea236ebf948c1",
       "optimization_prepare_run": 41956997250,
       "optimization_prepare_status": "Authenticated189/89 product679526e4,15949XML/13deps exactEEA;35timings skipped. Corrected controller119 peer4b220 closed, published main0c5b. Reuse product for6realpreflights and fixedABBA; no samples or KEEP yet.",
-      "next_release_status": "Exact5a98 genuine41959757847 SUCCESS, installed-input/immutability and new timing command pass; raw results not yet independently admitted; same-source4profile campaign next after duplicate check."
+      "next_release_status": "Genuine257 scoped minimum/ellipsoid admitted49e102a3 peer5c375a58,12winsGM16.775025x; exactfull41962339458 running. No wholeproduct qualification or shipping yet.",
+      "next_release_qualification_run": 41962339458,
+      "optimization_comparison_run": 41962343215,
+      "optimization_comparison_status": "TERMINALDISCARD fixedcontrols, notsetup;1120samples40checks independentlyrootreconstructed;Bpeerpending. Sourceprivate, allbaseline lossesretained."
     }
   },
   "parallel_review": {
