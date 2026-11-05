@@ -2386,7 +2386,7 @@ def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
     cmake=(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()
     assert 'foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives draw_coordinates circle_perimeter line_nd)' in cmake
     assert 'target_link_libraries(${_current}_consumer PRIVATE skimagexx::skimagexx)' in cmake
-    for family in ('colocalization','footprint_shapes'):
+    for family in ('colocalization','footprint_shapes','line_nd'):
         source=(ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')).read_text()
         assert '#include <skimagexx/'+family+'.hpp>' in source and '#include <skimagexx/image.hpp>' in source
         assert '../src/' not in source and 'Python.h' not in source
