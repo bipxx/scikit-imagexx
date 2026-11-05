@@ -291,7 +291,7 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current258'
+CURRENT_PRODUCT_SCOPE = 'current260'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter')
 CURRENT_SDK_CLIENT_SCOPE = 'current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
@@ -367,6 +367,33 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tests/test_regionprops_bbox_extent_public.py', 'coverage/contracts/regionprops-bbox-extent-frontend-v1.json',
     'coverage/contracts/regionprops-scalar-runtime-v1.json', 'benchmarks/regionprops_scalars.py',
     'coverage/contracts/regionprops-scalars-benchmark-v1.json', 'tests/test_regionprops_scalars_benchmark.py',
+    'coverage/contracts/regionprops-strided-native-v2.json',
+    'coverage/contracts/regionprops-scalar-boundary-v2.json', 'tests/test_regionprops_scalar_boundary_v2.py',
+    'coverage/contracts/regionprops-performance-state-v2.json', 'coverage/contracts/regionprops-performance-scalars-v2.json',
+    'coverage/contracts/regionprops-performance-compare-v2.json', 'coverage/contracts/region-stain-controller-v1-context.json',
+    'tools/region_stain_compare.py', 'benchmarks/stain_f32_holdouts.py',
+    'coverage/contracts/region-stain-same-host-v1.json', 'tests/test_region_stain_compare.py',
+    'tests/test_regionprops_performance_v2.py', 'tests/test_regionprops_strided_sdk_scope.py',
+    'include/skimagexx/draw_polygon.hpp',
+    'src/draw_polygon.cpp',
+    'src/bind_draw_polygon.cpp',
+    'python/skimagexx/_draw_polygon.py',
+    'tests/draw_polygon_contract.py',
+    'tests/draw_polygon_observer.py',
+    'tests/test_draw_polygon_reference.py',
+    'coverage/contracts/draw-polygon-v1.json',
+    'tests/test_draw_polygon_native.cpp',
+    'coverage/contracts/draw-polygon-native-v1.json',
+    'tests/test_draw_polygon_public.py',
+    'coverage/contracts/draw-polygon-frontend-v1.json',
+    'tests/test_draw_polygon_default.py',
+    'tests/test_draw_polygon_sdk_scope.py',
+    'benchmarks/draw_polygon.py',
+    'coverage/contracts/draw-polygon-benchmark-v1.json',
+    'tests/test_draw_polygon_benchmark.py',
+    'tests/test_draw_polygon_benchmark_intake.py',
+    'coverage/contracts/draw-polygon-dtype-tag-v1.json', 'tests/test_draw_polygon_dtype_tag_reference.py',
+    'coverage/contracts/draw-polygon-runtime-v1.json',
     'include/skimagexx/draw_ellipsoid.hpp',
     'src/draw_ellipsoid.cpp',
     'src/bind_draw_ellipsoid.cpp',
@@ -504,7 +531,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py')
+POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_draw_polygon_reference.py', 'test_draw_polygon_public.py', 'test_draw_polygon_default.py', 'test_draw_polygon_benchmark.py', 'test_draw_polygon_benchmark_intake.py', 'test_draw_polygon_dtype_tag_reference.py')
 
 
 def groups_for_source(root):
@@ -795,7 +822,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -845,6 +872,9 @@ def current_install_layout(read_bytes, names, profile):
     require('include/skimagexx/regionprops_state.hpp' in headers
             and 'skimagexx/_regionprops_state.py' in sources and 'skimagexx/_regionprops_state_class.py' in sources,
             'current RegionProperties install closure absent')
+    require('include/skimagexx/draw_polygon.hpp' in headers
+            and 'skimagexx/_draw_polygon.py' in sources,
+            'current polygon install closure absent')
     require('include/skimagexx/circle_perimeter_aa.hpp' in headers
             and 'skimagexx/_circle_perimeter_aa.py' in sources,
             'current circle-AA install closure absent')

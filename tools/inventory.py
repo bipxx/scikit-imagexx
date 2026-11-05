@@ -16,6 +16,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
+    (('draw.polygon','draw.polygon2mask'),'tests/test_draw_polygon_public.py::test_draw_polygon_saved_public_pipeline','benchmarks/draw_polygon.py'),
     (('draw.ellipse_perimeter',),'tests/test_draw_ellipse_perimeter_public.py::test_ellipse_perimeter_saved_public_pipeline','benchmarks/ellipse_perimeter.py'),
     (('draw.ellipsoid',),'tests/test_draw_ellipsoid_public.py::test_ellipsoid_saved_public_pipeline','benchmarks/draw_ellipsoid.py'),
     (('draw.line_nd',),'tests/test_line_nd_public.py::test_line_nd_saved_public_pipeline','benchmarks/line_nd.py'),
@@ -172,6 +173,8 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
+            elif path in ('draw.polygon','draw.polygon2mask'):
+                entries[-1]['default_input_kind']='Frozen Python-int triangle geometry; image dtype labels are descriptor-only, not coordinate or image-pixel dtype coverage. Owned raster/orderedintp/boolscatter; numeric bounds, conversions, allocation and unsupported protocol/shape/frontiers explicit providers.'
             elif path == 'draw.ellipse_perimeter':
                 entries[-1]['default_input_kind']='Frozen unequal-axis coordinate geometry; descriptor dtype/pixels unused. Owned exact intp 0D/1D outputs, bounded axis and unit-circle rotation, explicit general Bezier/protocol frontier.'
             elif path == 'draw.ellipsoid':

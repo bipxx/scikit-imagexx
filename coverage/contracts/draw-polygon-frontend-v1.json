@@ -1,0 +1,127 @@
+{
+  "schema": "draw-polygon-frontend-v1",
+  "state": "COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_FRONTEND_AND_NATIVE_SUCCESSOR_REVIEW",
+  "base": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
+  "header": "ed8f00585aa0439d6a750ae701eb00702ea400a4",
+  "reference": "295ef53254a9e6aedec08eb33c6b8a1f659278cb",
+  "reference_peer": "6f21412ef0667d6ec1cc75bbd80b63db2a9a565d9e6cf61aa00d38ad351f2180",
+  "signatures": {
+    "polygon": "(r, c, shape=None)",
+    "polygon2mask": "(image_shape, polygon)"
+  },
+  "native_entries": [
+    "draw_polygon_prepare",
+    "draw_polygon_coords_into",
+    "draw_polygon_mask_into"
+  ],
+  "plan": "Ownsoneclassifierlabelraster+rowprefix/count; noinputpointers; countreadonlyprivateproperty. Pythonfreshoutputallocations, boolzero/scattercanonical and2disjointintparrays.",
+  "boundary": "Sourceorderedatleast1dr/c thenrmin/ceilmax,cmin/ceilmax,shapeclip,mutablecontiguousf64rthenctypedview. Bounds remainexplicitNumPy/math providers. Exactordinarynumericarrays/list/scalars firstfrontier; customprotocols/subclasses/object/complex/carrierfrontiers providerbeforeunassessedoperations. Unassessedtypedvalues/scan/FENV/provider gap nevernativecredit.",
+  "errors": "Saved7errors/profile ownedsourceordered: NPemptyreduce, literalPythonmasktransposeunpack, rank/writabilitymutableviewerror, np.zerosnegativeallocation. ConstnativeinputsdoNOTauthorizecopy-awayreadonlyf64error.",
+  "unsafe": "Nonemptyunequalnormalizedr/clengths andknownshortshape carriers quarantineNotImplemented, neverunsafeoriginalcalls. No originalerrorparityclaimfortheseexclusions.",
+  "workers": "Snapshotglobalonceonlyafterassessednormalization/ownederrors; stableworkerspassedprepare/fill, default1/current1or4.",
+  "checks": "All24savedIDs/profileworkers1/4\u00d7normal/disabled, originalprovidersdenied;17returns/7errors exactrawrows; realprepare/intoCreturns+localnative_resultPlan/nonNone; independentowningoutputs/zero-strideempty/lifetime/inputstate. Newtargetedprotocol/provider/quarantine/order/readonly/workercontrols; actualMSVCbindercompileonly.",
+  "calls": {
+    "new_originals": 0,
+    "timings": 0,
+    "new_environments": 0,
+    "fullSDKbuilds": 0
+  },
+  "limits": [
+    "Numericbounds/classconstructorNPprimitiveproviders explicit; sourcefullyownedclaimnotmade",
+    "Generalshape/protocol/FP/nonfinite/frontiers notinreference remainprovider/unassessed, broadergoalopen"
+  ],
+  "private_ABI": {
+    "prepare": "draw_polygon_prepare(mutableCfloat64rows,columns,first,last,workers)->owningprivatePlan/None",
+    "coords": "draw_polygon_coords_into(plan,freshowningCintprows,columns,workers)->True",
+    "mask": "draw_polygon_mask_into(plan,freshowningCbooloutput,workers)->True",
+    "count": "PrivatePlan.count readonly; no inputpointers retained"
+  },
+  "allocation": "Twoindependentnp.empty(intp), emptystride0. Ordinarymask np.empty(bool,C), nativezero+scatter exactlyonce; negative-shape literalnp.zeros aftersourceprep retains originalerrorphase. NPallocation primitiveprovider explicit.",
+  "proof": {
+    "modes": [
+      {
+        "profile": "minimum",
+        "mode": "normal",
+        "predecessor_parity_checks": 57,
+        "successor_link_admission_checks": 2,
+        "actual_avx2": true,
+        "workers_restored": 1
+      },
+      {
+        "profile": "minimum",
+        "mode": "scalar",
+        "predecessor_parity_checks": 57,
+        "successor_link_admission_checks": 2,
+        "actual_avx2": false,
+        "workers_restored": 1
+      },
+      {
+        "profile": "modern",
+        "mode": "normal",
+        "predecessor_parity_checks": 57,
+        "successor_link_admission_checks": 2,
+        "actual_avx2": true,
+        "workers_restored": 1
+      },
+      {
+        "profile": "modern",
+        "mode": "scalar",
+        "predecessor_parity_checks": 57,
+        "successor_link_admission_checks": 2,
+        "actual_avx2": false,
+        "workers_restored": 1
+      }
+    ],
+    "predecessor_checks_total": 228,
+    "saved_row_equalities": 192,
+    "saved_returns": 136,
+    "saved_error_equalities": 56,
+    "additional_boundary_controls": 36,
+    "successor_relink_admission_checks": 8,
+    "scope": "No finalfull228successor replay; rootapproved exactgate-onlyCPPinverse reuses normalenv228predecessorproofs. New2modulelinks/8selectednativeadmissionchecks againstactualsuccessorPIC.",
+    "native_predecessor": {
+      "source": "fbc06dc0760c91c806c0b14e3c49e51aed3634f8",
+      "PIC": "3ad16aa0563cbcf4dd603ebb542e195f44835893049b3898ff4c446b0b5bce78"
+    },
+    "native_successor": {
+      "source": "bc14bff2d9ec1ba14edc5a4eedf54a5255cca63d",
+      "PIC": "385f9285ae4a6a7b18df667b053ce1f38ef929f4e134def320e9446d4f54fecb",
+      "gate_only": "MXCSRbits13/14 addedtoexistingFTZ/DAZmask, enforcesalreadydeclarednearest; entireoldCPP recoveredbyone-maskinverse. Header/classifier/math unchanged.",
+      "A_author_proof": "build/worktrees/draw-polygon-native-v1/build/native-mxcsr-v2/handoff-v2.json",
+      "A_author_proof_sha256": "f4334c811b7faa043b6fe4b50936fac925d153ce1f09c94c3bbc884c632f0c10",
+      "limits": "NativeMSVCtest-only x87assumptioncorrection/rootguardpeer separate, doesnotchangeproduction/header/PIC; no fabricatedWindowsruntime/publicFPproof."
+    },
+    "MSVC": "ActualunchangedbinderTU /openmp /fp:strict compilePASS; nativeguard/test separateAproof.",
+    "component": "Newbinder+ignoredregistraradapter, retainedtrue_coreinitializer/FFTowner guard/SDK91archive, Anewleaf. Actualmodulebuiltins/publicdrawaliasoverlay, notshippingregistry/fullproduct.",
+    "provider_dtype_successor": {
+      "predecessor": "e60ec5b46f1fd8e67cf80b39898c0476d2b93df0",
+      "fix": "OnprepareNoneforwardoriginalnormalizedr/c, notcastf64rptr/cptr; preservesdtype/words beforeupstreammin/ceil. Alreadyconvertedprotocolsnotreplayed.",
+      "new_guard_checks": 4,
+      "candidate_only_diagnostics": 2,
+      "diagnostic": "Bothprofilesoldproviderstubobservedf64/2**53 afterdeclineduint64(2**53+1); newprovidergetsoriginalu64dtype/value/identities. No originalpixels/results/golds created.",
+      "reuse": "One-lineinverse entirewrapper, unchangednativepreparedtuple/binder/PIC and228+8ordinaryproofs; targetednewguardonly, no numericalgoldreplay."
+    },
+    "effective_unique_controls_and_saved_rows": 232,
+    "actual_test_executions": 240,
+    "A_native_test_only_successor": "b8ae4e7a570adfe756c59082588b2a8215d520d0 changesonlyWindowsUCRT testassertion, no production/header/PICchange orcomponentrelink."
+  },
+  "next_gate": "Rootindependentfrontendreview plusseparatenativeguardpeer, thenrootsharedCMake/export/registry/defaults/inventory/SDK integration+genuineproduct/benchmarks. No nativecount credit orperformanceclaim fromcomponent.",
+  "fallback_policy_successor": {
+    "predecessor": "a31aadbe4e4f90bce962abfe31f778e4ff0ec841",
+    "fix": "Both whole-image providers use existing _compat.fallback after unchanged normalization/hazard quarantine. Disabled fallback raises; enabled fallback emits FallbackWarning and invokes public provider once.",
+    "proof": "20 affected checks across four retained modes: 3 existing protocol/dtype nodes plus 2 new strict-policy nodes per mode. Public/private original stubs prevent real algorithms; disabled tests require zero native entries/getter.",
+    "reuse": "Exact whole-wrapper inverse; native/error branches, binder/header/PIC unchanged. Reuse 228 gold/control nodes plus 8 link smokes and 4 dtype guards; no relink or gold replay.",
+    "effective_unique_nodes": 240,
+    "actual_test_executions_including_affected_rechecks": 260
+  },
+  "tagged_float64_successor": {
+    "reason": "ActualNumPy copies of taggedpolygon2mask columnviews preserve metadata andfloat64equivalence but notdescriptoridentity inbothprofiles; pybind .is pointeridentity rejected those operands.",
+    "source_change": "Onlyprepare inputpredicate:float64typenum plus explicit nativebyteorder, allotherentry/outputchecks unchanged.",
+    "saved_reference": "coverage/contracts/draw-polygon-dtype-tag-v1.json",
+    "capture": "Exactly4once-onlyoriginals,2internalpolygondependencies, no errors/warnings/FPevents; allrawmetadata/words preserved, old24matrix unchanged.",
+    "proof": "32newchecks:16nativepublicsavedrow/witness+12privatef32/swapped/rankrefusal+4saved-onlyvalidators; normal/disabled bothprofiles workers1/4/default1. Two binder-onlycompiles/links+MSVCcompile, samekernel385f/SDK91donor.",
+    "reuse": "Exactinverse entireoldbinder/wrapperunchanged;228oldnative/error+8leaflink+4dtypeguard+20policychecks retained, no fullreplay.",
+    "effective_unique_nodes": 272,
+    "actual_test_executions_over_increments": 292
+  }
+}

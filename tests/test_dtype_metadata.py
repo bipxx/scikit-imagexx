@@ -33,6 +33,12 @@ def calls(api,dtype):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api in ('draw.polygon','draw.polygon2mask'):
+        # Whole tuple identity/cross-array ownership checks precede leaf metadata.
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)
+        values=zip(actual,expected)if api=='draw.polygon'else[(actual,expected)]
+        assert all(a.dtype.metadata==e.dtype.metadata for a,e in values),path
+        return
     if api=='measure.regionprops':
         # The typed seven-property/state checker requires the whole result list.
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)

@@ -2274,10 +2274,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','draw'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2303,12 +2303,12 @@ def current_metadata_artifact(tmp_path):
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,258)
+    result=q.plan(ROOT,profile,260)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current258' and result['registry']['image_count']==258
-    assert result['product_members']==193 and result['SDK_members']==91
+    assert result['product_scope']=='current260' and result['registry']['image_count']==260
+    assert result['product_members']==195 and result['SDK_members']==92
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==85
+    assert len(result['public_groups']['public-post203'])==92
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2364,7 +2364,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current258' and result['record_verified']
+        assert result['product_scope']=='current260' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2378,7 +2378,7 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',258)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',260)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():

@@ -921,6 +921,14 @@ needs("draw.random_shapes", "array rng geometry")
 needs("draw.ellipsoid_stats", "pointwise provider")
 
 # Source-backed peer audit corrections and explicit computational/provider edges.
+for _polygon_api in ('draw.polygon','draw.polygon2mask'):
+    override(_polygon_api,
+             algorithm='Reuse the reviewed single classifier raster and row prefix; emit ordered intp coordinates or zero/scatter bool directly without intermediate coordinate allocation for masks',
+             hazards='Source-ordered numeric bounds/conversion providers, exact tags/endian/readonly behavior, unsafe short-shape and unequal-column quarantine, clipping and empty owning outputs',
+             workload='Existing17 saved return geometries and7 errors plus tagged-f64 supplement; extend one unassessed safe input partition only after source-audited reference freeze',
+             numerical_policy='Exact ordered intp coordinate words and canonical bool words/storage/errors/state; no anti-alias tolerance or private-plan public-class credit',
+             frontier='Owned finite typed raster/ordered emission/direct bool scatter; NumPy/math numeric bounds, conversion/allocation and unassessed dtype/protocol/shape behavior remain explicit providers')
+
 override("feature.fisher_vector",
          algorithm="Read GMM probabilities/parameters through provider; compute mixture-weight, mean and variance gradients, concatenate K+2KD values, then optional power/L2 normalization",
          hazards="d_pi/d_mu/d_sigma scaling/order, covariance convention, alpha and zero normalization",

@@ -1,0 +1,14 @@
+{
+  "state": "PROSPECTIVE_CORRECTNESS_COMPONENT_BEFORE_PERFORMANCE",
+  "baseline": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+  "header_freeze": "7ba12d5c59dddf2cb2f96457be51788d77040d70",
+  "performance_protocol": "build/regionprops-performance-v2/prospective-v1.json",
+  "performance_scope": "28 frozen cohorts,1568 samples; all priorCPP direct and original-normalized per-pair ceilings1.05; frozen Fortran targets2x and warmtargets1.5x. Root owns isolated measurements/admission; no local timing or performance claim.",
+  "geometry_mechanism_reused_from": "0b0415bcf099ae79190c5e4d01d3e32d6e37c674",
+  "scalar_helpers": "Exact6a implementation body and numeric frontier retained; prior independent scalar proofs reused through explicit byte equivalence, not rerun.",
+  "boundary": "Existing validated native-endian eight signed/unsigned integer types, nonempty2D/3D safe signed byte spans. Sorted positive labels and immutable constructor bbox/count; current mutated pixels remain visible. No new cache/framework/domain.",
+  "strided_outputs": "Caller proves disjoint capacity and signed byte spans. Direct mask uses output locality; coords reads current provided mask in C logical order, emits exact intp into caller byte strides including negatives. All old entry signatures preserved.",
+  "execution": "Constructor serial locality pointer-walk; independent mask spans use existing optional global budget snapshot once, default1; no persistent worker snapshot or new pools. Ordered coordinate discovery remains serial.",
+  "proofs": "Reuse88 saved state records and exact0b analytic mutation/strided tests; run affected native leaf+test normal, truecompiler-scalar including-fno-openmp-simd, ASanUBSan, actualMSVC compile. Public binder/boxing/provider/cache tests remain separate owner's gate.",
+  "limits": "No original recapture, library/API registration, whole class ownership, fullSDK/core rebuild, performance KEEP, or rejected experiment relabel. Native author cannot independently accept candidate."
+}
