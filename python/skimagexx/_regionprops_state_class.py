@@ -1,9 +1,31 @@
 """Lazy provider subclass for the bounded returned-region state bridge."""
 import numpy as np
+import warnings
 from skimage.measure._regionprops import RegionProperties as _Provider
 from skimage.measure._regionprops import _cached
 from skimage.measure._regionprops import regionprops as _provider_regionprops
 from . import _core
+
+
+def _extent(first,denominator):
+    # Same bounded FP-policy delivery convention as existing derived moments.
+    # The operands are already evaluated in source order; providers reuse them.
+    policy,handler=np.geterr(),np.geterrcall()
+    if any(v not in ('ignore','warn','raise','call') for v in policy.values()):
+        return first/denominator
+    native_result=_core.regionprops_state_extent_f64(first,denominator)
+    if native_result is None:return first/denominator
+    value,status=native_result
+    flags=((status&1)<<3)|((status&2)>>1)|((status&4)>>1)|((status&8)>>1)
+    for bit,key,label in ((1,'divide','divide by zero'),(2,'over','overflow'),(4,'under','underflow'),(8,'invalid','invalid value')):
+        if not flags&bit:continue
+        action=policy[key]
+        if action=='warn':warnings.warn(label+' encountered in scalar divide',RuntimeWarning,stacklevel=3)
+        elif action=='raise':raise FloatingPointError(label+' encountered in scalar divide')
+        elif action=='call':
+            if handler is None:raise NameError(f'python callback specified for {label} (in  scalar divide) but no function found.')
+            handler(label,flags)
+    return value
 
 
 class RegionProperties(_Provider):
@@ -36,6 +58,42 @@ class RegionProperties(_Provider):
         if native_result is None:
             return np.sum(mask)
         return np.intp(native_result)
+
+    @property
+    @_cached
+    def area(self):
+        if type(self) is not RegionProperties or '_native_state' not in self.__dict__:
+            return _Provider.area.fget(self)
+        mask=self.image
+        count=_core.regionprops_state_population(mask) if type(mask) is np.ndarray else None
+        if count is None:return np.sum(mask)*self._pixel_area
+        pixel_area=self._pixel_area
+        native_result=_core.regionprops_state_scaled_count_f64(count,pixel_area)
+        if native_result is None:return np.intp(count)*pixel_area
+        value,status=native_result
+        # The admitted scaled-count domain has no overflow/underflow/invalid.
+        assert status==0
+        return value
+
+    @property
+    def area_bbox(self):
+        if type(self) is not RegionProperties or '_native_state' not in self.__dict__:
+            return _Provider.area_bbox.fget(self)
+        count=self.image.size
+        pixel_area=self._pixel_area
+        native_result=_core.regionprops_state_scaled_count_f64(count,pixel_area)
+        if native_result is None:return count*pixel_area
+        value,status=native_result
+        assert status==0
+        return value
+
+    @property
+    def extent(self):
+        if type(self) is not RegionProperties or '_native_state' not in self.__dict__:
+            return _Provider.extent.fget(self)
+        first=self.area
+        denominator=self.area_bbox
+        return _extent(first,denominator)
 
     @property
     def coords(self):

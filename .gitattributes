@@ -703,3 +703,9 @@ coverage/contracts/ellipse-perimeter-frontend-v1.json -text
 coverage/contracts/ellipse-perimeter-sdk-v1.json -text
 coverage/contracts/ellipse-perimeter-benchmark.json -text
 tests/cmake_consumer/ellipse_perimeter_fixtures.bin -text
+coverage/contracts/regionprops-bbox-extent.json -text
+coverage/contracts/regionprops-scalar-native-v1.json -text
+coverage/contracts/regionprops-bbox-extent-frontend-v1.json -text
+coverage/contracts/regionprops-scalars-benchmark-v1.json -text
+tests/fixtures/regionprops_scalar_native.bin -text
+coverage/contracts/regionprops-scalar-runtime-v1.json -text

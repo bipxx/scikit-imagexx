@@ -13,7 +13,7 @@ import sys
 import warnings
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/regionprops-state-lazy-runtime-v1.json'
+CONTRACT=ROOT/'coverage/contracts/regionprops-scalar-runtime-v1.json'
 PROPERTIES=('label','slice','bbox','image','coords','num_pixels','area')
 
 

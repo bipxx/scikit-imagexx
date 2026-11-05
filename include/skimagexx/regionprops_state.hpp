@@ -44,4 +44,23 @@ std::size_t regionprops_mask_population(const std::uint8_t*,std::size_t count) n
 // allocation are explicit future frontend gates; no FP arithmetic here.
 void regionprops_coords_into(const RegionPropsState&,std::size_t region,
                              const std::uint8_t* mask,std::intptr_t* output) noexcept;
+// Owned scalar arithmetic; NumPy scalar boxing, cache/dependency evaluation,
+// spacing normalization and FP-policy delivery remain frontend responsibilities.
+enum RegionPropsScalarFp : unsigned {
+    regionprops_fp_invalid=1, regionprops_fp_divide=2,
+    regionprops_fp_overflow=4, regionprops_fp_underflow=8
+};
+struct RegionPropsScalar64 { std::uint64_t bits; unsigned fp_status; };
+// Exact count <= min(2^53, INTP_MAX); pixel_area is positive zero or finite
+// [2^-256,2^256]. Reuse mask_population for area and CURRENT image.size for
+// area_bbox. No constructor geometry/initial population or cached num_pixels.
+RegionPropsScalar64 regionprops_scaled_count_f64(std::size_t count,double pixel_area);
+// Visible area and visible area_bbox, evaluated separately in source order.
+// Operands are positive zero or finite [2^-256,2^309]. Required 0/0 returns
+// bits=0xfff8000000000000 and invalid status. Positive/0 reports divide status.
+RegionPropsScalar64 regionprops_extent_f64(double area,double area_bbox);
+// Both typed entries reject values outside this first frontier and require
+// nearest rounding/gradual underflow (invalid_argument). They allocate nothing,
+// run serially, read no worker state, and restore caller fenv including flags.
+// Status bits above are SDK-local: NumPy callback invalid uses flag8, not1.
 }

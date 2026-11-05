@@ -1,0 +1,217 @@
+{
+  "schema": "regionprops-scalars-benchmark-v1",
+  "state": "FROZEN_READY_FOR_ROOT_FIRST_COHORT",
+  "scope": "Eight publicscalarproperty workloads; constructor/allocation andwarmgetter boundaries distinguished. Nowholeclass/pureownedpipeline/cachedblanketspeed/KEEP claim.",
+  "cases": [
+    {
+      "id": "regionprops-scalars/tiny-ctor-c-off",
+      "shape": [
+        4,
+        5
+      ],
+      "layout": "C",
+      "cache": false,
+      "operation": "constructor",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/medium-ctor-f-on",
+      "shape": [
+        128,
+        128
+      ],
+      "layout": "F",
+      "cache": true,
+      "operation": "constructor",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/tiny-warm-c-on",
+      "shape": [
+        4,
+        5
+      ],
+      "layout": "C",
+      "cache": true,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/medium-getters-c-off",
+      "shape": [
+        128,
+        128
+      ],
+      "layout": "C",
+      "cache": false,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/medium-getters-f-off",
+      "shape": [
+        128,
+        128
+      ],
+      "layout": "F",
+      "cache": false,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/3d-warm-f-on",
+      "shape": [
+        32,
+        24,
+        16
+      ],
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/pixel-cycle-c-off",
+      "shape": [
+        64,
+        64
+      ],
+      "layout": "C",
+      "cache": false,
+      "operation": "pixel-cycle",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/slice-cycle-3d-on",
+      "shape": [
+        16,
+        16,
+        16
+      ],
+      "layout": "F",
+      "cache": true,
+      "operation": "slice-cycle",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ]
+    }
+  ],
+  "properties": [
+    "area",
+    "area_bbox",
+    "extent"
+  ],
+  "native_source": "aa3bfa34c8f7d92e7222606f7b9b5fec89d5fe2a",
+  "header_freeze": "da553c7c0651311a7aebd90c6fca891adad53e02",
+  "reference_source": "eaf8cc25f009e47d5ae0cb06f980934396ad393d",
+  "source_closure": {
+    "include/skimagexx/regionprops_state.hpp": "8a2a3edc9c225ac683cffa6b014f7bcd1f90bcc8baf8d42fe16fe98f2807c76a",
+    "src/regionprops_state.cpp": "5ffd27081657d5041d5b8bf0811c6ebd7a4d7161e4ca918f862ae6c89795ab53",
+    "src/bind_regionprops_state.cpp": "57842fbdd57302ab51833d11704a6c76918f122796e5bcca4a3bf4ce081e819d",
+    "python/skimagexx/_regionprops_state_class.py": "36f6d7cba00a423bb6a567114d6e9aae08f2846f7e3f67687cc9cd02ff0c837a",
+    "python/skimagexx/_regionprops_state.py": "28ed1e1625ca9ce1184feddd79cbdc3d0774b9affde0ac1dffb366050a999669",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/regionprops_scalars.py": "d199a176fd8d4d762bb1a8d384bbde83d6cb3cb837c1aacc338d777b6d723289"
+  },
+  "pending_frontend_paths": [],
+  "original_source_sha256": {
+    "skimage.measure._regionprops": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+    "skimage.measure._regionprops_utils": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+  },
+  "original_binary_sha256": {
+    "1.24.4": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe",
+    "2.5.4": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092"
+  },
+  "type_policy": {
+    "original_qualified_type": [
+      "skimage.measure._regionprops",
+      "RegionProperties"
+    ],
+    "backend_qualified_type": [
+      "skimagexx._regionprops_state",
+      "RegionProperties"
+    ],
+    "relationship": "Distinct backend subclass of pinned original RegionProperties, same public class name. isinstance/subclass compatible; literal type identity is explicitly NOT claimed.",
+    "comparison": "Keep original goldens and raw observed qualified types unchanged. Compare all other captured row fields exactly. Assert the prospective original/backend pair separately, retaining actual raw rows; never canonicalize or rewrite type observations."
+  },
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_calibration_min_ms": 250,
+  "raw_samples": 112,
+  "warmup_groups": 16,
+  "max_input_elements": 16384,
+  "max_label": 2,
+  "max_mask_elements": 32768,
+  "timed_boundary": {
+    "constructor": "Constructor+allregions(area,area_bbox,extent), allocations/destructioninsideinvocation.",
+    "getters": "Constructoroutside; cacheTrue area/imageprimedoutside. Eachinvocationreturnsnewlist+triplets; cacheFalse freshmask/reduction/scalarallocationsinside. No cache reset betweenrepeats.",
+    "pixel_cycle": "Freshconstructor+area prime+pixel mutation+triplet read+pixel restoration allinside; state resets eachinvocation.",
+    "slice_cycle": "Freshconstructor+area prime+publicslice mutation+triplet readinside. cacheTruevisibleimage/area persist; newinstance perinvocation resets state."
+  },
+  "prior_CPP_controls": {
+    "source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+    "source_fingerprint": "0123d8453eabc7263945c1de22cd337103d7e7d6ffbd2583b35e0a200d8cbdb4",
+    "recipe": "RunSAME8caseswith--backend-role prior-cpp onauthenticatedEEAproduct; publicconstructor/getters match, oldprovider scalararithmetic explicitlyallowed. No numericalCPPspeedcredittransfer.",
+    "existing_12_region_workloads": "Remainbyteexact/historical andrequiredunchangedpriorCPPregressioncontrols beforeanyreleaseKEEP; newdriverdoesnotreplaceexistingfixed20comparison orautograntKEEP."
+  },
+  "native_entries": [
+    "regionprops_state_prepare",
+    "regionprops_state_image",
+    "regionprops_state_population",
+    "regionprops_state_scaled_count_f64",
+    "regionprops_state_extent_f64"
+  ],
+  "provider_frontier": "Originalconstructor class/cache/spacing normalization andNumPyallocation/boxing/FPdelivery explicit; candidateimage/count/scale/divide mustreachownedC++ foradmittedcases. PriorCPP usesitsoriginal scalarproviders, labeledseparately.",
+  "FP_zero_validation": "Native-only typed scaledzero +actual_extentscalarpolicyhelper beforetimers, saved0/0word/callbackflag8/raisemessage. No extraoriginal orregionconstructor; fullpubliczero28rows reusesavedpublictests.",
+  "acceptance": "Reportallgains/losses; noKEEP gate ininitialdriver. Future rootfixedsamehostdirectANDnormalizedgateprotocol mustfreeze beforemeasure; neverretryunchangedfailed554/58b.",
+  "unassessed": [
+    "Other35properties/fullclass/intensity/extras",
+    "Integer/f32/half/nonfinite/extreme scalarspacing andprotocol domains",
+    "Coldimportoverhead/Windowsruntime/fullproduct/performancepending"
+  ],
+  "frontend_source": "e9837e4a9efa56d0c425bf9669f26b6ee9791a1b",
+  "input_state_method_sha256": "b97edffe4300922071b4028ebe2fce15069808f2152a452e64b68fa89f92fc02",
+  "input_state_dependency": "Existingregionprops_state.input_state FUNCTIONbody pinned; wholehistoricaldriver/contextpointer notpinned ormodifiedbythisnewpacket."
+}

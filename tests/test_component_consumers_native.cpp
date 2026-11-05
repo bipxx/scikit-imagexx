@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <cfenv>
+#include <cstring>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
@@ -13,6 +15,42 @@ using namespace skimagexx;
 namespace {
 void require(bool value){if(!value)throw std::runtime_error("component consumer native assertion failed");}
 std::size_t region_state_checks=0;
+// Installed SDK composition: visible population, separately visible box size,
+// and a cached area value are deliberately different state inputs.
+void regionprops_scalars(int workers) {
+    using namespace skimagexx::detail;
+    auto check=[](bool value){++region_state_checks;require(value);};
+    auto number=[](RegionPropsScalar64 value){double out;std::memcpy(&out,&value.bits,8);return out;};
+    std::fenv_t original;check(std::fegetenv(&original)==0);
+    check(std::fesetround(FE_TONEAREST)==0);
+    std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_INEXACT);
+    const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
+    set_num_threads(workers);
+    std::array<std::uint8_t,6> visible{1,0,1,1,0,1};
+    const auto area=regionprops_scaled_count_f64(regionprops_mask_population(visible.data(),visible.size()),.75);
+    const auto box=regionprops_scaled_count_f64(visible.size(),.75);
+    check(area.bits==0x4008000000000000ULL&&area.fp_status==0);
+    check(box.bits==0x4012000000000000ULL&&box.fp_status==0);
+    const auto extent=regionprops_extent_f64(number(area),number(box));
+    check(extent.bits==0x3fe5555555555555ULL&&extent.fp_status==0);
+    visible={1,0,0,0,0,0};
+    const auto fresh=regionprops_scaled_count_f64(regionprops_mask_population(visible.data(),visible.size()),.75);
+    check(fresh.bits==0x3fe8000000000000ULL&&fresh.fp_status==0);
+    check(regionprops_extent_f64(number(fresh),number(box)).bits==0x3fc5555555555555ULL);
+    // A retained cached area is not silently recomputed from the edited mask.
+    check(regionprops_extent_f64(number(area),number(box)).bits==extent.bits);
+    const auto resized_box=regionprops_scaled_count_f64(2,.75);
+    check(regionprops_extent_f64(number(area),number(resized_box)).bits==0x4000000000000000ULL);
+    const auto empty=regionprops_scaled_count_f64(0,.75);
+    check(empty.bits==0&&empty.fp_status==0);
+    const auto invalid=regionprops_extent_f64(number(empty),number(empty));
+    check(invalid.bits==0xfff8000000000000ULL&&invalid.fp_status==regionprops_fp_invalid);
+    const auto divide=regionprops_extent_f64(number(area),0.);
+    check(divide.bits==0x7ff0000000000000ULL&&divide.fp_status==regionprops_fp_divide);
+    check(std::fegetround()==FE_TONEAREST&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
+    check(get_num_threads()==workers);
+    check(std::fesetenv(&original)==0);
+}
 void regionprops_state(int workers) {
     using namespace skimagexx::detail;
     auto check=[](bool value){++region_state_checks;require(value);};
@@ -124,7 +162,17 @@ void concurrent_configuration() {
 #endif
 }
 int main(int argc,char** argv) {
-    require(argc==1||(argc==2&&std::string(argv[1])=="--regionprops-state-only"));
+    require(argc==1||(argc==2&&(std::string(argv[1])=="--regionprops-state-only"||std::string(argv[1])=="--regionprops-scalar-only")));
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    })regionprops_scalars(workers);
+    if(argc==2&&std::string(argv[1])=="--regionprops-scalar-only"){
+        set_num_threads(1);
+        std::cout<<"installed regionprops scalar controls="<<region_state_checks<<"; default="<<get_num_threads()<<"; AVX2="<<has_avx2()<<"\n";
+        return 0;
+    }
     for(int workers:{1
 #ifdef _OPENMP
         ,4
