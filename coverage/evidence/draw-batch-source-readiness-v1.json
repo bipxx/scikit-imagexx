@@ -1,0 +1,68 @@
+{
+  "status": "PASS_SCOPED_SOURCE_AND_COMPONENT_READINESS_NOT_GENUINE_OR_RELEASE_ADMISSION",
+  "source": "db4f59b8aa69840591266e607e253a8611676ced",
+  "branch": "integrate/draw-batch-v1",
+  "census": {
+    "candidate_partial_image_APIs": 262,
+    "registered_functions": 265,
+    "metadata_functions": 3,
+    "product_members": 199,
+    "SDK_members": 94,
+    "SDK_families": 31,
+    "SDK_checks": 62
+  },
+  "independent_reviews": {
+    "named51path_projection": "bf5cb35c170b59301e11d73dea5f0efcc287ba7593173401883deacfdfcd4ca8",
+    "shared_Python": "b43c0e748851d8fea9ea837bfecd6f0b3844c90a0eff17e3b80e65efe97f2d61",
+    "shared_build_successor": "c5f80f386e5a7364a82f2703c3eabaa204208788770f341cf3998b232a973db7",
+    "prebuild_closure": "770b0cc394422f1af5d97435fe0ab2c1b869c97ad668d30a84ddf26f86dd3f51",
+    "TV_import_boundary": "301a4252560097d003f2109e758b125e4d21c30ddafc135baab472086384b9ba"
+  },
+  "component_handoff": {
+    "path": "build/draw-batch-integration-v1/handoff-v1.json",
+    "sha256": "a42bdd7ef6a4cf5575c1b708533326b09466e0bc991e0771148427f02fdb139b"
+  },
+  "root_verification": {
+    "committed_source_pins": 37,
+    "raw_runtime_XMLs": 16,
+    "saved_default_checks": 144,
+    "actual_generic_checks": 240,
+    "bad_or_skipped_runtime_nodes": 0,
+    "TV_two_path_projection": "exactGitblobs5a4b91cf",
+    "scope": "Source/code projection and retained component proof authentication only; root did not replay algorithms/builds/originals or measurements."
+  },
+  "prebuild": {
+    "profiles": [
+      "nativeWindowsCPython3.11",
+      "nativeWindowsCPython3.13"
+    ],
+    "actual_workflow_selectors": 97,
+    "effective_IDs_per_profile": 2707,
+    "missing": 0,
+    "current_A_passes": 317,
+    "new_C_passes": 28,
+    "exact_Prescott_reused": 11,
+    "input_equivalent_parent_reuse": 2351,
+    "not_one_full_command": true,
+    "scope": "Each current selected identity is covered by current or source/profile/input-equivalent retained evidence; failed predecessors excluded. Original raw records and18one-to-onehistoricalclass-ID normalization retained unchanged."
+  },
+  "remaining": [
+    "Genuine exact-source combined product/installed SDK admission",
+    "Actual dedicated/generic CLI first cohorts",
+    "Canonical448sample one-worker comparison with original scikit-image and explicit losses",
+    "Exact-source four-profile release admission and main production delivery",
+    "Remaining full477API/class/native ownership and performance scope"
+  ],
+  "next_campaign": {
+    "run": 42127381279,
+    "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42127381279",
+    "status_at_publication": "in_progress",
+    "kind": "minimum_only prepare_only",
+    "timing": "disabled; all39timer groups must be skipped"
+  },
+  "closeout": {
+    "reuse": "Frozen family originals/native proofs, donor SDK and prior source-prebuild evidence reused; only invalidated/missing guards executed. No recapture or unchanged performance replay.",
+    "avoidable_work": "Two source setup blockers found before genuine build; exact corrections and first-failure receipts retained. Unnecessary automatic CI from receipt commits was cancelled and skip markers added, with raw diagnostics retained.",
+    "next_owner_trigger": "Root retain genuine artifact once after terminal run, independent reader admits actual package/runtime; then explicit CLI/performance/release activation. Partial counts are not full parity or speed claims."
+  }
+}
