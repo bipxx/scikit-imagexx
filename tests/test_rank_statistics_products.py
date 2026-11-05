@@ -937,7 +937,7 @@ def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
 @pytest.mark.parametrize('profile',('windows','modern','minimum'))
 def test_current_stager_scope_uses_source_closure_and_exact253_registry(profile):
     scope=p.qualification_scope(ROOT,profile)
-    assert scope['name']=='current256' and scope['members']==188 and scope['sdk']==89
+    assert scope['name']=='current256' and scope['members']==189 and scope['sdk']==89
     assert scope['image_count']==256 and scope['metadata_count']==3 and len(scope['functions'])==259
     assert len(scope['families'])==29 and 'current29 required' in scope['SDK_client_scope']
     assert ('lib/skimagexx.lib' in scope['SDK_members']) == (profile=='windows')
