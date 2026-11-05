@@ -2,7 +2,7 @@
   "schema": "coords-scaled-same-host-compare-v1",
   "optimization_version": 2,
   "mode": "coords-scaled",
-  "state": "PROSPECTIVE_SOURCE_ONLY_GENUINE_AND_ROOT_ACTIVATION_PENDING",
+  "state": "FROZEN_READY_FOR_ROOT_FIRST_COHORT",
   "baseline": {
     "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
     "run": "42002481826",
@@ -12,11 +12,11 @@
     "core_sha256": "52be10566b69aed7755f93eba63523c303875695d9f579ebff5a16ac39bd0284"
   },
   "candidate": {
-    "source": "f1871b85b89e956c7017bb8600aec2f5ec8c3859",
-    "run": null,
-    "artifact": null,
-    "bytes": null,
-    "sha256": null
+    "source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+    "run": "42065217414",
+    "artifact": 13434087475,
+    "bytes": 85625166,
+    "sha256": "90fc6ff0a6571aff4938d7003d5d9539dfdda7a6f832ba36585eb1b008bb1740"
   },
   "families": [
     "coords-scaled"
@@ -179,7 +179,7 @@
     "target_direct_max": 0.9,
     "target_vs_original_max": 0.9
   },
-  "benchmark_contract_sha256": "bf65c50bb5133d003234fa74b7cf9a476a2590dfb0e2cdf91c94553825ea7172",
+  "benchmark_contract_sha256": "28ae48a17be05e1be74774052f978789fcd6c617a473580302d9f8399e08815d",
   "controller_source_sha256": {
     "tools/region_stain_compare.py": "c7097dbf4203e37c593d9e783c5510e09eb6529ced536dc0962bd2bb65809697",
     ".github/workflows/region-stain-same-host.yml": "40d934e259dc7507e888d51fafed2db55074233e3cb3516c500125db4f8e3a33",

@@ -1,6 +1,6 @@
 {
   "schema": "regionprops-coords-scaled-prospective-benchmark-v1",
-  "state": "PROSPECTIVE_SOURCE_ONLY_GENUINE_INPUTS_PENDING",
+  "state": "FROZEN_READY_FOR_ROOT_FIRST_COHORT",
   "api": "measure.regionprops",
   "property": "coords_scaled",
   "scope": "Six one-worker allocation-inclusive public-property cohorts. Fullnativef64 fourphase partition only; integer-spacing multiply/add are explicit NumPy providers. All original losses retained. No wholeclass/library/SIMD/parallel speed claim.",
@@ -277,5 +277,31 @@
     "future_preflight_per_process_max_top_constructors": 16,
     "future_preflight_per_process_max_property_reads": 32,
     "future_exact_counts": "Derivefromactualpureinertfactory+installedinstrumentationbeforeRootGO; countsinclude2freshoutputs/role/case+imageprimes; no originalgoldcapture."
+  },
+  "root_execution_authorization": {
+    "scope": "First tiny case only for two role preflights, then fixed4pass comparison conditional on both preflights; prepared snapshots never modified",
+    "preflight": {
+      "roles": 2,
+      "original_public_constructors": 2,
+      "backend_public_constructors": 2,
+      "original_property_reads": 4,
+      "backend_property_reads": 4,
+      "explicit_image_primes": 0,
+      "sampler_call_intercepts": 2,
+      "sampler_body_calls": 0
+    },
+    "four_pass_validation_outside_sampler": {
+      "top_constructors_both_arms": 56,
+      "property_reads_both_arms": 96,
+      "explicit_image_primes": 32
+    },
+    "timed": {
+      "accepted_samples": 336,
+      "warmup_groups": 48,
+      "threads": 1,
+      "adaptive_operation_calls": "Bounded by fixed UTC deadline and existing sampler; raw loops/calibrations retained"
+    },
+    "input_admission_sha256": "ac12e9e733a8d36398f352de1a26fb46ba386c34eea292db9c41482699a6e24f",
+    "limitations": "Two preflights do not validate all six cases; remaining cases are checked before their own timing. No speed or whole-product release claim before results."
   }
 }
