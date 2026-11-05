@@ -1,0 +1,1314 @@
+{
+  "schema": "regionprops-bbox-extent-v1",
+  "api": "measure.regionprops",
+  "members": [
+    "area_bbox",
+    "extent"
+  ],
+  "aliases": {
+    "BoundingBoxArea": "area_bbox",
+    "bbox_area": "area_bbox",
+    "Extent": "extent"
+  },
+  "state": "PROSPECTIVE_INTAKE_PASS_PENDING_INDEPENDENT_REVIEW_BEFORE_ANY_ORIGINAL",
+  "signature": "(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)",
+  "reference_version": "0.26.0",
+  "source_sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+  "utils_sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21",
+  "provenance": {
+    "origin": "Previously retained official PyPI0.26.0 sdist; no new download or environment",
+    "sdist_sha256": "f5f970ab04efad85c24714321fcc91613fcb64ef2a892a13167df2f3e59199fa",
+    "license": "third_party/scikit-image-LICENSE.txt",
+    "files": {
+      "_regionprops.py": {
+        "archive_path": "scikit_image-0.26.0/src/skimage/measure/_regionprops.py",
+        "canonical_lf_sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007"
+      },
+      "_regionprops_utils.py": {
+        "archive_path": "scikit_image-0.26.0/src/skimage/measure/_regionprops_utils.py",
+        "canonical_lf_sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+      },
+      "test_regionprops.py": {
+        "archive_path": "scikit_image-0.26.0/tests/skimage/measure/test_regionprops.py",
+        "canonical_lf_sha256": "3ea741a5e92a7c3438a2dd92d9c25366b06e765ce94e05dac22645e40223c29e"
+      }
+    }
+  },
+  "source_body_scope": {
+    "area_bbox": "propertywithout_cached: self.image.size * self._pixel_area",
+    "extent": "propertywithout_cached: self.area / self.area_bbox",
+    "dependencies": "imageandarea property_cached; existing7propertyscope reused onlyasprimingdependency,no repeated7propertyobservations",
+    "aliases": "getitemcanonicalanddeprecatedBoundingBoxArea/bbox_area/Extent; lowercasebbox_areaattributealias; CamelCaseattributeerrorprobe perliteral__getattr__ source",
+    "cache_mutation": "Eachcaseconstructoronce. Optionallyprimeimageorarea(type-onlyreceipt), thenexplicitboundedpixel/slice/empty-slicemutation; readONLY2newscalarproperties/aliases inexactsequence. No privatecachemutation."
+  },
+  "source_safety": {
+    "constructor": "nativeendian2D/3Dintegerarrays<=64elements/maxlabel2; SciPyfind_objects output<=2andregionindex0; initialprimarybbox2peraxis, inputaddressableownedC/F",
+    "spacing": "Noneorfinitebuiltinfloatvectors .0..3; positiveproductsbounded<=27; offsetbuiltinintsabs<=4. Onewrongspacinglength rejectsnormalizebeforepropertyreads. Nointensity/extras/customprotocols.",
+    "properties": "maskatmost64; population<=64, area/boxproducts<=1728. Emptypublicslice/zerospace0/0 usesNumPyscalarFPcall/raise underownedhandler, noCintoverflow, invalidcasts ornativeuncheckedindex. Captureactualtype/warning/error/event, noprediction/tolerancerelaxation.",
+    "mutation": "Explicitindexpositionsinsidearray; slicestarts/stopsinsideextent, emptyallowed. Inputpointer/layoutstable; onlydeclaredpixelwrites allowed. Cache/geometryobservablesleftunaltered."
+  },
+  "numerical_policy": "ExactscalarPython/NumPytypesandwords,signed/nonfinitebits,aliaswarning/errorclass/message/order,FPcallbacksequenceandNumPypolicy/buffer/handlerrestoration. No numericaltolerance orcomputedgold.",
+  "cases": [
+    {
+      "id": "regionprops-bbox-extent/plain2d-cache-False",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "spacing": null,
+      "offset": null,
+      "cache": false,
+      "sequence": [
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/plain2d-cache-True",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "spacing": null,
+      "offset": null,
+      "cache": true,
+      "sequence": [
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/anisotropic2d-cache-False",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint8",
+      "order": "F",
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "offset": [
+        -3,
+        4
+      ],
+      "cache": false,
+      "sequence": [
+        [
+          "prime",
+          "image"
+        ],
+        [
+          "set-pixel",
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/anisotropic2d-cache-True",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint8",
+      "order": "F",
+      "spacing": [
+        0.5,
+        2.0
+      ],
+      "offset": [
+        -3,
+        4
+      ],
+      "cache": true,
+      "sequence": [
+        [
+          "prime",
+          "image"
+        ],
+        [
+          "set-pixel",
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/area-primed2d-cache-False",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int32",
+      "order": "C",
+      "spacing": [
+        2.0,
+        0.25
+      ],
+      "offset": [
+        1,
+        2
+      ],
+      "cache": false,
+      "sequence": [
+        [
+          "prime",
+          "area"
+        ],
+        [
+          "set-pixel",
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/area-primed2d-cache-True",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int32",
+      "order": "C",
+      "spacing": [
+        2.0,
+        0.25
+      ],
+      "offset": [
+        1,
+        2
+      ],
+      "cache": true,
+      "sequence": [
+        [
+          "prime",
+          "area"
+        ],
+        [
+          "set-pixel",
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/unprimed3d-cache-False",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "uint16",
+      "order": "C",
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "offset": [
+        0,
+        -1,
+        2
+      ],
+      "cache": false,
+      "sequence": [
+        [
+          "set-pixel",
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/unprimed3d-cache-True",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "uint16",
+      "order": "C",
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "offset": [
+        0,
+        -1,
+        2
+      ],
+      "cache": true,
+      "sequence": [
+        [
+          "set-pixel",
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            0
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/slice3d-cache-False",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "int64",
+      "order": "F",
+      "spacing": [
+        2.0,
+        0.5,
+        1.5
+      ],
+      "offset": [
+        2,
+        3,
+        4
+      ],
+      "cache": false,
+      "sequence": [
+        [
+          "prime",
+          "image"
+        ],
+        [
+          "set-slice",
+          [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "regionprops-bbox-extent/slice3d-cache-True",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "int64",
+      "order": "F",
+      "spacing": [
+        2.0,
+        0.5,
+        1.5
+      ],
+      "offset": [
+        2,
+        3,
+        4
+      ],
+      "cache": true,
+      "sequence": [
+        [
+          "prime",
+          "image"
+        ],
+        [
+          "set-slice",
+          [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": true
+    },
+    {
+      "id": "regionprops-bbox-extent/empty-slice2d-cache-False",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "spacing": [
+        1.0,
+        2.0
+      ],
+      "offset": null,
+      "cache": false,
+      "sequence": [
+        [
+          "prime",
+          "area"
+        ],
+        [
+          "set-slice",
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {
+        "all": "call"
+      },
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/empty-slice2d-cache-True",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "spacing": [
+        1.0,
+        2.0
+      ],
+      "offset": null,
+      "cache": true,
+      "sequence": [
+        [
+          "prime",
+          "area"
+        ],
+        [
+          "set-slice",
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {
+        "all": "call"
+      },
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/zero-spacing",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "spacing": [
+        0.0,
+        1.0
+      ],
+      "offset": null,
+      "cache": false,
+      "sequence": [
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {
+        "all": "raise"
+      },
+      "holdout": false
+    },
+    {
+      "id": "regionprops-bbox-extent/bad-spacing-length",
+      "api": "measure.regionprops",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "order": "C",
+      "spacing": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "offset": null,
+      "cache": false,
+      "sequence": [
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ],
+        [
+          "item",
+          "area_bbox"
+        ],
+        [
+          "item",
+          "extent"
+        ],
+        [
+          "item",
+          "BoundingBoxArea"
+        ],
+        [
+          "item",
+          "bbox_area"
+        ],
+        [
+          "item",
+          "Extent"
+        ],
+        [
+          "attr",
+          "bbox_area"
+        ],
+        [
+          "attr",
+          "BoundingBoxArea"
+        ],
+        [
+          "attr",
+          "area_bbox"
+        ],
+        [
+          "attr",
+          "extent"
+        ]
+      ],
+      "policy": {},
+      "holdout": false
+    }
+  ],
+  "bounds_by_case": {
+    "regionprops-bbox-extent/plain2d-cache-False": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/plain2d-cache-True": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/anisotropic2d-cache-False": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/anisotropic2d-cache-True": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/area-primed2d-cache-False": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/area-primed2d-cache-True": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/unprimed3d-cache-False": {
+      "input_elements": 64,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 64,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/unprimed3d-cache-True": {
+      "input_elements": 64,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 64,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/slice3d-cache-False": {
+      "input_elements": 64,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 64,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/slice3d-cache-True": {
+      "input_elements": 64,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 64,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/empty-slice2d-cache-False": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/empty-slice2d-cache-True": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/zero-spacing": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    },
+    "regionprops-bbox-extent/bad-spacing-length": {
+      "input_elements": 20,
+      "maximum_label": 2,
+      "region_count_upper_bound": 2,
+      "selected_region": 0,
+      "mask_upper_bound": 20,
+      "read_count": 11,
+      "floating_frontier": "finite small products; explicit NumPy0/0 call/raise safe observation, no nonfiniteinput or nativeundefinedcast"
+    }
+  },
+  "unassessed": [
+    "Other35 properties, intensity/extras/table output and wholeclass lifecycle/serialization/equality",
+    "Custom label/spacing/offset/attribute protocols, ndarray subclasses, external/concurrent mutation",
+    "Nonfinite/negative/extreme spacing, unsupported dtypes/endianness and broad geometry changes",
+    "Nativeprovider/arithmetic implementation, SDK/workers/SIMD/performance and otherprofiles"
+  ],
+  "source_freeze": {
+    "tests/regionprops_bbox_extent_contract.py": "7700ed343789aaf4683931e33b96c947d59b73156b864bfbe761f8bb844b6c0a",
+    "tests/regionprops_bbox_extent_observer.py": "cddfeeb5b3fb8ec2c2c29e640e6848890ae3f33a09096f5f35c2f428d5287351",
+    "tests/test_regionprops_bbox_extent_reference.py": "4843863b2c9a5228f14a160b1ae91f76aa559b0e5bd00c6b524e682320561c3c",
+    "tests/regionprops_state_observer.py": "6d0cc0cc41e17efab7e976e97748b654b1f1b122c1301e17d9e8f63097a2949f",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "coverage/contracts/regionprops-runtime-surface.json": "83e1ef881dcd3598fb8c9c3e117d8e7a71a8f6dab1ac237126ca492e39b4a559"
+  },
+  "original_observations": {},
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false,
+  "next_gate": "Independentprospective/source-safe/refusalreview; rootexplicitGO beforeanyoriginalconstructor/propertycall. Thenexact14once/profile journals, independentreferenceaudit beforeanynewnativeclass/propertyimplementation. Other37unimplementedproperties remainopen; thispacket selects2, other35notinpacket.",
+  "closeout": {
+    "result": "14prospectiveIDs\u00d72profiles original-refusedintakes PASS;24source/guard/schema nodes perprofile48total; actualoriginalconstructor/property calls blockedandzero. Source-only, no native/originalresultcredit.",
+    "waste_reuse": "ReuseexistingRegionruntime discovery, source/codebody evidence, scalarencoder/scientificruntimes. Oldimage/area onlytype-recordedpriming, notrecaptured7propertygolds. No wholeclass/477audit,newframework, environment/build/SDK/timing ororiginalcalls. Bothruns firstattemptPASS; initial source read wasoversized metadataoutput, narrowedtopropertyASTsnippets.",
+    "observed_cost": "minimum24nodes3.78s; modern24nodes3.29s; no reruns to measure cost.",
+    "next_owner_trigger": {
+      "owner": "root/independent prospective reviewer",
+      "trigger": "frozen4pathsource/intakehandoff",
+      "action": "Reviewboundedspacing/empty-slice/FP/error andcachemutation/aliassequence beforeexplicitGO. Then capture14cases once/profile withflushedjournals, preserveall outcomes andindependentlyreview references before native/frontend scope/interface. No registry orwholeclass completionclaim."
+    }
+  },
+  "intake_summary": {
+    "profiles": [
+      "1.24.4",
+      "2.5.4"
+    ],
+    "nodes_each": 24,
+    "total": 48,
+    "constructor_refused_IDs_each": 14,
+    "unsafe_negative_nodes_each": 7,
+    "manifest_each": 1,
+    "synthetic_schema_nodes_each": 2,
+    "real_original_constructor_property_calls": 0,
+    "native_calls": 0,
+    "SDK_builds": 0,
+    "new_environments": 0,
+    "timings": false
+  }
+}
