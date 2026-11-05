@@ -1,0 +1,34 @@
+{
+  "schema": "draw-bezier-sdk-v1",
+  "status": "AUTHOR_ASSEMBLED_INSTALLED_COMPONENT_PASS_PENDING_INDEPENDENT_REVIEW",
+  "source_scope": "Genuine4acSDK91donor+onlynewtypedheader/PICleaf;notgenuineupdatedproduct.",
+  "header": "include/skimagexx/bezier_curve.hpp",
+  "client": "tests/cmake_consumer/bezier_curve_consumer.cpp",
+  "client_argv": "<saved-fixture.bin> auto (or explicit1/0 availableISAexpectation)",
+  "fixture": "tests/fixtures/bezier_curve_originals_v1.bin",
+  "fixture_sha256": "7bf92a2e8710833e4a065037576f755b2ca7278c86b5648615f87994893266fc",
+  "fixture_loader": "tests/cmake_consumer/bezier_curve_fixture.cmake",
+  "fixture_records": 28,
+  "fixture_derivation": "Onlyindependentlyacceptedonce-onlyoriginalrawwords, bothprofilesidentical. No candidateformula or recapture.",
+  "installed_sdk_files": 92,
+  "archive_members_before": 173,
+  "archive_members_after": 174,
+  "new_archive_sha256": "2cea9c18f9d214839b56c9887ea07f65845a9c50d4d67d397ea92e5ab90ba121",
+  "controls_each": 525592,
+  "modes": [
+    "normal-envunset availableAVX2true",
+    "actualSKIMAGEXX_DISABLE_SIMD1 availablefalse"
+  ],
+  "global_workers": [
+    1,
+    4
+  ],
+  "global_default_restored": 1,
+  "parallel_analytic": "131073point diagonal=262146coordinatewords crossesindependentfillthreshold;separatefromoriginalparity.",
+  "resolution": "Relocatedfind_package/exportedskimagexx::skimagexx target; actualdependencyfileinstalledheaderonly andlinkmapnewleaf. OneclientTU,oldarchivecopied+newleafonly.",
+  "limits": [
+    "Runtime-disableisnotcompiler-scalarmode;truecompiler-scalarnewleafprovedseparatelyinnativepacket",
+    "MSVCcompileonlyclient; noWindowsSDKruntimeresult",
+    "No fullSDKrebuild/genuine/fourprofile/performanceacceptance"
+  ]
+}

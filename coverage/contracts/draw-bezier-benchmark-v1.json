@@ -1,0 +1,207 @@
+{
+  "schema": "draw-bezier-benchmark-v1",
+  "status": "PROSPECTIVE_FROZEN_UNEXECUTED",
+  "api": "draw.bezier_curve",
+  "cases": [
+    {
+      "id": "bezier/point",
+      "api": "draw.bezier_curve",
+      "args": [
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        1.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/tiny",
+      "api": "draw.bezier_curve",
+      "args": [
+        0,
+        0,
+        1,
+        4,
+        6,
+        6,
+        1.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/straight-512",
+      "api": "draw.bezier_curve",
+      "args": [
+        0,
+        0,
+        256,
+        256,
+        512,
+        512,
+        0.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/half-medium",
+      "api": "draw.bezier_curve",
+      "args": [
+        0,
+        0,
+        64,
+        256,
+        384,
+        384,
+        0.5
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/heavy-medium",
+      "api": "draw.bezier_curve",
+      "args": [
+        0,
+        0,
+        64,
+        256,
+        384,
+        384,
+        2.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/flat-quarter",
+      "api": "draw.bezier_curve",
+      "args": [
+        0,
+        0,
+        0,
+        320,
+        64,
+        320,
+        0.25
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/column-extremum-unit",
+      "api": "draw.bezier_curve",
+      "args": [
+        32,
+        32,
+        352,
+        352,
+        672,
+        32,
+        1.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/column-extremum-weighted",
+      "api": "draw.bezier_curve",
+      "args": [
+        32,
+        32,
+        352,
+        352,
+        672,
+        32,
+        2.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/row-extremum-weighted",
+      "api": "draw.bezier_curve",
+      "args": [
+        32,
+        32,
+        352,
+        352,
+        32,
+        672,
+        2.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/both-extrema-weighted",
+      "api": "draw.bezier_curve",
+      "args": [
+        0,
+        0,
+        640,
+        640,
+        320,
+        160,
+        2.0
+      ],
+      "shape": null
+    },
+    {
+      "id": "bezier/large-clipped",
+      "api": "draw.bezier_curve",
+      "args": [
+        0,
+        0,
+        2560,
+        2560,
+        1280,
+        640,
+        2.0
+      ],
+      "shape": [
+        768,
+        768
+      ]
+    },
+    {
+      "id": "bezier/fully-clipped",
+      "api": "draw.bezier_curve",
+      "args": [
+        1,
+        1,
+        11,
+        11,
+        21,
+        1,
+        2.0
+      ],
+      "shape": [
+        0,
+        8
+      ]
+    }
+  ],
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_calibration_min_ms": 250,
+  "raw_samples": 168,
+  "warm_groups": 24,
+  "native_entries": [
+    "bezier_curve_weight",
+    "draw_bezier_curve"
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "reference_contract_sha256": "1683419948fa1aa41359489d507ccf4ea95910ae446c6776e8ecfdb6020ed02c",
+  "source_closure": {
+    "include/skimagexx/bezier_curve.hpp": "2ee117aa64dc41e7890632def9f5b66bb7f307f87148481a7d4815369b31ed22",
+    "src/bezier_curve.cpp": "c05ce1d1d36970f1705821d2604444b60d5cfda50eed8053858b4850c90a6ce9",
+    "src/bind_bezier_curve.cpp": "dcf6da346abc2419052ba9b8764354e52c9ab38662c292e040cf96536d088376",
+    "python/skimagexx/_bezier_curve.py": "68f80609a104a9c026cf757348f44cfc848332c6cbdc33f362f3adb416530b3a",
+    "benchmarks/bezier_curve.py": "78d09c66a269b049cd65178162a4bab55944d7cd684566ceefb329128ff7981d",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "safety": "12exactsource-stage trace recipes; positive rational weights0/.25/.5/1/2, endpointabs<=2560, checked int32 extrema/casts and sourcehelper progress. No shortshape/nonfinite/provider originals. Conservativefinitecapturebound <=50000pairs plus independent source-to-trace review before originalCLI.",
+  "timed_boundary": "Actualoriginalpublic vsactualnativepublic, outputallocationanddestruction included; validation/profiling/originaldenial/warningcapture outside sustainedmeasure. Both normalshape cases use ownedC++ clipping.",
+  "scope": "Prospective bounded rational Bezier API comparison. All12wins/losses retained, no library-wide or priorCPP optimization acceptance. Orderedrecurrence serial; independentfillSIMD only. Genericshape/provider/exceptional domains outside benchmark; genuineinput plus rootactualCLI GO required before execution.",
+  "execution_gate": "No original/native benchmarkcalls or timing authorized by this file. Root separately admits genuine inputs and exact source, then untimed firstcohort and isolatedone-worker campaign."
+}

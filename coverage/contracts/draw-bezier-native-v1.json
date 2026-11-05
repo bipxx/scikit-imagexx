@@ -1,0 +1,63 @@
+{
+  "schema": "draw-bezier-native-v1",
+  "status": "AUTHOR_SAVED_PARITY_PASS_PENDING_INDEPENDENT_REVIEW",
+  "api": "draw.bezier_curve",
+  "header_commit": "c4a64524333a6a791e4c685b1cddc6b029fbde68",
+  "interface": "prepare_bezier_curve(BezierCurveRequest,BezierCurve&) -> bool; bezier_curve_count; bezier_curve_fill(BezierCurve,DrawCoordinatePair,workers)",
+  "source": {
+    "member": "scikit_image-0.26.0/skimage/draw/_draw.pyx",
+    "canonical_lf_sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4",
+    "functions": [
+      "_bezier_segment",
+      "_bezier_curve"
+    ],
+    "types": "Endpoints Py_ssize_t; vc/vr C int; recurrence/split variables binary64. Bounded native intermediates are int32 representable even though stored in intptr_t. Casts truncate toward zero after literal source +.5/floor stages."
+  },
+  "domain": {
+    "intp_bits": 64,
+    "coordinate_abs_max": 1048576,
+    "intermediate_coordinate_abs_max": 2097152,
+    "weight": "Finite [0,16], accepted only when literal source arithmetic has no invalid/divide/overflow/underflow event and bounded casts/progress complete.",
+    "shape": "No shape or finite double bounds within +/-2^52; frontend exact conversion/provider policy remains separately assessed.",
+    "output_points_max": 1000000,
+    "fp": "Nearest x87 and SSE; no FTZ/DAZ. Caller flags/environment restored on every exit.",
+    "refusal": "Return false without changing output. No original algorithm call or hidden fallback. Allocation exceptions propagate."
+  },
+  "ordering": {
+    "extrema": "Literal column split then row split then remaining segment, including endpoint reversal and source int32 casts.",
+    "flat": "Literal recursive first-half return only; do not silently repair upstream behavior.",
+    "line": "Existing draw_line_into source-equivalent Bresenham with row/column argument/output swap equivalence.",
+    "clip": "Stable point filter; preserve duplicates, segment joins, order. Two independent owning 1D intp public outputs, including empty/point."
+  },
+  "workers": {
+    "global_default": 1,
+    "boundary_snapshot": "Frontend snapshots existing global policy once after conversions.",
+    "recurrence": "Serial dependent recurrence; no SIMD claim.",
+    "independent_fill": "Existing optional partition, threshold262144 coordinatewords; independent copy loop omp simd on supported GNU/Clang, guarded against MSVC omp-simd rejection.",
+    "tests_pending": "Closedauthorcomponent normal/runtime-disabled/truecompiler-scalar newleaf/ASanUBSan; each1838963controls withglobal1/4/default1; actualMSVCchangedTUscompileonly. Independentacceptance/genuine/Windowsruntime stillpending."
+  },
+  "source_safety": {
+    "test_only_trace": "SKIMAGEXX_BEZIER_TRACE emits segment inputs, extrema t/q, one-half recursion and visited/emitted counts; compiled out in ordinary leaf.",
+    "frozen_recipes": 31,
+    "numeric_geometries": 28,
+    "checked_entry_error_recipes": 3,
+    "shape_short": "Original-unsafe/unassessed quarantined; prior C++ unclipped geometry trace did not prove original shape handling or IndexError. No original call permitted.",
+    "selected_bound": "Exact31safe capture recipes include28 numeric geometries and3 checkedentryerrors. Source-safety trace max27points. Actualoriginal capture62topcalls independentlyaccepted9533bb0a; no unsafe shortshape calls. Orderedraworiginal coordinatewords now drive28 nativefixture records.",
+    "source_integer_bound": "Input differences <=2^21 and initial vc/vr <=2^22; all exact integer arithmetic fits Py_ssize_t/C int. Cast results checked <=2^21 before native conversions; million-step budget prevents signed-coordinate overflow in recurrence. Float intermediates remain finite for the actual29 geometry traces.",
+    "termination": "Top-level at most3 source segments; flat recursion increases weight<.5 to(weight+1)/2>=.5, so no repeated recursive flat branch. Each traced loop progresses by signed unit steps and completes; fallback line bounded by checked endpoints. Native guard cannot alone certify original progress: independent source-to-trace comparison required before original GO."
+  },
+  "remaining": [
+    "Nativeauthorcomponentpassedactualsavedrawfixture; independentnativeacceptance and genuineinstalledplatforms remainpending.",
+    "Broader finite weights/coordinates and additional branch crossproducts, negative/nonfinite/subnormal/exceptional arithmetic need assessed partitions.",
+    "Python conversion/error/shape providers and shared shipping/SDK/genuine/one-thread benchmark gates remain pending."
+  ],
+  "evidence": {
+    "original_handoff_sha256": "00a96be4c8ab3c8c5c5488565f7eb91b0fe8ae36d4c85e38e0492d46b97754df",
+    "independent_original_review_sha256": "9533bb0aa660d09a4b562a75b0b7cea11d03154422666471470719458798335d",
+    "saved_fixture": "tests/fixtures/bezier_curve_originals_v1.bin",
+    "saved_fixture_sha256": "7bf92a2e8710833e4a065037576f755b2ca7278c86b5648615f87994893266fc",
+    "native_controls_each": 1838963,
+    "compiler_fill": "Both independentcopyloops16bytevectorized normal; selectedfilldisassembly16packedcopies vs0 compiler-scalar. Serialdependentrecurrence unchanged.",
+    "reuse": "HeaderABIc4a;recurrenceprefixexact3357. Changedfillcache/contiguouspath successorretainspriornormalPASS. No originalreplay/fullSDK/core/environment."
+  }
+}

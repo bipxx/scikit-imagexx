@@ -1,0 +1,29 @@
+{
+  "schema": "draw-bezier-frontend-v1",
+  "status": "AUTHOR_COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_REVIEW",
+  "signature": "(r0, c0, r1, c1, r2, c2, weight, shape=None)",
+  "core_entry": "draw_bezier_curve(r0,c0,r1,c1,r2,c2,weight,clipped,height,width,workers)",
+  "weight_conversion": "bezier_curve_weight calls PyFloat_AsDouble exactly once, before worker snapshot; no float(string) broadening.",
+  "endpoint_conversion": "Six sequential operator.index plus immediate Py_ssize bounds. Actual31savedrows/profile proveexactcapturedcallback/errorprefix; generalprotocolfrontier stillunassessed.",
+  "worker": "One existing global snapshot after scalar and callback-free ordinary-shape normalization; default global1, optional4. No new pool.",
+  "outputs": "Tuple of separate owning 1D native intp arrays; fresh allocation each call, including empty/point. Native_result local is nonNone on successful kernel return.",
+  "clipping": {
+    "owned": "Exact builtin tuple/list length>=2, first2 builtin int/bool/float finite and within +/-2^52: fixed typed facts passed once to existing C++ stable clipping.",
+    "provider_tail": "Other shape types untouched until owned unclipped raster returns, then literal NumPy comparison/index tail. This is partial clipping ownership, not whole-original algorithm fallback.",
+    "quarantine": "Builtin shape length<2 original-unsafe/unassessed. Explicit NI, no original expected error or parity credit."
+  },
+  "scope": "Boundednativefloat/rational raster, ordinarybuiltinshapeownedclipping andexplicitNumPytails. Actualcaptured31rows exact; no wholeAPI/provider/exceptionalFP claim or measuredperformance. Sharedrootshipping/genuine/qualification stillpending.",
+  "evidence": {
+    "public_checks_per_mode": 68,
+    "modes": 4,
+    "total_checks": 272,
+    "saved_rows_per_profile": 31,
+    "saved_successes_per_profile": 28,
+    "saved_checkederrors_per_profile": 3,
+    "original_algorithm_replays": 0,
+    "actual_builtin_C_return_once_and_global_snapshot": "Allsavedsuccesses; captured3errorsstopbeforeworker/kernel.",
+    "original_algorithms_denied": "Cachedpubliccode+compiledentry, directoriginalcallpaths trapped. Public-compatibleprivatewrapper tested; sharedpublicalias stillpendingroot.",
+    "readonly_shape_provider": "Actualread-onlynegative-strideint64shapeusesliteralNumPytail afterownedraster. Fullclippingownershipnotclaimedforthisproviderpartition.",
+    "MSVC": "BinderactualcompileonlyPASS, noWindowsruntimeacceptance."
+  }
+}
