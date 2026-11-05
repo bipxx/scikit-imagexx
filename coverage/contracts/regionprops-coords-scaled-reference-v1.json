@@ -1,0 +1,40 @@
+{
+  "schema": "regionprops-coords-scaled-reference-v1",
+  "status": "ACTUAL_NUMPY_ORIGINAL_REFUSED_INTAKES_PASSED_CAPTURE_REQUIRES_SEPARATE_ROOT_GO",
+  "property": "coords_scaled",
+  "prospective_contract_sha256": "8d671acc4d8b0502f9ea5f1fba85073f77bab8ee0825cef65f53db48fbdb6129",
+  "budget": {
+    "top_level_regionprops_calls": 24,
+    "coords_scaled_fget_reads": 72,
+    "explicit_image_primes": 6,
+    "canonical_getitem_dispatches": 24,
+    "internal_RegionProperties_init_calls": 48,
+    "image_wrapper_reads_including_dependencies": 78
+  },
+  "source_pins": {
+    "tests/test_regionprops_coords_scaled_reference.py": "5cbffd601931fe9da4a9bda3aeb26abbc533f001afeb4177bb5be36cd33e9725",
+    "tests/regionprops_state_observer.py": "6d0cc0cc41e17efab7e976e97748b654b1f1b122c1301e17d9e8f63097a2949f",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/regionprops_state_contract.py": "004d681c397af81eaf8c31ee769b54e19d6797c59cc1b22a2987322d95371674",
+    "coverage/contracts/regionprops-coords-scaled-prospective-v1.json": "8d671acc4d8b0502f9ea5f1fba85073f77bab8ee0825cef65f53db48fbdb6129"
+  },
+  "source_pin_domain": "Code/prospectiveJSONcanonicalLF; rawarraywords nevernormalized.",
+  "original_observations": {},
+  "assessed_data": "None; oldd658proposal preserved byteexact; nextrootGOneededfornew24ctors/72propertyreads",
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": 0,
+  "intake_scope": {
+    "profiles": 2,
+    "nodes_each": 13,
+    "IDs_each": 12,
+    "original_calls": 0,
+    "coords_scaled_reads": 0,
+    "image_primes": 0,
+    "getitem": 0,
+    "native_calls": 0,
+    "timings": 0,
+    "no_synthetic_regions": true
+  },
+  "intake_evidence": "build/regionprops-coords-scaled-intake-v1/handoff.json (final successor pins outside code-source selfhashdomain)"
+}
