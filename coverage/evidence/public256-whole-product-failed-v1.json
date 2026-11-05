@@ -1,0 +1,309 @@
+{
+  "source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+  "run": 41947826837,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41947826837",
+  "outcome": "TERMINAL_FAILURE_ALL_FOUR_PROFILES",
+  "windows_prebuild_failure": "coverage/evidence/public256-windows-checkout-failed-v1.json",
+  "Linux_profiles": {
+    "minimum": {
+      "artifact": {
+        "artifact": 13380469907,
+        "profile": "minimum",
+        "run": 41947826837,
+        "source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+        "path": "build/public256-qualification-v1/retained-v1/13380469907.zip",
+        "bytes": 1329809275,
+        "sha256": "1c27cf4beddc2395dd0775f5089f720bc6786081afa5b3bc7434a7f82e28b0a0",
+        "downloaded_once": true
+      },
+      "manifest": {
+        "path": "build/public256-qualification-v1/minimum-artifact-diagnostic-v1/manifest.json",
+        "sha256": "717b07acb80e1284d348cf137f78e13264753d505464eb48d5947dac86ad7bf6",
+        "passed": false,
+        "reported_XML_tests": 230742,
+        "reported_XML_failures": 42,
+        "SDK_checks": 58
+      },
+      "commands_sha256": "e0964447b6860d8179cb0c984c21ea88c4555fff48ce4e3b00112c2cf112cc57",
+      "only_failed_commands": [
+        "normal-shared",
+        "scalar-shared"
+      ],
+      "shared_XML": [
+        {
+          "path": "build/public256-qualification-v1/minimum-artifact-diagnostic-v1/normal-shared.xml",
+          "sha256": "f6dabbb55300b5c32437f39d4cb7667073d5e68c923975e843615bc195b71d60",
+          "tests": 9667,
+          "failures": 21,
+          "failure_IDs_exactly_match_canonical": true
+        },
+        {
+          "path": "build/public256-qualification-v1/minimum-artifact-diagnostic-v1/scalar-shared.xml",
+          "sha256": "abef416234d4cf998ff32c7ade7f8a54f1f7c3bbd8c01d4178caccef524ec9b2",
+          "tests": 9667,
+          "failures": 21,
+          "failure_IDs_exactly_match_canonical": true
+        }
+      ]
+    },
+    "modern": {
+      "artifact": {
+        "artifact": 13381087521,
+        "profile": "modern",
+        "run": 41947826837,
+        "source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+        "path": "build/public256-qualification-v1/retained-v1/13381087521.zip",
+        "bytes": 1291208242,
+        "sha256": "b8c07acc9966fdc6e610b8a77cf9e2e60be39997630b411682842d5d3eb9a3d6",
+        "downloaded_once": true
+      },
+      "manifest": {
+        "path": "build/public256-qualification-v1/modern-artifact-diagnostic-v1/manifest.json",
+        "sha256": "e97bbf8e9fd27a1b91093db5db8b83e73a801f453161c534e0f8103ced5a3538",
+        "passed": false,
+        "reported_XML_tests": 230742,
+        "reported_XML_failures": 42,
+        "SDK_checks": 58
+      },
+      "commands_sha256": "e48af41a13be190f7e132d324b091ed4ca47d6cdd01abf7208f216faa0941180",
+      "only_failed_commands": [
+        "normal-shared",
+        "scalar-shared"
+      ],
+      "shared_XML": [
+        {
+          "path": "build/public256-qualification-v1/modern-artifact-diagnostic-v1/normal-shared.xml",
+          "sha256": "da45401c03e9e6fbeee596027c369f3eefeb4b5a8531d001569ee4dc5324d518",
+          "tests": 9667,
+          "failures": 21,
+          "failure_IDs_exactly_match_canonical": true
+        },
+        {
+          "path": "build/public256-qualification-v1/modern-artifact-diagnostic-v1/scalar-shared.xml",
+          "sha256": "269539c81580bcd4a4bd0c16255deb2500c05dd203ac487832a1e4e1ae5e1a9d",
+          "tests": 9667,
+          "failures": 21,
+          "failure_IDs_exactly_match_canonical": true
+        }
+      ]
+    },
+    "debug": {
+      "artifact": {
+        "artifact": 13381270899,
+        "profile": "debug",
+        "run": 41947826837,
+        "source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+        "path": "build/public256-qualification-v1/retained-v1/13381270899.zip",
+        "bytes": 1658245721,
+        "sha256": "342575fdbb7c01db42e3c46b15ece6c19013a8fd79d0dcce1dfa271cc81a949f",
+        "downloaded_once": true
+      },
+      "manifest": {
+        "path": "build/public256-qualification-v1/debug-artifact-diagnostic-v1/manifest.json",
+        "sha256": "6e961a6aa9707adb3f8104a5fc23528af26023a35fa5041f39c335d1b02b08ce",
+        "passed": false,
+        "reported_XML_tests": 230742,
+        "reported_XML_failures": 42,
+        "SDK_checks": 58
+      },
+      "commands_sha256": "876c1e572a4e4eca5be7353688290b95bed1ddf92c2fcc0ad77f9620697bd564",
+      "only_failed_commands": [
+        "normal-shared",
+        "scalar-shared"
+      ],
+      "shared_XML": [
+        {
+          "path": "build/public256-qualification-v1/debug-artifact-diagnostic-v1/normal-shared.xml",
+          "sha256": "4ac16a55b24d96a3421a353e2605fc3642f35fe964495eeff434e0e0a2a039d2",
+          "tests": 9667,
+          "failures": 21,
+          "failure_IDs_exactly_match_canonical": true
+        },
+        {
+          "path": "build/public256-qualification-v1/debug-artifact-diagnostic-v1/scalar-shared.xml",
+          "sha256": "59e211ddf6ddd3a13bf9e232583a5a8bc2665a9007da9335fa8a3014f082d42e",
+          "tests": 9667,
+          "failures": 21,
+          "failure_IDs_exactly_match_canonical": true
+        }
+      ]
+    }
+  },
+  "canonical_21_shared_failure_records": [
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[1-draw.line]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[1-draw.rectangle]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[1-draw.disk]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[1-draw.ellipse]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[4-draw.line]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[4-draw.rectangle]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[4-draw.disk]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions[4-draw.ellipse]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "AssertionError: Regex pattern did not match.\n  Expected regex: 'exact intp'\n  Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'",
+      "text": "tests/test_api.py:215: in test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions\n    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)\nE   AssertionError: Regex pattern did not match.\nE     Expected regex: 'exact intp'\nE     Actual message: 'Drawing uses exact coordinate/weight words and storage; call assert_default_parity'"
+    },
+    {
+      "name": "test_every_native_function[1-skimagexx.measure.regionprops-float32-(1, 1)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[1-skimagexx.measure.regionprops-float32-(3, 19)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[1-skimagexx.measure.regionprops-float32-(519, 521)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[1-skimagexx.measure.regionprops-float64-(1, 1)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[1-skimagexx.measure.regionprops-float64-(3, 19)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[1-skimagexx.measure.regionprops-float64-(519, 521)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[4-skimagexx.measure.regionprops-float32-(1, 1)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[4-skimagexx.measure.regionprops-float32-(3, 19)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[4-skimagexx.measure.regionprops-float32-(519, 521)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[4-skimagexx.measure.regionprops-float64-(1, 1)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[4-skimagexx.measure.regionprops-float64-(3, 19)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_every_native_function[4-skimagexx.measure.regionprops-float64-(519, 521)]",
+      "classname": "tests.test_api",
+      "kind": "failure",
+      "message": "TypeError: Non-integer label_image types are ambiguous",
+      "text": "tests/test_api.py:276: in test_every_native_function\n    getattr(native, name)(a)\nbuild/public-qualification/minimum/package/skimagexx/_regionprops_state.py:71: in regionprops\n    raise TypeError('Non-integer label_image types are ambiguous')\nE   TypeError: Non-integer label_image types are ambiguous"
+    },
+    {
+      "name": "test_native_wildcard_import_does_not_require_upstream",
+      "classname": "tests.test_nested_imports",
+      "kind": "failure",
+      "message": "AssertionError: Traceback (most recent call last):\n    File \"<string>\", line 10, in <module>\n    File \"<string>\", line 1, in <module>\n    File \"/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/__init__.py\", line 25, in __getattr__\n      module = importlib.import_module(f'{__name__}.{name}')\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    File \"/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/importlib/__init__.py\", line 126, in import_module\n      return _bootstrap._gcd_import(name[level:], package, level)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    File \"/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/measure.py\", line 82, in <module>\n      from ._regionprops_state import regionprops\n    File \"/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/_regionprops_state.py\", line 7, in <module>\n      from skimage.measure._regionprops import RegionProperties as _Provider\n    File \"<string>\", line 7, in find_spec\n  ModuleNotFoundError: upstream is unavailable\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env...egionProperties as _Provider\\n  File \"<string>\", line 7, in find_spec\\nModuleNotFoundError: upstream is unavailable\\n').returncode",
+      "text": "tests/test_nested_imports.py:76: in test_native_wildcard_import_does_not_require_upstream\n    assert result.returncode == 0, result.stderr\nE   AssertionError: Traceback (most recent call last):\nE       File \"<string>\", line 10, in <module>\nE       File \"<string>\", line 1, in <module>\nE       File \"/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/__init__.py\", line 25, in __getattr__\nE         module = importlib.import_module(f'{__name__}.{name}')\nE                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       File \"/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/importlib/__init__.py\", line 126, in import_module\nE         return _bootstrap._gcd_import(name[level:], package, level)\nE                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       File \"/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/measure.py\", line 82, in <module>\nE         from ._regionprops_state import regionprops\nE       File \"/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/_regionprops_state.py\", line 7, in <module>\nE         from skimage.measure._regionprops import RegionProperties as _Provider\nE       File \"<string>\", line 7, in find_spec\nE     ModuleNotFoundError: upstream is unavailable\nE     \nE   assert 1 == 0\nE    +  where 1 = CompletedProcess(args=['/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env...egionProperties as _Provider\\n  File \"<string>\", line 7, in find_spec\\nModuleNotFoundError: upstream is unavailable\\n').returncode"
+    }
+  ],
+  "classification": {
+    "stale_exact_drawing_diagnostic_regex": 8,
+    "generic_wrong_float_dtype_error_expectation_regionprops": 12,
+    "eager_Regionprovider_import_breaks_no_upstream_wildcard": 1
+  },
+  "scope": "Manifests/authenticatedZIPs andsixsharedXMLs inspected. No failureoutside normal/scalar-shared commands reported; no wholeproduct/admission credit from thisfailedcampaign. XML counts aremanifestreported, not independentrootrerun.",
+  "fix": {
+    "commit": "8882635fb51ad882e8e912f2e4771060171793a5",
+    "root_review": {
+      "path": "build/qualification256-shared-fix-v1/root-review-v1.json",
+      "sha256": "26144416eaea1a18e23d3cc86f9390ff06ba465c921faebbd2736c9669a0b9c4"
+    },
+    "scoped_checks": 110,
+    "numerical_CPP_changed": false,
+    "product_python_member_delta": 1,
+    "fresh_qualification_required": true
+  },
+  "watch_receipt": {
+    "path": "build/public256-qualification-v1/watch-handoff-v1.json",
+    "sha256": "c2ebb7f2d262c9ab45675ebbcc1e33ff82a5492371eb58a60ff1322b93f54744"
+  },
+  "qualified_baseline": 252,
+  "whole_product_qualified": false,
+  "closeout": {
+    "result": "All4failedprofiles audited; Windowscheckoutbyteissue plusLinux2testcontractdefects/1realimportbug identified andseparate reviewedfixes retained. Oldcampaign neverrelabeled.",
+    "waste_reuse": "Each3LinuxZIP downloadedonce+streamhashed; onlymanifest/commands/sharedXML extracted, no wholeenv/archivepayload rehash/extract. Existingfailed-testlists reused; no 9kshared/230kperprofile replay.110affectedfixchecks andoldcoreevidence reused.",
+    "next_plan_change": "Newregistrations/checker/providerchanges mustexerciseexistingaffected test_api dtype/error/default-checker andno-upstreamwildcard consumers beforehostedfreeze, notonlydtypealias/metadata tests. Compose ready257 withfixes aftersource-only/runtimeCLI/sharedpeer gates; avoidanotherunchanged256fullcampaign justforbookkeeping."
+  }
+}
