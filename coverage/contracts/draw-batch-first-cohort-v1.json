@@ -1,0 +1,360 @@
+{
+  "schema": "draw-batch-first-cohort-prospective-v1",
+  "status": "SOURCE_ONLY_SCAFFOLD_NOT_EXECUTED_NOT_GENUINE_BOUND",
+  "source_revision": "db4f59b8aa69840591266e607e253a8611676ced",
+  "source_scope": "db4 adds only reviewed TV metadata import boundary to7a; drawing drivers/golds unchanged. Final producer source/root admission must match before actual activation.",
+  "probe": {
+    "path": "build/draw-batch-benchmark-controller-v1/first-cohort-probe-v1.py",
+    "raw_sha256": "d0606dfb4879b24bc5af70d594b3a950197e37007502320497800f0d0d56b6af",
+    "stdlib_AST_compile": "PASS_NO_MODULE_EXECUTION"
+  },
+  "routes": {
+    "dedicated-polygon": {
+      "kind": "dedicated",
+      "api": "draw.polygon",
+      "driver": "benchmarks/draw_polygon.py",
+      "owned_module": "skimagexx._draw_polygon",
+      "contract": "coverage/contracts/draw-polygon-draw-batch-runtime-v1.json",
+      "first_case": {
+        "id": "draw.polygon/tiny-triangle",
+        "api": "draw.polygon",
+        "vertices": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "carrier": "list",
+        "dtype": "float64",
+        "shape": [
+          8,
+          9
+        ]
+      },
+      "native_entries": [
+        "draw_polygon_prepare",
+        "draw_polygon_coords_into"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    },
+    "dedicated-bezier": {
+      "kind": "dedicated",
+      "api": "draw.bezier_curve",
+      "driver": "benchmarks/bezier_curve.py",
+      "owned_module": "skimagexx._bezier_curve",
+      "contract": "coverage/contracts/draw-bezier-benchmark-v1.json",
+      "first_case": {
+        "id": "bezier/point",
+        "api": "draw.bezier_curve",
+        "args": [
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          1.0
+        ],
+        "shape": null
+      },
+      "native_entries": [
+        "bezier_curve_weight",
+        "draw_bezier_curve"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    },
+    "dedicated-set-color": {
+      "kind": "dedicated",
+      "api": "draw.set_color",
+      "driver": "benchmarks/draw_set_color.py",
+      "owned_module": "skimagexx._draw_set_color",
+      "contract": "coverage/contracts/draw-set-color-benchmark.json",
+      "first_case": {
+        "id": "tiny-gray",
+        "shape": [
+          4,
+          5,
+          1
+        ],
+        "count": 4,
+        "channels": 1,
+        "kind": "ordinary",
+        "order": "C"
+      },
+      "native_entries": [
+        "draw_set_color"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    },
+    "generic-polygon": {
+      "kind": "generic",
+      "api": "draw.polygon",
+      "driver": "benchmarks/coverage.py",
+      "owned_module": "skimagexx._draw_polygon",
+      "native_entries": [
+        "draw_polygon_prepare",
+        "draw_polygon_coords_into"
+      ],
+      "sampler": "benchmarks/run.py",
+      "first_carrier_dtype": "uint8",
+      "argv": [
+        "--modules",
+        "draw",
+        "--api",
+        "draw.polygon",
+        "--sizes",
+        "8",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    },
+    "generic-polygon2mask": {
+      "kind": "generic",
+      "api": "draw.polygon2mask",
+      "driver": "benchmarks/coverage.py",
+      "owned_module": "skimagexx._draw_polygon",
+      "native_entries": [
+        "draw_polygon_prepare",
+        "draw_polygon_mask_into"
+      ],
+      "sampler": "benchmarks/run.py",
+      "first_carrier_dtype": "uint8",
+      "argv": [
+        "--modules",
+        "draw",
+        "--api",
+        "draw.polygon2mask",
+        "--sizes",
+        "8",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    },
+    "generic-bezier_curve": {
+      "kind": "generic",
+      "api": "draw.bezier_curve",
+      "driver": "benchmarks/coverage.py",
+      "owned_module": "skimagexx._bezier_curve",
+      "native_entries": [
+        "bezier_curve_weight",
+        "draw_bezier_curve"
+      ],
+      "sampler": "benchmarks/run.py",
+      "first_carrier_dtype": "uint8",
+      "argv": [
+        "--modules",
+        "draw",
+        "--api",
+        "draw.bezier_curve",
+        "--sizes",
+        "8",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    },
+    "generic-set_color": {
+      "kind": "generic",
+      "api": "draw.set_color",
+      "driver": "benchmarks/coverage.py",
+      "owned_module": "skimagexx._draw_set_color",
+      "native_entries": [
+        "draw_set_color"
+      ],
+      "sampler": "benchmarks/run.py",
+      "first_carrier_dtype": "float32",
+      "argv": [
+        "--modules",
+        "draw",
+        "--api",
+        "draw.set_color",
+        "--sizes",
+        "8",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    }
+  },
+  "source_git_blobs": {
+    "benchmarks/bezier_curve.py": "84972aee1187d6e9d2d6dd75441e52359edd272b",
+    "benchmarks/coverage.py": "759eb18ccbcb02424e572ecaf58c8a21e6dd92a1",
+    "benchmarks/draw_coordinates.py": "39f69b7764a6a48365befecc45e748b9d0cd3807",
+    "benchmarks/draw_polygon.py": "ea6415d8ef6edfe684e1e612c5b66d3513081023",
+    "benchmarks/draw_set_color.py": "8b82ef73f4ce04c12f6b38fa386a0fdb9ee90799",
+    "benchmarks/provenance.py": "f44f08ed2c0fb62b562c1d294beefd289dc50da4",
+    "benchmarks/run.py": "ce2ad42a5ad0ac2c823a29b81b490abb4d4b51ab",
+    "coverage/contracts/draw-bezier-benchmark-v1.json": "8d46b8913da1cf04204560ae1323ed6a12d47c5d",
+    "coverage/contracts/draw-polygon-draw-batch-runtime-v1.json": "cdef9f930346ac4842c8cbf82d533fcec553765d",
+    "coverage/contracts/draw-set-color-benchmark.json": "4cdcc9ca1792ad45b80a0f6d3c846b025eeaca85",
+    "python/skimagexx/coverage.py": "09e5b8be50527578d1a8087fcf405d6dc0b2ab34",
+    "tools/montage_sustained.py": "53b23ff4c03cbd957216e443ea962331fba9c437"
+  },
+  "reuse": {
+    "old_probe": "build/worktrees/draw-polygon-integration-v1/build/integration-v1/first-cohort-v2/cli_probe.py",
+    "pattern": "Same runpy/actual argv/sys.settrace measure-CALL stop, flushed before/after public call journal, no sampler substitution. Old probe hardcodes polygon/component overlays; small route adapter necessary. No old actual CLI claim reused.",
+    "family_author_aggregate": "build/draw-batch-integration-v1/handoff-v1.json SHA a42bdd7ef6a4cf5575c1b708533326b09466e0bc991e0771148427f02fdb139b",
+    "source_safety": "Accepted dedicated firstcase factories and original-first contracts/default word receipts; no new geometry. Existing family safety/proof hashes not replayed."
+  },
+  "generic_first_inputs": {
+    "draw.polygon": {
+      "args": [
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          5,
+          2
+        ]
+      ],
+      "options": {},
+      "descriptor": "uint8 8x8 RNG2026 carrier pixels/shape unused"
+    },
+    "draw.polygon2mask": {
+      "args": [
+        [
+          6,
+          7
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      ],
+      "options": {},
+      "descriptor": "uint8 8x8 RNG2026 carrier unused"
+    },
+    "draw.bezier_curve": {
+      "args": [
+        0,
+        0,
+        1,
+        4,
+        6,
+        6,
+        1.0
+      ],
+      "options": {},
+      "descriptor": "uint8 8x8 carrier unused"
+    },
+    "draw.set_color": {
+      "image": "(arange16 float32 reshape4x4 /32).astype(float32)",
+      "rows": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "cols": [
+        1,
+        2,
+        3,
+        0
+      ],
+      "color": [
+        0.25
+      ],
+      "alpha": 0.5,
+      "descriptor": "First eligible float32 after skipped uint8. set_color_default_result creates separate K-order image perarm and observes full mutated image with None public return."
+    }
+  },
+  "budget": {
+    "profiles": "ONE future genuine installed whole-product runtime only, not7perprofile. Additional profile requires separately authorized versioned quota.",
+    "routes": 7,
+    "original_public_topcalls": 7,
+    "native_public_topcalls": 7,
+    "source_derived_polygon2mask_internal_polygon_calls": 1,
+    "timed_batches": 0,
+    "maximum_sampler_body_calls": 0,
+    "retry": false,
+    "failure": "Stop remaining routes after any unexpected error; preserve route directory/journal and consumed calls. Never replay completed route."
+  },
+  "sampler_boundary": {
+    "dedicated": "Unmodified tools/montage_sustained.py::measure 100ms7repeat250mswarm; stop real trace call before body. Driver strict method pins and full validation run normally.",
+    "generic": "Actual benchmarks/coverage.py imports unmodified benchmarks/run.py::measure (15ms), not sustained sampler. Trap this actual code path before body; no claim generic uses sustained protocol.",
+    "instrumentation": "Outer trace survives each dedicated driver temporary profile hook. Dedicated witnesses/getter/source checks remain driver-owned. Generic outer profiler observes actual native C returns; trace requires accepted native_result, exact defaultchecker0, firstdtype/worker/inputstate, FP/policy/buffer restore. No public function/sampler replacement."
+  },
+  "activation_required": [
+    "Root independently reviews exact probe/prospective and supplies explicit GO +freshdeadline before any execution.",
+    "Root-authenticated genuine installed WHOLE core/package admission matching final producer source; no narrow/component/assembled product. Binding supplies actual installed site/interpreter/core/root-admission pins and unchanged driver/source pins.",
+    "Freeze actual binding/rootGO outside prepared snapshot; existing source working tree stays clean. No copy/staging/bootstrap/new environment in this scaffold.",
+    "Execute one route per fresh subprocess sequentially using existing prepared interpreter; stop all remaining on failure. Root owns new hosted producer/qualification and raw artifact retention."
+  ],
+  "binding_fields": [
+    "source_root",
+    "source_revision",
+    "git_argv",
+    "genuine_root_admission_path",
+    "genuine_root_admission_sha256",
+    "product_kind=GENUINE_INSTALLED_WHOLE_PRODUCT",
+    "interpreter",
+    "source_files_sha256",
+    "installed_site",
+    "numpy",
+    "core_path",
+    "core_sha256",
+    "output_root",
+    "routes"
+  ],
+  "root_go_fields": [
+    "binding_sha256",
+    "probe_sha256",
+    "routes",
+    "timed_batches=0",
+    "maximum_original_topcalls<=7",
+    "maximum_native_topcalls<=7",
+    "deadline_utc"
+  ],
+  "closeout": {
+    "result": "Seven finite actual CLI routes prepared; no scientific imports/target calls/timer body/staging executed.",
+    "waste_reuse": "Reused retained real-driver probe design, actual sampler interfaces and accepted first recipes. Concrete generic sampler difference recorded rather than changing source or inventing sustained behavior. No repeated sourceproof hashes or numerical checks.",
+    "next_owner_trigger": "Root reviews this scaffold; after exact genuine product admission, binds immutable executable/source/runtime identity and authorizes bounded execution. No action before that gate."
+  },
+  "active_processes": 0,
+  "readers_released": true
+}
