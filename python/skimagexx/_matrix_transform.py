@@ -77,7 +77,8 @@ _FORCED_CPU = ('OPENBLAS_CORETYPE', 'NPY_DISABLE_CPU_FEATURES',
 _RUNTIME_CORES = {
     'ed4f167a5330424524f45258e7ca2c8d7f03c0cba1f30ee4985553ac1f88ecf8': frozenset(('Haswell',)),
     '432e1c1739731468ba305771af96773939e43016643e2d630f58cb45b6670e96': frozenset(('Haswell', 'SkylakeX')),
-    '554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9': frozenset(('Haswell', 'Cooperlake', 'Zen')),
+    # Exact F64 equivalence: coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json
+    '554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9': frozenset(('Haswell', 'Cooperlake', 'Zen', 'SkylakeX')),
 }
 
 

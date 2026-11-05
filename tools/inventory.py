@@ -16,6 +16,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
+    (('draw.ellipse_perimeter',),'tests/test_draw_ellipse_perimeter_public.py::test_ellipse_perimeter_saved_public_pipeline','benchmarks/ellipse_perimeter.py'),
     (('draw.ellipsoid',),'tests/test_draw_ellipsoid_public.py::test_ellipsoid_saved_public_pipeline','benchmarks/draw_ellipsoid.py'),
     (('draw.line_nd',),'tests/test_line_nd_public.py::test_line_nd_saved_public_pipeline','benchmarks/line_nd.py'),
     (('draw.line_aa',),'tests/test_line_aa_public.py::test_line_aa_saved_public_pipeline','benchmarks/line_aa.py'),
@@ -171,6 +172,8 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
+            elif path == 'draw.ellipse_perimeter':
+                entries[-1]['default_input_kind']='Frozen unequal-axis coordinate geometry; descriptor dtype/pixels unused. Owned exact intp 0D/1D outputs, bounded axis and unit-circle rotation, explicit general Bezier/protocol frontier.'
             elif path == 'draw.ellipsoid':
                 entries[-1]['default_input_kind']='Frozen unit3D bool geometry; descriptor carriers uint8/float32/float64 do not represent pixel/coordinate dtype coverage. C++ count/grid/ordered math, explicit original protocol/provider frontier.'
             elif path == 'draw.line_nd':

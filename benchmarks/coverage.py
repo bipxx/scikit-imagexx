@@ -276,7 +276,7 @@ def main():
                     assert xx.get_num_threads() == threads
                     actual = native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):
+                    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter')):
                         error = draw_default_error(api,data,actual,expected)
                     elif api == 'draw.ellipsoid':
                         error = ellipsoid_default_error(data, actual, expected)
@@ -356,7 +356,7 @@ def main():
                                     **({'size_unit': 'points'} if api in COORDS_MOMENTS_FUNCTIONS else {}),
                                     **({'input_shape':list(data.shape), 'default_input_kind':'coordinate-shape-carrier',
                                         'descriptor_carrier_dtype':case_dtype, 'requested_output_dtype':('intp,intp,float64' if api=='draw.line_aa' else 'intp')}
-                                       if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')) else {}),
+                                       if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter')) else {}),
                                     **({'default_input_kind':'fixed-frozen-coordinate-row','coordinate_dtype':str(call_args[0].dtype),
                                         'coordinate_dimensions':int(max(call_args[0].size,call_args[1].size)),
                                         'carrier_pixels_consumed':False} if api=='draw.line_nd' else {}),

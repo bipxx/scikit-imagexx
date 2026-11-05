@@ -36101,20 +36101,10 @@
       "base_sha": "dca7c03dab19a4c6fe3a1e6879973590c51d273a",
       "id": "regionprops-scalars-shared258-v1",
       "kind": "implementation",
-      "owner": "tiny_line_implementation",
+      "owner": "root",
       "branch": "integrate/regionprops-scalar-v1",
-      "state": "implementing",
-      "owns": [
-        "CMakeLists.txt",
-        "tools/public_qualification.py",
-        ".github/workflows/ci.yml",
-        ".github/workflows/public-qualification.yml",
-        "coverage/contracts/current-public-qualification.json",
-        "coverage/contracts/regionprops-scalar-runtime-v1.json",
-        "benchmarks/regionprops_state.py",
-        "tests/test_regionprops_state_benchmark.py",
-        "tests/fixtures/regionprops_scalar_native.bin"
-      ],
+      "state": "accepted",
+      "owns": [],
       "depends_on": [
         "regionprops-scalar-native-v1",
         "regionprops-bbox-extent-frontend-v1",
@@ -36129,11 +36119,22 @@
         }
       },
       "acceptance": "Sole sharedwriter/finalfreeze. Current258 imagecount/193product91SDK31families62checks derivedactual, newPOST85selectors class-onlyextension. StrictFP/explicitcompiler-scalar andOpenMPunitfixture; newbenchmarksourcecontext, actualboth-profile prebuild/importrefusal/changedgenericconsumers; independentwiring+workflowpeer thenactualuntimedCLI rootGObeforegenuine. Terminalwaste/reuse/nextcorrection; no oldscience/timing replay.",
-      "current_checkpoint": "Candidate6a2b33a2 closed shared readiness/actualCLI and genuine41985437089:193product91SDK16600XML0bad. Corrected full41986546641 ALL4SUCCESS; root archive/seal/stager acceptance inprogress, main remainsqualified257. Initial8scalar one-worker cases ALLSLOWER, GMoriginal/CPP0.293166605, worst35.555208x slower; root/peer closed and raw reports nowpublished.",
+      "current_checkpoint": "Exact6a independentlyadmitted7880cecc,4profiles926832XML0bad/248SDK/48corpora/3Release stagers. Root55namedpathprojection481files exactlyfe0856, main258partial. Initial8losses publiclyretained; nextoptimizationseparate.",
       "next_gate": {
         "owner": "root",
-        "action": "Finish four retained raw qualification audits/three stagers and independent metadata admission, then exact6a production projection/main delivery. Do not wait for unfinished v2optimization or relabel eight losses."
-      }
+        "action": "Push qualified exactsource increment; retain active6a donor/read-onlysource and rawarchives. Independentlyreviewv2sharedreadiness and authorize next genuine candidate only after affectedsetup/CLI gates. No oldfullcampaignreplay."
+      },
+      "frozen_source_paths": [
+        "CMakeLists.txt",
+        "tools/public_qualification.py",
+        ".github/workflows/ci.yml",
+        ".github/workflows/public-qualification.yml",
+        "coverage/contracts/current-public-qualification.json",
+        "coverage/contracts/regionprops-scalar-runtime-v1.json",
+        "benchmarks/regionprops_state.py",
+        "tests/test_regionprops_state_benchmark.py",
+        "tests/fixtures/regionprops_scalar_native.bin"
+      ]
     },
     {
       "apis": [],
@@ -36179,7 +36180,7 @@
       "id": "matrix-numpy124-skylakex-certificate-v1",
       "kind": "reference",
       "owner": "next_family_contract",
-      "state": "implementing",
+      "state": "parity_passed",
       "owns": [
         "python/skimagexx/_matrix_transform.py",
         "tests/test_matrix_transform_numpy124_skylakex_certificate.py",
@@ -36200,7 +36201,7 @@
       "kind": "reference",
       "owner": "qualification251_readiness",
       "branch": "reference/draw-polygon-v1",
-      "state": "contracting",
+      "state": "contracted",
       "apis": [],
       "target_apis": [
         "draw.polygon",
@@ -36215,10 +36216,111 @@
       "base_sha": "4f0fe268",
       "depends_on": [],
       "acceptance": "Actualpinnedsourceaudit+source-safe boundedorderedfill/maskcases, ordinarylayout/dtype/edge/clip/error semantics; checkexistingownedpolygonpredicate reuse. Original-refusedpureintake bothprofiles before independentprospectivesafety review. No original/native/build/timing/env/SDK yet; terminalwaste/reuse/nextownertrigger.",
-      "current_checkpoint": "Prospective405cc merged4cd7367a; independent8cef/intake7883 closed. Root separately authorized48originalcalls, each executed once:24/profile,17returns7errors, identical rawrows; capturehandoff194399d1 andsavedgoldsource295ef532. Cnow independentcapture review+ONLYtwo new saved-validator nodes/profile; no original replay.",
+      "current_checkpoint": "Savedreference295ef merged91c20247; independent actualcapture6f21412e PASS48once-onlyoriginals/96events,2new savedvalidators/profile4PASS. Cleanancestor/readersreleasedWT retired;21proofs/30207bytes preserved underredirect. No nativeownershipcredit.",
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Review saved actualcaptures and new2validators/profile; root merge reviewed saved-reference2pathdelta promptly. Freeze typed native/header against existingpolygon_label (axisorderc,r), then independent implementation/SDK/frontend lanes."
+        "owner": "tiny_line_implementation",
+        "action": "Freeze minimal typed interface over existingpolygon_label usingc,r classifier order, label!=0, boundedscan and exactsavederror/layout semantics; rootreview before native/frontend/SDK implementation lanes. No neworiginalcalls."
+      }
+    },
+    {
+      "id": "regionprops-strided-native-v2",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "tiny_line_implementation",
+      "base_sha": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+      "state": "parity_passed",
+      "owns": [
+        "include/skimagexx/regionprops_state.hpp",
+        "src/regionprops_state.cpp",
+        "tests/test_regionprops_state_native.cpp"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Exactsource547c0497def9ac0d560e5494b970bfd1f31a7d9a, independentpeerbuild/regionprops-strided-v2-independent-native-review-v1/review.json SHAfd8fedb0e2d50760db1a59933cc0f86418d69b7ea69b8c84ae60ad54ca833834; boundedcomponent scope only, no performanceclaim.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Restore exactreviewednamedpaths into coherentv2candidate, preserve historicalbaseline/sourcegolds and all28prospective gates. Genuine readiness/measurement required; no componenttest replay."
+      }
+    },
+    {
+      "id": "regionprops-scalar-boundary-v2",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "next_family_contract",
+      "base_sha": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+      "state": "parity_passed",
+      "owns": [
+        "src/bind_regionprops_state.cpp",
+        "python/skimagexx/_regionprops_state_class.py",
+        "tests/test_regionprops_bbox_extent_public.py",
+        "tests/test_regionprops_scalar_boundary_v2.py",
+        "coverage/contracts/regionprops-scalar-boundary-v2.json"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Exactsource07eb98653ba36cc237912a80535bf4e1ee390831, independentpeerbuild/regionprops-scalar-boundary-independent-review-v2/review.json SHA12f8c4d511b0a29be0ae4fc7ef7f2eabbdf3c7d3f62c1af3478ee694bfee5cdf; boundedcomponent scope only, no performanceclaim.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Restore exactreviewednamedpaths into coherentv2candidate, preserve historicalbaseline/sourcegolds and all28prospective gates. Genuine readiness/measurement required; no componenttest replay."
+      }
+    },
+    {
+      "id": "regionprops-strided-sdk-v2",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "tiny_line_implementation",
+      "base_sha": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+      "state": "parity_passed",
+      "owns": [
+        "tests/test_component_consumers_native.cpp",
+        "tests/test_regionprops_strided_sdk_scope.py"
+      ],
+      "depends_on": [],
+      "current_checkpoint": "Exactsource2975a3ed78cddb97e4870812976237f30f1fe271, independentpeerbuild/regionprops-strided-sdk-independent-review-v2/review.json SHAeac7b3aed56dd9eb1e3d7d5162acac6b7eca4d96c460b2053b63bf1c7d35edf7; boundedcomponent scope only, no performanceclaim.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Restore exactreviewednamedpaths into coherentv2candidate, preserve historicalbaseline/sourcegolds and all28prospective gates. Genuine readiness/measurement required; no componenttest replay."
+      }
+    },
+    {
+      "id": "regionprops-performance-shared-v2",
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owner": "qualification251_readiness",
+      "branch": "integrate/regionprops-performance-v2",
+      "base_sha": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+      "state": "implementing",
+      "owns": [
+        "CMakeLists.txt",
+        ".github/workflows/ci.yml",
+        ".github/workflows/public-qualification.yml",
+        ".github/workflows/region-stain-same-host.yml",
+        "tools/public_qualification.py",
+        "tools/region_stain_compare.py",
+        "benchmarks/regionprops_scalars.py",
+        "benchmarks/regionprops_state.py",
+        "tests/test_region_stain_compare.py"
+      ],
+      "depends_on": [
+        "regionprops-strided-native-v2",
+        "regionprops-scalar-boundary-v2",
+        "regionprops-strided-sdk-v2"
+      ],
+      "acceptance": "Fixedprospectivebuild/regionprops-performance-v2/prospective-v1.json:28cohorts/4ABBA1568samples,perpairpriorCPP+originalnormalized<=1.05 plusF/warmtargetreductions. Preserveallhistoricalfailures/contracts/reports. Rootgenuine/firstcohortGO and independentwiring before hostedtiming.",
+      "current_checkpoint": "Native/frontend/SDK independentpeersclosed; sharedsourcecontextsuccessors drafted, old119controller reusedwithoptionalcontract selector/historicalsourcecontext. No neworiginal/timing/fullproductbuild yet.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Freeze exactnamedsource+strictsuccessorcontexts, both-profileaffectedpureguards, actualselectorclosure and rootfirstcohortproposal. RootseparateGO before neworiginalcalls; no hostdispatch untilgenuine readiness."
       }
     }
   ],
@@ -38060,6 +38162,12 @@
       "retained_directory": "build/regionprops-bbox-extent-reference-retained-v1",
       "preservation_receipt": "build/regionprops-bbox-extent-reference-retained-v1/source-retirement-v1.json",
       "member_rule": "Wholeignoredproofdirectory moved intact aftercleanancestor+allreaderrelease checks;appendformer relative suffix;immutable handedoffbytes unchanged."
+    },
+    {
+      "former_prefix": "build/worktrees/draw-polygon-reference-v1/build",
+      "retained_directory": "build/draw-polygon-reference-retained-v1",
+      "preservation_receipt": "build/draw-polygon-reference-retained-v1/source-retirement-v1.json",
+      "member_rule": "Wholeignoredproofdirectory moved intact aftercleanancestor+readerrelease; appendformer suffix; handedoffbytes unchanged."
     }
   ],
   "inventory_assessment_pending": {
@@ -38195,14 +38303,15 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
-    "run": 41962339458,
-    "image_paths": 257,
+    "source": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+    "run": 41986546641,
+    "image_paths": 258,
     "receipt": {
-      "path": "coverage/evidence/public257-whole-product-admission.json",
-      "sha256": "a1e3cc875c0766f02e40ab4c8a1c9fa7f544c912998d517c3f344dcd9fbe4afc"
+      "path": "coverage/evidence/public258-whole-product-admission.json",
+      "sha256": "2f169132cb778f19343a52eb992c11a80f610dfca9a12e20368dffea5e03272f"
     },
-    "scope": "Exact257declaredpartialcontracts,4profiles/924568XML/240SDK/48corpora/3Release stagers. Notfull477/class/performance completion orlatercodequalification."
+    "scope": "All four supported profiles qualify exact258 declared PARTIAL image contracts plus3metadata functions, including bounded RegionProperties area/area_bbox/extent. This is not full477API/class/runtime/nativeownership/performance completion or later optimization acceptance.",
+    "production_source_sha256": "fe08560b60c91735060145f18982df31f13c759af2d9717eb96ed43ac4b8962d"
   },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",

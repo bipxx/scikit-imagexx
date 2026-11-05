@@ -1,0 +1,123 @@
+{
+  "api": "measure.regionprops",
+  "members": [
+    "area",
+    "area_bbox",
+    "extent"
+  ],
+  "status": "COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_FRONTEND_REVIEW",
+  "base": "acc15b10",
+  "reference": "eaf8cc25f009e47d5ae0cb06f980934396ad393d",
+  "reference_matrix_sha256": "0c8c82082af758b6f41b49346fc223be84cbfd928e99ba9a24e4a659ab7f7164",
+  "case_ids": [
+    "regionprops-bbox-extent/plain2d-cache-False",
+    "regionprops-bbox-extent/plain2d-cache-True",
+    "regionprops-bbox-extent/anisotropic2d-cache-False",
+    "regionprops-bbox-extent/anisotropic2d-cache-True",
+    "regionprops-bbox-extent/area-primed2d-cache-False",
+    "regionprops-bbox-extent/area-primed2d-cache-True",
+    "regionprops-bbox-extent/unprimed3d-cache-False",
+    "regionprops-bbox-extent/unprimed3d-cache-True",
+    "regionprops-bbox-extent/slice3d-cache-False",
+    "regionprops-bbox-extent/slice3d-cache-True",
+    "regionprops-bbox-extent/empty-slice2d-cache-False",
+    "regionprops-bbox-extent/empty-slice2d-cache-True",
+    "regionprops-bbox-extent/zero-spacing",
+    "regionprops-bbox-extent/bad-spacing-length"
+  ],
+  "saved_sequences": 28,
+  "native_header": "da553c7c0651311a7aebd90c6fca891adad53e02",
+  "native_source": "aa3bfa34c8f7d92e7222606f7b9b5fec89d5fe2a",
+  "native_PIC_sha256": "57b437e62ca25ed2a173bfce68ee19e839b3d757bf6fb2cb917547851ca287f1",
+  "typed_entries": [
+    "regionprops_state_scaled_count_f64(count,exactnp.float64pixelarea)",
+    "regionprops_state_extent_f64(exactnp.float64visiblearea,exactnp.float64visiblebbox)"
+  ],
+  "result": "None refuses; otherwise(bit-exactboxednp.float64,SDKstatus). No NumPy numeric result substitution.",
+  "type_policy": {
+    "original": [
+      "skimage.measure._regionprops",
+      "RegionProperties"
+    ],
+    "backend": [
+      "skimagexx._regionprops_state",
+      "RegionProperties"
+    ],
+    "scope": "Distinctbackendclasspair/subclasscompatible; othercaptured fields rawexact, no literaltypeidentitynormalization."
+  },
+  "order": "area original_cached keyarea: self.image\u2192population\u2192readpixelarea\u2192multiply; bboxuncached:self.image.size\u2192readpixelarea\u2192multiply; extentuncached:self.area THENSELF.area_bbox\u2192divide. No frozenbox/count substitution, fuseddependencies or cacheinvalidation.",
+  "frontier": "64bit exactordinarybackend withnative_state; exactnativeboolC/F array image, existingstoragevalidator/population; count<=2^53/intpmax; exactnp.float64positivezero ornativef64typedfrontier. Cachedvisibleareas consumednotrecomputed. No arbitraryprivatecache/protocol/subclass promise.",
+  "FP": "HeaderSDKinvalid1/divide2/over4/under8 mapsNPflags8/1/2/4; exactexistingmoments-derived ignore/warn/raise/call dispatcher convention. np.float64boxing provider only; no numeric computation. Print/log/otherdtype/FENV/numericfrontier use literalalready-evaluatedoperands provider, no duplicate dependency reads.",
+  "providers": [
+    "Original classconstructor/spacing/cache/scaffolding/aliases andchangedgeometry image tails remain explicit",
+    "NumPy scalar boxing, policy lookup/warnings/callback delivery remain providers",
+    "Unsupportedmask fallbacknp.sum(mask) usesalready-readmask; rejectedscale onownedboolcount usesnp.intp(count)*pixelarea, exactsourceboolsumtype on64bit",
+    "Other35unportedproperties/intensity/extras/privateprotocols/fullclass/platform/SDK/genuine/performance remain open"
+  ],
+  "prospective_checks": [
+    "14savedIDs\u00d7workers1/4\u00d74modes exactallrows exceptdeclaredclasspair, ctorerror unchanged; forbidoriginalconstruct/findobjects/area/bbox/extent/np.sum admittedpaths, realprivatebuiltinCreturns/nonNone",
+    "FPinvalidphase3/5/8/12, rawnegativeNaNwords andzero-spacing4raise preserved; no callbackreplay/stateresets",
+    "Nativecachedarea independentofnum_pixels; currentimage.sizevsfrozenbox, cacheoffseparateimageevaluations anddependencyorder, mutablecachedmask andvisiblecachedarea",
+    "Explicitalready-evaluatedproviderfallthrough andprint/logscope; lifetime/workers1/4/defaultrestore",
+    "Onlyaffectedoldstate/publicmutation/pointgold selectors, no broad244/552replay"
+  ],
+  "new_original_calls": 0,
+  "timings": false,
+  "proof": {
+    "modes": [
+      {
+        "profile": "minimum",
+        "mode": "normal",
+        "nodes": 52,
+        "new_saved_nodes": 28,
+        "new_boundary_controls": 4,
+        "old_affected_state_nodes": 12,
+        "old_affected_mutation_nodes": 8,
+        "actual_avx2": true
+      },
+      {
+        "profile": "minimum",
+        "mode": "scalar",
+        "nodes": 52,
+        "new_saved_nodes": 28,
+        "new_boundary_controls": 4,
+        "old_affected_state_nodes": 12,
+        "old_affected_mutation_nodes": 8,
+        "actual_avx2": false
+      },
+      {
+        "profile": "modern",
+        "mode": "normal",
+        "nodes": 52,
+        "new_saved_nodes": 28,
+        "new_boundary_controls": 4,
+        "old_affected_state_nodes": 12,
+        "old_affected_mutation_nodes": 8,
+        "actual_avx2": true
+      },
+      {
+        "profile": "modern",
+        "mode": "scalar",
+        "nodes": 52,
+        "new_saved_nodes": 28,
+        "new_boundary_controls": 4,
+        "old_affected_state_nodes": 12,
+        "old_affected_mutation_nodes": 8,
+        "actual_avx2": false
+      }
+    ],
+    "nodes_total": 208,
+    "saved_new_row_equality_nodes": 112,
+    "source_analytic_boundary_controls": 16,
+    "affected_old_gold_nodes": 80,
+    "new_original_calls": 0,
+    "timings": false,
+    "mode_scope": "Actualruntime SIMDavailabletrue/disabledfalse withsame normalPIC; notcompiler-scalar proof. NewbinderTU eachprofile,oldinitializer/storageguard/genuineSDK90 runtime reused."
+  },
+  "closeout": {
+    "result": "4modes52PASS each208total firstattempt; exactnewcapturedrows/FPphases/errors/types,realnativeCreturns/nonNone/providersdenied,4source-analytic controls and80affectedoldgolds. Independentfrontendpeerpending.",
+    "waste_reuse": "ReusedBfrozenheader/PIC57b/rootoldinitializers/storageguard/runtimearchive andexistingNPprofiles. Initialminimumbindercompilefailedbeforeanytest because isolatedheader relativecomponents.hpp requiredinclude/skimagexx searchpath; preservedfailedlogs/recipe, correctedincludeonly,2binderTUs+2links final,0leaf/init/fullSDK rebuild. Old24referenceintakes/244or552broadfamilysuites notrerun.",
+    "observed_cost": "Per-mode52nodepytest times fromrawXML; no new performance/waste timing.0originalcalls/envcreation/cleanup/fullSDK builds.",
+    "next_owner_trigger": "Rootindependentfrontendreviewthenexplicitsharedintegration/benchmarksourcecontext. NewclassmembersnotnewAPI/family, area owneddependency notnewcanonicalproperty. Source closure/FENV/callback/providerfirstf64scope mustremainexplicit; fullgenuine/SDK/wholeclass/speedacceptance separate."
+  }
+}

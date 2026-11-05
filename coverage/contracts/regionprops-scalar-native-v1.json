@@ -1,0 +1,63 @@
+{
+  "schema": "regionprops-scalar-native-v1",
+  "state": "PROSPECTIVE_HEADER_FROZEN_BEFORE_IMPLEMENTATION_PROOF",
+  "qualified_base": "acc15b102cb2a5fb7a77beb0b2875c0fd6a2274f",
+  "header_freeze": "da553c7c0651311a7aebd90c6fca891adad53e02",
+  "reference": "eaf8cc25f009e47d5ae0cb06f980934396ad393d",
+  "api": "measure.regionprops",
+  "members": [
+    "area_bbox",
+    "extent"
+  ],
+  "necessary_dependency": "area: existingpopulation plusnewscaled-count; Pythoncacheandscalarboxing remainfrontend",
+  "interface": [
+    "RegionPropsScalar64 regionprops_scaled_count_f64(size_t,double)",
+    "RegionPropsScalar64 regionprops_extent_f64(double,double)"
+  ],
+  "status_bits": {
+    "invalid": 1,
+    "divide": 2,
+    "overflow": 4,
+    "underflow": 8,
+    "numpy_invalid_callback_flag": 8
+  },
+  "source_sha256": {
+    "include/skimagexx/regionprops_state.hpp": "8a2a3edc9c225ac683cffa6b014f7bcd1f90bcc8baf8d42fe16fe98f2807c76a",
+    "src/regionprops_state.cpp": "5ffd27081657d5041d5b8bf0811c6ebd7a4d7161e4ca918f862ae6c89795ab53",
+    "tests/test_regionprops_scalar_native.cpp": "111c1637408affd8bdd6216f738e64261b633a7460f93e7995cdb7dcc0153a61"
+  },
+  "frontier": {
+    "count": "<=min(2**53,INTP_MAX)",
+    "pixel_area": "exactf64 +0 or[2**-256,2**256]",
+    "visible_area_and_bbox": "exactf64 +0 or[2**-256,2**309]",
+    "fenv": "nearest,gradualunderflow; typedentryrefusalotherwise; callerflags/roundingrestored",
+    "invalid_zero_divide_word": "fff8000000000000"
+  },
+  "execution": "SerialO1scalarops, noalloc/globalworkerreads/pool. Existingpopulationloopreusedunchanged. No fakeSIMDclaim.",
+  "prospective_proof": {
+    "records": 8481,
+    "saved_and_dependency_records": 286,
+    "independent_Fraction_records": 8192,
+    "analytic_FP_records": 3,
+    "fixtures_sha256": "51c97708e670151caa78abcfefd64a4dc8145d739645f371f783fbf5327e04d8",
+    "saved_mapping_sha256": "722be2733659527f17b23bf66a979e605af3cba506c733248980fe251de46b76",
+    "modes": [
+      "GNU normal",
+      "GNU truecompiler-scalar",
+      "GNU ASanUBSan",
+      "MSVC strictFP compile affectedTUs"
+    ],
+    "workers": [
+      1,
+      4
+    ]
+  },
+  "unassessed": [
+    "Frontendcache/alias/protocol/callback/warnings/errorboxing andnp.float64type",
+    "integer/f32/f16/negative/nonfinite/subnormal/extreme scalarspacing;>2**53 counts",
+    "unassessedFPenvironments/non-x8664NaNsemantics",
+    "remaining35properties/wholeclass/lifecycle/intensity/extras",
+    "FullSDK/genuineproduct/benchmark/performance"
+  ],
+  "next_gate": "AffectedTUs proofthenindependentnativepeer; rootownsadmission/sharedCMake/frontendSDKintegration. No newimageAPIcount."
+}

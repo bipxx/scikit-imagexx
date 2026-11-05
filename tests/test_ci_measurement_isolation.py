@@ -252,7 +252,9 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/circle_perimeter_aa.py --threads 1 --repeat 7 --output build/ci-circle-perimeter-aa.json',
         'python benchmarks/stains.py --half-only --size 512 --threads 1 --repeat 7 --output build/ci-combine-stains-half.json',
         'python benchmarks/line_nd.py --threads 1 --repeat 7 --output build/ci-line-nd.json',
-        'python benchmarks/draw_ellipsoid.py --threads 1 --repeat 7 --output build/ci-ellipsoid.json']
+        'python benchmarks/draw_ellipsoid.py --threads 1 --repeat 7 --output build/ci-ellipsoid.json',
+        'python benchmarks/ellipse_perimeter.py --threads 1 --repeat 7 --output build/ci-ellipse-perimeter.json',
+        'python benchmarks/regionprops_scalars.py --threads 1 --repeat 7 --output build/ci-regionprops-scalars.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -540,7 +542,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 36 and all(condition in step for step in timed)
+    assert len(timed) == 38 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -556,13 +558,15 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 36 and all(skip in s for s in timed[:-1])
+    assert len(timed) == 38 and all(skip in s for s in timed[:-1])
     assert skip not in timed[-1]
-    assert 'benchmarks/regionprops_state.py ' in timed[-5]
-    assert 'benchmarks/circle_perimeter_aa.py ' in timed[-4]
-    assert 'benchmarks/stains.py --half-only ' in timed[-3]
-    assert 'benchmarks/line_nd.py ' in timed[-2]
-    assert 'benchmarks/draw_ellipsoid.py ' in timed[-1]
+    assert 'benchmarks/regionprops_state.py ' in timed[-7]
+    assert 'benchmarks/circle_perimeter_aa.py ' in timed[-6]
+    assert 'benchmarks/stains.py --half-only ' in timed[-5]
+    assert 'benchmarks/line_nd.py ' in timed[-4]
+    assert 'benchmarks/draw_ellipsoid.py ' in timed[-3]
+    assert 'benchmarks/ellipse_perimeter.py ' in timed[-2]
+    assert 'benchmarks/regionprops_scalars.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -806,8 +810,8 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
     assert "str(ROOT / 'tests/test_api.py')" in feature_source
     contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
-    assert contract['scope']=='current257'
-    assert len(contract['image_paths'])==257 and len(contract['metadata_paths'])==3
+    assert contract['scope']=='current258'
+    assert len(contract['image_paths'])==258 and len(contract['metadata_paths'])==3
     assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py','tests/test_line_aa_reference.py','tests/test_line_aa_public.py','tests/test_line_aa_default.py'}<=set(contract['required_selectors'])
 
 
@@ -896,3 +900,37 @@ def test_ellipsoid_generic_benchmark_uses_exact_storage_checker():
     namespace=dict(actual=actual,expected=expected,data=data,ellipsoid_default_error=checker)
     exec(compile(ast.Module(body=branch.body,type_ignores=[]),'<ellipsoid generic storage>','exec'),namespace)
     assert calls==[(data,actual,expected)] and namespace['error']==0.
+
+
+def test_ellipse_perimeter_shipping_preparation_and_source_gates():
+    blocks=jobs((ROOT/'.github/workflows/ci.yml').read_text())
+    minimum=blocks['numpy-minimum']
+    assert all('ellipse-perimeter-'+mode+'.xml' in minimum for mode in ('normal','scalar'))
+    assert minimum.split('ellipse-perimeter-scalar.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    workflow=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    assert 'tests/test_ellipse_perimeter_reference.py::test_ellipse_perimeter_prospective_source_safety' in workflow
+    assert 'tests/test_draw_ellipse_perimeter_default.py::test_ellipse_perimeter_saved_sdk_oracle_metadata_without_science' in workflow
+    assert 'tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_factory_original_refused' in workflow
+    assert 'tests/test_ellipse_perimeter_benchmark.py ' not in workflow
+    assert 'checker_corruption_controls' not in workflow
+    cmake=(ROOT/'CMakeLists.txt').read_text()
+    assert 'set_source_files_properties(src/draw_ellipse_perimeter.cpp src/bind_draw_ellipse_perimeter.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math")' in cmake
+
+
+def test_region_scalar_installed_preparation_source_and_fixture_gates():
+    import hashlib
+    blocks=jobs((ROOT/'.github/workflows/ci.yml').read_text())
+    for name in ('check','numpy-minimum'):
+        job=blocks[name]
+        assert 'tests/test_regionprops_bbox_extent_reference.py tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalars_benchmark.py' in job
+        assert 'regionprops-scalars-normal.xml' in job and 'regionprops-scalars-scalar.xml' in job
+        assert job.split('regionprops-scalars-scalar.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+        if name=='numpy-minimum':assert job.index('regionprops-scalars-normal.xml')<job.index('ci_measurement_artifacts.py freeze')
+    text=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    for node in ('test_bbox_extent_prospective_source_and_scope','test_bbox_extent_saved_rows_and_declared_pixel_mutation','test_bbox_extent_saved_scalar_types_errors_and_FP_phases'):
+        assert 'tests/test_regionprops_bbox_extent_reference.py::'+node in text
+    assert 'tests/test_regionprops_scalars_benchmark.py ' in text
+    assert 'tests/test_regionprops_bbox_extent_reference.py ' not in text
+    cmake=(ROOT/'CMakeLists.txt').read_text()
+    assert 'src/regionprops_state.cpp src/bind_regionprops_state.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math"' in cmake
+    assert hashlib.sha256((ROOT/'tests/fixtures/regionprops_scalar_native.bin').read_bytes()).hexdigest()=='51c97708e670151caa78abcfefd64a4dc8145d739645f371f783fbf5327e04d8'

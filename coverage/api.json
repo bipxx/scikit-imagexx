@@ -1081,11 +1081,16 @@
       "api": "draw.ellipse_perimeter",
       "kind": "callable",
       "signature": "(r, c, r_radius, c_radius, orientation=0, shape=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_ellipse_perimeter_public.py::test_ellipse_perimeter_saved_public_pipeline",
+      "benchmark": "benchmarks/ellipse_perimeter.py",
+      "default_input_kind": "Frozen unequal-axis coordinate geometry; descriptor dtype/pixels unused. Owned exact intp 0D/1D outputs, bounded axis and unit-circle rotation, explicit general Bezier/protocol frontier."
     },
     {
       "api": "draw.ellipsoid",

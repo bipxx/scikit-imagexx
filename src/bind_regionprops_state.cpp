@@ -3,6 +3,7 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <cstring>
+#include <stdexcept>
 #include <memory>
 #include <vector>
 
@@ -47,9 +48,38 @@ std::vector<std::uint8_t> c_mask(const py::array& a) {
     }
     return out;
 }
+bool scalar_f64(const py::object& value,double& output) {
+    const auto scalar_type=py::dtype::of<double>().attr("type");
+    if(reinterpret_cast<PyObject*>(Py_TYPE(value.ptr()))!=scalar_type.ptr())return false;
+    output=PyFloat_AsDouble(value.ptr());
+    if(PyErr_Occurred())throw py::error_already_set();
+    return true;
+}
+py::object scalar_result(const skimagexx::detail::RegionPropsScalar64& result) {
+    py::array_t<double> boxed(std::vector<py::ssize_t>{});
+    std::memcpy(boxed.mutable_data(),&result.bits,sizeof(result.bits));
+    return py::make_tuple(boxed.attr("__getitem__")(py::tuple()),result.fp_status);
+}
 }
 
 void bind_regionprops_state(py::module_& m) {
+    m.def("regionprops_state_scaled_count_f64",[](std::size_t count,const py::object& pixel_area)->py::object {
+        double scale;if(!scalar_f64(pixel_area,scale))return py::none();
+        // SDK helper owns the exported numeric/FENV boundary. Refusal is an
+        // explicit primitive-provider route with already evaluated operands.
+        skimagexx::detail::RegionPropsScalar64 result;
+        try{result=skimagexx::detail::regionprops_scaled_count_f64(count,scale);}
+        catch(const std::invalid_argument&){return py::none();}
+        return scalar_result(result);
+    },py::arg("count"),py::arg("pixel_area"));
+    m.def("regionprops_state_extent_f64",[](const py::object& area,const py::object& bbox)->py::object {
+        double first,denominator;
+        if(!scalar_f64(area,first)||!scalar_f64(bbox,denominator))return py::none();
+        skimagexx::detail::RegionPropsScalar64 result;
+        try{result=skimagexx::detail::regionprops_extent_f64(first,denominator);}
+        catch(const std::invalid_argument&){return py::none();}
+        return scalar_result(result);
+    },py::arg("area"),py::arg("bbox"));
     py::class_<Prepared,std::shared_ptr<Prepared>>(m,"_RegionPropsState");
     m.def("regionprops_state_prepare",[](const py::array& a)->py::object {
         auto p=std::make_shared<Prepared>();

@@ -1,0 +1,112 @@
+{
+  "schema": "public-qualification-reviews-v1",
+  "run": 41986546641,
+  "source": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+  "admission": {
+    "path": "coverage/evidence/public258-whole-product-admission.json",
+    "sha256": "2f169132cb778f19343a52eb992c11a80f610dfca9a12e20368dffea5e03272f"
+  },
+  "profile_reviews": {
+    "minimum": {
+      "receipt": {
+        "path": "build/public258-scalar-qualification-v1/minimum-raw-review.json",
+        "sha256": "8c1bc90efba3db7aed1ff0c1b8cffd04753db3eb49e6d9245fe16ddbd5e54c28"
+      },
+      "XML": {
+        "tests": 231708,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 62,
+      "manifest_sha256": "3b5fb924636d7aad4055cca9749921dccea6d5059d3436376ad8aba473f70124",
+      "source_derived_closure": {
+        "product_members": 193,
+        "SDK_members": 91
+      }
+    },
+    "modern": {
+      "receipt": {
+        "path": "build/public258-scalar-qualification-v1/modern-raw-review.json",
+        "sha256": "487ea43cf7ee37075eaef741b799013ef63397ac318e378c2511456ed8b32696"
+      },
+      "XML": {
+        "tests": 231708,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 62,
+      "manifest_sha256": "a183adc1400c00c81e6f535f9539caa8b9069f3b9cd8c8bc769d60182cbc6211",
+      "source_derived_closure": {
+        "product_members": 193,
+        "SDK_members": 91
+      }
+    },
+    "windows": {
+      "receipt": {
+        "path": "build/public258-scalar-qualification-v1/windows-raw-review.json",
+        "sha256": "de57e87e234b410c63a2000bfb12caffb8041b9b6ff469732c518a0cdf1bed18"
+      },
+      "XML": {
+        "tests": 231708,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 62,
+      "manifest_sha256": "25162e84a1cfaa8a3d76bc4361d840e443878f9962541e7a90e8b69522aa3279",
+      "source_derived_closure": {
+        "product_members": 193,
+        "SDK_members": 91
+      }
+    },
+    "debug": {
+      "receipt": {
+        "path": "build/public258-scalar-qualification-v1/debug-raw-review.json",
+        "sha256": "36c19c4d904214a7ed2fd2389e82e9df95c300b0013f46b6e11c217ebbb1ee75"
+      },
+      "XML": {
+        "tests": 231708,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 62,
+      "manifest_sha256": "d013f8bc8c6a611411e80f94c09deee7aba9299f75ad4690a9cc25ebd7f8cb64",
+      "source_derived_closure": {
+        "product_members": 193,
+        "SDK_members": 91
+      }
+    }
+  },
+  "controlled_stagers": [
+    {
+      "profile": "minimum",
+      "path": "build/public258-scalar-qualification-v1/minimum-stager-review.json",
+      "sha256": "60fc23c3e60a47d9f628d3d865a962c85963369b3d0c569344e70c9e5a1c7a78",
+      "verified_files": 2216,
+      "status": "Authenticated exact-source Release staged product; original staged-unaccepted payload bytes retained unchanged."
+    },
+    {
+      "profile": "modern",
+      "path": "build/public258-scalar-qualification-v1/modern-stager-review.json",
+      "sha256": "f630c830099eec5de1d73abab2a119b9d53fd66943082a3e20b6b4f7f3be10c0",
+      "verified_files": 2216,
+      "status": "Authenticated exact-source Release staged product; original staged-unaccepted payload bytes retained unchanged."
+    },
+    {
+      "profile": "windows",
+      "path": "build/public258-scalar-qualification-v1/windows-stager-review.json",
+      "sha256": "b5de68be606769662f2d4f15bb0c7212baacce5bd83a6890078c56cb190edc5d",
+      "verified_files": 2202,
+      "status": "Authenticated exact-source Release staged product; original staged-unaccepted payload bytes retained unchanged."
+    }
+  ],
+  "independent_review": {
+    "path": "build/public258-scalar-independent-admission-review-v1/review.json",
+    "sha256": "7880cecc0aba950b9360a271cc09b4e11ef65d4241efc33f064e370d84fd84b8"
+  },
+  "production_source_sha256": "fe08560b60c91735060145f18982df31f13c759af2d9717eb96ed43ac4b8962d",
+  "scope": "All four supported profiles qualify exact258 declared PARTIAL image contracts plus3metadata functions, including bounded RegionProperties area/area_bbox/extent. This is not full477API/class/runtime/nativeownership/performance completion or later optimization acceptance."
+}

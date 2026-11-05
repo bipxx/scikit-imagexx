@@ -2,6 +2,13 @@
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
 #include <algorithm>
+#include <cfenv>
+#include <stdexcept>
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+#include <xmmintrin.h>
+#endif
+
+#pragma STDC FENV_ACCESS ON
 #include <cstring>
 #include <limits>
 #include <map>
@@ -127,5 +134,62 @@ void regionprops_coords_into(const RegionPropsState& state,std::size_t index,con
         for(auto a=ndim;a-->0;){p[a]=local%shape[a];local/=shape[a];}
         for(std::size_t a=0;a<ndim;++a)*output++=std::intptr_t(region.start[a]+p[a]);
     }
+}
+
+namespace {
+bool scalar_frontier(double value,double lower,double upper) noexcept {
+    std::uint64_t bits;std::memcpy(&bits,&value,sizeof(bits));
+    if(bits==0)return true;
+    if((bits>>63) || ((bits>>52)&0x7ffu)==0x7ffu)return false;
+    return value>=lower && value<=upper;
+}
+class ScalarEnvironment {
+    std::fenv_t original_;
+public:
+    ScalarEnvironment() {
+        if(std::fegetround()!=FE_TONEAREST)
+            throw std::invalid_argument("RegionProperties scalar requires nearest rounding");
+        #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+        if(_mm_getcsr()&((1u<<15)|(1u<<6)))
+            throw std::invalid_argument("RegionProperties scalar requires gradual underflow");
+        #endif
+        if(std::feholdexcept(&original_))
+            throw std::runtime_error("cannot capture RegionProperties scalar environment");
+    }
+    ~ScalarEnvironment(){std::fesetenv(&original_);}
+    unsigned flags()const noexcept {
+        const auto f=std::fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW);
+        return (f&FE_INVALID?regionprops_fp_invalid:0u)
+             | (f&FE_DIVBYZERO?regionprops_fp_divide:0u)
+             | (f&FE_OVERFLOW?regionprops_fp_overflow:0u)
+             | (f&FE_UNDERFLOW?regionprops_fp_underflow:0u);
+    }
+};
+RegionPropsScalar64 scalar_result(double value,unsigned status)noexcept {
+    RegionPropsScalar64 result{0,status};std::memcpy(&result.bits,&value,sizeof(value));return result;
+}
+}
+
+RegionPropsScalar64 regionprops_scaled_count_f64(std::size_t count,double pixel_area) {
+    if(std::uint64_t(count)>UINT64_C(9007199254740992)
+       || count>std::size_t(std::numeric_limits<std::intptr_t>::max())
+       || !scalar_frontier(pixel_area,0x1p-256,0x1p256))
+        throw std::invalid_argument("RegionProperties scaled count outside f64 frontier");
+    ScalarEnvironment environment;
+    volatile double value=double(count)*pixel_area;
+    return scalar_result(value,environment.flags());
+}
+
+RegionPropsScalar64 regionprops_extent_f64(double area,double area_bbox) {
+    if(!scalar_frontier(area,0x1p-256,0x1p309)
+       || !scalar_frontier(area_bbox,0x1p-256,0x1p309))
+        throw std::invalid_argument("RegionProperties extent outside f64 frontier");
+    ScalarEnvironment environment;
+    // NumPy's assessed x86-64 scalar invalid result has this exact negative
+    // quiet-NaN word. Return it deterministically without leaking hardware flags.
+    if(area==0. && area_bbox==0.)
+        return {UINT64_C(0xfff8000000000000),regionprops_fp_invalid};
+    volatile double value=area/area_bbox;
+    return scalar_result(value,environment.flags());
 }
 }
