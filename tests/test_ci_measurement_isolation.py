@@ -100,7 +100,11 @@ def test_runtime_python_pins_reject_floating_or_mismatched_interpreters(monkeypa
 
 
 def test_debug_runtime_proof_rejects_release(monkeypatch):
-    import skimagexx
+    import sys
+    from types import ModuleType
+    skimagexx = ModuleType('skimagexx')
+    skimagexx._core = SimpleNamespace()
+    monkeypatch.setitem(sys.modules, 'skimagexx', skimagexx)
     monkeypatch.setattr(skimagexx._core, '_consumer_gil_assertions', False, raising=False)
     with pytest.raises(AssertionError, match='must be active'):
         helper.main(['debug-assertions'])
