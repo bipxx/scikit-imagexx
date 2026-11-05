@@ -150,5 +150,7 @@ def test_coords_scaled_actual_main_validation_precedes_sampler():
     assert "actual is not expected and not np.shares_memory(actual, expected)" in source
     assert "actual is not buffer and not np.shares_memory(actual, buffer)" in source
     assert 'source_fingerprint(args.source_root)' in source
-    assert "sys.version == audit['runtime']['python']" in source
+    assert "sys.version == manifest['runtime']['python']" in source
+    assert "manifest['schema'] == 'ci-offline-measurement-v1'" in source
+    assert "method_sha256=contract['method_sha256'], fallback_enabled=False" in source
     assert "calls == list(STAGES[:3] if integer else STAGES)*2" in source

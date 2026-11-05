@@ -2,6 +2,11 @@ name: region-stain-same-host
 on:
   workflow_dispatch:
     inputs:
+      comparison_mode:
+        description: Frozen comparison protocol; legacy keeps the original Region/stain cohorts
+        type: choice
+        options: [legacy, coords-scaled]
+        default: legacy
       candidate_run:
         type: string
         required: true
@@ -41,6 +46,7 @@ jobs:
       CANDIDATE_SOURCE: ${{ inputs.candidate_source }}
       CANDIDATE_ARTIFACT: ${{ inputs.candidate_artifact }}
       DEADLINE_UTC: ${{ inputs.deadline_utc }}
+      COMPARE_MODE: ${{ inputs.comparison_mode }}
     steps:
       - uses: actions/setup-python@v5
         with:
@@ -52,7 +58,7 @@ jobs:
           fetch-depth: 1
       - uses: actions/checkout@v4
         with:
-          ref: 6a2b33a2f78606b9315dd0fcc50777b6e85ac38f
+          ref: ${{ inputs.comparison_mode == 'coords-scaled' && 'cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b' || '6a2b33a2f78606b9315dd0fcc50777b6e85ac38f' }}
           path: snapshots/baseline
           fetch-depth: 1
       - uses: actions/checkout@v4
@@ -68,8 +74,12 @@ jobs:
           lscpu > machine/cpu.txt
           uname -a > machine/platform.txt
           git -C controller rev-parse HEAD > machine/controller-source.txt
+          COMPARE_CONTRACT=controller/coverage/contracts/regionprops-performance-compare-v2.json
+          if [[ "$COMPARE_MODE" == coords-scaled ]]; then
+            COMPARE_CONTRACT=controller/coverage/contracts/regionprops-coords-scaled-compare-v1.json
+          fi
           python controller/tools/region_stain_compare.py execute \
-            --contract controller/coverage/contracts/regionprops-performance-compare-v2.json \
+            --contract "$COMPARE_CONTRACT" \
             --repository "$GITHUB_REPOSITORY" \
             --candidate-source "$CANDIDATE_SOURCE" --candidate-run "$CANDIDATE_RUN" \
             --candidate-artifact "$CANDIDATE_ARTIFACT" --deadline-utc "$DEADLINE_UTC" \

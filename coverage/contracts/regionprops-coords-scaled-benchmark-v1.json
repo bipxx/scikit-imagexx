@@ -156,7 +156,7 @@
     "comparison": "Keep original goldens and raw observed qualified types unchanged. Compare all other captured row fields exactly. Assert the prospective original/backend pair separately, retaining actual raw rows; never canonicalize or rewrite type observations."
   },
   "source_closure": {
-    "benchmarks/regionprops_coords_scaled.py": "cf375bb0f0ccf48293d5c1d2be776ab904cf535f9732f7265efb81b8bb215543",
+    "benchmarks/regionprops_coords_scaled.py": "8068d26fae5624217c5858005ee090a81325a9119b946c9beb056af6b128b15b",
     "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
     "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
     "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
@@ -262,7 +262,9 @@
     "input_audit": "Existing root input-auth audit.json schema; caller supplies independentlyadmitted digest and source revision. Driver checks source/fullmanifest/projectPython+header/core/runtime, not an unauthenticatedcomponent alias.",
     "controller_required": "Authenticateproducer job/run/artifact once, freeze independentadmission digest, compareall13 nonproject dependency wheels/fullPython/runtime/libmaps tocf0. Driver perprocess role isnotwholeABBA acceptance or independentauthentication.",
     "first_cohort": "RootGO actualoneoriginal+native operation perretainedprofile thenstoprealmeasureCALLbeforebody; sourceonlypacket executesnone.",
-    "four_profile_release": "Separate gate; no fullrelease credit from thisbenchmark."
+    "four_profile_release": "Separate gate; no fullrelease credit from thisbenchmark.",
+    "input_manifest": "Existing authenticated ci-offline-measurement-v1 prepared/ci-artifacts/measurement.json. Controller runs eachsnapshot own verify before/after, admits13deps/runtime equality, andpasses exactmanifest digest; no localrootaudit schema/synthetic authbooleans.",
+    "activation": "Only externalcontrollerchild contractmayactivate after independentgenuineinput admission; source-root/manifest/install identity remains immutablepreparedsource, nevercontrollerchild. State remainsprospective inthispacket."
   },
   "timed_boundary": {
     "getters": "Public coords_scaled on separatelypreconstructed realRegion; cacheTrue primesimage only outside timer; fresh output allocation/destruction inside sampler.",
