@@ -1,0 +1,1115 @@
+{
+  "schema": "draw-polygon-dtype-tag-reference-v1",
+  "status": "FOUR_ORIGINAL_OBSERVATIONS_COMPLETE_PENDING_INDEPENDENT_REVIEW",
+  "cases": [
+    {
+      "id": "draw.polygon/tagged-f64",
+      "api": "draw.polygon",
+      "shape": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/tagged-C-f64",
+      "api": "draw.polygon2mask",
+      "shape": [
+        3,
+        3
+      ]
+    }
+  ],
+  "recipe": {
+    "vertices": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "dtype": "nativefloat64",
+    "dtype_metadata": {
+      "tag": 7
+    },
+    "writeable": true,
+    "shape": [
+      3,
+      3
+    ]
+  },
+  "safety": {
+    "scan_points": 9,
+    "vertices": 3,
+    "max_edge_checks": 27,
+    "max_output_pairs": 9,
+    "max_mask_elements": 9,
+    "source": "Finite equal nonempty vertices; shape exactly2 ordinary nonnegative ints; mutable f64 C rows after normalizing; no unchecked shape/length access."
+  },
+  "original_observations": {
+    "1.24.4": [
+      {
+        "id": "draw.polygon/tagged-f64",
+        "api": "draw.polygon",
+        "inputs_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "32c741d9e868d2d7cdc5f9e429d1627304632d00918ca3e7247f986e805ea03a",
+                  "raw_zlib_base64": "eJxjYMAKHAAAWABB"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "21db8363e8ffdb6d973959d6adb6adf64d493b67c2031a404dc27407bd67e29d",
+                  "raw_zlib_base64": "eJxjYEABDjAGAAJYAEE="
+                }
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  3,
+                  3
+                ]
+              }
+            }
+          ]
+        },
+        "inputs_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "32c741d9e868d2d7cdc5f9e429d1627304632d00918ca3e7247f986e805ea03a",
+                  "raw_zlib_base64": "eJxjYMAKHAAAWABB"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "21db8363e8ffdb6d973959d6adb6adf64d493b67c2031a404dc27407bd67e29d",
+                  "raw_zlib_base64": "eJxjYEABDjAGAAJYAEE="
+                }
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  3,
+                  3
+                ]
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                6
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "8dd9d48e80c204000659130d407fffa5ed919cf318caf1d84eefed9106b54ffe",
+              "raw_zlib_base64": "eJxjYMAOGNFoJigNAABoAAU="
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                6
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "df3067e435b0411e454b6d5137e9266ed60bb99f95f85b6b4898e8e7f5a0a191",
+              "raw_zlib_base64": "eJxjYIAARijNxIAKGNH4AACoAAU="
+            }
+          ]
+        },
+        "error": null,
+        "warnings": [],
+        "FP_events": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "checks": {
+          "input_bytes_metadata_unchanged": true,
+          "original_pointers_unchanged": true,
+          "original_descriptors_unchanged": true,
+          "fp_policy_unchanged": true,
+          "state_restored": true
+        },
+        "call_accounting": {
+          "top_level_calls": 1,
+          "actual_wrapper_entries": {
+            "draw.polygon": 1,
+            "draw.polygon2mask": 0
+          },
+          "dependent_polygon_calls": 0
+        }
+      },
+      {
+        "id": "draw.polygon2mask/tagged-C-f64",
+        "api": "draw.polygon2mask",
+        "inputs_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    3,
+                    3
+                  ]
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3,
+                    2
+                  ],
+                  "strides": [
+                    16,
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": false,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "93a5f04ce93b22a53392bf6f7506d472d717ec6a929cbb2c6b0d7000a435fec9",
+                  "raw_zlib_base64": "eJxjYMALHNBoBgAGsACB"
+                }
+              ]
+            },
+            {}
+          ]
+        },
+        "inputs_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    3,
+                    3
+                  ]
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3,
+                    2
+                  ],
+                  "strides": [
+                    16,
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": false,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "93a5f04ce93b22a53392bf6f7506d472d717ec6a929cbb2c6b0d7000a435fec9",
+                  "raw_zlib_base64": "eJxjYMALHNBoBgAGsACB"
+                }
+              ]
+            },
+            {}
+          ]
+        },
+        "result": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "dtype_descr": {
+            "container": "list",
+            "items": [
+              {
+                "container": "tuple",
+                "items": [
+                  "",
+                  "|b1"
+                ]
+              }
+            ]
+          },
+          "dtype_metadata": null,
+          "shape": [
+            3,
+            3
+          ],
+          "strides": [
+            3,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "aligned": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "base_shape": null,
+          "base_strides": null,
+          "raw_sha256": "1f895d1c6551a40cddd5f1a4b128eac9068da98319a3d9f962aa15e8f00f7146",
+          "raw_zlib_base64": "eJxjZAQCBkYGBgAALwAH"
+        },
+        "error": null,
+        "warnings": [],
+        "FP_events": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [
+          [
+            false,
+            false
+          ]
+        ],
+        "checks": {
+          "input_bytes_metadata_unchanged": true,
+          "original_pointers_unchanged": true,
+          "original_descriptors_unchanged": true,
+          "fp_policy_unchanged": true,
+          "state_restored": true
+        },
+        "call_accounting": {
+          "top_level_calls": 1,
+          "actual_wrapper_entries": {
+            "draw.polygon": 1,
+            "draw.polygon2mask": 1
+          },
+          "dependent_polygon_calls": 1
+        }
+      }
+    ],
+    "2.5.4": [
+      {
+        "id": "draw.polygon/tagged-f64",
+        "api": "draw.polygon",
+        "inputs_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "32c741d9e868d2d7cdc5f9e429d1627304632d00918ca3e7247f986e805ea03a",
+                  "raw_zlib_base64": "eJxjYMAKHAAAWABB"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "21db8363e8ffdb6d973959d6adb6adf64d493b67c2031a404dc27407bd67e29d",
+                  "raw_zlib_base64": "eJxjYEABDjAGAAJYAEE="
+                }
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  3,
+                  3
+                ]
+              }
+            }
+          ]
+        },
+        "inputs_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "32c741d9e868d2d7cdc5f9e429d1627304632d00918ca3e7247f986e805ea03a",
+                  "raw_zlib_base64": "eJxjYMAKHAAAWABB"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3
+                  ],
+                  "strides": [
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "21db8363e8ffdb6d973959d6adb6adf64d493b67c2031a404dc27407bd67e29d",
+                  "raw_zlib_base64": "eJxjYEABDjAGAAJYAEE="
+                }
+              ]
+            },
+            {
+              "shape": {
+                "container": "tuple",
+                "items": [
+                  3,
+                  3
+                ]
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                6
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "8dd9d48e80c204000659130d407fffa5ed919cf318caf1d84eefed9106b54ffe",
+              "raw_zlib_base64": "eJxjYMAOGNFoJigNAABoAAU="
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                6
+              ],
+              "strides": [
+                8
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "df3067e435b0411e454b6d5137e9266ed60bb99f95f85b6b4898e8e7f5a0a191",
+              "raw_zlib_base64": "eJxjYIAARijNxIAKGNH4AACoAAU="
+            }
+          ]
+        },
+        "error": null,
+        "warnings": [],
+        "FP_events": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "checks": {
+          "input_bytes_metadata_unchanged": true,
+          "original_pointers_unchanged": true,
+          "original_descriptors_unchanged": true,
+          "fp_policy_unchanged": true,
+          "state_restored": true
+        },
+        "call_accounting": {
+          "top_level_calls": 1,
+          "actual_wrapper_entries": {
+            "draw.polygon": 1,
+            "draw.polygon2mask": 0
+          },
+          "dependent_polygon_calls": 0
+        }
+      },
+      {
+        "id": "draw.polygon2mask/tagged-C-f64",
+        "api": "draw.polygon2mask",
+        "inputs_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    3,
+                    3
+                  ]
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3,
+                    2
+                  ],
+                  "strides": [
+                    16,
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": false,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "93a5f04ce93b22a53392bf6f7506d472d717ec6a929cbb2c6b0d7000a435fec9",
+                  "raw_zlib_base64": "eJxjYMALHNBoBgAGsACB"
+                }
+              ]
+            },
+            {}
+          ]
+        },
+        "inputs_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    3,
+                    3
+                  ]
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f8",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f8"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": {
+                    "tag": 7
+                  },
+                  "shape": [
+                    3,
+                    2
+                  ],
+                  "strides": [
+                    16,
+                    8
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": false,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "93a5f04ce93b22a53392bf6f7506d472d717ec6a929cbb2c6b0d7000a435fec9",
+                  "raw_zlib_base64": "eJxjYMALHNBoBgAGsACB"
+                }
+              ]
+            },
+            {}
+          ]
+        },
+        "result": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "dtype_descr": {
+            "container": "list",
+            "items": [
+              {
+                "container": "tuple",
+                "items": [
+                  "",
+                  "|b1"
+                ]
+              }
+            ]
+          },
+          "dtype_metadata": null,
+          "shape": [
+            3,
+            3
+          ],
+          "strides": [
+            3,
+            1
+          ],
+          "own": true,
+          "writeable": true,
+          "aligned": true,
+          "c": true,
+          "f": false,
+          "base_type": "NoneType",
+          "base_shape": null,
+          "base_strides": null,
+          "raw_sha256": "1f895d1c6551a40cddd5f1a4b128eac9068da98319a3d9f962aa15e8f00f7146",
+          "raw_zlib_base64": "eJxjZAQCBkYGBgAALwAH"
+        },
+        "error": null,
+        "warnings": [],
+        "FP_events": [],
+        "output_pair_aliases": [
+          [
+            true,
+            true,
+            true
+          ]
+        ],
+        "output_input_aliases": [
+          [
+            false,
+            false
+          ]
+        ],
+        "checks": {
+          "input_bytes_metadata_unchanged": true,
+          "original_pointers_unchanged": true,
+          "original_descriptors_unchanged": true,
+          "fp_policy_unchanged": true,
+          "state_restored": true
+        },
+        "call_accounting": {
+          "top_level_calls": 1,
+          "actual_wrapper_entries": {
+            "draw.polygon": 1,
+            "draw.polygon2mask": 1
+          },
+          "dependent_polygon_calls": 1
+        }
+      }
+    ]
+  },
+  "unassessed": [
+    "All other tags, dtype/layout/protocol/large geometry partitions remain outside this supplemental witness; prior24case golds unchanged."
+  ],
+  "runtime": {
+    "1.24.4": {
+      "runtime": {
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "reference": "0.26.0",
+        "source_sha256": {
+          "draw": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+          "polygon2mask": "63575285de3c5916f1a51aaf3c4bd444f3f1c0529a47483e458d75fdea4aa325"
+        },
+        "binaries": {
+          "skimage.draw._draw": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/draw/_draw.cpython-311-x86_64-linux-gnu.so",
+            "sha256": "32673fec979236e2f83543ad289a8128059b96e6562a9ea30114c4e73c17139b"
+          },
+          "skimage._shared.geometry": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/geometry.cpython-311-x86_64-linux-gnu.so",
+            "sha256": "1e3c9d10521cfc941841bb03a77e393b5df06916b7005207a7a28a506bff7278"
+          }
+        },
+        "calls_per_spec": 1,
+        "native_calls": 0,
+        "timings": false
+      },
+      "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python"
+    },
+    "2.5.4": {
+      "runtime": {
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "reference": "0.26.0",
+        "source_sha256": {
+          "draw": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+          "polygon2mask": "63575285de3c5916f1a51aaf3c4bd444f3f1c0529a47483e458d75fdea4aa325"
+        },
+        "binaries": {
+          "skimage.draw._draw": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/draw/_draw.cpython-313-x86_64-linux-gnu.so",
+            "sha256": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4"
+          },
+          "skimage._shared.geometry": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/geometry.cpython-313-x86_64-linux-gnu.so",
+            "sha256": "388e1559a7bea0d05dd9db1ab8e9f6ab3d6a253b989b9ae39eb60c917ea26458"
+          }
+        },
+        "calls_per_spec": 1,
+        "native_calls": 0,
+        "timings": false
+      },
+      "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python"
+    }
+  },
+  "capture_evidence": {
+    "minimum/observations.json": "632a2bc09ef8af2fbb75d78302fa10b3c70329eb37989c4d16656b96bc8a802d",
+    "minimum/observations.jsonl": "62ff1b1f5ba4dd904490a0f926126dd270877c3cf6b1b5a98a5d1a1f4be79e9e",
+    "minimum/journal.jsonl": "127d3fd439f3e1bf996669721f74061a18140900a167f81a0cdd1ccbd3596f58",
+    "minimum/refused-intakes.json": "57b8181f1cf4353197a4c607bf7a85fe27bed2c1865ba2ff855571785be06406",
+    "minimum/precall.json": "cb37f8a471bdad56c801519b6700c683ef810e002272c97cf39d148f17890ee5",
+    "minimum/runtime-before.json": "6e8f105af7bfe644d145fcaad78a0f75c71a6f463da80ee666440b38bde2ffbf",
+    "minimum/terminal.json": "7fab1e28e87927d89a83591943ded584bc3e6e351e4ae334a6e34e5f93e9e0d0",
+    "modern/observations.json": "632a2bc09ef8af2fbb75d78302fa10b3c70329eb37989c4d16656b96bc8a802d",
+    "modern/observations.jsonl": "62ff1b1f5ba4dd904490a0f926126dd270877c3cf6b1b5a98a5d1a1f4be79e9e",
+    "modern/journal.jsonl": "127d3fd439f3e1bf996669721f74061a18140900a167f81a0cdd1ccbd3596f58",
+    "modern/refused-intakes.json": "57b8181f1cf4353197a4c607bf7a85fe27bed2c1865ba2ff855571785be06406",
+    "modern/precall.json": "cb37f8a471bdad56c801519b6700c683ef810e002272c97cf39d148f17890ee5",
+    "modern/runtime-before.json": "ac47aacc0eac6e4925ea984d8c07cc8ec0adb2a74efb0200c1afe8e9e293c167",
+    "modern/terminal.json": "dc455509acb7eae3a0c8da0a332b7a35ee71c6378422ad31861e0ff18069d9c4"
+  },
+  "precall_freeze_sha256": "478eb7af353c8fb8407872c3286c8befd9c0d691015533ef1795c364bd029d44"
+}

@@ -1,0 +1,349 @@
+{
+  "schema": "draw-polygon-typed-interface-prospective-v1",
+  "state": "NATIVE_CASES_FROZEN_BEFORE_EXECUTION",
+  "base": "91c20247bfc8c792a468a539d8720b790d216871",
+  "reference": "295ef53254a9e6aedec08eb33c6b8a1f659278cb",
+  "reference_matrix": "coverage/contracts/draw-polygon-v1.json",
+  "reference_peer": "build/draw-polygon-independent-capture-review-v1/review.json",
+  "original_scope": "24savedIDs/profile,17returns7errors; profiles byte-identical.48once-onlytop-levelcalls alreadyclosed. No neworiginals allowed by this packet.",
+  "APIs": [
+    "draw.polygon",
+    "draw.polygon2mask"
+  ],
+  "classifier": {
+    "reuse": [
+      "src/polygon.cpp::polygon_label",
+      "src/simd_polygon_avx2.cpp::polygon_points"
+    ],
+    "operand_order": "PolygonView{x=cptr,y=rptr,vertices=N}; query x=c_i,y=r_i. Existing row-first grid_points_in_poly cannot be called unchanged.",
+    "arithmetic": "Exact literal epsilon1e-12, vertex shortcut before later edges, source-ordered right ray then left ray with (x0*y1-x1*y0)/(y1-y0), then source parity labels0/1/2/3. No coordinate swap, cross-product rewrite, reassociation/FMA, bool-byte relabel of the existing classifier API.",
+    "selection": "Both new APIs select label!=0, including EDGE3 and VERTEX2. polygon2mask scatters canonical uint8 bool1, not raw classifier labels.",
+    "SIMD_route": "Reuse existing AVX point helper with small fixed stack query chunks x=columns,y=constantrow; independent scan spans. Scalar fallback calls the same owned literal classifier. No algorithm clone, dense query grids, new dispatcher or general array framework."
+  },
+  "source_boundary": {
+    "polygon": "np.atleast_1d(r),np.atleast_1d(c); minr=int(max(0,r.min())); maxr=int(libcceil(r.max())); minc=int(max(0,c.min())); maxc=int(libcceil(c.max())); optional maxr=min(shape[0]-1,maxr),thenmaxc=min(shape[1]-1,maxc); np.ascontiguousarray(r,float64),then c; typed memoryview rank validation; source integer ranges min..max inclusive.",
+    "polygon2mask": "np.asarray(polygon); exact polygon.T two-column unpack; call the polygon boundary with image_shape; onlyafterthat np.zeros(image_shape,bool),then canonical selected-pixel scatter. Preserve seven captured error rows and precedence; no native success credit for error prefixes.",
+    "providers_remaining": [
+      "NumPy structural conversion/atleast1d/contiguous copies and original scalar/protocol/rank/error order",
+      "NUMERIC r/c min/max/ceil scan-bound preparation: explicit initial native-ownership gap",
+      "Python ndarray allocation/type/layout/alias/lifetime metadata",
+      "Unknown protocols, provider interposition, unsupported dtypes/shape-frontiers and broad FP policies remain unassessed/provider paths"
+    ],
+    "output": "polygon tuple of two independent owning1D intp arrays with exact raw words/order, no duplicates beyondone selectedpixel/scan; empty arrays retain savedzero strides. polygon2mask independent owning C bool array, savedempty strides, allunselectedpixelszero. Input views/readonly/gaps/negative strides must retain bytes/owner metadata through frontend normalization.",
+    "unsafe": "Unequal lengths (especially c longer), empty-r/nonempty-c, short shape, nonfinite/huge/ragged/object/complex and integeroverflow are not safe original capture recipes; never infer Pythonexception from unchecked source. Existing original error rows are handled literally before kernel."
+  },
+  "typed_partition": {
+    "vertices": "Equal nonzero contiguous nativefloat64 columns, count<=4096; original int/f16/f32 casts admitted only where exact sourceprefix/conversion proven.",
+    "coordinate_domain": "Finite zero or abs in[2^-128,2^20]; includes all17saved success geometries, signedzeros allowed. Existing nearest/gradual environment; nonnearest/FTZ and broader exceptional FP domains explicit pending/provider partitions.",
+    "scan": "Supplied sourceprepared intp inclusive first[2]>=0, first<=2^20,last<=2^20. Negative/clippedbelowfirst last yields empty; compute lengths onlyafter signed comparisons. Source max+1 Coverflow excluded by upperbound. scan_elements<=16Mi,vertices*scan_elements<=64Mi checked without overflowing.",
+    "mask": "Typed nonnegative2D shape, representable product<=16Mi, selectedcoordinates fit; errorfrontier and negative shape sourceallocation errors are frontend obligations.",
+    "FP_basis": "Smallest coordinate word2^-128 has float64ULP>=2^-180; integer scan positions<=2^20 exact. Difference/products/subtraction/divisions stay normal-or-zero and finite under this bound (product floor>=2^-360, cancellation floor>=2^-412, denominator gap>=2^-180, ratio bounded wellbelow2^1024). Exact expressionorder retained, fenv isolated/restored using existing polygon pattern; hardware-flag parity not claimed by savedreferences. Root/nativepeer must check this bound before implementation acceptance."
+  },
+  "storage": {
+    "chosen": "One owned rawlabel byte/scan pixel plus one row-prefix size_t[rows+1]; no dense coordinates inplan, no second boolraster, no input-pointer lifetime dependency afterprepare.",
+    "polygon": "Allocate two final ndarray intp[count] buffers directly; perrow prefix assigns disjoint ordered write spans.",
+    "polygon2mask": "Allocate only final boolimage, zero it andscatter directly fromsameplan labels. No intermediate rr/cc allocation/copy; defaultnumeric sourceprefix must preserve semantics despite eliminating those internal temporaries.",
+    "stability": "Prepare refusal leaves priorplan unchanged; success freezes labels/prefix/count. Fill doesnotmodifyplan. Separate owning outputs are caller responsibility; unsupportedpublicprotocol/error/provider semantics not silently normalized."
+  },
+  "execution": "Optional existing workers/default1, frontend snapshots once/call andpasses samebudget toprepare/fill; bounded independentrow/chunk classification and emission can use existing partition threshold, serialexclusiveprefix. No new pool/cache/concurrency machinery.",
+  "parallel_lanes_after_root_review": {
+    "A_native": "Own new draw_polygon.cpp/header/nativeCppsavedtest; reuse existingclassifier+SIMD symbols, sourcecheckedbounds/FENV/SIMD/scalar/ASan/MSVC proofs. OnlyaffectedTUs, no original/fullSDKbuild.",
+    "B_frontend": "Own new Pythonmodule/binder/publicsavedtests with frozenprefix/error/provider domains, independent owningarrays andrealC-return/oncebudget witnesses. No native/header/shared edits.",
+    "C_SDK_and_benchmark": "After eligibleleaf released, extendexistingdrawSDKfamily consumer (notAPI-per-client); prospectivecase IDs/strictbenchmark frozen before timing, no originals withoutrootGO.",
+    "root_shared": "Independent componentreviews, sharedCMake/registry/export/default/dtype/alias/inventory/qualifier/CI; actualcompleteaffectedsourceguards anduntimedCLI firstcohorts beforegenuine. No registration/APIcount credit fromthis plan."
+  },
+  "completion_gaps_retained": [
+    "Own numeric min/max/ceil reductions while preserving source dtype/callback/error order",
+    "Assess larger/general safe vertices andscan/mask work beyondfirstbudgets withoutdroppinggoal",
+    "Broader dtype/protocol/shape/providerinterposition/FP partitions",
+    "Independentparity/SIMD/SDK/platform/runtime/genuine/performanceproofs; fullAPIownership and originalspeed superiority notclaimed"
+  ],
+  "task_closeout": {
+    "result": "Minimal typed header/prospectiveimplementationplan frozen; no implementation/nativecalls/originals/builds/timing.",
+    "reuse": "Existing reviewedclassifier andAVXpoint helper,24savedIDs/APIpartition andsharedencoder; old retiredreferenceWT notread. No C++ classifier clone or secondrawraster/coordinatecache.",
+    "waste": "One broad retained-source filename search andconsolecat returnedmore context thanneeded; no scientificexecution. No repeated captures/validation/builds toquantifycost; elapsedresearchcost unknown.",
+    "next_owner_trigger": "ROOT independenttypedinterface/sourcebound review beforeANYalgorithmimplementation; then parallel A/B/C lanes with explicitownedpaths. Keep native numeric-reduction gap and broaderdomain work inexisting executionplan, not fullownership credit."
+  },
+  "source_pins_canonical_LF": {
+    "src/polygon.cpp": "cbab61ab080242f55d95d8adff50588f31374bb2b1f665204caaea44f427ef23",
+    "src/polygon.hpp": "ec399d2fb4848b648d079e0dc4757a26064c140605af6671be58335615727a36",
+    "src/simd_polygon_avx2.cpp": "662a2ea05e3c50d5546d1ebd1d5e608d046cafd2773fa981bcdb9043bed10f9f",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "tests/draw_polygon_contract.py": "98c2b66b57916924af13702d9a4e8ae4c5301e1de5ed74cbc302d88e56e0b8fe",
+    "tests/draw_polygon_observer.py": "b7882a23192fbb15b485cd065e5045c78ffa6cad7bb260efc03a14934ee2922b",
+    "coverage/contracts/draw-polygon-v1.json": "bc19b2840df53b11d660e87b74a81c8590a7ff9ab015ec3695c34fa58e5e07fa"
+  },
+  "retained_original_source_pins_canonical_LF": {
+    "draw_pyx": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-coordinate-source-v1\\_draw.pyx",
+      "sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4"
+    },
+    "geometry_pyx": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\polygon-native-private-v1\\native-v1\\primary-source\\geometry.pyx",
+      "sha256": "889ee7d70fccf6ef3dd70054e592e87a4dc0f48aa83755b53c7c0ec95d7256c8"
+    }
+  },
+  "frozen_reference_caseIDs": [
+    "draw.polygon/triangle-list",
+    "draw.polygon/rectangle-i32",
+    "draw.polygon/concave-reverse",
+    "draw.polygon/bowtie-strided",
+    "draw.polygon/negative-clip",
+    "draw.polygon/fully-negative",
+    "draw.polygon/zero-shape",
+    "draw.polygon/epsilon-vertex",
+    "draw.polygon/singleton",
+    "draw.polygon/collinear-duplicate",
+    "draw.polygon/empty",
+    "draw.polygon/rank2-columns",
+    "draw.polygon2mask/triangle-list",
+    "draw.polygon2mask/rectangle-f64-F",
+    "draw.polygon2mask/concave-f32-C",
+    "draw.polygon2mask/negative-strided",
+    "draw.polygon2mask/outside",
+    "draw.polygon2mask/zero-shape",
+    "draw.polygon2mask/epsilon-vertex",
+    "draw.polygon2mask/singleton",
+    "draw.polygon2mask/empty",
+    "draw.polygon2mask/three-columns",
+    "draw.polygon2mask/negative-shape",
+    "draw.polygon2mask/rank1"
+  ],
+  "typed_review": {
+    "source": "ed8f00585aa0439d6a750ae701eb00702ea400a4",
+    "receipt_sha256": "d11f4d4821a29210bcf20390c10c5855a32168fdefd3cd58974a55e934233277"
+  },
+  "native_proof_freeze": {
+    "saved_successes_per_worker": 17,
+    "workers": [
+      1,
+      4
+    ],
+    "saved_records_per_mode": 34,
+    "exact_golds": [
+      {
+        "id": "draw.polygon/triangle-list",
+        "pairs": 11,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/rectangle-i32",
+        "pairs": 20,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/concave-reverse",
+        "pairs": 28,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/bowtie-strided",
+        "pairs": 17,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/negative-clip",
+        "pairs": 20,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/fully-negative",
+        "pairs": 0,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/zero-shape",
+        "pairs": 0,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/epsilon-vertex",
+        "pairs": 6,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/singleton",
+        "pairs": 1,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon/collinear-duplicate",
+        "pairs": 3,
+        "original_API": "draw.polygon",
+        "expected_coordinates": "saved rr/cc",
+        "expected_mask": "projection of saved rr/cc"
+      },
+      {
+        "id": "draw.polygon2mask/triangle-list",
+        "pairs": 11,
+        "original_API": "draw.polygon2mask",
+        "expected_coordinates": "projection of saved boolmask",
+        "expected_mask": "saved boolmask"
+      },
+      {
+        "id": "draw.polygon2mask/concave-f32-C",
+        "pairs": 28,
+        "original_API": "draw.polygon2mask",
+        "expected_coordinates": "projection of saved boolmask",
+        "expected_mask": "saved boolmask"
+      },
+      {
+        "id": "draw.polygon2mask/negative-strided",
+        "pairs": 20,
+        "original_API": "draw.polygon2mask",
+        "expected_coordinates": "projection of saved boolmask",
+        "expected_mask": "saved boolmask"
+      },
+      {
+        "id": "draw.polygon2mask/outside",
+        "pairs": 0,
+        "original_API": "draw.polygon2mask",
+        "expected_coordinates": "projection of saved boolmask",
+        "expected_mask": "saved boolmask"
+      },
+      {
+        "id": "draw.polygon2mask/zero-shape",
+        "pairs": 0,
+        "original_API": "draw.polygon2mask",
+        "expected_coordinates": "projection of saved boolmask",
+        "expected_mask": "saved boolmask"
+      },
+      {
+        "id": "draw.polygon2mask/epsilon-vertex",
+        "pairs": 6,
+        "original_API": "draw.polygon2mask",
+        "expected_coordinates": "projection of saved boolmask",
+        "expected_mask": "saved boolmask"
+      },
+      {
+        "id": "draw.polygon2mask/singleton",
+        "pairs": 1,
+        "original_API": "draw.polygon2mask",
+        "expected_coordinates": "projection of saved boolmask",
+        "expected_mask": "saved boolmask"
+      }
+    ],
+    "frontend_error_prefix_only_no_native_calls": [
+      {
+        "id": "draw.polygon/empty",
+        "error": [
+          "builtins",
+          "ValueError",
+          "zero-size array to reduction operation minimum which has no identity"
+        ]
+      },
+      {
+        "id": "draw.polygon/rank2-columns",
+        "error": [
+          "builtins",
+          "ValueError",
+          "Buffer has wrong number of dimensions (expected 1, got 2)"
+        ]
+      },
+      {
+        "id": "draw.polygon2mask/rectangle-f64-F",
+        "error": [
+          "builtins",
+          "ValueError",
+          "buffer source array is read-only"
+        ]
+      },
+      {
+        "id": "draw.polygon2mask/empty",
+        "error": [
+          "builtins",
+          "ValueError",
+          "zero-size array to reduction operation minimum which has no identity"
+        ]
+      },
+      {
+        "id": "draw.polygon2mask/three-columns",
+        "error": [
+          "builtins",
+          "ValueError",
+          "too many values to unpack (expected 2)"
+        ]
+      },
+      {
+        "id": "draw.polygon2mask/negative-shape",
+        "error": [
+          "builtins",
+          "ValueError",
+          "negative dimensions are not allowed"
+        ]
+      },
+      {
+        "id": "draw.polygon2mask/rank1",
+        "error": [
+          "builtins",
+          "ValueError",
+          "too many values to unpack (expected 2)"
+        ]
+      }
+    ],
+    "analytic_groups": [
+      "square labels0/1/2/3 andorderedwrites",
+      "emptybounds/nulloutputs",
+      "large513x513 threshold/allwords",
+      "maskzero/scatter andshape-outside refusal beforewrites",
+      "rounding/refusal state",
+      "FTZ/refusal state",
+      "bad typed input/worker/frontier refusal leaves priorplan"
+    ],
+    "typed_refusal_cases": [
+      "emptyvertices",
+      "nullrows",
+      "nullcolumns",
+      "excessvertices",
+      "NaNrow",
+      "infinitecolumn",
+      "coordinateabove2^20",
+      "coordinatebelow2^-128",
+      "negativefirst",
+      "firstabove2^20",
+      "lastabove2^20",
+      "scanabove16Mi",
+      "edgeworkabove64Mi",
+      "worker0",
+      "worker1025",
+      "nonnearest",
+      "FTZ"
+    ],
+    "modes": [
+      "normalactualAVXavailable",
+      "actualSKIMAGEXX_DISABLE_SIMD1",
+      "truecompiler-scalar(newleaf+classifier dependency)",
+      "ASanUBSan",
+      "actualMSVCleaf+test compileonly"
+    ],
+    "original_calls": 0,
+    "newgoldcaptures": 0,
+    "timings": 0
+  },
+  "nearest_boundary_successor": {
+    "predecessor_source": "fbc06dc0760c91c806c0b14e3c49e51aed3634f8",
+    "predecessor_handoff_sha256": "520e9f5bff80d54480513d125e6f55f26722a23e731525af774d3c7f0789698c",
+    "correction": "ExtendexistingMXCSRFTZ/DAZmask with roundingbits13/14 torefuseSSE-onlynonnearest beforeanycoordinatearithmetic. Existingdeclarednearestpartition unchanged; allmath/classifier/body/headergolds unchanged.",
+    "new_control": "OneMXCSR-onlydownward refusalrecipe, workers1/4; exactsamecase in normal/actualdisabled/truecompiler-scalar/ASan modes. --mxcsr-only skipssaved/largecontrols; defaultfutureunitexecutesnewcontrol too.",
+    "old_counterexample": "Retainedoldreleasedleaf acceptedone9pixel square withfegetroundnearest butMXCSRdown8192; no originalcall or speed/geometrycapture.",
+    "reuse": "Prior34savedrecords/1580041controls/mode reused byexactone-maskinverse andunchangednumeric/testfunctionsource; no fullnumericalreplay."
+  }
+}
