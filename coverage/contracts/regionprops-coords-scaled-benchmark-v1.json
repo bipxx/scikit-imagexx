@@ -156,10 +156,11 @@
     "comparison": "Keep original goldens and raw observed qualified types unchanged. Compare all other captured row fields exactly. Assert the prospective original/backend pair separately, retaining actual raw rows; never canonicalize or rewrite type observations."
   },
   "source_closure": {
-    "benchmarks/regionprops_coords_scaled.py": "8068d26fae5624217c5858005ee090a81325a9119b946c9beb056af6b128b15b",
+    "benchmarks/regionprops_coords_scaled.py": "9876092b5bc6562a19055f006d7b710f182835549e874859a09586f454ed0f4c",
     "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
     "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
-    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7"
   },
   "reused_state_method_sha256": {
     "case_bounds": "bcf23154520121704ed0d1864a3c0272bbefa176e7615132ac4a21df2bd39d25",
@@ -259,7 +260,7 @@
   },
   "genuine_gate": {
     "candidate": "Pending coherent source/artifact+independentmetadata authentication. No numerical calls while prospective. Activation statusonlyafteractualnative source pins+savedsemantic source-equivalence+genuine normal/disabled installed gates+rootGO.",
-    "input_audit": "Existing root input-auth audit.json schema; caller supplies independentlyadmitted digest and source revision. Driver checks source/fullmanifest/projectPython+header/core/runtime, not an unauthenticatedcomponent alias.",
+    "input_audit": "Historical rootaudit is independentadmission evidence only, not a driverinput; use actual ci-offline-measurement-v1 input_manifest. Eachchildrebinds revision/files_sha256 using pinned source_state before scientificimports; productionfingerprint is separate before/after reportmetadata.",
     "controller_required": "Authenticateproducer job/run/artifact once, freeze independentadmission digest, compareall13 nonproject dependency wheels/fullPython/runtime/libmaps tocf0. Driver perprocess role isnotwholeABBA acceptance or independentauthentication.",
     "first_cohort": "RootGO actualoneoriginal+native operation perretainedprofile thenstoprealmeasureCALLbeforebody; sourceonlypacket executesnone.",
     "four_profile_release": "Separate gate; no fullrelease credit from thisbenchmark.",

@@ -154,3 +154,31 @@ def test_coords_scaled_actual_main_validation_precedes_sampler():
     assert "manifest['schema'] == 'ci-offline-measurement-v1'" in source
     assert "method_sha256=contract['method_sha256'], fallback_enabled=False" in source
     assert "calls == list(STAGES[:3] if integer else STAGES)*2" in source
+    assert source.index('require_prepared_source(manifest, args.source_root, args.source_revision, source_state)') < source.index('import numpy as np')
+    assert 'production_source_sha256' not in source
+
+
+@pytest.mark.parametrize('revision,cmake_pin', [
+    ('cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b', '2c2fd8c0f2d0e9042ffddba261f3eacb339e8e7b9be2d0ab01a75af482d81f9f'),
+    ('4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e', '10e1943c5f9865dd7c1ba8945920479b671c54ea4dbcb2255ac64e8f5217f35f'),
+])
+def test_coords_scaled_real_prepared_source_schema_without_audit_fields(revision,cmake_pin):
+    # Two-field projections from retained cf0/4ac measurement.json, not audits.
+    # Full immutable source equality is enforced by the real source_state call.
+    module=load();root=Path('not-read-by-inert-verifier')
+    source=dict(revision=revision, files_sha256={
+        'CMakeLists.txt':cmake_pin,
+        'pyproject.toml':'104620f215d91ab2a181301ae2e55ba96dec7e3b544e689d41fbd55d7544240d'})
+    manifest=dict(source=source);observed=[]
+    def read_source(path):
+        observed.append(path);return copy.deepcopy(source)
+    module.require_prepared_source(manifest,root,revision,read_source)
+    assert observed==[root]
+    with pytest.raises(AssertionError):
+        module.require_prepared_source(manifest,root,'0'*40,read_source)
+    wrong=copy.deepcopy(source);wrong['files_sha256']['CMakeLists.txt']='0'*64
+    with pytest.raises(AssertionError):
+        module.require_prepared_source(manifest,root,revision,lambda path:wrong)
+    invented=copy.deepcopy(manifest);invented['source']['production_source_sha256']='0'*64
+    with pytest.raises(AssertionError):
+        module.require_prepared_source(invented,root,revision,read_source)

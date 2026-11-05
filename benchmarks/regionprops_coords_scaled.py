@@ -92,6 +92,13 @@ def checked_output(actual, expected, buffers, np):
     return row
 
 
+def require_prepared_source(manifest, root, revision, read_source):
+    # Rebind at the child-process boundary; the controller also verifies inputs.
+    assert set(manifest['source']) == {'revision', 'files_sha256'}
+    assert manifest['source']['revision'] == revision
+    assert read_source(root) == manifest['source']
+
+
 def main():
     raw_contract = CONTRACT.read_bytes(); contract = json.loads(raw_contract)
     assert contract['state'] == 'FROZEN_READY_FOR_ROOT_FIRST_COHORT', 'prospective: genuine source/input gate has not closed'
@@ -122,7 +129,6 @@ def main():
     assert hashlib.sha256(manifest_raw).hexdigest() == args.input_manifest_sha256
     manifest = json.loads(manifest_raw)
     assert manifest['schema'] == 'ci-offline-measurement-v1'
-    assert manifest['source']['revision'] == args.source_revision
     assert len(manifest['wheels']) == len(manifest['runtime']['versions']) == 14
     manifest_core = [pin for name,pin in manifest['runtime']['packages_sha256']['skimagexx'].items()
                      if name.startswith('_core.') and name.endswith('.so')]
@@ -133,6 +139,8 @@ def main():
     sys.path[:0] = [str(ROOT/'tools'), str(ROOT/'benchmarks')]
     from montage_sustained import measure
     from provenance import source_fingerprint
+    from ci_measurement_artifacts import source_state
+    require_prepared_source(manifest, args.source_root, args.source_revision, source_state)
     from regionprops_state import input_state, fixture as state_fixture, case_bounds as state_bounds
     for function in (input_state, state_fixture, state_bounds):
         assert hashlib.sha256(inspect.getsource(function).encode()).hexdigest() == contract['reused_state_method_sha256'][function.__name__]
@@ -155,7 +163,6 @@ def main():
     assert binary_sha == contract['original_binary_sha256'][np.__version__]
     assert hashlib.sha256(inspect.getsource(measure).encode()).hexdigest() == contract['method_sha256']
     before = source_fingerprint(args.source_root)
-    assert before['source_sha256'] == manifest['source']['production_source_sha256']
     core = Path(xx._core.__file__); core_sha = hashlib.sha256(core.read_bytes()).hexdigest()
     assert core_sha == manifest_core[0]
     pools = {name: os.environ[name] for name in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS', 'BLIS_NUM_THREADS')}

@@ -179,11 +179,11 @@
     "target_direct_max": 0.9,
     "target_vs_original_max": 0.9
   },
-  "benchmark_contract_sha256": "bf0c768e29dba628732c3eb805324039a91d3d94c46352fb57b23a056f527cc7",
+  "benchmark_contract_sha256": "bf65c50bb5133d003234fa74b7cf9a476a2590dfb0e2cdf91c94553825ea7172",
   "controller_source_sha256": {
     "tools/region_stain_compare.py": "c7097dbf4203e37c593d9e783c5510e09eb6529ced536dc0962bd2bb65809697",
     ".github/workflows/region-stain-same-host.yml": "40d934e259dc7507e888d51fafed2db55074233e3cb3516c500125db4f8e3a33",
-    "benchmarks/regionprops_coords_scaled.py": "8068d26fae5624217c5858005ee090a81325a9119b946c9beb056af6b128b15b",
+    "benchmarks/regionprops_coords_scaled.py": "9876092b5bc6562a19055f006d7b710f182835549e874859a09586f454ed0f4c",
     "coverage/contracts/regionprops-coords-scaled-controller-context-v1.json": "b5a0501e67d0c3f766c8c7506e52582e7bfabd42eaa401935f3f8f4c79416b10"
   },
   "activation": "Rootindependentlyauthenticates exactpreparedcandidate source/run/artifact/digest plus13dependencies/fullruntime/libequality; childcontrollerfills pendingselection andactivates bothchildcontracts, leavingpreparedsnapshots/manifests unchanged. No numericcalls fromthisprospectivepacket.",
