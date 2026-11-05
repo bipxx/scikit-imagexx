@@ -3,7 +3,7 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-int main(){using namespace skimagexx;using namespace skimagexx::detail;auto old=get_num_threads();int checks=0;
+int set_color_consumer_controls(){using namespace skimagexx;using namespace skimagexx::detail;auto old=get_num_threads();int checks=0;
 for(int workers:{1,4}){set_num_threads(workers);
 float f32=.5f;double f32color=.25,f32alpha=.5;std::intptr_t f32zero=0;SetColorView f32view{&f32,{1,1,1},{4,4,0},&f32zero,&f32zero,1,&f32color,&f32alpha};f32view.image_float32=true;assert(draw_set_color(f32view,get_num_threads())&&f32==.375f);++checks;
 
@@ -15,4 +15,7 @@ image[0]=.5;image[1]=.75;v.color=&image[0];v.count=2;c[0]=0;c[1]=1;r[1]=0;alpha[
 // Signed image strides and clipped coordinates, no out-of-bounds reads.
 v.image=image+5;v.strides={-24,-8,0};v.color=color;r[0]=-1;r[1]=0;c[1]=1;v.count=2;assert(draw_set_color(v,workers));assert(image[4]==.25);checks+=2;
 }
-set_num_threads(old);assert(get_num_threads()==1);std::cout<<checks<<" installed-client controls PASS default1 restored\n";}
+set_num_threads(old);assert(get_num_threads()==1);std::cout<<checks<<" installed-client controls PASS default1 restored\n";return 0;}
+#ifndef SKIMAGEXX_DRAW_CONSUMER_EMBEDDED
+int main(){return set_color_consumer_controls();}
+#endif

@@ -140,6 +140,10 @@ foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives draw
     endif()
     add_test(NAME installed_${_current}_consumer COMMAND ${_current}_consumer)
 endforeach()
+target_sources(draw_coordinates_consumer PRIVATE bezier_curve_consumer.cpp draw_set_color_consumer.cpp)
+include("${CMAKE_CURRENT_SOURCE_DIR}/bezier_curve_fixture.cmake")
+target_compile_definitions(draw_coordinates_consumer PRIVATE SKIMAGEXX_DRAW_CONSUMER_EMBEDDED
+    SKIMAGEXX_BEZIER_FIXTURE_PATH="${SKIMAGEXX_BEZIER_FIXTURE}")
 
 # Exact23 unique original ellipse-perimeter rows; existing exported library only.
 include("${CMAKE_CURRENT_SOURCE_DIR}/ellipse_perimeter_fixtures.cmake")

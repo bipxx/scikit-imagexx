@@ -67,6 +67,14 @@ jobs:
         run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Draw batch saved public defaults normal
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-normal.xml
+      - name: Draw batch saved public defaults disabled
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-disabled.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Bezier NumPy-only benchmark checker intake
+        run: python -m pytest -q tests/test_bezier_curve_benchmark_intake.py --junitxml=build/ci-artifacts/bezier-benchmark-intake.xml
       - name: Polygon fresh NumPy-only benchmark intake
         run: python -m pytest -q tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-numpy-intake.xml
       - name: Polygon saved defaults and installed boundary normal
@@ -418,6 +426,14 @@ jobs:
         run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Draw batch saved public defaults normal
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-normal.xml
+      - name: Draw batch saved public defaults disabled
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-disabled.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Bezier NumPy-only benchmark checker intake
+        run: python -m pytest -q tests/test_bezier_curve_benchmark_intake.py --junitxml=build/ci-artifacts/bezier-benchmark-intake.xml
       - name: Polygon fresh NumPy-only benchmark intake
         run: python -m pytest -q tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-numpy-intake.xml
       - name: Polygon saved defaults and installed boundary normal

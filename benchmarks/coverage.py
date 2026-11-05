@@ -15,6 +15,7 @@ import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error, draw_polygon_default_error
+from skimagexx.coverage import set_color_default_result, set_color_default_error
 from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error, regionprops_default_error, line_nd_default_error, ellipsoid_default_error
 
 
@@ -200,6 +201,16 @@ def main():
             'warnings and errors. Defaults map real uint8 labels through all256keys to uint16(3*key+1). '
             'Exact output storage and words are checked before timing; benchmarks/map_array.py is canonical.')
     for api in apis:
+        if api=='draw.set_color':
+            provider_frontiers[api] = ('In-place None-returning API: compare independent full mutated images, never None equality. '
+                'The fixed saved gray fixture uses actualfloat32/float64 image dtype; carrier pixels and size are unused. '
+                'Generic timing includes the same fresh image copy perarm; NumPy input adaptation is explicit. '
+                'benchmarks/draw_set_color.py is the canonical mutation/layout workload.')
+        if api=='draw.bezier_curve':
+            provider_frontiers[api] = ('Fixed frozen rational Bezier geometry; carrier pixels, size and dtype are not API inputs. '
+                'Bounded rational recurrence, extrema, ordered intp output and ordinary clipping are owned; '
+                'scalar conversion/allocation and unassessed shape protocols remain explicit providers. '
+                'benchmarks/bezier_curve.py is the canonical geometry/weight cohort.')
         if api in ('draw.polygon','draw.polygon2mask'):
             provider_frontiers[api] = ('Fixed frozen triangle geometry; image carrier pixels, size and dtype are not API inputs. '
                 'NumPy coercion, bounds reductions/ceil and allocation remain explicit providers; '
@@ -275,13 +286,15 @@ def main():
                     call_args=(first,*call_args[1:])
                 case_size = 4 if api in DERIVED_MOMENTS_FUNCTIONS else call_args[0].shape[0] if api in COORDS_MOMENTS_FUNCTIONS else size
                 case_dtype = call_args[0].dtype.name if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else np.dtype(dtype).name
-                expected = reference(*call_args,**options)
+                expected = set_color_default_result(reference,call_args,options) if api=='draw.set_color' else reference(*call_args,**options)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
                     assert xx.get_num_threads() == threads
-                    actual = native(*call_args,**options)
+                    actual = set_color_default_result(native,call_args,options) if api=='draw.set_color' else native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter')):
+                    if api=='draw.set_color':
+                        error=set_color_default_error(data,actual,expected)
+                    elif (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter','draw.bezier_curve')):
                         error = draw_default_error(api,data,actual,expected)
                     elif api in ('draw.polygon','draw.polygon2mask'):
                         error = draw_polygon_default_error(api,data,actual,expected)
@@ -343,7 +356,10 @@ def main():
                         rtol,atol = parity_tolerance(api,np.dtype(dtype),image=data,expected=expected)
                         error=comparison_error(actual,expected,rtol,atol)
                     if args.dtype_metadata:assert dtype_metadata(actual)==dtype_metadata(expected)
-                    timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
+                    if api=='draw.set_color':
+                        timing=measure(lambda:set_color_default_result(reference,call_args,options),lambda:set_color_default_result(native,call_args,options),args.repeat,15)
+                    else:
+                        timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
                     assert xx.get_num_threads() == threads
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
                     if api == 'measure.mesh_surface_area' and call_args[0].dtype.char not in ('f', 'd'):
@@ -372,6 +388,18 @@ def main():
                                         'geometry_vertices':3,
                                         'output_shape':(list(actual.shape) if api=='draw.polygon2mask' else [list(a.shape) for a in actual])}
                                        if api in ('draw.polygon','draw.polygon2mask') else {}),
+                                    **({'default_input_kind':'fixed-frozen-bezier-geometry',
+                                        'descriptor_carrier_shape':list(data.shape), 'descriptor_carrier_dtype':case_dtype,
+                                        'carrier_pixels_consumed':False, 'carrier_size_consumed':False,
+                                        'requested_output_dtype':'intp,intp', 'geometry_parameters':list(call_args),
+                                        'output_shape':[list(a.shape) for a in actual]}
+                                       if api=='draw.bezier_curve' else {}),
+                                    **({'default_input_kind':'fixed-saved-inplace-gray-image',
+                                        'descriptor_carrier_shape':list(data.shape), 'carrier_pixels_consumed':False,
+                                        'carrier_size_consumed':False, 'input_shape':list(call_args[0].shape),
+                                        'actual_image_dtype':str(call_args[0].dtype), 'public_return':'None',
+                                        'comparison_observation':'independent-full-mutated-image', 'fresh_image_copy_timed':True}
+                                       if api=='draw.set_color' else {}),
                                     **({'default_input_kind':'fixed-frozen-coordinate-row','coordinate_dtype':str(call_args[0].dtype),
                                         'coordinate_dimensions':int(max(call_args[0].size,call_args[1].size)),
                                         'carrier_pixels_consumed':False} if api=='draw.line_nd' else {}),

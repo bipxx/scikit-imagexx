@@ -11,7 +11,7 @@
 #include <vector>
 using namespace skimagexx::detail;
 template<class T>static T read(std::ifstream& f){T value{};f.read(reinterpret_cast<char*>(&value),sizeof(value));if(!f)throw std::runtime_error("Bezier SDK fixture truncated");return value;}
-int main(int argc,char** argv) {
+int bezier_curve_consumer_controls(int argc,char** argv) {
     if(argc!=3)return 2;
     const auto available=skimagexx::has_avx2();const char* disabled=std::getenv("SKIMAGEXX_DISABLE_SIMD");
     if(disabled&&std::strcmp(disabled,"1")==0&&available)throw std::runtime_error("disabled dispatch");
@@ -50,4 +50,8 @@ int main(int argc,char** argv) {
     }
     skimagexx::set_num_threads(old);if(skimagexx::get_num_threads()!=old)throw std::runtime_error("restore budget");
     std::cout<<"Bezier installed controls="<<checks<<" saved_records="<<records<<" available="<<available<<" default="<<old<<'\n';
+    return 0;
 }
+#ifndef SKIMAGEXX_DRAW_CONSUMER_EMBEDDED
+int main(int argc,char** argv){return bezier_curve_consumer_controls(argc,argv);}
+#endif

@@ -30,11 +30,12 @@ def public_matrix():
     assert xx.transform.__all__.count('matrix_transform')==1
     package=Path(xx.__file__).resolve().parent
     assert Path(module.__file__).resolve().parent==Path(core.__file__).resolve().parent==package
-    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_completed','matrix_transform_v2_completed'):
+    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_run_v3','matrix_transform_completed','matrix_transform_v2_completed'):
         entry=getattr(core,name)
         assert inspect.isbuiltin(entry) and entry.__module__==core.__name__ and entry.__name__==name
     assert core.matrix_transform_interface=='matrix-transform-math-v1' and type(core.matrix_transform_capabilities) is int and core.matrix_transform_capabilities==31
     assert core.matrix_transform_v2_interface=='matrix-transform-math-v2' and type(core.matrix_transform_v2_capabilities) is int and core.matrix_transform_v2_capabilities==63
+    assert core.matrix_transform_v3_interface=='matrix-transform-math-v3' and type(core.matrix_transform_v3_capabilities) is int and core.matrix_transform_v3_capabilities==1023
     return module,core
 
 
@@ -48,7 +49,7 @@ def test_actual_public_source_is_frozen_520_and_scope_is_partial(public_matrix):
     scope=matrix_transform_contract()
     assert scope['implementation']=='native-partial'
     assert scope['actual_runtime_evidence']==('Haswell','Zen')
-    assert scope['prepared_only_runtime_evidence']==('Cooperlake','SkylakeX')
+    assert scope['prepared_only_runtime_evidence']==('Cooperlake','SkylakeX','Prescott')
 
 
 @pytest.mark.parametrize('enabled',(False,True))

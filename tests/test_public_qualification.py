@@ -1569,8 +1569,9 @@ def test_matrix_source_closure_is_required_before_build(tmp_path,monkeypatch,mis
 def synthetic_matrix_admission(monkeypatch):
     core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1,has_openmp=True,
         matrix_transform_interface='matrix-transform-math-v1',matrix_transform_capabilities=31,
-        matrix_transform_v2_interface='matrix-transform-math-v2',matrix_transform_v2_capabilities=63)
-    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_completed','matrix_transform_v2_completed'):
+        matrix_transform_v2_interface='matrix-transform-math-v2',matrix_transform_v2_capabilities=63,
+        matrix_transform_v3_interface='matrix-transform-math-v3',matrix_transform_v3_capabilities=1023)
+    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_run_v3','matrix_transform_completed','matrix_transform_v2_completed'):
         def entry(*a,**kw):raise AssertionError('metadata-only entry never executes')
         entry.__name__=name;entry.__module__=core.__name__;entry.synthetic_builtin=True;setattr(core,name,entry)
     monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:getattr(value,'synthetic_builtin',False))
@@ -2303,14 +2304,14 @@ def current_metadata_artifact(tmp_path):
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,260)
+    result=q.plan(ROOT,profile,262)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current260' and result['registry']['image_count']==260
-    assert result['product_members']==195 and result['SDK_members']==92
+    assert result['product_scope']=='current262' and result['registry']['image_count']==262
+    assert result['product_members']==199 and result['SDK_members']==94
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==95
+    assert len(result['public_groups']['public-post203'])==104
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==96
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==105
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2369,7 +2370,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current260' and result['record_verified']
+        assert result['product_scope']=='current262' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2383,7 +2384,7 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',260)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',262)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
@@ -2843,7 +2844,7 @@ def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',260)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',262)['blockers']
 
 
 @pytest.mark.parametrize('selector',(

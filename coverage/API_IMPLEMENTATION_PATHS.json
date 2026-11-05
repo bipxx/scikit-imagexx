@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "e45dc16166f4c56f6f161359df41f6bddd305ab28e2be2bf46e3ecb11054e65f",
+  "source_inventory_sha256": "b5042909c9b4f2f9a4cd4225e123fc76a7fa452f854c18535a05786dc51db55f",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 260,
-      "upstream-only": 208
+      "native-partial": 262,
+      "upstream-only": 206
     },
     "kinds": {
       "callable": 448,
@@ -3594,22 +3594,26 @@
       "api": "draw.bezier_curve",
       "kind": "callable",
       "signature": "(r0, c0, r1, c1, r2, c2, weight, shape=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.bezier_curve",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Port rational quadratic Bezier integer raster recurrence with weight",
+      "easiest_credible_path": "Audit/extend existing native implementation: Port rational quadratic Bezier integer raster recurrence with weight",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze straight/curved/degenerate weighted arcs against pinned upstream, including control-point/weight degeneracy, output order, clipping; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered control-point/weight degeneracy, output order, clipping. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "control-point/weight degeneracy, output order, clipping",
       "parity_cases_to_freeze": "straight/curved/degenerate weighted arcs",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -3620,10 +3624,10 @@
         "kind": "compute",
         "specific_workload": "straight/curved/degenerate weighted arcs",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/bezier_curve.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_bezier_curve_public.py::test_bezier_saved_public",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -4259,22 +4263,25 @@
       "api": "draw.set_color",
       "kind": "callable",
       "signature": "(image, coords, color, alpha=1)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.set_color",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Scatter blend color at supplied coordinates using native alpha arithmetic",
+      "easiest_credible_path": "Audit/extend existing native implementation: Scatter blend color at supplied coordinates using native alpha arithmetic",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze repeated coordinates, scalar/vector alpha and RGB arrays against pinned upstream, including in-place mutation, duplicate coordinates/order, alpha broadcasting and dtype; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered in-place mutation, duplicate coordinates/order, alpha broadcasting and dtype. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "in-place mutation, duplicate coordinates/order, alpha broadcasting and dtype",
       "parity_cases_to_freeze": "repeated coordinates, scalar/vector alpha and RGB arrays",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -4285,10 +4292,10 @@
         "kind": "compute",
         "specific_workload": "repeated coordinates, scalar/vector alpha and RGB arrays",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/draw_set_color.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_draw_set_color_public.py::test_saved_native",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

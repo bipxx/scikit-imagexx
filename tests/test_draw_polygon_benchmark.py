@@ -95,5 +95,5 @@ def test_current_polygon_context_preserves_historical_cases_and_driver(prospect)
     assert hashlib.sha256(historical.read_bytes()).hexdigest() == '6a40a1a7c82d534229f815296358c1e5b60fd5f5bf255b05c3d02ff7a426a636'
     assert {k:v for k,v in current.items() if k not in ('source_closure','scope')} == {k:v for k,v in old.items() if k not in ('source_closure','scope')}
     source = (ROOT / 'benchmarks/draw_polygon.py').read_text()
-    restored = source.replace("CONTRACT = ROOT / 'coverage/contracts/draw-polygon-current-runtime-v1.json'", "CONTRACT = ROOT / 'coverage/contracts/draw-polygon-runtime-v1.json'", 1)
+    restored = source.replace("CONTRACT = ROOT / 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'", "CONTRACT = ROOT / 'coverage/contracts/draw-polygon-runtime-v1.json'", 1)
     assert hashlib.sha256(restored.encode()).hexdigest() == '009f684108559dbcc27286cd10a5b7227a59e463fb3e08af0271dca0781404fe'

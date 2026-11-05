@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current260",
+  "scope": "current262",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -248,12 +248,20 @@
     "color.yiq2rgb",
     "color.ypbpr2rgb",
     "color.yuv2rgb",
+    "draw.bezier_curve",
     "draw.circle_perimeter",
+    "draw.circle_perimeter_aa",
     "draw.disk",
     "draw.ellipse",
+    "draw.ellipse_perimeter",
+    "draw.ellipsoid",
     "draw.line",
     "draw.line_aa",
+    "draw.line_nd",
+    "draw.polygon",
+    "draw.polygon2mask",
     "draw.rectangle",
+    "draw.set_color",
     "exposure.adjust_gamma",
     "exposure.adjust_log",
     "exposure.adjust_sigmoid",
@@ -395,6 +403,7 @@
     "measure.perimeter_crofton",
     "measure.points_in_poly",
     "measure.profile_line",
+    "measure.regionprops",
     "measure.shannon_entropy",
     "measure.subdivide_polygon",
     "metrics.mean_squared_error",
@@ -460,14 +469,7 @@
     "util.map_array",
     "util.montage",
     "util.regular_seeds",
-    "util.unique_rows",
-    "measure.regionprops",
-    "draw.circle_perimeter_aa",
-    "draw.line_nd",
-    "draw.ellipsoid",
-    "draw.ellipse_perimeter",
-    "draw.polygon",
-    "draw.polygon2mask"
+    "util.unique_rows"
   ],
   "metadata_paths": [
     "color.xyz_tristimulus_values",
@@ -531,7 +533,9 @@
     "draw.ellipsoid": "tests/test_draw_ellipsoid_public.py",
     "draw.ellipse_perimeter": "tests/test_draw_ellipse_perimeter_public.py",
     "draw.polygon": "tests/test_draw_polygon_public.py",
-    "draw.polygon2mask": "tests/test_draw_polygon_public.py"
+    "draw.polygon2mask": "tests/test_draw_polygon_public.py",
+    "draw.bezier_curve": "tests/test_bezier_curve_public.py",
+    "draw.set_color": "tests/test_draw_set_color_public.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -629,7 +633,16 @@
     "tests/test_draw_polygon_default.py",
     "tests/test_draw_polygon_benchmark.py",
     "tests/test_draw_polygon_benchmark_intake.py",
-    "tests/test_draw_polygon_dtype_tag_reference.py"
+    "tests/test_draw_polygon_dtype_tag_reference.py",
+    "tests/test_draw_bezier_reference.py",
+    "tests/test_bezier_curve_public.py",
+    "tests/test_bezier_curve_default.py",
+    "tests/test_bezier_curve_benchmark.py",
+    "tests/test_bezier_curve_benchmark_intake.py",
+    "tests/test_draw_set_color_reference.py",
+    "tests/test_draw_set_color_public.py",
+    "tests/test_draw_set_color_default.py",
+    "tests/test_draw_set_color_benchmark.py"
   ],
   "SDK_scope": "current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance",
   "required_client_families": [
@@ -665,6 +678,8 @@
     "include/skimagexx/line_nd.hpp",
     "include/skimagexx/draw_ellipsoid.hpp",
     "include/skimagexx/draw_ellipse_perimeter.hpp",
-    "include/skimagexx/draw_polygon.hpp"
+    "include/skimagexx/draw_polygon.hpp",
+    "include/skimagexx/bezier_curve.hpp",
+    "include/skimagexx/draw_set_color.hpp"
   ]
 }

@@ -17,6 +17,8 @@ DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
     (('draw.polygon','draw.polygon2mask'),'tests/test_draw_polygon_public.py::test_draw_polygon_saved_public_pipeline','benchmarks/draw_polygon.py'),
+    (('draw.bezier_curve',),'tests/test_bezier_curve_public.py::test_bezier_saved_public','benchmarks/bezier_curve.py'),
+    (('draw.set_color',),'tests/test_draw_set_color_public.py::test_saved_native','benchmarks/draw_set_color.py'),
     (('draw.ellipse_perimeter',),'tests/test_draw_ellipse_perimeter_public.py::test_ellipse_perimeter_saved_public_pipeline','benchmarks/ellipse_perimeter.py'),
     (('draw.ellipsoid',),'tests/test_draw_ellipsoid_public.py::test_ellipsoid_saved_public_pipeline','benchmarks/draw_ellipsoid.py'),
     (('draw.line_nd',),'tests/test_line_nd_public.py::test_line_nd_saved_public_pipeline','benchmarks/line_nd.py'),
@@ -175,6 +177,10 @@ def inventory():
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
             elif path in ('draw.polygon','draw.polygon2mask'):
                 entries[-1]['default_input_kind']='Frozen Python-int triangle geometry; image dtype labels are descriptor-only, not coordinate or image-pixel dtype coverage. Owned raster/orderedintp/boolscatter; numeric bounds, conversions, allocation and unsupported protocol/shape/frontiers explicit providers.'
+            elif path=='draw.bezier_curve':
+                entries[-1]['default_input_kind']='Frozen rational Bezier geometry; image dtype and pixels are unused descriptor carriers. Bounded rational/extrema arithmetic and ordered intp output are owned; conversion/allocation and unassessed shape/FP/protocol frontiers explicit.'
+            elif path=='draw.set_color':
+                entries[-1]['default_input_kind']='In-place float32/float64 fixed saved gray image; compare independent full mutated carriers and assert actual public return None. Carrier size/pixels unused; same fresh image copy timed in generic adapter. Bounded staged arithmetic/gather-before-scatter owned; conversion/alignment and unsupported domains explicit.'
             elif path == 'draw.ellipse_perimeter':
                 entries[-1]['default_input_kind']='Frozen unequal-axis coordinate geometry; descriptor dtype/pixels unused. Owned exact intp 0D/1D outputs, bounded axis and unit-circle rotation, explicit general Bezier/protocol frontier.'
             elif path == 'draw.ellipsoid':

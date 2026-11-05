@@ -291,7 +291,7 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current260'
+CURRENT_PRODUCT_SCOPE = 'current262'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter')
 CURRENT_SDK_CLIENT_SCOPE = 'current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
@@ -448,6 +448,45 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tests/test_draw_polygon_dtype_tag_reference.py',
     'coverage/contracts/draw-polygon-runtime-v1.json',
     'coverage/contracts/draw-polygon-current-runtime-v1.json',
+) + (
+    'benchmarks/bezier_curve.py',
+    'coverage/contracts/draw-bezier-benchmark-v1.json',
+    'coverage/contracts/draw-bezier-frontend-v1.json',
+    'coverage/contracts/draw-bezier-native-v1.json',
+    'coverage/contracts/draw-bezier-sdk-v1.json',
+    'coverage/contracts/draw-bezier-v1.json',
+    'include/skimagexx/bezier_curve.hpp',
+    'python/skimagexx/_bezier_curve.py',
+    'src/bezier_curve.cpp',
+    'src/bind_bezier_curve.cpp',
+    'tests/cmake_consumer/bezier_curve_consumer.cpp',
+    'tests/cmake_consumer/bezier_curve_fixture.cmake',
+    'tests/draw_bezier_contract.py',
+    'tests/draw_bezier_observer.py',
+    'tests/fixtures/bezier_curve_originals_v1.bin',
+    'tests/test_bezier_curve_benchmark.py',
+    'tests/test_bezier_curve_benchmark_intake.py',
+    'tests/test_bezier_curve_native.cpp',
+    'tests/test_bezier_curve_public.py',
+    'tests/test_draw_bezier_reference.py',
+    'tests/test_bezier_curve_default.py',
+    'benchmarks/draw_set_color.py',
+    'coverage/contracts/draw-set-color-benchmark.json',
+    'coverage/contracts/draw-set-color.json',
+    'include/skimagexx/draw_set_color.hpp',
+    'python/skimagexx/_draw_set_color.py',
+    'src/draw_set_color.cpp',
+    'src/bind_draw_set_color.cpp',
+    'tests/cmake_consumer/draw_set_color_consumer.cpp',
+    'tests/draw_set_color_contract.py',
+    'tests/draw_set_color_observer.py',
+    'tests/test_draw_set_color_benchmark.py',
+    'tests/test_draw_set_color_native.cpp',
+    'tests/test_draw_set_color_public.py',
+    'tests/test_draw_set_color_reference.py',
+    'tests/test_draw_set_color_default.py',
+    'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json',
+    'coverage/contracts/draw-set-color-native-v1.json',
 )
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
@@ -494,7 +533,16 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'coverage/evidence/matrix-transform-public-assertion-migration.json',
     'coverage/evidence/matrix-transform-public-source-successor-assertion.json',
     'coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json',
-    'tests/test_matrix_transform_numpy124_skylakex_certificate.py')
+    'tests/test_matrix_transform_numpy124_skylakex_certificate.py') + (
+    'coverage/contracts/matrix-prescott-reference-v1.json',
+    'coverage/contracts/matrix-prescott-v1.json',
+    'tests/fixtures/matrix_prescott_native.hpp',
+    'tests/matrix_prescott_context.py',
+    'tests/matrix_prescott_controls.hpp',
+    'tests/test_matrix_prescott_contract.py',
+    'tests/test_matrix_prescott_native.cpp',
+    'tests/test_matrix_prescott_public.py',
+)
 RECONSTRUCTION_PATH = 'morphology.reconstruction'
 RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
@@ -535,7 +583,7 @@ GROUPS = {
     'public-Matrix': ('test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
                       'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
                       'test_matrix_transform_skylakex_routing.py',
-                      'test_matrix_transform_numpy124_skylakex_certificate.py'),
+                      'test_matrix_transform_numpy124_skylakex_certificate.py','test_matrix_prescott_public.py'),
     'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
     'public-MaxTree-fixes': ('test_max_tree_dtype_metadata.py', 'test_max_tree_sdk_oracle.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
@@ -552,6 +600,16 @@ POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.
     'test_draw_polygon_default.py',
     'test_draw_polygon_benchmark.py',
     'test_draw_polygon_dtype_tag_reference.py',
+) + (
+    'test_draw_bezier_reference.py',
+    'test_bezier_curve_public.py',
+    'test_bezier_curve_default.py',
+    'test_bezier_curve_benchmark.py',
+    'test_bezier_curve_benchmark_intake.py',
+    'test_draw_set_color_reference.py',
+    'test_draw_set_color_public.py',
+    'test_draw_set_color_default.py',
+    'test_draw_set_color_benchmark.py',
 )
 
 
@@ -845,7 +903,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -908,6 +966,10 @@ def current_install_layout(read_bytes, names, profile):
     require('include/skimagexx/draw_polygon.hpp' in headers
             and 'skimagexx/_draw_polygon.py' in sources,
             'current polygon install closure absent')
+    require('include/skimagexx/bezier_curve.hpp' in headers and 'skimagexx/_bezier_curve.py' in sources,
+            'current Bezier install closure absent')
+    require('include/skimagexx/draw_set_color.hpp' in headers and 'skimagexx/_draw_set_color.py' in sources,
+            'current set-color install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
@@ -1377,10 +1439,12 @@ def matrix_admission(core, transform, wrapper, registered, diagnostic_path=None)
     for name,want in (('matrix_transform_interface','matrix-transform-math-v1'),
                       ('matrix_transform_capabilities',31),
                       ('matrix_transform_v2_interface','matrix-transform-math-v2'),
-                      ('matrix_transform_v2_capabilities',63)):
+                      ('matrix_transform_v2_capabilities',63),
+                      ('matrix_transform_v3_interface','matrix-transform-math-v3'),
+                      ('matrix_transform_v3_capabilities',1023)):
         value=getattr(core,name,None)
         require(type(value) is type(want) and value==want, 'missing/wrong matrix capability: '+name)
-    for name in ('matrix_transform_run','matrix_transform_run_v2',
+    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_run_v3',
                  'matrix_transform_completed','matrix_transform_v2_completed'):
         entry=getattr(core,name,None)
         require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,

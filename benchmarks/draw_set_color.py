@@ -24,6 +24,7 @@ def fixture(spec,np):
         # Fresh image is required by in-place API; same copy/setup for both arms.
         image=base.copy(order='K');prepared_color=image[0,0]if spec['kind']=='color-alias'else color
         result=function(image,(rr,cc),prepared_color,alpha=alpha)
+        assert result is None
         return image
     return call,(base,rr,cc,color,alpha)
 

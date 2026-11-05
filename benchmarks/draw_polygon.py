@@ -13,7 +13,7 @@ import sys
 import warnings
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = ROOT / 'coverage/contracts/draw-polygon-current-runtime-v1.json'
+CONTRACT = ROOT / 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'
 REFERENCE = ROOT / 'coverage/contracts/draw-polygon-v1.json'
 
 

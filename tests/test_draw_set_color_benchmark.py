@@ -10,6 +10,10 @@ def test_timer_boundary():
     source=(ROOT/'benchmarks/draw_set_color.py').read_text();tree=ast.parse(source)
     assert 'sys.setprofile(prior)'in source and 'actual.tobytes()==expected.tobytes()'in source
     assert len([n for n in ast.walk(tree)if isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='measure'])==1
+    call=next(n for n in ast.walk(tree)if isinstance(n,ast.FunctionDef)and n.name=='call')
+    statement=next(n for n in call.body if isinstance(n,ast.Assert))
+    assert ast.unparse(statement.test)=='result is None'
+    assert statement.lineno<next(n.lineno for n in call.body if isinstance(n,ast.Return))
 
 def test_source_closure():
     import hashlib

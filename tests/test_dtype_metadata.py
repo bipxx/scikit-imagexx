@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
+from skimagexx.coverage import set_color_default_result
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -24,6 +25,10 @@ def calls(api,dtype):
     module,name=api.rsplit('.',1)
     reference=getattr(importlib.import_module('skimage.'+module),name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
+    if api=='draw.set_color':
+        expected=set_color_default_result(reference,arguments,options)
+        actual=set_color_default_result(native,arguments,options)
+        return actual,expected,data
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
         expected=reference(*arguments,**options)

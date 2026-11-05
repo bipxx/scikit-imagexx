@@ -235,11 +235,21 @@ void stages(int workers){
     check(get_num_threads()==global&&std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
 }
 }
+int bezier_curve_consumer_controls(int argc,char** argv);
+int set_color_consumer_controls();
 int main(int argc,char** argv){
-    check(argc==1||(argc==2&&(std::string(argv[1])=="--line-aa-only"||std::string(argv[1])=="--circle-aa-only"||std::string(argv[1])=="--polygon-only")));
+    check(argc==1||(argc==2&&(std::string(argv[1])=="--line-aa-only"||std::string(argv[1])=="--circle-aa-only"||std::string(argv[1])=="--polygon-only"||std::string(argv[1])=="--draw-batch-only")));
     const bool line_aa_only=argc==2&&std::string(argv[1])=="--line-aa-only",circle_aa_only=argc==2&&std::string(argv[1])=="--circle-aa-only",polygon_only=argc==2&&std::string(argv[1])=="--polygon-only";
     check(get_num_threads()==1);
-    for(int workers:{1,4}){set_num_threads(workers);if(!polygon_only){if(!line_aa_only&&!circle_aa_only)stages(workers);if(!circle_aa_only)line_aa(workers);if(!line_aa_only)circle_aa(workers);}if(argc==1||polygon_only)polygon(workers);}
+    const bool draw_batch_only=argc==2&&std::string(argv[1])=="--draw-batch-only";
+    if(!draw_batch_only)for(int workers:{1,4}){set_num_threads(workers);if(!polygon_only){if(!line_aa_only&&!circle_aa_only)stages(workers);if(!circle_aa_only)line_aa(workers);if(!line_aa_only)circle_aa(workers);}if(argc==1||polygon_only)polygon(workers);}
     set_num_threads(1);check(get_num_threads()==1);
+    if(argc==1||draw_batch_only){
+        char program[]="drawing SDK",fixture[]=SKIMAGEXX_BEZIER_FIXTURE_PATH,dispatch[]="auto";
+        char* arguments[]{program,fixture,dispatch};
+        check(bezier_curve_consumer_controls(3,arguments)==0);
+        check(set_color_consumer_controls()==0);
+        check(get_num_threads()==1);
+    }
     std::cout<<"installed drawing SDK controls="<<checks<<"; workers=1,4; default=1; AVX2="<<has_avx2()<<"; line_aa_only="<<line_aa_only<<"; circle_aa_only="<<circle_aa_only<<"; polygon_only="<<polygon_only<<"\n";
 }

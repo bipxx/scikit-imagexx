@@ -1013,11 +1013,16 @@
       "api": "draw.bezier_curve",
       "kind": "callable",
       "signature": "(r0, c0, r1, c1, r2, c2, weight, shape=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_bezier_curve_public.py::test_bezier_saved_public",
+      "benchmark": "benchmarks/bezier_curve.py",
+      "default_input_kind": "Frozen rational Bezier geometry; image dtype and pixels are unused descriptor carriers. Bounded rational/extrema arithmetic and ordered intp output are owned; conversion/allocation and unassessed shape/FP/protocol frontiers explicit."
     },
     {
       "api": "draw.circle_perimeter",
@@ -1243,11 +1248,15 @@
       "api": "draw.set_color",
       "kind": "callable",
       "signature": "(image, coords, color, alpha=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_set_color_public.py::test_saved_native",
+      "benchmark": "benchmarks/draw_set_color.py",
+      "default_input_kind": "In-place float32/float64 fixed saved gray image; compare independent full mutated carriers and assert actual public return None. Carrier size/pixels unused; same fresh image copy timed in generic adapter. Bounded staged arithmetic/gather-before-scatter owned; conversion/alignment and unsupported domains explicit."
     },
     {
       "api": "exposure.adjust_gamma",
