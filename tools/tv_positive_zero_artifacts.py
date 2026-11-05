@@ -50,13 +50,17 @@ def read_json(path):
     return json.loads(Path(path).read_text(encoding='utf-8-sig'))
 
 
-execution_environment()
 require(sha(ROOT / PLAN_PATH) == PLAN_SHA256, 'prospective source plan changed')
 PLAN = read_json(ROOT / PLAN_PATH)
-# Authenticate before executing inherited standard-library controller code.
-for _name, _record in PLAN['dependency_pins'].items():
-    require(text_sha(ROOT / _name) == _record['canonical_lf_sha256'],
-            'frozen comparison dependency changed: ' + _name)
+
+
+def authenticate_dependencies():
+    """Authenticate the frozen execution context, not unrelated test imports."""
+    for name, record in PLAN['dependency_pins'].items():
+        require(text_sha(ROOT / name) == record['canonical_lf_sha256'],
+                'frozen comparison dependency changed: ' + name)
+
+
 _spec = importlib.util.spec_from_file_location('_tv_zero_historical_artifacts',
     ROOT / 'tools/tv_chambolle_admission_artifacts.py')
 _legacy = importlib.util.module_from_spec(_spec)
@@ -173,6 +177,7 @@ def load_experiment(path, expected_sha, controller_revision=None):
             'bounded exact external experiment required')
     raw = path.read_bytes()
     require(hashlib.sha256(raw).hexdigest() == expected_sha, 'external experiment raw SHA differs')
+    authenticate_dependencies()
     selected = controller_revision or revision()
     verify_controller_checkout(selected)
     return validate_experiment(json.loads(raw), selected)
