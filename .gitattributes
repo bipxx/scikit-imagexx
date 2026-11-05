@@ -687,6 +687,7 @@ benchmarks/regionprops-import-tax-diagnostic.batches.jsonl -text
 coverage/evidence/regionprops-import-tax-diagnostic-v1.json -text
 coverage/evidence/public257-whole-product-admission.json -text
 coverage/evidence/current257-qualification-v1.json -text
+coverage/contracts/regionprops-bbox-extent.json -text
 coverage/evidence/public256-windows-checkout-failed-v1.json -text
 coverage/evidence/public256-whole-product-failed-v1.json -text
 coverage/contracts/region-stain-same-host-v1.json -text
