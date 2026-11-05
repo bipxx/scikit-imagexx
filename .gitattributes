@@ -670,3 +670,5 @@ benchmarks/regionprops-state-minimum-initial.* -text
 benchmarks/circle-perimeter-aa-minimum-initial.* -text
 benchmarks/combine-stains-half-minimum-initial.* -text
 coverage/evidence/current255-minimum-initial-performance-v1.json -text
+benchmarks/line-nd-minimum-initial.* -text
+coverage/evidence/current256-minimum-initial-performance-v1.json -text

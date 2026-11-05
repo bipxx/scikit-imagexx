@@ -1,0 +1,89 @@
+{
+  "source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+  "run": 41946801050,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41946801050",
+  "admitted_scope": "Minimum preparation/public parity and12lineND initial workloads only; source-ready256 partial contracts, not whole-product qualification, fullAPI parity or prior-C++ optimization KEEP. Runtime providers/SIMD/platform limits retained.",
+  "prepared_members": {
+    "product": 188,
+    "SDK": 89,
+    "XML": 15947
+  },
+  "worker_count": 1,
+  "cases": 12,
+  "samples": 168,
+  "wins": 12,
+  "losses": 0,
+  "geometric_mean_original_over_cpp": 2.547376061055843,
+  "minimum_accepted_batch_ns": 105659889,
+  "minimum_warmup_group_ns": 250919290,
+  "runtime": {
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true
+  },
+  "production_source_sha256": "97f830bae37cde9cf757cb0e5bd7df4ce0bd1812ed30cbd89fa4c68f089c9cf9",
+  "core_sha256": "72d394e6382784a99601c151447d316ed240986d06c89f06df5ff859a4f3ad21",
+  "reports": [
+    {
+      "path": "benchmarks/line-nd-minimum-initial.json",
+      "sha256": "dcae609038785143b1796431ba5c90127990e1a845463c7369a9f1eb24ae88ec",
+      "bytes": 176676,
+      "artifact": 13379930442,
+      "member": "ci-line-nd.json",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/line-nd-minimum-initial.md",
+      "sha256": "45dfaf5b6af5daf0f3497c1f39b87ea20e7a706a93bb9234125c1aa3139de278",
+      "bytes": 1110,
+      "artifact": 13379930442,
+      "member": "ci-line-nd.md",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/line-nd-minimum-initial.batches.jsonl",
+      "sha256": "566b6395dd6f97ccb6f49d7d12e5de757d1dd3c75fbbf971fb0a76a76a0aa40b",
+      "bytes": 177050,
+      "artifact": 13379930442,
+      "member": "ci-line-nd.batches.jsonl",
+      "unchanged_raw_bytes": true
+    }
+  ],
+  "root_admission": {
+    "path": "build/candidate256-genuine-minimum-v1/root-admission-v1.json",
+    "sha256": "2657a0b540f7b44fd54d45d3097e3f489f66c3865b697513fcab569ae1714b44"
+  },
+  "input_auth": {
+    "path": "build/candidate256-genuine-minimum-v1/input-auth-v1/audit.json",
+    "sha256": "7ce7a7e663311a20f996ba1df7919b9dd040f8cf8799d4869beac33764450d5c"
+  },
+  "metric_verification": {
+    "path": "build/candidate256-genuine-minimum-v1/reports-v1/verification.json",
+    "sha256": "54eefb3b355b69b7a599733c780e96bd51191536eb2929940c3b8c84d8a2448a"
+  },
+  "retention": {
+    "run": 41946801050,
+    "source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+    "artifact": 13379930442,
+    "name": "ci-performance-minimum",
+    "path": "build/candidate256-genuine-minimum-v1/retained-v1/13379930442.zip",
+    "bytes": 85482328,
+    "sha256": "8327f6bd4a6345c1929000ec50d9380090400c02c339bc51d93d2cd031f32c6f",
+    "producer_duplicate_not_downloaded": true
+  },
+  "full_qualification": {
+    "run": 41947826837,
+    "status_at_dispatch": "running; pendingactual4profileadmission",
+    "accepted_baseline": 252
+  },
+  "whole_product_qualified": false,
+  "closeout": {
+    "result": "Exact-source genuine minimum andNDinitialperformance admitted,12wins/0losses/168samples. Fourprofile qualification and source shipping projection remain open.",
+    "waste_reuse": "One85MBperformance artifact downloaded; producerduplicate notdownloaded. Reused existingstdlib input/journalverifiers withsource/count deltas, one unique inputauth and one metricsanalysis. No scientific rerun/build/env/newtiming.",
+    "next_plan_change": "Root publish source-scoped3raw reports once; B observes4profile campaign; keepRegion/stain oldlosses explicit and prospective candidatecontrol gates unchanged. No remeasure34unchanged groups."
+  }
+}
