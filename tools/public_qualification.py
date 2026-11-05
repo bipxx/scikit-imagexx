@@ -448,7 +448,7 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tests/test_draw_polygon_dtype_tag_reference.py',
     'coverage/contracts/draw-polygon-runtime-v1.json',
     'coverage/contracts/draw-polygon-current-runtime-v1.json',
-) + (
+
     'benchmarks/bezier_curve.py',
     'coverage/contracts/draw-bezier-benchmark-v1.json',
     'coverage/contracts/draw-bezier-frontend-v1.json',
@@ -533,7 +533,7 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'coverage/evidence/matrix-transform-public-assertion-migration.json',
     'coverage/evidence/matrix-transform-public-source-successor-assertion.json',
     'coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json',
-    'tests/test_matrix_transform_numpy124_skylakex_certificate.py') + (
+    'tests/test_matrix_transform_numpy124_skylakex_certificate.py',
     'coverage/contracts/matrix-prescott-reference-v1.json',
     'coverage/contracts/matrix-prescott-v1.json',
     'tests/fixtures/matrix_prescott_native.hpp',
@@ -600,7 +600,7 @@ POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.
     'test_draw_polygon_default.py',
     'test_draw_polygon_benchmark.py',
     'test_draw_polygon_dtype_tag_reference.py',
-) + (
+
     'test_draw_bezier_reference.py',
     'test_bezier_curve_public.py',
     'test_bezier_curve_default.py',
