@@ -339,6 +339,7 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'coverage/contracts/combine-stains-half-source-context-v1.json',
     'coverage/contracts/combine-stains-legacy-benchmark-source-v1.json',
     'coverage/contracts/regionprops-strided-runtime-v1.json',
+    'coverage/contracts/regionprops-warm-runtime-v1.json',
     'coverage/contracts/combine-stains-half-f32-runtime-v1.json',
     'coverage/contracts/combine-stains-half-frontend-v1.json',
     'include/skimagexx/line_nd.hpp',

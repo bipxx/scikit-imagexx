@@ -100,6 +100,78 @@ def test_regionprops_lazy_provider_identity_and_lookup(monkeypatch):
     assert len(calls) == 1 and calls[0][0][0] is labels and calls[0][0][1] is intensity
 
 
+def test_regionprops_first_cold_lookup_and_warm_calls_do_not_self_import():
+    script = """
+import builtins
+import sys
+import numpy as np
+import skimagexx as xx
+from skimagexx import _regionprops_state as owned
+import skimage.measure._regionprops as original
+import scipy.ndimage as ndi
+def denied(*args, **kwargs):
+    raise AssertionError('original constructor algorithm was called')
+original.regionprops = ndi.find_objects = denied
+assert 'skimagexx._regionprops_state_class' not in sys.modules
+assert 'RegionProperties' not in vars(owned) and '_provider_regionprops' not in vars(owned)
+lookup = owned.__getattr__
+calls = []
+def tracked(name):
+    calls.append(name)
+    return lookup(name)
+owned.__getattr__ = tracked
+prior_import = builtins.__import__
+def no_self_import(name, *args, **kwargs):
+    assert name not in ('_regionprops_state', 'skimagexx._regionprops_state'), name
+    return prior_import(name, *args, **kwargs)
+builtins.__import__ = no_self_import
+try:
+    labels = np.array([[0, 1, 1], [0, 1, 0]], dtype=np.int16)
+    first = owned.regionprops(labels)
+    assert calls == ['RegionProperties', '_provider_regionprops']
+    assert first[0]._native_state is not None
+    assert type(first[0]) is owned.RegionProperties
+    calls.clear()
+    second = owned.regionprops(labels)
+    assert calls == [] and second[0]._native_state is not None
+    assert type(second[0]) is type(first[0])
+finally:
+    builtins.__import__ = prior_import
+"""
+    result = subprocess.run([sys.executable, '-c', script], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+
+
+def test_regionprops_patched_aliases_and_deleted_lazy_aliases(monkeypatch):
+    from skimagexx import _regionprops_state as owned
+    labels = np.array([[0, 1, 1], [0, 1, 0]], dtype=np.int16)
+    cls = owned.RegionProperties
+    provider = owned._provider_regionprops
+    lookup = owned.__getattr__
+    lookups = []
+    def tracked(name):
+        lookups.append(name)
+        return lookup(name)
+    monkeypatch.setattr(owned, '__getattr__', tracked)
+    sentinel = object()
+    calls = []
+    def patched(*args, **kwargs):
+        calls.append((args, kwargs))
+        return sentinel
+    monkeypatch.setattr(owned, '_provider_regionprops', patched)
+    assert owned.regionprops(labels, labels) is sentinel and len(calls) == 1
+    assert lookups == [] and calls[0][0][0] is labels and calls[0][0][1] is labels
+    monkeypatch.delattr(owned, '_provider_regionprops')
+    region = owned.regionprops(labels)[0]
+    assert lookups == ['_provider_regionprops'] and owned._provider_regionprops is provider
+    assert type(region) is cls and region._native_state is not None
+    lookups.clear()
+    monkeypatch.delattr(owned, 'RegionProperties')
+    region = owned.regionprops(labels)[0]
+    assert lookups == ['RegionProperties'] and type(region) is cls
+    assert xx.measure.regionprops is owned.regionprops
+
+
 @pytest.mark.parametrize('path', ['filters.rank', 'filters.rank.generic',
                                   'color.colorconv', 'util.dtype'])
 def test_nested_namespace_import_and_identity(path):

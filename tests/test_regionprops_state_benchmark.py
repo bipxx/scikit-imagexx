@@ -14,7 +14,7 @@ def load_harness():
 
 
 def test_regionprops_benchmark_prospective_cases_and_bounds():
-    module=load_harness();contract=json.loads((ROOT/'coverage/contracts/regionprops-strided-runtime-v1.json').read_bytes());cases=module.case_specs()
+    module=load_harness();contract=json.loads((ROOT/'coverage/contracts/regionprops-warm-runtime-v1.json').read_bytes());cases=module.case_specs()
     assert len(cases)==12 and len({s['id']for s in cases})==12
     assert {s['operation']for s in cases}=={'constructor','seven-properties'}
     assert {len(s['shape'])for s in cases}=={2,3}and{v['cache']for v in cases}=={True,False}
@@ -52,12 +52,24 @@ def test_regionprops_benchmark_import_refuses_scientific_side_effects(monkeypatc
 
 def test_region_candidate_runtime_contract_preserves_history_and_timed_source():
     historical = json.loads((ROOT/'coverage/contracts/regionprops-state-benchmark.json').read_bytes())
-    candidate = json.loads((ROOT/'coverage/contracts/regionprops-strided-runtime-v1.json').read_bytes())
+    candidate = json.loads((ROOT/'coverage/contracts/regionprops-warm-runtime-v1.json').read_bytes())
     assert set(candidate) == set(historical)
     assert {key for key in candidate if candidate[key] != historical[key]} <= {'source_closure', 'scope', 'status'}
     assert candidate['cases'] == historical['cases']
     assert set(candidate['source_closure']) == set(historical['source_closure']) | {'python/skimagexx/_regionprops_state_class.py'}
     source = (ROOT/'benchmarks/regionprops_state.py').read_bytes().replace(b'\r\n',b'\n')
-    assert source.count(b'regionprops-strided-runtime-v1.json') == 1
-    restored = source.replace(b'regionprops-strided-runtime-v1.json',b'regionprops-state-benchmark.json')
+    assert source.count(b'regionprops-warm-runtime-v1.json') == 1
+    restored = source.replace(b'regionprops-warm-runtime-v1.json',b'regionprops-state-benchmark.json')
     assert hashlib.sha256(restored).hexdigest() == '12c237328a25b462362b19551af70b52dc0868a66bc72c1a4ecfbe5755a39587'
+
+
+def test_region_warm_context_preserves_measured_strided_contract():
+    old = json.loads((ROOT/'coverage/contracts/regionprops-strided-runtime-v1.json').read_bytes())
+    active = json.loads((ROOT/'coverage/contracts/regionprops-warm-runtime-v1.json').read_bytes())
+    assert set(active) == set(old)
+    assert {k:v for k,v in active.items() if k not in ('source_closure','scope','status')} == {
+        k:v for k,v in old.items() if k not in ('source_closure','scope','status')}
+    expected = dict(old['source_closure'])
+    path = 'python/skimagexx/_regionprops_state.py'
+    expected[path] = hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    assert active['source_closure'] == expected

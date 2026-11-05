@@ -17,9 +17,13 @@ def __getattr__(name):
 
 
 def regionprops(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None):
-    # Resolve the provider subclass only when this API is actually called.
-    # Module attributes retain the existing monkeypatch/provider-denial boundary.
-    from ._regionprops_state import RegionProperties, _provider_regionprops
+    # Resolve only missing lazy aliases; warm calls keep ordinary module globals.
+    # Patched aliases and deletion remain visible without a repeated self-import.
+    namespace = globals()
+    if 'RegionProperties' not in namespace:
+        __getattr__('RegionProperties')
+    if '_provider_regionprops' not in namespace:
+        __getattr__('_provider_regionprops')
     # Explicit bounded route. Unknown protocols/intensity/callback semantics are
     # still literal providers, never credited to the returned-state native leaf.
     if type(label_image) is not np.ndarray or intensity_image is not None or extra_properties is not None:
