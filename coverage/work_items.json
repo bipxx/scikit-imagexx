@@ -36451,7 +36451,7 @@
         "draw.polygon2mask"
       ],
       "owner": "qualification251_readiness",
-      "state": "preparing",
+      "state": "measured",
       "branch": "integrate/draw-polygon-process-v2",
       "base_sha": "72f9fc00b3dee5437ceab84bd5bb061ae956976d",
       "owns": [],
@@ -36461,10 +36461,10 @@
         "draw-polygon-sdk-v1",
         "draw-polygon-benchmark-v1"
       ],
-      "current_checkpoint": "Process-onlybd16 peerPASS4eb4b65e/396actualprocesschecks; POST91+cold1=92requiredselectors, ordinaryadmission unchanged. Genuine42027790280SUCCESS: correctedcold90/normal91/disabled92/freeze137+consumerverify6/46PASS,39timersSKIPPED. Rootoneconsumer13414728898 authenticated14wheels195product92SDK/2264source/485prod/16882XML0bad/core dcb2/PF74f929. Strictcf0runtime13deps equal. Main83a qualified258 remains, no260ship/speedcredit.",
+      "current_checkpoint": "bd16 genuine42027790280 admitted98576c94/195product92SDK16882XML0bad/core dcb2/PF74f929. Fixedv3run42032588452 scientificDISCARD independently16e3691b/f06426ad:1568samples5032events,5failedpairs8inequalities; sparse2DctorCPP+10.6/+12.3%,large3Dsparse+5.7%onepair,twoflatCPPstainnormalizedfails. Warmtargets1.14\u20131.23xgains cannotwaive;8wins20originallosses eachpass,24rawCPPincreases. No260shipping/fourprofile/speedacceptance.",
       "next_gate": {
         "owner": "root",
-        "action": "A independentminimuminputmetadataadmission thenpromptfixedv3isolated28cohortcomparison vsqualifiedcf0, all1568samples/rawlosses/caps retained. New12polygonoriginalmeasurements andfourprofilereleasequalification remainbeforemain260projection. B preparesdispatchbyactualworkflowinputs, no uncontrolledretry orsourcepinrewrite. Failed42023725498 remainsfailed."
+        "action": "Publish everyrawsample/journal/ratio/loss in existingDISCARDcapsule; no retry/noiseattribution/waiver. A source+profile constructorbottleneck review: preparealreadystridedwalk and1609bytes/15relocations identical, no divisionpatch. LocalcProfile metadata~71%isdiagnostic only, nothostcausereproduction. Newmaterialproposal requirespeer/genuine/newfixedexperiment; polygon12measurement/full4release remain."
       },
       "frozen_source_paths": [
         ".github/workflows/ci.yml",
@@ -36578,7 +36578,7 @@
         "measure.regionprops"
       ],
       "owner": "tiny_line_implementation",
-      "state": "contracted",
+      "state": "measured",
       "owns": [],
       "frozen_source_paths": [
         "coverage/contracts/regionprops-performance-compare-v3.json",
@@ -36589,10 +36589,10 @@
         "regionprops-attribute-keys-v1",
         "regionprops-mxcsr-rounding-v1"
       ],
-      "current_checkpoint": "Prospective20268c7e independentlyPASS14451428:exactcf0baselineartifact,28cases/4ABBA1568samples unchanged; two scalarwarmtargets.95 and26controls1.05 direct+normalizedeachpair. Engineversion2/configrevision3; no timing.",
+      "current_checkpoint": "Executedonce42032588452 exactbd16 vscf0; independentdataaudit16e3691b/f06426ad validates1568samples5032events224warmgroups/16processes/8preflights/112inequalities. ScientificDISCARD5failedpairs8inequalities, all24CPPincreases and20original losses perpass retained.",
       "next_gate": {
         "owner": "root",
-        "action": "Authenticate one eligible coherent successor preparedproduct after processgroupfix, pin exactsource/runtime/artifact/deadline and reserveisolatedhost beforefixedcomparison. Preserve allfailedexperiments andeveryoriginal loss."
+        "action": "Keepfailedexperimentimmutable/publicallrawdata. Diagnoseactualsparseconstructorpath separately; sourcegeometryalreadyoptimized andstaticbodyequal, so no speculativeFP/division/layoutpatch. Newprofilemethod local/CPythonpatchdifference explicit; no partialpromotionfromwarmgains."
       }
     },
     {

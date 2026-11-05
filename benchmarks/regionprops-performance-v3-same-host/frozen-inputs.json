@@ -1,0 +1,11 @@
+{
+  "command": "execute",
+  "repository": "bipxx/scikit-imagexx",
+  "candidate_source": "bd16b09eaa54d4b5115c8185b441015c4a3d0bd7",
+  "candidate_run": "42027790280",
+  "candidate_artifact": 13414728898,
+  "snapshots": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshots",
+  "results": "/home/runner/work/scikit-imagexx/scikit-imagexx/results",
+  "deadline_utc": "2026-11-05T13:34:52Z",
+  "contract": "controller/coverage/contracts/regionprops-performance-compare-v3.json"
+}

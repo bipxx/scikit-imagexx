@@ -1,0 +1,1596 @@
+{
+  "decision": "DISCARD",
+  "source": "bd16b09eaa54d4b5115c8185b441015c4a3d0bd7",
+  "baseline_source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+  "run": 42032588452,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42032588452",
+  "worker_count": 1,
+  "cohorts": 28,
+  "passes": 4,
+  "samples": 1568,
+  "journal_events": 5032,
+  "paired_checks": 56,
+  "inequalities": 112,
+  "failed_checks": [
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.1061820667754427,
+      "original_normalized": 1.1208797285416,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0574499851516883,
+      "original_normalized": 1.0576704323066028,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9979958899516693,
+      "original_normalized": 1.0588483601413858,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.1226919463248102,
+      "original_normalized": 1.1313232805863525,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9974138879060561,
+      "original_normalized": 1.0732428981760866,
+      "limit": 1.05,
+      "passed": false
+    }
+  ],
+  "failed_inequalities": [
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "metric": "direct",
+      "ratio": 1.1061820667754427,
+      "limit": 1.05
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "metric": "original_normalized",
+      "ratio": 1.1208797285416,
+      "limit": 1.05
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "metric": "direct",
+      "ratio": 1.0574499851516883,
+      "limit": 1.05
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "metric": "original_normalized",
+      "ratio": 1.0576704323066028,
+      "limit": 1.05
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "metric": "original_normalized",
+      "ratio": 1.0588483601413858,
+      "limit": 1.05
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "metric": "direct",
+      "ratio": 1.1226919463248102,
+      "limit": 1.05
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "metric": "original_normalized",
+      "ratio": 1.1313232805863525,
+      "limit": 1.05
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "metric": "original_normalized",
+      "ratio": 1.0732428981760866,
+      "limit": 1.05
+    }
+  ],
+  "all_checks": [
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9858768001090045,
+      "original_normalized": 0.992133610049889,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9958634928608304,
+      "original_normalized": 0.9936827474857197,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.1061820667754427,
+      "original_normalized": 1.1208797285416,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0114824375170872,
+      "original_normalized": 1.0060349579217298,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.017512812132514,
+      "original_normalized": 1.0333188214933913,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0219415761977617,
+      "original_normalized": 1.026557913758208,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0332561771344608,
+      "original_normalized": 1.0444425069111345,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0397661995520526,
+      "original_normalized": 1.0402425770437442,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/small3d-constructor",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9789826646345057,
+      "original_normalized": 0.9896841540933914,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0038775919019487,
+      "original_normalized": 1.0101406913423894,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9998144252622073,
+      "original_normalized": 1.0009860031433102,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0574499851516883,
+      "original_normalized": 1.0576704323066028,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-ctor-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9690396442532716,
+      "original_normalized": 0.9601274751577527,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-ctor-f-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9579172372547432,
+      "original_normalized": 0.9514194223435462,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-warm-c-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.8137394944037105,
+      "original_normalized": 0.7973696931129194,
+      "limit": 0.95,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9449003827117521,
+      "original_normalized": 0.9915765522038625,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-f-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9556375568851144,
+      "original_normalized": 0.9635960149598572,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/3d-warm-f-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.8271039199187593,
+      "original_normalized": 0.8178904828212163,
+      "limit": 0.95,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/pixel-cycle-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9830138410266284,
+      "original_normalized": 0.9910277086421851,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/slice-cycle-3d-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9975935263037427,
+      "original_normalized": 0.9972070892298739,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0014560215373998,
+      "original_normalized": 0.9903453622262472,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9995385115971175,
+      "original_normalized": 0.9965105860043819,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0017153940984882,
+      "original_normalized": 1.0076543540512426,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.000634018331875,
+      "original_normalized": 0.9923054419814351,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9980650452389283,
+      "original_normalized": 0.9811104534429081,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.001850793873382,
+      "original_normalized": 0.9843244974743206,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9949608950035513,
+      "original_normalized": 0.9991214694746987,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9979958899516693,
+      "original_normalized": 1.0588483601413858,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9787489572217869,
+      "original_normalized": 0.9895396620915926,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9884393517540958,
+      "original_normalized": 0.9859195027373318,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.1226919463248102,
+      "original_normalized": 1.1313232805863525,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0363839416709337,
+      "original_normalized": 1.0340755147288072,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.033756940232325,
+      "original_normalized": 1.031844081398053,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0280296601531256,
+      "original_normalized": 1.0447474465460946,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.035225921448499,
+      "original_normalized": 1.0396679265731021,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.042493334090342,
+      "original_normalized": 1.0429611425488459,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/small3d-constructor",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9750544507195901,
+      "original_normalized": 0.9845661922399488,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0110960407735101,
+      "original_normalized": 1.0126078075939366,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9700836603906366,
+      "original_normalized": 0.9702103879998258,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.040086555422364,
+      "original_normalized": 1.0491289583675047,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-ctor-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9882910061023098,
+      "original_normalized": 0.9775567147387663,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-ctor-f-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9626143664539107,
+      "original_normalized": 0.9280194817036341,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/tiny-warm-c-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.8512521039512196,
+      "original_normalized": 0.8611531813986073,
+      "limit": 0.95,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.958590750275909,
+      "original_normalized": 1.0002846629922666,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-f-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9516700529798934,
+      "original_normalized": 0.9410904601775126,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/3d-warm-f-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.8804267821168412,
+      "original_normalized": 0.8997556238735739,
+      "limit": 0.95,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/pixel-cycle-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9936830543196573,
+      "original_normalized": 0.9805566287915662,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/slice-cycle-3d-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.007678390057842,
+      "original_normalized": 0.9877136564624194,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0011098663574063,
+      "original_normalized": 0.9882059234377708,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9984577186357827,
+      "original_normalized": 1.0328455494908941,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.000001806813444,
+      "original_normalized": 1.0340438838175272,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9999571519875116,
+      "original_normalized": 1.0099898471968916,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9974138879060561,
+      "original_normalized": 1.0732428981760866,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "old-f32-combine-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.993904986874019,
+      "original_normalized": 0.8575430461244531,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0000214328951484,
+      "original_normalized": 1.0101747173491242,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9875323358476041,
+      "original_normalized": 1.0308934951500415,
+      "limit": 1.05,
+      "passed": true
+    }
+  ],
+  "raw_CPP_increases": [
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.1061820667754427,
+      "original_normalized": 1.1208797285416,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0114824375170872,
+      "original_normalized": 1.0060349579217298,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.017512812132514,
+      "original_normalized": 1.0333188214933913,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0219415761977617,
+      "original_normalized": 1.026557913758208,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0332561771344608,
+      "original_normalized": 1.0444425069111345,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0397661995520526,
+      "original_normalized": 1.0402425770437442,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0038775919019487,
+      "original_normalized": 1.0101406913423894,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0574499851516883,
+      "original_normalized": 1.0576704323066028,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0014560215373998,
+      "original_normalized": 0.9903453622262472,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0017153940984882,
+      "original_normalized": 1.0076543540512426,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.000634018331875,
+      "original_normalized": 0.9923054419814351,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.001850793873382,
+      "original_normalized": 0.9843244974743206,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.1226919463248102,
+      "original_normalized": 1.1313232805863525,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0363839416709337,
+      "original_normalized": 1.0340755147288072,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.033756940232325,
+      "original_normalized": 1.031844081398053,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0280296601531256,
+      "original_normalized": 1.0447474465460946,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.035225921448499,
+      "original_normalized": 1.0396679265731021,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.042493334090342,
+      "original_normalized": 1.0429611425488459,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0110960407735101,
+      "original_normalized": 1.0126078075939366,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.040086555422364,
+      "original_normalized": 1.0491289583675047,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/slice-cycle-3d-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.007678390057842,
+      "original_normalized": 0.9877136564624194,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0011098663574063,
+      "original_normalized": 0.9882059234377708,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.000001806813444,
+      "original_normalized": 1.0340438838175272,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0000214328951484,
+      "original_normalized": 1.0101747173491242,
+      "limit": 1.05,
+      "passed": true
+    }
+  ],
+  "original_normalized_increases": [
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.1061820667754427,
+      "original_normalized": 1.1208797285416,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0114824375170872,
+      "original_normalized": 1.0060349579217298,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.017512812132514,
+      "original_normalized": 1.0333188214933913,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0219415761977617,
+      "original_normalized": 1.026557913758208,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0332561771344608,
+      "original_normalized": 1.0444425069111345,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0397661995520526,
+      "original_normalized": 1.0402425770437442,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0038775919019487,
+      "original_normalized": 1.0101406913423894,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9998144252622073,
+      "original_normalized": 1.0009860031433102,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0574499851516883,
+      "original_normalized": 1.0576704323066028,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 1.0017153940984882,
+      "original_normalized": 1.0076543540512426,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "direct": 0.9979958899516693,
+      "original_normalized": 1.0588483601413858,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.1226919463248102,
+      "original_normalized": 1.1313232805863525,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0363839416709337,
+      "original_normalized": 1.0340755147288072,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.033756940232325,
+      "original_normalized": 1.031844081398053,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0280296601531256,
+      "original_normalized": 1.0447474465460946,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.035225921448499,
+      "original_normalized": 1.0396679265731021,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.042493334090342,
+      "original_normalized": 1.0429611425488459,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0110960407735101,
+      "original_normalized": 1.0126078075939366,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.040086555422364,
+      "original_normalized": 1.0491289583675047,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-scalars/medium-getters-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.958590750275909,
+      "original_normalized": 1.0002846629922666,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9984577186357827,
+      "original_normalized": 1.0328455494908941,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.000001806813444,
+      "original_normalized": 1.0340438838175272,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9999571519875116,
+      "original_normalized": 1.0099898471968916,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-custom1",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9974138879060561,
+      "original_normalized": 1.0732428981760866,
+      "limit": 1.05,
+      "passed": false
+    },
+    {
+      "case_id": "old-f32-separate-custom7",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 1.0000214328951484,
+      "original_normalized": 1.0101747173491242,
+      "limit": 1.05,
+      "passed": true
+    },
+    {
+      "case_id": "old-f32-combine-hed-f64matrix",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "direct": 0.9875323358476041,
+      "original_normalized": 1.0308934951500415,
+      "limit": 1.05,
+      "passed": true
+    }
+  ],
+  "candidate_vs_original": [
+    [
+      {
+        "case_id": "regionprops-state/tiny2d-constructor",
+        "original_over_cpp": 0.8470702893195055,
+        "cpp_over_original": 1.1805395757692678,
+        "original_ms": 0.023297406420351302,
+        "cpp_ms": 0.027503510292005744,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/tiny2d-properties",
+        "original_over_cpp": 1.259608604339811,
+        "cpp_over_original": 0.7938974031732042,
+        "original_ms": 0.0879691251908397,
+        "cpp_ms": 0.06983846004842614,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/medium2d-constructor-sparse",
+        "original_over_cpp": 0.9659231655328713,
+        "cpp_over_original": 1.0352790322078356,
+        "original_ms": 0.12064267400419287,
+        "cpp_ms": 0.1248988307860262,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/medium2d-properties-cache-on",
+        "original_over_cpp": 1.4667083020222298,
+        "cpp_over_original": 0.6817988270886898,
+        "original_ms": 0.550017380952381,
+        "cpp_ms": 0.37500120521172636,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/medium2d-transpose-cache-off",
+        "original_over_cpp": 1.1218427221641392,
+        "cpp_over_original": 0.8913905489986215,
+        "original_ms": 0.6649391502890174,
+        "cpp_ms": 0.5927204742268041,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/large2d-c-cache-off",
+        "original_over_cpp": 1.1552986984892206,
+        "cpp_over_original": 0.8655770159766439,
+        "original_ms": 6.6160491666666665,
+        "cpp_ms": 5.726700095238095,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/large2d-f-coords",
+        "original_over_cpp": 1.4112431725523364,
+        "cpp_over_original": 0.7085951021406374,
+        "original_ms": 5.291782318181818,
+        "cpp_ms": 3.7497310322580644,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/medium2d-reverse-sparse",
+        "original_over_cpp": 1.6108654046521784,
+        "cpp_over_original": 0.6207843294120046,
+        "original_ms": 2.1793984339622643,
+        "cpp_ms": 1.3529363953488371,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/small3d-constructor",
+        "original_over_cpp": 0.8614471593756727,
+        "cpp_over_original": 1.1608373062890387,
+        "original_ms": 0.05111216881959911,
+        "cpp_ms": 0.05933291237113402,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/medium3d-f-cache-off",
+        "original_over_cpp": 0.9524454350486803,
+        "cpp_over_original": 1.0499289126719256,
+        "original_ms": 0.761674701986755,
+        "cpp_ms": 0.7997042916666667,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/large3d-cache-off",
+        "original_over_cpp": 1.259561220155669,
+        "cpp_over_original": 0.7939272692727156,
+        "original_ms": 6.329064631578947,
+        "cpp_ms": 5.024817,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+        "original_over_cpp": 1.8378382989946749,
+        "cpp_over_original": 0.5441175105269136,
+        "original_ms": 4.991512958333333,
+        "cpp_ms": 2.7159696046511628,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-scalars/tiny-ctor-c-off",
+        "original_over_cpp": 0.9005529436231169,
+        "cpp_over_original": 1.1104288838108578,
+        "original_ms": 0.047962574414715714,
+        "cpp_ms": 0.05325902797202797,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/medium-ctor-f-on",
+        "original_over_cpp": 0.9606034471589128,
+        "cpp_over_original": 1.0410122959246155,
+        "original_ms": 0.10805435426429241,
+        "cpp_ms": 0.11248591141732282,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/tiny-warm-c-on",
+        "original_over_cpp": 0.5807340837048969,
+        "cpp_over_original": 1.721958514334687,
+        "original_ms": 0.0028213448368503325,
+        "cpp_ms": 0.004858238763688638,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/medium-getters-c-off",
+        "original_over_cpp": 0.6081940849090723,
+        "cpp_over_original": 1.6442119790584684,
+        "original_ms": 0.07036533746898263,
+        "cpp_ms": 0.11569553077699293,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/medium-getters-f-off",
+        "original_over_cpp": 0.39823630238618807,
+        "cpp_over_original": 2.5110719289228784,
+        "original_ms": 0.04594367116223721,
+        "cpp_ms": 0.11536786296715741,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/3d-warm-f-on",
+        "original_over_cpp": 0.5824958060585804,
+        "cpp_over_original": 1.7167505578562603,
+        "original_ms": 0.0028585959272763354,
+        "cpp_ms": 0.004907496152837283,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/pixel-cycle-c-off",
+        "original_over_cpp": 0.9604441649475297,
+        "cpp_over_original": 1.041184939735285,
+        "original_ms": 0.06938295223700121,
+        "cpp_ms": 0.07224048494353827,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/slice-cycle-3d-on",
+        "original_over_cpp": 0.9036263226124365,
+        "cpp_over_original": 1.1066521359282027,
+        "original_ms": 0.05063756585365854,
+        "cpp_ms": 0.05603817041015625,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/standard-f32",
+        "original_over_cpp": 0.4980822511531547,
+        "cpp_over_original": 2.0077005307553337,
+        "original_ms": 2.8278389268292683,
+        "cpp_ms": 5.677453714285715,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/standard-f64",
+        "original_over_cpp": 0.7019430303595425,
+        "cpp_over_original": 1.4246170369236228,
+        "original_ms": 3.4003028529411763,
+        "cpp_ms": 4.844129375,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/custom-k7",
+        "original_over_cpp": 0.581092444978807,
+        "cpp_over_original": 1.7208965778869676,
+        "original_ms": 5.8720669,
+        "cpp_ms": 10.105219833333335,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/reverse-k1",
+        "original_over_cpp": 0.5794639859499533,
+        "cpp_over_original": 1.725732787967201,
+        "original_ms": 2.0381362105263157,
+        "cpp_ms": 3.517278484848485,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-combine-custom1",
+        "original_over_cpp": 0.25725530087603365,
+        "cpp_over_original": 3.8871890942370926,
+        "original_ms": 0.5105734601769911,
+        "cpp_ms": 1.9846955862068965,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-combine-custom7",
+        "original_over_cpp": 0.5353012602049989,
+        "cpp_over_original": 1.8681069415324,
+        "original_ms": 4.591960538461538,
+        "cpp_ms": 8.578273357142857,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-separate-custom7",
+        "original_over_cpp": 0.27064017952016833,
+        "cpp_over_original": 3.694942863890168,
+        "original_ms": 1.8748712741935483,
+        "cpp_ms": 6.927542235294117,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-combine-hed-f64matrix",
+        "original_over_cpp": 0.5473568344149035,
+        "cpp_over_original": 1.8269617498591189,
+        "original_ms": 1.81443484375,
+        "cpp_ms": 3.314903057142857,
+        "faster_than_original": false
+      }
+    ],
+    [
+      {
+        "case_id": "regionprops-state/tiny2d-constructor",
+        "original_over_cpp": 0.8427667755972499,
+        "cpp_over_original": 1.1865678963095365,
+        "original_ms": 0.023054980384307443,
+        "cpp_ms": 0.02735629957406531,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/tiny2d-properties",
+        "original_over_cpp": 1.2494758134639992,
+        "cpp_over_original": 0.8003356201250812,
+        "original_ms": 0.08733018830675779,
+        "cpp_ms": 0.06989346041412911,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/medium2d-constructor-sparse",
+        "original_over_cpp": 0.9651054696330451,
+        "cpp_over_original": 1.0361561834067965,
+        "original_ms": 0.12082113249211357,
+        "cpp_ms": 0.1251895635179153,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/medium2d-properties-cache-on",
+        "original_over_cpp": 1.4737683545080804,
+        "cpp_over_original": 0.6785326859143909,
+        "original_ms": 0.5543856105769231,
+        "cpp_ms": 0.3761687573770492,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/medium2d-transpose-cache-off",
+        "original_over_cpp": 1.130877698685993,
+        "cpp_over_original": 0.8842689188777315,
+        "original_ms": 0.6700988546511627,
+        "cpp_ms": 0.5925475897435898,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/large2d-c-cache-off",
+        "original_over_cpp": 1.1564101560323445,
+        "cpp_over_original": 0.8647450861474708,
+        "original_ms": 6.667813611111111,
+        "cpp_ms": 5.765959055555556,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/large2d-f-coords",
+        "original_over_cpp": 1.4296355057471282,
+        "cpp_over_original": 0.699478990260108,
+        "original_ms": 5.376390954545454,
+        "cpp_ms": 3.7606725161290324,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/medium2d-reverse-sparse",
+        "original_over_cpp": 1.6104737845297101,
+        "cpp_over_original": 0.6209352860046832,
+        "original_ms": 2.18259975,
+        "cpp_ms": 1.3552532,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/small3d-constructor",
+        "original_over_cpp": 0.8544163789766823,
+        "cpp_over_original": 1.1703895484748084,
+        "original_ms": 0.050912861579414374,
+        "cpp_ms": 0.05958788107549121,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/medium3d-f-cache-off",
+        "original_over_cpp": 0.9571611580483692,
+        "cpp_over_original": 1.044756143300861,
+        "original_ms": 0.7697598466666666,
+        "cpp_ms": 0.8042113286713287,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-state/large3d-cache-off",
+        "original_over_cpp": 1.2413514706800666,
+        "cpp_over_original": 0.8055736216690962,
+        "original_ms": 6.326953368421052,
+        "cpp_ms": 5.096826739130434,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+        "original_over_cpp": 1.8274431707108156,
+        "cpp_over_original": 0.5472126389632311,
+        "original_ms": 4.955108375,
+        "cpp_ms": 2.711497930232558,
+        "faster_than_original": true
+      },
+      {
+        "case_id": "regionprops-scalars/tiny-ctor-c-off",
+        "original_over_cpp": 0.8874732987928594,
+        "cpp_over_original": 1.1267944639688872,
+        "original_ms": 0.0486661517328825,
+        "cpp_ms": 0.05483675035528186,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/medium-ctor-f-on",
+        "original_over_cpp": 0.9769903050297316,
+        "cpp_over_original": 1.0235516103402562,
+        "original_ms": 0.11035908084696824,
+        "cpp_ms": 0.11295821491658488,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/tiny-warm-c-on",
+        "original_over_cpp": 0.5537563168623619,
+        "cpp_over_original": 1.805848474408561,
+        "original_ms": 0.0028122738406629673,
+        "cpp_ms": 0.005078540424780324,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/medium-getters-c-off",
+        "original_over_cpp": 0.6011456756054101,
+        "cpp_over_original": 1.6634902995732377,
+        "original_ms": 0.07024644078144078,
+        "cpp_ms": 0.11685427281947262,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/medium-getters-f-off",
+        "original_over_cpp": 0.4024210434436513,
+        "cpp_over_original": 2.4849595126603368,
+        "original_ms": 0.04667034807302231,
+        "cpp_ms": 0.1159739254032258,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/3d-warm-f-on",
+        "original_over_cpp": 0.5409281548172096,
+        "cpp_over_original": 1.8486743407503348,
+        "original_ms": 0.002852506138613861,
+        "cpp_ms": 0.005273354905288263,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/pixel-cycle-c-off",
+        "original_over_cpp": 0.9630002391152916,
+        "cpp_over_original": 1.0384213413266647,
+        "original_ms": 0.07060857859327217,
+        "cpp_ms": 0.07332145489199492,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "regionprops-scalars/slice-cycle-3d-on",
+        "original_over_cpp": 0.9088785170329703,
+        "cpp_over_original": 1.100257054446061,
+        "original_ms": 0.05163756888888889,
+        "cpp_ms": 0.05681459944444445,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/standard-f32",
+        "original_over_cpp": 0.4969467765180616,
+        "cpp_over_original": 2.0122879295176492,
+        "original_ms": 2.821375,
+        "cpp_ms": 5.677418857142857,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/standard-f64",
+        "original_over_cpp": 0.6999773186108555,
+        "cpp_over_original": 1.4286177186205924,
+        "original_ms": 3.3958935294117647,
+        "cpp_ms": 4.851433666666667,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/custom-k7",
+        "original_over_cpp": 0.5752939053141044,
+        "cpp_over_original": 1.7382419503540727,
+        "original_ms": 5.810856,
+        "cpp_ms": 10.100673666666665,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "combine-half-bench/reverse-k1",
+        "original_over_cpp": 0.5745278009550882,
+        "cpp_over_original": 1.7405598098779764,
+        "original_ms": 2.0197219298245614,
+        "cpp_ms": 3.515446818181818,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-combine-custom1",
+        "original_over_cpp": 0.23582015510553622,
+        "cpp_over_original": 4.240519643253019,
+        "original_ms": 0.4681844430894309,
+        "cpp_ms": 1.9853453275862067,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-combine-custom7",
+        "original_over_cpp": 0.6290915061490747,
+        "cpp_over_original": 1.5895938670693668,
+        "original_ms": 5.383751,
+        "cpp_ms": 8.557977571428571,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-separate-custom7",
+        "original_over_cpp": 0.2711784494931307,
+        "cpp_over_original": 3.6876086645864947,
+        "original_ms": 1.8867427258064515,
+        "cpp_ms": 6.957568823529412,
+        "faster_than_original": false
+      },
+      {
+        "case_id": "old-f32-combine-hed-f64matrix",
+        "original_over_cpp": 0.5559679791425167,
+        "cpp_over_original": 1.798664738826011,
+        "original_ms": 1.840998515625,
+        "cpp_ms": 3.3113391142857145,
+        "faster_than_original": false
+      }
+    ]
+  ],
+  "identity": {
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0"
+  },
+  "retained_artifact": {
+    "artifact": {
+      "id": 13417530830,
+      "node_id": "MDg6QXJ0aWZhY3QxMzQxNzUzMDgzMA==",
+      "name": "region-stain-same-host",
+      "size_in_bytes": 171035160,
+      "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/13417530830",
+      "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/13417530830/zip",
+      "expired": false,
+      "digest": "sha256:99eb34ebf1efd0a08a306af501e81b1931a8c08603de7134d4059f774ec65c71",
+      "created_at": "2026-11-05T13:10:40Z",
+      "updated_at": "2026-11-05T13:10:40Z",
+      "expires_at": "2027-02-03T13:04:56Z",
+      "workflow_run": {
+        "id": 42032588452,
+        "repository_id": 1427753300,
+        "head_repository_id": 1427753300,
+        "head_branch": "integrate/draw-polygon-process-v2",
+        "head_sha": "bd16b09eaa54d4b5115c8185b441015c4a3d0bd7"
+      }
+    },
+    "run": 42032588452,
+    "source": "bd16b09eaa54d4b5115c8185b441015c4a3d0bd7",
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\regionprops-performance-v3\\comparison-v1\\retained-v1\\13417530830.zip",
+    "sha256": "99eb34ebf1efd0a08a306af501e81b1931a8c08603de7134d4059f774ec65c71",
+    "bytes": 171035160,
+    "seconds": 10.534454099833965,
+    "download_passes": 1,
+    "scope": "ScientificDISCARD artifact retainedonce;rawmath/intakeauditpending. No nestedproducthash/extract orscientificreplay."
+  },
+  "root_reconstruction": {
+    "path": "build/regionprops-performance-v3/comparison-v1/verification-v1.json",
+    "sha256": "afcad7d1600536e4898bee935b429f6a9637d731b83a5142b37d21e36e9b0441"
+  },
+  "independent_data_review": {
+    "path": "build/regionprops-performance-v3-independent-performance-review-v1/handoff-v1.json",
+    "sha256": "f06426ad98c08dc0f1b586e894a1bc4ec1238307eb5976cc662cc2a2e0dbc539"
+  },
+  "public_capsule_files": 21,
+  "scope": "ScientificDISCARD of exactbd16 fixedexperiment. No mainpromotion, no four-profile release or fullAPI speedclaim. Mainqualifiedcf0 remains.",
+  "closeout": {
+    "result": "Allsamples/journals/5failures/8failedinequalities/24rawCPPincreases and20originallosses eachpass published.",
+    "waste_and_reuse": "One171MB streamingretention,191smallmembers7.29MB extracted; two nestedproductarchives notread/rehashed. Rootanalyzeronce, independentownmath once. No unchangedrerun/noisewaiver/originalrecapture forpublication.",
+    "next_plan_correction": "A investigates actual sparseconstructor path; sourceandSDKprepare alreadyoptimized/byteidentical, so no division-removal patch. Localprofiledominantmetadata isdiagnostic-only. Cnative/Bfrontend coords_scaled coveragecontinues independently; no speculation-driven FP/layout changes."
+  }
+}
