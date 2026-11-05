@@ -1,0 +1,124 @@
+{
+  "status": "PROSPECTIVE_NO_TIMING",
+  "cases": [
+    {
+      "id": "tiny-gray",
+      "shape": [
+        4,
+        5,
+        1
+      ],
+      "count": 4,
+      "channels": 1,
+      "kind": "ordinary",
+      "order": "C"
+    },
+    {
+      "id": "rgb-dense",
+      "shape": [
+        256,
+        256,
+        3
+      ],
+      "count": 65536,
+      "channels": 3,
+      "kind": "ordinary",
+      "order": "C"
+    },
+    {
+      "id": "duplicates",
+      "shape": [
+        128,
+        128,
+        3
+      ],
+      "count": 65536,
+      "channels": 3,
+      "kind": "duplicates",
+      "order": "C"
+    },
+    {
+      "id": "clipped",
+      "shape": [
+        128,
+        128,
+        3
+      ],
+      "count": 65536,
+      "channels": 3,
+      "kind": "clipped",
+      "order": "C"
+    },
+    {
+      "id": "fortran-large",
+      "shape": [
+        384,
+        384,
+        3
+      ],
+      "count": 147456,
+      "channels": 3,
+      "kind": "ordinary",
+      "order": "F"
+    },
+    {
+      "id": "color-alias",
+      "shape": [
+        256,
+        256,
+        3
+      ],
+      "count": 65536,
+      "channels": 3,
+      "kind": "color-alias",
+      "order": "C"
+    },
+    {
+      "id": "f32-rgb-dense",
+      "shape": [
+        256,
+        256,
+        3
+      ],
+      "count": 65536,
+      "channels": 3,
+      "kind": "ordinary",
+      "order": "C",
+      "dtype": "float32"
+    },
+    {
+      "id": "f32-duplicates",
+      "shape": [
+        128,
+        128,
+        3
+      ],
+      "count": 65536,
+      "channels": 3,
+      "kind": "duplicates",
+      "order": "C",
+      "dtype": "float32"
+    }
+  ],
+  "raw_samples": 112,
+  "warmgroups": 16,
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "original_source_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+  "source_closure": {
+    "include/skimagexx/draw_set_color.hpp": "258b593beb4753aebe4480745deec5c1d5f85e3501c3087d14f2902d8af88f5c",
+    "src/draw_set_color.cpp": "21ae7f9f1eb8474e34c497ecd41374d446a4886f0d888cd5aef147b22b09d3be",
+    "src/bind_draw_set_color.cpp": "afa0d9185dea87ad4292cc9fd591c6a061a132dba565a03b6e7c912222603933",
+    "python/skimagexx/_draw_set_color.py": "40c50f39f799331e613f346559884018490ee8272bea562cd5977c8d0829c440"
+  },
+  "scope": "Eight bounded set_color workloads: original6f64cases unchanged +2f32storagecases. Actualpublicmutation+samefreshinputcopy perarm, no timingsyet; nofullAPI/libraryclaim.",
+  "timed_boundary": "fresh image copy plus actual public set_color including operand preparation and output mutation; no provider/validation instrumentation inside sampler",
+  "numeric_policy": "zero ULP exact whole-image words in actual f64 or f32 storage; public None alone has no numerical credit",
+  "provider_frontier": [
+    "non-f32/f64 images",
+    "f32 selected subnormal or nonzero tiny final cast",
+    "nonordinary/nonfinite/extreme operands",
+    "custom protocols",
+    "overlapping image storage"
+  ],
+  "integer_product_successor": "Originalint64weightedcolor stage preserved; uint64mixedint64 staysf64 basedactualoperationwitnesses. Existingboundedintegerdomain retained."
+}
