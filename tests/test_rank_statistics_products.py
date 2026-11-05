@@ -822,9 +822,11 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
     scope = p.qualification_scope(ROOT)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current256', 188, 89, 29)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current257', 191, 90, 30)
     # Historical literal envelopes remain independently closed.
-    legacy=p.qualification_scope_text(text.replace("CURRENT_PRODUCT_SCOPE = 'current256'\n",''))
+    historical_text=text.replace("CURRENT_PRODUCT_SCOPE = 'current257'\n",'')
+    assert historical_text!=text
+    legacy=p.qualification_scope_text(historical_text)
     assert (legacy['name'],legacy['members'],legacy['sdk'])==('h_extrema23',120,68)
     snapshot = {'files_sha256': {name: body_hash(raw) for name, raw in nmi_source_records.items()}}
     with nmi_source_archive(nmi_source_records) as archive:
@@ -967,7 +969,9 @@ def test_current_stager_never_bypasses_historical_source_guards(guard):
 @pytest.mark.parametrize('declaration',("FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives')", "FAMILIES + ('colocalization',)", "FAMILIES + ('colocalization','footprint_shapes')", "FAMILIES + ('colocalization','footprint_shapes','unmapped')", "FAMILIES + ['colocalization','footprint_shapes']", "('replacement',)"))
 def test_current_stager_rejects_missing_or_replaced_client_declaration(declaration):
     text=(ROOT/'tools/public_qualification.py').read_text()
-    text=text.replace("CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd')",'CURRENT_FAMILIES = '+declaration)
+    original=text
+    text=text.replace("CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid')",'CURRENT_FAMILIES = '+declaration)
+    assert text!=original
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include') for f in (ROOT/prefix).rglob('*') if f.is_file()]
     with pytest.raises(RuntimeError):p.qualification_scope_text(text,read_bytes=lambda n:(ROOT/n).read_bytes(),names=names)
 
