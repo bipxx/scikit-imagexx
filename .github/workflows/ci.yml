@@ -67,6 +67,15 @@ jobs:
         run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Region coords scaled saved public and installed SDK boundary normal
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_reference.py tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-normal.xml
+        env:
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-normal-rows
+      - name: Region coords scaled public and installed SDK boundary disabled
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-scalar-rows
       - name: Authenticate frozen original reconstruction source
         shell: bash
         run: |
@@ -399,6 +408,15 @@ jobs:
         run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Region coords scaled saved public and installed SDK boundary normal
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_reference.py tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-normal.xml
+        env:
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-normal-rows
+      - name: Region coords scaled public and installed SDK boundary disabled
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-scalar-rows
       - name: RegionProperties saved state and shipping defaults
         run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_public_mutation_reference.py tests/test_regionprops_public_mutation_public.py tests/test_regionprops_state_benchmark.py --junitxml=build/ci-artifacts/regionprops-state-normal.xml
         env:

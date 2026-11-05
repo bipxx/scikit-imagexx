@@ -934,3 +934,42 @@ def test_region_scalar_installed_preparation_source_and_fixture_gates():
     cmake=(ROOT/'CMakeLists.txt').read_text()
     assert 'src/regionprops_state.cpp src/bind_regionprops_state.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math"' in cmake
     assert hashlib.sha256((ROOT/'tests/fixtures/regionprops_scalar_native.bin').read_bytes()).hexdigest()=='51c97708e670151caa78abcfefd64a4dc8145d739645f371f783fbf5327e04d8'
+
+
+def test_coords_scaled_prebuild_keeps_numpy_intakes_installed():
+    import shlex
+    workflow=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    command=next(line.strip()for line in workflow.splitlines()
+                 if line.strip().startswith('python -m pytest -q --capture=sys'))
+    selected=set(shlex.split(command.split(' 2>&1 | tee ')[0]))
+    assert 'tests/test_regionprops_coords_scaled_reference.py' not in selected
+    assert 'tests/test_regionprops_coords_scaled_public.py' not in selected
+    assert not any('test_coords_scaled_controller_intake_originals_refused' in item for item in selected)
+    assert {'tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_prospective_scope_and_source',
+            'tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_sequences_and_accounting',
+            'tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_payload_words_and_declared_mutations',
+            'tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_sdk_default_and_focused_route',
+            'tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_reuses_installed_component_family'} <= selected
+    assert workflow.index(command)<workflow.index('tools/public_qualification.py all')
+
+
+def test_coords_scaled_installed_gates_keep_rows_and_dispatch_modes_separate():
+    source=(ROOT/'.github/workflows/ci.yml').read_text()
+    for job in ('check','numpy-minimum'):
+        block=jobs(source)[job]
+        steps={step.splitlines()[0].removeprefix('      - name: '):step
+               for step in re.split(r'(?=^      - name: )',block,flags=re.M)
+               if step.startswith('      - name: ')}
+        normal=steps['Region coords scaled saved public and installed SDK boundary normal']
+        scalar=steps['Region coords scaled public and installed SDK boundary disabled']
+        assert 'tests/test_regionprops_coords_scaled_reference.py ' in normal
+        for mode,step in (('normal',normal),('scalar',scalar)):
+            assert 'tests/test_regionprops_coords_scaled_public.py ' in step
+            assert 'tests/test_regionprops_coords_scaled_sdk_scope.py ' in step
+            assert '--junitxml=build/ci-artifacts/regionprops-coords-scaled-'+mode+'.xml' in step
+            assert 'SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-'+mode+'-rows' in step
+            assert block.index(step)>block.index('pip install')
+        assert "SKIMAGEXX_DISABLE_SIMD: '1'" in scalar
+        assert 'SKIMAGEXX_DISABLE_SIMD:' not in normal
+        if job=='numpy-minimum':
+            assert block.index(scalar)<block.index('ci_measurement_artifacts.py freeze')
