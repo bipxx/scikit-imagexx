@@ -973,3 +973,24 @@ def test_coords_scaled_installed_gates_keep_rows_and_dispatch_modes_separate():
         assert 'SKIMAGEXX_DISABLE_SIMD:' not in normal
         if job=='numpy-minimum':
             assert block.index(scalar)<block.index('ci_measurement_artifacts.py freeze')
+
+
+def test_coords_scaled_cold_intake_runs_fresh_outside_broad_pytest():
+    workflow=(ROOT/'.github/workflows/ci.yml').read_text()
+    blocks=jobs(workflow)
+    path='tests/test_regionprops_coords_scaled_benchmark_intake.py'
+    step=('      - name: Region coords scaled fresh NumPy-only benchmark intake\n'
+          '        run: python -m pytest -q '+path+' --junitxml=build/ci-artifacts/regionprops-coords-scaled-numpy-intake.xml\n')
+    broad='      - run: python -m pytest -q --ignore='+path
+    assert workflow.count(step)==2 and blocks['check'].count(broad)==2
+    assert '\n      - run: python -m pytest -q\n' not in workflow
+    for name in ('check','numpy-minimum'):
+        block=blocks[name]
+        assert block.count(step)==1 and block.count(path)==(3 if name=='check'else 1)
+        install=('python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" cmake'
+                 if name=='check'else 'python -m pip install --no-deps build/wheels/*.whl')
+        assert block.index(install)<block.index(step)<block.index('Region coords scaled saved public and installed SDK boundary normal')
+        assert not block.split(step,1)[1].startswith('        env:')
+        if name=='numpy-minimum':assert block.index(step)<block.index('ci_measurement_artifacts.py freeze')
+    q=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    assert path not in q
