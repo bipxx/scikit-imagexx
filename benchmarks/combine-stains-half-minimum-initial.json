@@ -1,0 +1,1887 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-05T00:14:33.004366+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "source_sha256": "0123d8453eabc7263945c1de22cd337103d7e7d6ffbd2583b35e0a200d8cbdb4",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "core_sha256": "c15aac0446bbdd5dbd0f7eddc0954f86c53586207bd31a6a93f09a765218ad01",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_calibration_min_ms": 250,
+    "raw_samples": 56,
+    "deadline_utc": "2026-11-05T01:14:23.330708+00:00",
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "contract_sha256": "0ebb151522bfca53e480358ea33e07b96d3152ad51a5502874e7d3a34f0c34a2",
+    "harness_sha256": "66ef348a23e6850c0e16dd15f9ff342144e07061a6d1bc89bbd9e9cec224d03c",
+    "scope": "Newhalf-only finite combine_stains descriptive allocation-inclusive public comparison; preservealllosses. Legacy39combineand39separateworkloads/results/sampler unchanged andnotrerun. No wholeAPI/performanceKEEP claim.",
+    "selected_mode": "half-only",
+    "fallback_enabled": false
+  },
+  "results": [
+    {
+      "case_id": "combine-half-bench/standard-f32",
+      "api": "color.combine_stains",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "original_output_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "parameters": {
+        "id": "combine-half-bench/standard-f32",
+        "api": "color.combine_stains",
+        "matrix": [
+          [
+            0.65,
+            0.7,
+            0.29
+          ],
+          [
+            0.07,
+            0.99,
+            0.11
+          ],
+          [
+            0.27,
+            0.57,
+            0.78
+          ]
+        ],
+        "matrix_dtype": "float32",
+        "layout": "C"
+      },
+      "backend": "native",
+      "actual_C_returns": [
+        "stain_transform"
+      ],
+      "half_normalizations": [
+        "<f2"
+      ],
+      "native_accepted": true,
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f4",
+            "dtype_metadata": null,
+            "shape": [
+              512,
+              512,
+              3
+            ],
+            "strides": [
+              6144,
+              12,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "output_sha256": "0afbe92f876aee3357070f72f3668a5b2cc0cf8d9f0bacead29dbcb409eb7df7",
+      "original_output_sha256": "344d3101349c217852d17e4e104b880e9d28d1b2909f3b44b1a49001bec39fcd",
+      "rtol": 2e-06,
+      "atol": 4.519999980926514e-06,
+      "max_abs_error": 1.1920928955078125e-07,
+      "reference_ms": 2.8593623243243242,
+      "cpp_ms": 5.683748285714286,
+      "speedup": 0.5030768747291531,
+      "samples_ms": [
+        [
+          2.878734222222222,
+          3.136747875,
+          2.8593623243243242,
+          2.8530638292682924,
+          2.8633314634146343,
+          2.8531351463414634,
+          2.8580925853658536
+        ],
+        [
+          5.676729142857143,
+          5.683748285714286,
+          5.6767286666666665,
+          5.690877095238095,
+          5.683312857142857,
+          5.685807095238095,
+          5.684183714285714
+        ]
+      ],
+      "loops": [
+        [
+          36,
+          40,
+          37,
+          41,
+          41,
+          41,
+          41
+        ],
+        [
+          21,
+          21,
+          21,
+          21,
+          21,
+          21,
+          21
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        366514988,
+        364218625
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 2944163,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 40,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114619459,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 41,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 123388261,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 39,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 125563105,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 5740673,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 119388244,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 119313746,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 119775962,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119211312,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 36,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 103634432,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 40,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 125469915,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119358714,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119211302,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 37,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 105796406,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 41,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116975617,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119508419,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119349570,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 41,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117396590,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 41,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116978541,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119401949,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119367858,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "combine-half-bench/standard-f32",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 41,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117181796,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "combine-half-bench/standard-f64",
+      "api": "color.combine_stains",
+      "dtype": "float16",
+      "output_dtype": "float64",
+      "original_output_dtype": "float64",
+      "size": 512,
+      "threads": 1,
+      "parameters": {
+        "id": "combine-half-bench/standard-f64",
+        "api": "color.combine_stains",
+        "matrix": [
+          [
+            0.65,
+            0.7,
+            0.29
+          ],
+          [
+            0.07,
+            0.99,
+            0.11
+          ],
+          [
+            0.27,
+            0.57,
+            0.78
+          ]
+        ],
+        "matrix_dtype": "float64",
+        "layout": "C"
+      },
+      "backend": "native",
+      "actual_C_returns": [
+        "stain_transform"
+      ],
+      "half_normalizations": [
+        "<f2"
+      ],
+      "native_accepted": true,
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              512,
+              512,
+              3
+            ],
+            "strides": [
+              12288,
+              24,
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "output_sha256": "3e419aabe2473c026203e75cd67e5de11b9acf48790feb1530a7d422bd9cf1ab",
+      "original_output_sha256": "abb6db88c6c13c316107231e85c6ed523e3e09c8adc9a91a2c26293f71ecaa21",
+      "rtol": 2e-06,
+      "atol": 4.519999999999999e-06,
+      "max_abs_error": 1.6653345369377348e-16,
+      "reference_ms": 3.4941945625,
+      "cpp_ms": 4.873957291666667,
+      "speedup": 0.7169111983139984,
+      "samples_ms": [
+        [
+          3.609239294117647,
+          3.4941945625,
+          3.4929058484848485,
+          3.5653986060606058,
+          3.53644196969697,
+          3.4581453333333334,
+          3.427911588235294
+        ],
+        [
+          4.906685333333333,
+          4.900423791666667,
+          4.860681875,
+          4.85856625,
+          4.860714458333333,
+          4.880479625,
+          4.873957291666667
+        ]
+      ],
+      "loops": [
+        [
+          34,
+          32,
+          33,
+          33,
+          33,
+          33,
+          34
+        ],
+        [
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        329022853,
+        354194519
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 4485774,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 26,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 89455254,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 34,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117076819,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 34,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 118005006,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 4926167,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116369604,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116509214,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116389534,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 34,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 122714136,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117760448,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117610171,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 32,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 111814226,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115265893,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116656365,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116605590,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117658154,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116702585,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116657147,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117131511,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114118796,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 34,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116548994,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "combine-half-bench/standard-f64",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116974975,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "combine-half-bench/custom-k7",
+      "api": "color.combine_stains",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "original_output_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "parameters": {
+        "id": "combine-half-bench/custom-k7",
+        "api": "color.combine_stains",
+        "matrix": [
+          [
+            -0.1875,
+            -0.0625,
+            0.0625,
+            0.1875,
+            -0.125,
+            0.0,
+            0.125
+          ],
+          [
+            -0.125,
+            0.0,
+            0.125,
+            -0.1875,
+            -0.0625,
+            0.0625,
+            0.1875
+          ],
+          [
+            -0.0625,
+            0.0625,
+            0.1875,
+            -0.125,
+            0.0,
+            0.125,
+            -0.1875
+          ]
+        ],
+        "matrix_dtype": "float32",
+        "layout": "C"
+      },
+      "backend": "native",
+      "actual_C_returns": [
+        "stain_transform"
+      ],
+      "half_normalizations": [
+        "<f2"
+      ],
+      "native_accepted": true,
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f4",
+            "dtype_metadata": null,
+            "shape": [
+              512,
+              512,
+              7
+            ],
+            "strides": [
+              14336,
+              28,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "output_sha256": "3ca843b2e56b6473cf8563009894aadc9da057c3168e858ef707e1ea45166e29",
+      "original_output_sha256": "9ad0116aa40882b67ede1b892991e1d0e5d97eb08f3690a572056eebf18319e6",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "max_abs_error": 3.5762786865234375e-07,
+      "reference_ms": 6.122898,
+      "cpp_ms": 10.133751333333334,
+      "speedup": 0.6042084316653517,
+      "samples_ms": [
+        [
+          6.127674684210527,
+          6.12724347368421,
+          6.122898,
+          6.128732052631579,
+          6.105283578947368,
+          6.115727210526315,
+          6.0603907368421055
+        ],
+        [
+          10.122718916666667,
+          10.193823416666666,
+          10.345792166666666,
+          10.09876775,
+          10.133751333333334,
+          10.159510916666665,
+          10.099577333333334
+        ]
+      ],
+      "loops": [
+        [
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19
+        ],
+        [
+          12,
+          12,
+          12,
+          12,
+          12,
+          12,
+          12
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        268983234,
+        253306191
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 4880648,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 148082859,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116019727,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 10197933,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 121889814,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 121218444,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121472627,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116425819,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116417626,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 122325881,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 124149506,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116335062,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116445909,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121185213,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121605016,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116000388,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116198817,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121914131,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 12,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121194928,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "combine-half-bench/custom-k7",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115147424,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "combine-half-bench/reverse-k1",
+      "api": "color.combine_stains",
+      "dtype": "float16",
+      "output_dtype": "float32",
+      "original_output_dtype": "float32",
+      "size": 512,
+      "threads": 1,
+      "parameters": {
+        "id": "combine-half-bench/reverse-k1",
+        "api": "color.combine_stains",
+        "matrix": [
+          [
+            0.125
+          ],
+          [
+            -0.2
+          ],
+          [
+            0.0625
+          ]
+        ],
+        "matrix_dtype": "float32",
+        "layout": "reverse"
+      },
+      "backend": "native",
+      "actual_C_returns": [
+        "stain_transform"
+      ],
+      "half_normalizations": [
+        "<f2"
+      ],
+      "native_accepted": true,
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<f4",
+            "dtype_metadata": null,
+            "shape": [
+              512,
+              512,
+              1
+            ],
+            "strides": [
+              2048,
+              4,
+              4
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": false,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null
+          }
+        ],
+        "shared_bases": [
+          [
+            true
+          ]
+        ]
+      },
+      "output_sha256": "0a0807c40d93d8c0c98d7406a7d7f547a11aa240e538c7aeae155026758e137b",
+      "original_output_sha256": "e455899f9c82d37750c37db95484ddd16712b7ed51296dcaa51ad19bd27985f6",
+      "rtol": 2e-06,
+      "atol": 2e-06,
+      "max_abs_error": 1.7881393432617188e-07,
+      "reference_ms": 2.010872534482759,
+      "cpp_ms": 3.519544121212121,
+      "speedup": 0.57134460180889,
+      "samples_ms": [
+        [
+          2.0130197758620687,
+          2.011716568965517,
+          2.0065922931034486,
+          2.014932620689655,
+          2.009394965517241,
+          2.010872534482759,
+          2.009153034482759
+        ],
+        [
+          3.515234606060606,
+          3.519544121212121,
+          3.532235636363636,
+          3.5147599393939393,
+          3.521805393939394,
+          3.517468242424242,
+          3.5270854545454546
+        ]
+      ],
+      "loops": [
+        [
+          58,
+          58,
+          58,
+          58,
+          58,
+          58,
+          58
+        ],
+        [
+          33,
+          33,
+          33,
+          33,
+          33,
+          33,
+          33
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        344786312,
+        351987084
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 2097087,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 55,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 110201448,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116333025,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116154752,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 3565343,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116088502,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116014160,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116319079,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116755147,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116002742,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116144956,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116679561,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116382353,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116563776,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115987078,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116866092,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116544908,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116219578,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116076452,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116630607,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 58,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116530876,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "combine-half-bench/reverse-k1",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 33,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116393820,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "schema": "current255-genuine-minimum-initial-performance-v1",
+  "source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+  "run": 41938456869,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41938456869",
+  "admitted_scope": "Exacteea genuine minimum product/runtime and24initialworkloads only. Class/provider/partial/SIMD/platform limitations remain; no fullsupportedprofile acceptance, wholelibraryspeed or priorCPPoptimization KEEP.",
+  "prepared_members": {
+    "product": 186,
+    "SDK": 88,
+    "XML": 15553
+  },
+  "worker_count": 1,
+  "raw_samples": 336,
+  "summary": {
+    "regionprops-state": {
+      "cases": 12,
+      "wins": 1,
+      "losses": 11,
+      "geometric_mean_original_over_cpp": 0.40380949856384274,
+      "loss_rows": [
+        {
+          "case_id": "regionprops-state/tiny2d-constructor",
+          "original_ms": 0.02368308890718255,
+          "cpp_ms": 0.026439237657864524,
+          "ratio": 0.8957553623009951,
+          "excess_ms": 0.002756148750681975
+        },
+        {
+          "case_id": "regionprops-state/medium2d-constructor-sparse",
+          "original_ms": 0.12330497427652733,
+          "cpp_ms": 0.21673019811320757,
+          "ratio": 0.5689330575525973,
+          "excess_ms": 0.09342522383668024
+        },
+        {
+          "case_id": "regionprops-state/medium2d-properties-cache-on",
+          "original_ms": 0.5494845971563981,
+          "cpp_ms": 0.9583496923076923,
+          "ratio": 0.5733654443330044,
+          "excess_ms": 0.4088650951512942
+        },
+        {
+          "case_id": "regionprops-state/medium2d-transpose-cache-off",
+          "original_ms": 0.6693883662790698,
+          "cpp_ms": 6.084659578947368,
+          "ratio": 0.11001245962799985,
+          "excess_ms": 5.415271212668298
+        },
+        {
+          "case_id": "regionprops-state/large2d-c-cache-off",
+          "original_ms": 6.829987470588235,
+          "cpp_ms": 13.840654444444445,
+          "ratio": 0.4934728699429203,
+          "excess_ms": 7.0106669738562095
+        },
+        {
+          "case_id": "regionprops-state/large2d-f-coords",
+          "original_ms": 5.374666578947368,
+          "cpp_ms": 27.5468682,
+          "ratio": 0.1951098956122848,
+          "excess_ms": 22.17220162105263
+        },
+        {
+          "case_id": "regionprops-state/medium2d-reverse-sparse",
+          "original_ms": 2.1894940188679244,
+          "cpp_ms": 4.5852882,
+          "ratio": 0.47750412261282166,
+          "excess_ms": 2.3957941811320755
+        },
+        {
+          "case_id": "regionprops-state/small3d-constructor",
+          "original_ms": 0.05222501181281236,
+          "cpp_ms": 0.06344711252068395,
+          "ratio": 0.8231266914753109,
+          "excess_ms": 0.011222100707871593
+        },
+        {
+          "case_id": "regionprops-state/medium3d-f-cache-off",
+          "original_ms": 0.7676635266666666,
+          "cpp_ms": 10.004331333333335,
+          "ratio": 0.07673311699592515,
+          "excess_ms": 9.236667806666668
+        },
+        {
+          "case_id": "regionprops-state/large3d-cache-off",
+          "original_ms": 6.306104736842105,
+          "cpp_ms": 14.333662444444444,
+          "ratio": 0.43995069378003077,
+          "excess_ms": 8.02755770760234
+        },
+        {
+          "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+          "original_ms": 4.970426916666667,
+          "cpp_ms": 12.4843179,
+          "ratio": 0.3981336390566173,
+          "excess_ms": 7.513890983333334
+        }
+      ]
+    },
+    "circle-perimeter-aa": {
+      "cases": 8,
+      "wins": 8,
+      "losses": 0,
+      "geometric_mean_original_over_cpp": 10.446752457562685,
+      "loss_rows": []
+    },
+    "combine-stains-half": {
+      "cases": 4,
+      "wins": 0,
+      "losses": 4,
+      "geometric_mean_original_over_cpp": 0.59401328377056,
+      "loss_rows": [
+        {
+          "case_id": "combine-half-bench/standard-f32",
+          "original_ms": 2.8593623243243242,
+          "cpp_ms": 5.683748285714286,
+          "ratio": 0.5030768747291531,
+          "excess_ms": 2.8243859613899613
+        },
+        {
+          "case_id": "combine-half-bench/standard-f64",
+          "original_ms": 3.4941945625,
+          "cpp_ms": 4.873957291666667,
+          "ratio": 0.7169111983139984,
+          "excess_ms": 1.3797627291666665
+        },
+        {
+          "case_id": "combine-half-bench/custom-k7",
+          "original_ms": 6.122898,
+          "cpp_ms": 10.133751333333334,
+          "ratio": 0.6042084316653517,
+          "excess_ms": 4.010853333333334
+        },
+        {
+          "case_id": "combine-half-bench/reverse-k1",
+          "original_ms": 2.010872534482759,
+          "cpp_ms": 3.519544121212121,
+          "ratio": 0.57134460180889,
+          "excess_ms": 1.508671586729362
+        }
+      ]
+    }
+  },
+  "published_raw": [
+    {
+      "path": "benchmarks/regionprops-state-minimum-initial.json",
+      "sha256": "00861ca4f405af9b6d4392365f45668ea698b541ced845bfdf2599fe9400fb00",
+      "bytes": 886429,
+      "artifact": 13375676861,
+      "member": "ci-regionprops-state.json",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/regionprops-state-minimum-initial.md",
+      "sha256": "be0be00f78a591cbf4cfaeb9429a2242d0890f22529f8ab47c8afcae98942824",
+      "bytes": 1446,
+      "artifact": 13375676861,
+      "member": "ci-regionprops-state.md",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/regionprops-state-minimum-initial.batches.jsonl",
+      "sha256": "0b26adbfd3bb3133fd6d3b5607d9aaa581b7e394d13c1a40e68e21cb7b75058e",
+      "bytes": 186552,
+      "artifact": 13375676861,
+      "member": "ci-regionprops-state.batches.jsonl",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/circle-perimeter-aa-minimum-initial.json",
+      "sha256": "3f8755921fefa3a70c0d9da6b54e802906ed7e6ef8c3fc8721716f2ca27b1937",
+      "bytes": 101118,
+      "artifact": 13375676861,
+      "member": "ci-circle-perimeter-aa.json",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/circle-perimeter-aa-minimum-initial.md",
+      "sha256": "41f06b6a88097155940c0f39d05e2e0484add854055a904a4354cc083a4a45bf",
+      "bytes": 800,
+      "artifact": 13375676861,
+      "member": "ci-circle-perimeter-aa.md",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/circle-perimeter-aa-minimum-initial.batches.jsonl",
+      "sha256": "b63bd92b64db134403373fc8d11527666f5416ce2f9254a243aa317028f27397",
+      "bytes": 118740,
+      "artifact": 13375676861,
+      "member": "ci-circle-perimeter-aa.batches.jsonl",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/combine-stains-half-minimum-initial.json",
+      "sha256": "cd1cad040f0076ef7ea6dfbcc8dd70ed0457cf0cab61f912d64b20fadbab2ccd",
+      "bytes": 47023,
+      "artifact": 13375676861,
+      "member": "ci-combine-stains-half.json",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/combine-stains-half-minimum-initial.md",
+      "sha256": "d8d87e9ef00db4444a67c8c4dda6d4fdeb129c2a1c9fa7674d7740106f499a0f",
+      "bytes": 830,
+      "artifact": 13375676861,
+      "member": "ci-combine-stains-half.md",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/combine-stains-half-minimum-initial.batches.jsonl",
+      "sha256": "58c9b4afea5b204379a3893e30b1a862edac209215f3f022fafff8d72fc1028e",
+      "bytes": 58870,
+      "artifact": 13375676861,
+      "member": "ci-combine-stains-half.batches.jsonl",
+      "unchanged_raw_bytes": true
+    }
+  ],
+  "input_auth": {
+    "path": "build/candidate255-genuine-minimum-v3/input-auth-v1/handoff.json",
+    "sha256": "d82d9bde2f5b40b7c1747183bf3498f64ed32b91d2f5553cfd5a2a0cf21bcffc"
+  },
+  "metrics_analysis": {
+    "path": "build/candidate255-genuine-minimum-v3/reports-v1/handoff.json",
+    "sha256": "3797818a31501da0a555ff912503c1b3405c6eed4a1b69455fed9727a80fe33d",
+    "authorship_conflicts": "C contributed relevant implementation/benchmarksource. Root independently recomputed all336journal-derived samples/medians/ratios/warmgroups andsourcecorecrossclosure; inputauthA isindependent."
+  },
+  "root_admission": {
+    "path": "build/candidate255-genuine-minimum-v3/root-admission-v1.json",
+    "sha256": "00fd7757682169486f2b2412075eba2687f03baac34efd3ab1b892d4ba03b88e"
+  },
+  "whole_product_qualified": false,
+  "qualified_baseline": {
+    "images": 252,
+    "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84"
+  },
+  "performance_target_met": {
+    "circle-perimeter-aa": true,
+    "regionprops-state": false,
+    "combine-stains-half": false
+  },
+  "retention": {
+    "outer_performance_zip": "build/candidate255-genuine-minimum-v3/retained-v1/13375676861.zip",
+    "sha256": "409ff721f9a4dbf6d5b09d1695119929928f76e4b70649a2f5c9553ca65c1d50",
+    "producer_duplicate_not_downloaded": true
+  },
+  "closeout": {
+    "result": "Preparation and initial performance admitted withall15losses explicit; sourcequalified count doesnotadvance.",
+    "waste_and_reuse": "One85MBperformance artifact retainedonce, producerduplicate notdownloaded. Source/wheel/SDKinputauth uniqueA; Cjournals analysis reused androotarithmetic independentlycheckedwithoutnewtimings or compiler/environment work.",
+    "next_plan_change": {
+      "owner": "root+optimizationlanes",
+      "trigger": "Baseline now admitted",
+      "action": "Skipthese3unchanged groups for256initialrun; keeptheir exacteea scope. PrioritizeRegionlargeF absolutecost thenf32stainpath; profile/benchmarkprospectivepriorCPPcontrols beforeacceptingoptimizations. Batchready256fornextfourprofilecampaign afterrealsetup/CLI gates; no extra255campaign justforbookkeeping."
+    }
+  }
+}

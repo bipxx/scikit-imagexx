@@ -18,6 +18,8 @@
 
 - Before hosted preparation, run changed source-only benchmark/metadata guards on both retained supported Python versions; source-plan commands do not execute those guards. For new cross-version code-immutability checks, compare pinned source bytes or parse the baseline and candidate on the same interpreter. Frozen AST dumps include interpreter schema and must not be treated as portable source hashes. Preserve historical pins and failures.
 
+- Once required readiness and the affected next gate are closed, dispatch eligible hosted work promptly; batch unrelated publication, broad ledger refresh and next-family reviews while it runs. A single explicitly assigned owner may author shared integration in an isolated candidate; root retains independent admission and main delivery.
+
 # Engineering judgment and simplicity
 
 - Match defensive complexity to a concrete risk. Address ordinary correctness issues and realistic concurrency or security risks within the agreed scope. Before adding substantial machinery for a speculative or very unlikely edge case, explain the failure scenario, evidence for its likelihood and impact, simpler alternatives, and estimated code and maintenance cost; obtain the user's approval before expanding scope. Do not use this rule to omit necessary input validation, standard security controls, or requirements already authorized.

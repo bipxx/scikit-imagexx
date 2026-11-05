@@ -38,12 +38,18 @@
           "source_sha": "d00245ed4b653777c8c3bbf6e04c53ab8e116520",
           "definition": "#pragma once\n#include <array>\n#include <cstddef>\n#include <cstdint>\n\nnamespace skimagexx::detail {\nenum class LineNDType { float16, float32, float64, int8, uint8, int64, uint64 };\nstruct LineNDVector {\n    const void* data;\n    std::size_t size;\n    std::ptrdiff_t stride; // bytes; signed, gapped and unaligned storage allowed\n    LineNDType type;\n};\nstruct LineNDFPEvents {\n    bool divide_underflow = false;\n    bool multiply_underflow = false;\n};\nstruct LineNDPlan {\n    std::size_t dimensions = 0, points = 0, rounded_dimensions = 0;\n    LineNDType precision = LineNDType::float64;\n    bool endpoint = false, integer = true, zero_step = false;\n    std::array<double, 8> start{}, stop{}, delta{}, step{};\n    LineNDFPEvents events{};\n};\n// Typed boundary: equal input dtypes; vectors of length1 broadcast, dimensions\n// 1..8. Caller proves complete native-endian byte spans and ordinary nearest\n// rounding. Read operands once, retaining original-dtype subtraction/abs for\n// count before linspace's floating conversion. Refuse unsupported/nonfinite,\n// unsafe extent/integer-cast domains without changing plan. Scalar form and\n// NumPy conversion/protocol/error/storage semantics remain the Python boundary.\nbool line_nd_prepare(LineNDVector start, LineNDVector stop, bool endpoint,\n                     bool integer, LineNDPlan& plan);\n// Caller owns a complete nonoverlapping output buffer. Steps are BYTES; usual\n// point-major backing uses point_step=D*itemsize, dimension_step=itemsize.\n// Integer outputs are intptr_t; floating outputs match plan.precision (half is\n// uint16 storage). All coordinates are emitted from prepared snapshots.\n// Worker limit is already snapshotted once by caller (global default1). Small\n// outputs remain serial. Independent coordinates permit optional thresholded\n// parallel/SIMD work; no private pools/global worker lookup here. Floating\n// status is reported as stage facts for caller's NumPy FP callback policy;\n// this entry never calls Python and restores the calling floating environment.\nLineNDFPEvents line_nd_into(const LineNDPlan&, void* output,\n                          std::ptrdiff_t point_step, std::ptrdiff_t dimension_step,\n                          int workers);\n}\n",
           "sha256": "a9867fb742c713f229727736fdcbf6fcb1bc89bedc5e7e18b97ff527d9d1d069"
+        },
+        "typed-core-v2": {
+          "state": "frozen",
+          "source_sha": "4cd652de2e3533b1d036fae472094b0380c79ef1",
+          "definition": "#pragma once\n#include <array>\n#include <cstddef>\n#include <cstdint>\n\nnamespace skimagexx::detail {\nenum class LineNDType { float16, float32, float64, int8, uint8, int64, uint64 };\n// Explicit NumPy scalar promotion policy for _round_safe's first % 1.\n// Standalone SDK defaults to legacy float64 (NumPy1 semantics). Python binding\n// selects from its actual scalar result dtype once at its runtime boundary.\nenum class LineNDScalarPromotion { legacy_float64, weak_input };\nstruct LineNDVector {\n    const void* data;\n    std::size_t size;\n    std::ptrdiff_t stride; // bytes; signed, gapped and unaligned storage allowed\n    LineNDType type;\n};\nstruct LineNDFPEvents {\n    bool divide_underflow = false;\n    bool multiply_underflow = false;\n};\nstruct LineNDPlan {\n    std::size_t dimensions = 0, points = 0, rounded_dimensions = 0;\n    LineNDType precision = LineNDType::float64;\n    LineNDScalarPromotion scalar_promotion = LineNDScalarPromotion::legacy_float64;\n    bool endpoint = false, integer = true, zero_step = false;\n    std::array<double, 8> start{}, stop{}, delta{}, step{};\n    LineNDFPEvents events{};\n};\n// Typed boundary: equal input dtypes; vectors of length1 broadcast, dimensions\n// 1..8. Caller proves complete native-endian byte spans and ordinary nearest\n// rounding. Read operands once, retaining original-dtype subtraction/abs for\n// count before linspace's floating conversion. Refuse unsupported/nonfinite,\n// unsafe extent/integer-cast domains without changing plan. Scalar form and\n// NumPy conversion/protocol/error/storage semantics remain the Python boundary.\nbool line_nd_prepare(LineNDVector start, LineNDVector stop, bool endpoint,\n                     bool integer, LineNDPlan& plan,\n                     LineNDScalarPromotion promotion = LineNDScalarPromotion::legacy_float64);\n// Caller owns a complete nonoverlapping output buffer. Steps are BYTES; usual\n// point-major backing uses point_step=D*itemsize, dimension_step=itemsize.\n// Integer outputs are intptr_t; floating outputs match plan.precision (half is\n// uint16 storage). All coordinates are emitted from prepared snapshots.\n// Worker limit is already snapshotted once by caller (global default1). Small\n// outputs remain serial. Independent coordinates permit optional thresholded\n// parallel/SIMD work; no private pools/global worker lookup here. Floating\n// status is reported as stage facts for caller's NumPy FP callback policy;\n// this entry never calls Python and restores the calling floating environment.\nLineNDFPEvents line_nd_into(const LineNDPlan&, void* output,\n                          std::ptrdiff_t point_step, std::ptrdiff_t dimension_step,\n                          int workers);\n}\n",
+          "sha256": "1832e4d6916f6935d2e16171c1c59a53832a1c1240636806e0b8726dd09dc3cd"
         }
       },
-      "current_checkpoint": "Author00db60ad final six modes180records/585487controls each PASS. Exact238array/6scalar payloads and FP/globalworker controls; cachedbounds unlock Clang width2 arithmetic SIMD. GCC arithmeticSIMD remainsopen. Handoff16d2d2e5 pendingrootindependentreview; header/PICsharedfrontend/SDK.",
+      "current_checkpoint": "Corrected native95f5c84 includes explicit legacy/weak scalar promotion. Independent review7facd32b passes; six modes184records/586331controls each. GCC arithmetic SIMD remains a declared gap; no speed claim. Initial typed-core-v1 definition is historical; corrected header at4cd652de includes LineNDScalarPromotion and is the integrated interface at7266ba32.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Review final native source/codegen and retained exact-word proofs once; no native acceptance from headerfreeze or claimed universal SIMD."
+        "action": "Component gate closed; reuse retained proof in coherent256. Next/root: genuine installed proof, ND-only measurement and same-source four-profile qualification; do not repeat component work."
       }
     },
     {
@@ -51,7 +57,7 @@
       "kind": "implementation",
       "owner": "qualification251_readiness",
       "branch": "line-nd-frontend-v1",
-      "state": "implementing",
+      "state": "parity_passed",
       "apis": [],
       "target_apis": [
         "draw.line_nd"
@@ -73,13 +79,13 @@
           "evidence_scope": "contract_reference"
         },
         "line-nd-native-v1": {
-          "interface": "typed-core-v1"
+          "interface": "typed-core-v2"
         }
       },
-      "current_checkpoint": "Binding/frontend component under development against frozen header. Exact shared base/strides/scalars, dtype, FP/protocol/state, globalworker and actual C-return parity required; correct reference prose pin beforefinalfreeze.",
+      "current_checkpoint": "Frontend99183baf passes484 component nodes and440 complete observer equalities; independent reviewfb655dff passes. Actual once-import scalar capability and native-return/storage/FP witnesses retained.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Independently review component/public saved-reference proof and declared native/provider frontier before shared registration; no full-library claim."
+        "action": "Component gate closed; reuse retained proof in coherent256. Next/root: genuine installed proof, ND-only measurement and same-source four-profile qualification; do not repeat component work."
       }
     },
     {
@@ -102,10 +108,10 @@
         "draw-line-nd-reference-v1"
       ],
       "acceptance": "Terminal closeout records result/source/evidence, avoidable waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work. No original recapture, full local SDK rebuild or hidden provider credit.",
-      "current_checkpoint": "Prospective12cases/168samples/24warmgroups; max32769points/65538elements separately audited, source/refused checks15perruntime plus affected cached-original guard pass. Handoff7505f048 frombac68670 pending independentreview;0original/native/timing calls.",
+      "current_checkpoint": "Prospective benchmarkbac68670 independently reviewedbb3edeca;12cases/168samples. Integrated dedicated/generic four CLI cohorts closed. No lineND timings yet.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Review prospective benchmark once; actual CLI firstcohorts only after integrated eligible core, followed by genuine worker1 original comparison. Do not call prospective tooling measured."
+        "action": "Component gate closed; reuse retained proof in coherent256. Next/root: genuine installed proof, ND-only measurement and same-source four-profile qualification; do not repeat component work."
       }
     },
     {
@@ -113,7 +119,7 @@
       "kind": "integration",
       "owner": "next_family_contract",
       "branch": "line-nd-sdk-v1",
-      "state": "implementing",
+      "state": "parity_passed",
       "apis": [],
       "target_apis": [
         "draw.line_nd"
@@ -129,13 +135,13 @@
       "acceptance": "Terminal closeout records result/source/evidence, avoidable waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work. No original recapture, full local SDK rebuild or hidden provider credit.",
       "dependency_requirements": {
         "line-nd-native-v1": {
-          "interface": "typed-core-v1"
+          "interface": "typed-core-v2"
         }
       },
-      "current_checkpoint": "New installed client and assembled successor reuse reviewed SDK88; onlynewleaf/header/clientTU maybuild. Actual SDK census/proofs pending; preserve knownlocalMSVC/CRT runtime gap, no genuineSDK89 claim.",
+      "current_checkpoint": "SDKac159cbe corrected installed89-file client passes524772controls in each normal/scalar mode; independent root review550b8330 passes. Genuine four-profileSDK29 still pending.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Review source/actual relocated installed component and exactCMake/install wiring; root integrates shared files after native/frontend gates. No repeat oldSDK build/authentication."
+        "action": "Component gate closed; reuse retained proof in coherent256. Next/root: genuine installed proof, ND-only measurement and same-source four-profile qualification; do not repeat component work."
       }
     },
     {
@@ -156,10 +162,10 @@
       "base_sha": "2afcb19a",
       "depends_on": [],
       "acceptance": "Freeze source-safe bounded public-call domains and test every prospective ID with originals refused before real capture. Stop at prospective handoff for independent review; no implementation, build, timing or native credit. Record result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
-      "current_checkpoint": "108 originals once-only:54/profile,45returns9errors each. Independent data reviewd119974c and two-prose-only delta12d3162f pass. Corrected matrix7eceab83 atc5e6895f preserves all cases/policies/observations. No native/API/performance credit; do not recapture.",
+      "current_checkpoint": "Corrected primary54-case/profile reference mergedmain e0f84a05;108 once-only observations retained. Separate actual NumPy-promotion holdout58fe50cc preserves version-dependent outputs without rewriting original matrix.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Publish corrected reviewed reference only; native/frontend/benchmark/SDK proceed against frozen interface. Reuse all original data; root shared integration comes after their scoped proofs."
+        "action": "Component gate closed; reuse retained proof in coherent256. Next/root: genuine installed proof, ND-only measurement and same-source four-profile qualification; do not repeat component work."
       },
       "proofs": {
         "contract_reference": {
@@ -209,7 +215,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Compose writer/env/context metadata, freeze255 and test affected guards; reuse552 checks and originals. No repeated mutation review or capture."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -253,7 +259,7 @@
       "current_checkpoint": "Independent native reviewe2cf9101 PASS:91 proofs;800 saved records/2400 layouts,0ULP. No replay or new original calls. Frontend/SDK/genuine product gates separate.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Compose reviewed frontend/SDK when ready; do not expose a header without its linked leaf."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -284,8 +290,8 @@
       "acceptance": "Saved48 rows, callback/error order and owning coordinate/weight arrays. All41 returns use native geometry, float-shape NumPy clip tail explicit. Unknown protocol/buffer domains remain gaps; no unsafe original calls. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
       "current_checkpoint": "Frontend review b48bdd44 complete:444 useful passes,384 saved comparisons/328 native witnesses/56 errors; default96 checks complete. Bytearray-owner failure stays retained; external-buffer shape compatibility remains open. Three CLI cohorts complete, five routes across candidate families remain unexecuted.",
       "next_gate": {
-        "owner": "tiny_line_implementation",
-        "action": "After final255 freeze run only outstanding CLI routes specified in EXECUTION_PLAN step2; reuse eligible completed cohorts and all component/default proofs."
+        "owner": "integrator",
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -314,8 +320,8 @@
       "acceptance": "Existing drawing SDK family only; strict-FP leaf wiring and scoped downstream controls. Component assembledSDK88 is not a genuine product; source/receipt independent review required. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
       "current_checkpoint": "Independent SDK review7c781765 complete; assembled SDK88 component437 controls per mode reuse the reviewed native leaf. Genuine installed product/SDK evidence remains open.",
       "next_gate": {
-        "owner": "qualification251_readiness",
-        "action": "Review final composition metadata then genuine installed SDK evidence after preparation; no duplicate local SDK build."
+        "owner": "integrator",
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -339,7 +345,7 @@
       "current_checkpoint": "Finite-half reference, frontend204 checks and benchmark plan are independently reviewed. Original3xK semantics and legacy kernels remain unchanged. Nonfinite/extreme/FP-callback and broader provider partitions remain open.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Include reviewed bounded half route in255; select the next uncovered partition only after current freeze, without repeating finite-half audit."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -364,7 +370,7 @@
       "acceptance": "Finite native-endian float16 plain arrays/three input channels; prospective12 bounded cases formatrix/axis/layout/metadata domains, exact observed dtype/storage/state and existing numerical policy. Every original ID must pass refused-original controller intake first; capture safe observations once per retained runtime. No other stainAPI change. Terminal closeout records result/evidence, waste/reuse and next owner/trigger correction (or reviewed, no change) before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Compose context archive and named dependencies/attributes, review metadata only, then freeze and run the two unexecuted half CLI cohorts through A; genuine half timing remains open."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       },
       "current_checkpoint": "Reference review650d46cd and frontend reviewd9bd81a7 complete;204 scoped passes retained. Context-only fix8c60955e repairs historical pin handling with one metadata node passing, unchanged original matrix/24 gold observations.",
       "proofs": {
@@ -411,7 +417,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Drain coherent255 final-source CLI/setup gates then genuine preparation; no recapture or repeated native review."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -448,7 +454,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Include supplemental saved point tests in the composed state shipping/qualification selectors; no original recapture."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -659,7 +665,7 @@
       "acceptance": "Compose reviewed private sources without overwriting the current-budget fix. Wire actual exports, defaults, registry, inventory, SDK87 and qualifier; preserve seven-property/37-unassessed, provider and distinct-type limitations. Run the real CLI first cohort once per profile: one original and one native call, stop at the real sampler call before its body, zero timed batches. Run the complete actual setup selection once after shared wiring freezes. Public-native proof and coverage credit require actual execution and independent review. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Dispatch one genuine successor at18b262f8 only after affected metadata on BOTH retained runtimes pass (closed26 checks). Reuse unchanged8dsetup and all8CLI cohorts; do not repeat unchanged local science/builds. Preserve failed41927959780; only3new timing groups, then separate four-profile qualification and main shipping projection."
+        "action": "Publish scoped initial results once; batch next full campaign on compatible256. Region direct-strided allocation candidate and half float32 SIMD candidate need prospective prior-C++ controls before code. Do not redispatch completed255 campaign."
       },
       "dependency_requirements": {
         "regionprops-state-native-v1": {
@@ -688,14 +694,14 @@
           }
         }
       },
-      "current_checkpoint": "Genuine255 run41927959780 at8d failed one cross-Python AST-schema metadata guard (66otherspassed);no timings/preparation/SDK acceptance. Failed artifact retainedonce and public capsule published. Metadata-only successor18b262f8 has13affectedbenchmark/source-closure checksPASS per retained interpreter; production Git projection identical8d. Rootready-v4 SHA76b1cecd61be6a773b8157d80681a4cee534da6380555b52a9235223fbc5f733; no full18bsetup claim."
+      "current_checkpoint": "Genuine255 exacteea/run41938456869 admitted:15553XML,186product/88SDK;24initial worker1 cases/336samples. Region1/12wins, CircleAA8/8, half0/4. All15 losses retained; wholequalification remains252."
     },
     {
       "id": "regionprops-state-measurement-v1",
       "kind": "measurement",
       "owner": "integrator",
       "branch": "integrate/regionprops-state-v1",
-      "state": "queued",
+      "state": "measured",
       "apis": [],
       "target_apis": [
         "measure.regionprops"
@@ -717,9 +723,9 @@
       "acceptance": "Blocked until exact composed public-native proof, real first cohort and genuine installed-family/SDK validation. Isolated one-worker comparison: 12 frozen cases, 168 samples. Retain slower cases, hardware and source identity. An initial baseline is not an optimization KEEP; platform/provider limits stay explicit. After terminal outcome, record result/evidence, waste/reuse and the next owner/trigger correction (or reviewed, no change). Root updates the affected next action before dependent work.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Dispatch one genuine successor at18b262f8 only after affected metadata on BOTH retained runtimes pass (closed26 checks). Reuse unchanged8dsetup and all8CLI cohorts; do not repeat unchanged local science/builds. Preserve failed41927959780; only3new timing groups, then separate four-profile qualification and main shipping projection."
+        "action": "Publish scoped initial results once; batch next full campaign on compatible256. Region direct-strided allocation candidate and half float32 SIMD candidate need prospective prior-C++ controls before code. Do not redispatch completed255 campaign."
       },
-      "current_checkpoint": "Genuine255 run41927959780 at8d failed one cross-Python AST-schema metadata guard (66otherspassed);no timings/preparation/SDK acceptance. Failed artifact retainedonce and public capsule published. Metadata-only successor18b262f8 has13affectedbenchmark/source-closure checksPASS per retained interpreter; production Git projection identical8d. Rootready-v4 SHA76b1cecd61be6a773b8157d80681a4cee534da6380555b52a9235223fbc5f733; no full18bsetup claim."
+      "current_checkpoint": "Genuine255 exacteea/run41938456869 admitted:15553XML,186product/88SDK;24initial worker1 cases/336samples. Region1/12wins, CircleAA8/8, half0/4. All15 losses retained; wholequalification remains252."
     },
     {
       "id": "regionprops-state-reference-v1",
@@ -753,7 +759,7 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Reuse saved references and components for final255 setup/preparation; close genuine installed/Windows evidence in supported campaign, no repeated original captures."
+        "action": "Scoped255 preparation and initial comparisons closed at exacteea321b2/run41938456869. Reuse evidence/current255-minimum-initial-performance-v1.json; no recapture or old timing replay. Next cumulative qualification batches compatible256; partial/provider/platform gaps remain open."
       }
     },
     {
@@ -17511,7 +17517,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -17533,7 +17539,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -26520,7 +26526,7 @@
             "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
             "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
           },
-          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs\u00d77paired rounds\u00d73profiles; one worker, all regressions retained."
+          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs×7paired rounds×3profiles; one worker, all regressions retained."
         }
       }
     },
@@ -31808,7 +31814,7 @@
           },
           "native_contract_checks": 184,
           "native_pending": 0,
-          "scope": "184 actual installed C++SDK consumer tests:23families\u00d7normal/scalar\u00d74profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
+          "scope": "184 actual installed C++SDK consumer tests:23families×normal/scalar×4profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
         }
       }
     },
@@ -34971,7 +34977,7 @@
           "acceptance_pass": false
         }
       },
-      "native_check_unit": "946 case/worker combinations per mode\u00d76=5676;25,836 grouped assertions each mode, not independent-case credit.",
+      "native_check_unit": "946 case/worker combinations per mode×6=5676;25,836 grouped assertions each mode, not independent-case credit.",
       "genuine_preparation": {
         "status": "verified_private_prepare_only",
         "run": 40790763016,
@@ -36306,18 +36312,22 @@
     "upstream_only_names": 215,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Main253 native-partial image APIs/3metadata/215upstream-only; fullsupported-profile qualification252 at exact6fae. Line-AA genuinely prepared28a,9/9initialoneworkerwinsGM28.185764431/126samples,182product/86SDK; newer253needs cumulativequalification. RegionProperties7observed/37unassessed remains private/provider-partial, noAPIcredit.",
+    "note": "Main253 native-partial/3metadata/215upstream-only; qualified252 exact6fae. Private255 exacteea admitted genuine minimum and24initial cases with15losses. Coherent private256 at7266 is not yet genuinely prepared or qualified; counts are not full contract completion.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
     "accepted_binary_image_names": 252
   },
   "execution_policy": {
-    "active_workers": ["tiny_line_implementation", "qualification251_readiness", "next_family_contract"],
+    "active_workers": [
+      "tiny_line_implementation",
+      "qualification251_readiness",
+      "next_family_contract"
+    ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
-    "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay.",
+    "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay. Once mandatory readiness closes, update only the dependent gate and dispatch eligible hosted work promptly; do broad publication while it runs. Assign one isolated shared integration owner; root retains independent admission/main delivery.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
     "implementation_goal_status": "active",
     "mode": "executing-updated-plan",
@@ -36330,10 +36340,10 @@
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
       "tiny_line_implementation": [],
-      "qualification251_readiness": ["line-nd-frontend-v1"],
-      "next_family_contract": ["line-nd-sdk-v1"]
+      "qualification251_readiness": [],
+      "next_family_contract": []
     },
-    "current_three_agent_packets": {"tiny_line_implementation":"line-nd-native-v1","qualification251_readiness":"line-nd-frontend-v1","next_family_contract":"line-nd-sdk-v1"},
+    "current_three_agent_packets": {},
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -36726,9 +36736,30 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Nativehandoff00db closed; independently review prospectivebenchmark, no original calls.",
-      "qualification251_readiness": "lineNDbinding/public parity against frozen typedinterface; test-cost increment merged.",
-      "next_family_contract": "lineNDinstalled client usingSDK88; prospectivebenchmark pendingrootreview."
+      "tiny_line_implementation": "Shared256 code review passed741f18ab; remaining-plan review only, no science replay.",
+      "qualification251_readiness": "Shared integration handed off clean7266ba32; completed, not currently implementing frontend.",
+      "next_family_contract": "Shared256 workflow review passed2f90a547; no remaining component/shared authoring assignment."
+    },
+    "next_action": "Root uses both passed independent shared256 reviews and dispatches exactly one genuine minimum/ND-only candidate at7266ba327c8b2fed0efa86513d9c3f94f67e01c6; same-source four-profile campaign follows installed-input gates. No duplicate255 full campaign.",
+    "current_checkpoint": {
+      "main_image_names": 253,
+      "qualified_image_names": 252,
+      "prepared_source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+      "prepared_run": 41938456869,
+      "candidate_source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
+      "candidate_image_names": 256,
+      "candidate_status": "source-ready: both independent shared reviews passed; genuine preparation, ND measurement and full qualification remain open",
+      "performance_evidence": "coverage/evidence/current255-minimum-initial-performance-v1.json",
+      "readiness_reviews": [
+        {
+          "path": "build/candidate256-independent-code-review-v1/review.json",
+          "sha256": "741f18abc7995014852cf0aa5cdabd701e01cbc6c3c23bb6f1d4c467c279b580"
+        },
+        {
+          "path": "build/candidate256-independent-workflow-review-v1/review.json",
+          "sha256": "2f90a5479f8faeab86c7f742eb47139f8309747cdf165378bdd439871c363955"
+        }
+      ]
     }
   },
   "parallel_review": {
@@ -37565,7 +37596,7 @@
       "sha256": "d4500a5730ae26486c3d444016dc7da2b5d5de9e0a46313b9a887edff19e20d1"
     },
     "scope": "Exact whole qualified252 partial contracts,4profiles/914344XML/224SDK/48corpora/3Release stagers; not a certificate for newer253/class code or library-wide speed."
-  },
+  },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",
     "sha256": "fe44b7dba778ed8c632fdf1ddedbc8df29441d1b0d30b8c9b97c20235b54c87e",

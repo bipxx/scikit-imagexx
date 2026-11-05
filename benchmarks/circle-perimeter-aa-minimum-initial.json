@@ -1,0 +1,4147 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-05T00:14:23.199705+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "source_sha256": "0123d8453eabc7263945c1de22cd337103d7e7d6ffbd2583b35e0a200d8cbdb4",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "core_sha256": "c15aac0446bbdd5dbd0f7eddc0954f86c53586207bd31a6a93f09a765218ad01",
+    "threads": 1,
+    "repeat": 7,
+    "raw_samples": 112,
+    "target_ms": 100,
+    "warmup_calibration_min_ms": 250,
+    "deadline_utc": "2026-11-05T01:14:05.031056+00:00",
+    "reference_pool_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1"
+    },
+    "contract_sha256": "2eae4606bcaf951232c110530b263efb99d7beb2ed3217942e4b903862d02e8e",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "harness_sha256": "a7e280a57900a61886a163abd7d3ec640e76e664cd6796058a40cad1f034483c",
+    "scope": "Initial descriptive allocation-inclusive public-call comparison, not an optimization KEEP decision or whole-library speed claim; every loss retained.",
+    "dtype_scope": "Integer center/radius and finite typed integer clipping bounds; independent owning intp/intp/float64 outputs including empty stride0. No image pixel dtype claim.",
+    "oracle_scope": "Exact live pinned0.26 original output/storage, saved41safe-return rows/profile and independently reviewed native geometry; no third numerical oracle claimed."
+  },
+  "results": [
+    {
+      "case_id": "circle-aa/tiny",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/tiny",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          0,
+          0,
+          2
+        ],
+        "safe_args": [
+          0,
+          0,
+          2
+        ],
+        "kwargs": {},
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              24
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "739a9688a7c40e499271a240686a612cde77d5579d99bfa8b2b95e64561cd07a"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              24
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "09205163ee5c6afffac4f16b4b552424ad203d5cca7120b9a7405e0b95e6fe2b"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              24
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "2586e9878da4c62a0bf3bc41713057ee5be06469a60451cba50648247286deeb"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.004616908857509628,
+      "cpp_ms": 0.0018209181889763779,
+      "speedup": 2.5354839582908473,
+      "samples_ms": [
+        [
+          0.00460881470516668,
+          0.004618180018434658,
+          0.0046101433218215405,
+          0.004666543996792945,
+          0.004613324257425743,
+          0.004616908857509628,
+          0.004644378457585612
+        ],
+        [
+          0.0018082355743530077,
+          0.0018123871190917954,
+          0.0018225813594313902,
+          0.001811029034200767,
+          0.0018209181889763779,
+          0.001821918818779194,
+          0.001866991635113512
+        ]
+      ],
+      "loops": [
+        [
+          24658,
+          24953,
+          24902,
+          24945,
+          24644,
+          24928,
+          24909
+        ],
+        [
+          63602,
+          63598,
+          63453,
+          63098,
+          63500,
+          63155,
+          63121
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        261236254,
+        350999790
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 17677,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 6506,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 30035367,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 24911,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116092205,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 24677,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115091005,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 36565,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3146,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 5679704,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 63699,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 118693206,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 61717,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 111693773,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 63544,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114896542,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 63602,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115007399,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 24658,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113644153,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 24953,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115237446,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 63598,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115264196,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 63453,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115648255,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 24902,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114801789,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 24945,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116406940,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 63098,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114272310,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 63500,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115628305,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 24644,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113690763,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 24928,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115090304,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 63155,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115063283,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 63121,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117846379,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "circle-aa/tiny",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 24909,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115686823,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "circle-aa/zero",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/zero",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          0,
+          0,
+          0
+        ],
+        "safe_args": [
+          0,
+          0,
+          0
+        ],
+        "kwargs": {},
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              8
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              8
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              8
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "fe5b7d5309402fa73f02fe2905b3d9eeb69d9c468cf3a1b6cfc35f01f27b43ab"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.0033381633438265127,
+      "cpp_ms": 0.0017690706624605677,
+      "speedup": 1.8869587375235328,
+      "samples_ms": [
+        [
+          0.003332509448934607,
+          0.0033462525717928657,
+          0.0033253073879011847,
+          0.0033520358836456165,
+          0.0033381633438265127,
+          0.0033434577225624797,
+          0.0033359019362716597
+        ],
+        [
+          0.00176964344501428,
+          0.0017690706624605677,
+          0.0017651094514352522,
+          0.0017758080181728881,
+          0.00176890921865349,
+          0.0017732974373961732,
+          0.0017654491989329386
+        ]
+      ],
+      "loops": [
+        [
+          34025,
+          34509,
+          34367,
+          34584,
+          34308,
+          34451,
+          34396
+        ],
+        [
+          65126,
+          64985,
+          65006,
+          65152,
+          64760,
+          65012,
+          64851
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        256398478,
+        352243076
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 15423,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 7457,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 24877751,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 34471,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115224085,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 34404,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116281219,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 28182,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 4081,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 7206736,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 65122,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116231056,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 64433,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113881867,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 65066,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114895235,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 34025,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113388634,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 65126,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115249799,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 64985,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114963057,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 34509,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115475830,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 34367,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114280839,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 65006,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114742705,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 65152,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115697444,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 34584,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115926809,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 34308,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114525708,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 64760,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114554561,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 65012,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115285613,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 34451,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115185462,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 34396,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114741683,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "circle-aa/zero",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 64851,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114491146,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "circle-aa/cache",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/cache",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          0,
+          0,
+          32
+        ],
+        "safe_args": [
+          0,
+          0,
+          32
+        ],
+        "kwargs": {},
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              376
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "6a065e50b8bf43702a11f5e5c21a56e0f8a525c24381fda696f05c8cc015bcde"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              376
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "afe762abd91dac6f35e3f09fca88ed579941b82df55ce4b1042779c1826c6b55"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              376
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "942ad11d38cb9124292b24805d506495e601469b3c6d990ef9f30e9a5ffa87bc"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.03538152163315052,
+      "cpp_ms": 0.002661878088962109,
+      "speedup": 13.29193916876415,
+      "samples_ms": [
+        [
+          0.03579923392695442,
+          0.0356015810768752,
+          0.03580770937790158,
+          0.035044358343711085,
+          0.03538152163315052,
+          0.0348178280529068,
+          0.035081410838631547
+        ],
+        [
+          0.0026684197161541672,
+          0.002661878088962109,
+          0.002657102122537787,
+          0.0026621613641089627,
+          0.002655368304088152,
+          0.0026706414832944653,
+          0.002659539095701447
+        ]
+      ],
+      "loops": [
+        [
+          3313,
+          3213,
+          3231,
+          3212,
+          3282,
+          3251,
+          3303
+        ],
+        [
+          43122,
+          43097,
+          43203,
+          43281,
+          43198,
+          43309,
+          43061
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        313969413,
+        355790910
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 47542,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2419,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 84282349,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3301,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115938827,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3275,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113700695,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 28302,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 4064,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 10846527,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 43089,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114580971,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 43247,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115462319,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 43074,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114872791,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 43122,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115067595,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 3313,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118602862,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 3213,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114387880,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 43097,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114718960,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 43203,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114794783,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 3231,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115694709,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 3212,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112562479,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 43281,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115221006,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 43198,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114706600,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 3282,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116122154,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 3251,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113192759,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 43309,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115662812,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 43061,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114522413,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "circle-aa/cache",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 3303,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115873900,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "circle-aa/long",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/long",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          0,
+          0,
+          4096
+        ],
+        "safe_args": [
+          0,
+          0,
+          4096
+        ],
+        "kwargs": {},
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              46344
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "496b6be168a2bd54cb457ff3df56417719d3028a067b7d94c4405902cc7c89e8"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              46344
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "4007a0a001ae6afb3d34c967bdb90158ed69125b49d10f069581fa0501f04b7b"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              46344
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "24e46537e54c59889ebf840574b7eab20256a68f4123222e49ac0228b59f3bb5"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 4.561367259259259,
+      "cpp_ms": 0.103263039497307,
+      "speedup": 44.17231258603631,
+      "samples_ms": [
+        [
+          4.905600166666667,
+          4.89675475,
+          4.704190375,
+          4.52391344,
+          4.403333423076923,
+          4.561367259259259,
+          4.379429730769231
+        ],
+        [
+          0.1030648671454219,
+          0.10325862903225806,
+          0.103263039497307,
+          0.10334201795332136,
+          0.10309091734052112,
+          0.1035589471326165,
+          0.10334711881188119
+        ]
+      ],
+      "loops": [
+        [
+          24,
+          24,
+          24,
+          25,
+          26,
+          27,
+          26
+        ],
+        [
+          1114,
+          1116,
+          1114,
+          1114,
+          1113,
+          1116,
+          1111
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        346613220,
+        322564657
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 5030982,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 23,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 110483777,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115754690,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115343771,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 128534,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 895,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 92476268,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1113,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114953262,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1114,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115006593,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117734404,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 1114,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114814262,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 1116,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115236630,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117522114,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 24,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112900569,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 1114,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115035026,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 1114,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115123008,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 25,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113097836,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 26,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114486669,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 1113,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114740191,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 1116,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115571785,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 27,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 123156916,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 26,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113865173,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "circle-aa/long",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 1111,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114818649,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "circle-aa/clipped",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/clipped",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          128,
+          128,
+          256
+        ],
+        "safe_args": [
+          128,
+          128,
+          256
+        ],
+        "kwargs": {
+          "shape": [
+            256,
+            256
+          ]
+        },
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              0
+            ],
+            "strides": [
+              0
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              0
+            ],
+            "strides": [
+              0
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              0
+            ],
+            "strides": [
+              0
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.2481640452586207,
+      "cpp_ms": 0.00743630150462963,
+      "speedup": 33.371971954622985,
+      "samples_ms": [
+        [
+          0.2504045128205128,
+          0.2440623413043478,
+          0.24611684533898306,
+          0.24571537393162393,
+          0.24837201279317697,
+          0.2481874870689655,
+          0.2481640452586207
+        ],
+        [
+          0.007539755459089714,
+          0.007394846718678293,
+          0.00743630150462963,
+          0.007376715033947624,
+          0.00750408992944195,
+          0.007489758172920065,
+          0.007391081015955715
+        ]
+      ],
+      "loops": [
+        [
+          468,
+          460,
+          472,
+          468,
+          469,
+          464,
+          464
+        ],
+        [
+          15204,
+          15253,
+          15552,
+          15465,
+          15590,
+          15325,
+          15355
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        327616550,
+        251176501
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 291309,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 395,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 97859941,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 465,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114406949,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 468,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115058351,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 45038,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2554,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 18963640,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 15489,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117039947,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 15220,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115127876,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 15204,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114634442,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 468,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117189312,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 460,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112268677,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 15253,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112793597,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 15552,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115649361,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 472,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116167151,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 468,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114994795,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 15465,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114080898,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 15590,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116988762,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 469,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116486474,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 464,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115158994,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 15325,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114780544,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 15355,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113490049,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "circle-aa/clipped",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 464,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115148117,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "circle-aa/clipped-away",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/clipped-away",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          -8192,
+          -8192,
+          128
+        ],
+        "safe_args": [
+          -8192,
+          -8192,
+          128
+        ],
+        "kwargs": {
+          "shape": [
+            64,
+            64
+          ]
+        },
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              0
+            ],
+            "strides": [
+              0
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              0
+            ],
+            "strides": [
+              0
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              0
+            ],
+            "strides": [
+              0
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.1315732401795735,
+      "cpp_ms": 0.004071370787707524,
+      "speedup": 32.31669308450748,
+      "samples_ms": [
+        [
+          0.1315732401795735,
+          0.13176362971428573,
+          0.12880690607101947,
+          0.1317137659574468,
+          0.13159588901601832,
+          0.13139132494279177,
+          0.1312553801369863
+        ],
+        [
+          0.0041056182862852855,
+          0.004101492592195923,
+          0.004047188808445379,
+          0.004062274538096076,
+          0.004071370787707524,
+          0.0040710367826671855,
+          0.004075727919572374
+        ]
+      ],
+      "loops": [
+        [
+          891,
+          875,
+          873,
+          893,
+          874,
+          874,
+          876
+        ],
+        [
+          28021,
+          28011,
+          28039,
+          28415,
+          28310,
+          28247,
+          28249
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        331262099,
+        357809517
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 147102,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 782,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 101377534,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 888,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115502121,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 885,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114235342,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 36465,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3154,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 12967543,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 27971,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115035618,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 27963,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114426510,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 28104,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115343381,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 891,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117231757,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 28021,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115043530,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 28011,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114886909,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 875,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115293176,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 873,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112448429,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 28039,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113479127,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 28415,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115429531,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 893,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117620393,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 874,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115014807,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 28310,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115260507,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 28247,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114994576,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 874,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114836018,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 876,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114979713,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "circle-aa/clipped-away",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 28249,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115135238,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "circle-aa/translated",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/translated",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          1073741824,
+          -1073741824,
+          128
+        ],
+        "safe_args": [
+          1073741824,
+          -1073741824,
+          128
+        ],
+        "kwargs": {},
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              1464
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "ad67d7c06bf69d0c549f994c0865a3f170d77e477bb5464e5e1a6773029416d1"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              1464
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "8cefeff5d30dd6eb62d65e02f5967eb99b4c349552002147af432796069a82aa"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              1464
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "a918b10285da40f820584ba317fc0376cb9027532fe034ba60be99ddc97c9cbf"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.12547152221018418,
+      "cpp_ms": 0.004973921180990202,
+      "speedup": 25.22587665637385,
+      "samples_ms": [
+        [
+          0.12547152221018418,
+          0.12270691384950927,
+          0.1262737803837953,
+          0.12520314818880351,
+          0.12334268770402612,
+          0.1257848735262594,
+          0.12563758579234974
+        ],
+        [
+          0.004978611503313266,
+          0.004963087363089311,
+          0.004964097876747799,
+          0.004973921180990202,
+          0.0049742861467929585,
+          0.004966112721138457,
+          0.004976509781059723
+        ]
+      ],
+      "loops": [
+        [
+          923,
+          917,
+          938,
+          911,
+          919,
+          933,
+          915
+        ],
+        [
+          23089,
+          23099,
+          23172,
+          23167,
+          23121,
+          23119,
+          23157
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        324069499,
+        363499054
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 153221,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 751,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 92666566,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 932,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116081184,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 924,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115168528,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 31488,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3653,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 18144686,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23153,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115031111,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23147,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115185274,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23110,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115106495,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 23089,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114951161,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 923,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115810215,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 917,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112522240,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 23099,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114642355,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 23172,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115028076,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 938,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118444806,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 911,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114060068,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 23167,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115230832,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 23121,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115010470,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 919,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113351930,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 933,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117357287,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 23119,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114811560,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 23157,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115241037,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "circle-aa/translated",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 915,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114958391,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "circle-aa/negative",
+      "api": "draw.circle_perimeter_aa",
+      "parameters": {
+        "id": "circle-aa/negative",
+        "api": "draw.circle_perimeter_aa",
+        "kind": "ordinary",
+        "args": [
+          0,
+          0,
+          -3
+        ],
+        "safe_args": [
+          0,
+          0,
+          -3
+        ],
+        "kwargs": {},
+        "policy": {},
+        "holdout": false
+      },
+      "backend": "native",
+      "threads": 1,
+      "actual_C_returns": [
+        "draw_circle_perimeter_aa"
+      ],
+      "native_accepted": true,
+      "worker_snapshots": [
+        1
+      ],
+      "output": {
+        "container": "tuple",
+        "arrays": [
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              8
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "33296b464ce7e170039c54315dbdf16f485252e67da6a15a446d0096713802ff"
+          },
+          {
+            "dtype": "<i8",
+            "dtype_metadata": null,
+            "shape": [
+              8
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "14ed48d026028bc5d854d4cbf424502afd6fbe6d5c58ce69c184fad8750ca857"
+          },
+          {
+            "dtype": "<f8",
+            "dtype_metadata": null,
+            "shape": [
+              8
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "sha256": "fe5b7d5309402fa73f02fe2905b3d9eeb69d9c468cf3a1b6cfc35f01f27b43ab"
+          }
+        ],
+        "shared_bases": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true
+          ]
+        ]
+      },
+      "max_abs_error": 0.0,
+      "reference_ms": 0.003307921742881795,
+      "cpp_ms": 0.0017820570332121742,
+      "speedup": 1.856237865136805,
+      "samples_ms": [
+        [
+          0.0033042387965616046,
+          0.0033074584530513734,
+          0.003307921742881795,
+          0.0033110681125237303,
+          0.00331143452723713,
+          0.003312505514123643,
+          0.0033045689143647206
+        ],
+        [
+          0.0017759113333026156,
+          0.0017679570850577552,
+          0.001771039048687872,
+          0.0017898164751901932,
+          0.0018105803153160164,
+          0.0017940156810882298,
+          0.0017820570332121742
+        ]
+      ],
+      "loops": [
+        [
+          34900,
+          34804,
+          34770,
+          34766,
+          34732,
+          34729,
+          34717
+        ],
+        [
+          65109,
+          64756,
+          65047,
+          64934,
+          64253,
+          63516,
+          64103
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        250093342,
+        352238252
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 19279,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 5966,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 19574160,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 35051,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115385155,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 34934,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115114748,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 29855,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3852,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 6785096,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 65288,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 118810367,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 63195,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 111932091,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 64928,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114680843,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 34900,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115317934,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 65109,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115627811,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 64756,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114485829,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 34804,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115112784,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 34770,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115016439,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 65047,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115200777,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 64934,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116219943,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 34766,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115112594,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 34732,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115012744,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 64253,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116335217,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 63516,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113948700,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 34729,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115040004,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 34717,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114724719,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "circle-aa/negative",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 64103,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114235202,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    }
+  ]
+}
