@@ -681,3 +681,4 @@ coverage/contracts/line-nd-native-v1.json -text
 coverage/contracts/line-nd-frontend-v1.json -text
 coverage/contracts/line-nd-sdk-v1.json -text
 coverage/contracts/line-nd-benchmark.json -text
+benchmarks/stain-parameters.json -text
