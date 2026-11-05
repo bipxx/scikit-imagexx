@@ -1,0 +1,278 @@
+{
+  "schema": "regionprops-coords-scaled-prospective-benchmark-v1",
+  "state": "PROSPECTIVE_SOURCE_ONLY_GENUINE_INPUTS_PENDING",
+  "api": "measure.regionprops",
+  "property": "coords_scaled",
+  "scope": "Six one-worker allocation-inclusive public-property cohorts. Fullnativef64 fourphase partition only; integer-spacing multiply/add are explicit NumPy providers. All original losses retained. No wholeclass/library/SIMD/parallel speed claim.",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_calibration_min_ms": 250,
+  "raw_samples_per_process": 84,
+  "warmup_groups_per_process": 12,
+  "cases": [
+    {
+      "id": "regionprops-coords-scaled/tiny-c-off",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "cache": false,
+      "operation": "getters",
+      "pattern": "saved2d",
+      "max_label": 2,
+      "spacing": null,
+      "offset": null,
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/tiny-f-warm",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "saved2d",
+      "max_label": 2,
+      "spacing": null,
+      "offset": null,
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/medium2d-f-warm",
+      "shape": [
+        128,
+        192
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "checkerboard",
+      "max_label": 2,
+      "spacing": [
+        -0.5,
+        2.0
+      ],
+      "offset": [
+        -3,
+        4
+      ],
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/medium3d-f-warm",
+      "shape": [
+        16,
+        32,
+        32
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "checkerboard",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0,
+        1.25
+      ],
+      "offset": [
+        0,
+        -1,
+        2
+      ],
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "shape": [
+        128,
+        192
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "cache": true,
+      "operation": "constructor",
+      "pattern": "sparse",
+      "max_label": 8,
+      "spacing": null,
+      "offset": null,
+      "native_partition": "f64"
+    },
+    {
+      "id": "regionprops-coords-scaled/integer3d-partial",
+      "shape": [
+        4,
+        4,
+        4
+      ],
+      "dtype": "int64",
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "pattern": "saved3d",
+      "max_label": 2,
+      "spacing": [
+        1,
+        2,
+        3
+      ],
+      "offset": [
+        1,
+        0,
+        -2
+      ],
+      "native_partition": "integer-provider"
+    }
+  ],
+  "max_input_elements": 24576,
+  "max_output_elements": 49152,
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "original_source_sha256": {
+    "skimage.measure._regionprops": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+    "skimage.measure._regionprops_utils": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+  },
+  "original_binary_sha256": {
+    "1.24.4": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe",
+    "2.5.4": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092"
+  },
+  "type_policy": {
+    "original_qualified_type": [
+      "skimage.measure._regionprops",
+      "RegionProperties"
+    ],
+    "backend_qualified_type": [
+      "skimagexx._regionprops_state",
+      "RegionProperties"
+    ],
+    "relationship": "Distinct backend subclass of pinned original RegionProperties, same public class name. isinstance/subclass compatible; literal type identity is explicitly NOT claimed.",
+    "comparison": "Keep original goldens and raw observed qualified types unchanged. Compare all other captured row fields exactly. Assert the prospective original/backend pair separately, retaining actual raw rows; never canonicalize or rewrite type observations."
+  },
+  "source_closure": {
+    "benchmarks/regionprops_coords_scaled.py": "cf375bb0f0ccf48293d5c1d2be776ab904cf535f9732f7265efb81b8bb215543",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "reused_state_method_sha256": {
+    "case_bounds": "bcf23154520121704ed0d1864a3c0272bbefa176e7615132ac4a21df2bd39d25",
+    "fixture": "ffb63499289328f3d6c01572acd888bbee0d1caf0db65f9fa5c85ebdb9a0d1a6",
+    "input_state": "b97edffe4300922071b4028ebe2fce15069808f2152a452e64b68fa89f92fc02"
+  },
+  "native_source_closure": {
+    "python/skimagexx/_regionprops_state_class.py": "fe85be5ab1a89e275f92c93bccc32e0dce688fc00543e03192f7887cba86819e",
+    "src/bind_regionprops_state.cpp": "9c8eb251855914c561f5c2613597bbea74ea6d599132737a157770b0e9812c73",
+    "src/regionprops_state.cpp": "3d3b37962bfd9c47d675acac26c177a4502a99776b9587d0fc313711795f8c8b",
+    "include/skimagexx/regionprops_state.hpp": "11b22d5fcc1ecfc60e15c4bfe1a4b6d4d76d25406650d047529f9ca24fdf7a69"
+  },
+  "required_native_source_paths": [
+    "python/skimagexx/_regionprops_state_class.py",
+    "src/bind_regionprops_state.cpp",
+    "src/regionprops_state.cpp",
+    "include/skimagexx/regionprops_state.hpp"
+  ],
+  "pending_integrated_source_paths": [],
+  "reviewed_dependencies": {
+    "active_integrated_source": "9558890a3f758a06c638bc778701e329c99ad0ff",
+    "native_provenance": "eafc253a5440df2e0ea0c46c9e7e84ef51209ff6",
+    "frontend_provenance": "c7beb1eac2e9077436c82775e56bde0ce0392c61",
+    "header_canonicalLF_sha256": "11b22d5fcc1ecfc60e15c4bfe1a4b6d4d76d25406650d047529f9ca24fdf7a69",
+    "integration_rule": "Active955 source excludes discardedbd16 name-key experiment; acceptedcomponents are provenance only. Helperfunction pins ignore only uncalled legacyCONTRACTpointer changes."
+  },
+  "saved_semantics": {
+    "reference": "coverage/contracts/regionprops-coords-scaled-reference-v1.json",
+    "reference_canonicalLF_sha256": "a3ff77291dfff20f95138d4549628ec254ce538296fb47581a63772a5bc171ce",
+    "proposal": "coverage/contracts/regionprops-coords-scaled-prospective-v1.json",
+    "proposal_canonicalLF_sha256": "8d671acc4d8b0502f9ea5f1fba85073f77bab8ee0825cef65f53db48fbdb6129",
+    "case_ids": [
+      "regionprops-coords-scaled/plain2d-c-off",
+      "regionprops-coords-scaled/plain2d-f-on",
+      "regionprops-coords-scaled/negative-anisotropic2d",
+      "regionprops-coords-scaled/scalar-spacing2d",
+      "regionprops-coords-scaled/fractional3d",
+      "regionprops-coords-scaled/integer-spacing3d",
+      "regionprops-coords-scaled/float32-spacing-offset2d",
+      "regionprops-coords-scaled/pixel-mutation-unprimed2d",
+      "regionprops-coords-scaled/primed-pixel-mutation2d",
+      "regionprops-coords-scaled/cached-mask-edit2d",
+      "regionprops-coords-scaled/primed-public-slice-shift2d",
+      "regionprops-coords-scaled/empty-current-mask2d"
+    ],
+    "constructor_sequences": 24,
+    "property_arrays": 72,
+    "reuse": "Existing independentlyaccepted captured12recipes+frontend148checks/96savedcomparisonrows are untimed reusable correctnessproof. Do not recapture or replay them because a newbenchmark isadded. Source-equivalence/normal-disabled installedselectors remain genuinegate; transformedshippingcode requires affectedproof."
+  },
+  "native_entries": [
+    "regionprops_state_coords_scaled_local",
+    "regionprops_state_coords_scaled_origin_into",
+    "regionprops_state_coords_scaled_multiply_f64",
+    "regionprops_state_coords_scaled_add_f64_into"
+  ],
+  "baseline": {
+    "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+    "run": 42002481826,
+    "artifact": 13403507497,
+    "bytes": 85519557,
+    "sha256": "e213203d7ebfe3353dcf2c6972c7b1b4c1b8d0ebb576052379ca713bf6c57e0e",
+    "core_sha256": "52be10566b69aed7755f93eba63523c303875695d9f579ebff5a16ac39bd0284",
+    "role": "qualifiedpriorCPP; inheritedoriginalcoords_scaled allowed, no newCentry witnesses expected"
+  },
+  "comparison": {
+    "process_roles": [
+      "prior-cpp",
+      "native",
+      "native",
+      "prior-cpp"
+    ],
+    "pairings": [
+      [
+        0,
+        1
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "accepted_arm_samples": 336,
+    "warmup_groups": 48,
+    "all_case_direct_max": 1.05,
+    "all_case_original_normalized_max": 1.05,
+    "target_ids": [
+      "regionprops-coords-scaled/medium2d-f-warm",
+      "regionprops-coords-scaled/medium3d-f-warm"
+    ],
+    "target_direct_max": 0.9,
+    "target_vs_original_max": 0.9,
+    "direct": "candidateCPP / oldCPP",
+    "original_normalized": "(candidateCPP/candidateOriginal)/(oldCPP/oldOriginal)",
+    "target_original": "candidateCPP/candidateOriginal",
+    "variation": "Both fixedpairs must pass everycase floor; no separatevariance estimator or averagewaiver. Anyfailure DISCARDSoptimizationacceptance; preserveallrawlosses; no favorable-noise retry.",
+    "execution": "Reuse existing authenticatedoffline samehost launcher; new6caseprotocol integration stillpending, no newlauncher inthispacket."
+  },
+  "genuine_gate": {
+    "candidate": "Pending coherent source/artifact+independentmetadata authentication. No numerical calls while prospective. Activation statusonlyafteractualnative source pins+savedsemantic source-equivalence+genuine normal/disabled installed gates+rootGO.",
+    "input_audit": "Existing root input-auth audit.json schema; caller supplies independentlyadmitted digest and source revision. Driver checks source/fullmanifest/projectPython+header/core/runtime, not an unauthenticatedcomponent alias.",
+    "controller_required": "Authenticateproducer job/run/artifact once, freeze independentadmission digest, compareall13 nonproject dependency wheels/fullPython/runtime/libmaps tocf0. Driver perprocess role isnotwholeABBA acceptance or independentauthentication.",
+    "first_cohort": "RootGO actualoneoriginal+native operation perretainedprofile thenstoprealmeasureCALLbeforebody; sourceonlypacket executesnone.",
+    "four_profile_release": "Separate gate; no fullrelease credit from thisbenchmark."
+  },
+  "timed_boundary": {
+    "getters": "Public coords_scaled on separatelypreconstructed realRegion; cacheTrue primesimage only outside timer; fresh output allocation/destruction inside sampler.",
+    "constructor": "Realpublicconstructor+selectedlabel1.coords_scaled+destroyregions/result inside operation.",
+    "validation": "Exactraw/storage/ownership/nonalias, allfour builtin Creturns/nonNone f64/oneworker snapshot; integerlocal+originowned/provider suffix; allspies restored before unchangedsampler."
+  },
+  "call_budget": {
+    "now": 0,
+    "future_preflight_per_process_max_top_constructors": 16,
+    "future_preflight_per_process_max_property_reads": 32,
+    "future_exact_counts": "Derivefromactualpureinertfactory+installedinstrumentationbeforeRootGO; countsinclude2freshoutputs/role/case+imageprimes; no originalgoldcapture."
+  }
+}
