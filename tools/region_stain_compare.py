@@ -58,7 +58,7 @@ def validate_prepare_jobs(jobs):
     assert jobs['total_count']==len(jobs['jobs'])
     matches=[x for x in jobs['jobs'] if any(s['name']=='Verify source, wheel, runtime, package and SDK before measurements' for s in x['steps'])]
     assert len(matches)==1;job=matches[0];assert job['conclusion']=='success'
-    steps=job['steps'];timers=[s for s in steps if 'benchmarks/' in s['name'] and '--repeat' in s['name']]
+    steps=job['steps'];timers=[s for s in steps if s['name'].startswith('Run python benchmarks/')]
     assert timers and all(s['conclusion']=='skipped' for s in timers)
     for name in ('Install exact offline hash-locked runtime','Verify source, wheel, runtime, package and SDK before measurements','Verify measurement inputs remained immutable'):
         found=[s for s in steps if s['name']==name];assert len(found)==1 and found[0]['conclusion']=='success'

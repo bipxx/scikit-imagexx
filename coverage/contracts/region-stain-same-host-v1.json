@@ -390,7 +390,7 @@
   "scope": "Bounded two optimizations only; old half/Region losses retained. Newholdouts use actual public upstream allocation-inclusive comparisons. No full-library claim.",
   "next_gate": "root independent source review then eligible genuinecandidate product/preflight before timing authorization",
   "controller_source_sha256": {
-    "tools/region_stain_compare.py": "b1e807c105fce09d1f1a14c407383362c96fe38b81d42ff2d5f378605ec5efd2",
+    "tools/region_stain_compare.py": "dd3e0c345e1b8c7feca6194309b08b997d46cda9856ba827fb07e7abfba12018",
     "benchmarks/stain_f32_holdouts.py": "2d9cf31b44c3dfc9b902dd2933fea81b9a51938dd598b3e81dfc68b8f9ba4b9a",
     ".github/workflows/region-stain-same-host.yml": "69f85b5809bf11eaa510d0d357bdaed30768e0bdf9ee71684e78fbc2f8bbb3a0"
   }

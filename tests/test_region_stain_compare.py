@@ -70,10 +70,13 @@ def test_artifact_authentication_negative(fault):
     with pytest.raises(AssertionError):C.validate_selection(r,a,'baseline',b['source'],b['run'],b['artifact'],'bipxx/qupathxx',P)
 
 
-@pytest.mark.parametrize('timed', (False,True))
+@pytest.mark.parametrize('timed', (False,True,'ciede-no-repeat'))
 def test_prepare_only_actual_step_admission(timed):
     names=['Install exact offline hash-locked runtime','Verify source, wheel, runtime, package and SDK before measurements','Verify measurement inputs remained immutable']
-    steps=[{'name':n,'conclusion':'success'} for n in names]+[{'name':'python benchmarks/stains.py --half-only --repeat 7','conclusion':'success' if timed else 'skipped'}]
+    steps=[{'name':n,'conclusion':'success'} for n in names]
+    steps += [{'name':f'Run python benchmarks/closed_{index}.py --repeat 7','conclusion':'success' if timed is True and index==0 else 'skipped'} for index in range(34)]
+    steps += [{'name':'Run python benchmarks/ciede2000.py --threads 1 --output build/ci-ciede2000.json','conclusion':'success' if timed=='ciede-no-repeat' else 'skipped'}]
+    assert len([step for step in steps if step['name'].startswith('Run python benchmarks/')])==35
     jobs={'total_count':1,'jobs':[{'conclusion':'success','steps':steps}]}
     if timed:
         with pytest.raises(AssertionError):C.validate_prepare_jobs(jobs)
