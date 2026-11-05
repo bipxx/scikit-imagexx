@@ -1,0 +1,884 @@
+{
+  "api": "draw.ellipse_perimeter",
+  "reference": "0.26.0",
+  "signature": "(r, c, r_radius, c_radius, orientation=0, shape=None)",
+  "state": "PROSPECTIVE_ORIGINAL_REFUSED_ONLY_PENDING_INDEPENDENT_REVIEW_NO_CAPTURE",
+  "source_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+  "cython_sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4",
+  "provenance": {
+    "sdist": "build/draw-coordinate-source-v1/scikit_image-0.26.0.tar.gz",
+    "sdist_sha256_reused": "f5f970ab04efad85c24714321fcc91613fcb64ef2a892a13167df2f3e59199fa",
+    "members": {
+      "draw.py": {
+        "member": "scikit_image-0.26.0/src/skimage/draw/draw.py",
+        "canonical_lf_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49"
+      },
+      "_draw.pyx": {
+        "member": "scikit_image-0.26.0/src/skimage/draw/_draw.pyx",
+        "canonical_lf_sha256": "fe7f5f475d2643633f494befe433b5cd1c4bae6d6c141ed4d1bb5415e80207e4"
+      }
+    },
+    "shared_encoder": "tests/draw_coordinates_observer.py::encode",
+    "shared_profiles": "tests/draw_coordinates_observer.py::scientific_profile",
+    "binary_pins_reused": {
+      "1.24.4": "32673fec979236e2f83543ad289a8128059b96e6562a9ea30114c4e73c17139b",
+      "2.5.4": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4"
+    },
+    "license": "third_party/scikit-image-LICENSE.txt"
+  },
+  "source_audit": {
+    "conversions": "Public Python wrapper forwards four arguments to Py_ssize_t plus float64 orientation. Only bounded hypothetical successful conversions admitted; explicit None/hugeint/missing/keyword failures before Cbody; no unsafe narrowing or nonfinite conversions captured.",
+    "axis_aligned": "Radii0..8, centers[-16,16]. Exact integer recurrence audit returns only progress/iteration/absolute-state bounds, not expected coordinates. Every source loop iteration advances r or c, finite admitted state and translation bounds checked; emitted4permain plus2pertip.",
+    "rotated_partition": "ONLY center0/radii1 exact circle, orientation+.3/-.5. cd-rd=0 ->za=0, ca=ra=1, bounds+-1, w=.5, offsets1 exactly. Four reflected Lcontrol-pointsegments have initial d1c=d1r=2,rc=0,d2c=1,d2r=-1,err0; both axes advance once toendpoint then d2r1 exits, line(endpoint,endpoint) emits1. No recursion(weight<.5 false), max8points/16arrayentries. No near-equal/rounding assumption.",
+    "point": "Bothradii0 returns np.array(center) pair as0D before any shape clip; outside-imagecenter+nonzeroangle retained for this special branch.",
+    "shape": "Cython global boundscheck=False/wraparound=False; clipping reads shape[0]/[1] unchecked. All0/1-length shape objects quarantined even for point case. Only exact tuple/list finite2/3entries or valid1Dintp reversedreadonly array.",
+    "unsafe_excluded": [
+      "short shape carriers",
+      "nonfinite casts/orientation",
+      "zeroone-radius nonzeroorientation",
+      "radii/centers outside arithmetic bound",
+      "unequal rotated Bezier recursion without termination bound"
+    ]
+  },
+  "numerical_policy": {
+    "coordinates": "Exactintp words, topology, order and duplicates; no sorted/deduplicated normalization",
+    "container_dtype_storage": "Exact tuple/ndarray/scalar-rank,dtype,metadata,shape,strides,own/base/flags/output-input/output-outputaliases",
+    "callbacks_errors": "Exact callback/warning/error/order/state observations; hypothetical casts do not imply admitted native credit",
+    "float_output_tolerance": "Notapplicable:outputs integers; no tolerance applied to angle/provider traces"
+  },
+  "cases": [
+    {
+      "id": "ellipse-perimeter/unit",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "safe_args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/unequal",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "safe_args": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {
+        "all": "call"
+      }
+    },
+    {
+      "id": "ellipse-perimeter/swapped",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        5,
+        2
+      ],
+      "safe_args": [
+        0,
+        0,
+        5,
+        2
+      ],
+      "kwargs": {},
+      "holdout": true,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/flat-row",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1,
+        7
+      ],
+      "safe_args": [
+        0,
+        0,
+        1,
+        7
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/flat-column",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        7,
+        1
+      ],
+      "safe_args": [
+        0,
+        0,
+        7,
+        1
+      ],
+      "kwargs": {},
+      "holdout": true,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/zero-row",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        0,
+        3
+      ],
+      "safe_args": [
+        0,
+        0,
+        0,
+        3
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/zero-column",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        3,
+        0
+      ],
+      "safe_args": [
+        0,
+        0,
+        3,
+        0
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/point",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        3,
+        -4,
+        0,
+        0
+      ],
+      "safe_args": [
+        3,
+        -4,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/negative-center",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        -4,
+        -3,
+        3,
+        5
+      ],
+      "safe_args": [
+        -4,
+        -3,
+        3,
+        5
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/translated",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        16,
+        -16,
+        4,
+        2
+      ],
+      "safe_args": [
+        16,
+        -16,
+        4,
+        2
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/positive-angle",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "safe_args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {
+        "orientation": 0.3
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/negative-angle",
+      "api": "draw.ellipse_perimeter",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "safe_args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {
+        "orientation": -0.5
+      },
+      "holdout": true,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/clip",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-tuple",
+      "args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6,
+          7
+        ]
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/clip-away",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-tuple",
+      "args": [
+        -12,
+        -12,
+        2,
+        3
+      ],
+      "safe_args": [
+        -12,
+        -12,
+        2,
+        3
+      ],
+      "kwargs": {
+        "shape": [
+          4,
+          5
+        ]
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/zero-shape",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-tuple",
+      "args": [
+        0,
+        0,
+        2,
+        3
+      ],
+      "safe_args": [
+        0,
+        0,
+        2,
+        3
+      ],
+      "kwargs": {
+        "shape": [
+          0,
+          7
+        ]
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/extra-shape",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-tuple",
+      "args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6,
+          7,
+          9
+        ]
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/point-before-clip",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-tuple",
+      "args": [
+        3,
+        4,
+        0,
+        0
+      ],
+      "safe_args": [
+        3,
+        4,
+        0,
+        0
+      ],
+      "kwargs": {
+        "shape": [
+          1,
+          1
+        ],
+        "orientation": 0.3
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/list-shape",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-list",
+      "args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6,
+          7
+        ]
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/float-shape",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-tuple",
+      "args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6.5,
+          7.5
+        ]
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/reversed-readonly-shape",
+      "api": "draw.ellipse_perimeter",
+      "kind": "shape-reverse",
+      "args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "safe_args": [
+        3,
+        4,
+        2,
+        4
+      ],
+      "kwargs": {
+        "shape": [
+          6,
+          7
+        ]
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/numpy-int32",
+      "api": "draw.ellipse_perimeter",
+      "kind": "np-int32",
+      "args": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "safe_args": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/fractional-conversion",
+      "api": "draw.ellipse_perimeter",
+      "kind": "fractional",
+      "args": [
+        1.5,
+        -2.5,
+        2.5,
+        3.5
+      ],
+      "safe_args": [
+        1,
+        -2,
+        2,
+        3
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/index-provider",
+      "api": "draw.ellipse_perimeter",
+      "kind": "provider-first",
+      "args": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "safe_args": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/orientation-provider",
+      "api": "draw.ellipse_perimeter",
+      "kind": "provider-angle",
+      "args": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "safe_args": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "kwargs": {
+        "orientation": 0.0
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/overflow-first",
+      "api": "draw.ellipse_perimeter",
+      "kind": "error-overflow-first",
+      "args": [
+        1267650600228229401496703205376,
+        0,
+        2,
+        3
+      ],
+      "safe_args": null,
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/none-first",
+      "api": "draw.ellipse_perimeter",
+      "kind": "error-none-first",
+      "args": [
+        null,
+        0,
+        2,
+        3
+      ],
+      "safe_args": null,
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/missing",
+      "api": "draw.ellipse_perimeter",
+      "kind": "error-missing",
+      "args": [
+        0,
+        0,
+        2
+      ],
+      "safe_args": null,
+      "kwargs": {},
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/orientation-none",
+      "api": "draw.ellipse_perimeter",
+      "kind": "error-orientation-none",
+      "args": [
+        0,
+        0,
+        2,
+        3
+      ],
+      "safe_args": null,
+      "kwargs": {
+        "orientation": null
+      },
+      "holdout": false,
+      "policy": {}
+    },
+    {
+      "id": "ellipse-perimeter/unexpected-keyword",
+      "api": "draw.ellipse_perimeter",
+      "kind": "error-unexpected-keyword",
+      "args": [
+        0,
+        0,
+        2,
+        3
+      ],
+      "safe_args": null,
+      "kwargs": {
+        "rotation": 0.0
+      },
+      "holdout": false,
+      "policy": {}
+    }
+  ],
+  "bounds_by_case": {
+    "ellipse-perimeter/unit": {
+      "preentry_rejection": false,
+      "max_output_elements": 16,
+      "integer_iterations": 2,
+      "max_abs_recurrence_value": 8,
+      "translation_headroom": 2147483643
+    },
+    "ellipse-perimeter/unequal": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483639
+    },
+    "ellipse-perimeter/swapped": {
+      "preentry_rejection": false,
+      "max_output_elements": 48,
+      "integer_iterations": 6,
+      "max_abs_recurrence_value": 144,
+      "translation_headroom": 2147483638
+    },
+    "ellipse-perimeter/flat-row": {
+      "preentry_rejection": false,
+      "max_output_elements": 64,
+      "integer_iterations": 8,
+      "max_abs_recurrence_value": 312,
+      "translation_headroom": 2147483637
+    },
+    "ellipse-perimeter/flat-column": {
+      "preentry_rejection": false,
+      "max_output_elements": 56,
+      "integer_iterations": 6,
+      "max_abs_recurrence_value": 183,
+      "translation_headroom": 2147483637
+    },
+    "ellipse-perimeter/zero-row": {
+      "preentry_rejection": false,
+      "max_output_elements": 32,
+      "integer_iterations": 4,
+      "max_abs_recurrence_value": 18,
+      "translation_headroom": 2147483642
+    },
+    "ellipse-perimeter/zero-column": {
+      "preentry_rejection": false,
+      "max_output_elements": 20,
+      "integer_iterations": 1,
+      "max_abs_recurrence_value": 36,
+      "translation_headroom": 2147483642
+    },
+    "ellipse-perimeter/point": {
+      "preentry_rejection": false,
+      "max_output_elements": 2,
+      "early_0D_before_shape": true
+    },
+    "ellipse-perimeter/negative-center": {
+      "preentry_rejection": false,
+      "max_output_elements": 56,
+      "integer_iterations": 7,
+      "max_abs_recurrence_value": 368,
+      "translation_headroom": 2147483633
+    },
+    "ellipse-perimeter/translated": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 104,
+      "translation_headroom": 2147483623
+    },
+    "ellipse-perimeter/positive-angle": {
+      "preentry_rejection": false,
+      "max_output_elements": 16,
+      "unit_circle_half_weight": true
+    },
+    "ellipse-perimeter/negative-angle": {
+      "preentry_rejection": false,
+      "max_output_elements": 16,
+      "unit_circle_half_weight": true
+    },
+    "ellipse-perimeter/clip": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483635
+    },
+    "ellipse-perimeter/clip-away": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 98,
+      "translation_headroom": 2147483628
+    },
+    "ellipse-perimeter/zero-shape": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 98,
+      "translation_headroom": 2147483640
+    },
+    "ellipse-perimeter/extra-shape": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483635
+    },
+    "ellipse-perimeter/point-before-clip": {
+      "preentry_rejection": false,
+      "max_output_elements": 2,
+      "early_0D_before_shape": true
+    },
+    "ellipse-perimeter/list-shape": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483635
+    },
+    "ellipse-perimeter/float-shape": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483635
+    },
+    "ellipse-perimeter/reversed-readonly-shape": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483635
+    },
+    "ellipse-perimeter/numpy-int32": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483637
+    },
+    "ellipse-perimeter/fractional-conversion": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 98,
+      "translation_headroom": 2147483638
+    },
+    "ellipse-perimeter/index-provider": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483637
+    },
+    "ellipse-perimeter/orientation-provider": {
+      "preentry_rejection": false,
+      "max_output_elements": 40,
+      "integer_iterations": 5,
+      "max_abs_recurrence_value": 168,
+      "translation_headroom": 2147483637
+    },
+    "ellipse-perimeter/overflow-first": {
+      "preentry_rejection": true,
+      "max_output_elements": 0
+    },
+    "ellipse-perimeter/none-first": {
+      "preentry_rejection": true,
+      "max_output_elements": 0
+    },
+    "ellipse-perimeter/missing": {
+      "preentry_rejection": true,
+      "max_output_elements": 0
+    },
+    "ellipse-perimeter/orientation-none": {
+      "preentry_rejection": true,
+      "max_output_elements": 0
+    },
+    "ellipse-perimeter/unexpected-keyword": {
+      "preentry_rejection": true,
+      "max_output_elements": 0
+    }
+  },
+  "unassessed": [
+    "All shape carriers of length<2: unchecked shape[0]/shape[1], never invoke originals",
+    "Unequal rotated ellipses: rational Bezier subdivision/termination requires a separate bound before capture/native parity",
+    "Nonzero angles outside exact unit-circle cases; nonzero-angle single-zero radius can divide by zero before C-int casts",
+    "Nonfinite geometry/angles/shapes, signed-size/C-int overflow or narrowing, negative radii and unbounded allocations",
+    "Arbitrary protocols, subclass/custom shape indexing, external-buffer storage and concurrent mutation",
+    "Exceptional hardware floating environments and other platforms/profiles; no native/SDK/worker/performance credit"
+  ],
+  "original_observations": {},
+  "original_calls": 0,
+  "native_calls": 0,
+  "timings": false,
+  "source_freeze": {
+    "tests/ellipse_perimeter_contract.py": "b527702085e98de4d0e9dd53410e5b3d15a32cb2b04661d3fee42c191eebdd3a",
+    "tests/ellipse_perimeter_observer.py": "7b6b67ac3827b7bf2a11e9d5c73c09e6a075c9333316f5e4ec2d766f56833f55",
+    "tests/test_ellipse_perimeter_reference.py": "994acf396dbb12160c5db3f959925feceefaf6d83b51959e5e0d5b714a09fedd"
+  },
+  "next_gate": "Rootindependentprospective source/intake review beforeANYoriginalcaptures; captureonce/spec/profile withflushjournal onlyafterexplicitGO. Unequalrotation remainsfull-goal dependency on Bezier bound, notcovered/removed.",
+  "closeout": {
+    "result": "Bothretainedprofiles38PASS each:29original-refusedcontrollerintakes,8unsafeinputnegativeguards,1sourcefrozenmanifest. Nooriginalalgorithmcalls/observations.",
+    "reuse": "Existingencoder/profile/binarypins/retainedsdist+runtimes; no newenvironment/native/SDK/build/timing.",
+    "waste": "Avoided copying full100lineBezier intoPython forreferencecapture. Restrictednonzeroanglecases to exactunitcircle with algebraic oneiterationproof, leaving unequalrotation explicitpending.",
+    "next_owner_trigger": "Rootprospectivereviewer checkssource-bound/protocol/schema intake; then rootauthorizesexactonceonlyoriginalcapture. No native/APIinventory credit.",
+    "observed_cost": "minimum38checks1.37s;modern38checks1.47s fromretainedpytestlogs. No additional measurement."
+  },
+  "intake_summary": {
+    "minimum": {
+      "nodes": 38,
+      "original_refused_controller_nodes": 29,
+      "unsafe_negative_nodes": 8,
+      "manifest_nodes": 1,
+      "original_algorithm_calls": 0,
+      "native_calls": 0
+    },
+    "modern": {
+      "nodes": 38,
+      "original_refused_controller_nodes": 29,
+      "unsafe_negative_nodes": 8,
+      "manifest_nodes": 1,
+      "original_algorithm_calls": 0,
+      "native_calls": 0
+    }
+  }
+}
