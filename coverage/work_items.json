@@ -36736,11 +36736,11 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Shared256 code review passed741f18ab; remaining-plan review only, no science replay.",
-      "qualification251_readiness": "Shared integration handed off clean7266ba32; completed, not currently implementing frontend.",
-      "next_family_contract": "Shared256 workflow review passed2f90a547; no remaining component/shared authoring assignment."
+      "qualification251_readiness": "Own exact41946801050 observation; notify root when genuine installed-input gates pass; no duplicate dispatch or artifact download.",
+      "tiny_line_implementation": "One Region direct-strided mask/coords candidate fromeea, prospective12controls frozen before edits; no local timing amid builds/tests.",
+      "next_family_contract": "One float32 combine-stains exp8 candidate fromeea, prospective8cohorts fixed before edits; no local timing amid builds/tests."
     },
-    "next_action": "Root uses both passed independent shared256 reviews and dispatches exactly one genuine minimum/ND-only candidate at7266ba327c8b2fed0efa86513d9c3f94f67e01c6; same-source four-profile campaign follows installed-input gates. No duplicate255 full campaign.",
+    "next_action": "Root starts same-frozen7266 cumulative four-profile campaign once live run41946801050 installed-input gates pass; do not wait ND timing. Keep independent Region/stain candidates private until their parity and fixed samehost performance controls pass.",
     "current_checkpoint": {
       "main_image_names": 253,
       "qualified_image_names": 252,
@@ -36748,7 +36748,7 @@
       "prepared_run": 41938456869,
       "candidate_source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
       "candidate_image_names": 256,
-      "candidate_status": "source-ready: both independent shared reviews passed; genuine preparation, ND measurement and full qualification remain open",
+      "candidate_status": "Genuine minimum preparation/ND-only measurement running41946801050 on exact7266; both independent readiness gates passed. Not yet prepared or qualified.",
       "performance_evidence": "coverage/evidence/current255-minimum-initial-performance-v1.json",
       "readiness_reviews": [
         {
@@ -36759,7 +36759,9 @@
           "path": "build/candidate256-independent-workflow-review-v1/review.json",
           "sha256": "2f90a5479f8faeab86c7f742eb47139f8309747cdf165378bdd439871c363955"
         }
-      ]
+      ],
+      "candidate_run": 41946801050,
+      "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41946801050"
     }
   },
   "parallel_review": {

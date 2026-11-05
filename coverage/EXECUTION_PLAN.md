@@ -43,7 +43,7 @@ Use existing module/session fixtures for immutable test data. Keep mutation case
 
 Measure success by useful validated increments, setup-only failures, repeated fixture work and time to merge. Do not add another telemetry framework or use assertion counts as the progress metric.
 
-Live execution (2026-11-04): main253/qualified252; exacteea255 genuine minimum and24 initial workloads are admitted. Circle-AA8/8wins; Region11losses/half4losses remain targets, not performance passes. Compatible256 is coherently assembled with all component peer gates and final source-only dependency-barrier corrections; both independent shared-source reviews pass; genuine256/168 new ND samples/fullfourprofile admission remain. Region/stain read-only root-cause packets are closed; their implementations remain next tasks. B has handed off clean256; A shared code wiring review passes, and C shared workflow/evidence review passes2f90a547. Published255 evidence never qualifies later code or implies wholelibraryspeed.
+Live execution (2026-11-04): main253/qualified252; exacteea255 genuine minimum and24 initial workloads are admitted, retaining15 losses. Both independent shared256 reviews passed. Genuine minimum/ND-only run41946801050 is live at frozen7266ba327c8b2fed0efa86513d9c3f94f67e01c6. B observes installed-input gates; root then starts same-source full qualification without waiting timing results. A owns one Region direct-strided mask/coords candidate, C one float32 stain exp8 candidate, each with prospective prior-C++ controls fixed before code and no local timings alongside builds/tests. Neither candidate delays256. No new preparation, speed or qualification acceptance is implied by dispatch.
 
 
 ## Remaining work and completion gates (2026-11-04)
