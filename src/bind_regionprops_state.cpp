@@ -68,10 +68,13 @@ py::object scalar_result(const skimagexx::detail::RegionPropsScalar64& result) {
 }
 
 void bind_regionprops_state(py::module_& m) {
-    m.def("regionprops_state_area_bbox_get",[](const py::object& self)->py::object {
+    // Own immutable names with the callable; operand values remain fresh reads.
+    const py::str image_name("image"), size_name("size"), pixel_area_name("_pixel_area");
+    const py::str area_name("area"), area_bbox_name("area_bbox");
+    m.def("regionprops_state_area_bbox_get",[image_name,size_name,pixel_area_name](const py::object& self)->py::object {
         // Preserve the public dependency reads before deciding native arithmetic.
-        py::object count=self.attr("image").attr("size");
-        py::object pixel_area=self.attr("_pixel_area");
+        py::object count=self.attr(image_name).attr(size_name);
+        py::object pixel_area=self.attr(pixel_area_name);
         double scale;
         if(!PyLong_CheckExact(count.ptr()) || !scalar_f64(pixel_area,scale))
             return py::make_tuple(count,pixel_area);
@@ -83,9 +86,9 @@ void bind_regionprops_state(py::module_& m) {
         if(result.fp_status)return py::make_tuple(count,pixel_area);
         return scalar_value(result);
     },py::arg("self"));
-    m.def("regionprops_state_extent_get",[](const py::object& self)->py::object {
-        py::object area=self.attr("area");
-        py::object bbox=self.attr("area_bbox");
+    m.def("regionprops_state_extent_get",[area_name,area_bbox_name](const py::object& self)->py::object {
+        py::object area=self.attr(area_name);
+        py::object bbox=self.attr(area_bbox_name);
         double first,denominator;
         if(!scalar_f64(area,first) || !scalar_f64(bbox,denominator))
             return py::make_tuple(area,bbox);

@@ -1,0 +1,408 @@
+{
+  "schema": "regionprops-state-prospective-benchmark-v1",
+  "api": "measure.regionprops",
+  "status": "PROSPECTIVE_OWNED_F64_AREA_RUNTIME_BINDING_NO_NEW_TIMINGS",
+  "scope": "Same12 constructor/seven-property workloads, timedbody/cases/method/typepolicy unchanged; boundedarea arithmetic nowownedscalar. Two moreproperties are assessed by separate savedrows/8casebenchmark; remaining35unassessed and allpriorlosses stayopen. No newtiming/KEEP orwholeclass claim. Active optimization-v2 source context only; historical twelve cases/method and results retained. Active v3 source context binds reviewed immutable attribute-name handles and complete MXCSR rounding refusal; cases, method and prior failed outcomes unchanged.",
+  "type_policy": {
+    "original_qualified_type": [
+      "skimage.measure._regionprops",
+      "RegionProperties"
+    ],
+    "backend_qualified_type": [
+      "skimagexx._regionprops_state",
+      "RegionProperties"
+    ],
+    "relationship": "Distinct backend subclass of pinned original RegionProperties, same public class name. isinstance/subclass compatible; literal type identity is explicitly NOT claimed.",
+    "comparison": "Keep original goldens and raw observed qualified types unchanged. Compare all other captured row fields exactly. Assert the prospective original/backend pair separately, retaining actual raw rows; never canonicalize or rewrite type observations."
+  },
+  "properties": [
+    "label",
+    "slice",
+    "bbox",
+    "image",
+    "coords",
+    "num_pixels",
+    "area"
+  ],
+  "cases": [
+    {
+      "id": "regionprops-state/tiny2d-constructor",
+      "shape": [
+        3,
+        4
+      ],
+      "operation": "constructor",
+      "layout": "C",
+      "cache": true,
+      "max_label": 2,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int16"
+    },
+    {
+      "id": "regionprops-state/tiny2d-properties",
+      "shape": [
+        8,
+        9
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": true,
+      "max_label": 3,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int16"
+    },
+    {
+      "id": "regionprops-state/medium2d-constructor-sparse",
+      "shape": [
+        128,
+        192
+      ],
+      "operation": "constructor",
+      "layout": "C",
+      "cache": true,
+      "max_label": 8,
+      "pattern": "sparse",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/medium2d-properties-cache-on",
+      "shape": [
+        128,
+        192
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": true,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/medium2d-transpose-cache-off",
+      "shape": [
+        128,
+        192
+      ],
+      "operation": "seven-properties",
+      "layout": "transpose",
+      "cache": false,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large2d-c-cache-off",
+      "shape": [
+        512,
+        768
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": false,
+      "max_label": 3,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large2d-f-coords",
+      "shape": [
+        512,
+        768
+      ],
+      "operation": "seven-properties",
+      "layout": "F",
+      "cache": true,
+      "max_label": 3,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/medium2d-reverse-sparse",
+      "shape": [
+        257,
+        389
+      ],
+      "operation": "seven-properties",
+      "layout": "reverse",
+      "cache": true,
+      "max_label": 8,
+      "pattern": "sparse",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/small3d-constructor",
+      "shape": [
+        8,
+        12,
+        16
+      ],
+      "operation": "constructor",
+      "layout": "C",
+      "cache": true,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "uint16"
+    },
+    {
+      "id": "regionprops-state/medium3d-f-cache-off",
+      "shape": [
+        24,
+        32,
+        40
+      ],
+      "operation": "seven-properties",
+      "layout": "F",
+      "cache": false,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large3d-cache-off",
+      "shape": [
+        48,
+        64,
+        80
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": false,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large3d-sparse-spacing-offset",
+      "shape": [
+        40,
+        64,
+        80
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": true,
+      "max_label": 8,
+      "pattern": "sparse",
+      "spacing": [
+        0.5,
+        2.0,
+        3.0
+      ],
+      "offset": [
+        1,
+        -2,
+        4
+      ],
+      "dtype": "int32"
+    }
+  ],
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_calibration_min_ms": 250,
+  "warmup_groups": 24,
+  "raw_samples": 168,
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "method": "Unchanged tools/montage_sustained.measure; adaptive250msminimum warm and7accepted100ms samples/backend/case with alternation and batchjournal.",
+  "timed_boundary": "Same invoke helper for bothbackends; fixed prebuilt labelimage/options. Constructor-only allocates/destroys returnedlist/objects. Propertycases alsoaccess7properties in frozenorder andretain region+allvalues until unchangedsampler delresult. No retainedoutputs orvalidationinside timedloop.",
+  "validation": "Oncebeforeeachcase: oneoriginalconstructor andonenativeconstructor plus sevenpublicproperty snapshots/repeatimage+coords for exactbytes/scalartypes/arraystorage/within-and-cross-region-alias/cache/typepair check. Deny originalregionprops/find_objects/image/num_pixels/coords for nativevalidation; actualbuiltinCreturn/nonNone. Original/native snapshots retain distinctqualified classpair, notgoldencanonicalization.",
+  "provider_frontier": "OriginalRegionProperties initialization/cache/mapping scaffolding and area/spacing scalar normalization/arithmetic remainproviders. NumPy owns layoutallocation and offset promotion. C++owns sortedlabel/bbox constructorgeometry, freshmask,currentmask population and unshiftedcoords. Other37canonicalprops/intensity/extra_properties/lifecycle unassessed.",
+  "admission": "Plain own NumPy2D/3D integerlabels, labels1..8 with optionalzeros, finitepositiveordinaryspacing andsmalloffset, eight-bit/overflow/scalarprotocol cases notextended; actualcases int16/int32/uint16. Public xx.measure.regionprops must be reviewed ownedwrapper before CLI.",
+  "original_source_sha256": {
+    "skimage.measure._regionprops": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+    "skimage.measure._regionprops_utils": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+  },
+  "source_closure": {
+    "python/skimagexx/_regionprops_state.py": "28ed1e1625ca9ce1184feddd79cbdc3d0774b9affde0ac1dffb366050a999669",
+    "src/bind_regionprops_state.cpp": "a044d80ac6e22d8cce7beb471255973bf4317e842c2bd68bd6e7abad4e4ec865",
+    "src/regionprops_state.cpp": "e571c3b3116df65efc799db924217e23c0c4403e3edeff378524b2820c60ad55",
+    "include/skimagexx/regionprops_state.hpp": "bf1f1da0047b920808c48f9f26da6beadd99ccbb89b187718dfcaf42efed369f",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "coverage/contracts/regionprops-state-frontend-v1.json": "f037ec83bb3cb366d717fcf103c874119d67c222195f816131e155e40db718f4",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "python/skimagexx/_regionprops_state_class.py": "2089b43f070631231a8a02040ffddab3b6ad8cf602e4b1650d8d5c090bb700db",
+    "coverage/contracts/regionprops-scalar-native-v1.json": "c16814816a674c115bc667fb83ba3fe25518faec04a57ca0ec0644b1a9149d5c",
+    "coverage/contracts/regionprops-bbox-extent-frontend-v1.json": "0aab5deb87dff23db7295b337bf78e448f38c93faeb880e6956bc7406832531a",
+    "coverage/contracts/regionprops-strided-native-v2.json": "5dda499d77b1b8cdf2f4cf47b17ddd92d3493c02df33711b4f424190dd130370",
+    "coverage/contracts/regionprops-scalar-boundary-v2.json": "13a1c0cd7777d92108f9df40d90d4aa2ad2c140d535c21a141ac6365b9c8668d"
+  },
+  "max_input_elements": 400000,
+  "max_positive_label": 8,
+  "max_coords_elements": 5000000,
+  "max_validation_payload_bytes": 100000000,
+  "allocation_bound": "N=prod(shape),R=max_label,D=ndim. Perimage masks<=N*R andcoords<=N*R*D; tworeads<=2*(N*R+8*N*R*D)rawbytes. Whole expected+actual snapshots/input/arrays conservatively<512MiB in these cases. Separate from smallreference observer elementquota; noquota weakened.",
+  "bounds_by_case": {
+    "regionprops-state/tiny2d-constructor": {
+      "input_elements": 12,
+      "regions": 2,
+      "mask_elements": 24,
+      "coords_elements": 48,
+      "validation_payload_bytes": 816,
+      "input_bytes": 48
+    },
+    "regionprops-state/tiny2d-properties": {
+      "input_elements": 72,
+      "regions": 3,
+      "mask_elements": 216,
+      "coords_elements": 432,
+      "validation_payload_bytes": 7344,
+      "input_bytes": 288
+    },
+    "regionprops-state/medium2d-constructor-sparse": {
+      "input_elements": 24576,
+      "regions": 8,
+      "mask_elements": 196608,
+      "coords_elements": 393216,
+      "validation_payload_bytes": 6684672,
+      "input_bytes": 98304
+    },
+    "regionprops-state/medium2d-properties-cache-on": {
+      "input_elements": 24576,
+      "regions": 4,
+      "mask_elements": 98304,
+      "coords_elements": 196608,
+      "validation_payload_bytes": 3342336,
+      "input_bytes": 98304
+    },
+    "regionprops-state/medium2d-transpose-cache-off": {
+      "input_elements": 24576,
+      "regions": 4,
+      "mask_elements": 98304,
+      "coords_elements": 196608,
+      "validation_payload_bytes": 3342336,
+      "input_bytes": 98304
+    },
+    "regionprops-state/large2d-c-cache-off": {
+      "input_elements": 393216,
+      "regions": 3,
+      "mask_elements": 1179648,
+      "coords_elements": 2359296,
+      "validation_payload_bytes": 40108032,
+      "input_bytes": 1572864
+    },
+    "regionprops-state/large2d-f-coords": {
+      "input_elements": 393216,
+      "regions": 3,
+      "mask_elements": 1179648,
+      "coords_elements": 2359296,
+      "validation_payload_bytes": 40108032,
+      "input_bytes": 1572864
+    },
+    "regionprops-state/medium2d-reverse-sparse": {
+      "input_elements": 99973,
+      "regions": 8,
+      "mask_elements": 799784,
+      "coords_elements": 1599568,
+      "validation_payload_bytes": 27192656,
+      "input_bytes": 399892
+    },
+    "regionprops-state/small3d-constructor": {
+      "input_elements": 1536,
+      "regions": 4,
+      "mask_elements": 6144,
+      "coords_elements": 18432,
+      "validation_payload_bytes": 307200,
+      "input_bytes": 6144
+    },
+    "regionprops-state/medium3d-f-cache-off": {
+      "input_elements": 30720,
+      "regions": 4,
+      "mask_elements": 122880,
+      "coords_elements": 368640,
+      "validation_payload_bytes": 6144000,
+      "input_bytes": 122880
+    },
+    "regionprops-state/large3d-cache-off": {
+      "input_elements": 245760,
+      "regions": 4,
+      "mask_elements": 983040,
+      "coords_elements": 2949120,
+      "validation_payload_bytes": 49152000,
+      "input_bytes": 983040
+    },
+    "regionprops-state/large3d-sparse-spacing-offset": {
+      "input_elements": 204800,
+      "regions": 8,
+      "mask_elements": 1638400,
+      "coords_elements": 4915200,
+      "validation_payload_bytes": 81920000,
+      "input_bytes": 819200
+    }
+  },
+  "root_first_cohort": "After independent source review ROOTonly may runone original+one native workload/profile andstop before realmeasureCALL. No firstcohort/timedbatch is run by this sourcepacket.",
+  "required_controls": [
+    "OPENBLAS/MKL/OMP/BLIS_NUM_THREADS=1",
+    "globalworkers1 andfallbackdisabled",
+    "source/core/contract/harness identities unchanged",
+    "inputbytes/descriptor andFPpolicy/handler/buffer unchanged",
+    "allwinsandlossesreported; nogatewaiver orKEEPthreshold"
+  ],
+  "task_closeout": {
+    "result": "Hardwaremetadata-only successor:4statementLineAAcapture and3reportfields; oneaffectedimport/ASTcheckPASS0.22s, no fixtures/algorithm/timing/build/env/cleanup calls.",
+    "waste_and_reuse": "Reused sampler/provenance/typepolicy/sourceaudit. LargeF/coords/cacheoff cases deliberatelyexpose existingcopy/dispatch costs beforeoptimization. No newcontroller, arrayframework, namespacepatch, environment orcapturereplay. Reused existingreviewed portability/budget successor through dependencymerge, preserving oldfrozenproofs. Onlyuntimedcross-regionaliasvalidation andmetadata provenance enhanced aftercasefreeze, no case/method ordata-driven selection change. Hardwaremetadata gap camefromreuseofoldercircletemplate; thissuccessor copies currentpublishedLineAAinline4statementcapture exactly. Useexistingcurrentbenchmarkmetadata template atinitialdesign; do notrepeatgapacrossfamilies. InitialnewASTguard selected firstfor(sourcepinloop), notcasefor;1failedmetadata check0.31s preserved, thenexplicit enumerate(case_specs()) selectorfixed. Thiswas preventabletestselector setupwork; sourcehardwarecapture itselfrequirednocorrection.",
+    "next_plan_correction": "Root assigns independent source review then runsbounded firstcohort. Onlyafterdata identifiesactualcosts shouldowner optimizecopies/dispatch; failedvalidation stops beforetiming. Root integrates only3newbenchmarkfiles atop correctapproveddependencies; do not merge duplicated reference/frontend ancestor commits. Currentpublicmeasurebinding must equal ownedwrapper beforeCLI. Firstcohortcore must bind current-budget PICleaf receipt ratherthan relabel old761binary; same ABI permits source-authorized relink of existingbinder/initializer, no fullSDK needed. Benchmarkowner usescurrentpublishedLineAAhardwaretemplate initially; testexactcase-loop boundary ratherthan firstsyntacticloop. No unchangedcases/broadsuite replay."
+  },
+  "original_binary_sha256": {
+    "1.24.4": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe",
+    "2.5.4": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092"
+  },
+  "source_successor": {
+    "commit": "ea28aeb1d68aef5bb72b3ecf783407db09a7a9fd",
+    "reason": "Each fresh mask snapshots currentglobal worker budget via existingactive_workers; MSVCexcludes unsupportedomp-simd pragma. Reviewedold5c/761evidence remains unchanged, sourceclosure nowbinds thisprospective successor beforecalls.",
+    "C_handoff_sha256": "88a20794d7743f0d7e1d0946ce4c60a735e593c6c3c9dd15aa387d00f1412b38",
+    "input_cases_unchanged": true,
+    "old_source_closure": {
+      "src/regionprops_state.cpp": "7ce79583c098da81f279d0aaaa6571733456829190059ee162d5c8215e75582d",
+      "include/skimagexx/regionprops_state.hpp": "aefe1c1203b3450e0200c38b74e8d4709fee3fe2d9bf654bfefa0c067e862919"
+    }
+  },
+  "pre_CLI_gates": [
+    "Independent benchmarksource review PASS.",
+    "Public xx.measure.regionprops is the reviewed ownedwrapper, no originalfallback route.",
+    "Genuine installedproduct source/build receipt binds actualcore to ea28 current-budget sourceclosure; for componentcohort relink approved unchangedbinder/initializer with newbudget-v2 PICleaf, notold761leaf.",
+    "ROOTalone authorizes one original+one native firstcohort/profile andstopsat realmeasureCALL before any batch; no child timing."
+  ],
+  "metadata_checks": {
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "observed_seconds": 0.22,
+    "scope": "Purestdlib casebound/import/sourcepin checks; no fixtures/scientific calls."
+  },
+  "native_public_API_credit": 0,
+  "hardware_metadata_successor": {
+    "predecessor_commit": "deb30f28cbf2214c955b039b26ee93246f5ba087",
+    "predecessor_handoff_sha256": "73366b05ddba6197ee8986444d9128eedba0e9bdf9f2a0823e8256bd9589cfc9",
+    "fields": [
+      "cpu_model",
+      "logical_cpu_count",
+      "avx2_available"
+    ],
+    "capture": "ExactexistingLineAAinline template beforecase/timingloop: first/proc/cpuinfo modelname fallingbacktoplatform.processor, os.cpu_count, bool(xx._core.has_avx2).",
+    "scope": "Metadataonly; cases23809/method/typepolicy/bounds/pools/sourceclosure unchanged; no newdata/algorithms/timings."
+  }
+}

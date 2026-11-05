@@ -371,6 +371,8 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'coverage/contracts/regionprops-scalar-boundary-v2.json', 'tests/test_regionprops_scalar_boundary_v2.py',
     'coverage/contracts/regionprops-performance-state-v2.json', 'coverage/contracts/regionprops-performance-scalars-v2.json',
     'coverage/contracts/regionprops-performance-compare-v2.json', 'coverage/contracts/region-stain-controller-v1-context.json',
+    'coverage/contracts/regionprops-performance-state-v3.json', 'coverage/contracts/regionprops-performance-scalars-v3.json',
+    'coverage/contracts/regionprops-performance-compare-v3.json',
     'tools/region_stain_compare.py', 'benchmarks/stain_f32_holdouts.py',
     'coverage/contracts/region-stain-same-host-v1.json', 'tests/test_region_stain_compare.py',
     'tests/test_regionprops_performance_v2.py', 'tests/test_regionprops_strided_sdk_scope.py',

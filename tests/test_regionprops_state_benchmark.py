@@ -14,7 +14,7 @@ def load_harness():
 
 
 def test_regionprops_benchmark_prospective_cases_and_bounds():
-    module=load_harness();contract=json.loads((ROOT/'coverage/contracts/regionprops-performance-state-v2.json').read_bytes());cases=module.case_specs()
+    module=load_harness();contract=json.loads(module.CONTRACT.read_bytes());cases=module.case_specs()
     assert len(cases)==12 and len({s['id']for s in cases})==12
     assert {s['operation']for s in cases}=={'constructor','seven-properties'}
     assert {len(s['shape'])for s in cases}=={2,3}and{v['cache']for v in cases}=={True,False}
@@ -41,7 +41,7 @@ def test_regionprops_lazy_runtime_preserves_historical_benchmark_contract():
     expected['python/skimagexx/_regionprops_state_class.py']='9a989917c4d6a6836c9224240ab156c2c11d942fc0b3cae50e9165183ddea42e'
     assert active['source_closure']==expected
     current=(ROOT/'benchmarks/regionprops_state.py').read_bytes().replace(b'\r\n',b'\n')
-    restored=current.replace(b'regionprops-performance-state-v2.json',b'regionprops-state-benchmark.json')
+    restored=current.replace(b'regionprops-performance-state-v3.json',b'regionprops-state-benchmark.json')
     assert hashlib.sha256(restored).hexdigest()=='12c237328a25b462362b19551af70b52dc0868a66bc72c1a4ecfbe5755a39587'
     scalar=json.loads((ROOT/'coverage/contracts/regionprops-scalar-runtime-v1.json').read_bytes())
     assert set(scalar)==set(active)

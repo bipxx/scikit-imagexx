@@ -1,0 +1,565 @@
+{
+  "schema": "region-stain-same-host-v1",
+  "status": "PROSPECTIVE_NO_TIMING",
+  "baseline": {
+    "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+    "run": "42002481826",
+    "artifact": 13403507497,
+    "bytes": 85519557,
+    "sha256": "e213203d7ebfe3353dcf2c6972c7b1b4c1b8d0ebb576052379ca713bf6c57e0e"
+  },
+  "candidate": "required successful minimum prepare-only CI source/run/artifact inputs; no mutable source-pin rewrite",
+  "passes": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "pairs": [
+    [
+      0,
+      1
+    ],
+    [
+      3,
+      2
+    ]
+  ],
+  "region_cases": [
+    {
+      "id": "regionprops-state/tiny2d-constructor",
+      "shape": [
+        3,
+        4
+      ],
+      "operation": "constructor",
+      "layout": "C",
+      "cache": true,
+      "max_label": 2,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int16"
+    },
+    {
+      "id": "regionprops-state/tiny2d-properties",
+      "shape": [
+        8,
+        9
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": true,
+      "max_label": 3,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int16"
+    },
+    {
+      "id": "regionprops-state/medium2d-constructor-sparse",
+      "shape": [
+        128,
+        192
+      ],
+      "operation": "constructor",
+      "layout": "C",
+      "cache": true,
+      "max_label": 8,
+      "pattern": "sparse",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/medium2d-properties-cache-on",
+      "shape": [
+        128,
+        192
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": true,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/medium2d-transpose-cache-off",
+      "shape": [
+        128,
+        192
+      ],
+      "operation": "seven-properties",
+      "layout": "transpose",
+      "cache": false,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large2d-c-cache-off",
+      "shape": [
+        512,
+        768
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": false,
+      "max_label": 3,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large2d-f-coords",
+      "shape": [
+        512,
+        768
+      ],
+      "operation": "seven-properties",
+      "layout": "F",
+      "cache": true,
+      "max_label": 3,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/medium2d-reverse-sparse",
+      "shape": [
+        257,
+        389
+      ],
+      "operation": "seven-properties",
+      "layout": "reverse",
+      "cache": true,
+      "max_label": 8,
+      "pattern": "sparse",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/small3d-constructor",
+      "shape": [
+        8,
+        12,
+        16
+      ],
+      "operation": "constructor",
+      "layout": "C",
+      "cache": true,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "uint16"
+    },
+    {
+      "id": "regionprops-state/medium3d-f-cache-off",
+      "shape": [
+        24,
+        32,
+        40
+      ],
+      "operation": "seven-properties",
+      "layout": "F",
+      "cache": false,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large3d-cache-off",
+      "shape": [
+        48,
+        64,
+        80
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": false,
+      "max_label": 4,
+      "pattern": "dense",
+      "spacing": null,
+      "offset": null,
+      "dtype": "int32"
+    },
+    {
+      "id": "regionprops-state/large3d-sparse-spacing-offset",
+      "shape": [
+        40,
+        64,
+        80
+      ],
+      "operation": "seven-properties",
+      "layout": "C",
+      "cache": true,
+      "max_label": 8,
+      "pattern": "sparse",
+      "spacing": [
+        0.5,
+        2.0,
+        3.0
+      ],
+      "offset": [
+        1,
+        -2,
+        4
+      ],
+      "dtype": "int32"
+    }
+  ],
+  "half_cases": [
+    {
+      "id": "combine-half-bench/standard-f32",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          0.65,
+          0.7,
+          0.29
+        ],
+        [
+          0.07,
+          0.99,
+          0.11
+        ],
+        [
+          0.27,
+          0.57,
+          0.78
+        ]
+      ],
+      "matrix_dtype": "float32",
+      "layout": "C"
+    },
+    {
+      "id": "combine-half-bench/standard-f64",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          0.65,
+          0.7,
+          0.29
+        ],
+        [
+          0.07,
+          0.99,
+          0.11
+        ],
+        [
+          0.27,
+          0.57,
+          0.78
+        ]
+      ],
+      "matrix_dtype": "float64",
+      "layout": "C"
+    },
+    {
+      "id": "combine-half-bench/custom-k7",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          -0.1875,
+          -0.0625,
+          0.0625,
+          0.1875,
+          -0.125,
+          0.0,
+          0.125
+        ],
+        [
+          -0.125,
+          0.0,
+          0.125,
+          -0.1875,
+          -0.0625,
+          0.0625,
+          0.1875
+        ],
+        [
+          -0.0625,
+          0.0625,
+          0.1875,
+          -0.125,
+          0.0,
+          0.125,
+          -0.1875
+        ]
+      ],
+      "matrix_dtype": "float32",
+      "layout": "C"
+    },
+    {
+      "id": "combine-half-bench/reverse-k1",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          0.125
+        ],
+        [
+          -0.2
+        ],
+        [
+          0.0625
+        ]
+      ],
+      "matrix_dtype": "float32",
+      "layout": "reverse"
+    }
+  ],
+  "holdout_cases": [
+    {
+      "id": "old-f32-combine-custom1",
+      "operation": "combine_stains",
+      "matrix": "custom",
+      "k": 1
+    },
+    {
+      "id": "old-f32-combine-custom7",
+      "operation": "combine_stains",
+      "matrix": "custom",
+      "k": 7
+    },
+    {
+      "id": "old-f32-separate-custom7",
+      "operation": "separate_stains",
+      "matrix": "custom",
+      "k": 7
+    },
+    {
+      "id": "old-f32-combine-hed-f64matrix",
+      "operation": "combine_stains",
+      "matrix": "rgb_from_hed",
+      "k": 3
+    }
+  ],
+  "legacy_dataset": {
+    "size": 512,
+    "image_seed": 31,
+    "recipe": "default_rng31 uint8[0,256),shape512x512x3; (image/255).astype(float32)",
+    "matrix": "default_rng(k).uniform(-1,1,(3,k)).astype(float32) OR actual original rgb_from_hed float64"
+  },
+  "sampling": {
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_ms": 250,
+    "cohorts": 28,
+    "samples_per_pass": 392,
+    "samples_total": 1568,
+    "deadline": "required immutable UTC deadline; checked before every actualbatch"
+  },
+  "fixed_gates": {
+    "per_case_limits": {
+      "regionprops-state/tiny2d-constructor": 1.05,
+      "regionprops-state/tiny2d-properties": 1.05,
+      "regionprops-state/medium2d-constructor-sparse": 1.05,
+      "regionprops-state/medium2d-properties-cache-on": 1.05,
+      "regionprops-state/medium2d-transpose-cache-off": 1.05,
+      "regionprops-state/large2d-c-cache-off": 1.05,
+      "regionprops-state/large2d-f-coords": 1.05,
+      "regionprops-state/medium2d-reverse-sparse": 1.05,
+      "regionprops-state/small3d-constructor": 1.05,
+      "regionprops-state/medium3d-f-cache-off": 1.05,
+      "regionprops-state/large3d-cache-off": 1.05,
+      "regionprops-state/large3d-sparse-spacing-offset": 1.05,
+      "regionprops-scalars/tiny-ctor-c-off": 1.05,
+      "regionprops-scalars/medium-ctor-f-on": 1.05,
+      "regionprops-scalars/tiny-warm-c-on": 0.95,
+      "regionprops-scalars/medium-getters-c-off": 1.05,
+      "regionprops-scalars/medium-getters-f-off": 1.05,
+      "regionprops-scalars/3d-warm-f-on": 0.95,
+      "regionprops-scalars/pixel-cycle-c-off": 1.05,
+      "regionprops-scalars/slice-cycle-3d-on": 1.05,
+      "combine-half-bench/standard-f32": 1.05,
+      "combine-half-bench/standard-f64": 1.05,
+      "combine-half-bench/custom-k7": 1.05,
+      "combine-half-bench/reverse-k1": 1.05,
+      "old-f32-combine-custom1": 1.05,
+      "old-f32-combine-custom7": 1.05,
+      "old-f32-separate-custom7": 1.05,
+      "old-f32-combine-hed-f64matrix": 1.05
+    },
+    "policy": "Every cohort direct AND original-normalized limit must pass separately in EACH ABBA pair; no aggregation or waiver."
+  },
+  "numerical": "unchanged existing dtype/metadata/layout/FP/input/alias/provider policies, 2e-6 timesmatrixnorm forf32 stain; no newtolerance",
+  "source_safety": {
+    "holdout_input_elements": 786432,
+    "holdout_max_output_elements": 1835008,
+    "matrix_elements_max": 21,
+    "finite_image_range": [
+      0,
+      1
+    ],
+    "matrix_absolute_max": 1,
+    "no_original_or_native_calls_on_import": true
+  },
+  "scope": "Comparison-v3: fixed28 public cohorts against genuine cf0. Two warm scalar getters must each improve >=5% direct AND original-normalized in EACH pair; all other26 controls retain1.05 floor. Earlier F/warm targets versus6a already achieved, not repeated. All original losses retained; no whole-class/library claim.",
+  "next_gate": "Independent prospective peer, coherent260 source/workflow/context and historical consumer inverse, root actual preflight GO and genuine prepare-only authentication; then separate frozen-deadline isolated comparison GO. No candidate source-pin rewriting or timing now.",
+  "controller_source_sha256": {
+    "tools/region_stain_compare.py": "7c8d4a24ebecb9d37104db9aabbeafbac08529086c0815ef1ff4d572d1492c05",
+    "benchmarks/stain_f32_holdouts.py": "2d9cf31b44c3dfc9b902dd2933fea81b9a51938dd598b3e81dfc68b8f9ba4b9a",
+    ".github/workflows/region-stain-same-host.yml": "1480569247f9a64d1e679efe7477220878151e08f5a64fe8ebb3b9270542d0e9"
+  },
+  "optimization_version": 2,
+  "families": [
+    "region",
+    "scalars",
+    "half",
+    "holdouts"
+  ],
+  "scalar_cases": [
+    {
+      "id": "regionprops-scalars/tiny-ctor-c-off",
+      "shape": [
+        4,
+        5
+      ],
+      "layout": "C",
+      "cache": false,
+      "operation": "constructor",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/medium-ctor-f-on",
+      "shape": [
+        128,
+        128
+      ],
+      "layout": "F",
+      "cache": true,
+      "operation": "constructor",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/tiny-warm-c-on",
+      "shape": [
+        4,
+        5
+      ],
+      "layout": "C",
+      "cache": true,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/medium-getters-c-off",
+      "shape": [
+        128,
+        128
+      ],
+      "layout": "C",
+      "cache": false,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/medium-getters-f-off",
+      "shape": [
+        128,
+        128
+      ],
+      "layout": "F",
+      "cache": false,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/3d-warm-f-on",
+      "shape": [
+        32,
+        24,
+        16
+      ],
+      "layout": "F",
+      "cache": true,
+      "operation": "getters",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/pixel-cycle-c-off",
+      "shape": [
+        64,
+        64
+      ],
+      "layout": "C",
+      "cache": false,
+      "operation": "pixel-cycle",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "id": "regionprops-scalars/slice-cycle-3d-on",
+      "shape": [
+        16,
+        16,
+        16
+      ],
+      "layout": "F",
+      "cache": true,
+      "operation": "slice-cycle",
+      "dtype": "int16",
+      "max_label": 2,
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ]
+    }
+  ],
+  "comparison_revision": 3,
+  "protocol_parser_version_note": "optimization_version2 retained: unchanged controller protocol/parser schema and math, only baseline/limits/pointers successor.",
+  "predecessor_contract": {
+    "path": "coverage/contracts/regionprops-performance-compare-v2.json",
+    "sha256": "dcd0d05545b53b221e3326ea0d4c10ddfdfc5bc60312baef3725d6916c665783",
+    "immutable": true
+  },
+  "workflow_readiness": "FROZEN_SHARED_WORKFLOW_PROJECTION: exact baseline6a-to-cf0 and --contractv2-to-v3 delta, actual shared integrator source hash confirmed1480569247f9a64d1e679efe7477220878151e08f5a64fe8ebb3b9270542d0e9. This isolated WT retains historical workflow; tests prove projected hash and old inverse. Root must peer actual coherent controller/workflow/context and genuine inputs before execution. No timing/readiness claim from this source-only packet."
+}

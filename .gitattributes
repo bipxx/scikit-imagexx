@@ -745,3 +745,7 @@ coverage/contracts/draw-polygon-frontend-v1.json -text
 coverage/contracts/draw-polygon-benchmark-v1.json -text
 coverage/contracts/draw-polygon-dtype-tag-v1.json -text
 coverage/contracts/draw-polygon-runtime-v1.json -text
+
+coverage/contracts/regionprops-performance-state-v3.json -text
+coverage/contracts/regionprops-performance-scalars-v3.json -text
+coverage/contracts/regionprops-performance-compare-v3.json -text

@@ -167,3 +167,70 @@ def test_controller_rejects_non_UTC_before_any_execution(deadline,monkeypatch):
     monkeypatch.setattr(C,'execute',lambda args:pytest.fail('invaliddeadline reached controller execution'))
     with pytest.raises(AssertionError):
         C.main(['execute','--repository','bipxx/qupathxx','--candidate-source','0'*40,'--candidate-run','1','--candidate-artifact','1','--snapshots','unused','--results','unused','--deadline-utc',deadline])
+
+
+V3=json.loads((ROOT/'coverage/contracts/regionprops-performance-compare-v3.json').read_bytes())
+
+
+def test_v3_fixed_cf0_baseline_unchanged_cases_and_method():
+    oldpath=ROOT/V3['predecessor_contract']['path'];old=json.loads(oldpath.read_bytes())
+    assert hashlib.sha256(oldpath.read_bytes()).hexdigest()==V3['predecessor_contract']['sha256']
+    assert V3['baseline']==dict(source='cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b',run='42002481826',artifact=13403507497,bytes=85519557,sha256='e213203d7ebfe3353dcf2c6972c7b1b4c1b8d0ebb576052379ca713bf6c57e0e')
+    changed={'baseline','fixed_gates','scope','next_gate','controller_source_sha256','prospective_root_contract_sha256','comparison_revision','protocol_parser_version_note','predecessor_contract','workflow_readiness'}
+    assert {k:v for k,v in V3.items()if k not in changed}=={k:v for k,v in old.items()if k not in changed}
+    assert V3['optimization_version']==2 and V3['comparison_revision']==3
+    ids=[s['id']for k in ('region_cases','scalar_cases','half_cases','holdout_cases')for s in V3[k]]
+    assert len(ids)==len(set(ids))==28 and V3['sampling']['samples_total']==1568
+    limits=V3['fixed_gates']['per_case_limits'];assert set(limits)==set(ids)
+    targets={'regionprops-scalars/tiny-warm-c-on','regionprops-scalars/3d-warm-f-on'}
+    assert limits=={cid:.95 if cid in targets else 1.05 for cid in ids}
+    assert V3['fixed_gates']['policy']==old['fixed_gates']['policy']
+    assert isinstance(V3['candidate'],str) and 'required successful minimum prepare-only' in V3['candidate']
+
+
+def test_v3_controller_pointer_only_inverse_and_pending_workflow():
+    old=json.loads((ROOT/V3['predecessor_contract']['path']).read_bytes())
+    source=(ROOT/'tools/region_stain_compare.py').read_bytes().replace(b'\r\n',b'\n')
+    assert hashlib.sha256(source).hexdigest()==V3['controller_source_sha256']['tools/region_stain_compare.py']
+    inverse=source
+    for new,previous in [(b"CONTRACT=ROOT/'coverage/contracts/regionprops-performance-compare-v3.json'",b"CONTRACT=ROOT/'coverage/contracts/region-stain-same-host-v1.json'"),(b"active=load(ROOT/'coverage/contracts/regionprops-performance-compare-v3.json')",b"active=load(ROOT/'coverage/contracts/regionprops-performance-compare-v2.json')")]:
+        assert inverse.count(new)==1;inverse=inverse.replace(new,previous)
+    assert hashlib.sha256(inverse).hexdigest()==old['controller_source_sha256']['tools/region_stain_compare.py']
+    assert C.CONTRACT==ROOT/'coverage/contracts/regionprops-performance-compare-v3.json'
+    # The shared integrator owns this exact two-pointer workflow successor.
+    assert V3['workflow_readiness'].startswith('FROZEN_SHARED_WORKFLOW_PROJECTION:')
+    for name,pin in V3['controller_source_sha256'].items():
+        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name=='.github/workflows/region-stain-same-host.yml':
+            if hashlib.sha256(raw).hexdigest()==old['controller_source_sha256'][name]:
+                raw=raw.replace(b'ref: 6a2b33a2f78606b9315dd0fcc50777b6e85ac38f',b'ref: cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b').replace(b'--contract controller/coverage/contracts/regionprops-performance-compare-v2.json',b'--contract controller/coverage/contracts/regionprops-performance-compare-v3.json')
+            else:
+                predecessor=raw.replace(b'ref: cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b',b'ref: 6a2b33a2f78606b9315dd0fcc50777b6e85ac38f').replace(b'--contract controller/coverage/contracts/regionprops-performance-compare-v3.json',b'--contract controller/coverage/contracts/regionprops-performance-compare-v2.json')
+                assert hashlib.sha256(predecessor).hexdigest()==old['controller_source_sha256'][name]
+        assert hashlib.sha256(raw).hexdigest()==pin
+
+
+def test_v3_exact_baseline_selection_and_wrong_predecessor_refusal():
+    b=V3['baseline'];record,listing=selection()
+    record.update(id=int(b['run']),head_sha=b['source'])
+    item=listing['artifacts'][0];item.update(id=b['artifact'],size_in_bytes=b['bytes'],digest='sha256:'+b['sha256'],workflow_run=dict(id=int(b['run']),head_sha=b['source']))
+    assert C.validate_selection(record,listing,'baseline',b['source'],b['run'],b['artifact'],'bipxx/qupathxx',V3)==item
+    with pytest.raises(AssertionError):C.validate_selection(*selection(),'baseline',P['baseline']['source'],P['baseline']['run'],P['baseline']['artifact'],'bipxx/qupathxx',V3)
+
+
+@pytest.mark.parametrize('candidate_pass',(1,2))
+def test_v3_every_direct_and_normalized_gate_remains_strict(candidate_pass):
+    limits=V3['fixed_gates']['per_case_limits']
+    data=[{cid:dict(original=1.,cpp=1.)for cid in limits}for _ in range(4)]
+    for index in (1,2):
+        for cid,limit in limits.items():data[index][cid]['cpp']=min(limit,1.)
+    result=C.acceptance(data,V3);assert result['decision']=='KEEP' and len(result['checks'])==56
+    for cid,limit in limits.items():
+        fault=copy.deepcopy(data);fault[candidate_pass][cid]['cpp']=limit*1.000001
+        rejected=C.acceptance(fault,V3);assert rejected['decision']=='DISCARD'
+        row=next(r for r in rejected['checks']if r['case_id']==cid and r['candidate_pass']==candidate_pass+1)
+        assert row['direct']>limit and not row['passed']
+        fault=copy.deepcopy(data);fault[candidate_pass][cid]['original']=.5
+        rejected=C.acceptance(fault,V3);assert rejected['decision']=='DISCARD'
+        row=next(r for r in rejected['checks']if r['case_id']==cid and r['candidate_pass']==candidate_pass+1)
+        assert row['direct']<=limit and row['original_normalized']>limit and not row['passed']

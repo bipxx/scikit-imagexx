@@ -67,6 +67,18 @@ def test_private_compiled_getters_read_dependencies_once_in_source_order():
     assert _core.regionprops_state_extent_get(Probe())==np.float64(.5)
     assert events==['area','area_bbox']
 
+def test_private_getter_name_reuse_keeps_operands_fresh_and_keyword_signature():
+    import numpy as np
+    from skimagexx import _core
+    probe=SimpleNamespace(image=SimpleNamespace(size=4),_pixel_area=np.float64(.5),
+                          area=np.float64(1),area_bbox=np.float64(2))
+    assert _core.regionprops_state_area_bbox_get(self=probe)==np.float64(2)
+    assert _core.regionprops_state_extent_get(self=probe)==np.float64(.5)
+    probe.image=SimpleNamespace(size=12);probe._pixel_area=np.float64(.25)
+    probe.area=np.float64(3);probe.area_bbox=np.float64(4)
+    assert _core.regionprops_state_area_bbox_get(probe)==np.float64(3)
+    assert _core.regionprops_state_extent_get(probe)==np.float64(.75)
+
 @pytest.mark.parametrize('value_kind',['float32','negative','nonfinite','python'])
 def test_getter_refusal_retains_already_evaluated_operands(value_kind):
     import numpy as np

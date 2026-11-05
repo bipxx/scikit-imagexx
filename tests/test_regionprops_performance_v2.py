@@ -39,7 +39,10 @@ def test_v2_fixed_baseline_cases_method_and_each_pair_limits():
 
 def test_v2_active_closures_and_immutable_timed_bodies():
     for filename,oldfile,driver in [('regionprops-performance-state-v2.json','regionprops-scalar-runtime-v1.json','regionprops_state.py'),('regionprops-performance-scalars-v2.json','regionprops-scalars-benchmark-v1.json','regionprops_scalars.py')]:
+        previous=json.loads((ROOT/'coverage/contracts'/filename).read_bytes())
+        filename=filename.replace('-v2.json','-v3.json')
         active=json.loads((ROOT/'coverage/contracts'/filename).read_bytes());old=json.loads((ROOT/'coverage/contracts'/oldfile).read_bytes())
+        assert {k:v for k,v in active.items()if k not in ('source_closure','scope')}=={k:v for k,v in previous.items()if k not in ('source_closure','scope')}
         assert active['cases']==old['cases']
         assert {k:v for k,v in active.items()if k not in ('source_closure','scope','native_entries')}=={k:v for k,v in old.items()if k not in ('source_closure','scope','native_entries')}
         for name,pin in active['source_closure'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
@@ -56,15 +59,24 @@ def test_v2_active_closures_and_immutable_timed_bodies():
 def test_v2_controller_source_workflow_and_no_science_import(monkeypatch):
     import builtins
     p=json.loads(CONTRACT.read_bytes())
-    for name,pin in p['controller_source_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    for name,pin in p['controller_source_sha256'].items():
+        predecessor=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name=='tools/region_stain_compare.py':
+            predecessor=predecessor.replace(b"CONTRACT=ROOT/'coverage/contracts/regionprops-performance-compare-v3.json'",b"CONTRACT=ROOT/'coverage/contracts/region-stain-same-host-v1.json'")
+            predecessor=predecessor.replace(b"active=load(ROOT/'coverage/contracts/regionprops-performance-compare-v3.json')",b"active=load(ROOT/'coverage/contracts/regionprops-performance-compare-v2.json')")
+        elif name=='.github/workflows/region-stain-same-host.yml':
+            predecessor=predecessor.replace(b'cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b',p['baseline']['source'].encode())
+            predecessor=predecessor.replace(b'regionprops-performance-compare-v3.json',b'regionprops-performance-compare-v2.json')
+        assert hashlib.sha256(predecessor).hexdigest()==pin,name
     previous=builtins.__import__
     def checked(name,*a,**kw):
         assert name.split('.')[0]not in {'numpy','scipy','skimage','skimagexx'}
         return previous(name,*a,**kw)
     monkeypatch.setattr(builtins,'__import__',checked);assert callable(controller().acceptance)
     workflow=(ROOT/'.github/workflows/region-stain-same-host.yml').read_text()
-    assert '--contract controller/coverage/contracts/regionprops-performance-compare-v2.json' in workflow
-    assert 'ref: '+p['baseline']['source']in workflow and 'if: always()'in workflow
+    assert '--contract controller/coverage/contracts/regionprops-performance-compare-v3.json' in workflow
+    active=json.loads((ROOT/'coverage/contracts/regionprops-performance-compare-v3.json').read_bytes())
+    assert 'ref: '+active['baseline']['source']in workflow and 'if: always()'in workflow
     source=(ROOT/'tools/region_stain_compare.py').read_text();ast.parse(source)
     assert "choices=('region','scalars','half','holdouts')"in source
     assert "protocol.get('families',['region','half','holdouts'])"in source

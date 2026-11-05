@@ -16,7 +16,7 @@ import sys
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/region-stain-same-host-v1.json'
+CONTRACT=ROOT/'coverage/contracts/regionprops-performance-compare-v3.json'
 POOLS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 
 
@@ -180,7 +180,7 @@ def execute(args):
         if protocol.get('optimization_version')!=2 and name in ('tools/region_stain_compare.py','.github/workflows/region-stain-same-host.yml'):
             context=load(ROOT/'coverage/contracts/region-stain-controller-v1-context.json')['entries'][name]
             assert hashlib.sha256(context['utf8'].encode()).hexdigest()==context['raw_sha256']==pin
-            active=load(ROOT/'coverage/contracts/regionprops-performance-compare-v2.json')
+            active=load(ROOT/'coverage/contracts/regionprops-performance-compare-v3.json')
             assert hashlib.sha256(current).hexdigest()==active['controller_source_sha256'][name]
         else:assert hashlib.sha256(current).hexdigest()==pin,name
     out=args.results.resolve();out.mkdir(parents=True,exist_ok=False)

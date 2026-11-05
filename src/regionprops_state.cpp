@@ -225,7 +225,7 @@ public:
         if(std::fegetround()!=FE_TONEAREST)
             throw std::invalid_argument("RegionProperties scalar requires nearest rounding");
         #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
-        if(_mm_getcsr()&((1u<<15)|(1u<<6)))
+        if(_mm_getcsr()&((1u<<15)|(1u<<6)|(3u<<13)))
             throw std::invalid_argument("RegionProperties scalar requires gradual underflow");
         #endif
         if(std::feholdexcept(&original_))
