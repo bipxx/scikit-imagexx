@@ -2,9 +2,8 @@
 #include "bind_array_storage.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
-#include <cstring>
+#include <array>
 #include <memory>
-#include <vector>
 
 namespace py=pybind11;
 namespace {
@@ -38,14 +37,10 @@ bool bool_storage(const py::array& a) {
     return a.dtype().kind()=='b' && a.itemsize()==1
         && (a.flags()&(py::array::c_style|py::array::f_style));
 }
-std::vector<std::uint8_t> c_mask(const py::array& a) {
-    std::vector<std::uint8_t> out(std::size_t(a.size()));
-    for(std::size_t i=0;i<out.size();++i) {
-        auto local=i;py::ssize_t offset=0;
-        for(auto d=a.ndim();d-->0;){offset+=py::ssize_t(local%std::size_t(a.shape(d)))*a.strides(d);local/=std::size_t(a.shape(d));}
-        std::memcpy(out.data()+i,static_cast<const char*>(a.data())+offset,1);
-    }
-    return out;
+std::array<std::ptrdiff_t,3> strides(const py::array& a) {
+    std::array<std::ptrdiff_t,3> result{};
+    for(py::ssize_t d=0;d<a.ndim();++d)result[std::size_t(d)]=a.strides(d);
+    return result;
 }
 }
 
@@ -68,19 +63,8 @@ void bind_regionprops_state(py::module_& m) {
     m.def("regionprops_state_image",[](const std::shared_ptr<Prepared>& p,std::size_t index,const py::array& labels,py::array output)->py::object {
         if(!unchanged(*p,labels) || !region_shape(*p,index,output) || !bool_storage(output) || !output.owndata() || !output.writeable())return py::none();
         skimagexx::bindings::check_array_storage(labels);skimagexx::bindings::check_array_storage(output);
-        const auto count=std::size_t(output.size());
-        if(output.flags()&py::array::c_style) {
-            auto* data=static_cast<std::uint8_t*>(output.mutable_data());
-            {py::gil_scoped_release release;skimagexx::detail::regionprops_mask_into(p->state,index,data);}
-        } else {
-            std::vector<std::uint8_t> mask(count);
-            {py::gil_scoped_release release;skimagexx::detail::regionprops_mask_into(p->state,index,mask.data());}
-            for(std::size_t i=0;i<count;++i) {
-                auto local=i;py::ssize_t offset=0;
-                for(auto d=output.ndim();d-->0;){offset+=py::ssize_t(local%std::size_t(output.shape(d)))*output.strides(d);local/=std::size_t(output.shape(d));}
-                std::memcpy(static_cast<char*>(output.mutable_data())+offset,mask.data()+i,1);
-            }
-        }
+        auto* data=static_cast<std::uint8_t*>(output.mutable_data());const auto steps=strides(output);
+        {py::gil_scoped_release release;skimagexx::detail::regionprops_mask_strided_into(p->state,index,data,steps);}
         return py::bool_(true);
     },py::arg("state"),py::arg("index"),py::arg("labels").noconvert(),py::arg("output").noconvert());
     m.def("regionprops_state_population",[](const py::array& a)->py::object {
@@ -94,13 +78,13 @@ void bind_regionprops_state(py::module_& m) {
            || !output.dtype().is(py::dtype::of<std::intptr_t>()) || !output.owndata() || !output.writeable()
            || !(output.flags()&(py::array::c_style|py::array::f_style)))return py::none();
         skimagexx::bindings::check_array_storage(labels);skimagexx::bindings::check_array_storage(mask);skimagexx::bindings::check_array_storage(output);
-        const auto logical=c_mask(mask);const auto count=skimagexx::detail::regionprops_mask_population(logical.data(),logical.size());
+        const auto* data=static_cast<const std::uint8_t*>(mask.data());
+        const auto count=skimagexx::detail::regionprops_mask_population(data,std::size_t(mask.size()));
         if(std::size_t(output.shape(0))!=count)return py::none();
-        std::vector<std::intptr_t> coordinates(std::size_t(output.size()));
-        {py::gil_scoped_release release;skimagexx::detail::regionprops_coords_into(p->state,index,logical.data(),coordinates.data());}
-        const auto ndim=p->state.labels.shape.size();
-        for(std::size_t i=0;i<count;++i)for(std::size_t d=0;d<ndim;++d)
-            std::memcpy(static_cast<char*>(output.mutable_data())+py::ssize_t(i)*output.strides(0)+py::ssize_t(d)*output.strides(1),coordinates.data()+i*ndim+d,sizeof(std::intptr_t));
+        const auto steps=strides(mask);auto* coordinates=static_cast<std::intptr_t*>(output.mutable_data());
+        const auto point_step=output.strides(0),dimension_step=output.strides(1);
+        {py::gil_scoped_release release;skimagexx::detail::regionprops_coords_strided_into(p->state,index,data,steps,
+            coordinates,point_step,dimension_step);}
         return py::bool_(true);
     },py::arg("state"),py::arg("index"),py::arg("labels").noconvert(),py::arg("mask").noconvert(),py::arg("output").noconvert());
 }

@@ -1,0 +1,300 @@
+{
+  "schema": "regionprops-strided-comparison-v1",
+  "source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
+  "core_sha256": "c15aac0446bbdd5dbd0f7eddc0954f86c53586207bd31a6a93f09a765218ad01",
+  "source_sha256": "0123d8453eabc7263945c1de22cd337103d7e7d6ffbd2583b35e0a200d8cbdb4",
+  "baseline_report": "build/candidate255-genuine-minimum-v3/reports-v1/ci-regionprops-state.json",
+  "baseline_report_sha256_reused": "00861ca4f405af9b6d4392365f45668ea698b541ced845bfdf2599fe9400fb00",
+  "cases": [
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "parameters": {
+        "id": "regionprops-state/tiny2d-constructor",
+        "shape": [
+          3,
+          4
+        ],
+        "operation": "constructor",
+        "layout": "C",
+        "cache": true,
+        "max_label": 2,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int16"
+      },
+      "original_ms": 0.02368308890718255,
+      "prior_CPP_ms": 0.026439237657864524,
+      "original_over_prior_CPP": 0.8957553623009951
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "parameters": {
+        "id": "regionprops-state/tiny2d-properties",
+        "shape": [
+          8,
+          9
+        ],
+        "operation": "seven-properties",
+        "layout": "C",
+        "cache": true,
+        "max_label": 3,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int16"
+      },
+      "original_ms": 0.08852393476592478,
+      "prior_CPP_ms": 0.07699604701141706,
+      "original_over_prior_CPP": 1.1497205142596263
+    },
+    {
+      "case_id": "regionprops-state/medium2d-constructor-sparse",
+      "parameters": {
+        "id": "regionprops-state/medium2d-constructor-sparse",
+        "shape": [
+          128,
+          192
+        ],
+        "operation": "constructor",
+        "layout": "C",
+        "cache": true,
+        "max_label": 8,
+        "pattern": "sparse",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 0.12330497427652733,
+      "prior_CPP_ms": 0.21673019811320757,
+      "original_over_prior_CPP": 0.5689330575525973
+    },
+    {
+      "case_id": "regionprops-state/medium2d-properties-cache-on",
+      "parameters": {
+        "id": "regionprops-state/medium2d-properties-cache-on",
+        "shape": [
+          128,
+          192
+        ],
+        "operation": "seven-properties",
+        "layout": "C",
+        "cache": true,
+        "max_label": 4,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 0.5494845971563981,
+      "prior_CPP_ms": 0.9583496923076923,
+      "original_over_prior_CPP": 0.5733654443330044
+    },
+    {
+      "case_id": "regionprops-state/medium2d-transpose-cache-off",
+      "parameters": {
+        "id": "regionprops-state/medium2d-transpose-cache-off",
+        "shape": [
+          128,
+          192
+        ],
+        "operation": "seven-properties",
+        "layout": "transpose",
+        "cache": false,
+        "max_label": 4,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 0.6693883662790698,
+      "prior_CPP_ms": 6.084659578947368,
+      "original_over_prior_CPP": 0.11001245962799985
+    },
+    {
+      "case_id": "regionprops-state/large2d-c-cache-off",
+      "parameters": {
+        "id": "regionprops-state/large2d-c-cache-off",
+        "shape": [
+          512,
+          768
+        ],
+        "operation": "seven-properties",
+        "layout": "C",
+        "cache": false,
+        "max_label": 3,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 6.829987470588235,
+      "prior_CPP_ms": 13.840654444444445,
+      "original_over_prior_CPP": 0.4934728699429203
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "parameters": {
+        "id": "regionprops-state/large2d-f-coords",
+        "shape": [
+          512,
+          768
+        ],
+        "operation": "seven-properties",
+        "layout": "F",
+        "cache": true,
+        "max_label": 3,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 5.374666578947368,
+      "prior_CPP_ms": 27.5468682,
+      "original_over_prior_CPP": 0.1951098956122848
+    },
+    {
+      "case_id": "regionprops-state/medium2d-reverse-sparse",
+      "parameters": {
+        "id": "regionprops-state/medium2d-reverse-sparse",
+        "shape": [
+          257,
+          389
+        ],
+        "operation": "seven-properties",
+        "layout": "reverse",
+        "cache": true,
+        "max_label": 8,
+        "pattern": "sparse",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 2.1894940188679244,
+      "prior_CPP_ms": 4.5852882,
+      "original_over_prior_CPP": 0.47750412261282166
+    },
+    {
+      "case_id": "regionprops-state/small3d-constructor",
+      "parameters": {
+        "id": "regionprops-state/small3d-constructor",
+        "shape": [
+          8,
+          12,
+          16
+        ],
+        "operation": "constructor",
+        "layout": "C",
+        "cache": true,
+        "max_label": 4,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "uint16"
+      },
+      "original_ms": 0.05222501181281236,
+      "prior_CPP_ms": 0.06344711252068395,
+      "original_over_prior_CPP": 0.8231266914753109
+    },
+    {
+      "case_id": "regionprops-state/medium3d-f-cache-off",
+      "parameters": {
+        "id": "regionprops-state/medium3d-f-cache-off",
+        "shape": [
+          24,
+          32,
+          40
+        ],
+        "operation": "seven-properties",
+        "layout": "F",
+        "cache": false,
+        "max_label": 4,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 0.7676635266666666,
+      "prior_CPP_ms": 10.004331333333335,
+      "original_over_prior_CPP": 0.07673311699592515
+    },
+    {
+      "case_id": "regionprops-state/large3d-cache-off",
+      "parameters": {
+        "id": "regionprops-state/large3d-cache-off",
+        "shape": [
+          48,
+          64,
+          80
+        ],
+        "operation": "seven-properties",
+        "layout": "C",
+        "cache": false,
+        "max_label": 4,
+        "pattern": "dense",
+        "spacing": null,
+        "offset": null,
+        "dtype": "int32"
+      },
+      "original_ms": 6.306104736842105,
+      "prior_CPP_ms": 14.333662444444444,
+      "original_over_prior_CPP": 0.43995069378003077
+    },
+    {
+      "case_id": "regionprops-state/large3d-sparse-spacing-offset",
+      "parameters": {
+        "id": "regionprops-state/large3d-sparse-spacing-offset",
+        "shape": [
+          40,
+          64,
+          80
+        ],
+        "operation": "seven-properties",
+        "layout": "C",
+        "cache": true,
+        "max_label": 8,
+        "pattern": "sparse",
+        "spacing": [
+          0.5,
+          2.0,
+          3.0
+        ],
+        "offset": [
+          1,
+          -2,
+          4
+        ],
+        "dtype": "int32"
+      },
+      "original_ms": 4.970426916666667,
+      "prior_CPP_ms": 12.4843179,
+      "original_over_prior_CPP": 0.3981336390566173
+    }
+  ],
+  "original_numeric_policy_unchanged": true,
+  "targets": [
+    "regionprops-state/large2d-f-coords",
+    "regionprops-state/medium3d-f-cache-off"
+  ],
+  "direct_CPP_guard_all12": "Proposed before candidate: same-host newCPP/priorCPP <=1.05 for EVERY case; no dropped tiny/constructor/sparse/spacing case, and no geomean waiver.",
+  "target_minimum_gain": "Proposed before candidate: each two F targets newCPP<=0.5*priorCPP. Also report all12 vs actual scikit-image; crossing original is separate observed outcome, not inferred.",
+  "measurement": "Root authorization only, isolatedhost,oneworker/exactruntime,pairedbaseline+candidate asfreshprocesses ABBA using existing sustainedsampler,all12*7pairs perrole/process. No local timing; no new stats framework. Existing31other workload selectors stay off.",
+  "numerical_gate": "Unchanged saved C++/public/cache/mutation/worker/stride contracts, exact arraywords/types/owner/layout; no new originals/golden rewrite.",
+  "cases_frozen_before_candidate": true,
+  "status": "ROOT_AUTHORIZED_PROSPECTIVE_FROZEN_BEFORE_CANDIDATE",
+  "passes": [
+    "priorCPP",
+    "candidate",
+    "candidate",
+    "priorCPP"
+  ],
+  "worst_pair_gate": "For eachcase max(candidate medians)/min(priorCPP medians)<=1.05, plus same bound for original-normalized medians; targets<=0.5. No claimed variance estimator.",
+  "authorization": "Root explicit boundedcandidate task; bothFtargets>=2x priorCPP, all12new/prior<=1.05, alloriginalcomparisons retained.",
+  "candidate_owned_paths": [
+    "include/skimagexx/regionprops_state.hpp",
+    "src/regionprops_state.cpp",
+    "src/bind_regionprops_state.cpp",
+    "tests/test_regionprops_state_native.cpp",
+    "tests/test_regionprops_strided_public.py"
+  ]
+}

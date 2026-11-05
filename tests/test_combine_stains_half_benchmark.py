@@ -7,7 +7,7 @@ ROOT = Path(__file__).parents[1]
 
 
 def test_half_stain_selector_preserves_legacy_module_and_history():
-    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-f32-runtime-v1.json').read_bytes())
     archived = (ROOT/'coverage/contracts/combine-stains-legacy-benchmark-source-v1.json').read_bytes()
     assert hashlib.sha256(archived).hexdigest() == '03c0890c5064660c0ddcb0d8a4b0990a5586ebbf2c66a6361faf48dbd38972aa'
     baseline = json.loads(archived)
@@ -43,7 +43,7 @@ def test_half_stain_selector_preserves_legacy_module_and_history():
 
 
 def test_half_stain_frozen_cases_policy_and_bounds():
-    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-f32-runtime-v1.json').read_bytes())
     assert hashlib.sha256((ROOT/'coverage/contracts/combine-stains-half.json').read_bytes()).hexdigest() == contract['reference_contract_sha256']
     assert contract['size'] == 512 and contract['threads'] == 1 and contract['repeat'] == 7
     assert contract['raw_samples'] == 56 and contract['warmup_groups'] == 8
@@ -65,7 +65,7 @@ def test_half_stain_frozen_cases_policy_and_bounds():
 
 
 def test_half_stain_sampler_witness_state_and_hardware_source():
-    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-f32-runtime-v1.json').read_bytes())
     for filename,key in (('tools/montage_sustained.py','method_sha256'),('benchmarks/run.py','legacy_method_sha256')):
         source = (ROOT/filename).read_text(encoding='utf-8')
         method = next(n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name == 'measure')
@@ -90,3 +90,16 @@ def test_half_stain_sampler_witness_state_and_hardware_source():
         index = next(i for i,n in enumerate(node.body) if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id == 'cpu_model' for t in n.targets))
         blocks.append([ast.dump(n,include_attributes=False) for n in node.body[index:index+4]])
     assert blocks[0] == blocks[1]
+
+
+def test_stain_candidate_runtime_contract_preserves_history_and_timed_source():
+    historical = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    candidate = json.loads((ROOT/'coverage/contracts/combine-stains-half-f32-runtime-v1.json').read_bytes())
+    assert set(candidate) == set(historical)
+    assert {key for key in candidate if candidate[key] != historical[key]} <= {'source_closure', 'scope'}
+    assert candidate['cases'] == historical['cases']
+    assert set(candidate['source_closure']) == set(historical['source_closure'])
+    source = (ROOT/'benchmarks/stains.py').read_bytes().replace(b'\r\n',b'\n')
+    assert source.count(b'combine-stains-half-f32-runtime-v1.json') == 1
+    restored = source.replace(b'combine-stains-half-f32-runtime-v1.json',b'combine-stains-half-benchmark.json')
+    assert hashlib.sha256(restored).hexdigest() == '66ef348a23e6850c0e16dd15f9ff342144e07061a6d1bc89bbd9e9cec224d03c'

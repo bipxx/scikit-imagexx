@@ -2294,7 +2294,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     result=q.plan(ROOT,profile,256)
     assert not result['blockers'] and result['readiness_only'] is True
     assert result['product_scope']=='current256' and result['registry']['image_count']==256
-    assert result['product_members']==188 and result['SDK_members']==89
+    assert result['product_members']==189 and result['SDK_members']==89
     assert result['SDK_checks']==58 and 'current29 required' in result['SDK_client_scope']
     assert len(result['public_groups']['public-post203'])==74
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
@@ -2730,3 +2730,11 @@ def test_line_nd_source_admission_boundary(monkeypatch,fault,weak):
     if fault=='none':q.line_nd_admission(core,draw,wrapper,registered)
     else:
         with pytest.raises(q.QualificationError):q.line_nd_admission(core,draw,wrapper,registered)
+
+
+def test_current_region_provider_class_is_required_in_install_closure():
+    names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
+           for p in (ROOT/prefix).rglob('*') if p.is_file()]
+    names.remove('python/skimagexx/_regionprops_state_class.py')
+    with pytest.raises(q.QualificationError,match='RegionProperties install closure'):
+        q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,'modern')

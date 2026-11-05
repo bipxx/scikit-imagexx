@@ -96,7 +96,7 @@ def _half_main(args):
     utils = importlib.import_module('skimage._shared.utils')
     dtype_module = importlib.import_module('skimage.util.dtype')
     owned = importlib.import_module('skimagexx.color')
-    contract_path = root/'coverage/contracts/combine-stains-half-benchmark.json'
+    contract_path = root/'coverage/contracts/combine-stains-half-f32-runtime-v1.json'
     reference_path = root/'coverage/contracts/combine-stains-half.json'
     contract_raw, reference_raw = contract_path.read_bytes(), reference_path.read_bytes()
     contract, saved = json.loads(contract_raw), json.loads(reference_raw)

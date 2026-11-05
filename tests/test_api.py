@@ -212,7 +212,7 @@ def test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions(api):
     with pytest.raises(AssertionError):draw_default_error(api,image,tuple(actual)if isinstance(actual,list)else list(actual),expected)
     actual[0].flat[0]+=1
     with pytest.raises(AssertionError):draw_default_error(api,image,actual,expected)
-    with pytest.raises(ValueError,match='exact intp'):parity_tolerance(api,np.uint8)
+    with pytest.raises(ValueError,match='exact coordinate/weight words and storage'):parity_tolerance(api,np.uint8)
 
 
 def test_unported_namespace_interchangeability():
@@ -265,7 +265,7 @@ def test_every_native_function(native, original, name, dtype, shape):
             with pytest.raises(ValueError) as actual:getattr(native, name)(*args, **options)
             assert str(actual.value) == str(expected.value)
             return
-        if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential'):
+        if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.relabel_sequential','measure.regionprops'):
             # These integer-only algorithms preserve original defined dtype
             # rejection; this is separate from successful default-case dtypes.
             with pytest.raises(TypeError) as expected:getattr(original,name)(a)

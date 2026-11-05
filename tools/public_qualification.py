@@ -318,6 +318,7 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'coverage/contracts/line-aa-native-v1.json',
     'include/skimagexx/regionprops_state.hpp', 'src/regionprops_state.cpp',
     'src/bind_regionprops_state.cpp', 'python/skimagexx/_regionprops_state.py',
+    'python/skimagexx/_regionprops_state_class.py',
     'tests/test_regionprops_state_native.cpp', 'tests/test_regionprops_state_reference.py',
     'tests/test_regionprops_state_public.py', 'tests/test_regionprops_state_default.py',
     'tests/regionprops_state_contract.py', 'tests/regionprops_state_observer.py',
@@ -337,6 +338,8 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'coverage/contracts/combine-stains-half.json',
     'coverage/contracts/combine-stains-half-source-context-v1.json',
     'coverage/contracts/combine-stains-legacy-benchmark-source-v1.json',
+    'coverage/contracts/regionprops-strided-runtime-v1.json',
+    'coverage/contracts/combine-stains-half-f32-runtime-v1.json',
     'coverage/contracts/combine-stains-half-frontend-v1.json',
     'include/skimagexx/line_nd.hpp',
     'src/line_nd.cpp',
@@ -791,7 +794,8 @@ def current_install_layout(read_bytes, names, profile):
             and 'skimagexx/_line_aa.py' in sources,
             'current line-AA install closure absent')
     require('include/skimagexx/regionprops_state.hpp' in headers
-            and 'skimagexx/_regionprops_state.py' in sources,
+            and 'skimagexx/_regionprops_state.py' in sources
+            and 'skimagexx/_regionprops_state_class.py' in sources,
             'current RegionProperties install closure absent')
     require('include/skimagexx/circle_perimeter_aa.hpp' in headers
             and 'skimagexx/_circle_perimeter_aa.py' in sources,

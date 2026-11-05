@@ -25,6 +25,9 @@ template<class Input,class Output> void execute(const void* source,void* destina
 #ifdef SKIMAGEXX_AVX2
         if constexpr (std::is_same_v<Output,double>) if (has_avx2())
             done=simd::stain_transform(input+std::ptrdiff_t(begin)*pixels,output+begin*spec.channels,end-begin,type,spec,pixels,channels);
+        if constexpr (std::is_same_v<Input,float> && std::is_same_v<Output,float>)
+            if (spec.transform==StainTransform::combine && spec.intermediate32 && has_avx2())
+                done=simd::stain_combine_float32(input+std::ptrdiff_t(begin)*pixels,output+begin*spec.channels,end-begin,spec,pixels,channels);
 #else
         (void)type;
 #endif

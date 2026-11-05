@@ -1,0 +1,167 @@
+{
+  "schema": "combine-stains-half-benchmark-v1",
+  "reference_contract_sha256": "b9de054acedf7c55b4e45be874e049e2bcb45abf95a11c867569dd63537412b5",
+  "cases": [
+    {
+      "id": "combine-half-bench/standard-f32",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          0.65,
+          0.7,
+          0.29
+        ],
+        [
+          0.07,
+          0.99,
+          0.11
+        ],
+        [
+          0.27,
+          0.57,
+          0.78
+        ]
+      ],
+      "matrix_dtype": "float32",
+      "layout": "C"
+    },
+    {
+      "id": "combine-half-bench/standard-f64",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          0.65,
+          0.7,
+          0.29
+        ],
+        [
+          0.07,
+          0.99,
+          0.11
+        ],
+        [
+          0.27,
+          0.57,
+          0.78
+        ]
+      ],
+      "matrix_dtype": "float64",
+      "layout": "C"
+    },
+    {
+      "id": "combine-half-bench/custom-k7",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          -0.1875,
+          -0.0625,
+          0.0625,
+          0.1875,
+          -0.125,
+          0.0,
+          0.125
+        ],
+        [
+          -0.125,
+          0.0,
+          0.125,
+          -0.1875,
+          -0.0625,
+          0.0625,
+          0.1875
+        ],
+        [
+          -0.0625,
+          0.0625,
+          0.1875,
+          -0.125,
+          0.0,
+          0.125,
+          -0.1875
+        ]
+      ],
+      "matrix_dtype": "float32",
+      "layout": "C"
+    },
+    {
+      "id": "combine-half-bench/reverse-k1",
+      "api": "color.combine_stains",
+      "matrix": [
+        [
+          0.125
+        ],
+        [
+          -0.2
+        ],
+        [
+          0.0625
+        ]
+      ],
+      "matrix_dtype": "float32",
+      "layout": "reverse"
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "legacy_main_ast_sha256": "cb4bdd6fd060c5542c6ddc59441bbc9ac91dcb6de404102908d425bb19bcb650",
+  "legacy_stains_sha256": "f9a31c9c5dd41914690fd754889782a6498bacb58dca8bdfde50b1bacdf6e32c",
+  "size": 512,
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 56,
+  "warmup_groups": 8,
+  "max_input_elements": 786432,
+  "max_matrix_elements": 21,
+  "max_output_elements": 2000000,
+  "dataset": {
+    "seed": 31,
+    "construction": "uint8integers0..255 scaledby.75/255 thenfloat16; Cbase orvalidreverseview",
+    "max_abs_input": 0.75,
+    "max_abs_matrix": 1,
+    "max_abs_exponent": 31.5
+  },
+  "numerical_policy": {
+    "rtol": 2e-06,
+    "atol": 2e-06,
+    "matrix_scale": "max(1,max(sum(abs(matrix),axis=0))) fromactualmatrixdtype; existingprepared-f32policy unchanged",
+    "structural": "Exactdtype/metadata/shape/strides/ownership/errors/warnings/inputstate; actualoriginalandcurrentrawhashes retained withoutforcingbitwise float arithmetic"
+  },
+  "reference_pool_limits": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1"
+  },
+  "source_closure": {
+    "python/skimagexx/color.py": "b0eeb0cb49f5dccf0ed668a0a6e61ed5501c2a300604ebfacb9d2c605bbc8e2f",
+    "python/skimagexx/_stain_matrices.py": "a1611e41073b7108a789cb4f4254c81b2afdc6785616f9757c94e5f6b5d03a0b",
+    "src/stain.cpp": "e4888691bc53c361e1f03c96dcc0375c75682a24e349a4ad7c7238b814299863",
+    "src/stain_detail.hpp": "25544db59a9927b7c82061dc474a5d0f087a5327d165544d8332e48fe913d195",
+    "src/simd_stain_avx2.cpp": "1123298231c75ee102fa4208ef4d13ba2a05f8a5d245d66ad10e97052be69b05",
+    "src/color_detail.hpp": "4ce491eb4c9a6a774b0f0d86ffef1eb41991995e7705c25b341b1403996f2a84",
+    "include/skimagexx/stain.hpp": "ec4fbd35fcdd117f456a48daf9592af646bc76b1feb58c2613d1e13959714707",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "scope": "Prospective source-pinned float32 SIMD candidate; unchanged4half workloads/numerical policy. No performance acceptance; fixed prior-C++8cohort gates separate.",
+  "cli": "python benchmarks/stains.py --half-only --size 512 --threads 1 --repeat 7 --output build/ci-combine-stains-half.json",
+  "gates": "Independent source review thenrealCLI firstcohort oneoriginal+onenative/profile, stopatactualsustainedmeasureCALL beforebody. Futuregenuineoneworker measurement onlyafterrootauthorization.",
+  "task_closeout": {
+    "status": "PASS_AST_SOURCE_ONLY_PROSPECTIVE_BENCHMARK",
+    "result": "4frozenhalf-onlycases/56futureacceptedrawsamples;3source-only checksPASS;zero target/fixture/timingexecution. Entirelegacy main/moduleAST andoldhistoricalreport preserved.",
+    "evidence": "metadata-v2.xml3passed; existingstrict100ms/250warmmethodhash andlegacyrun.measurehash verifiedwithoutimportingdriver/science. Nativeonecast/Creturn/structure/FPstate/source/hardware/poolguards source-reviewed; realCLIpreflightstillpending.",
+    "reuse": "ExistingstainsCLI andhistoricallegacyrun.measure retained; ONLYnewhalfbranch usesexistingmontage_sustained.measure+JSONLjournal andsnapshot/hardwarehelpers. Existing24half-referencewords and2e-6matrixnormrule unchanged; no newframework/env/build.",
+    "avoidable_work": "WindowsdefaultGBKread decodedlegacyUTF8multiplicationcharacters incorrectly andlaterreadfailed beforetestfilecreation; firstdependentpytestinvocation foundmissingfile/no tests. CorrectedallnewsourceIOtoexplicitUTF8, reconstructedfromretainedtrueUTF8legacybytes, sourceASTguardnowbindstruebaseline. Initialdriver/metadataXML preserved; no scientificworkrepeated.",
+    "next_plan_correction": {
+      "owner": "root/benchmarkimplementation-review lane",
+      "trigger": "Beforefuturefirstcohort/genuine255latestmeasurement",
+      "action": "Independentreviewexact3paths; rootadds ONLYadvertisedhalfCLI tolatestbatch, neverlegacy39/f32rerun. RunactualCLIcontext firstcaseold+native/profileandstopatreal_sustained_measureCALL. Futurecodegenerators useexplicitUTF8 andabortdependentchecks ongenerationfailure; preserveimmutablepredecessors. Isolatedoneworker timingonlyaftergenuineproductauthorization."
+    },
+    "readers": "Released afterfinalimmutablehandoff;no activebenchmarks/readers;sourcefrontendregionfiles/proofsuntouched"
+  },
+  "legacy_module_ast_sha256": "5921750ab0e11ed8ef4e5d5261edf8a1677bcf10f49e48a00574f9b70647e340",
+  "legacy_report_sha256": "3df98bde122249c9b275ef5881451dcf7458278ede204c6b3afe00a31046643f",
+  "legacy_method_sha256": "b5c0074a31e395b06c2c555617c1a1f1b0d337b2610272d0b3adff38841d7aa0"
+}

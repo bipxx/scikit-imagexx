@@ -34,6 +34,11 @@ bool prepare_regionprops_state(const ComponentsView&,RegionPropsState&);
 // discovery stays serial. Later global-budget changes affect existing states.
 std::size_t regionprops_mask_into(const RegionPropsState&,std::size_t region,
                                  std::uint8_t* output);
+// Same mask/count contract, directly into caller-validated signed byte strides
+// for the frozen bounding-box shape. No intermediate C-layout mask. Caller
+// proves complete disjoint output spans; public binding supplies owned C/F.
+std::size_t regionprops_mask_strided_into(const RegionPropsState&,std::size_t region,
+    std::uint8_t* output,const std::array<std::ptrdiff_t,3>& output_strides);
 // Count current caller-owned mask before allocating coords, including cached
 // masks modified through the eventual public image array. Nonzero means true.
 std::size_t regionprops_mask_population(const std::uint8_t*,std::size_t count) noexcept;
@@ -44,4 +49,11 @@ std::size_t regionprops_mask_population(const std::uint8_t*,std::size_t count) n
 // allocation are explicit future frontend gates; no FP arithmetic here.
 void regionprops_coords_into(const RegionPropsState&,std::size_t region,
                              const std::uint8_t* mask,std::intptr_t* output) noexcept;
+// Read the CURRENT provided mask using signed byte strides and emit directly
+// into caller-validated coordinate byte strides. Canonical C logical order is
+// preserved even for F masks; point_step/dimension_step are BYTES. Capacity and
+// mask stability remain count/fill boundary invariants. No temporary/copy.
+void regionprops_coords_strided_into(const RegionPropsState&,std::size_t region,
+    const std::uint8_t* mask,const std::array<std::ptrdiff_t,3>& mask_strides,
+    std::intptr_t* output,std::ptrdiff_t point_step,std::ptrdiff_t dimension_step) noexcept;
 }

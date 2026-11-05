@@ -682,3 +682,5 @@ coverage/contracts/line-nd-frontend-v1.json -text
 coverage/contracts/line-nd-sdk-v1.json -text
 coverage/contracts/line-nd-benchmark.json -text
 benchmarks/stain-parameters.json -text
+coverage/contracts/regionprops-strided-runtime-v1.json -text
+coverage/contracts/combine-stains-half-f32-runtime-v1.json -text
