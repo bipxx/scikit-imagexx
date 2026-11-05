@@ -6,7 +6,7 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
@@ -321,6 +321,7 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api in ('draw.polygon','draw.polygon2mask'):return ('uint8','float32','float64')
     if api == 'draw.line_nd':
         return ('float16','float32','float64','int8','uint8','int64','uint64')
     if api == 'measure.regionprops':
@@ -363,6 +364,8 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='draw.polygon':return ([1,1,4],[1,5,2]),{}
+    if api=='draw.polygon2mask':return ((6,7),[[1,1],[1,5],[4,2]]),{}
     if api == 'draw.ellipse_perimeter':
         # Frozen unequal-axis coordinates; image/dtype are descriptor carriers only.
         return (0,0,2,4), {}
@@ -568,6 +571,34 @@ def default_call(api, image):
         matrix=MATRICES['hed_from_rgb' if api.endswith('separate_stains') else 'rgb_from_hed']
         return (image,matrix), {}
     return (image,), {}
+
+
+def draw_polygon_default_error(api,image,actual,expected):
+    """Exact frozen triangle outputs; labels describe descriptor carriers only."""
+    import numpy as np
+    assert api in ('draw.polygon','draw.polygon2mask')
+    if api=='draw.polygon' and not isinstance(expected,np.ndarray):
+        assert type(actual) is type(expected) is tuple and actual is not expected
+        assert len(actual)==len(expected)==2
+        pairs=list(zip(actual,expected))
+        assert actual[0] is not actual[1] and not np.shares_memory(*actual)
+        assert all(a is not e and not np.shares_memory(a,e)for a in actual for e in expected)
+    else:pairs=[(actual,expected)]
+    dtype=np.dtype(np.intp if api=='draw.polygon'else bool)
+    for a,e in pairs:
+        assert type(a) is type(e) is np.ndarray and a is not e
+        assert a.dtype==e.dtype==dtype and a.dtype.isnative and e.dtype.isnative
+        assert a.dtype.metadata is e.dtype.metadata is None
+        assert a.shape==e.shape and a.strides==e.strides
+        assert a.ndim==e.ndim==(1 if api=='draw.polygon'else 2)
+        for value in (a,e):
+            assert value.flags.owndata and value.base is None
+            assert value.flags.writeable and value.flags.aligned and value.flags.c_contiguous
+        assert a.flags.f_contiguous==e.flags.f_contiguous
+        assert not np.shares_memory(a,e)
+        if image is not None:assert a is not image and not np.shares_memory(a,image)
+        assert a.tobytes(order='C')==e.tobytes(order='C')
+    return 0.
 
 
 def draw_default_error(api,image,actual,expected):
@@ -919,6 +950,8 @@ def ellipsoid_default_error(image, actual, expected):
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api in ('draw.polygon','draw.polygon2mask'):
+        draw_polygon_default_error(api,image,actual,expected);return
     if api == 'draw.ellipsoid':
         ellipsoid_default_error(image, actual, expected)
         return
@@ -998,6 +1031,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api in ('draw.polygon','draw.polygon2mask'):
+        raise ValueError('Drawing polygon requires exact coordinate/bool words and owning storage; call assert_default_parity')
     if api == 'draw.ellipsoid':
         raise ValueError('draw.ellipsoid requires exact array words and owning storage')
     if api == 'draw.line_nd':

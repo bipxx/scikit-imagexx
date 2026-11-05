@@ -73,6 +73,7 @@ void bind_circle_perimeter_aa(pybind11::module_&);
 void bind_line_nd(pybind11::module_&);
 void bind_draw_ellipsoid(pybind11::module_&);
 void bind_draw_ellipse_perimeter(pybind11::module_&);
+void bind_draw_polygon(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -883,6 +884,7 @@ PYBIND11_MODULE(_core, m) {
     bind_line_nd(m);
     bind_draw_ellipsoid(m);
     bind_draw_ellipse_perimeter(m);
+    bind_draw_polygon(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);

@@ -1169,21 +1169,31 @@
       "api": "draw.polygon",
       "kind": "callable",
       "signature": "(r, c, shape=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_polygon_public.py::test_draw_polygon_saved_public_pipeline",
+      "benchmark": "benchmarks/draw_polygon.py",
+      "default_input_kind": "Frozen Python-int triangle geometry; image dtype labels are descriptor-only, not coordinate or image-pixel dtype coverage. Owned raster/orderedintp/boolscatter; numeric bounds, conversions, allocation and unsupported protocol/shape/frontiers explicit providers."
     },
     {
       "api": "draw.polygon2mask",
       "kind": "callable",
       "signature": "(image_shape, polygon)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_polygon_public.py::test_draw_polygon_saved_public_pipeline",
+      "benchmark": "benchmarks/draw_polygon.py",
+      "default_input_kind": "Frozen Python-int triangle geometry; image dtype labels are descriptor-only, not coordinate or image-pixel dtype coverage. Owned raster/orderedintp/boolscatter; numeric bounds, conversions, allocation and unsupported protocol/shape/frontiers explicit providers."
     },
     {
       "api": "draw.polygon_perimeter",

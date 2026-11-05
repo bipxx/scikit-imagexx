@@ -2274,10 +2274,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','draw'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2303,12 +2303,14 @@ def current_metadata_artifact(tmp_path):
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,258)
+    result=q.plan(ROOT,profile,260)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current258' and result['registry']['image_count']==258
-    assert result['product_members']==193 and result['SDK_members']==91
+    assert result['product_scope']=='current260' and result['registry']['image_count']==260
+    assert result['product_members']==195 and result['SDK_members']==92
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==90
+    assert len(result['public_groups']['public-post203'])==95
+    assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==96
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2316,7 +2318,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert 'lib/cmake/skimagexx/skimagexxTargets-'+('debug' if profile=='debug' else 'release')+'.cmake' in layout['SDK_members']
 
 
-@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector'))
+@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector','missing-intake-group','mixed-intake'))
 def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypatch,fault):
     if fault=='unknown-api':
         registry=q.registry_expectation(ROOT)
@@ -2325,16 +2327,19 @@ def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypat
     else:
         groups=q.groups_for_source(ROOT)
         if fault=='missing-group':groups.pop('public-post203')
+        elif fault=='missing-intake-group':groups.pop('public-polygon-intake')
+        elif fault=='mixed-intake':groups['public-post203']+=('test_draw_polygon_benchmark_intake.py',)
         else:groups['public-post203']=tuple(n for n in groups['public-post203'] if n!='test_compare_images_public.py')
         monkeypatch.setattr(q,'groups_for_source',lambda _:groups)
     assert any('current qualification readiness:' in b for b in q.plan(ROOT,'modern')['blockers'])
 
 
-@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','wrong-scope'))
+@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','missing-cold-selector','wrong-scope'))
 def test_current_contract_rejects_missing_api_or_selector(fault):
     data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_text())
     if fault=='missing-api-map':data['post203_contracts'].pop('util.compare_images')
     elif fault=='missing-required-selector':data['required_selectors'].remove('tests/test_blur_effect_public.py')
+    elif fault=='missing-cold-selector':data['required_selectors'].remove('tests/test_draw_polygon_benchmark_intake.py')
     else:data['scope']='h_extrema23'
     with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
 
@@ -2364,7 +2369,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current258' and result['record_verified']
+        assert result['product_scope']=='current260' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2378,7 +2383,7 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',258)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',260)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
@@ -2832,12 +2837,13 @@ def test_current258_contract_requires_ellipse_perimeter(fault):
     'coverage/contracts/regionprops-coords-scaled-benchmark-v1.json',
     'tests/test_regionprops_coords_scaled_benchmark.py',
     'tests/test_regionprops_coords_scaled_benchmark_intake.py',
+    'coverage/contracts/draw-polygon-current-runtime-v1.json',
 ))
 def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',258)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',260)['blockers']
 
 
 @pytest.mark.parametrize('selector',(
@@ -2857,3 +2863,29 @@ def test_coords_scaled_contract_requires_benchmark_source_checks():
     data['required_selectors'].remove('tests/test_regionprops_coords_scaled_benchmark.py')
     with pytest.raises(q.QualificationError,match='selector contract differs'):
         q.current_contract(lambda n:json.dumps(data).encode())
+
+
+def test_polygon_cold_intake_uses_direct_journal_process_and_keeps_admission(tmp_path,monkeypatch):
+    groups=q.groups_for_source(ROOT)
+    assert groups['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
+    assert 'test_draw_polygon_benchmark_intake.py'not in groups['public-post203']
+    out=tmp_path/'qualification';out.mkdir();(out/'state.json').write_text(json.dumps(dict(source={},profile='minimum')))
+    calls=[]
+    monkeypatch.setattr(q,'source_state',lambda _: {})
+    monkeypatch.setattr(q,'Journal',lambda _:types.SimpleNamespace(run=lambda label,argv,env:calls.append((label,list(map(str,argv)),env))))
+    monkeypatch.setattr(q,'python_in',lambda _:Path(sys.executable))
+    monkeypatch.setattr(q,'GROUPS',{'public-polygon-intake':groups['public-polygon-intake']})
+    monkeypatch.setattr(q,'CORPORA',{})
+    monkeypatch.setattr(q,'environment',lambda package=None,scalar=False:{'scalar':scalar})
+    monkeypatch.setattr(q,'sdk',lambda *_:None)
+    q.qualify(out)
+    for mode in ('normal','scalar'):
+        admission=next(argv for label,argv,env in calls if label==mode+'-admission')
+        assert '_child'in admission and admission[-1]=='admission'
+        command=next(argv for label,argv,env in calls if label==mode+'-public-polygon-intake')
+        assert command[:5]==[sys.executable,'-m','pytest','-q','--capture=sys']
+        assert '_child'not in command
+        assert [arg for arg in command if arg.endswith('.py')]==[str(ROOT/'tests/test_draw_polygon_benchmark_intake.py')]
+        assert '--junitxml='+str(out/(mode+'-public-polygon-intake.xml'))in command
+        assert '--basetemp='+str(out/'pytest-tmp'/(mode+'-public-polygon-intake'))in command
+    assert len([label for label,_,_ in calls if label.endswith('-admission')])==2
