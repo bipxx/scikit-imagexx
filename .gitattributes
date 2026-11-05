@@ -672,3 +672,4 @@ benchmarks/combine-stains-half-minimum-initial.* -text
 coverage/evidence/current255-minimum-initial-performance-v1.json -text
 benchmarks/line-nd-minimum-initial.* -text
 coverage/evidence/current256-minimum-initial-performance-v1.json -text
+coverage/contracts/ellipsoid.json -text
