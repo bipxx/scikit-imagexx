@@ -2308,7 +2308,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['product_scope']=='current260' and result['registry']['image_count']==260
     assert result['product_members']==195 and result['SDK_members']==92
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==92
+    assert len(result['public_groups']['public-post203'])==91
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2316,7 +2316,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert 'lib/cmake/skimagexx/skimagexxTargets-'+('debug' if profile=='debug' else 'release')+'.cmake' in layout['SDK_members']
 
 
-@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector'))
+@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector','missing-intake-group','mixed-intake'))
 def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypatch,fault):
     if fault=='unknown-api':
         registry=q.registry_expectation(ROOT)
@@ -2325,6 +2325,8 @@ def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypat
     else:
         groups=q.groups_for_source(ROOT)
         if fault=='missing-group':groups.pop('public-post203')
+        elif fault=='missing-intake-group':groups.pop('public-polygon-intake')
+        elif fault=='mixed-intake':groups['public-post203']+=('test_draw_polygon_benchmark_intake.py',)
         else:groups['public-post203']=tuple(n for n in groups['public-post203'] if n!='test_compare_images_public.py')
         monkeypatch.setattr(q,'groups_for_source',lambda _:groups)
     assert any('current qualification readiness:' in b for b in q.plan(ROOT,'modern')['blockers'])
@@ -2814,3 +2816,29 @@ def test_current258_contract_requires_ellipse_perimeter(fault):
         selector={'reference':'tests/test_ellipse_perimeter_reference.py','public':'tests/test_draw_ellipse_perimeter_public.py','default':'tests/test_draw_ellipse_perimeter_default.py','benchmark':'tests/test_ellipse_perimeter_benchmark.py'}[fault]
         data['required_selectors'].remove(selector)
     with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode())
+
+
+def test_polygon_cold_intake_uses_direct_journal_process_and_keeps_admission(tmp_path,monkeypatch):
+    groups=q.groups_for_source(ROOT)
+    assert groups['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
+    assert 'test_draw_polygon_benchmark_intake.py'not in groups['public-post203']
+    out=tmp_path/'qualification';out.mkdir();(out/'state.json').write_text(json.dumps(dict(source={},profile='minimum')))
+    calls=[]
+    monkeypatch.setattr(q,'source_state',lambda _: {})
+    monkeypatch.setattr(q,'Journal',lambda _:types.SimpleNamespace(run=lambda label,argv,env:calls.append((label,list(map(str,argv)),env))))
+    monkeypatch.setattr(q,'python_in',lambda _:Path(sys.executable))
+    monkeypatch.setattr(q,'GROUPS',{'public-polygon-intake':groups['public-polygon-intake']})
+    monkeypatch.setattr(q,'CORPORA',{})
+    monkeypatch.setattr(q,'environment',lambda package=None,scalar=False:{'scalar':scalar})
+    monkeypatch.setattr(q,'sdk',lambda *_:None)
+    q.qualify(out)
+    for mode in ('normal','scalar'):
+        admission=next(argv for label,argv,env in calls if label==mode+'-admission')
+        assert '_child'in admission and admission[-1]=='admission'
+        command=next(argv for label,argv,env in calls if label==mode+'-public-polygon-intake')
+        assert command[:5]==[sys.executable,'-m','pytest','-q','--capture=sys']
+        assert '_child'not in command
+        assert [arg for arg in command if arg.endswith('.py')]==[str(ROOT/'tests/test_draw_polygon_benchmark_intake.py')]
+        assert '--junitxml='+str(out/(mode+'-public-polygon-intake.xml'))in command
+        assert '--basetemp='+str(out/'pytest-tmp'/(mode+'-public-polygon-intake'))in command
+    assert len([label for label,_,_ in calls if label.endswith('-admission')])==2

@@ -61,8 +61,10 @@ jobs:
       - run: python tools/diagnose_color_precision.py
       - run: python tools/diagnose_distance_precision.py
       - run: python tools/ci_measurement_artifacts.py inventory
+      - name: Polygon NumPy-only fixture intake in a fresh process
+        run: python -m pytest -q tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-benchmark-intake.xml
       - name: Polygon saved defaults and installed boundary normal
-        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-normal.xml
+        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-normal.xml
       - name: Polygon saved defaults and installed boundary disabled
         run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-disabled.xml
         env:
@@ -91,9 +93,9 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as stream:
               stream.write('SKIMAGEXX_RECONSTRUCTION_PRIMARY_SOURCE=' + source.as_posix() + '\n')
           PY
-      - run: python -m pytest -q
+      - run: python -m pytest -q --ignore=tests/test_draw_polygon_benchmark_intake.py
       - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
-      - run: python -m pytest -q
+      - run: python -m pytest -q --ignore=tests/test_draw_polygon_benchmark_intake.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
@@ -399,8 +401,10 @@ jobs:
         run: python -m pytest -q tests/test_line_aa_reference.py tests/test_line_aa_public.py tests/test_line_aa_default.py --junitxml=build/ci-artifacts/line-aa-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Polygon NumPy-only fixture intake in a fresh process
+        run: python -m pytest -q tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-benchmark-intake.xml
       - name: Polygon saved defaults and installed boundary normal
-        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-normal.xml
+        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-normal.xml
       - name: Polygon saved defaults and installed boundary disabled
         run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-disabled.xml
         env:

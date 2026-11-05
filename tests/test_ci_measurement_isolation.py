@@ -942,7 +942,10 @@ def test_polygon_shared_installed_and_source_only_gate_closure():
     blocks=jobs((ROOT/'.github/workflows/ci.yml').read_text())
     for job_name in ('check','numpy-minimum'):
         job=blocks[job_name]
-        assert 'tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py tests/test_draw_polygon_benchmark_intake.py' in job
+        assert 'tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=' in job
+        assert 'test_draw_polygon_default.py tests/test_draw_polygon_benchmark_intake.py' not in job
+        assert job.count('run: python -m pytest -q tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-benchmark-intake.xml')==1
+        if job_name=='check':assert job.count('python -m pytest -q --ignore=tests/test_draw_polygon_benchmark_intake.py')==2
         assert 'draw-polygon-normal.xml' in job and 'draw-polygon-disabled.xml' in job
         assert job.split('draw-polygon-disabled.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
         if job_name=='numpy-minimum':assert job.index('draw-polygon-normal.xml')<job.index('ci_measurement_artifacts.py freeze')
