@@ -716,3 +716,6 @@ coverage/contracts/regionprops-state-lazy-runtime-v1.json -text
 benchmarks/region-stain-warm-same-host-v1/*.json -text
 benchmarks/region-stain-warm-same-host-v1/*.jsonl -text
 coverage/evidence/region-stain-warm-same-host-discard-v1.json -text
+benchmarks/ellipse-perimeter-minimum-initial.json -text
+benchmarks/ellipse-perimeter-minimum-initial.batches.jsonl -text
+coverage/evidence/current258-minimum-initial-performance-v1.json -text

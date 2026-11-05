@@ -32,10 +32,10 @@
         "draw-ellipse-perimeter-reference-v1"
       ],
       "acceptance": "Reusepeerednative573/SDKe392/frontenda742/benchmarkaa94. Actualsourcecensus193product91SDK/31families62checks/258images261funcs/1inventoryrowdelta. Completeactualprebuildselectorclosure/importrefusal;4realCLIs stoppedbeforemeasure; independentwiring/workflowreviews thenone genuine/latestonly168samples. Terminalwastecloseout andnextplancorrection; no newenv/fullSDK/localfullcore/originalrecapture/timingwithoutGO.",
-      "current_checkpoint": "Exactdca genuine41972961044 root auditfbeb2bd6:193product/91SDK/16497XML0bad/2134sourcefiles,12cases168samples/10wins2lossesGM4.839609; independent review pending. Full41974178441 minimum failed matrix admission BEFOREellipsechecks on natural unassessedLinuxNP1.24SkylakeX; other3live at diagnosis. Main qualified257.",
+      "current_checkpoint": "Exactdca genuine41972961044 root auditfbeb2bd6/peer32833985:193product/91SDK/16497XML0bad/2134sourcefiles,12cases168samples/10wins2lossesGM4.839609; Scoped genuine/performance admission complete; public receipt coverage/evidence/current258-minimum-initial-performance-v1.json. Full41974178441 minimum failed matrix admission BEFOREellipsechecks on natural unassessedLinuxNP1.24SkylakeX; other3live at diagnosis. Main qualified257.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Close independent genuine/performance review and publish scoped result with point/unit losses. C diagnoses/proposes missing actualSkylakeX matrixcertificate; no whitelist/forcedCPU/unchangedretry. Preserve failedcampaign and assess remainingprofiles before successor; no sourcepromotion until fullqualification."
+        "action": "Scoped genuine/performance result admitted/published,10wins2losses retained; no repeated download/audit/timing. C assesses exactLinuxNP1.24SkylakeX matrixcertificate before changedsource readiness andsuccessorqualification; preserve failedrun/remainingprofileoutcomes. Main stays257 untilwholecampaign andsourceprojection."
       }
     },
     {
@@ -60,7 +60,7 @@
       "current_checkpoint": "Accepted reference-only eaf8cc25 merged ed469ace.28 once-only sequences/322steps/8FPevents, capture peer eda00a11, postprocess peer6e0f2c57 and6 saved validators closed. No native/class completion credit. Waste/reuse: saved originals and48 prior intake checks reused; no recapture. Next interface proposal9ef92e66 ready for review.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Review scalar/FP proposal9ef92e66 and freeze typed header before native/Python/SDK consumers. Preserve current mask size, area cache/evaluation order and zero/zero FP semantics; own area reduction. Remaining35properties unassessed. No repeated reference task."
+        "action": "Headerda553 frozen; saved-data-derived scalar/native/Python/SDK implementation split into three existing-queue packets. Ref remainsclosed, no recapture. Review nativev2 correctedcompiler-scalar proof, frontend saved-row parity, andSDKpeer3a81 thencomposeonecurrentruntimecontext/genuinecandidate. Remaining35properties andwiderdomainsstayopen."
       }
     },
     {
@@ -35970,6 +35970,102 @@
           "correction": "Only workflow sys.path.insert(0, str(Path(benchmarks).resolve())) before unchanged runpy; production source, driver, contracts, method, cases and original two-hour clock unchanged."
         }
       ]
+    },
+    {
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "base_sha": "acc15b102cb2a5fb7a77beb0b2875c0fd6a2274f",
+      "id": "regionprops-scalar-native-v1",
+      "owner": "qualification251_readiness",
+      "branch": "feature/regionprops-scalar-native-v1",
+      "state": "validating",
+      "owns": [
+        "include/skimagexx/regionprops_state.hpp",
+        "src/regionprops_state.cpp",
+        "tests/test_regionprops_scalar_native.cpp",
+        "coverage/contracts/regionprops-scalar-native-v1.json"
+      ],
+      "depends_on": [
+        "regionprops-bbox-extent-reference-v1"
+      ],
+      "provided_interfaces": {
+        "scalar-f64-v1": {
+          "state": "frozen",
+          "definition": "RegionPropsScalar64 { uint64_t bits; unsigned fp_status; }; regionprops_scaled_count_f64(size_t,double); regionprops_extent_f64(double,double); SDK statuses invalid1/divide2/overflow4/underflow8; count<=min(2^53,INTP_MAX), pixelarea +0 or[2^-256,2^256], operands +0 or[2^-256,2^309], nearest/gradual;0/0negativeqNaN.",
+          "sha256": "120b0a98b8bef8fb17729fe1fb716a6ccc3ec5f3a0a432b1b92dc00527825a20",
+          "source": "da553c7c0651311a7aebd90c6fca891adad53e02"
+        }
+      },
+      "acceptance": "Saved scalarwords/FPevents and bounded independent controls, strictFP,normal/compiler-scalar/sanitizer plusactualMSVCcompile;callerfenv restored,oldgeometry/populationunchanged. Independent native review, scopedlimits andterminalresult/waste/reuse/nextplancorrection beforeconsumers accepted.",
+      "current_checkpoint": "Sourceaa3bfa34; normal/sanitizer andMSVCproofsclosed. Rootcode/proofreview foundexplicitOpenMP SIMD flag omission in claimed compiler-scalar mode. Correctonlythatmode with-fno-openmp-simd, preservev1 andnormal/sanitizer/MSVC. FrozenABI/PICunchanged.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Review versioned corrected compiler-scalar proof, sourcecanonicalLF/rawproofhashscope, thenindependentnativeadmission. No replayunchangedproofs/fullSDK/originals/timing."
+      }
+    },
+    {
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "base_sha": "acc15b102cb2a5fb7a77beb0b2875c0fd6a2274f",
+      "id": "regionprops-bbox-extent-frontend-v1",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/regionprops-bbox-extent-frontend-v1",
+      "state": "implementing",
+      "owns": [
+        "python/skimagexx/_regionprops_state_class.py",
+        "src/bind_regionprops_state.cpp",
+        "tests/test_regionprops_bbox_extent_public.py",
+        "coverage/contracts/regionprops-bbox-extent-frontend-v1.json"
+      ],
+      "depends_on": [
+        "regionprops-scalar-native-v1"
+      ],
+      "dependency_requirements": {
+        "regionprops-scalar-native-v1": {
+          "interface": "scalar-f64-v1"
+        }
+      },
+      "acceptance": "Reuse28savedsequences, nativeC-return/providerdenial, scalarboxing/words/cache/currentimage/dependencyorder/FPcallbackphases inminimum/modern available/disabled worker1/4. Affectedoldarea/cache/aliascontrols;literalalready-evaluatedproviderfrontiers disclosed. Independentpeer, terminalwaste/reuse,nextgate beforeintegration; no neworiginal/environment/fullcore/timing.",
+      "current_checkpoint": "Frozenheaderda553/PIC57b437 released. Implementactualclassfile notlazybridge; bridgesourceunchanged/no warmoptimization. Prospectivepubliccasefreeze beforechangedbindercompile/link.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Completeboundedfrontend and actualsavedrow modesusingreleasedleaf/retainedcoreobjects; freezehandoff forindependentreview. Scalarf64firstpartitiononly, remainingclass/domainsopen."
+      }
+    },
+    {
+      "kind": "implementation",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "base_sha": "acc15b102cb2a5fb7a77beb0b2875c0fd6a2274f",
+      "id": "regionprops-scalar-sdk-v1",
+      "owner": "integrator",
+      "branch": "sdk/regionprops-scalar-v1",
+      "state": "parity_passed",
+      "owns": [
+        "tests/test_component_consumers_native.cpp"
+      ],
+      "depends_on": [
+        "regionprops-scalar-native-v1"
+      ],
+      "dependency_requirements": {
+        "regionprops-scalar-native-v1": {
+          "interface": "scalar-f64-v1"
+        }
+      },
+      "acceptance": "Existinginstalledcomponentfamily,actualrelocatedfind_package/exportedtargetheader+.d+archive/mapproof. Visiblepopulation/currentdenom/cachedarea/errorstatus/fenv/workers1/4/defaultrestore;MSVCcompile scopeexplicit. Independentreview pluscloseout; no newfamily/fullSDK/replayoldmillioncontrols.",
+      "current_checkpoint": "Consumer8424a75c, assembledgenuine258SDK91/173members/replaced1leaf;30controls pernormal/runtimedisabled withworkers1/4/default1;MSVCcompile0. Root handoff6ac859c6 independentlyreviewed3a81d40f. No source/librarypromotion ornewgenuineSDKclaim.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "ReuseacceptedscopedSDKproofinsharedintegrationafter native/frontend peers; carrychangedconsumer/sourceclosure/strictFP/newruntimecontext. Genuineupdatedproduct/qualification/performance remainopen."
+      }
     }
   ],
   "unassigned_inventoried_apis": [

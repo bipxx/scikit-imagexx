@@ -1,0 +1,139 @@
+{
+  "source": "dca7c03dab19a4c6fe3a1e6879973590c51d273a",
+  "run": 41972961044,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41972961044",
+  "admitted_scope": "Exact genuine minimum product and12 initial ellipse-perimeter public-call one-worker workloads only. No fullAPI contract, wholeproduct qualification, priorCPP optimizationKEEP or librarywide speed claim.",
+  "prepared_members": {
+    "product": 193,
+    "SDK": 91,
+    "XML": 16497
+  },
+  "worker_count": 1,
+  "cases": 12,
+  "samples": 168,
+  "wins": 10,
+  "losses": 2,
+  "geometric_mean_original_over_cpp": 4.839609073894569,
+  "minimum_accepted_batch_ns": 103598967,
+  "minimum_warmup_group_ns": 252808687,
+  "runtime": {
+    "source_sha256": "7916317b7fa34517ca3b9b1b718a42ae2216165d0a14f9c7a63a5eaacdc62c0f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "core_sha256": "ffa7844e506133a982a32a8a03ed9c4e61227244a0c6c67aa9e0751a9e55f444",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39"
+  },
+  "production_source_sha256": "7916317b7fa34517ca3b9b1b718a42ae2216165d0a14f9c7a63a5eaacdc62c0f",
+  "core_sha256": "ffa7844e506133a982a32a8a03ed9c4e61227244a0c6c67aa9e0751a9e55f444",
+  "reports": [
+    {
+      "path": "benchmarks/ellipse-perimeter-minimum-initial.json",
+      "sha256": "634e4fc3096fefe9661f462bbbfd28def2e530fb8c717fc5a2d4ad7f7df02d2a",
+      "bytes": 150200,
+      "artifact": 13390299722,
+      "member": "ci-ellipse-perimeter.json",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/ellipse-perimeter-minimum-initial.batches.jsonl",
+      "sha256": "69474c60e6a9d3858c5826e39713fa466b1fde0a7ff6102f3b43ab99a60110ff",
+      "bytes": 191587,
+      "artifact": 13390299722,
+      "member": "ci-ellipse-perimeter.batches.jsonl",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/ellipse-perimeter-minimum-initial.md",
+      "sha256": "9b02a7867f2423330b6aff1cc1ab5fa15a0c1b9a851769cfe005c11f2bc13603",
+      "bytes": 2392,
+      "artifact": 13390299722,
+      "member": "ci-ellipse-perimeter.md",
+      "unchanged_raw_bytes": false
+    }
+  ],
+  "retention": {
+    "artifact": {
+      "id": 13390299722,
+      "node_id": "MDg6QXJ0aWZhY3QxMzM5MDI5OTcyMg==",
+      "name": "ci-performance-minimum",
+      "size_in_bytes": 85520204,
+      "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/13390299722",
+      "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/13390299722/zip",
+      "expired": false,
+      "digest": "sha256:4134b70381886b1306d2e804fac6ca817c5594709e06033a8696c4956b609c93",
+      "created_at": "2026-11-05T05:26:51Z",
+      "updated_at": "2026-11-05T05:26:51Z",
+      "expires_at": "2027-02-03T05:16:22Z",
+      "workflow_run": {
+        "id": 41972961044,
+        "repository_id": 1427753300,
+        "head_repository_id": 1427753300,
+        "head_branch": "integrate/ellipse-perimeter-v1",
+        "head_sha": "dca7c03dab19a4c6fe3a1e6879973590c51d273a"
+      }
+    },
+    "path": "build\\candidate258-genuine-minimum-v1\\retained-v1\\13390299722.zip",
+    "sha256": "4134b70381886b1306d2e804fac6ca817c5594709e06033a8696c4956b609c93",
+    "role": "final consumer only; producer not downloaded"
+  },
+  "root_review": {
+    "path": "build/candidate258-genuine-minimum-v1/root-audit-v1.json",
+    "sha256": "fbeb2bd6860c41674ec8dd1d061102b37a420ab3ed31cd14c9edbefc939c5e95",
+    "bytes": 8102
+  },
+  "independent_review": {
+    "path": "build/candidate258-independent-genuine-review-v1/review.json",
+    "sha256": "3283398540226076cbe2a68e32bbcf4549a09ac963d1247ae1d5e6ef9a73f0e7",
+    "bytes": 8954
+  },
+  "input_auth": {
+    "path": "build/candidate258-genuine-minimum-v1/input-auth-v1/audit.json",
+    "sha256": "8f104336a68caf988f0c77b1934a5bcdb0b13d20897a7e3ec63b0c614543f650"
+  },
+  "raw_reconstruction": {
+    "path": "build/candidate258-genuine-minimum-v1/reports-v1/verification.json",
+    "sha256": "425f239866bf8f8324be008ced5b04adb45d8e13db290d2e22791b5750d292c0"
+  },
+  "binary_label_correction": "Historical metadata numpy_binary_sha256 is actual skimage.draw._draw binary; explicitly verified against frozen original binary_sha256 and genuine skimage package members. NumPy package authenticated separately.",
+  "losses_open": [
+    {
+      "case_id": "ellipse-perimeter/point",
+      "original_ms": 0.0004444921390153082,
+      "cpp_ms": 0.0012800281163186664,
+      "original_over_cpp": 0.3472518559152108,
+      "cpp_minus_original_ms": 0.0008355359773033581,
+      "samples_per_backend": 7,
+      "minimum_batch_ns": 105362583,
+      "warmup_elapsed_ns": [
+        352545198,
+        351069957
+      ]
+    },
+    {
+      "case_id": "ellipse-perimeter/unit",
+      "original_ms": 0.001338719816043777,
+      "cpp_ms": 0.0015460212886209495,
+      "original_over_cpp": 0.8659129249364442,
+      "cpp_minus_original_ms": 0.0002073014725771725,
+      "samples_per_backend": 7,
+      "minimum_batch_ns": 112386641,
+      "warmup_elapsed_ns": [
+        252808687,
+        350758429
+      ]
+    }
+  ],
+  "qualification_boundary": "Full258 minimum41974178441 failed natural matrix admission on unassessedLinuxNumPy1.24SkylakeX; not ellipse numericalfailure. Main staysqualified257 until correctedwholecampaignadmission andsourceprojection. No failurewaiver.",
+  "closeout": {
+    "result": "Independent scoped admission complete; all168rawsamples/566journal events retained,10wins2losses explicit.",
+    "waste_reuse": "Finalconsumer85.52MB downloaded/authenticated once; producer omitted, reusedstd auditors andsavedcontracts, no scientificreplay/localbuild/timing. Readerempty-stride/binarylabel correctionsonly; independentpeer used small authenticatedevidence.",
+    "next_owner_trigger": "Rootpublishes scopedresult andpreserves point/unit bottlenecks. C assesses missingmatrixcertificate before anyqualification successor. Regionproperty native/frontend/SDK packet proceedsindependently."
+  }
+}
