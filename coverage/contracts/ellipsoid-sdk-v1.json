@@ -1,0 +1,83 @@
+{
+  "api": "draw.ellipsoid",
+  "state": "assembled-relocated-SDK90-component-pending-independent-review",
+  "native_commit": "860546fae31c3039b1b583b9e596c254be7e55d3",
+  "header_freeze": "3f000b6c930a20cf6921c205d06e600ca10a2798",
+  "client": "tests/cmake_consumer/draw_ellipsoid_consumer.cpp",
+  "installation": {
+    "donor": "build/candidate256-genuine-minimum-v1/input-auth-v1/project-members",
+    "authentication": "build/candidate256-genuine-minimum-v1/input-auth-v1/audit.json",
+    "genuine_donor_sdk_members": 89,
+    "assembled_sdk_members": 90,
+    "archive_old_objects": 171,
+    "archive_new_objects": 172,
+    "only_additions": [
+      "include/skimagexx/draw_ellipsoid.hpp",
+      "draw_ellipsoid.cpp.o"
+    ],
+    "old_archive_hash_reused": true,
+    "build": "Ignored isolated CMake find_package(skimagexx CONFIG REQUIRED), link skimagexx::skimagexx; exactly one new client TU, existing archive/PIC objects unchanged"
+  },
+  "controls": {
+    "saved_return_records": 19,
+    "profiles": "Saved return words identical across both reference profiles;19minimum records reused from authenticated native fixture without new originals.",
+    "float64_max_ulp": 0,
+    "shape": "Exact, including even dimensions and step-not-exact probe/grid difference",
+    "analytic": "Axes32/spacing1,67^3=300763, exact pow2 distance bool/f64; above262144 parallel threshold, workers1/4.",
+    "other": [
+      "default process-wide workers1 restored",
+      "true has_avx2 query before first algorithm dispatch; unset1 and actualdisable1=>0",
+      "caller-owned sentinel-guarded outputs",
+      "no invalid/div0/overflow/underflow flags in fills",
+      "typed refusal leaves plan unchanged",
+      "prepared axis/square storage survives caller operand mutation and deep plan copy mutation"
+    ],
+    "results": {
+      "normal": {
+        "actual_avx2": true,
+        "records": 19,
+        "controls": 1203292,
+        "workers": [
+          1,
+          4
+        ],
+        "restored": true
+      },
+      "disabled": {
+        "actual_avx2": false,
+        "records": 19,
+        "controls": 1203292,
+        "workers": [
+          1,
+          4
+        ],
+        "restored": true
+      },
+      "old_archive_objects": 171,
+      "new_archive_objects": 172,
+      "new_member_sha256": "a49d6c73b02a3ccdf8af795f32a8ef8db918eb15a348eb3abbd429371095691e",
+      "archive_not_rehashed": true
+    }
+  },
+  "scope": {
+    "typed": "Owned prepare-plan and contiguous caller-owned outputs; ordinary-nearest finite positive float64 axes/spacing in[2^-128,2^128],<=16Mvoxels",
+    "partial_sdk": true,
+    "genuine_new_ellipsoid": false,
+    "independent_native_review": false,
+    "author": "Native author also authored this client; independent review/admission owned by root/B",
+    "simd": "Actual public dispatch capability toggle verified; this leaf uses compiler SSE2 SIMD, no custom AVX2 dispatch and no claim disable key removes compiler SIMD.",
+    "unassessed": [
+      "Python/protocol/error/provider boundaries",
+      "NumPy array metadata ownership at frontend",
+      "Full API SDK/other clients and platforms",
+      "Genuine installed new API and performance"
+    ]
+  },
+  "closeout": {
+    "result": "Both installed-client processes PASS1203292controls each,19saved returns plus large analytic workers1/4. Exactly1newclientTU compiled and linked.",
+    "reuse": "Authenticated genuineSDK89 source/headers/config/archive reused without oldarchive rehash; released ellipsoid PIC reused unchanged; existing native fixtures sliced to first19rather than original recapture.",
+    "waste": "Initial copy omitted license share directory; corrected by copying8existing license files before sealing/count90, no executable/science replay. No failed scientific checks. Earlier guessed missing receipt path was inspection-only; actual existing audit used. Dependency reader hit Windows long-path limit; extended path prefix fixed only metadata intake, no executable/science replay.",
+    "observed_cost": "Single build/run orchestration returned success after one asynchronous command, no dedicated performance/waste timers.",
+    "next_owner_trigger": "Root/B independent kernel/source review and peer SDK review; root shipping/genuine1worker benchmark after Cfrontend. No shared CMake/consumer counters altered."
+  }
+}

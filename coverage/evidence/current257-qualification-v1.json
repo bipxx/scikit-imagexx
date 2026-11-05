@@ -1,0 +1,2179 @@
+{
+  "schema": "public-qualification-reviews-v1",
+  "run": 41962339458,
+  "source": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+  "admission": {
+    "path": "coverage/evidence/public257-whole-product-admission.json",
+    "sha256": "a1e3cc875c0766f02e40ab4c8a1c9fa7f544c912998d517c3f344dcd9fbe4afc"
+  },
+  "profile_reviews": {
+    "minimum": {
+      "receipt": {
+        "path": "build/public257-qualification-v1/minimum-raw-review.json",
+        "sha256": "3f81f38d05daf05f6f5376ccd15cf9c95f75641b0d36ecf9d008dceb2fcb6501"
+      },
+      "summary": {
+        "terminal_status": "completed",
+        "terminal_conclusion": "success",
+        "run": 41962339458,
+        "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+        "profile": "minimum",
+        "artifact": 13387758607,
+        "artifact_sha256": "b6483423b9d64d93188b97aa2e997b5e2f57ef1a2baf06d15afe0dd95dedd9a5",
+        "whole_product_promotion": false,
+        "manifest_passed": true,
+        "manifest_sha256": "8179e14fff43fa1dac3d11ea826187d627f1c2e096b018abaf39a254f27244af",
+        "manifest_failures": [],
+        "sealed_records_rehashed": 30944,
+        "sealed_bytes_rehashed": 2151980417,
+        "independent_host_verify": {
+          "passed": true,
+          "manifest_sha256": "8179e14fff43fa1dac3d11ea826187d627f1c2e096b018abaf39a254f27244af",
+          "records_rehashed": 30944
+        },
+        "source_derived_closure": {
+          "product_members": 191,
+          "SDK_members": 90
+        },
+        "actual_testcase_nodes": {
+          "normal-public-H-extrema": 6,
+          "normal-public-NMI": 874,
+          "normal-public-Reconstruction": 904,
+          "normal-public-rank": 46512,
+          "normal-public-bilateral": 12228,
+          "normal-public-decisions": 7432,
+          "normal-public-TV": 3553,
+          "normal-public-Bregman": 763,
+          "normal-public-Matrix": 10070,
+          "normal-public-MaxTree": 2300,
+          "normal-public-MaxTree-fixes": 622,
+          "normal-public-consumers": 3028,
+          "normal-metrics-leaf-half": 249,
+          "normal-metrics-policies": 3706,
+          "normal-shared": 9694,
+          "normal-public-counts": 2975,
+          "normal-public-Li-u16": 1,
+          "normal-public-post203": 10654,
+          "scalar-public-H-extrema": 6,
+          "scalar-public-NMI": 874,
+          "scalar-public-Reconstruction": 904,
+          "scalar-public-rank": 46512,
+          "scalar-public-bilateral": 12228,
+          "scalar-public-decisions": 7432,
+          "scalar-public-TV": 3553,
+          "scalar-public-Bregman": 763,
+          "scalar-public-Matrix": 10070,
+          "scalar-public-MaxTree": 2300,
+          "scalar-public-MaxTree-fixes": 622,
+          "scalar-public-consumers": 3028,
+          "scalar-metrics-leaf-half": 249,
+          "scalar-metrics-policies": 3706,
+          "scalar-shared": 9694,
+          "scalar-public-counts": 2975,
+          "scalar-public-Li-u16": 1,
+          "scalar-public-post203": 10654
+        },
+        "xml": {
+          "normal-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "failed_nodes": [],
+        "drawing_xml_nodes": {
+          "normal": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          },
+          "scalar": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          }
+        },
+        "xml_totals": {
+          "tests": 231142,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "SDK_checks": 60,
+        "failed_commands": [],
+        "frozen_corpora_validated": {
+          "normal-consumers-corpus.json": 878,
+          "normal-statistics-corpus.json": 1379,
+          "normal-percentile-corpus.json": 2552,
+          "normal-bilateral-corpus.json": 1008,
+          "normal-decisions-corpus.json": 694,
+          "normal-metrics-corpus.json": 1231,
+          "scalar-consumers-corpus.json": 878,
+          "scalar-statistics-corpus.json": 1379,
+          "scalar-percentile-corpus.json": 2552,
+          "scalar-bilateral-corpus.json": 1008,
+          "scalar-decisions-corpus.json": 694,
+          "scalar-metrics-corpus.json": 1231
+        },
+        "natural_matrix_receipts": [
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-3951.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-3969.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-3980.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-3993.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4005.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4025.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4055.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4069.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4116.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4133.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4149.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4163.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4177.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4189.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4204.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4214.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4227.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4298.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4307.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4320.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4457.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4466.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4652.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4661.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4673.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4685.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4703.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4731.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4743.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4762.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4780.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4793.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4803.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4816.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4833.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4847.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4856.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4870.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4976.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4985.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-4998.json",
+            "profile": "1.24.4"
+          },
+          {
+            "path": "public-qualification/minimum/matrix-runtime-admission-5158.json",
+            "profile": "1.24.4"
+          }
+        ],
+        "accepted_in_isolation": true,
+        "stager_required": true,
+        "stager_review": "Separate stage-only receipt; do not hash stage files in both reviewers."
+      }
+    },
+    "modern": {
+      "receipt": {
+        "path": "build/public257-qualification-v1/modern-raw-review.json",
+        "sha256": "4a1c45ec371d6335a4359653f262d4fd041b4065636c4440107ad6f2721abcbd"
+      },
+      "summary": {
+        "terminal_status": "completed",
+        "terminal_conclusion": "success",
+        "run": 41962339458,
+        "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+        "profile": "modern",
+        "artifact": 13387990991,
+        "artifact_sha256": "4b280f840321e671baeb756bb8dd5eebccf643aa4eb797f62940235d0d749171",
+        "whole_product_promotion": false,
+        "manifest_passed": true,
+        "manifest_sha256": "83fdf2f6fef531a4596fa0695229913d6c0352e384db7ce610bacd8d8ad0073b",
+        "manifest_failures": [],
+        "sealed_records_rehashed": 28869,
+        "sealed_bytes_rehashed": 2100683426,
+        "independent_host_verify": {
+          "passed": true,
+          "manifest_sha256": "83fdf2f6fef531a4596fa0695229913d6c0352e384db7ce610bacd8d8ad0073b",
+          "records_rehashed": 28869
+        },
+        "source_derived_closure": {
+          "product_members": 191,
+          "SDK_members": 90
+        },
+        "actual_testcase_nodes": {
+          "normal-public-H-extrema": 6,
+          "normal-public-NMI": 874,
+          "normal-public-Reconstruction": 904,
+          "normal-public-rank": 46512,
+          "normal-public-bilateral": 12228,
+          "normal-public-decisions": 7432,
+          "normal-public-TV": 3553,
+          "normal-public-Bregman": 763,
+          "normal-public-Matrix": 10070,
+          "normal-public-MaxTree": 2300,
+          "normal-public-MaxTree-fixes": 622,
+          "normal-public-consumers": 3028,
+          "normal-metrics-leaf-half": 249,
+          "normal-metrics-policies": 3706,
+          "normal-shared": 9694,
+          "normal-public-counts": 2975,
+          "normal-public-Li-u16": 1,
+          "normal-public-post203": 10654,
+          "scalar-public-H-extrema": 6,
+          "scalar-public-NMI": 874,
+          "scalar-public-Reconstruction": 904,
+          "scalar-public-rank": 46512,
+          "scalar-public-bilateral": 12228,
+          "scalar-public-decisions": 7432,
+          "scalar-public-TV": 3553,
+          "scalar-public-Bregman": 763,
+          "scalar-public-Matrix": 10070,
+          "scalar-public-MaxTree": 2300,
+          "scalar-public-MaxTree-fixes": 622,
+          "scalar-public-consumers": 3028,
+          "scalar-metrics-leaf-half": 249,
+          "scalar-metrics-policies": 3706,
+          "scalar-shared": 9694,
+          "scalar-public-counts": 2975,
+          "scalar-public-Li-u16": 1,
+          "scalar-public-post203": 10654
+        },
+        "xml": {
+          "normal-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "failed_nodes": [],
+        "drawing_xml_nodes": {
+          "normal": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          },
+          "scalar": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          }
+        },
+        "xml_totals": {
+          "tests": 231142,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "SDK_checks": 60,
+        "failed_commands": [],
+        "frozen_corpora_validated": {
+          "normal-consumers-corpus.json": 878,
+          "normal-statistics-corpus.json": 1379,
+          "normal-percentile-corpus.json": 2552,
+          "normal-bilateral-corpus.json": 1008,
+          "normal-decisions-corpus.json": 694,
+          "normal-metrics-corpus.json": 1231,
+          "scalar-consumers-corpus.json": 878,
+          "scalar-statistics-corpus.json": 1379,
+          "scalar-percentile-corpus.json": 2552,
+          "scalar-bilateral-corpus.json": 1008,
+          "scalar-decisions-corpus.json": 694,
+          "scalar-metrics-corpus.json": 1231
+        },
+        "natural_matrix_receipts": [
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4016.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4034.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4044.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4054.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4069.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4084.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4112.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4131.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4149.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4169.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4184.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4196.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4209.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4221.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4236.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4245.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4258.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4330.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4340.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4350.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4497.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4508.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4668.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4677.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4688.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4700.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4723.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4748.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4762.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4783.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4800.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4812.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4823.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4837.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4849.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4865.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4876.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4890.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4949.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4958.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-4969.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/modern/matrix-runtime-admission-5134.json",
+            "profile": "2.5.4"
+          }
+        ],
+        "accepted_in_isolation": true,
+        "stager_required": true,
+        "stager_review": "Separate stage-only receipt; do not hash stage files in both reviewers."
+      }
+    },
+    "debug": {
+      "receipt": {
+        "path": "build/public257-qualification-v1/debug-raw-review.json",
+        "sha256": "62e97f1948b7267a35d00d042378ce270d7ab8f92a22b6cc297fc933d0b5880c"
+      },
+      "summary": {
+        "terminal_status": "completed",
+        "terminal_conclusion": "success",
+        "run": 41962339458,
+        "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+        "profile": "debug",
+        "artifact": 13388405981,
+        "artifact_sha256": "3a2ba7d4e0063f35ac00930aad5e4490a15ec7718a305dc20b9f8edd9b83af5f",
+        "whole_product_promotion": false,
+        "manifest_passed": true,
+        "manifest_sha256": "64579a4f0402e98b772bfb23f5e426111b455c86161adf8a22b643f1d7303c01",
+        "manifest_failures": [],
+        "sealed_records_rehashed": 28788,
+        "sealed_bytes_rehashed": 3099853712,
+        "independent_host_verify": {
+          "passed": true,
+          "manifest_sha256": "64579a4f0402e98b772bfb23f5e426111b455c86161adf8a22b643f1d7303c01",
+          "records_rehashed": 28788
+        },
+        "source_derived_closure": {
+          "product_members": 191,
+          "SDK_members": 90
+        },
+        "actual_testcase_nodes": {
+          "normal-public-H-extrema": 6,
+          "normal-public-NMI": 874,
+          "normal-public-Reconstruction": 904,
+          "normal-public-rank": 46512,
+          "normal-public-bilateral": 12228,
+          "normal-public-decisions": 7432,
+          "normal-public-TV": 3553,
+          "normal-public-Bregman": 763,
+          "normal-public-Matrix": 10070,
+          "normal-public-MaxTree": 2300,
+          "normal-public-MaxTree-fixes": 622,
+          "normal-public-consumers": 3028,
+          "normal-metrics-leaf-half": 249,
+          "normal-metrics-policies": 3706,
+          "normal-shared": 9694,
+          "normal-public-counts": 2975,
+          "normal-public-Li-u16": 1,
+          "normal-public-post203": 10654,
+          "scalar-public-H-extrema": 6,
+          "scalar-public-NMI": 874,
+          "scalar-public-Reconstruction": 904,
+          "scalar-public-rank": 46512,
+          "scalar-public-bilateral": 12228,
+          "scalar-public-decisions": 7432,
+          "scalar-public-TV": 3553,
+          "scalar-public-Bregman": 763,
+          "scalar-public-Matrix": 10070,
+          "scalar-public-MaxTree": 2300,
+          "scalar-public-MaxTree-fixes": 622,
+          "scalar-public-consumers": 3028,
+          "scalar-metrics-leaf-half": 249,
+          "scalar-metrics-policies": 3706,
+          "scalar-shared": 9694,
+          "scalar-public-counts": 2975,
+          "scalar-public-Li-u16": 1,
+          "scalar-public-post203": 10654
+        },
+        "xml": {
+          "normal-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "failed_nodes": [],
+        "drawing_xml_nodes": {
+          "normal": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          },
+          "scalar": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          }
+        },
+        "xml_totals": {
+          "tests": 231142,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "SDK_checks": 60,
+        "failed_commands": [],
+        "frozen_corpora_validated": {
+          "normal-consumers-corpus.json": 878,
+          "normal-statistics-corpus.json": 1379,
+          "normal-percentile-corpus.json": 2552,
+          "normal-bilateral-corpus.json": 1008,
+          "normal-decisions-corpus.json": 694,
+          "normal-metrics-corpus.json": 1231,
+          "scalar-consumers-corpus.json": 878,
+          "scalar-statistics-corpus.json": 1379,
+          "scalar-percentile-corpus.json": 2552,
+          "scalar-bilateral-corpus.json": 1008,
+          "scalar-decisions-corpus.json": 694,
+          "scalar-metrics-corpus.json": 1231
+        },
+        "natural_matrix_receipts": [
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-3964.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-3980.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-3990.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4000.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4014.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4029.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4061.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4076.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4091.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4109.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4122.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4132.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4144.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4157.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4172.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4181.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4193.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4277.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4287.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4298.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4444.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4453.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4622.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4631.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4642.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4654.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4667.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4696.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4708.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4726.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4744.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4758.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4770.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4788.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4800.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4814.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4824.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4837.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4963.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4972.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-4982.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/debug/matrix-runtime-admission-5145.json",
+            "profile": "2.5.4"
+          }
+        ],
+        "accepted_in_isolation": true,
+        "stager_required": false,
+        "stager_review": "Separate stage-only receipt; do not hash stage files in both reviewers."
+      }
+    },
+    "windows": {
+      "receipt": {
+        "path": "build/public257-qualification-v1/windows-raw-review.json",
+        "sha256": "e5e5b80b1efb15c1a0b1641bd0b0cb14dfa0b4fb10906f55d848e4589aa58c99"
+      },
+      "summary": {
+        "terminal_status": "completed",
+        "terminal_conclusion": "success",
+        "run": 41962339458,
+        "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+        "profile": "windows",
+        "artifact": 13388091468,
+        "artifact_sha256": "e82e67f4f38d9dcbad83eaafaa8651c97b5110d07a5bf968466a141246eb576b",
+        "whole_product_promotion": false,
+        "manifest_passed": true,
+        "manifest_sha256": "a8c3e6e10312a8de15c3833cfeab8c4c20315de49ff25d0d5382f9f88e3909b6",
+        "manifest_failures": [],
+        "sealed_records_rehashed": 28943,
+        "sealed_bytes_rehashed": 2710865057,
+        "independent_host_verify": {
+          "passed": true,
+          "manifest_sha256": "a8c3e6e10312a8de15c3833cfeab8c4c20315de49ff25d0d5382f9f88e3909b6",
+          "records_rehashed": 28943
+        },
+        "source_derived_closure": {
+          "product_members": 191,
+          "SDK_members": 90
+        },
+        "actual_testcase_nodes": {
+          "normal-public-H-extrema": 6,
+          "normal-public-NMI": 874,
+          "normal-public-Reconstruction": 904,
+          "normal-public-rank": 46512,
+          "normal-public-bilateral": 12228,
+          "normal-public-decisions": 7432,
+          "normal-public-TV": 3553,
+          "normal-public-Bregman": 763,
+          "normal-public-Matrix": 10070,
+          "normal-public-MaxTree": 2300,
+          "normal-public-MaxTree-fixes": 622,
+          "normal-public-consumers": 3028,
+          "normal-metrics-leaf-half": 249,
+          "normal-metrics-policies": 3706,
+          "normal-shared": 9694,
+          "normal-public-counts": 2975,
+          "normal-public-Li-u16": 1,
+          "normal-public-post203": 10654,
+          "scalar-public-H-extrema": 6,
+          "scalar-public-NMI": 874,
+          "scalar-public-Reconstruction": 904,
+          "scalar-public-rank": 46512,
+          "scalar-public-bilateral": 12228,
+          "scalar-public-decisions": 7432,
+          "scalar-public-TV": 3553,
+          "scalar-public-Bregman": 763,
+          "scalar-public-Matrix": 10070,
+          "scalar-public-MaxTree": 2300,
+          "scalar-public-MaxTree-fixes": 622,
+          "scalar-public-consumers": 3028,
+          "scalar-metrics-leaf-half": 249,
+          "scalar-metrics-policies": 3706,
+          "scalar-shared": 9694,
+          "scalar-public-counts": 2975,
+          "scalar-public-Li-u16": 1,
+          "scalar-public-post203": 10654
+        },
+        "xml": {
+          "normal-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "normal-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-H-extrema": {
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-NMI": {
+            "tests": 874,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Reconstruction": {
+            "tests": 904,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-rank": {
+            "tests": 46512,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-bilateral": {
+            "tests": 12228,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-decisions": {
+            "tests": 7432,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-TV": {
+            "tests": 3553,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Bregman": {
+            "tests": 763,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Matrix": {
+            "tests": 10070,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree": {
+            "tests": 2300,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-MaxTree-fixes": {
+            "tests": 622,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-consumers": {
+            "tests": 3028,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-leaf-half": {
+            "tests": 249,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-metrics-policies": {
+            "tests": 3706,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-shared": {
+            "tests": 9694,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-counts": {
+            "tests": 2975,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-Li-u16": {
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "scalar-public-post203": {
+            "tests": 10654,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "failed_nodes": [],
+        "drawing_xml_nodes": {
+          "normal": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          },
+          "scalar": {
+            "test_draw_coordinates_public": 271,
+            "test_draw_coordinates_integration": 181,
+            "test_circle_perimeter_public": 147
+          }
+        },
+        "xml_totals": {
+          "tests": 231142,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "SDK_checks": 60,
+        "failed_commands": [],
+        "frozen_corpora_validated": {
+          "normal-consumers-corpus.json": 878,
+          "normal-statistics-corpus.json": 1379,
+          "normal-percentile-corpus.json": 2552,
+          "normal-bilateral-corpus.json": 1008,
+          "normal-decisions-corpus.json": 694,
+          "normal-metrics-corpus.json": 1231,
+          "scalar-consumers-corpus.json": 878,
+          "scalar-statistics-corpus.json": 1379,
+          "scalar-percentile-corpus.json": 2552,
+          "scalar-bilateral-corpus.json": 1008,
+          "scalar-decisions-corpus.json": 694,
+          "scalar-metrics-corpus.json": 1231
+        },
+        "natural_matrix_receipts": [
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-1148.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-1320.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-1364.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-1384.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-1852.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-2044.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-2348.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-2808.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-3196.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-3616.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-3652.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-4192.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-4656.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-4952.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-4976.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-5128.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-5252.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-5812.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-5836.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-5976.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-6264.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-6340.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-6408.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-6424.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-6452.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-7048.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-7304.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-732.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-7320.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-7428.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-7676.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-7744.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-7948.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-8080.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-8216.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-8240.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-8604.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-8748.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-8980.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-9032.json",
+            "profile": "2.5.4"
+          },
+          {
+            "path": "public-qualification/windows/matrix-runtime-admission-9100.json",
+            "profile": "2.5.4"
+          }
+        ],
+        "accepted_in_isolation": true,
+        "stager_required": true,
+        "stager_review": "Separate stage-only receipt; do not hash stage files in both reviewers."
+      }
+    }
+  },
+  "stager_reviews": {
+    "minimum": {
+      "receipt": {
+        "path": "build/public257-qualification-v1/minimum-stager-review.json",
+        "sha256": "d3cc9c7df210f915a8ffc676a9fccd166cdacad6688e71fba2693c72020c4a14"
+      },
+      "summary": {
+        "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE257_ADMISSION",
+        "run": 41962339458,
+        "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+        "profile": "minimum",
+        "artifact": 13387329130,
+        "artifact_sha256": "e967824e66db1d242e8f1001da4d78ff4264eb15c1dea8c777483cf8895d3001",
+        "product_json_sha256": "a58d999ee4568fcef9a456b2e49b8c22a2b9914c1159d543095fe84655c0de89",
+        "qualification_raw_review_sha256": "3f81f38d05daf05f6f5376ccd15cf9c95f75641b0d36ecf9d008dceb2fcb6501",
+        "qualification_manifest_sha256": "8179e14fff43fa1dac3d11ea826187d627f1c2e096b018abaf39a254f27244af",
+        "verified_stage_files": 2181,
+        "verified_stage_bytes": 839506659,
+        "source_derived_closure": {
+          "product_members": 191,
+          "SDK_members": 90
+        },
+        "SDK_checks": 60,
+        "whole_qualification_sealed_records_rehashed_again": 0,
+        "closeout": {
+          "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+          "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+          "next_plan_change": "Root admits only after four terminal successful same-source profiles, all required SDK/runtime/corpora/XML gates, and three authenticated stagers. Staging alone is not acceptance."
+        }
+      }
+    },
+    "modern": {
+      "receipt": {
+        "path": "build/public257-qualification-v1/modern-stager-review.json",
+        "sha256": "d7641207efe81a75199a8a031dec64b43e4e50376d5d8a43cba8dcb138106587"
+      },
+      "summary": {
+        "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE257_ADMISSION",
+        "run": 41962339458,
+        "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+        "profile": "modern",
+        "artifact": 13388105050,
+        "artifact_sha256": "bfe6e5ba27ec3467cbe146f0c00db7a9c97daad369fc114e5e8c4a2d05bddff3",
+        "product_json_sha256": "aae4239ffbf2dc89aa11e0696be64806a835193699801f54c80bde515c1bef75",
+        "qualification_raw_review_sha256": "4a1c45ec371d6335a4359653f262d4fd041b4065636c4440107ad6f2721abcbd",
+        "qualification_manifest_sha256": "83fdf2f6fef531a4596fa0695229913d6c0352e384db7ce610bacd8d8ad0073b",
+        "verified_stage_files": 2181,
+        "verified_stage_bytes": 836487108,
+        "source_derived_closure": {
+          "product_members": 191,
+          "SDK_members": 90
+        },
+        "SDK_checks": 60,
+        "whole_qualification_sealed_records_rehashed_again": 0,
+        "closeout": {
+          "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+          "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+          "next_plan_change": "Root admits only after four terminal successful same-source profiles, all required SDK/runtime/corpora/XML gates, and three authenticated stagers. Staging alone is not acceptance."
+        }
+      }
+    },
+    "windows": {
+      "receipt": {
+        "path": "build/public257-qualification-v1/windows-stager-review.json",
+        "sha256": "9e81f4876e1bc4f8adce22bc3047d9c1cd931eb6996353e5fe7f8ea3b8a0b28d"
+      },
+      "summary": {
+        "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE257_ADMISSION",
+        "run": 41962339458,
+        "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+        "profile": "windows",
+        "artifact": 13387872860,
+        "artifact_sha256": "304f9bfc19c9af6dccf44f9b1b009a7494c4bc506727e8ffc7acaf62e6a175e9",
+        "product_json_sha256": "3814e8cd32e2290caffe896d7a7b265004581b3839d7a747c4262102e61de82c",
+        "qualification_raw_review_sha256": "e5e5b80b1efb15c1a0b1641bd0b0cb14dfa0b4fb10906f55d848e4589aa58c99",
+        "qualification_manifest_sha256": "a8c3e6e10312a8de15c3833cfeab8c4c20315de49ff25d0d5382f9f88e3909b6",
+        "verified_stage_files": 2167,
+        "verified_stage_bytes": 841619831,
+        "source_derived_closure": {
+          "product_members": 191,
+          "SDK_members": 90
+        },
+        "SDK_checks": 60,
+        "whole_qualification_sealed_records_rehashed_again": 0,
+        "closeout": {
+          "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+          "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+          "next_plan_change": "Root admits only after four terminal successful same-source profiles, all required SDK/runtime/corpora/XML gates, and three authenticated stagers. Staging alone is not acceptance."
+        }
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "id": 13388405981,
+      "name": "public-qualification-debug",
+      "run": 41962339458,
+      "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\public257-qualification-v1\\13388405981.zip",
+      "bytes": 1664767956,
+      "sha256": "3a2ba7d4e0063f35ac00930aad5e4490a15ec7718a305dc20b9f8edd9b83af5f",
+      "seconds": 200.63056789990515,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13388105050,
+      "name": "rank-statistics-product-modern",
+      "run": 41962339458,
+      "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\public257-qualification-v1\\13388105050.zip",
+      "bytes": 211519256,
+      "sha256": "bfe6e5ba27ec3467cbe146f0c00db7a9c97daad369fc114e5e8c4a2d05bddff3",
+      "seconds": 16.34060569992289,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13388091468,
+      "name": "public-qualification-windows",
+      "run": 41962339458,
+      "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\public257-qualification-v1\\13388091468.zip",
+      "bytes": 1227534580,
+      "sha256": "e82e67f4f38d9dcbad83eaafaa8651c97b5110d07a5bf968466a141246eb576b",
+      "seconds": 119.77038190001622,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13387990991,
+      "name": "public-qualification-modern",
+      "run": 41962339458,
+      "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\public257-qualification-v1\\13387990991.zip",
+      "bytes": 1293635574,
+      "sha256": "4b280f840321e671baeb756bb8dd5eebccf643aa4eb797f62940235d0d749171",
+      "seconds": 206.65343780000694,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13387872860,
+      "name": "rank-statistics-product-windows",
+      "run": 41962339458,
+      "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\public257-qualification-v1\\13387872860.zip",
+      "bytes": 210422085,
+      "sha256": "304f9bfc19c9af6dccf44f9b1b009a7494c4bc506727e8ffc7acaf62e6a175e9",
+      "seconds": 19.09308210015297,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13387758607,
+      "name": "public-qualification-minimum",
+      "run": 41962339458,
+      "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\public257-qualification-v1\\13387758607.zip",
+      "bytes": 1332245797,
+      "sha256": "b6483423b9d64d93188b97aa2e997b5e2f57ef1a2baf06d15afe0dd95dedd9a5",
+      "seconds": 102.95780920004472,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13387329130,
+      "name": "rank-statistics-product-minimum",
+      "run": 41962339458,
+      "revision": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\public257-qualification-v1\\13387329130.zip",
+      "bytes": 214253379,
+      "sha256": "e967824e66db1d242e8f1001da4d78ff4264eb15c1dea8c777483cf8895d3001",
+      "seconds": 18.764997699996457,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "totals": {
+    "XML_checks": 924568,
+    "SDK_checks": 240,
+    "frozen_corpora": 48,
+    "sealed_records_rehashed": 117544,
+    "sealed_bytes_rehashed": 10063382612,
+    "stager_files_authenticated": 6529
+  },
+  "independent_review": {
+    "path": "build/public257-independent-admission-review-v1/review.json",
+    "sha256": "9a8cd9867c44c2a14837b18eaa9045102752accc380bd069c590465f8d3fbddb"
+  },
+  "scope": "All four supported profiles qualify exact257 DECLARED PARTIAL image contracts plus3metadata functions. This is not full477API/class/runtime-contract/nativeownership/performance completion or a certificate for later code.",
+  "task_closeout": {
+    "result": "All4actualproducts/XML/SDK/corpora/seals and3stagers audited; independentmetadatareview required before rootadmission.",
+    "waste_reuse": "All7namedartifacts downloaded/streamhashed once againstactualAPI digests, eachseal/stagerfile hashed once; existing252auditors reused withsource/census-only deltas and existingread-only5a sourceWT, no newcheckout/build/science/test/timing.",
+    "next_owner_trigger": "C reviews bounded aggregate/sourceverifier deltas only, reuses authenticatedbigobjects. Root then admits, publishes bounded rawdecisionmetadata and restores validatedsourceprojection to main promptly."
+  }
+}

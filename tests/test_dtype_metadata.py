@@ -29,10 +29,16 @@ def calls(api,dtype):
         expected=reference(*arguments,**options)
         actual=native(*arguments,**options)
         if arguments and expected is arguments[0]:assert actual is arguments[0]
-    return actual,expected,arguments if api == 'measure.mesh_surface_area' else arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS or api == 'measure.perimeter' or api == 'measure.euler_number' else data
+    return actual,expected,arguments if api == 'measure.mesh_surface_area' else arguments[0] if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS or api == 'measure.perimeter' or api == 'measure.euler_number' or api == 'measure.regionprops' else data
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api=='measure.regionprops':
+        # The typed seven-property/state checker requires the whole result list.
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)
+        for a,e in zip(actual,expected):
+            assert a._label_image.dtype.metadata==e._label_image.dtype.metadata==image.dtype.metadata,path
+        return
     if api=='measure.inertia_tensor_eigvals':
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)
         assert all(a.dtype.metadata==e.dtype.metadata for a,e in zip(actual,expected)),path
@@ -56,6 +62,24 @@ def compare(actual,expected,api,dtype,path='result',image=None):
     assert a.shape==e.shape and a.dtype==e.dtype,path
     assert_default_parity(api,np.dtype(dtype),a,e,image=image)
     assert a.dtype.metadata==e.dtype.metadata,f'{path}: native metadata={a.dtype.metadata!r}; reference={e.dtype.metadata!r}'
+
+
+def test_regionprops_metadata_compare_keeps_whole_typed_result(monkeypatch):
+    labels=np.zeros((3,4),dtype=np.dtype('int32',metadata={'units':'linear','source':'parity'}))
+    class StructuredRegion:
+        def __init__(self,image):self._label_image=image
+        def __array__(self,*args,**options):raise AssertionError('structured result must not be coerced')
+    actual,expected=[StructuredRegion(labels)],[StructuredRegion(labels)]
+    calls=[]
+    def delegated(api,dtype,a,e,*,image):
+        calls.append((api,dtype,a,e,image))
+        assert a is actual and e is expected and image is labels
+    monkeypatch.setitem(compare.__globals__,'assert_default_parity',delegated)
+    compare(actual,expected,'measure.regionprops','int32',image=labels)
+    assert len(calls)==1 and calls[0][:2]==('measure.regionprops',np.dtype('int32'))
+    actual[0]._label_image=labels.view(np.dtype('int32',metadata={'units':'wrong'}))
+    with pytest.raises(AssertionError):compare(actual,expected,'measure.regionprops','int32',image=labels)
+    assert len(calls)==2
 
 
 @pytest.fixture(autouse=True,params=[1,4])

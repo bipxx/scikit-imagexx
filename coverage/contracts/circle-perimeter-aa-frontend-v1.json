@@ -1,0 +1,94 @@
+{
+  "schema": "circle-perimeter-aa-frontend-v1",
+  "status": "PASS_SCOPED_CIRCLE_AA_COMPONENT_REAL_BUFFER_OWNER_GAP_OPEN",
+  "native_interface_commit": "e795570c",
+  "native_implementation": "54e785542d29e2f2ba9af576049738c87faf9df1",
+  "reference_commit": "53fdaa285901cffd81520b1a34288a0da253d3dc",
+  "public_signature": "(r, c, radius, shape=None)",
+  "conversion": "operator.index once/r,c,radius order and immediatePy_ssize bounds; signatureerrors remainliteralPython. No externalshape protocols executed forunassessedgaps.",
+  "native_integer_clip_IDs": 40,
+  "native_recurrence_IDs": 41,
+  "provider_tail_IDs": [
+    "circle-aa/float-shape"
+  ],
+  "provider_tail": "Knownfinitebuiltin-float tuple usesexistingnativeentryunclipped, then literalNumPycomparison/gather. No originalcirclealgorithmfallback; geometryprepare once onselectedroute.",
+  "quarantine": "Onlysource-proven builtinshorttuples namedunsafequarantine, afterendpointconversions. Otherunsupportedshape/carrier/numericdomains explicitNotImpl gaps withoutupstreamcalls orparitycredit.",
+  "output": "ThreefreshindependentowningCcontiguous intp/intp/f64 arrays, emptystride0; words/order/duplicates/zeroweights andmetadata exact.",
+  "workers": "Wrappergetteronce pernativeadmittedcall, default1/global1/4/restoration; count/filldependentrecurrence serial, no customparallel/SIMDclaim.",
+  "frozen_weight_policy": "Bitwise0ULP literal sqrt/ceil/subtraction underordinaryrounding; no newgoldens/relaxation.",
+  "test_scope": "All48savedrows/profile\u00d7workers1/4; lifetime/quota/storage/gappedinput/overflow/unsafequarantine controls; no originals/timing/fullSDK/env.",
+  "shared_export_registry_gate": "Rootownsactualdrawexport/CMake/registry; privatecomponentcall is notshippingcredit.",
+  "native_public_API_credit": 0,
+  "remaining_compatibility_gaps": [
+    {
+      "domain": "bytearray/external-buffer-backed ndarray shapes",
+      "observed": "Existing sharedcheck_array_storage raises ValueError: FFT requires ndarray-backed storage",
+      "classification": "REAL buffercompatibility gap; not source-unsafe, not successful parity credit",
+      "next_action": "Future bounded buffer-owner boundary solution validating genuinelyaddressable externalowners without loosening sharedFFT/storage safeguards blindly; reuse geometrygoldens, no uncapturedunsafeoriginals.",
+      "owner": "root/future buffer-boundary packet",
+      "trigger": "Afterthisbounded circleAAfrontend integration"
+    }
+  ],
+  "unaligned_holdout": "NDArray-backed uint8owner plusoffset1, preserve exactcoordinates/weights vs savedintegerclip; previousbytearray-owner failure retained.",
+  "execution": {
+    "XML": {
+      "minimum/normal": {
+        "tests": 100,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "minimum/normal-v2": {
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "minimum/scalar-v2": {
+        "tests": 111,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "modern/normal-v2": {
+        "tests": 111,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "modern/scalar-v2": {
+        "tests": 111,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "useful_passes": 444,
+    "retained_failed_extra_owner_node": 1,
+    "saved_row_comparisons": 384,
+    "native_success_Creturn_nonNone_once_worker_snapshot_witnesses": 328,
+    "conversion_signature_error_comparisons": 56,
+    "original_algorithm_calls": 0,
+    "global_workers": [
+      1,
+      4
+    ],
+    "default_restored": 1,
+    "actual_normal_AVX2": true,
+    "actual_scalar_AVX2": false,
+    "new_binder_TUs": 2,
+    "new_initializer_TUs": 2,
+    "new_leaf_compilations": 0,
+    "links": 2,
+    "new_environments": 0,
+    "fullSDK_builds": 0,
+    "timings": 0
+  },
+  "task_closeout": {
+    "result": "All48savedrows/profile\u00d71/4workers\u00d7normal/scalar exact, including41returns/7errors, floatcomparison/gather tail explicit.444usefulnodesPASS using99retainedprefix+12affected/unexecutedminimumcontrols and111othermodes; first1externalownerfailure remainsfailed. No fullAPI/genuine/speed credit.",
+    "waste_and_reuse": "Reused releasednative54PICleaf, authenticatedSDK83 workerarchive/FFTowner-guard objects, pinned96originals/encoder and retainedscientificruntimes. Only2binders/2initializers/2links; no failedbuild. Initialextraunalignedfixture chosebytearrayowner outside existingstoragevalidator; retainedrealcompatibilitygap andcorrected intendedholdout toNDArray-backed uint8owner+offset1. Reused99passednodes andreranonly1affected+11unexecuted, no originalreplay/SDKbuild/env/timing. One guessedcompile-commandfilename lookup failedreadonly, thenactualfileinventory used. Observedpytesttimes remainXML; costnotremeasured.",
+    "next_plan_correction": "Root: independentlyreview4filefrontend thenwireactualdrawexport/CMake/SDK/inventory/defaults and benchmark usingunchangednativeheader. Explicitfollow-up buffer-owner packet mustaddressbytearray/external-buffer-backed validshape compatibility, not labelitunsafe orsuccessfulparity. KeepfloatNumPyclip/gatherprovider andunknownprotocolgaps visible; no sharedstoragevalidator changes here. Reuse444componentpasses/384comparisons withoutbookkeeping replay.",
+    "owner_trigger": "Rootfrontendintegration afterreview; later bounded buffer-owner solution before fullcontract closure.",
+    "useful_failure": "Bytearray-backed validshape rejection is useful discoveredcompatibilityevidence and remainsopen. Only choosingit for an intendedndarray-backed unalignedholdout waspreventablefixture-intake work; changingholdoutdoesnotcloseexternalowner gap."
+  }
+}

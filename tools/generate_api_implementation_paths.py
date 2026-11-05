@@ -197,7 +197,7 @@ def alias(api, canonical, evidence):
 
 
 add("color", "point", """
-combine_stains | Reuse the existing native 3xK matrix/exponential core; normalize float16 inputs to float32 once at the boundary | float16-to-float32 preparation and version-dependent result promotion; preserve channel axis and clipping | float16 three-channel stain inputs with standard 3x3 and custom 3xK output widths
+combine_stains | Reuse the existing native 3xK core and reviewed half-to-float32 boundary; finish affected-domain timing and exceptional-value contracts | remaining half nonfinite/extreme values, warning and FP-callback behavior; retain version-dependent promotion and finite-case evidence | half zero/subnormal/NaN/Inf and supported error-policy cases with exact dtype, metadata, state and warning order
 convert_colorspace | Extend existing named-space routing through the native RGB hub | case-insensitive names, unsupported-space errors, intermediate dtype/range | all supported source/destination pairs including identity
 deltaE_cie76 | Reuse native Euclidean Lab difference with original promotion points | broadcast shapes, float32 intermediates, NaNs and extra channels | broadcast Lab tensors and near-zero differences
 deltaE_ciede2000 | Reuse native hue-adjusted CIEDE2000 formula | hue wrap, zero chroma, branch ties, weighting and cancellation | hue-wrap/achromatic pairs plus dense Lab images
@@ -300,7 +300,7 @@ ellipsoid | Evaluate scaled 3D quadratic field on exact spacing-derived grid | g
 ellipsoid_stats | Direct volume formula plus reviewed elliptic-integral surface-area implementation | sphere/spheroid limits, axis ordering and special-function accuracy | spheres, oblate/prolate and triaxial cases
 line | Port Bresenham integer line with exact endpoint order | octants, reversed endpoints, degenerate point | all octants and long diagonals
 line_aa | Port anti-aliased line coverage recurrence | octant symmetry, duplicate/order and endpoint intensities | all octants and one-pixel segments
-line_nd | Generate evenly spaced N-D coordinates with upstream safe integer rounding | endpoint flag, half ties, integer=False and reversed axes | fractional N-D endpoints and half-integer crossings
+line_nd | Extend reviewed typed count/interpolation/rounding with runtime scalar-modulo policy, preserve shared row-view base | endpoint flag, profile-specific f16/f32 half ties, original-dtype count wrap, scalar/provider frontiers and K/F integer backing | existing frozen54 rows plus promotion supplement; unassessed mixed/0D typed scalar domains
 polygon | Scan bounding box with exact polygon inclusion/edge rule | self-intersection, concavity, edge inclusion and shape clipping | concave/self-touching/out-of-bounds polygons
 polygon2mask | Reuse polygon fill coordinates and scatter into boolean mask | image_shape and polygon coordinate convention | fractional vertices and clipped polygons
 polygon_perimeter | Clip polygon when requested then rasterize ordered edges | closure, duplicate vertices, clipping versus shape filtering | open inputs, repeated vertices and clipped outlines

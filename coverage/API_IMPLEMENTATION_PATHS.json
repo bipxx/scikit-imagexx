@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "0b496e2bb8ddd229db46153da63dfd71c9dc667d5dca577ee13fbb5550a1eee6",
+  "source_inventory_sha256": "891cbe3d51a58bbd224cc443595ac609369a3acced925003d778f399afe52580",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 253,
-      "upstream-only": 215
+      "native-partial": 257,
+      "upstream-only": 211
     },
     "kinds": {
       "callable": 448,
@@ -478,6 +478,7 @@
       "current_execution_kind": "native",
       "current_native_default_case_dtypes": [
         "uint8",
+        "float16",
         "float32",
         "float64"
       ],
@@ -486,23 +487,23 @@
       "family": "point",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Audit/extend existing native implementation: Reuse the existing native 3xK matrix/exponential core; normalize float16 inputs to float32 once at the boundary",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse the existing native 3xK core and reviewed half-to-float32 boundary; finish affected-domain timing and exceptional-value contracts",
       "mandatory_route_dependencies": [
         "array",
         "pointwise"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered float16-to-float32 preparation and version-dependent result promotion; preserve channel axis and clipping. Select optimization from retained measured regressions; do not reimplement the accepted core.",
-      "compatibility_hazards": "float16-to-float32 preparation and version-dependent result promotion; preserve channel axis and clipping",
-      "parity_cases_to_freeze": "float16 three-channel stain inputs with standard 3x3 and custom 3xK output widths",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered remaining half nonfinite/extreme values, warning and FP-callback behavior; retain version-dependent promotion and finite-case evidence. Select optimization from retained measured regressions; do not reimplement the accepted core.",
+      "compatibility_hazards": "remaining half nonfinite/extreme values, warning and FP-callback behavior; retain version-dependent promotion and finite-case evidence",
+      "parity_cases_to_freeze": "half zero/subnormal/NaN/Inf and supported error-policy cases with exact dtype, metadata, state and warning order",
       "numerical_policy": "Exact dtype, clipping, integer rounding, branch and warning behavior; predeclare dtype-aware floating tolerances, preserving any existing bitwise contract.",
       "simd_strategy": "Reuse vector lanes for independent pixels; scalar tails and exceptional branches remain equivalent.",
       "optional_global_workers_strategy": "Partition disjoint pixel ranges above a measured threshold; default one and shared global budget.",
       "benchmark_plan": {
         "status": "proposal-not-measured-results",
         "kind": "compute",
-        "specific_workload": "float16 three-channel stain inputs with standard 3x3 and custom 3xK output widths",
+        "specific_workload": "half zero/subnormal/NaN/Inf and supported error-policy cases with exact dtype, metadata, state and warning order",
         "one_worker_recipe": "Contiguous and strided uint8/float32/float64 images; tiny/512x512/2048x2048; time public allocation and conversion as well as optional kernel-only diagnostic.",
         "existing_inventory_reference": "benchmarks/coverage.py"
       },
@@ -3669,22 +3670,26 @@
       "api": "draw.circle_perimeter_aa",
       "kind": "callable",
       "signature": "(r, c, radius, shape=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.circle_perimeter_aa",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Port weighted anti-aliased circle recurrence",
+      "easiest_credible_path": "Audit/extend existing native implementation: Port weighted anti-aliased circle recurrence",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze tiny/large subpixel coverage circles against pinned upstream, including coordinate duplicates/order, intensity weights and radius zero; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered coordinate duplicates/order, intensity weights and radius zero. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "coordinate duplicates/order, intensity weights and radius zero",
       "parity_cases_to_freeze": "tiny/large subpixel coverage circles",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -3695,10 +3700,10 @@
         "kind": "compute",
         "specific_workload": "tiny/large subpixel coverage circles",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/circle_perimeter_aa.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_circle_perimeter_aa_public.py::test_circle_perimeter_aa_saved_public_pipeline",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -3821,22 +3826,26 @@
       "api": "draw.ellipsoid",
       "kind": "callable",
       "signature": "(a, b, c, spacing=(1.0, 1.0, 1.0), levelset=False)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "draw.ellipsoid",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Evaluate scaled 3D quadratic field on exact spacing-derived grid",
+      "easiest_credible_path": "Audit/extend existing native implementation: Evaluate scaled 3D quadratic field on exact spacing-derived grid",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze anisotropic ellipsoids and degenerate dimensions against pinned upstream, including grid extents/spacing, boolean versus levelset output; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered grid extents/spacing, boolean versus levelset output. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "grid extents/spacing, boolean versus levelset output",
       "parity_cases_to_freeze": "anisotropic ellipsoids and degenerate dimensions",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -3847,10 +3856,10 @@
         "kind": "compute",
         "specific_workload": "anisotropic ellipsoids and degenerate dimensions",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/draw_ellipsoid.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_draw_ellipsoid_public.py::test_ellipsoid_saved_public_pipeline",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -3973,36 +3982,44 @@
       "api": "draw.line_nd",
       "kind": "callable",
       "signature": "(start, stop, *, endpoint=False, integer=True)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "float16",
+        "float32",
+        "float64",
+        "int8",
+        "uint8",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "draw.line_nd",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Generate evenly spaced N-D coordinates with upstream safe integer rounding",
+      "easiest_credible_path": "Audit/extend existing native implementation: Extend reviewed typed count/interpolation/rounding with runtime scalar-modulo policy, preserve shared row-view base",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze fractional N-D endpoints and half-integer crossings against pinned upstream, including endpoint flag, half ties, integer=False and reversed axes; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
-      "compatibility_hazards": "endpoint flag, half ties, integer=False and reversed axes",
-      "parity_cases_to_freeze": "fractional N-D endpoints and half-integer crossings",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered endpoint flag, profile-specific f16/f32 half ties, original-dtype count wrap, scalar/provider frontiers and K/F integer backing. Select optimization from retained measured regressions; do not reimplement the accepted core.",
+      "compatibility_hazards": "endpoint flag, profile-specific f16/f32 half ties, original-dtype count wrap, scalar/provider frontiers and K/F integer backing",
+      "parity_cases_to_freeze": "existing frozen54 rows plus promotion supplement; unassessed mixed/0D typed scalar domains",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
       "simd_strategy": "Vectorize independent membership/coverage tests; ordered Bresenham/anti-alias recurrences stay scalar.",
       "optional_global_workers_strategy": "Serial ordered coordinate emission; parallel independent rows only with stable output concatenation.",
       "benchmark_plan": {
         "status": "proposal-not-measured-results",
         "kind": "compute",
-        "specific_workload": "fractional N-D endpoints and half-integer crossings",
+        "specific_workload": "existing frozen54 rows plus promotion supplement; unassessed mixed/0D typed scalar domains",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/line_nd.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_line_nd_public.py::test_line_nd_saved_public_pipeline",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -12665,15 +12682,24 @@
       "api": "measure.regionprops",
       "kind": "callable",
       "signature": "(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "measure.regionprops",
       "identity_alias": false,
       "family": "component",
       "wave": "W2",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Build own lazy region objects around component bounds/moments/geometry primitives",
+      "easiest_credible_path": "Audit/extend existing native implementation: Build own lazy region objects around component bounds/moments/geometry primitives",
       "mandatory_route_dependencies": [
         "array",
         "components",
@@ -12683,7 +12709,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze every property on tiny canonical and irregular regions against pinned upstream, including cache, spacing/offset, intensity channels, property aliases and extra_properties; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered cache, spacing/offset, intensity channels, property aliases and extra_properties. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "cache, spacing/offset, intensity channels, property aliases and extra_properties",
       "parity_cases_to_freeze": "every property on tiny canonical and irregular regions",
       "numerical_policy": "Exact labels, background, connectivity, output dtype, integer counts, ties and aliasing.",
@@ -12694,10 +12720,10 @@
         "kind": "compute",
         "specific_workload": "every property on tiny canonical and irregular regions",
         "one_worker_recipe": "Sparse/dense/noisy labels, all-background/all-connected, large label IDs, 2D/3D and strided outputs.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/regionprops_state.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_regionprops_state_public.py::test_regionprops_state_saved_rows_exact_except_declared_distinct_class",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

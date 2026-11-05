@@ -1,0 +1,79 @@
+{
+  "status": "SCOPED_LOCAL_DIAGNOSTIC_ADMITTED_NOT_RELEASE_KEEP",
+  "source": "55465253ea03d5239a4a1d3b499ea236ebf948c1",
+  "samples": 42,
+  "rows": [
+    {
+      "case_id": "regionprops-state/tiny2d-constructor",
+      "source_wrapper_ms": 0.021216312732688012,
+      "AST_without_import_ms": 0.019777059256661993,
+      "source_over_diagnostic": 1.0727738870247456,
+      "diagnostic_latency_reduction_percent": 6.783711638113998
+    },
+    {
+      "case_id": "regionprops-state/tiny2d-properties",
+      "source_wrapper_ms": 0.06346716619559073,
+      "AST_without_import_ms": 0.05997274134199134,
+      "source_over_diagnostic": 1.0582668855117463,
+      "diagnostic_latency_reduction_percent": 5.505878177750045
+    },
+    {
+      "case_id": "regionprops-state/large2d-f-coords",
+      "source_wrapper_ms": 5.9034185,
+      "AST_without_import_ms": 5.85118205263158,
+      "source_over_diagnostic": 1.0089275033486484,
+      "diagnostic_latency_reduction_percent": 0.8848508261513288
+    }
+  ],
+  "runtime": {
+    "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "core_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/region-stain-genuine-prepare-v1/input-auth-v1/project-members/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "core_sha256_reused": "f200f44d58be306ece196b9be5c972c1a48f799c083cb10637f11dc3da17d8e5",
+    "actual_AVX2": true,
+    "source_wrapper_code": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/region-stain-genuine-prepare-v1/input-auth-v1/project-members/skimagexx/_regionprops_state.py",
+    "diagnostic_code": "<diagnostic-only-no-self-import>",
+    "same_globals": true,
+    "only_AST_import_removed": true
+  },
+  "hardware": {
+    "cpu_model": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logical_cpu_count": 18,
+    "actual_AVX2": true,
+    "avx2_source": "actualcandidatecorequeryinvalidation-v1samehost",
+    "scope": "LocalWSLdiagnostic metadata only"
+  },
+  "reports": [
+    {
+      "path": "benchmarks/regionprops-import-tax-diagnostic.json",
+      "sha256": "59a916d05d3c581899b6077381614a1fb17b68f6d826b08bf0f447556dc11d32",
+      "bytes": 34893,
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/regionprops-import-tax-diagnostic.batches.jsonl",
+      "sha256": "b230b1a230c6a6f5a0d5372cdd1e38131f27d01c0be679b2100079f0355ea268",
+      "bytes": 48512,
+      "unchanged_raw_bytes": true
+    }
+  ],
+  "independent_review": {
+    "path": "build/regionprops-tiny-import-independent-review-v1/review.json",
+    "sha256": "1d79ce702c34f5c92ef73c23fa70f310917560061535ecdb9ae6c12f11d338ad"
+  },
+  "timing_handoff": {
+    "path": "build/regionprops-tiny-import-diagnostic-v1/timing-handoff-v1.json",
+    "sha256": "7e361c4cb88bf87e7d752f8824893e5d54a6548027c27c3f1c1a64b16be8374b"
+  },
+  "scope": "Function0actualsource554warmedpublicwrapper/function1diagnosticAST only; inheritedsamplerreference/cpp/scikit-image labels explicitlymapped, notanoriginal-librarycomparison orKEEP. No productionedits.",
+  "conclusion": "Underthislocalwarmed/samecore/fixedinputtest, removingONLYtheImportFromnode lowers tinyconstructor/propertylatency ~6.78%/~5.51%; largeF~0.885%. Thisdemonstratesnetlocalcontribution ofthatASTchange, notcompletehosted554regressioncausality orcrossCPUtransfer. Native traversalidentical; productioncoldlazy/alias requirementsmustremain.",
+  "closeout": {
+    "result": "SingleROOTauthorizedquietrun71576terminal0;42samples/3cohorts,all100msaccepted/warm250mschecks verifieddata-only. Rootquietleasereleasedbeforesealing.",
+    "reuse": "Actualauthenticatedcore/product andretainedinterpreter; no newenv/build/originalrecapture/old20cohortmeasurement orretry. Readinessbe907/pinsunchanged.",
+    "avoidable_work": "Reviewed,no timingfailure/retry. Existinghardcodedsamplerlabels retainedverbatimwithdiagnosticrolemapping; do notmislabelresults asscikit-image speedups. Start/endwalltimes notrecorded, no inventedcost/quietduration.",
+    "next_owner_trigger": "Rootindependentrawreview then minimalproductionwarm-pathsourcefix mayuseevidence; correctness/lazy/aliasguards andgenuinefixed20gates stillrequired. Old554DISCARD staysfailed.",
+    "readers": "Timingprocess71576reaped; localCPUquietlease alreadyreleased. Productprefixkeptread-only;257watch50730activeandpriority. Allpaths/labels/closeout finalizedbeforehash."
+  }
+}

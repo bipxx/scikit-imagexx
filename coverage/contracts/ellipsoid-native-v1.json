@@ -1,0 +1,75 @@
+{
+  "api": "draw.ellipsoid",
+  "state": "typed-native-component-pending-independent-review",
+  "header_freeze": "3f000b6c930a20cf6921c205d06e600ca10a2798",
+  "reference_commit": "f046c677bcab248be0222cce63647b5daff625d7",
+  "reference_matrix_canonical_lf_sha256": "44a63e956df78357a3c33c5d23d094f169b7c34440cccdda530b9412f243e020",
+  "interface": {
+    "prepare": "draw_ellipsoid_prepare(axes3,spacing3,plan)",
+    "fill": [
+      "draw_ellipsoid_bool_into(plan,uint8_output,workers)",
+      "draw_ellipsoid_levelset_into(plan,double_output,workers)"
+    ],
+    "worker_policy": "Caller snapshots existing process-wide budget exactly once, default1; independent rows use existing partition only when count>=262144. No cached budget/private pool."
+  },
+  "domain": {
+    "axes_spacing": "finite positive float64 in inclusive [2^-128,2^128]",
+    "max_probe_axis": 16777216,
+    "max_output_elements": 16777216,
+    "rounding": "ordinary nearest, no fast math/FMA/reassociation; exceptional floating environments are unassessed",
+    "refusal": "false, caller plan unchanged; allocation failures propagate"
+  },
+  "stages": [
+    "ceil(-axis-spacing), floor((axis+spacing)+1), parity correction to low",
+    "arange length ceil((high-low)/spacing); literal second=low+spacing then effective_step=second-low, sample0/1 literal and i>=2 low+i*effective_step",
+    "missing zero: subtract maximum negative probe value from low",
+    "fresh mgrid ceil shape, potentially EVEN; coordinate=(index*nominal_spacing)+low",
+    "float64 divide, multiply square; left-associated (x_square+y_square)+z_square, then <=1 or subtract1"
+  ],
+  "numeric_safety": "With input quantization>=2^-180, bounded integer indices<2^24, nonzero coordinate>=2^-180 and magnitude<2^153; divide bounds about2^-308..2^281, squares2^-616..2^562. No overflow/underflow in the admitted ordinary environment. Inexact flags are allowed as in source.",
+  "provenance": {
+    "original_draw3d_sha256": "78c9a91b754d8a0ca59e8eccd75fa9458dc12a529230f542858d4ee6ae6c57ca",
+    "numpy_grid_sources": [
+      "numpy/lib/index_tricks.py@1.24.4",
+      "numpy/lib/_index_tricks_impl.py@2.5.4"
+    ],
+    "numpy_arange_sources": [
+      "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/multiarray/ctors.c",
+      "https://raw.githubusercontent.com/numpy/numpy/v2.5.4/numpy/_core/src/multiarray/ctors.c",
+      "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/multiarray/arraytypes.c.src",
+      "https://raw.githubusercontent.com/numpy/numpy/v2.5.4/numpy/_core/src/multiarray/arraytypes.c.src"
+    ]
+  },
+  "proof": {
+    "saved_arrays": 38,
+    "profiles": [
+      "1.24.4",
+      "2.5.4"
+    ],
+    "float64_max_ulp": 0,
+    "bool": "byte exact",
+    "analytic_holdout": "axes32 spacing1 shape67^3=300763; exact integer squared distances/1024, both modes and workers1/4",
+    "controls": [
+      "guard sentinels",
+      "shape and byte counts",
+      "FE_INVALID/OVERFLOW/DIVBYZERO/UNDERFLOW absent during fill",
+      "invalid numeric/count refusal preserves plan",
+      "global default1 and restoration"
+    ],
+    "simd": "Both independent voxel fill loops vectorize16bytes in GCC13 normal mode; scalar leaf built without OpenMP and both tree vectorizers disabled. No custom AVX2 claim."
+  },
+  "unassessed": [
+    "Python scalar/spacing protocols/conversion/error/truth boundaries and actual ndarray storage: frontend packet",
+    "Nine original error rows: not native parity credit",
+    "Nonfinite/nonpositive/out-of-interval inputs or count>16M",
+    "Exceptional FP environments, NumPy error callbacks/policies",
+    "Genuine installed artifact, full SDK integration, other platforms/compilers",
+    "Performance versus original and prior C++ not measured"
+  ],
+  "closeout": {
+    "result": "38 saved arrays exact plus analytic large worker holdout; native component only",
+    "reuse": "Pinned golds and SDK88 archive/runtime reused; only new leaf/test compiled. No original calls, full SDK/core/env builds or timings.",
+    "avoidable_work": "Initial compiler report exposed bool loop vectorization miss; retained predecessor; simple independent-loop annotation corrected it and only affected modes rebuilt. Build command wall costs recorded by tools (~seconds); no additional waste timing.",
+    "next_owner_trigger": "Root obtains independent source/evidence review, frontend owns Python boundary, root SDK/shipping and genuine1-worker benchmark; no API promotion from component proof."
+  }
+}

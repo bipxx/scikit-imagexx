@@ -1,0 +1,105 @@
+{
+  "schema": "line-nd-installed-sdk-component-v1",
+  "native_commit": "95f5c84abb3e051539fc3a9c65696d9ef002e75b",
+  "native_header_freeze": "4cd652de2e3533b1d036fae472094b0380c79ef1",
+  "native_handoff": "build/worktrees/line-nd-native-v1/build/promotion-fix-v1/handoff.json",
+  "native_handoff_sha256": "f8ca3c0ab65485daa00603fb038554394de64f8af1c656868f49c2e79870b8cd",
+  "sdk_component_members": 89,
+  "genuine_sdk": false,
+  "assembled_prefix": "build/line-nd-sdk-integration-v2/assembled relocated SDK89",
+  "donor": "Immutable predecessor assembledSDK89 source2c8e/archive903e/authorSDKda5e/independent59d6; no oldarchive/header/core rehash",
+  "consumer": "tests/cmake_consumer/line_nd_consumer.cpp",
+  "source_closure": [
+    "include/skimagexx/line_nd.hpp",
+    "src/line_nd.cpp",
+    "src/execution.hpp",
+    "src/half.hpp",
+    "include/skimagexx/image.hpp"
+  ],
+  "compile_only_new_client": true,
+  "reused_unchanged_native_object": true,
+  "strict_fp_flags": [
+    "-ffp-contract=off",
+    "-fno-fast-math"
+  ],
+  "controls_per_mode": 524772,
+  "modes": {
+    "normal": "SIMD disable key absent, actual SDK has_avx2=1",
+    "scalar": "SKIMAGEXX_DISABLE_SIMD=1, actual SDK has_avx2=0; same portable PICleaf, not compiler-scalar-object evidence"
+  },
+  "worker_budgets": [
+    1,
+    4
+  ],
+  "global_default_restored": 1,
+  "controls": [
+    "Exact saved original positive/descending half ties, broadcast-start truncation, binary16 words and int8 wrapped count; independent small exact controls for all7storage kinds",
+    "Signed gapped unaligned input/output byte spans and untouched sentinels; operands snapshotted before caller mutation",
+    "Coincident point/empty nullptr and8D geometry",
+    "Divide/multiply underflow stage facts and preserved caller FP flags/rounding",
+    "Refused empty/mixed/nonfinite preparation preserves complete existing plan bytes",
+    "Large float64 2D start{0,0},stop{131073,-131073},endpointtrue:131074points\u00d72=262148>actual262144OpenMPthreshold, exactly +/-i words andguards underbothbudgets",
+    "Explicit savedNumPy1/NumPy2 float32 nearnegative-half output difference, documentedstandalonedefault andbothenumvalues, no provider narrowing/tolerance relaxation"
+  ],
+  "large_holdout_safety": "Finite integer-valued doubles abs<=131073, all exact unit source arithmetic, output262148elements<2m and intptr/address representable. Separate native closed-form holdout, not inherited512referencepoint cap; no original recapture.",
+  "cmake_wiring_for_root": [
+    "Use corrected src/line_nd.cpp andmatching4cd header, addnativeleafwith -ffp-contract=off/-fno-fast-math (orMSVC/fp:strict); old09adb object/header ABI incompatible andmustnotship.",
+    "Existing installed include-directory rule exports correctedheader. All SDKchecks here assembledcomponent89 only; genuinepackage/hostedcoverage requiresrootnewsourcefreeze.",
+    "Compile changednew lineNDclient againstexportedtarget underexistingdrawfamilyasrootchooses; nootherclient/fullSDKwork orfamilycounterchange."
+  ],
+  "platform_scope": "Linux GNU OpenMP SDK component only. Newleaf SIMD evidence remains A six-mode record: Clang packed two-double arithmetic, GCC planSLP only, no AVX2-specific claim. Runtime scalar proves SDK dispatch disabled, not recompilation of newleaf. Known local MSVC/CRT __std_unique_8 limitation retained; no Windows compile/link/runtime claim or retry.",
+  "task_closeout": {
+    "result": "CorrectedABI component89 replacement andchangedclient524772controls/mode bothpassfirstattempt, includingactualoldprofile/modernoriginalholdout anddefaultlegacy. Newarchive/header/object/client pinned; priorcomponent immutable.",
+    "costs": {
+      "assemble-archive": {
+        "exit_code": 0,
+        "wall_seconds": 1.4182795899999974
+      },
+      "compile-client": {
+        "exit_code": 0,
+        "wall_seconds": 1.1368823539999937
+      },
+      "link-client": {
+        "exit_code": 0,
+        "wall_seconds": 0.5370976829999989
+      },
+      "run-normal": {
+        "exit_code": 0,
+        "wall_seconds": 0.0131293219999975
+      },
+      "run-scalar": {
+        "exit_code": 0,
+        "wall_seconds": 0.011886943000000372
+      }
+    },
+    "waste_and_reuse": "Necessary bounded repeat because header/LineNDPlan/prepareABI changed afterrealFPbug; oldclientobject/leaf couldnotbereusedcompatibly. ReusedallotherreviewedSDKmembers andAnewimmutablePIC; compiledonlyonechangedclientTU/link, zero kernel/fullSDK/otherclients/originalcalls. Old5constantauth reused;2newrawsupplementpayloads mechanicallyboundto3policycontrols. Checked changedhandoffPIC schema beforeexecution, avoidingguessed-keyfailure. No setup/testfailure or newframework.",
+    "next_plan_correction": {
+      "owner": "root SDKdelta reviewer/integration",
+      "trigger": "Review thiscorrectedcomponent89 source/provenance andbothmoderetainedoutputs",
+      "action": "Promote onlycorrected95f5/header4cd pair afterindependentnative/frontendpolicyreviews. Wire updatedstatic source/header/client intoexistingfamily; retain89assembledlabel. Freezegenuine source andrealCLI firstcohort separately; no claimold00db/component1fixedfromitsoldPASS."
+    },
+    "readers_released": true
+  },
+  "original_calls": 0,
+  "timed_batches": 0,
+  "full_sdk_builds": 0,
+  "leaf_compiles": 0,
+  "new_envs": 0,
+  "source_policy": "Standalone preparation defaults explicitlyto legacy_float64; newinstalledclient alsochooseslegacy_float64 andweak_input explicitly againstactualtwo-profile originalholdout. Current runtimeISA disable doesnotselectNumPy policy; caller enumdoes.",
+  "new_archive_sha256": "d9ba10515796ca86f15a6d19a68f487299b17fbca1ad6bd6085f9d4407338488",
+  "predecessor_preserved": {
+    "commit": "2c8e2acd32c24ad8867e9545ba968d134d8ba423",
+    "handoff_sha256": "da5e9fbf08daed4bf9eabd3a38a9146ec4a0c6a8279b2b3103351d5b783bcbe7",
+    "archive_sha256": "903ef5baad976dc815d5c2675d45ddf3bb454ba8fc0c5bc4fee6895dc1c0fdf1",
+    "scope": "Old524708checks/mode remain historicalpredecessor; native00db bug remains recordedREQUEST_CHANGES, not relabellednewacceptance."
+  },
+  "strict_native_flags": [
+    "-ffp-contract=off",
+    "-fno-fast-math"
+  ],
+  "strict_client_flags": [
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-frounding-math"
+  ]
+}

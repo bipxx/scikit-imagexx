@@ -17,7 +17,7 @@ def native(request):
 
 
 def alias(dtype):
-    return np.dtype({'uint8':'>u1','float32':'>f4','float64':'>f8'}[dtype]).newbyteorder('=')
+    return np.dtype(dtype).newbyteorder('>').newbyteorder('=')
 
 
 @pytest.mark.parametrize('api,dtype',CASES,ids=[api+'-'+dtype for api,dtype in CASES])

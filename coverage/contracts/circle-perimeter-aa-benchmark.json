@@ -1,0 +1,224 @@
+{
+  "schema": "circle-perimeter-aa-benchmark-v1",
+  "reference_contract_sha256": "d16096f78907b251aa15e7ec897ed7fc8cec8975f2cf6b91ae203133e6eadae6",
+  "cases": [
+    {
+      "id": "circle-aa/tiny",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        2
+      ],
+      "safe_args": [
+        0,
+        0,
+        2
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/zero",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        0
+      ],
+      "safe_args": [
+        0,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/cache",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        32
+      ],
+      "safe_args": [
+        0,
+        0,
+        32
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/long",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        4096
+      ],
+      "safe_args": [
+        0,
+        0,
+        4096
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/clipped",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        128,
+        128,
+        256
+      ],
+      "safe_args": [
+        128,
+        128,
+        256
+      ],
+      "kwargs": {
+        "shape": [
+          256,
+          256
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/clipped-away",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        -8192,
+        -8192,
+        128
+      ],
+      "safe_args": [
+        -8192,
+        -8192,
+        128
+      ],
+      "kwargs": {
+        "shape": [
+          64,
+          64
+        ]
+      },
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/translated",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        1073741824,
+        -1073741824,
+        128
+      ],
+      "safe_args": [
+        1073741824,
+        -1073741824,
+        128
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    },
+    {
+      "id": "circle-aa/negative",
+      "api": "draw.circle_perimeter_aa",
+      "kind": "ordinary",
+      "args": [
+        0,
+        0,
+        -3
+      ],
+      "safe_args": [
+        0,
+        0,
+        -3
+      ],
+      "kwargs": {},
+      "policy": {},
+      "holdout": false
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 112,
+  "warmup_groups": 16,
+  "native_entry": "draw_circle_perimeter_aa",
+  "max_output_elements": 1000000,
+  "max_radius": 4096,
+  "max_ulp": 0,
+  "reference_pool_limits": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1"
+  },
+  "native_implementation": "54e785542d29e2f2ba9af576049738c87faf9df1",
+  "frontend_implementation": "347d175d5610e5e7fd4698d15a6fe17477764a7b",
+  "source_closure": {
+    "include/skimagexx/circle_perimeter_aa.hpp": "81e1ee26e1f60d59e967872d1ecc831b6f51ffc54b870747c154c3bcb431dbd6",
+    "src/circle_perimeter_aa.cpp": "cbb64a43af368e448ca7d962c1d579eac16ae2d49ca716bcec1e3842a688ca29",
+    "src/bind_circle_perimeter_aa.cpp": "7a6b2a03bf9f6c75662844178b3b01dbc18b07d32ca9bcb91f2d177b5c88b7c7",
+    "python/skimagexx/_circle_perimeter_aa.py": "c917ad6882c830c486324bce5af7bd80638881e2fefb200117d16aa822079635",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "scope": "Initial descriptive allocation-inclusive public-call comparison, not an optimization KEEP decision or whole-library speed claim; every loss retained.",
+  "dtype_scope": "Integer center/radius and finite typed integer clipping bounds; independent owning intp/intp/float64 outputs including empty stride0. No image pixel dtype claim.",
+  "oracle_scope": "Exact live pinned0.26 original output/storage, saved41safe-return rows/profile and independently reviewed native geometry; no third numerical oracle claimed.",
+  "hardware_metadata": [
+    "cpu_model",
+    "logical_cpu_count",
+    "avx2_available"
+  ],
+  "allocation": "Existing sustained sampler includes public-call allocation and result destruction for both backends; validation/witness/hardware capture outside timed batches.",
+  "remaining_components": "Float-shape NumPy tail, external-buffer compatibility gap and unknown shape/protocol partitions remain visible in frontend scope; these8cases do not claim fullAPI or wholelibrary performance.",
+  "task_closeout": {
+    "status": "PROSPECTIVE_BENCHMARK_NO_TARGET_CALLS_OR_TIMINGS",
+    "reuse": "Current line-AA template/hardware metadata, frozen8referencecases, existing sustained sampler, unchanged strict0ULP geometry and outputquota.",
+    "next_plan_correction": {
+      "owner": "root/genuine255 preparation lane",
+      "trigger": "After independent source review and coherent genuine producer success",
+      "action": "Validate actual owned shipping entry and source/runtime/pool identities before future one-worker comparison; retain all gains/losses without KEEP or wholelibrary claim. No benchmark fixture or target calls during prospective setup."
+    },
+    "result": "Three import/source metadata checks PASS; prospective only, zero fixture/algorithm/timing calls. Source/index coordination remains root-owned.",
+    "evidence": "build/circle-perimeter-aa-benchmark-v1/metadata.xml:3passed,0failed/error/skipped,0.26s pytestconsole.",
+    "avoidable_work": "Initial source-closure lookup assumed tools/provenance.py; current template imports benchmarks/provenance.py. Read-only failure before tests/targets; corrected to actual current helper path. No scientific work repeated.",
+    "identity_successor": {
+      "result": "Affectedinertguard1PASS0.28s; all8cases/method/sourceclosure/CPU/bounds/pools unchanged.",
+      "reuse": "Reusepredecessor3metadataPASS; no sourcecase/native/original/timingreplay.",
+      "avoidable_work": "Independentreview caught missing objectidentity checks for emptyowners; narrow2assertionfix. Predecessor preservation message arrived afteredit; byteexact originals reconstructed underhashgate and retained transparently. Initial recovery extra-newline refused beforewrite.",
+      "next_plan_correction": {
+        "owner": "root/benchmarkreview lane",
+        "trigger": "Before firstcohort/genuine255freeze",
+        "action": "Require both identity and memory checks for independent emptyoutputs; useversionedsuccessor and retainfailed predecessor review/evidence."
+      }
+    }
+  },
+  "ownership_validation_successor": {
+    "reason": "Emptyarray shares_memory(self,self) isfalse, so independentowningoutputs require objectidentity checks too.",
+    "assertions": "Actualarrays distinct byobjectidentity and memory from eachother andfrom originaloutputs; sameemptyobject rejected.",
+    "metadata_test": "Actual2assertion expressions evaluated using inert empty(size0) and nonempty(size3) owners; no NumPy/fixture/algorithm/timingcalls."
+  }
+}

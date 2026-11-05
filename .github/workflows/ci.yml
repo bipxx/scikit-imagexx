@@ -370,15 +370,46 @@ jobs:
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Circle perimeter frozen public and native witness contracts
-        run: python -m pytest -q tests/test_circle_perimeter_public.py --junitxml=build/ci-artifacts/circle-perimeter-normal.xml
+        run: python -m pytest -q tests/test_circle_perimeter_public.py tests/test_circle_perimeter_unsafe_boundary.py --junitxml=build/ci-artifacts/circle-perimeter-normal.xml
       - name: Circle perimeter contracts with SIMD disabled
-        run: python -m pytest -q tests/test_circle_perimeter_public.py --junitxml=build/ci-artifacts/circle-perimeter-scalar.xml
+        run: python -m pytest -q tests/test_circle_perimeter_public.py tests/test_circle_perimeter_unsafe_boundary.py --junitxml=build/ci-artifacts/circle-perimeter-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Anti-aliased line saved public and shipping defaults
         run: python -m pytest -q tests/test_line_aa_reference.py tests/test_line_aa_public.py tests/test_line_aa_default.py tests/test_line_aa_benchmark.py --junitxml=build/ci-artifacts/line-aa-normal.xml
       - name: Anti-aliased line contracts with SIMD disabled
         run: python -m pytest -q tests/test_line_aa_reference.py tests/test_line_aa_public.py tests/test_line_aa_default.py --junitxml=build/ci-artifacts/line-aa-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: RegionProperties saved state and shipping defaults
+        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_public_mutation_reference.py tests/test_regionprops_public_mutation_public.py tests/test_regionprops_state_benchmark.py --junitxml=build/ci-artifacts/regionprops-state-normal.xml
+        env:
+          SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-normal-rows
+          SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-normal-rows
+          SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR: build/ci-artifacts/regionprops-public-mutation-normal-rows
+      - name: RegionProperties state contracts with SIMD disabled
+        run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_public_mutation_public.py --junitxml=build/ci-artifacts/regionprops-state-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+          SKIMAGEXX_REGIONPROPS_ROWS_DIR: build/ci-artifacts/regionprops-state-scalar-rows
+          SKIMAGEXX_POINT_ROWS_DIR: build/ci-artifacts/regionprops-point-scalar-rows
+          SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR: build/ci-artifacts/regionprops-public-mutation-scalar-rows
+      - name: Line-ND saved/default parity normal
+        run: python -m pytest -q tests/test_line_nd_reference.py tests/test_line_nd_rounding_promotion_reference.py tests/test_line_nd_public.py tests/test_line_nd_default.py tests/test_line_nd_benchmark.py --junitxml=build/ci-artifacts/line-nd-normal.xml
+      - name: Line-ND saved/default parity scalar
+        run: python -m pytest -q tests/test_line_nd_public.py tests/test_line_nd_default.py --junitxml=build/ci-artifacts/line-nd-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Anti-aliased circle saved public and shipping defaults
+        run: python -m pytest -q tests/test_circle_perimeter_aa_reference.py tests/test_circle_perimeter_aa_public.py tests/test_circle_perimeter_aa_default.py tests/test_circle_perimeter_aa_benchmark.py --junitxml=build/ci-artifacts/circle-perimeter-aa-normal.xml
+      - name: Anti-aliased circle contracts with SIMD disabled
+        run: python -m pytest -q tests/test_circle_perimeter_aa_public.py tests/test_circle_perimeter_aa_default.py --junitxml=build/ci-artifacts/circle-perimeter-aa-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Half stain saved public boundary and unchanged provider partitions
+        run: python -m pytest -q tests/test_combine_stains_half_reference.py tests/test_combine_stains_half_public.py tests/test_combine_stains_half_benchmark.py --junitxml=build/ci-artifacts/combine-stains-half-normal.xml
+      - name: Half stain contracts with SIMD disabled
+        run: python -m pytest -q tests/test_combine_stains_half_public.py --junitxml=build/ci-artifacts/combine-stains-half-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Drawing frozen public parity and prepared native pipelines
@@ -439,6 +470,12 @@ jobs:
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
+      - name: Ellipsoid saved public defaults and source checks
+        run: python -m pytest -q tests/test_ellipsoid_reference.py tests/test_draw_ellipsoid_public.py tests/test_draw_ellipsoid_default.py tests/test_ellipsoid_benchmark.py --junitxml=build/ci-artifacts/ellipsoid-normal.xml
+      - name: Ellipsoid saved public defaults with SIMD disabled
+        run: python -m pytest -q tests/test_draw_ellipsoid_public.py tests/test_draw_ellipsoid_default.py --junitxml=build/ci-artifacts/ellipsoid-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Freeze exact offline measurement artifacts
         shell: bash
         run: |
@@ -609,6 +646,17 @@ jobs:
       - run: python benchmarks/circle_perimeter.py --threads 1 --repeat 7 --output build/ci-circle-perimeter.json
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/line_aa.py --threads 1 --repeat 7 --output build/ci-line-aa.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      # Historical groups retain prior reports; latest_only runs only new ellipsoid.
+      - run: python benchmarks/regionprops_state.py --threads 1 --repeat 7 --output build/ci-regionprops-state.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      - run: python benchmarks/circle_perimeter_aa.py --threads 1 --repeat 7 --output build/ci-circle-perimeter-aa.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      - run: python benchmarks/stains.py --half-only --size 512 --threads 1 --repeat 7 --output build/ci-combine-stains-half.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      - run: python benchmarks/line_nd.py --threads 1 --repeat 7 --output build/ci-line-nd.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      - run: python benchmarks/draw_ellipsoid.py --threads 1 --repeat 7 --output build/ci-ellipsoid.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()
@@ -651,9 +699,24 @@ jobs:
             build/ci-circle-perimeter.json
             build/ci-circle-perimeter.md
             build/ci-circle-perimeter.batches.jsonl
+            build/ci-line-nd.json
+            build/ci-line-nd.md
+            build/ci-line-nd.batches.jsonl
+            build/ci-ellipsoid.json
+            build/ci-ellipsoid.md
+            build/ci-ellipsoid.batches.jsonl
             build/ci-line-aa.json
             build/ci-line-aa.md
             build/ci-line-aa.batches.jsonl
+            build/ci-regionprops-state.json
+            build/ci-regionprops-state.md
+            build/ci-regionprops-state.batches.jsonl
+            build/ci-circle-perimeter-aa.json
+            build/ci-circle-perimeter-aa.md
+            build/ci-circle-perimeter-aa.batches.jsonl
+            build/ci-combine-stains-half.json
+            build/ci-combine-stains-half.md
+            build/ci-combine-stains-half.batches.jsonl
             build/prepared/ci-artifacts/
             build/prepared/wheels/
   debug-gil:

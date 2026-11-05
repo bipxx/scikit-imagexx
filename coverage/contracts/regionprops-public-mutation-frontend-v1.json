@@ -1,0 +1,106 @@
+{
+  "schema": "regionprops-public-mutation-frontend-v1",
+  "reference_commit": "3b99d1e168b767c794be0ad8af76f278fa804cfd",
+  "status": "PASS_BOUNDED_PUBLIC_GEOMETRY_MUTATION_CORRECTION_PENDING_INDEPENDENT_REVIEW",
+  "root_cause": "Ctorpreparedlabel/bbox remainedselected afterassignablepubliclabel/slicereplacement",
+  "fix": "Snapshotactualinitialpubliclabel/slice objects once; sharedidentity-onlyhelperusedbyimage/coords selectsstateonlywhileunchanged; otherwiseliteral originalpropertytail. No cacheinvalidation.",
+  "provider_disposition": "Changedpublicgeometry becomesexplicitimage/coords provider-partial; nativeconstructor/popcount stillusedwherevalid. Cachedimage/count/area persist exactly; coordsusescurrentslicewithcachedmask. No nativegeometry/domain/classcountcredit.",
+  "scoped_properties": [
+    "label",
+    "slice",
+    "bbox",
+    "image",
+    "coords",
+    "num_pixels",
+    "area"
+  ],
+  "type_policy": "Distinctbackendclass remainsseparatelyasserted; allothercapturedrows exact, raworiginals nevercanonicalized",
+  "source_overlay": "Current255Python06142f85 withONLYfixedwrapperoverride, unchangedfixedbudgeta25/8bbcores; no actualwholeproduct/SDKqualification",
+  "old_failed_diagnostics": "24oldcandidate rows remainFAILED11/12perprofile; no reclassification",
+  "proof": {
+    "modes": {
+      "minimum-normal": {
+        "passed": 138,
+        "numpy": "1.24.4",
+        "actual_avx2": true,
+        "seconds": 6.767,
+        "raw_new_rows": 24,
+        "old_state_nodes": 61,
+        "old_default_nodes": 39,
+        "old_point_nodes": 13,
+        "new_mutation_nodes": 25,
+        "warning_scope": "none",
+        "original_constructor_calls": 0,
+        "default_worker": 1
+      },
+      "minimum-scalar": {
+        "passed": 138,
+        "numpy": "1.24.4",
+        "actual_avx2": false,
+        "seconds": 4.716,
+        "raw_new_rows": 24,
+        "old_state_nodes": 61,
+        "old_default_nodes": 39,
+        "old_point_nodes": 13,
+        "new_mutation_nodes": 25,
+        "warning_scope": "none",
+        "original_constructor_calls": 0,
+        "default_worker": 1
+      },
+      "modern-normal": {
+        "passed": 138,
+        "numpy": "2.5.4",
+        "actual_avx2": true,
+        "seconds": 4.325,
+        "raw_new_rows": 24,
+        "old_state_nodes": 61,
+        "old_default_nodes": 39,
+        "old_point_nodes": 13,
+        "new_mutation_nodes": 25,
+        "warning_scope": "NumPy2.5.4existingtestimage.shape setterDeprecationWarning retained; newmutationrowswarnings exactnone",
+        "original_constructor_calls": 0,
+        "default_worker": 1
+      },
+      "modern-scalar": {
+        "passed": 138,
+        "numpy": "2.5.4",
+        "actual_avx2": false,
+        "seconds": 4.325,
+        "raw_new_rows": 24,
+        "old_state_nodes": 61,
+        "old_default_nodes": 39,
+        "old_point_nodes": 13,
+        "new_mutation_nodes": 25,
+        "warning_scope": "NumPy2.5.4existingtestimage.shape setterDeprecationWarning retained; newmutationrowswarnings exactnone",
+        "original_constructor_calls": 0,
+        "default_worker": 1
+      }
+    },
+    "total_passed_nodes": 552,
+    "total_new_raw_candidate_rows": 96,
+    "exact": "Everynewmutation row exact originalexceptseparatelyasserteddistinctbackendclass; allpublicvalues/rawbytes/types/layout/FPstate/input/cachealiasrelations matched",
+    "provider_witness": "2literaloriginalcoords tails perchangedcase; imagetailonlywhencacheisnotalreadyprimed/active. Nativecoords onlybeforemutation whenprimed; prepare1andnativepopcountofreturnedmask stillobserved.",
+    "compatibility": "Existing61public+39default+13pointnodes/mode allpass withactualcurrent255export andunchangedfixedbudgetcores; cachedmask/scalarpersistencyandinputpixelmutation regressions retained",
+    "scope": "No neworiginalconstructorcall, C++build, backend, pool, lock, framework ortiming. Changedgeometryproviderpartial, no nativeownership/APIcountcredit."
+  },
+  "task_closeout": {
+    "status": "FIX_TERMINAL_PASS_INDEPENDENT_FRONTEND_REVIEW_PENDING",
+    "result": "Actualroot255Pythonoverlay+minimal14linewrapperdelta, 552checksPASSfirstattempt; all96newcase/budget/rawrows nowcorrect. Old24failedcandidate rows remainFAILED11/12perprofile anduntouched.",
+    "evidence": "4retainedruntime/dispatchmodes, global1/4/defaultrestore; exactsavedpublicmutationrows/cache/aliases; Creturnandexplicitpropertytailwitnesses, oldpublic/default/pointconsumers. ASTundoofhelper/2snapshotstores/2gettercalls recoversENTIREbaselinewrapperAST.",
+    "reuse": "Reusedroot06142stablePython, fixedbudgeta25/8bbcores, new24/old58/point8rawgolds andsuccessfulruntimes. No source/codeeditstoold255prefixes/oldsites; NEWoverlayonly. AllnewsourceIOUTF8; no build/env/original/timing.",
+    "avoidable_work": "Oneinitialreadguessedpoint_public filename despiteactualdiscoverylisting; correctedtoexistingtest_regionprops_point_witness.py beforetests. No failedbuild/scientifictest/replay. SharedrootPythonexportpinavoidedoldcomponentaliaspreflightrepeat.",
+    "next_plan_correction": {
+      "owner": "root/reviewer/genuine255lane",
+      "trigger": "Beforefirstcohort/genuine255sourcefreeze",
+      "action": "Independentreviewthis3filedelta thenmergepromptly; updateprospectiveRegionbenchmarkwrapperpin toexplicitnewhash withoutchangingcases/gates. Keepchangedgeometryexplicitprovider-partialandpersistentcaches; retainfailed22diagnostics. Firstcohortandperformancegates remainroot-owned; no unchangedtestreplayforbookkeeping."
+    },
+    "scope": "Builtinpubliclabel/sameextentslicereplacement andexisting7properties only; private/protocol/extent/deletion/other37properties remainunassessed. Classliteralidentitystilldistinctbackend.",
+    "readers": "Writerreleasedafterimmutablehandoff; allprefixes/rawproofs retained"
+  },
+  "wrapper_canonical_lf_sha256": "10c972d255babcf2bd3e613903c3279e8419542976d6859099ce5be15bdf5e51",
+  "reference_review": {
+    "path": "build/regionprops-public-mutation-independent-reference-review-v1/review.json",
+    "sha256": "b89a995b150b7680f44674c58479a13d930c2bbbe06947c1e4c8ed624efc2e4c",
+    "status": "PASS"
+  }
+}

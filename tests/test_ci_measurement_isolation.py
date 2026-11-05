@@ -100,7 +100,11 @@ def test_runtime_python_pins_reject_floating_or_mismatched_interpreters(monkeypa
 
 
 def test_debug_runtime_proof_rejects_release(monkeypatch):
-    import skimagexx
+    import sys
+    from types import ModuleType
+    skimagexx = ModuleType('skimagexx')
+    skimagexx._core = SimpleNamespace()
+    monkeypatch.setitem(sys.modules, 'skimagexx', skimagexx)
     monkeypatch.setattr(skimagexx._core, '_consumer_gil_assertions', False, raising=False)
     with pytest.raises(AssertionError, match='must be active'):
         helper.main(['debug-assertions'])
@@ -243,7 +247,12 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/approximate_polygon.py --threads 1 --repeat 7 --output build/ci-approximate-polygon.json',
         'python benchmarks/subdivide_polygon.py --threads 1 --repeat 7 --output build/ci-subdivide-polygon.json',
         'python benchmarks/circle_perimeter.py --threads 1 --repeat 7 --output build/ci-circle-perimeter.json',
-        'python benchmarks/line_aa.py --threads 1 --repeat 7 --output build/ci-line-aa.json']
+        'python benchmarks/line_aa.py --threads 1 --repeat 7 --output build/ci-line-aa.json',
+        'python benchmarks/regionprops_state.py --threads 1 --repeat 7 --output build/ci-regionprops-state.json',
+        'python benchmarks/circle_perimeter_aa.py --threads 1 --repeat 7 --output build/ci-circle-perimeter-aa.json',
+        'python benchmarks/stains.py --half-only --size 512 --threads 1 --repeat 7 --output build/ci-combine-stains-half.json',
+        'python benchmarks/line_nd.py --threads 1 --repeat 7 --output build/ci-line-nd.json',
+        'python benchmarks/draw_ellipsoid.py --threads 1 --repeat 7 --output build/ci-ellipsoid.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -531,7 +540,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 31 and all(condition in step for step in timed)
+    assert len(timed) == 36 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -547,8 +556,13 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 31 and all(skip in s for s in timed[:-1])
-    assert skip not in timed[-1] and 'benchmarks/line_aa.py ' in timed[-1]
+    assert len(timed) == 36 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1]
+    assert 'benchmarks/regionprops_state.py ' in timed[-5]
+    assert 'benchmarks/circle_perimeter_aa.py ' in timed[-4]
+    assert 'benchmarks/stains.py --half-only ' in timed[-3]
+    assert 'benchmarks/line_nd.py ' in timed[-2]
+    assert 'benchmarks/draw_ellipsoid.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -576,7 +590,9 @@ def test_measure_contracts_precede_freeze(stem):
                                              ('measure.blur_effect', 'blur_default_error'),
                                              ('util.compare_images', 'compare_default_error'),
                                              ('util.map_array', 'map_array_default_error'), ('util.label_points', 'label_points_default_error'), ('util.unique_rows', 'unique_rows_default_error'),
-                                             ('util.montage', 'montage_default_error')))
+                                             ('util.montage', 'montage_default_error'),
+                                             ('measure.regionprops', 'regionprops_default_error'),
+                                             ('draw.line_nd', 'line_nd_default_error')))
 def test_measure_benchmark_uses_shared_scalar_policy_before_timing(api, checker_name):
     tree = ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes())
     imports = [n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'skimagexx.coverage']
@@ -790,6 +806,93 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
     assert "str(ROOT / 'tests/test_api.py')" in feature_source
     contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
-    assert contract['scope']=='current253'
-    assert len(contract['image_paths'])==253 and len(contract['metadata_paths'])==3
+    assert contract['scope']=='current257'
+    assert len(contract['image_paths'])==257 and len(contract['metadata_paths'])==3
     assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py','tests/test_line_aa_reference.py','tests/test_line_aa_public.py','tests/test_line_aa_default.py'}<=set(contract['required_selectors'])
+
+
+def test_equivalent_descriptor_fixture_accepts_every_registered_dtype_before_build():
+    # Construction-domain intake only; actual NumPy equivalence stays in the
+    # scientific test. This catches a stale three-dtype whitelist pre-build.
+    tree = ast.parse((ROOT / 'tests/test_dtype_aliases.py').read_bytes())
+    alias = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == 'alias')
+
+    class Descriptor:
+        def newbyteorder(self, order):
+            assert order in ('>', '=')
+            return self
+
+    namespace = {'np': SimpleNamespace(dtype=lambda name: Descriptor())}
+    exec(compile(ast.Module(body=[alias], type_ignores=[]), '<dtype alias intake>', 'exec'), namespace)
+    inventory = json.loads((ROOT / 'coverage/api.json').read_bytes())
+    names = {dtype for entry in inventory['entries'] for dtype in entry['native_default_case_dtypes']}
+    assert names
+    for name in names:
+        assert isinstance(namespace['alias'](name), Descriptor)
+
+
+
+def test_line_nd_saved_defaults_and_typed_policy_are_preparation_gates():
+    workflow = (ROOT/'.github/workflows/ci.yml').read_text()
+    minimum = jobs(workflow)['numpy-minimum']
+    for mode in ('normal','scalar'):
+        path = 'build/ci-artifacts/line-nd-'+mode+'.xml'
+        assert minimum.count(path) == 1 and minimum.index(path) < minimum.index('ci_measurement_artifacts.py freeze')
+    assert minimum.split('line-nd-scalar.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    qualification = (ROOT/'.github/workflows/public-qualification.yml').read_text()
+    for selector in ('test_line_nd_reference.py','test_line_nd_rounding_promotion_reference.py','test_line_nd_benchmark.py'):
+        assert qualification.index(selector) < qualification.index('tools/public_qualification.py all')
+    cmake = (ROOT/'CMakeLists.txt').read_text()
+    assert 'set_source_files_properties(src/line_nd.cpp src/bind_line_nd.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math")' in cmake
+    assert 'src/line_nd.cpp' in cmake and 'src/bind_line_nd.cpp' in cmake
+    wrapper = (ROOT/'python/skimagexx/_line_nd.py').read_text()
+    assert wrapper.count('(np.float32(0) % 1).dtype') == 1
+
+
+
+def test_prebuild_line_nd_selects_only_dependency_free_nodes_and_runtime_keeps_intakes():
+    import shlex
+    workflow = (ROOT/'.github/workflows/public-qualification.yml').read_text()
+    command = next(line.strip() for line in workflow.splitlines()
+                   if line.strip().startswith('python -m pytest -q --capture=sys'))
+    selected = set(shlex.split(command.split(' 2>&1 | tee ')[0]))
+    modules = ('test_regionprops_state_reference.py','test_line_nd_reference.py',
+               'test_line_nd_rounding_promotion_reference.py','test_line_nd_benchmark.py')
+    assert all('tests/'+module not in selected for module in modules)
+    assert {'tests/test_line_nd_reference.py::test_line_nd_prospective_matrix_and_source_safety',
+            'tests/test_line_nd_reference.py::test_line_nd_saved_original_rows_without_replay',
+            'tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_source_safety_without_science',
+            'tests/test_line_nd_benchmark.py::test_line_nd_benchmark_import_refuses_scientific_modules'} <= selected
+    tree = ast.parse((ROOT/'tools/public_qualification.py').read_bytes())
+    runtime = next(ast.literal_eval(node.value) for node in tree.body
+                   if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
+                       and target.id == 'POST203_TESTS' for target in node.targets))
+    assert set(modules) <= set(runtime)
+
+
+def test_ellipsoid_preparation_and_dependency_free_source_gates():
+    minimum=jobs((ROOT/'.github/workflows/ci.yml').read_text())['numpy-minimum']
+    for mode in ('normal','scalar'):
+        path='build/ci-artifacts/ellipsoid-'+mode+'.xml'
+        assert minimum.count(path)==1 and minimum.index(path)<minimum.index('ci_measurement_artifacts.py freeze')
+    assert minimum.split('ellipsoid-scalar.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    text=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    assert 'tests/test_ellipsoid_reference.py::test_ellipsoid_prospective_matrix_and_source_safety' in text
+    assert 'tests/test_ellipsoid_reference.py::test_ellipsoid_saved_observations_without_replay' in text
+    assert 'tests/test_draw_ellipsoid_default.py::test_ellipsoid_saved_sdk_oracle_metadata_without_science' in text
+    assert 'tests/test_ellipsoid_reference.py ' not in text
+    assert 'tests/test_ellipsoid_benchmark.py ' not in text
+    assert 'tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_import_refuses_science' in text
+    cmake=(ROOT/'CMakeLists.txt').read_text()
+    assert 'set_source_files_properties(src/draw_ellipsoid.cpp src/bind_draw_ellipsoid.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math")' in cmake
+
+
+def test_ellipsoid_generic_benchmark_uses_exact_storage_checker():
+    tree=ast.parse((ROOT/'benchmarks/coverage.py').read_bytes())
+    main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
+    branch=next(n for n in ast.walk(main) if isinstance(n,ast.If) and ast.unparse(n.test)=="api == 'draw.ellipsoid'")
+    actual,expected,data=object(),object(),object();calls=[]
+    def checker(*args):calls.append(args);return 0.
+    namespace=dict(actual=actual,expected=expected,data=data,ellipsoid_default_error=checker)
+    exec(compile(ast.Module(body=branch.body,type_ignores=[]),'<ellipsoid generic storage>','exec'),namespace)
+    assert calls==[(data,actual,expected)] and namespace['error']==0.

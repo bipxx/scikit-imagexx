@@ -2,6 +2,7 @@
 #include <skimagexx/draw_coordinates.hpp>
 #include <skimagexx/image.hpp>
 #include <skimagexx/line_aa.hpp>
+#include <skimagexx/circle_perimeter_aa.hpp>
 #include <cstring>
 #include <limits>
 #include <algorithm>
@@ -17,6 +18,51 @@ using namespace skimagexx::detail;
 namespace {
 std::size_t checks=0;
 void check(bool value){++checks;if(!value)throw std::runtime_error("installed drawing coordinate mismatch "+std::to_string(checks));}
+// Exact radius2 words from frozen circle-aa/radius-2, pinned0.26 originals.
+void circle_aa(int workers){
+    const auto global=get_num_threads();
+    constexpr std::array<std::intptr_t,24> rr{2,0,2,0,-2,0,-2,0,2,1,1,1,2,1,1,1,-2,-1,-1,-1,-2,-1,-1,-1};
+    constexpr std::array<std::intptr_t,24> cc{0,2,0,-2,0,2,0,-2,1,1,2,1,-1,-1,-2,-1,1,1,2,1,-1,-1,-2,-1};
+    constexpr std::uint64_t unit=4607182418800017408ULL, complement=4604768947033643348ULL, distance=4598498563450654040ULL;
+    for(bool clipped:{false,true}){
+        CirclePerimeterAA prepared;
+        check(prepare_circle_perimeter_aa({0,0,2,clipped,2,2},prepared));
+        std::vector<std::size_t> expected;
+        for(std::size_t i=0;i<rr.size();++i)if(!clipped||(rr[i]>=0&&rr[i]<2&&cc[i]>=0&&cc[i]<2))expected.push_back(i);
+        const auto count=circle_perimeter_aa_count(prepared,workers);
+        check(count==expected.size()&&count<=prepared.max_points);
+        for(int step:{1,-2}){
+            std::array<std::intptr_t,49> rows,columns;rows.fill(999);columns.fill(999);
+            std::array<double,49> weights;weights.fill(-99.25);
+            const int start=step>0?1:47;
+            circle_perimeter_aa_fill(prepared,{rows.data()+start,columns.data()+start,step,step},weights.data()+start,step,workers);
+            for(int i=0;i<49;++i){
+                const int delta=i-start;const bool written=delta%step==0&&delta/step>=0&&std::size_t(delta/step)<count;
+                if(written){
+                    const auto index=expected[std::size_t(delta/step)];std::uint64_t word;std::memcpy(&word,&weights[i],sizeof(word));
+                    check(rows[i]==rr[index]&&columns[i]==cc[index]&&word==(index<8?unit:(index%2?distance:complement)));
+                }else check(rows[i]==999&&columns[i]==999&&weights[i]==-99.25);
+            }
+        }
+    }
+    for(std::intptr_t radius:{-3,0}){
+        CirclePerimeterAA prepared;check(prepare_circle_perimeter_aa({0,0,radius},prepared));
+        check(circle_perimeter_aa_count(prepared,workers)==8);
+        std::array<std::intptr_t,8> rows,columns;std::array<double,8> weights;
+        circle_perimeter_aa_fill(prepared,{rows.data(),columns.data(),1,1},weights.data(),1,workers);
+        const std::array<std::intptr_t,8> r{radius,0,radius,0,-radius,0,-radius,0},c{0,radius,0,-radius,0,radius,0,-radius};
+        check(rows==r&&columns==c&&std::all_of(weights.begin(),weights.end(),[](double v){return v==1.;}));
+    }
+    CirclePerimeterAA empty;check(prepare_circle_perimeter_aa({0,0,2,true,0,2},empty));
+    check(circle_perimeter_aa_count(empty,workers)==0);
+    circle_perimeter_aa_fill(empty,{nullptr,nullptr,1,1},nullptr,1,workers);
+    const auto prior=empty;constexpr auto high=std::numeric_limits<std::intptr_t>::max(),low=std::numeric_limits<std::intptr_t>::min();
+    for(auto q:{CirclePerimeterAARequest{high,0,1},{low,0,1},{0,0,high},{0,0,low}}){
+        check(!prepare_circle_perimeter_aa(q,empty));
+        check(empty.request.row==prior.request.row&&empty.request.column==prior.request.column&&empty.request.radius==prior.request.radius&&empty.request.clipped==prior.request.clipped&&empty.request.height==prior.request.height&&empty.request.width==prior.request.width&&empty.max_points==prior.max_points&&empty.squared_radius==prior.squared_radius);
+    }
+    check(get_num_threads()==global);
+}
 // Frozen half-tie and point words from pinned0.26 original observations.
 void line_aa(int workers){
     const auto global=get_num_threads();
@@ -105,10 +151,10 @@ void stages(int workers){
 }
 }
 int main(int argc,char** argv){
-    check(argc==1||(argc==2&&std::string(argv[1])=="--line-aa-only"));
-    const bool line_aa_only=argc==2;
+    check(argc==1||(argc==2&&(std::string(argv[1])=="--line-aa-only"||std::string(argv[1])=="--circle-aa-only")));
+    const bool line_aa_only=argc==2&&std::string(argv[1])=="--line-aa-only",circle_aa_only=argc==2&&std::string(argv[1])=="--circle-aa-only";
     check(get_num_threads()==1);
-    for(int workers:{1,4}){set_num_threads(workers);if(!line_aa_only)stages(workers);line_aa(workers);}
+    for(int workers:{1,4}){set_num_threads(workers);if(!line_aa_only&&!circle_aa_only)stages(workers);if(!circle_aa_only)line_aa(workers);if(!line_aa_only)circle_aa(workers);}
     set_num_threads(1);check(get_num_threads()==1);
-    std::cout<<"installed drawing SDK controls="<<checks<<"; workers=1,4; default=1; AVX2="<<has_avx2()<<"; line_aa_only="<<line_aa_only<<"\n";
+    std::cout<<"installed drawing SDK controls="<<checks<<"; workers=1,4; default=1; AVX2="<<has_avx2()<<"; line_aa_only="<<line_aa_only<<"; circle_aa_only="<<circle_aa_only<<"\n";
 }

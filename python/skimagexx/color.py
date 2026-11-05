@@ -434,6 +434,10 @@ def _stain(name,image,matrix,channel_axis):
     moved=a if axis==-1 else np.moveaxis(a,axis,-1)
     if moved.shape[-1]!=3:
         raise ValueError(f'the input array must have size 3 along `channel_axis`, got {moved.shape}')
+    # Upstream prepares half stain input as float32 before scaling/matmul.
+    # Keep other stain APIs, endian and provider-object partitions unchanged.
+    if name=='combine_stains' and type(image) is np.ndarray and moved.dtype.type is np.float16 and moved.dtype.isnative:
+        moved=moved.astype(np.float32)
     mat=np.asarray(matrix)
     if moved.dtype.type not in _COLOR_TYPES or not moved.dtype.isnative or mat.dtype.kind not in 'buif' or mat.ndim!=2 or mat.shape[0]!=3:
         return fallback('color',name,*args,**options)

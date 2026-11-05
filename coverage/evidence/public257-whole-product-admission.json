@@ -1,0 +1,99 @@
+{
+  "schema": "whole-public-product-admission-v1",
+  "source": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+  "run": 41962339458,
+  "passed": true,
+  "root_accepted": true,
+  "admitted_at_utc": "2026-11-05T04:48:29.024338+00:00",
+  "profiles": 4,
+  "XML_checks": 924568,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "SDK_checks": 240,
+  "frozen_corpora": 48,
+  "sealed_records_rehashed": 117544,
+  "sealed_bytes_rehashed": 10063382612,
+  "source_image_paths": 257,
+  "registered_functions": 260,
+  "prepared_members": {
+    "product": 191,
+    "SDK": 90
+  },
+  "scope": "All four supported profiles qualify exact257 DECLARED PARTIAL image contracts plus3metadata functions. This is not full477API/class/runtime-contract/nativeownership/performance completion or a certificate for later code.",
+  "independent_verification": {
+    "path": "build/public257-independent-admission-review-v1/review.json",
+    "sha256": "9a8cd9867c44c2a14837b18eaa9045102752accc380bd069c590465f8d3fbddb"
+  },
+  "root_aggregate": {
+    "path": "build/public257-qualification-v1/root-aggregate-v1.json",
+    "sha256": "c35edef31f786af2089a952393f9437bf205db2b5267b5d7d4a635b2d029ae43"
+  },
+  "previous_admission": {
+    "path": "coverage/evidence/public252-whole-product-admission.json",
+    "sha256": "d4500a5730ae26486c3d444016dc7da2b5d5de9e0a46313b9a887edff19e20d1"
+  },
+  "new_partial_paths": [
+    "draw.circle_perimeter_aa",
+    "draw.ellipsoid",
+    "draw.line_aa",
+    "draw.line_nd",
+    "measure.regionprops"
+  ],
+  "raw_reviews": [
+    {
+      "profile": "minimum",
+      "path": "build/public257-qualification-v1/minimum-raw-review.json",
+      "sha256": "3f81f38d05daf05f6f5376ccd15cf9c95f75641b0d36ecf9d008dceb2fcb6501",
+      "qualification_manifest_sha256": "8179e14fff43fa1dac3d11ea826187d627f1c2e096b018abaf39a254f27244af"
+    },
+    {
+      "profile": "modern",
+      "path": "build/public257-qualification-v1/modern-raw-review.json",
+      "sha256": "4a1c45ec371d6335a4359653f262d4fd041b4065636c4440107ad6f2721abcbd",
+      "qualification_manifest_sha256": "83fdf2f6fef531a4596fa0695229913d6c0352e384db7ce610bacd8d8ad0073b"
+    },
+    {
+      "profile": "debug",
+      "path": "build/public257-qualification-v1/debug-raw-review.json",
+      "sha256": "62e97f1948b7267a35d00d042378ce270d7ab8f92a22b6cc297fc933d0b5880c",
+      "qualification_manifest_sha256": "64579a4f0402e98b772bfb23f5e426111b455c86161adf8a22b643f1d7303c01"
+    },
+    {
+      "profile": "windows",
+      "path": "build/public257-qualification-v1/windows-raw-review.json",
+      "sha256": "e5e5b80b1efb15c1a0b1641bd0b0cb14dfa0b4fb10906f55d848e4589aa58c99",
+      "qualification_manifest_sha256": "a8c3e6e10312a8de15c3833cfeab8c4c20315de49ff25d0d5382f9f88e3909b6"
+    }
+  ],
+  "controlled_stagers": [
+    {
+      "profile": "minimum",
+      "path": "build/public257-qualification-v1/minimum-stager-review.json",
+      "sha256": "d3cc9c7df210f915a8ffc676a9fccd166cdacad6688e71fba2693c72020c4a14",
+      "verified_files": 2181,
+      "status": "Authenticated exact-source staged product; historical staged-unaccepted payload bytes unchanged."
+    },
+    {
+      "profile": "modern",
+      "path": "build/public257-qualification-v1/modern-stager-review.json",
+      "sha256": "d7641207efe81a75199a8a031dec64b43e4e50376d5d8a43cba8dcb138106587",
+      "verified_files": 2181,
+      "status": "Authenticated exact-source staged product; historical staged-unaccepted payload bytes unchanged."
+    },
+    {
+      "profile": "windows",
+      "path": "build/public257-qualification-v1/windows-stager-review.json",
+      "sha256": "9e81f4876e1bc4f8adce22bc3047d9c1cd931eb6996353e5fe7f8ea3b8a0b28d",
+      "verified_files": 2167,
+      "status": "Authenticated exact-source staged product; historical staged-unaccepted payload bytes unchanged."
+    }
+  ],
+  "performance_claim": "No aggregate speed claim. Existing scoped reports/losses retained; newellipse-perimeter/privateoptimization not included.",
+  "boundary": "Partial/provider/runtimeclass/platform domains remain explicit. Shipping requires final main production projection to equal qualified source. Olderfailedcampaigns stayfailed; no scope/threshold waivers.",
+  "waste_review": {
+    "result": "All4actualproducts/XML/SDK/corpora/seals and3stagers audited; independentmetadatareview required before rootadmission.",
+    "waste_reuse": "All7namedartifacts downloaded/streamhashed once againstactualAPI digests, eachseal/stagerfile hashed once; existing252auditors reused withsource/census-only deltas and existingread-only5a sourceWT, no newcheckout/build/science/test/timing.",
+    "next_owner_trigger": "C reviews bounded aggregate/sourceverifier deltas only, reuses authenticatedbigobjects. Root then admits, publishes bounded rawdecisionmetadata and restores validatedsourceprojection to main promptly."
+  }
+}

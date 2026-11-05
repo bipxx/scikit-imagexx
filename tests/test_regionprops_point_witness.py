@@ -79,7 +79,7 @@ def test_regionprops_point_saved_candidate_exact(spec, workers, monkeypatch):
                 actual = observe(owned.regionprops, spec, np)
             finally:
                 sys.setprofile(old_profiler)
-        folder = Path(os.environ['SKIMAGEXX_POINT_ROWS_DIR'])
+        folder = Path(os.environ.get('SKIMAGEXX_POINT_ROWS_DIR', ROOT / 'build' / 'regionprops-point-rows'))
         folder.mkdir(parents=True, exist_ok=True)
         (folder / (spec['id'].split('/')[-1] + '-workers' + str(workers) + '.json')).write_text(
             json.dumps(actual, indent=2, allow_nan=False) + '\n', encoding='utf-8')

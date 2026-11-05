@@ -7,6 +7,38 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "draw-ellipse-perimeter-shared258-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "branch": "integrate/ellipse-perimeter-v1",
+      "state": "implementing",
+      "apis": [],
+      "target_apis": [
+        "draw.ellipse_perimeter"
+      ],
+      "owns": [
+        "CMakeLists.txt",
+        "src/bindings.cpp",
+        "python/skimagexx/draw.py",
+        "python/skimagexx/coverage.py",
+        "coverage/api.json",
+        "tools/public_qualification.py",
+        "tests/cmake_consumer/CMakeLists.txt",
+        ".github/workflows/ci.yml",
+        ".github/workflows/public-qualification.yml"
+      ],
+      "base_sha": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+      "depends_on": [
+        "draw-ellipse-perimeter-reference-v1"
+      ],
+      "acceptance": "Reusepeerednative573/SDKe392/frontenda742/benchmarkaa94. Actualsourcecensus193product91SDK/31families62checks/258images261funcs/1inventoryrowdelta. Completeactualprebuildselectorclosure/importrefusal;4realCLIs stoppedbeforemeasure; independentwiring/workflowreviews thenone genuine/latestonly168samples. Terminalwastecloseout andnextplancorrection; no newenv/fullSDK/localfullcore/originalrecapture/timingwithoutGO.",
+      "current_checkpoint": "CsoleownerNEW5aWT;39paths19reviewedrestores+20shared/default, actualplanners193/91/31/62,128default+136genericPASS narrowcores/savedexpecteds0originals. FullactualWindowsprebuild51745 running; CLIcallsnotauthorizedyet.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Finishactualsetupbarrier, narrowfixonlyfailures; freezeexactsource andrequestrootGO for4untimedactualCLIs. Reusepassingproofs, no fixturegoldrewrite or sourceplanasruntimeproof."
+      }
+    },
+    {
       "id": "regionprops-bbox-extent-reference-v1",
       "kind": "reference",
       "owner": "integrator",
@@ -80,10 +112,10 @@
         "half-stain-f32-simd-v1"
       ],
       "acceptance": "Fixed20cohortABBA1120samples, all12Region <=1.05old andtwoFtargets>=2x; all8stain<=1.05old,stdF32/K7>=1.25x. Actualgenuineinputauth/6CLIpreflight beforetiming, originals normalization andbothpairedpass gates/noaveragewaiver. Terminalcloseout: result/evidence,waste/reuse withobservedcostorunknown,nextowner/triggercorrection (or reviewed,nochange) beforedependentwork. No referencegoldrecapture/newenvironment/full localSDK rebuild or localtimingamidbuilds/tests.",
-      "current_checkpoint": "TERMINALDISCARD41962343215/controller119, notsetupfailure. Root retained13386505806/APIsha77253632 once and reconstructed1120samples/40checks: ONLYtiny2d-constructor fails direct1.065462 firstpair and normalized1.059337 secondpair (limit1.05); alltargetgatespass. All6realpreflights andbefore/afterverify closed. IndependentBrawreviewPASS1aaf3343; sourceunmerged.",
+      "current_checkpoint": "TERMINALDISCARD41962343215/controller119, notsetupfailure. Root retained13386505806/APIsha77253632 once and reconstructed1120samples/40checks: ONLYtiny2d-constructor fails direct1.065462 firstpair and normalized1.059337 secondpair (limit1.05); alltargetgatespass. All6realpreflights andbefore/afterverify closed. IndependentBrawreviewPASS1aaf3343; sourceunmerged. Warmrepair58b installed15952XML/2boundarynodes admitted13909135; newcomparison41969983206 finaldecisionrejection, raw13389417631 awaitsreconstruction. Old554DISCARD staysunchanged.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Preserve DISCARD/allraw; publish after independent raw review. Diagnose recurring lazyprovider self-import vs changed nativeconstructor traversal with same prepared core before successor. Source difference is hypothesis, not proven causal attribution. No unchanged retry/waiver; localtiming only when captures/builds/tests idle."
+        "action": "Retain13389417631 once andindependentlyreconstructfailed40gates/1120samples; identifyexactremainingmechanism beforeanothersourcechange. LocalimportdiagnosticnotreleaseKEEP; no thresholdwaiver/noise retry."
       }
     },
     {
@@ -91,7 +123,7 @@
       "kind": "implementation",
       "owner": "integrator",
       "branch": "integrate/ellipsoid-v1",
-      "state": "validating",
+      "state": "accepted",
       "apis": [],
       "target_apis": [
         "draw.ellipsoid"
@@ -113,10 +145,10 @@
         "draw-ellipsoid-frontend-v1"
       ],
       "acceptance": "Sourceclosed191product/90SDK/30families60checks/78selectors/257image260functions; fullactualsource-onlybarrier and4untimedactualCLIcohorts, independentcode+workflowreviews, then genuine/wheel/SDK/12case168sample/4profile gates. Terminalcloseout: result/evidence,waste/reuse withobservedcostorunknown,nextowner/triggercorrection (or reviewed,nochange) beforedependentwork. No referencegoldrecapture/newenvironment/full localSDK rebuild or localtimingamidbuilds/tests.",
-      "current_checkpoint": "Exact5a98 genuine41959757847 scoped rootadmission49e102a3 independentlyPASS5c375a58:191product/90SDK/16226XML0bad,12/12ellipsoidwins GM16.775025x/168samples,35oldtimingsskipped. Public evidence/current257-minimum-initial-performance-v1.json. Actualfull25741962339458 running, wholequalified252/main253 remain; finalshipping projection open.",
+      "current_checkpoint": "Full257 exact5a98/run41962339458 rootadmitteda1e3cc87 peer9a8cd986:924568XML0bad/240SDK/48corpora/3stagers. Main98namedrestores production7b8d matchqualifiedsource; scopedellipsoid12winsGM16.775025x remainsseparate. No fullAPI completion.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Publish reviewed scoped raw ellipsoid evidence once. B observes existing41962339458; fullqualification requires actual4profile SDK/corpus/product admission before final source projection/shipping. Reuse all minimum/reference/timing proofs; no new benchmark for noise."
+        "action": "Commit/push qualifiedsourceprojection+boundedreceipts, thenretire eligible releasedancestors. Cshared258 nextgates separate; no recompute/redownload/oldtimingreplay."
       }
     },
     {
@@ -36632,14 +36664,20 @@
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
     "worker_queues": {
-      "tiny_line_implementation": [],
-      "qualification251_readiness": [],
-      "next_family_contract": []
+      "tiny_line_implementation": [
+        "regionprops-bbox-extent-reference-v1"
+      ],
+      "qualification251_readiness": [
+        "region-stain-comparison-v1"
+      ],
+      "next_family_contract": [
+        "draw-ellipse-perimeter-shared258-v1"
+      ]
     },
     "current_three_agent_packets": {
-      "tiny_line_implementation": "draw-ellipsoid-shared257-v1",
-      "qualification251_readiness": "draw-ellipsoid-shared257-v1",
-      "next_family_contract": "draw-ellipsoid-shared257-v1"
+      "tiny_line_implementation": "regionprops-bbox-extent-reference-v1",
+      "qualification251_readiness": "region-stain-comparison-v1",
+      "next_family_contract": "draw-ellipse-perimeter-shared258-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -37033,14 +37071,14 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "Plan review complete; ellipse-perimeter prospectivef07d5311 ready for independent safety review before capture/native work.",
-      "qualification251_readiness": "Plan/current gates review complete; next assigned257 qualification watch or prospective review, not a live job claim.",
-      "next_family_contract": "Plan route review complete; controller119 peer4b220 closed; next assigned comparison watch after root dispatch, no self-acceptance."
+      "tiny_line_implementation": "BBox/extentpostprocess eaf8 peerpendingroot; all ellipse component/benchmarkreviews handedoff.",
+      "qualification251_readiness": "Warmcomparison41969983206watchclosed d152d887; rawadmissionnext, shippingplan98restores closed.",
+      "next_family_contract": "Sole shared258integrator from5a; full257metadatareview9a8cd986 andnative/SDK/benchmark peersclosed."
     },
-    "next_action": "Full25741962339458 watcherB staysactive. Anativeellipse frozen3e0 pluspoint-ordercorrection, Cfrontend component, Bminimalwarm-importfix from554 aftersealed42samplediagnostic7e361. Root scopedcapture/postprocessing ofarea_bbox/extent, safe sourceWTretirement and independentadmission. Old554DISCARD remainsfixed.",
+    "next_action": "Publishqualified257 source7b8d andallboundedreceipts promptly; Csource258 shared setup/freeze/4CLI/peer beforegenuine. Rootnewwarmcomparison rawfailedgateaudit, bbox/extentpostprocesspeer/reference-onlymerge, safe releasedancestorcleanup. Fullobjective477/class/runtime/nativeownership/perAPIperformance remainsactive.",
     "current_checkpoint": {
-      "main_image_names": 253,
-      "qualified_image_names": 252,
+      "main_image_names": 257,
+      "qualified_image_names": 257,
       "prepared_source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
       "prepared_run": 41938456869,
       "candidate_source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
@@ -37066,13 +37104,13 @@
       "next_release_expected_images": 257,
       "next_release_expected_product": 191,
       "next_release_expected_SDK": 90,
-      "optimization_prepare_source": "55465253ea03d5239a4a1d3b499ea236ebf948c1",
-      "optimization_prepare_run": 41956997250,
-      "optimization_prepare_status": "Authenticated189/89 product679526e4,15949XML/13deps exactEEA;35timings skipped. Corrected controller119 peer4b220 closed, published main0c5b. Reuse product for6realpreflights and fixedABBA; no samples or KEEP yet.",
-      "next_release_status": "Genuine257 scoped minimum/ellipsoid admitted49e102a3 peer5c375a58,12winsGM16.775025x; exactfull41962339458 running. No wholeproduct qualification or shipping yet.",
+      "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
+      "optimization_prepare_run": 41967608976,
+      "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
+      "next_release_status": "Exact5a98 fulladmitteda1e3cc87/peer9a8cd986; mainproduction7b8d restored98namedpaths, publicationpending. New258componentintegrationprivate.",
       "next_release_qualification_run": 41962339458,
-      "optimization_comparison_run": 41962343215,
-      "optimization_comparison_status": "TERMINALDISCARD fixedcontrols, notsetup;1120samples40checks independentlyrootreconstructed;BpeerPASS1aaf3343. Sourceprivate, allbaseline lossesretained."
+      "optimization_comparison_run": 41969983206,
+      "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
     }
   },
   "parallel_review": {
@@ -37901,14 +37939,14 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
-    "run": 41882408142,
-    "image_paths": 252,
+    "source": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
+    "run": 41962339458,
+    "image_paths": 257,
     "receipt": {
-      "path": "coverage/evidence/public252-whole-product-admission.json",
-      "sha256": "d4500a5730ae26486c3d444016dc7da2b5d5de9e0a46313b9a887edff19e20d1"
+      "path": "coverage/evidence/public257-whole-product-admission.json",
+      "sha256": "a1e3cc875c0766f02e40ab4c8a1c9fa7f544c912998d517c3f344dcd9fbe4afc"
     },
-    "scope": "Exact whole qualified252 partial contracts,4profiles/914344XML/224SDK/48corpora/3Release stagers; not a certificate for newer253/class code or library-wide speed."
+    "scope": "Exact257declaredpartialcontracts,4profiles/924568XML/240SDK/48corpora/3Release stagers. Notfull477/class/performance completion orlatercodequalification."
   },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",

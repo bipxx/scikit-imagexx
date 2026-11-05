@@ -1,0 +1,63 @@
+{
+  "api": "draw.ellipsoid",
+  "status": "COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_REVIEW",
+  "signature": "(a, b, c, spacing=(1.0, 1.0, 1.0), levelset=False)",
+  "reference_commit": "f046c677bcab248be0222cce63647b5daff625d7",
+  "reference_matrix_sha256": "44a63e956df78357a3c33c5d23d094f169b7c34440cccdda530b9412f243e020",
+  "native_header_commit": "3f000b6c930a20cf6921c205d06e600ca10a2798",
+  "native_source_commit": "860546fae31c3039b1b583b9e596c254be7e55d3",
+  "entry": "_core.draw_ellipsoid(axes, spacing, levelset, workers)",
+  "success_partition": "exact builtin int/float axes; exact tuple/list3 exact builtin int/float spacings; exact bool levelset; builtinints additionally abs<=2**50 before floatconversion; all scalars in closed2^-128..2^128 interval; C++ prepare admission and count<=16M, ordinary nearest rounding",
+  "owned_error_partition": "six source-short-circuit nonpositive-axis errors for builtin axes; captured safe malformed tuple spacinglen1/2/4 with positive axes<=8 and spacings .25..2. No C++ arithmetic credit for errors.",
+  "output": "one fresh independently owning writable aligned native-endian C ndarray, bool0/1 orfloat64, exact saved words/layout/type/state",
+  "workers": "one real global getter in wrapper per prepared public call, pass stable snapshot to typed fill. No cache/newpool.",
+  "provider_frontier": [
+    "Exactbuiltinints above2**50 retain untouched sourceprovider before conversion/getter: actual NumPy array-stage overflow/objectpromotion differs from float; largeinteger originalpartition unassessed",
+    "NumPy scalars/subclasses/customcomparisons/conversions/truth and customspacingcontainers: untouched source provider, no pre-callback replay",
+    "malformed spacing outside exact owned safe error partition, nonfinite/nonpositive spacing, verylarge axes/count or typed preparation refusal",
+    "exceptional rounding environment refused by binder; FTZ/DAZ/platforms outside native proof unassessed"
+  ],
+  "numerical": "No NumPy grid/interpolation/arithmetic provider on nineteen saved successful native paths. Allgrid/count/squared/ordered expression C++native plan; zeroULP, no tolerance.",
+  "component_overlay": "true _core built with newbinder + releasednativePIC + tiny existinginitializerrecipe and genuineSDK88; minimal Python alias overlay, pending actual shared shipping export/registry wiring. Not genuine fullproduct.",
+  "pending": [
+    "independent source/proof review",
+    "root shared integration/default route and source-safe firstcohort/performance"
+  ],
+  "task_closeout": {
+    "result": "Confirmed NumPy integer stage mismatch corrected with builtinint cap,20newboundary-onlysentinel checks PASS; old260componentproofs reused via exact guard-removal equivalence and all28operandcap checks.",
+    "waste_reuse": "Prior9ea/5ed proof immutable. Reuse2releasedcores/PIC/old260golds; no neworiginal/build/env/timing or fullsuite replay. Broadbuiltinint admission had skipped actual NumPy vectorint64/object arithmetic; future native normalization must audit those stages, not just final floatconversion.",
+    "observed_cost": "minimum10checks1.84s; modern10checks1.94s; no full260replay or extra costmeasurement.",
+    "next_owner_trigger": "A independent reviewer checks cap/supplement/changedtests and unchangedproofequivalence, root composes successor before shipping sourcefreeze."
+  },
+  "proof": {
+    "modes": [
+      "minimum-normal",
+      "minimum-scalar",
+      "modern-normal",
+      "modern-scalar"
+    ],
+    "nodes_each": 65,
+    "total": 260,
+    "saved_cases_each_mode": 28,
+    "saved_successes_workers1_and4": 38,
+    "saved_owned_errors_workers1_and4": 18,
+    "C_return_native_result_worker_getter_success_witnesses_total": 152,
+    "original_calls": 0,
+    "timed_batches": 0,
+    "build": "two newbinders/two tinyinitializers/two narrowcorelinks; releasednativePIC reused; no leaf/fullSDK/productbuild"
+  },
+  "integer_boundary_successor": {
+    "source_witness": "build/draw-ellipsoid-independent-frontend-review-v1/numpy-int-witness-review-v2.json",
+    "sha256": "65eec098189dcd9d5b3d4a2a5f3124c9accefa2fc46a1751971b0381c6bd6d25",
+    "new_tests": "8provider-preserving axes/spacing hugeint cases plus2justinsidecap sentineladmission cases, no actual originalalgorithm or newC++targets",
+    "unchanged": "all19saved successful +9saved error operands are belowcap; old260proofs reused with exact guard-removal byteequivalence, oldsource/handoff retained. No nativebinder/kernel/PIC/SDK recompile.",
+    "observed_checks": {
+      "minimum": 10,
+      "modern": 10,
+      "failures": 0,
+      "actual_original_calls": 0,
+      "new_native_algorithm_calls": 0,
+      "new_builds": 0
+    }
+  }
+}

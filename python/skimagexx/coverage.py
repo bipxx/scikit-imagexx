@@ -6,13 +6,13 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
@@ -321,14 +321,19 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api == 'draw.line_nd':
+        return ('float16','float32','float64','int8','uint8','int64','uint64')
+    if api == 'measure.regionprops':
+        return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
     # Drawing labels are SHAPE carriers only; no image pixel dtype is consumed.
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):return ('uint8','float32','float64')
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):return ('uint8','float32','float64')
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
     if api in ('measure.approximate_polygon','measure.subdivide_polygon'):return ('float64',)
     # These are actual prepared coordinate dtypes, not image-pixel parity.
+    if api == 'color.combine_stains':return ('uint8','float16','float32','float64')
     if api == 'util.label_points':return ('uint8','float32','float64')
     if api == 'util.map_array':return ('uint8',)
     if api == 'measure.moments_normalized':return ('float32','float64')
@@ -358,6 +363,34 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'draw.ellipsoid':
+        # Frozen unit bool row; descriptor pixels/dtype are not algorithm inputs.
+        return (1,1,1), {}
+    if api == 'draw.line_nd':
+        import numpy as np
+        # Actual coordinate dtypes, using existing frozen source-safe rows.
+        dtype = np.dtype(image.dtype.str).newbyteorder('=')
+        if dtype == np.dtype('int8'):
+            start, stop, integer = [120], [-120], True
+        elif dtype == np.dtype('uint8'):
+            start, stop, integer = [5,6], [1,2], True
+        elif dtype == np.dtype('uint64'):
+            start, stop, integer = [1,2], [5,7], True
+        elif dtype == np.dtype('int64'):
+            start, stop, integer = [0,0], [1,3], True
+        elif dtype in (np.dtype('float16'),np.dtype('float32'),np.dtype('float64')):
+            start, stop, integer = [1.5,-2.5], [4.5,3.5], False
+        else:
+            raise ValueError('draw.line_nd: default coordinate dtype is outside the frozen partition')
+        return (np.array(start,dtype=dtype),np.array(stop,dtype=dtype)), {'endpoint':False,'integer':integer}
+    if api == 'measure.regionprops':
+        import numpy as np
+        # Frozen 2D constructor case; carrier dtype is used for actual labels.
+        labels = np.array([[0,3,3,0],[1,0,3,0],[1,1,0,0]], dtype=image.dtype)
+        return (labels,), {'cache': True}
+    if api == 'draw.circle_perimeter_aa':
+        # Frozen radius2 in an interior8x8 geometry; dtype/pixels are not API inputs.
+        return (3,3,2), {'shape':(8,8)}
     if api == 'draw.line_aa':
         rows,columns=image.shape
         return (0,0,rows-1,columns-1),{}
@@ -541,15 +574,15 @@ def draw_default_error(api,image,actual,expected):
     calls retain the existing generic dtype suites' recursive output checks.
     """
     import numpy as np
-    assert (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa'))
+    assert (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa'))
     if isinstance(expected,np.ndarray):
-        expected_dtype=expected.dtype if api=='draw.line_aa' else np.dtype(np.intp)
+        expected_dtype=expected.dtype if api in ('draw.line_aa','draw.circle_perimeter_aa') else np.dtype(np.intp)
         assert expected_dtype in (np.dtype(np.intp),np.dtype(np.float64))
         pairs=[(actual,expected,expected_dtype)]
     else:
         assert type(actual)is type(expected)and type(expected)in(tuple,list)
-        assert len(actual)==len(expected)==(3 if api=='draw.line_aa' else 2)
-        pairs=[(a,e,np.dtype(np.float64 if api=='draw.line_aa' and i==2 else np.intp))for i,(a,e)in enumerate(zip(actual,expected))]
+        assert len(actual)==len(expected)==(3 if api in ('draw.line_aa','draw.circle_perimeter_aa') else 2)
+        pairs=[(a,e,np.dtype(np.float64 if api in ('draw.line_aa','draw.circle_perimeter_aa') and i==2 else np.intp))for i,(a,e)in enumerate(zip(actual,expected))]
     for a,e,dtype in pairs:
         assert type(a)is type(e)is np.ndarray
         assert a.dtype==e.dtype==dtype and a.dtype.isnative and e.dtype.isnative
@@ -774,9 +807,117 @@ def block_default_error(image, actual, expected):
     return default_error(image, actual, expected)
 
 
+def regionprops_default_error(image, actual, expected):
+    """Exact seven-property state/storage check for the tiny default labels."""
+    import numpy as np
+    from ._regionprops_state import RegionProperties as backend
+    from skimage.measure._regionprops import RegionProperties as original
+    assert backend is not original and issubclass(backend, original)
+    assert (backend.__module__, backend.__qualname__) == ('skimagexx._regionprops_state', 'RegionProperties')
+    assert (original.__module__, original.__qualname__) == ('skimage.measure._regionprops', 'RegionProperties')
+    assert type(actual) is list and type(expected) is list and len(actual) == len(expected) == 2
+    assert all(type(region) is backend for region in actual)
+    assert all(type(region) is original for region in expected)
+
+    def snapshot(regions):
+        arrays = []
+
+        def value(item):
+            if isinstance(item, np.ndarray):
+                arrays.append(item)
+                base = item.base
+                return ('array', type(item).__name__, item.dtype.str, item.dtype.descr, item.dtype.metadata,
+                        item.shape, item.strides, bool(item.flags.owndata), bool(item.flags.writeable),
+                        bool(item.flags.aligned), bool(item.flags.c_contiguous), bool(item.flags.f_contiguous),
+                        type(base).__name__, getattr(base, 'shape', None), getattr(base, 'strides', None),
+                        item.tobytes(order='C'))
+            if isinstance(item, np.generic):
+                return ('scalar', type(item).__name__, item.dtype.str, item.tobytes())
+            if isinstance(item, slice):
+                return ('slice', item.start, item.stop, item.step)
+            if type(item) in (tuple, list):
+                return (type(item).__name__, tuple(value(v) for v in item))
+            assert item is None or type(item) in (int, float, bool, str)
+            return (type(item).__name__, item)
+
+        rows = []
+        for region in regions:
+            properties = tuple(getattr(region, name) for name in
+                               ('label', 'slice', 'bbox', 'image', 'coords', 'num_pixels', 'area'))
+            repeated = (region.image, region.coords)
+            rows.append((value(properties), value(repeated)))
+        aliases = [(a is b, bool(np.shares_memory(a, b)), a.base is b.base)
+                   for a in arrays for b in arrays]
+        input_aliases = [(a is image, bool(np.shares_memory(a, image))) for a in arrays]
+        return rows, aliases, input_aliases
+
+    assert snapshot(actual) == snapshot(expected), 'RegionProperties default property/storage mismatch'
+    return 0.0
+
+
+def line_nd_default_error(image, actual, expected):
+    """Exact coordinate words, row views and shared owning base for line-ND."""
+    import numpy as np
+    if isinstance(expected, np.ndarray):
+        pairs = [(actual, expected)]
+    elif isinstance(expected, np.generic):
+        assert type(actual) is type(expected) and actual.dtype == expected.dtype
+        assert actual.tobytes() == expected.tobytes()
+        return 0.
+    else:
+        assert type(actual) is type(expected) is tuple and len(actual) == len(expected)
+        pairs = list(zip(actual, expected))
+    for a, e in pairs:
+        assert type(a) is type(e) is np.ndarray
+        assert a.dtype == e.dtype and a.dtype.isnative and a.dtype.metadata is e.dtype.metadata is None
+        assert a.shape == e.shape and a.strides == e.strides
+        assert type(a.base) is type(e.base) is np.ndarray
+        for value, reference in ((a, e), (a.base, e.base)):
+            assert value.dtype == reference.dtype and value.dtype.metadata is reference.dtype.metadata is None
+            assert value.shape == reference.shape and value.strides == reference.strides
+            for flag in ('owndata','writeable','aligned','c_contiguous','f_contiguous'):
+                assert getattr(value.flags, flag) == getattr(reference.flags, flag)
+            assert value.tobytes(order='C') == reference.tobytes(order='C')
+        assert a.base.flags.owndata and a.base.base is None
+        assert not np.shares_memory(a, image)
+    for i, (a, e) in enumerate(pairs):
+        for b, f in pairs[i+1:]:
+            assert (a is b) == (e is f)
+            assert np.shares_memory(a, b) == np.shares_memory(e, f)
+            assert (a.base is b.base) == (e.base is f.base)
+    return 0.
+
+
+def ellipsoid_default_error(image, actual, expected):
+    """Exact single owning3D array words and complete storage for ellipsoid."""
+    import numpy as np
+    assert type(actual) is type(expected) is np.ndarray
+    assert actual is not expected and not np.shares_memory(actual,expected)
+    assert actual.dtype == expected.dtype and actual.dtype.isnative
+    assert actual.dtype.metadata is expected.dtype.metadata is None
+    assert actual.shape == expected.shape and actual.strides == expected.strides
+    assert actual.ndim == expected.ndim == 3
+    for value in (actual,expected):
+        assert value.flags.owndata and value.flags.writeable and value.flags.aligned
+        assert value.flags.c_contiguous and value.base is None
+    assert actual.flags.f_contiguous == expected.flags.f_contiguous
+    assert actual.tobytes(order='C') == expected.tobytes(order='C')
+    assert not np.shares_memory(actual,image)
+    return 0.
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
+    if api == 'draw.ellipsoid':
+        ellipsoid_default_error(image, actual, expected)
+        return
+    if api == 'draw.line_nd':
+        line_nd_default_error(image, actual, expected)
+        return
+    if api == 'measure.regionprops':
+        regionprops_default_error(image, actual, expected)
+        return
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):
         draw_default_error(api,image,actual,expected)
         return
     if api == 'measure.subdivide_polygon':
@@ -846,7 +987,13 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa')):
+    if api == 'draw.ellipsoid':
+        raise ValueError('draw.ellipsoid requires exact array words and owning storage')
+    if api == 'draw.line_nd':
+        raise ValueError('draw.line_nd requires exact coordinate words and shared-base storage')
+    if api == 'measure.regionprops':
+        raise ValueError('RegionProperties uses exact property/storage checks; call assert_default_parity')
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):
         raise ValueError('Drawing uses exact coordinate/weight words and storage; call assert_default_parity')
     if api == 'measure.subdivide_polygon':
         raise ValueError('Subdivide polygon uses exact float64 words and fresh layout; call assert_default_parity')
@@ -947,7 +1094,7 @@ def parity_tolerance(api, dtype, image=None, expected=None):
     if api=='transform.matrix_transform':return (0.,0.)
     if api in ('color.label2rgb','transform.integral_image','transform.integrate','filters.threshold_minimum','filters.threshold_multiotsu','filters.rank_order','filters.apply_hysteresis_threshold'):return (0.,0.)
     name = str(dtype)
-    single = name == 'float32'
+    single = name == 'float32' or (api == 'color.combine_stains' and name == 'float16')
     if api=='color.deltaE_ciede2000' and single:
         # atan2 provider differences of a few float32 ULPs are amplified by
         # chroma in the hue term, especially when the final distance is small.
