@@ -2569,11 +2569,15 @@ def test_current253_drawing_admission_is_wired_before_generic_fixture_calls():
     tree=ast.parse(inspect.getsource(q.admission))
     barrier=next(n for n in ast.walk(tree) if isinstance(n,ast.If)
                  and ast.unparse(n.test)=="record['product_scope'] == CURRENT_PRODUCT_SCOPE")
-    assert len(barrier.body)==1
+    assert len(barrier.body)==2
     call=barrier.body[0].value
     assert isinstance(call,ast.Call) and ast.unparse(call.func)=='draw_admission'
     assert [ast.unparse(a) for a in call.args]==['xx._core', "importlib.import_module('skimagexx.draw')",
         "importlib.import_module('skimagexx._draw_coordinates')", 'coverage.native_functions()', "importlib.import_module('skimagexx._circle_perimeter')", "importlib.import_module('skimagexx._line_aa')"]
+    call=barrier.body[1].value
+    assert isinstance(call,ast.Call) and ast.unparse(call.func)=='line_nd_admission'
+    assert [ast.unparse(a) for a in call.args]==['xx._core', "importlib.import_module('skimagexx.draw')",
+        "importlib.import_module('skimagexx._line_nd')", 'coverage.native_functions()']
     source=inspect.getsource(q.admission)
 
 

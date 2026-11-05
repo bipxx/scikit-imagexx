@@ -823,3 +823,21 @@ def test_equivalent_descriptor_fixture_accepts_every_registered_dtype_before_bui
     assert names
     for name in names:
         assert isinstance(namespace['alias'](name), Descriptor)
+
+
+
+def test_line_nd_saved_defaults_and_typed_policy_are_preparation_gates():
+    workflow = (ROOT/'.github/workflows/ci.yml').read_text()
+    minimum = jobs(workflow)['numpy-minimum']
+    for mode in ('normal','scalar'):
+        path = 'build/ci-artifacts/line-nd-'+mode+'.xml'
+        assert minimum.count(path) == 1 and minimum.index(path) < minimum.index('ci_measurement_artifacts.py freeze')
+    assert minimum.split('line-nd-scalar.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    qualification = (ROOT/'.github/workflows/public-qualification.yml').read_text()
+    for selector in ('test_line_nd_reference.py','test_line_nd_rounding_promotion_reference.py','test_line_nd_benchmark.py'):
+        assert qualification.index(selector) < qualification.index('tools/public_qualification.py all')
+    cmake = (ROOT/'CMakeLists.txt').read_text()
+    assert 'set_source_files_properties(src/line_nd.cpp src/bind_line_nd.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math")' in cmake
+    assert 'src/line_nd.cpp' in cmake and 'src/bind_line_nd.cpp' in cmake
+    wrapper = (ROOT/'python/skimagexx/_line_nd.py').read_text()
+    assert wrapper.count('(np.float32(0) % 1).dtype') == 1
