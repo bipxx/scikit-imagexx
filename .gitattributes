@@ -747,3 +747,5 @@ benchmarks/regionprops-performance-v3-same-host/* -text
 coverage/contracts/regionprops-performance-state-coords-scaled-v1.json -text
 coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json -text
 coverage/contracts/regionprops-coords-scaled-benchmark-v1.json -text
+coverage/contracts/draw-polygon-runtime-v1.json -text
+coverage/contracts/draw-polygon-current-runtime-v1.json -text
