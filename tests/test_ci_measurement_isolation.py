@@ -774,7 +774,7 @@ def test_historical_subdivision_harness_is_available_for_actual_inverse_guard_jo
         assert block.count(probe)==1 and block.count(fetch)==1
         assert block.index(probe)<block.index(fetch)<block.index('python -m pytest')
         assert "git cat-file -e '"+target+"'\n" in block
-    assert '- run: python -m pytest -q\n' in blocks['check']
+    assert '- run: python -m pytest -q --ignore=tests/test_regionprops_coords_scaled_benchmark_intake.py\n' in blocks['check']
     assert 'tests/test_subdivide_polygon_benchmark.py' in blocks['numpy-minimum']
     # These jobs use selected numerical files or artifact-only measurements,
     # and never collect the historical benchmark inverse guard.
