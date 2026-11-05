@@ -36759,11 +36759,11 @@
         "regionprops-coords-scaled-frontend-v1",
         "regionprops-coords-scaled-sdk-v1"
       ],
-      "current_checkpoint": "Exact4ac genuine input independentlyPASSac12e9e7 afterSUCCESS42065217414/all38timersSKIPPED:2306Gitfiles481production193product91SDK14wheels13nonproject/runtimeexactcf0,16745XML0bad/111newcoords checks. Sourcebarrier2610+8 admitted. Sixcase controller/schema/merge/activation peers closed; separatechildcf1222 published, prepared4ac/cf0snapshots unchanged. Fixedcomparison42074843238 dispatchedONCE17:27:43UTC/deadline17:57:43; no speed result yet.",
+      "current_checkpoint": "Exact4ac genuine input independentlyPASSac12e9e7 afterSUCCESS42065217414/all38timersSKIPPED:2306Gitfiles481production193product91SDK14wheels13nonproject/runtimeexactcf0,16745XML0bad/111newcoords checks. Sourcebarrier2610+8 admitted. Sixcase controller/schema/merge/activation peers closed; separatechildcf1222 published, prepared4ac/cf0snapshots unchanged. Fixedcomparison42074843238 completed successfully; retained root reconstruction KEEP336samples/12pairs/32inequalities/6wins bothpasses. Independent second-reader admission PASS28d57749; scoped KEEP publication coverage/evidence/regionprops-coords-scaled-performance-keep-v1.json. Four-profile campaign42099127401 live exact4ac; no librarywide claim.",
       "waste_review": "Retained all passed proofs. The first full source run lost verdict to disk exhaustion; replacement uses fresh D scratch with50GB capacity check. Redundant builtins import guard rejected inert sys.modules fixtures; keep one real-load MetaPathFinder, rerun only14 failures and reuse2595passes. Preserve existing mixed newlines using byte edits. Four duplicate metadata-directory deletion was rejected by automatic approval policy; nothing deleted. No unchanged benchmark replay or weakened thresholds.",
       "next_gate": {
         "owner": "integrator",
-        "action": "On user resume: independently admit retained raw comparison42074843238 (root reconstruction KEEP), publish scoped raw evidence, then exact4ac four-profile qualification and reviewed merge/push. No unchanged timing retry."
+        "action": "Independent raw admission PASS28d57749; scoped KEEP published at coverage/evidence/regionprops-coords-scaled-performance-keep-v1.json. Exact4ac four-profile campaign42099127401 is in_progress; observe that handle only, no redispatch. Admit all four actual seals/SDK/corpora/stagers before reviewed merge/push. No unchanged timing retry."
       },
       "proofs": {
         "public_native": {
@@ -36859,13 +36859,107 @@
         }
       },
       "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
-      "current_checkpoint": "Actualinprogress42074843238/controllercf1222, one dispatch17:27:43Z/deadline17:57:43. Candidate4ac/run42065217414/art13434087475, acceptedcf0baseline. Externalchildcontracts activated, actualbudgets recorded. Cases/methods/gates fixedbeforecalls, integerpartial explicitlynotfullynative.",
+      "current_checkpoint": "TerminalSUCCESS42074843238/controllercf1222, one dispatch17:27:43Z/deadline17:57:43; root reconstruction KEEP, independent second-reader PASS28d57749 and scoped publication complete. Candidate4ac/run42065217414/art13434087475, acceptedcf0baseline. Externalchildcontracts activated, actualbudgets recorded. Cases/methods/gates fixedbeforecalls, integerpartial explicitlynotfullynative.",
       "acceptance": "All6direct+original-normalized priorCPP ratios<=1.05 bothpairs;2mediumtargets directprior<=.90 AND candidate/original<=.90 eachpair.336accepted samples/48warmgroups/32inequalities; allraw calibration/loop data retained. OnefailureDISCARD, no averagewaiver orunchangedretry.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Run42074843238 is terminal successful. Retained verification-v1.json reconstructs KEEP:336samples/12pairedchecks/32passinginequalities,6of6wins vsoriginal in bothpasses. Independent second-reader admission and publication pending; reuse retained raw files, no redispatch/download/timing."
+        "action": "Run42074843238 is terminal successful. Retained verification-v1.json reconstructs KEEP:336samples/12pairedchecks/32passinginequalities,6of6wins vsoriginal in bothpasses. Independent second-reader admission PASS28d57749; scoped KEEP published at coverage/evidence/regionprops-coords-scaled-performance-keep-v1.json. Four-profile42099127401 remains pending; no redispatch/download/timing."
       },
       "waste_review": "Sourcepeer caught absentproductionfingerprintmanifestfield; minimalactualrevision/fullfilemaphelper fixedbeforemath,5affectedchecks/profile instead of262replay. Reuseexistingcontroller/sampler/offlineartifacts; separatechildactivation avoids preparedsnapshotmutation. Checkagentstate beforemessaging: send_message tocompleted agent doesnotresume; followup_task required."
+    },
+    {
+      "id": "draw-polygon-current-batch-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/polygon-batch-v1",
+      "state": "implementing",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "owns": [
+        "include/skimagexx/draw_polygon.hpp",
+        "src/draw_polygon.cpp",
+        "tests/test_draw_polygon_native.cpp",
+        "coverage/contracts/draw-polygon-native-v1.json",
+        "python/skimagexx/_draw_polygon.py",
+        "src/bind_draw_polygon.cpp",
+        "tests/test_draw_polygon_public.py",
+        "coverage/contracts/draw-polygon-frontend-v1.json",
+        "tests/test_draw_polygon_dtype_tag_reference.py",
+        "coverage/contracts/draw-polygon-dtype-tag-v1.json",
+        "tests/cmake_consumer/draw_coordinates_consumer.cpp",
+        "tests/test_draw_polygon_sdk_scope.py",
+        "benchmarks/draw_polygon.py",
+        "tests/test_draw_polygon_benchmark.py",
+        "coverage/contracts/draw-polygon-benchmark-v1.json",
+        "tests/test_draw_polygon_benchmark_intake.py",
+        "tests/test_draw_polygon_default.py",
+        "coverage/contracts/draw-polygon-runtime-v1.json"
+      ],
+      "depends_on": [
+        "draw-polygon-native-v1",
+        "draw-polygon-frontend-v1",
+        "draw-polygon-sdk-v1"
+      ],
+      "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Reuse accepted18family paths and4main references; root transplants polygon-only shared hooks. Close current context/parity/SDK and genuine/performance/release gaps without rejected captured-key ancestry."
+      },
+      "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission."
+    },
+    {
+      "id": "draw-bezier-current-batch-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "branch": "feature/draw-bezier-v1",
+      "state": "contracting",
+      "apis": [],
+      "target_apis": [
+        "draw.bezier_curve"
+      ],
+      "owns": [
+        "include/skimagexx/draw_bezier.hpp",
+        "src/draw_bezier.cpp",
+        "src/bind_draw_bezier.cpp",
+        "python/skimagexx/_draw_bezier.py"
+      ],
+      "depends_on": [],
+      "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Freeze source-safe rational/extremum recurrence cases, then native/public/SDK implementation and one-worker workload design. Border APIs remain open behind pinned Matplotlib clipping/reference admission; no line-proxy full-API claim."
+      },
+      "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission."
+    },
+    {
+      "id": "draw-set-color-current-batch-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "branch": "feature/draw-set-color-v1",
+      "state": "contracting",
+      "apis": [],
+      "target_apis": [
+        "draw.set_color"
+      ],
+      "owns": [
+        "include/skimagexx/draw_set_color.hpp",
+        "src/draw_set_color.cpp",
+        "src/bind_draw_set_color.cpp",
+        "python/skimagexx/_draw_set_color.py"
+      ],
+      "depends_on": [],
+      "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
+      "next_gate": {
+        "owner": "next_family_contract",
+        "action": "Freeze safe mutation/duplicate/alias/dtype/layout/alpha cases; own arithmetic and gather-before-scatter semantics, justified ordered scatter, SIMD/globalworker/default1 assessment. Initial f64 partition does not close remaining dtype/provider domains."
+      },
+      "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission."
     }
   ],
   "unassigned_inventoried_apis": [
@@ -37236,7 +37330,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Live counts use inventory_snapshot and latest_accepted_qualification; canonical next actions are coverage/EXECUTION_PLAN.md. Implementation is paused by user request. Historical packet states retain exact-source evidence and are not live dispatch orders.",
+  "note": "Live counts use inventory_snapshot and latest_accepted_qualification; canonical next actions are coverage/EXECUTION_PLAN.md. Implementation resumed by user request. Historical packet states retain exact-source evidence and are not live dispatch orders.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -37539,24 +37633,38 @@
     "accepted_binary_image_names": 258
   },
   "execution_policy": {
-    "active_workers": [],
+    "active_workers": ["next_family_contract", "qualification251_readiness", "tiny_line_implementation"],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
     "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay. Once mandatory readiness closes, update only the dependent gate and dispatch eligible hosted work promptly; do broad publication while it runs. Assign one isolated shared integration owner; root retains independent admission/main delivery.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
-    "implementation_goal_status": "paused",
-    "mode": "documentation-only-user-pause",
+    "implementation_goal_status": "active",
+    "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
       "tiny_line_implementation",
       "qualification251_readiness",
       "next_family_contract"
     ],
     "agent_roster": "python tools/work_queue.py --agents",
-    "resume_rule": "Implementation is paused at user request. Resume only when the user lifts the pause; reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
-    "worker_queues": {},
-    "current_three_agent_packets": {},
+    "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
+    "worker_queues": {
+      "tiny_line_implementation": [
+        "draw-polygon-current-batch-v1"
+      ],
+      "qualification251_readiness": [
+        "draw-bezier-current-batch-v1"
+      ],
+      "next_family_contract": [
+        "draw-set-color-current-batch-v1"
+      ]
+    },
+    "current_three_agent_packets": {
+      "tiny_line_implementation": "draw-polygon-current-batch-v1",
+      "qualification251_readiness": "draw-bezier-current-batch-v1",
+      "next_family_contract": "draw-set-color-current-batch-v1"
+    },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",

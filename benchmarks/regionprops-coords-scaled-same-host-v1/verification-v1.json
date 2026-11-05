@@ -1,0 +1,306 @@
+{
+  "result": "RAW_RECONSTRUCTION_KEEP",
+  "controller": "cf1222b2701968fff175e6098fb58bef08a33a86",
+  "candidate": {
+    "source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+    "run": "42065217414",
+    "artifact": 13434087475,
+    "bytes": 85625166,
+    "sha256": "90fc6ff0a6571aff4938d7003d5d9539dfdda7a6f832ba36585eb1b008bb1740"
+  },
+  "baseline": {
+    "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+    "run": "42002481826",
+    "artifact": 13403507497,
+    "bytes": 85519557,
+    "sha256": "e213203d7ebfe3353dcf2c6972c7b1b4c1b8d0ebb576052379ca713bf6c57e0e",
+    "core_sha256": "52be10566b69aed7755f93eba63523c303875695d9f579ebff5a16ac39bd0284"
+  },
+  "accepted_samples": 336,
+  "journal_events": 1096,
+  "warmup_groups": 48,
+  "minimum_warmup_ns": 251929264,
+  "paired_checks": 12,
+  "inequalities": 32,
+  "all_inequalities_pass": true,
+  "candidate_wins_vs_original": [
+    6,
+    6
+  ],
+  "candidate_vs_original_speedup_range": [
+    1.0892472931899861,
+    1.9687953275114924
+  ],
+  "identity": {
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "original_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe"
+  },
+  "checks": [
+    {
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5970051837806383,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.6062923790175704,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.4967504713906982,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5084567569744,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8085156265931468,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.7842833293161304,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8085156265931468,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.7856357547559755,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8456732806991373,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8295316136642896,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8456732806991373,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8311196848711603,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.9134275745501284,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.9147024108664946,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.6220401228286238,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.6362980176114984,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5932962661286709,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5976383790368759,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5001413355214157,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5054965556621216,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8025455277611732,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8069519964714592,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8025455277611732,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8043476463289172,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8501318101575366,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8386032231284026,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8501318101575366,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8403728591215246,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.9183739079754585,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.9221614030866395,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.6364805643511479,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.634088089237304,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "scope": "Six fixed property cohorts only; integer arithmetic suffix remains provider. No whole-library/SDK/four-profile release claim. Independent second reader pending.",
+  "scientific_calls_for_reader": 0,
+  "nested_archives_read": 0
+}

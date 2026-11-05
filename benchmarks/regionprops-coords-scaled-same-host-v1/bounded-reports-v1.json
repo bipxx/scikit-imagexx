@@ -1,0 +1,2910 @@
+[
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "original_report_sha256": "d8c8aceec90dabf66657866886a55790cff1630c4e3e685cb02d59f9644edded",
+    "metadata": {
+      "source_revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "backend_role": "prior-cpp",
+      "pass_index": 1,
+      "deadline_utc": "2026-11-05T17:57:43.299751+00:00",
+      "threads": 1,
+      "repeat": 7,
+      "target_ms": 100,
+      "warmup_calibration_min_ms": 250,
+      "raw_samples": 84,
+      "reference_pool_limits": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1"
+      },
+      "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+      "logical_cpu_count": 4,
+      "avx2_available": true,
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "numpy": "1.24.4",
+      "scipy": "1.15.3",
+      "reference": "0.26.0",
+      "source_sha256": "20531fec1abf02fe04d827159775c56eaf9a03d2e0fc8da65a62dbd4e9441d02",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "core_sha256": "52be10566b69aed7755f93eba63523c303875695d9f579ebff5a16ac39bd0284",
+      "original_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe",
+      "input_manifest_sha256": "c2f1c2217fbc3b46e235d07731b1c49d3e6167940fd67c6074e9cb81c6d35915",
+      "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+      "fallback_enabled": false,
+      "contract_sha256": "28ae48a17be05e1be74774052f978789fcd6c617a473580302d9f8399e08815d",
+      "scope": "Six one-worker allocation-inclusive public-property cohorts. Fullnativef64 fourphase partition only; integer-spacing multiply/add are explicit NumPy providers. All original losses retained. No wholeclass/library/SIMD/parallel speed claim."
+    },
+    "exit": {
+      "returncode": 0,
+      "started_utc": "2026-11-05T17:28:58.842615+00:00",
+      "completed_utc": "2026-11-05T17:29:13.315901+00:00"
+    },
+    "results": [
+      {
+        "case_id": "regionprops-coords-scaled/tiny-c-off",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-c-off",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "C",
+          "cache": false,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.009908287002834809,
+        "cpp_ms": 0.010284548630444545,
+        "speedup": 0.9634148623211408,
+        "samples_ms": [
+          [
+            0.009908287002834809,
+            0.009897284311191523,
+            0.009900538812392428,
+            0.009904806732093664,
+            0.009955779174920333,
+            0.009933394909972299,
+            0.00993191837968561
+          ],
+          [
+            0.010257957972695636,
+            0.01024676719293551,
+            0.010223215431218818,
+            0.01035381162770024,
+            0.010309875225063016,
+            0.010328339130434782,
+            0.010284548630444545
+          ]
+        ],
+        "loops": [
+          [
+            11641,
+            11607,
+            11620,
+            11616,
+            11611,
+            11552,
+            11578
+          ],
+          [
+            11207,
+            11211,
+            11224,
+            11249,
+            11108,
+            11155,
+            11135
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          261631333,
+          252964511
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/tiny-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-f-warm",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.008023457479436778,
+        "cpp_ms": 0.008053243235605793,
+        "speedup": 0.996301396183177,
+        "samples_ms": [
+          [
+            0.008059996567666013,
+            0.008063323170731707,
+            0.008000241814485031,
+            0.008016660452173913,
+            0.008023457479436778,
+            0.008044165282913556,
+            0.008016770441351332
+          ],
+          [
+            0.008053243235605793,
+            0.00916164012605042,
+            0.008040113120369632,
+            0.008215956445749439,
+            0.008009093584797828,
+            0.008058102026603524,
+            0.008003940582959642
+          ]
+        ],
+        "loops": [
+          [
+            14276,
+            14268,
+            14263,
+            14375,
+            14346,
+            14333,
+            14297
+          ],
+          [
+            14155,
+            14280,
+            12553,
+            14304,
+            13998,
+            14359,
+            14272
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          268673790,
+          280737399
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium2d-f-warm",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            -0.5,
+            2.0
+          ],
+          "offset": [
+            -3,
+            4
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.0978088714893617,
+        "cpp_ms": 0.09797753401360544,
+        "speedup": 0.9982785592029666,
+        "samples_ms": [
+          [
+            0.09788040646258503,
+            0.0978088714893617,
+            0.09765388265306123,
+            0.09787872665534804,
+            0.09772431829787233,
+            0.09777875531011046,
+            0.09781353950722176
+          ],
+          [
+            0.09779339778534923,
+            0.09786451530612246,
+            0.09785000340136055,
+            0.09797753401360544,
+            0.09815633730834752,
+            0.10124655204778157,
+            0.09899817253521127
+          ]
+        ],
+        "loops": [
+          [
+            1176,
+            1175,
+            1176,
+            1178,
+            1175,
+            1177,
+            1177
+          ],
+          [
+            1174,
+            1176,
+            1176,
+            1176,
+            1174,
+            1172,
+            1136
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          325428987,
+          331404024
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium3d-f-warm",
+          "shape": [
+            16,
+            32,
+            32
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            0.5,
+            2.0,
+            1.25
+          ],
+          "offset": [
+            0,
+            -1,
+            2
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.08723144275966642,
+        "cpp_ms": 0.08739844030418252,
+        "speedup": 0.9980892388475712,
+        "samples_ms": [
+          [
+            0.08730663181818182,
+            0.08720369271623672,
+            0.08722224109173617,
+            0.08723144275966642,
+            0.087277159969674,
+            0.08716838239757208,
+            0.08731509242424242
+          ],
+          [
+            0.08721840440060698,
+            0.08719056254738439,
+            0.08739877634571645,
+            0.08749915729483282,
+            0.08739844030418252,
+            0.08740369376899697,
+            0.08734861094224924
+          ]
+        ],
+        "loops": [
+          [
+            1320,
+            1318,
+            1319,
+            1319,
+            1319,
+            1318,
+            1320
+          ],
+          [
+            1318,
+            1319,
+            1319,
+            1316,
+            1315,
+            1316,
+            1316
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          315578833,
+          319489582
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+        "parameters": {
+          "id": "regionprops-coords-scaled/sparse2d-ctor-read",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int32",
+          "layout": "C",
+          "cache": true,
+          "operation": "constructor",
+          "pattern": "sparse",
+          "max_label": 8,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.18262348571428572,
+        "cpp_ms": 0.18157036277602523,
+        "speedup": 1.0058000816992338,
+        "samples_ms": [
+          [
+            0.18264653006329115,
+            0.18262348571428572,
+            0.18252109365079366,
+            0.18253728843106182,
+            0.1825973771790808,
+            0.18291360476190477,
+            0.18307393799682034
+          ],
+          [
+            0.18139488589540412,
+            0.18157036277602523,
+            0.182407380126183,
+            0.18221182250396198,
+            0.1812658908227848,
+            0.18106503937007873,
+            0.1820696147798742
+          ]
+        ],
+        "loops": [
+          [
+            632,
+            630,
+            630,
+            631,
+            631,
+            630,
+            629
+          ],
+          [
+            631,
+            634,
+            634,
+            631,
+            632,
+            635,
+            636
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          316787454,
+          303296617
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/integer3d-partial",
+        "parameters": {
+          "id": "regionprops-coords-scaled/integer3d-partial",
+          "shape": [
+            4,
+            4,
+            4
+          ],
+          "dtype": "int64",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved3d",
+          "max_label": 2,
+          "spacing": [
+            1,
+            2,
+            3
+          ],
+          "offset": [
+            1,
+            0,
+            -2
+          ],
+          "native_partition": "integer-provider"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.007955920233463035,
+        "cpp_ms": 0.00795860873464882,
+        "speedup": 0.9996621895515381,
+        "samples_ms": [
+          [
+            0.007954218489727929,
+            0.007990872665652234,
+            0.007955920233463035,
+            0.007990488481494293,
+            0.007936030987285486,
+            0.008009715271547858,
+            0.007934091377629196
+          ],
+          [
+            0.007955003673158222,
+            0.007959132876807084,
+            0.007985612360717004,
+            0.00793465314908687,
+            0.00795860873464882,
+            0.007956325121107267,
+            0.00799678684101287
+          ]
+        ],
+        "loops": [
+          [
+            14408,
+            14458,
+            14392,
+            14455,
+            14393,
+            14491,
+            14358
+          ],
+          [
+            14429,
+            14457,
+            14449,
+            14401,
+            14494,
+            14450,
+            14454
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          274286162,
+          276570203
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "original_report_sha256": "c4e4cc88bbaeb494618bc99a7bc8318a07012ab666c2b66132b076e6c5fbf5fe",
+    "metadata": {
+      "source_revision": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "backend_role": "native",
+      "pass_index": 2,
+      "deadline_utc": "2026-11-05T17:57:43.299751+00:00",
+      "threads": 1,
+      "repeat": 7,
+      "target_ms": 100,
+      "warmup_calibration_min_ms": 250,
+      "raw_samples": 84,
+      "reference_pool_limits": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1"
+      },
+      "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+      "logical_cpu_count": 4,
+      "avx2_available": true,
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "numpy": "1.24.4",
+      "scipy": "1.15.3",
+      "reference": "0.26.0",
+      "source_sha256": "2b8f9bc761be4b6a5a08c4ea95ff8dd71956fa83ec85b52c0f72148826ca35a6",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "core_sha256": "99a3884859e090ec0643c6a00bd5ea1696f9442d7b0363272f67b4ec06d6a541",
+      "original_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe",
+      "input_manifest_sha256": "fba6161e4bda977085b65c88fef044feef04766e97af342a7629e4fca2a0d98c",
+      "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+      "fallback_enabled": false,
+      "contract_sha256": "28ae48a17be05e1be74774052f978789fcd6c617a473580302d9f8399e08815d",
+      "scope": "Six one-worker allocation-inclusive public-property cohorts. Fullnativef64 fourphase partition only; integer-spacing multiply/add are explicit NumPy providers. All original losses retained. No wholeclass/library/SIMD/parallel speed claim."
+    },
+    "exit": {
+      "returncode": 0,
+      "started_utc": "2026-11-05T17:29:13.320519+00:00",
+      "completed_utc": "2026-11-05T17:29:28.109917+00:00"
+    },
+    "results": [
+      {
+        "case_id": "regionprops-coords-scaled/tiny-c-off",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-c-off",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "C",
+          "cache": false,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.009756511722386797,
+        "cpp_ms": 0.006139928845219457,
+        "speedup": 1.5890268386388888,
+        "samples_ms": [
+          [
+            0.01160364450867052,
+            0.00973670467638089,
+            0.0097335533824401,
+            0.009756511722386797,
+            0.009781502333078815,
+            0.009745728757336055,
+            0.009757931954919075
+          ],
+          [
+            0.006391539372633856,
+            0.006208519424220529,
+            0.006139928845219457,
+            0.006103803897490657,
+            0.006141301470197973,
+            0.006122030011748371,
+            0.0061013282938514775
+          ]
+        ],
+        "loops": [
+          [
+            11418,
+            11804,
+            11811,
+            11815,
+            11787,
+            11757,
+            11801
+          ],
+          [
+            18490,
+            17993,
+            18523,
+            18730,
+            18841,
+            18726,
+            18785
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          254959455,
+          357744806
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/tiny-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-f-warm",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.007838732066046898,
+        "cpp_ms": 0.00400045237351113,
+        "speedup": 1.9594614144017355,
+        "samples_ms": [
+          [
+            0.007862981893004115,
+            0.0078466628606591,
+            0.007978605895196507,
+            0.007838732066046898,
+            0.00783194104014723,
+            0.007822543789158268,
+            0.007808206842606448
+          ],
+          [
+            0.003969202536031042,
+            0.004012530889763236,
+            0.003959330902620285,
+            0.00400192494663637,
+            0.0039935311967150364,
+            0.00400045237351113,
+            0.004001779768323652
+          ]
+        ],
+        "loops": [
+          [
+            14580,
+            14626,
+            14656,
+            14414,
+            14671,
+            14684,
+            14702
+          ],
+          [
+            28864,
+            28974,
+            28661,
+            29046,
+            28737,
+            28797,
+            28747
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          256912956,
+          357676723
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium2d-f-warm",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            -0.5,
+            2.0
+          ],
+          "offset": [
+            -3,
+            4
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.10083090901287553,
+        "cpp_ms": 0.07921636730506156,
+        "speedup": 1.2728544926148477,
+        "samples_ms": [
+          [
+            0.09873605598621878,
+            0.09865022746781116,
+            0.09872584476843911,
+            0.10083090901287553,
+            0.10237186941279579,
+            0.101710134341637,
+            0.10340201149425288
+          ],
+          [
+            0.0783018545207342,
+            0.07850888359428182,
+            0.07868051467576792,
+            0.07921636730506156,
+            0.07972113636363637,
+            0.08018450173250175,
+            0.0809204181184669
+          ]
+        ],
+        "loops": [
+          [
+            1161,
+            1165,
+            1166,
+            1165,
+            1141,
+            1124,
+            1131
+          ],
+          [
+            1471,
+            1469,
+            1465,
+            1462,
+            1452,
+            1443,
+            1435
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          306847139,
+          308906291
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium3d-f-warm",
+          "shape": [
+            16,
+            32,
+            32
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            0.5,
+            2.0,
+            1.25
+          ],
+          "offset": [
+            0,
+            -1,
+            2
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.08892885956790124,
+        "cpp_ms": 0.07391052574002574,
+        "speedup": 1.2031961439525036,
+        "samples_ms": [
+          [
+            0.08966995865834634,
+            0.08891592049883086,
+            0.08879836939721793,
+            0.08892885956790124,
+            0.08900014142194745,
+            0.08890435576179427,
+            0.08893838717156105
+          ],
+          [
+            0.07498410478654592,
+            0.07390285723598436,
+            0.07385738342967245,
+            0.07382610654685494,
+            0.07404866880616175,
+            0.07391052574002574,
+            0.0739590057840617
+          ]
+        ],
+        "loops": [
+          [
+            1282,
+            1283,
+            1294,
+            1296,
+            1294,
+            1293,
+            1294
+          ],
+          [
+            1546,
+            1534,
+            1557,
+            1558,
+            1558,
+            1554,
+            1556
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          308114063,
+          305872148
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+        "parameters": {
+          "id": "regionprops-coords-scaled/sparse2d-ctor-read",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int32",
+          "layout": "C",
+          "cache": true,
+          "operation": "constructor",
+          "pattern": "sparse",
+          "max_label": 8,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.18236896025437202,
+        "cpp_ms": 0.16585137608069164,
+        "speedup": 1.0995926869225618,
+        "samples_ms": [
+          [
+            0.18267503459119497,
+            0.18293483809523808,
+            0.18236896025437202,
+            0.18167485736925515,
+            0.1816627345971564,
+            0.18189711041009463,
+            0.18267761137440758
+          ],
+          [
+            0.16575424892086332,
+            0.1671824567723343,
+            0.16583549273255813,
+            0.16585137608069164,
+            0.1659983544668588,
+            0.166099544011544,
+            0.16551872727272726
+          ]
+        ],
+        "loops": [
+          [
+            636,
+            630,
+            629,
+            631,
+            633,
+            634,
+            633
+          ],
+          [
+            695,
+            694,
+            688,
+            694,
+            694,
+            693,
+            693
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          318181622,
+          298429429
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/integer3d-partial",
+        "parameters": {
+          "id": "regionprops-coords-scaled/integer3d-partial",
+          "shape": [
+            4,
+            4,
+            4
+          ],
+          "dtype": "int64",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved3d",
+          "max_label": 2,
+          "spacing": [
+            1,
+            2,
+            3
+          ],
+          "offset": [
+            1,
+            0,
+            -2
+          ],
+          "native_partition": "integer-provider"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": false,
+            "add_owned": null,
+            "native_accepted": false
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": false,
+            "add_owned": null,
+            "native_accepted": false
+          }
+        ],
+        "native_accepted": false,
+        "reference_ms": 0.007777647363754177,
+        "cpp_ms": 0.00495057395484591,
+        "speedup": 1.571059726547659,
+        "samples_ms": [
+          [
+            0.007777647363754177,
+            0.007795816109833627,
+            0.007756509286876356,
+            0.007768610710190868,
+            0.007781097068359903,
+            0.007773672801082544,
+            0.0077977101527646345
+          ],
+          [
+            0.004936059517173363,
+            0.00495057395484591,
+            0.0049670900990099005,
+            0.004959847751911199,
+            0.004941975417259672,
+            0.004952528855657256,
+            0.004944435381766504
+          ]
+        ],
+        "loops": [
+          [
+            14661,
+            14786,
+            14752,
+            14827,
+            14804,
+            14780,
+            14794
+          ],
+          [
+            23321,
+            23298,
+            23230,
+            23153,
+            23187,
+            23271,
+            23221
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          256331536,
+          356676329
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "original_report_sha256": "cd2b8278c1aebdf2d49da95a36897c5b7032dfa336f1a97ee7cb2a6abd4bb162",
+    "metadata": {
+      "source_revision": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "backend_role": "native",
+      "pass_index": 3,
+      "deadline_utc": "2026-11-05T17:57:43.299751+00:00",
+      "threads": 1,
+      "repeat": 7,
+      "target_ms": 100,
+      "warmup_calibration_min_ms": 250,
+      "raw_samples": 84,
+      "reference_pool_limits": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1"
+      },
+      "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+      "logical_cpu_count": 4,
+      "avx2_available": true,
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "numpy": "1.24.4",
+      "scipy": "1.15.3",
+      "reference": "0.26.0",
+      "source_sha256": "2b8f9bc761be4b6a5a08c4ea95ff8dd71956fa83ec85b52c0f72148826ca35a6",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "core_sha256": "99a3884859e090ec0643c6a00bd5ea1696f9442d7b0363272f67b4ec06d6a541",
+      "original_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe",
+      "input_manifest_sha256": "fba6161e4bda977085b65c88fef044feef04766e97af342a7629e4fca2a0d98c",
+      "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+      "fallback_enabled": false,
+      "contract_sha256": "28ae48a17be05e1be74774052f978789fcd6c617a473580302d9f8399e08815d",
+      "scope": "Six one-worker allocation-inclusive public-property cohorts. Fullnativef64 fourphase partition only; integer-spacing multiply/add are explicit NumPy providers. All original losses retained. No wholeclass/library/SIMD/parallel speed claim."
+    },
+    "exit": {
+      "returncode": 0,
+      "started_utc": "2026-11-05T17:29:28.114097+00:00",
+      "completed_utc": "2026-11-05T17:29:42.897425+00:00"
+    },
+    "results": [
+      {
+        "case_id": "regionprops-coords-scaled/tiny-c-off",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-c-off",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "C",
+          "cache": false,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.009840501843436508,
+        "cpp_ms": 0.006112610119840213,
+        "speedup": 1.6098690494746855,
+        "samples_ms": [
+          [
+            0.009840501843436508,
+            0.009971562847608454,
+            0.009806736408566722,
+            0.009868546601858957,
+            0.010235292517590528,
+            0.009837027055891777,
+            0.009810496108117355
+          ],
+          [
+            0.006112610119840213,
+            0.006111286648240672,
+            0.006089220799234775,
+            0.006108984062268347,
+            0.006728113359893759,
+            0.006117704498917686,
+            0.0061194419619108415
+          ]
+        ],
+        "loops": [
+          [
+            11663,
+            11687,
+            11533,
+            11727,
+            11654,
+            11236,
+            11691
+          ],
+          [
+            18775,
+            18814,
+            18818,
+            18886,
+            18825,
+            17093,
+            18798
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          363420109,
+          353464607
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/tiny-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-f-warm",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.007935397274633124,
+        "cpp_ms": 0.00403058518259654,
+        "speedup": 1.9687953275114924,
+        "samples_ms": [
+          [
+            0.007935397274633124,
+            0.00794404747119299,
+            0.007940823236858465,
+            0.007957217979700339,
+            0.007935293779838096,
+            0.00791215234941006,
+            0.007934860061919504
+          ],
+          [
+            0.004018917668629456,
+            0.00403058518259654,
+            0.004064146992850133,
+            0.004025037565819698,
+            0.0040488488730225395,
+            0.004029905435854105,
+            0.0040337255492868904
+          ]
+        ],
+        "loops": [
+          [
+            14310,
+            14493,
+            14477,
+            14483,
+            14453,
+            14493,
+            14535
+          ],
+          [
+            28361,
+            28615,
+            28532,
+            28297,
+            28572,
+            28404,
+            28537
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          258548300,
+          353892060
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium2d-f-warm",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            -0.5,
+            2.0
+          ],
+          "offset": [
+            -3,
+            4
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.09775857519116399,
+        "cpp_ms": 0.07863187986348123,
+        "speedup": 1.243243521086995,
+        "samples_ms": [
+          [
+            0.09796707124681933,
+            0.09793886712095401,
+            0.09767540510638298,
+            0.09778003310696096,
+            0.09775469498725572,
+            0.09773769413763805,
+            0.09775857519116399
+          ],
+          [
+            0.07844196199032481,
+            0.07865061554192229,
+            0.07896772932330827,
+            0.07858230542210021,
+            0.07853603415300546,
+            0.07863187986348123,
+            0.0786504019138756
+          ]
+        ],
+        "loops": [
+          [
+            1179,
+            1174,
+            1175,
+            1178,
+            1177,
+            1177,
+            1177
+          ],
+          [
+            1447,
+            1467,
+            1463,
+            1457,
+            1464,
+            1465,
+            1463
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          311854995,
+          307245144
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium3d-f-warm",
+          "shape": [
+            16,
+            32,
+            32
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            0.5,
+            2.0,
+            1.25
+          ],
+          "offset": [
+            0,
+            -1,
+            2
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.08791125057295646,
+        "cpp_ms": 0.07387822899294419,
+        "speedup": 1.1899479964706856,
+        "samples_ms": [
+          [
+            0.08852644266055046,
+            0.08786017384615384,
+            0.08791125057295646,
+            0.08806329793735676,
+            0.08828323277182236,
+            0.08784050959324637,
+            0.08776686641221375
+          ],
+          [
+            0.07379720758354756,
+            0.07388612379730596,
+            0.07378823699421966,
+            0.07392152661962798,
+            0.07381087853470437,
+            0.07387822899294419,
+            0.07388971290944124
+          ]
+        ],
+        "loops": [
+          [
+            1308,
+            1300,
+            1309,
+            1309,
+            1306,
+            1303,
+            1310
+          ],
+          [
+            1556,
+            1559,
+            1557,
+            1559,
+            1556,
+            1559,
+            1557
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          308750216,
+          303725788
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+        "parameters": {
+          "id": "regionprops-coords-scaled/sparse2d-ctor-read",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int32",
+          "layout": "C",
+          "cache": true,
+          "operation": "constructor",
+          "pattern": "sparse",
+          "max_label": 8,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": true,
+            "add_owned": true,
+            "native_accepted": true
+          }
+        ],
+        "native_accepted": true,
+        "reference_ms": 0.181934125,
+        "cpp_ms": 0.1670273831640058,
+        "speedup": 1.0892472931899861,
+        "samples_ms": [
+          [
+            0.1819431119873817,
+            0.18179967140600314,
+            0.1812600758293839,
+            0.18118948976377955,
+            0.18195519527559056,
+            0.18197565560821485,
+            0.181934125
+          ],
+          [
+            0.1670273831640058,
+            0.1674341770682148,
+            0.16740625181950508,
+            0.1664567001455604,
+            0.16744918668596237,
+            0.1667723420669578,
+            0.16656387826086957
+          ]
+        ],
+        "loops": [
+          [
+            634,
+            633,
+            633,
+            635,
+            635,
+            633,
+            632
+          ],
+          [
+            689,
+            689,
+            687,
+            687,
+            691,
+            687,
+            690
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          313076376,
+          298262419
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/integer3d-partial",
+        "parameters": {
+          "id": "regionprops-coords-scaled/integer3d-partial",
+          "shape": [
+            4,
+            4,
+            4
+          ],
+          "dtype": "int64",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved3d",
+          "max_label": 2,
+          "spacing": [
+            1,
+            2,
+            3
+          ],
+          "offset": [
+            1,
+            0,
+            -2
+          ],
+          "native_partition": "integer-provider"
+        },
+        "phases": [
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": false,
+            "add_owned": null,
+            "native_accepted": false
+          },
+          {
+            "index_owned": true,
+            "origin_owned": true,
+            "multiply_owned": false,
+            "add_owned": null,
+            "native_accepted": false
+          }
+        ],
+        "native_accepted": false,
+        "reference_ms": 0.007956741552069657,
+        "cpp_ms": 0.005049410092705964,
+        "speedup": 1.5757764582368596,
+        "samples_ms": [
+          [
+            0.007980959916782247,
+            0.007993654892435809,
+            0.007976239799819282,
+            0.007949807254820364,
+            0.007947428729434537,
+            0.007956741552069657,
+            0.007950491697799917
+          ],
+          [
+            0.005049410092705964,
+            0.005058468671789243,
+            0.00504039722894216,
+            0.005064781863604487,
+            0.005147009424821633,
+            0.005040273406731114,
+            0.005015670947100846
+          ]
+        ],
+        "loops": [
+          [
+            14420,
+            14410,
+            14387,
+            14418,
+            14466,
+            14471,
+            14454
+          ],
+          [
+            22868,
+            22775,
+            22735,
+            22816,
+            22706,
+            22344,
+            22817
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          266126136,
+          358617264
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "original_report_sha256": "063fed723c5d802c2a4ab9bd0d3c2af80080eb975dd7f0f2ae21496f9c286e0e",
+    "metadata": {
+      "source_revision": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "backend_role": "prior-cpp",
+      "pass_index": 4,
+      "deadline_utc": "2026-11-05T17:57:43.299751+00:00",
+      "threads": 1,
+      "repeat": 7,
+      "target_ms": 100,
+      "warmup_calibration_min_ms": 250,
+      "raw_samples": 84,
+      "reference_pool_limits": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1"
+      },
+      "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+      "logical_cpu_count": 4,
+      "avx2_available": true,
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "numpy": "1.24.4",
+      "scipy": "1.15.3",
+      "reference": "0.26.0",
+      "source_sha256": "20531fec1abf02fe04d827159775c56eaf9a03d2e0fc8da65a62dbd4e9441d02",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+      "core_sha256": "52be10566b69aed7755f93eba63523c303875695d9f579ebff5a16ac39bd0284",
+      "original_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe",
+      "input_manifest_sha256": "c2f1c2217fbc3b46e235d07731b1c49d3e6167940fd67c6074e9cb81c6d35915",
+      "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+      "fallback_enabled": false,
+      "contract_sha256": "28ae48a17be05e1be74774052f978789fcd6c617a473580302d9f8399e08815d",
+      "scope": "Six one-worker allocation-inclusive public-property cohorts. Fullnativef64 fourphase partition only; integer-spacing multiply/add are explicit NumPy providers. All original losses retained. No wholeclass/library/SIMD/parallel speed claim."
+    },
+    "exit": {
+      "returncode": 0,
+      "started_utc": "2026-11-05T17:29:42.901292+00:00",
+      "completed_utc": "2026-11-05T17:29:57.365945+00:00"
+    },
+    "results": [
+      {
+        "case_id": "regionprops-coords-scaled/tiny-c-off",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-c-off",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "C",
+          "cache": false,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.009912520786613766,
+        "cpp_ms": 0.010302795532029427,
+        "speedup": 0.9621195291896872,
+        "samples_ms": [
+          [
+            0.009899166580355603,
+            0.009941392666551902,
+            0.009918994726832641,
+            0.009912520786613766,
+            0.00991192949491467,
+            0.00989435697664397,
+            0.00991881949582724
+          ],
+          [
+            0.010317742275406322,
+            0.010302795532029427,
+            0.010257883095941951,
+            0.010328231915083402,
+            0.010343192366412212,
+            0.010276731180861589,
+            0.010279699669377178
+          ]
+        ],
+        "loops": [
+          [
+            11586,
+            11618,
+            11568,
+            11594,
+            11602,
+            11603,
+            11623
+          ],
+          [
+            11198,
+            11146,
+            11163,
+            11211,
+            11135,
+            11119,
+            11191
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          259658644,
+          251929264
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/tiny-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/tiny-f-warm",
+          "shape": [
+            4,
+            5
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved2d",
+          "max_label": 2,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.008020364855377703,
+        "cpp_ms": 0.008058892349688528,
+        "speedup": 0.995219256860738,
+        "samples_ms": [
+          [
+            0.008038991290412486,
+            0.00800464609254858,
+            0.008073768914874364,
+            0.008020364855377703,
+            0.008002261942952785,
+            0.00803093869598497,
+            0.00801450405027933
+          ],
+          [
+            0.008049514167774436,
+            0.008058892349688528,
+            0.00807915585143658,
+            0.00805972047769582,
+            0.008057006517625621,
+            0.008024890500210172,
+            0.00806517793594306
+          ]
+        ],
+        "loops": [
+          [
+            14352,
+            14306,
+            14367,
+            14244,
+            14339,
+            14371,
+            14320
+          ],
+          [
+            14293,
+            14287,
+            14270,
+            14235,
+            14269,
+            14274,
+            14331
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          267681241,
+          272838607
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium2d-f-warm",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            -0.5,
+            2.0
+          ],
+          "offset": [
+            -3,
+            4
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.09829532991452991,
+        "cpp_ms": 0.09797809238665527,
+        "speedup": 1.0032378414413572,
+        "samples_ms": [
+          [
+            0.09847744901456726,
+            0.09827787671232877,
+            0.09817574210076857,
+            0.09823912457337884,
+            0.09843416652433817,
+            0.0983724756201882,
+            0.09829532991452991
+          ],
+          [
+            0.09797809238665527,
+            0.09811324275979556,
+            0.09791338959931799,
+            0.09810257531914894,
+            0.09796410485933504,
+            0.09814646933560477,
+            0.09797598890784982
+          ]
+        ],
+        "loops": [
+          [
+            1167,
+            1168,
+            1171,
+            1172,
+            1171,
+            1169,
+            1170
+          ],
+          [
+            1169,
+            1174,
+            1173,
+            1175,
+            1173,
+            1174,
+            1172
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          305112067,
+          328927005
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+        "parameters": {
+          "id": "regionprops-coords-scaled/medium3d-f-warm",
+          "shape": [
+            16,
+            32,
+            32
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "checkerboard",
+          "max_label": 2,
+          "spacing": [
+            0.5,
+            2.0,
+            1.25
+          ],
+          "offset": [
+            0,
+            -1,
+            2
+          ],
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.08671909132075471,
+        "cpp_ms": 0.08690208754716981,
+        "speedup": 0.9978942251955021,
+        "samples_ms": [
+          [
+            0.08682049434815374,
+            0.08670518037735848,
+            0.0867836865109269,
+            0.0868463318250377,
+            0.08671909132075471,
+            0.08666467972871138,
+            0.08669118462697815
+          ],
+          [
+            0.08690208754716981,
+            0.08715142975830817,
+            0.08708549772727273,
+            0.08666031264193792,
+            0.08679070933734939,
+            0.08690036877828056,
+            0.08703123716012084
+          ]
+        ],
+        "loops": [
+          [
+            1327,
+            1325,
+            1327,
+            1326,
+            1325,
+            1327,
+            1327
+          ],
+          [
+            1325,
+            1324,
+            1320,
+            1321,
+            1328,
+            1326,
+            1324
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          317046506,
+          319684988
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+        "parameters": {
+          "id": "regionprops-coords-scaled/sparse2d-ctor-read",
+          "shape": [
+            128,
+            192
+          ],
+          "dtype": "int32",
+          "layout": "C",
+          "cache": true,
+          "operation": "constructor",
+          "pattern": "sparse",
+          "max_label": 8,
+          "spacing": null,
+          "offset": null,
+          "native_partition": "f64"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.18268444532488115,
+        "cpp_ms": 0.1818729623233909,
+        "speedup": 1.004461812196402,
+        "samples_ms": [
+          [
+            0.18243778830963664,
+            0.18268444532488115,
+            0.1818933650793651,
+            0.1840479383886256,
+            0.18212949280000001,
+            0.18299027056962025,
+            0.18324446104928457
+          ],
+          [
+            0.1818729623233909,
+            0.18149798578199053,
+            0.1817660788643533,
+            0.18324503949447077,
+            0.18212512898089173,
+            0.18225176898734177,
+            0.1816742567353407
+          ]
+        ],
+        "loops": [
+          [
+            633,
+            631,
+            630,
+            633,
+            625,
+            632,
+            629
+          ],
+          [
+            637,
+            633,
+            634,
+            633,
+            628,
+            632,
+            631
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          317058221,
+          299415498
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "case_id": "regionprops-coords-scaled/integer3d-partial",
+        "parameters": {
+          "id": "regionprops-coords-scaled/integer3d-partial",
+          "shape": [
+            4,
+            4,
+            4
+          ],
+          "dtype": "int64",
+          "layout": "F",
+          "cache": true,
+          "operation": "getters",
+          "pattern": "saved3d",
+          "max_label": 2,
+          "spacing": [
+            1,
+            2,
+            3
+          ],
+          "offset": [
+            1,
+            0,
+            -2
+          ],
+          "native_partition": "integer-provider"
+        },
+        "phases": [],
+        "native_accepted": false,
+        "reference_ms": 0.007926832852233678,
+        "cpp_ms": 0.007933329586982004,
+        "speedup": 0.9991810834685367,
+        "samples_ms": [
+          [
+            0.0089743882134762,
+            0.007935348107686306,
+            0.007939736355481957,
+            0.007911385916465308,
+            0.007917872050629429,
+            0.007904272358003443,
+            0.007926832852233678
+          ],
+          [
+            0.007932631123719901,
+            0.007928844047454822,
+            0.007950998896932092,
+            0.007937296045353983,
+            0.007941174891296846,
+            0.007929653224692721,
+            0.007933329586982004
+          ]
+        ],
+        "loops": [
+          [
+            14559,
+            12815,
+            14493,
+            14485,
+            14537,
+            14525,
+            14550
+          ],
+          [
+            14452,
+            14498,
+            14505,
+            14464,
+            14489,
+            14482,
+            14503
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          272093561,
+          268269515
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    ]
+  }
+]

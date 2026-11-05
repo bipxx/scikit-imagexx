@@ -1,0 +1,3362 @@
+[
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 0,
+    "loops": 11641,
+    "elapsed_ns": 115342369,
+    "ms": 0.009908287002834809
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 1,
+    "loops": 11607,
+    "elapsed_ns": 114877779,
+    "ms": 0.009897284311191523
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 2,
+    "loops": 11620,
+    "elapsed_ns": 115044261,
+    "ms": 0.009900538812392428
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 3,
+    "loops": 11616,
+    "elapsed_ns": 115054235,
+    "ms": 0.009904806732093664
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 4,
+    "loops": 11611,
+    "elapsed_ns": 115596552,
+    "ms": 0.009955779174920333
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 5,
+    "loops": 11552,
+    "elapsed_ns": 114750578,
+    "ms": 0.009933394909972299
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 6,
+    "loops": 11578,
+    "elapsed_ns": 114991751,
+    "ms": 0.00993191837968561
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 0,
+    "loops": 11207,
+    "elapsed_ns": 114960935,
+    "ms": 0.010257957972695636
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 1,
+    "loops": 11211,
+    "elapsed_ns": 114876507,
+    "ms": 0.01024676719293551
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 2,
+    "loops": 11224,
+    "elapsed_ns": 114745370,
+    "ms": 0.010223215431218818
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 3,
+    "loops": 11249,
+    "elapsed_ns": 116470027,
+    "ms": 0.01035381162770024
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 4,
+    "loops": 11108,
+    "elapsed_ns": 114522094,
+    "ms": 0.010309875225063016
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 5,
+    "loops": 11155,
+    "elapsed_ns": 115212623,
+    "ms": 0.010328339130434782
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 6,
+    "loops": 11135,
+    "elapsed_ns": 114518449,
+    "ms": 0.010284548630444545
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 14276,
+    "elapsed_ns": 115064511,
+    "ms": 0.008059996567666013
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 14268,
+    "elapsed_ns": 115047495,
+    "ms": 0.008063323170731707
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 14263,
+    "elapsed_ns": 114107449,
+    "ms": 0.008000241814485031
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 14375,
+    "elapsed_ns": 115239494,
+    "ms": 0.008016660452173913
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 14346,
+    "elapsed_ns": 115104521,
+    "ms": 0.008023457479436778
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 14333,
+    "elapsed_ns": 115297021,
+    "ms": 0.008044165282913556
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 14297,
+    "elapsed_ns": 114615767,
+    "ms": 0.008016770441351332
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 14155,
+    "elapsed_ns": 113993658,
+    "ms": 0.008053243235605793
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 14280,
+    "elapsed_ns": 130828221,
+    "ms": 0.00916164012605042
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 12553,
+    "elapsed_ns": 100927540,
+    "ms": 0.008040113120369632
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 14304,
+    "elapsed_ns": 117521041,
+    "ms": 0.008215956445749439
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 13998,
+    "elapsed_ns": 112111292,
+    "ms": 0.008009093584797828
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 14359,
+    "elapsed_ns": 115706287,
+    "ms": 0.008058102026603524
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 14272,
+    "elapsed_ns": 114232240,
+    "ms": 0.008003940582959642
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1176,
+    "elapsed_ns": 115107358,
+    "ms": 0.09788040646258503
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1175,
+    "elapsed_ns": 114925424,
+    "ms": 0.0978088714893617
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1176,
+    "elapsed_ns": 114840966,
+    "ms": 0.09765388265306123
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1178,
+    "elapsed_ns": 115301140,
+    "ms": 0.09787872665534804
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1175,
+    "elapsed_ns": 114826074,
+    "ms": 0.09772431829787233
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1177,
+    "elapsed_ns": 115085595,
+    "ms": 0.09777875531011046
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1177,
+    "elapsed_ns": 115126536,
+    "ms": 0.09781353950722176
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1174,
+    "elapsed_ns": 114809449,
+    "ms": 0.09779339778534923
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1176,
+    "elapsed_ns": 115088670,
+    "ms": 0.09786451530612246
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1176,
+    "elapsed_ns": 115071604,
+    "ms": 0.09785000340136055
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1176,
+    "elapsed_ns": 115221580,
+    "ms": 0.09797753401360544
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1174,
+    "elapsed_ns": 115235540,
+    "ms": 0.09815633730834752
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1172,
+    "elapsed_ns": 118660959,
+    "ms": 0.10124655204778157
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1136,
+    "elapsed_ns": 112461924,
+    "ms": 0.09899817253521127
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1320,
+    "elapsed_ns": 115244754,
+    "ms": 0.08730663181818182
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1318,
+    "elapsed_ns": 114934467,
+    "ms": 0.08720369271623672
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1319,
+    "elapsed_ns": 115046136,
+    "ms": 0.08722224109173617
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1319,
+    "elapsed_ns": 115058273,
+    "ms": 0.08723144275966642
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1319,
+    "elapsed_ns": 115118574,
+    "ms": 0.087277159969674
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1318,
+    "elapsed_ns": 114887928,
+    "ms": 0.08716838239757208
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1320,
+    "elapsed_ns": 115255922,
+    "ms": 0.08731509242424242
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1318,
+    "elapsed_ns": 114953857,
+    "ms": 0.08721840440060698
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1319,
+    "elapsed_ns": 115004352,
+    "ms": 0.08719056254738439
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1319,
+    "elapsed_ns": 115278986,
+    "ms": 0.08739877634571645
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1316,
+    "elapsed_ns": 115148891,
+    "ms": 0.08749915729483282
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1315,
+    "elapsed_ns": 114928949,
+    "ms": 0.08739844030418252
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1316,
+    "elapsed_ns": 115023261,
+    "ms": 0.08740369376899697
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1316,
+    "elapsed_ns": 114950772,
+    "ms": 0.08734861094224924
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 0,
+    "loops": 632,
+    "elapsed_ns": 115432607,
+    "ms": 0.18264653006329115
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 1,
+    "loops": 630,
+    "elapsed_ns": 115052796,
+    "ms": 0.18262348571428572
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 2,
+    "loops": 630,
+    "elapsed_ns": 114988289,
+    "ms": 0.18252109365079366
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 3,
+    "loops": 631,
+    "elapsed_ns": 115181029,
+    "ms": 0.18253728843106182
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 4,
+    "loops": 631,
+    "elapsed_ns": 115218945,
+    "ms": 0.1825973771790808
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 5,
+    "loops": 630,
+    "elapsed_ns": 115235571,
+    "ms": 0.18291360476190477
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 6,
+    "loops": 629,
+    "elapsed_ns": 115153507,
+    "ms": 0.18307393799682034
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 0,
+    "loops": 631,
+    "elapsed_ns": 114460173,
+    "ms": 0.18139488589540412
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 1,
+    "loops": 634,
+    "elapsed_ns": 115115610,
+    "ms": 0.18157036277602523
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 2,
+    "loops": 634,
+    "elapsed_ns": 115646279,
+    "ms": 0.182407380126183
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 3,
+    "loops": 631,
+    "elapsed_ns": 114975660,
+    "ms": 0.18221182250396198
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 4,
+    "loops": 632,
+    "elapsed_ns": 114560043,
+    "ms": 0.1812658908227848
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 5,
+    "loops": 635,
+    "elapsed_ns": 114976300,
+    "ms": 0.18106503937007873
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 6,
+    "loops": 636,
+    "elapsed_ns": 115796275,
+    "ms": 0.1820696147798742
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 0,
+    "loops": 14408,
+    "elapsed_ns": 114604380,
+    "ms": 0.007954218489727929
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 1,
+    "loops": 14458,
+    "elapsed_ns": 115532037,
+    "ms": 0.007990872665652234
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 2,
+    "loops": 14392,
+    "elapsed_ns": 114501604,
+    "ms": 0.007955920233463035
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 3,
+    "loops": 14455,
+    "elapsed_ns": 115502511,
+    "ms": 0.007990488481494293
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 4,
+    "loops": 14393,
+    "elapsed_ns": 114223294,
+    "ms": 0.007936030987285486
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 5,
+    "loops": 14491,
+    "elapsed_ns": 116068784,
+    "ms": 0.008009715271547858
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 6,
+    "loops": 14358,
+    "elapsed_ns": 113917684,
+    "ms": 0.007934091377629196
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 0,
+    "loops": 14429,
+    "elapsed_ns": 114782748,
+    "ms": 0.007955003673158222
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 1,
+    "loops": 14457,
+    "elapsed_ns": 115065184,
+    "ms": 0.007959132876807084
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 2,
+    "loops": 14449,
+    "elapsed_ns": 115384113,
+    "ms": 0.007985612360717004
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 3,
+    "loops": 14401,
+    "elapsed_ns": 114266940,
+    "ms": 0.00793465314908687
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 4,
+    "loops": 14494,
+    "elapsed_ns": 115352075,
+    "ms": 0.00795860873464882
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 5,
+    "loops": 14450,
+    "elapsed_ns": 114968898,
+    "ms": 0.007956325121107267
+  },
+  {
+    "pass_index": 1,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 6,
+    "loops": 14454,
+    "elapsed_ns": 115585557,
+    "ms": 0.00799678684101287
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 0,
+    "loops": 11418,
+    "elapsed_ns": 132490413,
+    "ms": 0.01160364450867052
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 1,
+    "loops": 11804,
+    "elapsed_ns": 114932062,
+    "ms": 0.00973670467638089
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 2,
+    "loops": 11811,
+    "elapsed_ns": 114962999,
+    "ms": 0.0097335533824401
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 3,
+    "loops": 11815,
+    "elapsed_ns": 115273186,
+    "ms": 0.009756511722386797
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 4,
+    "loops": 11787,
+    "elapsed_ns": 115294568,
+    "ms": 0.009781502333078815
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 5,
+    "loops": 11757,
+    "elapsed_ns": 114580533,
+    "ms": 0.009745728757336055
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 6,
+    "loops": 11801,
+    "elapsed_ns": 115153355,
+    "ms": 0.009757931954919075
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 0,
+    "loops": 18490,
+    "elapsed_ns": 118179563,
+    "ms": 0.006391539372633856
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 1,
+    "loops": 17993,
+    "elapsed_ns": 111709890,
+    "ms": 0.006208519424220529
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 2,
+    "loops": 18523,
+    "elapsed_ns": 113729902,
+    "ms": 0.006139928845219457
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 3,
+    "loops": 18730,
+    "elapsed_ns": 114324247,
+    "ms": 0.006103803897490657
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 4,
+    "loops": 18841,
+    "elapsed_ns": 115708261,
+    "ms": 0.006141301470197973
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 5,
+    "loops": 18726,
+    "elapsed_ns": 114641134,
+    "ms": 0.006122030011748371
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 6,
+    "loops": 18785,
+    "elapsed_ns": 114613452,
+    "ms": 0.0061013282938514775
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 14580,
+    "elapsed_ns": 114642276,
+    "ms": 0.007862981893004115
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 14626,
+    "elapsed_ns": 114765291,
+    "ms": 0.0078466628606591
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 14656,
+    "elapsed_ns": 116934448,
+    "ms": 0.007978605895196507
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 14414,
+    "elapsed_ns": 112987484,
+    "ms": 0.007838732066046898
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 14671,
+    "elapsed_ns": 114902407,
+    "ms": 0.00783194104014723
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 14684,
+    "elapsed_ns": 114866233,
+    "ms": 0.007822543789158268
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 14702,
+    "elapsed_ns": 114796257,
+    "ms": 0.007808206842606448
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 28864,
+    "elapsed_ns": 114567062,
+    "ms": 0.003969202536031042
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 28974,
+    "elapsed_ns": 116259070,
+    "ms": 0.004012530889763236
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 28661,
+    "elapsed_ns": 113478383,
+    "ms": 0.003959330902620285
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 29046,
+    "elapsed_ns": 116239912,
+    "ms": 0.00400192494663637
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 28737,
+    "elapsed_ns": 114762106,
+    "ms": 0.0039935311967150364
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 28797,
+    "elapsed_ns": 115201027,
+    "ms": 0.00400045237351113
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 28747,
+    "elapsed_ns": 115039163,
+    "ms": 0.004001779768323652
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1161,
+    "elapsed_ns": 114632561,
+    "ms": 0.09873605598621878
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1165,
+    "elapsed_ns": 114927515,
+    "ms": 0.09865022746781116
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1166,
+    "elapsed_ns": 115114335,
+    "ms": 0.09872584476843911
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1165,
+    "elapsed_ns": 117468009,
+    "ms": 0.10083090901287553
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1141,
+    "elapsed_ns": 116806303,
+    "ms": 0.10237186941279579
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1124,
+    "elapsed_ns": 114322191,
+    "ms": 0.101710134341637
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1131,
+    "elapsed_ns": 116947675,
+    "ms": 0.10340201149425288
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1471,
+    "elapsed_ns": 115182028,
+    "ms": 0.0783018545207342
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1469,
+    "elapsed_ns": 115329550,
+    "ms": 0.07850888359428182
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1465,
+    "elapsed_ns": 115266954,
+    "ms": 0.07868051467576792
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1462,
+    "elapsed_ns": 115814329,
+    "ms": 0.07921636730506156
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1452,
+    "elapsed_ns": 115755090,
+    "ms": 0.07972113636363637
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1443,
+    "elapsed_ns": 115706236,
+    "ms": 0.08018450173250175
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1435,
+    "elapsed_ns": 116120800,
+    "ms": 0.0809204181184669
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1282,
+    "elapsed_ns": 114956887,
+    "ms": 0.08966995865834634
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1283,
+    "elapsed_ns": 114079126,
+    "ms": 0.08891592049883086
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1294,
+    "elapsed_ns": 114905090,
+    "ms": 0.08879836939721793
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1296,
+    "elapsed_ns": 115251802,
+    "ms": 0.08892885956790124
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1294,
+    "elapsed_ns": 115166183,
+    "ms": 0.08900014142194745
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1293,
+    "elapsed_ns": 114953332,
+    "ms": 0.08890435576179427
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1294,
+    "elapsed_ns": 115086273,
+    "ms": 0.08893838717156105
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1546,
+    "elapsed_ns": 115925426,
+    "ms": 0.07498410478654592
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1534,
+    "elapsed_ns": 113366983,
+    "ms": 0.07390285723598436
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1557,
+    "elapsed_ns": 114995946,
+    "ms": 0.07385738342967245
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1558,
+    "elapsed_ns": 115021074,
+    "ms": 0.07382610654685494
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1558,
+    "elapsed_ns": 115367826,
+    "ms": 0.07404866880616175
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1554,
+    "elapsed_ns": 114856957,
+    "ms": 0.07391052574002574
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1556,
+    "elapsed_ns": 115080213,
+    "ms": 0.0739590057840617
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 0,
+    "loops": 636,
+    "elapsed_ns": 116181322,
+    "ms": 0.18267503459119497
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 1,
+    "loops": 630,
+    "elapsed_ns": 115248948,
+    "ms": 0.18293483809523808
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 2,
+    "loops": 629,
+    "elapsed_ns": 114710076,
+    "ms": 0.18236896025437202
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 3,
+    "loops": 631,
+    "elapsed_ns": 114636835,
+    "ms": 0.18167485736925515
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 4,
+    "loops": 633,
+    "elapsed_ns": 114992511,
+    "ms": 0.1816627345971564
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 5,
+    "loops": 634,
+    "elapsed_ns": 115322768,
+    "ms": 0.18189711041009463
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 6,
+    "loops": 633,
+    "elapsed_ns": 115634928,
+    "ms": 0.18267761137440758
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 0,
+    "loops": 695,
+    "elapsed_ns": 115199203,
+    "ms": 0.16575424892086332
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 1,
+    "loops": 694,
+    "elapsed_ns": 116024625,
+    "ms": 0.1671824567723343
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 2,
+    "loops": 688,
+    "elapsed_ns": 114094819,
+    "ms": 0.16583549273255813
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 3,
+    "loops": 694,
+    "elapsed_ns": 115100855,
+    "ms": 0.16585137608069164
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 4,
+    "loops": 694,
+    "elapsed_ns": 115202858,
+    "ms": 0.1659983544668588
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 5,
+    "loops": 693,
+    "elapsed_ns": 115106984,
+    "ms": 0.166099544011544
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 6,
+    "loops": 693,
+    "elapsed_ns": 114704478,
+    "ms": 0.16551872727272726
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 0,
+    "loops": 14661,
+    "elapsed_ns": 114028088,
+    "ms": 0.007777647363754177
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 1,
+    "loops": 14786,
+    "elapsed_ns": 115268937,
+    "ms": 0.007795816109833627
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 2,
+    "loops": 14752,
+    "elapsed_ns": 114424025,
+    "ms": 0.007756509286876356
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 3,
+    "loops": 14827,
+    "elapsed_ns": 115185191,
+    "ms": 0.007768610710190868
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 4,
+    "loops": 14804,
+    "elapsed_ns": 115191361,
+    "ms": 0.007781097068359903
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 5,
+    "loops": 14780,
+    "elapsed_ns": 114894884,
+    "ms": 0.007773672801082544
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 6,
+    "loops": 14794,
+    "elapsed_ns": 115359324,
+    "ms": 0.0077977101527646345
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 0,
+    "loops": 23321,
+    "elapsed_ns": 115113844,
+    "ms": 0.004936059517173363
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 1,
+    "loops": 23298,
+    "elapsed_ns": 115338472,
+    "ms": 0.00495057395484591
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 2,
+    "loops": 23230,
+    "elapsed_ns": 115385503,
+    "ms": 0.0049670900990099005
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 3,
+    "loops": 23153,
+    "elapsed_ns": 114835355,
+    "ms": 0.004959847751911199
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 4,
+    "loops": 23187,
+    "elapsed_ns": 114589584,
+    "ms": 0.004941975417259672
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 5,
+    "loops": 23271,
+    "elapsed_ns": 115250299,
+    "ms": 0.004952528855657256
+  },
+  {
+    "pass_index": 2,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 6,
+    "loops": 23221,
+    "elapsed_ns": 114814734,
+    "ms": 0.004944435381766504
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 0,
+    "loops": 11663,
+    "elapsed_ns": 114769773,
+    "ms": 0.009840501843436508
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 1,
+    "loops": 11687,
+    "elapsed_ns": 116537655,
+    "ms": 0.009971562847608454
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 2,
+    "loops": 11533,
+    "elapsed_ns": 113101091,
+    "ms": 0.009806736408566722
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 3,
+    "loops": 11727,
+    "elapsed_ns": 115728446,
+    "ms": 0.009868546601858957
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 4,
+    "loops": 11654,
+    "elapsed_ns": 119282099,
+    "ms": 0.010235292517590528
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 5,
+    "loops": 11236,
+    "elapsed_ns": 110528836,
+    "ms": 0.009837027055891777
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 6,
+    "loops": 11691,
+    "elapsed_ns": 114694510,
+    "ms": 0.009810496108117355
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 0,
+    "loops": 18775,
+    "elapsed_ns": 114764255,
+    "ms": 0.006112610119840213
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 1,
+    "loops": 18814,
+    "elapsed_ns": 114977747,
+    "ms": 0.006111286648240672
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 2,
+    "loops": 18818,
+    "elapsed_ns": 114586957,
+    "ms": 0.006089220799234775
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 3,
+    "loops": 18886,
+    "elapsed_ns": 115374273,
+    "ms": 0.006108984062268347
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 4,
+    "loops": 18825,
+    "elapsed_ns": 126656734,
+    "ms": 0.006728113359893759
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 5,
+    "loops": 17093,
+    "elapsed_ns": 104569923,
+    "ms": 0.006117704498917686
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 6,
+    "loops": 18798,
+    "elapsed_ns": 115033270,
+    "ms": 0.0061194419619108415
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 14310,
+    "elapsed_ns": 113555535,
+    "ms": 0.007935397274633124
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 14493,
+    "elapsed_ns": 115133080,
+    "ms": 0.00794404747119299
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 14477,
+    "elapsed_ns": 114959298,
+    "ms": 0.007940823236858465
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 14483,
+    "elapsed_ns": 115244388,
+    "ms": 0.007957217979700339
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 14453,
+    "elapsed_ns": 114688801,
+    "ms": 0.007935293779838096
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 14493,
+    "elapsed_ns": 114670824,
+    "ms": 0.00791215234941006
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 14535,
+    "elapsed_ns": 115333191,
+    "ms": 0.007934860061919504
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 28361,
+    "elapsed_ns": 113980524,
+    "ms": 0.004018917668629456
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 28615,
+    "elapsed_ns": 115335195,
+    "ms": 0.00403058518259654
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 28532,
+    "elapsed_ns": 115958242,
+    "ms": 0.004064146992850133
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 28297,
+    "elapsed_ns": 113896488,
+    "ms": 0.004025037565819698
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 28572,
+    "elapsed_ns": 115683710,
+    "ms": 0.0040488488730225395
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 28404,
+    "elapsed_ns": 114465434,
+    "ms": 0.004029905435854105
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 28537,
+    "elapsed_ns": 115110426,
+    "ms": 0.0040337255492868904
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1179,
+    "elapsed_ns": 115503177,
+    "ms": 0.09796707124681933
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1174,
+    "elapsed_ns": 114980230,
+    "ms": 0.09793886712095401
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1175,
+    "elapsed_ns": 114768601,
+    "ms": 0.09767540510638298
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1178,
+    "elapsed_ns": 115184879,
+    "ms": 0.09778003310696096
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1177,
+    "elapsed_ns": 115057276,
+    "ms": 0.09775469498725572
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1177,
+    "elapsed_ns": 115037266,
+    "ms": 0.09773769413763805
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1177,
+    "elapsed_ns": 115061843,
+    "ms": 0.09775857519116399
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1447,
+    "elapsed_ns": 113505519,
+    "ms": 0.07844196199032481
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1467,
+    "elapsed_ns": 115380453,
+    "ms": 0.07865061554192229
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1463,
+    "elapsed_ns": 115529788,
+    "ms": 0.07896772932330827
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1457,
+    "elapsed_ns": 114494419,
+    "ms": 0.07858230542210021
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1464,
+    "elapsed_ns": 114976754,
+    "ms": 0.07853603415300546
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1465,
+    "elapsed_ns": 115195704,
+    "ms": 0.07863187986348123
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1463,
+    "elapsed_ns": 115065538,
+    "ms": 0.0786504019138756
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1308,
+    "elapsed_ns": 115792587,
+    "ms": 0.08852644266055046
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1300,
+    "elapsed_ns": 114218226,
+    "ms": 0.08786017384615384
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1309,
+    "elapsed_ns": 115075827,
+    "ms": 0.08791125057295646
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1309,
+    "elapsed_ns": 115274857,
+    "ms": 0.08806329793735676
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1306,
+    "elapsed_ns": 115297902,
+    "ms": 0.08828323277182236
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1303,
+    "elapsed_ns": 114456184,
+    "ms": 0.08784050959324637
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1310,
+    "elapsed_ns": 114974595,
+    "ms": 0.08776686641221375
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1556,
+    "elapsed_ns": 114828455,
+    "ms": 0.07379720758354756
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1559,
+    "elapsed_ns": 115188467,
+    "ms": 0.07388612379730596
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1557,
+    "elapsed_ns": 114888285,
+    "ms": 0.07378823699421966
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1559,
+    "elapsed_ns": 115243660,
+    "ms": 0.07392152661962798
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1556,
+    "elapsed_ns": 114849727,
+    "ms": 0.07381087853470437
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1559,
+    "elapsed_ns": 115176159,
+    "ms": 0.07387822899294419
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1557,
+    "elapsed_ns": 115046283,
+    "ms": 0.07388971290944124
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 0,
+    "loops": 634,
+    "elapsed_ns": 115351933,
+    "ms": 0.1819431119873817
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 1,
+    "loops": 633,
+    "elapsed_ns": 115079192,
+    "ms": 0.18179967140600314
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 2,
+    "loops": 633,
+    "elapsed_ns": 114737628,
+    "ms": 0.1812600758293839
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 3,
+    "loops": 635,
+    "elapsed_ns": 115055326,
+    "ms": 0.18118948976377955
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 4,
+    "loops": 635,
+    "elapsed_ns": 115541549,
+    "ms": 0.18195519527559056
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 5,
+    "loops": 633,
+    "elapsed_ns": 115190590,
+    "ms": 0.18197565560821485
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 6,
+    "loops": 632,
+    "elapsed_ns": 114982367,
+    "ms": 0.181934125
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 0,
+    "loops": 689,
+    "elapsed_ns": 115081867,
+    "ms": 0.1670273831640058
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 1,
+    "loops": 689,
+    "elapsed_ns": 115362148,
+    "ms": 0.1674341770682148
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 2,
+    "loops": 687,
+    "elapsed_ns": 115008095,
+    "ms": 0.16740625181950508
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 3,
+    "loops": 687,
+    "elapsed_ns": 114355753,
+    "ms": 0.1664567001455604
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 4,
+    "loops": 691,
+    "elapsed_ns": 115707388,
+    "ms": 0.16744918668596237
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 5,
+    "loops": 687,
+    "elapsed_ns": 114572599,
+    "ms": 0.1667723420669578
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 6,
+    "loops": 690,
+    "elapsed_ns": 114929076,
+    "ms": 0.16656387826086957
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 0,
+    "loops": 14420,
+    "elapsed_ns": 115085442,
+    "ms": 0.007980959916782247
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 1,
+    "loops": 14410,
+    "elapsed_ns": 115188567,
+    "ms": 0.007993654892435809
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 2,
+    "loops": 14387,
+    "elapsed_ns": 114754162,
+    "ms": 0.007976239799819282
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 3,
+    "loops": 14418,
+    "elapsed_ns": 114620321,
+    "ms": 0.007949807254820364
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 4,
+    "loops": 14466,
+    "elapsed_ns": 114967504,
+    "ms": 0.007947428729434537
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 5,
+    "loops": 14471,
+    "elapsed_ns": 115142007,
+    "ms": 0.007956741552069657
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 6,
+    "loops": 14454,
+    "elapsed_ns": 114916407,
+    "ms": 0.007950491697799917
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 0,
+    "loops": 22868,
+    "elapsed_ns": 115469910,
+    "ms": 0.005049410092705964
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 1,
+    "loops": 22775,
+    "elapsed_ns": 115206624,
+    "ms": 0.005058468671789243
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 2,
+    "loops": 22735,
+    "elapsed_ns": 114593431,
+    "ms": 0.00504039722894216
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 3,
+    "loops": 22816,
+    "elapsed_ns": 115558063,
+    "ms": 0.005064781863604487
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 4,
+    "loops": 22706,
+    "elapsed_ns": 116867996,
+    "ms": 0.005147009424821633
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 5,
+    "loops": 22344,
+    "elapsed_ns": 112619869,
+    "ms": 0.005040273406731114
+  },
+  {
+    "pass_index": 3,
+    "role": "candidate",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 6,
+    "loops": 22817,
+    "elapsed_ns": 114442564,
+    "ms": 0.005015670947100846
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 0,
+    "loops": 11586,
+    "elapsed_ns": 114691744,
+    "ms": 0.009899166580355603
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 1,
+    "loops": 11618,
+    "elapsed_ns": 115499100,
+    "ms": 0.009941392666551902
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 2,
+    "loops": 11568,
+    "elapsed_ns": 114742931,
+    "ms": 0.009918994726832641
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 3,
+    "loops": 11594,
+    "elapsed_ns": 114925766,
+    "ms": 0.009912520786613766
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 4,
+    "loops": 11602,
+    "elapsed_ns": 114998206,
+    "ms": 0.00991192949491467
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 5,
+    "loops": 11603,
+    "elapsed_ns": 114804224,
+    "ms": 0.00989435697664397
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 0,
+    "round": 6,
+    "loops": 11623,
+    "elapsed_ns": 115286439,
+    "ms": 0.00991881949582724
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 0,
+    "loops": 11198,
+    "elapsed_ns": 115538078,
+    "ms": 0.010317742275406322
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 1,
+    "loops": 11146,
+    "elapsed_ns": 114834959,
+    "ms": 0.010302795532029427
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 2,
+    "loops": 11163,
+    "elapsed_ns": 114508749,
+    "ms": 0.010257883095941951
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 3,
+    "loops": 11211,
+    "elapsed_ns": 115789808,
+    "ms": 0.010328231915083402
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 4,
+    "loops": 11135,
+    "elapsed_ns": 115171447,
+    "ms": 0.010343192366412212
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 5,
+    "loops": 11119,
+    "elapsed_ns": 114266974,
+    "ms": 0.010276731180861589
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-c-off",
+    "arm": 1,
+    "round": 6,
+    "loops": 11191,
+    "elapsed_ns": 115040119,
+    "ms": 0.010279699669377178
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 14352,
+    "elapsed_ns": 115375603,
+    "ms": 0.008038991290412486
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 14306,
+    "elapsed_ns": 114514467,
+    "ms": 0.00800464609254858
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 14367,
+    "elapsed_ns": 115995838,
+    "ms": 0.008073768914874364
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 14244,
+    "elapsed_ns": 114242077,
+    "ms": 0.008020364855377703
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 14339,
+    "elapsed_ns": 114744434,
+    "ms": 0.008002261942952785
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 14371,
+    "elapsed_ns": 115412620,
+    "ms": 0.00803093869598497
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 14320,
+    "elapsed_ns": 114767698,
+    "ms": 0.00801450405027933
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 14293,
+    "elapsed_ns": 115051706,
+    "ms": 0.008049514167774436
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 14287,
+    "elapsed_ns": 115137395,
+    "ms": 0.008058892349688528
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 14270,
+    "elapsed_ns": 115289554,
+    "ms": 0.00807915585143658
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 14235,
+    "elapsed_ns": 114730121,
+    "ms": 0.00805972047769582
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 14269,
+    "elapsed_ns": 114965426,
+    "ms": 0.008057006517625621
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 14274,
+    "elapsed_ns": 114547287,
+    "ms": 0.008024890500210172
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/tiny-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 14331,
+    "elapsed_ns": 115582065,
+    "ms": 0.00806517793594306
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1167,
+    "elapsed_ns": 114923183,
+    "ms": 0.09847744901456726
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1168,
+    "elapsed_ns": 114788560,
+    "ms": 0.09827787671232877
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1171,
+    "elapsed_ns": 114963794,
+    "ms": 0.09817574210076857
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1172,
+    "elapsed_ns": 115136254,
+    "ms": 0.09823912457337884
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1171,
+    "elapsed_ns": 115266409,
+    "ms": 0.09843416652433817
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1169,
+    "elapsed_ns": 114997424,
+    "ms": 0.0983724756201882
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1170,
+    "elapsed_ns": 115005536,
+    "ms": 0.09829532991452991
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1169,
+    "elapsed_ns": 114536390,
+    "ms": 0.09797809238665527
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1174,
+    "elapsed_ns": 115184947,
+    "ms": 0.09811324275979556
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1173,
+    "elapsed_ns": 114852406,
+    "ms": 0.09791338959931799
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1175,
+    "elapsed_ns": 115270526,
+    "ms": 0.09810257531914894
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1173,
+    "elapsed_ns": 114911895,
+    "ms": 0.09796410485933504
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1174,
+    "elapsed_ns": 115223955,
+    "ms": 0.09814646933560477
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1172,
+    "elapsed_ns": 114827859,
+    "ms": 0.09797598890784982
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 0,
+    "loops": 1327,
+    "elapsed_ns": 115210796,
+    "ms": 0.08682049434815374
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 1,
+    "loops": 1325,
+    "elapsed_ns": 114884364,
+    "ms": 0.08670518037735848
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 2,
+    "loops": 1327,
+    "elapsed_ns": 115161952,
+    "ms": 0.0867836865109269
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 3,
+    "loops": 1326,
+    "elapsed_ns": 115158236,
+    "ms": 0.0868463318250377
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 4,
+    "loops": 1325,
+    "elapsed_ns": 114902796,
+    "ms": 0.08671909132075471
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 5,
+    "loops": 1327,
+    "elapsed_ns": 115004030,
+    "ms": 0.08666467972871138
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 0,
+    "round": 6,
+    "loops": 1327,
+    "elapsed_ns": 115039202,
+    "ms": 0.08669118462697815
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 0,
+    "loops": 1325,
+    "elapsed_ns": 115145266,
+    "ms": 0.08690208754716981
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 1,
+    "loops": 1324,
+    "elapsed_ns": 115388493,
+    "ms": 0.08715142975830817
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 2,
+    "loops": 1320,
+    "elapsed_ns": 114952857,
+    "ms": 0.08708549772727273
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 3,
+    "loops": 1321,
+    "elapsed_ns": 114478273,
+    "ms": 0.08666031264193792
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 4,
+    "loops": 1328,
+    "elapsed_ns": 115258062,
+    "ms": 0.08679070933734939
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 5,
+    "loops": 1326,
+    "elapsed_ns": 115229889,
+    "ms": 0.08690036877828056
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+    "arm": 1,
+    "round": 6,
+    "loops": 1324,
+    "elapsed_ns": 115229358,
+    "ms": 0.08703123716012084
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 0,
+    "loops": 633,
+    "elapsed_ns": 115483120,
+    "ms": 0.18243778830963664
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 1,
+    "loops": 631,
+    "elapsed_ns": 115273885,
+    "ms": 0.18268444532488115
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 2,
+    "loops": 630,
+    "elapsed_ns": 114592820,
+    "ms": 0.1818933650793651
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 3,
+    "loops": 633,
+    "elapsed_ns": 116502345,
+    "ms": 0.1840479383886256
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 4,
+    "loops": 625,
+    "elapsed_ns": 113830933,
+    "ms": 0.18212949280000001
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 5,
+    "loops": 632,
+    "elapsed_ns": 115649851,
+    "ms": 0.18299027056962025
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 0,
+    "round": 6,
+    "loops": 629,
+    "elapsed_ns": 115260766,
+    "ms": 0.18324446104928457
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 0,
+    "loops": 637,
+    "elapsed_ns": 115853077,
+    "ms": 0.1818729623233909
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 1,
+    "loops": 633,
+    "elapsed_ns": 114888225,
+    "ms": 0.18149798578199053
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 2,
+    "loops": 634,
+    "elapsed_ns": 115239694,
+    "ms": 0.1817660788643533
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 3,
+    "loops": 633,
+    "elapsed_ns": 115994110,
+    "ms": 0.18324503949447077
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 4,
+    "loops": 628,
+    "elapsed_ns": 114374581,
+    "ms": 0.18212512898089173
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 5,
+    "loops": 632,
+    "elapsed_ns": 115183118,
+    "ms": 0.18225176898734177
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+    "arm": 1,
+    "round": 6,
+    "loops": 631,
+    "elapsed_ns": 114636456,
+    "ms": 0.1816742567353407
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 0,
+    "loops": 14559,
+    "elapsed_ns": 130658118,
+    "ms": 0.0089743882134762
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 1,
+    "loops": 12815,
+    "elapsed_ns": 101691486,
+    "ms": 0.007935348107686306
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 2,
+    "loops": 14493,
+    "elapsed_ns": 115070599,
+    "ms": 0.007939736355481957
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 3,
+    "loops": 14485,
+    "elapsed_ns": 114596425,
+    "ms": 0.007911385916465308
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 4,
+    "loops": 14537,
+    "elapsed_ns": 115102106,
+    "ms": 0.007917872050629429
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 5,
+    "loops": 14525,
+    "elapsed_ns": 114809556,
+    "ms": 0.007904272358003443
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 0,
+    "round": 6,
+    "loops": 14550,
+    "elapsed_ns": 115335418,
+    "ms": 0.007926832852233678
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 0,
+    "loops": 14452,
+    "elapsed_ns": 114642385,
+    "ms": 0.007932631123719901
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 1,
+    "loops": 14498,
+    "elapsed_ns": 114952381,
+    "ms": 0.007928844047454822
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 2,
+    "loops": 14505,
+    "elapsed_ns": 115329239,
+    "ms": 0.007950998896932092
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 3,
+    "loops": 14464,
+    "elapsed_ns": 114805050,
+    "ms": 0.007937296045353983
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 4,
+    "loops": 14489,
+    "elapsed_ns": 115059683,
+    "ms": 0.007941174891296846
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 5,
+    "loops": 14482,
+    "elapsed_ns": 114837238,
+    "ms": 0.007929653224692721
+  },
+  {
+    "pass_index": 4,
+    "role": "baseline",
+    "case_id": "regionprops-coords-scaled/integer3d-partial",
+    "arm": 1,
+    "round": 6,
+    "loops": 14503,
+    "elapsed_ns": 115057079,
+    "ms": 0.007933329586982004
+  }
+]

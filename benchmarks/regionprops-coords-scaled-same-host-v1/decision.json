@@ -1,0 +1,262 @@
+{
+  "decision": "KEEP",
+  "checks": [
+    {
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5970051837806383,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.6062923790175704,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.4967504713906982,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5084567569744,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8085156265931468,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.7842833293161304,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8085156265931468,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.7856357547559755,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8456732806991373,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8295316136642896,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8456732806991373,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8311196848711603,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.9134275745501284,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.9147024108664946,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.6220401228286238,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.6362980176114984,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5932962661286709,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5976383790368759,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5001413355214157,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5054965556621216,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8025455277611732,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8069519964714592,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8025455277611732,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8043476463289172,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8501318101575366,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8386032231284026,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8501318101575366,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8403728591215246,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.9183739079754585,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.9221614030866395,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.6364805643511479,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.634088089237304,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "scope": "six fixed property cohorts only; integer suffix is provider, no whole-library claim"
+}
