@@ -25,6 +25,17 @@ foreach(_include IN LISTS _includes)
     endif()
 endforeach()
 
+# Current ellipsoid client uses the exact retained source-word fixture.
+add_executable(draw_ellipsoid_consumer draw_ellipsoid_consumer.cpp)
+target_link_libraries(draw_ellipsoid_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(draw_ellipsoid_consumer PRIVATE /UNDEBUG /fp:strict)
+else()
+    target_compile_options(draw_ellipsoid_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math)
+endif()
+include("${CMAKE_CURRENT_SOURCE_DIR}/ellipsoid_source_oracle.cmake")
+add_test(NAME installed_draw_ellipsoid_consumer COMMAND draw_ellipsoid_consumer "${SKIMAGEXX_ELLIPSOID_SOURCE_ORACLE}" auto)
+
 get_target_property(_links skimagexx::skimagexx INTERFACE_LINK_LIBRARIES)
 if(SKIMAGEXX_EXPECT_OPENMP)
     if(NOT "OpenMP::OpenMP_CXX" IN_LIST _links)
@@ -117,7 +128,7 @@ endif()
 include("${CMAKE_CURRENT_SOURCE_DIR}/h_extrema_source_oracle.cmake")
 add_test(NAME installed_h_extrema_consumer COMMAND h_extrema_consumer "${SKIMAGEXX_H_EXTREMA_SOURCE_ORACLE}")
 
-# Current qualification adds six installed staged-ABI clients; historical jobs
+# Current qualification adds seven installed staged-ABI clients; historical jobs
 # still select their closed23 targets explicitly.
 foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives draw_coordinates circle_perimeter line_nd)
     add_executable(${_current}_consumer ${_current}_consumer.cpp)

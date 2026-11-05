@@ -2262,10 +2262,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','draw'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','draw'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2291,12 +2291,12 @@ def current_metadata_artifact(tmp_path):
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,256)
+    result=q.plan(ROOT,profile,257)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current256' and result['registry']['image_count']==256
-    assert result['product_members']==188 and result['SDK_members']==89
-    assert result['SDK_checks']==58 and 'current29 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==74
+    assert result['product_scope']=='current257' and result['registry']['image_count']==257
+    assert result['product_members']==191 and result['SDK_members']==90
+    assert result['SDK_checks']==60 and 'current30 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==78
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2352,12 +2352,12 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current256' and result['record_verified']
+        assert result['product_scope']=='current257' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
 
-@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd'))
+@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid'))
 @pytest.mark.parametrize('fault',('missing-target','missing-source'))
 def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
     if fault=='missing-target':
@@ -2366,11 +2366,11 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',256)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',257)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd') and len(q.FAMILIES)==23
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid') and len(q.FAMILIES)==23
     current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
     old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
     q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
@@ -2569,7 +2569,7 @@ def test_current253_drawing_admission_is_wired_before_generic_fixture_calls():
     tree=ast.parse(inspect.getsource(q.admission))
     barrier=next(n for n in ast.walk(tree) if isinstance(n,ast.If)
                  and ast.unparse(n.test)=="record['product_scope'] == CURRENT_PRODUCT_SCOPE")
-    assert len(barrier.body)==2
+    assert len(barrier.body)==3
     call=barrier.body[0].value
     assert isinstance(call,ast.Call) and ast.unparse(call.func)=='draw_admission'
     assert [ast.unparse(a) for a in call.args]==['xx._core', "importlib.import_module('skimagexx.draw')",
@@ -2578,6 +2578,10 @@ def test_current253_drawing_admission_is_wired_before_generic_fixture_calls():
     assert isinstance(call,ast.Call) and ast.unparse(call.func)=='line_nd_admission'
     assert [ast.unparse(a) for a in call.args]==['xx._core', "importlib.import_module('skimagexx.draw')",
         "importlib.import_module('skimagexx._line_nd')", 'coverage.native_functions()']
+    call=barrier.body[2].value
+    assert isinstance(call,ast.Call) and ast.unparse(call.func)=='ellipsoid_admission'
+    assert [ast.unparse(a) for a in call.args]==['xx._core', "importlib.import_module('skimagexx.draw')",
+        "importlib.import_module('skimagexx._draw_ellipsoid')", 'coverage.native_functions()']
     source=inspect.getsource(q.admission)
 
 
@@ -2730,3 +2734,32 @@ def test_line_nd_source_admission_boundary(monkeypatch,fault,weak):
     if fault=='none':q.line_nd_admission(core,draw,wrapper,registered)
     else:
         with pytest.raises(q.QualificationError):q.line_nd_admission(core,draw,wrapper,registered)
+
+
+@pytest.mark.parametrize('missing',('python/skimagexx/_regionprops_state_class.py',
+    'include/skimagexx/draw_ellipsoid.hpp','python/skimagexx/_draw_ellipsoid.py'))
+def test_current257_layout_requires_new_class_and_ellipsoid(missing):
+    names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
+           for p in (ROOT/prefix).rglob('*') if p.is_file()]
+    names.remove(missing)
+    with pytest.raises(q.QualificationError):
+        q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,'modern')
+
+
+@pytest.mark.parametrize('fault',('none','registry','entry','core','alias','signature'))
+def test_ellipsoid_installed_source_admission_boundary(monkeypatch,fault):
+    core=types.SimpleNamespace(__name__='fake_core')
+    def entry(*args):raise AssertionError('source admission never calls algorithm')
+    entry.__module__=core.__name__;entry.__name__='draw_ellipsoid';core.draw_ellipsoid=entry
+    def ellipsoid(a,b,c,spacing=(1.0,1.0,1.0),levelset=False):raise AssertionError('source admission never calls wrapper')
+    ellipsoid.__module__='skimagexx._draw_ellipsoid'
+    draw=types.SimpleNamespace(ellipsoid=ellipsoid);wrapper=types.SimpleNamespace(_core=core,ellipsoid=ellipsoid)
+    registered=['draw.ellipsoid'];monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:value is entry)
+    if fault=='registry':registered=[]
+    elif fault=='entry':del core.draw_ellipsoid
+    elif fault=='core':wrapper._core=object()
+    elif fault=='alias':draw.ellipsoid=lambda:None
+    elif fault=='signature':ellipsoid.__signature__=inspect.Signature()
+    if fault=='none':q.ellipsoid_admission(core,draw,wrapper,registered)
+    else:
+        with pytest.raises(q.QualificationError):q.ellipsoid_admission(core,draw,wrapper,registered)

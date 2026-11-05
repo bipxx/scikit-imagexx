@@ -1,0 +1,239 @@
+{
+  "schema": "ellipsoid-benchmark-v1",
+  "status": "SOURCE_ONLY_INTAKE_PASS_PENDING_INDEPENDENT_REVIEW_GENUINE_PRODUCT_AND_REAL_CLI",
+  "cases": [
+    {
+      "id": "ellipsoid-bench/unit-levelset-False",
+      "api": "draw.ellipsoid",
+      "axes": [
+        1,
+        1,
+        1
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": false
+    },
+    {
+      "id": "ellipsoid-bench/unit-levelset-True",
+      "api": "draw.ellipsoid",
+      "axes": [
+        1,
+        1,
+        1
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": true
+    },
+    {
+      "id": "ellipsoid-bench/tiny-fractional-levelset-False",
+      "api": "draw.ellipsoid",
+      "axes": [
+        0.125,
+        0.25,
+        0.5
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": false
+    },
+    {
+      "id": "ellipsoid-bench/tiny-fractional-levelset-True",
+      "api": "draw.ellipsoid",
+      "axes": [
+        0.125,
+        0.25,
+        0.5
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": true
+    },
+    {
+      "id": "ellipsoid-bench/nonbinary-spacing-levelset-False",
+      "api": "draw.ellipsoid",
+      "axes": [
+        1.1,
+        2.2,
+        3.3
+      ],
+      "spacing": [
+        0.3,
+        0.6,
+        1.2
+      ],
+      "levelset": false
+    },
+    {
+      "id": "ellipsoid-bench/nonbinary-spacing-levelset-True",
+      "api": "draw.ellipsoid",
+      "axes": [
+        1.1,
+        2.2,
+        3.3
+      ],
+      "spacing": [
+        0.3,
+        0.6,
+        1.2
+      ],
+      "levelset": true
+    },
+    {
+      "id": "ellipsoid-bench/anisotropic-levelset-False",
+      "api": "draw.ellipsoid",
+      "axes": [
+        8,
+        12,
+        16
+      ],
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "levelset": false
+    },
+    {
+      "id": "ellipsoid-bench/anisotropic-levelset-True",
+      "api": "draw.ellipsoid",
+      "axes": [
+        8,
+        12,
+        16
+      ],
+      "spacing": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "levelset": true
+    },
+    {
+      "id": "ellipsoid-bench/medium-levelset-False",
+      "api": "draw.ellipsoid",
+      "axes": [
+        12,
+        16,
+        20
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": false
+    },
+    {
+      "id": "ellipsoid-bench/medium-levelset-True",
+      "api": "draw.ellipsoid",
+      "axes": [
+        12,
+        16,
+        20
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": true
+    },
+    {
+      "id": "ellipsoid-bench/large-levelset-False",
+      "api": "draw.ellipsoid",
+      "axes": [
+        48,
+        48,
+        48
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": false
+    },
+    {
+      "id": "ellipsoid-bench/large-levelset-True",
+      "api": "draw.ellipsoid",
+      "axes": [
+        48,
+        48,
+        48
+      ],
+      "spacing": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "levelset": true
+    }
+  ],
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 168,
+  "warmup_groups": 24,
+  "max_output_elements": 1000000,
+  "max_axis_elements": 99,
+  "max_dense_grid_elements": 3000000,
+  "max_working_allocation_bytes": 80010000,
+  "reference_contract_sha256": "44a63e956df78357a3c33c5d23d094f169b7c34440cccdda530b9412f243e020",
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "source_closure": {
+    "src/draw_ellipsoid.cpp": "a3cc65764d69c66487dc111b1ed491fdba92b8b623bfcf51152c8c9bbb99fd7c",
+    "include/skimagexx/draw_ellipsoid.hpp": "b870303427f509cb1016ced6a75bea6c47bbc64e6a8154e669bf3e8240a150b5",
+    "src/bind_draw_ellipsoid.cpp": "49bef5a17e5ff6cb4633ed2f14a3d8809213cc6078370851270f0e3dbfe6ceba",
+    "python/skimagexx/_draw_ellipsoid.py": "e5c80404c1d9dd2921708889513d43bec9b47e1bab5e442969abc615cb98a3b6",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc"
+  },
+  "native_entry": "draw_ellipsoid",
+  "native_dependencies": {
+    "header": "3f000b6c930a20cf6921c205d06e600ca10a2798",
+    "portable_native": "b9bed8c7b7df7816d56fcdb46314f07e0258b546",
+    "frontend_integer_boundary": "780c1b6e921f68a35578cf0802d84823a1e5f41a"
+  },
+  "source_safety": "All axespositivebuiltin<=48,spacingpositivebuiltinfloat .3..2,levelsetexactbool. For each axis use source ceil(-a-s),floor((a+s)+1),parity shift low--. Precorrection N=ceil((high-low)/s)<=99. Zero-missing source subtracts strictlynegative probe thusincreaseslow andcannotincrease subsequentnominalstep mgridcount. Probeeffective step positive,normal; independentofoldreferencecapturecap. Boundnotexpectedshape/output.",
+  "allocation_bound": "largestoutput99^3=970299;3dense coordinategrid arrays<=3N doubles; conservative80N+8sum(axisbound) workingbytes including sourcearithmetictemporaries. No unboundedradius/spacing or inputarrays/protocols.",
+  "numerical_policy": "zeroULP entire bool/float64 words, exactowningwritablealignedC/baseNone/dtype metadata; source-orderedarithmetic and unchangedFPpolicy/inputstate; originalpublicallocationinclusive and nativepublicallocationinclusive.",
+  "witnesses": [
+    "realbuiltinCreturn",
+    "wrappernative_result nonNone",
+    "exactlyoneglobalget_num_threadsCreturn",
+    "originalmodule/publicproviderdenial plus cachedoriginalcodeprofileguard",
+    "restore allprofile/providerinstrumentation BEFOREmeasure"
+  ],
+  "scope": "Twelve bounded ordinaryscalar one-worker initial ellipsoid comparisons only. Larger970k geometry is prospective safe allocation audit, not captured/reference/native credit. Originalpublic0.26 is oracle; no third mathematical oracle claimed.",
+  "pre_CLI_gates": [
+    "compose exact portableheader/kernel and integer-correctedwrapper, actualdrawexport/defaults/installedcore",
+    "independent benchmark source review",
+    "genuine257product/input auth and actualfirstcohort stoppedbeforemeasurebody before anytiming",
+    "source CMake strictFPflags matching nativeproof retained; no fastmath/reassociation"
+  ],
+  "task_closeout": {
+    "result": "25source-onlymetadata/factory/storageguard checks PASS ineachretainedprofile=50;12prospectivecases168samples, allvolume bounds validated beforeoriginal. No target/timing/CLI claim.",
+    "waste_reuse": "Reuseimmutable56originalobservations/sourcepins, reviewednative/header/frontend dependencies andexisting sampler/hardware/snapshot patterns. No newframework, environment, capture, native/fullSDK build ortiming. Source-safe intstage cap honored; no type-promotion inference. Allnewtests passed firstattempt, no duplicate reruns.",
+    "observed_cost": "minimum25checks2.81s; modern25checks3.41s. No extra work to measure costs.",
+    "next_owner_trigger": {
+      "owner": "independent reviewer thenA257integrator/root",
+      "trigger": "this frozen3path benchmark/source-onlyhandoff",
+      "action": "Review larger-domain allocation audit/witness/strictwordguard. Integrateexactdependencies+sharedexports/defaults, genuine257minimum preparation/inputauth, actualfirstcohort original/native stoppedatmeasureCALL beforeauthorizingtiming. Keep fullAPI/otherplatform claims out."
+    }
+  }
+}

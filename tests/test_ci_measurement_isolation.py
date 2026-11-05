@@ -251,7 +251,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/regionprops_state.py --threads 1 --repeat 7 --output build/ci-regionprops-state.json',
         'python benchmarks/circle_perimeter_aa.py --threads 1 --repeat 7 --output build/ci-circle-perimeter-aa.json',
         'python benchmarks/stains.py --half-only --size 512 --threads 1 --repeat 7 --output build/ci-combine-stains-half.json',
-        'python benchmarks/line_nd.py --threads 1 --repeat 7 --output build/ci-line-nd.json']
+        'python benchmarks/line_nd.py --threads 1 --repeat 7 --output build/ci-line-nd.json',
+        'python benchmarks/draw_ellipsoid.py --threads 1 --repeat 7 --output build/ci-ellipsoid.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -539,7 +540,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 35 and all(condition in step for step in timed)
+    assert len(timed) == 36 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -555,12 +556,13 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 35 and all(skip in s for s in timed[:-1])
+    assert len(timed) == 36 and all(skip in s for s in timed[:-1])
     assert skip not in timed[-1]
-    assert 'benchmarks/regionprops_state.py ' in timed[-4]
-    assert 'benchmarks/circle_perimeter_aa.py ' in timed[-3]
-    assert 'benchmarks/stains.py --half-only ' in timed[-2]
-    assert 'benchmarks/line_nd.py ' in timed[-1]
+    assert 'benchmarks/regionprops_state.py ' in timed[-5]
+    assert 'benchmarks/circle_perimeter_aa.py ' in timed[-4]
+    assert 'benchmarks/stains.py --half-only ' in timed[-3]
+    assert 'benchmarks/line_nd.py ' in timed[-2]
+    assert 'benchmarks/draw_ellipsoid.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -804,8 +806,8 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
     assert "str(ROOT / 'tests/test_api.py')" in feature_source
     contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
-    assert contract['scope']=='current256'
-    assert len(contract['image_paths'])==256 and len(contract['metadata_paths'])==3
+    assert contract['scope']=='current257'
+    assert len(contract['image_paths'])==257 and len(contract['metadata_paths'])==3
     assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py','tests/test_line_aa_reference.py','tests/test_line_aa_public.py','tests/test_line_aa_default.py'}<=set(contract['required_selectors'])
 
 
@@ -866,3 +868,31 @@ def test_prebuild_line_nd_selects_only_dependency_free_nodes_and_runtime_keeps_i
                    if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
                        and target.id == 'POST203_TESTS' for target in node.targets))
     assert set(modules) <= set(runtime)
+
+
+def test_ellipsoid_preparation_and_dependency_free_source_gates():
+    minimum=jobs((ROOT/'.github/workflows/ci.yml').read_text())['numpy-minimum']
+    for mode in ('normal','scalar'):
+        path='build/ci-artifacts/ellipsoid-'+mode+'.xml'
+        assert minimum.count(path)==1 and minimum.index(path)<minimum.index('ci_measurement_artifacts.py freeze')
+    assert minimum.split('ellipsoid-scalar.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
+    text=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    assert 'tests/test_ellipsoid_reference.py::test_ellipsoid_prospective_matrix_and_source_safety' in text
+    assert 'tests/test_ellipsoid_reference.py::test_ellipsoid_saved_observations_without_replay' in text
+    assert 'tests/test_draw_ellipsoid_default.py::test_ellipsoid_saved_sdk_oracle_metadata_without_science' in text
+    assert 'tests/test_ellipsoid_reference.py ' not in text
+    assert 'tests/test_ellipsoid_benchmark.py ' not in text
+    assert 'tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_import_refuses_science' in text
+    cmake=(ROOT/'CMakeLists.txt').read_text()
+    assert 'set_source_files_properties(src/draw_ellipsoid.cpp src/bind_draw_ellipsoid.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math")' in cmake
+
+
+def test_ellipsoid_generic_benchmark_uses_exact_storage_checker():
+    tree=ast.parse((ROOT/'benchmarks/coverage.py').read_bytes())
+    main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
+    branch=next(n for n in ast.walk(main) if isinstance(n,ast.If) and ast.unparse(n.test)=="api == 'draw.ellipsoid'")
+    actual,expected,data=object(),object(),object();calls=[]
+    def checker(*args):calls.append(args);return 0.
+    namespace=dict(actual=actual,expected=expected,data=data,ellipsoid_default_error=checker)
+    exec(compile(ast.Module(body=branch.body,type_ignores=[]),'<ellipsoid generic storage>','exec'),namespace)
+    assert calls==[(data,actual,expected)] and namespace['error']==0.

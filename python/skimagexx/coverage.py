@@ -6,7 +6,7 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
@@ -363,6 +363,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'draw.ellipsoid':
+        # Frozen unit bool row; descriptor pixels/dtype are not algorithm inputs.
+        return (1,1,1), {}
     if api == 'draw.line_nd':
         import numpy as np
         # Actual coordinate dtypes, using existing frozen source-safe rows.
@@ -885,8 +888,28 @@ def line_nd_default_error(image, actual, expected):
     return 0.
 
 
+def ellipsoid_default_error(image, actual, expected):
+    """Exact single owning3D array words and complete storage for ellipsoid."""
+    import numpy as np
+    assert type(actual) is type(expected) is np.ndarray
+    assert actual.dtype == expected.dtype and actual.dtype.isnative
+    assert actual.dtype.metadata is expected.dtype.metadata is None
+    assert actual.shape == expected.shape and actual.strides == expected.strides
+    assert actual.ndim == expected.ndim == 3
+    for value in (actual,expected):
+        assert value.flags.owndata and value.flags.writeable and value.flags.aligned
+        assert value.flags.c_contiguous and value.base is None
+    assert actual.flags.f_contiguous == expected.flags.f_contiguous
+    assert actual.tobytes(order='C') == expected.tobytes(order='C')
+    assert not np.shares_memory(actual,image)
+    return 0.
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'draw.ellipsoid':
+        ellipsoid_default_error(image, actual, expected)
+        return
     if api == 'draw.line_nd':
         line_nd_default_error(image, actual, expected)
         return
@@ -963,6 +986,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'draw.ellipsoid':
+        raise ValueError('draw.ellipsoid requires exact array words and owning storage')
     if api == 'draw.line_nd':
         raise ValueError('draw.line_nd requires exact coordinate words and shared-base storage')
     if api == 'measure.regionprops':

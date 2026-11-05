@@ -28,7 +28,7 @@ def test_public_mutation_geometry_guard_uses_identity_and_real_public_export():
     from skimagexx import _regionprops_state as owned
     assert xx.measure.regionprops is owned.regionprops
     assert str(inspect.signature(owned.regionprops)) == '(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)'
-    source = (ROOT/'python/skimagexx/_regionprops_state.py').read_text(encoding='utf-8')
+    source = (ROOT/'python/skimagexx/_regionprops_state_class.py').read_text(encoding='utf-8')
     cls = next(n for n in ast.parse(source).body if isinstance(n,ast.ClassDef) and n.name == 'RegionProperties')
     helper = next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name == '_current_native_geometry')
     assert all(isinstance(op,(ast.Is,ast.IsNot)) for n in ast.walk(helper) if isinstance(n,ast.Compare) for op in n.ops)

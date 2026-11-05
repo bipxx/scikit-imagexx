@@ -70,10 +70,34 @@ sys.meta_path.insert(0, NoUpstream())
 namespace = {}
 exec('from skimagexx import *', namespace)
 assert 'threshold_li' in namespace and 'morphology' in namespace
+from skimagexx import _regionprops_state as owned
+assert namespace['measure'].regionprops is owned.regionprops
+assert 'skimagexx._regionprops_state_class' not in sys.modules
+assert str(__import__('inspect').signature(owned.regionprops)) == '(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None)'
 assert not any(name == 'skimage' or name.startswith('skimage.') for name in sys.modules)
 '''
     result = subprocess.run([sys.executable, '-c', script], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+
+
+def test_regionprops_lazy_provider_identity_and_lookup(monkeypatch):
+    from skimagexx import _regionprops_state as owned
+    from skimage.measure._regionprops import RegionProperties as provider
+    cls = owned.RegionProperties
+    assert cls is owned.RegionProperties and cls is not provider
+    assert issubclass(cls, provider) and owned._Provider is provider
+    assert (cls.__module__, cls.__qualname__) == ('skimagexx._regionprops_state', 'RegionProperties')
+    assert xx.measure.regionprops is owned.regionprops
+    calls = []
+    sentinel = object()
+    def tail(*args, **options):
+        calls.append((args, options))
+        return sentinel
+    monkeypatch.setattr(owned, '_provider_regionprops', tail)
+    labels = np.ones((2, 3), dtype=np.int16)
+    intensity = np.ones_like(labels)
+    assert owned.regionprops(labels, intensity) is sentinel
+    assert len(calls) == 1 and calls[0][0][0] is labels and calls[0][0][1] is intensity
 
 
 @pytest.mark.parametrize('path', ['filters.rank', 'filters.rank.generic',

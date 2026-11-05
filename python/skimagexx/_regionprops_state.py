@@ -4,61 +4,22 @@ Distinct backend subclass; full class arithmetic and literal type identity are
 not claimed. Original scaffolding attribution: third_party/scikit-image-LICENSE.txt.
 """
 import numpy as np
-from skimage.measure._regionprops import RegionProperties as _Provider
-from skimage.measure._regionprops import _cached
-from skimage.measure._regionprops import regionprops as _provider_regionprops
 from . import _core
 
 
-class RegionProperties(_Provider):
-    def _current_native_geometry(self):
-        prepared = self.__dict__.get('_native_state')
-        # Public writes do not invalidate upstream caches. Refuse only the
-        # frozen native geometry; original property tails observe current state.
-        if (prepared is not None and self.label is self._native_initial_label
-                and self.slice is self._native_initial_slice):
-            return prepared
-        return None
-    @property
-    @_cached
-    def image(self):
-        prepared = self._current_native_geometry()
-        if prepared is None:
-            return _Provider.image.fget(self)
-        output = np.empty_like(self._label_image[self.slice], dtype=bool, order='K', subok=False)
-        native_result = _core.regionprops_state_image(prepared, self._native_index, self._label_image, output)
-        if native_result is None:
-            return _Provider.image.fget(self)
-        return output
-
-    @property
-    @_cached
-    def num_pixels(self):
-        mask = self.image
-        native_result = _core.regionprops_state_population(mask)
-        if native_result is None:
-            return np.sum(mask)
-        return np.intp(native_result)
-
-    @property
-    def coords(self):
-        prepared = self._current_native_geometry()
-        if prepared is None:
-            return _Provider.coords.fget(self)
-        mask = self.image
-        count = _core.regionprops_state_population(mask)
-        if count is None:
-            return _Provider.coords.fget(self)
-        output = np.empty((count, self._ndim), dtype=np.intp, order='F')
-        native_result = _core.regionprops_state_coords(prepared, self._native_index, self._label_image, mask, output)
-        if native_result is None:
-            return _Provider.coords.fget(self)
-        # Literal provider scalar-promotion/ufunc tail; native emitted global
-        # integer coordinates, the exact first addition in the original source.
-        return output + self._offset
+def __getattr__(name):
+    if name in ('RegionProperties', '_Provider', '_cached', '_provider_regionprops'):
+        from . import _regionprops_state_class
+        value = getattr(_regionprops_state_class, name)
+        globals()[name] = value
+        return value
+    raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
 
 
 def regionprops(label_image, intensity_image=None, cache=True, *, extra_properties=None, spacing=None, offset=None):
+    # Resolve the provider subclass only when this API is actually called.
+    # Module attributes retain the existing monkeypatch/provider-denial boundary.
+    from ._regionprops_state import RegionProperties, _provider_regionprops
     # Explicit bounded route. Unknown protocols/intensity/callback semantics are
     # still literal providers, never credited to the returned-state native leaf.
     if type(label_image) is not np.ndarray or intensity_image is not None or extra_properties is not None:

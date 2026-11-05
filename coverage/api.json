@@ -1091,11 +1091,16 @@
       "api": "draw.ellipsoid",
       "kind": "callable",
       "signature": "(a, b, c, spacing=(1.0, 1.0, 1.0), levelset=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_ellipsoid_public.py::test_ellipsoid_saved_public_pipeline",
+      "benchmark": "benchmarks/draw_ellipsoid.py",
+      "default_input_kind": "Frozen unit3D bool geometry; descriptor carriers uint8/float32/float64 do not represent pixel/coordinate dtype coverage. C++ count/grid/ordered math, explicit original protocol/provider frontier."
     },
     {
       "api": "draw.ellipsoid_stats",
