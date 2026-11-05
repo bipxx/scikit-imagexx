@@ -2308,7 +2308,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['product_scope']=='current258' and result['registry']['image_count']==258
     assert result['product_members']==193 and result['SDK_members']==91
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==86
+    assert len(result['public_groups']['public-post203'])==89
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2814,3 +2814,35 @@ def test_current258_contract_requires_ellipse_perimeter(fault):
         selector={'reference':'tests/test_ellipse_perimeter_reference.py','public':'tests/test_draw_ellipse_perimeter_public.py','default':'tests/test_draw_ellipse_perimeter_default.py','benchmark':'tests/test_ellipse_perimeter_benchmark.py'}[fault]
         data['required_selectors'].remove(selector)
     with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode())
+
+
+@pytest.mark.parametrize('missing',(
+    'tests/test_regionprops_coords_scaled_reference.py',
+    'tests/test_regionprops_coords_scaled_public.py',
+    'tests/test_regionprops_coords_scaled_sdk_scope.py',
+    'tests/test_regionprops_coords_scaled_native.cpp',
+    'coverage/contracts/regionprops-coords-scaled-prospective-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-reference-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-f64-interface-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-native-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-frontend-v1.json',
+    'coverage/contracts/regionprops-performance-state-coords-scaled-v1.json',
+    'coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json',
+))
+def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
+    original=Path.is_file
+    absent=ROOT/missing
+    monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',258)['blockers']
+
+
+@pytest.mark.parametrize('selector',(
+    'tests/test_regionprops_coords_scaled_reference.py',
+    'tests/test_regionprops_coords_scaled_public.py',
+    'tests/test_regionprops_coords_scaled_sdk_scope.py',
+))
+def test_coords_scaled_contract_requires_installed_selectors(selector):
+    data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
+    data['required_selectors'].remove(selector)
+    with pytest.raises(q.QualificationError,match='selector contract differs'):
+        q.current_contract(lambda n:json.dumps(data).encode())

@@ -381,6 +381,8 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'coverage/contracts/regionprops-coords-scaled-f64-interface-v1.json',
     'coverage/contracts/regionprops-coords-scaled-native-v1.json',
     'coverage/contracts/regionprops-coords-scaled-frontend-v1.json',
+    'coverage/contracts/regionprops-performance-state-coords-scaled-v1.json',
+    'coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json',
     'include/skimagexx/draw_ellipsoid.hpp',
     'src/draw_ellipsoid.cpp',
     'src/bind_draw_ellipsoid.cpp',

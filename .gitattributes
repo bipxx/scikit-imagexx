@@ -744,3 +744,5 @@ coverage/contracts/region-stain-controller-v1-context.json -text
 coverage/contracts/regionprops-coords-scaled-prospective-v1.json -text
 coverage/contracts/regionprops-coords-scaled-reference-v1.json -text
 benchmarks/regionprops-performance-v3-same-host/* -text
+coverage/contracts/regionprops-performance-state-coords-scaled-v1.json -text
+coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json -text
