@@ -53,11 +53,17 @@ def test_label_pair_saved_rows_without_replay():
             elif isinstance(value,list):pending.extend(value)
 
 
+@pytest.fixture(scope='module')
+def reference_context():
+    from label_pair_metrics_observer import reference_runtime
+    return reference_runtime()
+
+
 @pytest.mark.parametrize('spec',cases(),ids=lambda s:s['id'])
-def test_label_pair_fixture_without_metric_activity(spec):
-    from label_pair_metrics_observer import observation,reference_runtime,without_reference_activity
-    np,_,_=reference_runtime()
-    with without_reference_activity():
+def test_label_pair_fixture_without_metric_activity(spec,reference_context):
+    from label_pair_metrics_observer import observation,without_reference_activity
+    np,functions,_=reference_context
+    with without_reference_activity(functions):
         args,options,buffers=fixture(spec,np)
         assert all(value.size<=MAX_PIXELS for value in buffers.values())
         assert all(value.dtype.kind in 'iuf'for value in buffers.values())

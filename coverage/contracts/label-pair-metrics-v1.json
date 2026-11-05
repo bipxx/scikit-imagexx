@@ -770,8 +770,8 @@
   "source_freeze": {
     "include/skimagexx/label_pair_metrics.hpp": "4c5697551e4e3402bd7a946b850112d113246faaa383b863eba5031e79bf72c5",
     "tests/label_pair_metrics_contract.py": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27",
-    "tests/label_pair_metrics_observer.py": "a3416e63c7da69fc00591cb811207c75583d580bad1b7ac3f4669588351becda",
-    "tests/test_label_pair_metrics_reference.py": "6a329bb183c5c320a61eadf05010ed8ca8dce11e09c37940b716faeb342af224"
+    "tests/label_pair_metrics_observer.py": "476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc",
+    "tests/test_label_pair_metrics_reference.py": "5e3f3081fa2428a3224466d97ebdfd705bde6d28da07ba77e24f76e08460a2e8"
   },
   "upstream_sources": {
     "skimage/metrics/_contingency_table.py": "e334f4ec16ac3c2bd9fb0c533e8ca454029c914c8649d5322b6f0cc5adbdbf62",

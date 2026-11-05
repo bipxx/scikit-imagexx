@@ -39,9 +39,9 @@ def reference_runtime():
 
 
 @contextmanager
-def without_reference_activity():
+def without_reference_activity(functions):
     """Deny actual metric bodies, including cached function references."""
-    _,functions,_=reference_runtime();codes={fn.__code__ for fn in functions.values()};previous=sys.getprofile()
+    codes={fn.__code__ for fn in functions.values()};previous=sys.getprofile()
     def guard(frame,event,arg):
         if event=='call'and frame.f_code in codes:raise AssertionError('Original label-pair metric forbidden during intake')
     sys.setprofile(guard)
