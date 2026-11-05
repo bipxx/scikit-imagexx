@@ -1,3 +1,73 @@
+/*********************************************************************/
+/* Copyright 2009, 2010 The University of Texas at Austin.           */
+/* All rights reserved.                                              */
+/*                                                                   */
+/* Redistribution and use in source and binary forms, with or        */
+/* without modification, are permitted provided that the following   */
+/* conditions are met:                                               */
+/*                                                                   */
+/*   1. Redistributions of source code must retain the above         */
+/*      copyright notice, this list of conditions and the following  */
+/*      disclaimer.                                                  */
+/*                                                                   */
+/*   2. Redistributions in binary form must reproduce the above      */
+/*      copyright notice, this list of conditions and the following  */
+/*      disclaimer in the documentation and/or other materials       */
+/*      provided with the distribution.                              */
+/*                                                                   */
+/*    THIS  SOFTWARE IS PROVIDED  BY THE  UNIVERSITY OF  TEXAS AT    */
+/*    AUSTIN  ``AS IS''  AND ANY  EXPRESS OR  IMPLIED WARRANTIES,    */
+/*    INCLUDING, BUT  NOT LIMITED  TO, THE IMPLIED  WARRANTIES OF    */
+/*    MERCHANTABILITY  AND FITNESS FOR  A PARTICULAR  PURPOSE ARE    */
+/*    DISCLAIMED.  IN  NO EVENT SHALL THE UNIVERSITY  OF TEXAS AT    */
+/*    AUSTIN OR CONTRIBUTORS BE  LIABLE FOR ANY DIRECT, INDIRECT,    */
+/*    INCIDENTAL,  SPECIAL, EXEMPLARY,  OR  CONSEQUENTIAL DAMAGES    */
+/*    (INCLUDING, BUT  NOT LIMITED TO,  PROCUREMENT OF SUBSTITUTE    */
+/*    GOODS  OR  SERVICES; LOSS  OF  USE,  DATA,  OR PROFITS;  OR    */
+/*    BUSINESS INTERRUPTION) HOWEVER CAUSED  AND ON ANY THEORY OF    */
+/*    LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR TORT    */
+/*    (INCLUDING NEGLIGENCE OR OTHERWISE)  ARISING IN ANY WAY OUT    */
+/*    OF  THE  USE OF  THIS  SOFTWARE,  EVEN  IF ADVISED  OF  THE    */
+/*    POSSIBILITY OF SUCH DAMAGE.                                    */
+/*                                                                   */
+/* The views and conclusions contained in the software and           */
+/* documentation are those of the authors and should not be          */
+/* interpreted as representing official policies, either expressed   */
+/* or implied, of The University of Texas at Austin.                 */
+/*********************************************************************/
+
+/*
+Prescott policies derived from OpenBLAS0.3.21 commit b89fb708caa5a5a32de8f4306c4ff132e0228e9a.
+Copyright (c) 2011-2014, The OpenBLAS Project
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in
+      the documentation and/or other materials provided with the
+      distribution.
+   3. Neither the name of the OpenBLAS project nor the names of
+      its contributors may be used to endorse or promote products
+      derived from this software without specific prior written
+      permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 #include "skimagexx/matrix_transform.hpp"
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
@@ -13,6 +83,35 @@
 #endif
 
 namespace skimagexx {
+namespace detail {
+double matrix_prescott_dot_f64(const double* x,const double* m,std::size_t k,
+    MatrixArithmeticProfile profile,std::size_t component) {
+    if(profile==MatrixArithmeticProfile::prescott0321_gemm ||
+       profile==MatrixArithmeticProfile::prescott0321_gemv_nontransposed) {
+        double value=0.;
+        for(std::size_t i=0;i<k;++i)value=value+x[i]*m[i];
+        return value*1.+0.;
+    }
+    // Literal SSE lane reductions; alpha1/output+0 are retained explicitly.
+    double low=0.,high=0.;
+    if(profile==MatrixArithmeticProfile::prescott0321_gemv_transposed_peeled) {
+        low=low+x[0]*m[0];
+        low=low+x[1]*m[1];high=high+x[2]*m[2];
+        if(k>=4)low=low+x[3]*m[3];
+        if(k==5)high=high+x[4]*m[4];
+    }else {
+        low=low+x[0]*m[0];high=high+x[1]*m[1];
+        if(k==5 && component==4) {
+            low=low+x[4]*m[4];low=low+x[2]*m[2];
+        }else {
+            low=low+x[2]*m[2];
+            if(k==5)low=low+x[4]*m[4];
+        }
+        if(k>=4)high=high+x[3]*m[3];
+    }
+    return (low+high)*1.+0.;
+}
+}
 namespace {
 struct Span { std::uintptr_t lo, hi; };
 bool span(const MatrixReadView& v, Span& out) {
@@ -67,6 +166,11 @@ bool fma_available() {
 #endif
 }
 double dot(const double* x,const double* m,std::size_t d,MatrixArithmeticProfile profile,std::size_t component) {
+    if(profile>=MatrixArithmeticProfile::prescott0321_gemm &&
+       profile<=MatrixArithmeticProfile::prescott0321_gemv_transposed_peeled) {
+        double full[5];for(std::size_t i=0;i<d;++i)full[i]=x[i];full[d]=1.;
+        return detail::matrix_prescott_dot_f64(full,m,d+1,profile,component);
+    }
     if (profile==MatrixArithmeticProfile::cooperlake0321_gemv_nontransposed) {
         // Exact pinned 0.3.21 ELF: K3 scalar tail and K5 lda5 denominator
         // use +0-seeded FMA. The K4/K5 packed rows instead seed product1.
@@ -135,15 +239,25 @@ MatrixMapStatus matrix_transform_into(const MatrixReadView& p,const MatrixReadVi
 
 MatrixMapStatus matrix_transform_into_v2(const MatrixReadView& p,const MatrixReadView& m,
     const MatrixWriteView& output,MatrixArithmeticProfile profile) {
+    if(profile>=MatrixArithmeticProfile::prescott0321_gemm)
+        return MatrixMapStatus::unsupported_profile;
+    return matrix_transform_into_v3(p,m,output,profile);
+}
+
+MatrixMapStatus matrix_transform_into_v3(const MatrixReadView& p,const MatrixReadView& m,
+    const MatrixWriteView& output,MatrixArithmeticProfile profile) {
+    const bool prescott_gemm=profile==MatrixArithmeticProfile::prescott0321_gemm;
+    const bool prescott_gemv=profile>=MatrixArithmeticProfile::prescott0321_gemv_nontransposed &&
+        profile<=MatrixArithmeticProfile::prescott0321_gemv_transposed_peeled;
     const bool fused=profile==MatrixArithmeticProfile::haswell_gemm_fma;
     const bool cooper=profile==MatrixArithmeticProfile::cooperlake0321_gemv_nontransposed;
     const bool gemv=profile==MatrixArithmeticProfile::haswell_gemv_transposed ||
-        profile==MatrixArithmeticProfile::haswell_gemv_nontransposed || cooper;
-    if (!fused && !gemv && profile!=MatrixArithmeticProfile::numpy124_noblas &&
+        profile==MatrixArithmeticProfile::haswell_gemv_nontransposed || cooper || prescott_gemv;
+    if (!fused && !gemv && !prescott_gemm && profile!=MatrixArithmeticProfile::numpy124_noblas &&
         profile!=MatrixArithmeticProfile::numpy254_special_noblas)
         return MatrixMapStatus::unsupported_profile;
     const auto d=p.columns,n=p.rows;
-    if (d<2 || d>4 || !n || (fused && n==1) || (gemv && n!=1) ||
+    if (d<2 || d>4 || !n || ((fused || prescott_gemm) && n==1) || (gemv && n!=1) ||
         (profile==MatrixArithmeticProfile::numpy254_special_noblas && n!=1) || m.rows!=d+1 || m.columns!=d+1 ||
         output.rows!=n || output.columns!=d) return MatrixMapStatus::unsupported_shape;
     if (n>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/(d*8))
@@ -157,6 +271,10 @@ MatrixMapStatus matrix_transform_into_v2(const MatrixReadView& p,const MatrixRea
     const Span os{op,op+bytes};
     if (intersects(os,ps) || intersects(os,ms)) return MatrixMapStatus::overlap;
     if (!gradual_nearest()) return MatrixMapStatus::unsafe_fp_environment;
+#if defined(__x86_64__) || defined(_M_X64)
+    if((prescott_gemm || prescott_gemv) && (_mm_getcsr()&(3u<<13)))
+        return MatrixMapStatus::unsafe_fp_environment;
+#endif
     double coefficients[25];
     for (std::size_t i=0;i<=d;++i)for (std::size_t j=0;j<=d;++j) {
         const auto v=load(m,i,j);

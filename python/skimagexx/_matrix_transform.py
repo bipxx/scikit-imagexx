@@ -78,7 +78,7 @@ _RUNTIME_CORES = {
     'ed4f167a5330424524f45258e7ca2c8d7f03c0cba1f30ee4985553ac1f88ecf8': frozenset(('Haswell',)),
     '432e1c1739731468ba305771af96773939e43016643e2d630f58cb45b6670e96': frozenset(('Haswell', 'SkylakeX')),
     # Exact F64 equivalence: coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json
-    '554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9': frozenset(('Haswell', 'Cooperlake', 'Zen', 'SkylakeX')),
+    '554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9': frozenset(('Haswell', 'Cooperlake', 'Zen', 'SkylakeX', 'Prescott')),
 }
 
 
@@ -301,6 +301,8 @@ def _runtime_profile():
         corename = actual.decode('ascii')
         if threads() != 1:
             return None
+        if corename == 'Prescott' and (version != '1.24.4' or _checked_entry(7) is None):
+            return None
         if corename not in _RUNTIME_CORES[digest]:
             if corename != 'SkylakeX':
                 return None
@@ -319,6 +321,14 @@ _runtime_profile.cache_clear = _authenticate_runtime.cache_clear
 
 
 def _checked_entry(profile=1):
+    if 7 <= profile <= 10:
+        function = getattr(_core, 'matrix_transform_run_v3', None)
+        if (type(function) is BuiltinFunctionType and function.__name__ == 'matrix_transform_run_v3'
+                and function.__module__ == _core.__name__
+                and getattr(_core, 'matrix_transform_v3_interface', None) == 'matrix-transform-math-v3'
+                and getattr(_core, 'matrix_transform_v3_capabilities', None) == 1023):
+            return function
+        return None
     if profile == 6:
         function = getattr(_core, 'matrix_transform_run_v2', None)
         if (type(function) is BuiltinFunctionType and function.__name__ == 'matrix_transform_run_v2'
@@ -361,6 +371,14 @@ def _arithmetic_profile(h, matrix, version):
 def _prepared_profile(h, matrix, version, corename):
     # Arithmetic SHAPE selection only; this never authenticates a runtime.
     profile = _arithmetic_profile(h, matrix, version)
+    if corename == 'Prescott' and version == '1.24.4':
+        if profile == 1:
+            return 7
+        if profile == 4:
+            return 8
+        if profile == 3:
+            # Literal original BLAS A alignment, BEFORE any convenient view/copy.
+            return 10 if matrix.ctypes.data & 8 else 9
     if profile == 4 and corename in ('Cooperlake', 'SkylakeX'):
         return 6
     return profile
