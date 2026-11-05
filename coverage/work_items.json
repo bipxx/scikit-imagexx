@@ -36740,7 +36740,7 @@
       "id": "regionprops-coords-scaled-shared-v1",
       "kind": "implementation",
       "owner": "integrator",
-      "state": "validating",
+      "state": "performance_pending",
       "branch": "integrate/regionprops-coords-scaled-v1",
       "base_sha": "1bc43693",
       "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
@@ -36759,11 +36759,24 @@
         "regionprops-coords-scaled-frontend-v1",
         "regionprops-coords-scaled-sdk-v1"
       ],
-      "current_checkpoint": "Remote4ac verified and genuine min42065217414 dispatchedONCE16:30:50UTC/deadline17:00:50. Source barrier independently admitted2610uniquePASS+8subtests viaexplicitreuse:2570parent+39CIreaders+1literalrepair. ColdCI mergebee639 excludesintakefrom2broadcollectors andrunsfreshNPonce/check+minimum. Product193/SDK91/image258/functions261/families31/checks62/selectors90 unchanged. Newfeature installed producer gates showSUCCESS but fullrun/raw admission pending.",
+      "current_checkpoint": "Exact4ac genuine input independentlyPASSac12e9e7 afterSUCCESS42065217414/all38timersSKIPPED:2306Gitfiles481production193product91SDK14wheels13nonproject/runtimeexactcf0,16745XML0bad/111newcoords checks. Sourcebarrier2610+8 admitted. Sixcase controller/schema/merge/activation peers closed; separatechildcf1222 published, prepared4ac/cf0snapshots unchanged. Fixedcomparison42074843238 dispatchedONCE17:27:43UTC/deadline17:57:43; no speed result yet.",
       "waste_review": "Retained all passed proofs. The first full source run lost verdict to disk exhaustion; replacement uses fresh D scratch with50GB capacity check. Redundant builtins import guard rejected inert sys.modules fixtures; keep one real-load MetaPathFinder, rerun only14 failures and reuse2595passes. Preserve existing mixed newlines using byte edits. Four duplicate metadata-directory deletion was rejected by automatic approval policy; nothing deleted. No unchanged benchmark replay or weakened thresholds.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Watch exact42065217414 without redispatch; terminalproof must show38timersSKIPPED and actualsource4ac. Download/authenticate onlyone consumer package afterterminal, reusingbaseline. New sixcase controller source peer found one wrong actualmanifest field; author narrowfix and independentre-review before any actualCLI/first-cohort/timing. Preparedsnapshots immutable. Fullfour-profile release and full477scope remain."
+        "action": "Watch exact42074843238; preflights firsttinycase2roles muststoprealmeasure beforebody, thenfixed4ABBA6cases336samples48warmgroups32inequalities. Preserveallrawdata/failures; rootretainoneartifact andindependentlyreconstructgates. No thresholdwaiver/unchangedrerun. Fullfour-profile release onlyafteracceptance."
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-genuine-independent-input-review-v1/review.json",
+            "sha256": "ac12e9e733a8d36398f352de1a26fb46ba386c34eea292db9c41482699a6e24f"
+          },
+          "native_contract_checks": 74,
+          "native_pending": 0,
+          "scope": "Actual installed minimum37public nodes normal+disabled (74), bounded f64full-native domain; integer-provider/refusal controls explicit. Fullclass/integer arithmetic/unassessed domains not nativecredit."
+        }
       }
     },
     {
@@ -36803,7 +36816,7 @@
       "id": "regionprops-coords-scaled-genuine-minimum-v1",
       "kind": "qualification",
       "owner": "integrator",
-      "state": "preparing",
+      "state": "accepted",
       "apis": [],
       "target_apis": [
         "measure.regionprops"
@@ -36815,12 +36828,44 @@
         "regionprops-coords-scaled-shared-v1"
       ],
       "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
-      "current_checkpoint": "ActualGitHub42065217414 inprogress, source4ac/eventworkflow_dispatch. Rootactivationfixed30mindeadline17:00:50Z; no second dispatch. Poll16:36:04 newNPintake/public+SDKnormal/disabledstepSUCCESS; not fullproductadmission. Timerconclusionsawaitconsumer.",
+      "current_checkpoint": "SUCCESS42065217414 exact4ac,38timersSKIPPED. Consumer13434087475 retainedonce85625166B/SHA90fc6ff0..., producerduplicateNOTdownloaded. Independentac12e9e7 validates193/91,14wheels2306sources/481production2b8f9bc7/core99a38848,16745XML0bad incl111coords;13deps/fullruntime/scientificmaps equalcf0. Scopedgenuineinput acceptance only;31family62checks sourcecensus notgenuineinstalledSDKexecution.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Cwatcher preserves run/jobs/artifactmetadata. Rootterminaladmission,oneconsumerZIPretention/inputauth and13nonprojectruntime/dependencycomparison; no timing untilgenuine+controller/CLI gates close."
+        "action": "Reuseauthenticatedmetadata/core/package identities forcomparison42074843238; no repeateddownload/env/hash/build. Separatefourprofile release remains."
       },
       "waste_review": "Recovered source barrier withfailed-onlyretries, correctedonecollectorstaleassertion, preservedallfailuresandrawarchives. GitHubpusherrorsclearedonlatestreviewed4ac; verifyremotebeforedispatch. Oneprepareonly run, no abandonedrerun or duplicatedownload."
+    },
+    {
+      "id": "regionprops-coords-scaled-comparison-v1",
+      "kind": "measurement",
+      "owner": "integrator",
+      "state": "measuring",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [
+        "build/regionprops-coords-scaled-comparison-v1"
+      ],
+      "depends_on": [
+        "regionprops-coords-scaled-shared-v1",
+        "regionprops-coords-scaled-genuine-minimum-v1"
+      ],
+      "dependency_requirements": {
+        "regionprops-coords-scaled-shared-v1": {
+          "evidence_scope": "public_native",
+          "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e"
+        }
+      },
+      "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "current_checkpoint": "Actualinprogress42074843238/controllercf1222, one dispatch17:27:43Z/deadline17:57:43. Candidate4ac/run42065217414/art13434087475, acceptedcf0baseline. Externalchildcontracts activated, actualbudgets recorded. Cases/methods/gates fixedbeforecalls, integerpartial explicitlynotfullynative.",
+      "acceptance": "All6direct+original-normalized priorCPP ratios<=1.05 bothpairs;2mediumtargets directprior<=.90 AND candidate/original<=.90 eachpair.336accepted samples/48warmgroups/32inequalities; allraw calibration/loop data retained. OnefailureDISCARD, no averagewaiver orunchangedretry.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Cwatch exactrun/no redispatch/download. Rootterminaloneartifactretention andrawindependentreconstruction; readinessfailurebeforetiming separatefromscientificDISCARD. Publishalllosses, thenprofile/implementonlyevidence-basednextfix."
+      },
+      "waste_review": "Sourcepeer caught absentproductionfingerprintmanifestfield; minimalactualrevision/fullfilemaphelper fixedbeforemath,5affectedchecks/profile instead of262replay. Reuseexistingcontroller/sampler/offlineartifacts; separatechildactivation avoids preparedsnapshotmutation. Checkagentstate beforemessaging: send_message tocompleted agent doesnotresume; followup_task required."
     }
   ],
   "unassigned_inventoried_apis": [
