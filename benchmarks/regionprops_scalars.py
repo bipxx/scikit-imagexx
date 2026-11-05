@@ -12,7 +12,7 @@ import platform
 import sys
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/regionprops-scalars-benchmark-v1.json'
+CONTRACT=ROOT/'coverage/contracts/regionprops-performance-scalars-v2.json'
 PROPERTIES=('area','area_bbox','extent')
 
 

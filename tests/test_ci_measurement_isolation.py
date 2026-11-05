@@ -922,7 +922,7 @@ def test_region_scalar_installed_preparation_source_and_fixture_gates():
     blocks=jobs((ROOT/'.github/workflows/ci.yml').read_text())
     for name in ('check','numpy-minimum'):
         job=blocks[name]
-        assert 'tests/test_regionprops_bbox_extent_reference.py tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalars_benchmark.py' in job
+        assert 'tests/test_regionprops_bbox_extent_reference.py tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py tests/test_regionprops_scalars_benchmark.py' in job
         assert 'regionprops-scalars-normal.xml' in job and 'regionprops-scalars-scalar.xml' in job
         assert job.split('regionprops-scalars-scalar.xml',1)[1].startswith("\n        env:\n          SKIMAGEXX_DISABLE_SIMD: '1'")
         if name=='numpy-minimum':assert job.index('regionprops-scalars-normal.xml')<job.index('ci_measurement_artifacts.py freeze')

@@ -126,6 +126,66 @@ void regionprops_state(int workers) {
     set_num_threads(workers);
     check(get_num_threads()==workers);
 }
+void regionprops_strided(int workers) {
+    using namespace skimagexx::detail;
+    auto check=[](bool value){++region_state_checks;require(value);};
+    set_num_threads(workers);
+    std::array<std::int16_t,12> labels{-1,5,0,2,5,0,2,0,0,5,0,2};
+    ComponentsView view{labels.data(),PixelType::int16,false,false,{3,4},{8,2}};
+    RegionPropsState state;check(prepare_regionprops_state(view,state));
+    std::array<std::uint8_t,8> mask;mask.fill(91);
+    check(regionprops_mask_strided_into(state,0,mask.data()+1,{1,3,0})==3);
+    check((mask==std::array<std::uint8_t,8>{91,0,1,0,1,0,1,91}));
+    std::array<std::intptr_t,8> output;output.fill(-999);
+    regionprops_coords_strided_into(state,0,mask.data()+1,{1,3,0},output.data()+1,sizeof(std::intptr_t),3*sizeof(std::intptr_t));
+    check((output==std::array<std::intptr_t,8>{-999,0,1,2,3,2,3,-999}));
+    labels[3]=0; // Current pixels change, frozen constructor box does not.
+    check(regionprops_mask_strided_into(state,0,mask.data()+6,{-1,-3,0})==2);
+    check(mask.front()==91&&mask.back()==91);
+    mask[6]=7; // Current supplied mask, including noncanonical nonzero truth.
+    output.fill(-999);
+    regionprops_coords_strided_into(state,0,mask.data()+6,{-1,-3,0},output.data()+6,-2*std::ptrdiff_t(sizeof(std::intptr_t)),sizeof(std::intptr_t));
+    check((output==std::array<std::intptr_t,8>{-999,-999,2,3,1,2,0,2}));
+    check(state.regions[0].initial_population==3&&state.regions[0].start==std::array<std::size_t,3>{0,2,0});
+    // Three-dimensional Fortran storage with exact canonical coordinate order.
+    std::vector<std::uint16_t> volume(2*3*4,9);
+    ComponentsView cube{volume.data(),PixelType::uint16,false,false,{2,3,4},{2,4,12}};
+    RegionPropsState cube_state;check(prepare_regionprops_state(cube,cube_state));
+    std::vector<std::uint8_t> cube_mask(volume.size()+2,91);volume[0]=0;
+    check(regionprops_mask_strided_into(cube_state,0,cube_mask.data()+1,{1,2,6})==23);
+    std::vector<std::intptr_t> cube_coords(23*3+2,-999);
+    regionprops_coords_strided_into(cube_state,0,cube_mask.data()+1,{1,2,6},cube_coords.data()+1,sizeof(std::intptr_t),23*sizeof(std::intptr_t));
+    for(std::size_t i=1;i<volume.size();++i){
+        check(cube_coords[i]==std::intptr_t(i/12));
+        check(cube_coords[23+i]==std::intptr_t((i/4)%3));
+        check(cube_coords[46+i]==std::intptr_t(i%4));
+    }
+    check(cube_mask.front()==91&&cube_mask.back()==91&&cube_coords.front()==-999&&cube_coords.back()==-999);
+    // Source-safe analytic span just above existing parallel_min, F input/output.
+    constexpr std::size_t width=65537,n=4*width;
+    std::vector<std::int16_t> large(n,7);
+    ComponentsView large_view{large.data(),PixelType::int16,false,false,{4,width},{2,8}};
+    RegionPropsState large_state;check(prepare_regionprops_state(large_view,large_state));
+#ifdef _OPENMP
+    const int current=workers==1?4:1;
+#else
+    const int current=1;
+#endif
+    set_num_threads(current);large[0]=0;
+    std::vector<std::uint8_t> large_mask(n+2,91);
+    check(regionprops_mask_strided_into(large_state,0,large_mask.data()+1,{1,4,0})==n-1);
+    std::vector<std::intptr_t> large_coords(2*(n-1)+2,-999);
+    regionprops_coords_strided_into(large_state,0,large_mask.data()+1,{1,4,0},large_coords.data()+1,sizeof(std::intptr_t),(n-1)*sizeof(std::intptr_t));
+    for(std::size_t i=1;i<n;++i){
+        check(large_mask[1+(i/width)+4*(i%width)]==1);
+        check(large_coords[i]==std::intptr_t(i/width));
+        check(large_coords[n-1+i]==std::intptr_t(i%width));
+    }
+    check(large_mask.front()==91&&large_mask.back()==91&&large_mask[1]==0);
+    check(large_coords.front()==-999&&large_coords.back()==-999);
+    check(large_state.workers==workers&&get_num_threads()==current);
+    set_num_threads(workers);check(get_num_threads()==workers);
+}
 void count_filter(int workers) {
     set_num_threads(workers);constexpr std::size_t n=513*513;
     std::vector<std::intptr_t> labels(n);std::array<std::intptr_t,8> expected{};
@@ -162,7 +222,24 @@ void concurrent_configuration() {
 #endif
 }
 int main(int argc,char** argv) {
-    require(argc==1||(argc==2&&(std::string(argv[1])=="--regionprops-state-only"||std::string(argv[1])=="--regionprops-scalar-only")));
+    require(argc==1||(argc==2&&(std::string(argv[1])=="--regionprops-state-only"||std::string(argv[1])=="--regionprops-scalar-only"||std::string(argv[1])=="--regionprops-strided-only")));
+    if(argc==2&&std::string(argv[1])=="--regionprops-strided-only"){
+        const bool available=has_avx2();
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        })regionprops_strided(workers);
+        set_num_threads(1);require(get_num_threads()==1);
+        std::cout<<"installed regionprops strided controls="<<region_state_checks<<"; default="<<get_num_threads()<<"; AVX2="<<available<<"\n";
+        return 0;
+    }
+    if(argc==1||std::string(argv[1])=="--regionprops-state-only")
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        })regionprops_strided(workers);
     for(int workers:{1
 #ifdef _OPENMP
         ,4

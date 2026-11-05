@@ -614,7 +614,8 @@
     "tests/test_ellipse_perimeter_benchmark.py",
     "tests/test_regionprops_bbox_extent_reference.py",
     "tests/test_regionprops_bbox_extent_public.py",
-    "tests/test_regionprops_scalars_benchmark.py"
+    "tests/test_regionprops_scalars_benchmark.py",
+    "tests/test_regionprops_scalar_boundary_v2.py"
   ],
   "SDK_scope": "current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance",
   "required_client_families": [

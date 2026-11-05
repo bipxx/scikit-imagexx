@@ -1,0 +1,106 @@
+{
+  "schema": "regionprops-scalar-boundary-v2",
+  "state": "COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_REVIEW_NO_PERFORMANCE_CLAIM",
+  "base": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+  "experiment": {
+    "path": "build/regionprops-performance-v2/prospective-v1.json",
+    "sha256": "4eeb47b378611597ad0b197435ecb27b73bca3a828fabc3913fa8bc9ad2beb0f"
+  },
+  "private_ABI": {
+    "preserved": [
+      "regionprops_state_scaled_count_f64(count,pixel_area)->None or(np.float64,status)",
+      "regionprops_state_extent_f64(area,bbox)->None or(np.float64,status)"
+    ],
+    "added": [
+      "regionprops_state_area_bbox_get(self)->exactnp.float64 onSDKstatus0,otherwise tuple(count,pixel_area)",
+      "regionprops_state_extent_get(self)->exactnp.float64 onSDKstatus0,otherwise tuple(visiblearea,visiblebbox)"
+    ],
+    "python_properties": "Keep literal@property fget(self), type/native_state provider guards. Call actualprivatebuiltin; returnnative_result onscalar success; otherwise literalmultiply/_extent onalready-evaluatedtuple. No descriptor/callback replay.",
+    "strided_dependency": {
+      "header": "7ba12d5c59dddf2cb2f96457be51788d77040d70",
+      "apis": [
+        "regionprops_mask_strided_into",
+        "regionprops_coords_strided_into"
+      ],
+      "ownership": "Aownsheader/kernel; Csolebinderwriter; no sharedCMake/registry change"
+    }
+  },
+  "scalar_CAPI": "Bothretainedpybindheaders expose TypeObjectFromType/ScalarAsCtype/Scalar. Exacttypeguard andrawCdouble storage, newNPscalar viaCAPI replaces0Darray+getitem; tupleAPI/status unchanged.",
+  "source_order": [
+    "bbox:self.image.size THENself._pixel_area",
+    "extent:self.area THENself.area_bbox; do notfreezegeometry/cacheor fusepropertydependencies"
+  ],
+  "FP": "STATUS0 fastpath performsnoPython np.geterr/geterrcall lookup; publicupstreamscalar arithmetic hasno suchPythonaliascallback. Event-freeprint/log now ownedexplicitly. NonzeroSDKstatus/refusal returnsalready-evaluatedoperands toexistingPython_extent orliteral multiply; exacterror/warn/call/print/logphase andsignedNaNwords preserved. No newFPframework.",
+  "checks": [
+    "Existing52nodes/profile/mode208rows/controls reusedselectionwithonlyCreturnentryexpectations adjustedfornewABI; rawgoldassertionsunchanged",
+    "Directprimitiveboxexactdtype/positivezero/signedNaN/status/refusal controls",
+    "Newgettercallbackorder/singledependencyreads/refusaloperandreuse andcustomdtype/scalarprovider controls",
+    "STATUS0 geterr/geterrcall aliases forbidden; nonzero0/0print/log policytail reachesexisting_extent once",
+    "Actualnormal/disabled dispatchbothprofiles/global1/4/defaultrestore; owningC/Fmask/coords/currentpublicmutation consumers",
+    "ActualMSVC changedbindercompileonly usingretainedheaders"
+  ],
+  "execution": {
+    "new_original_calls": 0,
+    "new_environments": 0,
+    "full_SDK_builds": 0,
+    "timed_samples": 0
+  },
+  "limits": [
+    "No priorCPPperformanceclaim beforefixed28caseABBA gates",
+    "Other classproperties/frontiers remainproviders; all8initialoriginal losses remainopen"
+  ],
+  "proof": {
+    "modes": [
+      {
+        "profile": "minimum",
+        "mode": "normal",
+        "base_checks": 67,
+        "delta_checks": 2,
+        "effective_unique": 69,
+        "actual_avx2": true,
+        "default_workers_restored": 1
+      },
+      {
+        "profile": "minimum",
+        "mode": "scalar",
+        "base_checks": 67,
+        "delta_checks": 2,
+        "effective_unique": 69,
+        "actual_avx2": false,
+        "default_workers_restored": 1
+      },
+      {
+        "profile": "modern",
+        "mode": "normal",
+        "base_checks": 67,
+        "delta_checks": 2,
+        "effective_unique": 69,
+        "actual_avx2": true,
+        "default_workers_restored": 1
+      },
+      {
+        "profile": "modern",
+        "mode": "scalar",
+        "base_checks": 67,
+        "delta_checks": 2,
+        "effective_unique": 69,
+        "actual_avx2": false,
+        "default_workers_restored": 1
+      }
+    ],
+    "checks": 276,
+    "existing_scope_reexecutions": 208,
+    "new_boundary_controls": 68,
+    "builds": "Two changedbinder TUs + two narrow component links; unchanged A normalPIC and retainedinitializer/guard/SDKarchive reused. OnechangedMSVCbindercompileonly.",
+    "source_after_first_checks": "Only2eventfreeprint/log test nodes appended, sourceprefix reconstructs exact testedfirstfreeze; executedonlynew2nodes/mode afterward. No C++/Python numerical changes after tests.",
+    "kernel_dependency": {
+      "source": "547c0497def9ac0d560e5494b970bfd1f31a7d9a",
+      "header": "7ba12d5c59dddf2cb2f96457be51788d77040d70",
+      "PIC_sha256": "0c229c3f0f87019aca5ffd0861c11613d2ffd603b48ec886c461161c62b90469",
+      "author_handoff": "build/worktrees/regionprops-strided-v2/build/native-v1/handoff-v1.json",
+      "author_handoff_sha256": "cb6023b91cb73218b40da254ef7cc21580ac12e9bbc0c514e4df020502e63844",
+      "independent_native_acceptance": "Separate root-assigned peer; this packet does not self-admit kernel"
+    }
+  },
+  "next_gate": "Independentbinder/class/parity review then rootcomposition with separatelyreviewedAkernel. Benchmarksuccessor source/native_entries must requirearea_bbox_get+extent_get in place ofmandatoryextent_f64 forstatus0; preservebaselinecontracts/reports/all28fixedABBA gates. Actualgenuinepublicproduct/firstcohorts/performanceawaitrootauthorization."
+}

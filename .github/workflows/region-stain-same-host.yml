@@ -1,0 +1,85 @@
+name: region-stain-same-host
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_run:
+        type: string
+        required: true
+      candidate_source:
+        type: string
+        required: true
+      candidate_artifact:
+        type: string
+        required: true
+      deadline_utc:
+        description: Frozen ISO8601 UTC deadline for every measurement batch
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTEST_ADDOPTS: ''
+  PYTEST_PLUGINS: ''
+  PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CANDIDATE_RUN: ${{ inputs.candidate_run }}
+      CANDIDATE_SOURCE: ${{ inputs.candidate_source }}
+      CANDIDATE_ARTIFACT: ${{ inputs.candidate_artifact }}
+      DEADLINE_UTC: ${{ inputs.deadline_utc }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: controller
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: 6a2b33a2f78606b9315dd0fcc50777b6e85ac38f
+          path: snapshots/baseline
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.candidate_source }}
+          path: snapshots/candidate
+          fetch-depth: 1
+      - name: Authenticate both products and preflight all runtimes before isolated ABBA
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p machine
+          lscpu > machine/cpu.txt
+          uname -a > machine/platform.txt
+          git -C controller rev-parse HEAD > machine/controller-source.txt
+          python controller/tools/region_stain_compare.py execute \
+            --contract controller/coverage/contracts/regionprops-performance-compare-v2.json \
+            --repository "$GITHUB_REPOSITORY" \
+            --candidate-source "$CANDIDATE_SOURCE" --candidate-run "$CANDIDATE_RUN" \
+            --candidate-artifact "$CANDIDATE_ARTIFACT" --deadline-utc "$DEADLINE_UTC" \
+            --snapshots "$GITHUB_WORKSPACE/snapshots" --results "$GITHUB_WORKSPACE/results"
+      - name: Retain all raw passes, failures and immutable inputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: region-stain-same-host
+          path: |
+            machine/
+            results/
+          if-no-files-found: error

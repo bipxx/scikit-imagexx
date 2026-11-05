@@ -2308,7 +2308,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['product_scope']=='current258' and result['registry']['image_count']==258
     assert result['product_members']==193 and result['SDK_members']==91
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==85
+    assert len(result['public_groups']['public-post203'])==86
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)

@@ -20,7 +20,7 @@ def test_bbox_extent_saved_public_rows(spec,workers,monkeypatch):
     from skimagexx import _regionprops_state_class as cls
     assert xx.measure.regionprops is owned.regionprops
     expected=next(r for r in MATRIX['original_observations'][np.__version__] if r['id']==spec['id'])
-    entries={getattr(xx._core,'regionprops_state_'+n):n for n in ('prepare','population','scaled_count_f64','extent_f64')}
+    entries={getattr(xx._core,'regionprops_state_'+n):n for n in ('prepare','population','scaled_count_f64','extent_f64','area_bbox_get','extent_get')}
     assert all(inspect.isbuiltin(f) for f in entries)
     returns=[];accepted=[]
     def profile(frame,event,value):
@@ -44,7 +44,7 @@ def test_bbox_extent_saved_public_rows(spec,workers,monkeypatch):
             assert expected['region_type']==['skimage.measure._regionprops','RegionProperties']
             assert actual['region_type']==['skimagexx._regionprops_state','RegionProperties']
             assert owned.RegionProperties is not owned._Provider and issubclass(owned.RegionProperties,owned._Provider)
-            assert 'scaled_count_f64' in returns and 'extent_f64' in returns and accepted and all(accepted)
+            assert 'scaled_count_f64' in returns and 'extent_get' in returns and accepted and all(accepted)
         else:assert actual['region_type'] is None and not accepted
         assert returns.count('prepare')==1 and xx.get_num_threads()==workers
     finally:sys.setprofile(prior);xx.set_num_threads(old_workers);xx.set_fallback_enabled(old_fallback)
@@ -90,6 +90,8 @@ def test_bbox_extent_provider_frontiers_reuse_operands_and_exact_types(monkeypat
     monkeypatch.setattr(owned._core,'regionprops_state_extent_f64',forbidden)
     with np.errstate(all='ignore',invalid='print'):
         assert cls._extent(np.float64(1),np.float64(2))==np.float64(.5)
+        # Exceptional print/log policies still use the literal primitive tail.
+        assert np.isnan(cls._extent(np.float64(0),np.float64(0)))
 
 
 def test_bbox_extent_native_boxing_status_and_f64_frontier():
