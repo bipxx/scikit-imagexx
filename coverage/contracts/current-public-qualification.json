@@ -624,6 +624,7 @@
     "tests/test_draw_polygon_public.py",
     "tests/test_draw_polygon_default.py",
     "tests/test_draw_polygon_benchmark.py",
+    "tests/test_draw_polygon_benchmark_intake.py",
     "tests/test_draw_polygon_dtype_tag_reference.py"
   ],
   "SDK_scope": "current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance",

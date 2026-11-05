@@ -2309,6 +2309,8 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['product_members']==195 and result['SDK_members']==92
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
     assert len(result['public_groups']['public-post203'])==91
+    assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==92
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2332,11 +2334,12 @@ def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypat
     assert any('current qualification readiness:' in b for b in q.plan(ROOT,'modern')['blockers'])
 
 
-@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','wrong-scope'))
+@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','missing-cold-selector','wrong-scope'))
 def test_current_contract_rejects_missing_api_or_selector(fault):
     data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_text())
     if fault=='missing-api-map':data['post203_contracts'].pop('util.compare_images')
     elif fault=='missing-required-selector':data['required_selectors'].remove('tests/test_blur_effect_public.py')
+    elif fault=='missing-cold-selector':data['required_selectors'].remove('tests/test_draw_polygon_benchmark_intake.py')
     else:data['scope']='h_extrema23'
     with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
 
