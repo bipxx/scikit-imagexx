@@ -1,0 +1,63 @@
+{
+  "schema": "regionprops-coords-scaled-native-v1",
+  "status": "NATIVE_COMPONENT_PROVED_PENDING_INDEPENDENT_REVIEW",
+  "interface_commit": "29d86314601f2f479f71bb29d683c045b7c3c30c",
+  "header_sha256": "11b22d5fcc1ecfc60e15c4bfe1a4b6d4d76d25406650d047529f9ca24fdf7a69",
+  "reference_commit": "51f3a50045774d67ed8a789d31edb88b5c93d592",
+  "scope": [
+    "local F intp from stable signed-stride mask",
+    "origin full numeric admission before in-place addition",
+    "f64 bounded multiply then separately read offset/add",
+    "nearest gradual FP context restored per worker"
+  ],
+  "excluded": [
+    "integer-spacing ownership",
+    "Python protocols/storage allocation/callback delivery",
+    "public qualification/performance"
+  ],
+  "proof_plan": {
+    "saved_recipes": 12,
+    "owned_f64_recipes": 11,
+    "layouts": [
+      "C",
+      "F",
+      "reverse-all-axes"
+    ],
+    "global_budgets": [
+      1,
+      4,
+      1
+    ],
+    "large_count": 131073,
+    "large_dimensions": 2,
+    "actual_parallel_threshold": 262144,
+    "modes": [
+      "GNU normal",
+      "actual SIMD-disabled",
+      "true compiler-scalar",
+      "ASan+UBSan",
+      "MSVC compile-only"
+    ]
+  },
+  "local_count_invariant": "stable mask count established at caller; invalid count cannot overrun output but may leave bounded partial writes",
+  "unchanged_old_source": "exact inverse in ignored old-source-inverse.json; intentional shared walker used twice",
+  "strict_fp_flags": [
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-frounding-math"
+  ],
+  "observed": {
+    "records_each_GNU_run": 108,
+    "controls_each_GNU_run": 789178,
+    "runs": [
+      "normal",
+      "actual SIMD-disabled",
+      "true compiler-scalar",
+      "ASan+UBSan"
+    ],
+    "MSVC": "leaf/test compile-only; first test failed missing <string>, fixed include-only and recompiled test",
+    "SIMD": "GNU 16-byte origin-intp and add-f64 loops; intp-to-f64 multiply scalar compiler gap; MSVC vectorized origin/add but multiply reason1101",
+    "public_parity_or_performance_claim": false,
+    "saved_oldcoords_focused": "22 controls per GNU normal/compiler-scalar/ASan; real saved regionprops-state/2d-cache-True; existing full newcoords proofs reused unchanged"
+  }
+}

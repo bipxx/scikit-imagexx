@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <memory>
 #include <vector>
+#include <limits>
 
 namespace py=pybind11;
 namespace {
@@ -65,9 +66,143 @@ py::object scalar_value(const skimagexx::detail::RegionPropsScalar64& result) {
 py::object scalar_result(const skimagexx::detail::RegionPropsScalar64& result) {
     return py::make_tuple(scalar_value(result),result.fp_status);
 }
+bool exact_array(const py::handle& value) {
+    return Py_TYPE(value.ptr())==py::detail::npy_api::get().PyArray_Type_;
+}
+bool scaled_workers(const py::handle& value,int& workers) {
+    if(!PyLong_CheckExact(value.ptr()))return false;
+    const long n=PyLong_AsLong(value.ptr());
+    if(PyErr_Occurred()){PyErr_Clear();return false;}
+    if(n<1 || n>std::numeric_limits<int>::max())return false;
+    workers=int(n);return true;
+}
+bool scaled_matrix(const py::array& a,int number,bool writable) {
+    return a.ndim()==2 && (a.shape(1)==2 || a.shape(1)==3)
+        && std::size_t(a.shape(0))<=skimagexx::detail::regionprops_coords_scaled_max_elements
+        && a.dtype().num()==number && a.dtype().attr("isnative").cast<bool>()
+        && (a.flags()&py::array::f_style)
+        && reinterpret_cast<std::uintptr_t>(a.data())%std::size_t(a.itemsize())==0
+        && (!writable || (a.owndata() && a.writeable()));
+}
+py::array scaled_output(std::size_t count,std::size_t ndim,const py::dtype& dtype) {
+    const auto n=py::ssize_t(count),d=py::ssize_t(ndim),bytes=dtype.itemsize();
+    return py::array(dtype,std::vector<py::ssize_t>{n,d},
+        std::vector<py::ssize_t>{n?bytes:0,n?n*bytes:0});
+}
+bool scaled_shape(const py::handle& value,std::size_t ndim,std::array<std::size_t,3>& shape) {
+    if(!PyTuple_CheckExact(value.ptr()) || std::size_t(PyTuple_GET_SIZE(value.ptr()))!=ndim)return false;
+    for(std::size_t d=0;d<ndim;++d) {
+        auto* item=PyTuple_GET_ITEM(value.ptr(),py::ssize_t(d));
+        if(!PyLong_CheckExact(item))return false;
+        shape[d]=PyLong_AsSize_t(item);
+        if(PyErr_Occurred()){PyErr_Clear();return false;}
+    }
+    return true;
+}
+bool scaled_disjoint(const py::array& values,const py::array& coefficient) {
+    if(!values.size())return true;
+    const auto first=reinterpret_cast<std::uintptr_t>(values.data());
+    const auto last=first+std::size_t(values.nbytes());
+    for(py::ssize_t d=0;d<coefficient.size();++d) {
+        const auto p=reinterpret_cast<std::uintptr_t>(static_cast<const char*>(coefficient.data())+d*coefficient.strides(0));
+        if(p<last && first<p+std::size_t(coefficient.itemsize()))return false;
+    }
+    return true;
+}
+bool scaled_coefficients(const py::handle& value,std::size_t ndim,bool spacing,std::array<double,3>& result) {
+    if(!exact_array(value))return false;
+    const auto a=py::reinterpret_borrow<py::array>(value);
+    if(a.ndim()!=1 || std::size_t(a.size())!=ndim || !a.dtype().attr("isnative").cast<bool>()
+       || !a.dtype().attr("metadata").is_none())return false;
+    const int number=a.dtype().num();
+    const bool f64=number==py::dtype::of<double>().num();
+    const bool f32=number==py::dtype::of<float>().num();
+    const bool integer=!spacing && number==py::dtype::of<std::intptr_t>().num();
+    if(!f64 && !f32 && !integer)return false;
+    skimagexx::bindings::check_array_storage(a);
+    for(std::size_t d=0;d<ndim;++d) {
+        const auto* p=static_cast<const char*>(a.data())+py::ssize_t(d)*a.strides(0);
+        if(f64)std::memcpy(&result[d],p,sizeof(double));
+        else if(f32) {
+            std::uint32_t bits;std::memcpy(&bits,p,sizeof(bits));
+            const auto exponent=(bits>>23)&255u;
+            if(exponent==255u || (!exponent && (bits&0x7fffffu)))return false;
+            float input;std::memcpy(&input,p,sizeof(input));result[d]=double(input);
+        } else {
+            std::intptr_t input;std::memcpy(&input,p,sizeof(input));
+            // Conversion is exact and cannot set an inexact FP flag before refusal.
+            if(input<-(std::int64_t(1)<<53) || input>(std::int64_t(1)<<53))return false;
+            result[d]=double(input);
+        }
+    }
+    return true;
+}
 }
 
 void bind_regionprops_state(py::module_& m) {
+    m.def("regionprops_state_coords_scaled_local",[](const py::object& value,const py::object& budget)->py::object {
+        int workers;if(!exact_array(value) || !scaled_workers(budget,workers))return py::none();
+        const auto mask=py::reinterpret_borrow<py::array>(value);
+        if((mask.ndim()!=2 && mask.ndim()!=3) || !bool_storage(mask)
+           || std::size_t(mask.size())>skimagexx::detail::regionprops_coords_scaled_max_elements)return py::none();
+        std::array<std::size_t,3> shape{};py::tuple snapshot(mask.ndim());
+        for(py::ssize_t d=0;d<mask.ndim();++d) {
+            shape[std::size_t(d)]=std::size_t(mask.shape(d));
+            if(shape[std::size_t(d)]>skimagexx::detail::regionprops_coords_scaled_max_extent)return py::none();
+            snapshot[d]=py::int_(shape[std::size_t(d)]);
+        }
+        skimagexx::bindings::check_array_storage(mask);
+        const auto* data=static_cast<const std::uint8_t*>(mask.data());
+        const auto ndim=std::size_t(mask.ndim()),elements=std::size_t(mask.size());
+        const auto steps=strides(mask);
+        std::size_t count;{py::gil_scoped_release release;count=skimagexx::detail::regionprops_mask_population(data,elements);}
+        auto output=scaled_output(count,ndim,py::dtype::of<std::intptr_t>());
+        auto* coordinates=static_cast<std::intptr_t*>(output.mutable_data());
+        bool ok;{py::gil_scoped_release release;ok=skimagexx::detail::regionprops_coords_scaled_local_into(data,ndim,shape,steps,count,coordinates,workers);}
+        if(!ok)return py::none();
+        return py::make_tuple(output,snapshot);
+    },py::arg("mask"),py::arg("workers"));
+    m.def("regionprops_state_coords_scaled_origin_into",[](const py::object& value,const py::object& origin,const py::object& mask_shape,const py::object& budget)->py::object {
+        int workers;if(!exact_array(value) || !exact_array(origin) || !scaled_workers(budget,workers))return py::none();
+        auto coordinates=py::reinterpret_borrow<py::array>(value);const auto origins=py::reinterpret_borrow<py::array>(origin);
+        if(!scaled_matrix(coordinates,py::dtype::of<std::intptr_t>().num(),true)
+           || origins.ndim()!=1 || origins.size()!=coordinates.shape(1)
+           || origins.dtype().num()!=py::dtype::of<std::intptr_t>().num()
+           || !origins.dtype().attr("isnative").cast<bool>() || !origins.dtype().attr("metadata").is_none())return py::none();
+        std::array<std::size_t,3> shape{};const auto ndim=std::size_t(coordinates.shape(1));
+        if(!scaled_shape(mask_shape,ndim,shape))return py::none();
+        skimagexx::bindings::check_array_storage(coordinates);skimagexx::bindings::check_array_storage(origins);
+        if(!scaled_disjoint(coordinates,origins))return py::none();
+        std::array<std::intptr_t,3> offsets{};
+        for(std::size_t d=0;d<ndim;++d)std::memcpy(&offsets[d],static_cast<const char*>(origins.data())+py::ssize_t(d)*origins.strides(0),sizeof(std::intptr_t));
+        auto* data=static_cast<std::intptr_t*>(coordinates.mutable_data());const auto count=std::size_t(coordinates.shape(0));
+        bool ok;{py::gil_scoped_release release;ok=skimagexx::detail::regionprops_coords_scaled_origin_into(data,count,ndim,shape,offsets,workers);}
+        return ok?py::object(py::bool_(true)):py::object(py::none());
+    },py::arg("indices"),py::arg("origin"),py::arg("mask_shape"),py::arg("workers"));
+    m.def("regionprops_state_coords_scaled_multiply_f64",[](const py::object& value,const py::object& spacing,const py::object& budget)->py::object {
+        int workers;if(!exact_array(value) || !scaled_workers(budget,workers))return py::none();
+        const auto coordinates=py::reinterpret_borrow<py::array>(value);
+        if(!scaled_matrix(coordinates,py::dtype::of<std::intptr_t>().num(),false))return py::none();
+        const auto count=std::size_t(coordinates.shape(0)),ndim=std::size_t(coordinates.shape(1));std::array<double,3> coefficients{};
+        if(!scaled_coefficients(spacing,ndim,true,coefficients))return py::none();
+        skimagexx::bindings::check_array_storage(coordinates);
+        auto output=scaled_output(count,ndim,py::dtype::of<double>());
+        const auto* data=static_cast<const std::intptr_t*>(coordinates.data());auto* result=static_cast<double*>(output.mutable_data());
+        bool ok;{py::gil_scoped_release release;ok=skimagexx::detail::regionprops_coords_scaled_multiply_f64_into(data,count,ndim,coefficients,result,workers);}
+        if(!ok)return py::none();return output;
+    },py::arg("absolute"),py::arg("spacing"),py::arg("workers"));
+    m.def("regionprops_state_coords_scaled_add_f64_into",[](const py::object& value,const py::object& offset,const py::object& budget)->py::object {
+        int workers;if(!exact_array(value) || !scaled_workers(budget,workers))return py::none();
+        auto values=py::reinterpret_borrow<py::array>(value);
+        if(!scaled_matrix(values,py::dtype::of<double>().num(),true) || !values.dtype().attr("metadata").is_none())return py::none();
+        const auto count=std::size_t(values.shape(0)),ndim=std::size_t(values.shape(1));std::array<double,3> coefficients{};
+        if(!scaled_coefficients(offset,ndim,false,coefficients))return py::none();
+        skimagexx::bindings::check_array_storage(values);
+        if(!scaled_disjoint(values,py::reinterpret_borrow<py::array>(offset)))return py::none();
+        auto* data=static_cast<double*>(values.mutable_data());
+        bool ok;{py::gil_scoped_release release;ok=skimagexx::detail::regionprops_coords_scaled_add_f64_into(data,count,ndim,coefficients,workers);}
+        return ok?py::object(py::bool_(true)):py::object(py::none());
+    },py::arg("scaled"),py::arg("offset"),py::arg("workers"));
     m.def("regionprops_state_area_bbox_get",[](const py::object& self)->py::object {
         // Preserve the public dependency reads before deciding native arithmetic.
         py::object count=self.attr("image").attr("size");
