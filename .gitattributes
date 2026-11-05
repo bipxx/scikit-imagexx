@@ -722,3 +722,4 @@ coverage/evidence/current258-minimum-initial-performance-v1.json -text
 coverage/evidence/public258-minimum-initial-admission.log -text
 coverage/evidence/public258-minimum-matrix-runtime-diagnostic-v1.json -text
 coverage/evidence/public258-minimum-runtime-admission-failed-v1.json -text
+coverage/contracts/draw-polygon-v1.json -text

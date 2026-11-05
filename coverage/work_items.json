@@ -36129,10 +36129,10 @@
         }
       },
       "acceptance": "Sole sharedwriter/finalfreeze. Current258 imagecount/193product91SDK31families62checks derivedactual, newPOST85selectors class-onlyextension. StrictFP/explicitcompiler-scalar andOpenMPunitfixture; newbenchmarksourcecontext, actualboth-profile prebuild/importrefusal/changedgenericconsumers; independentwiring+workflowpeer thenactualuntimedCLI rootGObeforegenuine. Terminalwaste/reuse/nextcorrection; no oldscience/timing replay.",
-      "current_checkpoint": "Rootnativeaff399/frontend15fa/SDK3a81peersclosed; sourcepartsrestored, strictFP+fixture configuredactualCMake0, changedold12contextmetadata3nodes\u00d72runtimesPASS peer7219008b. Asolewritertransfer; Bnew8casebenchfinalhandoffpending. CmissingSkylakeXcertificate separatelyassessed; main qualified257.",
+      "current_checkpoint": "Candidate6a2b33a2 closed shared readiness/actualCLI and genuine41985437089:193product91SDK16600XML0bad. Corrected full41986546641 ALL4SUCCESS; root archive/seal/stager acceptance inprogress, main remainsqualified257. Initial8scalar one-worker cases ALLSLOWER, GMoriginal/CPP0.293166605, worst35.555208x slower; root/peer closed and raw reports nowpublished.",
       "next_gate": {
-        "owner": "tiny_line_implementation",
-        "action": "RestoreB3benchmarkpaths byexactfinalcommit, wireboth-profile installed/publicnormal+disabled gates, latest_only8-casegroup/artifacts/deps andstrictmetadatafixtures. Freezeactualsource/completeaffectedprebuildclosure thenrequestrootGOforfirstcohortstoppedbeforemeasure. Nohosteddispatch/neworiginal/timing/fullSDK."
+        "owner": "root",
+        "action": "Finish four retained raw qualification audits/three stagers and independent metadata admission, then exact6a production projection/main delivery. Do not wait for unfinished v2optimization or relabel eight losses."
       }
     },
     {
@@ -36144,8 +36144,8 @@
       "id": "regionprops-scalars-benchmark-v1",
       "kind": "implementation",
       "owner": "qualification251_readiness",
-      "branch": "benchmark/regionprops-scalars-v1",
-      "state": "validating",
+      "branch": "feature/regionprops-scalars-benchmark-v1",
+      "state": "measured",
       "owns": [
         "benchmarks/regionprops_scalars.py",
         "coverage/contracts/regionprops-scalars-benchmark-v1.json",
@@ -36164,10 +36164,10 @@
         }
       },
       "acceptance": "Prospective8publiccases constructor/getter/statecycle cache/layout scopes,112samples plan only; original/native identicalcalls/default1, strictCreturns/providers onlycandidate, oldCPPmodefixedEEA/no targetwaiver. Real-sourceprebuildscienceimportrefusalbothruntimes, exactmethod/closure/bodypins. No original/capture/timing/build now; independentpeer thenactualCLI+genuineproduct; terminalwaste/reuse/nextgate.",
-      "current_checkpoint": "Prospective622b1db2 3newpaths/8cases frozen;13purestdlibchecks/profilePASS0scientificimports/calls. Finalsource-body pinforreusedold12input_state preservespointer-onlycontextchange; cases/timedbodyunchanged. No old12driver/contract rewrites.",
+      "current_checkpoint": "Genuine6a run41985437089 initial8cases112samples360journalrecords:0wins8losses GM0.293166605. Rootabe14892 andindependentd096c282 PASSrawreconstruction; public coverage/evidence/regionprops-scalars-minimum-initial-performance-v1.json retains allrawreports. Fixed1worker, batch/warm thresholds passed.",
       "next_gate": {
-        "owner": "qualification251_readiness",
-        "action": "Freeze final3pathcommit/handoff withfunction-sourcepin/currentfrontendpins andaffectedmetadata delta. Rootindependentpeer thenAsharedwiring; no measurement untilgenuineproduct/readiness/isolatedhost gates."
+        "owner": "root",
+        "action": "Keep all8original losses open; optimize output-stride/scalarboundary mechanisms in separately frozen28case v2candidate. No unchanged timing rerun."
       }
     },
     {
@@ -36179,14 +36179,46 @@
       "id": "matrix-numpy124-skylakex-certificate-v1",
       "kind": "reference",
       "owner": "next_family_contract",
-      "state": "contracting",
-      "owns": [],
+      "state": "implementing",
+      "owns": [
+        "python/skimagexx/_matrix_transform.py",
+        "tests/test_matrix_transform_numpy124_skylakex_certificate.py",
+        "coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json",
+        "coverage/evidence/matrix-transform-public-assertion-migration.json"
+      ],
       "depends_on": [],
       "acceptance": "Failedminimum41974178441 legitimateactualunforcedSkylakeX onexactNP1.24/BLAS554b. Freeze13F64function/helper/init comparison before reading newbytes, prove general arithmetic/driver equivalence tocertifiedCooperlake. No mappingwhitelist/forcedCPU/blindretry/newcapture unlessstaticproof genuinelyinsufficient androotreviewsboundedwitness. Terminalresult/evidence/waste/reuse/nextgate.",
-      "current_checkpoint": "Diagnosisff64c758 retainedselectedrange9.05MB/notfull605.9MBartifact. StageAprospective contracts d6bb357d +versionedhelper/tableclosure inputs; readonlyretainedexactELF and .21source reused. Initialregular/GEMVT/packing identities, dependency/helper/init auditstillrunning. No source/mapping/math/build/timing changes.",
+      "current_checkpoint": "Minimal4pathaa0ecdff independently admitted5b6f0a32, composed6a plus affected generic certificate guard. Static equivalence e1ce/7967 reused oldCoopgolds without39recaptures. Genuine6a andfullcorrected41986546641 all4SUCCESS; actual natural runtime receipts stillunder root raw review.",
+      "next_gate": {
+        "owner": "root",
+        "action": "Reuse sealed static/patch peers; inspect actual minimum runtime metadata during qualification raw admission and deliver exact source projection. Preserve old41974178441 failure."
+      },
+      "branch": "fix/matrix-numpy124-skylakex-v1"
+    },
+    {
+      "id": "draw-polygon-reference-v1",
+      "kind": "reference",
+      "owner": "qualification251_readiness",
+      "branch": "reference/draw-polygon-v1",
+      "state": "contracting",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "owns": [
+        "tests/draw_polygon_contract.py",
+        "tests/draw_polygon_observer.py",
+        "tests/test_draw_polygon_reference.py",
+        "coverage/contracts/draw-polygon-v1.json"
+      ],
+      "base_sha": "4f0fe268",
+      "depends_on": [],
+      "acceptance": "Actualpinnedsourceaudit+source-safe boundedorderedfill/maskcases, ordinarylayout/dtype/edge/clip/error semantics; checkexistingownedpolygonpredicate reuse. Original-refusedpureintake bothprofiles before independentprospectivesafety review. No original/native/build/timing/env/SDK yet; terminalwaste/reuse/nextownertrigger.",
+      "current_checkpoint": "Prospective405cc merged4cd7367a; independent8cef/intake7883 closed. Root separately authorized48originalcalls, each executed once:24/profile,17returns7errors, identical rawrows; capturehandoff194399d1 andsavedgoldsource295ef532. Cnow independentcapture review+ONLYtwo new saved-validator nodes/profile; no original replay.",
       "next_gate": {
         "owner": "next_family_contract",
-        "action": "Seal falsifiableELFhelper/table/init evidence androotreview before smallestactualcertificate sourcechange. Keepfailedcampaign andunknownnaturalCPU refusal; no assumption otherbinarySkyproves554bSky."
+        "action": "Review saved actualcaptures and new2validators/profile; root merge reviewed saved-reference2pathdelta promptly. Freeze typed native/header against existingpolygon_label (axisorderc,r), then independent implementation/SDK/frontend lanes."
       }
     }
   ],

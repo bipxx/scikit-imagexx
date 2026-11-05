@@ -1,0 +1,214 @@
+{
+  "source": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f",
+  "run": 41985437089,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41985437089",
+  "admitted_scope": "Exact genuine minimum product and eight initial RegionProperties scalar public workloads. All eight slower cases remain open. No optimization KEEP, full class ownership, full qualification or library-wide speed claim.",
+  "worker_count": 1,
+  "prepared_members": {
+    "product": 193,
+    "SDK": 91,
+    "XML": 16600
+  },
+  "measurement": {
+    "cases": 8,
+    "samples": 112,
+    "warmup_groups": 16,
+    "journal_events": 360,
+    "accepted_samples": 112,
+    "minimum_accepted_batch_ns": 110818445,
+    "minimum_warmup_group_ns": 255377089,
+    "underlength_calibration_batches": 0,
+    "all_complete_no_failures": true,
+    "source_contract_harness_method_pins_verified": true,
+    "wins": 0,
+    "losses": 8,
+    "geometric_mean_original_over_cpp": 0.29316660510800113,
+    "rows": [
+      {
+        "case_id": "regionprops-scalars/tiny-ctor-c-off",
+        "original_ms": 0.0747837593688363,
+        "cpp_ms": 0.10325160269058296,
+        "original_over_cpp": 0.7242866688756681,
+        "cpp_minus_original_ms": 0.028467843321746664,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 110818445,
+        "warmup_elapsed_ns": [
+          294255008,
+          282475315
+        ]
+      },
+      {
+        "case_id": "regionprops-scalars/medium-ctor-f-on",
+        "original_ms": 0.14740963178294575,
+        "cpp_ms": 0.7428954258064516,
+        "original_over_cpp": 0.19842581696195655,
+        "cpp_minus_original_ms": 0.5954857940235059,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 113127700,
+        "warmup_elapsed_ns": [
+          320652417,
+          333894613
+        ]
+      },
+      {
+        "case_id": "regionprops-scalars/tiny-warm-c-on",
+        "original_ms": 0.003521659182922341,
+        "cpp_ms": 0.012896153872091715,
+        "original_over_cpp": 0.2730782540167644,
+        "cpp_minus_original_ms": 0.009374494689169375,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 114003203,
+        "warmup_elapsed_ns": [
+          261829951,
+          255377089
+        ]
+      },
+      {
+        "case_id": "regionprops-scalars/medium-getters-c-off",
+        "original_ms": 0.10267206976744186,
+        "cpp_ms": 0.17668760923076923,
+        "original_over_cpp": 0.5810937745687832,
+        "cpp_minus_original_ms": 0.07401553946332737,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 112769954,
+        "warmup_elapsed_ns": [
+          313604096,
+          303131332
+        ]
+      },
+      {
+        "case_id": "regionprops-scalars/medium-getters-f-off",
+        "original_ms": 0.06288713472070098,
+        "cpp_ms": 2.235965173076923,
+        "original_over_cpp": 0.028125274703702862,
+        "cpp_minus_original_ms": 2.173078038356222,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 114391937,
+        "warmup_elapsed_ns": [
+          286265522,
+          346082693
+        ]
+      },
+      {
+        "case_id": "regionprops-scalars/3d-warm-f-on",
+        "original_ms": 0.0035926166459240823,
+        "cpp_ms": 0.013119886822589846,
+        "original_over_cpp": 0.27382985040223884,
+        "cpp_minus_original_ms": 0.009527270176665763,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 113091722,
+        "warmup_elapsed_ns": [
+          265567242,
+          256857697
+        ]
+      },
+      {
+        "case_id": "regionprops-scalars/pixel-cycle-c-off",
+        "original_ms": 0.108991298394712,
+        "cpp_ms": 0.1391401580882353,
+        "original_over_cpp": 0.7833202138924947,
+        "cpp_minus_original_ms": 0.030148859693523294,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 112458918,
+        "warmup_elapsed_ns": [
+          311472703,
+          300260380
+        ]
+      },
+      {
+        "case_id": "regionprops-scalars/slice-cycle-3d-on",
+        "original_ms": 0.08001678087927425,
+        "cpp_ms": 0.20175485639229424,
+        "original_over_cpp": 0.39660398916836376,
+        "cpp_minus_original_ms": 0.12173807551301999,
+        "samples_per_backend": 7,
+        "minimum_batch_ns": 114315244,
+        "warmup_elapsed_ns": [
+          306726256,
+          310632438
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "source_sha256": "fe08560b60c91735060145f18982df31f13c759af2d9717eb96ed43ac4b8962d",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "core_sha256": "9de406bbeb59f9f92af7cc4635c918c3165a2fe274a08fff523b0e2cbf2c2ee8",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "cpu_model": "AMD EPYC 7763 64-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39"
+  },
+  "production_source_sha256": "fe08560b60c91735060145f18982df31f13c759af2d9717eb96ed43ac4b8962d",
+  "core_sha256": "9de406bbeb59f9f92af7cc4635c918c3165a2fe274a08fff523b0e2cbf2c2ee8",
+  "reports": [
+    {
+      "path": "benchmarks/regionprops-scalars-minimum-initial.json",
+      "sha256": "a2e89b40f656bafb6c633adf1bd0b3d2dd75d7fbabb551586a17db765435b869",
+      "bytes": 371247,
+      "artifact": 13396062741,
+      "member": "ci-regionprops-scalars.json",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/regionprops-scalars-minimum-initial.batches.jsonl",
+      "sha256": "80821340c8365e61db007292ce5dcdf1a44a75c65b72aea2b605af3d4d75b021",
+      "bytes": 125122,
+      "artifact": 13396062741,
+      "member": "ci-regionprops-scalars.batches.jsonl",
+      "unchanged_raw_bytes": true
+    },
+    {
+      "path": "benchmarks/regionprops-scalars-minimum-initial.md",
+      "sha256": "e0f11dadecdc5627f629112bfc022bd57cbcf88318cb39849fa8b73d6cfde8c5",
+      "bytes": 951,
+      "artifact": 13396062741,
+      "member": "ci-regionprops-scalars.md",
+      "unchanged_raw_bytes": true
+    }
+  ],
+  "retention": {
+    "artifact": {
+      "id": 13396062741,
+      "node_id": "MDg6QXJ0aWZhY3QxMzM5NjA2Mjc0MQ==",
+      "name": "ci-performance-minimum",
+      "size_in_bytes": 85524974,
+      "url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/13396062741",
+      "archive_download_url": "https://api.github.com/repos/bipxx/scikit-imagexx/actions/artifacts/13396062741/zip",
+      "expired": false,
+      "digest": "sha256:106f30693ea990776cfeb4d12afe97a55dfe86bae9818b5a40f17271e46126e0",
+      "created_at": "2026-11-05T07:19:47Z",
+      "updated_at": "2026-11-05T07:19:47Z",
+      "expires_at": "2027-02-03T07:11:08Z",
+      "workflow_run": {
+        "id": 41985437089,
+        "repository_id": 1427753300,
+        "head_repository_id": 1427753300,
+        "head_branch": "integrate/regionprops-scalar-v1",
+        "head_sha": "6a2b33a2f78606b9315dd0fcc50777b6e85ac38f"
+      }
+    },
+    "path": "build\\regionprops-scalars-genuine-minimum-v1\\retained-v1\\13396062741.zip",
+    "sha256": "106f30693ea990776cfeb4d12afe97a55dfe86bae9818b5a40f17271e46126e0",
+    "role": "Finalconsumeronly; producerduplicatenotdownloaded"
+  },
+  "root_review": {
+    "path": "build/regionprops-scalars-genuine-minimum-v1/root-audit-v1.json",
+    "sha256": "abe148926a5af8964a4f6a2294da501d075ae25e0813fc41cb2fe53b7f897c3b"
+  },
+  "independent_review": {
+    "path": "build/regionprops-scalars-independent-performance-review-v1/review.json",
+    "sha256": "d096c282a795c72053635ac1cfc64d3dedf2b6f8a0e909588ca89a99122c01b2"
+  },
+  "next_gate": "Review direct-strided output and scalar-boundary candidate, then fixed28case same-host comparison with baseline6a. Preserve original losses and all prior rejected trials.",
+  "closeout": {
+    "result": "Published genuine initial eight-workload baseline:0wins8losses; 112samples and360journal events retained.",
+    "waste_and_reuse": "Reused authenticated final consumer, root raw reconstruction and independent peer; three small raw report members copied unchanged. No new timings, captures, builds, archive downloads or digest replay.",
+    "plan_correction": "Prioritize F-order output temporary/reorder and scalar boxing/policy crossings. Flat population and coordinate-only c_mask do not explain the scalar workload losses. New candidate must pass original-normalized and prior-C++ regression gates."
+  }
+}
