@@ -1140,11 +1140,20 @@
       "api": "draw.line_nd",
       "kind": "callable",
       "signature": "(start, stop, *, endpoint=False, integer=True)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float16",
+        "float32",
+        "float64",
+        "int8",
+        "uint8",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_line_nd_public.py::test_line_nd_saved_public_pipeline",
+      "benchmark": "benchmarks/line_nd.py",
+      "default_input_kind": "Actual coordinate dtypes from frozen default rows; source-safe fixed endpoints use carrier dtype, no carrier pixels. Owned typed interpolation/rounding with explicit NumPy conversion/allocation/FP-policy providers."
     },
     {
       "api": "draw.polygon",

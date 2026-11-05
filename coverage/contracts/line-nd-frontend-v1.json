@@ -1,0 +1,120 @@
+{
+  "schema": "line-nd-frontend-v1",
+  "status": "COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_REVIEW",
+  "api": "draw.line_nd",
+  "reference_commit": "654d6ad82be1f2e5f785f7a41632b9ec73d4649b",
+  "reference_prose_successor": "c5e6895faea77bf0b2bd58abe87d6d85b785597d",
+  "reference_contract_sha256": "7eceab83bd90ba56acc7d3142a2cb0ab66e748769bb81b790ca8133aab5abeb8",
+  "native_implementation": "95f5c84abb3e051539fc3a9c65696d9ef002e75b",
+  "native_header_freeze": "4cd652de2e3533b1d036fae472094b0380c79ef1",
+  "public_signature": "(start, stop, *, endpoint=False, integer=True)",
+  "entry": "skimagexx._core.draw_line_nd(start, stop, endpoint, integer, workers, scalar_modulo_native)",
+  "success_local": "native_result",
+  "saved_returns_per_profile": 45,
+  "saved_errors_per_profile": 9,
+  "saved_payloads": {
+    "1.24.4": {
+      "returns": 45,
+      "errors": 9,
+      "arrays": 119,
+      "scalars": 3
+    },
+    "2.5.4": {
+      "returns": 45,
+      "errors": 9,
+      "arrays": 119,
+      "scalars": 3
+    }
+  },
+  "preparation": "np.asarray(start) then np.asarray(stop), exactlyonce including__array__ providers. Owned C operand copies AFTERboth conversions preserve assessedreadonly/unaligned/externalbytearray inputs andsnapshot semantics. No sharedstoragevalidator changes.",
+  "primitive_ownership": "C++ line_nd_prepare owns original-dtype count/wrap, linspace precision/step androunded_dimensions=len(start); line_nd_into owns interpolation/rounding/outputwords. No NumPylinspace/draw/_round_safe use.",
+  "dtype_scope": {
+    "vectors": [
+      "float16",
+      "float32",
+      "float64",
+      "int8",
+      "uint8",
+      "int64",
+      "uint64"
+    ],
+    "same_native_endian_dtype": true,
+    "dimensions": [
+      1,
+      8
+    ],
+    "broadcast": "Length1vectors only; originalstart length controls roundedrows.",
+    "scalar": "Onlyboth0Dfloat64 capturedPythonfloat form. Floatmode returns tupleofNumPyscalars; integermode retains originalpost-sampling len-unsized error.",
+    "metadata": "Inputmetadata preservedonoriginaloperands; outputmetadata dropped asobserved."
+  },
+  "storage": {
+    "floating": "Tupleofrowviews over sharedowning Cbase[points,dimensions]; emptystrides0.",
+    "integer": "Tupleofrowviews over sharedowning K-compatiblebase[dimensions,points]; Fstrides(itemsize,dimensions*itemsize) whenboth>1, Csingletonstrides, empty0strides.",
+    "lifetime": "Returnedviews retainbase; independentofallinputs, no per-rowowningarrayclaim.",
+    "input_owner": "Copies at Pythonboundary; builtinindependentlyrequiresownedCarrays. PreparedCplan ownsvalue snapshots, no borrowedpointerretained throughGILrelease."
+  },
+  "errors": "SourcePython signature handlesmissingstop/keyword. Core-refusedempty/mismatch/string/bool/nonfinite invokes ONLYliteral NumPycount/errorprefix toretainexactexceptions; successfulunsupportedprefix raisesexplicitNotImplementedError, neveroriginaldraw fallback.",
+  "FP": "Native stage facts dispatchunderflow divide thenmultiply via NumPypolicy/handler snapshotperoperation. Capturedignore/call exact; warn/raise useexistingproviderpattern, print/log faultpolicy explicitlyunassessed. CallerNPstate/handler/bufsize/FENV preservedexceptdeliberateusercallbackactions.",
+  "workers": "Onecurrentglobal getter perbodyadmitted/privatecall; default1/global1/4/restoration, count/fillserialorsupportedoptionalnativeparallel withpassedbudget. No frontendpool/cache/globalstate.",
+  "unassessed": [
+    "Mixed/unsupportedvector dtypes, nonnativeendian andhigher-rank forms.",
+    "Typed0Dnon-float64 or mixedscalar/vector promotion; no length1vectorcredit foruncapturedscalar behavior.",
+    "Nonbuiltinflagprotocols, print/log FPfaultdispatch, forgedstorage/concurrentmutation andunboundedallocations.",
+    "Publicdrawexport/CMake/registry/SDK/genuine/benchmark integration pendingroot; privatecomponentonly, no wholeAPI/performanceclaim."
+  ],
+  "acceptance_gates": [
+    "Frozen reference independentlyrootreviewed d119974c; native independentreview required beforepromotion.",
+    "All54savedrows/profileexactincluding45returns9errors, sharedbase/rawtypes/FP/protocol/inputstate; realbuiltinCreturn/nonNone/onegetter witness forsuccessfulrows.",
+    "Retainedmin/modern normal/scalardispatch global1/4 andadditionalownedlifetime/inputcallback/largeallocation controls; nooriginalrecapture/fullSDK/env/timing."
+  ],
+  "task_closeout": {
+    "status": "PASS_BOUNDED_COMPONENT_CHECKS_PENDING_INDEPENDENT_REVIEW",
+    "result": "121 actual XML nodes per mode, 484 total PASS on first target attempt. Complete observer-row equality for unchanged old54 and separate saved promotion holdout at global1/4; additional ownership/lifetime/callback/current-budget/frontier checks. Actual scalar capability false on NP1.24.4, true on NP2.5.4.",
+    "avoidable_work_and_reuse": "Reused frozen original observations, source helpers, corrected native PIC, donor runtime archive and two initializer objects. Initial two binder/initializer/link predecessor components completed before independent native holdout uncovered a useful real numerical bug; no target tests ran on those predecessor cores and no old reference recapture/full SDK/environment/timing was repeated. Do not treat rejected native evidence as a passing final build.",
+    "next_plan_correction": {
+      "owner": "root and independent reviewer",
+      "trigger": "Before shared source/public integration and genuine preparation",
+      "action": "Authenticate this bounded component source/evidence and corrected native review. Bind final scalar capability API; retain provider/frontier domains and original54/supplement words. Finalize handoff paths/labels before hash release; any later correction gets a new version. No wholeAPI/nativeSDK/performance credit from this component."
+    },
+    "readers_released": true
+  },
+  "scalar_modulo_policy": {
+    "capability": "Actual (np.float32(0) % 1).dtype == np.dtype(np.float32), sampled once at module import; not result_type/version/fixture inference.",
+    "native_mapping": "False -> legacy_float64; True -> weak_input, explicitly passed to typed preparation.",
+    "supplement_reference": "coverage/contracts/line-nd-rounding-promotion-v1.json",
+    "supplement_commits": [
+      "58fe50cc5ab945bf587300c992e03563e8917e78",
+      "59e40b784e2574ad7264d7ea81e41d62da36e1e3"
+    ],
+    "scope": "One saved profile-specific float32 holdout in addition to unchanged old54; runtime private promotion-state changes after import unassessed."
+  },
+  "native_handoff": {
+    "path": "build/worktrees/line-nd-native-v1/build/promotion-fix-v1/handoff.json",
+    "sha256": "f8ca3c0ab65485daa00603fb038554394de64f8af1c656868f49c2e79870b8cd"
+  },
+  "component_proof": {
+    "path": "build/worktrees/line-nd-frontend-v1/build/component-v2",
+    "source_commit": "e3d6e286",
+    "XML_nodes_per_mode": 121,
+    "modes": [
+      "minimum-normal",
+      "minimum-scalar",
+      "modern-normal",
+      "modern-scalar"
+    ],
+    "XML_nodes_total": 484,
+    "saved_rows_compared": {
+      "old54": 432,
+      "new_supplement": 8
+    },
+    "separate_candidate_rows_serialized": false,
+    "original_calls": 0,
+    "timed_batches": 0,
+    "new_binder_TUs": 2,
+    "reused_initializer_TUs": 2,
+    "new_leaf_TUs": 0,
+    "links": 2,
+    "reused_PIC_sha256": "bc127929526c81ff7678c3bdc126728b3f0b723047a6b17d964cfeadaeb79ca3",
+    "SDK_archive_scope": "Previously assembled SDK87 worker/runtime donor only; no SDK build or genuine SDK claim."
+  }
+}

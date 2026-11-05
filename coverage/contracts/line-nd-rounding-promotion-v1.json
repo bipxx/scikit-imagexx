@@ -1,0 +1,840 @@
+{
+  "schema": "line-nd-rounding-promotion-reference-v1",
+  "api": "draw.line_nd",
+  "cases": [
+    {
+      "id": "line-nd/rounding-promotion-f32-negative-near-half",
+      "api": "draw.line_nd",
+      "kind": "dtype-float32",
+      "start": [
+        -0.4999999701976776
+      ],
+      "stop": [
+        4.5
+      ],
+      "options": {
+        "endpoint": true,
+        "integer": true
+      },
+      "policy": {},
+      "holdout": true
+    }
+  ],
+  "original_observations": {
+    "1.24.4": [
+      {
+        "id": "line-nd/rounding-promotion-f32-negative-near-half",
+        "api": "draw.line_nd",
+        "input_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                  "raw_zlib_base64": "eJz7////PgAJuQO8"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                  "raw_zlib_base64": "eJxjYJjgAAABZADR"
+                }
+              ]
+            },
+            {
+              "endpoint": true,
+              "integer": true
+            },
+            {
+              "start": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                "raw_zlib_base64": "eJz7////PgAJuQO8"
+              },
+              "stop": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                "raw_zlib_base64": "eJxjYJjgAAABZADR"
+              }
+            }
+          ]
+        },
+        "input_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                  "raw_zlib_base64": "eJz7////PgAJuQO8"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                  "raw_zlib_base64": "eJxjYJjgAAABZADR"
+                }
+              ]
+            },
+            {
+              "endpoint": true,
+              "integer": true
+            },
+            {
+              "start": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                "raw_zlib_base64": "eJz7////PgAJuQO8"
+              },
+              "stop": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                "raw_zlib_base64": "eJxjYJjgAAABZADR"
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                6
+              ],
+              "strides": [
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "ndarray",
+              "base_shape": [
+                1,
+                6
+              ],
+              "base_strides": [
+                48,
+                8
+              ],
+              "raw_sha256": "a8359c7ec5b5855fee250ec33b3d3a36517bb457d4cf63746abb9158b7b0e48f",
+              "raw_zlib_base64": "eJxjYEAFTGg0CxoNAAEAAA0="
+            }
+          ]
+        },
+        "error": null,
+        "events": {
+          "container": "list",
+          "items": []
+        },
+        "warnings": [],
+        "output_pair_aliases": [
+          {
+            "first": 0,
+            "second": 0,
+            "same_object": true,
+            "shares_memory": true,
+            "same_base": true
+          }
+        ],
+        "output_input_aliases": [
+          {
+            "output": 0,
+            "input": "start",
+            "same_object": false,
+            "shares_memory": false
+          },
+          {
+            "output": 0,
+            "input": "stop",
+            "same_object": false,
+            "shares_memory": false
+          }
+        ],
+        "checks": {
+          "input_unchanged": true,
+          "pointers_stable": true,
+          "policy_unchanged": true,
+          "state_restored": true
+        }
+      }
+    ],
+    "2.5.4": [
+      {
+        "id": "line-nd/rounding-promotion-f32-negative-near-half",
+        "api": "draw.line_nd",
+        "input_before": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                  "raw_zlib_base64": "eJz7////PgAJuQO8"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                  "raw_zlib_base64": "eJxjYJjgAAABZADR"
+                }
+              ]
+            },
+            {
+              "endpoint": true,
+              "integer": true
+            },
+            {
+              "start": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                "raw_zlib_base64": "eJz7////PgAJuQO8"
+              },
+              "stop": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                "raw_zlib_base64": "eJxjYJjgAAABZADR"
+              }
+            }
+          ]
+        },
+        "input_after": {
+          "container": "tuple",
+          "items": [
+            {
+              "container": "tuple",
+              "items": [
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                  "raw_zlib_base64": "eJz7////PgAJuQO8"
+                },
+                {
+                  "type": "ndarray",
+                  "dtype": "<f4",
+                  "dtype_descr": {
+                    "container": "list",
+                    "items": [
+                      {
+                        "container": "tuple",
+                        "items": [
+                          "",
+                          "<f4"
+                        ]
+                      }
+                    ]
+                  },
+                  "dtype_metadata": null,
+                  "shape": [
+                    1
+                  ],
+                  "strides": [
+                    4
+                  ],
+                  "own": true,
+                  "writeable": true,
+                  "aligned": true,
+                  "c": true,
+                  "f": true,
+                  "base_type": "NoneType",
+                  "base_shape": null,
+                  "base_strides": null,
+                  "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                  "raw_zlib_base64": "eJxjYJjgAAABZADR"
+                }
+              ]
+            },
+            {
+              "endpoint": true,
+              "integer": true
+            },
+            {
+              "start": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "735c4062effa298cd5d35950815dd45de00f4808e2c842c5bf7c1f20d33f6693",
+                "raw_zlib_base64": "eJz7////PgAJuQO8"
+              },
+              "stop": {
+                "type": "ndarray",
+                "dtype": "<f4",
+                "dtype_descr": {
+                  "container": "list",
+                  "items": [
+                    {
+                      "container": "tuple",
+                      "items": [
+                        "",
+                        "<f4"
+                      ]
+                    }
+                  ]
+                },
+                "dtype_metadata": null,
+                "shape": [
+                  1
+                ],
+                "strides": [
+                  4
+                ],
+                "own": true,
+                "writeable": true,
+                "aligned": true,
+                "c": true,
+                "f": true,
+                "base_type": "NoneType",
+                "base_shape": null,
+                "base_strides": null,
+                "raw_sha256": "47ad7819472c9c1bad2049d6c87fb5de3458c633c491a88376df0802cca2901a",
+                "raw_zlib_base64": "eJxjYJjgAAABZADR"
+              }
+            }
+          ]
+        },
+        "result": {
+          "container": "tuple",
+          "items": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                6
+              ],
+              "strides": [
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": true,
+              "base_type": "ndarray",
+              "base_shape": [
+                1,
+                6
+              ],
+              "base_strides": [
+                48,
+                8
+              ],
+              "raw_sha256": "626ceb8398fa7a12341cbae1b7a5f8a0f73b1f94f4fa8d0e4c647a15dfc00e8f",
+              "raw_zlib_base64": "eJz7/x8CGKCAEUozQWlmKM0CpQFjewgD"
+            }
+          ]
+        },
+        "error": null,
+        "events": {
+          "container": "list",
+          "items": []
+        },
+        "warnings": [],
+        "output_pair_aliases": [
+          {
+            "first": 0,
+            "second": 0,
+            "same_object": true,
+            "shares_memory": true,
+            "same_base": true
+          }
+        ],
+        "output_input_aliases": [
+          {
+            "output": 0,
+            "input": "start",
+            "same_object": false,
+            "shares_memory": false
+          },
+          {
+            "output": 0,
+            "input": "stop",
+            "same_object": false,
+            "shares_memory": false
+          }
+        ],
+        "checks": {
+          "input_unchanged": true,
+          "pointers_stable": true,
+          "policy_unchanged": true,
+          "state_restored": true
+        }
+      }
+    ]
+  },
+  "original_provenance": {
+    "1.24.4": {
+      "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+      "numpy": "1.24.4",
+      "skimage": "0.26.0",
+      "source_path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/draw/draw_nd.py",
+      "source_canonical_lf_sha256": "44a1b51878ec4f25cdf09da75891950dea2a1b7b2ba8fbaa99345e66c26cb7fe",
+      "numpy_linspace_source_sha256": "35849b320cedb57fdec533fc360cca7595e349c28082af1caeed95ee2f975e71",
+      "numpy_binary_path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+      "numpy_binary_sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+      "calls_per_spec": 1,
+      "native_calls": 0,
+      "timings": false
+    },
+    "2.5.4": {
+      "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+      "numpy": "2.5.4",
+      "skimage": "0.26.0",
+      "source_path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/draw/draw_nd.py",
+      "source_canonical_lf_sha256": "44a1b51878ec4f25cdf09da75891950dea2a1b7b2ba8fbaa99345e66c26cb7fe",
+      "numpy_linspace_source_sha256": "97925f5f2a271088cbff838a149a6312335d8dac80ac0314f0c85a31b442c1b5",
+      "numpy_binary_path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+      "numpy_binary_sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+      "calls_per_spec": 1,
+      "native_calls": 0,
+      "timings": false
+    }
+  },
+  "original_calls": 2,
+  "source_safety": "New one-dimensional native-endian float32 endpoints startbitsbeffffff andstop4.5; delta rounds5, ceilcount5 +endpoint1 <=6points/6elements. Only original scalar predicate differs between NumPyprofiles; output not predicted or normalized. Existing reviewed source_safe/fixture/observe factories reused, no source changes.",
+  "numerical_policy": {
+    "max_ulp": 0,
+    "rtol": 0,
+    "atol": 0
+  },
+  "original_contract_sha256": "7eceab83bd90ba56acc7d3142a2cb0ab66e748769bb81b790ca8133aab5abeb8",
+  "scope": "Once-only supplemental original reference, not replacement of old54cases; native frozen00db review blocker until corrected and independently reviewed.",
+  "source_pins": {
+    "tests/line_nd_contract.py": "eddb57dfb4c9a255619dfa017e9c97e6e663d510cebd5504a6d8deea96d1e7fb",
+    "tests/line_nd_observer.py": "150916c43f1cb41492d810beba42f8e8f32f3ca4c0bd26ffdba273a8feac89d2"
+  },
+  "observed_result": "Original1.24.4 int64 [0,0,2,2,4,4]; original2.5.4 int64 [-1,0,1,2,3,4]. Both exact tuple of one writable aligned non-owning six-element shared-base row; no warnings/errors/events/input or FPstate mutation.",
+  "root_cause": "Original _round_safe NumPy scalar first%1 uses float64 forfloat32/Pythonint onNP1.24, float32 onNP2.5. Nearnegative-half remainder rounds to0.5 onlyonNP2.5, selectingfloorforwhole row. Kernel00db tests double first-floor(first) unconditionally; existing54golds lack this admitted edge.",
+  "task_closeout": {
+    "result": "Real version-specific returned-word difference observed fromexactly1neworiginal/profile afterrefusalintakes; no nativeexecution or changes toold54gold/source.",
+    "waste_and_reuse": "Reused originalobserver/source-safety factory/runtimes;6NumPy-only scalar controls establishedactualbehavior before2authorizedoriginalcalls. No nominalresult_type inference, recapture, build/env/timing, or speculativeproviderrefusal. Useful newrejected nativepredicate experiment, not setup waste.",
+    "next_plan_correction": {
+      "owner": "root with A native andBfrontend",
+      "trigger": "Independent supplement/reference acceptance before correctednative integration",
+      "action": "Make scalar modulo precision an explicit NumPy-profile policy attypedboundary; native predicate must compute source-equivalent remainder andprecision behavior. Preserve admitted f16/f32 domain andzeroULP policy, add thisprofile-specific regression andtargeted successor proof; retaininitial00db/sixmodeproof aspredecessor."
+    },
+    "readers_released": true
+  }
+}

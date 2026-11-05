@@ -300,7 +300,7 @@ ellipsoid | Evaluate scaled 3D quadratic field on exact spacing-derived grid | g
 ellipsoid_stats | Direct volume formula plus reviewed elliptic-integral surface-area implementation | sphere/spheroid limits, axis ordering and special-function accuracy | spheres, oblate/prolate and triaxial cases
 line | Port Bresenham integer line with exact endpoint order | octants, reversed endpoints, degenerate point | all octants and long diagonals
 line_aa | Port anti-aliased line coverage recurrence | octant symmetry, duplicate/order and endpoint intensities | all octants and one-pixel segments
-line_nd | Generate evenly spaced N-D coordinates with upstream safe integer rounding | endpoint flag, half ties, integer=False and reversed axes | fractional N-D endpoints and half-integer crossings
+line_nd | Extend reviewed typed count/interpolation/rounding with runtime scalar-modulo policy, preserve shared row-view base | endpoint flag, profile-specific f16/f32 half ties, original-dtype count wrap, scalar/provider frontiers and K/F integer backing | existing frozen54 rows plus promotion supplement; unassessed mixed/0D typed scalar domains
 polygon | Scan bounding box with exact polygon inclusion/edge rule | self-intersection, concavity, edge inclusion and shape clipping | concave/self-touching/out-of-bounds polygons
 polygon2mask | Reuse polygon fill coordinates and scatter into boolean mask | image_shape and polygon coordinate convention | fractional vertices and clipped polygons
 polygon_perimeter | Clip polygon when requested then rasterize ordered edges | closure, duplicate vertices, clipping versus shape filtering | open inputs, repeated vertices and clipped outlines

@@ -1,0 +1,87 @@
+{
+  "schema": "line-nd-native-component-v1",
+  "api": "draw.line_nd",
+  "reference_commit": "654d6ad82be1f2e5f785f7a41632b9ec73d4649b",
+  "reference_prose_successor": "c5e6895faea77bf0b2bd58abe87d6d85b785597d",
+  "reference_contract_sha256": "7eceab83bd90ba56acc7d3142a2cb0ab66e748769bb81b790ca8133aab5abeb8",
+  "source_sha256": "44a1b51878ec4f25cdf09da75891950dea2a1b7b2ba8fbaa99345e66c26cb7fe",
+  "header_freeze": "4cd652de2e3533b1d036fae472094b0380c79ef1",
+  "typed_scope": {
+    "input_types": [
+      "float16",
+      "float32",
+      "float64",
+      "int8",
+      "uint8",
+      "int64",
+      "uint64"
+    ],
+    "equal_input_dtype": true,
+    "dimensions": [
+      1,
+      8
+    ],
+    "broadcast": "Length1 vectors broadcast; original start length controls rounded rows.",
+    "input_storage": "Caller-proven native-endian complete signed byte spans; unaligned/gapped/negative strides read with memcpy.",
+    "numeric_boundary": "Finite coordinates with absolute value strictly below2**52; refuse wide uint64 decreasing/wrapped domains; float16 count<=65504; output count*dimensions*8 fits ptrdiff. No512-point capture quota.",
+    "output": "Caller-owned buffers and explicit signed byte point/dimension strides; intptr_t integer or binary16/float32/float64 floating words. Wrapper owns array/base/scalar/container layout.",
+    "allocation": "No allocation in kernel; fixed8dimension prepared snapshots. Refused preparation leaves output plan unchanged.",
+    "scalar_modulo_policy": "Explicit LineNDScalarPromotion legacy_float64/weak_input. SDK default legacy_float64 documents NumPy1 scalar remainder; weak_input rounds remainder to f16/f32 precision. Python samples actual scalar result dtype once at runtime boundary; no fixture ID or version-output selection in kernel."
+  },
+  "source_stages": [
+    "Read operands once, original-dtype stop-start/abs before ceil(max) count; int8 and uint8 wrap preserved.",
+    "Convert integer operands to double only for linspace; float16/32 retain precision at delta/divide/arange/multiply/add storage stages.",
+    "Any zero step selects divide-index-then-multiply-delta for every dimension; zero/one point and endpoint override preserved.",
+    "Only first len(start) rows apply safe floor when first%1 in selected scalar-promotion precision equals0.5 and second-first in coordinate precision equals positive1. Otherwise nearest-even; remaining broadcast rows truncate at final int cast.",
+    "Capture divide/multiply underflow facts for caller FP policy, including software binary16 inexact-tiny storage conversion; restore calling FENV.",
+    "Scalar form and error/callback/provider semantics remain separate frontend responsibility."
+  ],
+  "execution": {
+    "workers": "Caller snapshots global budget once, default1. No kernel global read or private pool.",
+    "parallel_threshold_elements": 262144,
+    "parallel": "Independent dimensions, optional GNU OpenMP when compiled; compiler-portable build serial; tested explicit1/4 budgets and threshold-crossing independent holdout.",
+    "simd": "Compiler independent-coordinate loops, contraction disabled. Observed Clang packed two-double vectorization in contiguous f64 loops; GCC plan SLP only, arithmetic-loop SIMD remains open. No custom ISA kernel/AVX2 claim.",
+    "compiler_scalar": "GCC no-tree-vectorize/no-tree-slp-vectorize; Clang no-vectorize/no-slp-vectorize."
+  },
+  "proof": {
+    "saved_success_rows_per_profile": 46,
+    "profiles": [
+      "1.24.4",
+      "2.5.4"
+    ],
+    "saved_array_payloads": 240,
+    "saved_scalar_payloads": 6,
+    "records_per_mode": 184,
+    "controls_per_mode": 586331,
+    "input_output_layouts_per_record": 3,
+    "modes": [
+      "gcc-normal",
+      "gcc-scalar",
+      "gcc-sanitize",
+      "clang-normal",
+      "clang-scalar",
+      "clang-sanitize"
+    ],
+    "additional_holdouts": [
+      "Large two-dimensional exact unit steps crossing optional parallel threshold",
+      "IEEE binary16 inexact-tiny divide/multiply flags",
+      "Refused empty and mixed-dtype geometry leaves prepared plan unchanged",
+      "Caller FENV flags preserved; input mutation after preparation cannot alter output",
+      "Actual original f32 negative-near-half supplement differs by profile and both match exact0ULP",
+      "Independent f16 near-half policy split; f64 policy invariance; descending signed-unit-step never selects positive-one floor"
+    ],
+    "new_original_calls": 0,
+    "timed_batches": 0,
+    "sdk_or_public_registration": false
+  },
+  "unassessed": [
+    "Mixed input dtypes, dimensions beyond8 and unsupported floating environments",
+    "Nonfinite and unsafe wide integer/narrowing/overflow partitions outside preparation domain",
+    "Python errors, scalar tuple/NumPy scalar identity, __array__ callbacks and FP-handler invocation order until separately proven frontend integration",
+    "Public shared-base ownership/layout, native registration, installed SDK and genuine artifact qualification",
+    "GCC arithmetic-loop SIMD and one-thread performance; no speed claim from component correctness/codegen"
+  ],
+  "predecessor_native_commit": "00db60ad85990d3b5ad81fb21778b78ee6bf0733",
+  "reference_supplement_commit": "58fe50cc5ab945bf587300c992e03563e8917e78",
+  "reference_supplement_sha256": "89dc418fa487b2d474ce263e34bfebccb5f5e7cb43b617f6ec0d02229d7a6cc9"
+}

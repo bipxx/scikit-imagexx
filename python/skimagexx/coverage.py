@@ -6,7 +6,7 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
@@ -321,6 +321,8 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api == 'draw.line_nd':
+        return ('float16','float32','float64','int8','uint8','int64','uint64')
     if api == 'measure.regionprops':
         return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     # Only a descriptor-carrier projection: level sets consume image.shape,
@@ -361,6 +363,23 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'draw.line_nd':
+        import numpy as np
+        # Actual coordinate dtypes, using existing frozen source-safe rows.
+        dtype = np.dtype(image.dtype.str).newbyteorder('=')
+        if dtype == np.dtype('int8'):
+            start, stop, integer = [120], [-120], True
+        elif dtype == np.dtype('uint8'):
+            start, stop, integer = [5,6], [1,2], True
+        elif dtype == np.dtype('uint64'):
+            start, stop, integer = [1,2], [5,7], True
+        elif dtype == np.dtype('int64'):
+            start, stop, integer = [0,0], [1,3], True
+        elif dtype in (np.dtype('float16'),np.dtype('float32'),np.dtype('float64')):
+            start, stop, integer = [1.5,-2.5], [4.5,3.5], False
+        else:
+            raise ValueError('draw.line_nd: default coordinate dtype is outside the frozen partition')
+        return (np.array(start,dtype=dtype),np.array(stop,dtype=dtype)), {'endpoint':False,'integer':integer}
     if api == 'measure.regionprops':
         import numpy as np
         # Frozen 2D constructor case; carrier dtype is used for actual labels.
@@ -833,8 +852,44 @@ def regionprops_default_error(image, actual, expected):
     return 0.0
 
 
+def line_nd_default_error(image, actual, expected):
+    """Exact coordinate words, row views and shared owning base for line-ND."""
+    import numpy as np
+    if isinstance(expected, np.ndarray):
+        pairs = [(actual, expected)]
+    elif isinstance(expected, np.generic):
+        assert type(actual) is type(expected) and actual.dtype == expected.dtype
+        assert actual.tobytes() == expected.tobytes()
+        return 0.
+    else:
+        assert type(actual) is type(expected) is tuple and len(actual) == len(expected)
+        pairs = list(zip(actual, expected))
+    for a, e in pairs:
+        assert type(a) is type(e) is np.ndarray
+        assert a.dtype == e.dtype and a.dtype.isnative and a.dtype.metadata is e.dtype.metadata is None
+        assert a.shape == e.shape and a.strides == e.strides
+        assert type(a.base) is type(e.base) is np.ndarray
+        for value, reference in ((a, e), (a.base, e.base)):
+            assert value.dtype == reference.dtype and value.dtype.metadata is reference.dtype.metadata is None
+            assert value.shape == reference.shape and value.strides == reference.strides
+            for flag in ('owndata','writeable','aligned','c_contiguous','f_contiguous'):
+                assert getattr(value.flags, flag) == getattr(reference.flags, flag)
+            assert value.tobytes(order='C') == reference.tobytes(order='C')
+        assert a.base.flags.owndata and a.base.base is None
+        assert not np.shares_memory(a, image)
+    for i, (a, e) in enumerate(pairs):
+        for b, f in pairs[i+1:]:
+            assert (a is b) == (e is f)
+            assert np.shares_memory(a, b) == np.shares_memory(e, f)
+            assert (a.base is b.base) == (e.base is f.base)
+    return 0.
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
     """Shared assertion; previous scalar budgets keep their existing checker."""
+    if api == 'draw.line_nd':
+        line_nd_default_error(image, actual, expected)
+        return
     if api == 'measure.regionprops':
         regionprops_default_error(image, actual, expected)
         return
@@ -908,6 +963,8 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
 
 def parity_tolerance(api, dtype, image=None, expected=None):
     """Floating budgets; Fourier filters use their frozen input/reference policies."""
+    if api == 'draw.line_nd':
+        raise ValueError('draw.line_nd requires exact coordinate words and shared-base storage')
     if api == 'measure.regionprops':
         raise ValueError('RegionProperties uses exact property/storage checks; call assert_default_parity')
     if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):

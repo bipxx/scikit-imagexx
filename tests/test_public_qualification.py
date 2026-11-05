@@ -2262,10 +2262,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','draw'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','draw'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2290,13 +2290,13 @@ def current_metadata_artifact(tmp_path):
 
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
-def test_current_source_plan_derives_full_closure_and_labels_required_sdk28(profile):
-    result=q.plan(ROOT,profile,255)
+def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
+    result=q.plan(ROOT,profile,256)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current255' and result['registry']['image_count']==255
-    assert result['product_members']==186 and result['SDK_members']==88
-    assert result['SDK_checks']==56 and 'current28 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==69
+    assert result['product_scope']=='current256' and result['registry']['image_count']==256
+    assert result['product_members']==188 and result['SDK_members']==89
+    assert result['SDK_checks']==58 and 'current29 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==73
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2352,25 +2352,25 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current255' and result['record_verified']
+        assert result['product_scope']=='current256' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
 
-@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter'))
+@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd'))
 @pytest.mark.parametrize('fault',('missing-target','missing-source'))
-def test_current_sdk28_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
+def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
     if fault=='missing-target':
         original=q.sdk_family_declarations
         monkeypatch.setattr(q,'sdk_family_declarations',lambda text:[n for n in original(text) if n!=family])
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',255)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',256)['blockers'])
 
 
-def test_current_sdk28_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter') and len(q.FAMILIES)==23
+def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd') and len(q.FAMILIES)==23
     current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
     old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
     q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
@@ -2674,3 +2674,45 @@ def test_current255_contract_keeps_half_stain_partition(partition):
     data['required_selectors'].remove('tests/test_combine_stains_half_' + partition + '.py')
     with pytest.raises(q.QualificationError):
         q.current_contract(lambda _: json.dumps(data).encode())
+
+
+@pytest.mark.parametrize('missing', ('include/skimagexx/line_nd.hpp', 'python/skimagexx/_line_nd.py'))
+def test_current256_layout_refuses_line_nd_gap(missing):
+    names = [p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx', 'include')
+             for p in (ROOT / prefix).rglob('*') if p.is_file()]
+    names.remove(missing)
+    with pytest.raises(q.QualificationError, match='line-ND install closure'):
+        q.current_install_layout(lambda name: (ROOT / name).read_bytes(), names, 'modern')
+
+
+@pytest.mark.parametrize('fault', ('map','header','reference','rounding_promotion_reference','public','default'))
+def test_current256_contract_refuses_line_nd_gap(fault):
+    data = json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
+    if fault == 'map':data['post203_contracts'].pop('draw.line_nd')
+    elif fault == 'header':data['required_client_headers'].remove('include/skimagexx/line_nd.hpp')
+    else:data['required_selectors'].remove('tests/test_line_nd_'+fault+'.py')
+    with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
+
+
+@pytest.mark.parametrize('fault', ('none','registry','entry','core','alias','forwarding','signature','policy'))
+def test_line_nd_source_admission_boundary(monkeypatch,fault):
+    import numpy as np
+    core = types.SimpleNamespace(__name__='skimagexx._core')
+    def entry():raise AssertionError('metadata boundary never calls native entry')
+    entry.__module__=core.__name__;entry.__name__='draw_line_nd';core.draw_line_nd=entry
+    def line_nd(start,stop,*,endpoint=False,integer=True):raise AssertionError('metadata boundary never calls wrapper')
+    line_nd.__module__='skimagexx._line_nd'
+    draw=types.SimpleNamespace(line_nd=line_nd)
+    wrapper=types.SimpleNamespace(_core=core,line_nd=line_nd,_SCALAR_MODULO_NATIVE=(np.float32(0)%1).dtype==np.dtype(np.float32))
+    registered=['draw.line_nd']
+    real=inspect.isbuiltin;monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:value is entry or real(value))
+    if fault=='registry':registered=[]
+    elif fault=='entry':del core.draw_line_nd
+    elif fault=='core':wrapper._core=object()
+    elif fault=='alias':draw.line_nd=lambda *args:None
+    elif fault=='forwarding':line_nd.__module__='skimage.draw'
+    elif fault=='signature':line_nd.__signature__=inspect.Signature()
+    elif fault=='policy':wrapper._SCALAR_MODULO_NATIVE=not wrapper._SCALAR_MODULO_NATIVE
+    if fault=='none':q.line_nd_admission(core,draw,wrapper,registered)
+    else:
+        with pytest.raises(q.QualificationError):q.line_nd_admission(core,draw,wrapper,registered)

@@ -70,6 +70,7 @@ void bind_circle_perimeter(pybind11::module_&);
 void bind_line_aa(pybind11::module_&);
 void bind_regionprops_state(pybind11::module_&);
 void bind_circle_perimeter_aa(pybind11::module_&);
+void bind_line_nd(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -877,6 +878,7 @@ PYBIND11_MODULE(_core, m) {
     bind_line_aa(m);
     bind_regionprops_state(m);
     bind_circle_perimeter_aa(m);
+    bind_line_nd(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);

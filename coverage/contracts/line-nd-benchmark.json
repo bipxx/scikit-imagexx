@@ -1,0 +1,271 @@
+{
+  "schema": "line-nd-benchmark-v1",
+  "api": "draw.line_nd",
+  "reference_contract_sha256": "7eceab83bd90ba56acc7d3142a2cb0ab66e748769bb81b790ca8133aab5abeb8",
+  "cases": [
+    {
+      "id": "line-nd/empty",
+      "api": "draw.line_nd",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        1.5,
+        -2.5
+      ],
+      "kwargs": {
+        "endpoint": false,
+        "integer": true
+      },
+      "dtype": null,
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/unit",
+      "api": "draw.line_nd",
+      "start": [
+        0
+      ],
+      "stop": [
+        1
+      ],
+      "kwargs": {
+        "endpoint": true,
+        "integer": true
+      },
+      "dtype": null,
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/small-descending",
+      "api": "draw.line_nd",
+      "start": [
+        4.5,
+        -0.5
+      ],
+      "stop": [
+        0.5,
+        3.5
+      ],
+      "kwargs": {
+        "endpoint": true,
+        "integer": true
+      },
+      "dtype": null,
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/long-integer-2d",
+      "api": "draw.line_nd",
+      "start": [
+        0,
+        0
+      ],
+      "stop": [
+        32768,
+        16384
+      ],
+      "kwargs": {
+        "endpoint": false,
+        "integer": true
+      },
+      "dtype": null,
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/floating-3d",
+      "api": "draw.line_nd",
+      "start": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "stop": [
+        1024.3,
+        2048.6,
+        -512.1
+      ],
+      "kwargs": {
+        "endpoint": true,
+        "integer": false
+      },
+      "dtype": "float64",
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/integer-8d",
+      "api": "draw.line_nd",
+      "start": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "stop": [
+        8192,
+        4096,
+        -6144,
+        2048,
+        -1024,
+        512,
+        256,
+        -128
+      ],
+      "kwargs": {
+        "endpoint": false,
+        "integer": true
+      },
+      "dtype": "float64",
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/float16",
+      "api": "draw.line_nd",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        4.5,
+        3.5
+      ],
+      "kwargs": {
+        "endpoint": false,
+        "integer": false
+      },
+      "dtype": "float16",
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/float32",
+      "api": "draw.line_nd",
+      "start": [
+        0.5,
+        -0.5
+      ],
+      "stop": [
+        8192.5,
+        4096.5
+      ],
+      "kwargs": {
+        "endpoint": false,
+        "integer": false
+      },
+      "dtype": "float32",
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/float64",
+      "api": "draw.line_nd",
+      "start": [
+        0.25,
+        -0.5
+      ],
+      "stop": [
+        32768.25,
+        -16384.5
+      ],
+      "kwargs": {
+        "endpoint": true,
+        "integer": false
+      },
+      "dtype": "float64",
+      "layout": "C"
+    },
+    {
+      "id": "line-nd/reverse-3d",
+      "api": "draw.line_nd",
+      "start": [
+        0.5,
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        16384.5,
+        4097.5,
+        -8194.5
+      ],
+      "kwargs": {
+        "endpoint": true,
+        "integer": true
+      },
+      "dtype": "float64",
+      "layout": "reverse"
+    },
+    {
+      "id": "line-nd/readonly-unaligned",
+      "api": "draw.line_nd",
+      "start": [
+        1.5,
+        -2.5
+      ],
+      "stop": [
+        8193.5,
+        4093.5
+      ],
+      "kwargs": {
+        "endpoint": true,
+        "integer": true
+      },
+      "dtype": "float64",
+      "layout": "readonly-unaligned"
+    },
+    {
+      "id": "line-nd/int8-wrap",
+      "api": "draw.line_nd",
+      "start": [
+        120
+      ],
+      "stop": [
+        -120
+      ],
+      "kwargs": {
+        "endpoint": false,
+        "integer": true
+      },
+      "dtype": "int8",
+      "layout": "C"
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 168,
+  "warmup_groups": 24,
+  "max_output_elements": 2000000,
+  "max_points": 32769,
+  "max_dimensions": 8,
+  "native_entry": "draw_line_nd",
+  "native_wrapper": "skimagexx._line_nd",
+  "native_result_local": "native_result",
+  "scope": "Prospective descriptive allocation-inclusive actual public comparison only. No timing or performance acceptance yet; preserve every loss. Source-safe bounded vector cases, not whole API/domain coverage.",
+  "dtype_scope": "Float16/32/64, int8 source wrap and ordinary integer lists; integer outputs intp and floating dtype preserved; readonly unaligned/reverse inputs. Distinct non-owning row views of shared backing storage, exact words/base layout/empty identities.",
+  "oracle_scope": "Actual skimage.draw.line_nd0.26 public call plus frozen54-row/profile original contract and independent native proof later. No synthetic or third algorithm oracle claimed.",
+  "safety": "Large cases independently audited: equal vector length1..8, builtin flags, finite coordinates abs<=32769; ordinary float64 subtraction abs<=32768.25; float32 endpoints exactly representable halves, float16 smallexact values. Only int8 wrap literal120->-120 gives16 source samples. npoints<=32769 and output<=65538, safely inside nativeint32 and quota2m. No inherited512point reference cap.",
+  "numerical_policy": {
+    "max_ulp": 0,
+    "rtol": 0,
+    "atol": 0,
+    "metadata": "Exact tuple/row/base bytes,dtype,shape,strides,flags andidentity/alias matrices; errors/warnings absent, FP policy andinputs unchanged."
+  },
+  "source_pins": {
+    "original_python_sha256": "44a1b51878ec4f25cdf09da75891950dea2a1b7b2ba8fbaa99345e66c26cb7fe",
+    "numpy_linspace_source_sha256": {
+      "1.24.4": "35849b320cedb57fdec533fc360cca7595e349c28082af1caeed95ee2f975e71",
+      "2.5.4": "97925f5f2a271088cbff838a149a6312335d8dac80ac0314f0c85a31b442c1b5"
+    },
+    "numpy_binary_sha256": {
+      "1.24.4": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+      "2.5.4": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576"
+    }
+  },
+  "first_cohort_gate": "Pending root integrated public wrapper/core and actual CLI context with original/native pair then stop at measure CALL; source-only tests do not satisfy this gate.",
+  "native_interface_status": "Names confirmed by frontend author: _core.draw_line_nd(start_array,stop_array,endpoint,integer,workers), _line_nd.line_nd local native_result. Actual integrated public/core first-cohort still pending."
+}

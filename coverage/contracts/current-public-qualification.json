@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current255",
+  "scope": "current256",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -462,7 +462,8 @@
     "util.regular_seeds",
     "util.unique_rows",
     "measure.regionprops",
-    "draw.circle_perimeter_aa"
+    "draw.circle_perimeter_aa",
+    "draw.line_nd"
   ],
   "metadata_paths": [
     "color.xyz_tristimulus_values",
@@ -521,7 +522,8 @@
     "draw.circle_perimeter": "tests/test_circle_perimeter_public.py",
     "draw.line_aa": "tests/test_line_aa_public.py",
     "measure.regionprops": "tests/test_regionprops_state_public.py",
-    "draw.circle_perimeter_aa": "tests/test_circle_perimeter_aa_public.py"
+    "draw.circle_perimeter_aa": "tests/test_circle_perimeter_aa_public.py",
+    "draw.line_nd": "tests/test_line_nd_public.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -592,15 +594,20 @@
     "tests/test_combine_stains_half_reference.py",
     "tests/test_combine_stains_half_public.py",
     "tests/test_regionprops_public_mutation_reference.py",
-    "tests/test_regionprops_public_mutation_public.py"
+    "tests/test_regionprops_public_mutation_public.py",
+    "tests/test_line_nd_reference.py",
+    "tests/test_line_nd_rounding_promotion_reference.py",
+    "tests/test_line_nd_public.py",
+    "tests/test_line_nd_default.py"
   ],
-  "SDK_scope": "current28 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates and circle perimeter); source readiness is not qualification acceptance",
+  "SDK_scope": "current29 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter and line ND); source readiness is not qualification acceptance",
   "required_client_families": [
     "colocalization",
     "footprint_shapes",
     "recent_primitives",
     "draw_coordinates",
-    "circle_perimeter"
+    "circle_perimeter",
+    "line_nd"
   ],
   "required_client_headers": [
     "include/skimagexx/colocalization.hpp",
@@ -621,6 +628,7 @@
     "include/skimagexx/circle_perimeter.hpp",
     "include/skimagexx/line_aa.hpp",
     "include/skimagexx/regionprops_state.hpp",
-    "include/skimagexx/circle_perimeter_aa.hpp"
+    "include/skimagexx/circle_perimeter_aa.hpp",
+    "include/skimagexx/line_nd.hpp"
   ]
 }

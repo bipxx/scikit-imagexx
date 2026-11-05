@@ -16,6 +16,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
+    (('draw.line_nd',),'tests/test_line_nd_public.py::test_line_nd_saved_public_pipeline','benchmarks/line_nd.py'),
     (('draw.line_aa',),'tests/test_line_aa_public.py::test_line_aa_saved_public_pipeline','benchmarks/line_aa.py'),
     (('draw.circle_perimeter_aa',),'tests/test_circle_perimeter_aa_public.py::test_circle_perimeter_aa_saved_public_pipeline','benchmarks/circle_perimeter_aa.py'),
     (('measure.regionprops',),'tests/test_regionprops_state_public.py::test_regionprops_state_saved_rows_exact_except_declared_distinct_class','benchmarks/regionprops_state.py'),
@@ -169,6 +170,8 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
+            elif path == 'draw.line_nd':
+                entries[-1]['default_input_kind']='Actual coordinate dtypes from frozen default rows; source-safe fixed endpoints use carrier dtype, no carrier pixels. Owned typed interpolation/rounding with explicit NumPy conversion/allocation/FP-policy providers.'
             elif path == 'draw.circle_perimeter_aa':
                 entries[-1]['default_input_kind']='fixed8x8 coordinate-geometry descriptor; dtype labels are carrier-only, not pixel or coordinate-argument dtype coverage'
             elif path in ('draw.circle_perimeter','draw.line_aa'):
