@@ -36743,7 +36743,7 @@
       "state": "validating",
       "branch": "integrate/regionprops-coords-scaled-v1",
       "base_sha": "1bc43693",
-      "source_sha": "f1871b85b89e956c7017bb8600aec2f5ec8c3859",
+      "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
       "apis": [],
       "target_apis": [
         "measure.regionprops"
@@ -36759,11 +36759,11 @@
         "regionprops-coords-scaled-frontend-v1",
         "regionprops-coords-scaled-sdk-v1"
       ],
-      "current_checkpoint": "Final f187 source/registration peers PASS:15 new required sources,90 exact qualification selectors;193product91SDK258images261functions31families62checks unchanged. Benchmark6case source40purechecks plus36NumPy-only intakechecks independentlyPASS,0original/native/timing. Actual sourcebarrier covers2609uniquePASS+8subtests:2595retained fromfullv2 plusEXACT14launcher-only failed-node repairs; independent final admission pending. v1ENOSPC partial andv2falsefailures retained. Remote integrationref still339; GitHub update/create-ref failures prevent f187 publication and genuine dispatch.",
+      "current_checkpoint": "Remote4ac verified and genuine min42065217414 dispatchedONCE16:30:50UTC/deadline17:00:50. Source barrier independently admitted2610uniquePASS+8subtests viaexplicitreuse:2570parent+39CIreaders+1literalrepair. ColdCI mergebee639 excludesintakefrom2broadcollectors andrunsfreshNPonce/check+minimum. Product193/SDK91/image258/functions261/families31/checks62/selectors90 unchanged. Newfeature installed producer gates showSUCCESS but fullrun/raw admission pending.",
       "waste_review": "Retained all passed proofs. The first full source run lost verdict to disk exhaustion; replacement uses fresh D scratch with50GB capacity check. Redundant builtins import guard rejected inert sys.modules fixtures; keep one real-load MetaPathFinder, rerun only14 failures and reuse2595passes. Preserve existing mixed newlines using byte edits. Four duplicate metadata-directory deletion was rejected by automatic approval policy; nothing deleted. No unchanged benchmark replay or weakened thresholds.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Admit final sourcebarrier receipt055ff4fc; verify actual remote f187 after GitHub commit_refs_rules error clears, then dispatch ONE ci.yml minimum_only=true prepare_only=true latest_only=true;38existing timers must SKIP. Authenticate real package/runtime/source, bounded first-cohort and fixed six-case ABBA next; separate controller child never mutates prepared snapshots. Four-profile release and remaining477/property/SIMD/integer gaps stay open."
+        "action": "Watch exact42065217414 without redispatch; terminalproof must show38timersSKIPPED and actualsource4ac. Download/authenticate onlyone consumer package afterterminal, reusingbaseline. New sixcase controller source peer found one wrong actualmanifest field; author narrowfix and independentre-review before any actualCLI/first-cohort/timing. Preparedsnapshots immutable. Fullfour-profile release and full477scope remain."
       }
     },
     {
@@ -36798,6 +36798,29 @@
         "action": "Implement explicit six-case adapter in existing same-host controller, actual prepared measurement manifest and emitted metadata, strict partial/prior witnesses, unchanged old28protocol. Keep f187 prepared snapshots immutable; activate only controller-child contract after genuine/first-cohort gates."
       },
       "waste_review": "Reuse existing sampler/fixture/helper methods and stored12 semantic recipes; no new launcher framework, original recapture or old numerical replay."
+    },
+    {
+      "id": "regionprops-coords-scaled-genuine-minimum-v1",
+      "kind": "qualification",
+      "owner": "integrator",
+      "state": "preparing",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "build/regionprops-coords-scaled-genuine-minimum-v1"
+      ],
+      "depends_on": [
+        "regionprops-coords-scaled-shared-v1"
+      ],
+      "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "current_checkpoint": "ActualGitHub42065217414 inprogress, source4ac/eventworkflow_dispatch. Rootactivationfixed30mindeadline17:00:50Z; no second dispatch. Poll16:36:04 newNPintake/public+SDKnormal/disabledstepSUCCESS; not fullproductadmission. Timerconclusionsawaitconsumer.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Cwatcher preserves run/jobs/artifactmetadata. Rootterminaladmission,oneconsumerZIPretention/inputauth and13nonprojectruntime/dependencycomparison; no timing untilgenuine+controller/CLI gates close."
+      },
+      "waste_review": "Recovered source barrier withfailed-onlyretries, correctedonecollectorstaleassertion, preservedallfailuresandrawarchives. GitHubpusherrorsclearedonlatestreviewed4ac; verifyremotebeforedispatch. Oneprepareonly run, no abandonedrerun or duplicatedownload."
     }
   ],
   "unassigned_inventoried_apis": [
