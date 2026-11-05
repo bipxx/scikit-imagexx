@@ -7,6 +7,31 @@
   "integrator_owns_shared_integration": true,
   "packets": [
     {
+      "id": "regionprops-bbox-extent-reference-v1",
+      "kind": "reference",
+      "owner": "integrator",
+      "branch": "reference/regionprops-bbox-extent-v1",
+      "state": "validating",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "tests/regionprops_bbox_extent_contract.py",
+        "tests/regionprops_bbox_extent_observer.py",
+        "tests/test_regionprops_bbox_extent_reference.py",
+        "coverage/contracts/regionprops-bbox-extent.json"
+      ],
+      "base_sha": "b0669e684704734f8a38c2c5f531533445fa7024",
+      "depends_on": [],
+      "acceptance": "Source-safe14casepartition, original-refusedintake beforecapture; once-only14sequences/profile, callback/errors/FP/cache/publicmutation/alias/scalartypes preserved. Savedvalidation/independentactualcapturepeer beforetypedinterface; no wholeclass credit. Terminalwastecloseout outcome/evidence/reuse/nextowner beforedependentwork.",
+      "current_checkpoint": "Prospective23d34e02/48intakechecks peer3008c3c6 approved; rootactual28constructorsequences complete firstattempt,13returns1constructorerror/161steps4FPevents each. Allrowsprofileexact, no native/build/env/timing. Rawcapture19da6d98; capturedcontract/savedvalidators/actualpeer pending.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Populatecapturedcontract onlyfromretained28sequence rows, add/runaffected savedvalidation withscienceimportsrefused; preservezero-oldgoldrecapture. Independentactualpeer then freeze typedscalar/FP boundary; broadremaining35properties stayunassessed."
+      }
+    },
+    {
       "id": "draw-ellipse-perimeter-reference-v1",
       "kind": "reference",
       "owner": "tiny_line_implementation",
@@ -37012,7 +37037,7 @@
       "qualification251_readiness": "Plan/current gates review complete; next assigned257 qualification watch or prospective review, not a live job claim.",
       "next_family_contract": "Plan route review complete; controller119 peer4b220 closed; next assigned comparison watch after root dispatch, no self-acceptance."
     },
-    "next_action": "B observes actual full25741962339458 and independently reviews rootraw comparisonDISCARD41962343215. C independently reviews scoped257 ellipsoid admission. A captures ONLYapproved29ellipseIDs/profile once after8c743011 safetyPASS; rootGO given. Root publishes reviewed evidence and diagnoses tinyconstructor recurring-self-import versus native-traversal cause before new optimization.",
+    "next_action": "Full25741962339458 watcherB staysactive. Anativeellipse frozen3e0 pluspoint-ordercorrection, Cfrontend component, Bminimalwarm-importfix from554 aftersealed42samplediagnostic7e361. Root scopedcapture/postprocessing ofarea_bbox/extent, safe sourceWTretirement and independentadmission. Old554DISCARD remainsfixed.",
     "current_checkpoint": {
       "main_image_names": 253,
       "qualified_image_names": 252,
@@ -37910,5 +37935,13 @@
     "path": "build/draw-ellipsoid-reference-v1/source-retirement-v1.json",
     "sha256": "97740c40b3af72403f8ba5d7c726ac34ed117c275aa2466d4db74cc12acc0c23",
     "scope": "Cleanmergedf046sourceWTremovedwith11obsoleteignoredtestcachefiles/117349logicalbytes afterA/Creaderrelease. Proofs/journals outsideWT preserved;4sourcefiles main/Git, no frozenreceipt rewrites."
+  },
+  "ellipse_perimeter_reference_retirement": {
+    "path": "build/ellipse-perimeter-reference-retained-v1/source-retirement-v1.json",
+    "sha256": "47611146bc9c2405e5509d63c5a89077c8b2bed9c7fb0638cf4d83db12ccf183",
+    "prefix_redirects": {
+      "build/worktrees/ellipse-perimeter-reference-v1/build": "build/ellipse-perimeter-reference-retained-v1"
+    },
+    "scope": "Only obsolete clean ancestor source and ignored tests/__pycache__ removed through git worktree remove. Entire old build evidence moved within verified workspace before removal. No rawproof/receipt rewriting, no wholebuild deletion."
   }
 }
