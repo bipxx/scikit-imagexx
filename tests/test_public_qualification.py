@@ -1640,6 +1640,17 @@ def require_matrix_runtime_admission_successor(frozen, current, row):
     assert row['allowed_function_changes'] == ['_runtime_profile']
     assert row['allowed_function_additions'] == ['_skylakex_driver_fields', '_skylakex_table_readable', '_windows_skylakex_driver']
     assert row['allowed_assignment_additions'] == ['_RUNTIME_DRIVER']
+    # Authenticate the exact static certificate delta before the historical
+    # runtime-only projection; do not exempt the whole core allowset from it.
+    successor = row['static_runtime_certificate_successor']
+    assert successor['certificate'] == 'coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json'
+    assert hashlib.sha256(current).hexdigest() == '98b850ec50e0e86f51ae330b183e21bd17820f62babf5af04e62c635258113de'
+    comment = b'    # Exact F64 equivalence: coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json\n'
+    assert current.count(comment) == 1
+    current = current.replace(comment, b'').replace(
+        b"frozenset(('Haswell', 'Cooperlake', 'Zen', 'SkylakeX'))",
+        b"frozenset(('Haswell', 'Cooperlake', 'Zen'))")
+    assert hashlib.sha256(current).hexdigest() == successor['predecessor_current_canonical_lf_sha256'] == '04d4438b7def68598d3dea57e4f2a6c0422053f2b9b1f19df56a90a3465f08b9'
     def project(raw):
         nodes = []
         for node in ast.parse(raw).body:
@@ -1986,7 +1997,8 @@ def test_composed_skylakex_metadata_guard_is_required_and_selected(tmp_path, mon
     assert q.GROUPS['public-Matrix'] == (
         'test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
         'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
-        'test_matrix_transform_skylakex_routing.py')
+        'test_matrix_transform_skylakex_routing.py',
+        'test_matrix_transform_numpy124_skylakex_certificate.py')
     synthetic_complete_plan(tmp_path)
     functions = ['filters.rank.' + n for n in q.R5] + sorted(
         q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH, q.RECONSTRUCTION_PATH, q.NMI_PATH} | set(q.MAX_TREE_PATHS) | set(q.H_EXTREMA_PATHS))

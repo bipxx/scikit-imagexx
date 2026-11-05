@@ -450,7 +450,9 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'tests/test_matrix_transform_public.py', 'tests/test_matrix_transform_skylakex_routing.py',
     'coverage/contracts/matrix-transform.json',
     'coverage/evidence/matrix-transform-public-assertion-migration.json',
-    'coverage/evidence/matrix-transform-public-source-successor-assertion.json')
+    'coverage/evidence/matrix-transform-public-source-successor-assertion.json',
+    'coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json',
+    'tests/test_matrix_transform_numpy124_skylakex_certificate.py')
 RECONSTRUCTION_PATH = 'morphology.reconstruction'
 RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
@@ -490,7 +492,8 @@ GROUPS = {
     'public-Bregman': ('test_tv_bregman_contracts.py', 'test_tv_bregman_public.py'),
     'public-Matrix': ('test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
                       'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
-                      'test_matrix_transform_skylakex_routing.py'),
+                      'test_matrix_transform_skylakex_routing.py',
+                      'test_matrix_transform_numpy124_skylakex_certificate.py'),
     'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
     'public-MaxTree-fixes': ('test_max_tree_dtype_metadata.py', 'test_max_tree_sdk_oracle.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),

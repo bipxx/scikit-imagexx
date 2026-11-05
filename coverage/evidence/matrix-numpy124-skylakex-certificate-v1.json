@@ -1,0 +1,53 @@
+{
+  "schema": "matrix-numpy124-skylakex-static-certificate-v1",
+  "numpy_version": "1.24.4",
+  "blas_sha256": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9",
+  "added_core": "SkylakeX",
+  "equivalent_existing_core": "Cooperlake",
+  "upstream_umath_sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+  "source_before_canonical_lf_sha256": "04d4438b7def68598d3dea57e4f2a6c0422053f2b9b1f19df56a90a3465f08b9",
+  "source_after_canonical_lf_sha256": "98b850ec50e0e86f51ae330b183e21bd17820f62babf5af04e62c635258113de",
+  "author_evidence": {
+    "path": "build/matrix-numpy124-skylakex-elf-audit-v1/handoff.json",
+    "sha256": "e1ce08318da109bb279d42ed98d886e1296cf03efcd6da29c57633fa63498e46"
+  },
+  "independent_review": {
+    "path": "build/matrix-numpy124-skylakex-independent-elf-review-v1/review.json",
+    "sha256": "796729f6f3e65da4d0c90a7fb7726dfe2e8d54be32be3078b2549e324a514b9e"
+  },
+  "scope": {
+    "precision": "F64",
+    "K": [
+      3,
+      4,
+      5
+    ],
+    "functions": 13,
+    "f64_table_relocations": 26,
+    "gemm_P": 192,
+    "gemm_Q": 384,
+    "unroll": [
+      16,
+      2,
+      32
+    ],
+    "profiles": [
+      1,
+      2,
+      3,
+      6
+    ],
+    "natural_SkylakeX_execution_observed_by_this_packet": false,
+    "math_changes": false
+  },
+  "invariants": [
+    "Exact existing binary/version/owner/file identity authentication retained",
+    "One BLAS thread; forcing and linker interposition still refused",
+    "Unknown cores remain refused",
+    "No original golds or historical arithmetic assertions changed"
+  ],
+  "limitations": [
+    "Static equivalence certifies bounded existing matrix arithmetic paths, not arbitrary OpenBLAS APIs",
+    "Local checks observe Haswell only; natural SkylakeX public qualification remains next hosted gate"
+  ]
+}

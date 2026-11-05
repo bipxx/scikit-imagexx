@@ -709,3 +709,4 @@ coverage/contracts/regionprops-bbox-extent-frontend-v1.json -text
 coverage/contracts/regionprops-scalars-benchmark-v1.json -text
 tests/fixtures/regionprops_scalar_native.bin -text
 coverage/contracts/regionprops-scalar-runtime-v1.json -text
+coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json -text
