@@ -822,9 +822,9 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
     scope = p.qualification_scope(ROOT)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current257', 191, 90, 30)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current258', 193, 91, 31)
     # Historical literal envelopes remain independently closed.
-    historical_text=text.replace("CURRENT_PRODUCT_SCOPE = 'current257'\n",'')
+    historical_text=text.replace("CURRENT_PRODUCT_SCOPE = 'current258'\n",'')
     assert historical_text!=text
     legacy=p.qualification_scope_text(historical_text)
     assert (legacy['name'],legacy['members'],legacy['sdk'])==('h_extrema23',120,68)
@@ -939,9 +939,9 @@ def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
 @pytest.mark.parametrize('profile',('windows','modern','minimum'))
 def test_current_stager_scope_uses_source_closure_and_exact253_registry(profile):
     scope=p.qualification_scope(ROOT,profile)
-    assert scope['name']=='current257' and scope['members']==191 and scope['sdk']==90
-    assert scope['image_count']==257 and scope['metadata_count']==3 and len(scope['functions'])==260
-    assert len(scope['families'])==30 and 'current30 required' in scope['SDK_client_scope']
+    assert scope['name']=='current258' and scope['members']==193 and scope['sdk']==91
+    assert scope['image_count']==258 and scope['metadata_count']==3 and len(scope['functions'])==261
+    assert len(scope['families'])==31 and 'current31 required' in scope['SDK_client_scope']
     assert ('lib/skimagexx.lib' in scope['SDK_members']) == (profile=='windows')
     text=(ROOT/'tools/public_qualification.py').read_text()
     with pytest.raises(RuntimeError,match='authenticated install closure'):p.qualification_scope_text(text)
@@ -949,8 +949,8 @@ def test_current_stager_scope_uses_source_closure_and_exact253_registry(profile)
 
 def test_current_stager_rejects_old_scope_claim_with_current253_source():
     text=(ROOT/'tools/public_qualification.py').read_text(encoding='utf-8')
-    assert p.CURRENT_PRODUCT_SCOPE=='current257'
-    stale=text.replace("CURRENT_PRODUCT_SCOPE = 'current257'", "CURRENT_PRODUCT_SCOPE = 'current247'")
+    assert p.CURRENT_PRODUCT_SCOPE=='current258'
+    stale=text.replace("CURRENT_PRODUCT_SCOPE = 'current258'", "CURRENT_PRODUCT_SCOPE = 'current247'")
     assert stale!=text
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for f in (ROOT/prefix).rglob('*') if f.is_file()]
@@ -970,7 +970,7 @@ def test_current_stager_never_bypasses_historical_source_guards(guard):
 def test_current_stager_rejects_missing_or_replaced_client_declaration(declaration):
     text=(ROOT/'tools/public_qualification.py').read_text()
     original=text
-    text=text.replace("CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid')",'CURRENT_FAMILIES = '+declaration)
+    text=text.replace("CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter')",'CURRENT_FAMILIES = '+declaration)
     assert text!=original
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include') for f in (ROOT/prefix).rglob('*') if f.is_file()]
     with pytest.raises(RuntimeError):p.qualification_scope_text(text,read_bytes=lambda n:(ROOT/n).read_bytes(),names=names)

@@ -1,0 +1,68 @@
+{
+  "schema": "ellipse-perimeter-frontend-v1",
+  "api": "draw.ellipse_perimeter",
+  "status": "COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_REVIEW",
+  "signature": "(r, c, r_radius, c_radius, orientation=0, shape=None)",
+  "reference_source": "0741be2f790ab4a1528be4a269c37d110ebca0af",
+  "reference_matrix_sha256": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
+  "native_header": "3e0b970ba5d2e51475d11496398908343bcc5222",
+  "native_entry": "_core.draw_ellipse_perimeter(row,column,row_radius,column_radius,orientation,shape,workers)",
+  "conversion_primitive": "_core.ellipse_perimeter_orientation(value) usesPyFloat_AsDouble exactlyonce afterfour sequentialoperator.index/ssizechecks. Primitive ismetadata adaptation, notnewimageAPI.",
+  "native_scope": "Typedordinaryaxisangle0/radii0..32768/checkedorigintranslations/count<=1M; nonzeroangleonlyorigin0/radii1/finiteabs<=.5; exactC-shapedowningintp pair (scalar0Dpoint or1D includingemptystride0). Exacttuple/listfirst2builtinint/float/bool boundswithin+-2**52; nativeendian1DNumPyint8/16/32/64,uint8/16/32/64,float32/64shape validatedaddressablebefore2stridedreads. No originalnumericprovider on58claimed savedrows.",
+  "point_order": "Afterall5sourceconversions, bothradii0 ignoresANYshape andorientationmath; pointNaN/Infallowedwithoutshapeaccess. Nativepointguard successor mustmatchliteralearlysource beforefiniteanglecheck.",
+  "workers": "One realprocessglobalget_num_threads snapshot afterexternalconversions; stableintpassedtypedfill. Default1 and1/4tests restorepreviousglobal; no newpool.",
+  "numerical": "Exact58savedobservations across2profiles inclintegerwords/order/duplicates/dtype/rank/layout/base/own/readwrite/aliases,input/protocol/state/errors/warnings; no tolerance ornormalization.",
+  "provider_frontier": [
+    "Unknownshape/protocols andtypedplanrefusals useoriginalcompiledprovider withalreadyconverted4ints+angle andexactoriginalshape, no scalarcallbackreplay/no nativecredit.",
+    "GeneralunequalrotatedBezierdomain remainsexplicitfuturetermination/numerical/allocationdependency, notlostfullgoal.",
+    "Nonpointnonfiniteangle ornonzeroanglewithsinglezeroradius: explicitunsupported-safeboundary refusal, knownsourceinvalidFP-to-Cinteger risk; notguessedoriginalparity.",
+    "Exacttuple/listshortshape nonpoint explicitlyrefused asoutsideassessedsafe boundary, notoriginalexception/parityclaim. Cythonuncheckedtuple/sourceindexrisk known; listloweringnotindependentlyestablished, listquarantinedunassessed. Pointignores evenunknown/shortshape beforethisguard.",
+    "Otherunassessedsourceoverflow/unboundedallocation/custom/arraystorage/exceptionalFP domains retainexplicitpartiallimitations; no fullfunction/class/platform claim."
+  ],
+  "proof_plan": {
+    "savednodes_per_mode": 58,
+    "success_witnesses_per_mode": 46,
+    "boundaryerror_savednodes_per_mode": 12,
+    "newcontrols_per_mode": 12,
+    "total_per_mode": 70,
+    "modes": [
+      "minimum-normal",
+      "minimum-scalar",
+      "modern-normal",
+      "modern-scalar"
+    ],
+    "original_calls": 0,
+    "timings": 0
+  },
+  "integration_scope": "Onlynewbinder/wrapper/tests/contract; minimalexactpublicalias component intended, rootownsshippingregistry/CMake/export/defaults. Aownsheader/kernel/PIC; unchangedSDK/object/runtime reused.",
+  "task_closeout": {
+    "result": "4actualcomponentmodes70PASS each280;full58once-onlysavedrows reused withoutrecapture,23success+6errorrecords/profile\u00d7workers1/4\u00d7dispatch. Currentbudget/lifetime/CAPI/error/point-order/aliasmetadata evidence passes; no shipping/fullproduct/performanceclaim.",
+    "waste_reuse": "ReuseA573finalpoint-order-correctedPIC/header,oldgenuineSDK89/storageguardobjects/Pythonruntimes. Initial2corelinks missedexternal check_array_storage object, causingfirstminimumimportfailurebeforepytest0numericchecks; preservedoldcores/maps/logs andcorrectedonly2links withretainedguard,no compile ornumericreplay. Futurelookupaffectedundefined nonPython symbols/importsmoke aftercomponentlink before suite; no newframework. One knownbuildenv hadnoCython; stoppedlookupand labelledshortlistloweringunassessed.",
+    "observed_cost": "pytest70nodes2.80/2.47/2.90/3.17s; initialimportfailure/compilelinkwallnotseparatelymeasured. No extra costmeasurement.",
+    "next_owner_trigger": {
+      "owner": "root independentfrontend/source reviewer thenintegrationowner",
+      "trigger": "frozen4pathsource/proofhandoff",
+      "action": "Reviewnewboundaryshims/guards/shapeadmission andreuse nativepeeracceptance separately. Composeheader/kernel+actualshippingexports/defaults/SDK/sourceguards onlyafterreview; genuineproduct+realCLI+frozenoneworkerperformance later. PreservebroaderBezier/unsafe/protocol gaps, no fullgoal removal."
+    }
+  },
+  "native_source": "573f514ec9e1f9990928d0002be2e72521f716b4",
+  "native_PIC_sha256": "924e4e27331c6b0973fb16ccab083e73e824051b5d063b3f8b039bd2efd09ea3",
+  "proof": {
+    "modes": [
+      "minimum-normal",
+      "minimum-scalar",
+      "modern-normal",
+      "modern-scalar"
+    ],
+    "nodes_each": 70,
+    "total": 280,
+    "saved_observer_equality_nodes": 232,
+    "actual_native_C_return_accepted_one_getter_successes": 184,
+    "owned_saved_error_nodes": 48,
+    "additional_boundary_controls": 48,
+    "normal_actual_AVX2": true,
+    "disabled_actual_AVX2": false,
+    "original_algorithm_calls": 0,
+    "timings": 0
+  }
+}

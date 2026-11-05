@@ -1,0 +1,80 @@
+{
+  "api": "draw.ellipse_perimeter",
+  "state": "NATIVE_COMPONENT_PASS_PENDING_INDEPENDENT_REVIEW",
+  "reference_commit": "0741be2f790ab4a1528be4a269c37d110ebca0af",
+  "reference_review": "build/ellipse-perimeter-independent-capture-review-v1/review.json",
+  "interface": "prepare_ellipse_perimeter(request,ownedPlan), ellipse_perimeter_count(plan), ellipse_perimeter_fill(plan,DrawCoordinatePair,callerWorkerSnapshot)",
+  "output": "Two ordered intp coordinate streams; preserve duplicate/order. scalar_result=true onlybothradii0 means eachpublicoutput0D; no clipping onthatpoint branch.",
+  "domain": {
+    "platform": "64bitintptr, checkedcenter translations; no signed overflow",
+    "axis_aligned": "orientation==0, nonnegative radii<=32768, sourceprogress checks and<=1Mpoint allocation budget",
+    "rotated": "ONLYorigin0 and bothradii1, finiteabsorientation<=.5. Execute literal source trig/bounds/halfweight quadrant arithmetic; no goldenlookup or generalBezier claim.",
+    "clipping": "Finite doubleheight/width in[-2^52,2^52] fornonpoint output. Integercoordinates nearthese bounds convert exactly; distantvalues cannotcrossbound throughrounding. Literal nonnegativeinteger coordinate predicates then doublebound comparisons, stable sourceorder; nofloattointcast.",
+    "refusal": "False leaves preparedoutputunchanged; allocation errors propagate. Python conversion/error/protocol/shapecontainer providers remain frontend-owned.",
+    "point": "Bothradii0 returnsonecoordinate withscalar_result=true BEFOREorientationmath/clipping. Alreadyconverted doubleNaN/Inf areignored, source-conversionerrors remainfrontend-owned."
+  },
+  "source_integer_audit": {
+    "declared_types": "Pinned _draw.pyx: radii,rd,cd,r,c,e2,err andcenter are Py_ssize_t; rotatedir0/ir1/ic0/ic1/ird/icd are Cint. Linux64/win64 sourceword widths scoped; rotatedcorners limitedto+-1.",
+    "squares": "R<=32768 =>rd,cd<=2^30",
+    "initial_error": "c*(2*rd+c)+rd magnitude <=2*R^3+2*R^2",
+    "recurrence_identity": "err=rd*(c+1)^2+cd*(r+1)^2-rd*cd; sourceconditionusesold2*err forboth decisions, evenafter cupdate.",
+    "state_bounds": "Beforeiteration c in[-column_radius,0], r in[0,row_radius+2]; one step canreach c1/rR+3. prepare checksmonotoneprogress/count beforefurtheriteration.",
+    "error_headroom": "Conservative |err|<=3R^4+8R^3+16R^2; twicebound=6R^4+16R^3+32R^2<INT64_MAX atR32768. Products(2c+1)rd and(2r+1)cd <=(2R+7)R^2; allseparateupdates fit64.",
+    "point_bound": "4*(row_radius+column_radius+3)+2*row_radius<=327692 points; hardbudget1M protectsallocation. Checkedorigin additions use row_radius+3 andcolumn_radius+1 headroom."
+  },
+  "parallel_simd": "Recurrence serial byordereddependency. Ownedordered vectors computedonce. Independent contiguous outputcopies compilerSIMD; signed/gapped stores preserveexactlayout. Existingpartition mayparallelize coordinatewordwork>=262144 usingpassedglobalsnapshot; no newpool/cache. SIMDpragma guard _OPENMP&&!_MSC_VER.",
+  "tests_to_execute": [
+    "Reuseall58captured observations;46successful rows/92arrays,0ULP integerwords; error/conversion rows remainfrontendscope",
+    "Bothzero scalar_result ignoresclipping; inputrequest/ownedplan lifetime; refusalleavesplan unchanged; signed/gapped output guards",
+    "Smallsource-analytic geometry holds andlarge32768circle onlyafterallintermediatebound checks; labelanalytic notneworiginalparity",
+    "Workers1/4/defaultrestoration, scalar/normal/ASanUBSan native leafonly, actualMSVCchangedTU compile andcodegen proof; nooriginalcalls/timings/fullSDK"
+  ],
+  "remaining": [
+    "Unequal/nonunit rotatedellipses depend on source-faithful rationalBezier termination/bound/nativeprimitive",
+    "Negative/nonfinite/oversizedgeometry, unsafe shortshape, arbitraryprotocol/error/FP/platform partitions",
+    "PublicPython/binder/installedSDK/genuineproduct/performance gates; no API inventory promotion here"
+  ],
+  "closeout": {
+    "result": "All46saved successrows/92arraywords exact in3predecessor modes;150942controls/mode incllargeworkerholdout. Pointorderfix3newmodes12cases/62controls each. ActualMSVC2TUcompilePASS; independent reviewpending.",
+    "waste_reuse": "No originalcalls/env/fullSDK/timing. Reused58golds/scientificsourcepins/SDK89runtimeobjects. Initialfiniteanglecheck incorrectlyprecededsourcepointreturn; root/Ccaughtbeforefrontendrelease, source-orderfix andtargeted12point-onlycontrols avoid46goldreplay. Keptpredecessor source/objects/results scoped; no generalBezierimplemented.",
+    "observed_cost": "Native3-modecommand6.14s predecessor;pointsuccessor3leaf+tests6.88s;MSVC2TU2.15s. No separateperformance/wastemeasurement. Pausedalllocalworkforrootquietdiagnostic, resumedonlyafterRELEASE.",
+    "next_owner_trigger": "Root/B independent native/source/word/pointdelta/codegen review. C frontend mayreusefinalreleasedPIC; rootownsSDK/wiring/genuine1workerbenchmark. UnequalrotatedBezier remainsexplicitdependency."
+  },
+  "proof": {
+    "header_freeze": "3e0b970ba5d2e51475d11496398908343bcc5222",
+    "predecessor": "build/native-v1",
+    "predecessor_modes": [
+      "normal-v2",
+      "scalar-v2",
+      "sanitize-v2"
+    ],
+    "predecessor_saved_rows_per_mode": 46,
+    "predecessor_controls_per_mode": 150942,
+    "large_analytic_points": 185368,
+    "large_coordinate_words": 370736,
+    "point_order_successor": "build/native-v3",
+    "point_order_cases_per_mode": 12,
+    "point_order_controls_per_mode": 62,
+    "point_order_modes": [
+      "normal",
+      "scalar",
+      "sanitize"
+    ],
+    "MSVC": "Actualretained /std:c++17 /openmp /fp:strict /c leaf+Cppunit bothPASS; compileonly,noWindowsruntime/SDKclaim",
+    "codegen": {
+      "normal": {
+        "packed_copy_instructions": 9,
+        "GOMP_parallel": true
+      },
+      "scalar": {
+        "packed_copy_instructions": 0,
+        "GOMP_parallel": false
+      }
+    },
+    "original_calls": 0,
+    "new_environments": 0,
+    "full_SDK_builds": 0,
+    "timings": false
+  },
+  "reuse_equivalence": "Successoronlymovesorientationisfinite afterpointreturn. Allcapturedanglesfinite:23successful rows/profile unchanged, nonpointsteps identical; old46row/large worker/scalar/sanitizer proofs reusedexplicitly withoutreplay. Fresh3leafbuilds andonly12source-analyticpointcases/mode verifyrealNaN/Infpoint gapfix. HeaderABIunchanged."
+}

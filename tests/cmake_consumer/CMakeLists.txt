@@ -140,3 +140,14 @@ foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives draw
     endif()
     add_test(NAME installed_${_current}_consumer COMMAND ${_current}_consumer)
 endforeach()
+
+# Exact23 unique original ellipse-perimeter rows; existing exported library only.
+include("${CMAKE_CURRENT_SOURCE_DIR}/ellipse_perimeter_fixtures.cmake")
+add_executable(draw_ellipse_perimeter_consumer draw_ellipse_perimeter_consumer.cpp)
+target_link_libraries(draw_ellipse_perimeter_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(draw_ellipse_perimeter_consumer PRIVATE /UNDEBUG /fp:strict)
+else()
+    target_compile_options(draw_ellipse_perimeter_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math)
+endif()
+add_test(NAME installed_draw_ellipse_perimeter_consumer COMMAND draw_ellipse_perimeter_consumer "${SKIMAGEXX_ELLIPSE_PERIMETER_FIXTURES}" auto)

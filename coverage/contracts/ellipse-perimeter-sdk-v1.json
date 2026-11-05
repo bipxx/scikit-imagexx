@@ -1,0 +1,95 @@
+{
+  "api": "draw.ellipse_perimeter",
+  "state": "INSTALLED_COMPONENT_PASS_PENDING_INDEPENDENT_REVIEW",
+  "native_commit": "573f514ec9e1f9990928d0002be2e72521f716b4",
+  "native_pic_sha256": "924e4e27331c6b0973fb16ccab083e73e824051b5d063b3f8b039bd2efd09ea3",
+  "reference_commit": "0741be2f790ab4a1528be4a269c37d110ebca0af",
+  "donor": "Authenticated genuine257 SDK90; copied include/lib plus new header and one archive object => SDK91, no old archive hash/build",
+  "fixture": {
+    "path": "tests/cmake_consumer/ellipse_perimeter_fixtures.bin",
+    "sha256": "079da2ae19560e01b5e098a6a12121046479392ced66d6572ff648b2448f5772",
+    "records": 23,
+    "ids": [
+      "ellipse-perimeter/unit",
+      "ellipse-perimeter/unequal",
+      "ellipse-perimeter/swapped",
+      "ellipse-perimeter/flat-row",
+      "ellipse-perimeter/flat-column",
+      "ellipse-perimeter/zero-row",
+      "ellipse-perimeter/zero-column",
+      "ellipse-perimeter/point",
+      "ellipse-perimeter/negative-center",
+      "ellipse-perimeter/translated",
+      "ellipse-perimeter/positive-angle",
+      "ellipse-perimeter/negative-angle",
+      "ellipse-perimeter/clip",
+      "ellipse-perimeter/clip-away",
+      "ellipse-perimeter/zero-shape",
+      "ellipse-perimeter/extra-shape",
+      "ellipse-perimeter/point-before-clip",
+      "ellipse-perimeter/list-shape",
+      "ellipse-perimeter/float-shape",
+      "ellipse-perimeter/reversed-readonly-shape",
+      "ellipse-perimeter/numpy-int32",
+      "ellipse-perimeter/index-provider",
+      "ellipse-perimeter/orientation-provider"
+    ]
+  },
+  "prospective_checks": [
+    "Relocated find_package(skimagexx CONFIG REQUIRED), exported target only, dependency/header and map/archive leaf resolution",
+    "All23unique saved success rows, exact coordinate words/order/duplicates/scalar_result, disjoint owning client streams and signed/gapped output guards",
+    "Source-safe analyticR32768 large185368points crosses370736coordinateword copy threshold; global1/4/default1 restoration",
+    "Normalunset and actual SKIMAGEXX_DISABLE_SIMD=1 available dispatch before first algorithm, not compiler-scalar/customAVX2 proof",
+    "Actual MSVC client compile-only using relocated headers; no Windowslink/runtime claim"
+  ],
+  "limits": [
+    "Author also owns kernel; SDK client proof is not independent native acceptance",
+    "General rotated Bezier and Python/binder/genuine shipping/performance remain separate",
+    "SDK typed scalar_result flag only, no Python0Dallocation claim"
+  ],
+  "original_calls": 0,
+  "timings": false,
+  "observed": {
+    "normal": {
+      "available_avx2": true,
+      "records": 23,
+      "controls": 144998,
+      "large_points": 185368,
+      "coordinate_words": 370736,
+      "workers": [
+        1,
+        4
+      ],
+      "default_restored": true
+    },
+    "disabled": {
+      "available_avx2": false,
+      "records": 23,
+      "controls": 144998,
+      "large_points": 185368,
+      "coordinate_words": 370736,
+      "workers": [
+        1,
+        4
+      ],
+      "default_restored": true
+    }
+  },
+  "resolution": {
+    "header": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/ellipse-perimeter-sdk-v1/build/component-v1/relocated-prefix/include/skimagexx/draw_ellipse_perimeter.hpp",
+    "header_sha256": "5caadc0f22f05cbe0b2d82f3fd2fd6f81925ed2ccebfced4c2ed56e0a3d825c0",
+    "dependency_file": "build/component-v1/client-build/CMakeFiles/consumer.dir/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/ellipse-perimeter-sdk-v1/tests/cmake_consumer/draw_ellipse_perimeter_consumer.cpp.o.d",
+    "archive": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/worktrees/ellipse-perimeter-sdk-v1/build/component-v1/relocated-prefix/lib/libskimagexx.a",
+    "new_member": "draw_ellipse_perimeter.cpp.o",
+    "archive_member_count": 173,
+    "installed_header_count": 78,
+    "SDK_component_count": 91,
+    "scope": "Relocated copied genuineSDK90 include/lib/share plus one header and one released object; package metadata untouched; SDK91 assembled component, not genuine SDK91"
+  },
+  "closeout": {
+    "result": "23unique savedreturns exact in two separate normal/disabled processes;144998controls each, large185368points, worker1/4/default restoration. Actual MSVC clientTU compile-only passes. Relocated exported CMake target/header/archive leaf resolved.",
+    "waste_reuse": "Reused immutable58observations, unique23successes only; nativePIC unchanged, genuine257 SDK90 copied and one leaf appended. No old clients/library rebuild/old archive authentication/original/env/timing. Initial source inspection used absent main-path ellipsoid client, corrected to retained integration path before any compile; no scientific work wasted.",
+    "observed_cost": "One downstream clientTU Linux compile/link and one MSVC compile; wall-clock cost not separately recorded; no rerun to measure waste.",
+    "next_owner_trigger": "Root/B independent SDK client/source/evidence review; root future shared wiring/relocation/full genuine campaign. Native acceptance remains separate parent review, not author self-acceptance."
+  }
+}

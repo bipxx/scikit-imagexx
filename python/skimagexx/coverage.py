@@ -6,7 +6,7 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
@@ -328,7 +328,7 @@ def native_dtypes(api):
     # Only a descriptor-carrier projection: level sets consume image.shape,
     # never image pixels or an image dtype. This is not dtype coverage.
     # Drawing labels are SHAPE carriers only; no image pixel dtype is consumed.
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):return ('uint8','float32','float64')
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter')):return ('uint8','float32','float64')
     if api in LEVEL_SET_FUNCTIONS:return ('uint8',)
     if api in ROLLING_KERNEL_FUNCTIONS:return ('float64',)
     if api in ('measure.approximate_polygon','measure.subdivide_polygon'):return ('float64',)
@@ -363,6 +363,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'draw.ellipse_perimeter':
+        # Frozen unequal-axis coordinates; image/dtype are descriptor carriers only.
+        return (0,0,2,4), {}
     if api == 'draw.ellipsoid':
         # Frozen unit bool row; descriptor pixels/dtype are not algorithm inputs.
         return (1,1,1), {}
@@ -574,7 +577,7 @@ def draw_default_error(api,image,actual,expected):
     calls retain the existing generic dtype suites' recursive output checks.
     """
     import numpy as np
-    assert (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa'))
+    assert (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter'))
     if isinstance(expected,np.ndarray):
         expected_dtype=expected.dtype if api in ('draw.line_aa','draw.circle_perimeter_aa') else np.dtype(np.intp)
         assert expected_dtype in (np.dtype(np.intp),np.dtype(np.float64))
@@ -594,8 +597,16 @@ def draw_default_error(api,image,actual,expected):
         assert getattr(a.base,'shape',None)==getattr(e.base,'shape',None)
         assert getattr(a.base,'strides',None)==getattr(e.base,'strides',None)
         assert not np.shares_memory(a,image)
+        if api == 'draw.ellipse_perimeter':
+            assert a is not e and not np.shares_memory(a,e)
+            assert a.flags.owndata and a.base is None
+            assert a.ndim in (0,1)
         assert a.tobytes(order='C')==e.tobytes(order='C')
     if not isinstance(expected,np.ndarray):
+        if api == 'draw.ellipse_perimeter':
+            assert type(actual) is type(expected) is tuple and actual is not expected
+            assert actual[0] is not actual[1] and not np.shares_memory(*actual)
+            assert all(a is not e and not np.shares_memory(a,e) for a in actual for e in expected)
         for i in range(len(actual)):
             for j in range(i+1,len(actual)):
                 assert (actual[i]is actual[j])==(expected[i]is expected[j])
@@ -917,7 +928,7 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
     if api == 'measure.regionprops':
         regionprops_default_error(image, actual, expected)
         return
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter')):
         draw_default_error(api,image,actual,expected)
         return
     if api == 'measure.subdivide_polygon':
@@ -993,7 +1004,7 @@ def parity_tolerance(api, dtype, image=None, expected=None):
         raise ValueError('draw.line_nd requires exact coordinate words and shared-base storage')
     if api == 'measure.regionprops':
         raise ValueError('RegionProperties uses exact property/storage checks; call assert_default_parity')
-    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa')):
+    if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter')):
         raise ValueError('Drawing uses exact coordinate/weight words and storage; call assert_default_parity')
     if api == 'measure.subdivide_polygon':
         raise ValueError('Subdivide polygon uses exact float64 words and fresh layout; call assert_default_parity')
