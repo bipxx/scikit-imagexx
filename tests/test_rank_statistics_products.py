@@ -937,9 +937,9 @@ def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
 @pytest.mark.parametrize('profile',('windows','modern','minimum'))
 def test_current_stager_scope_uses_source_closure_and_exact253_registry(profile):
     scope=p.qualification_scope(ROOT,profile)
-    assert scope['name']=='current256' and scope['members']==188 and scope['sdk']==89
-    assert scope['image_count']==256 and scope['metadata_count']==3 and len(scope['functions'])==259
-    assert len(scope['families'])==29 and 'current29 required' in scope['SDK_client_scope']
+    assert scope['name']=='current257' and scope['members']==191 and scope['sdk']==90
+    assert scope['image_count']==257 and scope['metadata_count']==3 and len(scope['functions'])==260
+    assert len(scope['families'])==30 and 'current30 required' in scope['SDK_client_scope']
     assert ('lib/skimagexx.lib' in scope['SDK_members']) == (profile=='windows')
     text=(ROOT/'tools/public_qualification.py').read_text()
     with pytest.raises(RuntimeError,match='authenticated install closure'):p.qualification_scope_text(text)
@@ -947,8 +947,8 @@ def test_current_stager_scope_uses_source_closure_and_exact253_registry(profile)
 
 def test_current_stager_rejects_old_scope_claim_with_current253_source():
     text=(ROOT/'tools/public_qualification.py').read_text(encoding='utf-8')
-    assert p.CURRENT_PRODUCT_SCOPE=='current256'
-    stale=text.replace("CURRENT_PRODUCT_SCOPE = 'current256'", "CURRENT_PRODUCT_SCOPE = 'current247'")
+    assert p.CURRENT_PRODUCT_SCOPE=='current257'
+    stale=text.replace("CURRENT_PRODUCT_SCOPE = 'current257'", "CURRENT_PRODUCT_SCOPE = 'current247'")
     assert stale!=text
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for f in (ROOT/prefix).rglob('*') if f.is_file()]

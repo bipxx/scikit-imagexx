@@ -69,7 +69,7 @@ def test_ellipsoid_actual_default_saved_words(dtype,workers,monkeypatch):
 
 @pytest.mark.parametrize('levelset',(False,True))
 @pytest.mark.parametrize('checker',('exact','shared'))
-@pytest.mark.parametrize('fault',('word','dtype','view','layout','missing','container'))
+@pytest.mark.parametrize('fault',('word','dtype','view','layout','missing','container','same-object'))
 def test_ellipsoid_checker_rejects_corruption(levelset,checker,fault):
     import numpy as np
     from skimagexx.coverage import ellipsoid_default_error,assert_default_parity
@@ -81,6 +81,7 @@ def test_ellipsoid_checker_rejects_corruption(levelset,checker,fault):
     elif fault=='view':actual=actual.view()
     elif fault=='layout':actual=np.array(actual,order='F')
     elif fault=='missing':actual=actual[:-1].copy()
+    elif fault=='same-object':actual=expected
     else:actual=[actual]
     with pytest.raises(AssertionError):
         if checker=='exact':ellipsoid_default_error(carrier,actual,expected)

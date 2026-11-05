@@ -892,6 +892,7 @@ def ellipsoid_default_error(image, actual, expected):
     """Exact single owning3D array words and complete storage for ellipsoid."""
     import numpy as np
     assert type(actual) is type(expected) is np.ndarray
+    assert actual is not expected and not np.shares_memory(actual,expected)
     assert actual.dtype == expected.dtype and actual.dtype.isnative
     assert actual.dtype.metadata is expected.dtype.metadata is None
     assert actual.shape == expected.shape and actual.strides == expected.strides
