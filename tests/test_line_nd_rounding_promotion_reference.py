@@ -50,3 +50,13 @@ def test_line_nd_rounding_promotion_saved_original_only(profile):
     raw=zlib.decompress(base64.b64decode(value['raw_zlib_base64']))
     assert hashlib.sha256(raw).hexdigest()==value['raw_sha256'] and len(raw)==48
     assert value['dtype']=='<i8' and value['shape']==[6] and not value['own']
+
+
+
+def test_line_nd_rounding_promotion_source_safety_without_science():
+    matrix = json.loads(MATRIX.read_bytes())
+    assert len(matrix['cases']) == 1
+    assert matrix['numerical_policy'] == dict(max_ulp=0, rtol=0, atol=0)
+    for name, pin in matrix['source_pins'].items():
+        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == pin
+    assert source_safe(matrix['cases'][0])['max_output_elements'] == 512

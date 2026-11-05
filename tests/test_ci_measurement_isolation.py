@@ -841,3 +841,24 @@ def test_line_nd_saved_defaults_and_typed_policy_are_preparation_gates():
     assert 'src/line_nd.cpp' in cmake and 'src/bind_line_nd.cpp' in cmake
     wrapper = (ROOT/'python/skimagexx/_line_nd.py').read_text()
     assert wrapper.count('(np.float32(0) % 1).dtype') == 1
+
+
+
+def test_prebuild_line_nd_selects_only_dependency_free_nodes_and_runtime_keeps_intakes():
+    import shlex
+    workflow = (ROOT/'.github/workflows/public-qualification.yml').read_text()
+    command = next(line.strip() for line in workflow.splitlines()
+                   if line.strip().startswith('python -m pytest -q --capture=sys'))
+    selected = set(shlex.split(command.split(' 2>&1 | tee ')[0]))
+    modules = ('test_regionprops_state_reference.py','test_line_nd_reference.py',
+               'test_line_nd_rounding_promotion_reference.py','test_line_nd_benchmark.py')
+    assert all('tests/'+module not in selected for module in modules)
+    assert {'tests/test_line_nd_reference.py::test_line_nd_prospective_matrix_and_source_safety',
+            'tests/test_line_nd_reference.py::test_line_nd_saved_original_rows_without_replay',
+            'tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_source_safety_without_science',
+            'tests/test_line_nd_benchmark.py::test_line_nd_benchmark_import_refuses_scientific_modules'} <= selected
+    tree = ast.parse((ROOT/'tools/public_qualification.py').read_bytes())
+    runtime = next(ast.literal_eval(node.value) for node in tree.body
+                   if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
+                       and target.id == 'POST203_TESTS' for target in node.targets))
+    assert set(modules) <= set(runtime)

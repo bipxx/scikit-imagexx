@@ -2296,7 +2296,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['product_scope']=='current256' and result['registry']['image_count']==256
     assert result['product_members']==188 and result['SDK_members']==89
     assert result['SDK_checks']==58 and 'current29 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==73
+    assert len(result['public_groups']['public-post203'])==74
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2384,7 +2384,7 @@ def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_
 
 def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
     cmake=(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()
-    assert 'foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives draw_coordinates circle_perimeter)' in cmake
+    assert 'foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives draw_coordinates circle_perimeter line_nd)' in cmake
     assert 'target_link_libraries(${_current}_consumer PRIVATE skimagexx::skimagexx)' in cmake
     for family in ('colocalization','footprint_shapes'):
         source=(ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')).read_text()
@@ -2689,7 +2689,7 @@ def test_current256_layout_refuses_line_nd_gap(missing):
         q.current_install_layout(lambda name: (ROOT / name).read_bytes(), names, 'modern')
 
 
-@pytest.mark.parametrize('fault', ('map','header','reference','rounding_promotion_reference','public','default'))
+@pytest.mark.parametrize('fault', ('map','header','reference','rounding_promotion_reference','public','default','benchmark'))
 def test_current256_contract_refuses_line_nd_gap(fault):
     data = json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
     if fault == 'map':data['post203_contracts'].pop('draw.line_nd')
@@ -2699,8 +2699,18 @@ def test_current256_contract_refuses_line_nd_gap(fault):
 
 
 @pytest.mark.parametrize('fault', ('none','registry','entry','core','alias','forwarding','signature','policy'))
-def test_line_nd_source_admission_boundary(monkeypatch,fault):
-    import numpy as np
+@pytest.mark.parametrize('weak', (False, True))
+def test_line_nd_source_admission_boundary(monkeypatch,fault,weak):
+    class Scalar:
+        dtype = 'float32' if weak else 'float64'
+        def __init__(self,value):assert value == 0
+        def __mod__(self,divisor):
+            assert divisor == 1
+            return self
+    np = types.ModuleType('numpy')
+    np.float32 = Scalar
+    np.dtype = lambda _: 'float32'
+    monkeypatch.setitem(sys.modules, 'numpy', np)
     core = types.SimpleNamespace(__name__='skimagexx._core')
     def entry():raise AssertionError('metadata boundary never calls native entry')
     entry.__module__=core.__name__;entry.__name__='draw_line_nd';core.draw_line_nd=entry
