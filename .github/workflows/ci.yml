@@ -641,12 +641,13 @@ jobs:
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/line_aa.py --threads 1 --repeat 7 --output build/ci-line-aa.json
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      # These three reports remain measured at eea321b2; latest_only runs new line-ND only.
       - run: python benchmarks/regionprops_state.py --threads 1 --repeat 7 --output build/ci-regionprops-state.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/circle_perimeter_aa.py --threads 1 --repeat 7 --output build/ci-circle-perimeter-aa.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/stains.py --half-only --size 512 --threads 1 --repeat 7 --output build/ci-combine-stains-half.json
-        if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/line_nd.py --threads 1 --repeat 7 --output build/ci-line-nd.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable

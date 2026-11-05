@@ -555,8 +555,8 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 35 and all(skip in s for s in timed[:-4])
-    assert all(skip not in step for step in timed[-4:])
+    assert len(timed) == 35 and all(skip in s for s in timed[:-1])
+    assert skip not in timed[-1]
     assert 'benchmarks/regionprops_state.py ' in timed[-4]
     assert 'benchmarks/circle_perimeter_aa.py ' in timed[-3]
     assert 'benchmarks/stains.py --half-only ' in timed[-2]
