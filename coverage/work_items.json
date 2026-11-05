@@ -36743,7 +36743,7 @@
       "state": "validating",
       "branch": "integrate/regionprops-coords-scaled-v1",
       "base_sha": "1bc43693",
-      "source_sha": "339d81c91baaed8536aed68950ee7e01e72b2eb8",
+      "source_sha": "f1871b85b89e956c7017bb8600aec2f5ec8c3859",
       "apis": [],
       "target_apis": [
         "measure.regionprops"
@@ -36759,12 +36759,45 @@
         "regionprops-coords-scaled-frontend-v1",
         "regionprops-coords-scaled-sdk-v1"
       ],
-      "current_checkpoint": "Integration branch pushed at339d81c9: three component peers,12path projection, sharedq/CMake95d2bd69 and CI2ffa9b75 all PASS. Shared guards22+2PASS; legacy context successors4c3 independently accepted,14retained pure checks, driver pointer-only inverse exact. Installed scope remains193product91SDK31families62checks258images261functions,89selectors. No genuine build or new performance result yet.",
-      "waste_review": "Reused saved component/XML/context/CI evidence without numerical or timing replay. Corrected one metadata-only output-path error. Restored FAST_RUN original line endings after an accidental normalization; edit future status text as bytes to avoid whole-file churn. New contexts were necessary because source pin guards cover changed leaf/header/binder/class, not permission to rerun historical timing.",
+      "current_checkpoint": "Final f187 source/registration peers PASS:15 new required sources,90 exact qualification selectors;193product91SDK258images261functions31families62checks unchanged. Benchmark6case source40purechecks plus36NumPy-only intakechecks independentlyPASS,0original/native/timing. Actual sourcebarrier covers2609uniquePASS+8subtests:2595retained fromfullv2 plusEXACT14launcher-only failed-node repairs; independent final admission pending. v1ENOSPC partial andv2falsefailures retained. Remote integrationref still339; GitHub update/create-ref failures prevent f187 publication and genuine dispatch.",
+      "waste_review": "Retained all passed proofs. The first full source run lost verdict to disk exhaustion; replacement uses fresh D scratch with50GB capacity check. Redundant builtins import guard rejected inert sys.modules fixtures; keep one real-load MetaPathFinder, rerun only14 failures and reuse2595passes. Preserve existing mixed newlines using byte edits. Four duplicate metadata-directory deletion was rejected by automatic approval policy; nothing deleted. No unchanged benchmark replay or weakened thresholds.",
       "next_gate": {
         "owner": "integrator",
-        "action": "A finishes six-case benchmark source and pure tests, B independently reviews it. Compose only named paths; include pure benchmark selectors/source closure and run the actual final prebuild before one clean minimum prepare-only CI dispatch. All38existing timers must skip; derive any new count. Then authenticate installed package, execute bounded first-cohort validation and isolated one-worker comparison. Full four-profile release remains after acceptance."
+        "action": "Admit final sourcebarrier receipt055ff4fc; verify actual remote f187 after GitHub commit_refs_rules error clears, then dispatch ONE ci.yml minimum_only=true prepare_only=true latest_only=true;38existing timers must SKIP. Authenticate real package/runtime/source, bounded first-cohort and fixed six-case ABBA next; separate controller child never mutates prepared snapshots. Four-profile release and remaining477/property/SIMD/integer gaps stay open."
       }
+    },
+    {
+      "id": "regionprops-coords-scaled-benchmark-source-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled benchmark",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-frontend-v1"
+      ],
+      "source_sha": "033fd5b68d18bbf2cfc4597567ffffa9e55e3159",
+      "current_checkpoint": "Six bounded cases fixed before measurement:4ABBAprocesses336samples,1.05direct+normalized control floors,2medium f64 targets .90 direct+original eachpair.40pure/36NumPyintake checks PASS; no application algorithms or performance calls. Native f64 vs integer partial-provider acceptance explicit. Source composed f187, stillPROSPECTIVE.",
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "033fd5b68d18bbf2cfc4597567ffffa9e55e3159",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-benchmark-intake-independent-review-v1/review.json",
+            "sha256": "a456a9c33dcba88cb53634abd97e223f53415951d512d1e8b7ec15865cb297fd"
+          },
+          "scope": "Saved pure and NumPy-only benchmark validation, not public native speed acceptance."
+        }
+      },
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Implement explicit six-case adapter in existing same-host controller, actual prepared measurement manifest and emitted metadata, strict partial/prior witnesses, unchanged old28protocol. Keep f187 prepared snapshots immutable; activate only controller-child contract after genuine/first-cohort gates."
+      },
+      "waste_review": "Reuse existing sampler/fixture/helper methods and stored12 semantic recipes; no new launcher framework, original recapture or old numerical replay."
     }
   ],
   "unassigned_inventoried_apis": [
