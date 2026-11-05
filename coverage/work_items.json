@@ -36609,8 +36609,8 @@
       "depends_on": [],
       "current_checkpoint": "51f3 captures independentlyPASSf568ac6d,4referencepaths mergedmain.24topctors72fget/48privateinit24getitem78imagewrapper48compute,342events;72arrays444words independentlymatchedrecipes,0errors/warn/FP. Integer3Di64/11otherf64;ownF/nonempty,ownemptyzero-strides/noalias. Only4newpurevalidatorsPASS, no26intake/old9replay. SourceWTretiredcleanancestor afterreaderrelease;14obsoletepycacheremoved, allrawproofs rootbuildprotected. No nativecoveragecredit;34otherpropertiesunassessed.",
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Freeze one minimaltypeddefinition inexistingRegionmodule preserving sourcephaseorder andcapturedoperands onunsupported suffix; no publiccoords scaling/wholegetterre-entry. Native/frontend/SDKparallelimplementation onlyafterheaderpeer. Use main/Git51f3; retiredreferenceWT no longerinput."
+        "owner": "integrator",
+        "action": "Reference and frozen fourphase interface/native/frontend/SDK component reviews closed. Reuse exact saved rows; integrate coords-only9558890a, close existing source pin/CI/installed/genuine/performance gates. Do not recapture originals or restore rejected bd16 key experiment."
       },
       "frozen_source_paths": [
         "coverage/contracts/regionprops-coords-scaled-prospective-v1.json",
@@ -36629,6 +36629,141 @@
           "passing_contract_checks": 4,
           "scope": "Original24sequences/72outputs andpure savedvalidators only; not C++native parity."
         }
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-native-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-reference-v1"
+      ],
+      "source_sha": "eafc253a5440df2e0ea0c46c9e7e84ef51209ff6",
+      "current_checkpoint": "Four modes each108recipe/layout/budget records and789178controls; oldcoords22x3; MSVC2TUcompile-only. Origin/add16B SIMD, intp-to-f64 multiply scalar gap remains. Exact oldbody inverse plus reviewed MXCSR correctness dependency.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "eafc253a5440df2e0ea0c46c9e7e84ef51209ff6",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-independent-native-review-v1/review.json",
+            "sha256": "7a7c81b6b9219d2ffdcae348379490e04c61bd947eb12ad9fc79857a8f8a5eb8"
+          },
+          "native_contract_checks": 789178,
+          "native_pending": 0,
+          "scope": "Four modes each108recipe/layout/budget records and789178controls; oldcoords22x3; MSVC2TUcompile-only. Origin/add16B SIMD, intp-to-f64 multiply scalar gap remains. Exact oldbody inverse plus reviewed MXCSR correctness dependency."
+        }
+      },
+      "waste_review": "Independent retained-proof review only, no build/science/timing replay. Preserve component evidence and all rejected performance history.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Minimal shared source registration and existing-profile genuine/installed acceptance, then separately frozen one-worker comparison; no API count increase from this property frontier."
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-frontend-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-reference-v1"
+      ],
+      "source_sha": "c7beb1eac2e9077436c82775e56bde0ce0392c61",
+      "current_checkpoint": "Four modes148PASS,96savedsequences/288arrays;264fourstage f64 reads and24integer partial-provider reads. Image once, workers once after image; inplace only private native intermediates. Component-only, not genuine product.",
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "c7beb1eac2e9077436c82775e56bde0ce0392c61",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-frontend-independent-review-v1/review.json",
+            "sha256": "a265627a2a52722b0e3ccf8e4cd24259e75f743861417d12a755122cfc3dcb0b"
+          },
+          "native_contract_checks": 148,
+          "native_pending": 0,
+          "scope": "Four modes148PASS,96savedsequences/288arrays;264fourstage f64 reads and24integer partial-provider reads. Image once, workers once after image; inplace only private native intermediates. Component-only, not genuine product."
+        }
+      },
+      "waste_review": "Independent retained-proof review only, no build/science/timing replay. Preserve component evidence and all rejected performance history.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Minimal shared source registration and existing-profile genuine/installed acceptance, then separately frozen one-worker comparison; no API count increase from this property frontier."
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-sdk-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-reference-v1"
+      ],
+      "source_sha": "52a02aabfed16a4aa12367c9b9bdfd1616412dae",
+      "current_checkpoint": "Existing installed family default and focused route, four modes162controls each, workers1/4/default restore. Assembled SDK92 donor component only; actual current main SDK91 unchanged. MSVC client compile-only. No new family.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "52a02aabfed16a4aa12367c9b9bdfd1616412dae",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-independent-sdk-review-v1/review.json",
+            "sha256": "c4a4c8a13367a346e9ed060636d94468cf4bd6a9f9b6517748fb34ac95f0bc22"
+          },
+          "native_contract_checks": 162,
+          "native_pending": 0,
+          "scope": "Existing installed family default and focused route, four modes162controls each, workers1/4/default restore. Assembled SDK92 donor component only; actual current main SDK91 unchanged. MSVC client compile-only. No new family."
+        }
+      },
+      "waste_review": "Independent retained-proof review only, no build/science/timing replay. Preserve component evidence and all rejected performance history.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Minimal shared source registration and existing-profile genuine/installed acceptance, then separately frozen one-worker comparison; no API count increase from this property frontier."
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-shared-v1",
+      "kind": "implementation",
+      "owner": "integrator",
+      "state": "validating",
+      "branch": "integrate/regionprops-coords-scaled-v1",
+      "base_sha": "1bc43693",
+      "source_sha": "9558890a3f758a06c638bc778701e329c99ad0ff",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [
+        "CMakeLists.txt",
+        "tools/public_qualification.py",
+        "coverage/contracts/current-public-qualification.json"
+      ],
+      "depends_on": [
+        "regionprops-coords-scaled-native-v1",
+        "regionprops-coords-scaled-frontend-v1",
+        "regionprops-coords-scaled-sdk-v1"
+      ],
+      "current_checkpoint": "12path source projection independentlyPASS8d397c7c, compose15path9558890a includes CMake strictFP and89selectors; minimum plan0blockers193product91SDK31families62checks258images. Oldbinder/class exactmain inverse, no rejectedkey/polygon ancestry. Distinct per-mode rows in qualifier. Current shipped qualification remains cf0.",
+      "waste_review": "Reuse 3component peers; metadata-only plan CLI first used output outside WTbuild and was corrected, no scientific replay. Source-pin contexts/CI successors are required by actual changed closure, not new timing evidence.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "B closes old-driver context successors without timedbody changes; C closes CI pure/installed wiring; A implements frozen sixcase benchmark source-only. Review/execute affected source gates, then actual installed/genuine and isolated original comparison. Integer suffix/SIMD gap/34otherproperties/full477 remain open."
       }
     }
   ],
