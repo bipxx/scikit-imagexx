@@ -36743,7 +36743,7 @@
       "state": "validating",
       "branch": "integrate/regionprops-coords-scaled-v1",
       "base_sha": "1bc43693",
-      "source_sha": "9558890a3f758a06c638bc778701e329c99ad0ff",
+      "source_sha": "339d81c91baaed8536aed68950ee7e01e72b2eb8",
       "apis": [],
       "target_apis": [
         "measure.regionprops"
@@ -36759,11 +36759,11 @@
         "regionprops-coords-scaled-frontend-v1",
         "regionprops-coords-scaled-sdk-v1"
       ],
-      "current_checkpoint": "12path source projection independentlyPASS8d397c7c, compose15path9558890a includes CMake strictFP and89selectors; minimum plan0blockers193product91SDK31families62checks258images. Oldbinder/class exactmain inverse, no rejectedkey/polygon ancestry. Distinct per-mode rows in qualifier. Current shipped qualification remains cf0.",
-      "waste_review": "Reuse 3component peers; metadata-only plan CLI first used output outside WTbuild and was corrected, no scientific replay. Source-pin contexts/CI successors are required by actual changed closure, not new timing evidence.",
+      "current_checkpoint": "Integration branch pushed at339d81c9: three component peers,12path projection, sharedq/CMake95d2bd69 and CI2ffa9b75 all PASS. Shared guards22+2PASS; legacy context successors4c3 independently accepted,14retained pure checks, driver pointer-only inverse exact. Installed scope remains193product91SDK31families62checks258images261functions,89selectors. No genuine build or new performance result yet.",
+      "waste_review": "Reused saved component/XML/context/CI evidence without numerical or timing replay. Corrected one metadata-only output-path error. Restored FAST_RUN original line endings after an accidental normalization; edit future status text as bytes to avoid whole-file churn. New contexts were necessary because source pin guards cover changed leaf/header/binder/class, not permission to rerun historical timing.",
       "next_gate": {
         "owner": "integrator",
-        "action": "B closes old-driver context successors without timedbody changes; C closes CI pure/installed wiring; A implements frozen sixcase benchmark source-only. Review/execute affected source gates, then actual installed/genuine and isolated original comparison. Integer suffix/SIMD gap/34otherproperties/full477 remain open."
+        "action": "A finishes six-case benchmark source and pure tests, B independently reviews it. Compose only named paths; include pure benchmark selectors/source closure and run the actual final prebuild before one clean minimum prepare-only CI dispatch. All38existing timers must skip; derive any new count. Then authenticate installed package, execute bounded first-cohort validation and isolated one-worker comparison. Full four-profile release remains after acceptance."
       }
     }
   ],
