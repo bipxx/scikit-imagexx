@@ -200,6 +200,11 @@ def main():
             'warnings and errors. Defaults map real uint8 labels through all256keys to uint16(3*key+1). '
             'Exact output storage and words are checked before timing; benchmarks/map_array.py is canonical.')
     for api in apis:
+        if api in ('draw.polygon','draw.polygon2mask'):
+            provider_frontiers[api] = ('Fixed frozen triangle geometry; image carrier pixels, size and dtype are not API inputs. '
+                'NumPy coercion, bounds reductions/ceil and allocation remain explicit providers; '
+                'bounded raster classification, ordered intp output and boolean mask scatter are owned. '
+                'benchmarks/draw_polygon.py supplies the canonical geometry/stride cohort.')
         if api in LEVEL_SET_FUNCTIONS:
             provider_frontiers[api] = ('Shape-only constructor: the uint8 fixture is a descriptor carrier, '
                 'not image-pixel/dtype coverage. Integer geometry uses owned C++; protocols, floating '
@@ -359,6 +364,14 @@ def main():
                                     **({'input_shape':list(data.shape), 'default_input_kind':'coordinate-shape-carrier',
                                         'descriptor_carrier_dtype':case_dtype, 'requested_output_dtype':('intp,intp,float64' if api=='draw.line_aa' else 'intp')}
                                        if (api in DRAW_COORDINATE_FUNCTIONS or api in ('draw.circle_perimeter','draw.line_aa','draw.circle_perimeter_aa','draw.ellipse_perimeter')) else {}),
+                                    **({'default_input_kind':'fixed-frozen-triangle-geometry',
+                                        'descriptor_carrier_shape':list(data.shape), 'descriptor_carrier_dtype':case_dtype,
+                                        'carrier_pixels_consumed':False, 'carrier_size_consumed':False,
+                                        'requested_output_dtype':('bool' if api=='draw.polygon2mask' else 'intp,intp'),
+                                        'input_shape':(list(call_args[0]) if api=='draw.polygon2mask' else None),
+                                        'geometry_vertices':3,
+                                        'output_shape':(list(actual.shape) if api=='draw.polygon2mask' else [list(a.shape) for a in actual])}
+                                       if api in ('draw.polygon','draw.polygon2mask') else {}),
                                     **({'default_input_kind':'fixed-frozen-coordinate-row','coordinate_dtype':str(call_args[0].dtype),
                                         'coordinate_dimensions':int(max(call_args[0].size,call_args[1].size)),
                                         'carrier_pixels_consumed':False} if api=='draw.line_nd' else {}),
