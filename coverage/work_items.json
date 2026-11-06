@@ -37061,6 +37061,33 @@
         "action": "Integrateonlydirectsharedhooks beforecombinedfreeze; rootfullbarrier/genuine/performance/4profilegates. Boundaryworker nowisolatedconsumer author; sourcecomponent immutable."
       },
       "source_sha": "08a06b22bb4eceb580f3bf7f15a0a1664f9cc9f9"
+    },
+    {
+      "id": "join-segmentations-current-batch-v1",
+      "kind": "implementation",
+      "owner": "boundary_worker",
+      "branch": "feature/join-segmentations-v1",
+      "state": "contracting",
+      "apis": [],
+      "target_apis": [
+        "segmentation.join_segmentations"
+      ],
+      "owns": [
+        "include/skimagexx/join_segmentations.hpp",
+        "src/join_segmentations.cpp",
+        "src/bind_join_segmentations.cpp",
+        "python/skimagexx/_join_segmentations.py",
+        "coverage/contracts/join-segmentations-v1.json"
+      ],
+      "depends_on": [],
+      "base_sha": "057b1e28ae2060fe58b05aca2c7a566c424a368d",
+      "scope": "IndependentnextAPI source/test-first:fullintendedsignatureinclreturn_mapping/type/maps/shape/errors. Reuseexistingrelabel/ArrayMap/pairkeyprimitives; no originalcalls until source-safepeer/rootGO. Notincurrentready265.",
+      "acceptance": "Declared public/hotswap/nativeSDK ownership,perfunctionparity,applicableSIMD/true-scalar andoptionalglobalworkersdefault1,isolated1threadoriginalcomparison,independentfullrelease. PartialpacketnotAPIcompletion.",
+      "current_checkpoint": "Liveworkerassignedsource/header/prospectiverecipes only; controller0dd/templates separatelyimmutableandUNBOUND. No neworiginal/native/timercredit.",
+      "next_gate": {
+        "owner": "boundary_worker",
+        "action": "Freeze exactsource/interface/saferesolvecases beforeimplementation/originalcapture; rootindependentsafetypeer/GO next. No sharedintegrationchanges."
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -37759,7 +37786,7 @@
         "label-pair-metrics-current-batch-v1"
       ],
       "boundary_worker": [
-        "find-boundaries-current-batch-v1"
+        "join-segmentations-current-batch-v1"
       ],
       "readiness_reviewer": [
         "label-pair-metrics-current-batch-v1"
@@ -37767,7 +37794,7 @@
     },
     "current_three_agent_packets": {
       "metrics_integrator": "label-pair-metrics-current-batch-v1",
-      "boundary_worker": "find-boundaries-current-batch-v1",
+      "boundary_worker": "join-segmentations-current-batch-v1",
       "readiness_reviewer": "label-pair-metrics-current-batch-v1"
     },
     "current_source_staging": {
@@ -38162,11 +38189,11 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Sole sharedauthor combined metrics+readyboundary successor;323FAIL retained, allnumericalproofs scopedreuse, no hostedreadiness yet.",
-      "boundary_worker": "Isolated4route/28case stager-basedbenchmarkconsumer author; no timing ororiginalcalls.",
-      "readiness_reviewer": "Boundarycomponent42e994 PASS; awaitexactfinalclean combinedsource forindependent full2-runtimebarrier."
+      "metrics_integrator": "Frozen cbcef227ffbf80b7e1cdf1cf5ed649c7ac58992f; handoff-v4 a725bd4e authenticated. Two metadata corrections only; complete independent source barriers pending. No new release credit.",
+      "readiness_reviewer": "Qualification templates peer16d108b5 scoped PASS UNBOUND. Complete cbce Windows3.11/3.13 source barriers running under reviewer-owned handles6867/88159; terminal receipts and independent admission pending.",
+      "boundary_worker": "Controller0dd/templatesfrozenUNBOUND; nextjoin_segmentationssource/test-first packet only, no originalcalls."
     },
-    "next_action": "Finishcombinedready successor, fullactualsourcebarriers onbothretainedruntimes, thenone4profilequalification. ReuseitsminimumRelease stagerforisolatedbenchmarkconsumer, no separatepreparebuild. Main262 remainsqualified334; source323failed3metadataguards retained.",
+    "next_action": "Await terminal complete two-runtime cbce source barriers and independent admission before four-profile dispatch; preserve failed412/323. Reuse minimum Release stager for reviewed28-case consumer. Rule documentation does not authorize new execution.",
     "current_checkpoint": {
       "main_image_names": 262,
       "qualified_image_names": 262,
@@ -38194,7 +38221,7 @@
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "COMBINED_SUCCESSOR_AUTHORING_NOT_READY;323fullbarrierFAIL04c7,ff2metadatafixes+readyboundary08ahooks; exactfinalcounts fromsource beforefreeze.",
+      "next_release_status": "SOURCE_CBCE_FULL_READINESS_PENDING: clean cbcef227ffbf80b7e1cdf1cf5ed649c7ac58992f corrects two metadata failures of412; both complete barriers running, no terminal PASS or hosted dispatch. Failed412 review9b8ddd and323 review04c7 retained.",
       "next_release_qualification_run": 42140207750,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
