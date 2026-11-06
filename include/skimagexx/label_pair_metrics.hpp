@@ -11,6 +11,9 @@ inline constexpr std::int64_t label_pair_max_label=(std::int64_t{1}<<20)-1;
 // order. Original reshape/conversion/protocol/shape-error order is a frontend
 // responsibility. Different image shapes with equal flattened size are valid
 // for contingency_table, while the two metric APIs check shape first.
+// Caller guarantees truth/test each address count int64 elements and ignored
+// labels address ignored_count elements. Lifetimes and contents stay stable
+// for this call; raw pointer capacities cannot be discovered by the SDK.
 struct LabelPairInput {
     const std::int64_t* truth=nullptr;
     const std::int64_t* test=nullptr;

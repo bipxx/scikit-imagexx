@@ -53,6 +53,58 @@ def test_label_pair_saved_rows_without_replay():
             elif isinstance(value,list):pending.extend(value)
 
 
+@pytest.mark.parametrize('api',APIS)
+def test_label_pair_per_function_saved_contract_without_science(api):
+    data=json.loads(MATRIX.read_bytes())
+    for version in ('1.24.4','2.5.4'):
+        rows=[r for r in data['original_observations'][version]if r['id'].startswith(api.split('.')[1]+'/')]
+        assert len(rows)==8 and all(all(r['checks'].values())for r in rows)
+        returned=[r['result']for r in rows if r['error']is None]
+        if api=='metrics.contingency_table':
+            assert len(returned)==5
+            for value in returned:
+                assert value['format']=='csr'and value['dtype']=='<f8'
+                assert value['data']['shape']==value['indices']['shape']==[value['nnz']]
+                assert value['data']['base_shape']==value['indices']['base_shape']==[6]
+                assert value['indices']['dtype']==value['indptr']['dtype']=='<i4'
+        elif api=='metrics.adapted_rand_error':
+            assert len(returned)==6
+            assert all(v['container']=='tuple'and len(v['items'])==3 for v in returned)
+            assert all(x['type']=='float64'and x['dtype']=='<f8'and len(x['raw'])==16 for v in returned for x in v['items'])
+        else:
+            assert len(returned)==7
+            assert all(v['type']=='ndarray'and v['shape']==[2]and v['dtype']=='<f8'and v['own']and v['base_type']=='NoneType'for v in returned)
+
+
+def test_label_pair_profile_specific_supplied_table_mutation_without_science():
+    data=json.loads(MATRIX.read_bytes());old=data['original_observations']['1.24.4'];new=data['original_observations']['2.5.4']
+    changed=('adapted_rand_error/table-array','adapted_rand_error/table-matrix')
+    assert [a['id']for a,b in zip(old,new)if a!=b]==list(changed)
+    for a,b in zip(old,new):
+        assert a['result']==b['result']and a['error']==b['error']and a['warnings']==b['warnings']and a['events']==b['events']
+        assert not a['input_state_changed']
+        assert b['input_state_changed']==(b['id']in changed)
+        if b['id']in changed:
+            before=b['before']['items'][1]['table'];after=b['after']['items'][1]['table']
+            assert before['cached_sorted']is None and before['cached_canonical']is None
+            assert after['cached_sorted']is True and after['cached_canonical']is True
+            assert before['data']['raw_sha256']!=after['data']['raw_sha256']
+            assert before['indices']['raw_sha256']!=after['indices']['raw_sha256']
+
+
+def test_label_pair_saved_FP_and_error_prefix_without_science():
+    data=json.loads(MATRIX.read_bytes())
+    for rows in data['original_observations'].values():
+        assert sum(r['error']is not None for r in rows)==6
+        assert sum(len(r['events'])for r in rows)==5 and sum(len(r['warnings'])for r in rows)==4
+        singleton=next(r for r in rows if r['id']=='adapted_rand_error/singleton')
+        assert singleton['events']==[dict(event='FP-handler',message='invalid value',flags=8)]*3
+        table=next(r for r in rows if r['id']=='adapted_rand_error/table-matrix')
+        assert table['error']['type']=='ValueError'and 'matmul:'in table['error']['message']
+        none=next(r for r in rows if r['id']=='variation_of_information/table-with-None-images')
+        assert none['error']==dict(type='AttributeError',module='builtins',message="'NoneType' object has no attribute 'shape'")
+
+
 @pytest.fixture(scope='module')
 def reference_context():
     from label_pair_metrics_observer import reference_runtime
