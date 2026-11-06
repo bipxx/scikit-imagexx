@@ -1,0 +1,167 @@
+{
+  "schema": "next-metrics-first-cohort-prospective-v1",
+  "status": "SOURCE_ONLY_SCAFFOLD_NOT_EXECUTED_NOT_GENUINE_BOUND",
+  "source_revision": null,
+  "source_scope": "Frozen323 metrics+ellipse and08a06b22 boundary drivers/cases; combined metadata-fix qualified source unknown. Root binds reviewed successor before any real call.",
+  "reference_source": "323deb004b9f268078ea5242d6609be21032d313",
+  "routes": {
+    "metrics-are": {
+      "kind": "dedicated",
+      "api": "metrics.adapted_rand_error",
+      "driver": "benchmarks/label_pair_metrics.py",
+      "owned_module": "skimagexx._label_pair_metrics",
+      "acceptance_function": "_are_from_i64",
+      "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+      "first_case": {
+        "id": "metrics.adapted_rand_error/tiny",
+        "api": "metrics.adapted_rand_error",
+        "shape": [
+          2,
+          3
+        ],
+        "layout": "C",
+        "labels": 3,
+        "dtype": "int64",
+        "normalize": false,
+        "ignore": [
+          0
+        ],
+        "alpha": 0.5
+      },
+      "native_entries": [
+        "label_pair_rand_terms",
+        "label_pair_rand_divide",
+        "label_pair_rand_divide",
+        "label_pair_rand_fscore",
+        "label_pair_rand_error"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7",
+        "--api",
+        "metrics.adapted_rand_error"
+      ]
+    },
+    "metrics-contingency": {
+      "kind": "dedicated",
+      "api": "metrics.contingency_table",
+      "driver": "benchmarks/label_pair_metrics.py",
+      "owned_module": "skimagexx._contingency_table",
+      "acceptance_function": "contingency_table",
+      "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+      "first_case": {
+        "id": "metrics.contingency_table/tiny",
+        "api": "metrics.contingency_table",
+        "shape": [
+          2,
+          3
+        ],
+        "layout": "C",
+        "labels": 3,
+        "dtype": "int64",
+        "normalize": false,
+        "ignore": [
+          0
+        ],
+        "alpha": 0.5
+      },
+      "native_entries": [
+        "label_pair_counts_preweighted"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7",
+        "--api",
+        "metrics.contingency_table"
+      ]
+    },
+    "ellipse": {
+      "kind": "dedicated",
+      "api": "draw.ellipse_perimeter",
+      "driver": "benchmarks/ellipse_perimeter.py",
+      "owned_module": "skimagexx._draw_ellipse_perimeter",
+      "acceptance_function": "ellipse_perimeter",
+      "contract": "coverage/contracts/ellipse-perimeter-benchmark.json",
+      "first_case": {
+        "id": "ellipse-perimeter/point",
+        "api": "draw.ellipse_perimeter",
+        "args": [
+          3,
+          -4,
+          0,
+          0
+        ],
+        "kwargs": {}
+      },
+      "native_entries": [
+        "draw_ellipse_perimeter"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    },
+    "boundary": {
+      "kind": "dedicated",
+      "api": "segmentation.find_boundaries",
+      "driver": "benchmarks/find_boundaries.py",
+      "owned_module": "skimagexx._find_boundaries",
+      "acceptance_function": "find_boundaries",
+      "native_result_kind": "true",
+      "contract": "coverage/contracts/find-boundaries-benchmark-v1.json",
+      "first_case": {
+        "id": "cross-thick",
+        "shape": [
+          3,
+          3
+        ],
+        "dtype": "uint8",
+        "layout": "C",
+        "mode": "thick",
+        "connectivity": 1,
+        "background": 0,
+        "pattern": "cross",
+        "readonly": false
+      },
+      "native_entries": [
+        "find_boundaries_into"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ],
+      "root_binding_flag": "--root-binding"
+    }
+  },
+  "source_git_blobs": null,
+  "reference_files_raw_sha256": {
+    "benchmarks/label_pair_metrics.py": "5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1",
+    "benchmarks/ellipse_perimeter.py": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "python/skimagexx/coverage.py": "c8e78f3b10c1ddf9f0253375dd574ec0fe3fa0796af8b9b78062bf43794c1364",
+    "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+    "coverage/contracts/ellipse-perimeter-benchmark.json": "e8ebc3418f958bc1416951a8f1302cf1597c775a7db89297f5df8dabf21058c9",
+    "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
+    "coverage/contracts/find-boundaries-benchmark-v1.json": "77385be1aa49309a35e362b90739043c0de07190c22031c79103b3b33f9f08d4",
+    "benchmarks/find_boundaries.py": "daf853253d3315ad44f46cc1453228fa62321172f1ea56f35e22777a23fd7835"
+  },
+  "budget": {
+    "original_public_topcalls": 4,
+    "native_public_topcalls": 4,
+    "timed_batches": 0
+  }
+}

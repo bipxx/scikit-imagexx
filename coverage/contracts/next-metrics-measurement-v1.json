@@ -1,0 +1,75 @@
+{
+  "schema": "next-metrics-measurement-v1",
+  "status": "UNBOUND_NO_DISPATCH_OR_SCIENTIFIC_CALLS",
+  "producer": {
+    "run": null,
+    "revision": null,
+    "artifact": null,
+    "sha256": null
+  },
+  "prepared_source": null,
+  "SDK_members": null,
+  "core_sha256": null,
+  "benchmark_fingerprint": null,
+  "benchmark_source_sha256": {
+    "benchmarks/label_pair_metrics.py": "5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1",
+    "benchmarks/ellipse_perimeter.py": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "python/skimagexx/coverage.py": "c8e78f3b10c1ddf9f0253375dd574ec0fe3fa0796af8b9b78062bf43794c1364",
+    "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+    "coverage/contracts/ellipse-perimeter-benchmark.json": "e8ebc3418f958bc1416951a8f1302cf1597c775a7db89297f5df8dabf21058c9",
+    "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
+    "coverage/contracts/find-boundaries-benchmark-v1.json": "77385be1aa49309a35e362b90739043c0de07190c22031c79103b3b33f9f08d4",
+    "benchmarks/find_boundaries.py": "daf853253d3315ad44f46cc1453228fa62321172f1ea56f35e22777a23fd7835"
+  },
+  "families": {
+    "label_pair_metrics": {
+      "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+      "cases": 8
+    },
+    "ellipse_perimeter": {
+      "contract": "coverage/contracts/ellipse-perimeter-benchmark.json",
+      "cases": 12
+    },
+    "find_boundaries": {
+      "contract": "coverage/contracts/find-boundaries-benchmark-v1.json",
+      "cases": 8
+    }
+  },
+  "first_cohort": {
+    "status": "UNBOUND",
+    "source_revision": null,
+    "probe_path": "tools/next_metrics_first_cohort_probe.py",
+    "probe_sha256": "320c46be9180f4d97b22a40322530f3c15aca27e727425d76f3011dda4dc30d9",
+    "prospective_path": "coverage/contracts/next-metrics-first-cohort-v1.json",
+    "prospective_sha256": "8e11ce460e088b31b3171a270e665c083b1a4011054dff3f62fee18fcb5aa635",
+    "root_admission_path": null,
+    "root_admission_sha256": null,
+    "root_stager_path": null,
+    "root_stager_sha256": null,
+    "core_member": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "source_files_raw_sha256": null
+  },
+  "execution_scope": {
+    "untimed_topcalls": {
+      "original": 4,
+      "native": 4
+    },
+    "canonical_cases": 28,
+    "canonical_raw_samples": 392,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "reference_threadpools": 1,
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true,
+    "warmup_groups": 56
+  },
+  "qualification": "Consume minimum full-qualification stager only after same-source root whole-release and staged-input admission; raw product.status remains staged-unaccepted. Comparison does not replace qualification.",
+  "binding_gate": "Root binds admitted exact source/run/artifact/API SHA/runtime/core/SDK/fingerprint/source pins plus source-and-artifact-bound root receipts in a reviewed successor. No hosted dispatch or calls now.",
+  "runtime_sha256": null
+}

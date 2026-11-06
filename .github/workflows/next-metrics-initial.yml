@@ -1,0 +1,333 @@
+name: next-metrics-initial
+on:
+  workflow_dispatch:
+    inputs:
+      producer_run:
+        type: string
+        required: true
+      producer_revision:
+        type: string
+        required: true
+      artifact_id:
+        type: string
+        required: true
+      artifact_sha256:
+        type: string
+        required: true
+      execution_created_utc:
+        type: string
+        required: true
+      deadline_utc:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PRODUCER_RUN: ${{ inputs.producer_run }}
+      PRODUCER_REVISION: ${{ inputs.producer_revision }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      ARTIFACT_SHA256: ${{ inputs.artifact_sha256 }}
+      EXECUTION_CREATED_UTC: ${{ inputs.execution_created_utc }}
+      DEADLINE_UTC: ${{ inputs.deadline_utc }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: controller
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate the exact successful producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
+          assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
+          assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
+          frozen = json.loads(Path('controller/coverage/contracts/next-metrics-measurement-v1.json').read_bytes())
+          assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'
+          assert (run, revision, artifact, digest) == tuple(frozen['producer'][key] for key in ('run','revision','artifact','sha256'))
+          created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
+          deadline = datetime.fromisoformat(os.environ['DEADLINE_UTC'])
+          assert created.utcoffset() is not None and created.utcoffset().total_seconds() == 0
+          assert deadline.utcoffset() is not None and deadline.utcoffset().total_seconds() == 0
+          assert 0 < (deadline-created).total_seconds() <= 7200
+          assert created <= datetime.now(timezone.utc) < deadline
+          Path('results/execution-clock.json').write_text(json.dumps(dict(created_utc=created.isoformat(),deadline_utc=deadline.isoformat()))+'\n')
+          base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+          def api(endpoint, name):
+              raw = subprocess.check_output(['gh', 'api', base + endpoint])
+              Path('results', name + '.json').write_bytes(raw)
+              return json.loads(raw)
+          record = api('runs/' + run, 'producer-run')
+          assert str(record['id']) == run and record['head_sha'] == revision
+          assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          assert record['path'] == '.github/workflows/public-qualification.yml'
+          assert record['status'] == 'completed' and record['conclusion'] == 'success'
+          listing = api('runs/' + run + '/artifacts?per_page=100', 'producer-artifacts')
+          assert listing['total_count'] == len(listing['artifacts'])
+          matches = [a for a in listing['artifacts'] if a['name'] == 'rank-statistics-product-minimum']
+          assert len(matches) == 1
+          selected = matches[0]
+          assert str(selected['id']) == artifact and selected['digest'] == 'sha256:' + digest
+          assert not selected['expired'] and 0 < selected['size_in_bytes'] < 512 * 1024**2
+          assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
+          Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.producer_revision }}
+          path: snapshot
+          fetch-depth: 1
+      - name: Install the authenticated product offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/prepared.zip"
+          python - <<'PY'
+          import hashlib, json, os, runpy, stat, zipfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          selected = json.loads(Path('results/selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], 'prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results/archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and actual['sha256'] == os.environ['ARTIFACT_SHA256']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall('stage')
+          prepared = Path('stage')
+          manifest = json.loads((prepared / 'runtime.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          Path('results/measurement.json').write_bytes((prepared / 'runtime.json').read_bytes())
+          Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
+          assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
+          frozen = json.loads(Path('controller/coverage/contracts/next-metrics-measurement-v1.json').read_bytes())
+          sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
+          assert sha(prepared/'runtime.json')==frozen['runtime_sha256']
+          first=frozen['first_cohort']
+          admission_path=Path('controller',first['root_admission_path'])
+          stager_path=Path('controller',first['root_stager_path'])
+          assert sha(admission_path)==first['root_admission_sha256']
+          assert sha(stager_path)==first['root_stager_sha256']
+          admission=json.loads(admission_path.read_bytes());stager=json.loads(stager_path.read_bytes())
+          assert admission['source']==os.environ['PRODUCER_REVISION'] and str(admission['run'])==os.environ['PRODUCER_RUN']
+          assert admission['passed'] is True and admission['root_accepted'] is True and admission['profiles']==4
+          assert stager['revision']==os.environ['PRODUCER_REVISION'] and str(stager['run'])==os.environ['PRODUCER_RUN']
+          assert str(stager['artifact'])==os.environ['ARTIFACT_ID'] and stager['artifact_sha256']==os.environ['ARTIFACT_SHA256']
+          assert stager['profile']=='minimum' and stager['status'].startswith('AUTHENTICATED_STAGED_UNACCEPTED')
+          product=json.loads((prepared/'product.json').read_bytes());qualification=json.loads((prepared/'qualification.json').read_bytes())
+          assert sha(prepared/'product.json')==stager['product_json_sha256']
+          assert sha(prepared/'qualification.json')==stager['qualification_manifest_sha256']
+          assert product['schema']=='rank-statistics-comparison-product-v1'
+          assert product['status']==product['provenance']['status']=='staged-unaccepted'
+          assert product['revision']==os.environ['PRODUCER_REVISION'] and product['profile']=='minimum'
+          assert product['provenance']['original_run']==os.environ['PRODUCER_RUN']
+          assert product['provenance']['original_artifact']=='public-qualification-minimum'
+          assert product['provenance']['original_manifest_sha256']==sha(prepared/'qualification.json')
+          assert qualification['passed'] is True and qualification['no_timing'] is True and qualification['profile']=='minimum'
+          assert qualification['source']==manifest['source']
+          Path('results/product.json').write_bytes((prepared/'product.json').read_bytes())
+          Path('results/qualification.json').write_bytes((prepared/'qualification.json').read_bytes())
+          assert len(manifest['wheels']) == 14
+          assert manifest['source'] == frozen['prepared_source']
+          assert len(manifest['runtime']['sdk_sha256']) == frozen['SDK_members']
+          for name,pin in frozen['benchmark_source_sha256'].items():
+              assert manifest['source']['files_sha256'][name] == pin
+              assert hashlib.sha256(Path('snapshot',name).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == pin
+          # Independent whole-release and stager receipts bind source/artifact; staging stays unaccepted.
+          # Existing verifier below authenticates the installed package/runtime bytes.
+          PY
+          python -m venv "$RUNNER_TEMP/runtime"
+          "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links stage/wheels -r stage/runtime-lock.txt 2>&1 | tee results/offline-install.log
+          "$RUNNER_TEMP/runtime/bin/python" snapshot/tools/ci_measurement_artifacts.py verify --wheel-dir stage/wheels --artifact stage/runtime.json 2>&1 | tee results/original-identity.log
+      - name: Validate four real CLI first cohorts before timing
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          export PYTHONDONTWRITEBYTECODE=1
+          "$RUNNER_TEMP/runtime/bin/python" - <<'PY'
+          import hashlib,json,os,subprocess,sys,sysconfig
+          from pathlib import Path
+          workspace=Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
+          frozen=json.loads((controller/'coverage/contracts/next-metrics-measurement-v1.json').read_bytes())
+          first=frozen['first_cohort']
+          assert first['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS'
+          assert first['source_revision']==os.environ['PRODUCER_REVISION']
+          sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
+          probe=controller/first['probe_path'];prospective=controller/first['prospective_path']
+          assert sha(probe)==first['probe_sha256'] and sha(prospective)==first['prospective_sha256']
+          plan=json.loads(prospective.read_bytes())
+          assert plan['source_revision']==first['source_revision']
+          assert len(plan['routes'])==4 and plan['budget']['original_public_topcalls']==plan['budget']['native_public_topcalls']==4
+          assert plan['budget']['timed_batches']==0
+          admission=controller/first['root_admission_path']
+          assert sha(admission)==first['root_admission_sha256']
+          manifest=json.loads((results/'measurement.json').read_bytes())
+          assert manifest['source']==frozen['prepared_source']
+          assert set(first['source_files_raw_sha256'])==set(plan['source_git_blobs'])
+          site=Path(sysconfig.get_paths()['purelib']).resolve()
+          core=site/first['core_member']
+          assert core.resolve().is_relative_to(site) and sha(core)==frozen['core_sha256']
+          go_path=results/'first-cohort-root-go.json'
+          binding=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',
+              prepared_source=frozen['prepared_source'],producer=frozen['producer'],
+              runtime_path=str(workspace/'stage/runtime.json'),runtime_sha256=frozen['runtime_sha256'],
+              shared_CMake_sha256=frozen['prepared_source']['files_sha256']['CMakeLists.txt'],
+              genuine_root_stager_path=str(controller/first['root_stager_path']),
+              genuine_root_stager_sha256=first['root_stager_sha256'],
+              base_contract_sha256=sha(snapshot/frozen['families']['find_boundaries']['contract']),
+              root_go_path=str(go_path),source_root=str(snapshot),source_revision=first['source_revision'],
+              git_argv=['git','-C',str(snapshot)],genuine_root_admission_path=str(admission),
+              genuine_root_admission_sha256=first['root_admission_sha256'],
+              product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',interpreter=sys.executable,
+              source_files_sha256=first['source_files_raw_sha256'],installed_site=str(site),
+              numpy=manifest['runtime']['versions']['numpy'],core_path=str(core),core_sha256=frozen['core_sha256'],
+              output_root=str(results/'first-cohort'),routes=plan['routes'])
+          binding_path=results/'first-cohort-binding.json'
+          binding_path.write_text(json.dumps(binding,indent=2)+'\n')
+          go=dict(binding_sha256=sha(binding_path),probe_sha256=first['probe_sha256'],
+              routes=list(plan['routes']),timed_batches=0,maximum_original_topcalls=4,
+              maximum_native_topcalls=4,deadline_utc=os.environ['DEADLINE_UTC'])
+          go_path.write_text(json.dumps(go,indent=2)+'\n')
+          terminals=[]
+          for route in plan['routes']:
+              command=[sys.executable,str(probe),'--binding',str(binding_path),'--root-go',str(go_path),'--route',route]
+              (results/('first-cohort-'+route+'-command.json')).write_text(json.dumps(command)+'\n')
+              with (results/('first-cohort-'+route+'.log')).open('w')as log:
+                  # Fresh process, same authenticated offline installation; no automatic retry.
+                  completed=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT)
+              (results/('first-cohort-'+route+'-exit.json')).write_text(json.dumps(dict(exit=completed.returncode))+'\n')
+              assert completed.returncode==0, 'First-cohort failed; stop all remaining probes and timing: '+route
+              terminal=json.loads((results/'first-cohort'/route/'terminal.json').read_bytes())
+              assert terminal['status']=='PASS_REAL_CLI_STOP_BEFORE_BODY'
+              assert terminal['source']==first['source_revision'] and terminal['route']==route
+              assert terminal['counts']==dict(original=1,native=1)
+              assert terminal['timed_batches']==terminal['sampler_body_calls']==0
+              assert terminal['outer_state_restored'] is True
+              terminals.append(terminal)
+          assert len(terminals)==4
+          (results/'first-cohort-summary.json').write_text(json.dumps(dict(status='PASS',
+              original_public_topcalls=4,native_public_topcalls=4,timed_batches=0,
+              sampler_body_calls=0,routes=terminals),indent=2)+'\n')
+          PY
+      - name: Measure the three frozen metrics, ellipse and boundary families with one worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          output="$GITHUB_WORKSPACE/results"
+          cd snapshot
+          py="$RUNNER_TEMP/runtime/bin/python"
+          "$py" tools/ci_measurement_artifacts.py verify --wheel-dir "$GITHUB_WORKSPACE/stage/wheels" --artifact "$GITHUB_WORKSPACE/stage/runtime.json" 2>&1 | tee "$output/identity-before.log"
+          for family in label_pair_metrics ellipse_perimeter find_boundaries; do
+            status=0
+            binding_args=()
+            if [ "$family" = find_boundaries ]; then binding_args=(--root-binding "$output/first-cohort-binding.json"); fi
+            "$py" "benchmarks/$family.py" "${binding_args[@]}" --threads 1 --repeat 7 --deadline-utc "$DEADLINE_UTC" --output "$output/$family.json" 2>&1 | tee "$output/$family.log" || status=$?
+            echo "$status" > "$output/$family-exit.txt"
+            "$py" tools/ci_measurement_artifacts.py verify --wheel-dir "$GITHUB_WORKSPACE/stage/wheels" --artifact "$GITHUB_WORKSPACE/stage/runtime.json" 2>&1 | tee "$output/$family-identity-after.log"
+            test "$status" -eq 0
+          done
+      - name: Retain all samples and report every original comparison
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,json,math,statistics
+          from pathlib import Path
+          frozen=json.loads(Path('controller/coverage/contracts/next-metrics-measurement-v1.json').read_bytes())
+          summaries={}
+          for family,count in (('label_pair_metrics',8),('ellipse_perimeter',12),('find_boundaries',8)):
+              report=json.loads(Path('results',family+'.json').read_bytes());meta=report['metadata']
+              expected=frozen['prepared_source']
+              assert {key:meta[key] for key in frozen['benchmark_fingerprint']} == frozen['benchmark_fingerprint']
+              assert meta['core_sha256']==frozen['core_sha256']
+              assert meta['threads']==1 and meta['repeat']==7 and meta['target_ms']==100
+              assert meta['raw_samples']==count*14 and len(report['results'])==count
+              assert set(meta['reference_pool_limits'].values())=={'1'}
+              contract=Path('snapshot',frozen['families'][family]['contract'])
+              assert meta['contract_sha256']==hashlib.sha256(contract.read_bytes()).hexdigest()
+              specs=json.loads(contract.read_bytes())['cases']
+              assert [row['case_id'] for row in report['results']]==[spec['id'] for spec in specs]
+              journal=[json.loads(line)for line in Path('results',family+'.batches.jsonl').read_text().splitlines()]
+              assert {event['case_id']for event in journal}=={spec['id']for spec in specs}
+              for case_index,(row,spec) in enumerate(zip(report['results'],specs)):
+                  assert row['parameters']==spec and row['native_accepted'] is True
+                  assert list(map(len,row['samples_ms']))==[7,7]
+                  assert all(math.isfinite(x)and x>0 for arm in row['samples_ms']for x in arm)
+                  assert list(map(len,row['loops']))==[7,7] and all(type(x)is int and x>0 for arm in row['loops']for x in arm)
+                  assert row['reference_ms']==statistics.median(row['samples_ms'][0])
+                  assert row['cpp_ms']==statistics.median(row['samples_ms'][1])
+                  assert row['speedup']==row['reference_ms']/row['cpp_ms']
+                  events=[event for event in journal if event['case_id']==row['case_id']]
+                  batches=row['batch_records']
+                  assert len(events)==2*len(batches)+1
+                  assert all(event['case_index']==case_index for event in events)
+                  timing_keys=('reference_ms','cpp_ms','speedup','samples_ms','loops','sample_labels','warmup_elapsed_ns','sample_order','batch_records')
+                  assert events[-1]['event']=='measure_returned' and events[-1]['timing']=={key:row[key]for key in timing_keys}
+                  warm=[0,0];accepted=[[],[]];counts=[[],[]];order=[]
+                  for before,after,batch in zip(events[0:-1:2],events[1:-1:2],batches):
+                      assert before['event']=='batch_before' and after==batch and after['event']=='batch_after'
+                      assert all(before[key]==after[key]for key in ('case_index','case_id','function','round','ordinal','loops'))
+                      assert after['complete'] is True and after['failure'] is None
+                      arm=after['function'];elapsed=after['elapsed_ns'];n=after['loops']
+                      assert arm in (0,1) and type(elapsed)is int and elapsed>0 and type(n)is int and n>0
+                      if after['phase']=='warmup':
+                          assert before['requested_phase']=='warmup' and not after['accepted'] and after['round']==-1
+                          warm[arm]+=elapsed
+                      elif after['phase']=='underlength-calibration':
+                          assert before['requested_phase']=='sample' and not after['accepted'] and elapsed<100000000
+                      else:
+                          assert before['requested_phase']=='sample' and after['phase']=='sample' and after['accepted'] and elapsed>=100000000
+                          accepted[arm].append(elapsed/n/1e6);counts[arm].append(n)
+                          order.append((after['round'],after['ordinal'],arm))
+                  assert warm==row['warmup_elapsed_ns'] and min(warm)>=250000000
+                  assert accepted==row['samples_ms'] and counts==row['loops']
+                  expected_order=[[0,1]if(round_id+case_index+1)%2==0 else[1,0]for round_id in range(7)]
+                  assert row['sample_order']==expected_order
+                  assert order==[(round_id,ordinal,arm)for round_id,arms in enumerate(expected_order)for ordinal,arm in enumerate(arms)]
+              summaries[family]=dict(raw_samples=count*14,
+                  wins=[row['case_id']for row in report['results']if row['speedup']>1],
+                  losses=[row['case_id']for row in report['results']if row['speedup']<1],
+                  ties=[row['case_id']for row in report['results']if row['speedup']==1])
+          Path('results/summary.json').write_text(json.dumps(dict(families=summaries,
+              scope='Initial current/public-original comparison only; all losses retained, no previous-C++ gain or whole-product qualification claim.'),indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: next-metrics-initial-minimum
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error
