@@ -1,0 +1,785 @@
+{
+  "schema": "find-boundaries-reference-v1",
+  "status": "PROSPECTIVE_SOURCE_FROZEN_NO_ORIGINAL_CALLS",
+  "source_base": "f0c91244f29f7ea8294577ed7ba33d277ef7e24a",
+  "api": "segmentation.find_boundaries",
+  "public_signature": "(label_img, connectivity=1, mode='thick', background=0)",
+  "full_intended_scope": "Source public behavior for thick/inner/outer/subpixel, connectivity/background, integer/bool labels, shape/order/class/storage/errors and supported protocols. First typed frontier is not whole API completion; remaining dtype/rank/protocol/error partitions stay explicit.",
+  "cases": [
+    {
+      "id": "find_boundaries/thick-cross",
+      "shape": [
+        3,
+        3
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        2,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/inner-cross",
+      "shape": [
+        3,
+        3
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        2,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "inner",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/outer-cross",
+      "shape": [
+        3,
+        3
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        2,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "outer",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/subpixel-cross",
+      "shape": [
+        3,
+        3
+      ],
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        2,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/diagonal-full",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "uint8",
+      "mode": "thick",
+      "connectivity": 2,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/inner-negative",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        -1,
+        -1,
+        2,
+        0,
+        2,
+        -1
+      ],
+      "dtype": "int8",
+      "mode": "inner",
+      "connectivity": 1,
+      "background": -1,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/outer-negative",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        -1,
+        -1,
+        2,
+        0,
+        2,
+        -1
+      ],
+      "dtype": "int16",
+      "mode": "outer",
+      "connectivity": 1,
+      "background": -1,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/outer-high-background",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        7,
+        7,
+        2,
+        7,
+        2,
+        3
+      ],
+      "dtype": "uint8",
+      "mode": "outer",
+      "connectivity": 1,
+      "background": 7,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/outer-max-background",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        255,
+        1,
+        1,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "outer",
+      "connectivity": 1,
+      "background": 255,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/subpixel-max-collision",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        255,
+        0,
+        1,
+        255
+      ],
+      "dtype": "uint8",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/signed-high-words",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        -9007199254740993,
+        0,
+        9007199254740993,
+        9223372036854775807
+      ],
+      "dtype": "int64",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/unsigned-high-background",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        9223372036854775809,
+        9223372036854775810,
+        18446744073709551615
+      ],
+      "dtype": "uint64",
+      "mode": "outer",
+      "connectivity": 1,
+      "background": 9223372036854775809,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/subpixel-u64-max",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        18446744073709551615,
+        0,
+        1,
+        18446744073709551615
+      ],
+      "dtype": "uint64",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/bool-thick",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "bool",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/bool-inner-true",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "bool",
+      "mode": "inner",
+      "connectivity": 1,
+      "background": true,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/bool-noncanonical",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "bool",
+      "mode": "outer",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C",
+      "raw_bool": [
+        0,
+        2,
+        255,
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "id": "find_boundaries/bool-subpixel",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "bool",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/fortran-u16",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        0
+      ],
+      "dtype": "uint16",
+      "mode": "outer",
+      "connectivity": 2,
+      "background": 0,
+      "layout": "F"
+    },
+    {
+      "id": "find_boundaries/transposed-3d",
+      "shape": [
+        2,
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        2,
+        2,
+        2,
+        0,
+        0,
+        1,
+        2,
+        0
+      ],
+      "dtype": "int32",
+      "mode": "inner",
+      "connectivity": 3,
+      "background": 0,
+      "layout": "transpose",
+      "axes": [
+        2,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "find_boundaries/reverse-readonly-3d",
+      "shape": [
+        2,
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        2,
+        2,
+        2,
+        0,
+        0,
+        1,
+        2,
+        0
+      ],
+      "dtype": "uint32",
+      "mode": "thick",
+      "connectivity": 2,
+      "background": 0,
+      "layout": "reverse",
+      "readonly": true
+    },
+    {
+      "id": "find_boundaries/stepped-inner",
+      "shape": [
+        2,
+        3
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        2,
+        2,
+        0
+      ],
+      "dtype": "int16",
+      "mode": "inner",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "step"
+    },
+    {
+      "id": "find_boundaries/readonly-1d-subpixel",
+      "shape": [
+        4
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "dtype": "int32",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C",
+      "readonly": true
+    },
+    {
+      "id": "find_boundaries/singleton-axes",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "values": [
+        0,
+        1,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "outer",
+      "connectivity": 3,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/rank4",
+      "shape": [
+        2,
+        1,
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        0,
+        1,
+        2,
+        2,
+        0,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "thick",
+      "connectivity": 3,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/connectivity-zero",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "uint8",
+      "mode": "thick",
+      "connectivity": 0,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/connectivity-beyond-rank",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "uint8",
+      "mode": "outer",
+      "connectivity": 7,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/unknown-mode-is-thick",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "uint8",
+      "mode": "unrecognised-mode",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/empty-subpixel-error",
+      "shape": [
+        0,
+        2
+      ],
+      "values": [],
+      "dtype": "uint8",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/list-dtype-error",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "uint8",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "list"
+    },
+    {
+      "id": "find_boundaries/connectivity-none-error",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "dtype": "uint8",
+      "mode": "thick",
+      "connectivity": null,
+      "background": 0,
+      "layout": "C"
+    },
+    {
+      "id": "find_boundaries/tagged-u16",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "dtype": "uint16",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "layout": "C",
+      "metadata": {
+        "units": "labels",
+        "source": "frozen-reference"
+      }
+    },
+    {
+      "id": "find_boundaries/background-out-of-range",
+      "shape": [
+        2,
+        2
+      ],
+      "values": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "dtype": "uint8",
+      "mode": "outer",
+      "connectivity": 1,
+      "background": 1208925819614629174706176,
+      "layout": "C"
+    }
+  ],
+  "source_freeze": {
+    "include/skimagexx/find_boundaries.hpp": "8750519525d3b09aeb1a4962ca683cfd4daac74d5f841fa85315b7b2a1860e49",
+    "tests/find_boundaries_contract.py": "d2803bf8efceadfe50c1f5360c3499f0cab500153d74882914be809d06bac156",
+    "tests/find_boundaries_observer.py": "bbfe2e64cd8b26a1ccc0bab57e74541fa744f67c79717bb65554b1525e0f5904",
+    "tests/test_find_boundaries_reference.py": "46befc5dfcb4073f4c35b2386791f8db2e8c2d46abec013ad3baf71a4cc7ce5e",
+    "tests/test_find_boundaries_intake.py": "01c0b2526a64d7a6e7851d9fcc8f0a06f1b5247d56a600eff61d58b879ea0e59"
+  },
+  "upstream_source": {
+    "boundaries": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\segmentation\\boundaries.py",
+      "canonical_lf_sha256": "fbdbbf36d8813c09d00583d235063acb0911d842cd94628d482d5c5685818131",
+      "functions": {
+        "_find_boundaries_subpixel": {
+          "canonical_lf_sha256": "366f763a64bda551297769b08ab1dfd98e9cf00e2c621528e116e7ab1c2c3a43",
+          "start": 10,
+          "end": 45
+        },
+        "find_boundaries": {
+          "canonical_lf_sha256": "633bfa47b9dd777a7e83eb910bef47924096af1d9912db597aa04061a90632b6",
+          "start": 48,
+          "end": 182
+        }
+      }
+    },
+    "gray": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\morphology\\gray.py",
+      "canonical_lf_sha256": "19a82264276da07e8ff780fae8b092543965b5c88f34db4d16536a8d1f1e302e",
+      "functions": {
+        "erosion": {
+          "canonical_lf_sha256": "e47274b61a8267b4a1e6292f6d94fe0f2229cc689cd7d38ffd21515a8bf76c95",
+          "start": 66,
+          "end": 171
+        },
+        "dilation": {
+          "canonical_lf_sha256": "6a5d0de79be3a11b4e7e9b89be0158265ebe9d03821a51767d8ed1849d10dc4d",
+          "start": 175,
+          "end": 284
+        }
+      }
+    },
+    "shape": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\util\\shape.py",
+      "canonical_lf_sha256": "fc9ab1bdc09fa464828b6ee3ce96e610d04606b90c13a3ed58f80138e65c876b",
+      "functions": {
+        "view_as_windows": {
+          "canonical_lf_sha256": "22a178d6998c60c92ac55086f809e3da24b1d40f7a9df4783d8301295bbbc8aa",
+          "start": 96,
+          "end": 247
+        }
+      }
+    },
+    "morphology_scipy": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\scipy\\ndimage\\_morphology.py",
+      "canonical_lf_sha256": "5361c28977347a3bc4ba1240aea0b341a72a803498a5600506c9964a61eeb9ad",
+      "functions": {
+        "generate_binary_structure": {
+          "canonical_lf_sha256": "73adcceb9bf26c83cb73d29418d9249542c6cb7bac97d77e37393631f5240717",
+          "start": 124,
+          "end": 213
+        }
+      }
+    },
+    "retained_scipy_sources": {
+      "1.15.3": {
+        "module_canonical_lf_sha256": "2c5f7580a25c1c85a80fd6ad87ff7e63b1e053041b03410baa0558be6d580160",
+        "generate_binary_structure_canonical_lf_sha256": "73adcceb9bf26c83cb73d29418d9249542c6cb7bac97d77e37393631f5240717"
+      },
+      "1.18.1": {
+        "module_canonical_lf_sha256": "5361c28977347a3bc4ba1240aea0b341a72a803498a5600506c9964a61eeb9ad",
+        "generate_binary_structure_canonical_lf_sha256": "73adcceb9bf26c83cb73d29418d9249542c6cb7bac97d77e37393631f5240717"
+      }
+    }
+  },
+  "max_input_elements": 192,
+  "max_output_elements": 4096,
+  "original_observations": {},
+  "source_safety": {
+    "input_pixels": "<=12logical values in these recipes (32 source-safe specifications); stepped backing<=24elements, sum of encoded owner/view arrays bounded192. All integer values representable in declared dtype.",
+    "ordinary_morphology": "Positive nonempty integer/bool arrays rank1..4, footprint3^rank<=81, source reflect radius1; no custom footprints/protocols/NaN/uncheckedshortshape. SciPy morphology supports the standard rank/shape arguments; no raw fabricated buffers.",
+    "subpixel": "Expanded extents2*s-1, ordinary output<=25positions; np.pad adds1edge border, 3^rank rolling windows stay within padded owned array. Dtype-max collision preserved exactly. Zero-axis case raises at source np.zeros negative extent before view_as_windows.",
+    "errors": "List lacksdtype before any footprint/filter; connectivityNone fails its pure-Python comparison before footprint/filter; empty-subpixel negative allocation before rolling windows. Record actual errors, do not synthesize messages.",
+    "shape_dtype_order": "Ordinary result comes from source empty_like/minmax/ufunc allocation, potentially K/F/permuted order. Captures must preserve this; no assumed C-only result. Subpixel uses source zeros_like Cexpanded buffer.",
+    "integer_semantics": "No floating label normalization: signed/u64 high words, max sentinel, noncanonicalbool conversion, arbitraryintbackground that cannot equal anyuint8label. Outer source expression evaluated literally, including high/nonzero background."
+  },
+  "prospective_call_budget_per_profile": {
+    "top_find_boundaries": 32,
+    "source_derived_morphology_public_calls": 68,
+    "source_derived_generate_binary_structure": 41,
+    "source_derived_subpixel_helper": 6,
+    "native_calls": 0,
+    "timings": 0,
+    "note": "Nested source dependency bodies distinct from32topcalls. Decorator wrappers may add frames; actual controller must bind/count chosen body identities and freeze recipe-specific counts before original GO."
+  },
+  "native_direction": {
+    "reuse": [
+      "Existing ComponentsView/PixelType signed byte-stride descriptors and pixel_size",
+      "Existing execution.hpp partition/globalworker default1",
+      "Existing direct-neighbor/reflection knowledge; do not allocate four morphology intermediates or add generic graph/sparse infrastructure"
+    ],
+    "strict_integer_core": "Thick/inner exact neighborhood inequality. Outer max(fulloriginal)!=min(fullbackground-replaced-by-dtype-max). Subpixel source len(unique)>2 equivalent to two distinct original corner labels excluding dtype-max; center interstice itself guarantees sentinel presence.",
+    "padding_equivalence": "Radius1 reflect offsets duplicate endpoint neighbors just as clamping. For subpixel, edge padding duplicates existing corners and cannot introduce distinct labels.",
+    "output": "Caller-owned canonicalbool byte output at explicit strides; output allocation/order/NumPymetadata remain frontend providers. Input borrowed only for call. No public high-level class.",
+    "workers": "SDK workers0 reads existing globalbudget once; positive argument captured1..1024. Partition independent output positions, no new pool. SIMD actualproof pending, no forced claims.",
+    "header_is_prospective": "Freeze interface/source safety first. Native code, public/binder/parity/SDK/benchmark still unimplemented."
+  },
+  "remaining_partitions": [
+    "Public frontend source order for arbitrary scalar/connectivity/background/mode protocols, subclasses and dtype metadata; no whole original algorithm forwarding.",
+    "Non-native endian, object/structured/complex/float, rank0, ordinary zero-axis inputs and rank>8: explicit assessed-provider/frontier work, not fabricated native errors.",
+    "Source layout and empty-owner flags must be observed before allocating public native outputs; direct private entries revalidate after allocation boundary.",
+    "Original source/binary/controller freeze and refused-intake admission before any once-only originals; independent raw review before golden projection.",
+    "Actual compiled normal/scalar/sanitizer/MSVC where applicable, installed SDK/public hot-swap, independent native/ownedC witnesses, one-worker original measurements and exact-source release remain later gates."
+  ],
+  "pure_source_selectors": [
+    "tests/test_find_boundaries_reference.py::test_find_boundaries_prospective_scope_and_bounds",
+    "tests/test_find_boundaries_reference.py::test_find_boundaries_source_freeze_and_pure_boundary",
+    "tests/test_find_boundaries_reference.py::test_find_boundaries_saved_original_rows_without_replay"
+  ],
+  "installed_only_selector": "tests/test_find_boundaries_intake.py (32 NumPy/SciPy fixture/observer tests with cached original dependencies refused); NEVER wholepureprebuild",
+  "shared_hooks_later_for_root": [
+    "CMake newleaf+binder/header autoexport/nativeunit; src/bindings registration",
+    "segmentation.py actualpublic alias+coverage/default/inventory only after eligible family parity",
+    "Pure and installed-only intake selectors separated fromfirst wiring; genuine SDK family reuse decision after interface",
+    "No change to frozen334drawingcandidate or current release"
+  ]
+}
