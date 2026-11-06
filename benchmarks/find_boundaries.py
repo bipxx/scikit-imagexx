@@ -13,7 +13,7 @@ import sys
 import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v2.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v3.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -94,13 +94,15 @@ def load_root_binding(path, raw_contract):
 
 
 def validate_source_closure(contract):
-    """Authenticate the Windows admission-test successor against frozen v1."""
+    """Authenticate the Windows admission-test successor against frozen v2."""
     successor=contract['runtime_successor']
-    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v1.json'
+    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v2.json'
     raw=(ROOT/successor['contract']).read_bytes()
-    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060'
+    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4'
     previous=json.loads(raw)
-    assert {k:v for k,v in contract.items()if k not in ('source_closure','runtime_successor')}=={k:v for k,v in previous.items()if k!='source_closure'}
+    # load_root_binding already authenticates exactly these runtime fields.
+    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
+    assert {k:v for k,v in contract.items()if k not in provenance|{'source_closure','runtime_successor'}}=={k:v for k,v in previous.items()if k not in provenance|{'source_closure','runtime_successor'}}
     assert set(contract['source_closure'])==set(previous['source_closure'])
     for name,pin in contract['source_closure'].items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
