@@ -1,0 +1,43 @@
+{
+  "status": "COUNTS_COMPONENT_PASS_PENDING_INDEPENDENT_REVIEW",
+  "interface": "skimagexx::detail::label_pair_counts",
+  "donor": "Authenticated genuine drawing SDK94, immutable relocated prefix",
+  "assembly": "Copy donor; append one header and one archive leaf; exported target unchanged",
+  "controls": "Shared exact native controls, five admitted original logical CSR rows and analytic threshold/refusal/state cases",
+  "required_source_dependencies": [
+    "tests/cmake_consumer/label_pair_metrics_consumer.cpp",
+    "tests/label_pair_metrics_native_controls.hpp",
+    "tests/fixtures/label_pair_metrics_originals_v1.hpp"
+  ],
+  "proof_boundary": "New installed client TU, relocated find_package/exported target, actual dependency/map resolution. Normal and actual runtime-disabled modes; compiler-scalar/sanitizer arithmetic proven separately by native packet.",
+  "remaining": [
+    "Public SciPy CSR class/index packing and callback delivery",
+    "Adapted Rand reductions and variation-of-information reductions/logs",
+    "Independent component review, genuine successor, public performance and release qualification",
+    "Windows link/runtime; MSVC compile is compile-only"
+  ],
+  "observed_installed_controls": {
+    "normal": 478,
+    "runtime_disabled": 478,
+    "default_restored": 1,
+    "workers": [
+      1,
+      4
+    ],
+    "SDK_files": 95,
+    "archive_members": 177,
+    "new_leaf_members": 1
+  },
+  "observed_private_binding": {
+    "per_mode": 20,
+    "modes": 4,
+    "total": 80,
+    "normal_profiles": [
+      "NumPy1.24.4/Python3.11.14",
+      "NumPy2.5.4/Python3.13.8"
+    ],
+    "return_witness": "actual builtin c_return and nonNone native_result; one get_num_threads call",
+    "logical_indices": "int64 explicit SDK/binder ABI; not public SciPy index ABI credit"
+  },
+  "MSVC": "Actual new binder and installed-client TU compile /fp:strict /openmp; no Windowslink/runtime."
+}
