@@ -1,0 +1,104 @@
+{
+  "schema": "join-util-views-report-order-v5",
+  "base": "57072ba25f38785e79d930951a56ab4adfc0583f",
+  "original_validator_path": "tools/next_metrics_first_cohort_probe.py",
+  "original_function_source_sha256": "c9ef0a4d9376ff027c74e79c82ab3490ccf5803e8f1327fd1192d1a666ccf239",
+  "corrected_function_source_sha256": "203f8074cccb3876798e83eb4e5363761a14440b9a1b718ec6259f2f09493b58",
+  "inverse": {
+    "current": "            pass_index={'util-executor':0,'dedicated':1}[route['kind']]\n            expected_order=[[0,1]if(round_id+case_index+pass_index)%2==0 else[1,0]for round_id in range(7)]",
+    "predecessor": "            expected_order=[[0,1]if(round_id+case_index+1)%2==0 else[1,0]for round_id in range(7)]"
+  },
+  "source_pins_canonical": {
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/next_util_execution.py": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+    "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+    "benchmarks/find_boundaries.py": "bfa12ae19b78c7b891d6dbb1a3388d5cb41ca20e972b4dc25eb097b45d6eb8dc",
+    "benchmarks/ellipse_perimeter.py": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90"
+  },
+  "measurement_method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "manifest_path": "coverage/contracts/next-metrics-measurement-v4.json",
+  "manifest_raw_sha256": "a06539e559eccd9553dd0da843c1424fe6618ae97cb110dfff3d7c68d5735dad",
+  "retention_sha256": "7fc2234b42b9f71379e1f42d85e469bd932c644d3d944c2c509d41d1e31b7849",
+  "raw_review_sha256": "7186b43024ed1ca2b16eddf73d775cf6e87423aa4bd7c2783c49c30cbf4cf14f",
+  "raw_files": {
+    "metrics-are.json": {
+      "sha256": "0b3f27da7e66f671195a72552b8a1962270b8206b77aefd297e072879c793322",
+      "bytes": 230174
+    },
+    "metrics-are.batches.jsonl": {
+      "sha256": "84254111765d5ac5b1e88da69013ae12bd8f91379c42d7968c87d6080b362f10",
+      "bytes": 121486
+    },
+    "boundary.json": {
+      "sha256": "90f4f15be841a82cd70ed3b449841d1bc6543d00128b96438c54437fc7c76b6a",
+      "bytes": 88229
+    },
+    "boundary.batches.jsonl": {
+      "sha256": "bbb8602ea7b9a75166c93df799ff183087a89cc817b2fd87d3c295d438f3d38f",
+      "bytes": 110754
+    },
+    "join.json": {
+      "sha256": "5608a098db030cc2cb1bdedbb0f49808fe924a13d389304f46ab0bf30caf372a",
+      "bytes": 77706
+    },
+    "join.batches.jsonl": {
+      "sha256": "aed2d8f19665200b5dcb715105dccb3ea540734c101276a01be22e642508293b",
+      "bytes": 107689
+    },
+    "crop.json": {
+      "sha256": "e74e89381b97efc38d6b9a5d42a49102d38be31c1ca81f911bb5c4a7b44abea1",
+      "bytes": 80945
+    },
+    "crop.batches.jsonl": {
+      "sha256": "9c1497ca990c61ecf3275db572a6c946595c57a8681e4e22e5de2e72126728bd",
+      "bytes": 113758
+    },
+    "regular-grid.json": {
+      "sha256": "43261394176c60c2d72f78d9fbc71f6a6732b0dbca97cfadf308698aa4545cc4",
+      "bytes": 81167
+    },
+    "regular-grid.batches.jsonl": {
+      "sha256": "60eb0a6ce16b4a878a42bfb39b03523693bf735f62aaffb7da2942b149d00feb",
+      "bytes": 113156
+    },
+    "slice.json": {
+      "sha256": "46e4ea35be2c1e4070482b9b5b3e62da5c7bf91f298f1745d706434acac15637",
+      "bytes": 80453
+    },
+    "slice.batches.jsonl": {
+      "sha256": "18c07a5a35617415e08cf8dd06cd184e1fd77451f8fee537c7e294d1cedcb87c",
+      "bytes": 113054
+    },
+    "blocks.json": {
+      "sha256": "346c104a9f9ce74583213f97e4a30e37f8dadccd02b357632aa3a13854ece33a",
+      "bytes": 41590
+    },
+    "blocks.batches.jsonl": {
+      "sha256": "d3c96371daf05730b515579ec61c84fbdfdc4f9e10ad25caabc288bc425cbd33",
+      "bytes": 58105
+    },
+    "windows.json": {
+      "sha256": "33326fa3c308e38fb8c7bdac210b887a5ad6cddce48b77e93a9784224633b6d6",
+      "bytes": 41684
+    },
+    "windows.batches.jsonl": {
+      "sha256": "f4ddbb1c7852b543146e98a33017f62203b3c2b153c35cfa4cd267f6c97995b9",
+      "bytes": 58367
+    },
+    "ellipse.json": {
+      "sha256": "ee852aa62545987173eed516fbaf53624646097992245bb5cb722725998bade6",
+      "bytes": 149772
+    },
+    "ellipse.batches.jsonl": {
+      "sha256": "1a2d83507a3404ecbbd296d301c3d356100d2835ab0be0373e9c513836dc7edc",
+      "bytes": 190899
+    }
+  },
+  "hosted_status": "failure",
+  "reports": 9,
+  "cases": 68,
+  "samples": 952,
+  "warmup_groups": 136,
+  "source_only": true,
+  "next": "Root independent source admission/explicit report-only replay; no computational replay or hosted relabel."
+}
