@@ -1,0 +1,71 @@
+{
+  "schema": "next-metrics-actual-binding-root-review-v1",
+  "status": "PASS",
+  "passed": true,
+  "source": "20b9d4e70e091ab84f334bf5823d1d4242933b20",
+  "predecessor": "eba84bef1c87c66243abb2cc770ee0827abe1558",
+  "handoff": "build\\next-metrics-controller-binding-v1\\handoff-v1.json",
+  "handoff_sha256": "ccba376bed32ea98db94576df4cd913ff43b4389d5089d32ec1db6581ac24224",
+  "changed_files": [
+    "coverage/contracts/next-metrics-first-cohort-v1.json",
+    "coverage/contracts/next-metrics-measurement-v1.json",
+    "coverage/evidence/next-metrics-minimum-stager-admission-v1.json",
+    "coverage/evidence/next-metrics-whole-product-admission-v1.json",
+    "tests/test_next_metrics_initial_controller.py"
+  ],
+  "small_proofs_authenticated": 17,
+  "producer": {
+    "run": "42177447898",
+    "revision": "683f0043a6cd6bb61626241a003ffd615ba48205",
+    "artifact": "13485549510",
+    "sha256": "aa1f57a094828980f83b3b78ed037d12184150618ed57b010c09a63b9074a769"
+  },
+  "checks": {
+    "windows311": {
+      "cases": 14,
+      "exit_code": 0,
+      "seconds": 1.6880000000819564,
+      "evidence_reused": true
+    },
+    "windows313": {
+      "cases": 14,
+      "exit_code": 0,
+      "seconds": 1.933481000130996,
+      "evidence_reused": true
+    }
+  },
+  "production_and_measurement_code_unchanged": true,
+  "prepared_source_matches_authenticated_runtime": true,
+  "root_receipts_byte_identical": true,
+  "reference_files_authenticated": 18,
+  "budget": {
+    "original_public_topcalls": 4,
+    "native_public_topcalls": 4,
+    "timed_batches": 0
+  },
+  "execution_scope": {
+    "untimed_topcalls": {
+      "original": 4,
+      "native": 4
+    },
+    "canonical_cases": 28,
+    "canonical_raw_samples": 392,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "reference_threadpools": 1,
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true,
+    "warmup_groups": 56
+  },
+  "review": "Root independently inspected actual binding and test delta; old UNBOUND negative preserved, actual bound input/network refusals added; prior guard assertions retained. Workflow/probe/adapter byte-identical to admitted predecessor. Historical f13 anchor retained, actual producer683 pinned.",
+  "authorization": "GO for one existing hosted workflow dispatch; four real CLI cohorts must all pass before one comparison. No automatic retry. Dispatch input clocks supplied live.",
+  "remaining_gates": [
+    "Actual four real CLI stops before sampler body",
+    "Single isolated public-call comparison with all losses retained",
+    "Independent result reconstruction and qualified source main delivery"
+  ],
+  "waste_review": "Reused existing runtime/root admissions, predecessor review and both14-case guards. Authenticated only small source/metadata/proofs; zero builds/downloads/archive or core rehashes/originals/native/timing. Next owner root: dispatch promptly, then inspect exact run."
+}
