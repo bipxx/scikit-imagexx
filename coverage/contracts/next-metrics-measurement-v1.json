@@ -19,10 +19,10 @@
     "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
     "python/skimagexx/coverage.py": "c8e78f3b10c1ddf9f0253375dd574ec0fe3fa0796af8b9b78062bf43794c1364",
     "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
-    "coverage/contracts/ellipse-perimeter-benchmark.json": "e8ebc3418f958bc1416951a8f1302cf1597c775a7db89297f5df8dabf21058c9",
     "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
-    "coverage/contracts/find-boundaries-benchmark-v1.json": "77385be1aa49309a35e362b90739043c0de07190c22031c79103b3b33f9f08d4",
-    "benchmarks/find_boundaries.py": "daf853253d3315ad44f46cc1453228fa62321172f1ea56f35e22777a23fd7835"
+    "benchmarks/find_boundaries.py": "cec658ce590bbc9a22a30b2974e6b98ddda58a2a1fd57978df04db5949d87cdf",
+    "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
+    "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060"
   },
   "families": {
     "label_pair_metrics": {
@@ -30,11 +30,11 @@
       "cases": 8
     },
     "ellipse_perimeter": {
-      "contract": "coverage/contracts/ellipse-perimeter-benchmark.json",
+      "contract": "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json",
       "cases": 12
     },
     "find_boundaries": {
-      "contract": "coverage/contracts/find-boundaries-benchmark-v1.json",
+      "contract": "coverage/contracts/find-boundaries-benchmark-binding-v1.json",
       "cases": 8
     }
   },
@@ -42,9 +42,9 @@
     "status": "UNBOUND",
     "source_revision": null,
     "probe_path": "tools/next_metrics_first_cohort_probe.py",
-    "probe_sha256": "320c46be9180f4d97b22a40322530f3c15aca27e727425d76f3011dda4dc30d9",
+    "probe_sha256": "d7aead4ab5c885889b005ec4a7910bc6ae67bd9178f8ee525e38f5afe96977c9",
     "prospective_path": "coverage/contracts/next-metrics-first-cohort-v1.json",
-    "prospective_sha256": "8e11ce460e088b31b3171a270e665c083b1a4011054dff3f62fee18fcb5aa635",
+    "prospective_sha256": "c6afdfe92329f64077fa92b74458b0240958af61491844e963b0afc12fc4e3ce",
     "root_admission_path": null,
     "root_admission_sha256": null,
     "root_stager_path": null,

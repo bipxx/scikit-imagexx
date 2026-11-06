@@ -2,6 +2,8 @@
 import ast
 import hashlib
 import json
+import os
+import symtable
 from pathlib import Path
 import re
 import subprocess
@@ -26,7 +28,7 @@ def test_unbound_contract_and_frozen_scope():
     assert PLAN['source_revision']is None and PLAN['source_git_blobs']is None
     assert PLAN['budget']==dict(original_public_topcalls=4,native_public_topcalls=4,timed_batches=0)
     assert {r['api']for r in PLAN['routes'].values()}=={'metrics.adapted_rand_error','metrics.contingency_table','draw.ellipse_perimeter','segmentation.find_boundaries'}
-    assert CONTRACT['families']==dict(label_pair_metrics=dict(contract='coverage/contracts/label-pair-metrics-benchmark-v1.json',cases=8),ellipse_perimeter=dict(contract='coverage/contracts/ellipse-perimeter-benchmark.json',cases=12),find_boundaries=dict(contract='coverage/contracts/find-boundaries-benchmark-v1.json',cases=8))
+    assert CONTRACT['families']==dict(label_pair_metrics=dict(contract='coverage/contracts/label-pair-metrics-benchmark-v1.json',cases=8),ellipse_perimeter=dict(contract='coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json',cases=12),find_boundaries=dict(contract='coverage/contracts/find-boundaries-benchmark-binding-v1.json',cases=8))
     assert CONTRACT['execution_scope']['canonical_cases']==sum(f['cases']for f in CONTRACT['families'].values())==28
     assert CONTRACT['execution_scope']['canonical_raw_samples']==14*CONTRACT['execution_scope']['canonical_cases']==392
     assert CONTRACT['execution_scope']['warmup_groups']==2*CONTRACT['execution_scope']['canonical_cases']==56
@@ -131,21 +133,23 @@ original=import_module('skimage.'+route['api'].split('.')[0])
 native_public=import_module('skimagexx.'+route['api'].split('.')[0])
 def input_state(arguments):return tuple(arguments)
 def output_snapshot(value):return {'storage':'inert-complete-storage'}
+def snapshot(value):return output_snapshot(value)
 def main():
  xx.set_fallback_enabled(False)
  options={};arguments=(1,2);positional=arguments;state=globals()['input_state'](arguments)
  if route['api'].startswith('segmentation.'):
-  image=type('Image',(),{'ctypes':type('Address',(),{'data':123})()})();arguments=(image,);frozen=output_snapshot(image);address=image.ctypes.data
- snapshot=output_snapshot
+  image=type('Image',(),{'ctypes':type('Address',(),{'data':123})()})();arguments=(image,);frozen=snapshot(image);address=image.ctypes.data
  expected=getattr(original,route['api'].split('.')[1])(*arguments,**options)
  actual=getattr(native_public,route['api'].split('.')[1])(*arguments,**options)
  spec=route['first_case'];calls=route['native_entries'];accepted=[True];snapshots=['get_num_threads'];rows=[];error=0
- snapshot=output_snapshot
+ LOCAL_SNAPSHOT
  if route['api'].startswith('draw.'):
   input_state=(arguments,options.copy())
  measure(None,None)
 main()
 """.replace('ROUTE',repr(json.dumps(route)))
+code=code.replace(' LOCAL_SNAPSHOT', ' from draw_coordinates import snapshot'if namespace=='draw'else'')
+standin=types.ModuleType('draw_coordinates');standin.snapshot=lambda value:{'storage':'inert-complete-storage'};sys.modules['draw_coordinates']=standin
 if bad=='calls':code=code.replace("calls=route['native_entries']","calls=[]")
 if bad=='input':code=code.replace('measure(None,None)',"image.ctypes.data=999;measure(None,None)"if route_name=='boundary'else'arguments=(9,9);measure(None,None)')
 driver.write_text(code)
@@ -170,6 +174,10 @@ def test_actual_probe_inert_stubs_stop_before_sampler_body(tmp_path,route,bad):
     folder=tmp_path/'attempt'
     result=subprocess.run([sys.executable,str(child),str(ROOT/'tools/next_metrics_first_cohort_probe.py'),str(ROOT/'coverage/contracts/next-metrics-first-cohort-v1.json'),str(folder),route,bad],capture_output=True,text=True)
     terminal=folder/'results'/route/'terminal.json'
+    if route in ('boundary','ellipse'):
+        driver=folder/'snapshot'/PLAN['routes'][route]['driver']
+        symbol=next(t for t in symtable.symtable(driver.read_text(),str(driver),'exec').get_children()if t.get_name()=='main').lookup('snapshot')
+        assert symbol.is_global() if route=='boundary' else symbol.is_local() and symbol.is_imported()
     assert 'SAMPLER_BODY_FORBIDDEN'not in result.stderr and 'REAL_SCIENTIFIC_IMPORT_FORBIDDEN'not in result.stderr
     if bad=='none':
         assert result.returncode==0,result.stderr
@@ -181,3 +189,59 @@ def test_actual_probe_inert_stubs_stop_before_sampler_body(tmp_path,route,bad):
         if bad!='admission':
             failure=json.loads((folder/'results'/route/'failure.json').read_bytes())
             assert failure['counts']==dict(original=1,native=1) and failure['type']=='AssertionError'
+
+
+def actual_interface_source(route):
+    source=Path(os.environ.get('NEXT_METRICS_PRODUCER_SOURCE',str(ROOT)))
+    spec=PLAN['routes'][route]
+    text=(source/spec['driver']).read_text()
+    tree=ast.parse(text)
+    assignment=next(n for n in tree.body if isinstance(n,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='CONTRACT'for t in n.targets))
+    assert isinstance(assignment.value,ast.BinOp)and isinstance(assignment.value.op,ast.Div)
+    return source,text,assignment.value.right.value
+
+
+@pytest.mark.parametrize('route',['ellipse','boundary'])
+def test_actual_producer_contract_and_snapshot_scope(route):
+    source,text,contract_path=actual_interface_source(route)
+    spec=PLAN['routes'][route];family='ellipse_perimeter'if route=='ellipse'else'find_boundaries'
+    assert contract_path==spec['contract']==CONTRACT['families'][family]['contract']
+    assert hashlib.sha256((source/contract_path).read_bytes()).hexdigest()==CONTRACT['benchmark_source_sha256'][contract_path]
+    assert hashlib.sha256((source/spec['driver']).read_bytes()).hexdigest()==CONTRACT['benchmark_source_sha256'][spec['driver']]
+    symbol=next(t for t in symtable.symtable(text,spec['driver'],'exec').get_children()if t.get_name()=='main').lookup('snapshot')
+    assert symbol.is_global() if route=='boundary'else symbol.is_local()and symbol.is_imported()
+
+
+@pytest.mark.parametrize('route,old_path',[('ellipse','coverage/contracts/ellipse-perimeter-benchmark.json'),('boundary','coverage/contracts/find-boundaries-benchmark-v1.json')])
+@pytest.mark.parametrize('historical_mutation',[False,True])
+def test_actual_report_contract_hash_uses_producer_interface(tmp_path,monkeypatch,route,old_path,historical_mutation):
+    source,_,actual=actual_interface_source(route)
+    family='ellipse_perimeter'if route=='ellipse'else'find_boundaries'
+    frozen=json.loads(json.dumps(CONTRACT))
+    if historical_mutation:frozen['families'][family]['contract']=old_path
+    for path in (actual,old_path):
+        target=tmp_path/'snapshot'/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((source/path).read_bytes())
+    # Execute the actual collector's contract selection/hash barrier only.
+    loop=next(n for n in ast.parse(SCRIPTS[-1]).body if isinstance(n,ast.For))
+    select=next(i for i,n in enumerate(loop.body)if isinstance(n,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='contract'for t in n.targets))
+    snippet='\n'.join(ast.get_source_segment(SCRIPTS[-1],n)for n in loop.body[select:select+3])
+    monkeypatch.chdir(tmp_path)
+    context=dict(Path=Path,hashlib=hashlib,json=json,frozen=frozen,family=family,meta=dict(contract_sha256=hashlib.sha256((source/actual).read_bytes()).hexdigest()))
+    if historical_mutation:
+        with pytest.raises(AssertionError):exec(compile(snippet,'<actual-contract-collector>','exec'),context)
+    else:
+        exec(compile(snippet,'<actual-contract-collector>','exec'),context)
+        assert len(context['specs'])==frozen['families'][family]['cases']
+
+
+def test_boundary_local_snapshot_lookup_mutation_is_rejected(tmp_path):
+    # The old probe must fail with the faithful module-global fixture.
+    original=(ROOT/'tools/next_metrics_first_cohort_probe.py').read_text()
+    mutant=original.replace("frame.f_back.f_globals['snapshot']", "caller['snapshot']")
+    assert mutant!=original
+    probe=tmp_path/'mutant_probe.py';probe.write_text(mutant)
+    child=tmp_path/'child.py';child.write_text(STUB_CHILD);folder=tmp_path/'attempt'
+    result=subprocess.run([sys.executable,str(child),str(probe),str(ROOT/'coverage/contracts/next-metrics-first-cohort-v1.json'),str(folder),'boundary','none'],capture_output=True,text=True)
+    assert result.returncode!=0 and 'SAMPLER_BODY_FORBIDDEN'not in result.stderr
+    failure=json.loads((folder/'results/boundary/failure.json').read_bytes())
+    assert failure['type']=='KeyError'and 'snapshot'in failure['error']and failure['counts']==dict(original=1,native=1)

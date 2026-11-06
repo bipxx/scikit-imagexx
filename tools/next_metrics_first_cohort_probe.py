@@ -164,9 +164,9 @@ def main():
                     assert len(caller['actual']) == len(caller['expected']) == 3
                     assert frame.f_back.f_globals['output_snapshot'](caller['actual']) == frame.f_back.f_globals['output_snapshot'](caller['expected'])
             elif namespace == 'segmentation':
-                assert caller['snapshot'](caller['image']) == caller['frozen']
+                assert frame.f_back.f_globals['snapshot'](caller['image']) == caller['frozen']
                 assert caller['image'].ctypes.data == caller['address']
-                assert caller['snapshot'](caller['actual']) == caller['snapshot'](caller['expected'])
+                assert frame.f_back.f_globals['snapshot'](caller['actual']) == frame.f_back.f_globals['snapshot'](caller['expected'])
             else:
                 assert (arguments, caller['options']) == caller['input_state']
                 assert caller['snapshot'](caller['actual']) == caller['snapshot'](caller['expected'])
