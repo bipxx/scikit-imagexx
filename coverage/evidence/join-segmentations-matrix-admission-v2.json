@@ -1,0 +1,96 @@
+{
+  "schema": "join-segmentations-matrix-root-admission-v2",
+  "status": "PASS_SCOPED_CAPTURED_INPUT_PRIVATE_MATRIX_NOT_GENUINE_OR_PERFORMANCE",
+  "source": "e03a00633d7146b78391ad65833d3728eb7fd86e",
+  "base": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "handoff_sha256": "d6c8b4aa83971ce05cafa58592b1ad95cfdcd192f0e998f55fef75cac806c077",
+  "independent_review": {
+    "path": "build\\join-segmentations-matrix-independent-review-v2\\review-v2.json",
+    "sha256": "7d163519dfc2c9250400f90605a5591ac2e7dc4a874581ad11dd22f21e07eb6a"
+  },
+  "root_source_admission_sha256": "de7574883ad11066169d470d668c4e4953ec0329fdb22c504ae6a9ac0eddcbe0",
+  "source_files": {
+    "coverage/contracts/join-segmentations-captured-fenv-input-v1.json": "1af50e744744268b18baca3552d593970d43aa82536cb0db9e84e5ee48c3da18",
+    "coverage/contracts/join-segmentations-unique-reuse-v1.json": "137cfcd9341a809cafa216701fa020f871fe8f4bb03dbf54f2241db2e2ba3df2",
+    "python/skimagexx/_join_segmentations.py": "33c860519b7cc40f4019854f3384caa31919c740df7261502bb01412d1abae52",
+    "tests/join_segmentations_fenv_input.py": "a9be0b1794e785f737c5bfece9324002b232c02381754ad63f2e2033ac1a1e41",
+    "tests/test_join_segmentations_fenv_input_source.py": "54a9f09d5e1e47038f8d3c0f54dcb3dcd2d545c572f7dbe8cfee3a7620bf8f7a",
+    "tests/test_join_segmentations_native_contract.py": "37a581e215bb6bbe6734956c6be0a7e02e385f44d550cd0051a7bed906621d99",
+    "tests/test_join_segmentations_public.py": "61e39857131ac15513cf628d51f96658871f8ec30da571902ab785cd874cc30e",
+    "tests/test_join_segmentations_unique_reuse_public.py": "fe0c0e86ce8028c5a58668a8f5f6578a36dc62168baf9280601ed560164a1612"
+  },
+  "matrix": [
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "version": 2,
+      "XML": 63,
+      "observations": 50,
+      "terminal_sha256": "4af8b1df24eb8da3afbd379f0888c3583d1bd34ff9b0032d591788b9c479529f",
+      "reused_minimum": true
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "version": 2,
+      "XML": 63,
+      "observations": 50,
+      "terminal_sha256": "5d935a67f9d657e70095f79788bd228c490b7e31fe6c5ef2203d15c61b1f61c4",
+      "reused_minimum": true
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "version": 3,
+      "XML": 63,
+      "observations": 50,
+      "terminal_sha256": "8a6014a8bcd8e47772aefcb96200524b3de957fa80c3f71f327911a12c51e527",
+      "reused_minimum": false
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "version": 3,
+      "XML": 63,
+      "observations": 50,
+      "terminal_sha256": "6b3e9de6b6ba27a2e6996a46bc3f3daea0886843c1d60e1cf84f7daafd9a66c0",
+      "reused_minimum": false
+    }
+  ],
+  "XML": 252,
+  "saved_rows": 200,
+  "small_proof_authentication_scope": {
+    "count": 231,
+    "bytes": 3614149,
+    "authority": "Independent reviewer authenticated all; root inspected current source, actual four XML/terminal cells and unchanged source admission."
+  },
+  "setup_review": "Root read v3 launcher boundary. Only RECORD-authenticated canonical metadata declarations/tester init allowed while exact unchanged target assembled once; same pair replaces fixture, setup hooks restored then strict request/body guards applied before pytest. Canonical sentinel identity retained; not a namespace-refusal proof. Modern remains private dual extension; minimum retained271 ownwheel overlay.",
+  "FP_scope": "Numerical incoming CW/SW/MXCSR from original observations are seeded before call on current trusted32-byte template. All strict after/data/map/error/warning assertions remain; actual outercaller32 restored. Arbitrary sticky-invalid incoming source parity remains open; no after-call mask.",
+  "failure_history": [
+    "Earlier43 FP preservation failures retained; unchanged baseline clears same incoming invalid flag outside recorded input states.",
+    "Original modern59setup errors/4passes and v1handoff remain unready, not relabeled. Explicit metadata-only setup correction produced newmodern126 passes without redoing minimum126."
+  ],
+  "pending": [
+    "Shared Linux public-post203 sourcebuilt F1helper transport and versioned source/context/collector closure",
+    "Genuine singlecore namespace/hot-swap/shared worker globals/installed SDK/four-profile qualification",
+    "Returned ArrayMap exact class/protocol and broader FP/domain/provider/SDK closure",
+    "Actual one-thread public original performance: prior8JOIN losses retained until valid successor measurement",
+    "Main delivery and full API completion"
+  ],
+  "execution": {
+    "scientific_calls": 0,
+    "tests": 0,
+    "builds": 0,
+    "originals": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_hash_replays": 0
+  },
+  "waste_review": {
+    "result": "Reusable private optimized mapping component admitted; no shipping coverage increase.",
+    "reuse": "Minimum126 unchanged evidence, original100rows/native/SDK/helper/ABI; no new original or build/timing.",
+    "avoidable": "Private modern package metadata request setup dependency caused59setup errors before fixed boundary; root JSON/document edits used nonunique labels and stopped beforewrites, no scientific effect, costs unknown.",
+    "next_owner": "sole shared integration author",
+    "next_trigger": "Compose compatible admitted utility/JOIN/Radon and LBPbugrepair; complete bothPython source barriers before hosted genuine successor."
+  }
+}

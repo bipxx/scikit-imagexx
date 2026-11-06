@@ -37090,15 +37090,17 @@
       },
       "optimization_successor": {
         "owner": "readiness_reviewer",
-        "state": "captured_input_private_matrix_frozen_pending_root_admission",
+        "state": "private_matrix_root_admitted_shared_integration_assigned",
         "baseline": "a6bae9ac86dbba362537758784edf06c973e9c53",
         "evidence": "build/join-segmentations-losses-v1",
         "scope": "128native-onlycalls locate repeated4thunique sort; one-line mappingcandidate reuses thirdunique owned array. No CPP/build/originals/performance campaign.",
         "failure": "Initial63XML43FAIL20PASS at rawFENVpreservation. Same-process samefull32 baseline/candidate probes show targetclearsinvalidbit on bothlabels-only/negativeerror paths, outside oldcapturedincomingflag scope. Allfailures retained, no masks/waivers or fullFPclaim.",
-        "next_gate": "Root independently reviews frozen e03a handoff-v2 d6c8b4aa: 252XML/200saved rows across minimum/modern normal/disabled, all reported pass; source and matrix admission remain separate. Reuse minimum evidence; modern setup authenticated canonical metadata before strict guard, no original algorithms or timing. Old43FP failures/59setup errors retained. Genuine Linuxpost203 helper transport, shared globals, class/fullFP/SDK domains and performance remain pending. Update affected checklist rows at admission/delivery.",
+        "next_gate": "C sole shared author composes root-admitted e03source/matrix252XML/200saved rows, sourcebuiltF1env onLinuxpost203 and metadata/context/collector closure. Preserveold43FP/59setupfailures; no fullFP/class/genuine/performance claim. Root independent source/fullbarrier and genuine release later.",
         "source": "e03a00633d7146b78391ad65833d3728eb7fd86e",
         "root_source_admission": "build/join-captured-input-root-admission-v1/admission-v1.json",
-        "root_source_admission_sha256": "de7574883ad11066169d470d668c4e4953ec0329fdb22c504ae6a9ac0eddcbe0"
+        "root_source_admission_sha256": "de7574883ad11066169d470d668c4e4953ec0329fdb22c504ae6a9ac0eddcbe0",
+        "root_matrix_admission": "build/join-segmentations-matrix-root-admission-v2/admission-v1.json",
+        "root_matrix_admission_sha256": "f953b1ae1013f16ab95b751ebabffa51765c99a77a6ab6696dfad60c6431becc"
       }
     },
     {
@@ -37127,7 +37129,7 @@
       },
       "optimization_successor": {
         "owner": "metrics_integrator",
-        "state": "native_profile_demonstrated_candidate_in_progress",
+        "state": "scoped_component_root_admitted_shared_dependency_genuine_performance_pending",
         "source_baseline": "a6bae9ac86dbba362537758784edf06c973e9c53",
         "apis": [
           "util.crop",
@@ -37138,7 +37140,9 @@
         "evidence": "build/util-view-boundary-v1/native-profile-v1.json",
         "scope": "384native-only cProfile calls,0originalattempts/full32restored. Reused once-extracted5.875MBa6ownwheel+retainedWSL3.11.14NP1.24.4, distinctfrompublishedhost3.11.17. No official speedclaim.",
         "demonstrated_cost": "Repeatednp.iinfo construction and genericper-element fullrankoffset+memcpy dominate instrumentedcopycases; candidate cachesimmutableintpbound and useschecked-per-line PODwordcopy, no newSIMD/thread framework.",
-        "next_gate": "One familycandidate with affected savedparity/modes/SDK/source/sanitizer evidence, rootindependentadmission and lateractualgenuineperformance; no neworiginals or main271delay."
+        "next_gate": "Root463df5ba admits f48fivefile component/2336privateXML/31GNUcommands andscopedSDK528descriptors per mode. Soleintegrator closes LBPcopierdependency, versions exact sharedsourcecontexts/fullbarriers, genuinequalification then actualpublicperformance. All24oldlosses retained; no newgain inferred.",
+        "source": "f48fe19edeb336163249383d61a51b186ca610fa",
+        "root_admission": "coverage/evidence/util-view-boundary-root-admission-v1.json"
       }
     },
     {
@@ -37299,7 +37303,7 @@
       "id": "draw-multiblock-lbp-source-first-v1",
       "kind": "reference",
       "owner": "boundary_worker",
-      "state": "assigned",
+      "state": "lbp_dtype_metadata_bug_successor_assigned",
       "apis": [],
       "target_apis": [
         "feature.draw_multiblock_lbp"
@@ -37315,10 +37319,10 @@
       "base_sha": "9a303e65",
       "scope": "Existing dependency-ready W1 fixed LBP display overlay; source/test-first only. Reuse existing rectangle/scatter/alpha and conversion primitives after actual source inspection. No original/native/helper/sampler bodies, new environment or current release dependency.",
       "acceptance": "Pin actual upstream helper/source, freeze bit-to-neighbor order, center treatment, coordinates/clipping/slicing, colors/alpha, dtype/range/errors/mutation/provider/FP contracts and bounded factories; prospective original1thread benchmark plus complete SDK/native reuse route. Both retained Windows source guards and actual safe NumPy factory/cached-cold REQUEST refusal both profiles,0original/native calls.",
-      "current_checkpoint": "Actual94minimum+94modern publicobservations complete (92body+2prebindingerrors/profile); raw1bcf independentlyadmitted188rows. Prototype299/f529 frozen but NOTfullAPIready. R next closes all94numeric/error/protocol/FP/layout/half domains; CprivateOFF sharedintegration source/syntax done waitingRsuccessor. No original/timing authority remains. Publictarget94/profile fields nowmatch under privatebridge20d;13min rawrecord mismatches isolatedpost-return JSON formatting. Root observer-phase-scope-v1 keeps themdiagnostic, mandatorytargetFP/caller32unchanged, oldstrictfailsretained. R versionedmetadatareassessment/SDKclosure next; no genuine claim.",
+      "current_checkpoint": "299 faileddebug qualification demonstrates output dtype metadata wrongly retained for LBP float16/32/64. Prior private0e51/native94-case admission remains scoped; full qualification notpassed. B frozen Radon1855377b separatecomponent unchanged.",
       "next_gate": {
-        "owner": "metrics_integrator sole private shared LBP integration author; readiness_reviewer full saved-parity closure; root raw/native admission",
-        "action": "Reuse admitted MARK typedexceptioncodec0dbdf864 byte-exact in additive LBP observer successor, assess actual pinned exceptionarg domains and explicitfrontiers, complete same-controller0body source/runtime/FP prefixes+affectedpure controls in one frozenhandoff. No original188GO/capture; root independent complete admission before separate authority. R native implementation does not claim savedgold parity yet."
+        "owner": "boundary_worker",
+        "action": "New isolated family-specific successor from299: inspect pinned original source and actual failurepayload; correct root output-dtype construction in LBP frontend/binder as demonstrated, retain input metadata/alias/FP contracts. No assertions/golds relaxed, no original algorithms/timing/fullproduct. Reuse saved94cases/profile and existing privatecore/helpers; add meaningful metadata regression and SDK applicability disposition. Freeze coherent source/proofs for independent root review, shared integration owner reserved."
       }
     },
     {
@@ -37433,7 +37437,7 @@
       "id": "finite-radon-pair-v1",
       "kind": "implementation",
       "owner": "boundary_worker",
-      "state": "exceptional8_raw_root_admitted_native_successor_in_progress",
+      "state": "exceptional224_observed_native_root_admitted_shared_integration_pending",
       "apis": [],
       "target_apis": [
         "transform.frt2",
@@ -37457,17 +37461,27 @@
       "base_sha": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
       "scope": "Dependency-ready finite Radon pair, no FFTbackend needed. Exact-name scan of fullplan/ledger/evidence/tests/include/src found only unassignedinventory, no prior work/blocker. This resumes full477scope while currentrelease/futureMARKandLBP remain independent.",
       "acceptance": "Own native/public/SDK source-contract/parity/benchmark family. Pin actual upstreamsource and runtime, freeze bounded complete input/error/layout/dtype/overflow/scalarpromotion contract and safe fixtures first; sourceguards bothretainedPythons/zerooriginalbudget. Implement source-faithful complete namedowning operations with reusedPOD/conversion/runtime primitives, scalar/SIMD andoptionalglobalworkers default1 capturedonce; integer wrap/reduction/inverse division matchprofile. Fullcontract/provider/platform frontiers stayexplicit. No public count/genuine/hotswap/one-threadoriginal speedclaim until requiredlatergates.",
-      "current_checkpoint": "Root463708b2 admitted460a fourfixedn5NaN/Inf recipes; actual minimum4 and modern4 captures completed once after separate authority. Root rawv2 9d4ab6db admits all8 observations, original budget0. Existing216originals/ee639native/7fceebenchmark/failures unchanged. B native exceptional-cast successor in progress, not admitted; no timing authority.",
+      "current_checkpoint": "Root94290698 admits1855377b genericreal-f64 cast/status successor:1344strict saved worker/modecomparisons plus210generic, scopedassembledSDK252successes/8typederrors eachmode,10pure eachPython/MSVC2compileonly. New8originals consumedonce, budget0; wholeAPI/genuine/performance pending.",
       "next_gate": {
-        "owner": "root",
-        "action": "Root reviews B frozen native successor when available against old216 plus new8 reference records, affected scalar/SIMD/worker/SDK evidence and retained failures; no new originals or timing. Root benchmark-source review, genuine integration and public speed gates remain pending. Update affected checklist rows at bounded closeout."
+        "owner": "sole shared integration author after root compatible selection",
+        "action": "Selectively import reviewed cumulative Radonfamily+SDK/dependencies, not privateancestry wholesale; version active source/benchmark contexts for185 leaf and shared changes. Complete bothPython source barriers then genuine275candidate ascompatible. Frozen7fcee16case benchmark independentreview in progress; actual binding/larger-case parity/performance remain pending."
+      },
+      "benchmark_controller": {
+        "owner": "readiness_reviewer",
+        "state": "unbound_two_API_controller_source_in_progress",
+        "base": "7fcee23ddcd6c965c1d56e58d87e1dadb7684479",
+        "root_driver_admission": "build/finite-radon-benchmark-root-admission-v1/admission-v1.json",
+        "root_driver_admission_sha256": "fcef22a00c649cc95873a7d822c9ca369e906a89d3efd98df589bdbe3c462f09",
+        "owns": "Newfamily-only finite-radon-initial workflow/probe/controllercontract/tests in isolatedWT; frozen6drivers andsharedengine/registry/publicqualification untouched.",
+        "acceptance": "Reuse3548/271 sampler/install/F1/C1 infrastructure; actual2CLI frame/native/FP/full32 stop and poststop/postbatch sourceauthority controls. SeparateparenttimingGO;16unsigned cases8/API, actualsource-derived explicitpass/order. BothretainedWindowsPython pure/inert controls normalplugins0science. No originals/native/helper/sampler/build/env/download; allactualsource/run/artifact/core/runtime/SDK/root/helper/GO/deadline bindingsNULL until actualgenuine successor.",
+        "next_gate": "Freeze one reusable UNBOUND controller/source/proofhandoff for independentrootreview. Csole sharedintegration adds current185sourcecontexts separately; no fakebinding/stalehash waiver or selfdispatch."
       }
     },
     {
       "id": "mark-lbp-enabled-integration-v1",
       "kind": "implementation",
       "owner": "metrics_integrator",
-      "state": "live_exact273_four_profile_qualification",
+      "state": "failed_exact273_four_profile_qualification_retention_live",
       "target_apis": [
         "segmentation.mark_boundaries",
         "feature.draw_multiblock_lbp"
@@ -37492,17 +37506,17 @@
         "mark-boundaries-source-first-v1"
       ],
       "acceptance": "NEW isolated successor froma6, selectively import exactadmittedLBP0e51/22 and MARK6d4373/21 with existingreference/observerdeps. Remove temporary PRIVATE_LBP branches/config/headerexclusions and wire ordinary enabled complete operations, samecore/CMake/exportedSDK/publicroutes/registry. Strict existing current_install_layout/sourcecollector must accept actualsource without private-model emulation; derive actualcounts. Preserveoldcontracts via exactnarrow sourcecontexts only where literals trulychanged. Source-only affected checks BOTHretainedPythons normalconftest/plugins/0science; existingCMakeconfigure/affectedABI/clientcompile only asinvalidated. No newenv/download/fullproductbuild/original/nativepublic/timing/hosted untilrootnextgate. FullLinuxFPsaved suites require real source-built helper and cannotrunasWindowsfull32; freeze explicitselectors/platformfrontiers without skips or falseWindowsparity. Genuineonecore/completeinstalledSDK/hotswap/scalar/globalworkers/default1/fulloriginalbenchmark/fourprofilerelease pending. Rootalsoadmits MARKbenchmark446bde47/46ffhandoff: selectively import exactfivefiles after52v4/source reviewcb9a and26proof reconciliation. Add actualprebuild sourceguard selection; no actualouter MARKcohort/timing authority. Latestadmittedbenchmark6cc0/cacf ninefiledelta supersedes sharedMARK446 envelope only through preservedcontext-v2/exacthistory; reconcile currentSDKclient/gold sourcepins once and rerun onlyaffected97/combinedsource guards, no numericalreplay.",
-      "current_checkpoint": "Rootsource0919095e and complete readiness49577 PASS; exact29918814 hosted42280271105 LIVE, watcher94708, all4sourcebarriers passed and genuinebuild/qualification running. No aggregateproduct/SDK/performance admission yet. Current271delivery independent.",
+      "current_checkpoint": "Actual gh API confirms42280271105 completedFAILURE all4jobs at29918814. No3release stagers. R once-retains4actual failure archives; debug smallpayload shows12dtype-metadata failures in LBP workers1/4,float16/32/64,normal/scalar. Other profiles require actual retained review, not assumed identical.",
       "next_gate": {
-        "owner": "root",
-        "action": "Poll existing94708/run42280271105 to actualterminal; root source-bound priorreaders prepared in build/mark-lbp-enabled-qualification-v1/42280271105 with273/276/220/104/34/68 and actualsaved49/553/267/188counts. RetainAPI/archive/seals ONCE afterterminal, inspectallprofiles before aggregate; no rerun ofpassingreadiness."
+        "owner": "readiness_reviewer then root; boundary_worker owns separate family correction",
+        "action": "Retain actual4 archives once via versioned failure-only manifest; preserve failedrun. Inspect exact profile/XML/SDK/source/runtime failures and rootadmit scope. B fixes demonstrated LBP dtype metadata without changing assertions; source/genuine successor gates required, no unchanged campaign retry."
       }
     },
     {
       "id": "lbp-benchmark-execution-v1",
       "kind": "implementation",
       "owner": "readiness_reviewer",
-      "state": "two_api_controller_frozen_peer_review_pass_root_admission_pending",
+      "state": "unbound_controller_root_source_admitted_failed273_cannot_bind",
       "target_apis": [
         "feature.draw_multiblock_lbp"
       ],
@@ -37518,10 +37532,10 @@
         "draw-multiblock-lbp-source-first-v1"
       ],
       "acceptance": "NEW isolatedsource successor; reuse admittedLBP0e51 family+frozenbenchmark cases/method and admittedMARK446 executor/commonF1/realMontageentry guard. Produce executableactualpublic-call consumer with completegenuine source/runtime/core/SDK/helper/root binding, strictpublic/native ownership/input/FP/warnings, realentry0bodycontrols underabsent/nonstopping/replacedprofilers, separatefirstcohort/timingGO, workers1/allloss/rawbatch retention. Reuse actualboundary logic, minimal concrete extraction only if trulyshared; preservefrozen446/MARK8cases/method/historicalreceipts and currentCsource. Pure/negativecontrols BOTHretainedPythons normalconftest/plugins0science. No native/math/referencecodechanges, original/providerimage/native/helper/samplerbody/timing/newenv/download/build/hosted; genuinebindings/cohort/report admission remainpending.",
-      "current_checkpoint": "Source3548cf16/d426 frozen4newfiles from299:twoactualCLIcohorts,8MARK+4LBPcases/168samples/24warmgroups/pass0 actualAST,82pure/version/actionlint/5inlineblocks PASS. Bf476 independent25proof/71sourcepin reviewPASS; rootsourceadmission/actualgenuine273 binding andGO pending, all realfieldsUNBOUND.",
+      "current_checkpoint": "Root3cf3cfb7 admits3548 fourfile unbound controller/25smallproofs/82sourcecontrols perPython/pass0 actual driver. Actual299 producer42280271105 failed, so no boundexecution or timingauthority.",
       "next_gate": {
-        "owner": "root",
-        "action": "Independently admit frozen3548/f476 source scope; bind NEWsuccessor only after actual273profile/product/stager/root receipts. Actualhelper/cohorts/separateone-threadtiming/raw/main remainpending. No bodies/retiming from sourceevidence."
+        "owner": "root then bound-controller author",
+        "action": "Reuse admitted3548 controller; wait actual genuine successor/source/runtime/SDK/stager/roothelper evidence, create versioned binding and affectedsourceguards. No transplant/fakebinding or execution fromfailed273."
       }
     },
     {
@@ -38668,11 +38682,11 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Utilitycomponentf48fe19e frozen2336privateparityPASS plus affectedSDK/scalar/san/source evidence; B independentlyreviews. C now independentlyreviews Rcaptured-input proposal e03a0063/18sourceguards before rootmatrixGO. 3548MARK/LBPcontroller/f476 peerPASS remainsUNBOUND pending actual273/rootbinding.",
-      "readiness_reviewer": "JOINe03captured-input fixture proposal frozen18sourceguards eachPython, authenticCW/SW/MXCSR only beforeobserve/trustedtemplate, fullassertiontail/outer32 unchanged. Cindependentreview/rootadmission needed before63matrix. Old43fails/invalid-stickyoriginalparity frontier explicit,0originals/timing.",
-      "boundary_worker": "Radon460a4recipe readiness frozen28pure/version/8zero-bodyprefixes/6refusals, originalbudget0/rootreviewpending. B now independentutilityf48 component review; no scientific reruns. ee639native/root96 and7fceebenchmark/f476controller review preserved."
+      "metrics_integrator": "Live sole shared integration author from299; composes admittedf48/e03/185/7fcee selectively, Linuxpost203F1/context/collector and LBPcrop dependency. Required Bgraymetadatafix/rootadmission before readiness/freeze; no full localbuild/original/timing/dispatch.",
+      "readiness_reviewer": "Frozen7fcee benchmarksource independentlyreviewed b855/rootfcef; now authors new isolated twoAPI16caseUNBOUND controller reusing3548, no science. Failed273 raw81b3 retained; no archive/core replay.",
+      "boundary_worker": "Isolated LBPgraydtype-metadata rootcause repair from299; all4failedpayloads12identicalnodes. PreviousRadon185/h45fa immutable and rootscopedadmitted9429; no neworiginal/timing/fullbuild."
     },
-    "next_action": "Current271 deliveredef465027/48fc scoped68performance; no pending271dispatch or timing. Root follows actual273run42280271105/watcher94708 and reviews frozenRadon460a safety/readiness before any8callGO. Cutility candidate proof/rootadmission pending; RJOINcaptured-input FPfixture proposal pendingrootreview,43oldfails preserved. Full477goal remains active.",
+    "next_action": "Current271 delivered; actual273/42280271105 FAILED all4profiles, root81b34522 admits48identicalLBPgraymetadata failures over956246XML. B repairs isolatedfamily; C independentlyreviewsJOINmatrix then soleintegration afterrootgate; RreviewsRadonbenchmarksource. Utilityf48/Radon185/controller3548 scopedrootadmitted, no genuine/performance credit. Freeze earliestcompatible correctedcumulative candidate and run completebothPython sourcebarriers before hostedqualification; no unchangedretry. Full477goal active.",
     "current_checkpoint": {
       "main_image_names": 271,
       "qualified_image_names": 271,
@@ -38680,7 +38694,7 @@
       "prepared_run": 42262940227,
       "candidate_source": "2991881411972e6266f7e132c9dca8b7226a8567",
       "candidate_image_names": 273,
-      "candidate_status": "LIVE_EXACT273_42280271105_SOURCE_BARRIERS_PASS_GENUINE_RUNNING_NOT_ADMITTED; main271deliveredEF and68scopedperformance34wins34losses.",
+      "candidate_status": "FAILED_EXACT273_42280271105_ALL4_PROFILES_48_LBP_GRAY_DTYPE_METADATA_FAILURES_ROOT81b34522; main271 delivered and68scopedperformance34wins34losses; sourcecorrection/integration pending.",
       "performance_evidence": "benchmarks/join-util-views-minimum-initial-v1/README.md",
       "readiness_reviews": [
         {
@@ -38706,10 +38720,13 @@
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
     },
     "shared_integration_author": {
-      "agent": "metrics_integrator",
-      "branch": "integrate/join-segmentations-v1",
-      "worktree": "build/worktrees/join-integration-v1",
-      "scope": "Integrated source frozen9c92/458e/b557; no current sharedintegration writes. metrics_integrator remains reserved next integration author only on explicit assignment; root independentadmission/delivery/dispatch."
+      "owner": "metrics_integrator",
+      "state": "assigned_one_isolated_corrected_cumulative_successor",
+      "base": "2991881411972e6266f7e132c9dca8b7226a8567",
+      "scope": "Selectively compose root-admitted utilityf48/JOINe03/Radon185 and frozen LBPgraymetadata correction after independent admission. Root reserves final admission/main; no second integrator or cumulative readyRC.",
+      "prerequisites": "Root utility463df5ba/JOINf953b1ae/Radon94290698 source/private evidence available; failed273 root81b34522 remainsfailure. B LBPcorrection not yetadmitted; no dependent scientific run/freeze/releaseclaim until actualhand-off/rootadmission.",
+      "required_evidence": "Exactsourceprojection/dependencies; actual selectors/context/hash inverses preserving frozenhistory; dependent LBPcopy SDK/saved closure and Linuxpost203 F1env/collector transport. Derive source/SDK/product counts from actualsource, no guessed hardcodes. Complete affected guards bothretainedPython normalplugins0science before hostedprep and completeactualworkflow barrier bothPython beforequalification. Genuine/performance/rootbinding remainlatergates.",
+      "next_gate": "C freezes earliest compatible ready bundle, excludes unfinished unrelated work; no fullproduct/env/download/original/timing or hosteddispatch. Root independent source admission and exactsource readiness/genuine/performance/main delivery."
     }
   },
   "parallel_review": {

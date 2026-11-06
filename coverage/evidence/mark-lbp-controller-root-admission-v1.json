@@ -1,0 +1,55 @@
+{
+  "schema": "mark-lbp-controller-root-admission-v1",
+  "status": "PASS_SCOPED_UNBOUND_SOURCE_NO_EXECUTION_AUTHORITY",
+  "source": "3548cf16d474375f53068db295c99c1275173377",
+  "base": "2991881411972e6266f7e132c9dca8b7226a8567",
+  "handoff": {
+    "path": "build\\mark-lbp-measurement-controller-v1\\handoff-v1.json",
+    "sha256": "d426dd3266041e5a6f746aa7d0d1e99788fd585bdaf1c3b0c96d040fd4ecf924"
+  },
+  "independent_review": {
+    "path": "build\\mark-lbp-controller-independent-review-v1\\review-v1.json",
+    "sha256": "f4760b3838f67fad31fd2a13de85e2b685b2636532d18611f0734b8addf75e1e"
+  },
+  "source_files": {
+    ".github/workflows/mark-lbp-initial.yml": "7a0c8194efe23c0481c0ba84e362eec31dd5f72deb5e32bc443d862e30444a07",
+    "coverage/contracts/mark-lbp-measurement-v1.json": "f433cec611d22115f997f36def083e90ae47e6ddfc5da56c65fd99d817abe9c5",
+    "tests/test_mark_lbp_controller.py": "c877d6250e7cb724aae811d6997179ba8d456e66838e39d7397b5191fe41a219",
+    "tools/mark_lbp_first_cohort_probe.py": "17fed306e1db00183458447f5135f9e7f05dd354f9fcdd5a77e0acd98cc11bd3"
+  },
+  "retained_proofs": {
+    "count": 25,
+    "bytes": 86544,
+    "pure_source_controls_each_Windows_Python": 82,
+    "actual_raw_source_pins": 71
+  },
+  "root_review": [
+    "Actual source requires successful exact producer and prospective binding before preparation; failed299/run42280271105 cannot bind this controller.",
+    "Two distinct real CLI adapters enter measure through sample_entry, enforce original/native completion and stop before sampler body; full32/caller/source/authority restoration and terminal controls retained.",
+    "Both routes must complete and once-after-batch verifier succeed before conditional separate parent measurement authority.",
+    "Report order is derived from actual driver pass0/case-index and exact sampler formula, not copied utility/dedicated assumptions; synthetic controls retain all12losses."
+  ],
+  "pending": [
+    "Actual source successor and complete both-Python source barriers plus genuine product/installed SDK admission after failed273 diagnosis",
+    "New versioned source/run/artifact/core/runtime/SDK/stager/root/helper binding; no transplant from271 or failed273",
+    "Actual two real CLI cohorts and postbatch identity verifier",
+    "Separately authorized one-thread12case original comparison/168samples/24warmup groups; preserve every loss",
+    "Full API/platform/provider/domain closure and delivery"
+  ],
+  "execution": {
+    "science": 0,
+    "tests": 0,
+    "native": 0,
+    "helper": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "dispatches": 0
+  },
+  "waste_review": {
+    "result": "Reusable unbound controller source admitted; no readiness, measurement or speed claim.",
+    "reuse": "Existing sampler/CLI/F1/C1 infrastructure and retained source proofs; no new execution engine.",
+    "next_owner": "root then sole bound-controller author",
+    "next_trigger": "Passing genuine successor exact source and actual retained stager/root evidence, not the failed299 campaign."
+  }
+}

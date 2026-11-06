@@ -1,0 +1,110 @@
+{
+  "schema": "util-view-boundary-root-admission-v1",
+  "status": "PASS_SCOPED_COMPONENT_NOT_GENUINE_OR_PERFORMANCE",
+  "source": "f48fe19edeb336163249383d61a51b186ca610fa",
+  "base": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "handoff": {
+    "path": "build/util-view-boundary-v1/handoff-v1.json",
+    "sha256": "760a6c66a2b769f30e135a1e74521982796dec0075a24e4f20a9007c5ce5515d"
+  },
+  "independent_peer": {
+    "path": "build\\util-view-boundary-independent-review-v1\\review-v1.json",
+    "sha256": "74a012e5d9616587041b30cf0fd4f8a91440cb751b14f2e54e8888f59984f1ec"
+  },
+  "source_projection": {
+    "coverage/contracts/util-view-boundary-optimization-v1.json": "21ed45273428f5417a3eb7f7628aab7932d118c8c7c98b6e6db2aa4981c59559",
+    "python/skimagexx/_array_views.py": "ef0bf212313ea06badd68ea7a109ca42126a9fd55753563c48253ff39a6b22e8",
+    "src/crop.cpp": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+    "tests/test_crop_strided_copy.cpp": "fe3f2b5fd438c0602a339d8b72948094f9d6f27b05cbf7dac6c4999ca5aa91d6",
+    "tests/test_util_view_boundary_source.py": "7638f476afacfa55f2d3c25b9fea76a75f4dc8ca1ba90d20ef3ea73f4823c91b"
+  },
+  "unchanged_dependencies": 16,
+  "matrix": [
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "XML": 584,
+      "terminal_sha256": "60f9aa9dd412b3a953108bfb834e43ee4e5b7b7b55d2a5282138bf9e9810a109",
+      "native_returns": {
+        "crop_view": 28,
+        "crop_copy_into": 28,
+        "util_view_as_blocks": 71,
+        "util_view_as_windows": 85,
+        "util_slice_view": 167,
+        "util_slice_copy_into": 36
+      }
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "XML": 584,
+      "terminal_sha256": "413e1e04a79086f4b175cf3a9a930917094b5d3cd8bb9c82db748165418f43a2",
+      "native_returns": {
+        "crop_view": 28,
+        "crop_copy_into": 28,
+        "util_view_as_blocks": 71,
+        "util_view_as_windows": 85,
+        "util_slice_view": 167,
+        "util_slice_copy_into": 36
+      }
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "XML": 584,
+      "terminal_sha256": "0d5ea4dbc2ecd5e6805a7643550a88804d1654903919284f04e4bd0a75da1bf7",
+      "native_returns": {
+        "crop_view": 28,
+        "crop_copy_into": 28,
+        "util_view_as_blocks": 71,
+        "util_view_as_windows": 85,
+        "util_slice_view": 167,
+        "util_slice_copy_into": 36
+      }
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "XML": 584,
+      "terminal_sha256": "542891b30e8d5ce1e8a71566a9abdc021c379a86a151a7f2563edcf61b29ef4e",
+      "native_returns": {
+        "crop_view": 28,
+        "crop_copy_into": 28,
+        "util_view_as_blocks": 71,
+        "util_view_as_windows": 85,
+        "util_slice_view": 167,
+        "util_slice_copy_into": 36
+      }
+    }
+  ],
+  "retained_GNU_commands": 31,
+  "SDK_descriptor_cases_each_mode": 528,
+  "MSVC_compile_only": 2,
+  "source_controls_each_retained_Windows_Python": 10,
+  "review": [
+    "Read exact CPP delta: bulk C/F path preserved; checked monotone line endpoints, no advance after final element, constant alignment-independent POD memcpy and arbitrary-word fallback; no new arithmetic cast, helper mask, worker framework or ABI. Valid disjoint descriptor scope only; malformed descriptor partial-mutation ordering is not certified.",
+    "Same-interpreter AST inverse recovers original Python validation/control/protocol code after removing immutable platform metadata cache.",
+    "Actual four saved XML outputs/terminal records inspected; peer authenticates remaining small source/SDK/launcher proofs. No new scientific calls or repeats."
+  ],
+  "pending": [
+    "Dependent LBP crop-copy saved/SDK closure if composed with299",
+    "Versioned shared source/context guards; complete workflow barrier both retained Pythons",
+    "Genuine one-core/namespace/hot-swap/MSVC/installed SDK/four-profile qualification",
+    "Actual one-thread original-public performance and all-loss disposition; no speedup inferred",
+    "Full API/provider/platform/domain closure and main delivery"
+  ],
+  "execution": {
+    "scientific_calls": 0,
+    "tests": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_hash_replays": 0
+  },
+  "waste_review": {
+    "result": "Admitted reusable scoped optimization component; no coverage-count increase.",
+    "reuse": "Retained immutable small proof index and peer full authentication; actual selected XML/terminal source inspected, no whole asset/archive/core replay.",
+    "next_owner": "sole shared integration author after root selection",
+    "next_trigger": "Compose admitted source with compatible ready components and demonstrated failure repair; no standalone requalification for private edit."
+  }
+}

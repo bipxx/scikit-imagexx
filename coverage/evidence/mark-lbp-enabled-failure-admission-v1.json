@@ -1,0 +1,133 @@
+{
+  "schema": "mark-lbp-enabled-failure-root-admission-v1",
+  "status": "AUTHENTICATED_FAILURE_NOT_RELEASE_OR_READINESS",
+  "run": 42280271105,
+  "source": "2991881411972e6266f7e132c9dca8b7226a8567",
+  "handoff_sha256": "5883d47fa013fcf38b7eec5fa43b1caee5c4c5758ab775e372bad09bc916f74b",
+  "profiles": {
+    "modern": {
+      "XML": {
+        "tests": 239590,
+        "failures": 12,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 68,
+      "report_sha256": "e04a2a548618d9a1e738cb7ddd8aa4edefd7818970f411b31154c4648bd02a4e",
+      "source": {
+        "revision": "2991881411972e6266f7e132c9dca8b7226a8567",
+        "source_files": 2718,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "1b4a1c5adafa5fda36c2851283bc17a193c14758ac366821d46aa82895244be1"
+      },
+      "qualification_passed": false
+    },
+    "minimum": {
+      "XML": {
+        "tests": 239590,
+        "failures": 12,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 68,
+      "report_sha256": "adb41e926b0e31db654eb695057f5002cf1877f22fcf2b2877173db49a5cc4e0",
+      "source": {
+        "revision": "2991881411972e6266f7e132c9dca8b7226a8567",
+        "source_files": 2718,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "c6361568f7bb3e0687b74ae592f60a20bc2111bfe534091a78d09d8bcb3fee4b"
+      },
+      "qualification_passed": false
+    },
+    "debug": {
+      "XML": {
+        "tests": 239590,
+        "failures": 12,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 68,
+      "report_sha256": "0589b2f95723772a4b28f80dffc2ef24d85da9730fbd906d22b6b22bfd6e2c60",
+      "source": {
+        "revision": "2991881411972e6266f7e132c9dca8b7226a8567",
+        "source_files": 2718,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "2c96d392644b4ccd67ca4476428ff94873c07c32b85444156b163ff4405ff00d"
+      },
+      "qualification_passed": false
+    },
+    "windows": {
+      "XML": {
+        "tests": 237476,
+        "failures": 12,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 68,
+      "report_sha256": "0e74c954bf7e5a0c4941e0bc3b8c254b4d87a53e22ae21e40d49f74175b0fd86",
+      "source": {
+        "revision": "2991881411972e6266f7e132c9dca8b7226a8567",
+        "source_files": 2718,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "d1b39eb317899badf9be6560f7e32cf01b247de7a3e536ec92ff2726bcf69d39"
+      },
+      "qualification_passed": false
+    }
+  },
+  "XML": {
+    "tests": 956246,
+    "failures": 48,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_checks": 272,
+  "corpora": 48,
+  "retention": {
+    "artifacts": 4,
+    "bytes": 5844899683,
+    "small_proofs": 34,
+    "archives_and_sealed_records_authenticated_once": true,
+    "repeated_archive_core_hashes": 0,
+    "stagers": 0
+  },
+  "failure_nodes_per_profile": [
+    "normal-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[1-feature.draw_multiblock_lbp-float16]",
+    "normal-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[1-feature.draw_multiblock_lbp-float32]",
+    "normal-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[1-feature.draw_multiblock_lbp-float64]",
+    "normal-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[4-feature.draw_multiblock_lbp-float16]",
+    "normal-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[4-feature.draw_multiblock_lbp-float32]",
+    "normal-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[4-feature.draw_multiblock_lbp-float64]",
+    "scalar-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[1-feature.draw_multiblock_lbp-float16]",
+    "scalar-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[1-feature.draw_multiblock_lbp-float32]",
+    "scalar-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[1-feature.draw_multiblock_lbp-float64]",
+    "scalar-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[4-feature.draw_multiblock_lbp-float16]",
+    "scalar-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[4-feature.draw_multiblock_lbp-float32]",
+    "scalar-shared tests.test_dtype_metadata::test_every_native_entry_dtype_metadata[4-feature.draw_multiblock_lbp-float64]"
+  ],
+  "root_cause": {
+    "path": "build\\mark-lbp-enabled-failure-review-v1\\root-cause-v1.json",
+    "sha256": "5faa7ea7cc0792f4c9cb77f09e93f144772168b219e85d758987b1bcbcb6d509",
+    "review": "Actual failed outputs retain gray input dtype metadata while references have None. Pinned original applies gray2rgb before img_as_float; candidate passes grayplane tagged dtype to native preparation. Gray-only representation boundary must match original; RGB behavior/math/FP assertions preserved."
+  },
+  "root_decision": "Failed299 campaign remains failed; passing source barriers/private94case evidence did not cover this grayscale dtype-metadata partition. B owns narrow successor; root source/genuine/performance gates remain required. No unchanged qualification retry.",
+  "pending": [
+    "LBP correction and meaningful tagged-gray/RGB regression; independent source/private parity review",
+    "Compose compatible admitted utility/JOIN/Radon components under sole integration author",
+    "Complete exact workflow source barrier both retained Python versions, then actual four-profile genuine successor",
+    "Actual successful stager/root identity before controller binding/cohorts/timing/main delivery"
+  ],
+  "execution": {
+    "scientific_calls": 0,
+    "tests": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_hash_replays": 0
+  },
+  "waste_review": {
+    "avoidable": "Missing tagged-grayscale output metadata coverage let one source-backed contract bug reach four-profile qualification. Add this real domain to bounded family regression; do not alter shared expectation or recapture unchanged originals.",
+    "reuse": "All successful saved-domain/SDK/source/runtime observations retained within299 scope; archives and records sealed once, not replayed.",
+    "next_owner": "boundary_worker family fix, then sole shared integration author and independent root admission",
+    "next_trigger": "Frozen correction/proofs and compatible admitted components; new source barriers/genuine gates before next hosted dispatch."
+  }
+}

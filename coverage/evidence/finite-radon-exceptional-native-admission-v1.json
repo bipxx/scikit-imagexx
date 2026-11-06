@@ -1,0 +1,101 @@
+{
+  "schema": "finite-radon-exceptional-native-root-admission-v1",
+  "status": "PASS_SCOPED224_OBSERVED_COMPONENT_NOT_FULL_API_OR_GENUINE_RELEASE",
+  "source": "1855377b4baea97293bc7eeb5cb8e2236ac427fc",
+  "base": "ee639c0c19cc93be1a1751f7c6ac2c9b107bad4c",
+  "handoff_sha256": "45fa325a4c5e29c34abf0307960d9ef283926f272d0c988914ba9d8488a81b16",
+  "source_files": 10,
+  "authenticated_source_dependencies": 55,
+  "authenticated_small_proofs": 265,
+  "proof_bytes": 17491128,
+  "matrix": [
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "strict_saved": 224,
+      "generic": 35,
+      "XML": 259,
+      "terminal_sha256": "5168c4d25fe88a890b7352a56065da60d432bc22b6126420975414b4f5d3c452"
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "strict_saved": 224,
+      "generic": 35,
+      "XML": 259,
+      "terminal_sha256": "ead429b9def57a488941990c4508512a5b01537564d9b16cdfb681a14b3b81bd"
+    },
+    {
+      "profile": "minimum",
+      "mode": "scalar",
+      "strict_saved": 224,
+      "generic": 35,
+      "XML": 259,
+      "terminal_sha256": "4afeee72cf815259021967cea0780e64fcb6bd01959b515ad3fe228277ade3e9"
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "strict_saved": 224,
+      "generic": 35,
+      "XML": 259,
+      "terminal_sha256": "1ad0853772b5a9b3149eb43b3da3c6634e778947f92acf3d514c610d953550b3"
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "strict_saved": 224,
+      "generic": 35,
+      "XML": 259,
+      "terminal_sha256": "153e43e659c884a3e88594f1ca513e41fba2ec19be196062341afe733396f344"
+    },
+    {
+      "profile": "modern",
+      "mode": "scalar",
+      "strict_saved": 224,
+      "generic": 35,
+      "XML": 259,
+      "terminal_sha256": "a3cde57e42105ffe973cbab09e2e4113fa371ce5e2e886b22ad0271f1b3d50ee"
+    }
+  ],
+  "strict_saved_assessments": 1344,
+  "generic_controls": 210,
+  "SDK_successful_gold_outputs_each_mode": 252,
+  "SDK_new_typed_errors_notices_each_mode": 8,
+  "Windows_source_controls_each": 10,
+  "MSVC_compile_only_changed_TUs": 2,
+  "root_source_review": [
+    "Reviewed exact CPP delta against admitted ee639. Owned generic real-f64 groups of four use ordered2^31 adjustment, signed32 truncation and xor, scalar64 tail. Scalar architectural SSE lanes remain semantic when optional packed SIMD is disabled. No n5/caseID/NaN-result lookup or provider image cast.",
+    "Post-cast FE_INVALID is read rather than conservatively guessed from input ranges. Source pre-cast four-errorflag preparation remains unchanged; no after-call golden flag mask. Native truncation endpoint invariant and old/new saved target control/status/MXCSR inspected.",
+    "Header/binder/frontend ABI and ordered caller-thread floating core unchanged. Integer worker capture/SIMD scope remains prior admitted domain. Non-x64/other NumPy/compiler/ISA, wider floating/protocol states remain explicit frontiers."
+  ],
+  "record_projection": "Only historical raw FP address bytes, handler IDs and tagged nonsharing pointer offsets omitted for portable record equality; all numerical/control/status/MXCSR fields compared. Actual caller32 exact and raw rows retained.",
+  "failure_history": [
+    "Unchanged ee639 new NaN frt2 payload failures retained:2of8 per profile. Inf/inverse errors/FP match, not hidden.",
+    "First corrected source passed saved rows but used conservative invalid range classifier; source audit fixed actual status barrier then affected six matrices/native/SDK/source checks reran.",
+    "Old216 failures and raw/source authority receipts unchanged; original budget0."
+  ],
+  "pending": [
+    "Shared family/SDK/registry/source-context selective integration; cannot merge private ancestry wholesale",
+    "Complete actual source barriers both retained Python versions",
+    "Genuine single core/namespace/hot-swap/global-default/whole installed SDK/exact-source four-profile release",
+    "Versioned benchmark source successor and actual root-bound original-public one-thread16case performance",
+    "Full exceptional widths/positions/dtypes/platform/provider/protocol/API closure and main delivery"
+  ],
+  "execution": {
+    "originals": 0,
+    "scientific_calls": 0,
+    "tests": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_archive_core_hashes": 0
+  },
+  "waste_review": {
+    "result": "New8 reference observations plus prior216 now pass observed component; no shipping count increment.",
+    "reuse": "Existing immutable profiles/helper/raw transport/SDK donor/source/golds; stdlib retained-record review only.",
+    "avoidable": "Conservative input-range classifier caused one avoidable version of affected local checks; measured process test cost26.402971719s, not elapsed wall time; build cost unknown.",
+    "next_owner": "sole shared integration author after root compatible selection",
+    "next_trigger": "Import admitted family files plus independently reviewed dependencies; freeze earliest compatible successor with actual failed273 repair."
+  }
+}

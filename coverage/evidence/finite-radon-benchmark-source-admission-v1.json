@@ -1,0 +1,53 @@
+{
+  "schema": "finite-radon-benchmark-root-admission-v1",
+  "status": "PASS_FROZEN_UNBOUND_SOURCE_NOT_EXECUTION_OR_PERFORMANCE",
+  "source": "7fcee23ddcd6c965c1d56e58d87e1dadb7684479",
+  "base": "ee639c0c19cc93be1a1751f7c6ac2c9b107bad4c",
+  "handoff_sha256": "f2021b46ee8da894db9b63e5a418fc0bb1ee8b2357fbbd99996b671322a5a8f3",
+  "independent_review": {
+    "path": "build\\finite-radon-benchmark-independent-review-v1\\review-v1.json",
+    "sha256": "b855885ac11ceb44a5ae5fbb7ca50ab2094320b0e47571775f9b05d8143325a7"
+  },
+  "source_files": 6,
+  "source_pins": 37,
+  "retained_small_proofs": 34,
+  "retained_pure_source_checks_each_Windows_Python": 37,
+  "prospective_scope": {
+    "cases": 16,
+    "per_API": 8,
+    "maximum_n": 257,
+    "maximum_input_value": 7,
+    "peak_live_array_bytes_upper": 3709024,
+    "projection_sum_max": 1799,
+    "inverse_pre_subtraction_add_max": 1806
+  },
+  "root_review": [
+    "Read bounded fixture and caller source; no transform used to construct inverse input. Unsigned subtraction is intentional source wrap, not certified no-wrap. Larger numerical/reference outcomes remain unobserved.",
+    "Actual execute/sample path pins Montage and requires explicit pass-index plus correct binding before scientific imports; inherited mandatory firstcohort entry stop checked by source and inert controls, not genuine execution.",
+    "Scalar/SIMD/workers/native ownership/F1/full32/source/method/retain-loss requirements remain distinct from actual host proof. No broad namespace or fullAPI claim."
+  ],
+  "mandatory_successor": "1855377b changes finite_radon.cpp from the frozen ee639 pin. Sole shared author must add versioned current-source context/inverse/guards while preserving this contract and failed histories; old literal pins must continue refusing changed source. No stale binding or source guard waiver.",
+  "pending": [
+    "Current-leaf/shared source context successor and complete affected controls both retained Pythons",
+    "Genuine installed core/SDK/runtime/root binding and actual sourcebuilt host helper",
+    "Two actual API firstcohorts plus C1/postbatch verification",
+    "Larger-case numerical/reference parity at actual public calls, separately authorized one-thread16case original benchmark and all losses",
+    "WholeAPI/platform/domain closure and release/main delivery"
+  ],
+  "execution": {
+    "science": 0,
+    "tests": 0,
+    "originals": 0,
+    "native": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_hashes": 0
+  },
+  "waste_review": {
+    "result": "Reusable frozen benchmark source accepted only within its unbound scope.",
+    "reuse": "Existing CLI/Montage/F1/control infrastructure and37-per-version retained checks; no second engine or repeated science.",
+    "next_owner": "sole shared integration author, then root binding/admission",
+    "next_trigger": "Versioned185/current shared source context and actual genuine successor evidence."
+  }
+}
