@@ -37213,6 +37213,60 @@
         "action": "F1 test-only source659d is independently admitted2c314a70:7source/51proofs, full32 controls,322saved slice nodes/profile and19pure guards each retained Windows Python. C selectively imports7files with exact historical inverse and Linux prepare/env/source-copy/collector closure; B replaces benchmark legacy0c40 dependency through reviewed source-built interface. Include helper receipt/bundle in measurement transport. Root then admits final source and complete2source barriers before genuine qualification; no new originals or unchanged numerical replay."
       },
       "source_sha": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48"
+    },
+    {
+      "id": "mark-boundaries-source-first-v1",
+      "kind": "reference",
+      "owner": "readiness_reviewer",
+      "state": "assigned",
+      "apis": [],
+      "target_apis": [
+        "segmentation.mark_boundaries"
+      ],
+      "owns": [
+        "tests/mark_boundaries_contract.py",
+        "tests/test_mark_boundaries_intake.py",
+        "tests/test_mark_boundaries_reference.py",
+        "coverage/contracts/mark-boundaries-v1.json",
+        "benchmarks/mark_boundaries.py"
+      ],
+      "depends_on": [],
+      "base_sha": "d653b61a",
+      "scope": "Source/test-first next W1 API from existing per-key roadmap. Reuse qualified find_boundaries and existing conversion/overlay primitives; inspect actual pinned upstream source before selecting contracts. No original/native API bodies or capture authorization; this packet must not delay finished271 candidate.",
+      "acceptance": "Freeze bounded grayscale/RGB dtype/layout/color/outline/mode/background/error/provider/FP contracts including subpixel resampling frontier, exact pinned source, safe recipes and prospective one-thread benchmark. Both retained supported Python source guards and actual safe NumPy factory/REQUEST-refusal checks; no native/parity/performance credit without later independent safety/admission and original references.",
+      "current_checkpoint": "Dependency-ready source study assigned after independent00f review terminal CHANGES_REQUIRED718725bc. B owns its E1/F1 correction, C owns existing cumulative integration. No capture budget or native implementation authorization in this source packet.",
+      "next_gate": {
+        "owner": "readiness_reviewer then root independent safety reviewer",
+        "action": "Freeze one coherent source/contract/intake/benchmark packet, disclose genuine difficult subpixel/provider frontiers and easiest implementation route. Root reviews before any original capture or native work; keep current release moving independently."
+      }
+    },
+    {
+      "id": "perimeter-source-first-v1",
+      "kind": "reference",
+      "owner": "boundary_worker",
+      "state": "assigned",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon_perimeter",
+        "draw.rectangle_perimeter"
+      ],
+      "owns": [
+        "tests/perimeter_contract.py",
+        "tests/test_perimeter_intake.py",
+        "tests/test_perimeter_reference.py",
+        "coverage/contracts/perimeter-v1.json",
+        "benchmarks/polygon_perimeter.py",
+        "benchmarks/rectangle_perimeter.py"
+      ],
+      "depends_on": [],
+      "base_sha": "d653b61a",
+      "scope": "Coherent existing W1 perimeter pair, source/test-first only, reuse current rasterization/clipping primitives. Zero original/native/helper/sampler body authority; future packet does not delay current271 release.",
+      "acceptance": "Pin actual upstream/helper source and dependencies; freeze bounded closure/order/duplicates/clipping versus filtering/shape/dtype/error/FP contracts including rectangle tiny/off-image behavior. Disclose optional third-party clipping/runtime gaps. Pure source guards both retained Windows Pythons and actual safe NumPy factories/cached-cold REQUEST refusals both profiles; proposed complete SDK/native and public1thread route. No parity/native/performance credit before later independent safety/capture/genuine gates.",
+      "current_checkpoint": "Assigned after corrected benchmark executor9e8 independently admitteda20b757f; worker free for next existing W1 coherent batch. Current integration exclusively C; capture budget0.",
+      "next_gate": {
+        "owner": "boundary_worker then root independent source safety reviewer",
+        "action": "Freeze one source/contract/intake/benchmark packet with exact ownership/source/proofs/terminal/waste and easiest native reuse route. Root reviews optional dependency and source/storage safety before any original capture or implementation."
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -38315,10 +38369,10 @@
     },
     "current_review_assignments": {
       "metrics_integrator": "Sole shared integration author in build/worktrees/join-integration-v1; combines admitted b87 density,98df F-row,56ec util native and newly admitted659d F1 helper. Actual271 image/274 registered namespace derived privately; final candidate not frozen or qualified. Wire actual installed SDK/hot swap/selectors/helper preparation and collection, await B portable benchmark successor.",
-      "readiness_reviewer": "F1 frozen659d independently admitted2c314a70; all handles terminal. Resumed independent review of B00f executor12files/61proofs, no source edits or scientific replay. Root owns final admission.",
-      "boundary_worker": "Frozen00f six-API benchmark executor under independent review. Resumed narrow source-built F1 consumer/context successor using admitted659d interface; no target/helper/sampler/timing execution or shared edits."
+      "readiness_reviewer": "Independent00f executor review terminal CHANGES_REQUIRED718725bc (E1 zero-timing guard plus known F1 consumer). Source/test-first segmentation.mark_boundaries next existing W1 route now assigned in exclusive family files; zero original/native/sampler authority and no delay to current cumulative release.",
+      "boundary_worker": "Corrected benchmark9e8 independently admitteda20b757f,5delta/32proofs;168pure/version17NP-refusal/profile, actual inputs UNBOUND. C integrates exact executor. B now owns source/test-first draw polygon_perimeter+rectangle_perimeter W1 batch in exclusive files; no original/native authorization or current release delay."
     },
-    "next_action": "Finish and independently admit portable benchmark FP consumer and combined source; run complete actual workflow source barrier on both retained supported Pythons for final frozen source, then promptly dispatch eligible four-profile qualification. Actual main remains265 partial image APIs; no full271 admission or new performance claim. Preserve548 exhausted original references and historical failures; no unchanged replay.",
+    "next_action": "C integrates admitted9e8 executor with659d F1 and all ready native components, fixes demonstrated stager schema failure, then freezes one exact-source candidate. Root admits final source, runs complete actual source barriers on both retained Pythons, promptly dispatches eligible four-profile qualification. B perimeter and R mark_boundaries source-first future batches are independent and must not delay this release; original/native budget0. Main remains265 partial APIs; historical failures and every loss retained.",
     "current_checkpoint": {
         "main_image_names": 265,
         "qualified_image_names": 265,
@@ -38326,7 +38380,7 @@
         "prepared_run": 42177447898,
         "candidate_source": null,
         "candidate_image_names": 271,
-        "candidate_status": "DIRTY_SHARED_INTEGRATION_NOT_FROZEN_OR_QUALIFIED: exact admitted family components plus source-built F1 helper and benchmark consumer successor. Private namespace271/274 derived; current benchmark review found first-cohort non-stopping-profiler authority gap, B correction required. No candidate run or speed credit.",
+        "candidate_status": "DIRTY_SHARED_INTEGRATION_NOT_FROZEN_OR_QUALIFIED: all finished family inputs and F1 source659d/root2c314a70 plus corrected executor9e8/roota20b757f admitted. Private namespace271/274 derived. C composes final source/context/collector/SDK closure and corrects demonstrated stager expected_registry schema; no candidate run or speed credit.",
         "performance_evidence": "benchmarks/next-metrics-minimum-initial-v1/README.md",
         "readiness_reviews": [
           {
@@ -38346,7 +38400,7 @@
         "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
         "optimization_prepare_run": 41967608976,
         "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-        "next_release_status": "PENDING_FINAL_FROZEN_SOURCE_AND_INDEPENDENT_ADMISSION; C shared author, B portable FP/zero-timing correction, R independent benchmark review. Prior42158336231 and42169444853 failures retained; shipped683 successor42177447898 passed938528XML/256SDK/48corpora.",
+        "next_release_status": "PENDING_FINAL_FROZEN_SOURCE_AND_INDEPENDENT_ADMISSION; C sole shared author integrates admitted executor9e8 and F1. B perimeter and R mark_boundaries source/test-first future packets are independent, not release dependencies. Prior42158336231/42169444853 failures retained; shipped683/run42177447898 passed938528XML/256SDK/48corpora.",
         "next_release_qualification_run": null,
         "optimization_comparison_run": 41969983206,
         "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
@@ -39163,8 +39217,8 @@
     "per_api_roadmap": "coverage/API_IMPLEMENTATION_PATHS.json",
     "human_roadmap": "coverage/API_IMPLEMENTATION_PATHS.md",
     "audit": "coverage/PLAN_REVIEW_ASTRA.md",
-    "accepted_image_paths": 203,
-    "upstream_only_paths": 266,
+    "accepted_image_paths": 265,
+    "upstream_only_paths": 203,
     "public_inventory_paths": 477,
     "historical_packets_not_completion_evidence": true,
     "review_completed_date": "2026-10-25",
@@ -39190,10 +39244,16 @@
     "resumed_by_explicit_user_goal": "2026-10-25: implment the updated plan using3agents",
     "historical_planning_counts": {
       "accepted_image_paths": 192,
-      "upstream_only_paths": 277
+      "upstream_only_paths": 277,
+      "astra_audit_snapshot": {
+        "accepted_image_paths": 203,
+        "upstream_only_paths": 266,
+        "source_image_paths": 211,
+        "source_upstream_only_paths": 258
+      }
     },
-    "source_image_paths": 211,
-    "source_upstream_only_paths": 258
+    "source_image_paths": 265,
+    "source_upstream_only_paths": 203
   },
   "max_consumer_retirement": {
     "proof": {

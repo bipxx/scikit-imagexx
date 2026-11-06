@@ -1,0 +1,134 @@
+{
+  "schema": "next-util-benchmark-execution-independent-review-v1",
+  "status": "CHANGES_REQUIRED_ZERO_TIMING_ENTRY_GUARD_AND_PENDING_F1_CONSUMER",
+  "passed": false,
+  "source": "00f335929991cb75602e99d2054139447e7378e7",
+  "base": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48",
+  "producer_handoff": {
+    "path": "build/next-util-benchmark-execution-v1/handoff-v1.json",
+    "sha256": "2dd46be08614c8000135582d13e46ba28d41309ff60f699ed1ca54bdc6fd6855"
+  },
+  "audit": {
+    "path": "build/next-util-benchmark-execution-independent-review-v1/audit-v1.json",
+    "sha256": "439c97e6119fe4176c9b6782bcefba97646f8efbf76c5d2a75315eab51ba5750",
+    "script": "build/next-util-benchmark-execution-independent-review-v1/audit_v1.py",
+    "script_sha256": "a3d2048d95caea2ed1e40e9c51c69de155ea565a6db9b293b6631dea435b3272",
+    "source_files": 12,
+    "proof_fields": 61,
+    "fixture_scope": "Four unchanged fixture Git blobs match admitted56ec; raw/source component evidence reused without large golden/product/core rehash."
+  },
+  "rules_ownership": "Current root AGENTS read including stronger separate-call action-boundary rule; applicable inherited worktree root rules read/reused. Reviewer owns ignored audit/review outputs only. No B/C/main edits or original/native/helper/sampler/science/test/build/download/measurement work. Source review binds immutable00f Git bytes while root-authorized B successor work may proceed;00f handoff and proof fields remain unchanged.",
+  "findings": [
+    {
+      "id": "E1",
+      "severity": "BLOCKING_BEFORE_EXECUTOR_ADMISSION",
+      "state": "CHANGES_REQUIRED",
+      "location": "benchmarks/next_util_execution.py:262",
+      "finding": "--first-cohort skips measurement authority but only asserts sys.getprofile() is notNone before the direct real measure call. An unrelated or non-stopping profiler satisfies that assertion. If it returns at the measure call event, the real sampler body can execute despite GO.timed_batches==0. The future root observer is documented to stop entry, but this driver has no guaranteed fallback stop; current pure tests inspect method/caller locals and refuse at imports, so they do not test this path. This is a static control-flow finding; no sampler body was executed to demonstrate it.",
+      "minimal_correction": "Keep direct real measure(...) in execute for the existing observer caller.f_locals contract. In first-cohort mode chain the bound external observer at the actual measure call event and, if it returns/is missing, raise a mandatory stop before the first sampler body line. Restore the prior profile in finally. Measurement mode still requires its distinct manifest; do not replace the sampler or run callbacks.",
+      "required_changed_evidence": "Both supported pure interpreters: actual real measure entry with unrelated non-stopping profiler yields0body lines/clock/callback/journal/timing; missing observer refuses; intended observer stop propagates unchanged and prior profile restored. No original/native/helper/sampler body needed. Root accepted finding and assigned B correction;00f failed scope remains immutable."
+    },
+    {
+      "id": "E2",
+      "severity": "KNOWN_MANDATORY_GENUINE_INTEGRATION_GATE",
+      "state": "PENDING_PORTABLE_F1_CONSUMER",
+      "location": "benchmarks/next_util_execution.py:145",
+      "finding": "fp_controller hard-authenticates historical0c40 and UTIL_VIEWS_FENV_HELPER. This matches an admitted private Linux helper scope but cannot establish portable genuine delivery. No helper/native body executed in retained executor tests. F1 source-built remedy is under concurrent root independent review; its author validation is not root admission.",
+      "minimal_correction": "After root admits the final F1 successor, load its backend from the authenticated prepared source/tests location (not a local author/controller tree or arbitrary cached module). Genuine executor mode must require source-built-v1 with actual receipt and digest, no legacy fallback or hardcoded emitted hash. Reuse that authenticated backend while keeping current save/full32 restore/flags semantics and all FP/input/output/native acceptance checks unchanged. Do not build helpers inside first-cohort or measurement execution.",
+      "dependency_closure": "Version execution source context/strict historical inverses for helper module/C/build/probe/context and FP consumer change. C must include .c in actual source snapshot/index, perform the one separate source build/probe in genuine preparation, provide artifact-local env path+actual digest and collect whole small receipt/library/header/source/control directory. Existing historical56ec public-test pin needs exact F1 projection; preserve old00f/0c40 bytes.",
+      "required_changed_evidence": "Changed pure source/missing/tampered portable-consumer binding and safe actual entry/refusal scopes only after final F1 admission; no original/native/sampler body/timing or large product hash replay for this source-only correction. Actual genuine source/root/Git/runtime/core/binding still pending."
+    }
+  ],
+  "passed_scoped_review": {
+    "authentication": "12exact owned source files and61small proof fields authenticated. Production/header/wrapper/sampler/provenance/historical contracts match declared source pins and immutable56ec dependency blobs. No source mutation by reviewer.",
+    "preservation": "Strict inverse for every declared source file reconstructs actual56ec predecessor or empty new-file predecessor; frozen case/bounds/prior fixture functions are exact source-text matches with pinned hashes. Existing Montage methodc05b519d unchanged; no new measure engine.",
+    "six_API_cohorts": "Five drivers represent six distinct APIs.40fixed cases:8join/8crop/8grid/8slice/4blocks/4windows; six separate first-cohort template APIs retained, blocks/windows selectors distinct despite shared driver.560samples/80warmup groups are conditional arithmetic only, not approved campaign/budget.",
+    "authority_prefix": "External binding checks source/context/production pins, native-Git source-root spelling/HEAD/clean status, producer/revision/artifact hash, runtime source/core member, independent accepted whole-product/root/stager receipts, actual interpreter/NumPy, fixed source CMake and input-bound GO deadline before target imports. Separate measurement manifest is required before science and matches prepared producer/runtime/core/root/context/family/case IDs and method scope. No external arbitrary cases/method override admitted.",
+    "pre_sampler_checks": "Code has real public namespace/owned module/signature/original-source and builtin core ownership checks, denied whole-original/helper/fallback profile, exact accepted-return/C-return counts, full output/input/dtype/shape/stride/own/base/alias checks, scalar slice words, map shared keys/cache and NPpolicy/workers/FP before measure. These are source-reviewed intended checks, not actual genuine acceptance; current evidence stops before targets.",
+    "frontiers": "NumPy conversion/allocation/object references/as_strided/default-int providers explicit. JOIN ArrayMap exact upstream class identity remains open and class difference is reported, not coerced into parity. Platform/full domain/genuine ownership gates remain.",
+    "unbound": {
+      "source": null,
+      "producer_run": null,
+      "producer_artifact": null,
+      "runtime": null,
+      "core": null,
+      "SDK": null,
+      "root_admission": null,
+      "root_GO": null
+    }
+  },
+  "retained_checks": {
+    "XML": {
+      "pure-windows311-v4": {
+        "tests": 155,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 16.094000000040978
+      },
+      "pure-windows313-v4": {
+        "tests": 155,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 15.8692171999719
+      },
+      "numpy-minimum-v3": {
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 13.232110253999998
+      },
+      "numpy-modern-v3": {
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 13.175157733999999
+      }
+    },
+    "scope": "155source/metadata controls eachWin311/313 and17NumPy safe factories/cached/cold original-request refusal each retainedmin/modern. Normal conftest/plugins, terminal0/current failures0, no original/native/helper/sampler body. Synthetic Git/metadata receipts and setup arrays do not authenticate a real installed product, native return, locator or cohort."
+  },
+  "gates": {
+    "passed": [
+      "Exact12owned/61proof source/metadata authentication and declared unchanged dependency scope",
+      "Old function/cases/bounds/method inverse and six distinct prospective API selectors",
+      "Retained pure155/profile and NumPy17/profile current terminal scope, with failure history retained",
+      "Actual provenance fields remain null and no genuine/measurement acceptance claimed"
+    ],
+    "failed": [
+      "E1 zero-timing first-cohort guarantee: current nonNone-profile guard can allow sampler body"
+    ],
+    "pending": [
+      "B versioned narrow E1 + final root-admitted F1 consumer successor, then independent affected-delta admission",
+      "C sole shared integration/source projection/context/selectors/prepare/env/collector wiring; never merge private56ec ancestry",
+      "Actual root source/run/artifact/runtime/core/SDK/root/stager and Git/Linuxenv locator binding, genuine whole-product/SDK/hot-swap/default1/profile closure",
+      "Complete actual workflow source barriers both supported Pythons normalconftest/plugins/no-x and exact-source four-profile qualification/root admission",
+      "Root future real sampler-entry trap on each6API with0body/timing and actual C-return/FP/input/output/caller-restoration receipts",
+      "Root campaign/subset/ellipse reuse decision, distinct measurement GO and one isolated original-public comparison with all journals/losers, independent raw admission and main delivery"
+    ]
+  },
+  "failure_retention": {
+    "author": "Initial dependency/path guesses, Windows one-sided slash comparison13fail, Linux synthetic locator10fail and tmp-link receipt scan failure remain immutable. Final155/17 evidence supersedes only affected source/setup scopes. No original/helper/sampler experiment consumed.",
+    "independent": "Static E1 finding retained against00f; root acknowledged and B successor active. One optional measurement-manifest path guess and one agent-name underscore correction occurred during read-only review; resolved from actual file/agent inventory, no dependent source mutation/scientific execution."
+  },
+  "execution": {
+    "science_imports": 0,
+    "tests": 0,
+    "original_calls": 0,
+    "native_helper_calls": 0,
+    "sampler_calls": 0,
+    "timing_batches": 0,
+    "builds": 0,
+    "downloads": 0,
+    "large_product_or_core_rehashes": 0,
+    "source_shared_main_edits": 0
+  },
+  "waste_reuse": {
+    "reuse": "All retained passing pure/factory/refusal evidence and existing source/contracts/sampler/prior component/raw fixture scopes reused. Immutable Git blob identity avoids rehashing large unchanged fixture/product data. No repeated tests/science/download/build/original/helper/sampler/timing.",
+    "avoidable": "Author metadata prefix/fixture setup failures consumed retained15.547s and9.476s; no rerun by reviewer. E1 was missed by a structural source check/nonNone assertion and requires a narrow real-entry0body control, not a new framework or benchmark experiment.",
+    "observed_cost": "Stdlib source/proof audit9.37s; other inspection cost not aggregated. No replay to measure waste.",
+    "next_plan_correction": "Existing executor task becomes changes-required00f/E1 plus known F1 consumer dependency; root already assigned B combined successor. C receives only independently admitted corrected delta; current executable is unbound and not dispatch-ready."
+  },
+  "next_gate": {
+    "owner": "B executor author for assigned correction; root independent admission; C sole shared integrator",
+    "trigger": "Freeze E1+portable-consumer successor after affected pure/refusal validation; root requests narrow independent delta review. Preserve00f/2dd and this failure, do not invoke original/helper/native/sampler/timing or genuine dispatch based on this review."
+  }
+}
