@@ -37354,6 +37354,28 @@
         "owner": "readiness_reviewer narrow test author then root independent admission",
         "action": "Freeze minimal five-test-file source-only successor in separate worktree from9c92, preserve failed campaign and numerical source fingerprint. Root reviews actual full failure closure, then reruns complete actual workflow command on both supported Pythons; partial unions cannot satisfy readiness."
       }
+    },
+    {
+      "id": "join-util-views-windows-bytepolicy-v1",
+      "kind": "implementation",
+      "owner": "metrics_integrator",
+      "state": "assigned",
+      "apis": [],
+      "target_apis": [],
+      "owns": [
+        ".gitattributes"
+      ],
+      "depends_on": [
+        "join-util-views-sourcebarrier-fix-v1"
+      ],
+      "base_sha": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
+      "scope": "Fix proven hosted Windows checkout-byte mismatch; source algorithms/frozen bytes/hash checks unchanged. Keep42224231410 immutable.",
+      "acceptance": "Reproduce actual autocrlf=true checkout and failed guard scope. CRLF helperc2ec8aa8 matches hosted failure, stored97ff preserved. Byte-preserving attributes for actual raw-pinned closure. Affected guards both retained Pythons; root complete2barriers and exactsource4profile successor.",
+      "current_checkpoint": "Windows127913560774 failed92sourceguards/2943passes+8subtests beforeprep. Joblog retainedonce376856B. CRLF digest exactlymatches hosted helper, four F1paths textunspecified. Modern/minimum/debug terminal SUCCESS, independently unadmitted; run terminal FAILED overall.",
+      "next_gate": {
+        "owner": "metrics_integrator bytepolicy author then root independent readiness",
+        "action": "Isolated checkout using per-process autocrlf config, no global/worktreeformat change; minimal.gitattributes-only successor preserving all source/contracts/golds. No numerical/build/timing replay. Root faithful completebarriers before successor dispatch."
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -38455,11 +38477,11 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "C1 controller b36754dc/e3cb1469 frozen2file delta/60pure perversion; B independent review next. C independently reviews B additive LBP bd845fa8/7904537d 4newfiles/one real overlap recipe; no code/science replay.",
-      "readiness_reviewer": "Root admitted mark-prefix24d28ddc from actualaa2c2048, budget0. R now authors complete source/observer/capture-controller successor with guardedcapturemode and integrated0body prefix, no originalbody authorization; preserve d955/aa2c.",
-      "boundary_worker": "LBP additive bd845fa8/7904537d frozen,93old recipes exact+one new overlap,6pure/version9NP/profile; C independent review next. B independently reviews C1controller b36754dc/e3cb1469 2file poststop guard delta."
+      "metrics_integrator": "Windows raw-byte checkout policy author from458e, exclusive.gitattributes only; no algorithm/frozenbyte/hash weakening.",
+      "readiness_reviewer": "Author complete LBP94 observer/capturecontroller+samecode0bodyprefix; explicit93legacy/new1dispatch, originalbudget0.",
+      "boundary_worker": "Independent complete mark39bb/h7fe31aef observer/controller and actualsamecodeprefix review; no science replay or captureGO."
     },
-    "next_action": "Root observes exact458e four-profile qualification42224231410 (all4jobs live) after complete readinessc6c91307. Retain terminal artifacts once and independently admit genuine/source/SDK/profile scope before actual measurement binding/GO/main delivery. C controller2c7c review found C1post-stop immutability gap; correct narrowly before anyperformance. B/R/C independent future reviews proceed without source/run mutation.",
+    "next_action": "Exact458e four-profile qualification42224231410 is terminal FAILED: Windows source guards failed, three Linux profiles succeeded but remain independently unadmitted. Local readinessc6c91307 did not establish faithful hosted checkout-byte policy. Retain terminal artifacts once and independently admit genuine/source/SDK/profile scope before actual measurement binding/GO/main delivery. C1post-stop correction b36754dc has scoped independent review74b34242; actual campaign bindings and performance authority remain pending. B/R/C independent future reviews proceed without source/run mutation.",
     "current_checkpoint": {
         "main_image_names": 265,
         "qualified_image_names": 265,
@@ -38467,7 +38489,7 @@
         "prepared_run": 42177447898,
         "candidate_source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
         "candidate_image_names": 271,
-        "candidate_status": "Exact458e candidate remainsUNDELIVERED (265imagepaths stillship). Localcomplete readinessc6c91307 passed3035+8/version. Hosted42224231410:Windows failedbeforepreparation;modern jobsuccess pendingraw/SDK admission;minimum/debug active atobservation-v3. No271 genuine/fullparity/performance acceptance.",
+        "candidate_status": "Exact458e candidate remainsUNDELIVERED (265imagepaths stillship). Localcomplete readinessc6c91307 passed3035+8/version. Hosted42224231410 terminalFAILED atobservation-v5:Windows failedbeforepreparation;modern/minimum/debug jobsuccess pendingraw/SDK admission. No271 genuine/fullparity/performance acceptance.",
         "performance_evidence": "benchmarks/next-metrics-minimum-initial-v1/README.md",
         "readiness_reviews": [
           {
@@ -38479,7 +38501,7 @@
         "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42224231410",
         "candidate_qualification_run": 42224231410,
         "candidate_evidence": null,
-        "candidate_qualification_status": "RUN42224231410 stillIN_PROGRESS:Windows failure beforepreparation;modern SUCCESS but independentraw/SDK admissionpending;minimum/debug RUNNING atobservation-v3. No fullsource/profile admission or successor diagnosis claim.",
+        "candidate_qualification_status": "RUN42224231410 terminalFAILED atobservation-v5:Windows failure beforepreparation;modern/minimum/debug SUCCESS but independentraw/SDK admissionpending. ProvenCRLF helper mismatch; bytepolicy correction and successor readiness pending. No fullsource/profile admission.",
         "next_release_source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
         "next_release_expected_images": 271,
         "next_release_expected_product": 216,
@@ -38487,7 +38509,7 @@
         "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
         "optimization_prepare_run": 41967608976,
         "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-        "next_release_status": "Same exact458e run42224231410:Windows toolingguardfailure;modern jobsuccess notyetadmitted;minimum/debug live perobservation-v3. Preservealloutcomes and diagnosebefore anysuccessor. DetailedCOVERAGE_CHECKLIST.md gateincomplete; mainstill265.",
+        "next_release_status": "Same exact458e run42224231410 terminalFAILED:Windows toolingguardfailure;modern/minimum/debug SUCCESS notyetadmitted perobservation-v5. Preservealloutcomes; bytepolicy correction and complete readiness required before anysuccessor. DetailedCOVERAGE_CHECKLIST.md gateincomplete; mainstill265.",
         "next_release_qualification_run": 42224231410,
         "optimization_comparison_run": 41969983206,
         "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
