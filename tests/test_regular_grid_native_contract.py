@@ -6,8 +6,25 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def test_regular_grid_complete_dependency_closure():
-    data=json.loads((ROOT/'coverage/contracts/regular-grid-native-v1.json').read_bytes())
+    data=json.loads((ROOT/'coverage/contracts/regular-grid-native-v2.json').read_bytes())
     assert data['API_completion'] is False and data['shared_consumer_unchanged'] is True
+    predecessor=data['public_adapter_predecessor']
+    assert predecessor['contract']=='coverage/contracts/regular-grid-native-v1.json'
+    raw=(ROOT/predecessor['contract']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==predecessor['raw_sha256']=='58082bd2e38dc186a7dd4e7517d16004a434ae6d0d04ba1cdadc8e9523b61e9a'
+    previous=json.loads(raw)
+    raw=(ROOT/predecessor['context']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==predecessor['context_raw_sha256']
+    context=json.loads(raw);assert context['path']=='tests/test_regular_grid_public.py'
+    assert context['predecessor_source']=='47df67d4ae916701fdc15f5f9f536a4df9a58170'
+    raw=(ROOT/context['path']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==context['current_raw_sha256']==data['source_raw_sha256'][context['path']]
+    for fragment in context['inverse_fragments']:
+        current,old=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1
+        raw=raw.replace(current,old,1)
+    assert hashlib.sha256(raw).hexdigest()==context['predecessor_raw_sha256']==previous['source_raw_sha256'][context['path']]
+
     for group in ('source_raw_sha256','reused_raw_sha256'):
         for name,pin in data[group].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
     assert 'python/skimagexx/_regular_seeds.py' in data['reused_raw_sha256']

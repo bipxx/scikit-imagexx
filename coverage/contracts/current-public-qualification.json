@@ -680,7 +680,8 @@
     "tests/test_util_metadata_source.py",
     "tests/test_crop_benchmark.py",
     "tests/test_regular_grid_native_contract.py",
-    "tests/test_regular_grid_benchmark.py"
+    "tests/test_regular_grid_benchmark.py",
+    "tests/test_regular_grid_public.py"
   ],
   "SDK_scope": "current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance",
   "required_client_families": [
@@ -725,5 +726,10 @@
     "include/skimagexx/join_segmentations.hpp",
     "include/skimagexx/crop.hpp",
     "include/skimagexx/regular_grid.hpp"
+  ],
+  "Linux_saved_grid_profiles": [
+    "minimum",
+    "modern",
+    "debug"
   ]
 }
