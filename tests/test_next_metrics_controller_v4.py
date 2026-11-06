@@ -1,0 +1,346 @@
+"""Source-only controller interface/authority controls: no targets/helper/sampler."""
+import ast
+import copy
+import hashlib
+import importlib.util
+import json
+import re
+from pathlib import Path
+from types import SimpleNamespace
+import pytest
+
+ROOT=Path(__file__).resolve().parents[1]
+CONTRACT=ROOT/'coverage/contracts/next-metrics-measurement-v4.json'
+DATA=json.loads(CONTRACT.read_bytes())
+CONTEXT=json.loads((ROOT/'coverage/contracts/next-metrics-controller-binding-v3.json').read_bytes())
+PATH='coverage/contracts/next-metrics-measurement-v4.json'
+H=lambda b:hashlib.sha256(b).hexdigest()
+V4_CONTEXT=ROOT/'coverage/contracts/next-metrics-controller-binding-v4.json'
+spec=importlib.util.spec_from_file_location('controller_v2',ROOT/'tools/next_metrics_first_cohort_probe.py')
+PROBE=importlib.util.module_from_spec(spec);spec.loader.exec_module(PROBE)
+ROUTES=DATA['first_cohort']['routes']
+
+
+def test_v4_exact_scope_history_ellipse_interface_and_C1_source():
+    c=json.loads(V4_CONTEXT.read_bytes())
+    old=json.loads((ROOT/'coverage/contracts/next-metrics-measurement-v3.json').read_bytes())
+    assert H((ROOT/'coverage/contracts/next-metrics-measurement-v3.json').read_bytes())==c['predecessor_manifest_raw_sha256']
+    for name,pin in c['old_test_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin
+    assert DATA['producer']==old['producer']and DATA['prepared_source']==old['prepared_source']
+    for key in ('helper','benchmark_source_sha256','core_sha256','runtime_sha256','SDK_members','benchmark_fingerprint'):assert DATA[key]==old[key],key
+    for name,route in old['first_cohort']['routes'].items():assert ROUTES[name]==route
+    assert ROUTES['ellipse']==c['prior_route_source']['route']
+    contract=ROOT/ROUTES['ellipse']['contract'];ellipse=json.loads(contract.read_bytes())
+    assert H(contract.read_bytes())==c['ellipse_contract_raw_sha256']and ellipse['cases']==c['ellipse_cases']
+    assert len(ellipse['cases'])==12 and ellipse['cases'][0]==ROUTES['ellipse']['first_case']
+    assert ellipse['method_sha256']==c['method_sha256']and ellipse['repeat']==7 and ellipse['target_ms']==100 and ellipse['warmup_min_ms']==250
+    assert len(ROUTES)==len({r['api']for r in ROUTES.values()})==10
+    assert sum(v['cases']for v in DATA['families'].values())==68
+    scope=DATA['execution_scope'];assert(scope['canonical_cases'],scope['canonical_raw_samples'],scope['warmup_groups'])==(68,952,136)
+    assert scope['untimed_topcalls']==dict(original=10,native=10)
+    text=(ROOT/'tools/next_metrics_first_cohort_probe.py').read_text();functions={n.name:ast.get_source_segment(text,n)for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)}
+    for name,pin in c['predecessor_function_source_sha256'].items():
+        raw=functions[name]
+        for before,after in reversed(list(c['exact_probe_replacements'].items())):
+            raw=re.sub(re.escape(after)+r'(?![0-9])',before,raw)if before=='==9'else raw.replace(after,before)
+        assert H(raw.encode())==pin,name
+    assert set(functions)==set(c['predecessor_function_source_sha256'])
+    assert DATA['ellipse_reuse']['prior_wins']==10 and DATA['ellipse_reuse']['prior_losses']==2
+    assert DATA['ellipse_reuse']['status']=='NO_REUSE_CURRENT12_FROZEN_WORKLOADS_ADDED_EXECUTION_PENDING'
+    workflow=(ROOT/'.github/workflows/next-metrics-initial.yml').read_text()
+    assert workflow.count('coverage/contracts/next-metrics-measurement-v4.json')==2 and 'next-metrics-measurement-v3.json'not in workflow
+
+
+def test_historical_v2_UNBOUND_authority_still_refuses(tmp_path):
+    old_path=ROOT/'coverage/contracts/next-metrics-measurement-v2.json'
+    old=json.loads(old_path.read_bytes())
+    assert old['status']=='PROSPECTIVE_UNBOUND_NO_MEASUREMENT'
+    assert set(old['producer'].values())=={None}
+    assert all(old[k]is None for k in ('prepared_source','SDK_members','core_sha256','runtime_sha256','benchmark_fingerprint'))
+    assert len(old['first_cohort']['routes'])==9 and old['execution_scope']['canonical_cases']==56
+    fixture=tmp_path/'coverage/contracts/next-metrics-measurement-v4.json'
+    fixture.parent.mkdir(parents=True);fixture.write_bytes(old_path.read_bytes())
+    with pytest.raises(AssertionError,match='UNBOUND'):PROBE.read_manifest(tmp_path)
+
+
+@pytest.mark.parametrize('name',ROUTES)
+def test_each_real_api_cli_interface(name):
+    route=ROUTES[name]
+    argv=PROBE.driver_argv(ROOT,route,'binding.json','never.json','UTC')
+    assert argv[0]==str(ROOT/route['driver'])
+    if route['kind']=='util-executor':
+        assert '--deadline-utc'not in argv and '--first-cohort'in argv
+        assert argv[argv.index('--api')+1]==route['api']
+        assert argv[argv.index('--case')+1]==route['first_case']['id']
+        assert argv[-2:]==['--root-binding','binding.json']
+    else:assert argv[argv.index('--deadline-utc')+1]=='UTC'
+
+
+def test_contexts_scoped_without_recipe_or_method_override(tmp_path):
+    util=json.loads((ROOT/'coverage/contracts/next-util-benchmark-execution-v2.json').read_bytes())
+    for name,route in ROUTES.items():
+        binding=PROBE.scoped_binding({'source_revision':'source'},name,route,tmp_path/'go.json',hashlib.sha256((ROOT/route['contract']).read_bytes()).hexdigest())
+        assert set(binding['routes'])=={name}and binding['routes'][name]is route
+        assert binding['base_contract_sha256']==hashlib.sha256((ROOT/route['contract']).read_bytes()).hexdigest()
+        if route['kind']=='util-executor':
+            actual=util['routes'][route['execution_route']]
+            assert route['cases']==[s for s in actual['cases']if s.get('api',actual['apis'][0])==route['api']]
+            measurement=PROBE.scoped_measurement(DATA,route,'parent')
+            family=measurement['families'][Path(route['driver']).stem]
+            assert family['case_ids']==[s['id']for s in route['cases']]
+            assert family['cases']==len(route['cases'])
+            assert measurement['execution_scope']==DATA['execution_scope']
+    assert ROUTES['blocks']['first_case']!=ROUTES['windows']['first_case']
+    assert DATA['families']['array_views']['cases']==8
+    assert len(ROUTES['blocks']['cases'])==len(ROUTES['windows']['cases'])==4
+    bad=copy.deepcopy(ROUTES['blocks']);bad['cases'][0]['id']='unadmitted'
+    with pytest.raises(AssertionError):PROBE.scoped_measurement(DATA,bad,'parent')
+
+
+def frame_fixture(name):
+    route=ROUTES[name];args=('input',);options={'exact':True};state=('unchanged',)
+    caller=dict(cli=SimpleNamespace(first_cohort=True,measurement_go=None),spec=copy.deepcopy(route['first_case']),api=route['api'],accepted=[True],rows=[],returns=[k for k,v in route['native_return_counts'].items()for _ in range(v)],requirements=dict(route['native_return_counts']),expected_state={'alias':'same'},actual_state={'alias':'same'},reference_FP={'flags':32,'rounding':0},native_FP={'flags':32,'rounding':0},save=lambda:bytes(32),caller=bytes(32),args=args,options=options,inputs=['input'],before=[state],np=None)
+    parent=SimpleNamespace(f_code=SimpleNamespace(co_filename=str(ROOT/'benchmarks/next_util_execution.py')),f_locals=caller,f_globals={'array_state':lambda v,np:state})
+    frame=SimpleNamespace(f_back=parent)
+    input_state=lambda v:v
+    return route,frame,dict(counts=dict(original=1,native=1),accepted=[True],returns=[],getters=[],input_state=input_state,inputs_before=[(args,options)])
+
+
+@pytest.mark.parametrize('name',[k for k,v in ROUTES.items()if v['kind']=='util-executor'])
+def test_real_execute_frame_adapter_positive(name):
+    route,frame,kwargs=frame_fixture(name)
+    PROBE.validate_util_entry(frame,route,ROOT,**kwargs)
+
+
+@pytest.mark.parametrize('failure',('case','api','count','acceptance','native-marker','FP','full32','input','alias','timing','getter','caller'))
+def test_real_execute_frame_adapter_refuses_changed_scope(failure):
+    route,frame,kwargs=frame_fixture('blocks');caller=frame.f_back.f_locals
+    if failure=='case':caller['spec']={'id':'different'}
+    elif failure=='api':caller['api']='util.view_as_windows'
+    elif failure=='count':kwargs['counts']['original']=2
+    elif failure=='acceptance':caller['accepted']=[False]
+    elif failure=='native-marker':caller['returns']=[]
+    elif failure=='FP':caller['native_FP']['flags']=0
+    elif failure=='full32':caller['save']=lambda:bytes([1])+bytes(31)
+    elif failure=='input':kwargs['inputs_before']=[]
+    elif failure=='alias':caller['actual_state']={'alias':'changed'}
+    elif failure=='timing':caller['cli'].first_cohort=False
+    elif failure=='getter':kwargs['getters']=['unexpected-worker-lookup']
+    elif failure=='caller':frame.f_back.f_code.co_filename='wrong.py'
+    with pytest.raises(AssertionError):PROBE.validate_util_entry(frame,route,ROOT,**kwargs)
+
+
+def test_actual_root_refusal_stops_before_science(monkeypatch,tmp_path):
+    binding=tmp_path/'binding.json';binding.write_text(json.dumps({'status':'UNBOUND'}))
+    monkeypatch.setattr(PROBE.sys,'argv',['probe','--binding',str(binding),'--root-go',str(tmp_path/'never.json'),'--route','blocks'])
+    with pytest.raises(AssertionError,match='UNBOUND'):PROBE.main()
+    assert list(tmp_path.iterdir())==[binding]
+
+
+def test_measurement_commands_cannot_replay_first_cohort_or_pass_deadline_to_util(tmp_path):
+    authorities={name:{'binding':name+'.binding','measurement':name+'.measurement'}for name in ROUTES}
+    commands=PROBE.measurement_commands(ROOT,tmp_path,DATA,'python',authorities,'UTC')
+    assert len(commands)==9 and 'metrics-contingency'not in commands
+    for name,argv in commands.items():
+        assert '--first-cohort'not in argv and '--case'not in argv
+        if ROUTES[name]['kind']=='util-executor':
+            assert '--deadline-utc'not in argv and '--measurement-go'in argv
+            assert argv[argv.index('--api')+1]==ROUTES[name]['api']
+        else:assert '--deadline-utc'in argv
+
+
+def test_source_identity_helper_closure_and_no_hidden_sampler():
+    for name,pin in DATA['benchmark_source_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
+    for name,pin in DATA['helper']['source_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
+    tree=ast.parse((ROOT/'tools/next_metrics_first_cohort_probe.py').read_text());functions={n.name:n for n in tree.body if isinstance(n,ast.FunctionDef)}
+    prepare=ast.unparse(functions['prepare_host_helper']);assert 'util_views_fenv_build.py'in prepare and '--control-python'in prepare and 'rglob'in prepare
+    assert "bundle.exists()"in prepare and "done.returncode == 0"in prepare
+    main=ast.unparse(functions['main']);assert 'helper_binding_sha256'in ast.unparse(functions['verify_helper_state'])and 'StopBeforeBody'in main
+    assert main.index('finish_probe(')>main.index('xx.set_fallback_enabled(fallback)')
+    execute=ast.parse((ROOT/'benchmarks/next_util_execution.py').read_text())
+    assert 'first_cohort_profile' in {n.name for n in execute.body if isinstance(n,ast.FunctionDef)}
+    workflow=(ROOT/'.github/workflows/next-metrics-initial.yml').read_text()
+    assert workflow.count("probe['prepare_host_helper']")==1
+    assert workflow.index("probe['prepare_host_helper']")<workflow.index("probe['run_cohorts']")<workflow.index("probe['run_measurements']")
+    assert 'path: results/'in workflow and 'if: always()'in workflow
+    assert 'next-metrics-measurement-v1.json'not in workflow
+    assert '--first-cohort'not in ast.unparse(functions['run_measurements'])
+
+
+@pytest.mark.parametrize('cached',(False,True))
+@pytest.mark.parametrize('tamper',('none','helper-digest','helper-env','route','counter'))
+def test_actual_bound_probe_metadata_reaches_import_request_refusal(monkeypatch,tmp_path,cached,tamper):
+    import builtins,sys
+    from datetime import datetime,timezone,timedelta
+    sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+    source=tmp_path/'source';source.mkdir();revision='a'*40
+    admission=tmp_path/'admission.json';admission.write_text(json.dumps(dict(source=revision,passed=True,root_accepted=True,profiles=4)))
+    bundle=tmp_path/'helper';bundle.mkdir();receipt=bundle/'receipt.json';receipt.write_text('{"synthetic_metadata_only":true}')
+    env=dict(UTIL_VIEWS_FENV_MODE='source-built-v1',UTIL_VIEWS_FENV_RECEIPT=str(receipt),UTIL_VIEWS_FENV_RECEIPT_SHA256=sha(receipt))
+    helper=tmp_path/'helper-binding.json';helper.write_text(json.dumps(dict(env=env,files={'receipt.json':sha(receipt)})))
+    binding=tmp_path/'binding.json';go=tmp_path/'go.json'
+    payload=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',routes={'blocks':ROUTES['blocks']},source_root=str(source),git_argv=['synthetic-git','-C',str(source)],source_revision=revision,genuine_root_admission_path=str(admission),genuine_root_admission_sha256=sha(admission),product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',interpreter=sys.executable,source_files_sha256={},output_root=str(tmp_path/'first-cohort'),installed_site=str(tmp_path/'never-installed'))
+    binding.write_text(json.dumps(payload))
+    go.write_text(json.dumps(dict(binding_sha256=sha(binding),probe_sha256=sha(PROBE.__file__),routes=['views'],timed_batches=0,maximum_original_topcalls=1,maximum_native_topcalls=1,deadline_utc=(datetime.now(timezone.utc)+timedelta(hours=1)).isoformat(),helper_binding_sha256=sha(helper))))
+    def git(argv,**kwargs):
+        assert argv[:3]==payload['git_argv']
+        if argv[3:]==['rev-parse','HEAD']:return revision+'\n'
+        assert argv[3:]==['status','--porcelain'];return ''
+    monkeypatch.setattr(PROBE.subprocess,'check_output',git)
+    for key,value in env.items():monkeypatch.setenv(key,value)
+    for key in ('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS'):monkeypatch.setenv(key,'1')
+    monkeypatch.setenv('PYTHONDONTWRITEBYTECODE','1')
+    for key in ('GIT_DIR','GIT_WORK_TREE','UTIL_VIEWS_FENV_HELPER','SKIMAGEXX_DISABLE_SIMD'):monkeypatch.delenv(key,raising=False)
+    monkeypatch.setattr(sys,'path',list(sys.path))
+    if cached:monkeypatch.setitem(sys.modules,'numpy',SimpleNamespace(synthetic_cached_module=True))
+    monkeypatch.setattr(sys,'argv',['probe','--binding',str(binding),'--root-go',str(go),'--route','blocks'])
+    if tamper=='helper-digest':helper.write_text('{}')
+    elif tamper=='helper-env':monkeypatch.setenv('UTIL_VIEWS_FENV_RECEIPT_SHA256','0'*64)
+    elif tamper in ('route','counter'):
+        changed=json.loads(go.read_text())
+        if tamper=='route':changed['routes']=['blocks']
+        else:changed['maximum_original_topcalls']=2
+        go.write_text(json.dumps(changed))
+    prior=builtins.__import__;requests=[]
+    class RefusedBeforeScience(BaseException):pass
+    def request(name,*args,**kwargs):
+        if name=='numpy':requests.append(name);raise RefusedBeforeScience()
+        return prior(name,*args,**kwargs)
+    with monkeypatch.context()as patch:
+        patch.setattr(builtins,'__import__',request)
+        with pytest.raises(RefusedBeforeScience if tamper=='none'else AssertionError):PROBE.main()
+    assert requests==(['numpy']if tamper=='none'else [])and builtins.__import__ is prior
+    assert not (tmp_path/'first-cohort/blocks/calls.jsonl').exists()
+    assert not (tmp_path/'first-cohort/blocks/never-written.json').exists()
+
+
+@pytest.mark.parametrize('mutation',('none','source','HEAD','dirty','binding','GO','probe','contract','helper-binding','helper-receipt','helper-env','deadline','restoration'))
+def test_actual_poststop_terminal_write_path_refuses_mutation(tmp_path,monkeypatch,mutation):
+    sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+    root=tmp_path/'source';root.mkdir();source=root/'small.py';source.write_text('# frozen')
+    contract=root/'contract.json';contract.write_text('{}')
+    bundle=tmp_path/'helper';bundle.mkdir();receipt=bundle/'receipt.json';receipt.write_text('{"synthetic_metadata_only":true}')
+    env=dict(UTIL_VIEWS_FENV_MODE='source-built-v1',UTIL_VIEWS_FENV_RECEIPT=str(receipt),UTIL_VIEWS_FENV_RECEIPT_SHA256=sha(receipt))
+    helper=tmp_path/'helper-binding.json';helper.write_text(json.dumps(dict(env=env,files={'receipt.json':sha(receipt)})))
+    folder=tmp_path/'first-cohort/blocks';folder.mkdir(parents=True)
+    binding=tmp_path/'binding.json';binding.write_text('{}');go_path=tmp_path/'go.json';go_path.write_text('{}')
+    bp,gp=sha(binding),sha(go_path)
+    value=dict(source_root=str(root),git_argv=['fixture-git'],source_revision='a'*40,source_files_sha256={'small.py':sha(source),'contract.json':sha(contract)},output_root=str(folder.parent),routes={'blocks':{'contract':'contract.json'}},base_contract_sha256=sha(contract))
+    go=dict(probe_sha256=sha(PROBE.__file__),helper_binding_sha256=sha(helper),deadline_utc='2099-01-01T00:00:00+00:00')
+    stopped=dict(route='blocks',counts=dict(original=1,native=1),timed_batches=0,sampler_body_calls=0)
+    def git(argv,**kwargs):
+        if argv[-2:]==['rev-parse','HEAD']:return ('b'*40 if mutation=='HEAD'else'a'*40)+'\n'
+        assert argv[-2:]==['status','--porcelain'];return ' M small.py'if mutation=='dirty'else ''
+    monkeypatch.setattr(PROBE.subprocess,'check_output',git)
+    for k,v in env.items():monkeypatch.setenv(k,v)
+    for k in ('GIT_DIR','GIT_WORK_TREE','UTIL_VIEWS_FENV_HELPER'):monkeypatch.delenv(k,raising=False)
+    if mutation=='source':source.write_text('# changed')
+    elif mutation=='binding':binding.write_text('{"changed":true}')
+    elif mutation=='GO':go_path.write_text('{"changed":true}')
+    elif mutation=='probe':go['probe_sha256']='0'*64
+    elif mutation=='contract':contract.write_text('{"changed":true}')
+    elif mutation=='helper-binding':helper.write_text('{}')
+    elif mutation=='helper-receipt':receipt.write_text('{"changed":true}')
+    elif mutation=='deadline':go['deadline_utc']='2000-01-01T00:00:00+00:00'
+    elif mutation=='helper-env':monkeypatch.setenv('UTIL_VIEWS_FENV_RECEIPT_SHA256','0'*64)
+    call=lambda:PROBE.finish_probe(folder,stopped,value,binding,go_path,go,bp,gp,mutation!='restoration')
+    if mutation=='none':
+        call();terminal=json.loads((folder/'terminal.json').read_text())
+        assert terminal['poststop_source_authority_unchanged']is True
+        assert terminal['outer_state_restored']is True
+        assert not (folder/'failure.json').exists()
+    else:
+        with pytest.raises(AssertionError):call()
+        assert not (folder/'terminal.json').exists()
+        failure=json.loads((folder/'failure.json').read_text())
+        assert failure['phase']=='poststop-source-authority'and failure['retry']is False
+    assert not (folder/'never-written.json').exists()
+
+
+@pytest.mark.parametrize('fault',('none','verifier','runtime','runtime-during-verifier','manifest'))
+def test_actual_batch_summary_requires_one_postbatch_verifier(tmp_path,monkeypatch,fault):
+    # Synthetic completed child receipts; neither child probe nor verifier runs.
+    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/next-metrics-measurement-v4.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
+    stage=tmp_path/'stage';stage.mkdir();runtime=stage/'runtime.json';runtime.write_text('{"synthetic_only":true}')
+    results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA)
+    manifest['runtime_sha256']=hashlib.sha256(runtime.read_bytes()).hexdigest()
+    manifest['first_cohort']['source_revision']='source'
+    authorities={name:dict(binding='binding',go='go')for name in ROUTES};seen=[]
+    def completed(command,**kwargs):
+        if 'verify'in command:
+            seen.append('verify')
+            assert not (results/'first-cohort-summary.json').exists()
+            if fault=='runtime-during-verifier':runtime.write_text('{"changed":true}')
+            return SimpleNamespace(returncode=int(fault=='verifier'))
+        cohort=command[-1];seen.append(cohort);folder=results/'first-cohort'/cohort;folder.mkdir(parents=True)
+        terminal=dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY',route=cohort,source='source',counts=dict(original=1,native=1),timed_batches=0,sampler_body_calls=0,outer_state_restored=True,poststop_source_authority_unchanged=True)
+        (folder/'terminal.json').write_text(json.dumps(terminal))
+        if len(seen)==10:
+            if fault=='runtime':runtime.write_text('{"changed":true}')
+            elif fault=='manifest':manifest_path.write_text('{"changed":true}')
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(PROBE.subprocess,'run',completed)
+    call=lambda:PROBE.run_cohorts(controller,results,manifest,'python',authorities)
+    if fault=='none':
+        call();assert seen[-1]=='verify'and seen.count('verify')==1
+        summary=json.loads((results/'first-cohort-summary.json').read_text());assert summary['postbatch_offline_identity_verified']is True
+    else:
+        with pytest.raises(AssertionError):call()
+        assert not (results/'first-cohort-summary.json').exists()
+        assert seen.count('verify')==(1 if fault in ('verifier','runtime-during-verifier')else 0)
+        failure=json.loads((results/'first-cohort-failure.json').read_text())
+        assert failure['phase']=='postbatch-identity'and failure['retry']is False
+        if fault=='verifier':assert json.loads((results/'first-cohort-identity-after-exit.json').read_text())['exit']==1
+
+
+def test_actual_bound_root_source_runtime_core_SDK_metadata():
+    path,m=PROBE.read_manifest(ROOT)
+    assert path==ROOT/PATH and m==DATA
+    assert m['producer']==CONTEXT['producer']==dict(run='42262940227',revision='a6bae9ac86dbba362537758784edf06c973e9c53',artifact='13528655843',sha256='73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e')
+    assert m['runtime_sha256']==CONTEXT['runtime_sha256']=='6d41b7036debf39346a0439a28c81df242aa489299663905a3ca57a1ec5e1e5f'
+    assert len(CONTEXT['SDK_source_map'])==m['SDK_members']==102
+    assert m['benchmark_fingerprint']==CONTEXT['benchmark_fingerprint']
+    for n,pin in CONTEXT['root_receipts'].items():assert H((ROOT/n).read_bytes())==pin
+    assert len(m['benchmark_source_sha256'])==len(m['first_cohort']['source_files_raw_sha256'])==67
+    assert all(m['prepared_source']['files_sha256'][n]==pin for n,pin in m['benchmark_source_sha256'].items())
+    assert len(m['helper']['source_sha256'])==7 and m['helper']['prepare_once_on_actual_host']is True
+    assert m['helper']['receipt_sha256']is m['helper']['library_sha256']is m['helper']['root_GO']is None
+
+
+@pytest.mark.parametrize('tamper',('none','source','prepared','run','artifact','archive','admission-digest','stager-digest','core','core-member','SDK','fingerprint','source-pin','source-count','probe','routes','case-budget','sample-budget','worker','losses','helper-receipt','helper-library','helper-GO','runtime-format'))
+def test_actual_binding_metadata_tamper_before_any_body(tmp_path,monkeypatch,tamper):
+    m=copy.deepcopy(DATA);first=m['first_cohort']
+    for n in (first['root_admission_path'],first['root_stager_path'],first['probe_path']):
+        p=tmp_path/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((ROOT/n).read_bytes())
+    if tamper=='source':m['producer']['revision']='0'*40
+    elif tamper=='prepared':m['prepared_source']['revision']='0'*40
+    elif tamper=='run':m['producer']['run']='1'
+    elif tamper=='artifact':m['producer']['artifact']='1'
+    elif tamper=='archive':m['producer']['sha256']='0'*64
+    elif tamper=='admission-digest':first['root_admission_sha256']='0'*64
+    elif tamper=='stager-digest':first['root_stager_sha256']='0'*64
+    elif tamper=='core':m['core_sha256']='0'*64
+    elif tamper=='core-member':first['core_member']='wrong.so'
+    elif tamper=='SDK':m['SDK_members']=97
+    elif tamper=='fingerprint':m['benchmark_fingerprint']['source_sha256']='0'*64
+    elif tamper=='source-pin':m['prepared_source']['files_sha256']['CMakeLists.txt']='0'*64
+    elif tamper=='source-count':m['prepared_source']['files_sha256'].pop('AGENTS.md')
+    elif tamper=='probe':first['probe_sha256']='0'*64
+    elif tamper=='routes':first['routes'].pop('blocks')
+    elif tamper=='case-budget':m['execution_scope']['canonical_cases']=55
+    elif tamper=='sample-budget':m['execution_scope']['canonical_raw_samples']=1
+    elif tamper=='worker':m['execution_scope']['workers']=4
+    elif tamper=='losses':m['execution_scope']['retain_all_losses']=False
+    elif tamper=='helper-receipt':m['helper']['receipt_sha256']='0'*64
+    elif tamper=='helper-library':m['helper']['library_sha256']='0'*64
+    elif tamper=='helper-GO':m['helper']['root_GO']={}
+    elif tamper=='runtime-format':m['runtime_sha256']='unknown'
+    p=tmp_path/PATH;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(m))
+    calls=[]
+    def forbidden(*a,**kw):calls.append(a);raise AssertionError('BODY_OR_PROCESS_REACHED')
+    monkeypatch.setattr(PROBE.subprocess,'run',forbidden)
+    if tamper=='none':assert PROBE.read_manifest(tmp_path)[1]==m
+    else:
+        with pytest.raises(AssertionError):PROBE.read_manifest(tmp_path)
+    assert not calls

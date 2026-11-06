@@ -1,0 +1,239 @@
+{
+  "schema": "next-metrics-controller-binding-v4",
+  "base": "76c93138a62aaa7077e8f0d9b59ed10c4852efc0",
+  "producer": {
+    "run": "42262940227",
+    "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+    "artifact": "13528655843",
+    "sha256": "73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e"
+  },
+  "predecessor_manifest_raw_sha256": "881ebd7d3cdbfb3a2d8f1ef6a500b680130d7d117d6b4b128a1cf9651e8d31e4",
+  "prior_route_source": {
+    "path": "build/next-metrics-initial-results-v1/results/first-cohort-binding.json",
+    "sha256": "81518e2709259b34004a50f3500674ec50e7cf783c014b0d3fc4816ea96326e0",
+    "controller": "20b9d4e70e091ab84f334bf5823d1d4242933b20",
+    "route": {
+      "kind": "dedicated",
+      "api": "draw.ellipse_perimeter",
+      "driver": "benchmarks/ellipse_perimeter.py",
+      "owned_module": "skimagexx._draw_ellipse_perimeter",
+      "acceptance_function": "ellipse_perimeter",
+      "contract": "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json",
+      "first_case": {
+        "id": "ellipse-perimeter/point",
+        "api": "draw.ellipse_perimeter",
+        "args": [
+          3,
+          -4,
+          0,
+          0
+        ],
+        "kwargs": {}
+      },
+      "native_entries": [
+        "draw_ellipse_perimeter"
+      ],
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ]
+    }
+  },
+  "ellipse_contract_raw_sha256": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
+  "ellipse_cases": [
+    {
+      "id": "ellipse-perimeter/point",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        3,
+        -4,
+        0,
+        0
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/unit",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/unequal",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/flat",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        8
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/zero-axis",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        0,
+        8
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/translated-clip",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        4,
+        6,
+        3,
+        5
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          12
+        ]
+      }
+    },
+    {
+      "id": "ellipse-perimeter/unit-angle-positive",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {
+        "orientation": 0.3
+      }
+    },
+    {
+      "id": "ellipse-perimeter/unit-angle-negative",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {
+        "orientation": -0.5
+      }
+    },
+    {
+      "id": "ellipse-perimeter/medium-axis",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        64,
+        96
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/large-axis",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        4096,
+        6144
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/large-partclip",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        -1024,
+        3072,
+        4096,
+        6144
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          768
+        ]
+      }
+    },
+    {
+      "id": "ellipse-perimeter/fully-clipped-empty",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        -20000,
+        -20000,
+        64,
+        96
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          8
+        ]
+      }
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "predecessor_function_source_sha256": {
+    "sha": "c989b6adfc22cd15923df959361c4c4b20c84b0bc1c88b39f0779db41d92460c",
+    "verify_source_state": "589cb2ae21e384d683048065e1331e7681524da4e023f1dbb5df6c88b3a2f4c2",
+    "verify_helper_state": "51cf0e2871e74b8e4bafb55290168c393bc79c61b0bf7fbb66b97c135ade01f8",
+    "finish_probe": "a04ed6338a99d7c1e44abbbe4a2182cfeb0c9a47b09a97c25f7d24d9a3709d69",
+    "driver_argv": "4b6bb6f6a6f4ffedb01a5668d106dedee101d424858cd0e2ee41fddb599beb75",
+    "validate_util_entry": "afe1aa5b1cf0c9e5cff5121e2ec2dc3f4a1244ed1a45639381a2cb363fadce9f",
+    "main": "c39f06a080321b800cb3f2a35e39f228529723cd05a5ef8b18a103c3dd09560a",
+    "read_manifest": "bc9e8b199b18936f63d22c5e4b6fddb29e71e1f01af5932294f39ae1208bba96",
+    "validate_bound_manifest": "5b31651cf37f8a506177b8067e91ab4e0aa9e4b1f88bc325ace456183b90cf9a",
+    "write_json": "d911d5fac5ae555ded6d4839672ff2051300ca6e6529fe5e073d171f32c556a5",
+    "prepare_host_helper": "9de58a429eba129a781a48188dc7a7b2e29cc56fa6ad865e8f4117c3671ab47a",
+    "scoped_binding": "7818838298987b6a3e56d202b58fb3a18d3326f0f7c975829e8cd4d6f6be764a",
+    "scoped_measurement": "6cddd64969c36d67c0066be9553fb7cbd4e6d1fb59ee621afa5d4ff6bef25585",
+    "prepare_cohorts": "e17c4ca5b8f334add5781afb3d3482508ab1e636e1002c63bcba9f9e7d4a291e",
+    "run_cohorts": "6834098bc2eca7afd54465df1a076f6b2aeb733b04c65867e77c6bd9e72ffdf3",
+    "measurement_commands": "e1b94a3e01e39e20115dde84413f949af5e4f425434ef66ed07a23d27bc9bf2c",
+    "run_measurements": "ebdcf9b2b9cfb27d3deb86538bbbfe7ade88411b489d9dfaf4055e23730f2a3c",
+    "validate_reports": "c9ef0a4d9376ff027c74e79c82ab3490ccf5803e8f1327fd1192d1a666ccf239"
+  },
+  "exact_probe_replacements": {
+    "next-metrics-measurement-v3.json": "next-metrics-measurement-v4.json",
+    "==9": "==10",
+    "dict(original=9,native=9)": "dict(original=10,native=10)",
+    "(56,784,112,7,100,250,1)": "(68,952,136,7,100,250,1)",
+    "original_public_topcalls=9,native_public_topcalls=9": "original_public_topcalls=10,native_public_topcalls=10"
+  },
+  "replacement_counts": {
+    "next-metrics-measurement-v3.json": 3,
+    "==9": 4,
+    "dict(original=9,native=9)": 2,
+    "(56,784,112,7,100,250,1)": 1,
+    "original_public_topcalls=9,native_public_topcalls=9": 1
+  },
+  "old_test_raw_sha256": {
+    "tests/test_next_metrics_controller_v2.py": "b9d6abf4e5c2ef159eab648816deef217607feaae5c17fae1f21747bcd80f4ae",
+    "tests/test_next_metrics_controller_v3.py": "aea0413909fd12ffb01867c157fb89bc2da258196e25891ef6d7787ad3d42c53"
+  },
+  "scope": "Only sourcebound ellipse route/fixedscope counters/manifest literal successors. Native/FP/input/getter/worker/entry and C1poststop/postbatch helper/source authority preserved. V2/v3 histories and10wins2losses retained. Actualhost/call readiness unproven; rootdispatch later."
+}

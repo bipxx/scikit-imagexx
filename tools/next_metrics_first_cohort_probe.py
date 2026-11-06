@@ -281,7 +281,7 @@ def main():
 
 
 def read_manifest(controller):
-    path=Path(controller)/'coverage/contracts/next-metrics-measurement-v3.json'
+    path=Path(controller)/'coverage/contracts/next-metrics-measurement-v4.json'
     manifest=json.loads(path.read_bytes())
     assert manifest['schema']=='next-metrics-measurement-v1'
     assert manifest['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON','UNBOUND: no helper/target/sampler execution'
@@ -310,10 +310,10 @@ def validate_bound_manifest(controller,manifest):
     for name,pin in manifest['benchmark_source_sha256'].items():assert manifest['prepared_source']['files_sha256'][name]==pin,name
     assert len(manifest['runtime_sha256'])==64 and set(manifest['runtime_sha256'])<=set('0123456789abcdef')
     assert first['probe_sha256']==sha(Path(controller)/first['probe_path'])
-    assert len(first['routes'])==len({r['api']for r in first['routes'].values()})==9
+    assert len(first['routes'])==len({r['api']for r in first['routes'].values()})==10
     scope=manifest['execution_scope']
-    assert tuple(scope[k]for k in('canonical_cases','canonical_raw_samples','warmup_groups','repeat','target_ms','warmup_min_ms','workers'))==(56,784,112,7,100,250,1)
-    assert scope['untimed_topcalls']==dict(original=9,native=9)and scope['no_automatic_retry']is scope['retain_all_losses']is True
+    assert tuple(scope[k]for k in('canonical_cases','canonical_raw_samples','warmup_groups','repeat','target_ms','warmup_min_ms','workers'))==(68,952,136,7,100,250,1)
+    assert scope['untimed_topcalls']==dict(original=10,native=10)and scope['no_automatic_retry']is scope['retain_all_losses']is True
     # The future host builds its own helper. A producer-host binary/receipt is
     # never authority for another host and remains deliberately unbound here.
     assert manifest['helper']['receipt_sha256']is manifest['helper']['library_sha256']is manifest['helper']['root_GO']is None
@@ -369,7 +369,7 @@ def scoped_measurement(manifest,route,parent_sha256):
 def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
     controller=Path(controller);snapshot=Path(snapshot);results=Path(results)
     first=manifest['first_cohort'];routes=first['routes']
-    assert len(routes)==9 and manifest['execution_scope']['untimed_topcalls']==dict(original=9,native=9)
+    assert len(routes)==10 and manifest['execution_scope']['untimed_topcalls']==dict(original=10,native=10)
     assert first['source_revision']==manifest['producer']['revision']==manifest['prepared_source']['revision']
     probe=controller/first['probe_path'];assert sha(probe)==first['probe_sha256']
     admission=controller/first['root_admission_path'];stager=controller/first['root_stager_path']
@@ -378,7 +378,7 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
     core=Path(site)/first['core_member'];assert core.resolve().is_relative_to(Path(site).resolve())and sha(core)==manifest['core_sha256']
     common=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',prepared_source=manifest['prepared_source'],producer=manifest['producer'],runtime_path=str(runtime.resolve()),runtime_sha256=manifest['runtime_sha256'],shared_CMake_sha256=manifest['prepared_source']['files_sha256']['CMakeLists.txt'],genuine_root_stager_path=str(stager.resolve()),genuine_root_stager_sha256=first['root_stager_sha256'],source_root=str(snapshot.resolve()),source_revision=first['source_revision'],git_argv=['git','-C',str(snapshot.resolve())],genuine_root_admission_path=str(admission.resolve()),genuine_root_admission_sha256=first['root_admission_sha256'],product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',interpreter=str(python),source_files_sha256=first['source_files_raw_sha256'],installed_site=str(site),numpy=json.loads(runtime.read_bytes())['runtime']['versions']['numpy'],core_path=str(core.resolve()),core_sha256=manifest['core_sha256'],output_root=str((results/'first-cohort').resolve()))
     for name,pin in common['source_files_sha256'].items():assert sha(snapshot/name)==pin
-    manifest_path=controller/'coverage/contracts/next-metrics-measurement-v3.json'
+    manifest_path=controller/'coverage/contracts/next-metrics-measurement-v4.json'
     index={}
     for cohort,route in routes.items():
         folder=results/('authority-'+cohort);folder.mkdir(exist_ok=False)
@@ -393,7 +393,7 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
 
 def run_cohorts(controller,results,manifest,python,authorities):
     results=Path(results);terminals=[]
-    manifest_path=Path(controller)/'coverage/contracts/next-metrics-measurement-v3.json';manifest_pin=sha(manifest_path)
+    manifest_path=Path(controller)/'coverage/contracts/next-metrics-measurement-v4.json';manifest_pin=sha(manifest_path)
     for cohort in manifest['first_cohort']['routes']:
         authority=authorities[cohort]
         command=[str(python),str(Path(controller)/manifest['first_cohort']['probe_path']),'--binding',authority['binding'],'--root-go',authority['go'],'--route',cohort]
@@ -408,7 +408,7 @@ def run_cohorts(controller,results,manifest,python,authorities):
         assert terminal['poststop_source_authority_unchanged']is True
         terminals.append(terminal)
     try:
-        assert len(terminals)==9
+        assert len(terminals)==10
         assert sha(manifest_path)==manifest_pin,'Controller authority changed during cohorts'
         # Large installed core/runtime/SDK closure is verified once for this batch.
         # No extra per-route large-binary hash pass is introduced after the stop.
@@ -424,7 +424,7 @@ def run_cohorts(controller,results,manifest,python,authorities):
     except BaseException as error:
         write_json(results/'first-cohort-failure.json',dict(phase='postbatch-identity',type=type(error).__name__,error=str(error),retry=False,completed_routes=len(terminals)))
         raise
-    write_json(results/'first-cohort-summary.json',dict(status='PASS',original_public_topcalls=9,native_public_topcalls=9,timed_batches=0,sampler_body_calls=0,poststop_source_authority_unchanged=True,postbatch_offline_identity_verified=True,routes=terminals))
+    write_json(results/'first-cohort-summary.json',dict(status='PASS',original_public_topcalls=10,native_public_topcalls=10,timed_batches=0,sampler_body_calls=0,poststop_source_authority_unchanged=True,postbatch_offline_identity_verified=True,routes=terminals))
 
 
 def measurement_commands(snapshot,results,manifest,python,authorities,deadline):
@@ -444,7 +444,7 @@ def measurement_commands(snapshot,results,manifest,python,authorities,deadline):
 
 def run_measurements(snapshot,results,manifest,python,authorities,deadline):
     results=Path(results)
-    summary=json.loads((results/'first-cohort-summary.json').read_bytes());assert summary['status']=='PASS'and len(summary['routes'])==9
+    summary=json.loads((results/'first-cohort-summary.json').read_bytes());assert summary['status']=='PASS'and len(summary['routes'])==10
     verifier=[str(python),str(Path(snapshot)/'tools/ci_measurement_artifacts.py'),'verify','--wheel-dir',str(Path(snapshot).parent/'stage/wheels'),'--artifact',str(Path(snapshot).parent/'stage/runtime.json')]
     for cohort,command in measurement_commands(snapshot,results,manifest,python,authorities,deadline).items():
         with (results/(cohort+'-identity-before.log')).open('w')as log:subprocess.run(verifier,stdout=log,stderr=subprocess.STDOUT,check=True)
