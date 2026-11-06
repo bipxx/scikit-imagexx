@@ -114,13 +114,14 @@ def test_find_boundaries_permuted_owning_layout_and_current_pixels(owned,monkeyp
     monkeypatch.setattr(owned.np,'empty_like',mutate);assert not owned.find_boundaries(a).any()
 
 def test_find_boundaries_np_policy_and_fenv(owned):
-    libc=ctypes.CDLL(None)
-    if not hasattr(libc,'fetestexcept'):pytest.skip('C fenv entry unavailable')
+    libc=ctypes.CDLL('ucrtbase.dll')if os.name=='nt'else ctypes.CDLL(None)
+    mask=0x1f if os.name=='nt'else 0x3d
     libc.fetestexcept.argtypes=[ctypes.c_int];libc.fetestexcept.restype=ctypes.c_int
+    libc.fegetround.argtypes=[];libc.fegetround.restype=ctypes.c_int
     a=np.array([[0,1],[1,0]],dtype=np.uint32);policy=np.geterr();handler=np.geterrcall()
     try:
-        np.seterr(all='raise');flags=libc.fetestexcept(0x3d);rounding=libc.fegetround()
-        owned.find_boundaries(a);assert libc.fetestexcept(0x3d)==flags and libc.fegetround()==rounding
+        np.seterr(all='raise');flags=libc.fetestexcept(mask);rounding=libc.fegetround()
+        owned.find_boundaries(a);assert libc.fetestexcept(mask)==flags and libc.fegetround()==rounding
         assert np.geterr()==dict(divide='raise',over='raise',under='raise',invalid='raise')and np.geterrcall()is handler
     finally:np.seterr(**policy);np.seterrcall(handler)
 def test_find_boundaries_protocols_refused_without_conversion_replay(owned):
