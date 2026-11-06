@@ -1,0 +1,53 @@
+{
+  "schema": "reference-fenv-restore-independent-root-review-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_STANDALONE_RESTORATION_REMEDY_NOT_CAPTURE_GO",
+  "handoff": {
+    "path": "build/reference-fenv-restore-v1/handoff-v1.json",
+    "sha256": "f2737b11f7b67e0c01750da83b849a63f1e7810184331d30b06a608486064fe5"
+  },
+  "helper": {
+    "source": "build/reference-fenv-restore-v1/reference_fenv_restore.c",
+    "source_sha256": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "library": "build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+    "library_sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+    "library_bytes": 15632,
+    "ABI": "Linux x86_64 little-endian glibc2.39 native fenv_t32; compile staticoffset asserts and actual exportedlayout32/0/4/8/12/20/28/8. No masked equality.",
+    "operations": [
+      "reference_fenv_layout(uint32_t*words,size_tcount8) exports compiler-native ABI offsets/size",
+      "reference_fenv_restore(const void*trusted_snapshot,size_tbytes32): guarded copy of actual fenv_t then volatile fldenv saved28byte x87 environment + ldmxcsr saved field at28"
+    ],
+    "guarded_scope": "Trusted previously captured current-thread fegetenv snapshots on verified retained ABI, saved x87 tagwordffff(empty stack), allx87/SSE exceptionsmasked, no reserved MXCSR upper bits. Reject unsupported snapshots before either hardware instruction. Nonempty x87 stacks are refused because fenv_t does not save register DATA.",
+    "unrelated_machine_state": "No x87 arithmetic/push/pop or general context restore. Uses normal C ABI caller-save SIMD moves for32byte memcpy; actual disassembly confirms fldenv/ldmxcsr only FP-environment writes. Does not claim restore of GPR/SIMD payload/x87 register-stack DATA/full hardware context beyond actual glibc fenv_t representation."
+  },
+  "checks": {
+    "minimum": {
+      "exact_full32_controls": 32,
+      "refusals": 6,
+      "scientific_requests": 0,
+      "initial_state_restored": true
+    },
+    "modern": {
+      "exact_full32_controls": 32,
+      "refusals": 6,
+      "scientific_requests": 0,
+      "initial_state_restored": true
+    }
+  },
+  "evidence_authenticated": 14,
+  "source_review": "Root reviewed guarded saved fenv_t copy, explicit glibc/x86_64/little-endian ABI compile assertions, empty saved x87 tags, masked exceptions and MXCSR guards before volatile fldenv/ldmxcsr. No arithmetic/context framework. Raw exact equality preserved in controls; bit operations only construct test states. Disassembly and compiler receipt reviewed. No source correction required.",
+  "retained_failure": {
+    "path": "build/slice-along-axes-capture-readiness-v1/handoff-v1.json",
+    "sha256": "7b633894bca4dd2d8a8f2cdbacf8c607ce5854c9355594774c428803e94162ce",
+    "immutable": true,
+    "root_cause": "glibc fesetenv loses observed x87 statusC2bit0x400 in strict32byte probe; controls/mxcsr match. Priorfailed prefix not relabelled passed."
+  },
+  "scope": "Only trusted same-thread empty-stack masked-exception fenv_t snapshots on pinned retained Linux/glibc ABI. No nonempty stack DATA, arbitrary GPR/SIMD payload or general hardware-context claim.",
+  "execution": "Metadata/source/receipt review only; reused both retained controls,0builds/science/originals/targetcalls/recipes/journals/timing.",
+  "remaining_gates": [
+    "Versioned actual slice and array-view controller prefixes bound to helper/source/library and runtime ABI",
+    "Both retained profiles actual full-state/request-refusal controls through each real controller prefix",
+    "Independent source/readiness admission and explicit root source/runtime-bound original GO; budgets remain0"
+  ],
+  "waste_review": "Reused one15KBhelper build and64positive+12negative controls without replay. Replaces demonstrated libc state loss instead of masking acceptance or retrying unchanged source. Nextowner readiness_reviewer: versioned actual prefixes, root independent readiness/GO."
+}
