@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import runpy
 ROOT=Path(__file__).resolve().parents[1]
 
 
@@ -25,8 +26,13 @@ def test_regular_grid_complete_dependency_closure():
         raw=raw.replace(current,old,1)
     assert hashlib.sha256(raw).hexdigest()==context['predecessor_raw_sha256']==previous['source_raw_sha256'][context['path']]
 
+    context=json.loads((ROOT/'coverage/contracts/next-util-benchmark-execution-v2.json').read_bytes())
+    projection=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['historical_bytes']
     for group in ('source_raw_sha256','reused_raw_sha256'):
-        for name,pin in data[group].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
+        for name,pin in data[group].items():
+            # Exact admitted inverse authenticates current bytes before restoring historical benchmark bytes.
+            raw=projection(ROOT,name)if name in context['sources']else(ROOT/name).read_bytes()
+            assert hashlib.sha256(raw).hexdigest()==pin,name
     assert 'python/skimagexx/_regular_seeds.py' in data['reused_raw_sha256']
     assert 'tests/regular_grid_sdk_fixture.py' in data['source_raw_sha256']
     assert 'tests/fixtures/regular_grid_originals_v1.hpp' in data['source_raw_sha256']

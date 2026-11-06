@@ -633,7 +633,7 @@ def test_fresh_child_tmp_path_fixture_creates_only_owned_parent(tmp_path,monkeyp
     """Real pytest tmp_path setup, with metadata admission stubbed (no images)."""
     tree=tmp_path/'source';(tree/'tests').mkdir(parents=True)
     (tree/'tests/test_owned_temporary.py').write_text('def test_owned(tmp_path):\n    p=tmp_path/"owned.txt"\n    p.write_text("ok")\n    assert p.read_text()=="ok"\n')
-    out=tmp_path/'output';out.mkdir();(out/'state.json').write_text(json.dumps({'source':{}}))
+    out=tmp_path/'output';out.mkdir();(out/'state.json').write_text(json.dumps({'source':{},'profile':'minimum'}))
     monkeypatch.setattr(q,'ROOT',tree)
     monkeypatch.setattr(q,'GROUPS',{'tooling-temp-smoke':('test_owned_temporary.py',)})
     monkeypatch.setattr(q,'source_state',lambda _: {})
