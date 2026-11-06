@@ -1,0 +1,417 @@
+{
+  "schema": "mark-boundaries-benchmark-execution-v1",
+  "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "base_source": "6d4373b5720b5ee959c1d313e14e3d8f754085e4",
+  "unbound": {
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "root_GO": null,
+    "measurement_GO": null,
+    "genuine_first_cohort": null
+  },
+  "signature": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)",
+  "original_source_canonical_sha256": "fbdbbf36d8813c09d00583d235063acb0911d842cd94628d482d5c5685818131",
+  "supported_numpy": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "cases": [
+    {
+      "id": "gray-u8-outer",
+      "shape": [
+        512,
+        513
+      ],
+      "rgb": false,
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "outer",
+      "outline": false
+    },
+    {
+      "id": "RGB-f32-thick",
+      "shape": [
+        512,
+        513
+      ],
+      "rgb": true,
+      "dtype": "float32",
+      "layout": "C",
+      "mode": "thick",
+      "outline": false
+    },
+    {
+      "id": "gray-u16-F-inner",
+      "shape": [
+        512,
+        513
+      ],
+      "rgb": false,
+      "dtype": "uint16",
+      "layout": "F",
+      "mode": "inner",
+      "outline": false
+    },
+    {
+      "id": "RGB-f64-reverse-outline",
+      "shape": [
+        512,
+        513
+      ],
+      "rgb": true,
+      "dtype": "float64",
+      "layout": "reverse",
+      "mode": "outer",
+      "outline": true
+    },
+    {
+      "id": "gray-f64-subpixel",
+      "shape": [
+        64,
+        65
+      ],
+      "rgb": false,
+      "dtype": "float64",
+      "layout": "C",
+      "mode": "subpixel",
+      "outline": false
+    },
+    {
+      "id": "RGB-f32-subpixel-outline",
+      "shape": [
+        64,
+        65
+      ],
+      "rgb": true,
+      "dtype": "float32",
+      "layout": "C",
+      "mode": "subpixel",
+      "outline": true
+    },
+    {
+      "id": "singleton-subpixel-version",
+      "shape": [
+        1,
+        1
+      ],
+      "rgb": false,
+      "dtype": "float64",
+      "layout": "C",
+      "mode": "subpixel",
+      "outline": false
+    },
+    {
+      "id": "half-promotion-provider",
+      "shape": [
+        512,
+        513
+      ],
+      "rgb": false,
+      "dtype": "float16",
+      "layout": "C",
+      "mode": "outer",
+      "outline": false
+    }
+  ],
+  "bounds": [
+    {
+      "input_pixels": 262656,
+      "output_words": 787968,
+      "output_byte_bound": 6303744,
+      "threads": 1,
+      "source_resampler_required": false
+    },
+    {
+      "input_pixels": 262656,
+      "output_words": 787968,
+      "output_byte_bound": 6303744,
+      "threads": 1,
+      "source_resampler_required": false
+    },
+    {
+      "input_pixels": 262656,
+      "output_words": 787968,
+      "output_byte_bound": 6303744,
+      "threads": 1,
+      "source_resampler_required": false
+    },
+    {
+      "input_pixels": 262656,
+      "output_words": 787968,
+      "output_byte_bound": 6303744,
+      "threads": 1,
+      "source_resampler_required": false
+    },
+    {
+      "input_pixels": 4160,
+      "output_words": 49149,
+      "output_byte_bound": 393192,
+      "threads": 1,
+      "source_resampler_required": true
+    },
+    {
+      "input_pixels": 4160,
+      "output_words": 49149,
+      "output_byte_bound": 393192,
+      "threads": 1,
+      "source_resampler_required": true
+    },
+    {
+      "input_pixels": 1,
+      "output_words": 3,
+      "output_byte_bound": 24,
+      "threads": 1,
+      "source_resampler_required": true
+    },
+    {
+      "input_pixels": 262656,
+      "output_words": 787968,
+      "output_byte_bound": 6303744,
+      "threads": 1,
+      "source_resampler_required": false
+    }
+  ],
+  "method": {
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "threads": 1,
+    "retain_all_losses": true,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0"
+  },
+  "route": {
+    "kind": "mark-executor",
+    "driver": "benchmarks/mark_boundaries_consumer.py",
+    "api": "segmentation.mark_boundaries",
+    "owned_module": "skimagexx._mark_boundaries",
+    "sampler": "tools/montage_sustained.py",
+    "first_case": {
+      "id": "gray-u8-outer",
+      "shape": [
+        512,
+        513
+      ],
+      "rgb": false,
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "outer",
+      "outline": false
+    },
+    "cases": [
+      {
+        "id": "gray-u8-outer",
+        "shape": [
+          512,
+          513
+        ],
+        "rgb": false,
+        "dtype": "uint8",
+        "layout": "C",
+        "mode": "outer",
+        "outline": false
+      },
+      {
+        "id": "RGB-f32-thick",
+        "shape": [
+          512,
+          513
+        ],
+        "rgb": true,
+        "dtype": "float32",
+        "layout": "C",
+        "mode": "thick",
+        "outline": false
+      },
+      {
+        "id": "gray-u16-F-inner",
+        "shape": [
+          512,
+          513
+        ],
+        "rgb": false,
+        "dtype": "uint16",
+        "layout": "F",
+        "mode": "inner",
+        "outline": false
+      },
+      {
+        "id": "RGB-f64-reverse-outline",
+        "shape": [
+          512,
+          513
+        ],
+        "rgb": true,
+        "dtype": "float64",
+        "layout": "reverse",
+        "mode": "outer",
+        "outline": true
+      },
+      {
+        "id": "gray-f64-subpixel",
+        "shape": [
+          64,
+          65
+        ],
+        "rgb": false,
+        "dtype": "float64",
+        "layout": "C",
+        "mode": "subpixel",
+        "outline": false
+      },
+      {
+        "id": "RGB-f32-subpixel-outline",
+        "shape": [
+          64,
+          65
+        ],
+        "rgb": true,
+        "dtype": "float32",
+        "layout": "C",
+        "mode": "subpixel",
+        "outline": true
+      },
+      {
+        "id": "singleton-subpixel-version",
+        "shape": [
+          1,
+          1
+        ],
+        "rgb": false,
+        "dtype": "float64",
+        "layout": "C",
+        "mode": "subpixel",
+        "outline": false
+      },
+      {
+        "id": "half-promotion-provider",
+        "shape": [
+          512,
+          513
+        ],
+        "rgb": false,
+        "dtype": "float16",
+        "layout": "C",
+        "mode": "outer",
+        "outline": false
+      }
+    ],
+    "contract": "coverage/contracts/mark-boundaries-benchmark-execution-v1.json",
+    "argv": [
+      "--first-cohort",
+      "--api",
+      "segmentation.mark_boundaries",
+      "--case",
+      "gray-u8-outer"
+    ],
+    "sampler_caller": "sample_entry",
+    "parity_caller": "execute"
+  },
+  "source_files_canonical_sha256": {
+    "benchmarks/mark_boundaries.py": "27f3b49387232008312b1976d0bdc16fd972f062c10f5f24ebf63c528bc3d4df",
+    "benchmarks/mark_boundaries_consumer.py": "8917a4d0ed9847b865e731c2045ba8f2fa58e574dc351ae031de47fd52de82ad",
+    "benchmarks/mark_boundaries_execution.py": "253a99be3016d135547abdb7d5d1caf7fb1e5188c38814c2ef1be9cc428201ed",
+    "benchmarks/next_util_execution.py": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "tests/test_mark_boundaries_benchmark_execution.py": "f54dfcd1ce9a5c726a6e67ee30e11792f45fed980542fa9e70588c84bd6d9748",
+    "tests/test_mark_boundaries_native_contract.py": "5c979f793c2ef31454efd69f45c833eca414c18c07b1d1b0071f4b70eeaa74f8",
+    "python/skimagexx/_mark_boundaries.py": "6306f5fbb76ce0dbe1e91c01631ab9b39a4f3954dd0ab0315b5e4af02d4e594b",
+    "src/mark_boundaries.cpp": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb",
+    "src/bind_mark_boundaries.cpp": "131be453d708637e5902c2650654b893b67070f2f66c7b8be70178ba2669cf23",
+    "include/skimagexx/mark_boundaries.hpp": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "src/find_boundaries.cpp": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547",
+    "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "src/spline_detail.hpp": "314d0c12e5b3b3fc3e45da4a5ea043293ef961a06a254af44f8e05c6feed67ce",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "coverage/contracts/mark-boundaries-native-v1.json": "b0254460836780d41328fd34f2159ec289a08ba029e9fe8722ad71832d2e8e7d",
+    "coverage/contracts/mark-boundaries-native-v2.json": "d63a23f5c88217b73ec0a48657cb8bc8a717264d7708d4550a170936a189c39a"
+  },
+  "historical_sources": {
+    "benchmarks/mark_boundaries_consumer.py": {
+      "current_canonical_sha256": "8917a4d0ed9847b865e731c2045ba8f2fa58e574dc351ae031de47fd52de82ad",
+      "predecessor_canonical_sha256": "d918b6ef41dbdadb2376fe123d754de870148a7b356c2c1f330b5dbd5a78fd8e",
+      "inverse_fragments": [
+        {
+          "current": "\"\"\"MARK public benchmark consumer; frozen8cases, UNBOUND until genuine GO.\"\"\"\n",
+          "predecessor": "\"\"\"Prospective MARK benchmark consumer manifest; no bound execution authority.\"\"\"\n"
+        },
+        {
+          "current": "CONTRACT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v1.json'\n_FROZEN=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries.py'))\ncase_specs=_FROZEN['case_specs'];case_bounds=_FROZEN['case_bounds']",
+          "predecessor": "CONTRACT=ROOT/'coverage/contracts/mark-boundaries-native-v1.json'"
+        },
+        {
+          "current": "                next_gate='Root genuine installed product/core/SDK/F1 binding, actual strict native-owner zero-body firstcohort admission, then separate timingGO; RHS palette provider allocation/copy included, all8cases/alllosses retained.')\n",
+          "predecessor": "                next_gate='Resolve tiny-color hardwareFP frontier and independent component admission; root shared integration/genuine installed product/strict native-owner firstcohort and separate measurementGO.')\n"
+        },
+        {
+          "current": "def main():\n    import sys\n    sys.path.insert(0,str(Path(__file__).resolve().parent))\n    from mark_boundaries_execution import execute\n    return execute(globals())\n",
+          "predecessor": "def main():\n    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',action='store_true');args=parser.parse_args()\n    if args.plan:print(json.dumps(plan(),indent=2));return\n    raise SystemExit('MARK_BENCHMARK_UNBOUND: no original/target/sampler/timing authority; genuine rootbound execution adapter pending')\n"
+        }
+      ]
+    },
+    "tests/test_mark_boundaries_native_contract.py": {
+      "current_canonical_sha256": "5c979f793c2ef31454efd69f45c833eca414c18c07b1d1b0071f4b70eeaa74f8",
+      "predecessor_canonical_sha256": "a6bb74b43230f2728e84eccb46032367c5d60cf63da63d8994e331645684ec9a",
+      "inverse_fragments": [
+        {
+          "current": "    adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))\n    context=json.loads((ROOT/adapter['CONTEXT']).read_bytes())\n    for name,pin in d['source_files_canonical_LF_sha256'].items():\n        raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else(ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')\n        assert hashlib.sha256(raw).hexdigest()==pin",
+          "predecessor": "    for name,pin in d['source_files_canonical_LF_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()==pin"
+        }
+      ]
+    }
+  },
+  "reused_executor_canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+  "FENV_dependency": {
+    "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+    "source_files_raw_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "module": "tests/util_views_fenv.py",
+    "backend": "backend",
+    "mode": "source-built-v1",
+    "receipt_environment": "UTIL_VIEWS_FENV_RECEIPT",
+    "external_digest_environment": "UTIL_VIEWS_FENV_RECEIPT_SHA256",
+    "legacy": "F1 private-fixed-v1 scope retained; forbidden by this benchmark genuine consumer",
+    "collector": "C prepares current-source helper and exports MODE/RECEIPT/RECEIPT_SHA256, no HELPER. Retain entire emitted helper bundle recursively and7F1sourcefiles/context. Receipt/toolchain/source/current-library/control validation precedes target calls.",
+    "scope": "Reviewed empty-x87/masked exceptions/Linux x86_64 glibc32/MXCSR28; no Windows/general machine-state claim."
+  },
+  "genuine_first_cohort_status": "PENDING_NO_ACTUAL_PRODUCT_BINDING",
+  "providers": [
+    "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+    "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+    "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+  ],
+  "authority_scope": "Genuine exact-source4profile root admission+actual producer/stager/runtime/core/completeSDK map, clean source and F1 source-built helper receipt required. FirstGO exactly1publicoriginal+1native/0timed; only first frozen case. Timing separately uses existing next-metrics-measurement-v1 plus actual completed MARK cohort receipt; full8cases/7repeats/100ms/250ms/threads1/alllosses/noautomaticretry. Exclusive per-root-output role claim prevents rerun even if reportfilename changes.",
+  "runtime_identity_scope": "Actual installed core hash once per execute and small source/helper/authority pins once at entry; no per-case source/core/library rehash. Outer admitted controller must reuse existing offline ci_measurement_artifacts verify once before/after actual cohort/measurement batch to establish physical wholeSDK/package closure.",
+  "controller_integration_pending": "Existing9API next_metrics_first_cohort_probe is unchanged and has no MARK route. Root/C must add a reviewed MARK cohort adapter: actual sampler caller sample_entry, its parent execute holds parity/accepted/Creturn/getter/FP/input markers. Inner native observer counts actual builtin identity; no false independent outer getter count. Collect claim, root binding/GO, helper/source/runtime/SDK, entry and terminal receipts, then poststop source/authority and once offline identity verifier. Genuine realCLI0body readiness not established by this source packet.",
+  "collector_files": [
+    "mark-first-cohort.claim.json",
+    "mark-measurement.claim.json",
+    "report.json",
+    "report.batches.jsonl"
+  ],
+  "fixture_scope": "Factory source only: pixels arange modulo251 and labels modulo7. All dimensions/dtypes/layouts/modes remain frozen; no actual NumPy/image/provider/native bodies run in this packet. Actual genuine fixture/intake/cohort acceptance remains pending.",
+  "pending": [
+    "Independent source/authority admission before shared/root controller extension.",
+    "Actual prepared wholeproduct/genuine core/SDK/F1 host binding and external root GO; no private component or source plan substitutes.",
+    "Actual first original/native public call pair, full state/native Creturn/oncegetter/input checks, mandatory actual sampler0body stop and independent admission.",
+    "Separate timingGO then full8 public allocation-inclusive cases, warm groups/order/journals/underlength retention/all losers/per-source result validators using unchanged Montage method.",
+    "Full API/genuine/platform/performance and main delivery remain open; no speed or477-wide superiority claim."
+  ]
+}

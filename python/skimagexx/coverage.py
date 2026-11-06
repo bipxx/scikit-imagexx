@@ -8,13 +8,13 @@ DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table'),
-    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
+    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
@@ -338,6 +338,7 @@ def native_dtypes(api):
     if api=='util.regular_grid':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float32','float64')
     if api=='segmentation.join_segmentations':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     if api=='draw.set_color':return ('float32','float64')
     if api in ('draw.polygon','draw.polygon2mask'):return ('uint8','float32','float64')
     if api == 'draw.line_nd':
@@ -562,6 +563,13 @@ def default_call(api, image):
     if api=='util.regular_grid':
         import numpy as np
         return (np.array([5,7],dtype=image.dtype),1 if image.dtype.kind=='b' else 6),{}
+    if api=='segmentation.mark_boundaries':
+        import numpy as np
+        labels=(np.arange(image.size,dtype=np.int64).reshape(image.shape)%3).astype(np.int16)
+        labels.flags.writeable=False
+        return (image,labels),{'mode':'thick'}
+    if api=='feature.draw_multiblock_lbp':
+        return (image,3,3,2,2),{'lbp_code':170,'alpha':0.5}
     if api=='segmentation.join_segmentations':
         import numpy as np
         return (np.array([0,0,1,1,2,2,3,3],dtype=image.dtype).reshape(2,4),
@@ -1118,6 +1126,15 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
         util_views_default_error(actual,expected);return
     if api in ('util.crop','util.regular_grid'):
         util_metadata_default_error(api,actual,expected);return
+    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):
+        import numpy as np
+        assert type(actual)is type(expected)is np.ndarray
+        assert actual.shape==expected.shape and actual.dtype==expected.dtype
+        assert actual.strides==expected.strides and type(actual.base)is type(expected.base)
+        assert actual.flags.owndata==expected.flags.owndata and actual.flags.writeable==expected.flags.writeable
+        if image is not None:assert not np.shares_memory(actual,image)
+        assert actual.tobytes(order='C')==expected.tobytes(order='C')
+        return
     if api=='segmentation.join_segmentations':
         join_segmentations_default_error(actual,expected);return
     if api=='segmentation.find_boundaries':

@@ -291,9 +291,9 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current271'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics')
-CURRENT_SDK_CLIENT_SCOPE = 'current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance'
+CURRENT_PRODUCT_SCOPE = 'current273'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp')
+CURRENT_SDK_CLIENT_SCOPE = 'current34 required installed clients; existing32 plus MARK and multiblock LBP complete numeric operations; source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
 DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
@@ -659,7 +659,11 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-fenv-v1.json', 'tests/test_
 
 DRAW_SOURCE_PATHS += ('benchmarks/join_segmentations.py', 'benchmarks/next_util_execution.py', 'coverage/contracts/next-util-benchmark-execution-v1.json', 'tests/next_util_benchmark_support.py', 'tests/test_next_util_benchmark_execution.py', 'tests/test_next_util_benchmark_factories.py', 'coverage/contracts/next-util-benchmark-execution-v2.json')
 POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_execution.py','test_next_util_benchmark_factories.py')
+POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py')
+DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
+
+DRAW_SOURCE_PATHS += ('benchmarks/draw_multiblock_lbp.py', 'benchmarks/draw_multiblock_lbp_execution.py', 'benchmarks/draw_multiblock_lbp_native.py', 'benchmarks/mark_boundaries.py', 'benchmarks/mark_boundaries_consumer.py', 'benchmarks/mark_boundaries_execution.py', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v1.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json', 'coverage/contracts/draw-multiblock-lbp-native-v1.json', 'coverage/contracts/draw-multiblock-lbp-native-v2.json', 'coverage/contracts/draw-multiblock-lbp-observer-phase-scope-v1.json', 'coverage/contracts/draw-multiblock-lbp-v1.json', 'coverage/contracts/draw-multiblock-lbp-v2.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v1.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v2.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v3.json', 'coverage/contracts/mark-boundaries-native-v1.json', 'coverage/contracts/mark-boundaries-native-v2.json', 'coverage/contracts/mark-boundaries-v1.json', 'coverage/contracts/mark-lbp-enabled-additive-context-v1.json', 'coverage/contracts/mark-lbp-enabled-components-v1.json', 'include/skimagexx/draw_multiblock_lbp.hpp', 'include/skimagexx/mark_boundaries.hpp', 'python/skimagexx/_draw_multiblock_lbp.py', 'python/skimagexx/_mark_boundaries.py', 'src/bind_draw_multiblock_lbp.cpp', 'src/bind_mark_boundaries.cpp', 'src/draw_multiblock_lbp.cpp', 'src/mark_boundaries.cpp', 'tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp', 'tests/cmake_consumer/draw_multiblock_lbp_consumer.hpp', 'tests/cmake_consumer/draw_multiblock_lbp_enabled_consumer.cpp', 'tests/cmake_consumer/mark_boundaries_consumer.cpp', 'tests/cmake_consumer/mark_boundaries_consumer.hpp', 'tests/draw_multiblock_lbp_contract.py', 'tests/draw_multiblock_lbp_overlap_contract.py', 'tests/draw_multiblock_lbp_saved_parity.py', 'tests/draw_multiblock_lbp_sdk_saved.py', 'tests/fixtures/mark_boundaries_native_saved_v1.hpp', 'tests/fixtures/mark_boundaries_originals_v1.json', 'tests/fixtures/mark_boundaries_originals_v2.json', 'tests/mark_boundaries_contract.py', 'tests/mark_boundaries_exception_codec.py', 'tests/mark_boundaries_observer.py', 'tests/mark_boundaries_observer_v2.py', 'tests/test_draw_multiblock_lbp_benchmark_execution.py', 'tests/test_draw_multiblock_lbp_intake.py', 'tests/test_draw_multiblock_lbp_native.cpp', 'tests/test_draw_multiblock_lbp_native_source.py', 'tests/test_draw_multiblock_lbp_overlap_intake.py', 'tests/test_draw_multiblock_lbp_overlap_reference.py', 'tests/test_draw_multiblock_lbp_reference.py', 'tests/test_mark_boundaries_benchmark_execution.py', 'tests/test_mark_boundaries_native.cpp', 'tests/test_mark_boundaries_native_contract.py', 'tests/test_mark_boundaries_public.py', 'tests/test_mark_boundaries_workers.cpp', 'tests/test_mark_lbp_enabled_public.py', 'tests/test_mark_lbp_enabled_source.py')
 
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
@@ -681,6 +685,8 @@ def applicable_public_groups(groups,profile):
     if 'public-post203' in selected and profile!='windows':
         selected['public-regular-grid-saved-linux']=('test_regular_grid_public.py',)
         selected['public-util-views-saved-linux']=('test_util_views_public.py',)
+        selected['public-mark-saved-linux']=('test_mark_boundaries_public.py',)
+        selected['public-lbp-saved-linux']=('test_draw_multiblock_lbp_public.py',)
     return selected
 
 
@@ -963,7 +969,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp','include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -977,10 +983,11 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py'},
             'current qualification selector contract differs')
     require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
     require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
+    require(data.get('Linux_saved_mark_lbp_profiles')==['minimum','modern','debug'],'Linux saved MARK/LBP profile scope differs')
     return data
 
 
@@ -1007,6 +1014,7 @@ def current_install_layout(read_bytes, names, profile):
     require(all(n in headers for n in ('include/skimagexx/crop.hpp','include/skimagexx/regular_grid.hpp')) and all(n in sources for n in ('skimagexx/_crop.py','skimagexx/_regular_grid.py')), 'current util metadata install closure absent')
     require('include/skimagexx/join_segmentations.hpp' in headers and 'skimagexx/_join_segmentations.py' in sources,
             'current JOIN install closure absent')
+    require(all('include/skimagexx/'+n+'.hpp'in headers and 'skimagexx/_'+n+'.py'in sources for n in ('mark_boundaries','draw_multiblock_lbp')),'current MARK/LBP install closure absent')
     require('include/skimagexx/draw_coordinates.hpp' in headers
             and 'skimagexx/_draw_coordinates.py' in sources and 'skimagexx/draw.py' in sources,
             'current drawing install closure absent')
@@ -1869,6 +1877,13 @@ def admission(out, state):
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
     for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction', '_normalized_mutual_information', '_h_extrema'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
+    for module_name,namespace,name,entries in (
+        ('_mark_boundaries','segmentation','mark_boundaries',('mark_boundaries_prepare','mark_boundaries_mask','mark_boundaries_outline','mark_boundaries_paint')),
+        ('_draw_multiblock_lbp','feature','draw_multiblock_lbp',('_lbp_prepare','_lbp_binary','_lbp_assign'))):
+        module=importlib.import_module('skimagexx.'+module_name)
+        require(module._core is xx._core,'new frontend has alternate core')
+        require(getattr(getattr(xx,namespace),name)is getattr(module,name),'new public namespace route differs')
+        require(all(inspect.isbuiltin(getattr(xx._core,entry))and getattr(xx._core,entry).__module__=='skimagexx._core'for entry in entries),'new operation native entries are not installed builtin owners')
     coverage = importlib.import_module('skimagexx.coverage')
     label_pair_admission(xx._core,importlib.import_module('skimagexx.metrics'),coverage.native_functions())
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
@@ -2011,6 +2026,11 @@ def child(out, group):
         os.environ['MATRIX_TRANSFORM_PROOF_OUTPUT']=str(out/(mode+'-matrix-routes.json'))
     if group=='public-util-views-saved-linux':
         os.environ.update(util_views_fenv_environment(out,state))
+    if group in ('public-mark-saved-linux','public-lbp-saved-linux'):
+        require(state['profile']!='windows','Linuxsavedfull32envelope forbidden onWindows')
+        require(not os.environ.get('MARK_COMPONENT_DIR')and not os.environ.get('MARK_FENV_HELPER'),'GenuineMARKforbidsprivatebridge/helper')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['LBP_RESULT_DIR']=str(out/(mode+'-lbp-saved-rows'))
     if group=='public-regular-grid-saved-linux':
         require(not os.environ.get('REGULAR_GRID_COMPONENT_DIR'),'Genuine grid group forbids private component override')
         os.environ['REGULAR_GRID_RESULT_DIR']=str(out/(mode+'-regular-grid-saved-rows'))
@@ -2225,7 +2245,7 @@ def sdk(out, state, journal):
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
-                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp')):
+                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
@@ -2319,6 +2339,8 @@ def seal(out):
             require(row['tests'] > 0, 'empty public selector: ' + group)
             if group=='public-regular-grid-saved-linux':require(row['tests']==49,'Full49 grid saved-domain nodes required; no partial selector')
             if group=='public-util-views-saved-linux':require(row['tests']==553,'Full553 util views saved-domain nodes required; no partial selector')
+            if group=='public-mark-saved-linux':require(row['tests']==267,'Full267 MARK saved-domain nodes required; no partial selector')
+            if group=='public-lbp-saved-linux':require(row['tests']==188,'Full188 LBP saved-domain nodes required; no partial selector')
             if any(row[k] for k in ('failures','errors','skipped')):
                 failures.append(mode + '-' + group + '-assertions-or-skips')
             counts[mode + '-' + group] = row
@@ -2353,7 +2375,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()

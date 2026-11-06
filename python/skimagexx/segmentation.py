@@ -13,6 +13,8 @@ from ._find_boundaries import find_boundaries
 __all__ += ['find_boundaries']
 from ._join_segmentations import join_segmentations
 __all__ += ['join_segmentations']
+from ._mark_boundaries import mark_boundaries
+__all__ += ['mark_boundaries']
 
 
 @wraps(_consumers.clear_border)

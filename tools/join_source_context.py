@@ -5,7 +5,26 @@ import json
 CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'
 
 
+def enabled_predecessor_bytes(root,name,raw):
+    """One exact admitted enabled-family layer before historical shared guards."""
+    raw=raw.replace(b'\r\n',b'\n')
+    body=(Path(root)/'coverage/contracts/mark-lbp-enabled-additive-context-v1.json').read_bytes()
+    assert hashlib.sha256(body).hexdigest()=='79de3c7ef15cf213d5639b915956a077b16cc897c356640a9ce91d7bbcdafb5e'
+    context=json.loads(body)
+    assert context['predecessor_source']=='a6bae9ac86dbba362537758784edf06c973e9c53'
+    assert set(context['sources'])=={'CMakeLists.txt','src/bindings.cpp','python/skimagexx/coverage.py'}
+    if name not in context['sources']:return raw
+    row=context['sources'][name]
+    assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+    for f in row['inverse_fragments']:
+        current,old=f['current'].encode(),f['predecessor'].encode()
+        assert current and raw.count(current)==1,name;raw=raw.replace(current,old,1)
+    assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
+    return raw
+
+
 def predecessor_bytes(root,name,raw):
+    raw=enabled_predecessor_bytes(root,name,raw)
     raw=raw.replace(b'\r\n',b'\n')
     current_raw=(Path(root)/'coverage/contracts/util-views-density-additive-context-v1.json').read_bytes()
     assert hashlib.sha256(current_raw).hexdigest()=='608865130cc3ff264c695ead40eb10f9d102c5cca4f6440d696b22aefa754c1a'

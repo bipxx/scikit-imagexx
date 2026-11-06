@@ -5,6 +5,8 @@ from ._compat import fallback, module_attribute
 
 __path__=[]
 __all__=['hessian_matrix_eigvals','structure_tensor_eigenvalues']
+from ._draw_multiblock_lbp import draw_multiblock_lbp
+__all__ += ['draw_multiblock_lbp']
 _LEGACY_SCALARS=np.lib.NumpyVersion(np.__version__)<'2.0.0'
 
 

@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current271",
+  "scope": "current273",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -276,6 +276,7 @@
     "feature.corner_harris",
     "feature.corner_kitchen_rosenfeld",
     "feature.corner_shi_tomasi",
+    "feature.draw_multiblock_lbp",
     "feature.hessian_matrix",
     "feature.hessian_matrix_det",
     "feature.hessian_matrix_eigvals",
@@ -453,6 +454,7 @@
     "segmentation.disk_level_set",
     "segmentation.find_boundaries",
     "segmentation.join_segmentations",
+    "segmentation.mark_boundaries",
     "segmentation.relabel_sequential",
     "transform.downscale_local_mean",
     "transform.integral_image",
@@ -553,7 +555,9 @@
     "util.regular_grid": "tests/test_util_metadata_integration.py",
     "util.slice_along_axes": "tests/test_util_views_integration.py",
     "util.view_as_blocks": "tests/test_util_views_integration.py",
-    "util.view_as_windows": "tests/test_util_views_integration.py"
+    "util.view_as_windows": "tests/test_util_views_integration.py",
+    "segmentation.mark_boundaries": "tests/test_mark_lbp_enabled_public.py",
+    "feature.draw_multiblock_lbp": "tests/test_mark_lbp_enabled_public.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -697,9 +701,13 @@
     "tests/test_util_views_public.py",
     "tests/test_util_views_source.py",
     "tests/test_next_util_benchmark_execution.py",
-    "tests/test_next_util_benchmark_factories.py"
+    "tests/test_next_util_benchmark_factories.py",
+    "tests/test_mark_lbp_enabled_public.py",
+    "tests/test_mark_lbp_enabled_source.py",
+    "tests/test_mark_boundaries_public.py",
+    "tests/test_draw_multiblock_lbp_public.py"
   ],
-  "SDK_scope": "current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance",
+  "SDK_scope": "current34 required installed clients; existing32 plus MARK and multiblock LBP complete numeric operations; source readiness is not qualification acceptance",
   "required_client_families": [
     "colocalization",
     "footprint_shapes",
@@ -709,7 +717,9 @@
     "line_nd",
     "draw_ellipsoid",
     "draw_ellipse_perimeter",
-    "label_pair_metrics"
+    "label_pair_metrics",
+    "mark_boundaries",
+    "draw_multiblock_lbp"
   ],
   "required_client_headers": [
     "include/skimagexx/colocalization.hpp",
@@ -743,7 +753,9 @@
     "include/skimagexx/crop.hpp",
     "include/skimagexx/regular_grid.hpp",
     "include/skimagexx/array_views.hpp",
-    "include/skimagexx/slice_along_axes.hpp"
+    "include/skimagexx/slice_along_axes.hpp",
+    "include/skimagexx/mark_boundaries.hpp",
+    "include/skimagexx/draw_multiblock_lbp.hpp"
   ],
   "Linux_saved_grid_profiles": [
     "minimum",
@@ -751,6 +763,11 @@
     "debug"
   ],
   "Linux_saved_util_views_profiles": [
+    "minimum",
+    "modern",
+    "debug"
+  ],
+  "Linux_saved_mark_lbp_profiles": [
     "minimum",
     "modern",
     "debug"

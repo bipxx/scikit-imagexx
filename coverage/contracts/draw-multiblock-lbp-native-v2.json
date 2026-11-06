@@ -1,0 +1,114 @@
+{
+  "schema": "draw-multiblock-lbp-native-v2",
+  "status": "SAVED94_TARGET_CONTRACT_CLOSURE_PRIVATE_NOT_GENUINE_RELEASE",
+  "API_completion": false,
+  "registration_ready": false,
+  "original_budget": 0,
+  "predecessor": "299b966788fb1f5d0bef24685c0e90ad93f910cb",
+  "historical_contract_sha256": "c9bd93e83419ec66896f8c305fd6f68d148ab931a5cbd5eed46f33494b4aae18",
+  "historical_source_raw_sha256": {
+    "include/skimagexx/draw_multiblock_lbp.hpp": "fb4ea5eccff39b844f35aa5fb4451e4249c66c5e047d6148b74a683ead913646",
+    "src/draw_multiblock_lbp.cpp": "6181142b02a1bd42e08b520aa45555b7f131e616b9bf5dda11a723e7a6888cae",
+    "src/bind_draw_multiblock_lbp.cpp": "0a2f737e3ce690fd4ecd9587c5904bf1fdc41ec048c02c882de184b3b641f7bc",
+    "python/skimagexx/_draw_multiblock_lbp.py": "3a6ca0d4b0f67d102276137b323c5cfcb0361c820698a92a45743a10ce9e83b6",
+    "tests/test_draw_multiblock_lbp_native.cpp": "64e158c851b4062df185cabff2a56c72c3b4975258ca71f9704798e1f6651a6d",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.hpp": "c291fb89b780a73bb35d73b817a24f60f0723692957fd1cd51f8754d937f81d3",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp": "30239a99de6020cbb2ad3931505041e0ad31793b4370a1b8d5da3d16268dd24d",
+    "tests/draw_multiblock_lbp_saved_parity.py": "f530023a8024227bf5a3cfa578d001a1bb114fe7198c4222ff4522336087e6ba",
+    "benchmarks/draw_multiblock_lbp_native.py": "5752a92e9f0e02f0df8a0c68fa577712b9cf847d32558a414acdff6aec2b47e8",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "source_raw_sha256": {
+    "include/skimagexx/draw_multiblock_lbp.hpp": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e",
+    "src/draw_multiblock_lbp.cpp": "870eb16d16cfa8cfc6ff6ad9106873a1f6299c64dc80d6c0a0958a4891326c3a",
+    "src/bind_draw_multiblock_lbp.cpp": "de80b58c5fa66e9715f884e1534d9fadd54294f1514ef85b2e1135b1a7cb2db5",
+    "python/skimagexx/_draw_multiblock_lbp.py": "296beb2c1c96aa3fd0112b205466eab945ebd6750db8fe99c74c2ef330acb0a1",
+    "tests/test_draw_multiblock_lbp_native.cpp": "64e158c851b4062df185cabff2a56c72c3b4975258ca71f9704798e1f6651a6d",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.hpp": "a6444f25b908320e3d37f64e769e5ebceda1da24fd0d73ef6ee43a2f9e20714b",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp": "30239a99de6020cbb2ad3931505041e0ad31793b4370a1b8d5da3d16268dd24d",
+    "tests/draw_multiblock_lbp_saved_parity.py": "6d2d6867048eddc3f6ab29e7d536f08e7d3fce5e6da2e32b09db0ee725377f40",
+    "benchmarks/draw_multiblock_lbp_native.py": "5752a92e9f0e02f0df8a0c68fa577712b9cf847d32558a414acdff6aec2b47e8",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "tests/draw_multiblock_lbp_sdk_saved.py": "1d8906c64d6ce21e28adc5dcf72172668763aea76dd20c06adac53f8c7bc30f3"
+  },
+  "frozen_reference_raw_sha256": {
+    "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+    "coverage/contracts/draw-multiblock-lbp-v1.json": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+    "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+    "tests/test_draw_multiblock_lbp_intake.py": "23d8e425eeadd7a0c75bc50bdc5391012caeab467572689d8386c2e0e94fa97a",
+    "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+    "coverage/contracts/draw-multiblock-lbp-v2.json": "fe338701f23583cfa7f772f29ecc5b7f8e5b9df5d660193d7a539089e4bf4f78",
+    "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+    "tests/test_draw_multiblock_lbp_overlap_intake.py": "0468bb6b4fbf0bb71d5c31b3fe4c6471ce9d936071c471fcf043b5950f67e91d",
+    "tests/test_draw_multiblock_lbp_overlap_reference.py": "664beda7d7981c6effa08c4f78ca6214c4a351a3ad7e5906558ed242386dffc6"
+  },
+  "raw_admission_sha256": "1bcfff2be1b241b989a6142a756131474e89e756dd30047b0e653dde3d822726",
+  "raw_source": "339fe6812ec07997cb9861c7755378ea977fa1d4",
+  "recipes": 94,
+  "SDK_saved_scope": {
+    "return_rows_each": 71,
+    "public_error_parity_claim": false,
+    "scope": "Canonical logical payload/shape/precision plan and one worker snapshot. Standalone complete operation plus compositional public numeric phase functions; Python metadata/error/protocol delivery remains explicit."
+  },
+  "providers": [
+    "NumPy input/color array coercion and source-order protocol requests",
+    "NumPy initial copy and K-order empty return representation; native gray conversion/payload assignment",
+    "NumPy result_type scalar-promotion metadata; source UFunc exception class/descriptors",
+    "Python/NumPy scalar geometry and native index conversion; broadcast metadata validation",
+    "Explicit user AlphaProtocol owns its own alpha*color computation, eight ordered requests. Ordinary arithmetic is native.",
+    "NumPy current software policy/handler delivery from native per-phase real arithmetic flags; no mask/restoration in product",
+    "Floating phase operands retain original storage and are converted by C++ in the arithmetic loop, not by a NumPy whole-patch dtype cast. Nonfloating scalar-carrier array coercion remains explicit."
+  ],
+  "pending": [
+    "Root independent candidate assessment under explicit public-target vs post-return collector JSON scope. Preserve all strict raw failures and diagnostic fields; no product FP changes/normalization.",
+    "Extra unobserved dtype/rank/subclass/malicious protocol/huge geometry/longdouble/nondefault rounding/FTZ-DAZ/print-log policy/platform domains not established by94cases. No fullAPIparity claim.",
+    "Real registered hot-swap/public counters/genuine onecore/installedSDK/four-profile release source qualification. Private family bridge/assembled SDK are scoped evidence only.",
+    "Relevant public one-thread original performance across four frozencases, all losers, shared integration/main delivery."
+  ],
+  "benchmark_method": "Unchanged fourcase source and Montage method; no sampler or timings",
+  "observer_phase_authority": {
+    "path": "build/draw-multiblock-lbp-native-v2/observer-phase-scope-v1.json",
+    "sha256": "4c21baa192a904a957435cb2178f361cffb36d74a84399912daa98e5ef5a26e7"
+  },
+  "observed_target_scope": {
+    "profiles": [
+      "minimum NumPy1.24.4",
+      "modern NumPy2.5.4"
+    ],
+    "cases_each": 94,
+    "modes": [
+      "normal",
+      "SKIMAGEXX_DISABLE_SIMD",
+      "true compiler scalar"
+    ],
+    "workers": [
+      1,
+      4
+    ],
+    "assessed_comparisons": 1128,
+    "public_target_matches": 1128,
+    "collector_strict_matches": 1048,
+    "post_observer_only_differences": 80,
+    "root_scope_sha256": "4c21baa192a904a957435cb2178f361cffb36d74a84399912daa98e5ef5a26e7",
+    "not_claimed": "Full API/genuine/public advertised registry closure; source-plan metadata only, actual execution receipts remain independent ignored evidence.",
+    "historical_previous_float_cast_matrix": {
+      "target_matches": 1128,
+      "strict_raw_matches": 1120,
+      "collector_differences": 8,
+      "immutable_receipt": "build/draw-multiblock-lbp-native-v2/closure-v2.json"
+    }
+  }
+}

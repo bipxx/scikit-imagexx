@@ -1,0 +1,88 @@
+{
+  "schema": "draw-multiblock-lbp-native-v1",
+  "state": "PRIVATE_IMPLEMENTED_NUMERIC_SDK_OPERATION_PENDING_AUTHENTIC94_PARITY",
+  "API_completion": false,
+  "registration_ready": false,
+  "api": "feature.draw_multiblock_lbp",
+  "base": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+  "original_budget": 0,
+  "source_raw_sha256": {
+    "include/skimagexx/draw_multiblock_lbp.hpp": "fb4ea5eccff39b844f35aa5fb4451e4249c66c5e047d6148b74a683ead913646",
+    "src/draw_multiblock_lbp.cpp": "6181142b02a1bd42e08b520aa45555b7f131e616b9bf5dda11a723e7a6888cae",
+    "src/bind_draw_multiblock_lbp.cpp": "0a2f737e3ce690fd4ecd9587c5904bf1fdc41ec048c02c882de184b3b641f7bc",
+    "python/skimagexx/_draw_multiblock_lbp.py": "3a6ca0d4b0f67d102276137b323c5cfcb0361c820698a92a45743a10ce9e83b6",
+    "tests/test_draw_multiblock_lbp_native.cpp": "64e158c851b4062df185cabff2a56c72c3b4975258ca71f9704798e1f6651a6d",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.hpp": "c291fb89b780a73bb35d73b817a24f60f0723692957fd1cd51f8754d937f81d3",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp": "30239a99de6020cbb2ad3931505041e0ad31793b4370a1b8d5da3d16268dd24d",
+    "tests/draw_multiblock_lbp_saved_parity.py": "f530023a8024227bf5a3cfa578d001a1bb114fe7198c4222ff4522336087e6ba",
+    "benchmarks/draw_multiblock_lbp_native.py": "5752a92e9f0e02f0df8a0c68fa577712b9cf847d32558a414acdff6aec2b47e8",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "frozen_reference_raw_sha256": {
+    "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+    "coverage/contracts/draw-multiblock-lbp-v1.json": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+    "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+    "tests/test_draw_multiblock_lbp_intake.py": "23d8e425eeadd7a0c75bc50bdc5391012caeab467572689d8386c2e0e94fa97a",
+    "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+    "coverage/contracts/draw-multiblock-lbp-v2.json": "fe338701f23583cfa7f772f29ecc5b7f8e5b9df5d660193d7a539089e4bf4f78",
+    "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+    "tests/test_draw_multiblock_lbp_overlap_intake.py": "0468bb6b4fbf0bb71d5c31b3fe4c6471ce9d936071c471fcf043b5950f67e91d",
+    "tests/test_draw_multiblock_lbp_overlap_reference.py": "664beda7d7981c6effa08c4f78ca6214c4a351a3ad7e5906558ed242386dffc6"
+  },
+  "source_reviews": [
+    "198fdf2974f74a83d5ce7d06d6a1a8e2f4db0a1e7382baa254002f126c277152",
+    "11dbc64e6614da500e5129b648114635a15c046b08e15ee13a8f8cb6eda52512"
+  ],
+  "SDK_operation": {
+    "name": "skimagexx::draw_multiblock_lbp",
+    "complete_owning_numeric_operation": true,
+    "owns": [
+      "POD signed-stride/byteorder copy",
+      "graychannelreplication",
+      "existing integer normalization",
+      "eight live orderedpatches",
+      "firstimageproduct then selectedcolorproduct thenbroadcastsum/assignment",
+      "canonicalC float32/float64 ownedreturn"
+    ],
+    "types": [
+      "bool",
+      "u8",
+      "i8",
+      "u16",
+      "i16",
+      "u32",
+      "i32",
+      "u64",
+      "i64",
+      "f32",
+      "f64"
+    ],
+    "scalar_plan": "Explicit first_product_float32 SDKflag; publicbridge asks NumPy result_type metadata for builtin scalar branch. Half/NPscalar/eventfulpolicy parity notadmitted.",
+    "workers": "Exactlyoneprocessglobalbudget snapshot, default1/globalsetter preserved. OrderedFPphasecore remainsserial evenwhenbudget4; no parallel speedclaim. Converterchunks<existing parallel_min avoidextra getter. Independent f64 stages SSE2/vector tails selectable; truecompiler-scalar macro plusnoautovector flags andruntime disable distinguish paths."
+  },
+  "private_proofs": {
+    "original_parity": false,
+    "own_native_and_assembled_exported_SDK": true,
+    "binder": "Compileonly retained3.11/3.13 headers; no public-runtime/hotswap result claimed",
+    "MSVC": "Compileonly leaf/native/SDKclientTUs, noWindowslink/runtime",
+    "sanitizers": "Changedleaf/currentcrop/currentconverter instrumented; unchangeddonorSIMD/globalobjects unsanitized, nofullproduct sanitizerclaim"
+  },
+  "required_full_api_gates": [
+    "Authentic once-only93+1captures aftercodec/controller/readiness/rootGO, independentrawadmission; none fabricated or recaptured",
+    "Allsignature/dtypes includingfloat16/npstrong-weakscalar plans andnon-nativebyteorder/taggedmetadata",
+    "NumPycopyK-order/base/own/readonly/subclass/protocolsequence andrank0/1/4/channel1/2/4 outcomes",
+    "Exactcolors/alpha0/1/nonfinite/emptybroadcast/errorclass+messages/FPwarnings+callbacks/policy/stickyrounding domains",
+    "Fullpublicnativecounter/hotswap/genuineonecore+default1/globalworker/platform/MSVC runtime/completeinstalledSDK androot sharedintegration",
+    "PerAPIpublic one-thread originalperformance fixedfourcases/Montagemethod/alllosses andexactsource fourprofilequalification/rootdelivery"
+  ],
+  "public_frontier": "Private frontend guard exposes only plainPOD C rank2/3+builtin scalars andcolorcoercion metadata; it deliberately raisesNotImplemented forothermetadata. Even its ordinarynumericroute isnotadmitted parity until genuine94data/FP/error/layoutchecks. This is an explicitpending implementation boundary, not a reducedfinalAPI goal.",
+  "saved_reference_consumer": "Root-bound authentic94rows/terminal/rawadmission/observer/candidate/FPenvelope source digests. Every frozenID compared, no droppingunsupportedcases. FullrealFPenvelope mustseed callerstate andreturn actualobserver/controllerfields; onlydeclared pointer/handler/instruction-address diagnostics excluded inderivedcomparison, rawdata unchanged. Currentbinding/golds/envelopeUNBOUND.",
+  "shared_integration": "Root-only CMake add3modulewires: includeheader/export; compileleaf+binder andcallbind_draw_multiblock_lbp; feature.py/__all__/registry/inventory+qualifiedselectors/SDKdefaulttest+collector sourceguards afteradmission. No sharedfile changedhere.",
+  "performance": "Prospective4publiccall consumer only; no sampler executes withoutlaterroot existinginfrastructure integration+GO"
+}

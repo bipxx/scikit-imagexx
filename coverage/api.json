@@ -1886,11 +1886,24 @@
       "api": "feature.draw_multiblock_lbp",
       "kind": "callable",
       "signature": "(image, r, c, width, height, lbp_code=0, color_greater_block=(1, 1, 1), color_less_block=(0, 0.69, 0.96), alpha=0.5)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_multiblock_lbp_public.py::test_saved_lbp_public",
+      "benchmark": "benchmarks/draw_multiblock_lbp_native.py"
     },
     {
       "api": "feature.fisher_vector",
@@ -6993,11 +7006,24 @@
       "api": "segmentation.mark_boundaries",
       "kind": "callable",
       "signature": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_mark_boundaries_public.py::test_saved_mark_public",
+      "benchmark": "benchmarks/mark_boundaries_consumer.py"
     },
     {
       "api": "segmentation.morphological_chan_vese",
