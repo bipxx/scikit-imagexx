@@ -1,0 +1,203 @@
+{
+  "schema": "util-view-three-API-independent-component-review-v1",
+  "status": "PASS_SCOPED_COMPONENT_WITH_MANDATORY_TEST_HELPER_INTEGRATION_GATE",
+  "passed": true,
+  "source": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48",
+  "base": "762a4934159d562d41908fae1415a3474e3eeed0",
+  "worktree": "build/worktrees/util-view-operations-v1",
+  "clean": true,
+  "author_handoff": {
+    "path": "build/util-view-operations-v1/handoff-v1.json",
+    "sha256": "575721e0e3091b6d4e04e9f9b6d071336b8f0c24c6f4ac7e010fb429d49f6d63",
+    "bytes": 56096
+  },
+  "audit": {
+    "path": "build/util-view-operations-independent-review-v1/audit-v1.json",
+    "sha256": "1b84f3d0f386afe8cf753fa5cabdbee3a521743868230bf364954aa7e773b0c6",
+    "bytes": 54389
+  },
+  "audit_source": {
+    "path": "build/util-view-operations-independent-review-v1/audit_v1.py",
+    "sha256": "7742937df24c35b4af73bb0ec78be4dd6e2e4f76a1f417cafaa33ce85760f199",
+    "bytes": 7065
+  },
+  "ownership": "Only ignored build/util-view-operations-independent-review-v1 audit/receipt files; no source/shared/main/plan/ledger/producer edits. Other agents preserved.",
+  "applicable_rules": "Current root and source worktree AGENTS read; real prerequisites/terminal receipts, dependency-scoped reuse and failures preserved; no independent scope confused with release readiness. Private ancestry requires selective exact30-file import after dependency checks; never branch merge.",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "mandatory_before_genuine_integration",
+      "state": "OPEN_INTEGRATION_GATE_COMPONENT_DISCLOSES_DEPENDENCY",
+      "location": "tests/test_util_views_public.py:captured_FP_call",
+      "finding": "Saved slice parity requires UTIL_VIEWS_FENV_HELPER and hard-authenticates exact independently admitted0c40af72 library bytes. A generic genuine runner currently supplies neither this test artifact nor an admitted portable successor. Absent env/artifact stops before candidate calls; Windows/Linux architecture and libc symbols cannot be inferred. This is test-only, no product runtime/header/binder/frontend dependency. No local C:/ or /mnt/c path may be transplanted as hosted authority.",
+      "minimal_correction": "Before genuine execution, root assigns explicit test-helper supply/collector wiring: either stage the independently admitted exact helper artifact with provenance and actual runtime/layout checks, use its artifact-local absolute path through the test env and collect its hash/identity/restore receipts; OR independently version the envelope to a source-built standalone test helper from exact admitted97ff5740 C source with actual compiler/runtime layout receipt and emitted artifact hash instead of demanding historical0c40 bytes. New compiled bytes need independent successor admission; do not waive the hash, mask state or normalize outputs. Put saved548 Linux scope in explicit normal/scalar qualification group, retain Windows/global release checks and leave Windows saved-domain gate pending until its versioned equivalent is admitted.",
+      "owner_trigger": "Root/sole integration author resolves and reviews supply/collection or versioned portable envelope before genuine qualification dispatch. Current review does not authorize that code/build change or any original call."
+    }
+  ],
+  "source_review": [
+    {
+      "area": "Complete native operations",
+      "finding": "Borrowed block/window operations implement full integral geometry over arbitrary valid descriptors using checked signed stride products. Metadata-only construction does not read payloads; rank/positive-size/divisibility/window/step checks precede arithmetic, windows subtraction is bounded and positive scaling protects PTRDIFF_MIN/MAX. Slice operation implements identity shortcut, axes default/length/duplicates/range ordering, negative modulo before bound checks, admitted crop plan and real C-order owning POD payload transport. No cases-only dispatch or original API forwarding."
+    },
+    {
+      "area": "Lifetime and copy ownership",
+      "finding": "Borrowed SDK descriptors retain const data and caller-managed lifetime; output does not acquire ownership or promise writable state. Slice identity/borrowed/owned result kind and view() resolve owned data from the current payload vector, so copied/moved result objects expose their own storage rather than a stale embedded pointer. Full copy/view/move/empty/reverse/F/POD-byte tests retained. Python ndarray allocation/dtype/base/DummyArray/readonly/reference lifetime remain explicit NumPy providers; object/subclass shallow copy/protocols stay providers, ordinary nonobject payload copying is native crop."
+    },
+    {
+      "area": "Python boundary and storage",
+      "finding": "Wrappers preserve source argument/protocol/error order and public signatures, with ordinary ndarray integral geometry sent to builtin entries. Subclass/float/object/unusual-step promotion and overflowing stride-product domains use disclosed NumPy expressions. Native slice basic indexing uses NumPy representation after CPP crop planning. Copy binder requires matching POD dtype, rank/shape, owning writable C output and conservatively nonoverlapping computed address spans; signed span overflow checks cover boundary arithmetic. Caller-valid allocation descriptors remain a prerequisite, not a forged-storage safety guarantee."
+    },
+    {
+      "area": "Observed metadata and provider limits",
+      "finding": "All548 raw rows are projected type-exact unchanged, including aliases, readonly/base/strides, object payload-slot identities, mutation/error/protocol/warning/callback events and profile-specific empty-array-slices return/DeprecationWarning versus modern ValueError. Current comparability removes only raw full-fenv diagnostic envelopes and nonsharing process-specific pointer distances already excluded by raw admission. Sharing-relative offsets and observed payload identity/metadata remain exact. Observer class/function ASTs equal their captured snapshots on one interpreter; source-bound slice CONTRACT global alone versioned."
+    },
+    {
+      "area": "Causal FP envelope",
+      "finding": "captured_FP_call saves full caller state, clears/raises the saved incoming observable exception flags and rounding immediately at candidate entry, records target before/after even on exceptions, checks both against admitted source observations, then restores all32 caller bytes using admitted helper. This supplies a previously missing input context; it does not replace measured outgoing flags. Warnings/callbacks/policy and complete non-diagnostic row equality stay asserted. Initial26 inherited32-versus-saved33 failures are retained. Raw instruction addresses are not portable equality and C++ controls claim flags/modes only, not full32 ABI."
+    },
+    {
+      "area": "Execution and tests",
+      "finding": "Serial metadata and reused serial crop transport add no workers/global/SIMD engine. One private extension shares a donor worker archive, explicit default1/budgets1/4 and restoration tested. Normal/runtime-disabled/scalar/sanitizer scopes are distinct; donor workers/memcpy may contain SIMD, so no whole scalar-product claim. Final five supplementary tests include required native entry refusal, actual builtin identity, copy alias/object/readonly/nonowning refusal and safe zero-word/high-stride provider controls. Final empty-array constructor fixture now uses explicit2-byte backing to preserve its intended max stride; no production/gold normalization."
+    },
+    {
+      "area": "SDK and benchmark scope",
+      "finding": "Private assembled exported-target clients execute all three complete operations, including owning slice POD copy and copy/move lifetime. Actual installed headers/dependencies/member addition/maps inspected; copied old header differs only comments. Final SDK consumer explicitly checks starting default1. MSVC is compile-only. Both benchmark modules are prospective plan/refusal commands, with slice8+blocks4+windows4 cases and fixed one-thread method; actual execution/source/product/run/root bindings and public original timing remain absent. Separate six-driver lane is not reviewed/admitted here."
+    }
+  ],
+  "authentication": {
+    "owned_source_files": 30,
+    "proof_entries": 228,
+    "unique_authenticated_source_proof_files": 265,
+    "bytes": 11005947,
+    "raw_projection_rows": 548,
+    "raw_hash_scope": "Prior independent raw byte authentication reused; new fixture rows compared recursively with exact JSON types, no raw rehash or originals replay.",
+    "captured_observers_AST": {
+      "slice_along_axes_observer": [
+        "reference_runtime",
+        "encode",
+        "observe",
+        "main"
+      ],
+      "array_views_observer": [
+        "source_revision",
+        "validate_intake_binding",
+        "reference_runtime",
+        "validate_result_storage",
+        "base_chain",
+        "mutate_one_and_restore",
+        "observe",
+        "main"
+      ]
+    },
+    "source_clean": true
+  },
+  "retained_scopes": {
+    "final_XML": {
+      "pure-v3-windows311/results.xml": {
+        "tests": 319,
+        "failed": 0,
+        "skipped": 0
+      },
+      "pure-v3-windows313/results.xml": {
+        "tests": 319,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runtime-v4/minimum/disabled/results.xml": {
+        "tests": 553,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runtime-v4/minimum/normal/results.xml": {
+        "tests": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runtime-v4/modern/disabled/results.xml": {
+        "tests": 553,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runtime-v4/modern/normal/results.xml": {
+        "tests": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runtime-v5/minimum/normal/results.xml": {
+        "tests": 553,
+        "failed": 0,
+        "skipped": 0
+      },
+      "runtime-v5/modern/normal/results.xml": {
+        "tests": 553,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "full_public": "553 nodes each retained min/modern normal and runtime-disabled, actual complete commands terminal0/no denied source imports;548 per-profile-recipe checks withworkers1/4 plus5supplements per cell. Normal v5 and disabled v4 final-source dependencies match; not genuine whole-core release.",
+    "pure": "319 affected family source guards per Windows3.11/3.13, normal conftest/plugins, no scientific imports. Not the complete workflow source barrier.",
+    "native_SDK": "3139253 complete-operation controls per normal/true compiler-scalar/ASan+UBSan, normal runtime-disabled retained; actual assembled installed find_package/exported target with final default1 consumer each mode. No final whole SDK/source qualification.",
+    "MSVC": "Leaf v1 and final affected native/SDK client v2 compile-only exit0; no Windows link/runtime."
+  },
+  "failures_retained": [
+    {
+      "paths": [
+        "runtime-v1/minimum/normal",
+        "runtime-v1/modern/normal"
+      ],
+      "outcome": "26fail/526pass each, inherited fenv32 vs saved33; exact target-entry state envelope remedied setup only, no raw/gold weakening. Final full normal commands pass."
+    },
+    {
+      "paths": [
+        "runtime-v3/minimum/normal",
+        "runtime-v3/modern/normal"
+      ],
+      "outcome": "552pass/1fail each; no-buffer empty ndarray constructor canonicalized strides. Explicit two-byte backing now preserves asserted max stride; bounded control and final complete commands pass."
+    },
+    {
+      "path": "checkpoint-v1.json",
+      "outcome": "One native metadata writer assumed tools/provenance.py; stopped before native manifest write, corrected actual benchmarks/provenance.py. One failed patch expected wrong comment text; atomic no edits, corrected. Optional Windows rg glob/read-path errors were inspection only; no dependent mutation used them."
+    }
+  ],
+  "gates": {
+    "passed": [
+      "Exact clean30 family-file source and228 small-proof authentication",
+      "Complete native geometry/slice borrowed+owning POD copy/lifetime review and unchanged admitted crop dependencies",
+      "All548 raw projection rows and source observers exact within independent raw admission scope",
+      "Retained complete553/profile/mode and319/source-version, native/scalar/sanitize/donor exported-SDK/default1/MSVC compile scopes authenticated",
+      "Causal target-entry FP envelope reviewed; no posthoc output normalization or gold rewrites",
+      "Prospective per-API cases/source-safe cached-import-request refusal only; no timing authority"
+    ],
+    "failed_component": [],
+    "pending": [
+      "F1: explicit independently authenticated test-helper supply/collection or versioned portable envelope and profile applicability BEFORE genuine dispatch",
+      "Root independent component admission and sole shared selective exact30-file integration/dependency check; no private ancestry merge",
+      "Shared build/builtin/public namespace/registry/default/generic/hot-swap/SDK consumer/source guards/selectors and collector integration",
+      "Genuine single whole-core/default1/shared worker ownership, installed whole SDK/exported target and supported platform runtime qualification",
+      "COMPLETE exact workflow source barriers both retained Windows Pythons with normal plugins/conftest/no fail-fast after final source binding",
+      "Exact-source genuine four-profile release qualification and independent product/stager admission",
+      "Actual execution-capable bound per-API one-thread public-call original benchmark drivers/relevant comparisons and losses, full API/provider/FP/type portability closure",
+      "Root main delivery/merge/push/cleanup"
+    ]
+  },
+  "execution": {
+    "scientific_imports": 0,
+    "tests": 0,
+    "originals": 0,
+    "native_builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "source_edits": 0,
+    "archive_core_rehashes": 0
+  },
+  "waste_reuse": {
+    "reused": "Independent raw63bb/root source safety/helper/donor/crop primitives, all548 exhausted originals, retained native/binder/header/runtime/SDK/public/pure receipts. No tests/builds/science/original/timing/archive-core rehash in review.",
+    "avoidable": "Author initial inherited-FP-context26 failures and explicit-backing supplementary fixture failure retained; setup metadata path/patch misses preserved. Reviewer bounded inspections truncated output but no replay/implementation or numerical cost.",
+    "observed_cost": "Independent stdlib source/receipt/projection audit0.562s. Author failed processes~7.83s FP and~9.85s supplementary fixture retained; other review cost not measured.",
+    "next_plan_correction": "Component source review scoped PASS with F1 mandatory before genuine. Root reconciles existing component task gate, assigns helper/collector or portable-envelope correction alongside sole integration when authorized; no self-dispatch or obsolete source barriers."
+  },
+  "next_gate": {
+    "owner": "root",
+    "trigger": "Authenticate this immutable review and decide component admission; separately resolve F1 and exact selective source dependencies before assigning shared integration/final binding. Root retains original budget0, native/performance/workflow GO and main delivery."
+  }
+}

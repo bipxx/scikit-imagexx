@@ -1,0 +1,254 @@
+{
+  "schema": "label-pair-density-independent-component-review-v1",
+  "status": "PASS_SCOPED_COMPONENT_REVIEW_NOT_GENUINE_OR_RELEASE_READY",
+  "passed": true,
+  "source": "b87a24e4b39578b26cf8a2f9d3324ca59b8be6b3",
+  "base": "416b5762ff749cc9033bac79e343c0d7259f2f07",
+  "worktree": "build/worktrees/label-pair-density-v1",
+  "clean": true,
+  "author_handoff": {
+    "path": "build/label-pair-density-optimization-v1/handoff-v1.json",
+    "sha256": "a264e771dfc5115d6d795e7c47b5e79502baddf452b0e19efc45d5aca8d9649a",
+    "bytes": 45196
+  },
+  "independent_audit": {
+    "path": "build/label-pair-density-independent-review-v1/audit-v1.json",
+    "sha256": "a74fb031e65faf8167147d0aea8f3b6f1670acb3d0d6e5d3c1a07400c8218851",
+    "bytes": 60229
+  },
+  "audit_source": {
+    "path": "build/label-pair-density-independent-review-v1/audit_v1.py",
+    "sha256": "c86425b396363b4c74566bd42595f1ed2c46bb6849e5a2745382435058af4828",
+    "bytes": 8512
+  },
+  "requirements": {
+    "applicable": "Current root/worktree AGENTS: actual prerequisite and terminal receipts, dependency-scoped reuse, immutable final handoff, explicit unmet gates and waste/next owner.",
+    "ownership": "Only ignored build/label-pair-density-independent-review-v1 outputs. No producer/shared/main/source/publication/plan/ledger edits; others preserved.",
+    "scope": "Stdlib source/saved receipt audit only; no tests/science/native/original/timing/build/download/large archive/core replay."
+  },
+  "blocking_findings": [],
+  "source_review": [
+    {
+      "area": "Bounds and memory",
+      "finding": "Dense shape runs only after nonempty input/count<=2^20 and all labels in existing20-bit nonnegative domain are validated. Therefore rows/columns are positive; maximum_cells/columns gate safely avoids multiplication overflow. Complete grid<=65536 and<=floor(N/4) limits histogram to256KiB and O(N+cells) work. Each uint32 counter<=N<=2^20. Address arithmetic is bounded by that grid; no domain expansion or new alias promise."
+    },
+    {
+      "area": "Counts and Rand exactness",
+      "finding": "Histogram emits occupied cells in row/column lexicographic order, identical to sorted packed keys. Ignored rows retain explicit zero entries. Normalization computes the same per-sample weight and literally repeats Ncell-1 additions; no count*weight replacement. Source ordered invalid/all-ignored qNaN behavior, normalization status, Rand integer terms and scalar stages remain unchanged; five full-source inverse fragments reconstruct shipping bytes exactly."
+    },
+    {
+      "area": "Weighted row guard and full backing",
+      "finding": "After unchanged weight-domain/qNaN/common-word validation, dense weighted execution requires bit-identical weights within each truth row via memcpy words and seen flags. Equal-column unstable sort tie permutations then cannot change any weight word. It constructs fullN sorted index/data arrays, including backing tails and empty rows, before the unchanged in-place ordered duplicate coalescer. Row-mixed zero/common weights and wider/sparser grids take the original sort fallback. Positive/negative quiet-NaN payload words and explicit zero slots stay observable. No numeric/provider frontier is widened."
+    },
+    {
+      "area": "Execution policy and FP scope",
+      "finding": "One-time process-global worker/default1 validation remains unchanged. Dense histogram/ordered reductions intentionally serial; prior packed-key fallback retains its partition/SIMD source. True compiler-scalar flags and normal runtime-disable receipts are distinct from SIMD vectorization report. Tests preserve advertised FP exception flags/rounding and normalization status; libc Environment helper is unchanged, so these receipts do not claim exact full32-byte x87/C2 restoration or a new portable FP ABI."
+    },
+    {
+      "area": "Public/provider boundary",
+      "finding": "Corrected tests separately assert fullN backing at actual compiled binder and logical CSR payload/shape/indices/sorted/canonical flags after disclosed SciPy structural packing. Initial16 assertions wrongly demanded N-sized public SciPy-owned backing; those failures and correction are preserved. Existing84 saved public tests remain source-identical and passed; minimum new20 and modern full104 terminal0. Whole original metric entrypoints/fallback are refused; declared NumPy/SciPy callback/metadata/packing providers remain, not whole CPP computation credit. Narrow linked core is not a genuine final whole core."
+    },
+    {
+      "area": "Historical contracts and source admission",
+      "finding": "All frozen8 benchmark cases, method/sampler/history/four original-public losses are authenticated unchanged. Fourth pure control actually invokes existing closure verifier and requires exact changed-leaf refusal before intake. Source-only test module does not import scientific modules and has no cached MetaPath import-request boundary. Future shared integration still needs a strict versioned source-context successor; no benchmark hash waiver admitted."
+    }
+  ],
+  "retained_validation": {
+    "native": "6292622 density controls plus existing counts478/Rand148/preweighted428 each normal/compiler-scalar/ASan+UBSan; runtime-disabled normal scopes retained.",
+    "differential": "829 full-storage/vector-capacity bitwise controls each mode against exact shipping CPP; gate N3/4,63/64,4095/4096,cap256/257-label, maximumN, mixed-row fallback and common qNaN/ignored cases; budgets1/4/default, inputs and advertised FP/global restoration.",
+    "public_XML": {
+      "public-minimum/results.xml": {
+        "tests": 104,
+        "failures": 16,
+        "skipped": 0
+      },
+      "public-minimum-v3/results.xml": {
+        "tests": 20,
+        "failures": 0,
+        "skipped": 0
+      },
+      "public-modern-v3/results.xml": {
+        "tests": 104,
+        "failures": 0,
+        "skipped": 0
+      },
+      "pure-windows311/results.xml": {
+        "tests": 3,
+        "failures": 0,
+        "skipped": 0
+      },
+      "pure-windows311-v2/results.xml": {
+        "tests": 3,
+        "failures": 0,
+        "skipped": 0
+      },
+      "pure-windows311-v3/results.xml": {
+        "tests": 4,
+        "failures": 0,
+        "skipped": 0
+      },
+      "pure-windows313/results.xml": {
+        "tests": 3,
+        "failures": 0,
+        "skipped": 0
+      },
+      "pure-windows313-v2/results.xml": {
+        "tests": 3,
+        "failures": 0,
+        "skipped": 0
+      },
+      "pure-windows313-v3/results.xml": {
+        "tests": 4,
+        "failures": 0,
+        "skipped": 0
+      }
+    },
+    "public_reuse": "Minimum old84 are individually passing unchanged nodes in initial104=88PASS16FAIL, not reconstructed new whole104 minimum run. Corrected new20 minimum PASS; first final modern full104 PASS. No partial-union complete barrier claim.",
+    "pure": "Four final source-only nodes each retainedWindows3.11/3.13, normal conftest/plugins/science-request refusal. Earlier3-node scopes preserved, no full workflow barrier.",
+    "SDK": "Actual relocated find_package(skimagexx CONFIG REQUIRED)/skimagexx::skimagexx client in normal/scalar/sanitize; only existing changed leaf member replaced in retained assembled donor, member list exact, installed-header dependencies and map ownership checked. Each includes density6292622/counts478/Rand82/preweighted428. This is a modified donor component SDK, not final genuine whole SDK.",
+    "MSVC": "Changed leaf/density TU/old counts TU/current SDK client compile-only exit0; no Windows link/runtime or ABI validation.",
+    "small_authentication": {
+      "proof_entries": 243,
+      "dependency_entries": 30,
+      "unique_files": 276,
+      "bytes": 5127111
+    },
+    "large_reuse": "Existing donor/worker archive and narrow binder/initializer/storage-guard/core identity reused from retained scope; no archive/core rehash or execution in review."
+  },
+  "performance_scope": {
+    "local_native_comparison": {
+      "status": "PASS_LOCAL_NATIVE_SHIPPING_CPP_COMPARISON_ONLY",
+      "rows": [
+        {
+          "kind": "ARE",
+          "samples": 6,
+          "labels": 3,
+          "baseline_ms": 0.000114667,
+          "candidate_ms": 0.000105333,
+          "ratio": 1.08861
+        },
+        {
+          "kind": "weighted",
+          "samples": 6,
+          "labels": 3,
+          "baseline_ms": 0.000221333,
+          "candidate_ms": 0.00022,
+          "ratio": 1.00606
+        },
+        {
+          "kind": "weighted-normalized",
+          "samples": 6,
+          "labels": 3,
+          "baseline_ms": 0.000205667,
+          "candidate_ms": 0.000183667,
+          "ratio": 1.11978
+        },
+        {
+          "kind": "counts-normalized",
+          "samples": 6,
+          "labels": 3,
+          "baseline_ms": 0.000159333,
+          "candidate_ms": 0.000160667,
+          "ratio": 0.991701
+        },
+        {
+          "kind": "ARE",
+          "samples": 262144,
+          "labels": 64,
+          "baseline_ms": 7.78336,
+          "candidate_ms": 0.476358,
+          "ratio": 16.3393
+        },
+        {
+          "kind": "weighted",
+          "samples": 262144,
+          "labels": 64,
+          "baseline_ms": 10.3997,
+          "candidate_ms": 1.1225,
+          "ratio": 9.26472
+        },
+        {
+          "kind": "weighted-normalized",
+          "samples": 262144,
+          "labels": 64,
+          "baseline_ms": 9.27564,
+          "candidate_ms": 0.962239,
+          "ratio": 9.63964
+        },
+        {
+          "kind": "counts-normalized",
+          "samples": 262144,
+          "labels": 64,
+          "baseline_ms": 7.58013,
+          "candidate_ms": 0.484525,
+          "ratio": 15.6445
+        }
+      ],
+      "scope": "Strict-FP shipping and candidate leaf objects, 1worker, seven medians of3calls. Complete returned vectors compared. No original/public timing; not replacement for fixed public campaign.",
+      "original_calls": 0,
+      "whole_core_build": false
+    },
+    "interpretation": "Single local one-worker native CPP comparison only: four large ratios9.26472-16.3393; tiny normalized counts0.991701 retained. No original/public timing or final whole product speed evidence. All eight historical public cases/four losers remain mandatory in root-authorized future campaign."
+  },
+  "failures_retained": {
+    "author": [
+      {
+        "path": "public-minimum/terminal.json",
+        "result": "16failed88passed",
+        "reason": "New test incorrectly required public SciPy-owned arrays to retain N slots. Binder does; SciPy structural packing may trim.",
+        "correction": "public-correction-v1.json",
+        "successors": [
+          "public-minimum-v3/terminal.json",
+          "public-modern-v3/terminal.json"
+        ],
+        "dependency_scope": "Only new public test changed. All production/native code and old84 public tests unchanged; native and old minimum public proofs reused. New20 minimum and full first modern run passed."
+      },
+      {
+        "path": "public-minimum-v2/setup-failure.json",
+        "reason": "Build-only interpreter lacks pytest. Link succeeded but no tests/public/originals executed; explicit retained runtime corrected in v3."
+      }
+    ],
+    "reviewer": [
+      "Optional summary read used default Windows GBK and failed UTF8 decoding; corrected explicit UTF8 read, no source or scientific action.",
+      "Independent audit initially expected corrected public test function name in historical failure XML; actual old test_density_public_complete_backing name inspected and checked exactly. Audit stopped before output, corrected locally; no producer/test rerun."
+    ]
+  },
+  "gates": {
+    "passed": [
+      "Exact clean8-file source/component dependency scope and243 proof-pin authentication",
+      "Full five-fragment leaf inverse and bounded density/weighted guard/fallback/ordered coalescer review",
+      "Retained native/compiler-scalar/sanitizer/differential/public/actual installed donor SDK/MSVC compile/pure scope authenticated",
+      "Historical recipes/method/golds/losers and active benchmark refusal preserved"
+    ],
+    "pending": [
+      "Root independent component admission; reviewer does not grant integration, new original, timing or hosted authority",
+      "One sole shared integration author imports only exact reviewed8 files after dependency/ancestry check and creates strict benchmark/source/SDK context successor with all methods/cases/golds frozen",
+      "Affected pure guards both retained Windows Pythons after integration and COMPLETE actual two-version workflow source barriers, normal conftest/plugins/no fail-fast",
+      "Genuine integrated single core public namespace/hot-swap/native ownership/default1/single-global workers, scalar/runtime-disable and actual whole installed SDK/exported-target/platform runtime validation",
+      "Exact-source four-profile qualification and independent product/stager admission",
+      "Root GO then relevant one-thread public-call comparison against original for both advertised APIs using all8 frozen cases and historical losers",
+      "Full supported API/domain/provider/FP portability closure and main delivery/cleanup"
+    ],
+    "failed_current": []
+  },
+  "execution": {
+    "science": 0,
+    "tests": 0,
+    "originals": 0,
+    "native_builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "source_edits": 0,
+    "large_archive_core_rehashes": 0
+  },
+  "waste_reuse": {
+    "reused": "All unchanged source safety/golds/native/header/binder/runtime/provider/SDK/archive identities;276 small source/receipt files authenticated, not new scientific work. Independent source/receipt audit only.",
+    "avoidable": "Author new-public backing assumption16failures and runtime-path/setup mistakes preserved. Reviewer two subsecond source-inspection/audit assumptions corrected; no expensive dependent rerun or measurement.",
+    "observed_cost": "Author failed public scope5.627035463s retained; reviewer failed audit0.519s/corrected saved audit0.420s. Other review wall costs not measured, no replay to measure waste.",
+    "next_plan_correction": "Reviewed, no component source change requested. Root updates existing plan/ledger terminal component gate and decides next sole integration scope; do not self-dispatch or run obsolete277 source barriers before final compatible source/binding."
+  },
+  "next_owner_trigger": {
+    "owner": "root",
+    "trigger": "Authenticate immutable scoped PASS and decide component admission. Root retains all shared integration assignment, final binding/readiness/genuine/performance GO and main delivery. New F-boundary/utilview lanes remain separate and are not blockers to this review."
+  }
+}

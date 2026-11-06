@@ -1,0 +1,196 @@
+{
+  "schema": "find-boundaries-F-row-independent-review-v1",
+  "status": "PASS_SCOPED_COMPONENT_REVIEW_CANDIDATE_UNREADY",
+  "passed": true,
+  "source": "98df47b6f9886329957935ca25e89cfaece7c5bb",
+  "source_clean_at_closeout": true,
+  "predecessor": "c8c8bb78c7ded91cdcc6dbccc01c113eba4613ea",
+  "producer_handoff": {
+    "path": "build/find-boundaries-f-row-optimization-v1/handoff-v1.json",
+    "sha256": "201308afa8ffc2fefae08a286653f3dec1c071a4745cb853a567841ddc96a2ca"
+  },
+  "reused_component_review": {
+    "path": "build/find-boundaries-layout-independent-review-v1/review-v1.json",
+    "sha256": "ba61baa5360f00e94d59d8ba3919385d2a8a6eda793c9de92da2d8cd9ef08487",
+    "scope": "Admitted c8 source/generic/C-row/subpixel/typed-frontier and unchanged donor/gold/runtime evidence; no replay."
+  },
+  "audit": {
+    "path": "build/find-boundaries-f-row-independent-review-v1/audit-v1.json",
+    "sha256": "1593171963c17d7b1bfad221930abcde9c55bd804033075d50f3b1ae911e32ef",
+    "source": "build/find-boundaries-f-row-independent-review-v1/audit_v1.py",
+    "source_sha256": "17f42ea133c0e9252747c003103c4c486060f0ecf45d1e7092e78a95f1680767",
+    "owned_files": 6,
+    "dependencies": 25,
+    "external_SDK_driver_dependencies": 2,
+    "authenticated_small_proofs": 134,
+    "large_report_pins_reused_without_rehash": 3
+  },
+  "ownership_rules": {
+    "applicable": "Current root AGENTS read, applicable worktree root rules read/reused and byte-identical; sole AGENTS in family tree. Action-boundary/source-scoped reuse/immutable receipt/closeout requirements applied.",
+    "ownership": "Only ignored build/find-boundaries-f-row-independent-review-v1 outputs. No author source/shared integration/plan/ledger/main changes; not alone, other work preserved.",
+    "authorization": "Read-only source/proof review; no scientific/test/original/native/build/timing/download/archive/core/object authentication replay."
+  },
+  "blocking_findings": [],
+  "source_findings": [
+    {
+      "status": "PASS",
+      "area": "Exact additive closure",
+      "finding": "Six owned family files authenticated. Removing one strict17line source fragment restores whole c8 leaf byte-for-byte after canonical LF; cumulative inverses restore shipping e89 leaf exactly. Existing C interior/SSE row body, c8 strided odometer, all outer/subpixel/wide paths, header/binder/wrapper/execution and gold fixture remain unchanged."
+    },
+    {
+      "status": "PASS",
+      "area": "Eligibility and termination",
+      "finding": "Only ordinary thick/inner, rank2, seven typed carriers sizeof<=4, both extents>=3, aligned input, exact positive F input and output stride patterns qualify. Swap input/output shape and strides only; pointers/counts/parameters remain unchanged. After transpose, s0=oldshape0*item and s1=item, so new F eligibility would require oldshape0=1, contradicted by>=3. Exactly one recursive metadata reuse reaches existing C-row path."
+    },
+    {
+      "status": "PASS",
+      "area": "Semantics and bounds",
+      "finding": "Connectivity1 axial and connectivity2 full square footprints and clamped borders are invariant under axis permutation. The unchanged row kernel retains canonical bool loads, signed background bits and representability. Product caps/intake address proofs bound shape0*item and ptrdiff conversion; permutation preserves the exact reachable address set. Degenerate, misaligned, negative/mixed strides, wide carriers, outer and subpixel remain on old guard-false paths."
+    },
+    {
+      "status": "PASS",
+      "area": "Output ownership",
+      "finding": "Unchanged raw SDK contract requires stable input/descriptor, disjoint backing and caller-proved nonoverlapping output. F/F guard describes dense positive output exactly; transpose introduces neither copy nor new alias discovery. Public binder allocates output. No broader raw-allocation, arbitrary alias or capacity safety claim."
+    },
+    {
+      "status": "PASS",
+      "area": "Budget/global ownership",
+      "finding": "Unchanged public/native intake snapshots workers0 once, validates positive1..1024 and passes that captured positive budget through run recursion. No get_num_threads in added route and no new pool/global/callback. Row partition threshold/count unchanged; changed row orientation does not create overlapping output writes. Whole genuine single-core/global ownership remains a release gate."
+    },
+    {
+      "status": "PASS_WITH_SCOPE_LIMIT",
+      "area": "FP and SIMD",
+      "finding": "Added operation is integer metadata only. Retained native controls verify existing exception flags/four rounding modes, not a full32byte x87/C2 ABI guarantee. Normal compiler SSE2 integer operations and true scalar leaf flags/counts are distinguished from runtime-disable capability; libc/worker donor may contain SIMD, and runtime-disable does not erase compiled SSE2."
+    }
+  ],
+  "retained_validation": {
+    "native": {
+      "normal": {
+        "commands": 6,
+        "controls": 2709644,
+        "exit": 0
+      },
+      "scalar": {
+        "commands": 4,
+        "controls": 2709644,
+        "exit": 0
+      },
+      "sanitize": {
+        "commands": 4,
+        "controls": 2709644,
+        "exit": 0
+      }
+    },
+    "SDK": "4302860 checks per normal/scalar/ASan+UBSan mode, budgets2151430 each, default/captured0 and1/4/global restoration. Actual find_package/exported-target prefix/header and source helper/fixture closure inspected; same archive member list, producer extracted-member equality receipt reused. Previous assembled SDK95 donor, not fresh final whole SDK.",
+    "XML": {
+      "public-minimum": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "public-modern": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "pure-windows311": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "pure-windows313": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "public": "Each profile100XML = old86 closure +14 affected F dtype/worker controls. Private retained binder/initializer plus new leaf and worker donor, original algorithms/dependencies refused; primitive integer masks and saved golds reused. No genuine whole current core claim.",
+    "native_scope": "2709644 affected F controls per normal/compiler-scalar/ASan+UBSan mode; normal runtime-disable PASS. Old c8 guard-false source-identical numerical scopes reused without a duplicate large campaign.",
+    "MSVC": "Leaf/new F TU/current helper compile-only terminal0, no Windows linked/runtime/ABI proof.",
+    "pure": "4 affected source guards each retained Windows3.11/3.13 with actual selectors/normal conftest/plugins and0scientific import requests; not complete workflow barriers."
+  },
+  "comparison_interpretation": {
+    "status": "LOCAL_CPP_DIAGNOSTIC_ONLY",
+    "baseline_source": "c8c8bb78c7ded91cdcc6dbccc01c113eba4613ea",
+    "rows": [
+      {
+        "case": "u16-inner-F",
+        "elements": 130813,
+        "baseline_ms": 0.965753,
+        "candidate_ms": 0.14063,
+        "ratio": 6.86732
+      },
+      {
+        "case": "u16-thick-F",
+        "elements": 130813,
+        "baseline_ms": 0.812623,
+        "candidate_ms": 0.0776072,
+        "ratio": 10.471
+      },
+      {
+        "case": "bool-inner-F",
+        "elements": 130813,
+        "baseline_ms": 0.839207,
+        "candidate_ms": 0.20762,
+        "ratio": 4.04204
+      },
+      {
+        "case": "u16-inner-C-control",
+        "elements": 130813,
+        "baseline_ms": 0.130998,
+        "candidate_ms": 0.126716,
+        "ratio": 1.03379
+      }
+    ],
+    "clarification": "Author raw result/run-script scope prose says shipping C++ baseline, but authoritative baseline_source, exact predecessor-c8c8.cpp source and compile argv bind c8c8, not shipping e89. Ratios6.86732/10.471/4.04204 (Ccontrol1.03379) are strictly c8-versus98df local native1worker outcomes. Historical raw prose is retained unchanged; no reinterpretation as original-public gains or repeat measurement.",
+    "method_scope": "One local retained GNU/WSL run,7medians of5leaf calls, same synthetic130813-element requests/output equality and separated compilation. No hosted/original/public-call comparison or general speed claim."
+  },
+  "active_benchmark": {
+    "status": "REQUIRED_FAIL_CLOSED_UNCHANGED",
+    "contract_sha256": "fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba",
+    "leaf_and_SDK_helper_mismatch": true,
+    "scope": "Existing v3 refuses new leaf before intake (retained actual negative source guard). Eight fixed cases/sampler/method/four historical original-public losses remain pinned unchanged; shared context must be versioned before new genuine work."
+  },
+  "gates": {
+    "passed": [
+      "Independent exact17line delta/cumulative source inverses and6owned/25dependency/2SDKdriver source closure",
+      "Source reasoning for eligibility/permutation/borders/bool/background/overflow/output ownership and captured worker budget",
+      "134smallproof authenticity and terminal native/scalar/sanitizer/disable/public/assembledSDK/MSVC/pure scopes",
+      "Original benchmark case/method/loss immutability and intentional stale-source refusal"
+    ],
+    "failed_current": [],
+    "pending": [
+      "Root independent component admission then sole shared integrator minimal context/selectors/collector/installedSDK-hook integration",
+      "Complete actual workflow source-check command both retained supported Pythons, normal conftest/plugins/no fail-fast on frozen integrated source",
+      "Genuine exact-source full core/hot-swap/native ownership/default1 shared global/workers/scalar-SIMD and whole installedSDK/platform proof",
+      "Exact-source four-profile qualification/product/stagers and independent root admission",
+      "Root genuine-input/performance GO and fixed8case one-thread original-public measurements; preserve all losers",
+      "Root main delivery and safe obsolete-worktree cleanup after ancestry/source checks"
+    ]
+  },
+  "failure_retention": "No new setup/test/implementation failure in this successor or independent audit. Prior c8 component/read-path/counter-label failures and historical original-public losers remain unchanged; raw shipping-baseline wording clarified only here.",
+  "execution": {
+    "tests": 0,
+    "science_imports": 0,
+    "original_calls": 0,
+    "native_builds": 0,
+    "timing_batches": 0,
+    "downloads": 0,
+    "archive_core_object_rehashes": 0,
+    "source_shared_main_edits": 0
+  },
+  "waste_reuse": {
+    "reuse": "Reused ba61/c8 source review, saved golds, matching old binder/initializer, worker archive/SDK donor/export project and old guard-false numerical evidence. Authenticated small current receipts only; read existing codegen text without hashing large reports, objects, archives or cores.",
+    "avoidable": "No duplicate scientific/build/original/timing work. Inherited ambiguous baseline prose requires this explicit source-bound interpretation; no campaign needed to fix wording.",
+    "observed_cost": "Independent stdlib audit1.84s; other read/review cost not separately measured. No replay to estimate waste.",
+    "next_plan_correction": "reviewed, no code change. Root updates existing boundary component next gate to98df/this scopedPASS if selected, keeping current shared context/genuine/performance pending and earliest compatible bundle policy."
+  },
+  "next_gate": {
+    "owner": "root, then sole assigned shared integration author",
+    "trigger": "Authenticate frozen review, admit this component and overlay minimal F successor/context only if compatible before candidate freeze. Do not create another ready release candidate or wait for unfinished unrelated family. Root owns complete source/genuine/four-profile/performance/main delivery gates."
+  }
+}

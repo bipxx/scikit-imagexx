@@ -1,0 +1,64 @@
+{
+  "schema": "boundary-layout-shared-integration-independent-review-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_277_SHARED_SOURCE_AND_CONSUMER_INTERFACE_NOT_RELEASE_READY",
+  "source": "277ffc3ca858eaeae1d08fd9c22b217aa1c8b459",
+  "base": "762a4934159d562d41908fae1415a3474e3eeed0",
+  "handoff": {
+    "path": "build/join-integration-v1/handoff-v5.json",
+    "sha256": "e049ccc7654a21e0b6658df726f10102cbe704e382d8ef5c1a876442ee0c301a"
+  },
+  "source_files": 19,
+  "exact_component_imports": 6,
+  "small_proofs_authenticated": 59,
+  "findings": [
+    "Exact admitted c8c8 leaf/SDK/test6 files imported; no header/binder/frontend/gold/math change beyond admitted leaf.",
+    "Only benchmark source-closure validator changed and exact inverse helper added; all other driver function ASTs unchanged on same interpreter.8cases/method/sampler preserved.",
+    "Literal context pin verifies current leaf/SDK fragments and complete predecessor inverse; oldv3 retained/refusesnewsource, actual runtime/core/producer fieldsUNBOUND.",
+    "Workflow source command adds only oneguard beforepipe, no oldselector dropped, soletee log intact. Counts132POST203/134required and fullLinux49/Windowsglobal scopes retained.",
+    "Retained subset failures/GNU-MSVC syntax evidence have bounded labels; no completebarrier or genuine inference."
+  ],
+  "source_counts": {
+    "images": 268,
+    "registered": 271,
+    "product": 212,
+    "SDK": 100,
+    "families": 32,
+    "SDK_checks": 64,
+    "post203_selectors": 132,
+    "required_selectors": 134,
+    "metadata": 3
+  },
+  "active_consumer_interface": {
+    "boundary_contract": "coverage/contracts/find-boundaries-benchmark-binding-v4.json",
+    "boundary_contract_raw_sha256": "8ad09d6c73f47d017a5da741d60e18049abe6425042725e29c6e233eab2e8ff7",
+    "driver": "benchmarks/find_boundaries.py",
+    "driver_canonical_lf_sha256": "891a5bcb2d2d5f8a520a1368801c747f3db8767375b7b452d11c86e2309dfdf2",
+    "root_binding_flag": "--root-binding",
+    "schema": "Existing external ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS envelope unchanged; prepared_source remains revision/files_sha256 dict, root_GO pins binding without reciprocal hash.",
+    "actual_runtime_fields": "UNBOUND: state prospective, shared_CMake_sha256/genuine_core_sha256/prepared_run/prepared_artifact None; no fabricated prepared/run/artifact/core/root/SDK binding.",
+    "preservation": "8cases/112rawsamples/first-cohort gates/sampler/method/native acceptance/timed bodies retained; old raw packets remain historical."
+  },
+  "validation": {
+    "windows311": {
+      "affected_guards": 29,
+      "complete_barrier": false
+    },
+    "windows313": {
+      "affected_guards": 29,
+      "complete_barrier": false
+    }
+  },
+  "retained_reviewer_failure": {
+    "path": "build/find-boundaries-layout-integration-independent-review-v1/review-input-failure-v1.json",
+    "cause": "Guessed .json goldpath, actual frozen .hpp. Source19/proofs59/exact6imports/AST/header checks passed beforeGit128 stoppedreview; corrected onlyfixturepath andremainingchecks without source/scientific replay."
+  },
+  "remaining_gates": [
+    "Finished readylabel and F-layout successors may combine afterindependentadmission; no wait forunfinishedlanes",
+    "Final immutable consumer/source binding and complete actual2sourcebarriers normalplugins/conftest/no-x",
+    "Genuine finalcore/globalworkers/hot-swap/installedSDK/exactsource4profile qualification",
+    "Actualsource original-public1thread performance/alllosses/rootadmission/maindelivery"
+  ],
+  "execution": "Source/metadata/AST/XML review only;0science/tests/originals/native/build/timing/download/archivehash.",
+  "waste_review": "Reused independent c8c8/762a scopes and priorpassingpartialreview source checks;59smallproofs/19files only. Missingfilename assumption retained, resolvedfromactualGitmanifest. No obsoletefullbarrier replay. Nextroot/C: finalcompatibleadmittedbundle thenone completebarrier campaign."
+}
