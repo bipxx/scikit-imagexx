@@ -1,0 +1,56 @@
+{
+  "schema": "mark-boundaries-remaining-capture-independent-review-v1",
+  "status": "PASS_COMPLETE_REMAINING_20_125_READINESS_NO_ACTUAL_GO_YET",
+  "passed": true,
+  "complete_controller_readiness": true,
+  "source": "288244ca6e4b31685285d543b1ee49831ba566fe",
+  "controller_sha256": "16f7b951d68f20fade0dddc9831d52bd68b916c0aa8e5c935750aa39a8009bef",
+  "binding_sha256": "c8ae7fa6a6e48348c78aab78acc864f5f5a28558d757286185a29c9c4389ad30",
+  "incoming": {
+    "path": "build/mark-boundaries-remaining-capture-v1/handoff-v1.json",
+    "sha256": "43190b0ea4f36b81f059e5f377b2ecaa0ebdbb2b7c8bec7e309ec62167aaa785"
+  },
+  "authenticated": {
+    "small_proofs": 81,
+    "source_pins": 17,
+    "full_recipe_pool": 125,
+    "prior_started": 105,
+    "prior_complete": 104,
+    "remaining_minimum": 20,
+    "modern_unconsumed": 125,
+    "prospective_new_budget": 145,
+    "actual_prefixes": [
+      "minimum",
+      "modern"
+    ]
+  },
+  "findings": [],
+  "accepted_scope": [
+    "Entry authenticates immutable priorfailure/terminal/journal,105distinct started/104completed and lastfailed ID; exact ordered minimum20complement excludes every consumedID, modern125unchanged. Root invoked metadata selector on actualbinding without science. No retry/filter/resumeCLI.",
+    "Newsource288/codecadmission0db and17pins authenticated. Observer-v2 retains concrete errorargs metadata, no backfill of missing105.31pure/version and bothsame-controller0bodyprefixes plus8metadata refusals authenticated, no replay.",
+    "Two inert typedexception observer paths/profile explicitlynotoriginals; exactcaller32 restored. Fivecallercontrols+immediateFP/NP+process32 exact, actualtarget/provider bodies0.",
+    "Failure diagnostics/partialjournal retention and authority/deadline/entry-final source checks reuse admitted d83; no percasewhole-source hash."
+  ],
+  "authority": {
+    "original_budget": 0,
+    "actual_GO": null
+  },
+  "pending": [
+    "Root explicit exactsource/controller/binding/profile/runtime/casewhitelist/journal/deadline20min+125modern145newcall authority before capture.",
+    "Independent raw admission of retained104plus remaining145 observations and failed105metadata; missing consumed105structuredargs remains an explicit gap, never label recovered.",
+    "Complete native/public/installedSDK/FP/scalarSIMD/globalworkers/parity/performance/release gates."
+  ],
+  "execution": {
+    "tests": 0,
+    "metadata_validator_calls": 1,
+    "scientific_imports": 0,
+    "original_calls": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_hashes": 0
+  },
+  "waste_review": "Reuse immutable priorconsumption and codec/helper/recipe scope,81smallproofs authenticated once. Concrete fixed remainder replaces whole-batch restart; no genericresume framework or replay of105consumed. Nextroot actualseparate145GO then capture once and independentraw review."
+}

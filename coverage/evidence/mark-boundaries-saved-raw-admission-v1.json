@@ -1,0 +1,100 @@
+{
+  "schema": "mark-boundaries-saved-raw-admission-v1",
+  "status": "PASS_SCOPED_249_OBSERVATIONS_ONE_CONSUMED_ERROR_ARG_GAP",
+  "passed": true,
+  "api": "segmentation.mark_boundaries",
+  "full_recipe_pool": 125,
+  "profiles": {
+    "minimum": {
+      "complete_rows": 124,
+      "new_consumed": 20,
+      "failed_consumed": 1,
+      "source_versions": [
+        "39bb24a963ba4dbddcff643207ab90fac5ad61a3",
+        "288244ca6e4b31685285d543b1ee49831ba566fe"
+      ],
+      "terminal_sha256": "d1ed693c4c8b1f6f9815e629b4493cde0d60865193214bac8d7e09fb7a521d64"
+    },
+    "modern": {
+      "complete_rows": 125,
+      "new_consumed": 125,
+      "failed_consumed": 0,
+      "source_versions": [
+        "288244ca6e4b31685285d543b1ee49831ba566fe"
+      ],
+      "terminal_sha256": "183eeb80648d7db2622359c63b35ba48548d85185ff018aa3ca7c41f283ecb0e"
+    }
+  },
+  "total_consumed": 250,
+  "total_complete_rows": 249,
+  "failed_case": "mark_boundaries/background-none",
+  "failed_case_structured_args_recovered": false,
+  "source_observer_versions": "Old39bb observer/104rows and additive288 codec observer/145rows retained as distinct formats; no qualname backfill or numerical normalization.",
+  "raw_files": {
+    "build/mark-boundaries-capture-controller-v2/capture-v1/minimum/journal.jsonl": {
+      "sha256": "cc9ff552280056e4b776c11cb33c10f8ec174c8ed49a7b2838528449664c1002",
+      "bytes": 1195647
+    },
+    "build/mark-boundaries-capture-controller-v2/capture-v1/minimum/terminal.json": {
+      "sha256": "a25b2711b0d5a03d2d1ee1b26f5fea06943cbf17840cecbe44a55d217d2a4db9",
+      "bytes": 11029
+    },
+    "build/mark-boundaries-capture-controller-v2/capture-v1/minimum/precall-freeze.json": {
+      "sha256": "795fce1dae53d57d5f189a27d85c704eeacc5a73befd321bea48840add9cbf25",
+      "bytes": 10817
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/minimum/journal.jsonl": {
+      "sha256": "6d3a5b32f62ec047398b22c0c8386c5daef7d63ac396402089458ae4e8fff4bc",
+      "bytes": 222133
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/minimum/observations.json": {
+      "sha256": "d3e5f1f598d8e453386783d1043b0bff28c2f18d58806acb06806c35478b0421",
+      "bytes": 429176
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/minimum/terminal.json": {
+      "sha256": "d1ed693c4c8b1f6f9815e629b4493cde0d60865193214bac8d7e09fb7a521d64",
+      "bytes": 9079
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/minimum/precall-freeze.json": {
+      "sha256": "0329015505bb9753728712e7a9554937561c6d768063617feff87e22f6f42732",
+      "bytes": 10817
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/modern/journal.jsonl": {
+      "sha256": "7391011d58a315cd362ba7f1f93c26eea2ac8ab6da85e1822e7e836f8b99d896",
+      "bytes": 1419869
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/modern/observations.json": {
+      "sha256": "6508d389fa7d4808a7f5eda71e0ceed2bc092b9797cddab841eb7e234fd80a2b",
+      "bytes": 2747463
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/modern/terminal.json": {
+      "sha256": "183eeb80648d7db2622359c63b35ba48548d85185ff018aa3ca7c41f283ecb0e",
+      "bytes": 13248
+    },
+    "build/mark-boundaries-remaining-capture-v1/capture-v1/modern/precall-freeze.json": {
+      "sha256": "a771946103694a4feb9785ef9ddb052ba880e8eb28063b93825368f9a73e2081",
+      "bytes": 10780
+    }
+  },
+  "decoded": {
+    "array_payloads": 4185,
+    "scalar_payloads": 0,
+    "logical_payload_bytes": 184128
+  },
+  "FP_scope": "All full32 target-immediate state retained, caller saved/restored exact32 and fullprocess restoration; rawIP/dataaddresses/handlerIDs/nonsharingpointers are diagnostics not portablegold. No FPmasking.",
+  "original_computation": "Exactly250 public calls total:105initialminimum+20uncalledminimum+125modern; no original retry/new calls during admission. Provider computation occurs inside original public target, not claimed native.",
+  "gaps": [
+    "Minimumbackground-none consumedcase105 structured errorargs absent; original traceback/type/message/immediateFP/caller state retained but not reconstructed or relabeled complete.",
+    "FullAPI domains/quarantinedcases/platforms/providerownership/newnativeSDK/SIMD/workers/parity/performance/exactsource release remain pending."
+  ],
+  "execution": {
+    "original_calls": 0,
+    "scientific_imports": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "timing": 0,
+    "builds": 0,
+    "downloads": 0
+  },
+  "waste_review": "Recovered only fixed unconsumed suffix; retained104oldrows and failedcase. Decode/check249logicalpayloads once in stdlib, no algorithm/replay. Sharedcodec omission caused105th missingobservation; typeddescriptor repair fixed remainingcalls without whole-batchrestart. Nextnative family consumes exactsaved rows with explicit old/newmetadata and gap; root independentnative/performance admission later."
+}

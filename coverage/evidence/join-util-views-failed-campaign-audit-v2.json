@@ -1,0 +1,287 @@
+{
+  "status": "AUTHENTICATED_TERMINAL_FAILED_CAMPAIGN_WINDOWS_JOIN_FENV_SETUP",
+  "run": 42238215124,
+  "source": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+  "overall_campaign": "failure",
+  "whole_product_accepted": false,
+  "artifacts": [
+    {
+      "id": 13516423639,
+      "name": "public-qualification-minimum",
+      "run": 42238215124,
+      "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\join-util-views-qualification-v1\\42238215124\\retained-v1\\13516423639.zip",
+      "bytes": 1387047710,
+      "sha256": "e8b73d13eb95ff82999aadfe004499b69bab07d76c7b3b69e97a2a6b6aae5c77",
+      "seconds": 83.71039090002887,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13516429571,
+      "name": "public-qualification-debug",
+      "run": 42238215124,
+      "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\join-util-views-qualification-v1\\42238215124\\retained-v1\\13516429571.zip",
+      "bytes": 1767834655,
+      "sha256": "74b843ed7d4b3039e2537ee47177355a372a63e1547cb4b89a3a6cfda7fa42e0",
+      "seconds": 175.45832110010087,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13516612538,
+      "name": "rank-statistics-product-modern",
+      "run": 42238215124,
+      "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\join-util-views-qualification-v1\\42238215124\\retained-v1\\13516612538.zip",
+      "bytes": 217594818,
+      "sha256": "2dfab1b45d25c4049944f5854fa13779372dd377bf4629a52dbc62afad9b6c67",
+      "seconds": 17.723398000001907,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13516998040,
+      "name": "rank-statistics-product-minimum",
+      "run": 42238215124,
+      "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\join-util-views-qualification-v1\\42238215124\\retained-v1\\13516998040.zip",
+      "bytes": 220402024,
+      "sha256": "8352cfc9b56f46c2e3d0798f45d537d8f5d8120545d42ff63271993e792ec212",
+      "seconds": 22.71877389983274,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13517232714,
+      "name": "public-qualification-modern",
+      "run": 42238215124,
+      "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\join-util-views-qualification-v1\\42238215124\\retained-v1\\13517232714.zip",
+      "bytes": 1348729976,
+      "sha256": "7acbbb6a02a79ca1d27d3397b722b0a620ff706ace1411284c97c9bf76b6414b",
+      "seconds": 97.68542349990457,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13517439219,
+      "name": "public-qualification-windows",
+      "run": 42238215124,
+      "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\join-util-views-qualification-v1\\42238215124\\retained-v1\\13517439219.zip",
+      "bytes": 1292731355,
+      "sha256": "b4826b73f2f048349ff156e56f759e8b0462f15ca85b7ef73602c9a0662358d2",
+      "seconds": 91.75719070015475,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "downloaded_bytes": 6234340538,
+  "profiles": {
+    "windows": {
+      "review": {
+        "path": "build/join-util-views-qualification-v1/42238215124/windows-raw-review.json",
+        "sha256": "72bc8ed6168b4dc7fb7bbb4735df4abe2f37e9df94f0bffb3aa1292663e3c026"
+      },
+      "seal_once": {
+        "path": "build/join-util-views-qualification-v1/42238215124/windows-seal-once.json",
+        "sha256": "2d2a5ad8487f85834b36a4f52a8b2df58f94c89e48636fa21515159e5e7b4b35"
+      },
+      "manifest_passed": false,
+      "accepted_in_isolation": false,
+      "manifest_sha256": "c9042c7143df994c210d06d70cbaf3a5c3def0f08b9da91205926ec9edb8da25",
+      "records": 37742,
+      "sealed_bytes": 2916576315,
+      "XML": {
+        "tests": 237126,
+        "failures": 100,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "failed_commands": [
+        {
+          "label": "normal-public-post203",
+          "returncode": 1
+        },
+        {
+          "label": "scalar-public-post203",
+          "returncode": 1
+        }
+      ],
+      "actual_case_nodes": 237126,
+      "source_identity": {
+        "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+        "source_files": 2644,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "68647614b0ae0c6e21328cdaa59d4c5f1c6df3882691f75b1b27e0ace2016bfb"
+      }
+    },
+    "minimum": {
+      "review": {
+        "path": "build/join-util-views-qualification-v1/42238215124/minimum-raw-review.json",
+        "sha256": "7b749b2e8d4b1155d0b5b1ad03c60bfa7139f37444e90a496707ed1704e7c663"
+      },
+      "seal_once": {
+        "path": "build/join-util-views-qualification-v1/42238215124/minimum-seal-once.json",
+        "sha256": "6589488f7cd0b14bb127bb24997bb397e39a067669840c842e685c97661a2d57"
+      },
+      "manifest_passed": true,
+      "accepted_in_isolation": true,
+      "manifest_sha256": "790d5e2328a6b078d61a0da7392eb7c9430ad09653f78a2e9cea4ac3cddd6a64",
+      "records": 39897,
+      "sealed_bytes": 2268937646,
+      "XML": {
+        "tests": 238330,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "failed_commands": [],
+      "actual_case_nodes": 238330,
+      "source_identity": {
+        "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+        "source_files": 2644,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "5e23ad1198f3188b308491edcef41b1539e0f3f27a15c8ed5849cbb9f63ed1aa"
+      }
+    },
+    "modern": {
+      "review": {
+        "path": "build/join-util-views-qualification-v1/42238215124/modern-raw-review.json",
+        "sha256": "a5032cddb71cc422776ab4b8a8cca6f23cf4871f055715c027198e79f4b89ce4"
+      },
+      "seal_once": {
+        "path": "build/join-util-views-qualification-v1/42238215124/modern-seal-once.json",
+        "sha256": "2543c6cb451fa77fa6213f8a1c814b59278927138b7705878b132aab19f0017b"
+      },
+      "manifest_passed": true,
+      "accepted_in_isolation": true,
+      "manifest_sha256": "ad81f38337580fa759b1afb4aeb89b90c24b5259e32d207968220097fe87e7cb",
+      "records": 37822,
+      "sealed_bytes": 2218118052,
+      "XML": {
+        "tests": 238330,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "failed_commands": [],
+      "actual_case_nodes": 238330,
+      "source_identity": {
+        "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+        "source_files": 2644,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "ae8c75d484a25774b438d7f0474b8c98b67a13d913bb1b6c7ed78ae79bcd369f"
+      }
+    },
+    "debug": {
+      "review": {
+        "path": "build/join-util-views-qualification-v1/42238215124/debug-raw-review.json",
+        "sha256": "c51636ecdaac6ea823224f2d32650987797bfb8f7246407f1b47c9e42c467a1e"
+      },
+      "seal_once": {
+        "path": "build/join-util-views-qualification-v1/42238215124/debug-seal-once.json",
+        "sha256": "df2c0822f98a3a98b54f4ae1db9c473c160aff5ca32a02268ff2bd67845694d7"
+      },
+      "manifest_passed": true,
+      "accepted_in_isolation": true,
+      "manifest_sha256": "48d26b4847c7d4be4bc9d4f5a19f5f1889a2c3f1128aa8a2553b79b03128d7da",
+      "records": 37735,
+      "sealed_bytes": 3343717426,
+      "XML": {
+        "tests": 238330,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "failed_commands": [],
+      "actual_case_nodes": 238330,
+      "source_identity": {
+        "revision": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+        "source_files": 2644,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "4de2d72481d14564018214b655fd95bcd72376b37000aef4060934a1a9c94803"
+      }
+    }
+  },
+  "stagers": {
+    "minimum": {
+      "review": {
+        "path": "build/join-util-views-qualification-v1/42238215124/minimum-stager-review.json",
+        "sha256": "5c4eeb3438a29f1536b3abe524d2b172cb835baba3fbf2afcae37afbd2ce9732"
+      },
+      "stage_seal": {
+        "path": "build/join-util-views-qualification-v1/42238215124/minimum-stage-seal-once.json",
+        "sha256": "76a24eba152230b1c31984f2eb1ff829af2d54feb8671f6ca77b5fc91100365b"
+      },
+      "files": 2729,
+      "bytes": 880412356,
+      "qualification_manifest_sha256": "790d5e2328a6b078d61a0da7392eb7c9430ad09653f78a2e9cea4ac3cddd6a64",
+      "product_json_sha256": "5e90b742f33d56e4f26ec5c207fe3f466492e5890f2247425fc70839c2b64d12",
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE271_ADMISSION"
+    },
+    "modern": {
+      "review": {
+        "path": "build/join-util-views-qualification-v1/42238215124/modern-stager-review.json",
+        "sha256": "b4580224636c403c70b9225906ee3d3c0355673073c40b47dc9547e392142f06"
+      },
+      "stage_seal": {
+        "path": "build/join-util-views-qualification-v1/42238215124/modern-stage-seal-once.json",
+        "sha256": "2eb278bb050f7d6e72ec0b931db43c5b88bf1a1179cc3af2e4c26dab28a89c6a"
+      },
+      "files": 2729,
+      "bytes": 877435665,
+      "qualification_manifest_sha256": "ad81f38337580fa759b1afb4aeb89b90c24b5259e32d207968220097fe87e7cb",
+      "product_json_sha256": "71fd41877eb323262fbe82f778ae55ae629996c4134193b28f29951c25d0db25",
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE271_ADMISSION"
+    }
+  },
+  "all_scoped_XML_totals": {
+    "tests": 952116,
+    "failures": 100,
+    "errors": 0,
+    "skipped": 0
+  },
+  "sourceguard_XML": {
+    "path": "build/join-util-views-qualification-v1/42238215124/outer-source-XML-intake-v1.json",
+    "sha256": "f427ea1041c981e51ec252c76e1bcc1fa767d87fec107c09f125fdfe4307777f"
+  },
+  "Windows_failure": {
+    "groups": [
+      "normal-public-post203",
+      "scalar-public-post203"
+    ],
+    "failed_nodes": 100,
+    "unique_cases": 50,
+    "unique_tracebacks": 1,
+    "source": "tests/test_join_segmentations_public.py:72",
+    "library": "ucrtbase.dll",
+    "error": "AttributeError: function 'feraiseexcept' not found",
+    "stage": "WindowsFENVfunctionbinding before try/observe,50savedcases eachmode; no numericalmismatch established",
+    "full_nodes_trace": {
+      "path": "build/join-util-views-qualification-v1/42238215124/windows-fast-intake-v1/diagnostic-v1.json",
+      "sha256": "f5bfe46f5e6e02040ed72cd4df18e6ca77384f4d8d899c48330e6170989a5f3f"
+    }
+  },
+  "new_execution": "stdlib/source/saved artifact reads only; sixnetworkartifactdownloads authorizedonce, no tests/science/helper/original/native/build/timing/dispatch",
+  "reader_scope": {
+    "path": "build/join-util-views-qualification-v1/42238215124/reader-scope-v1.json",
+    "sha256": "79c0ba4171b5ebdbdc30f712d33b4ca6fb7190eccaecf03ec5ad68f120f7bedf"
+  },
+  "unmet": [
+    "Root assign narrow demonstratedWindowsJOINFENVtest correction with strict caller/FP/state requirements",
+    "Independent affected-source admission and COMPLETE sourcebarriers on bothsupported versions before exactsource4profile successor",
+    "Independent successful exactsourcefourprofile release and actualconsumer bindings/performance/main delivery; Linuxgreen alone cannot supersede failedcampaign"
+  ],
+  "waste_reuse": "Reused reviewedcurrent271readers/frozenb557qualifier, priorbytepolicy/source/numerical/SDKscope by dependency. Windows first smallmanifest/XML diagnosis provided before broadLinuxaudit. Eacharchive streamed/APIhashedonce; qualificationandstage records eachonepass in distinctartifactdomains; noqualificationseal/ZIP/core retry. An initialuniqueHEADlocator metadataassertion matchedthreeprivateWTs and stopped beforedownload; selectedactualcleanfrozencandidate explicitly. Full costunknown; perartifact seconds retained.",
+  "next_gate": {
+    "owner": "root",
+    "trigger": "Use exactWindowssetupfinding for source correction assignment; preservefailedb557campaign and allsixarchives; independent fixedsource gates and exactsuccessor required. No dependentpublication/dispatch authorized here."
+  }
+}

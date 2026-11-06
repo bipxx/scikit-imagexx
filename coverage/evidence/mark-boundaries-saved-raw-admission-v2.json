@@ -1,0 +1,154 @@
+{
+  "schema": "mark-boundaries-saved-raw-admission-v2",
+  "status": "PASS_SCOPED_125_ORIGINAL_CASES_EACH_PROFILE_FRESH_FIXED_CODEC_WITNESS",
+  "passed": true,
+  "api": "segmentation.mark_boundaries",
+  "predecessor": {
+    "path": "build/mark-boundaries-raw-admission-v1/admission-v1.json",
+    "sha256": "f6e60c6089bc7f195fddb026c11612fd4f85250565bcc0bcf473f697ccad99b1",
+    "complete_rows": 249,
+    "failed_history_unchanged": true
+  },
+  "fresh_witness": {
+    "source": "288244ca6e4b31685285d543b1ee49831ba566fe",
+    "controller_sha256": "e1aea5821364a88934af406f60730c6b93e0fe8ef9abb1e4318ce8a4d7f56d34",
+    "binding_sha256": "0eaa346fee27183ca2d353fbc880a2159ff8bc6b58a319a28cf5113a4b8d3f1c",
+    "case_id": "mark_boundaries/background-none",
+    "new_public_calls": 1,
+    "expected_original_error": {
+      "module": "numpy.core._exceptions",
+      "type": "UFuncTypeError",
+      "qualname": "_UFuncOutputCastingError",
+      "message": "Cannot cast ufunc 'bitwise_and' output from dtype('int64') to dtype('bool') with casting rule 'same_kind'",
+      "args": {
+        "container": "tuple",
+        "items": [
+          {
+            "kind": "numpy.ufunc",
+            "object_index": 0,
+            "type": {
+              "module": "numpy",
+              "name": "ufunc",
+              "qualname": "ufunc"
+            },
+            "name": "bitwise_and",
+            "numpy_namespace_identity": true,
+            "nin": 2,
+            "nout": 1,
+            "nargs": 3,
+            "signature": null,
+            "identity": -1
+          },
+          "same_kind",
+          {
+            "kind": "numpy.dtype",
+            "object_index": 1,
+            "type": {
+              "module": "numpy",
+              "name": "dtype[int64]",
+              "qualname": "dtype[int64]"
+            },
+            "str": "<i8",
+            "name": "int64",
+            "descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<i8"
+                  ]
+                }
+              ]
+            },
+            "byteorder": "=",
+            "kind_code": "i",
+            "char": "l",
+            "num": 7,
+            "itemsize": 8,
+            "alignment": 8,
+            "hasobject": false
+          },
+          {
+            "kind": "numpy.dtype",
+            "object_index": 2,
+            "type": {
+              "module": "numpy",
+              "name": "dtype[bool_]",
+              "qualname": "dtype[bool_]"
+            },
+            "str": "|b1",
+            "name": "bool",
+            "descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "|b1"
+                  ]
+                }
+              ]
+            },
+            "byteorder": "|",
+            "kind_code": "b",
+            "char": "?",
+            "num": 0,
+            "itemsize": 1,
+            "alignment": 1,
+            "hasobject": false
+          },
+          2
+        ]
+      }
+    },
+    "recording_input_changed": "Old39bb observer errorargs encoder failed; new288 typeddescriptor observer records source constructor args. Different reviewed one-call authority, oldgrants not reused."
+  },
+  "raw_files": {
+    "build/mark-boundaries-codec-repair-witness-v1/capture-v1/minimum/observations.json": {
+      "sha256": "c9a220cf6b0cfe47196bb98e11fe6cf5a48dc943feb241660d3b53ea5e955742",
+      "bytes": 22370
+    },
+    "build/mark-boundaries-codec-repair-witness-v1/capture-v1/minimum/journal.jsonl": {
+      "sha256": "807568aca640a5ba3de1107d9c74bd4903d73ae9551df495ca4c439f914d3205",
+      "bytes": 11312
+    },
+    "build/mark-boundaries-codec-repair-witness-v1/capture-v1/minimum/terminal.json": {
+      "sha256": "6034643045d30c796fec8a97e13517f0d6c93edd729435d1966b0af3627492d7",
+      "bytes": 8243
+    },
+    "build/mark-boundaries-codec-repair-witness-v1/capture-v1/minimum/precall-freeze.json": {
+      "sha256": "6fa7cc80458a65253a275c84391de0fae2a9f29a4c0eeacff9bc1242fbd6d600",
+      "bytes": 10817
+    }
+  },
+  "profile_complete_rows": {
+    "minimum": 125,
+    "modern": 125
+  },
+  "total_complete_rows": 250,
+  "total_consumed_calls": 251,
+  "historical_failed_call_rewritten": false,
+  "old_missing_args_reconstructed": false,
+  "original_cases_to_compare": 250,
+  "new_array_payloads_decoded": 16,
+  "assembly": "Load predecessor104initialminimumcompleted+20remainingminimum, addfreshsinglefailedID witness, orderby frozen125IDs; modern125unchanged. Never use inertprefixmetadata as originals or duplicate IDs.",
+  "scope": "Original-reference observations only. Native/public/SDK/hot-swap/FP/SIMD/workers/platform/performance/genuine release gates remain required; no fullAPI orspeed claim.",
+  "execution": {
+    "original_calls_during_admission": 0,
+    "scientific_imports": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0
+  },
+  "waste_review": "Permanentexclusion was avoidable after concrete recordingfix. One newreviewed affected observation closescasewithout replay249successes. Oldfailedcampaign/raw/witnessgrant immutable; predecessor4185payload audit reused, onlynew16payloads checked. NextnativeMark includes bothprofile125cases; sourceFPtiny remainsactual targetgap until fixed.",
+  "metadata_successor": {
+    "predecessor_path": "build/mark-boundaries-raw-admission-v2/admission-v2.json",
+    "predecessor_sha256": "1d4c88c5f2e7268988975164623996f24ac39d465cf8a70db6794a6b69c35c77",
+    "delta": "Correct explanatory payload count9 to actual16; numeric counters/rawfiles/source/evidence unchanged, no replay."
+  }
+}
