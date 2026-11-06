@@ -1,0 +1,10 @@
+{
+  "status": "PASS_IMMUTABLE_HANDOFF_RECONCILED_TO_DIRECT_REVIEW",
+  "source": "5d74130e2e7e4500cc47d122078e32f19fe62d0d",
+  "handoff_sha256": "c222d7a4193fbfaaf76af2c21745966727a5850c6162b5a8018af25d8b25f077",
+  "small_proofs": 72,
+  "bytes": 406239,
+  "unchanged_review": "build/draw-multiblock-lbp-private-integration-independent-review-v1/review-v1.json",
+  "scope": "Private source/ABI intake only; install-rule qualification failure retained. No genuine/core/SDKruntime/publicperformance credit.",
+  "next": "Normal-enabled MARK/LBP successor source wiring froma6bae9; remove temporary private option, preserve frozen source/native/parity evidence."
+}

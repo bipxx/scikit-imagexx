@@ -1,0 +1,25 @@
+{
+  "status": "PASS_SCOPED_PRIVATE_SOURCE_ABI_INTAKE_UNREADY_GENUINE",
+  "source": "5d74130e2e7e4500cc47d122078e32f19fe62d0d",
+  "base": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+  "source_files": 36,
+  "proofs": {
+    "build\\draw-multiblock-lbp-integration-v1\\windows311-pure-v2\\terminal.json": "9bc5b9d714cde1d146e0836876b10b4d2be7a0a654a55ffe0ac6852be9fe3f7c",
+    "build\\draw-multiblock-lbp-integration-v1\\windows313-pure-v2\\terminal.json": "146bbab0b9acf94d0b1d791fbccf895f8739b2173bec3a7b026b18b43f6ace28",
+    "build\\draw-multiblock-lbp-integration-v1\\gnu-abi-v3\\commands.json": "f5a28a3cbc486f81524bda0c5ba1e8d2aad74b48453a265aa5fe5f7e4a3862d5",
+    "build\\draw-multiblock-lbp-integration-v1\\gnu-abi-v3\\terminal.json": "e72f1ab9c460e2914c171da0e4e662bfd446512a22f3b9888978352478c69d11",
+    "build\\draw-multiblock-lbp-integration-v1\\msvc-abi-v3\\terminal.json": "0968a6c28828272de3e0611f591c076959d896519bbc95637a673f25519c621c",
+    "build\\draw-multiblock-lbp-integration-v1\\source-derived-scope-v2.json": "cb0e81b9fff71bef2213b4f94ee1533e27d40986a9367d6cb28af891048f12fb",
+    "build\\draw-multiblock-lbp-integration-v1\\precommit-v2.json": "f911992bc3fc5c17852313b9a2ce80adf33f81d81cefa6cbfce209d8945f9f19"
+  },
+  "review": "Read actual four shared CMake/config/binder/SDK-client diffs; exact source inverse authenticates unchanged baseline remainder. Family22 bytes match admitted0e51. Passed15source checks per retained Python, fourGNU and threeMSVC compile-only TUs verified. No installed-core or SDK runtime proof inferred.",
+  "demonstrated_limit": "Existing qualifier rejects conditional private install rules. Counts-only projections are not admission. Preserve strict failure and private snapshot; do not extend another private-only qualifier model.",
+  "next_owner_trigger": "After immutable handoff root reconciliation, C normal-enabled MARK+LBP source wiring in NEW isolated successor froma6bae9, remove PRIVATE_LBP branches; source parser/layout/selectors and actual supported-platform dependencies before hosted work. No expansion/delay of current271 run.",
+  "requirements": [
+    "MARK saved full32 suite Linux-only; do not dispatch LinuxFENV suite on Windows or imply Windows parity",
+    "Genuine single-core/exported complete SDK/hot-swap checks still required",
+    "Optional globalworkers default1 and scalar/SIMD semantics preserved",
+    "One-thread original-public benchmarks, full domains and independent release/delivery open"
+  ],
+  "waste_review": "Read retained source/terminal/command evidence; no scientific replay, native build, installed-core link, downloads or large hashing. Temporary private plumbing exposed actual parser incompatibility; next task removes it instead of expanding it."
+}

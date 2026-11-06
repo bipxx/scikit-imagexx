@@ -1,0 +1,23 @@
+{
+  "status": "PASS_SOURCE_REUSE_ONLY_ACTUAL_PRODUCT_RUNTIME_BINDING_PENDING",
+  "producer_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "controller_source": "b36754dc9d5183edeabb867274a75d901d59b7e7",
+  "scopes": {
+    "benchmark": {
+      "files": 67,
+      "changed_intersection": []
+    },
+    "first_cohort": {
+      "files": 67,
+      "changed_intersection": []
+    }
+  },
+  "actual_producer_run": 42262940227,
+  "producer_status": "live, not accepted",
+  "budget": {
+    "originals": 0,
+    "timing": 0,
+    "science": 0
+  },
+  "next": "After successful producer and root genuine admission bind actualartifact/runtime/core/SDK/helper/root receipts; mandatory9firstcohorts and separate timing GO. Existing67smallpins reused; no replay for unchanged source."
+}

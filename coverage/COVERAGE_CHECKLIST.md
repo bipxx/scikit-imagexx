@@ -77,7 +77,8 @@ The same increment contains reviewed density and F-layout boundary optimizations
 ## Next source/reference work
 
 - [ ] `segmentation.mark_boundaries`: [Saved original admission](evidence/mark-boundaries-saved-raw-admission-v2.json) covers 125 cases per profile (250 complete observations, 251 consumed calls including the retained failed attempt). One separately authorized fixed-codec witness closed the structured-error gap; no successful original rows were replayed. [Independent native successor admission](evidence/mark-boundaries-fp-successor-admission-v1.json) passes on source 6d4373b5720b5ee959c1d313e14e3d8f754085e4 for 1,500 saved worker/mode comparisons (125 cases per profile, workers 1/4, normal/disabled/scalar), including strict tiny-color target FP. Small RHS palette assignment remains explicit NumPy provider work. Genuine installation, platform/domain closure, one-thread original-public performance and delivery remain open.
-- [ ] `feature.draw_multiblock_lbp`: [Saved original admission](evidence/draw-multiblock-lbp-saved-raw-admission-v1.json) covers 94 cases per profile. [Independent private-component review](evidence/draw-multiblock-lbp-native-independent-review-v2.json) covers source 0e51dbc1e2c4741e243a91652d8c0b9771c96363: 1,128 target comparisons across two profiles, three scalar/SIMD modes and workers 1/4 pass. Of these, 1,048 complete records match and 80 differ only in post-return JSON collector MXCSR diagnostics, retained explicitly. Target FP and exact caller restoration remain strict. [Root scoped component admission](evidence/draw-multiblock-lbp-native-root-admission-v2.json) passes. Shared genuine core/installed SDK, full domains/platforms, one-thread original-public performance and delivery remain open.
+- [ ] `feature.draw_multiblock_lbp`: [Saved original admission](evidence/draw-multiblock-lbp-saved-raw-admission-v1.json) covers 94 cases per profile. [Independent private-component review](evidence/draw-multiblock-lbp-native-independent-review-v2.json) covers source 0e51dbc1e2c4741e243a91652d8c0b9771c96363: 1,128 target comparisons across two profiles, three scalar/SIMD modes and workers 1/4 pass. Of these, 1,048 complete records match and 80 differ only in post-return JSON collector MXCSR diagnostics, retained explicitly. Target FP and exact caller restoration remain strict. [Root scoped component admission](evidence/draw-multiblock-lbp-native-root-admission-v2.json) passes. [Private integration source/ABI review](evidence/draw-multiblock-lbp-private-integration-admission-v1.json) and [immutable handoff reconciliation](evidence/draw-multiblock-lbp-private-handoff-reconciliation-v1.json) pass in their scoped checks; the qualifier rejects the temporary conditional install rule, so genuine qualification is not passed. Normal enabled MARK/LBP integration is now being authored in a separate successor. Shared genuine core/installed SDK, full domains/platforms, one-thread original-public performance and delivery remain open.
+- [ ] `transform.frt2` and `transform.ifrt2`: [Source/storage review](evidence/finite-radon-source-storage-admission-v1.json) passes on d2109de2 for 108 recipes, 54 per API. Integer-only native/SDK invariant checks are not original parity; no original calls yet. Controller/readiness and full dtype/protocol/platform/performance gates remain open.
 - [ ] `draw.polygon_perimeter` and `draw.rectangle_perimeter`: reuse retained clipping assessment; pinned Matplotlib/AGG reference/native dependency strategy is still required. Do not repeat the already-recorded dependency discovery.
 - [ ] Performance controller C1 successor: [post-stop source/authority checks and one post-batch verifier](evidence/join-util-views-controller-admission-v2.json) pass scoped independent review; bind only after actual genuine product admission. No measurement authority is inferred from pure tests.
 
@@ -1193,7 +1194,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: bit-to-neighbor orientation, center treatment and dtype/range. Cases to close: each individual bit and mixed block codes.
   - Easiest remaining route: Draw fixed nine-block LBP overlay through rectangle/alpha primitives.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
-  - Current private gate: [Saved original admission](evidence/draw-multiblock-lbp-saved-raw-admission-v1.json) covers 94 cases per profile. [Independent private-component review](evidence/draw-multiblock-lbp-native-independent-review-v2.json) covers source 0e51dbc1e2c4741e243a91652d8c0b9771c96363: 1,128 target comparisons across two profiles, three scalar/SIMD modes and workers 1/4 pass. Of these, 1,048 complete records match and 80 differ only in post-return JSON collector MXCSR diagnostics, retained explicitly. Target FP and exact caller restoration remain strict. [Root scoped component admission](evidence/draw-multiblock-lbp-native-root-admission-v2.json) passes. Shared genuine core/installed SDK, full domains/platforms, one-thread original-public performance and delivery remain open.
+  - Current private gate: [Saved original admission](evidence/draw-multiblock-lbp-saved-raw-admission-v1.json) covers 94 cases per profile. [Independent private-component review](evidence/draw-multiblock-lbp-native-independent-review-v2.json) covers source 0e51dbc1e2c4741e243a91652d8c0b9771c96363: 1,128 target comparisons across two profiles, three scalar/SIMD modes and workers 1/4 pass. Of these, 1,048 complete records match and 80 differ only in post-return JSON collector MXCSR diagnostics, retained explicitly. Target FP and exact caller restoration remain strict. [Root scoped component admission](evidence/draw-multiblock-lbp-native-root-admission-v2.json) passes. [Private integration source/ABI review](evidence/draw-multiblock-lbp-private-integration-admission-v1.json) and [immutable handoff reconciliation](evidence/draw-multiblock-lbp-private-handoff-reconciliation-v1.json) pass in their scoped checks; the qualifier rejects the temporary conditional install rule, so genuine qualification is not passed. Normal enabled MARK/LBP integration is now being authored in a separate successor. Shared genuine core/installed SDK, full domains/platforms, one-thread original-public performance and delivery remain open.
 
 
 <a id="api-feature-fisher-vector"></a>
@@ -3675,11 +3676,12 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-transform-frt2"></a>
 - [ ] **`transform.frt2`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `upstream-only`; gate status `C~ N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
   - Signature: `(a)`.
   - Required focus: supported size, modular line indexing and unsigned overflow. Cases to close: tiny exact prime grids and integer limits.
   - Easiest remaining route: Implement finite Radon integer line sums on prime-sized square grid.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current private gate: [Source/storage admission](evidence/finite-radon-source-storage-admission-v1.json) at d2109de2a0b7f07e27f0a892585cd7414e36bfbf: 54 recipes for this API, bounded factory/protocol scope only. Integer native/SDK invariants are authored and not independently admitted original parity. Actual original observations: 0. Guarded capture controller/entry readiness, floating/complex/protocol/platform domains, genuine hot swap/complete installed SDK and one-thread performance remain open.
 
 <a id="api-transform-hough-circle"></a>
 - [ ] **`transform.hough_circle`** — full contract closed.
@@ -3723,11 +3725,12 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-transform-ifrt2"></a>
 - [ ] **`transform.ifrt2`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `upstream-only`; gate status `C~ N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
   - Signature: `(a)`.
   - Required focus: prime-size assumptions, division and signed/unsigned dtype. Cases to close: exact forward/inverse integer fixtures.
   - Easiest remaining route: Invert finite Radon modular line sums with exact normalization.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current private gate: [Source/storage admission](evidence/finite-radon-source-storage-admission-v1.json) at d2109de2a0b7f07e27f0a892585cd7414e36bfbf: 54 recipes for this API, bounded factory/protocol scope only. Integer native/SDK invariants are authored and not independently admitted original parity. Actual original observations: 0. Guarded capture controller/entry readiness, floating/complex/protocol/platform domains, genuine hot swap/complete installed SDK and one-thread performance remain open.
 
 <a id="api-transform-integral-image"></a>
 - [ ] **`transform.integral_image`** — full contract closed.
