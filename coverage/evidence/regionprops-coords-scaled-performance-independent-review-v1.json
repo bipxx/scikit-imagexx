@@ -1,0 +1,189 @@
+{
+  "schema": "coords-scaled-fixed-comparison-independent-performance-review-v1",
+  "verdict": "PASS_KEEP_SIX_FIXED_COHORTS_ONLY",
+  "controller_source": "cf1222b2701968fff175e6098fb58bef08a33a86",
+  "candidate_source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+  "baseline_source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+  "run": 42074843238,
+  "retained_outer_identity_reused": {
+    "artifact": 13437762797,
+    "bytes": 171052651,
+    "sha256": "5c4c8aabd5be5faabcda130da08c0d2595e2c94faf8667eda57e99f0ae9b3115"
+  },
+  "counts": {
+    "cases": 6,
+    "passes": 4,
+    "accepted_samples": 336,
+    "warmup_groups": 48,
+    "journal_events": 1096,
+    "underlength_retries_retained": 1,
+    "pair_checks": 12,
+    "inequalities": 32
+  },
+  "all32inequalities_pass": true,
+  "all12pairchecks_pass": true,
+  "minimum_warmup_ns": 251929264,
+  "accepted_sample_minimum_ms": 100,
+  "candidate_original_wins": 12,
+  "candidate_original_losses": [],
+  "candidate_prior_CPP_regressions": [],
+  "candidate_original_speedup_range": [
+    1.0892472931899861,
+    1.9687953275114924
+  ],
+  "geometric_mean_prior_CPP_over_candidate_CPP": 1.4303684517344781,
+  "geometric_mean_candidate_original_over_CPP": 1.4183780668904722,
+  "baseline_original_losses_in_this_experiment": [
+    {
+      "pass_index": 1,
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "original_ms": 0.009908287002834809,
+      "cpp_ms": 0.010284548630444545,
+      "original_over_cpp": 0.9634148623211408
+    },
+    {
+      "pass_index": 1,
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "original_ms": 0.008023457479436778,
+      "cpp_ms": 0.008053243235605793,
+      "original_over_cpp": 0.996301396183177
+    },
+    {
+      "pass_index": 1,
+      "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+      "original_ms": 0.0978088714893617,
+      "cpp_ms": 0.09797753401360544,
+      "original_over_cpp": 0.9982785592029666
+    },
+    {
+      "pass_index": 1,
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "original_ms": 0.08723144275966642,
+      "cpp_ms": 0.08739844030418252,
+      "original_over_cpp": 0.9980892388475712
+    },
+    {
+      "pass_index": 1,
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "original_ms": 0.007955920233463035,
+      "cpp_ms": 0.00795860873464882,
+      "original_over_cpp": 0.9996621895515381
+    },
+    {
+      "pass_index": 4,
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "original_ms": 0.009912520786613766,
+      "cpp_ms": 0.010302795532029427,
+      "original_over_cpp": 0.9621195291896872
+    },
+    {
+      "pass_index": 4,
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "original_ms": 0.008020364855377703,
+      "cpp_ms": 0.008058892349688528,
+      "original_over_cpp": 0.995219256860738
+    },
+    {
+      "pass_index": 4,
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "original_ms": 0.08671909132075471,
+      "cpp_ms": 0.08690208754716981,
+      "original_over_cpp": 0.9978942251955021
+    },
+    {
+      "pass_index": 4,
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "original_ms": 0.007926832852233678,
+      "cpp_ms": 0.007933329586982004,
+      "original_over_cpp": 0.9991810834685367
+    }
+  ],
+  "identity": {
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2_available": true,
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "reference": "0.26.0",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "original_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe"
+  },
+  "preflight": {
+    "roles": 2,
+    "firsttinycase_only": true,
+    "real_measure_calls_intercepted_beforebody": 2,
+    "sampler_body_batches": 0,
+    "all_six_prevalidated": false,
+    "source_derived_authorized_top_constructors": 4,
+    "source_derived_authorized_property_reads": 8,
+    "scope": "Actualmarker+successfulpinneddrivercontrolflow evidence; nosyntheticmarker orall6preflightclaim"
+  },
+  "validation": "Exactword/type/Fowningstorage snapshots same acrossall4passes; actualcandidate4builtinreturns\u00d72readsf64 and3returns\u00d72integerpartial,2budget1snapshots,phaserows/sourcecodeanti-forwarding/input/FPchecks. AliasingandFPstate areassertedbyfrozenlivechecker, notindependentlyretrospectivelymeasurablefrombytesalone.",
+  "publication_draft": {
+    "status": "PASS_BOUNDED_NUMBERS_AND_SCOPE",
+    "root": "benchmarks/regionprops-coords-scaled-same-host-v1",
+    "samples336_and4journals": "exactbyte/dataidentity to independentlyreconstructedraw",
+    "fourboundedreports": "everypublishedmetadata/exit/resultkey equalsfullraw;fullsemanticpayload omission disclosed",
+    "README": "sixdecimalmedians match, currentpendingadmission sentence mustbe finalizedwiththisreceiptlinkbyroot; no extra scientificrerun",
+    "version_at_review_sha256": {
+      "README.md": "bd8290b9147bf9637f78815b560b5de0c1adbff970ed44e0ed99a57fe549d088",
+      "bounded-reports-v1.json": "2cba569222886900382804e4020cf8319598aec9401171809f57dcf648964437",
+      "timing-samples-v1.json": "7c3f1bc8d8189c046a7c2b62c800724bc421cc64605fe486d3732db4792d76b3",
+      "verification-v1.json": "e4c92efe7c8c8e8441624b6f8df0667f5d2a6cebf6f34a1b44a0dc88ba6116ae",
+      "activation-v1.json": "35a0a719ca904a13b044fa00aed135a7238777357f3a8d808212bd6f615e08ce"
+    }
+  },
+  "limits": [
+    "Sixfixedone-workerallocation-inclusivepublic-propertycohorts onAMD EPYC9V74/4logicalCPUs/AVX2, notwholelibraryspeed",
+    "Fivef64cohortsowned4phasepath; integer-spacing multiplication/additionexplicitNumPyproviders withnativeprefix, nofullC++claim",
+    "Small sparseconstructor-plus-readwin doesnotprove pureconstructorrootcausefixed",
+    "No universalSIMD/scaling orfourprofile/wholeSDKreleaseacceptance",
+    "Previousbaselineandv3lossesremainrecorded; no noise-retiming/waivedgates"
+  ],
+  "closeout": {
+    "result": "independentsecond-readerPASS/KEEP fixed6cohortexperiment;32actualinequalities12paircheckspass;boundedpublicationdraftnumbers/scope faithful",
+    "evidence": "Rawjournals1096events/336samples/48warmgroups and4fullreports reconstructedfrom elapsed_ns/loops, notrootverification orauthoracceptance function. Oneunderlengthretry retained. Everymedian/rawsample/loop/order/warmup/report-return tuple reconciled. Twoactualtiny-rolemeasureCALLstopmarkers+setup-before-timing andverify-after order verified. Frozencontracts/source/manifest/core/runtime/hardwareidentities crossbound.",
+    "authorship": "Reviewer was watcher and earliernative/SDK contributor; didnotauthor controller/benchmark orrootrawauditor. Thisadmitsindependentlyderivedmetrics, notselfacceptance ofnativecode; priorindependent source/input reviews reused.",
+    "waste_and_reuse": "No timing/download/environment/build/test/original replay or nestedZIP/core/wheel rehash. Existing root extraction hashes authenticate smallrawmembers only; rootverification read onlyAFTERindependent derivation for publicationcopy consistency. Minorfile-pathguess tools-vs-benchmarks corrected viaGitfilenames; noisylist-displayprobe switchedtoboundedmetadata; no measurementcost.",
+    "observed_cost": "metadata arithmetic only, nottimed separately; no rerun to measurewaste",
+    "next_plan_correction": {
+      "owner": "rootpublication/admission/releaseowner",
+      "trigger": "acceptthisindependentperformanceverdict; exact4acfour-profile campaignalreadydispatchedbyroot",
+      "action": "publishall336samples/journals/12pairchecks andsixcase/providerlimits withindependentreceiptlink; preservebaseline9original-lossmediansinthisexperiment andearlierv3DISCARD. Admit/mergeonlyafterseparateexact-source4profile/SDK/stagerclosure; do notrepeat benchmark forfavorablevariation."
+    },
+    "leases": "all source/raw/publication readleasesreleased; no writer/executionactive; sharedtrackedfilesuntouched"
+  },
+  "evidence": {
+    "reconstruct.py": {
+      "path": "build/regionprops-coords-scaled-comparison-independent-review-v1/reconstruct.py",
+      "bytes": 13710,
+      "sha256": "34eda892888622d36bad7ef1bf85c1bdcb7e854ef46a42df5e114883853d4e42"
+    },
+    "reconstruction.json": {
+      "path": "build/regionprops-coords-scaled-comparison-independent-review-v1/reconstruction.json",
+      "bytes": 39589,
+      "sha256": "308694ceaa3ed278a15d07bc4594f4b5ef5802e6e6e98e62e36e19c93d72f71a"
+    },
+    "accepted-samples.json": {
+      "path": "build/regionprops-coords-scaled-comparison-independent-review-v1/accepted-samples.json",
+      "bytes": 78115,
+      "sha256": "7ec6d3c07d301920ed7aafade2b82d3bb34bc4bf3631d8ccc0bbc5e733fdae17"
+    },
+    "warmup-groups.json": {
+      "path": "build/regionprops-coords-scaled-comparison-independent-review-v1/warmup-groups.json",
+      "bytes": 6597,
+      "sha256": "b70074089393ad4355d864b7b42c58cc8a35c1b44e9b67bb1876eb770f07d1a4"
+    },
+    "check-publication.py": {
+      "path": "build/regionprops-coords-scaled-comparison-independent-review-v1/check-publication.py",
+      "bytes": 4882,
+      "sha256": "54fab5c85bbf78e48b9ac79d06514ac6efe6fb2101dbb4f8e4452ddc872da206"
+    },
+    "publication-check.json": {
+      "path": "build/regionprops-coords-scaled-comparison-independent-review-v1/publication-check.json",
+      "bytes": 5820,
+      "sha256": "96c41b71a03278ef1c625e2f46be16e56dd09a4518812b5202dd76b237169d27"
+    }
+  }
+}

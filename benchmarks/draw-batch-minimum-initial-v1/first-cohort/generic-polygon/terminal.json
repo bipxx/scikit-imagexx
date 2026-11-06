@@ -1,0 +1,18 @@
+{
+  "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+  "source": "db4f59b8aa69840591266e607e253a8611676ced",
+  "route": "generic-polygon",
+  "api": "draw.polygon",
+  "counts": {
+    "original": 1,
+    "native": 1
+  },
+  "native_result_accepted": [
+    true
+  ],
+  "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/benchmarks/run.py",
+  "sampler_body_calls": 0,
+  "timed_batches": 0,
+  "public_driver_checks_completed": true,
+  "outer_state_restored": true
+}

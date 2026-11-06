@@ -1,0 +1,308 @@
+{
+  "schema": "coords-scaled-fixed-comparison-admission-v1",
+  "decision": "KEEP",
+  "root_accepted": true,
+  "admitted_at_utc": "2026-11-05T20:04:52.396778+00:00",
+  "source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+  "baseline_source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+  "controller_source": "cf1222b2701968fff175e6098fb58bef08a33a86",
+  "run": 42074843238,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42074843238",
+  "worker_count": 1,
+  "cohorts": 6,
+  "passes": 4,
+  "samples": 336,
+  "journal_events": 1096,
+  "warmup_groups": 48,
+  "paired_checks": 12,
+  "inequalities": 32,
+  "all_inequalities_pass": true,
+  "candidate_wins_vs_original": [
+    6,
+    6
+  ],
+  "candidate_vs_original_speedup_range": [
+    1.0892472931899861,
+    1.9687953275114924
+  ],
+  "failed_checks": [],
+  "checks": [
+    {
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5970051837806383,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.6062923790175704,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.4967504713906982,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5084567569744,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8085156265931468,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.7842833293161304,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8085156265931468,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.7856357547559755,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8456732806991373,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8295316136642896,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8456732806991373,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8311196848711603,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.9134275745501284,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.9147024108664946,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "baseline_pass": 1,
+      "candidate_pass": 2,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.6220401228286238,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.6362980176114984,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-c-off",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5932962661286709,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5976383790368759,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/tiny-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.5001413355214157,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.5054965556621216,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium2d-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8025455277611732,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8069519964714592,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8025455277611732,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8043476463289172,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/medium3d-f-warm",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.8501318101575366,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.8386032231284026,
+          "limit": 1.05
+        },
+        {
+          "metric": "target_direct",
+          "value": 0.8501318101575366,
+          "limit": 0.9
+        },
+        {
+          "metric": "target_vs_original",
+          "value": 0.8403728591215246,
+          "limit": 0.9
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/sparse2d-ctor-read",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.9183739079754585,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.9221614030866395,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "regionprops-coords-scaled/integer3d-partial",
+      "baseline_pass": 4,
+      "candidate_pass": 3,
+      "limits": [
+        {
+          "metric": "direct",
+          "value": 0.6364805643511479,
+          "limit": 1.05
+        },
+        {
+          "metric": "original_normalized",
+          "value": 0.634088089237304,
+          "limit": 1.05
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "retained_artifact": {
+    "artifact": 13437762797,
+    "bytes": 171052651,
+    "sha256": "5c4c8aabd5be5faabcda130da08c0d2595e2c94faf8667eda57e99f0ae9b3115"
+  },
+  "independent_review": {
+    "path": "coverage/evidence/regionprops-coords-scaled-performance-independent-review-v1.json",
+    "sha256": "28d577496c868fc7e4137611c29fdc97bd253d335f6e2901fd0bfb057ecaa3ac"
+  },
+  "raw_publication": "benchmarks/regionprops-coords-scaled-same-host-v1",
+  "scope": "Six fixed one-worker public coords_scaled cohorts. Five f64 cohorts own four native phases; integer-spacing arithmetic suffix remains NumPy provider. No whole-class/library/native-ownership completion, pure-constructor regression fix, all-SIMD/scaling or four-profile release claim.",
+  "pending_release": {
+    "source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+    "run": 42099127401,
+    "status": "in_progress"
+  },
+  "closeout": {
+    "result": "Independently admitted fixed KEEP; no prior-C++ regressions in twelve direct comparisons.",
+    "waste_and_reuse": "One retained consumer archive; unchanged genuine products/runtime/source identities reused. No numerical rerun, new download or nested prepared archive hash. Publication bounded to samples/journals/decision metadata.",
+    "next_gate": "Observe exact4ac four-profile42099127401; independently admit actual seals and deliver reviewed source."
+  }
+}

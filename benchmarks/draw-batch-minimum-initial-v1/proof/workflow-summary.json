@@ -1,0 +1,59 @@
+{
+  "families": {
+    "draw_polygon": {
+      "raw_samples": 168,
+      "wins": [
+        "draw.polygon/medium-rectangle",
+        "draw.polygon/large-concave",
+        "draw.polygon/strided-int32",
+        "draw.polygon/negative-unclipped",
+        "draw.polygon2mask/medium-rectangle-F",
+        "draw.polygon2mask/large-concave",
+        "draw.polygon2mask/strided-f32",
+        "draw.polygon2mask/many-vertices"
+      ],
+      "losses": [
+        "draw.polygon/tiny-triangle",
+        "draw.polygon/empty-clip",
+        "draw.polygon2mask/tiny-triangle",
+        "draw.polygon2mask/outside"
+      ],
+      "ties": []
+    },
+    "bezier_curve": {
+      "raw_samples": 168,
+      "wins": [
+        "bezier/point",
+        "bezier/tiny",
+        "bezier/straight-512",
+        "bezier/half-medium",
+        "bezier/heavy-medium",
+        "bezier/flat-quarter",
+        "bezier/column-extremum-unit",
+        "bezier/column-extremum-weighted",
+        "bezier/row-extremum-weighted",
+        "bezier/both-extrema-weighted",
+        "bezier/large-clipped",
+        "bezier/fully-clipped"
+      ],
+      "losses": [],
+      "ties": []
+    },
+    "draw_set_color": {
+      "raw_samples": 112,
+      "wins": [
+        "tiny-gray",
+        "rgb-dense",
+        "duplicates",
+        "clipped",
+        "fortran-large",
+        "color-alias",
+        "f32-rgb-dense",
+        "f32-duplicates"
+      ],
+      "losses": [],
+      "ties": []
+    }
+  },
+  "scope": "Initial current/public-original comparison only; all losses retained, no previous-C++ gain or whole-product qualification claim."
+}

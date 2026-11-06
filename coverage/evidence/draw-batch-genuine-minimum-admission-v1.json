@@ -1,0 +1,49 @@
+{
+  "status": "ROOT_ADMITTED_GENUINE_MINIMUM_AND_BOUNDED_INSTALLED_DRAWING_SDK",
+  "source": "db4f59b8aa69840591266e607e253a8611676ced",
+  "run": 42127381279,
+  "artifact": {
+    "id": 13462575731,
+    "name": "ci-performance-minimum",
+    "bytes": 85690911,
+    "sha256": "272d2a20f170dd3c1f5753d3b0df518f4c89e3c12c1df5673f6c07ee7e7bac0b"
+  },
+  "production_source_sha256": "ab513b8efe337d621921813b0df5b77a90827be5985e76f92a60db9e11ec0ae9",
+  "production_source_files": 493,
+  "compiled_core_sha256": "bd585d258737e0f7f2cf46bc8bbde6ca1cb7dabde1ffcf4bc2a1a08130899cc5",
+  "product_members": 199,
+  "SDK_members": 94,
+  "wheels": 14,
+  "XML": {
+    "tests": 17629,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "all39standalone_timers_skipped": true,
+  "independent_input_admission": {
+    "path": "build\\draw-batch-minimum-preparation-v1\\independent-input-admission-v1.json",
+    "sha256": "29d34a8a02f6e633425d214c310be86f5af428e9047b64e7e02cca596eda864f"
+  },
+  "genuine_installed_drawing_SDK": {
+    "handoff": "build\\draw-batch-minimum-preparation-v1\\genuine-drawing-sdk-v1\\handoff-v1.json",
+    "sha256": "712e635f6374c59ae91ded072f22e64236a7217aa24cead49750e42e552acd3e",
+    "new_small_proofs_authenticated": 25,
+    "actual_find_package_relocated_genuine_archive": true,
+    "client_TUs": 3,
+    "focused_processes": 4,
+    "workers": [
+      1,
+      4
+    ],
+    "restored_default": 1,
+    "normal_and_runtime_disabled": true,
+    "whole62SDK_claim": false
+  },
+  "limits": [
+    "Minimum Release only, not four-profile qualification",
+    "Bounded declared native-partial API domains, not full477/class/provider closure",
+    "No new performance evidence yet; all losses must be retained"
+  ],
+  "next_gate": "Reviewed seven untimed CLI first cohorts then one canonical448sample public-original comparison on one isolated host; four-profile release and main production delivery remain required."
+}

@@ -1,0 +1,84 @@
+{
+  "schema": "draw-batch-qualification-failure-v1",
+  "run": 42135532859,
+  "source": "db4f59b8aa69840591266e607e253a8611676ced",
+  "status": "FAILED_ALL_FOUR_SOURCE_GUARDS_BEFORE_PRODUCT_PREPARATION",
+  "artifacts": [
+    {
+      "id": 13466040861,
+      "name": "public-qualification-minimum",
+      "run": 42135532859,
+      "revision": "db4f59b8aa69840591266e607e253a8611676ced",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v1\\retained-v1\\13466040861.zip",
+      "bytes": 33626,
+      "sha256": "a61dbe5ed04873d9158881d9bc41ee1b77eb71a58edba97b81f26d3af7b70b4c",
+      "seconds": 0.5786764998920262,
+      "actual_API_digest_exact": true,
+      "download_passes": 1,
+      "failed_source_nodes": [
+        "tests.test_public_qualification::test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources",
+        "tests.test_public_qualification::test_matrix_runtime_successor_never_relabels_old_math_or_widens_the_projection[None]",
+        "tests.test_public_qualification::test_composed_skylakex_metadata_guard_is_required_and_selected"
+      ],
+      "terminal_acceptance_seal_present": false
+    },
+    {
+      "id": 13465676243,
+      "name": "public-qualification-debug",
+      "run": 42135532859,
+      "revision": "db4f59b8aa69840591266e607e253a8611676ced",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v1\\retained-v1\\13465676243.zip",
+      "bytes": 33665,
+      "sha256": "840740fe5adb122a666803b14aea22619f8ddc1040bec383da3bd4c41692057b",
+      "seconds": 0.5648380999919027,
+      "actual_API_digest_exact": true,
+      "download_passes": 1,
+      "failed_source_nodes": [
+        "tests.test_public_qualification::test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources",
+        "tests.test_public_qualification::test_matrix_runtime_successor_never_relabels_old_math_or_widens_the_projection[None]",
+        "tests.test_public_qualification::test_composed_skylakex_metadata_guard_is_required_and_selected"
+      ],
+      "terminal_acceptance_seal_present": false
+    },
+    {
+      "id": 13465620951,
+      "name": "public-qualification-modern",
+      "run": 42135532859,
+      "revision": "db4f59b8aa69840591266e607e253a8611676ced",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v1\\retained-v1\\13465620951.zip",
+      "bytes": 33559,
+      "sha256": "6ca19b3663a5a9fe617017f73b002460603613555fda15e2afda2627ac2b1590",
+      "seconds": 0.8855916999746114,
+      "actual_API_digest_exact": true,
+      "download_passes": 1,
+      "failed_source_nodes": [
+        "tests.test_public_qualification::test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources",
+        "tests.test_public_qualification::test_matrix_runtime_successor_never_relabels_old_math_or_widens_the_projection[None]",
+        "tests.test_public_qualification::test_composed_skylakex_metadata_guard_is_required_and_selected"
+      ],
+      "terminal_acceptance_seal_present": false
+    },
+    {
+      "id": 13465162246,
+      "name": "public-qualification-windows",
+      "run": 42135532859,
+      "revision": "db4f59b8aa69840591266e607e253a8611676ced",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v1\\retained-v1\\13465162246.zip",
+      "bytes": 34622,
+      "sha256": "a4ea83e545f5ea3bffd63b413af4f45bfb72080e595e2685b2892880772a0407",
+      "seconds": 0.7633660999126732,
+      "actual_API_digest_exact": true,
+      "download_passes": 1,
+      "failed_source_nodes": [
+        "tests.test_public_qualification::test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources",
+        "tests.test_public_qualification::test_matrix_runtime_successor_never_relabels_old_math_or_widens_the_projection[None]",
+        "tests.test_public_qualification::test_composed_skylakex_metadata_guard_is_required_and_selected"
+      ],
+      "terminal_acceptance_seal_present": false
+    }
+  ],
+  "superseded_readiness": "coverage/evidence/draw-batch-source-readiness-v1.json",
+  "successor_source": "334e68e2e6717421501742365b6fe58328fc1019",
+  "successor_run": 42140207750,
+  "scope": "Failure preserved; no acceptance or numerical/performance invalidation. Successor actual qualification remains pending."
+}

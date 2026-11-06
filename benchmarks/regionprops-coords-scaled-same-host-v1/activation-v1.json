@@ -1,0 +1,73 @@
+{
+  "status": "ROOT_GO_ONE_CONDITIONAL_PREFLIGHT_AND_FIXED_COMPARISON",
+  "controller_source": "cf1222b2701968fff175e6098fb58bef08a33a86",
+  "candidate": {
+    "source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+    "run": "42065217414",
+    "artifact": 13434087475,
+    "bytes": 85625166,
+    "sha256": "90fc6ff0a6571aff4938d7003d5d9539dfdda7a6f832ba36585eb1b008bb1740"
+  },
+  "baseline": {
+    "source": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+    "run": "42002481826",
+    "artifact": 13403507497,
+    "bytes": 85519557,
+    "sha256": "e213203d7ebfe3353dcf2c6972c7b1b4c1b8d0ebb576052379ca713bf6c57e0e",
+    "core_sha256": "52be10566b69aed7755f93eba63523c303875695d9f579ebff5a16ac39bd0284"
+  },
+  "started_utc": "2026-11-05T17:27:43.299751+00:00",
+  "deadline_utc": "2026-11-05T17:57:43.299751+00:00",
+  "comparison_contract_sha256": "b1e7713a300f7f81c88aa5af44d2625789af38708dfc9325348cab9a40c83dbd",
+  "benchmark_contract_sha256": "28ae48a17be05e1be74774052f978789fcd6c617a473580302d9f8399e08815d",
+  "authorization": {
+    "scope": "First tiny case only for two role preflights, then fixed4pass comparison conditional on both preflights; prepared snapshots never modified",
+    "preflight": {
+      "roles": 2,
+      "original_public_constructors": 2,
+      "backend_public_constructors": 2,
+      "original_property_reads": 4,
+      "backend_property_reads": 4,
+      "explicit_image_primes": 0,
+      "sampler_call_intercepts": 2,
+      "sampler_body_calls": 0
+    },
+    "four_pass_validation_outside_sampler": {
+      "top_constructors_both_arms": 56,
+      "property_reads_both_arms": 96,
+      "explicit_image_primes": 32
+    },
+    "timed": {
+      "accepted_samples": 336,
+      "warmup_groups": 48,
+      "threads": 1,
+      "adaptive_operation_calls": "Bounded by fixed UTC deadline and existing sampler; raw loops/calibrations retained"
+    },
+    "input_admission_sha256": "ac12e9e733a8d36398f352de1a26fb46ba386c34eea292db9c41482699a6e24f",
+    "limitations": "Two preflights do not validate all six cases; remaining cases are checked before their own timing. No speed or whole-product release claim before results."
+  },
+  "genuine_input_admission_sha256": "ac12e9e733a8d36398f352de1a26fb46ba386c34eea292db9c41482699a6e24f",
+  "activation_review_sha256": "c9c1b3d079622195b3c494a5cf09d49dcfffb08d3066aa43d9b6de6bb437b4ed",
+  "argv": [
+    "gh",
+    "workflow",
+    "run",
+    "region-stain-same-host.yml",
+    "--repo",
+    "bipxx/scikit-imagexx",
+    "--ref",
+    "compare/coords-scaled-active-v1",
+    "-f",
+    "comparison_mode=coords-scaled",
+    "-f",
+    "candidate_source=4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+    "-f",
+    "candidate_run=42065217414",
+    "-f",
+    "candidate_artifact=13434087475",
+    "-f",
+    "deadline_utc=2026-11-05T17:57:43.299751+00:00"
+  ],
+  "automatic_retry": false,
+  "scope": "One bounded singleworker benchmark; all raw failures/loops/calibrations retained; no threshold relaxation or wholelibrary claim"
+}

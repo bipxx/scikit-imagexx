@@ -1,0 +1,11 @@
+{
+  "command": "execute",
+  "repository": "bipxx/scikit-imagexx",
+  "candidate_source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+  "candidate_run": "42065217414",
+  "candidate_artifact": 13434087475,
+  "snapshots": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshots",
+  "results": "/home/runner/work/scikit-imagexx/scikit-imagexx/results",
+  "deadline_utc": "2026-11-05T17:57:43.299751+00:00",
+  "contract": "controller/coverage/contracts/regionprops-coords-scaled-compare-v1.json"
+}

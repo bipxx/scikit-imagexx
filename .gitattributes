@@ -762,3 +762,11 @@ coverage/contracts/matrix-prescott-v1.json -text
 tests/fixtures/matrix_prescott_native.hpp -text
 coverage/contracts/draw-polygon-draw-batch-runtime-v1.json -text
 coverage/contracts/matrix-prescott-release-test-context-v1.json -text
+.github/workflows/draw-batch-initial.yml -text
+tools/draw_batch_first_cohort_probe.py -text
+coverage/contracts/draw-batch-first-cohort-v1.json -text
+coverage/contracts/draw-batch-measurement-v1.json -text
+coverage/evidence/draw-batch-genuine-minimum-admission-v1.json -text
+benchmarks/draw-batch-minimum-initial-v1/** -text
+coverage/evidence/draw-batch-source-readiness-v2.json -text
+coverage/evidence/draw-batch-qualification-failure-v1.json -text

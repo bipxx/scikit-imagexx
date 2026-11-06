@@ -1,0 +1,41 @@
+{
+  "status": "ACCEPTED_ORIGINAL_REFERENCE_PARTITION_ONLY",
+  "admitted_at_utc": "2026-11-05T21:21:49.090451+00:00",
+  "api": "draw.bezier_curve",
+  "reference_projection_source": "ea90f0dc841b1fd19676b87816f1fbbf2f219fb8",
+  "capture_source": "c09cd541b9254a8f6088455f9967c59211d316eb",
+  "paths": {
+    "tests/draw_bezier_contract.py": "bcb955dd057cd3c6dc2b2d72da166c80cf8aea0a953ef24014ab23d6ebbe59dc",
+    "tests/draw_bezier_observer.py": "fce2710d78f24f51e00f82b9fa7df085989db8cfa5a0c1c706088636019298db",
+    "tests/test_draw_bezier_reference.py": "cfecb4150213896aff044895f6ee6613953cc0af1b2d030af82ac658dae17054",
+    "coverage/contracts/draw-bezier-v1.json": "1683419948fa1aa41359489d507ccf4ea95910ae446c6776e8ecfdb6020ed02c"
+  },
+  "safe_cases_per_profile": 31,
+  "numeric_returns_per_profile": 28,
+  "checked_entry_errors_per_profile": 3,
+  "original_topcalls": 62,
+  "journal_events": 124,
+  "arrays": 112,
+  "array_elements": 1132,
+  "profiles": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "independent_safety": {
+    "path": "build/draw-bezier-independent-safety-review-v1/review-v2.json",
+    "sha256": "3dd3a9d8be81b19e54ae64823053c776f4be2229d2c2a19b211a6b7905089a51"
+  },
+  "independent_capture": {
+    "path": "build/draw-bezier-independent-capture-review-v1/review.json",
+    "sha256": "9533bb0aa660d09a4b562a75b0b7cea11d03154422666471470719458798335d"
+  },
+  "original_unsafe_excluded": [
+    "bezier/shape-short"
+  ],
+  "scope": "Original31-caseobservations/source-safeentryerrors only. BothretainedLinuxNumPyprofiles; no native/publicownership/SDK/speed/wholefunctioncoverage credit. Newnative/scaffold commits deliberatelynotimported viaancestry.",
+  "closeout": {
+    "result": "Four independentlyadmitted reference files projectedpromptly to main; savedtruth/rawcaptures preserved.",
+    "waste_and_reuse": "Reusedexisting sourceencoder/controller/SDKpatterns andactualCPPsafetytrace; no throwawayalgorithmclone, originalrecapture ornewenv. Unsafeuncalledshape quarantinedbeforecapture; numericrational/extremum coverage retained.",
+    "next_owner": "A completesnative/public/SDK; rootsharedintegration; independentfamilyreview andgenuine/performance/release remain."
+  }
+}

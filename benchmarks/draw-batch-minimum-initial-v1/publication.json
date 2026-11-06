@@ -1,0 +1,213 @@
+{
+  "schema": "draw-batch-minimum-initial-publication-v1",
+  "status": "INITIAL_MEASURED_RESULTS_ONLY_NO_RELEASE_ACCEPTANCE",
+  "source": "db4f59b8aa69840591266e607e253a8611676ced",
+  "controller": "9c37eb7825e167f96537fb0571f822de7ed31910",
+  "benchmark_run": 42132995271,
+  "producer_run": 42127381279,
+  "retained_artifact": 13464576814,
+  "independent_review_sha256": "b82b68c9c4090996c29f8f27f72ef0dfe40f37540f9cd44d85f4194e84430c7c",
+  "copied_raw_files": [
+    {
+      "path": "raw/draw_polygon.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/draw_polygon.json",
+      "bytes": 147295,
+      "sha256": "4dbfe6505a44f040c06bc011b2db6edfc326c7a18fe4f8d57be1cb2b074132db"
+    },
+    {
+      "path": "raw/draw_polygon.batches.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/draw_polygon.batches.jsonl",
+      "bytes": 179509,
+      "sha256": "acf4b138f405d5be04f788ef3ef52bb859600383f1fa964450658c7d818ed92c"
+    },
+    {
+      "path": "raw/bezier_curve.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/bezier_curve.json",
+      "bytes": 145781,
+      "sha256": "839a48753912926d31677bb0f389ab921b74457603d01fa67e20ac035d66b681"
+    },
+    {
+      "path": "raw/bezier_curve.batches.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/bezier_curve.batches.jsonl",
+      "bytes": 182465,
+      "sha256": "d890e869616618aade6da93bc50d43f2148b07cf30b6dace2e1b3d9160291caf"
+    },
+    {
+      "path": "raw/draw_set_color.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/draw_set_color.json",
+      "bytes": 81983,
+      "sha256": "83cc27efaa3db15628113f718394b305df65567af351e9414bb387bfc3e65a0d"
+    },
+    {
+      "path": "raw/draw_set_color.batches.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/draw_set_color.batches.jsonl",
+      "bytes": 109715,
+      "sha256": "e5140886940643e6aa4d809689f1f79dbab5140376c08a15d357b97f44de7524"
+    },
+    {
+      "path": "first-cohort/dedicated-bezier/terminal.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/dedicated-bezier/terminal.json",
+      "bytes": 492,
+      "sha256": "0ec6204026caec58ea4b1f4d9b07f27bf0dca1970dbfe2563bbdd85abe7b9fce"
+    },
+    {
+      "path": "first-cohort/dedicated-bezier/calls.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/dedicated-bezier/calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "first-cohort/dedicated-polygon/terminal.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/dedicated-polygon/terminal.json",
+      "bytes": 488,
+      "sha256": "614db55a137429f612b93edbd64ff30fdcff01eb9ac973a4e219613509f1a11d"
+    },
+    {
+      "path": "first-cohort/dedicated-polygon/calls.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/dedicated-polygon/calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "first-cohort/dedicated-set-color/terminal.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/dedicated-set-color/terminal.json",
+      "bytes": 492,
+      "sha256": "fe24a8de8d3275ed45615b36fd31be8c7a2eb6c7e1bebe77de02d46c31303efa"
+    },
+    {
+      "path": "first-cohort/dedicated-set-color/calls.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/dedicated-set-color/calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "first-cohort/generic-bezier_curve/terminal.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-bezier_curve/terminal.json",
+      "bytes": 487,
+      "sha256": "73117f31018f7e6595c3dd8398d420814ebf6c47dcd0c7ffe0bef7938aea5007"
+    },
+    {
+      "path": "first-cohort/generic-bezier_curve/calls.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-bezier_curve/calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "first-cohort/generic-polygon/terminal.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-polygon/terminal.json",
+      "bytes": 477,
+      "sha256": "003001850140b2c36c92acad0e431466056bd5762a8d399af74244365afeb641"
+    },
+    {
+      "path": "first-cohort/generic-polygon/calls.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-polygon/calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "first-cohort/generic-polygon2mask/terminal.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-polygon2mask/terminal.json",
+      "bytes": 487,
+      "sha256": "257f0806c897376478a707b7eb7445ea11776426dd26e27dd8ad14fc4bb3ff09"
+    },
+    {
+      "path": "first-cohort/generic-polygon2mask/calls.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-polygon2mask/calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "first-cohort/generic-set_color/terminal.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-set_color/terminal.json",
+      "bytes": 481,
+      "sha256": "fb66fd284dc025fbc8c08c4426d42d23eabfbb0f998480198575a67c44bca0a0"
+    },
+    {
+      "path": "first-cohort/generic-set_color/calls.jsonl",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/first-cohort/generic-set_color/calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "proof/workflow-summary.json",
+      "source": "build/draw-batch-initial-comparison-v1/raw-v1/summary.json",
+      "bytes": 1588,
+      "sha256": "c7763cd566b3b9a6633e5d31ef8876459bcd275f94c4b8733c3d3b21b22ef0e9"
+    },
+    {
+      "path": "proof/independent-review.json",
+      "source": "build/draw-batch-initial-comparison-independent-review-v1/review.json",
+      "bytes": 14362,
+      "sha256": "b82b68c9c4090996c29f8f27f72ef0dfe40f37540f9cd44d85f4194e84430c7c"
+    },
+    {
+      "path": "proof/retention.json",
+      "source": "build/draw-batch-initial-comparison-v1/retention-v1.json",
+      "bytes": 399,
+      "sha256": "b01cb704788d258a8a3724d2dc76eadb61f50a53bd4fdc4889eb0762fe66228a"
+    }
+  ],
+  "API_summary": {
+    "draw.polygon": {
+      "cases": 6,
+      "wins": 4,
+      "losses": 2,
+      "geometric_mean_ratio": 4.16055061532213
+    },
+    "draw.polygon2mask": {
+      "cases": 6,
+      "wins": 4,
+      "losses": 2,
+      "geometric_mean_ratio": 3.5510352274422123
+    },
+    "draw.bezier_curve": {
+      "cases": 12,
+      "wins": 12,
+      "losses": 0,
+      "geometric_mean_ratio": 12.017408842060815
+    },
+    "draw.set_color": {
+      "cases": 8,
+      "wins": 8,
+      "losses": 0,
+      "geometric_mean_ratio": 2.0724176645067853
+    }
+  },
+  "family_summary": {
+    "draw_polygon": {
+      "cases": 12,
+      "wins": 8,
+      "losses": 4,
+      "geometric_mean_ratio": 3.8437301935184336
+    },
+    "bezier_curve": {
+      "cases": 12,
+      "wins": 12,
+      "losses": 0,
+      "geometric_mean_ratio": 12.017408842060815
+    },
+    "draw_set_color": {
+      "cases": 8,
+      "wins": 8,
+      "losses": 0,
+      "geometric_mean_ratio": 2.0724176645067853
+    }
+  },
+  "samples": 448,
+  "wins": 28,
+  "cases": 32,
+  "warm_groups": 64,
+  "journal_events": 1454,
+  "latency_unit": "ms per allocation-inclusive public call, medians of7accepted batches/arm",
+  "ratio": "original/current; case-equal geometric means",
+  "FP_and_provider_limits": "See README and unchanged report/source contract scope; no all-domain/native-only or hardware-fenv universality claim.",
+  "closeout": {
+    "result": "Exact admitted raw reports/journals/probe records and compact proofs published as uncommitted MAIN folder; README derived from those records, all4losses retained.",
+    "avoidable_work_reuse": "No large archive, full source map, installed metadata or package duplicated. Reused independent raw reconstruction; no algorithm/measurement/test/build calls. New destination byte pins support root copy projection only, not another performance audit. One documentation-only check initially used Windows locale-default GBK to read UTF-8 README and failed before validation; corrected to explicit UTF-8. Raw copies unchanged; no scientific cost.",
+    "next_owner_trigger": "Root validates exact source/destination projection and README arithmetic/links, stages scoped raw-byte attributes if needed, and commits/pushes publication with skipci. Root retains corrected release qualification gate."
+  },
+  "source_edits_outside_publication": 0,
+  "scientific_or_timing_calls": 0,
+  "reader_leases_released": true,
+  "documentation_validation": "32case rows+4API aggregate rows,4markedlosses,all local links and7zero-timing terminals checked; no measurement replay."
+}

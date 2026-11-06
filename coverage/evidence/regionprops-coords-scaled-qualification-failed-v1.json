@@ -1,0 +1,91 @@
+{
+  "status": "FAILED_FOUR_PROFILE_RELEASE_NOT_ADMITTED",
+  "source": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+  "run": 42099127401,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42099127401",
+  "whole_product_accepted": false,
+  "passing_profiles": {
+    "modern": {
+      "raw_review": {
+        "path": "build/regionprops-coords-scaled-qualification-v1/modern-raw-review.json",
+        "sha256": "91ba78d3cf6e26896946d1ca49fff084fbce49da81ca1d678dc0e23b58467930"
+      },
+      "XML": {
+        "tests": 231890,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 62,
+      "corpora": 12,
+      "qualification_manifest_sha256": "5ca0f0b03ee0be93535878b6bf143fb7d3f485acc17e1edd243c6af2d379274c",
+      "stager_review": {
+        "path": "build/regionprops-coords-scaled-qualification-v1/modern-stager-review.json",
+        "sha256": "600db984c4e68369ed1eeafcb736bf86e3cad5dc449a89d56a963de1d3183f9b"
+      }
+    },
+    "windows": {
+      "raw_review": {
+        "path": "build/regionprops-coords-scaled-qualification-v1/windows-raw-review.json",
+        "sha256": "d6ac9fba60b0951d142d59b17fa0db03501459a39dc90e93a31b1ec5b610a426"
+      },
+      "XML": {
+        "tests": 231890,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 62,
+      "corpora": 12,
+      "qualification_manifest_sha256": "48c8b7aafba71d258cb2f6ec26adac30cb8589c24b6bac4116e65d682fb6d8e1",
+      "stager_review": {
+        "path": "build/regionprops-coords-scaled-qualification-v1/windows-stager-review.json",
+        "sha256": "6c3bb325093b813f27053787b2fe29e66fcb9b09c6971a2ab39b90ef876a82ad"
+      }
+    },
+    "debug": {
+      "raw_review": {
+        "path": "build/regionprops-coords-scaled-qualification-v1/debug-raw-review.json",
+        "sha256": "646f5e8a27d0b9f8d0d17f38e1d342094f719b33dfb677a6e4a2cde3a1299b2d"
+      },
+      "XML": {
+        "tests": 231890,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 62,
+      "corpora": 12,
+      "qualification_manifest_sha256": "7771a96cd32a8159c22660f56151fe6c821b20f542aec041ae5f199ff4c148ae"
+    }
+  },
+  "passing_profile_XML_total": {
+    "tests": 695670,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "passing_profile_SDK_checks": 186,
+  "passing_profile_corpora": 36,
+  "required_profile_failure": {
+    "profile": "minimum",
+    "gate": "initial-public-admission",
+    "reason": "Authenticated unforced NumPy1.24.4/OpenBLAS0.3.21 selectedPrescott; currentnativearithmetic/runtime mapdoesnotadmitthatroute. FailedhostCPUIDwhyunavailable; selectedPrescottverified.",
+    "artifact": 13449207856,
+    "artifact_sha256": "64cb0b3632cf7e4e646f6dcd5ee4180f5d17d4d477982dd00a4811fd0fd1eb9f",
+    "diagnostic_path": "build/regionprops-coords-scaled-qualification-v1/minimum-matrix-runtime-v1.json"
+  },
+  "retention": {
+    "artifacts": 6,
+    "downloads_per_artifact": 1,
+    "minimum_early_artifact_reused": true,
+    "record": "build/regionprops-coords-scaled-qualification-v1/retention-complete-v1.json"
+  },
+  "qualification_scope": "Exact4ac source only; three accepted-in-isolation profiles do not meet four-profile releasegate. Mainwholeproductqualifiedsource remainscf0; no imagecount or full477API/parity/speed completioncredit.",
+  "separate_performance": "coords_scaled six-caseone-workerKEEP is independentlyadmitted separately; itcannotwaiveminimumfailure.",
+  "closeout": {
+    "result": "Retainedfailedrun plusauthenticated3passingprofiles/2stagers; no unchangedretry.",
+    "waste_and_reuse": "Sixartifactsretainedonce; profile sealedrecordsreadonce; stagersreusequalificationseal, nobighashreplay. Existingauditorsadaptedbysource/run/identity/scope, no newframework/scientificreplay.",
+    "next_owner": "BminimalPrescottv3nativeprofilefix from96completedauthenticatedvendorcalls; independentreview then exactchangedsourcequalification."
+  }
+}

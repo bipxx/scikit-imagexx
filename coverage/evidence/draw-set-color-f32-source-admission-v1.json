@@ -1,0 +1,45 @@
+{
+  "status": "PASS_SOURCE_DELTA_PENDING_SHARED_AND_GENUINE_GATES",
+  "reviewer": "root; independent of source author",
+  "source_commit": "2667158c7ecfdce8f950267807fabf885cdfbe8b",
+  "parent_source": "75c86322754e951d6c9d6049222ef3678ae8d05c",
+  "handoff": {
+    "path": "build/draw-set-color-f32-v3/handoff-v4.json",
+    "sha256": "2bc06ec703ab4afeee5aa6e7736b8bfb74303fd998dab04efc0e8edf2564bbde"
+  },
+  "checks": [
+    "Reviewed complete four-production-file delta and final native leaf/wrapper. Authenticated all14 canonical-LF Git pins; every parent contract key unchanged, four new F32 sections appended.",
+    "F32 image reads use raw uint32 magnitude guards before float conversion, memcpy for unaligned storage, four-byte spans and once-rounded assignment; bounded coefficients and normal inputs keep intermediate arithmetic finite.",
+    "Both retained NumPy operation witnesses show float64 selected-value multiplication and sum with existing alpha preparation. Integer weighted-color stage retained, including signed-zero distinction. No tolerance introduced.",
+    "F32 post-arithmetic tiny-output refusal happens before all writes and restores saved caller fenv. Native focused controls cover preexisting flags and signaling-NaN rejection. Existing F64 arithmetic expressions and scatter order unchanged.",
+    "Auxiliary alignment normalized once at public boundary; already aligned contiguous inputs returned directly, private binder rejects unaligned typed buffers, SDK documents typed alignment. This fixes prior undefined typed dereferences while preserving valid public views.",
+    "NumPy version copy policy cached at import; all new alignment helper uses share one implementation. No generic framework or speculative machinery added."
+  ],
+  "evidence_scope": {
+    "author_verification": "C verifies own author receipts only, not independent source acceptance; root supplies source acceptance",
+    "targeted_public": 172,
+    "pure": 8,
+    "focused_native_controls_per_mode": 524300,
+    "native_modes": 4,
+    "assembled_SDK_controls_per_process": 22,
+    "SDK_processes": 2,
+    "new_original_calls": 24,
+    "MSVC": "compile-only evidence contains command/logs/four objects; standalone exit-status JSON absent, author observed exit0. No Windows runtime credit."
+  },
+  "remaining": [
+    "shared exports and mutation-aware generic integration",
+    "genuine exact-source installed product",
+    "actual CLI checks",
+    "eight-case112sample one-worker original comparison",
+    "supported-profile release qualification"
+  ],
+  "closeout": {
+    "result": "Independent source delta accepted for named-file projection, no full API/shipping/performance acceptance",
+    "waste_reuse": "Reused parent observations/receipts; source inspection and small metadata authentication only, no scientific/build/original replay. MSVC receipt limitation disclosed without replay.",
+    "next_owner_trigger": "A may project15 complete family files (14 changed plus unchanged observer); root retains exact shared/genuine admission."
+  },
+  "author_evidence_verification": {
+    "path": "build/draw-set-color-f32-independent-review-v1/review.json",
+    "sha256": "157d4b033ac4a23e878ed4678a6089d1da971ec998f37227865bc0dd40ab3f7a"
+  }
+}

@@ -1,0 +1,383 @@
+{
+  "status": "PASS_INDEPENDENT_RAW_PERFORMANCE_RECONSTRUCTION",
+  "producer": {
+    "run": "42127381279",
+    "revision": "db4f59b8aa69840591266e607e253a8611676ced",
+    "artifact": "13462575731",
+    "sha256": "272d2a20f170dd3c1f5753d3b0df518f4c89e3c12c1df5673f6c07ee7e7bac0b"
+  },
+  "benchmark_run": "42132995271",
+  "controller_source": "9c37eb7825e167f96537fb0571f822de7ed31910",
+  "retained_artifact": "13464576814",
+  "artifact_authentication": "Reused root once-retained320983byte archive identity b668606605812b7804859f58f904f307b7807e56f617fbcb2d3e583bf3544eb6; no nested/archive/core/wheel hash replay.",
+  "families": {
+    "draw_polygon": {
+      "cases": 12,
+      "raw_samples": 168,
+      "warm_groups": 24,
+      "journal_events": 536,
+      "wins": 8,
+      "losses": [
+        {
+          "case_id": "draw.polygon/tiny-triangle",
+          "reference_ms": 0.013907135542168676,
+          "cpp_ms": 0.01834113860598345,
+          "speedup": 0.7582482113532327
+        },
+        {
+          "case_id": "draw.polygon/empty-clip",
+          "reference_ms": 0.009280535157826755,
+          "cpp_ms": 0.014738720755198366,
+          "speedup": 0.6296703297369616
+        },
+        {
+          "case_id": "draw.polygon2mask/tiny-triangle",
+          "reference_ms": 0.017686590950779575,
+          "cpp_ms": 0.020394864509246085,
+          "speedup": 0.8672080632240188
+        },
+        {
+          "case_id": "draw.polygon2mask/outside",
+          "reference_ms": 0.017126798125557872,
+          "cpp_ms": 0.021473502772643253,
+          "speedup": 0.7975782203254244
+        }
+      ],
+      "geometric_mean_speedup": 3.8437301935184336,
+      "rows": [
+        {
+          "case_id": "draw.polygon/tiny-triangle",
+          "reference_ms": 0.013907135542168676,
+          "cpp_ms": 0.01834113860598345,
+          "speedup": 0.7582482113532327
+        },
+        {
+          "case_id": "draw.polygon/medium-rectangle",
+          "reference_ms": 8.878072923076925,
+          "cpp_ms": 0.6815577218934911,
+          "speedup": 13.026149712473401
+        },
+        {
+          "case_id": "draw.polygon/large-concave",
+          "reference_ms": 35.92202475,
+          "cpp_ms": 3.1285956756756756,
+          "speedup": 11.48183673246368
+        },
+        {
+          "case_id": "draw.polygon/strided-int32",
+          "reference_ms": 2.228876326923077,
+          "cpp_ms": 0.2063168989169675,
+          "speedup": 10.803169001779594
+        },
+        {
+          "case_id": "draw.polygon/negative-unclipped",
+          "reference_ms": 0.28144460294117646,
+          "cpp_ms": 0.041859235550708834,
+          "speedup": 6.72359633993389
+        },
+        {
+          "case_id": "draw.polygon/empty-clip",
+          "reference_ms": 0.009280535157826755,
+          "cpp_ms": 0.014738720755198366,
+          "speedup": 0.6296703297369616
+        },
+        {
+          "case_id": "draw.polygon2mask/tiny-triangle",
+          "reference_ms": 0.017686590950779575,
+          "cpp_ms": 0.020394864509246085,
+          "speedup": 0.8672080632240188
+        },
+        {
+          "case_id": "draw.polygon2mask/medium-rectangle-F",
+          "reference_ms": 9.562719384615384,
+          "cpp_ms": 0.8474752720588234,
+          "speedup": 11.283773934057198
+        },
+        {
+          "case_id": "draw.polygon2mask/large-concave",
+          "reference_ms": 41.889650333333336,
+          "cpp_ms": 3.5965124545454548,
+          "speedup": 11.647297447946016
+        },
+        {
+          "case_id": "draw.polygon2mask/strided-f32",
+          "reference_ms": 2.3448406200000003,
+          "cpp_ms": 0.2454880724946695,
+          "speedup": 9.551749688575667
+        },
+        {
+          "case_id": "draw.polygon2mask/many-vertices",
+          "reference_ms": 2.467149574468085,
+          "cpp_ms": 1.0683773333333333,
+          "speedup": 2.309249267550995
+        },
+        {
+          "case_id": "draw.polygon2mask/outside",
+          "reference_ms": 0.017126798125557872,
+          "cpp_ms": 0.021473502772643253,
+          "speedup": 0.7975782203254244
+        }
+      ],
+      "source_provider_scope": "Twelve bounded one-worker public polygon raster workloads. Numeric min/max/ceil bounds, structural conversion/allocation remain explicit providers; no full API ownership, library-wide speed, prior-C++ KEEP or four-profile acceptance claim. Publish every slower case. Active reviewed native/frontend source closure; original prospective contract retained byte-exact. Current4ac-based polygon-only composition; historical978runtime remainsimmutable. No captured-key experiment, newwholeproduct or performanceadmission. Coherent draw-batch source context; polygon cases, arithmetic and timed calls unchanged."
+    },
+    "bezier_curve": {
+      "cases": 12,
+      "raw_samples": 168,
+      "warm_groups": 24,
+      "journal_events": 560,
+      "wins": 12,
+      "losses": [],
+      "geometric_mean_speedup": 12.01740884206082,
+      "rows": [
+        {
+          "case_id": "bezier/point",
+          "reference_ms": 0.0068725445816186555,
+          "cpp_ms": 0.002412136191254426,
+          "speedup": 2.8491527993055
+        },
+        {
+          "case_id": "bezier/tiny",
+          "reference_ms": 0.0046273914312350535,
+          "cpp_ms": 0.0025750420583869373,
+          "speedup": 1.7970158647170806
+        },
+        {
+          "case_id": "bezier/straight-512",
+          "reference_ms": 0.10072472695035461,
+          "cpp_ms": 0.004174571407565342,
+          "speedup": 24.12816002328211
+        },
+        {
+          "case_id": "bezier/half-medium",
+          "reference_ms": 0.07629417417619368,
+          "cpp_ms": 0.005263481738178834,
+          "speedup": 14.495001212370784
+        },
+        {
+          "case_id": "bezier/heavy-medium",
+          "reference_ms": 0.08653397201210287,
+          "cpp_ms": 0.005817779879316465,
+          "speedup": 14.874053987458497
+        },
+        {
+          "case_id": "bezier/flat-quarter",
+          "reference_ms": 0.05797675266092245,
+          "cpp_ms": 0.0047622077463325444,
+          "speedup": 12.17434344513242
+        },
+        {
+          "case_id": "bezier/column-extremum-unit",
+          "reference_ms": 0.11773425971370144,
+          "cpp_ms": 0.006470667754642656,
+          "speedup": 18.19507107735952
+        },
+        {
+          "case_id": "bezier/column-extremum-weighted",
+          "reference_ms": 0.11849736102564103,
+          "cpp_ms": 0.006528954300312233,
+          "speedup": 18.14951607487498
+        },
+        {
+          "case_id": "bezier/row-extremum-weighted",
+          "reference_ms": 0.11790707970244421,
+          "cpp_ms": 0.00670809910326873,
+          "speedup": 17.57682435624577
+        },
+        {
+          "case_id": "bezier/both-extrema-weighted",
+          "reference_ms": 0.15257552139037434,
+          "cpp_ms": 0.007703150701402805,
+          "speedup": 19.806898151763942
+        },
+        {
+          "case_id": "bezier/large-clipped",
+          "reference_ms": 0.587625056122449,
+          "cpp_ms": 0.018786134357633214,
+          "speedup": 31.279721785002785
+        },
+        {
+          "case_id": "bezier/fully-clipped",
+          "reference_ms": 0.022596234218289084,
+          "cpp_ms": 0.0029042206875693113,
+          "speedup": 7.780481116674715
+        }
+      ],
+      "source_provider_scope": "Prospective bounded rational Bezier API comparison. All12wins/losses retained, no library-wide or priorCPP optimization acceptance. Orderedrecurrence serial; independentfillSIMD only. Genericshape/provider/exceptional domains outside benchmark; genuineinput plus rootactualCLI GO required before execution."
+    },
+    "draw_set_color": {
+      "cases": 8,
+      "raw_samples": 112,
+      "warm_groups": 16,
+      "journal_events": 358,
+      "wins": 8,
+      "losses": [],
+      "geometric_mean_speedup": 2.0724176645067853,
+      "rows": [
+        {
+          "case_id": "tiny-gray",
+          "reference_ms": 0.015755879192800654,
+          "cpp_ms": 0.007503280520499575,
+          "speedup": 2.0998654055055392
+        },
+        {
+          "case_id": "rgb-dense",
+          "reference_ms": 4.44239162962963,
+          "cpp_ms": 2.0685978035714285,
+          "speedup": 2.147537632477349
+        },
+        {
+          "case_id": "duplicates",
+          "reference_ms": 4.411203230769231,
+          "cpp_ms": 2.0021784310344826,
+          "speedup": 2.203201853737909
+        },
+        {
+          "case_id": "clipped",
+          "reference_ms": 3.3687724571428572,
+          "cpp_ms": 1.3667759764705882,
+          "speedup": 2.464758318215399
+        },
+        {
+          "case_id": "fortran-large",
+          "reference_ms": 18.10618314285714,
+          "cpp_ms": 14.78678625,
+          "speedup": 1.224483997857015
+        },
+        {
+          "case_id": "color-alias",
+          "reference_ms": 4.423868346153846,
+          "cpp_ms": 2.057322105263158,
+          "speedup": 2.1503041914712604
+        },
+        {
+          "case_id": "f32-rgb-dense",
+          "reference_ms": 4.980624958333333,
+          "cpp_ms": 2.2039265576923075,
+          "speedup": 2.2598869916738322
+        },
+        {
+          "case_id": "f32-duplicates",
+          "reference_ms": 5.061795565217391,
+          "cpp_ms": 2.167638851851852,
+          "speedup": 2.335165547015828
+        }
+      ],
+      "source_provider_scope": "Eight bounded set_color workloads: original6f64cases unchanged +2f32storagecases. Actualpublicmutation+samefreshinputcopy perarm, no timingsyet; nofullAPI/libraryclaim."
+    }
+  },
+  "first_cohorts": [
+    {
+      "route": "dedicated-polygon",
+      "original_topcalls": 1,
+      "native_topcalls": 1,
+      "sampler_body_calls": 0
+    },
+    {
+      "route": "dedicated-bezier",
+      "original_topcalls": 1,
+      "native_topcalls": 1,
+      "sampler_body_calls": 0
+    },
+    {
+      "route": "dedicated-set-color",
+      "original_topcalls": 1,
+      "native_topcalls": 1,
+      "sampler_body_calls": 0
+    },
+    {
+      "route": "generic-polygon",
+      "original_topcalls": 1,
+      "native_topcalls": 1,
+      "sampler_body_calls": 0
+    },
+    {
+      "route": "generic-polygon2mask",
+      "original_topcalls": 1,
+      "native_topcalls": 1,
+      "sampler_body_calls": 0
+    },
+    {
+      "route": "generic-bezier_curve",
+      "original_topcalls": 1,
+      "native_topcalls": 1,
+      "sampler_body_calls": 0
+    },
+    {
+      "route": "generic-set_color",
+      "original_topcalls": 1,
+      "native_topcalls": 1,
+      "sampler_body_calls": 0
+    }
+  ],
+  "cpu": {
+    "model": "AMD EPYC 7763 64-Core Processor",
+    "logical_cpu_count": 4,
+    "avx2": true
+  },
+  "raw_samples": 448,
+  "warm_groups": 64,
+  "journal_events": 1454,
+  "small_raw_pins": [
+    {
+      "path": "build\\draw-batch-initial-comparison-v1\\raw-v1\\draw_polygon.json",
+      "sha256": "4dbfe6505a44f040c06bc011b2db6edfc326c7a18fe4f8d57be1cb2b074132db"
+    },
+    {
+      "path": "build\\draw-batch-initial-comparison-v1\\raw-v1\\draw_polygon.batches.jsonl",
+      "sha256": "acf4b138f405d5be04f788ef3ef52bb859600383f1fa964450658c7d818ed92c"
+    },
+    {
+      "path": "build\\draw-batch-initial-comparison-v1\\raw-v1\\bezier_curve.json",
+      "sha256": "839a48753912926d31677bb0f389ab921b74457603d01fa67e20ac035d66b681"
+    },
+    {
+      "path": "build\\draw-batch-initial-comparison-v1\\raw-v1\\bezier_curve.batches.jsonl",
+      "sha256": "d890e869616618aade6da93bc50d43f2148b07cf30b6dace2e1b3d9160291caf"
+    },
+    {
+      "path": "build\\draw-batch-initial-comparison-v1\\raw-v1\\draw_set_color.json",
+      "sha256": "83cc27efaa3db15628113f718394b305df65567af351e9414bb387bfc3e65a0d"
+    },
+    {
+      "path": "build\\draw-batch-initial-comparison-v1\\raw-v1\\draw_set_color.batches.jsonl",
+      "sha256": "e5140886940643e6aa4d809689f1f79dbab5140376c08a15d357b97f44de7524"
+    }
+  ],
+  "identity": {
+    "source_fingerprint": {
+      "source_sha256": "ab513b8efe337d621921813b0df5b77a90827be5985e76f92a60db9e11ec0ae9",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "compiled_core_sha256": "bd585d258737e0f7f2cf46bc8bbde6ca1cb7dabde1ffcf4bc2a1a08130899cc5",
+    "prepared_source_files": 2370,
+    "offline_wheels": 14,
+    "clock": {
+      "created_utc": "2026-11-05T23:55:12.665102+00:00",
+      "deadline_utc": "2026-11-06T00:55:12.665102+00:00"
+    }
+  },
+  "limits": [
+    "Initial fixed32case original-scikit-image comparison only, no previousCPP optimization or library-wide speed claim.",
+    "Set_color report has no method_sha256 field; accepted pinned harness plus actual sustained-journal reconstruction establish method. Its historical scope prose says no timings yet, superseded by these actual samples without rewriting raw evidence.",
+    "All four polygon losses preserved; provider/structural work remains as declared in each family scope.",
+    "Original/CPP public preflight acceptance and mutation check witnesses retained; set_color None alone supplies no numerical credit.",
+    "Independent source acceptance reused from other reviewers for authored set_color source; this review accepts raw arithmetic/protocol, not own implementation.",
+    "Exact-source four-profile release qualification and production delivery remain separate gates."
+  ],
+  "closeout": {
+    "result": "Raw paired journals reproduce all448samples,64warm groups,32medians/ratios and seven once-only untimed routes; no concrete blocker.",
+    "evidence": "Read only actual report/journal/precall/terminal/identity metadata and frozen contract bytes; retained workflow predicates used without executing drivers.",
+    "waste_reuse": "Reused authenticated producer/runtime/archive/source identities and source reviews; no unchanged algorithms, timing, tests or large hashes repeated.",
+    "observed_cost": "Metadata-only runtime not separately measured; no rerun for accounting.",
+    "next_owner_trigger": "Root publishes every ratio and four polygon losses; decide bounded bottleneck work separately. Fullqualification owner proceeds on exact source after independent admission."
+  },
+  "tests_executed": 0,
+  "original_calls": 0,
+  "native_calls": 0,
+  "timed_batches": 0,
+  "downloads": 0,
+  "API_calls": 0,
+  "builds": 0,
+  "readers_released": true
+}

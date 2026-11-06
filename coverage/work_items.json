@@ -36609,8 +36609,8 @@
       "depends_on": [],
       "current_checkpoint": "51f3 captures independentlyPASSf568ac6d,4referencepaths mergedmain.24topctors72fget/48privateinit24getitem78imagewrapper48compute,342events;72arrays444words independentlymatchedrecipes,0errors/warn/FP. Integer3Di64/11otherf64;ownF/nonempty,ownemptyzero-strides/noalias. Only4newpurevalidatorsPASS, no26intake/old9replay. SourceWTretiredcleanancestor afterreaderrelease;14obsoletepycacheremoved, allrawproofs rootbuildprotected. No nativecoveragecredit;34otherpropertiesunassessed.",
       "next_gate": {
-        "owner": "next_family_contract",
-        "action": "Freeze one minimaltypeddefinition inexistingRegionmodule preserving sourcephaseorder andcapturedoperands onunsupported suffix; no publiccoords scaling/wholegetterre-entry. Native/frontend/SDKparallelimplementation onlyafterheaderpeer. Use main/Git51f3; retiredreferenceWT no longerinput."
+        "owner": "integrator",
+        "action": "Component proof is closed within its declared scope. Follow regionprops-coords-scaled-shared-v1 for remaining independent performance admission and four-profile release. Do not recapture, rebuild or repeat unchanged proofs."
       },
       "frozen_source_paths": [
         "coverage/contracts/regionprops-coords-scaled-prospective-v1.json",
@@ -36629,6 +36629,431 @@
           "passing_contract_checks": 4,
           "scope": "Original24sequences/72outputs andpure savedvalidators only; not C++native parity."
         }
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-native-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-reference-v1"
+      ],
+      "source_sha": "eafc253a5440df2e0ea0c46c9e7e84ef51209ff6",
+      "current_checkpoint": "Four modes each108recipe/layout/budget records and789178controls; oldcoords22x3; MSVC2TUcompile-only. Origin/add16B SIMD, intp-to-f64 multiply scalar gap remains. Exact oldbody inverse plus reviewed MXCSR correctness dependency.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "eafc253a5440df2e0ea0c46c9e7e84ef51209ff6",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-independent-native-review-v1/review.json",
+            "sha256": "7a7c81b6b9219d2ffdcae348379490e04c61bd947eb12ad9fc79857a8f8a5eb8"
+          },
+          "native_contract_checks": 789178,
+          "native_pending": 0,
+          "scope": "Four modes each108recipe/layout/budget records and789178controls; oldcoords22x3; MSVC2TUcompile-only. Origin/add16B SIMD, intp-to-f64 multiply scalar gap remains. Exact oldbody inverse plus reviewed MXCSR correctness dependency."
+        }
+      },
+      "waste_review": "Independent retained-proof review only, no build/science/timing replay. Preserve component evidence and all rejected performance history.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Component proof is closed within its declared scope. Follow regionprops-coords-scaled-shared-v1 for remaining independent performance admission and four-profile release. Do not recapture, rebuild or repeat unchanged proofs."
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-frontend-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-reference-v1"
+      ],
+      "source_sha": "c7beb1eac2e9077436c82775e56bde0ce0392c61",
+      "current_checkpoint": "Four modes148PASS,96savedsequences/288arrays;264fourstage f64 reads and24integer partial-provider reads. Image once, workers once after image; inplace only private native intermediates. Component-only, not genuine product.",
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "c7beb1eac2e9077436c82775e56bde0ce0392c61",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-frontend-independent-review-v1/review.json",
+            "sha256": "a265627a2a52722b0e3ccf8e4cd24259e75f743861417d12a755122cfc3dcb0b"
+          },
+          "native_contract_checks": 148,
+          "native_pending": 0,
+          "scope": "Four modes148PASS,96savedsequences/288arrays;264fourstage f64 reads and24integer partial-provider reads. Image once, workers once after image; inplace only private native intermediates. Component-only, not genuine product."
+        }
+      },
+      "waste_review": "Independent retained-proof review only, no build/science/timing replay. Preserve component evidence and all rejected performance history.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Component proof is closed within its declared scope. Follow regionprops-coords-scaled-shared-v1 for remaining independent performance admission and four-profile release. Do not recapture, rebuild or repeat unchanged proofs."
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-sdk-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-reference-v1"
+      ],
+      "source_sha": "52a02aabfed16a4aa12367c9b9bdfd1616412dae",
+      "current_checkpoint": "Existing installed family default and focused route, four modes162controls each, workers1/4/default restore. Assembled SDK92 donor component only; actual current main SDK91 unchanged. MSVC client compile-only. No new family.",
+      "proofs": {
+        "native_private": {
+          "status": "verified",
+          "source_sha": "52a02aabfed16a4aa12367c9b9bdfd1616412dae",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-independent-sdk-review-v1/review.json",
+            "sha256": "c4a4c8a13367a346e9ed060636d94468cf4bd6a9f9b6517748fb34ac95f0bc22"
+          },
+          "native_contract_checks": 162,
+          "native_pending": 0,
+          "scope": "Existing installed family default and focused route, four modes162controls each, workers1/4/default restore. Assembled SDK92 donor component only; actual current main SDK91 unchanged. MSVC client compile-only. No new family."
+        }
+      },
+      "waste_review": "Independent retained-proof review only, no build/science/timing replay. Preserve component evidence and all rejected performance history.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Component proof is closed within its declared scope. Follow regionprops-coords-scaled-shared-v1 for remaining independent performance admission and four-profile release. Do not recapture, rebuild or repeat unchanged proofs."
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-shared-v1",
+      "kind": "implementation",
+      "owner": "integrator",
+      "state": "performance_pending",
+      "branch": "integrate/regionprops-coords-scaled-v1",
+      "base_sha": "1bc43693",
+      "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [
+        "CMakeLists.txt",
+        "tools/public_qualification.py",
+        "coverage/contracts/current-public-qualification.json"
+      ],
+      "depends_on": [
+        "regionprops-coords-scaled-native-v1",
+        "regionprops-coords-scaled-frontend-v1",
+        "regionprops-coords-scaled-sdk-v1"
+      ],
+      "current_checkpoint": "Exact4ac genuine input independentlyPASSac12e9e7 afterSUCCESS42065217414/all38timersSKIPPED:2306Gitfiles481production193product91SDK14wheels13nonproject/runtimeexactcf0,16745XML0bad/111newcoords checks. Sourcebarrier2610+8 admitted. Sixcase controller/schema/merge/activation peers closed; separatechildcf1222 published, prepared4ac/cf0snapshots unchanged. Fixedcomparison42074843238 completed successfully; retained root reconstruction KEEP336samples/12pairs/32inequalities/6wins bothpasses. Independent second-reader admission PASS28d57749; scoped KEEP publication coverage/evidence/regionprops-coords-scaled-performance-keep-v1.json. Four-profile campaign42099127401: minimum failed initial-public-admission on authenticated unforced OpenBLAS Prescott; Windows/modern/debug passed; campaign terminalfailure. Diagnosis owner qualification251_readiness; no successor/waiver.",
+      "waste_review": "Retained all passed proofs. The first full source run lost verdict to disk exhaustion; replacement uses fresh D scratch with50GB capacity check. Redundant builtins import guard rejected inert sys.modules fixtures; keep one real-load MetaPathFinder, rerun only14 failures and reuse2595passes. Preserve existing mixed newlines using byte edits. Four duplicate metadata-directory deletion was rejected by automatic approval policy; nothing deleted. No unchanged benchmark replay or weakened thresholds.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Independent raw admission PASS28d57749; scoped KEEP published at coverage/evidence/regionprops-coords-scaled-performance-keep-v1.json. Exact4ac campaign42099127401 remains in_progress but minimum failed initial-public-admission: authenticated NumPy1.24.4/OpenBLAS Prescott is outside current runtime map. Retained artifact13449207856; diagnose exact compatibility gap before any successor. Observe remaining profiles, preserve failure, no waiver/unchanged retry. No unchanged timing retry."
+      },
+      "proofs": {
+        "public_native": {
+          "status": "verified",
+          "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-genuine-independent-input-review-v1/review.json",
+            "sha256": "ac12e9e733a8d36398f352de1a26fb46ba386c34eea292db9c41482699a6e24f"
+          },
+          "native_contract_checks": 74,
+          "native_pending": 0,
+          "scope": "Actual installed minimum37public nodes normal+disabled (74), bounded f64full-native domain; integer-provider/refusal controls explicit. Fullclass/integer arithmetic/unassessed domains not nativecredit."
+        }
+      }
+    },
+    {
+      "id": "regionprops-coords-scaled-benchmark-source-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "state": "contracted",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled benchmark",
+      "owns": [],
+      "depends_on": [
+        "regionprops-coords-scaled-frontend-v1"
+      ],
+      "source_sha": "033fd5b68d18bbf2cfc4597567ffffa9e55e3159",
+      "current_checkpoint": "Six bounded cases fixed before measurement:4ABBAprocesses336samples,1.05direct+normalized control floors,2medium f64 targets .90 direct+original eachpair.40pure/36NumPyintake checks PASS; no application algorithms or performance calls. Native f64 vs integer partial-provider acceptance explicit. Source composed f187, stillPROSPECTIVE.",
+      "proofs": {
+        "tooling": {
+          "status": "verified",
+          "source_sha": "033fd5b68d18bbf2cfc4597567ffffa9e55e3159",
+          "manifest": {
+            "path": "build/regionprops-coords-scaled-benchmark-intake-independent-review-v1/review.json",
+            "sha256": "a456a9c33dcba88cb53634abd97e223f53415951d512d1e8b7ec15865cb297fd"
+          },
+          "scope": "Saved pure and NumPy-only benchmark validation, not public native speed acceptance."
+        }
+      },
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Adapter implementation and controller-child activation are complete; reuse exact controllercf1222b2 and terminalrun42074843238 evidence. Keep prepared4ac and active controller-only configuration separate. No new adapter work."
+      },
+      "waste_review": "Reuse existing sampler/fixture/helper methods and stored12 semantic recipes; no new launcher framework, original recapture or old numerical replay."
+    },
+    {
+      "id": "regionprops-coords-scaled-genuine-minimum-v1",
+      "kind": "qualification",
+      "owner": "integrator",
+      "state": "accepted",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "owns": [
+        "build/regionprops-coords-scaled-genuine-minimum-v1"
+      ],
+      "depends_on": [
+        "regionprops-coords-scaled-shared-v1"
+      ],
+      "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "current_checkpoint": "SUCCESS42065217414 exact4ac,38timersSKIPPED. Consumer13434087475 retainedonce85625166B/SHA90fc6ff0..., producerduplicateNOTdownloaded. Independentac12e9e7 validates193/91,14wheels2306sources/481production2b8f9bc7/core99a38848,16745XML0bad incl111coords;13deps/fullruntime/scientificmaps equalcf0. Scopedgenuineinput acceptance only;31family62checks sourcecensus notgenuineinstalledSDKexecution.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Genuine minimum42065217414 is accepted within minimum scope. Reuse authenticated inputs for retained comparison review; exact-source four-profile release remains pending. No repeated package download or build."
+      },
+      "waste_review": "Recovered source barrier withfailed-onlyretries, correctedonecollectorstaleassertion, preservedallfailuresandrawarchives. GitHubpusherrorsclearedonlatestreviewed4ac; verifyremotebeforedispatch. Oneprepareonly run, no abandonedrerun or duplicatedownload."
+    },
+    {
+      "id": "regionprops-coords-scaled-comparison-v1",
+      "kind": "measurement",
+      "owner": "integrator",
+      "state": "measured",
+      "apis": [],
+      "target_apis": [
+        "measure.regionprops"
+      ],
+      "target_member": "RegionProperties.coords_scaled",
+      "owns": [
+        "build/regionprops-coords-scaled-comparison-v1"
+      ],
+      "depends_on": [
+        "regionprops-coords-scaled-shared-v1",
+        "regionprops-coords-scaled-genuine-minimum-v1"
+      ],
+      "dependency_requirements": {
+        "regionprops-coords-scaled-shared-v1": {
+          "evidence_scope": "public_native",
+          "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e"
+        }
+      },
+      "source_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "current_checkpoint": "TerminalSUCCESS42074843238/controllercf1222, one dispatch17:27:43Z/deadline17:57:43; root reconstruction KEEP, independent second-reader PASS28d57749 and scoped publication complete. Candidate4ac/run42065217414/art13434087475, acceptedcf0baseline. Externalchildcontracts activated, actualbudgets recorded. Cases/methods/gates fixedbeforecalls, integerpartial explicitlynotfullynative.",
+      "acceptance": "All6direct+original-normalized priorCPP ratios<=1.05 bothpairs;2mediumtargets directprior<=.90 AND candidate/original<=.90 eachpair.336accepted samples/48warmgroups/32inequalities; allraw calibration/loop data retained. OnefailureDISCARD, no averagewaiver orunchangedretry.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Run42074843238 is terminal successful. Retained verification-v1.json reconstructs KEEP:336samples/12pairedchecks/32passinginequalities,6of6wins vsoriginal in bothpasses. Independent second-reader admission PASS28d57749; scoped KEEP published at coverage/evidence/regionprops-coords-scaled-performance-keep-v1.json. Four-profile42099127401 remains pending; no redispatch/download/timing."
+      },
+      "waste_review": "Sourcepeer caught absentproductionfingerprintmanifestfield; minimalactualrevision/fullfilemaphelper fixedbeforemath,5affectedchecks/profile instead of262replay. Reuseexistingcontroller/sampler/offlineartifacts; separatechildactivation avoids preparedsnapshotmutation. Checkagentstate beforemessaging: send_message tocompleted agent doesnotresume; followup_task required."
+    },
+    {
+      "id": "draw-polygon-current-batch-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/polygon-batch-v1",
+      "state": "measured",
+      "apis": [],
+      "target_apis": [
+        "draw.polygon",
+        "draw.polygon2mask"
+      ],
+      "owns": [
+        "include/skimagexx/draw_polygon.hpp",
+        "src/draw_polygon.cpp",
+        "tests/test_draw_polygon_native.cpp",
+        "coverage/contracts/draw-polygon-native-v1.json",
+        "python/skimagexx/_draw_polygon.py",
+        "src/bind_draw_polygon.cpp",
+        "tests/test_draw_polygon_public.py",
+        "coverage/contracts/draw-polygon-frontend-v1.json",
+        "tests/test_draw_polygon_dtype_tag_reference.py",
+        "coverage/contracts/draw-polygon-dtype-tag-v1.json",
+        "tests/cmake_consumer/draw_coordinates_consumer.cpp",
+        "tests/test_draw_polygon_sdk_scope.py",
+        "benchmarks/draw_polygon.py",
+        "tests/test_draw_polygon_benchmark.py",
+        "coverage/contracts/draw-polygon-benchmark-v1.json",
+        "tests/test_draw_polygon_benchmark_intake.py",
+        "tests/test_draw_polygon_default.py",
+        "coverage/contracts/draw-polygon-runtime-v1.json"
+      ],
+      "depends_on": [
+        "draw-polygon-native-v1",
+        "draw-polygon-frontend-v1",
+        "draw-polygon-sdk-v1"
+      ],
+      "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
+      },
+      "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
+      "current_checkpoint": "Family6432d023 independentlyPASS2093e177:19familypaths,160component/6pure andcurrent4acassembledSDK92 normal526515controls. Rootsharedaffectedsource279uniqueassertions/profile PASS; nofullprebuild/genuine/performance/releasecredit. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production.",
+      "waste_review": "Sourceprebuild reuse770b missed3active literal/hash/selector dependencies and normalconftest scope; retain failed421355 and invalidateits readiness claim. Ccorrected complete2708+8subtests perinterpreter, no partialunion. Preserve production-identical db4genuine/448timings; no numerical rerun for metadata. Rootnext: independentlyadmit running334campaign before main delivery."
+    },
+    {
+      "id": "draw-bezier-current-batch-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/draw-bezier-v1",
+      "state": "measured",
+      "apis": [],
+      "target_apis": [
+        "draw.bezier_curve"
+      ],
+      "owns": [
+        "include/skimagexx/bezier_curve.hpp",
+        "src/bezier_curve.cpp",
+        "src/bind_bezier_curve.cpp",
+        "python/skimagexx/_bezier_curve.py"
+      ],
+      "depends_on": [],
+      "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
+      },
+      "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
+      "current_checkpoint": "Final family55462f45517c953548c583aa8c17d033a795d28e independently reviewed PASS465fea03:20 source paths/74 small proofs; recurrence unchanged from safety-sealed48c,272 public checks, four native modes and assembled SDK92 evidence. References on main; current measured/genuine status follows below. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production."
+    },
+    {
+      "id": "draw-set-color-current-batch-v1",
+      "kind": "implementation",
+      "owner": "next_family_contract",
+      "branch": "feature/draw-set-color-f32-v3",
+      "state": "measured",
+      "apis": [],
+      "target_apis": [
+        "draw.set_color"
+      ],
+      "owns": [
+        "include/skimagexx/draw_set_color.hpp",
+        "src/draw_set_color.cpp",
+        "src/bind_draw_set_color.cpp",
+        "python/skimagexx/_draw_set_color.py"
+      ],
+      "depends_on": [],
+      "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
+      },
+      "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
+      "current_checkpoint": "F32 successor2667158 independently source-reviewed by root: build/draw-set-color-independent-review-v3/review.json SHA bc32f7027f9c71fa6b9282d83c3f09ad4447f7e5da30992d1a02a4ec6fffc497. Author metadata verification157d4b03 authenticates14 source/296 smallproof pins,24 originals,172 public/8 pure, four native modes and assembled SDK22x2. Parent allcontractkeys including52+A2 observations unchanged. MSVC compile-only standalone exit receipt absent; no Windows runtime credit. Scoped measured/genuine status follows below. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production."
+    },
+    {
+      "id": "matrix-transform-prescott-release-fix-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "branch": "fix/matrix-prescott-v1",
+      "state": "parity_passed",
+      "apis": [],
+      "target_apis": [
+        "transform.matrix_transform"
+      ],
+      "owns": [
+        "include/skimagexx/matrix_transform.hpp",
+        "src/matrix_transform.cpp",
+        "src/bind_matrix_transform.cpp",
+        "python/skimagexx/_matrix_transform.py"
+      ],
+      "depends_on": [],
+      "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+      "acceptance": "CloseobservedauthenticatedOpenBLAS0.3.21Prescottarithmetic viaexistingprofilearchitecture, exactsource/binaryclosure andboundedwitnesses; no corename-onlyallowlist orCPUforcing; preserveexistingprofiles/worker/SDK contracts. Independentreview+genuine supportedprofileacceptance required.",
+      "current_checkpoint": "Frozen clean source906ba318d4222f0030c5fc164469786a1d56dfcc, handoff build/matrix-prescott-native-v1/handoff-v1.json SHA2885e58ce0a6c3da33a519d1107fec4aaf9c56ad51a8f5d7ae6d16eb302bf83d:16 named paths/139 small proofs. All48 captured cases432words match across four native modes;348 targeted public passes,15 unique pure nodes/profile, relocated assembledSDK91 normal/disabled and3TU MSVC compile-only. Independent C review PASS9241cd8a sealed and published in coverage/evidence/matrix-prescott-source-admission-v1.json; old wrapper and C++ inverse independently reconstructed. No naturalPrescott public host or speed claim. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
+      }
+    },
+    {
+      "id": "label-pair-metrics-current-batch-v1",
+      "kind": "implementation",
+      "owner": "tiny_line_implementation",
+      "branch": "feature/label-pair-metrics-v1",
+      "state": "validating",
+      "apis": [],
+      "target_apis": [
+        "metrics.contingency_table",
+        "metrics.adapted_rand_error",
+        "metrics.variation_of_information"
+      ],
+      "owns": [
+        "coverage/contracts/label-pair-metrics-native-v1.json",
+        "coverage/contracts/label-pair-metrics-sdk-v1.json",
+        "coverage/contracts/label-pair-metrics-v1.json",
+        "include/skimagexx/label_pair_metrics.hpp",
+        "python/skimagexx/_label_pair_metrics.py",
+        "src/bind_label_pair_metrics.cpp",
+        "src/label_pair_metrics.cpp",
+        "tests/cmake_consumer/label_pair_metrics_consumer.cpp",
+        "tests/fixtures/label_pair_metrics_originals_v1.hpp",
+        "tests/label_pair_metrics_contract.py",
+        "tests/label_pair_metrics_native_controls.hpp",
+        "tests/label_pair_metrics_observer.py",
+        "tests/test_label_pair_metrics_counts_binding.py",
+        "tests/test_label_pair_metrics_native.cpp",
+        "tests/test_label_pair_metrics_reference.py"
+      ],
+      "depends_on": [],
+      "base_sha": "db4f59b8aa69840591266e607e253a8611676ced",
+      "scope": "Independent next vertical family while frozen drawing candidate validates. No shared wiring or delay to current release. Reuse existing primitives; implement a minimal owned label-pair count primitive only if absent. Preserve full three-API scope, explicit unassessed partitions and SciPy sparse object-factory ownership.",
+      "acceptance": "Declared per-function Python signature/type/shape/mutation/error/warning/FP parity, native typed SDK and ownership, applicable scalar/SIMD/process-global optional workers default1, one-thread original benchmarks with losses, independent admission and supported release. Bounded partitions are not full API completion.",
+      "current_checkpoint": "Private counts064e72ef0ea13a906bd125a04be589a0052a9613 / handoff-counts-v2.json SHA29594946 supersedes ea99/01a4 with scalar-proofmetadata only. Independent Cpeerdd3db80 PASS:1912effective nativecontrols (1434retained+478correctedtrue-scalar),80binder and956installedSDKcontrols. Raw48originals independentlyc90e admitted with modernCSRmutation/errorprefix intact. No publicAPI/registration, wholemetric or performance credit.",
+      "next_gate": {
+        "owner": "tiny_line_implementation",
+        "action": "Privatecounts peer/scalarcorrection CLOSED064/dd3db80; use retainedproofs. Nextfreeze source-ordered publicconversion/CSRclass/index/capacity/callback-mutation and adaptedRand/VI reduction/log/scalarFP policy before implementation. Root owns sharedintegration/genuine/performance/release; no publicmetriccredit or delay to current334drawingcampaign."
+      }
+    },
+    {
+      "id": "find-boundaries-current-batch-v1",
+      "kind": "implementation",
+      "owner": "qualification251_readiness",
+      "branch": "feature/find-boundaries-v1",
+      "state": "contracting",
+      "apis": [],
+      "target_apis": [
+        "segmentation.find_boundaries"
+      ],
+      "owns": [
+        "include/skimagexx/find_boundaries.hpp",
+        "src/find_boundaries.cpp",
+        "src/bind_find_boundaries.cpp",
+        "python/skimagexx/_find_boundaries.py",
+        "coverage/contracts/find-boundaries-v1.json"
+      ],
+      "depends_on": [],
+      "base_sha": "f0c91244f29f7ea8294577ed7ba33d277ef7e24a",
+      "scope": "Independent vertical family; full public signature/modes/connectivity/background/subpixel remain intended scope. First source audit/header/safe reference cases, no original calls until root source-safety admission. No shared wiring, no current334 release changes.",
+      "acceptance": "Per-function parity and hot-swap, native SDK ownership, applicable scalar/SIMD/default1 optional global workers, one-thread original comparison and independent release admission. No forwarding whole original algorithm or credit for untested domains.",
+      "current_checkpoint": "Live worker resumed; source inspection and isolated worktree preparation only. No original observations, implementation acceptance or public registration.",
+      "next_gate": {
+        "owner": "qualification251_readiness",
+        "action": "Freeze source-backed minimal reusable interface and bounded safe cases; root admits safety before original capture. Parallel next-family work must not delay exact334 campaign."
       }
     }
   ],
@@ -37000,7 +37425,7 @@
     "Additional public namespaces beyond current inventory",
     "Runtime-generated class fields/attributes and constructor/state behavior"
   ],
-  "note": "Live source/qualified counts use inventory_snapshot and latest_accepted_qualification; canonical next actions are coverage/EXECUTION_PLAN.md. Historical packet numbers keep their original exact-source scope. Fullrewrite goal remains active.",
+  "note": "Live counts use inventory_snapshot and latest_accepted_qualification; canonical next actions are coverage/EXECUTION_PLAN.md. Implementation resumed by user request. Historical packet states retain exact-source evidence and are not live dispatch orders.",
   "unassigned_static_member_paths": [
     "feature.BRIEF.__init__",
     "feature.BRIEF.extract",
@@ -37292,27 +37717,27 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 253,
+    "native_partial_image_names": 258,
     "metadata_names": 3,
-    "upstream_only_names": 215,
+    "upstream_only_names": 210,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Main253 native-partial/3metadata/215upstream-only; qualified252 exact6fae. Private255 exacteea admitted genuine minimum and24initial cases with15losses. Coherent private256 at7266 is not yet genuinely prepared or qualified; counts are not full contract completion.",
+    "note": "Main and accepted cf0 product have258 declared native-partial image APIs,210 upstream-only,3metadata,5native-class-partial and1exception-metadata-provider. Counts do not establish full contracts. Coords_scaled4ac remains pending independent performance admission and four-profile release; no API count increase.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
-    "accepted_binary_image_names": 252
+    "accepted_binary_image_names": 258
   },
   "execution_policy": {
     "active_workers": [
-      "tiny_line_implementation",
+      "next_family_contract",
       "qualification251_readiness",
-      "next_family_contract"
+      "tiny_line_implementation"
     ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
     "ready": "python tools/work_queue.py --ready",
     "handoff": "python tools/work_queue.py --packet <id>",
-    "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay. Once mandatory readiness closes, update only the dependent gate and dispatch eligible hosted work promptly; do broad publication while it runs. Assign one isolated shared integration owner; root retains independent admission/main delivery.",
+    "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay. Once mandatory readiness closes, update only the dependent gate and dispatch eligible hosted work promptly; do broad publication while it runs. Assign one isolated shared integration owner; root retains independent admission/main delivery. Before hosted releasequalification, execute the complete actual workflow source-check command on both retained supportedPythonversions with normalconftest/plugins, real selectors and nofailfast; afterfixes reruncompleteaffectedbarrier. Partialunions/collection/alteredconfiguration cannot satisfy thisgate.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
     "implementation_goal_status": "active",
     "mode": "executing-updated-plan",
@@ -37322,22 +37747,22 @@
       "next_family_contract"
     ],
     "agent_roster": "python tools/work_queue.py --agents",
-    "resume_rule": "Active user goal authorizes implementation; pause only on explicit user request.",
+    "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
     "worker_queues": {
       "tiny_line_implementation": [
-        "regionprops-bbox-extent-reference-v1"
+        "label-pair-metrics-current-batch-v1"
       ],
       "qualification251_readiness": [
-        "region-stain-comparison-v1"
+        "find-boundaries-current-batch-v1"
       ],
       "next_family_contract": [
-        "draw-ellipse-perimeter-shared258-v1"
+        "label-pair-metrics-current-batch-v1"
       ]
     },
     "current_three_agent_packets": {
-      "tiny_line_implementation": "regionprops-bbox-extent-reference-v1",
-      "qualification251_readiness": "region-stain-comparison-v1",
-      "next_family_contract": "draw-ellipse-perimeter-shared258-v1"
+      "tiny_line_implementation": "label-pair-metrics-current-batch-v1",
+      "qualification251_readiness": "find-boundaries-current-batch-v1",
+      "next_family_contract": "label-pair-metrics-current-batch-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -37731,44 +38156,40 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "BBox/extentpostprocess eaf8 peerpendingroot; all ellipse component/benchmarkreviews handedoff.",
-      "qualification251_readiness": "Warmcomparison41969983206watchclosed d152d887; rawadmissionnext, shippingplan98restores closed.",
-      "next_family_contract": "Sole shared258integrator from5a; full257metadatareview9a8cd986 andnative/SDK/benchmark peersclosed."
+      "tiny_line_implementation": "Counts064/dd3db80 admitted private; implementing frozen496 ARE table=None exact staged policy, no public registration.",
+      "qualification251_readiness": "Source/header/safe-cases find_boundaries family from f0c91244, new isolated feature branch; no original calls until root safety review.",
+      "next_family_contract": "Counts independent review closed; source-only VI log2/sparse reduction policy study, no family source ownership or scientific execution."
     },
-    "next_action": "Publishqualified257 source7b8d andallboundedreceipts promptly; Csource258 shared setup/freeze/4CLI/peer beforegenuine. Rootnewwarmcomparison rawfailedgateaudit, bbox/extentpostprocesspeer/reference-onlymerge, safe releasedancestorcleanup. Fullobjective477/class/runtime/nativeownership/perAPIperformance remainsactive.",
+    "next_action": "Root monitors ONCE-dispatched exact334 four-profile42140207750, independently admits actualresults then delivers named productionprojection; no success claimednow. Retain faileddb4campaign421355 and invalidv1sourceclaim770b. Drawing421329/b82b publication shipped f0c91244; no retiming. Private label-paircounts064/dd3db80 peer/scalarflags correction closed; publicCSR/reduction/log scope remains open, no publicmetriccredit.",
     "current_checkpoint": {
-      "main_image_names": 257,
-      "qualified_image_names": 257,
-      "prepared_source": "eea321b2a334ba51c475d7733ad7547fa24c553b",
-      "prepared_run": 41938456869,
-      "candidate_source": "7266ba327c8b2fed0efa86513d9c3f94f67e01c6",
-      "candidate_image_names": 256,
-      "candidate_status": "Exact7266 genuine minimum/12ND cases admitted; full41947826837 terminalFAILED all4profiles. Preserved historical scope, not whole-qualified or shipped.",
-      "performance_evidence": "coverage/evidence/current255-minimum-initial-performance-v1.json",
+      "main_image_names": 258,
+      "qualified_image_names": 258,
+      "prepared_source": "db4f59b8aa69840591266e607e253a8611676ced",
+      "prepared_run": 42127381279,
+      "candidate_source": "334e68e2e6717421501742365b6fe58328fc1019",
+      "candidate_image_names": 262,
+      "candidate_status": "Metadata-only strictguardfix;493productionblobs identicaldb4. Completeactual2708+8subtests perretainedinterpreterPASS46e3. SuccessorqualificationIN_PROGRESS, notaccepted.",
+      "performance_evidence": "benchmarks/draw-batch-minimum-initial-v1/publication.json",
       "readiness_reviews": [
         {
-          "path": "build/candidate256-independent-code-review-v1/review.json",
-          "sha256": "741f18abc7995014852cf0aa5cdabd701e01cbc6c3c23bb6f1d4c467c279b580"
-        },
-        {
-          "path": "build/candidate256-independent-workflow-review-v1/review.json",
-          "sha256": "2f90a5479f8faeab86c7f742eb47139f8309747cdf165378bdd439871c363955"
+          "path": "coverage/evidence/draw-batch-source-readiness-v2.json",
+          "sha256": "8daa125fb10ccb6db4a05e4b335f55dc9ea1aec7f281abc082ae6b0982b93bed"
         }
       ],
-      "candidate_run": 41946801050,
-      "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/41946801050",
-      "candidate_qualification_run": 41947826837,
-      "candidate_evidence": "coverage/evidence/current256-minimum-initial-performance-v1.json",
-      "candidate_qualification_status": "All4FAILED41947826837; retained audit coverage/evidence/public256-whole-product-failed-v1.json. Checkout+shared assertion/provider fixes reviewed and composed into257; do not repeat old campaign.",
-      "next_release_source": "5a98a9df1beca5d2a97ce897125b4bb3c235a6e7",
-      "next_release_expected_images": 257,
-      "next_release_expected_product": 191,
-      "next_release_expected_SDK": 90,
+      "candidate_run": 42127381279,
+      "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42127381279",
+      "candidate_qualification_run": 42140207750,
+      "candidate_evidence": "coverage/evidence/draw-batch-genuine-minimum-admission-v1.json",
+      "candidate_qualification_status": "IN_PROGRESS exact334 successor42140207750, rootwatch48157; all4sourceguardsPASS, productbuild/qualificationactive. Olddb4all4FAILED3sourceguards beforepreparation; no terminal releaseacceptance.",
+      "next_release_source": "334e68e2e6717421501742365b6fe58328fc1019",
+      "next_release_expected_images": 262,
+      "next_release_expected_product": 199,
+      "next_release_expected_SDK": 94,
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "Exact5a98 fulladmitteda1e3cc87/peer9a8cd986; mainproduction7b8d restored98namedpaths, publicationpending. New258componentintegrationprivate.",
-      "next_release_qualification_run": 41962339458,
+      "next_release_status": "IN_PROGRESS root-owned42140207750, all4sourceguardsPASS/buildsactive; v2readiness supersedes invalid770b; main258/qualifiedcf0 unchanged.",
+      "next_release_qualification_run": 42140207750,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
     }
