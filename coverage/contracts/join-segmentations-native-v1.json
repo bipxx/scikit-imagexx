@@ -1,0 +1,75 @@
+{
+  "state": "SCOPED_NATIVE_IMPLEMENTATION_PENDING_INDEPENDENT_INTEGRATION",
+  "api": "segmentation.join_segmentations",
+  "signature": "(s1, s2, return_mapping: bool = False)",
+  "reference_source": "78115e3c6549b27bfccc1af354cd9024b24dac53",
+  "source_raw_sha256": {
+    "include/skimagexx/join_segmentations.hpp": "564513250464f0c2ea1b02d7a07f44c4fc44568c6fbef56927633fbbb1717b6b",
+    "src/join_segmentations.cpp": "b201d5a3bd36cbe64c8c0d658f6ce5b3ba0b7ad6f1e320c2c97d8aaba8646c54",
+    "src/bind_join_segmentations.cpp": "3fda515922b53ddb1e35aa629f9ef49fd6ce988cf557a8fcdc0e15e376e93317",
+    "python/skimagexx/_join_segmentations.py": "77f82546eb9669b68a2f70a3caa601ce6f5e247a4b1c1547574d9c75a5a7eef3",
+    "tests/cmake_consumer/join_segmentations_consumer.hpp": "1d99b84d1ea1bd6be397c9ff5d9454ad3e65e5452164945981c5e0d167e93401",
+    "tests/fixtures/join_segmentations_originals_v1.hpp": "2283e5fe8a37a5205abd096bc93e3c43c61244af76013b43019082da768b8658",
+    "tests/join_segmentations_sdk_fixture.py": "b4e7a17723b895a1f39322634d6e13b6e75640c339d8671d71c41476113dac8e",
+    "tests/test_join_segmentations_native.cpp": "e715200a056f380ed505b90f1cdec9df7892674361775177edfd3c6b679ff780",
+    "tests/test_join_segmentations_public.py": "32f83ee5bcc6bdbf00e329dd0bae5f6ca36e0750e085cd2ec7003b6bd2d33a4b",
+    "benchmarks/join_segmentations.py": "36c99d15d52099ecba43c270e31ea11469dbeb2f5c49bf3fcb05f552a9e61fc2",
+    "coverage/contracts/join-segmentations-benchmark-v1.json": "aa69bfc3730fa0867277991e29e1a2d5556483ec627391c817f0e9e2a2d4b4c1",
+    "tests/test_join_segmentations_benchmark.py": "81891220c34fd1f5f897af1856d48810709f271ef26bc35734baa7068c2b8d2b"
+  },
+  "reused_raw_sha256": {
+    "python/skimagexx/_component_consumers.py": "f2643c25de70277fcbd30ba1a2e9774b20ae637137e1e8610eb3cd500f90fadd",
+    "python/skimagexx/_components.py": "ac0599f337cd72ff7c398b9a4ef4b6152c2b6e546ec7b4e2697aedf0f1095ad1",
+    "python/skimagexx/_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357",
+    "include/skimagexx/component_consumers.hpp": "1b696a8473a05d976339f557967f0a1fecd88f79216bbc99d8ba50a28a21a2a3",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "src/component_consumers.cpp": "faf804a7f3db07a960c90466a27833ef9d36ab72bcf7859cc67f0dea3bd0ef20",
+    "src/bind_component_consumers.cpp": "5c3569804ca11f12fcc0ba077922d2e9e047a0e30fb04fdf790f839efac25ec4",
+    "tests/join_segmentations_contract.py": "95074049dfbdecd811ee9b3a7d306f932e1f1fc8a7643ae873a8fef20cc534aa",
+    "tests/join_segmentations_observer.py": "6a9d12066d2f32c31969e9eedf07e9c994cc5425df2457e34eebd2a090d3aa0a",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/fixtures/join_segmentations_originals_v1.json": "0cb7da5d981bf95eb8895278bf9acc638ba3acd236625c48a00aa632a1b0a340",
+    "tests/fixtures/join_segmentations_upstream_v026.py.txt": "be0c8b727d574168ff49a4cd55b9cb9e9967f0cf0d0c7e7169495441cb6439ff",
+    "coverage/contracts/join-segmentations-v1.json": "e13989e90b0b5ae29b21e7a769411af4e4bf8a21863d23713bfd594321ce08e5"
+  },
+  "native_domain": {
+    "arrays": "exact ndarray/memmap; integer widths8/16/32/64 with native byte order and reference-admitted layouts; no artificial shape/label maximum",
+    "source_errors": "negative/bool/float/empty/mismatched/read-only/endian fields through existing relabel stages, including all admitted rows",
+    "arithmetic": "ORIGINAL s2 maximum plus NumPy uint8(1); scalar addition/provider policy and result_type metadata retained. C++ multiply wrap in promoted product dtype, then independently cast/add/wrap in sum dtype. Not mathematical pair equivalence.",
+    "maps": "owned ArrayMap state/cache/protocol; returned maps share the identical keys ndarray before mutation",
+    "callbacks": "warning stages and late return_mapping truth preserved; per-stage worker reads, no whole-call immutable snapshot",
+    "simd": "SSE2 independent16-bit encode spans on __SSE2__ targets; environment-disabled and compiler-scalar fallbacks; ordered unique/sort/remap reused",
+    "provider_computation": "live NumPy scalar addition/overflow warnings, dtype promotion/metadata, and existing ArrayMap metadata/advanced assignment provider authorities; image-wide numeric encode/divmod/max/unique/remap native"
+  },
+  "frontiers": [
+    "upstream exact ArrayMap class identity differs",
+    "nonpositive/overflowed original factor routes to explicit policy-aware fallback after relabel/scalar warning phase",
+    "unadmitted scalar/provider/subclass/float128 domains; no original validation beyond admitted100rows",
+    "genuine integrated shared globalworker/default dispatch/hotswap/binaryownership and all advertised/unsupported dtype smoke",
+    "genuine installed product and one-thread public benchmark; exact-source four-profile release"
+  ],
+  "integration_owner": "root: one isolated shared integration author after independent family review",
+  "benchmark": {
+    "contract": "coverage/contracts/join-segmentations-benchmark-v1.json",
+    "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+    "cases": 8,
+    "samples_if_fully_authorized": 112,
+    "warmup_groups_if_fully_authorized": 16,
+    "original_calls_now": 0,
+    "timing_now": 0
+  },
+  "API_completion": false,
+  "standalone_SDK": {
+    "entry": "skimagexx::join_segmentations(ComponentsView,ComponentsView,JoinParameters)",
+    "promotion_boundary": "explicit integer product/sum/division JoinType plan; source ORIGINAL maximum+uint8(1) derived natively",
+    "result": "owned typed/shape C-order labels and optional two map views sharing one keys buffer",
+    "assessed": "positive factor, integer plans; saved original source/outputs/maps, meaningful large images, source-factor201 wrap and mixed-width product-before-add",
+    "unmet_domains": [
+      "nonpositive or overflowed factor (rightuint8max255 defined-source case remains unsupported)",
+      "floating-promotion plans and NumPy scalar warning/protocol engine; no type-system approximation"
+    ]
+  }
+}
