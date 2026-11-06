@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from test_mark_boundaries_benchmark_execution import synthetic,FAULTS
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json'
+CONTEXT=ROOT/'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v3.json'
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 
@@ -15,7 +15,7 @@ def test_exact_case_method_source_domains_and_historical_projection():
     a=adapter();c=json.loads(CONTEXT.read_bytes());old=json.loads((ROOT/'coverage/contracts/draw-multiblock-lbp-v1.json').read_bytes())
     m=runpy.run_path(str(ROOT/'benchmarks/draw_multiblock_lbp_native.py'))
     assert c['cases']==m['case_specs']()==old['benchmark_cases']and len(c['cases'])==4
-    assert c['method']==json.loads((ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v3.json').read_bytes())['method']
+    assert c['method']==json.loads((ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v4.json').read_bytes())['method']
     assert m['plan']()['root_GO']is None and m['plan']()['timed_batches']==0
     assert all(v is None for v in c['unbound'].values())
     for name,pin in c['source_files_canonical_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name

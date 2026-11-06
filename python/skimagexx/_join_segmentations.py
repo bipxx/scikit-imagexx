@@ -29,7 +29,8 @@ def join_segmentations(s1, s2, return_mapping: bool = False):
     j_initial=_core.join_encode(s1_relabeled,s2_relabeled,int(factor),product_type,sum_type)
     j,_,map_j_to_j_initial=relabel_sequential(j_initial)
     if not return_mapping:return j
-    labels_j=_core.consumer_unique(j_initial)
+    # The third relabel already owns these sorted encoded labels.
+    labels_j=map_j_to_j_initial.out_values
     division_type=np.result_type(labels_j,factor)
     if division_type.kind not in 'iu':
         raise TypeError('The dtype of an array to be remapped should be integer.')

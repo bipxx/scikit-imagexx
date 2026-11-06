@@ -13,7 +13,10 @@ def test_native_source_and_historical_contract_closure():
     adapter=runpy.run_path(str(ROOT/'benchmarks/draw_multiblock_lbp_execution.py'))
     context=json.loads((ROOT/adapter['CONTEXT']).read_bytes())
     for name,pin in d['source_raw_sha256'].items():
-        raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else(ROOT/name).read_bytes()
+        if name=='src/bind_draw_multiblock_lbp.cpp':
+            from draw_multiblock_lbp_metadata_context import historical_bytes
+            raw=historical_bytes(ROOT,name)
+        else:raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else(ROOT/name).read_bytes()
         assert hashlib.sha256(raw).hexdigest()==pin,name
     for name,pin in d['frozen_reference_raw_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
 

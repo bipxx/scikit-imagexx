@@ -1,0 +1,93 @@
+{
+  "schema": "finite-radon-native-v2",
+  "status": "ALL216_OBSERVED_OUTCOMES_STRICT_PRIVATE_PARITY_GENUINE_PENDING",
+  "API_completion": false,
+  "ready_for_integration": false,
+  "ready_for_independent_component_review": true,
+  "predecessor": "49a95896863b5aeb937e376f14f22e42083c49f0",
+  "original_calls": 0,
+  "raw_admission_sha256": "ae58afd446546b0005edf6051a5f9745be2dd7e466416f8364b0547a363cb2ec",
+  "raw_transport_sha256": "5d8050e2d6a9e4476611e5848a64b1af8f75f871bc110f9f8717f9367891de9b",
+  "source_contract_sha256": "4c1f367d7db02cd313ac195829370ffbc7d10c83a828fa3b519e27f63d07b421",
+  "historical_native_contract_sha256": "7ff2a996bca0f59c4f6515ec3e213f40e50e009d7976e94ba99731a2b3ea75c2",
+  "source_files": {
+    "benchmarks/finite_radon_native_v2.py": "55285eebf103296c2255c7726c03a4cc32708ad24fc12fcb81a6f5649871d2d1",
+    "include/skimagexx/finite_radon.hpp": "a8cd344e47b7dc978c071c361f0c51625c2b3a8499369a2a141c15bed8e2c29b",
+    "python/skimagexx/_finite_radon.py": "013ddb7bf8bb08b72ca40108ac199a3a28dee1323c346181e56acc79094d466c",
+    "src/bind_finite_radon.cpp": "d2b727c445754d43e1fc71fe9450523f516f6477b0fe059e9198b68ead65079d",
+    "src/finite_radon.cpp": "e3e0c443ffdcff316d34ba97a0b1ea34d4bb5ec5ef8e1626dbdad1f00d6ef9d6",
+    "tests/cmake_consumer/finite_radon_consumer.hpp": "585ac152791f83fb57126b94cc6cf5d7e5d102d807ce44919b95bd267b711eb2",
+    "tests/fixtures/finite_radon_originals_v1.json": "5d8050e2d6a9e4476611e5848a64b1af8f75f871bc110f9f8717f9367891de9b",
+    "tests/fixtures/finite_radon_saved_v2.hpp": "bda873813b7960e06710e10b788127989a333ee3c92ba298d23d00b396115b8d",
+    "tests/test_finite_radon_native_source.py": "caff4dbd7cb69d5a9ab45c1ef30de9ff60b1ccfe79739b697c4396ceeaa2c0bc",
+    "tests/test_finite_radon_public.py": "913725772966bd5ece091e3b638d4e0aaadadb2399ed81cca8b7ef57e9423045",
+    "tests/test_finite_radon_saved_public.py": "dd0a97e3aa01b3a8438e3598e900d7fe44c08e906a8baa23bf398951fc73da76"
+  },
+  "observed": {
+    "recipes_each_profile": 108,
+    "return_rows_each": 61,
+    "error_rows_each": 47,
+    "profiles": 2,
+    "workers": [
+      1,
+      4
+    ],
+    "modes": [
+      "normal",
+      "runtime_disable",
+      "true_compiler_scalar"
+    ],
+    "strict_saved_assessments": 1296,
+    "generic_controls": 210,
+    "full_target_FP": true,
+    "FP_tolerance": 0,
+    "caller32_exact": true
+  },
+  "native": [
+    "Owning complete frt2 bool/i/u8..64/half/f32/f64/complex64/complex128; inverse bool/unsigned64 source promotion and typed signed/floating in-place cast error",
+    "Ordered native precision reductions/circular row spans/source pairwise row association/actual scalar SSE float-to-u32 truncation and per-cast source FP preparation",
+    "Native inverse prefix composed inside complete SDK ifrt2 before typed floating casting failure; public precise NumPy error types/args resolved at metadata boundary",
+    "Source synchronous complex-warning-beforecast and actual cast-invalid policy notices; no saved flags applied in production",
+    "One global default1 budget captured once; independent integer projections partition, ordered floating/policy/division stays caller-thread; SSE2 independent uint32 spans, scalar SSE conversions are scalar architecture"
+  ],
+  "providers": [
+    "NumPy source .copy/protocol representation, dtype resolution/default-integer/scalar promotion metadata and exact dtype-error class constructors",
+    "NumPy CAPI floating error policy delivery only (1.24 exportedGetPyValues/handlefperr,2.x GiveFloatingpointErrors); native arithmetic/cast remains C++",
+    "Bounded plain Pythonint object carrier extraction into u32 POD; arbitrary object arithmetic/overflow/negative conversion providers remain explicit frontier",
+    "Finite timedelta64 storage units use int64 POD; NaT/calendar/mixed temporal domains not assessed"
+  ],
+  "frontiers": [
+    "Observed108/profile is closed within admitted retained Linux1.24.4/2.5.4 scope only; not full API/universal dtype/provider/FP/platform closure.",
+    "Wider nonfinite/out-of-range floating vector-cast ISA/profile behavior (n>=4), cancellation-heavy larger reductions/half rounding, exceptional reduction warnings/alternate NP callbacks/FP rounding/FTZ/DAZ require additional exact source-safe witnesses before parity claims.",
+    "Extendedprecision/structured/metadata/subarray dtypes, arbitrary object floats/classes/negative or oversized integer payloads/projection overflow, temporal NaT/mixed units and exotic copy-return/subclass semantics remain unsupported/unassessed.",
+    "Other NumPy versions, non-x64 and Windows actual execution/default-int/intp/FP domains remain open; Windows MSVC compile only.",
+    "Large valid metadata >4096, malicious/concurrent/forged descriptors and source mutation callbacks outside fixed controlled protocols are not assessed.",
+    "Genuine registered singlecore/hot-swap/native owner counters/unique-global/whole SDK and full source four-profile qualification, one-thread original public performance/all losses/main release remain pending."
+  ],
+  "benchmark": {
+    "locator": "benchmarks/finite_radon_native_v2.py --plan",
+    "case_count": 8,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "cases_projection": "Only execution IDs gain layout suffix/source_case_id; exact original args/types/layout/method/loss pool recovered by strict inverse.",
+    "binding": null,
+    "root_GO": null,
+    "status": "UNBOUND_NO_TIMING"
+  },
+  "integration": {
+    "leaf": "src/finite_radon.cpp",
+    "binder": "src/bind_finite_radon.cpp",
+    "bind_function": "bind_finite_radon(pybind11::module_&)",
+    "header": "include/skimagexx/finite_radon.hpp",
+    "namespace": "Root adds frt2/ifrt2 default/hot-swap only after independent/genuine gates",
+    "NumPy": "Existing Python::NumPy target supplies official per-profile CAPI headers; import array/ufunc APIs in privatebinder, NPY2target2.0, legacy1.24 exports; no image algorithm calls.",
+    "ABI": "FiniteRadonInput half/complex flags and Frt result cast_status/callback signatures changed: recompile ownleaf/binder/clients, replace only one SDKmember; never mix d210family objects.",
+    "scalar": "DefineSKIMAGEXX_FINITE_RADON_SCALAR and disable compiler vectorization/OpenMP for own leaf; runtime disable only is not true compiler-scalar. Baseline scalar SSE truncation remains.",
+    "genuine_FP_consumer": "Saved public test requires strict source-built-v1 existing F1 backend+external receipt in genuine mode, no private fallback. Private0c40 used only with explicitcomponentdir."
+  },
+  "primary_sources": [
+    "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/multiarray/array_assign_array.c",
+    "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/umath/loops_utils.h.src",
+    "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/umath/extobj.c"
+  ],
+  "license": "third_party/numpy-LICENSE.txt and third_party/scikit-image-LICENSE.txt unchanged"
+}

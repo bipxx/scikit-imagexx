@@ -10,7 +10,7 @@ import sys
 import types
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v3.json'
+CONTEXT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v4.json'
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 

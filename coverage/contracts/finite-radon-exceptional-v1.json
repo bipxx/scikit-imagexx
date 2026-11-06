@@ -1,0 +1,199 @@
+{
+  "schema": "finite-radon-exceptional-source-v1",
+  "status": "PROSPECTIVE_SOURCE_ONLY_NO_GO",
+  "base": "ee639c0c19cc93be1a1751f7c6ac2c9b107bad4c",
+  "recipes": [
+    {
+      "id": "transform.frt2/exceptional-n5-nan",
+      "api": "frt2",
+      "n": 5,
+      "dtype": "float64",
+      "layout": "C",
+      "input": "ndarray",
+      "pattern": "float-nan",
+      "readonly": false
+    },
+    {
+      "id": "transform.frt2/exceptional-n5-inf",
+      "api": "frt2",
+      "n": 5,
+      "dtype": "float64",
+      "layout": "C",
+      "input": "ndarray",
+      "pattern": "float-inf",
+      "readonly": false
+    },
+    {
+      "id": "transform.ifrt2/exceptional-n5-nan",
+      "api": "ifrt2",
+      "n": 5,
+      "dtype": "float64",
+      "layout": "C",
+      "input": "ndarray",
+      "pattern": "float-nan",
+      "readonly": false
+    },
+    {
+      "id": "transform.ifrt2/exceptional-n5-inf",
+      "api": "ifrt2",
+      "n": 5,
+      "dtype": "float64",
+      "layout": "C",
+      "input": "ndarray",
+      "pattern": "float-inf",
+      "readonly": false
+    }
+  ],
+  "original_budget": 0,
+  "native_budget": 0,
+  "prospective_calls_per_profile": 4,
+  "prospective_total_calls": 8,
+  "calls_per_recipe": 1,
+  "independent_source_safety": null,
+  "independent_readiness": null,
+  "root_GO": null,
+  "limits": {
+    "input_elements": 30,
+    "physical_bytes": 240,
+    "output_elements": 30,
+    "original_additions": 150,
+    "total_arithmetic": 200,
+    "roll_calls": 16
+  },
+  "source_projection": {
+    "controller_predecessor": "tests/finite_radon_capture_controller.py",
+    "controller_inverse_fragments": [
+      {
+        "predecessor": "q['schema']=='finite-radon-capture-v1'",
+        "current": "q['schema']=='finite-radon-exceptional-capture-v1'",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "len(ids)==len(set(ids))==108",
+        "current": "len(ids)==len(set(ids))==4",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "ids[:54]",
+        "current": "ids[:2]",
+        "occurrences": 2
+      },
+      {
+        "predecessor": "ids[54:]",
+        "current": "ids[2:]",
+        "occurrences": 2
+      },
+      {
+        "predecessor": "ROOT_AUTHORIZED_FINITE_RADON_REFERENCE_ONCE",
+        "current": "ROOT_AUTHORIZED_FINITE_RADON_EXCEPTIONAL_REFERENCE_ONCE",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "maximum_public_topcalls_per_profile']==108",
+        "current": "maximum_public_topcalls_per_profile']==4",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "maximum_total_public_topcalls']==216",
+        "current": "maximum_total_public_topcalls']==8",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "PASS_ACTUAL_FINITE_RADON_CONTROLLER_ZERO_BODY_PREFIX",
+        "current": "PASS_ACTUAL_FINITE_RADON_EXCEPTIONAL_ZERO_BODY_PREFIX",
+        "occurrences": 2
+      },
+      {
+        "predecessor": "p['full_recipe_pool_count']==108",
+        "current": "p['full_recipe_pool_count']==4",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "from finite_radon_contract import cases,fixture",
+        "current": "from finite_radon_exceptional_contract import cases,fixture",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "from finite_radon_observer_v2 import observe",
+        "current": "from finite_radon_exceptional_observer_v1 import observe",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "len(specs)==108",
+        "current": "len(specs)==4",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "total_public<=108",
+        "current": "total_public<=4",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "len(capture_rows)==total_public==108",
+        "current": "len(capture_rows)==total_public==4",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "full_recipe_pool_count=108",
+        "current": "full_recipe_pool_count=4",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "else 108,native_image_bodies",
+        "current": "else 4,native_image_bodies",
+        "occurrences": 1
+      },
+      {
+        "predecessor": "    assert len(go['prefixes'])==4\n",
+        "current": "    # Historical108 safety is reuse only; this new pool needs its own peer.\n    item=go['independent_source_safety'];assert H(R/item['path'])==item['sha256'];safety=json.loads((R/item['path']).read_bytes())\n    assert safety['passed']is True and safety['source']==q['source']and safety['cases_sha256']==q['cases_sha256']and safety['recipe_count']==4\n    assert len(go['prefixes'])==4\n",
+        "occurrences": 1
+      }
+    ],
+    "observer_predecessor": "tests/finite_radon_observer_v2.py",
+    "observer_inverse": {
+      "current": "from finite_radon_exceptional_contract import fixture",
+      "predecessor": "from finite_radon_contract import fixture"
+    },
+    "fixture": "Exact historical fixture function body; only pool/source_safe authority new"
+  },
+  "historical_safety_scope": "Retained108recipe/typedcodec/full32/controller safety remains historical. New4recipes require independent source-safety+readiness and separate actualGO before any original computation.",
+  "frontier": "Width5 creates potential compiler-vectorized cast plus tail; actual kernel/ISA/NaN conversion bits/warnings/FP are UNOBSERVED. No guessed gold or native change. Other widths/layouts/dtypes/FP policies/platforms remain open.",
+  "source_pins": {
+    "tests/finite_radon_exceptional_contract.py": "8274290eb16ce8418159a6fc94bf9a009ae810f5000869142386ee7c3a526cfa",
+    "tests/finite_radon_exceptional_observer_v1.py": "1f3ac2d560bbb323ea806ed567755de9c94b0ada050c92bf26e5847ae71331e8",
+    "tests/finite_radon_exceptional_capture_controller.py": "665301e544d39a519714ee6c57fcee1c85e3c85283313633de8d944cae4ec04a"
+  },
+  "historical_pins": {
+    "tests/finite_radon_contract.py": "dd1da11e75d700a8706496fc6ef2ef1a9113decd3b2082d1d17f3de934f3763e",
+    "tests/finite_radon_observer_v2.py": "85bce1c750df23dcbde9c0205953c7f0544d95b3841f828a4660e75db39ea8c7",
+    "tests/finite_radon_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/finite_radon_capture_controller.py": "ac271ba72c105509db1e1c288f16c662e06476f66180a42e972d9ee7eb0fe31a",
+    "coverage/contracts/finite-radon-v1.json": "4c1f367d7db02cd313ac195829370ffbc7d10c83a828fa3b519e27f63d07b421",
+    "coverage/contracts/finite-radon-capture-v1.json": "04fbdeeb7b2e4b4b204f9680fb3e7ba9506d2e640313cd9ce0238a4c95abca1a",
+    "tests/fixtures/finite_radon_originals_v1.json": "5d8050e2d6a9e4476611e5848a64b1af8f75f871bc110f9f8717f9367891de9b",
+    "src/finite_radon.cpp": "e3e0c443ffdcff316d34ba97a0b1ea34d4bb5ec5ef8e1626dbdad1f00d6ef9d6",
+    "src/bind_finite_radon.cpp": "d2b727c445754d43e1fc71fe9450523f516f6477b0fe059e9198b68ead65079d",
+    "python/skimagexx/_finite_radon.py": "013ddb7bf8bb08b72ca40108ac199a3a28dee1323c346181e56acc79094d466c",
+    "include/skimagexx/finite_radon.hpp": "a8cd344e47b7dc978c071c361f0c51625c2b3a8499369a2a141c15bed8e2c29b"
+  },
+  "primary_source_audit": [
+    {
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/multiarray/array_assign_array.c",
+      "scope": "raw_array_assign_array selects aligned/strided transfer function; conditional pre-cast clear and post-cast floating error policy. Ordinary assignment, not modern same-value cast."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/multiarray/lowlevel_strided_loops.c.src",
+      "scope": "Generated aligned/contiguous numeric cast loop uses source C conversion and compiler optimization. Width5 may allow vector body plus tail; exact generated ISA/out-of-range result and status are unobserved, not inferred from C cast semantics."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v2.5.4/numpy/_core/src/multiarray/array_assign_array.c",
+      "scope": "raw_array_assign_array selects aligned/strided transfer function; conditional pre-cast clear and post-cast floating error policy. Ordinary assignment, not modern same-value cast."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v2.5.4/numpy/_core/src/multiarray/lowlevel_strided_loops.c.src",
+      "scope": "Generated aligned/contiguous numeric cast loop uses source C conversion and compiler optimization. Width5 may allow vector body plus tail; exact generated ISA/out-of-range result and status are unobserved, not inferred from C cast semantics."
+    }
+  ],
+  "witness_rationale": "n5 float64 C arrays: frt2 5x5 =>6x5u32 assignments; ifrt2 6x5 =>5x5u32 projection prefix before source same_kind add failure. Initial NaN or positiveInf at logical[0,0], others k%7. This exercises width5 cast+tail candidate, preserving source loop/reduction/order/FP/typed errors; no prescribed output bits or target calls.",
+  "reuse_boundary": "Historical108/216raw/source/codec/helper/controller failurewriter remain exact. Historical source-safety receipt is historical only. New4pool independent source-safety is mandatory inside futureGO, as is exact-current controller/binding readiness and all8zero-body prefixes."
+}

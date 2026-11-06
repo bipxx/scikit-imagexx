@@ -228,3 +228,6 @@ def _local_mean_dispatch(image,factors,cval,clip,notices,upstream):
 # Source-faithful coordinate intake with authenticated checked C++ arithmetic.
 from ._matrix_transform import matrix_transform
 __all__ += ['matrix_transform']
+
+
+from ._finite_radon import frt2, ifrt2

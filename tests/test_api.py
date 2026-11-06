@@ -412,6 +412,12 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             with pytest.raises(TypeError) as actual:getattr(native,name)(a)
             assert str(actual.value)==str(expected.value)
             return
+        if api=='transform.ifrt2':
+            args,options=default_call(api,a)
+            with pytest.raises(TypeError)as expected:getattr(original,name)(*args,**options)
+            with pytest.raises(type(expected.value))as actual:getattr(native,name)(*args,**options)
+            assert actual.value.args==expected.value.args
+            return
         if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):
             args,options=default_call(api,a)
             with pytest.raises((TypeError,ValueError))as expected:getattr(original,name)(*args,**options)

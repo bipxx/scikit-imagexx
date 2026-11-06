@@ -181,3 +181,13 @@ foreach(_boundary IN ITEMS mark_boundaries draw_multiblock_lbp)
     endif()
     add_test(NAME installed_${_boundary}_consumer COMMAND ${_boundary}_consumer)
 endforeach()
+
+# Complete finite Radon pair, admitted saved words and exceptional policy clients.
+add_executable(finite_radon_consumer finite_radon_consumer.cpp)
+target_link_libraries(finite_radon_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(finite_radon_consumer PRIVATE /UNDEBUG /fp:strict)
+else()
+    target_compile_options(finite_radon_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
+endif()
+add_test(NAME installed_finite_radon_consumer COMMAND finite_radon_consumer)

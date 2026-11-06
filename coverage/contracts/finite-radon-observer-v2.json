@@ -1,0 +1,13 @@
+{
+  "schema": "finite-radon-observer-v2-source-context",
+  "historical_source_packet_unchanged": true,
+  "change": "Replace limited initial error descriptor with byte-exact admitted MARK typed ufunc/dtype codec, preserving local identity tokens/qualname/nesting and source namespace identity; no ufunc is applied.",
+  "reused_codec_source": "288244ca6e4b31685285d543b1ee49831ba566fe",
+  "codec_sha256": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+  "source_files": {
+    "tests/finite_radon_observer.py": "14e90a452690def3506e31cc29f9cdd689ec9c538745796de86797b90aef791a",
+    "tests/finite_radon_observer_v2.py": "85bce1c750df23dcbde9c0205953c7f0544d95b3841f828a4660e75db39ea8c7",
+    "tests/finite_radon_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667"
+  },
+  "original_budget": 0
+}

@@ -21,6 +21,8 @@ for _names, _test, _benchmark in (
     (('util.regular_grid',),'tests/test_util_metadata_integration.py','benchmarks/regular_grid.py'),
     (('segmentation.mark_boundaries',),'tests/test_mark_boundaries_public.py::test_saved_mark_public','benchmarks/mark_boundaries_consumer.py'),
     (('feature.draw_multiblock_lbp',),'tests/test_draw_multiblock_lbp_public.py::test_saved_lbp_public','benchmarks/draw_multiblock_lbp_native.py'),
+    (('transform.frt2',),'tests/test_finite_radon_saved_public.py::test_saved_public_strict','benchmarks/finite_radon_frt2_v1.py'),
+    (('transform.ifrt2',),'tests/test_finite_radon_saved_public.py::test_saved_public_strict','benchmarks/finite_radon_ifrt2_v1.py'),
     (('segmentation.join_segmentations',),'tests/test_join_segmentations_integration.py','benchmarks/join_segmentations.py'),
     (('segmentation.find_boundaries',),'tests/test_find_boundaries_public.py','benchmarks/find_boundaries.py'),
     (('metrics.adapted_rand_error',),'tests/test_label_pair_rand_public.py','benchmarks/label_pair_metrics.py'),

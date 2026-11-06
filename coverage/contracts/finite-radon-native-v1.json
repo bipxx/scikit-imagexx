@@ -1,0 +1,68 @@
+{
+  "schema": "finite-radon-native-scoped-v1",
+  "API_completion": false,
+  "ready_for_integration": false,
+  "original_calls": 0,
+  "source_contract_sha256": "4c1f367d7db02cd313ac195829370ffbc7d10c83a828fa3b519e27f63d07b421",
+  "source_files": {
+    "benchmarks/frt2.py": "6df235a26349fc1bafb98d41c990a3748dba8278e918033e60af1ce57a3da12e",
+    "benchmarks/ifrt2.py": "ed3a0df56cdcd406b98ccfd6ed70ef50d59e71bf61c08db6aa4a571d5688e707",
+    "coverage/contracts/finite-radon-v1.json": "4c1f367d7db02cd313ac195829370ffbc7d10c83a828fa3b519e27f63d07b421",
+    "include/skimagexx/finite_radon.hpp": "686909b8bafaa5283723c4bf3fc1b8d832e812af11ed35f13c92c5f31efa2d65",
+    "python/skimagexx/_finite_radon.py": "82b48ca884c701b6d8566e358177cef62f51728dd3c603c03a84224ab9526cd9",
+    "src/bind_finite_radon.cpp": "6dc3c2c5c2e38538b554c7029c5b4f6081498354479a74f74ac9bbca45d1862e",
+    "src/finite_radon.cpp": "f7269bc4ed58eafcb36169fb42a6e4cfb1b2893387b3ee6c21fc953e0c56c5b5",
+    "tests/cmake_consumer/finite_radon_consumer.hpp": "e08d4c50b502c9141d1f615b96042a2432db1b207cf0559728b8a0a6aa7f15cb",
+    "tests/finite_radon_contract.py": "dd1da11e75d700a8706496fc6ef2ef1a9113decd3b2082d1d17f3de934f3763e",
+    "tests/finite_radon_observer.py": "14e90a452690def3506e31cc29f9cdd689ec9c538745796de86797b90aef791a",
+    "tests/finite_radon_saved_parity.py": "28d409c46a3a3b8c46f88a834210dfafe8306ca1baaea546dd6fe30ab73c8df2",
+    "tests/test_finite_radon_intake.py": "83638575c2da3fc4622d932687c801b64c827454947a2916d144b7b46ee0ee1c",
+    "tests/test_finite_radon_native.cpp": "d924d8782734d1a78aacd721d368931a80a13d86978fbf756f09e0e4ba96c24d",
+    "tests/test_finite_radon_native_source.py": "aba1739511975329aabf328aa8d8675e3cbbd1b9e9a2282305bca089259248ba",
+    "tests/test_finite_radon_public.py": "b98aa29df9772c6e8aa4ffabc37dfd2851c07bd13d2ed8c94992e0038f0d0988",
+    "tests/test_finite_radon_source.py": "2c5b8e91d3a35076589fa85a8811b06ff88ae4b1ab311778a88357010cabce05",
+    "benchmarks/finite_radon_native.py": "9cb610adf2e265efef9d2f3a3612b1c63cc877b0b0e3f48e1d7adf24a81f2772",
+    "tests/finite_radon_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/finite_radon_observer_v2.py": "85bce1c750df23dcbde9c0205953c7f0544d95b3841f828a4660e75db39ea8c7",
+    "coverage/contracts/finite-radon-observer-v2.json": "ff8f372ac8442b02081660ea4a818b4ba42d7d18f3592457401cffb40c0b11c2",
+    "tests/test_finite_radon_codec.py": "36a58d2dcc8dffa1e7aaa1b02444bffccadbecea740c0e8d69cbf9e52450191a"
+  },
+  "implemented": [
+    "Complete owning integer frt2 and unsigned/bool ifrt2",
+    "Explicit32/64 sum accumulator/weak versus strong scalar/signed bool sum promotion",
+    "uint32 intermediate wraps; contiguous split circular rows with integer SIMD spans",
+    "Independent integer projections optional workers; ordered caller-thread double division; globalbudget capturedonce/default1",
+    "Exact source shape messages/copy sequence and signed inverse casting descriptor (source-derived; original parity pending)"
+  ],
+  "frontiers": [
+    "ZERO original observations, no original parity or exact FP closure claimed. Native invariants and private public smoke cannot substitute.",
+    "frt floating/complex pairwise summation/default accumulator/cast/NaN/Inf/warning semantics NOT implemented; object/string/temporal/structured types similarly explicit.",
+    "ifrt signed input metadata error is source-derived, not observed; float/complex/object/temporal casting behavior still pending.",
+    "Subclass/custom copy/protocol behavior, alternate rounding/FTZ-DAZ/FP callback/softwarepolicy and Windows runtime/default integer width remain source/reference/implementation gates.",
+    "Native POD requires caller-proven ordinary valid storage, maxn4096; malformed/huge/concurrent descriptors outside assessed frontier.",
+    "Complete genuine core/global/hotswap/provider dispatch/installedSDK product/four-profile qualification and both one-thread original benchmark cohorts not run."
+  ],
+  "benchmark": {
+    "cases_each": 4,
+    "status": "UNBOUND_NO_TIMING",
+    "method": "Frozen Montage7repeat/100ms/250mswarm/thread1; preserve all losses",
+    "consumer": "benchmarks/finite_radon_native.py --plan (UNBOUND, no execution)"
+  },
+  "integration": {
+    "CMake": [
+      "Add src/finite_radon.cpp to native library",
+      "Add src/bind_finite_radon.cpp to private core"
+    ],
+    "binding": "declare/call bind_finite_radon(pybind11::module_&)",
+    "namespace": "root adds transform frt2/ifrt2 default/hotswap only after actual parity/admission",
+    "SDK": "install finite_radon.hpp plus leaf in exportedtarget; actual assembled private client proof is not wholeproduct",
+    "public_acceptance": "two unary builtins _core.frt2(a), _core.ifrt2(a,accumulator_bits,weak_scalar,signed_sum); wrappers expose(a); integer generic smokes and noninteger refusal must remain honest",
+    "reference": "root independent source/storage safety plus bound controller and explicit GO required; originalbudget0. Consume saved rows only after raw admission, no synthetic golden rows."
+  },
+  "providers": [
+    "NumPy source-order copy and ordinary representation",
+    "dtype/result_type/default integer width/NumPy source casting exception class metadata only; all implemented image shift/sum/subtract/divide loops C++"
+  ],
+  "evidence_scope": "Ownnative/privateSDK/invariants only; no READY/API-completion claim",
+  "reference_observer": "tests/finite_radon_observer_v2.py with exact reused typed descriptor codec; initial observer/source checkpoint untouched"
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "join-segmentations-unique-reuse-v1",
+  "base": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "frontend": "python/skimagexx/_join_segmentations.py",
+  "predecessor_raw_sha256": "77f82546eb9669b68a2f70a3caa601ce6f5e247a4b1c1547574d9c75a5a7eef3",
+  "current_raw_sha256": "33c860519b7cc40f4019854f3384caa31919c740df7261502bb01412d1abae52",
+  "current": "    # The third relabel already owns these sorted encoded labels.\n    labels_j=map_j_to_j_initial.out_values",
+  "predecessor": "    labels_j=_core.consumer_unique(j_initial)",
+  "benchmark_case_contract": "coverage/contracts/join-segmentations-benchmark-v1.json",
+  "benchmark_contract_raw_sha256": "aa69bfc3730fa0867277991e29e1a2d5556483ec627391c817f0e9e2a2d4b4c1",
+  "benchmark_driver_raw_sha256": "a1d74e213a8f5846a36a5a7e0855d67f1d536f9a311d3ebcc7a9d655c97baff6",
+  "native_source_unchanged": true,
+  "SDK_source_unchanged": true,
+  "original_budget": 0,
+  "native_profile": {
+    "path": "build/join-segmentations-losses-v1/native-profile-v1.json",
+    "sha256": "b3f13bd0caa825f9e0707093a6acf68f575da2290680f8db5879ce068b03c982",
+    "calls": 128,
+    "original_attempts": 0,
+    "runtime": "WSLCPython3.11.14/NumPy1.24.4, distinct from publishedCPython3.11.17"
+  },
+  "scope": "One frontend duplicate-sort/allocation removal for return_mapping only. Same internal sorted ndarray already owned by third relabel, reused for divmod; no returned ownership/key/map alias or ArrayMap class changes. Labels-only path unchanged. ExactArrayMap upstreamclass, SDKnonpositive/floating and unassessed/provider/platform/genuine/performance frontiers remain open."
+}

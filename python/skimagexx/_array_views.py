@@ -8,6 +8,9 @@ import numpy as np
 from numpy.lib.stride_tricks import as_strided
 from . import _core
 
+# Immutable platform metadata; avoid rebuilding dtype/iinfo per axis/call.
+_INTP_MAX = np.iinfo(np.intp).max
+
 
 def view_as_blocks(arr_in, block_shape):
     if not isinstance(block_shape, tuple):
@@ -22,8 +25,8 @@ def view_as_blocks(arr_in, block_shape):
         raise ValueError("'block_shape' is not compatible with 'arr_in'")
     if (type(arr_in) is np.ndarray and block_shape.ndim == 1
             and block_shape.dtype.kind in 'biu'
-            and all(int(b) <= np.iinfo(np.intp).max and
-                    -np.iinfo(np.intp).max-1 <= int(s)*int(b) <= np.iinfo(np.intp).max
+            and all(int(b) <= _INTP_MAX and
+                    -_INTP_MAX-1 <= int(s)*int(b) <= _INTP_MAX
                     for b,s in zip(block_shape,arr_in.strides))):
         new_shape, new_strides = _core.util_view_as_blocks(arr_in, block_shape.tolist())
     else:
@@ -59,8 +62,8 @@ def view_as_windows(arr_in, window_shape, step=1):
     indexing_strides = arr_in[slices].strides
     if (type(arr_in) is np.ndarray and window_shape.ndim == 1
             and window_shape.dtype.kind in 'biu'
-            and all(type(st) is int and 0 < st <= np.iinfo(np.intp).max
-                    and -np.iinfo(np.intp).max-1 <= int(s)*st <= np.iinfo(np.intp).max
+            and all(type(st) is int and 0 < st <= _INTP_MAX
+                    and -_INTP_MAX-1 <= int(s)*st <= _INTP_MAX
                     for st,s in zip(step,arr_in.strides))):
         new_shape, strides = _core.util_view_as_windows(arr_in, window_shape.tolist(), step)
     else:

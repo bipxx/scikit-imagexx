@@ -8,6 +8,18 @@ CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672
 def enabled_predecessor_bytes(root,name,raw):
     """One exact admitted enabled-family layer before historical shared guards."""
     raw=raw.replace(b'\r\n',b'\n')
+    active=(Path(root)/'coverage/contracts/mark-lbp-radon-util-additive-context-v1.json').read_bytes()
+    assert hashlib.sha256(active).hexdigest()=='47cee57ec955fbbe7cab192d6e948a1db0c67ceb0b71342a945f49e7fde1dd7a'
+    successor=json.loads(active)
+    assert successor['predecessor_source']=='2991881411972e6266f7e132c9dca8b7226a8567'
+    if name in successor['sources']:
+        row=successor['sources'][name]
+        assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+        for f in row['inverse_fragments']:
+            current,old=f['current'].encode(),f['predecessor'].encode()
+            assert current and raw.count(current)==1,name
+            raw=raw.replace(current,old,1)
+        assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
     body=(Path(root)/'coverage/contracts/mark-lbp-enabled-additive-context-v1.json').read_bytes()
     assert hashlib.sha256(body).hexdigest()=='79de3c7ef15cf213d5639b915956a077b16cc897c356640a9ce91d7bbcdafb5e'
     context=json.loads(body)

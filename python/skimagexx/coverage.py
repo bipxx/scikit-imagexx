@@ -15,7 +15,7 @@ NATIVE_FUNCTIONS = {
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp'),
-    'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
@@ -332,6 +332,8 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api=='transform.frt2':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
+    if api=='transform.ifrt2':return ('bool','uint8','uint16','uint32','uint64')
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
     if api=='util.crop':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
@@ -568,6 +570,10 @@ def default_call(api, image):
         labels=(np.arange(image.size,dtype=np.int64).reshape(image.shape)%3).astype(np.int16)
         labels.flags.writeable=False
         return (image,labels),{'mode':'thick'}
+    if api in ('transform.frt2','transform.ifrt2'):
+        import numpy as np
+        shape=(3,3)if api=='transform.frt2'else(4,3)
+        return (np.zeros(shape,dtype=image.dtype),),{}
     if api=='feature.draw_multiblock_lbp':
         return (image,3,3,2,2),{'lbp_code':170,'alpha':0.5}
     if api=='segmentation.join_segmentations':
@@ -1126,7 +1132,7 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
         util_views_default_error(actual,expected);return
     if api in ('util.crop','util.regular_grid'):
         util_metadata_default_error(api,actual,expected);return
-    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):
+    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp','transform.frt2','transform.ifrt2'):
         import numpy as np
         assert type(actual)is type(expected)is np.ndarray
         assert actual.shape==expected.shape and actual.dtype==expected.dtype

@@ -2,7 +2,7 @@
 import argparse,json,runpy
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v3.json'
+CONTRACT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v4.json'
 _FROZEN=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries.py'))
 case_specs=_FROZEN['case_specs'];case_bounds=_FROZEN['case_bounds']
 

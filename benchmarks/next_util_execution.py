@@ -16,7 +16,7 @@ import subprocess
 import sys
 import warnings
 
-CONTEXT='coverage/contracts/next-util-benchmark-execution-v2.json'
+CONTEXT='coverage/contracts/next-util-benchmark-execution-v3.json'
 LIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 
 
@@ -26,8 +26,8 @@ def digest(raw):return hashlib.sha256(raw).hexdigest()
 def source_bytes(path):return Path(path).read_bytes().replace(b'\r\n',b'\n')
 
 
-def historical_bytes(root,name):
-    context=json.loads((Path(root)/CONTEXT).read_bytes());row=context['sources'][name]
+def historical_bytes(root,name,section='sources'):
+    context=json.loads((Path(root)/CONTEXT).read_bytes());row=context[section][name]
     raw=source_bytes(Path(root)/name);assert digest(raw)==row['current_canonical_sha256'],name
     for fragment in row['inverse_fragments']:
         a,b=fragment['current'].encode(),fragment['predecessor'].encode()

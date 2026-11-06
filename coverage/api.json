@@ -8478,11 +8478,26 @@
       "api": "transform.frt2",
       "kind": "callable",
       "signature": "(a)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "complex64",
+        "complex128"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_finite_radon_saved_public.py::test_saved_public_strict",
+      "benchmark": "benchmarks/finite_radon_frt2_v1.py"
     },
     {
       "api": "transform.hough_circle",
@@ -8538,11 +8553,17 @@
       "api": "transform.ifrt2",
       "kind": "callable",
       "signature": "(a)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8",
+        "uint16",
+        "uint32",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_finite_radon_saved_public.py::test_saved_public_strict",
+      "benchmark": "benchmarks/finite_radon_ifrt2_v1.py"
     },
     {
       "api": "transform.integral_image",
