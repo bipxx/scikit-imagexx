@@ -1,0 +1,18 @@
+{
+  "status": "DELIVERED_VALIDATED_SCOPED_265_PATH_INCREMENT",
+  "shipping_commit": "e89c56da43081307a8374e6fcab3b30c4fb63d57",
+  "qualified_source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+  "production_blobs": 502,
+  "production_sha256": "906b5d0a24717da8cc6512d5cfec302e022a9384b89808897cc562478aef04c8",
+  "four_profile_qualification_run": 42177447898,
+  "benchmark_run": 42191638073,
+  "benchmark_cases": 28,
+  "wins": 18,
+  "losses": 10,
+  "independent_review_sha256": "7c4387bbd9baa862771f28b719d63f2746e16acccbbffb11652fac73e3c945ee",
+  "remote_main_verified": true,
+  "worktree_clean": true,
+  "remaining_goal": "Full477entries/classes/runtime/API/domain/nativeownership/SIMD/optional-global-workers and per-function one-thread superiority remain incomplete; no goal completion.",
+  "next_owner": "root and three assigned workers",
+  "next_trigger": "Measured boundary bottleneck fix; installed-grid saved-suite closure; concrete fullFENV restoration remedy before further captures. One current candidate only; reused exact scientific evidence, no unchanged rerun."
+}
