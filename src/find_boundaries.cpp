@@ -103,6 +103,69 @@ void interior_row(const T* FIND_BOUNDARIES_RESTRICT input,
     }
 }
 #undef FIND_BOUNDARIES_RESTRICT
+// Walk the admitted signed-stride lattice once. Each worker decodes its first
+// position only; contiguous/F/reversed layouts then advance by byte strides.
+// Border clamping stays literal. Interior neighbors reuse invariant offsets.
+template<class T,bool Boolean>
+void strided_regular(const ComponentsView& view,const FindBoundaryParameters& parameters,
+    std::uint8_t* output,const std::vector<std::ptrdiff_t>& output_strides,
+    std::size_t count,int workers,const std::vector<Delta>& near,const std::vector<Delta>& full) {
+    const auto rank=view.shape.size();
+    const T sentinel=std::numeric_limits<T>::max();
+    const bool inner=parameters.mode==FindBoundaryMode::inner;
+    const bool outer=parameters.mode==FindBoundaryMode::outer;
+    const bool fused=outer && parameters.connectivity==rank;
+    auto background=[&](T v){return parameters.background_representable &&
+        static_cast<std::uint64_t>(v)==parameters.background_bits;};
+    auto read=[&](std::ptrdiff_t offset){T v;std::memcpy(&v,static_cast<const char*>(view.data)+offset,sizeof(T));
+        if constexpr(Boolean)v=v!=0;return v;};
+    std::array<std::size_t,8> axes{};for(std::size_t d=0;d<rank;++d)axes[d]=d;
+    auto magnitude=[](std::ptrdiff_t s){return s<0?std::size_t(-(s+1))+1:std::size_t(s);};
+    std::sort(axes.begin(),axes.begin()+rank,[&](auto a,auto b){
+        const auto x=magnitude(view.strides[a]),y=magnitude(view.strides[b]);return x<y || (x==y && a<b);});
+    const bool has_interior=std::all_of(view.shape.begin(),view.shape.end(),[](auto n){return n>=3;});
+    auto offsets=[&](const std::vector<Delta>& neighbors){std::vector<std::ptrdiff_t> result;
+        if(has_interior)for(const auto& delta:neighbors){std::ptrdiff_t offset=0;for(std::size_t d=0;d<rank;++d)offset+=delta[d]*view.strides[d];result.push_back(offset);}return result;};
+    const auto near_offsets=offsets(near),full_offsets=fused?std::vector<std::ptrdiff_t>{}:offsets(full);
+    partition(count,workers,[&](std::size_t begin,std::size_t end,std::size_t){
+        Position p{};auto word=begin;
+        for(std::size_t i=0;i<rank;++i){auto d=axes[i];p[d]=word%view.shape[d];word/=view.shape[d];}
+        auto input_offset=offset_of(p,view.strides),output_offset=offset_of(p,output_strides);
+        for(auto index=begin;index<end;++index){
+            const auto center=read(input_offset);bool boundary=false;
+            if(!inner || !background(center)){
+                bool interior=has_interior;
+                for(std::size_t d=0;d<rank && interior;++d)interior=p[d]>0 && p[d]+1<view.shape[d];
+                auto neighbor_offset=[&](const Delta& delta){auto offset=input_offset;
+                    for(std::size_t d=0;d<rank;++d)if((delta[d]<0 && p[d])||(delta[d]>0 && p[d]+1<view.shape[d]))offset+=delta[d]*view.strides[d];return offset;};
+                T minimum=sentinel,maximum=std::numeric_limits<T>::lowest(),inverted_min=sentinel;
+                for(std::size_t k=0;k<near.size();++k){
+                    const auto value=read(interior?input_offset+near_offsets[k]:neighbor_offset(near[k]));
+                    minimum=std::min(minimum,value);maximum=std::max(maximum,value);
+                    if(fused)inverted_min=std::min(inverted_min,background(value)?sentinel:value);
+                }
+                boundary=maximum!=minimum;
+                if(outer && boundary && !background(center)){
+                    T original_max=maximum;
+                    if(!fused){original_max=std::numeric_limits<T>::lowest();
+                        for(std::size_t k=0;k<full.size();++k){
+                            const auto value=read(interior?input_offset+full_offsets[k]:neighbor_offset(full[k]));
+                            original_max=std::max(original_max,value);inverted_min=std::min(inverted_min,background(value)?sentinel:value);
+                        }
+                    }
+                    boundary=original_max!=inverted_min;
+                }
+            }
+            output[output_offset]=std::uint8_t(boundary);
+            // Update only valid positions; no one-past input/output pointer is
+            // formed, including a worker ending mid-row or at the final cell.
+            for(std::size_t i=0;i<rank;++i){const auto d=axes[i];
+                if(++p[d]<view.shape[d]){input_offset+=view.strides[d];output_offset+=output_strides[d];break;}
+                p[d]=0;input_offset-=std::ptrdiff_t(view.shape[d]-1)*view.strides[d];output_offset-=std::ptrdiff_t(view.shape[d]-1)*output_strides[d];
+            }
+        }
+    });
+}
 template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     const FindBoundaryParameters& parameters,std::uint8_t* output,
     const Shape& shape,const std::vector<std::ptrdiff_t>& strides,
@@ -139,6 +202,10 @@ template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     using U=std::make_unsigned_t<T>;const U bits=static_cast<U>(parameters.background_bits);
     T background;std::memcpy(&background,&bits,sizeof(T));
     const bool background_exists=parameters.background_representable && static_cast<std::uint64_t>(background)==parameters.background_bits;
+    if(!subpixel && !interior){
+        strided_regular<T,Boolean>(view,parameters,output,strides,output_count,team,near,full);
+        return true;
+    }
     partition(interior?shape[0]:output_count,team,[&](std::size_t begin,std::size_t end,std::size_t) {
         Position p{},q{};
         if(interior){begin*=shape[1];end*=shape[1];}

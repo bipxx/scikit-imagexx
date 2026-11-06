@@ -49,6 +49,25 @@ inline std::size_t find_boundaries_consumer(int workers) {
     check(find_boundaries_into(view,parameters,out.data(),{std::ptrdiff_t(width),1},0));
     for(auto value:out)check(value==1);
     check(get_num_threads()==workers);
+    // Exercise the signed/F traversal through the installed operation, including
+    // its background mask and full-connectivity outer formula. Logical checker
+    // labels make the expected mask independent of physical axis ordering.
+    std::vector<std::uint16_t> f_labels(height*width);
+    for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x)f_labels[x*height+y]=std::uint16_t(2+((x+y)&1));
+    const auto saved_f=f_labels;
+    ComponentsView f_view{f_labels.data()+height*(width-1),PixelType::uint16,false,false,
+        {height,width},{2,-std::ptrdiff_t(2*height)}};
+    for(auto mode:{FindBoundaryMode::inner,FindBoundaryMode::outer}){
+        parameters={mode,2,2,true};
+        const auto flags=std::fetestexcept(FE_ALL_EXCEPT),rounding=std::fegetround();
+        check(find_boundaries_into(f_view,parameters,out.data(),{std::ptrdiff_t(width),1},0));
+        check(std::fetestexcept(FE_ALL_EXCEPT)==flags && std::fegetround()==rounding);
+        for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x){
+            const auto v=f_labels[(width-1-x)*height+y];
+            check(out[y*width+x]==(mode==FindBoundaryMode::inner?v!=2:v==2));
+        }
+        check(f_labels==saved_f);check(get_num_threads()==workers);
+    }
     std::vector<std::size_t> unchanged{99};view.shape={0,2};check(!find_boundaries_shape(view,parameters.mode,unchanged));check(unchanged==std::vector<std::size_t>{99});
     return controls;
 }

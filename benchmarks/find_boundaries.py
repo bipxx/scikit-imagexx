@@ -13,7 +13,7 @@ import sys
 import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v3.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v4.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -93,29 +93,45 @@ def load_root_binding(path, raw_contract):
     return contract,binding,hashlib.sha256(raw_binding).hexdigest()
 
 
+def layout_predecessor(name, raw):
+    """Authenticate only the two independently admitted component changes."""
+    context_path=ROOT/'coverage/contracts/find-boundaries-layout-source-context-v1.json'
+    assert hashlib.sha256(context_path.read_bytes()).hexdigest()=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'
+    context=json.loads(context_path.read_bytes());item=context['sources'][name]
+    assert hashlib.sha256(raw).hexdigest()==item['current_sha256']
+    component=context['component_contract'];component_raw=(ROOT/component['path']).read_bytes()
+    assert hashlib.sha256(component_raw).hexdigest()==component['sha256']
+    for fragment in item['inverse']:
+        current,previous=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1;raw=raw.replace(current,previous,1)
+    assert hashlib.sha256(raw).hexdigest()==item['predecessor_sha256']
+    return raw
+
+
 def validate_source_closure(contract):
-    """Authenticate the Windows admission-test successor against frozen v2."""
-    successor=contract['runtime_successor']
-    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v2.json'
-    raw=(ROOT/successor['contract']).read_bytes()
-    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4'
+    """Bind the layout component without changing frozen cases or provenance."""
+    successor=contract['layout_successor'];raw=(ROOT/successor['contract']).read_bytes()
+    assert set(successor)=={'contract','sha256','context','context_sha256','added_source_pins','driver_inverse','scope'}
+    assert successor['context']=='coverage/contracts/find-boundaries-layout-source-context-v1.json' and successor['context_sha256']=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'
+    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v3.json'
+    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba'
     previous=json.loads(raw)
-    # load_root_binding already authenticates exactly these runtime fields.
     provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
-    assert {k:v for k,v in contract.items()if k not in provenance|{'source_closure','runtime_successor'}}=={k:v for k,v in previous.items()if k not in provenance|{'source_closure','runtime_successor'}}
-    assert set(contract['source_closure'])==set(previous['source_closure'])
+    excluded=provenance|{'source_closure','layout_successor'}
+    assert {k:v for k,v in contract.items()if k not in excluded}=={k:v for k,v in previous.items()if k not in excluded}
+    assert set(contract['source_closure'])==set(previous['source_closure'])|set(successor['added_source_pins'])
     for name,pin in contract['source_closure'].items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         assert hashlib.sha256(raw).hexdigest()==pin,name
-        if name=='tests/test_find_boundaries_public.py':fragments=successor['public_test_inverse']
-        elif name=='benchmarks/find_boundaries.py':fragments=successor['driver_inverse']
-        else:
-            assert pin==previous['source_closure'][name],name
-            continue
-        for fragment in fragments:
-            current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()
-            assert current and raw.count(current)==1
-            raw=raw.replace(current,predecessor,1)
+        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp'):
+            raw=layout_predecessor(name,raw)
+        elif name=='benchmarks/find_boundaries.py':
+            for fragment in successor['driver_inverse']:
+                current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()
+                assert current and raw.count(current)==1;raw=raw.replace(current,predecessor,1)
+        elif name in successor['added_source_pins']:
+            assert pin==successor['added_source_pins'][name];continue
+        else:assert pin==previous['source_closure'][name]
         assert hashlib.sha256(raw).hexdigest()==previous['source_closure'][name],name
 
 
