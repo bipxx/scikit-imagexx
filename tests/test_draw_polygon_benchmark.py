@@ -94,6 +94,9 @@ def test_current_polygon_context_preserves_historical_cases_and_driver(prospect)
     assert hashlib.sha256(historical.read_bytes()).hexdigest() == '6a40a1a7c82d534229f815296358c1e5b60fd5f5bf255b05c3d02ff7a426a636'
     assert {k:v for k,v in current.items() if k not in ('source_closure','scope','predecessor_binding')} == {k:v for k,v in old.items() if k not in ('source_closure','scope','predecessor_binding')}
     source = (ROOT / 'benchmarks/draw_polygon.py').read_text()
+    helper_spec=importlib.util.spec_from_file_location('join_draw_source_context',ROOT/'tools/join_source_context.py')
+    helper=importlib.util.module_from_spec(helper_spec);helper_spec.loader.exec_module(helper)
+    source=helper.predecessor_bytes(ROOT,'benchmarks/draw_polygon.py',source.encode()).decode()
     for fragment in current['predecessor_binding']['driver_inverse']:
         assert fragment['current'] and source.count(fragment['current']) == 1
         source = source.replace(fragment['current'],fragment['predecessor'],1)

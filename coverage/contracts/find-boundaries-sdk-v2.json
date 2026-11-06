@@ -1,0 +1,47 @@
+{
+  "schema": "find-boundaries-sdk-v1",
+  "status": "ASSEMBLED_RELOCATED_COMPONENT_PASS_PENDING_PEER_AND_SHARED_DEFAULT_WIRING",
+  "source_canonical_pins": {
+    "tests/cmake_consumer/find_boundaries_consumer.hpp": "90284ba5d93e473a63e57a9d2ba675b258c59510e7d2a62ca3b0e738b85fdf6b",
+    "tests/fixtures/find_boundaries_originals_v1.hpp": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "src/find_boundaries.cpp": "6b27086e96cda1ec7b6247920c67158d99418891a03dbfc9aab68d79f7297499"
+  },
+  "installed_target": "skimagexx::skimagexx",
+  "helper": "skimagexx_test::find_boundaries_consumer(workers)",
+  "required_sources": [
+    "tests/cmake_consumer/find_boundaries_consumer.hpp",
+    "tests/fixtures/find_boundaries_originals_v1.hpp"
+  ],
+  "required_existing_installed_headers": [
+    "skimagexx/components.hpp",
+    "skimagexx/convert.hpp",
+    "skimagexx/image.hpp"
+  ],
+  "new_installed_header": "skimagexx/find_boundaries.hpp",
+  "future_shared_route": "Existingcomponent_consumers segmentationfamily default includeshelper andcallsworkers1/4;rootintegration authorownsactualshareddefaultappend. No newfamily/count assumed.",
+  "actual_route": "Ignoredfocusedinstalledclient--find-boundaries-only, actualfind_package/exportedtarget, privateSDK94donor+header+memberoverlay =assembled95; notgenuine95.",
+  "proofs": {
+    "normal": 532320,
+    "runtime_disabled": 532320,
+    "compiler_scalar": 532320,
+    "sanitize": 532320,
+    "budget1": 266160,
+    "budget4": 266160,
+    "restored_global": 1,
+    "MSVC": "ActualclientcompileONLY"
+  },
+  "donor": "RetainedactualgenuineSDK94relocatedprefix fromdb4consumer, archiveunchangedexceptoneappendednewleafmember;176->177members; oldarchive/wheelsNOTrehashed.",
+  "required_source_guard": "tests/test_find_boundaries_sdk_scope.py",
+  "remaining": [
+    "IndependentSDKcomponentreview",
+    "Existingfamilyactualdefaultsharedwiring+extractionrequiredsources",
+    "ActualgenuinewholeSDK95/fullqualified31family campaign; no acceptancefromassembledcomponentsalone"
+  ],
+  "layout_successor": {
+    "contract": "coverage/contracts/find-boundaries-sdk-v1.json",
+    "sha256": "292ff68e95dac9fd94234215d2506dea0cb881887a8d421ba18659bc2e277864",
+    "context": "coverage/contracts/find-boundaries-layout-source-context-v1.json",
+    "context_sha256": "63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d"
+  }
+}

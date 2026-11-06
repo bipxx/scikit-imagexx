@@ -4,7 +4,7 @@ Reference: scikit-image 0.26.0.
 
 This generated table describes source declarations. See the [execution plan](EXECUTION_PLAN.md) for the exact qualified source, accepted evidence and remaining gates.
 
-477 public callable names inventoried in 20 modules; 265 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 268 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -415,7 +415,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.flood` | upstream-only | pending | pending |
 | `segmentation.flood_fill` | upstream-only | pending | pending |
 | `segmentation.inverse_gaussian_gradient` | upstream-only | pending | pending |
-| `segmentation.join_segmentations` | upstream-only | pending | pending |
+| `segmentation.join_segmentations` | native-partial | yes (partial input contract) | yes |
 | `segmentation.mark_boundaries` | upstream-only | pending | pending |
 | `segmentation.morphological_chan_vese` | upstream-only | pending | pending |
 | `segmentation.morphological_geodesic_active_contour` | upstream-only | pending | pending |
@@ -466,7 +466,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.PendingSkimage2Change` | upstream-only | pending | pending |
 | `util.apply_parallel` | upstream-only | pending | pending |
 | `util.compare_images` | native-partial | yes (partial input contract) | yes |
-| `util.crop` | upstream-only | pending | pending |
+| `util.crop` | native-partial | yes (partial input contract) | yes |
 | `util.dtype_limits` | metadata | yes (partial input contract) | yes |
 | `util.img_as_bool` | native-partial | yes (partial input contract) | yes |
 | `util.img_as_float` | native-partial | yes (partial input contract) | yes |
@@ -481,7 +481,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.map_array` | native-partial | yes (partial input contract) | yes |
 | `util.montage` | native-partial | yes (partial input contract) | yes |
 | `util.random_noise` | upstream-only | pending | pending |
-| `util.regular_grid` | upstream-only | pending | pending |
+| `util.regular_grid` | native-partial | yes (partial input contract) | yes |
 | `util.regular_seeds` | native-partial | yes (partial input contract) | yes |
 | `util.slice_along_axes` | upstream-only | pending | pending |
 | `util.unique_rows` | native-partial | yes (partial input contract) | yes |
@@ -523,3 +523,5 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.ThinPlateSplineTransform` | 5 | pending |
 | `util.FailedEstimationAccessError` | 13 | pending |
 | `util.PendingSkimage2Change` | 10 | pending |
+
+Private cumulative crop/regular_grid integration adds source-bound binary/shape defaults and complete SDK calls through the existing component-consumer family. Current source-derived scope is268 image routes/271registered,212product members/100SDK members,32families64SDK checks. These counts are source closure only. Crop coercion, allocation/order/object metadata and grid scalar FP/nonvector/object partitions retain explicit providers; serial metadata and memcpy transport do not establish SIMD/parallel speed. Exact-source genuine ownership/hot-swap/global workers, exported SDK, Windows/default-int/libm/full API and one-thread public-original performance remain pending.

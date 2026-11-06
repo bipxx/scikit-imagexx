@@ -5,6 +5,9 @@ import json
 
 
 def validate_source_closure(root, contract):
+    import importlib.util
+    helper_spec=importlib.util.spec_from_file_location('join_metric_source_context',Path(root)/'tools/join_source_context.py')
+    helper=importlib.util.module_from_spec(helper_spec);helper_spec.loader.exec_module(helper)
     root=Path(root)
     context_raw=(root/'coverage/contracts/label-pair-metrics-benchmark-context-v1.json').read_bytes().replace(b'\r\n',b'\n')
     assert hashlib.sha256(context_raw).hexdigest()=='d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1'
@@ -17,6 +20,7 @@ def validate_source_closure(root, contract):
     predecessors={}
     for path,row in context['sources'].items():
         raw=(root/path).read_bytes().replace(b'\r\n',b'\n')
+        raw=helper.predecessor_bytes(root,path,raw)
         assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],path
         for fragment in row['inverse_fragments']:
             current,previous=fragment['current'].encode(),fragment['predecessor'].encode()
@@ -26,4 +30,5 @@ def validate_source_closure(root, contract):
         predecessors[path]=raw
     for path,pin in contract['source_closure'].items():
         raw=predecessors[path]if path in predecessors else(root/path).read_bytes().replace(b'\r\n',b'\n')
+        if path=='src/label_pair_metrics.cpp':raw=helper.predecessor_bytes(root,path,raw)
         assert hashlib.sha256(raw).hexdigest()==pin,path

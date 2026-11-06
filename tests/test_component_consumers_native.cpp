@@ -1,5 +1,9 @@
 #include "skimagexx/component_consumers.hpp"
 #include "cmake_consumer/find_boundaries_consumer.hpp"
+#include "cmake_consumer/join_segmentations_consumer.hpp"
+#include "cmake_consumer/regular_grid_consumer.hpp"
+#include "cmake_consumer/crop_component_consumer.hpp"
+#include "cmake_consumer/util_views_consumer.hpp"
 #include "skimagexx/image.hpp"
 #include <skimagexx/regionprops_state.hpp>
 #include <string>
@@ -278,9 +282,13 @@ void concurrent_configuration() {
 #endif
 }
 int main(int argc,char** argv) {
+    if(argc==1){require(get_num_threads()==1);util_views_consumer();require(get_num_threads()==1);}
     if(argc==1)for(int workers:{1,4}){
         if(workers==4){try{set_num_threads(4);}catch(const std::invalid_argument&){require(get_num_threads()==1);continue;}set_num_threads(1);}
         require(skimagexx_test::find_boundaries_consumer(workers)>0);
+        require(skimagexx_test::join_segmentations_consumer(workers)>0);
+        require(skimagexx_test::regular_grid_consumer(workers)>0);
+        require(skimagexx_test::crop_component_consumer(workers)>0);
     }
     require(get_num_threads()==1);
     require(argc==1||(argc==2&&(std::string(argv[1])=="--regionprops-state-only"||std::string(argv[1])=="--regionprops-scalar-only"||std::string(argv[1])=="--regionprops-strided-only"||std::string(argv[1])=="--regionprops-coords-scaled-only")));

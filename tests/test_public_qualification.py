@@ -633,7 +633,7 @@ def test_fresh_child_tmp_path_fixture_creates_only_owned_parent(tmp_path,monkeyp
     """Real pytest tmp_path setup, with metadata admission stubbed (no images)."""
     tree=tmp_path/'source';(tree/'tests').mkdir(parents=True)
     (tree/'tests/test_owned_temporary.py').write_text('def test_owned(tmp_path):\n    p=tmp_path/"owned.txt"\n    p.write_text("ok")\n    assert p.read_text()=="ok"\n')
-    out=tmp_path/'output';out.mkdir();(out/'state.json').write_text(json.dumps({'source':{}}))
+    out=tmp_path/'output';out.mkdir();(out/'state.json').write_text(json.dumps({'source':{},'profile':'minimum'}))
     monkeypatch.setattr(q,'ROOT',tree)
     monkeypatch.setattr(q,'GROUPS',{'tooling-temp-smoke':('test_owned_temporary.py',)})
     monkeypatch.setattr(q,'source_state',lambda _: {})
@@ -2312,10 +2312,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries','join_segmentations','crop','regular_grid','array_views','slice_along_axes'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color','_find_boundaries'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color','_find_boundaries','_join_segmentations','_crop','_regular_grid','_array_views','_slice_along_axes'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2356,14 +2356,14 @@ def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,265)
+    result=q.plan(ROOT,profile,271)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current265' and result['registry']['image_count']==265
-    assert result['product_members']==206 and result['SDK_members']==97
+    assert result['product_scope']=='current271' and result['registry']['image_count']==271
+    assert result['product_members']==216 and result['SDK_members']==102
     assert result['SDK_checks']==64 and 'current32 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==120
+    assert len(result['public_groups']['public-post203'])==139
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==121
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==142
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2422,7 +2422,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current265' and result['record_verified']
+        assert result['product_scope']=='current271' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2436,7 +2436,7 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',265)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',271)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
@@ -2896,7 +2896,7 @@ def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',265)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',271)['blockers']
 
 
 @pytest.mark.parametrize('selector',(
@@ -2956,6 +2956,11 @@ def test_sdk_consumer_copy_keeps_boundary_and_metric_relative_headers(tmp_path, 
         'tests/fixtures/label_pair_metrics_originals_v1.hpp',
         'tests/fixtures/label_pair_rand_originals_v1.hpp',
         'tests/contingency_preweighted_controls.hpp',
+        'tests/cmake_consumer/join_segmentations_consumer.hpp',
+        'tests/fixtures/join_segmentations_originals_v1.hpp',
+        'tests/cmake_consumer/crop_component_consumer.hpp',
+        'tests/cmake_consumer/regular_grid_consumer.hpp',
+        'tests/fixtures/regular_grid_originals_v1.hpp',
     )
     members = {name: (ROOT / name).read_bytes() for name in required}
     members['tests/fixtures/bezier_curve_originals_v1.bin'] = b'old fixture remains copied'

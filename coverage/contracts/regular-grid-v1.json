@@ -1,0 +1,596 @@
+{
+  "schema": "regular-grid-prospective-v1",
+  "api": "util.regular_grid",
+  "signature": "(ar_shape, n_points)",
+  "status": "PROSPECTIVE_SOURCE_ONLY_NO_ORIGINAL_GO",
+  "base": "ffaaa12f7a30428fd4160c45b9ecce7b1fe2b6e5",
+  "source_canonical_lf_sha256": "64fcce3556f0cbf8cafd05a54ea3545b65b18bdcabbee25b953a21ba06875581",
+  "source_reuse": "Same pinned skimage0.26 util/_regular_grid.py as existing regular-seeds SOURCE_SHA; no new upstream copy or original call.",
+  "cases": [
+    {
+      "id": "ordinary1d",
+      "api": "util.regular_grid",
+      "shape": [
+        17
+      ],
+      "points": 6,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "doc2d",
+      "api": "util.regular_grid",
+      "shape": [
+        20,
+        40
+      ],
+      "points": 8,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "dense2d",
+      "api": "util.regular_grid",
+      "shape": [
+        20,
+        40
+      ],
+      "points": 32,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "doc3d",
+      "api": "util.regular_grid",
+      "shape": [
+        3,
+        20,
+        40
+      ],
+      "points": 8,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "axis-permutation",
+      "api": "util.regular_grid",
+      "shape": [
+        40,
+        3,
+        20
+      ],
+      "points": 8,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "thin-axes",
+      "api": "util.regular_grid",
+      "shape": [
+        1,
+        1,
+        100
+      ],
+      "points": 10,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "singleton",
+      "api": "util.regular_grid",
+      "shape": [
+        1
+      ],
+      "points": 1,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "equal-axes",
+      "api": "util.regular_grid",
+      "shape": [
+        3,
+        3,
+        8
+      ],
+      "points": 7,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "rank8",
+      "api": "util.regular_grid",
+      "shape": [
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5
+      ],
+      "points": 12,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "half-even-down",
+      "api": "util.regular_grid",
+      "shape": [
+        25
+      ],
+      "points": 10,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "half-even-up",
+      "api": "util.regular_grid",
+      "shape": [
+        35
+      ],
+      "points": 10,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "half-even-2d",
+      "api": "util.regular_grid",
+      "shape": [
+        25,
+        25
+      ],
+      "points": 100,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "one-point",
+      "api": "util.regular_grid",
+      "shape": [
+        13,
+        17
+      ],
+      "points": 1,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "full-grid",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 35,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "excess-points",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 100,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "fractional-points",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6.5,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "small-fraction-error",
+      "api": "util.regular_grid",
+      "shape": [
+        5
+      ],
+      "points": 0.5,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "zero-count",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 0,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "negative-count",
+      "api": "util.regular_grid",
+      "shape": [
+        5
+      ],
+      "points": -2,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "negative-zero-step",
+      "api": "util.regular_grid",
+      "shape": [
+        5
+      ],
+      "points": -20,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "empty-shape",
+      "api": "util.regular_grid",
+      "shape": [],
+      "points": 1,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "empty-shape-zero",
+      "api": "util.regular_grid",
+      "shape": [],
+      "points": 0,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "zero-axis",
+      "api": "util.regular_grid",
+      "shape": [
+        0,
+        7
+      ],
+      "points": 0,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "negative-dimension",
+      "api": "util.regular_grid",
+      "shape": [
+        -1,
+        7
+      ],
+      "points": 6,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "float-dimensions",
+      "api": "util.regular_grid",
+      "shape": [
+        5.0,
+        7.0
+      ],
+      "points": 6,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "bool-dimensions",
+      "api": "util.regular_grid",
+      "shape": [
+        true,
+        true
+      ],
+      "points": 1,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "bool-count",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": true,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "large-safe-early",
+      "api": "util.regular_grid",
+      "shape": [
+        9007199254740992
+      ],
+      "points": 9007199254740992,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "huge-object-early",
+      "api": "util.regular_grid",
+      "shape": [
+        1208925819614629174706176
+      ],
+      "points": 1267650600228229401496703205376,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "positive-inf-early",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": {
+        "float": "inf"
+      },
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "negative-inf-zero-step",
+      "api": "util.regular_grid",
+      "shape": [
+        5
+      ],
+      "points": {
+        "float": "-inf"
+      },
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "none-count",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": null,
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "list",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6,
+      "carrier": "list",
+      "dtype": null,
+      "policy": {}
+    },
+    {
+      "id": "array-i16",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6,
+      "carrier": "array",
+      "dtype": "int16",
+      "policy": {}
+    },
+    {
+      "id": "array-u64",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6,
+      "carrier": "array",
+      "dtype": "uint64",
+      "policy": {}
+    },
+    {
+      "id": "array-f32",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6,
+      "carrier": "array",
+      "dtype": "float32",
+      "policy": {}
+    },
+    {
+      "id": "array-reversed-readonly",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6,
+      "carrier": "reversed-readonly",
+      "dtype": "int64",
+      "policy": {}
+    },
+    {
+      "id": "array-swapped",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6,
+      "carrier": "array",
+      "dtype": ">i2",
+      "policy": {}
+    },
+    {
+      "id": "array-metadata",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": 6,
+      "carrier": "metadata",
+      "dtype": "int64",
+      "policy": {}
+    },
+    {
+      "id": "scalar-shape",
+      "api": "util.regular_grid",
+      "shape": 5,
+      "points": 6,
+      "carrier": "scalar",
+      "policy": {}
+    },
+    {
+      "id": "rank2-shape-prefix",
+      "api": "util.regular_grid",
+      "shape": [
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "points": 8,
+      "carrier": "rank2",
+      "policy": {}
+    },
+    {
+      "id": "numpy-count",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": {
+        "scalar": "int64",
+        "value": 6
+      },
+      "carrier": "tuple",
+      "policy": {}
+    },
+    {
+      "id": "numpy-zero-warn",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": {
+        "scalar": "float64",
+        "value": 0
+      },
+      "carrier": "tuple",
+      "policy": {
+        "divide": "warn"
+      }
+    },
+    {
+      "id": "numpy-zero-raise",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": {
+        "scalar": "float64",
+        "value": 0
+      },
+      "carrier": "tuple",
+      "policy": {
+        "divide": "raise"
+      }
+    },
+    {
+      "id": "numpy-zero-call",
+      "api": "util.regular_grid",
+      "shape": [
+        5,
+        7
+      ],
+      "points": {
+        "scalar": "float64",
+        "value": 0
+      },
+      "carrier": "tuple",
+      "policy": {
+        "divide": "call"
+      }
+    }
+  ],
+  "maximum_fixture_elements": 32,
+  "maximum_fixture_rank": 2,
+  "original_call_budget_before_GO": 0,
+  "original_observations": {},
+  "acceptance": {
+    "owner": "regular_grid family author",
+    "passed": [
+      "Pinned0.26source reused/read without original calls",
+      "BothretainedWindows sourceguards correctedPASS; originaldocstring-index setupfailure preserved",
+      "45 NumPy-only factory/codec intakes PASS on1.24.4 and2.5.4 withoriginal/native imports refused; no algorithm calls"
+    ],
+    "pending": [
+      "Independent safety/interface GO before any original capture or native implementation",
+      "Once-only original outputs/errors/warnings/FP/input/axis/scalar-type evidence after GO",
+      "Native arithmetic/scalar ownership policy, installed SDK and hot-swap, one-thread public performance, exact-source release qualification",
+      "Observer actualcall/FENV/lifecycle validation and source-faithful numerical/FP ownership require independentGO; observer not executed against original"
+    ],
+    "failed": []
+  },
+  "source_order": [
+    "asanyarray",
+    "len",
+    "argsort twice then sorted dims",
+    "prod then Pythonfloat",
+    "space<=points early full-slice return",
+    "root-derived f64 steps",
+    "anisotropic drop loop and suffix products",
+    "floor division by2 then intp starts",
+    "round ties-even then intp steps",
+    "axis inverse -> tuple of slice(start,None,step)"
+  ],
+  "safety_partition": {
+    "ordinary": "Small metadata vectors only; no image allocation/indexing. Bounded finite positive shapes/products<=2^53 and positivepoints; source loops bounded by rank.",
+    "prefix_errors": "Scalarshape len; None comparison; builtinzero division; emptyshape lowcount and rank2 scalarassignment error paths; no image access.",
+    "negative_and_nonfinite": "Negative1d points produce bounded finite negative/zero slice steps; never apply slices. +Inf points earlyreturn; -Inf point produces finite signedzero quotient/step. NaN/sNaN and invalidfloat-to-int conversions excluded.",
+    "numpy_zero": "NumPyfloat64 zero points emits divide warnings/FPcallback or raises; source anisotropy loop reaches Python exponent denominator0 BEFORE starts/steps integer casts. All vectors bounded; capture only after independent review.",
+    "large": "2^53exact and builtinobject2^80 dimensions paired with greatercounts force earlyfullslice before root/cast; source metadata vectorlength1, no imageallocation/productoverflow."
+  },
+  "deferred": [
+    "NaN/sNaN shape or point conversion to integer",
+    "product overflow or float-to-int overflow",
+    "arbitrary user callbacks/subclasses",
+    "forged or concurrently mutated storage",
+    "unbounded rank/containers"
+  ],
+  "normalization": "No input mutation; preserve slice component np.intp scalar type/raw words versus full None fields. Platform/runtime promotion and power/rounding are not declared owned yet.",
+  "reuse": {
+    "existing_consumer": "python/skimagexx/_regular_seeds.py remains unchanged original-grid provider; root later integrates owned grid after parity.",
+    "axis_representation": "RegularSeedsAxis normalized start/step/count reused by existing consumer after grid metadata construction; no image primitive reimplementation.",
+    "parallel": "Tiny ordered metadata does not justify artificial SIMD/worker machinery. Native serial disposition and default-global nonmutation required."
+  },
+  "scope": "Source/interface/prospective only, no public/native/API-count/SDK/performance credit. Full signature retained; arbitraryprotocols/unsafeconversion/overflow domains stay explicitly open.",
+  "next_gate": {
+    "owner": "root or independent safety reviewer",
+    "trigger": "Frozen source-safe packet plus original-refused intake evidence",
+    "action": "Review case safety/source-order and interface, issue explicit GO before any original/native implementation/build/timing."
+  },
+  "closeout_before_safety_GO": {
+    "result": "Prospectiveonly; no original/native/builder/timing dispatched",
+    "failure": "Initial pure source-order index accidentally matched docstring len(ar_shape); corrected to executable AST statements only. Twofailing source receipts retained; NumPyfixture intake was independent/unaffected and reused.",
+    "reuse": "Existing64fcce official source andRegularSeedsAxis/consumer boundaries retained; no recapture or imageallocation",
+    "next_owner": "root/independent safety reviewer",
+    "next_trigger": "Review frozen45case safety/interface/zero-original receipts and issue explicitGO beforeoriginal/nativework"
+  }
+}

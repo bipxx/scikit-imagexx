@@ -1,0 +1,83 @@
+{
+  "schema": "join-additive-source-context-v1",
+  "predecessor_source": "f13ae5ba01680c40f8ee0ae42153bd9480119ab1",
+  "scope": "Exact additive JOIN wiring only; restore immutable metrics/drawing source closures, never cases/method/timing/core provenance.",
+  "sources": {
+    "CMakeLists.txt": {
+      "current_canonical_lf_sha256": "a88584a606a0f316ecb8543697d8b4df49882217fe4015437c07aa1eba8c3b45",
+      "predecessor_canonical_lf_sha256": "f371d1523ec28b5b8277ff3bee24540176424b8b52b9513ce93b1b2401f49985",
+      "inverse_fragments": [
+        {
+          "current": "set_source_files_properties(src/label_pair_metrics.cpp src/bind_label_pair_metrics.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")\n    set_source_files_properties(src/join_segmentations.cpp src/bind_join_segmentations.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")",
+          "predecessor": "set_source_files_properties(src/label_pair_metrics.cpp src/bind_label_pair_metrics.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")"
+        },
+        {
+          "current": "set_source_files_properties(src/label_pair_metrics.cpp src/bind_label_pair_metrics.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")\n    set_source_files_properties(src/join_segmentations.cpp src/bind_join_segmentations.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")",
+          "predecessor": "set_source_files_properties(src/label_pair_metrics.cpp src/bind_label_pair_metrics.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")"
+        },
+        {
+          "current": "target_sources(_core PRIVATE src/bind_draw_set_color.cpp src/bind_label_pair_metrics.cpp src/bind_find_boundaries.cpp)\n    target_sources(_core PRIVATE src/bind_join_segmentations.cpp)",
+          "predecessor": "target_sources(_core PRIVATE src/bind_draw_set_color.cpp src/bind_label_pair_metrics.cpp src/bind_find_boundaries.cpp)"
+        },
+        {
+          "current": "target_sources(skimagexx PRIVATE src/draw_set_color.cpp src/label_pair_metrics.cpp src/find_boundaries.cpp)\ntarget_sources(skimagexx PRIVATE src/join_segmentations.cpp)",
+          "predecessor": "target_sources(skimagexx PRIVATE src/draw_set_color.cpp src/label_pair_metrics.cpp src/find_boundaries.cpp)"
+        }
+      ]
+    },
+    "src/bindings.cpp": {
+      "current_canonical_lf_sha256": "3c6c05e1a9dd689df59e84efdb4880795be002ac6a599a846734e2e805b66725",
+      "predecessor_canonical_lf_sha256": "56bf7652f661f15fec61a2f7e2a41568828e491e1ff6e71ec9d2e48f7077422c",
+      "inverse_fragments": [
+        {
+          "current": "    bind_find_boundaries(m);\n    bind_join_segmentations(m);",
+          "predecessor": "    bind_find_boundaries(m);"
+        },
+        {
+          "current": "void bind_find_boundaries(pybind11::module_&);\nvoid bind_join_segmentations(pybind11::module_&);",
+          "predecessor": "void bind_find_boundaries(pybind11::module_&);"
+        }
+      ]
+    },
+    "python/skimagexx/coverage.py": {
+      "current_canonical_lf_sha256": "93a5239b1984a56898a6c09092d907b65f90f3408ba8971838c59a7cebbd4aa3",
+      "predecessor_canonical_lf_sha256": "0d4397e680201ecc4ead7884c6f5ea4adc6b85750fa081ccebcac97c882090a0",
+      "inverse_fragments": [
+        {
+          "current": "'segmentation.clear_border','segmentation.relabel_sequential','segmentation.join_segmentations'):",
+          "predecessor": "'segmentation.clear_border','segmentation.relabel_sequential'):"
+        },
+        {
+          "current": "def join_segmentations_default_error(actual,expected):\n    import numpy as np\n    assert type(actual)is type(expected)is np.ndarray\n    assert actual.dtype.str==expected.dtype.str and actual.dtype.descr==expected.dtype.descr\n    assert actual.dtype.metadata==expected.dtype.metadata and actual.shape==expected.shape and actual.strides==expected.strides\n    for name in ('owndata','writeable','aligned','c_contiguous','f_contiguous'):\n        assert getattr(actual.flags,name)==getattr(expected.flags,name)\n    assert type(actual.base)is type(expected.base)and actual is not expected and not np.shares_memory(actual,expected)\n    assert actual.tobytes(order='C')==expected.tobytes(order='C')\n    return 0.\n\n\ndef assert_default_parity(api, dtype, actual, expected, *, image=None):\n    if api=='segmentation.join_segmentations':\n        join_segmentations_default_error(actual,expected);return",
+          "predecessor": "def assert_default_parity(api, dtype, actual, expected, *, image=None):"
+        },
+        {
+          "current": "    if api=='segmentation.join_segmentations':\n        import numpy as np\n        return (np.array([0,0,1,1,2,2,3,3],dtype=image.dtype).reshape(2,4),\n                np.array([0,1,1,0,0,1,1,0],dtype=image.dtype).reshape(2,4)),{}\n    if api=='segmentation.relabel_sequential':return (image,),{'offset':3}",
+          "predecessor": "    if api=='segmentation.relabel_sequential':return (image,),{'offset':3}"
+        },
+        {
+          "current": "    if api=='segmentation.join_segmentations':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')\n    if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')",
+          "predecessor": "    if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')"
+        },
+        {
+          "current": "'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations')",
+          "predecessor": "'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries')"
+        }
+      ]
+    },
+    "benchmarks/draw_polygon.py": {
+      "current_canonical_lf_sha256": "dbd9e78fc57d17f5b60f5197cdea5b0477f3ca15cd093451b019400ce19d860f",
+      "predecessor_canonical_lf_sha256": "b049d18c67d8d2a3ebc02015fad2931f3768cbe2c6a2e830c6c87d6055dc8c82",
+      "inverse_fragments": [
+        {
+          "current": "        raw = (ROOT / name).read_bytes().replace(b'\\r\\n', b'\\n')\n        raw = helper.predecessor_bytes(ROOT,name,raw)",
+          "predecessor": "        raw = (ROOT / name).read_bytes().replace(b'\\r\\n', b'\\n')"
+        },
+        {
+          "current": "    import importlib.util\n    helper_spec=importlib.util.spec_from_file_location('join_polygon_source_context',ROOT/'tools/join_source_context.py')\n    helper=importlib.util.module_from_spec(helper_spec);helper_spec.loader.exec_module(helper)\n    binding = contract['predecessor_binding']",
+          "predecessor": "    binding = contract['predecessor_binding']"
+        }
+      ]
+    }
+  }
+}

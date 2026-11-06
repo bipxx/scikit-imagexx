@@ -6973,11 +6973,21 @@
       "api": "segmentation.join_segmentations",
       "kind": "callable",
       "signature": "(s1, s2, return_mapping: bool = False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_join_segmentations_integration.py",
+      "benchmark": "benchmarks/join_segmentations.py",
+      "default_input_kind": "Frozen2x4binary integer fields; positive original factor only. Partial native stages/composedintegerSDK; NumPy scalar promotion and existing owned ArrayMap providers; nonpositive/floatingSDK/exactupstreamclass/genuineownership/performance gates remain open."
     },
     {
       "api": "segmentation.mark_boundaries",
@@ -9068,11 +9078,27 @@
       "api": "util.crop",
       "kind": "callable",
       "signature": "(ar, crop_width, copy=False, order='K')",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "complex64",
+        "complex128"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_util_metadata_integration.py",
+      "benchmark": "benchmarks/crop.py",
+      "default_input_kind": "Bounded fixed metadata inputs with actual requested dtype; cached references authenticate actual source/arguments/options. Crop view/copy and serial grid arithmetic are partial native; coercion/allocation/object/scalar/FP providers, Windows/type domains and genuine/performance gates remain explicit."
     },
     {
       "api": "util.dtype_limits",
@@ -9264,11 +9290,24 @@
       "api": "util.regular_grid",
       "kind": "callable",
       "signature": "(ar_shape, n_points)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_util_metadata_integration.py",
+      "benchmark": "benchmarks/regular_grid.py",
+      "default_input_kind": "Bounded fixed metadata inputs with actual requested dtype; cached references authenticate actual source/arguments/options. Crop view/copy and serial grid arithmetic are partial native; coercion/allocation/object/scalar/FP providers, Windows/type domains and genuine/performance gates remain explicit."
     },
     {
       "api": "util.regular_seeds",
@@ -9288,11 +9327,27 @@
       "api": "util.slice_along_axes",
       "kind": "callable",
       "signature": "(image, slices, axes=None, copy=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "complex64",
+        "complex128"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_util_views_integration.py",
+      "benchmark": "benchmarks/slice_along_axes.py",
+      "default_input_kind": "Frozen live4x5/4x6 ndarray requests in actual requested dtype; exact source/input/options saved references. Native integral geometry/POD slice copy; NumPy validation/base-chain/readonly/dtype/object/protocol providers and partial platform/performance scope remain explicit."
     },
     {
       "api": "util.unique_rows",
@@ -9312,21 +9367,53 @@
       "api": "util.view_as_blocks",
       "kind": "callable",
       "signature": "(arr_in, block_shape)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "complex64",
+        "complex128"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_util_views_integration.py",
+      "benchmark": "benchmarks/array_views.py",
+      "default_input_kind": "Frozen live4x5/4x6 ndarray requests in actual requested dtype; exact source/input/options saved references. Native integral geometry/POD slice copy; NumPy validation/base-chain/readonly/dtype/object/protocol providers and partial platform/performance scope remain explicit."
     },
     {
       "api": "util.view_as_windows",
       "kind": "callable",
       "signature": "(arr_in, window_shape, step=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "complex64",
+        "complex128"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_util_views_integration.py",
+      "benchmark": "benchmarks/array_views.py",
+      "default_input_kind": "Frozen live4x5/4x6 ndarray requests in actual requested dtype; exact source/input/options saved references. Native integral geometry/POD slice copy; NumPy validation/base-chain/readonly/dtype/object/protocol providers and partial platform/performance scope remain explicit."
     }
   ]
 }

@@ -10,7 +10,7 @@ import pytest
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def contract():return json.loads((ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v3.json').read_bytes())
+def contract():return json.loads((ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v5.json').read_bytes())
 
 
 def test_find_boundaries_benchmark_source_pins_and_sampler():
@@ -55,24 +55,20 @@ runpy.run_path(sys.argv[0],run_name='__main__')
 
 
 def test_boundary_external_binding_preserves_original_driver_and_contract():
-    c=contract();successor=c['runtime_successor'];raw=(ROOT/successor['contract']).read_bytes()
-    assert hashlib.sha256(raw).hexdigest()==successor['sha256']
-    current=json.loads(raw)
-    assert {k:v for k,v in c.items()if k not in ('source_closure','runtime_successor')}=={k:v for k,v in current.items()if k not in ('source_closure','runtime_successor')}
-    driver=runpy.run_path(str(ROOT/'benchmarks/find_boundaries.py'))
-    driver['validate_source_closure'](c)
-    binding=c['predecessor_binding'];raw=(ROOT/binding['contract']).read_bytes()
-    assert hashlib.sha256(raw).hexdigest()==binding['sha256']
-    old=json.loads(raw)
-    assert {k:v for k,v in c.items() if k not in ('source_closure','predecessor_binding','runtime_successor')}=={k:v for k,v in old.items() if k!='source_closure'}
-    assert set(c['source_closure'])==set(old['source_closure'])
-    for name,pin in old['source_closure'].items():
-        if name not in ('benchmarks/find_boundaries.py','tests/test_find_boundaries_public.py'):assert c['source_closure'][name]==pin
+    c=contract();driver=runpy.run_path(str(ROOT/'benchmarks/find_boundaries.py'));driver['validate_source_closure'](c)
+    v4=json.loads((ROOT/c['f_row_successor']['contract']).read_bytes())
+    v3=json.loads((ROOT/v4['layout_successor']['contract']).read_bytes())
+    v2=json.loads((ROOT/v3['runtime_successor']['contract']).read_bytes())
+    old=json.loads((ROOT/v3['predecessor_binding']['contract']).read_bytes())
+    chain=[c['f_row_successor']['driver_inverse'],v4['layout_successor']['driver_inverse'],v3['runtime_successor']['driver_inverse'],v2['runtime_successor']['driver_inverse'],v3['predecessor_binding']['driver_inverse']]
     raw=(ROOT/'benchmarks/find_boundaries.py').read_bytes().replace(b'\r\n',b'\n')
-    for fragment in successor['driver_inverse']+current['runtime_successor']['driver_inverse']+binding['driver_inverse']:
-        current,previous=fragment['current'].encode(),fragment['predecessor'].encode()
-        assert current and raw.count(current)==1;raw=raw.replace(current,previous,1)
+    for fragments in chain:
+        for fragment in fragments:
+            current,previous=fragment['current'].encode(),fragment['predecessor'].encode()
+            assert current and raw.count(current)==1;raw=raw.replace(current,previous,1)
     assert hashlib.sha256(raw).hexdigest()==old['source_closure']['benchmarks/find_boundaries.py']
+    for key in ('cases','sampler','method_sha256','first_cohort_gate','excluded'):
+        assert c[key]==v4[key]==v3[key]==v2[key]==old[key]
 
 
 @pytest.mark.parametrize('fault',('none','none-cached','cases','basepin','source','runtimepin','stager','GO','CMake','bound-cases','bound-method'))
@@ -108,7 +104,7 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
         assert {k:v for k,v in effective.items()if k not in changed}=={k:v for k,v in base.items()if k not in changed}
         assert raw_contract==driver.CONTRACT.read_bytes() and path.read_bytes()==raw_binding
         # Use real immutable closure bytes with the existing inert provenance envelope.
-        for name in (*base['source_closure'],base['runtime_successor']['contract']):
+        for name in (*base['source_closure'],base['runtime_successor']['contract'],base['layout_successor']['contract'],base['f_row_successor']['contract']):
             target=tmp_path/name;target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes((ROOT/name).read_bytes())
         if fault=='bound-cases':effective['cases']=[]
@@ -148,7 +144,7 @@ def test_boundary_portability_successor_rejects_changed_context(fault):
     if fault=='cases':value['cases']=[]
     elif fault=='method':value['method_sha256']='0'*64
     elif fault=='public-pin':value['source_closure']['tests/test_find_boundaries_public.py']='0'*64
-    else:value['runtime_successor']['driver_inverse'][0]['current']='absent active driver path'
+    else:value['f_row_successor']['driver_inverse'][0]['current']='absent active driver path'
     with pytest.raises(AssertionError):driver['validate_source_closure'](value)
 
 
@@ -158,5 +154,13 @@ def test_boundary_successor_contracts_are_required_qualification_sources():
                  'coverage/contracts/find-boundaries-frontend-v2.json',
                  'coverage/contracts/find-boundaries-benchmark-binding-v1.json',
                  'coverage/contracts/find-boundaries-benchmark-binding-v2.json',
-                 'coverage/contracts/find-boundaries-benchmark-binding-v3.json'):
+                 'coverage/contracts/find-boundaries-benchmark-binding-v3.json',
+                 'coverage/contracts/find-boundaries-benchmark-binding-v4.json',
+                 'coverage/contracts/find-boundaries-frontend-v3.json',
+                 'coverage/contracts/find-boundaries-sdk-v2.json',
+                 'coverage/contracts/find-boundaries-layout-source-context-v1.json',
+                 'coverage/contracts/find-boundaries-benchmark-binding-v5.json',
+                 'coverage/contracts/find-boundaries-frontend-v4.json',
+                 'coverage/contracts/find-boundaries-sdk-v3.json',
+                 'coverage/contracts/find-boundaries-f-row-source-context-v1.json'):
         assert qualifier['DRAW_SOURCE_PATHS'].count(name)==1

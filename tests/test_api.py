@@ -266,16 +266,107 @@ def contingency_float_reference():
     return reference
 
 
+@pytest.fixture(scope='module')
+def join_reference_rows():
+    # No original calls: validate the actual request and the actual original
+    # module before reusing admitted rows. Error equivalence is source-derived,
+    # not identical-input capture: bool/float defaults keep BOTH requested dtypes.
+    import ast,base64,hashlib,json,warnings,zlib
+    from pathlib import Path
+    from draw_coordinates_observer import encode
+    root=Path(__file__).parent
+    raw=(root/'fixtures/join_segmentations_originals_v1.json').read_bytes()
+    assert hashlib.sha256(raw).hexdigest()=='0cb7da5d981bf95eb8895278bf9acc638ba3acd236625c48a00aa632a1b0a340'
+    data=json.loads(raw);profile='minimum'if np.__version__.startswith('1.')else'modern'
+    assert np.__version__==data['profiles'][profile]['runtime']['numpy']
+    source_hash=data['profiles'][profile]['runtime']['source_sha256']
+    assert source_hash=='8d1da1717bf35818f57156f88a94cd84a9527f48aff16d60e250b7d8045cd8be'
+    rows={row['id'].split('/')[-1]:row for row in data['profiles'][profile]['rows']};cached={}
+    def reference(args,options,source_path):
+        source=Path(source_path).read_bytes().replace(b'\r\n',b'\n')
+        assert hashlib.sha256(source).hexdigest()==source_hash
+        assert type(args)is tuple and len(args)==2 and type(options)is dict and options=={}
+        assert all(type(a)is np.ndarray for a in args)
+        dtype=args[0].dtype
+        assert dtype==args[1].dtype and dtype.metadata is None
+        assert dtype.name in ('int8','uint8','int16','uint16','int32','uint32','int64','uint64','bool','float16','float32','float64')
+        # Validate full physical metadata and words, not merely dtype or a
+        # default_call reconstructed from the same implementation under test.
+        frozen=(np.array([0,0,1,1,2,2,3,3],dtype=dtype).reshape(2,4),
+                np.array([0,1,1,0,0,1,1,0],dtype=dtype).reshape(2,4))
+        actual_input=encode(args,np)
+        assert actual_input==encode(frozen,np)
+        if dtype.kind in 'bf':
+            row=rows['bool-left'if dtype.kind=='b'else'float-left']
+            assert row['input_before']==row['input_after'] and not row['warnings'] and not row['FP_events']
+            assert row['error']==['builtins','TypeError','label_field must have an integer dtype']
+            # Exact pinned source: equal shape -> first relabel(s1). Relabel's
+            # offset/min/unique/arange-or-concatenate prefix reads s1 only, then
+            # rejects its non-integer kind. s2 DATA/DTYPE and return_mapping
+            # are unread before this error. No map_array/native/provider call.
+            tree=ast.parse(source)
+            join=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='join_segmentations')
+            relabel=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='relabel_sequential')
+            body=join.body[1:]
+            assert ast.unparse(body[0].test)=='s1.shape != s2.shape'
+            assert ast.unparse(body[1].value)=='relabel_sequential(s1)'
+            prefix=relabel.body[1:9]
+            assert [type(n).__name__ for n in prefix]==['If','If','Assign','Assign','If','Assign','If','Assign']
+            assert ast.unparse(prefix[0].test)=='offset <= 0' and ast.unparse(prefix[1].test)=='np.min(label_field) < 0'
+            assert ast.unparse(prefix[3].value)=='np.unique(label_field)'
+            assert ast.unparse(prefix[5].value)=='label_field.dtype'
+            assert ast.unparse(prefix[6].test)=="input_type.kind not in 'iu'"
+            # Bounded NumPy-only prefix intake. These are source-derived
+            # intermediate checks, never claimed as captured original outputs.
+            state=np.geterr(),np.geterrcall(),np.getbufsize()
+            with warnings.catch_warnings(record=True)as observed:
+                warnings.simplefilter('always')
+                assert args[0].shape==args[1].shape and np.min(args[0])==0
+                unique=np.unique(args[0]);assert unique.tolist()==([False,True]if dtype.kind=='b'else[0.,1.,2.,3.])
+                out=np.concatenate([[0],np.arange(1,len(unique))])
+                assert out.tolist()==list(range(len(unique))) and dtype.kind not in 'iu'
+            assert not observed and state==(np.geterr(),np.geterrcall(),np.getbufsize())
+            assert encode(args,np)==actual_input
+            return None,row['error'],'SOURCE_DERIVED_EARLY_ERROR_EQUIVALENCE'
+        name=dtype.name+'-labels';row=rows[name];gold=row['result']
+        assert actual_input==row['input_before']['items'][0]
+        # Omitted flag binds to the pinned signature's False default; captured
+        # integer rows supplied False explicitly, except the int8 omission row.
+        assert row['input_before']['items'][1]in ({},{'return_mapping':False})
+        assert join_signature_default_false(source)
+        if name not in cached:
+            payload=zlib.decompress(base64.b64decode(gold['raw_zlib_base64']))
+            assert hashlib.sha256(payload).hexdigest()==gold['raw_sha256']
+            cached[name]=np.frombuffer(payload,np.dtype(gold['dtype'])).reshape(gold['shape']).copy()
+        assert encode(cached[name],np)==gold
+        return cached[name],None,'IDENTICAL_CAPTURED_ARRAYS_EFFECTIVE_FALSE_OPTION'
+    def join_signature_default_false(source):
+        function=next(n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef)and n.name=='join_segmentations')
+        return len(function.args.defaults)==1 and isinstance(function.args.defaults[0],ast.Constant)and function.args.defaults[0].value is False
+    return reference
+
+
 @pytest.mark.parametrize('native,original,name,dtype,shape', VALUE_CASES,
                          ids=[f'{n.__name__}.{name}-{np.dtype(dtype).name}-{shape}'
                               for n, _, name, dtype, shape in VALUE_CASES])
-def test_every_native_function(native, original, name, dtype, shape, monkeypatch, contingency_float_reference):
+def test_every_native_function(native, original, name, dtype, shape, monkeypatch, contingency_float_reference, join_reference_rows):
     rng = np.random.default_rng(15)
     api = native.__name__.split('.', 1)[1]+'.'+name
     a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
+        if api == 'segmentation.join_segmentations':
+            args,options=default_call(api,a)
+            _,error,scope=join_reference_rows(args,options,inspect.getsourcefile(getattr(original,name)))
+            assert scope=='SOURCE_DERIVED_EARLY_ERROR_EQUIVALENCE'
+            before=np.geterr(),np.geterrcall(),np.getbufsize()
+            assert error[:2]==['builtins','TypeError']
+            with pytest.raises(TypeError) as actual:getattr(native,name)(*args,**options)
+            assert str(actual.value)==error[2]
+            assert before==(np.geterr(),np.geterrcall(),np.getbufsize())
+            join_reference_rows(args,options,inspect.getsourcefile(getattr(original,name)))
+            return
         if api == 'metrics.contingency_table':
             # Float labels use the declared SciPy structural CSR suffix, not
             # the integer native counting entry or whole-function fallback.
@@ -325,6 +416,38 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
+        from util_views_reference import reference
+        from crop_observer import encode
+        before=encode((args,options),np)
+        expected,scope,row=reference(api,args,options,inspect.getsourcefile(getattr(original,name)),np)
+        actual=getattr(native,name)(*args,**options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected)
+        assert np.shares_memory(actual,args[0])and actual is not args[0]
+        assert encode((args,options),np)==before
+        return
+    if api in ('util.crop','util.regular_grid'):
+        from util_metadata_reference import reference
+        from crop_observer import encode as crop_encode
+        from regular_grid_observer import encode as grid_encode
+        encode=crop_encode if api=='util.crop'else grid_encode
+        before=(encode(args,np),dict(options))
+        expected,scope,row=reference(api,args,options,inspect.getsourcefile(getattr(original,name)),np)
+        actual=getattr(native,name)(*args,**options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected)
+        if api=='util.crop':
+            assert np.shares_memory(actual,args[0]) and actual is not args[0]
+            assert actual.ctypes.data==args[0].ctypes.data and actual.base is args[0].base
+        assert (encode(args,np),dict(options))==before
+        reference(api,args,options,inspect.getsourcefile(getattr(original,name)),np)
+        return
+    if api=='segmentation.join_segmentations':
+        expected,error,scope=join_reference_rows(args,options,inspect.getsourcefile(getattr(original,name)));assert error is None
+        assert scope=='IDENTICAL_CAPTURED_ARRAYS_EFFECTIVE_FALSE_OPTION'
+        actual=getattr(native,name)(*args,**options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
+        join_reference_rows(args,options,inspect.getsourcefile(getattr(original,name))) # inputs and cached storage unchanged
+        return
     if api=='draw.set_color':
         expected=set_color_default_result(getattr(original,name),args,options)
         actual=set_color_default_result(getattr(native,name),args,options)

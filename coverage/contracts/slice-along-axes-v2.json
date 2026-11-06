@@ -1,0 +1,4672 @@
+{
+  "api": "util.slice_along_axes",
+  "signature": "(image, slices, axes=None, copy=False)",
+  "state": "SOURCE_TEST_FIRST_NO_ORIGINAL_GO",
+  "base_revision": "a5d22d3f5c761dbcd8cecdb495274666c9df3c35",
+  "upstream": {
+    "version": "0.26.0",
+    "module": "skimage.util._slice_along_axes",
+    "public": "skimage.util.slice_along_axes",
+    "fixture": "tests/fixtures/slice_along_axes_upstream_v026.py.txt",
+    "raw_sha256": "1a75717aa0236c350b51cdbb79d8787411d7151bec2dcd335a474823b2be1bac",
+    "canonical_lf_sha256": "1a75717aa0236c350b51cdbb79d8787411d7151bec2dcd335a474823b2be1bac",
+    "profiles": [
+      "minimum",
+      "modern"
+    ]
+  },
+  "source_dependencies_raw_sha256": {
+    "tests/slice_along_axes_contract.py": "531d65cb5a15cba2d51ca5d7e1d02192de63710918e735ab8cd1a5bfdb0c113d",
+    "tests/slice_along_axes_observer.py": "b150a02d5b0f840a999bc0a2c1e58bfc239b62bb63471e1e741488f0e3d61b4b",
+    "tests/test_slice_along_axes_reference.py": "223e6290e2b137873a459dd6204f0db2e8c10f8c652dba62682668d5df933e86",
+    "tests/test_slice_along_axes_intake.py": "a0b723d3649a1b3c1be51c299a5bc500e2948de97e7ec291e6b980e778c5e3bc",
+    "tests/fixtures/slice_along_axes_upstream_v026.py.txt": "1a75717aa0236c350b51cdbb79d8787411d7151bec2dcd335a474823b2be1bac",
+    "include/skimagexx/slice_along_axes.hpp": "ee700666e63a0ad2bdc088e9a1b5030865d77f70848c9e5ca20ad7d0803c6a5f",
+    "benchmarks/slice_along_axes.py": "672b64ba3ccb19018429b881820d5121ca16b9466cc6b03e80cfab3de6fbd66b",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549"
+  },
+  "cases": [
+    {
+      "id": "slice_along_axes/ordinary-default",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/two-axis",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              4
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/explicit-axis1",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              4
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          1
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axis-order",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              3
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          1,
+          0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/full-view",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              4
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              5
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-result",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/upper-equality",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              4,
+              4
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-slices-list",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": 1180591620717411303424,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-slices-tuple",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "tuple",
+        "items": []
+      },
+      "axes": 1180591620717411303424,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-slices-none",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": null,
+      "axes": 1180591620717411303424,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-slices-false",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": false,
+      "axes": 1180591620717411303424,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-slices-zero",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": 0,
+      "axes": 1180591620717411303424,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-slices-string",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": "",
+      "axes": 1180591620717411303424,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/empty-array-slices",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "array": "int64",
+        "items": []
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-true",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": true,
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-int",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": 1,
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-string",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": "ab",
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-flat-pair",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          0,
+          2
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-pair-short",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "list",
+            "items": [
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-pair-long",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "list",
+            "items": [
+              0,
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-pair-none",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          null
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bad-slices-ambiguous-array",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "array": "int64",
+        "items": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-tuple",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "tuple",
+        "items": [
+          0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-range",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "axis_range": [
+          0,
+          1
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-negative",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          -1
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-outside",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          2
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-huge",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          1180591620717411303424
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-bool-false",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          false
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-bool-true",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          true
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-scalar-int",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": 0,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-scalar-numpy",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "np_scalar": "int64",
+        "value": 0
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-scalar-float",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": 0.0,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-string",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": "0",
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-empty",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": []
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-float-index",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          0.0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-unhashable",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          {
+            "container": "list",
+            "items": [
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-numpy-order",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "array": "int64",
+        "items": [
+          0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-numpy-float",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "array": "float64",
+        "items": [
+          0.0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-duplicate",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          0,
+          0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-duplicate-negative",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          -1,
+          -1
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-duplicate-bool",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          false,
+          0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/too-many-default",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-negative-start",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              -1,
+              4
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-negative-stop",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              -1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-negative-both",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              -3,
+              -1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-overnegative",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              -9,
+              -5
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-wrapped-order",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              -1,
+              0
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-ordering",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              3,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-stop-outside",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              6
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-huge-stop",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1180591620717411303424
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-huge-start",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1180591620717411303424,
+              1180591620717411303425
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-huge-negative",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              -1180591620717411303424,
+              -1180591620717411303422
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-none-start",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              null,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-none-stop",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              null
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-float",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0.5,
+              2.5
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-numpy-int",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "np_scalar": "int64",
+                "value": 1
+              },
+              {
+                "np_scalar": "int64",
+                "value": 3
+              }
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bounds-numpy-uint",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "np_scalar": "uint64",
+                "value": 1
+              },
+              {
+                "np_scalar": "uint64",
+                "value": 3
+              }
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/zero-axis",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        0,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/zero-axis-negative",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        0,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              -1,
+              0
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/zero-axis-numpy-warn",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        0,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "np_scalar": "int64",
+                "value": -1
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {
+        "divide": "warn"
+      }
+    },
+    {
+      "id": "slice_along_axes/zero-axis-numpy-call",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        0,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "np_scalar": "int64",
+                "value": -1
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {
+        "divide": "call"
+      }
+    },
+    {
+      "id": "slice_along_axes/zero-axis-numpy-raise",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        0,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "np_scalar": "int64",
+                "value": -1
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {
+        "divide": "raise"
+      }
+    },
+    {
+      "id": "slice_along_axes/rank-0",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/rank-1",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        7
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/rank-3",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/rank-4",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        2,
+        2
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/zeroD-nonempty",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-F-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-F-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-transpose-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "transpose",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-transpose-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "transpose",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-reverse_rows-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_rows",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-reverse_rows-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_rows",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-reverse_columns-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_columns",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-reverse_columns-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_columns",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-reverse_all-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_all",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-reverse_all-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_all",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-step_all-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "step_all",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-step_all-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "step_all",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-permute3-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "permute3",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/layout-permute3-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "permute3",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/readonly-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": true,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/readonly-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": true,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-bool",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-int8",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-uint8",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-uint16",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-int32",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-uint32",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-int64",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-uint64",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-float16",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-float32",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-float64",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-complex64",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-complex128",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-S3",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "S3",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-U2",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "U2",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-V3",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "V3",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-packed",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "packed",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-object",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-datetime64[D]",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "datetime64[D]",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-timedelta64[D]",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "timedelta64[D]",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-tagged_i16",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "tagged_i16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/dtype-big_endian_i16",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "big_endian_i16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-dtype-object",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-dtype-packed",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "packed",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-dtype-complex128",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-dtype-tagged_i16",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "tagged_i16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-dtype-S3",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "S3",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-dtype-U2",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "U2",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-dtype-V3",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "V3",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-list",
+      "api": "util.slice_along_axes",
+      "input_kind": "list",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-list",
+      "api": "util.slice_along_axes",
+      "input_kind": "list",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-tuple",
+      "api": "util.slice_along_axes",
+      "input_kind": "tuple",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-tuple",
+      "api": "util.slice_along_axes",
+      "input_kind": "tuple",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-python_scalar",
+      "api": "util.slice_along_axes",
+      "input_kind": "python_scalar",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-python_scalar",
+      "api": "util.slice_along_axes",
+      "input_kind": "python_scalar",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-numpy_scalar",
+      "api": "util.slice_along_axes",
+      "input_kind": "numpy_scalar",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-numpy_scalar",
+      "api": "util.slice_along_axes",
+      "input_kind": "numpy_scalar",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-subclass",
+      "api": "util.slice_along_axes",
+      "input_kind": "subclass",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-subclass",
+      "api": "util.slice_along_axes",
+      "input_kind": "subclass",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-array_provider",
+      "api": "util.slice_along_axes",
+      "input_kind": "array_provider",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-array_provider",
+      "api": "util.slice_along_axes",
+      "input_kind": "array_provider",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-array_provider_error",
+      "api": "util.slice_along_axes",
+      "input_kind": "array_provider_error",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-array_provider_error",
+      "api": "util.slice_along_axes",
+      "input_kind": "array_provider_error",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-interface_provider",
+      "api": "util.slice_along_axes",
+      "input_kind": "interface_provider",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-interface_provider",
+      "api": "util.slice_along_axes",
+      "input_kind": "interface_provider",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-memoryview",
+      "api": "util.slice_along_axes",
+      "input_kind": "memoryview",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-memoryview",
+      "api": "util.slice_along_axes",
+      "input_kind": "memoryview",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/input-distinct_objects",
+      "api": "util.slice_along_axes",
+      "input_kind": "distinct_objects",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-distinct_objects",
+      "api": "util.slice_along_axes",
+      "input_kind": "distinct_objects",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-truth-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": {
+        "bool_probe": false
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-truth-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": {
+        "bool_probe": true
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-truth-raise",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-array-ambiguous",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": {
+        "array": "int64",
+        "items": [
+          1,
+          0
+        ]
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/copy-error-after-getitem",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0.5,
+              2.5
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/identity-none-image",
+      "api": "util.slice_along_axes",
+      "input_kind": "python_none",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": []
+      },
+      "axes": 1180591620717411303424,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/nonempty-none-image",
+      "api": "util.slice_along_axes",
+      "input_kind": "python_none",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/slice-sequence",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "sequence": "slices",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axes-sequence",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "sequence": "axes",
+        "items": [
+          0
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bound-probe-None",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "bound_probe": 1,
+                "failure": null
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bound-probe-compare",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "bound_probe": 1,
+                "failure": "compare"
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bound-probe-mod",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "bound_probe": -1,
+                "failure": "mod"
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/bound-probe-index",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "bound_probe": 1,
+                "failure": "index"
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axis-probe-None",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          {
+            "axis_probe": 0,
+            "failure": null
+          }
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axis-probe-hash",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          {
+            "axis_probe": 0,
+            "failure": "hash"
+          }
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axis-probe-compare",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          {
+            "axis_probe": 0,
+            "failure": "compare"
+          }
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axis-probe-index",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          {
+            "axis_probe": 0,
+            "failure": "index"
+          }
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/axis-probe-duplicate",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      "axes": {
+        "container": "list",
+        "items": [
+          {
+            "axis_probe": 0,
+            "failure": null
+          },
+          {
+            "axis_probe": 0,
+            "failure": null
+          }
+        ]
+      },
+      "copy": false,
+      "mutation": false,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/image-probe-view-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {},
+      "image_result": "view"
+    },
+    {
+      "id": "slice_along_axes/image-probe-view-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {},
+      "image_result": "view"
+    },
+    {
+      "id": "slice_along_axes/image-probe-owned-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {},
+      "image_result": "owned"
+    },
+    {
+      "id": "slice_along_axes/image-probe-owned-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {},
+      "image_result": "owned"
+    },
+    {
+      "id": "slice_along_axes/image-probe-list-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {},
+      "image_result": "list"
+    },
+    {
+      "id": "slice_along_axes/image-probe-list-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {},
+      "image_result": "list"
+    },
+    {
+      "id": "slice_along_axes/image-probe-raise-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": false,
+      "policy": {},
+      "image_result": "raise"
+    },
+    {
+      "id": "slice_along_axes/image-probe-raise-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "image_probe",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": false,
+      "policy": {},
+      "image_result": "raise"
+    },
+    {
+      "id": "slice_along_axes/mutation-False",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": true,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/mutation-True",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": true,
+      "mutation": true,
+      "policy": {}
+    },
+    {
+      "id": "slice_along_axes/mutation-readonly",
+      "api": "util.slice_along_axes",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": true,
+      "slices": {
+        "container": "list",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              3
+            ]
+          }
+        ]
+      },
+      "axes": null,
+      "copy": false,
+      "mutation": true,
+      "policy": {}
+    }
+  ],
+  "original_observations": {},
+  "source_safety": {
+    "original_calls": 0,
+    "max_logical_elements": 256,
+    "max_physical_elements": 4096,
+    "max_retained_object_slots": 512,
+    "max_rank": 4,
+    "max_axis_extent": 8
+  },
+  "capture_plan": {
+    "current_authorized_original_calls": 0,
+    "proposed_cases_per_profile": 161,
+    "proposed_two_profile_total": 322,
+    "protocol": "One public topcall per recipe/profile only after independent safety and root GO; existing durable begin/end journal, no retry after consumption. Freeze controller/source/GO/setup before calls. Actual retained-runtime native Windows Git locator required at frozen Git-dependent entry point. Restore full controller FENV between cases; preserve immediate target flags, warnings and callbacks. No native or timing."
+  },
+  "semantics": [
+    "False slices returns exact image immediately, before image attributes, axes or copy truth; copy=True does not override identity.",
+    "No order keyword. axes documented int is not accepted by the nonempty implementation because len(axes) is required. Negative axes rejected.",
+    "Default axes spans ndim and may be longer than slices; only too many slices rejects. Explicit axes length must equal slices length. Uniqueness checked before range.",
+    "Zip slices and axes in supplied order. Pair unpacking and protocol operations remain observable. Negative bounds use modulo dimension before order and range checks, including zero-dimension remainder behavior.",
+    "Order rejects a>b after modulo. Range checks a<0 or b>dimension; no generic Python clamp normalization. Float/None/scalar errors preserve source phase.",
+    "Image indexed once with full-rank tuple of basic slices. Copy truth evaluated after getitem. Copy occurs only if requested and result.base is not None, using result.copy() default C. Owned custom results skip copying.",
+    "No asarray/provider computation is inserted. Preserve exact error class/text, events, warnings, FP policy and callbacks; object copy is shallow. Sharing, identity, relative offsets and declared mutation are separately observed."
+  ],
+  "SDK": {
+    "state": "PROSPECTIVE_DECLARATION_NO_COMPILE_OR_IMPLEMENTATION",
+    "operation": "slice_along_axes(CropView, vector<SliceAlongAxesPair>, optional axes pointer, copy) -> SliceAlongAxesResult",
+    "reused_geometry": {
+      "symbols": [
+        "CropView",
+        "CropPlan",
+        "crop_view",
+        "crop_copy_into"
+      ],
+      "dependency": "Admitted util-crop candidate header absent from this main base; root must integrate or authorize exact overlay after GO."
+    },
+    "result": "Identity/view/owned-C-copy tag, CropPlan and owned byte storage with copy/move-safe accessor; complete named operation rather than test-side composition.",
+    "boundary": "Explicit ordinary POD typed storage/metadata; source pair/axes order, modulo and bounds; empty-slices identity shortcut before normalization. No general type engine, provider registry, artificial SIMD or worker pool. Object/provider/Python protocols and platform intp are explicit frontend/full-parity gates."
+  },
+  "benchmark": {
+    "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+    "sampler": "tools/montage_sustained.py:measure",
+    "threads": 1,
+    "repeat": 7,
+    "warmup_groups_each": 1,
+    "case_count": 8,
+    "original_calls": 0
+  },
+  "remaining_gates": [
+    "Independent source safety and root original GO",
+    "Frozen one-shot controller actual entry locator/setup and bounded reference capture",
+    "Independent raw original admission",
+    "Native/public hot-swap implementation and dtype/provider/domain parity",
+    "Actual exported installed SDK complete operation and ownership/alias checks",
+    "Default1 and applicable worker/scalar/SIMD disclosures",
+    "Genuine exact-source product admission and one-thread public original benchmark GO/evidence",
+    "Exact-source four-profile release qualification and root integration/delivery"
+  ],
+  "schema": "slice-along-axes-implementation-source-context-v2",
+  "predecessor": {
+    "path": "coverage/contracts/slice-along-axes-v1.json",
+    "sha256": "497d15cf1b5c59f0df9e767f8c91f52b3d8af66e25d2bb4e622c88ae534058e2",
+    "scope": "Historical proposal/capture source; immutable. Current declaration/observer locator changed after native GO."
+  },
+  "saved_observations": {
+    "path": "tests/fixtures/util_views_originals_v1.json",
+    "sha256": "8a6378b76d9ca724e5f228de5a1d1d2b0e4735b61921d9515ef1f07c26fbb3c3",
+    "root_raw_admission_sha256": "63bb915f2a1e5b395594347560a2e2177470a6d5ce783b3e7e3d2e140d590678",
+    "remaining_original_budget": 0
+  }
+}

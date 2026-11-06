@@ -1,0 +1,44 @@
+{
+  "schema": "util-views-fenv-source-context-v1",
+  "status": "TEST_ONLY_SOURCE_BUILT_ENVELOPE_PENDING_INDEPENDENT_ADMISSION",
+  "base": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48",
+  "source_pins_raw_sha256": {
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed"
+  },
+  "helper_C_source_sha256": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+  "baseline_public_raw_sha256": "191a5a24ce99a66cf01474f56a3a83a148af3faa29981dcfc3ec087e3848a09c",
+  "public_FP_inverse": {
+    "current": "def captured_FP_call(call, expected):\n    # Identical reference_fenv_restore envelope, with explicit genuine/private binding.\n    from util_views_fenv import captured_call\n    return captured_call(call, expected)\n",
+    "baseline": "def captured_FP_call(call, expected):\n    # Establish the observed *incoming* flags at the actual target boundary;\n    # inherited pytest/codec flags are not an API output. The separate envelope\n    # preserves all32 caller bytes using the previously admitted Linux helper.\n    import os\n    helper_path=Path(os.environ['UTIL_VIEWS_FENV_HELPER'])\n    import hashlib\n    assert hashlib.sha256(helper_path.read_bytes()).hexdigest()=='0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220'\n    libc=ctypes.CDLL(None);helper=ctypes.CDLL(str(helper_path))\n    libc.fegetenv.argtypes=[ctypes.c_void_p];libc.fegetenv.restype=ctypes.c_int\n    for name in ('feclearexcept','feraiseexcept','fesetround','fetestexcept'):\n        getattr(libc,name).argtypes=[ctypes.c_int];getattr(libc,name).restype=ctypes.c_int\n    libc.fegetround.argtypes=[];libc.fegetround.restype=ctypes.c_int\n    helper.reference_fenv_restore.argtypes=[ctypes.c_void_p,ctypes.c_size_t];helper.reference_fenv_restore.restype=ctypes.c_int\n    def run(*args,**options):\n        saved=(ctypes.c_uint32*8)();assert libc.fegetenv(ctypes.byref(saved))==0\n        try:\n            assert libc.feclearexcept(0x3d)==0\n            assert libc.feraiseexcept(expected['fenv_before']['flags'])==0\n            assert libc.fesetround(expected['fenv_before']['rounding'])==0\n            before=dict(flags=libc.fetestexcept(0x3d),rounding=libc.fegetround())\n            try:return call(*args,**options)\n            finally:\n                after=dict(flags=libc.fetestexcept(0x3d),rounding=libc.fegetround())\n                assert before==expected['fenv_before'] and after==expected['fenv_after']\n        finally:\n            assert helper.reference_fenv_restore(ctypes.byref(saved),32)==0\n            actual=(ctypes.c_uint32*8)();assert libc.fegetenv(ctypes.byref(actual))==0 and bytes(actual)==bytes(saved)\n    return run\n"
+  },
+  "original_budget": 0,
+  "product_algorithm_changes": 0,
+  "gold_case_method_changes": 0,
+  "ABI": [
+    32,
+    0,
+    4,
+    8,
+    12,
+    20,
+    28,
+    8
+  ],
+  "scope": "Trusted current-thread empty saved x87 stack, masked exceptions, Linux x86_64 little-endian glibc fenv_t32 and MXCSRoffset28; no x87 register DATA/general machine state or Windows claim.",
+  "modes": {
+    "private-fixed-v1": "Old UTIL_VIEWS_FENV_HELPER0c40 mode preserved/default only when no source-built receipt.",
+    "source-built-v1": "Explicit MODE + actual RECEIPT and SHA256 required; legacy HELPER forbidden. Current emitted library/source/compiler/header/control receipt authenticated before target; no hardcoded emitted hash."
+  },
+  "prepare_command": "python tests/util_views_fenv_build.py --output <new absolute ignored helper-directory> [--control-python <actual interpreter> ...]",
+  "environment": {
+    "UTIL_VIEWS_FENV_MODE": "source-built-v1",
+    "UTIL_VIEWS_FENV_RECEIPT": "<absolute helper-directory>/receipt.json",
+    "UTIL_VIEWS_FENV_RECEIPT_SHA256": "<actual digest printed by builder>"
+  },
+  "collector": "Retain entire helper-directory recursively, including current emitted .so, receipt/command/compiler header copies/actual control records/source copies and stdout/stderr. No product core/SDK rebuild.",
+  "integration_source_guard": "Current public test raw hash differs from historical util-view-operations-v1.json. project_public_source applies this exact FP-only inverse and asserts historical56ec hash; all other pins/cases/golds/math unchanged. C/root own source guard reader integration and genuine workflow/collector."
+}

@@ -100,6 +100,9 @@ def checked_output(actual, expected, buffers, np, snapshot, bound, coordinates):
 
 def validate_source_closure(contract):
     """Authenticate the metrics additions against the frozen drawing closure."""
+    import importlib.util
+    helper_spec=importlib.util.spec_from_file_location('join_polygon_source_context',ROOT/'tools/join_source_context.py')
+    helper=importlib.util.module_from_spec(helper_spec);helper_spec.loader.exec_module(helper)
     binding = contract['predecessor_binding']
     assert binding['contract'] == 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'
     predecessor_raw = (ROOT / binding['contract']).read_bytes()
@@ -111,6 +114,7 @@ def validate_source_closure(contract):
     assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == 'f24de5ec75cf8a864446b5fe8a345cd86a3681aecb79adc5b4a8ea76b1e00e0e'
     for name, pin in contract['source_closure'].items():
         raw = (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
+        raw = helper.predecessor_bytes(ROOT,name,raw)
         assert hashlib.sha256(raw).hexdigest() == pin
         if name == 'CMakeLists.txt':
             for fragment in fragments:

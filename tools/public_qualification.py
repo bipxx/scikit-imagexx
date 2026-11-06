@@ -291,7 +291,7 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current265'
+CURRENT_PRODUCT_SCOPE = 'current271'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics')
 CURRENT_SDK_CLIENT_SCOPE = 'current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
@@ -492,6 +492,7 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
 )
 DRAW_SOURCE_PATHS += ('include/skimagexx/label_pair_metrics.hpp', 'src/label_pair_metrics.cpp', 'src/bind_label_pair_metrics.cpp', 'python/skimagexx/_label_pair_metrics.py', 'python/skimagexx/_contingency_table.py', 'tests/label_pair_metrics_contract.py', 'tests/label_pair_metrics_observer.py', 'tests/test_label_pair_metrics_reference.py', 'tests/test_label_pair_metrics_counts_binding.py', 'tests/test_label_pair_rand_binding.py', 'tests/test_label_pair_rand_public.py', 'tests/test_contingency_table_public.py', 'tests/test_label_pair_metrics_default.py', 'tests/test_label_pair_metrics_benchmark.py', 'tests/test_label_pair_metrics_benchmark_intake.py', 'tests/test_label_pair_metrics_native.cpp', 'tests/test_label_pair_rand_native.cpp', 'tests/test_label_pair_preweighted_native.cpp', 'tests/label_pair_metrics_native_controls.hpp', 'tests/contingency_preweighted_controls.hpp', 'tests/contingency_table_context.py', 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp', 'tests/cmake_consumer/label_pair_metrics_consumer.cpp', 'coverage/contracts/label-pair-metrics-v1.json', 'coverage/contracts/label-pair-metrics-native-v1.json', 'coverage/contracts/label-pair-metrics-sdk-v1.json', 'coverage/contracts/label-pair-rand-native-v1.json', 'coverage/contracts/contingency-table-frontend-v1.json', 'coverage/contracts/contingency-table-source-context-v1.json', 'coverage/contracts/label-pair-metrics-benchmark-v1.json', 'coverage/contracts/label-pair-metrics-benchmark-context-v1.json', 'tools/label_pair_benchmark_context.py', 'benchmarks/label_pair_metrics.py', 'third_party/scipy-sparse-LICENSE.txt', 'coverage/contracts/label-pair-ARE-metadata-context-v1.json', 'tests/test_ellipse_fallback_policy.py', 'coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json')
 DRAW_SOURCE_PATHS += ('include/skimagexx/find_boundaries.hpp', 'src/find_boundaries.cpp', 'src/bind_find_boundaries.cpp', 'python/skimagexx/_find_boundaries.py', 'tests/find_boundaries_contract.py', 'tests/find_boundaries_observer.py', 'tests/test_find_boundaries_reference.py', 'tests/test_find_boundaries_frontend_contract.py', 'tests/test_find_boundaries_intake.py', 'tests/test_find_boundaries_public.py', 'tests/test_find_boundaries_native.cpp', 'tests/test_find_boundaries_sdk_scope.py', 'tests/test_find_boundaries_benchmark.py', 'tests/test_find_boundaries_benchmark_intake.py', 'tests/test_find_boundaries_default.py', 'tests/cmake_consumer/find_boundaries_consumer.hpp', 'tests/fixtures/find_boundaries_originals_v1.hpp', 'coverage/contracts/find-boundaries-v1.json', 'coverage/contracts/find-boundaries-native-v1.json', 'coverage/contracts/find-boundaries-frontend-v1.json', 'coverage/contracts/find-boundaries-sdk-v1.json', 'coverage/contracts/find-boundaries-benchmark-v1.json', 'coverage/contracts/find-boundaries-benchmark-binding-v1.json', 'coverage/contracts/find-boundaries-frontend-v2.json', 'coverage/contracts/find-boundaries-benchmark-binding-v2.json', 'coverage/contracts/find-boundaries-benchmark-binding-v3.json', 'benchmarks/find_boundaries.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/find-boundaries-frontend-v3.json','coverage/contracts/find-boundaries-sdk-v2.json','coverage/contracts/find-boundaries-benchmark-binding-v4.json','coverage/contracts/find-boundaries-layout-source-context-v1.json','coverage/contracts/find-boundaries-layout-optimization-v1.json','tests/test_find_boundaries_layout.cpp','tests/test_find_boundaries_layout_public.py','tests/test_find_boundaries_layout_contract.py','tests/test_find_boundaries_layout_integration.py')
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
@@ -591,7 +592,7 @@ GROUPS = {
                       'test_matrix_transform_numpy124_skylakex_certificate.py','test_matrix_prescott_public.py'),
     'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
     'public-MaxTree-fixes': ('test_max_tree_dtype_metadata.py', 'test_max_tree_sdk_oracle.py'),
-    'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py', 'test_find_boundaries_public.py', 'test_find_boundaries_intake.py', 'test_find_boundaries_benchmark_intake.py', 'test_find_boundaries_default.py'),
+    'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py', 'test_find_boundaries_public.py', 'test_find_boundaries_intake.py', 'test_find_boundaries_benchmark_intake.py', 'test_find_boundaries_default.py', 'test_find_boundaries_layout_public.py', 'test_find_boundaries_f_rows_public.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
     'metrics-policies': ('test_metrics_reductions.py',),
@@ -618,7 +619,46 @@ POST203_TESTS = ('test_find_boundaries_reference.py','test_find_boundaries_front
 )
 
 
+POST203_TESTS += ('test_find_boundaries_layout_public.py','test_find_boundaries_layout_integration.py')
+
 POST203_TESTS += ('test_label_pair_metrics_reference.py', 'test_label_pair_metrics_counts_binding.py', 'test_label_pair_rand_binding.py', 'test_label_pair_rand_public.py', 'test_contingency_table_public.py', 'test_label_pair_metrics_default.py', 'test_label_pair_metrics_benchmark.py', 'test_label_pair_metrics_benchmark_intake.py')
+
+
+POST203_TESTS += ('test_join_segmentations_public.py','test_join_segmentations_integration.py','test_join_segmentations_native_contract.py','test_join_segmentations_benchmark.py')
+
+
+DRAW_SOURCE_PATHS += ('include/skimagexx/join_segmentations.hpp','src/join_segmentations.cpp','src/bind_join_segmentations.cpp','python/skimagexx/_join_segmentations.py','tests/cmake_consumer/join_segmentations_consumer.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/join_segmentations_sdk_fixture.py','tests/test_join_segmentations_public.py','tests/test_join_segmentations_integration.py','tests/test_join_segmentations_native_contract.py','tests/test_join_segmentations_benchmark.py','tests/test_join_integration_source.py','coverage/contracts/join-segmentations-native-v1.json','coverage/contracts/join-segmentations-native-v2.json','coverage/contracts/join-segmentations-benchmark-v1.json')
+
+
+DRAW_SOURCE_PATHS += ('tools/join_source_context.py','coverage/contracts/join-additive-source-context-v1.json')
+
+
+DRAW_SOURCE_PATHS += ('benchmarks/crop.py', 'coverage/contracts/crop-benchmark-v1.json', 'coverage/contracts/crop-native-v1.json', 'include/skimagexx/crop.hpp', 'python/skimagexx/_crop.py', 'src/bind_crop.cpp', 'src/crop.cpp', 'tests/cmake_consumer/crop_consumer.cpp', 'tests/crop_copy_diagnostic.cpp', 'tests/test_crop_benchmark.py', 'tests/test_crop_native.cpp', 'tests/test_crop_public.py', 'benchmarks/regular_grid.py', 'coverage/contracts/regular-grid-benchmark-v1.json', 'coverage/contracts/regular-grid-native-v1.json', 'coverage/contracts/regular-grid-v1.json', 'include/skimagexx/regular_grid.hpp', 'python/skimagexx/_regular_grid.py', 'src/bind_regular_grid.cpp', 'src/regular_grid.cpp', 'tests/cmake_consumer/regular_grid_consumer.hpp', 'tests/fixtures/regular_grid_originals_v1.hpp', 'tests/fixtures/regular_grid_originals_v1.json', 'tests/regular_grid_contract.py', 'tests/regular_grid_observer.py', 'tests/regular_grid_sdk_fixture.py', 'tests/test_regular_grid_benchmark.py', 'tests/test_regular_grid_native.cpp', 'tests/test_regular_grid_native_contract.py', 'tests/test_regular_grid_public.py', 'tests/test_regular_grid_reference.py', 'tests/test_regular_grid_saved_v1.py', 'tests/cmake_consumer/crop_component_consumer.hpp', 'tests/util_metadata_reference.py', 'tests/test_util_metadata_integration.py', 'tests/test_util_metadata_source.py', 'coverage/contracts/util-metadata-additive-context-v1.json')
+POST203_TESTS += ('test_crop_public.py','test_util_metadata_integration.py')
+
+
+DRAW_SOURCE_PATHS += ('tests/crop_contract.py', 'tests/crop_observer.py', 'tests/fixtures/crop_originals_v1.json', 'tests/fixtures/crop_upstream_v0_26.py.txt', 'coverage/contracts/crop-v1.json', 'tests/test_crop_reference.py', 'tests/test_crop_saved_reference.py')
+POST203_TESTS += ('test_util_metadata_source.py','test_crop_benchmark.py','test_regular_grid_native_contract.py','test_regular_grid_benchmark.py')
+
+
+DRAW_SOURCE_PATHS += ('tests/test_dtype_aliases.py','tests/test_dtype_metadata.py')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/regular-grid-native-v2.json','coverage/contracts/regular-grid-public-integration-context-v1.json')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/label-pair-density-optimization-v1.json', 'tests/test_label_pair_density_contract.py', 'tests/test_label_pair_density_native.cpp', 'tests/test_label_pair_density_public.py', 'benchmarks/next-metrics-minimum-initial-v1/label_pair_metrics.json', 'coverage/contracts/find-boundaries-f-row-optimization-v1.json', 'tests/test_find_boundaries_f_rows.cpp', 'tests/test_find_boundaries_f_rows_public.py', 'benchmarks/next-metrics-minimum-initial-v1/find_boundaries.json', 'benchmarks/array_views.py', 'benchmarks/slice_along_axes.py', 'coverage/contracts/slice-along-axes-v1.json', 'coverage/contracts/slice-along-axes-v2.json', 'coverage/contracts/util-array-views-v1.json', 'coverage/contracts/util-view-operations-v1.json', 'include/skimagexx/array_views.hpp', 'include/skimagexx/slice_along_axes.hpp', 'python/skimagexx/_array_views.py', 'python/skimagexx/_slice_along_axes.py', 'src/bind_util_views.cpp', 'src/util_views.cpp', 'tests/array_views_contract.py', 'tests/array_views_observer.py', 'tests/cmake_consumer/util_views_consumer.cpp', 'tests/cmake_consumer/util_views_consumer.hpp', 'tests/fixtures/array_views_observer_captured_v1.py.txt', 'tests/fixtures/array_views_upstream_v026.py.txt', 'tests/fixtures/slice_along_axes_observer_captured_v1.py.txt', 'tests/fixtures/slice_along_axes_upstream_v026.py.txt', 'tests/fixtures/util_views_originals_v1.json', 'tests/slice_along_axes_contract.py', 'tests/slice_along_axes_observer.py', 'tests/test_array_views_intake.py', 'tests/test_array_views_reference.py', 'tests/test_slice_along_axes_intake.py', 'tests/test_slice_along_axes_reference.py', 'tests/test_util_views_native.cpp', 'tests/test_util_views_public.py', 'tests/test_util_views_source.py', 'tests/util_views_reference.py', 'tests/test_util_views_integration.py', 'tests/test_join_util_views_density_source.py')
+POST203_TESTS += ('test_label_pair_density_public.py','test_find_boundaries_f_rows_public.py','test_util_views_integration.py','test_join_util_views_density_source.py')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-density-additive-context-v1.json', 'coverage/contracts/find-boundaries-f-row-source-context-v1.json', 'coverage/contracts/find-boundaries-benchmark-binding-v5.json', 'coverage/contracts/find-boundaries-frontend-v4.json', 'coverage/contracts/find-boundaries-sdk-v3.json')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-fenv-v1.json', 'tests/test_util_views_fenv.py', 'tests/util_views_fenv.py', 'tests/util_views_fenv_build.py', 'tests/util_views_fenv_probe.py', 'tests/util_views_fenv_restore.c')
+
+
+DRAW_SOURCE_PATHS += ('benchmarks/join_segmentations.py', 'benchmarks/next_util_execution.py', 'coverage/contracts/next-util-benchmark-execution-v1.json', 'tests/next_util_benchmark_support.py', 'tests/test_next_util_benchmark_execution.py', 'tests/test_next_util_benchmark_factories.py', 'coverage/contracts/next-util-benchmark-execution-v2.json')
+POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_execution.py','test_next_util_benchmark_factories.py')
 
 
 def groups_for_source(root):
@@ -632,6 +672,16 @@ def groups_for_source(root):
         groups['public-post203'] = POST203_TESTS
         groups['public-polygon-intake'] = ('test_draw_polygon_benchmark_intake.py',)
     return groups
+
+
+def applicable_public_groups(groups,profile):
+    """Keep all global gates; add full Linux captured-grid parity explicitly."""
+    require(profile in PROFILES,'unknown public-group profile')
+    selected=dict(groups)
+    if 'public-post203' in selected and profile!='windows':
+        selected['public-regular-grid-saved-linux']=('test_regular_grid_public.py',)
+        selected['public-util-views-saved-linux']=('test_util_views_public.py',)
+    return selected
 
 
 GROUPS = groups_for_source(ROOT)
@@ -852,7 +902,7 @@ def plan(root, profile, expected=None):
     for name in R6_SOURCE_PATHS:
         if not (root / name).is_file():
             blockers.append('missing required R6 source: ' + name)
-    groups = groups_for_source(root)
+    groups = applicable_public_groups(groups_for_source(root),profile)
     for name in [n for group in groups.values() for n in group] + ['test_arraymap_dense_contracts.py']:
         if not (root / 'tests' / name.split('::')[0]).is_file():
             blockers.append('missing required test: ' + name)
@@ -887,6 +937,8 @@ def plan(root, profile, expected=None):
                     and registry['image_count'] == len(contract['image_paths']), 'current registry has unmapped or stale image API scope')
             require(set(groups.get('public-post203', ())) == set(POST203_TESTS), 'current dedicated qualification group missing/stale')
             require(groups.get('public-polygon-intake') == ('test_draw_polygon_benchmark_intake.py',), 'current cold polygon intake group missing/stale')
+            require((groups.get('public-regular-grid-saved-linux')==('test_regular_grid_public.py',)) if profile!='windows' else ('public-regular-grid-saved-linux'not in groups),'Linux saved-grid selector/profile differs')
+            require((groups.get('public-util-views-saved-linux')==('test_util_views_public.py',)) if profile!='windows' else ('public-util-views-saved-linux'not in groups),'Linux saved util views selector/profile differs')
             names = [p.relative_to(root).as_posix() for prefix in ('python/skimagexx', 'include')
                      for p in (root / prefix).rglob('*') if p.is_file()]
             layout = current_install_layout(lambda name: (root / name).read_bytes(), names, profile)
@@ -896,7 +948,7 @@ def plan(root, profile, expected=None):
             product_members = sdk_members = None
     return dict(schema=SCHEMA, profile=profile, profile_config=PROFILES[profile], registry=registry,
                 runtime_pins=runtime_pins(profile), build_pins=dict(BUILD, numpy=PROFILES[profile]['headers']),
-                public_groups=groups, corpora=CORPORA, SDK_families=families, blockers=blockers,
+                public_groups=groups, Linux_saved_grid_scope='Full49nodes onminimum/modern/debug normal+scalar; Linuxx86_64 captured scalar/FENV only, Windows fullsaved/platform gate remains open', Linux_saved_util_views_scope='Full553nodes onminimum/modern/debug normal+scalar with independently source-built test-only full32 FENV helper; noWindows saved-observation equivalence inferred', corpora=CORPORA, SDK_families=families, blockers=blockers,
                 product_scope=scope, product_members=product_members, SDK_members=sdk_members, SDK_checks=2*len(families),
                 SDK_client_scope=SDK_scope, readiness_only=True,
                 R7_target_counts=dict(image_count=190, metadata_count=3, registered_count=193),
@@ -911,7 +963,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -925,8 +977,10 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py'},
             'current qualification selector contract differs')
+    require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
+    require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
     return data
 
 
@@ -949,6 +1003,10 @@ def current_install_layout(read_bytes, names, profile):
                and '__pycache__' not in PurePosixPath(n).parts and not n.endswith('/') and not n.endswith('.pyc')}
     headers = {n: n for n in names if n.startswith('include/') and not n.endswith('/')}
     require(sources and headers, 'current Python/header install closure absent')
+    require(all(n in headers for n in ('include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp')) and all(n in sources for n in ('skimagexx/_array_views.py','skimagexx/_slice_along_axes.py')), 'current util views install closure absent')
+    require(all(n in headers for n in ('include/skimagexx/crop.hpp','include/skimagexx/regular_grid.hpp')) and all(n in sources for n in ('skimagexx/_crop.py','skimagexx/_regular_grid.py')), 'current util metadata install closure absent')
+    require('include/skimagexx/join_segmentations.hpp' in headers and 'skimagexx/_join_segmentations.py' in sources,
+            'current JOIN install closure absent')
     require('include/skimagexx/draw_coordinates.hpp' in headers
             and 'skimagexx/_draw_coordinates.py' in sources and 'skimagexx/draw.py' in sources,
             'current drawing install closure absent')
@@ -1255,6 +1313,20 @@ def validate_build_identity(out, state):
     require(json.loads((out / 'build-identity.json').read_text()).get('schema') == record['schema'], 'build identity schema changed')
 
 
+def util_views_fenv_environment(out, state, *, toolchain=True):
+    """Authenticate the collected test-only helper before saved fixtures."""
+    require(state['profile']!='windows','Linux saved-view helper has no Windows envelope')
+    binding=state.get('util_views_fenv')
+    require(isinstance(binding,dict)and set(binding)=={'receipt','receipt_sha256'},'missing util views FENV stage binding')
+    require(binding['receipt']=='util-views-fenv/receipt.json','unexpected util views FENV bundle path')
+    path=(out/binding['receipt']).resolve();require(path.is_relative_to(out.resolve()),'FENV receipt outside stage')
+    spec=importlib.util.spec_from_file_location('qualified_util_views_fenv',ROOT/'tests/util_views_fenv.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module.validate_receipt(path,binding['receipt_sha256'],toolchain=toolchain)
+    require(not os.environ.get('UTIL_VIEWS_FENV_HELPER'),'legacy fixed FENV helper forbidden in genuine mode')
+    return dict(UTIL_VIEWS_FENV_MODE='source-built-v1',UTIL_VIEWS_FENV_RECEIPT=str(path),UTIL_VIEWS_FENV_RECEIPT_SHA256=binding['receipt_sha256'])
+
+
 def prepare(out, profile, expected):
     require(not out.exists(), 'choose a fresh output; never mutate a previous trial')
     out.mkdir(parents=True)
@@ -1328,6 +1400,13 @@ def prepare(out, profile, expected):
                  no_timing=True, public_scope=GROUPS, supplemental_scopes=['382 returned ArrayMap frozen protocols using installed public class'],
                  exclusions=planning['exclusions'])
     state['runtime_wheels'] = {p.name: wheel_metadata(p) for p in (out / 'runtime-wheels').glob('*.whl')}
+    if planning.get('product_scope')==CURRENT_PRODUCT_SCOPE and profile!='windows':
+        bundle=(out/'util-views-fenv').resolve()
+        must_run(journal,'prepare-util-views-fenv',[buildpy,ROOT/'tests/util_views_fenv_build.py','--output',bundle,'--control-python',runtimepy])
+        receipt=bundle/'receipt.json';require(receipt.is_file(),'helper builder produced no actual ready receipt')
+        state['util_views_fenv']=dict(receipt='util-views-fenv/receipt.json',receipt_sha256=sha(receipt))
+        util_views_fenv_environment(out,state)
+
     dump(out / 'state.json', state)
     must_run(journal, 'initial-public-admission', [*child_args, '--group', 'admission'], environment(package))
 
@@ -1915,7 +1994,8 @@ def child(out, group):
     if group == 'returned-maps':
         returned_maps(); return 0
     import pytest
-    require(group in GROUPS, 'unknown public selector')
+    groups=applicable_public_groups(GROUPS,state['profile'])
+    require(group in groups, 'unknown public selector')
     mode = 'scalar' if facts['scalar'] else 'normal'
     xml = out / f'{mode}-{group}.xml'
     temporary = out / 'pytest-tmp' / (mode + '-' + group)
@@ -1924,11 +2004,16 @@ def child(out, group):
     temporary.parent.mkdir(parents=True, exist_ok=True)
     args = ['-q', '--capture=sys', '--tb=short', '--junitxml=' + str(xml),
             '--basetemp=' + str(temporary), '-o', 'cache_dir=' + str(out / 'pytest-cache' / (mode + '-' + group))]
-    args += [str(ROOT / 'tests' / n) for n in GROUPS[group]]
+    args += [str(ROOT / 'tests' / n) for n in groups[group]]
     if group == 'metrics-policies':
         args += ['-k', POLICIES]
     if group == 'public-Matrix':
         os.environ['MATRIX_TRANSFORM_PROOF_OUTPUT']=str(out/(mode+'-matrix-routes.json'))
+    if group=='public-util-views-saved-linux':
+        os.environ.update(util_views_fenv_environment(out,state))
+    if group=='public-regular-grid-saved-linux':
+        require(not os.environ.get('REGULAR_GRID_COMPONENT_DIR'),'Genuine grid group forbids private component override')
+        os.environ['REGULAR_GRID_RESULT_DIR']=str(out/(mode+'-regular-grid-saved-rows'))
     if group == 'public-post203':
         os.environ['SKIMAGEXX_REGIONPROPS_ROWS_DIR'] = str(out / (mode + '-regionprops-state-rows'))
         os.environ['SKIMAGEXX_POINT_ROWS_DIR'] = str(out / (mode + '-regionprops-point-rows'))
@@ -2140,7 +2225,7 @@ def sdk(out, state, journal):
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
-                                'tests/contingency_preweighted_controls.hpp')):
+                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
@@ -2189,7 +2274,7 @@ def qualify(out):
     capsules = {name: create_capsule(out, name, state) for name in CORPORA}
     for mode in ('normal','scalar'):
         env = environment(package, scalar=mode == 'scalar')
-        for group in ('admission', *GROUPS, 'returned-maps'):
+        for group in ('admission', *applicable_public_groups(GROUPS,state['profile']), 'returned-maps'):
             if group == 'public-polygon-intake':
                 # This NumPy-only guard must stay cold: _child admission imports the backend.
                 journal.run(mode + '-' + group, [python, '-m', 'pytest', '-q', '--capture=sys',
@@ -2211,10 +2296,12 @@ def seal(out):
     state = json.loads((out / 'state.json').read_text()); require(source_state(ROOT) == state['source'], 'source changed')
     commands = json.loads((out / 'commands.json').read_text())
     require(commands and all(r['state'] == 'terminal' for r in commands), 'live/incomplete child cannot be sealed')
+    require(state.get('profile')in PROFILES,'missing required qualification profile')
     required_labels = {'initial-public-admission','actual-inventory','sdk-configure','sdk-build','sdk-list','sdk-normal','sdk-scalar',
                        'gather-build-identity-facts','capture-build-identity'}
+    if state['profile']!='windows'and 'public-post203'in GROUPS:required_labels.add('prepare-util-views-fenv')
     for mode in ('normal','scalar'):
-        required_labels.update(mode + '-' + n for n in ('admission', *GROUPS, 'returned-maps','metrics-corpus'))
+        required_labels.update(mode + '-' + n for n in ('admission', *applicable_public_groups(GROUPS,state['profile']), 'returned-maps','metrics-corpus'))
         required_labels.update(mode + '-' + n + '-corpus' for n in CORPORA)
     require(required_labels <= {r['label'] for r in commands}, 'missing required qualification command')
     validate_build_identity(out, state)
@@ -2224,12 +2311,14 @@ def seal(out):
     require(sha(out / 'product-wheels' / state['product_wheel']) == record['wheel_sha256'], 'product wheel changed')
     counts = {}
     for mode in ('normal','scalar'):
-        for group in GROUPS:
+        for group in applicable_public_groups(GROUPS,state['profile']):
             path = out / f'{mode}-{group}.xml'
             require(path.is_file(), 'missing actual public XML: ' + group)
             xml = ET.parse(path).getroot(); suites = [xml] if xml.tag == 'testsuite' else list(xml)
             row = {k: sum(int(s.get(k,0)) for s in suites) for k in ('tests','failures','errors','skipped')}
             require(row['tests'] > 0, 'empty public selector: ' + group)
+            if group=='public-regular-grid-saved-linux':require(row['tests']==49,'Full49 grid saved-domain nodes required; no partial selector')
+            if group=='public-util-views-saved-linux':require(row['tests']==553,'Full553 util views saved-domain nodes required; no partial selector')
             if any(row[k] for k in ('failures','errors','skipped')):
                 failures.append(mode + '-' + group + '-assertions-or-skips')
             counts[mode + '-' + group] = row
@@ -2237,6 +2326,7 @@ def seal(out):
             validate_corpus(out / (mode + '-' + family + '-corpus.json'), family)
         validate_metrics(out / (mode + '-metrics-corpus.json'))
         validate_matrix_rows(out / (mode + '-matrix-routes.json'))
+    if state['profile']!='windows'and 'public-post203'in GROUPS:util_views_fenv_environment(out,state,toolchain=False)
     require(len([r for r in commands if r['label'].startswith('sdk-')]) == 5, 'SDK commands incomplete')
     records = {p.relative_to(out).as_posix(): dict(bytes=p.stat().st_size,sha256=sha(p)) for p in out.rglob('*') if p.is_file() and p.name != 'manifest.json'}
     for name, row in records.items():
@@ -2248,6 +2338,7 @@ def seal(out):
                  counts=counts, SDK_checks=2*len(families), expected_registry=state['expected'], command_count=len(commands), records=records,
                  SDK_client_scope=CURRENT_SDK_CLIENT_SCOPE if state['expected'].get('image_count',0)>203 else 'historical scoped installed clients',
                  no_timing=True, inheritance='None implicit. These are bounded actual public scopes, not full-library or sanitizer/portable acceptance.',
+                 Linux_saved_grid_scope='Full49nodes onlyLinuxminimum/modern/debug normal+scalar; noWindows scalar/rawFENV equivalence inferred; existingWindows groups retained', Linux_saved_util_views_scope='Full553nodes onlyLinuxminimum/modern/debug normal+scalar; noWindows captured FENV equivalence inferred; testhelper bundle provenance required',
                  providers='NumPy/SciPy numerical providers allowed explicitly; native global workers1/4 and BLAS/OMP1 recorded; pure C++ fitting not claimed.',
                  supplemental='382 returned ArrayMap protocol cases use installed public returned class; no public class-count increase. Reverse-load cross-build diagnostics NOT run without separate authenticated matched-control evidence.')
     require(not (out / 'manifest.json').exists(), 'never overwrite sealed trial')
@@ -2262,7 +2353,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()
