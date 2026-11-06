@@ -114,7 +114,61 @@
         }
       }
     },
-    "scope": "Preoptimization219nodes/cell retained for immutable view/provider/binder scopes; changed native copy source rechecked27affected nodes/cell. No complete release barrier claim."
+    "scope": "Preoptimization219nodes/cell retained for immutable view/provider/binder scopes; changed native copy source rechecked27affected nodes/cell. No complete release barrier claim.",
+    "same_value_F_reverse_layout_plumbing_v6": {
+      "minimum": {
+        "normal": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.3442771019999995,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.4248675970000004,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      },
+      "modern": {
+        "normal": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.3308670770000002,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.4102226409999998,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      }
+    }
   },
   "native_ownership": {
     "view": "C++ owns raw step-one basic-slice clipping/extent/byte-offset geometry; builtin converts index objects via PySlice_Unpack then NumPy materializes exact ndarray/base/scalar semantics.",
@@ -144,7 +198,7 @@
     "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
     "python/skimagexx/_crop.py": "18f64b57c8a1c6f7a6ef5bb400802fba519e0cb89dc6e66ef147253360d6185f",
     "tests/test_crop_native.cpp": "bf10a087ef7ef110d92eb1b0b3da974014c86f73756ee998aa6c85d6084fc4e0",
-    "tests/test_crop_public.py": "0169cea775d6d1a6fa3b2dd78e44c4940790ec8dfa8b37f795e6dc37f78f6c54"
+    "tests/test_crop_public.py": "f9966b9935a6cabfa274af993624b3a3cecd59bf8f12eb142de300387f2a85a4"
   },
   "next_owner": "root independent implementation reviewer/integrator",
   "next_trigger": "Independent packet admission before shared hook/genuine integration; source-only performance workload requires later actual measurement GO.",

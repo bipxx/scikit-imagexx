@@ -44,3 +44,22 @@ def test_crop_private_copy_rejects_overlapping_output_axes():
 def test_crop_private_copy_rejects_zero_itemsize():
     a=np.empty((2,2),dtype='V0');b=np.empty_like(a)
     with pytest.raises(TypeError,match='nonzero itemsize'):owned._core.crop_copy_into(a,b)
+
+
+@pytest.mark.parametrize('layout',('F','reverse'))
+@pytest.mark.parametrize('workers',(1,4))
+def test_crop_private_copy_same_value_layout_gold(layout,workers):
+    # Same-value storage plumbing against admitted orderF gold, not a new
+    # original capture or broader upstream-layout parity claim.
+    from crop_contract import fixture
+    from crop_observer import encode
+    spec=next(s for s in cases()if s['id']=='crop/copy-True-order-F')
+    args,options,events,buffers=fixture(spec,np);original=args[0]
+    if layout=='F':a=np.asfortranarray(original)
+    else:a=np.ascontiguousarray(original[::-1,::-1])[::-1,::-1]
+    assert np.array_equal(a,original)
+    owned._core.set_num_threads(workers)
+    try:result=owned.crop(a,args[1],**options)
+    finally:owned._core.set_num_threads(1)
+    assert encode(result,np)==GOLD[spec['id']]['result']
+    assert not np.shares_memory(result,a)
