@@ -131,10 +131,11 @@
     "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
     "tests/find_boundaries_contract.py": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c",
     "tests/find_boundaries_observer.py": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473",
-    "benchmarks/find_boundaries.py": "f4f074ad2dc0f834431a5a65cda8e7fd2347dd8f5a89d2618211eadb4690a82f",
+    "benchmarks/find_boundaries.py": "daf853253d3315ad44f46cc1453228fa62321172f1ea56f35e22777a23fd7835",
     "tests/fixtures/find_boundaries_originals_v1.hpp": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
     "tests/cmake_consumer/find_boundaries_consumer.hpp": "ba46ec0259db0dbfd04c90b9843f10984463c8a0fc05ef90d6be47f499fba0b8",
-    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
   },
   "shared_CMake_sha256": null,
   "genuine_core_sha256": null,

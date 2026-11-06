@@ -64,7 +64,7 @@ def main():
     assert contract['genuine_core_sha256']and contract['prepared_run']and contract['prepared_artifact']
     deadline=args.deadline_utc or(datetime.now(timezone.utc)+timedelta(hours=1)).isoformat();assert datetime.now(timezone.utc)<datetime.fromisoformat(deadline)
     journal=args.output.with_suffix('.batches.jsonl');assert not args.output.exists()and not journal.exists()
-    sys.path[:0]=[str(ROOT/'tools')]
+    sys.path[:0]=[str(ROOT/'tools'),str(ROOT/'benchmarks')]
     from montage_sustained import measure
     from provenance import source_fingerprint
     import numpy as np,scipy,skimage,skimagexx as xx
