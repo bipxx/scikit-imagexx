@@ -37090,12 +37090,15 @@
       },
       "optimization_successor": {
         "owner": "readiness_reviewer",
-        "state": "mapping_reuse_candidate_fp_fixture_scope_review_pending",
+        "state": "captured_input_private_matrix_frozen_pending_root_admission",
         "baseline": "a6bae9ac86dbba362537758784edf06c973e9c53",
         "evidence": "build/join-segmentations-losses-v1",
         "scope": "128native-onlycalls locate repeated4thunique sort; one-line mappingcandidate reuses thirdunique owned array. No CPP/build/originals/performance campaign.",
         "failure": "Initial63XML43FAIL20PASS at rawFENVpreservation. Same-process samefull32 baseline/candidate probes show targetclearsinvalidbit on bothlabels-only/negativeerror paths, outside oldcapturedincomingflag scope. Allfailures retained, no masks/waivers or fullFPclaim.",
-        "next_gate": "R source-only authenticcapturedincomingstate fixture successor for rootreview BEFORE any dependentmatrix; allbefore/after/data/map assertions remain. Restore actualoutercaller32, no after-call normalization. Ifsourceinputscopecannotreplayauthentically, freezeunready ratherthanforcepass."
+        "next_gate": "Root independently reviews frozen e03a handoff-v2 d6c8b4aa: 252XML/200saved rows across minimum/modern normal/disabled, all reported pass; source and matrix admission remain separate. Reuse minimum evidence; modern setup authenticated canonical metadata before strict guard, no original algorithms or timing. Old43FP failures/59setup errors retained. Genuine Linuxpost203 helper transport, shared globals, class/fullFP/SDK domains and performance remain pending. Update affected checklist rows at admission/delivery.",
+        "source": "e03a00633d7146b78391ad65833d3728eb7fd86e",
+        "root_source_admission": "build/join-captured-input-root-admission-v1/admission-v1.json",
+        "root_source_admission_sha256": "de7574883ad11066169d470d668c4e4953ec0329fdb22c504ae6a9ac0eddcbe0"
       }
     },
     {
@@ -37430,7 +37433,7 @@
       "id": "finite-radon-pair-v1",
       "kind": "implementation",
       "owner": "boundary_worker",
-      "state": "observed_native_root_admitted_benchmark_frozen_wider_witness_source_assigned",
+      "state": "exceptional8_raw_root_admitted_native_successor_in_progress",
       "apis": [],
       "target_apis": [
         "transform.frt2",
@@ -37454,10 +37457,10 @@
       "base_sha": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
       "scope": "Dependency-ready finite Radon pair, no FFTbackend needed. Exact-name scan of fullplan/ledger/evidence/tests/include/src found only unassignedinventory, no prior work/blocker. This resumes full477scope while currentrelease/futureMARKandLBP remain independent.",
       "acceptance": "Own native/public/SDK source-contract/parity/benchmark family. Pin actual upstreamsource and runtime, freeze bounded complete input/error/layout/dtype/overflow/scalarpromotion contract and safe fixtures first; sourceguards bothretainedPythons/zerooriginalbudget. Implement source-faithful complete namedowning operations with reusedPOD/conversion/runtime primitives, scalar/SIMD andoptionalglobalworkers default1 capturedonce; integer wrap/reduction/inverse division matchprofile. Fullcontract/provider/platform frontiers stayexplicit. No public count/genuine/hotswap/one-threadoriginal speedclaim until requiredlatergates.",
-      "current_checkpoint": "Root96f730 admits ee639 observednative216reference records/1296strictworker-modecomparisons/210generic, assembledSDK244successes per mode, MSVCcompileonly8pure/version. Broader exceptionalvector/cancellation/half/object/temporal/ISA/Windows/genuine/performance remainopen. B7fcee16case benchmarksource frozen37pure/version pending rootreview; separate4n5exceptionalrecipes8prospectiveoriginals source-readiness task live, no actualGO.",
+      "current_checkpoint": "Root463708b2 admitted460a fourfixedn5NaN/Inf recipes; actual minimum4 and modern4 captures completed once after separate authority. Root rawv2 9d4ab6db admits all8 observations, original budget0. Existing216originals/ee639native/7fceebenchmark/failures unchanged. B native exceptional-cast successor in progress, not admitted; no timing authority.",
       "next_gate": {
-        "owner": "root/B within existing family ownership",
-        "action": "B freezes new4recipe source-safety/readiness withoutoriginals; root independentlyreviews before any8callGO. Root laterreviews7fceebenchmark and selects source-only Radonfamily into nextcompatibleintegration after earliest ready delivery; nevermergesprivate49ancestry wholesale."
+        "owner": "root",
+        "action": "Root reviews B frozen native successor when available against old216 plus new8 reference records, affected scalar/SIMD/worker/SDK evidence and retained failures; no new originals or timing. Root benchmark-source review, genuine integration and public speed gates remain pending. Update affected checklist rows at bounded closeout."
       }
     },
     {

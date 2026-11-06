@@ -64,7 +64,7 @@ Main delivers **271 partial image paths** at source `a6bae9ac86dbba362537758784e
 | `util.view_as_blocks` | Integral borrowed geometry/strides; NumPy representation/provider boundaries explicit. | Scoped installed core/SDK, own cohort and comparison admitted (4 cases, 4 losses); full domains/platforms, optimization remains; delivered in ef465027. |
 | `util.view_as_windows` | Integral borrowed sliding-window geometry/strides; provider and metadata overflow frontiers explicit. | Scoped installed core/SDK, separate cohort and comparison admitted (4 cases, 4 losses); full domains/platforms, optimization remains; delivered in ef465027. |
 
-Failed predecessor 42238215124 observation (2026-11-06; retained below). Its failures remain historical. Successor 42262940227 completed successfully on all four profiles and has independent admission above; performance and delivery remain pending:
+Failed predecessor 42238215124 observation (2026-11-06; retained below). Its failures remain historical. Successor 42262940227 completed successfully on all four profiles, received scoped performance admission, and was delivered in main ef465027. This table preserves the predecessor failures:
 
 | Profile | Hosted job result | Acceptance status |
 |---|---|---|
@@ -82,6 +82,16 @@ The same increment contains reviewed density and F-layout boundary optimizations
 - [ ] `transform.frt2` and `transform.ifrt2`: [Source/storage review](evidence/finite-radon-source-storage-admission-v1.json) passes on d2109de2 for 108 recipes, 54 per API. [Actual original capture](evidence/finite-radon-saved-raw-admission-v1.json) completed 108 observations per profile once after [independent controller admission](evidence/finite-radon-controller-admission-v1.json). [Observed native admission](evidence/finite-radon-observed-native-admission-v2.json) at ee639c0c now passes 1,296 strict saved worker/mode comparisons across both profiles plus scoped assembled SDK evidence. Wider dtype/protocol/platform/genuine/performance gates remain open.
 - [ ] `draw.polygon_perimeter` and `draw.rectangle_perimeter`: reuse retained clipping assessment; pinned Matplotlib/AGG reference/native dependency strategy is still required. Do not repeat the already-recorded dependency discovery.
 - [ ] Performance controller C1 successor: [post-stop source/authority checks and one post-batch verifier](evidence/join-util-views-controller-admission-v2.json) pass scoped independent review; bind only after actual genuine product admission. No measurement authority is inferred from pure tests.
+
+## Candidate coverage awaiting admission or delivery
+
+These rows describe bounded evidence, not additional shipping coverage. Main remains 271 partial image paths. A worker handoff cannot close an API gate before independent admission.
+
+| Affected APIs | Source and retained result | Still open |
+|---|---|---|
+| `segmentation.join_segmentations` | Candidate `e03a00633d7146b78391ad65833d3728eb7fd86e`; frozen handoff-v2 SHA256 `d6c8b4aa83971ce05cafa58592b1ad95cfdcd192f0e998f55fef75cac806c077` reports 252 private XML checks / 200 saved rows across minimum/modern, normal/disabled. [Captured-input source admission](evidence/join-captured-input-source-admission-v1.json) is separate from matrix admission. | Root matrix review; shared genuine core and Linux helper transport; class/FP/domain closure; new performance acceptance. Earlier 43 FP failures and 59 setup errors stay retained; eight shipped timing losses remain losses. |
+| `util.crop`, `util.view_as_blocks`, `util.view_as_windows` | Candidate `f48fe19edeb336163249383d61a51b186ca610fa`; frozen component handoff and independent peer review retained. Private evidence reports 584 saved nodes in each of four profile/mode combinations; scalar/sanitizer evidence covers changed leaf/assembled SDK only. | Root component admission, dependent LBP copy closure, shared integration, genuine qualification and measured performance. Borrowed crop, slice and regular-grid algorithms are not newly optimized by this component. |
+| `transform.frt2`, `transform.ifrt2` | [Exceptional source admission](evidence/finite-radon-exceptional-source-admission-v1.json) and [raw admission v2](evidence/finite-radon-exceptional-raw-admission-v2.json): four fixed NaN/Inf recipes per profile, eight original calls consumed once; no native parity inferred from capture. | Exceptional-cast native successor admission, wider domains/platforms, genuine hot swap/installed SDK, benchmark binding and actual one-thread results. Old native evidence remains scoped to its captured domain. |
 
 ## Module index
 

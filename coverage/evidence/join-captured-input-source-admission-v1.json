@@ -1,0 +1,36 @@
+{
+  "schema": "root-join-captured-input-source-admission-v1",
+  "status": "PASS_SCOPED_SOURCE_FIXTURE_ACTUAL_PRIVATE_MATRIX_AUTHORIZED_AFTER_FRESH_LAUNCHER_ENV_CHECKS",
+  "passed": true,
+  "source": "e03a00633d7146b78391ad65833d3728eb7fd86e",
+  "independent_review_sha256": "6f3756a91d1689e7b428aad764a3f1dd199cf761c62529dc6cfd506e8f530716",
+  "proposal_sha256": "743304c994ce6728f8f40b672317e0bd425351a4a60c4e5a9449b49cd46f5f02",
+  "review": "Read actualfixture diff and seed helper: only captured INPUT numericalCW/SW/MXCSR on current trustedempty/maskedtemplate beforeobserve. All24opaque bytes current; no historicalASLRaddress replay or afterAPI field normalization. Full before==after/data/map/FP tail and realoutercaller exact32 preserved.",
+  "source_guard_checks_each_python": 18,
+  "retained_failed_matrix": "43minimumrawFENV failures remainFAILED. Same-inputbaseline/candidate target bothclearinvalid; arbitraryinvalid-sticky originalparity remainsOPEN, not formatterdiagnostic or waived contract.",
+  "execution_prerequisites": [
+    {
+      "owner": "R after root explicit continuation",
+      "gate": "Versioned fresh ignored launcher/output",
+      "reason": "Current run_parity_v1 writes minimum-normal-parity-v1, which already contains43failed records and uses mkdir(exist_ok=False). Preserve it. Freeze successor with only newcaptured-input-parity-v2 output suffix and actual argv/digest; do not execute the nonexistent plannedpath or overwriteoldlogs."
+    },
+    {
+      "owner": "R/root",
+      "gate": "Explicit private full32 helper environment",
+      "reason": "Set UTIL_VIEWS_FENV_MODE=private-fixed-v1 and admitted0c40HELPER; clear genuine receipt/digest and stale component env. backend authenticates hash/glibc2.39/layout and masks before entry; no newhelperbuild or waiver."
+    },
+    {
+      "owner": "Root",
+      "gate": "Explicit native-only63matrix authorization",
+      "reason": "Only after this source review is independently admitted and fresh launcher prerequisites pass may both retainedprofiles normal+disabled run. Require63/0bad/0skip,0originalrequests and actual caller32restores; preserve anynewfailure without unchangedretry."
+    }
+  ],
+  "future_genuine_blocker": {
+    "owner": "Sole shared integration author assigned byroot",
+    "finding": "New Linux JOIN linux_fenv_backend introduces mandatoryF1 env in public-post203. Existing qualifier child exports util_views_fenv_environment only for public-util-views-saved-linux (and299 MARK/LBP saved groups), not public-post203 containingJOIN. Helper preparation alone does not transport env to that child.",
+    "required": "Before genuine preparation compose explicit Linux public-post203 helper mode/receipt/externaldigest/collector and sourceclosure; retain Windows UCRT branch and existinghelper receipt validation. Also compose strict changed-frontend/shared benchmark context successor. No qualifier/source edit or permission granted here."
+  },
+  "authorized_next": "R versions ignored launcher/output freshv2 before4private63nodecommands(min/modern normal/disabled), explicitprivate-fixed F1helper0c40 and no stale receipts/component overrides. Verifyactualsource/argv/env beforeexecution. No original/build/timing/genuineauthority; stopdependencies on anyfailure.",
+  "pending": "Actualmatrix+candidateindependent admission; genuineLinuxpost203F1transport/sharedcontexts/SDK/hotswap/performance/fullFP+class+platform closure.",
+  "waste_review": "Reused genuinea6package/runtime/helper and18pureguard proofs, no rerunofsource/numerical. Corrected demonstrated incoming-fixture dependency scope; requiredfailure/afterassertions remain. Freshoutput/envprerequisites caughtbefore anysuccessor matrix or hostedcampaign."
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "root-finite-radon-exceptional-raw-admission-v1",
+  "status": "PASS_EIGHT_FIXED_ORIGINAL_OBSERVATIONS_NATIVE_PARITY_NOT_YET_TESTED",
+  "passed": true,
+  "source": "460a776da912f6a1c89937a67284fef0ae500f10",
+  "binding_sha256": "6b03e17a490746bdc5a42e8128e2185fe474eeed7e7a3de8d17fe8a1e84e9bbb",
+  "source_readiness_admission_sha256": "463708b2c2c9236e3faccf5119021421b7209a1d264c069a9ba73f7487fa297c",
+  "profiles": {
+    "minimum": {
+      "rows": 4,
+      "consumed_original_calls": 4,
+      "returns": 2,
+      "errors": 2,
+      "caller32": 4,
+      "process32": true,
+      "source_unchanged": true
+    },
+    "modern": {
+      "rows": 4,
+      "consumed_original_calls": 4,
+      "returns": 2,
+      "errors": 2,
+      "caller32": 4,
+      "process32": true,
+      "source_unchanged": true
+    }
+  },
+  "complete_rows": 8,
+  "total_consumed_original_calls": 8,
+  "original_calls_remaining": 0,
+  "array_payloads_decoded": 20,
+  "logical_bytes_decoded": 4000,
+  "observed_first_return_word": {
+    "minimum/transform.frt2/exceptional-n5-nan": 2147483648,
+    "minimum/transform.frt2/exceptional-n5-inf": 0,
+    "modern/transform.frt2/exceptional-n5-nan": 2147483648,
+    "modern/transform.frt2/exceptional-n5-inf": 0
+  },
+  "raw_files": {
+    "build/finite-radon-exceptional-capture-v1/minimum/terminal.json": {
+      "sha256": "76b7168a5644f36b25bebef23ce082f13e947bac8157dfe660216bab08728a9e",
+      "bytes": 8244
+    },
+    "build/finite-radon-exceptional-capture-v1/minimum/observations.json": {
+      "sha256": "a87e5c7366919a4171d2f380a1a64305a7ff61a289fc6e9d6bb9399f518b1c06",
+      "bytes": 27547
+    },
+    "build/finite-radon-exceptional-capture-v1/minimum/journal.jsonl": {
+      "sha256": "c917dcedad7ba12cfdf6e783ed25f564b9be08d434b1134500376521dd39235c",
+      "bytes": 17196
+    },
+    "build/finite-radon-exceptional-capture-v1/minimum/precall-freeze.json": {
+      "sha256": "6cda25b346d470cfa5c057e7baf5c7368dd72ea2192d440b19e54668063b9b74",
+      "bytes": 3958
+    },
+    "build/finite-radon-exceptional-capture-v1/modern/terminal.json": {
+      "sha256": "ebf556af5869344b617eb670acad0e1bde186c997f8d1a621ff14e6d61ab3003",
+      "bytes": 8202
+    },
+    "build/finite-radon-exceptional-capture-v1/modern/observations.json": {
+      "sha256": "41f1f7db7c05eeb2c132968a469bea79820faa1fe3c50cf5e12284042aef86ff",
+      "bytes": 27469
+    },
+    "build/finite-radon-exceptional-capture-v1/modern/journal.jsonl": {
+      "sha256": "8607f5ba1b5779f4b3be7c37acbdd1c436c5c62228c8f197567d873d50cb1e7c",
+      "bytes": 17118
+    },
+    "build/finite-radon-exceptional-capture-v1/modern/precall-freeze.json": {
+      "sha256": "b217bbd86c62ab4ac2c078b5d925667dc4d61346d4a706ebab2352f4b142bdba",
+      "bytes": 3941
+    }
+  },
+  "scope": "Four fixed n5 C float64 NaN/Inf cases per runtime; exact one-shot original observations, no native comparison/vectorISA/generalplatform/fullAPI closure. Historical216rows unchanged.",
+  "waste_review": "Reused controller/runtime/helper/codec/prefixes; exactly8newrecipes once. No historicaloriginal recapture/native/timing/build/download. Boundarypayloadschema/size/SHA decoded once. Initialreader syntax error stopped before anyread/decoder; fixedspacing only. No outputmask/normalization. Four120-byte result payloads were decompressed a second time solely for first-word summary extraction; avoidable480-byte decoding, no scientific/validation replay. V2 clarifies this count without rerunning anything.",
+  "next_owner_trigger": "B NEWnative parity successor tests all8newrows plus prior216 with0originals; diagnose demonstrated cast mismatch only after actualcomparison. Preserve failures and source-derived correction before genuine/shared integration.",
+  "metadata_predecessor": {
+    "path": "admission-v1.json",
+    "sha256": "9311433dc1e06532d4ebe9c38e562214074b4c33bb733ca28d05c263b2ceaa5f",
+    "correction": "Clarify boundary-validation payload counts versus four extra summary-only result decompressions; no source/raw/admission/gate changes and no rereading/replay."
+  },
+  "payload_count_scope": {
+    "validated_array_occurrences": 20,
+    "validated_logical_bytes": 4000,
+    "integrity_validation_passes_each_occurrence": 1,
+    "additional_summary_only_result_decompressions": 4,
+    "additional_summary_logical_bytes": 480,
+    "actual_total_decompressed_array_occurrences": 24,
+    "actual_total_decompressed_logical_bytes": 4480
+  }
+}
