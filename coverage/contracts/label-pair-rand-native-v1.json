@@ -65,10 +65,10 @@
     "include/skimagexx/label_pair_metrics.hpp": "89457c1fe24fe06ce11e49bb81da3aadce976b43aa3834dbee8a346dd034022a",
     "src/label_pair_metrics.cpp": "617dfb3f219dcf0b8bc36234b38ea5cd3ae35dca03bcecc5462074582c631be9",
     "src/bind_label_pair_metrics.cpp": "c5c2062c6c7474beaa69448a7cb2af6db1082a359d5e29d52712fab061725ec5",
-    "python/skimagexx/_label_pair_metrics.py": "2e7c80e2676b79c48efd19f29708900b1a003f3b33426e2fae3c8c08894bfbb4",
+    "python/skimagexx/_label_pair_metrics.py": "d22cf65f63062fb4085a88ffcfc7e5ec76e41907a6eb8cacefc46f78469aec12",
     "tests/test_label_pair_rand_native.cpp": "9ee06fa399533d65ca5ab519ba53c98ef21ca4f9b8fe9266df1b3f53fdc961ce",
     "tests/test_label_pair_rand_binding.py": "6d4ff50369938fe1d6a4d182d754f15c9ffa98a11b03d0ca226f06b4a31a3c0e",
-    "tests/test_label_pair_rand_public.py": "e9e0a4a054746fbcc1eef88e4a776fe4307d128a4f77229e785499d9e2f35d19",
+    "tests/test_label_pair_rand_public.py": "49a08fe156a67bbb0f4c2a64b05e6d231237dc67d530f7c8765b8331305a8f3e",
     "tests/fixtures/label_pair_rand_originals_v1.hpp": "68a7bfe953277420a9ff1a6796759b900a0366f39dd585b582ad99dc3f521d5e",
     "tests/cmake_consumer/label_pair_metrics_consumer.cpp": "21307c1aa51b791254067d2db7ae28f3a671ca438ffa697c495576b266c0dcff"
   },
@@ -78,5 +78,13 @@
     "Publiccontingency CSRclass/index/base-capacity and normalizationcallbacks; suppliedtablemutations remain explicitunassessed",
     "VI actualf64log2/DDOT/reduction provenance unclosed; no VIcode/approximation",
     "Missing-handler message/protocolproviders/printlog/FENVchangingcallbacks and broadexternalbufferowners remain unassessed."
-  ]
+  ],
+  "alignment_successor": {
+    "predecessor": "842da3ec/c7ef",
+    "reason": "ascontiguousarray(dtype=i64) may retain Ccontiguous unaligned ordinary ndarray.",
+    "delta": "After integerconversion copy only unaligned truth/test with copy(order=C); no leaf/binder/SDK change.",
+    "regression": "Three owninguint8+offset1 carriers truth/test/both, savedperfectvalues/words, fullinputmetadataunchanged, actualCreturn/onegetter/accepted alignedprivateintake.",
+    "prospective_nodes": 12,
+    "remaining_gate": "Independentdelta peer beforeintegration"
+  }
 }

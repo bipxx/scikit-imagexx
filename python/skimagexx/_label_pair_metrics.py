@@ -97,5 +97,7 @@ def adapted_rand_error(image_true=None,image_test=None,*,table=None,ignore_label
     # coordinates are refused by the native intake, without allocating by label.
     truth=np.ascontiguousarray(truth,dtype=np.int64)
     test=np.ascontiguousarray(test,dtype=np.int64)
+    if not truth.flags.aligned:truth=truth.copy(order='C')
+    if not test.flags.aligned:test=test.copy(order='C')
     ignored=np.array(ignore_labels,dtype=np.int64)
     return _are_from_i64(truth,test,ignored,alpha)

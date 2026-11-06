@@ -115,3 +115,30 @@ def test_public_signature_defaults_and_no_registration():
     signature=inspect.signature(owned.adapted_rand_error)
     assert str(signature)=='(image_true=None, image_test=None, *, table=None, ignore_labels=(0,), alpha=0.5)'
     assert owned.adapted_rand_error.__module__=='skimagexx._label_pair_metrics'
+
+
+@pytest.mark.parametrize('unaligned',('truth','test','both'))
+def test_public_unaligned_ordinary_storage(unaligned):
+    import numpy as np,skimagexx as xx
+    from skimagexx._label_pair_metrics import adapted_rand_error,_are_from_i64
+    def carrier(offset):
+        owner=np.zeros(6*8+offset,np.uint8)
+        image=np.ndarray((2,3),dtype=np.int64,buffer=owner,offset=offset)
+        image[:]=[[0,1,1],[2,2,2]]
+        return image
+    truth=carrier(int(unaligned in ('truth','both')));test=carrier(int(unaligned in ('test','both')))
+    assert truth.flags.aligned==(unaligned=='test')and test.flags.aligned==(unaligned=='truth')
+    before=[observation(v,np)for v in (truth,test)];entry=xx._core.label_pair_rand_terms;getter=xx._core.get_num_threads;calls=[];accepted=[];intake=[];previous=sys.getprofile()
+    def trace(frame,event,value):
+        if event=='c_return'and(value is entry or value is getter):calls.append(value)
+        if event=='call'and frame.f_code is _are_from_i64.__code__:
+            a,b=frame.f_locals['truth'],frame.f_locals['test']
+            intake.append(a.flags.aligned and b.flags.aligned and a.flags.c_contiguous and b.flags.c_contiguous)
+        if event=='return'and frame.f_code is _are_from_i64.__code__:accepted.append(frame.f_locals.get('native_result')is not None)
+    try:
+        sys.setprofile(trace)
+        result=adapted_rand_error(truth,test)
+    finally:sys.setprofile(previous)
+    assert calls==[getter,entry]and accepted==intake==[True]
+    assert [v.tobytes().hex()for v in result]==['0000000000000000','000000000000f03f','000000000000f03f']
+    assert [observation(v,np)for v in (truth,test)]==before
