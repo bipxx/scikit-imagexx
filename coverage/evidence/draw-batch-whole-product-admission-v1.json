@@ -1,0 +1,213 @@
+{
+  "schema": "whole-public-product-admission-v1",
+  "source": "334e68e2e6717421501742365b6fe58328fc1019",
+  "run": 42140207750,
+  "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42140207750",
+  "passed": true,
+  "root_accepted": true,
+  "admitted_at_utc": "2026-11-06T02:18:19.419374+00:00",
+  "profiles": 4,
+  "XML_checks": 933088,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "SDK_checks": 248,
+  "frozen_corpora": 48,
+  "sealed_records_rehashed": 118027,
+  "sealed_bytes_rehashed": 10228908067,
+  "source_image_paths": 262,
+  "registered_functions": 265,
+  "prepared_members": {
+    "product": 199,
+    "SDK": 94
+  },
+  "SDK_families": 31,
+  "production_source_sha256": "ab513b8efe337d621921813b0df5b77a90827be5985e76f92a60db9e11ec0ae9",
+  "production_projection_files": 493,
+  "scope": "Exact334 four-profile qualification of262 declared partial image paths plus3metadata functions. Does not complete477publicentries/classes/runtime/nativeownership or all-domain/per-function speed. Newdrawing fixed32case initialcomparison28wins4losses; coords_scaled6case KEEP remainsseparate. No natural-Prescott speed or library-wide superiority claim.",
+  "independent_verification": {
+    "path": "build/draw-batch-qualification-independent-review-v2/review-v1.json",
+    "sha256": "a5a595dc58cb04044188f3d43af4cf2eae603da9d9275cd26f7375f2465aa3c3"
+  },
+  "root_aggregate": {
+    "path": "build/draw-batch-qualification-v2/root-aggregate-v2.json",
+    "sha256": "5383c7ba2cab90f1cf7a5e208ca8ad97eba825dd68dd0ea67d0d185126fe47d9"
+  },
+  "previous_admission": {
+    "path": "coverage/evidence/public258-optimization-whole-product-admission-v2.json",
+    "sha256": "34c2fdf2bb47dc6d5320c1ae9dec893e88c83015f2dd8b235b23eedb275c38cf"
+  },
+  "new_partial_paths": [
+    "draw.polygon",
+    "draw.polygon2mask",
+    "draw.bezier_curve",
+    "draw.set_color"
+  ],
+  "extended_partial_paths": [
+    "measure.regionprops",
+    "transform.matrix_transform"
+  ],
+  "raw_reviews": [
+    {
+      "profile": "minimum",
+      "path": "build/draw-batch-qualification-v2/minimum-raw-review.json",
+      "sha256": "1ddae91daef01844e43c2446142c1e95af94d4d481aa80122a4c9544a8a829e5",
+      "qualification_manifest_sha256": "66b06f7a6ba2b25196a0fc822cd2a960203afd7502ef68508a5ca4c90cf4b906",
+      "XML_checks": 233272,
+      "SDK_checks": 62
+    },
+    {
+      "profile": "modern",
+      "path": "build/draw-batch-qualification-v2/modern-raw-review.json",
+      "sha256": "e9998fa26d7dbe862b7772d728ea30376805c8008a018f4701466275745dcc33",
+      "qualification_manifest_sha256": "802bdb3da77981610c01042d77acf77cf414a5de0d929b69d8ff9ebc0a27421e",
+      "XML_checks": 233272,
+      "SDK_checks": 62
+    },
+    {
+      "profile": "windows",
+      "path": "build/draw-batch-qualification-v2/windows-raw-review.json",
+      "sha256": "c6f4076f61e61c1ea15476c0c8b2606cca7a428c19693e161ecfecf149e605e2",
+      "qualification_manifest_sha256": "e1d2143d475b032048cf3a8d3ea5fe6c773a564b8d82220bbece42817d9af3f4",
+      "XML_checks": 233272,
+      "SDK_checks": 62
+    },
+    {
+      "profile": "debug",
+      "path": "build/draw-batch-qualification-v2/debug-raw-review.json",
+      "sha256": "cc446b686b5dd502e8574f8dd086b44bac8d1f497d4cad5cb8e9fae43e8ea09d",
+      "qualification_manifest_sha256": "b11b2bae2e32493b161d7290d986c24b454ae0de2c5202be5d9b1bc037698281",
+      "XML_checks": 233272,
+      "SDK_checks": 62
+    }
+  ],
+  "controlled_stagers": [
+    {
+      "profile": "minimum",
+      "path": "build/draw-batch-qualification-v2/minimum-stager-review.json",
+      "sha256": "27dfa1d225e8c7f1e40ac513283606b7353781d3e0b4d8be0c02508d6229aa10",
+      "verified_files": 2438,
+      "status": "AuthenticatedexactsourceRelease stager; rawstaged-unacceptedhistoricalpayload unchanged."
+    },
+    {
+      "profile": "modern",
+      "path": "build/draw-batch-qualification-v2/modern-stager-review.json",
+      "sha256": "40e39fb854b34cff04be8732f1c2d09c5db4fdb0b8e808f232fcfa5dc1a9f121",
+      "verified_files": 2438,
+      "status": "AuthenticatedexactsourceRelease stager; rawstaged-unacceptedhistoricalpayload unchanged."
+    },
+    {
+      "profile": "windows",
+      "path": "build/draw-batch-qualification-v2/windows-stager-review.json",
+      "sha256": "2c362abee45bd96d408ded3186cb341d97c646abb7eec7dbb4064ea5e7a1f13d",
+      "verified_files": 2424,
+      "status": "AuthenticatedexactsourceRelease stager; rawstaged-unacceptedhistoricalpayload unchanged."
+    }
+  ],
+  "retained_artifacts": [
+    {
+      "id": 13470925205,
+      "name": "rank-statistics-product-windows",
+      "run": 42140207750,
+      "revision": "334e68e2e6717421501742365b6fe58328fc1019",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v2\\retained-v1\\13470925205.zip",
+      "bytes": 213501083,
+      "sha256": "59a93a405c3712fded234266844b7a92d52bdf3479b25b34849a520fd4b45c3d",
+      "seconds": 18.7108696999494,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13470092040,
+      "name": "public-qualification-debug",
+      "run": 42140207750,
+      "revision": "334e68e2e6717421501742365b6fe58328fc1019",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v2\\retained-v1\\13470092040.zip",
+      "bytes": 1696493371,
+      "sha256": "adf671bee03c30750f9ddd903946b058fc746faa0df167e5587fabbd552caa6d",
+      "seconds": 95.16544979996979,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13469657906,
+      "name": "public-qualification-minimum",
+      "run": 42140207750,
+      "revision": "334e68e2e6717421501742365b6fe58328fc1019",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v2\\retained-v1\\13469657906.zip",
+      "bytes": 1346387771,
+      "sha256": "275036c29cb319c263004ae36eb9fc11be5f054d6d79373a6539bab45fa8a96a",
+      "seconds": 125.53960069990717,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13469144428,
+      "name": "public-qualification-windows",
+      "run": 42140207750,
+      "revision": "334e68e2e6717421501742365b6fe58328fc1019",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v2\\retained-v1\\13469144428.zip",
+      "bytes": 1245914231,
+      "sha256": "4aba1150f7386ef89c72b181dd1ba149bf56c9e8fc8f25cf8b9f0eb7d3cb3d2e",
+      "seconds": 100.16397779993713,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13468994788,
+      "name": "rank-statistics-product-minimum",
+      "run": 42140207750,
+      "revision": "334e68e2e6717421501742365b6fe58328fc1019",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v2\\retained-v1\\13468994788.zip",
+      "bytes": 217252195,
+      "sha256": "76e09d0ae8c7c570d8d8767226847d93091933db99f2b39ce2853954bb64f7c1",
+      "seconds": 12.9149114000611,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13468368480,
+      "name": "rank-statistics-product-modern",
+      "run": 42140207750,
+      "revision": "334e68e2e6717421501742365b6fe58328fc1019",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v2\\retained-v1\\13468368480.zip",
+      "bytes": 214526863,
+      "sha256": "49a41792cbb450ffb7dfb0a6cba9c3ac83ff7361c0fefa69b79e2d163a77bd1f",
+      "seconds": 10.88535359990783,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13467569931,
+      "name": "public-qualification-modern",
+      "run": 42140207750,
+      "revision": "334e68e2e6717421501742365b6fe58328fc1019",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\draw-batch-qualification-v2\\retained-v1\\13467569931.zip",
+      "bytes": 1307946079,
+      "sha256": "cb92969825c1b5c2bbe73bc8e58b7f76baae604f60cd58507fcd5ac8d5a934b2",
+      "seconds": 66.07523619988933,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "performance": {
+    "drawing_publication": "benchmarks/draw-batch-minimum-initial-v1/publication.json",
+    "measured_source": "db4f59b8aa69840591266e607e253a8611676ced",
+    "run": 42132995271,
+    "cases": 32,
+    "wins": 28,
+    "losses": 4,
+    "reuse": "Exact493productionGitblobs matchdb4; source334metadatafix doesnotretagrawmeasurements. Initialoriginalcomparison,notoldCPP_KEEP orwholelibrary."
+  },
+  "failed_predecessor": {
+    "run": 42135532859,
+    "evidence": "coverage/evidence/draw-batch-qualification-failure-v1.json",
+    "status": "FAILED preserved; v1readinesssuperseded,fullactualbarriers46e3passedbeforechangedsourcecampaign."
+  },
+  "delivery": "ROOT_ADMITTED_PENDING_MAIN_EXACT_PRODUCTION_PROJECTION",
+  "closeout": {
+    "result": "Fouractualsuccessprofiles,requiredsource/CPU/FP/parity/nativeownership/SDK/corpora gates andthreeRelease stagers independentlyadmitted.",
+    "waste_reuse": "7archivesretained/hashboundonce,118027sealedrecordsonce,independentmetadatareviewreusesreconstruction;no algorithm/build/timer replay. Correctedstaleguardfailure retained.",
+    "next_owner_trigger": "Rootmergevalidatedlineage,compare493productionGitblobs,updateexistingplan/queue,mainpushandcleaneligibleancestorworktrees afterreadersrelease."
+  }
+}
