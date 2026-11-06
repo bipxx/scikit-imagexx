@@ -1,0 +1,39 @@
+{
+  "status": "ROOT_ADMITTED_SCOPED_SHARED_SOURCE_CORRECTIONS_NOT_GENUINE_READINESS_OR_RELEASE",
+  "source": "8c22dd6a729ac96e7b84fdd261294601a98748e3",
+  "handoff": {
+    "path": "build/join-integration-v1/handoff-v2.json",
+    "sha256": "c53c06bf9acc1e4e7ba6ee3cefbb62670ece39ccf80fbbebcb835c7fd60bd1db"
+  },
+  "independent_delta_review": {
+    "path": "build/join-integration-independent-review-v1/review-v2.json",
+    "sha256": "50e62088874138007e0f01b8838c08000e66f20baad02a31e5d7eef661ed3ab0"
+  },
+  "preserved_failed_predecessor": {
+    "source": "b4325f3cd973d46c0f31b119a8a81c877767f75e",
+    "review": "e8cdc532a98ed93f141a51a6007275e821eeeab4a7ba8afd1a26d95bb3400195"
+  },
+  "closed_blockers": [
+    "Actual pytest selectors before redirection and sole tee log target, malformed-placement controls",
+    "Actual args/options/upstreamsource-bound cached reference; exact integer captured-input scope separated from narrowly proved source-derived early-error equivalence; requested bool/f16/f32/f64 retained",
+    "Independently reviewed683 boundary import-cache correction merged exactly"
+  ],
+  "accepted_source_scope": "Shared source wiring/source-derived266image269registered208product98SDK32families64checks, existing installed component-consumer hook; authored genuine/single-core/public/SDK checks not executed. Kernel/golds remain c821; separate affected guard scopes are not a complete barrier.",
+  "integration_GO": {
+    "owner": "metrics_integrator",
+    "scope": "Sole next shared integration author in private candidate: preserve8c22 then combine root-admitted cropabaf and regular-grid7dfa with source/raw dependencies, derive actual newcounts, existing default1/global policy/public+SDK hooks and coherent cache-reference scope. No current683source/run mutation; no secondready candidate or hosted qualification/performance while current683 live."
+  },
+  "pending": [
+    "Actual genuine one-core/hot-swap/binary dtype/globaldefault/SIMD-worker ownership",
+    "Full API/nonpositive/floating/exact ArrayMap and provider/platform frontiers",
+    "Complete actual source barriers bothretained versions after nextfinalsource/root independent admission",
+    "Exact-source four-profile qualification and per-API1thread public-original performance/main delivery"
+  ],
+  "closeout": {
+    "result": "Both concrete source-setup blockers closed and independently delta-admitted; native/SDK/genuine/performance gates remain distinct.",
+    "reuse": "c821 source/SDK evidence, prior40source89proof review, successor59small proof review reused; no source-test/science/build/original/timing/archive replay byroot.",
+    "avoidable_work": "Substring checks/actionlint did not catch tee selector semantics, dtype-only oracle matching did not bind evidence scope. Existing guards and cache boundary corrected; no new framework or dropped dtype coverage.",
+    "next_owner": "metrics_integrator sole integration author",
+    "next_trigger": "Freeze earliest compatible ready crop+regular-grid addition to this private candidate, independent delta review; hold full readiness until current683 candidate slot is free."
+  }
+}

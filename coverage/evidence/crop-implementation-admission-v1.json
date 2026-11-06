@@ -1,0 +1,49 @@
+{
+  "status": "PASS_SCOPED_COMPONENT_AFTER_TEST_ONLY_CACHED_GUARD_CORRECTION_NOT_FULL_API_OR_RELEASE",
+  "source": "abaf82f4f4579e1643df86fa17551ed832a82550",
+  "handoff": {
+    "path": "build/util-crop-native-v2/handoff-v2.json",
+    "sha256": "4ad83169a8765cb890ddbefad735634cbc9691aa6caad0ff09bc8737831cff3f"
+  },
+  "predecessor_review": {
+    "path": "build/util-crop-native-independent-review-v1/review-v1.json",
+    "sha256": "6b6b852428c24c4a51fd4a947dc8fa81f669f8a33172fbdccc30ff85d0535208",
+    "status": "CHANGES_REQUIRED_RETAINED_SUPERSEDED_ONLY_FOR_CACHED_GUARD"
+  },
+  "delta": "One test file only; all old asserts and other functions unchanged; narrow actual-main import interception, cached control, exact live-module/importer restoration.",
+  "checks_reused": {
+    "cells": 4,
+    "cases_each": 7,
+    "profiles": [
+      "Windows3.11.11",
+      "Windows3.13.14"
+    ],
+    "states": [
+      "cold",
+      "cached"
+    ],
+    "normal_plugins_conftest": true,
+    "source_native_SDK_receipts_rehashed_again": 0,
+    "proof_path": "build/util-crop-native-v2/delta-proof-v1.json",
+    "proof_sha256": "481a8754b42caf4a1714cf63b3c6e7b2363195cd9d0fca5dadf91a93d69158f2"
+  },
+  "accepted_component_scope": "Root baseline6b6 authenticated12source/129small proofs and reviewed native clipping+PODcopy/shared-axis logic. Unchanged kernel/frontend/binder/header/SDK source permits scoped evidence reuse. Private installed-prefix direct-header/archive client executes complete view/copy operation; actual exported CMake target not executed here.",
+  "gates": {
+    "private_source_POD_operation_and_corrected_metadata_guard": "PASSED_SCOPED",
+    "full_API_V0_provider_type_platform_domains": "PENDING",
+    "genuine_hot_swap_single_global_default1_and_SDK_exported_target_MSVC": "PENDING",
+    "project_SIMD_parallel_copy_speed": "NOT_PROVEN_SERIAL_DISPOSITION_MEMCPY_PROVIDER_DISCLOSED",
+    "one_thread_public_original_performance_and_exact4profile_release": "PENDING"
+  },
+  "integration_GO": {
+    "owner": "single future integration author after currentJOIN review correction",
+    "scope": "Reviewed12crop family files at exactabaf may join compatible private cumulative candidate after ancestry/source dependency checks; no current683source/run edits, main delivery or timing."
+  },
+  "closeout": {
+    "result": "Known cached guard defect corrected and independently delta-admitted; baseline failure and all private receipts retained. No full API or genuine claim.",
+    "reuse": "Baseline129small receipts/source review reused unchanged;28cached/cold source guard cases reused. No original/native/build/timing or wholeproof/archive replay.",
+    "avoidable_work": "Author metadata writer failed twice and shell advanced a private unpublished commit after failure; author stopped dependent handoff/admission, corrected/audited final receipts. Root verifies committedonefile projection/current byte pins; no numerical proof invalidated. Future dependent mutations require sequential success checks.",
+    "next_owner": "root sole integration assignment",
+    "next_trigger": "Fix/admit currentJOIN shared source then integrate ready cropfiles; required complete actual source/genuine/SDK/performance/release gates remain."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "status": "FAILED_PREDECESSOR_RETAINED_CORRECTION_INDEPENDENTLY_READY_SUCCESSOR_DISPATCHED_NOT_RELEASE",
+  "failed_source": "f13ae5ba01680c40f8ee0ae42153bd9480119ab1",
+  "failed_run": 42169444853,
+  "failure_summary": {
+    "path": "build/next-metrics-qualification-v2/all-profile-failure-summary-v1.json",
+    "sha256": "9827794ffe21b1ea6bac179e2d9190d93e4802b7f180891e37d7dd5ca7498b82"
+  },
+  "XML": {
+    "tests": 938520,
+    "failures": 8,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_checks": 256,
+  "retained_archive_bytes": 5637969515,
+  "artifacts_downloaded_once": 4,
+  "root_cause": "Cached NumPy bypasses MetaPathFinder in in-process bound CLI source guard. All8failures are the same guard; no remaining failed command/SDK/XML category overlooked.",
+  "corrected_source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+  "independent_correction_review": {
+    "path": "build/boundary-bound-import-cache-independent-review-v1/review-v1.json",
+    "sha256": "cda3fb7e9d1c0ba5a3a06d3e33fb73d41ef5c5c62f624f3f35eb3be2cb609874"
+  },
+  "complete_source_readiness": {
+    "path": "build/boundary-bound-import-cache-readiness-v1/root-readiness-v1.json",
+    "sha256": "b03b43e24c47f47e728a8c6e6b7cd14ff08bc45f66971b6be63c967ce3d33428",
+    "each_profile": "2782identical collected cases+8subtests,0fail/error/skip/science,normalconftest/plugins,no-x,clean683"
+  },
+  "successor_run": 42177447898,
+  "actual_binding": {
+    "path": "build/next-metrics-qualification-v3/binding-root-v1.json",
+    "sha256": "f85a7c3672614c56a4602bf40e71b802f36c3443e0856c2657845fb6866cf824"
+  },
+  "binding_independent_review": {
+    "path": "build/next-metrics-qualification-v3/binding-review-v1.json",
+    "sha256": "7319849527d4f89eab4a84d22d090e159925b64e214ca6a40a8926b6ed9ca274"
+  },
+  "scope": "One test-only cache-boundary correction; production906b unchanged. Actual successor qualification in progress, observer44360 live; no new main native coverage, product/stager/performance acceptance. All failed sources and raw receipts remain immutable.",
+  "closeout": {
+    "result": "All4prior outcomes diagnosed before successor; cold-only import guard replaced by scoped request interception and cached controls; exact-source full readiness and independent admission closed before one dispatch.",
+    "reuse": "Four archives retained once, existing five reader scripts unchanged, actual source byte scope and numerical evidence preserved; no original capture/timing/build for source correction.",
+    "avoidable_work": "Full campaign failed on a cache-sensitive test omitted by cold-only preparation; same pattern caught in crop before hosted integration. Corrected both through existing guards, without new validator framework. Future JOIN source review also held selector/expected-input metadata defects before execution.",
+    "next_owner": "root terminal admission; three assigned independent workers on next dependencies",
+    "next_trigger": "Current42177447898 terminal products/stagers then genuine input/cohort/performance. Future private families require their open reviews/fixes; no unchanged retry."
+  }
+}
