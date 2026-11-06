@@ -774,3 +774,15 @@ coverage/evidence/draw-batch-whole-product-admission-v1.json -text
 coverage/contracts/draw-polygon-metrics-runtime-v1.json -text
 coverage/contracts/find-boundaries*.json -text
 coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json -text
+
+# Frozen source, contracts, fixtures and evidence are authenticated as stored.
+# Preserve intentional LF and CRLF bytes independently of core.autocrlf.
+.github/** -text
+benchmarks/** -text
+coverage/** -text
+include/** -text
+python/** -text
+src/** -text
+tests/** -text
+third_party/** -text
+tools/** -text
