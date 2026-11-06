@@ -8,9 +8,12 @@ reported upstream fallback. Fallback is compatibility, not a native rewrite.
 
 For development, use the [phased fast-run guide](coverage/FAST_RUN.md) to run
 per-feature surface, compact parity and full contract tests without rebuilding.
+The [detailed coverage checklist](coverage/COVERAGE_CHECKLIST.md) tracks all 477
+public keys and 284 static class/member paths, with contract, hot-swap, SDK, SIMD,
+workers, one-thread benchmark and release gates. It is updated at task closeout.
 
-Every native public function has scoped parity tests. All 251 partially native
-image API paths have benchmark harnesses against original scikit-image;
+Every native public function has scoped parity tests. The 265 partially native
+image API paths have registered test/benchmark locators against original scikit-image;
 measurements for newly integrated paths remain separately tracked.
 Measurements include **one-worker** runs and allocation,
 conversion and Python dispatch costs. Published results identify measured
@@ -24,7 +27,10 @@ The [Montage copy correction](benchmarks/montage-word-copy-same-host.md) is merg
 
 The earlier [byte-fill v2](benchmarks/montage-row-owned-v2-same-host.md) and [sustained](benchmarks/montage-sustained-same-host.md) experiments retain their original UNRESOLVED_MEASUREMENT outcomes and raw evidence.
 
-The [qualified baseline is247 partial image APIs](coverage/evidence/public247-whole-product-admission.json), at exact `f1f9c42`: four profiles,907,400 checks,208 installed SDK checks and48 corpora with no failures/errors/skips. Current main now declares251 APIs. The four drawing APIs pass [genuine minimum preparation40816710252](https://github.com/bipxx/scikit-imagexx/actions/runs/40816710252), normal/scalar parity, an actual SDK84 client and untimed first-cohort validation; initial12-case one-thread timing is next. The newer Montage optimization has separate measured evidence. Earlier failures and raw artifacts remain unchanged.
+The [qualified baseline has 265 partial image APIs](coverage/evidence/next-metrics-whole-product-admission-v1.json) at exact `683f0043`.
+Its four profiles pass 938,528 XML checks, 256 installed SDK checks and 48 corpora with no failures/errors/skips.
+The [latest 28-case one-thread cohort](benchmarks/next-metrics-minimum-initial-v1/README.md) retains 18 wins and 10 losses.
+The 271-path candidate awaits its separate release gates. Earlier failures, scoped measurements and raw artifacts remain retained.
 
 ## Supported parity surface
 
@@ -34,16 +40,16 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. Public source has **251 partially native
-image API paths and three metadata helpers**. All247 paths are included in the
-qualified four-profile baseline at frozen `f1f9c42`; scope remains partial per API.
+The reference is scikit-image **0.26.0**. Main ships **265 partially native
+image API paths and three metadata helpers**. The 265 image paths have a
+qualified four-profile baseline at frozen `683f0043`; scope remains partial per API.
 Initial one-thread measurements give polygon approximation **6.73× (9/9 wins)** and
 subdivision **4.00× (14/14 wins)** versus scikit-image in their frozen cohorts.
 See the [RDP report](benchmarks/approximate-polygon-minimum-initial.md) and
 [subdivision report](benchmarks/subdivide-polygon-minimum-initial.md). The
 [API inventory](coverage/README.md) tracks 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases and three public bilateral aliases of existing algorithms; 217 paths remain upstream-only.
+rank.generic aliases and three public bilateral aliases of existing algorithms; 203 paths remain upstream-only.
 Five classes now have partial native coordinate/state implementations,
 and one exception path uses an explicit canonical metadata provider. These are
 counted separately from image functions. Static discovery records 284 member paths
@@ -51,9 +57,9 @@ across 29 exported classes; remaining classes, member contracts and runtime
 attributes still need implementation and assessment.
 This is not full scikit-image coverage.
 
-The [latest accepted qualification](coverage/evidence/public247-whole-product-admission.json) passes
-907,400 public checks across Windows, modern/minimum Linux and Debug builds with normal
-and scalar dispatch, plus 208 installed SDK checks across 26 families.
+The [latest accepted qualification](coverage/evidence/next-metrics-whole-product-admission-v1.json) passes
+938,528 XML checks across Windows, modern/minimum Linux and Debug builds with normal
+and scalar dispatch, plus 256 installed SDK checks across 32 families.
 The fixed corpora run with one and four native workers. TV-Chambolle and TV-Bregman
 have qualified partial C++ implementations alongside the accepted rank optimization.
 The [initial TV-Chambolle one-worker baseline](benchmarks/tv-chambolle-public-initial.md)

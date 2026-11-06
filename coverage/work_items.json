@@ -38467,7 +38467,7 @@
         "prepared_run": 42177447898,
         "candidate_source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
         "candidate_image_names": 271,
-        "candidate_status": "EXACT458e COMPLETE_SOURCE_READINESS_c6c91307 PASSED3035cases+8subtests/version. Hosted4profile run42224231410 active on exactsource; all4jobs live, no genuine/parity/performance/main271 admission yet. Failed9c92 and corrected458e proof scopes retained.",
+        "candidate_status": "Exact458e candidate remainsUNDELIVERED (265imagepaths stillship). Localcomplete readinessc6c91307 passed3035+8/version. Hosted42224231410:Windows failedbeforepreparation;modern jobsuccess pendingraw/SDK admission;minimum/debug active atobservation-v3. No271 genuine/fullparity/performance acceptance.",
         "performance_evidence": "benchmarks/next-metrics-minimum-initial-v1/README.md",
         "readiness_reviews": [
           {
@@ -38479,7 +38479,7 @@
         "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42224231410",
         "candidate_qualification_run": 42224231410,
         "candidate_evidence": null,
-        "candidate_qualification_status": "IN_PROGRESS4PROFILE_RUN42224231410; four authoritative live job IDs127913560774/127913560983/127913561017/127913561150. No acceptance until terminal raw/genuine/exportedSDK/root admission.",
+        "candidate_qualification_status": "RUN42224231410 stillIN_PROGRESS:Windows failure beforepreparation;modern SUCCESS but independentraw/SDK admissionpending;minimum/debug RUNNING atobservation-v3. No fullsource/profile admission or successor diagnosis claim.",
         "next_release_source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
         "next_release_expected_images": 271,
         "next_release_expected_product": 216,
@@ -38487,7 +38487,7 @@
         "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
         "optimization_prepare_run": 41967608976,
         "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-        "next_release_status": "ROOT_DISPATCHED_ONCE source458e/run42224231410 after full passing readinessc6c91307 and remoteverify. Four jobs IN_PROGRESS at observation-v1 under build/join-util-views-qualification-v1/42224231410. Root follows same run; no redispatch on observation timeout or duplicate downloads.",
+        "next_release_status": "Same exact458e run42224231410:Windows toolingguardfailure;modern jobsuccess notyetadmitted;minimum/debug live perobservation-v3. Preservealloutcomes and diagnosebefore anysuccessor. DetailedCOVERAGE_CHECKLIST.md gateincomplete; mainstill265.",
         "next_release_qualification_run": 42224231410,
         "optimization_comparison_run": 41969983206,
         "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
