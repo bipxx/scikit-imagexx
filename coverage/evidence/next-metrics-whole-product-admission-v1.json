@@ -1,0 +1,71 @@
+{
+  "status": "ROOT_INDEPENDENTLY_ADMITTED_EXACT_SOURCE_WHOLE265_PRODUCT_NOT_FULL_LIBRARY_OR_SPEED",
+  "passed": true,
+  "root_accepted": true,
+  "profiles": 4,
+  "product_kind": "GENUINE_INSTALLED_WHOLE_PRODUCT",
+  "source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+  "run": 42177447898,
+  "expected_images": 265,
+  "registered_functions": 268,
+  "product_members": 206,
+  "SDK_members": 97,
+  "SDK_families": 32,
+  "SDK_checks": 256,
+  "corpora": 48,
+  "XML": {
+    "tests": 938528,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "production_source_sha256": "906b5d0a24717da8cc6512d5cfec302e022a9384b89808897cc562478aef04c8",
+  "root_aggregate": {
+    "path": "build/next-metrics-qualification-v3/root-aggregate-v2.json",
+    "sha256": "c8c867bd25e1020a1d6dbfa50f018a5d46894b96601b86f4e3abff313832dad1"
+  },
+  "independent_review": {
+    "path": "build/next-metrics-qualification-v3/independent-review-v1.json",
+    "sha256": "7a8671a9e4708901f7edfe1ede96f4a2a204e811502db22664576887f55cfa1e"
+  },
+  "profiles_evidence": {
+    "minimum": {
+      "path": "build/next-metrics-qualification-v3/minimum-raw-review.json",
+      "sha256": "ee17193287b3b653e90dfb4681a2c4fa6b81f78a0a7c55248b7d47b2c61591f9"
+    },
+    "modern": {
+      "path": "build/next-metrics-qualification-v3/modern-raw-review.json",
+      "sha256": "00060796d09fbebd214f0e3b0ca9e57bdd06b43ad58a9c4509d3d6ed00ab9a93"
+    },
+    "windows": {
+      "path": "build/next-metrics-qualification-v3/windows-raw-review.json",
+      "sha256": "d97538599491cc4a3f3016e05ba010e205f4e82b2cfeee81952fdbca883b9666"
+    },
+    "debug": {
+      "path": "build/next-metrics-qualification-v3/debug-raw-review.json",
+      "sha256": "f50e4c6545fb20af17a88eb976510d5f1b165f6566b44410f7cdf688635382ef"
+    }
+  },
+  "stagers": {
+    "minimum": {
+      "path": "build/next-metrics-qualification-v3/minimum-stager-review.json",
+      "sha256": "15a32c924aa3e93827e34e2035bfd53e79ab05b7a318967ab125fe5becbf4485"
+    },
+    "modern": {
+      "path": "build/next-metrics-qualification-v3/modern-stager-review.json",
+      "sha256": "20e108115d312207a1888429f6e2dba7464785cf63ee0470a5364ae789ffc639"
+    },
+    "windows": {
+      "path": "build/next-metrics-qualification-v3/windows-stager-review.json",
+      "sha256": "56fb7fe68e7786d5d758192fa607e89bffcf36b2e220440fb562f99ab3cb53a2"
+    }
+  },
+  "scope": "Four supported exact683 profiles and three authenticated staged products. Scoped265 image paths; not full477/classes/domain coverage or performance acceptance. Product bytes/staged-unaccepted labels remain unchanged.",
+  "closeout": {
+    "result": "Mandatory genuine whole-product release qualification independently admitted. Newly advertised API public1thread performance/main projection still required before final delivery.",
+    "reuse": "Seven archives API-hashed once,119301sealedrecords single rootpass,3stagepasses with no seal replay; independent boundedmetadata review adds no large hashes/science/build/timing.",
+    "avoidable_work": "Priorf13 guard failure corrected in testonly683; TLS observer timeout was re-polled on sameactualrun. All failedcampaigns remain failed/retained.",
+    "next_owner": "root actual minimum consumer binding/independent reviewer",
+    "next_trigger": "Bind authenticated minimum artifact/runtime/source/core/SDK/root fields in existing controller, independently reviewactualbindings/realCLI cohorts, then one isolated28case1thread comparison."
+  }
+}
