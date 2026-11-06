@@ -1,0 +1,262 @@
+{
+  "schema": "flood-fill-raw-independent-review-v1",
+  "status": "PASS_SCOPED_192_SAVED_ORIGINALS_PENDING_ROOT_RAW_ADMISSION",
+  "source": "7c14ee863934a2a6c5370d0ca699d3d299fba166",
+  "controller_sha256": "ff583101f34d397ef31e9a38429275bb2080b8e955f5121cde6054565d1a99b6",
+  "binding_sha256": "71c093112ca3a57c311154aa6e623ac6af5293063998747c4337d2dcae0c7341",
+  "root_readiness_sha256": "37d16b624bb36c954f05e2ebe0b720f76948227e83ef5cf2c4140837df8ef95f",
+  "ownership": "Only ignored build/flood-fill-raw-independent-review-v1 written. No source/main/shared/frozenraw/GO/controller/binding/helper edits or process launch/retry. Root explicitmodern terminal notification received before modern review.",
+  "proofs": {
+    "reconstruction": {
+      "path": "build/flood-fill-raw-independent-review-v1/reconstruction-v1.json",
+      "bytes": 240287,
+      "sha256": "1bab9f777bfba140d20ae90cae07ddda525a4cf4601083cedf913ca8d8117fb6"
+    },
+    "profile_differences": {
+      "path": "build/flood-fill-raw-independent-review-v1/profile-field-differences-v1.json",
+      "bytes": 10561,
+      "sha256": "4a3bdda332aa8e43dae98177baca32f2b56074f3195836b5f97b7ddefbdbfd89"
+    },
+    "base_alias_metadata": {
+      "path": "build/flood-fill-raw-independent-review-v1/base-alias-metadata-v1.json",
+      "bytes": 266,
+      "sha256": "43970de605ffd504827e080592891bd1573e64398e9ffb46f925b87608ab7bca"
+    },
+    "process32": {
+      "path": "build/flood-fill-raw-independent-review-v1/process-state-v1.json",
+      "bytes": 804,
+      "sha256": "180e4fc3e55bfe138221b69ef3d504d146675ad7e578dc21e0ce92ac9507660e"
+    },
+    "failed_review_parser": {
+      "path": "build/flood-fill-raw-independent-review-v1/failed-review-v1.json",
+      "bytes": 819,
+      "sha256": "c76d819e0ebf2e147c0bdb95fc8c0416f5715c26de7a2bffc48b98e03fe9f492"
+    }
+  },
+  "raw_files": [
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/observations.json",
+      "bytes": 595847,
+      "sha256": "e7e68862dac9a03ef0522b618b0c185e682745bc15244c8b46dcf2de6e3dff32"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/journal.jsonl",
+      "bytes": 350120,
+      "sha256": "3a71c4861fd531aed1c1aa420916b9663ee9b3c6af1b5d1d978661df36a253b2"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/terminal.json",
+      "bytes": 12375,
+      "sha256": "22ae598336a5a5c441f540a6d66c7c0ca19d0a5efa0f1d68ca6f96914be33463"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/precall-freeze.json",
+      "bytes": 8088,
+      "sha256": "5f152d8d6254557e568aeda2386705ef00dd3977e2e5f700e868a651dd59b14a"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-GO-v1.json",
+      "bytes": 14066,
+      "sha256": "0ee261c8d50f0afee4543cfd263b10f570673fb57722f605a7984ac27a4b7ba1"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-command-v1.json",
+      "bytes": 1159,
+      "sha256": "8cdf3035d43bfcc452c55f10ce9afb526ec75126dc4ab3d54458f059d660c4f2"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-process-v1.json",
+      "bytes": 21,
+      "sha256": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/observations.json",
+      "bytes": 593328,
+      "sha256": "cdb77e2bded352193b83627dd406e996ec7d53a55558486f1ff4c3f60063e74c"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/journal.jsonl",
+      "bytes": 347873,
+      "sha256": "1d8f26dd4cd352d75059ead4d2085528baeb3cefa0c990d0e5ca8e9274ae6383"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/terminal.json",
+      "bytes": 12325,
+      "sha256": "1effef43fd3785097c0fc9c637949c42efd282c0f4a29b235fb9ce67519ea020"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/precall-freeze.json",
+      "bytes": 8057,
+      "sha256": "e7cd49d586e3052f1d4bdb4a36368b1eec3e8d122be8f4686c24f73b3324f8b6"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-GO-v1.json",
+      "bytes": 14029,
+      "sha256": "7e2b53bebb3b75ef9162b5fdf8b61693c01c27eb7a191764148e27e4683b9801"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-command-v1.json",
+      "bytes": 1163,
+      "sha256": "f6db5f6d29887fe7e69da10c9092405117c448f6e8343ac3b473e829acd84326"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-process-v1.json",
+      "bytes": 21,
+      "sha256": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2"
+    }
+  ],
+  "scope": {
+    "canonical_operations": 2,
+    "public_names": 4,
+    "profiles": 2,
+    "rows": 192,
+    "supplied_calls_consumed": 192,
+    "nested_approved_flood_entries": 102,
+    "new_capture_credit_for_aliases": 0,
+    "minimum": {
+      "rows": 96,
+      "returns": 79,
+      "errors": 17
+    },
+    "modern": {
+      "rows": 96,
+      "returns": 78,
+      "errors": 18
+    },
+    "journal_events": 384,
+    "started": 192,
+    "completed": 192,
+    "raw_arrays": 601,
+    "raw_numpy_scalars": 8,
+    "logical_payload_bytes": 17238,
+    "row_FEnv32_records": 960,
+    "process_FEnv32_records": 4,
+    "caller_exact32_restores": 192,
+    "process_exact32_restores": 2
+  },
+  "checks": [
+    {
+      "gate": "GO/controller/binding/source/profile authority",
+      "result": "PASS_SCOPED",
+      "evidence": "Eachactualprocess exit0 beforedependentrawadmission. Exact7c14HEADclean/source12smallpins match admittedreadiness37d16,binding71c,controllerff58. Commandargv actualprofile/interpreter/capture/output/bindingSHA/rootGOSHA binds separate minimum andmodernGO. GO96fixeduniqueIDs/profile,45flood+51fill,onecall/recipe,max192total,no_retry,zero native/sampler/timing/build,source/cases/helper/runtime identities exact. Prefix/source/readiness/geometry authority reused, no compiled/core/archive rehash. CurrentGO clock expiry is not retroactivefailure: recordedstarts within their authorizedwindow and controllercheckeddeadlineentry/final."
+    },
+    {
+      "gate": "Exactly-once journal/raw accounting",
+      "result": "PASS",
+      "evidence": "Each96rowID equals exactorderedGO/sourcepool. Each2eventpair is started(consumed_before0..95,retryFalse) then completed(target_entries1,public_attempts1,row exactly observations row).192events/profile,384total; no failed/orphan/duplicate event, missingrow or retry. Terminal public96/target96/nestedflood51 eachprofile matches fill sourcehelperallowlist; aliases not extra canonical captures. Precallfreeze/source/runtime/GO/binding equal terminalfacts. Sourceunchangedafter true, no terminalfailure."
+    },
+    {
+      "gate": "Typed payload/hash/geometry/storage",
+      "result": "PASS_STDLIB_ONLY",
+      "evidence": "601array+8NumPy-scalar occurrences decoded once across192observationrows;17,238logicalbytes. Bounded zlib/base64 decode, exactrawSHA, dtypeitemsize/shape/rank/strides/physicalspan/base-shape validation andscalarhexwidth checked. Journalrows equality-checked without re-decodingduplicatepayloads.444base-metadata spans and173aliasrelation records structurallychecked separately without payloaddecompression. Sourcegeometry24logical/48backing/120padded/queue24<64/648checks and256KiBconservative namedarray/queue allowance reused; neither source4400compactmodel nor auditclaims process/import/allocator peak."
+    },
+    {
+      "gate": "Values/errors/warnings/input mutation/alias/base/metadata preservation",
+      "result": "PASS_RAW_PRESERVATION",
+      "evidence": "157returns/35errors retained verbatim. Results shape/dtype/layout/owning/base/metadata/rawbytes and aliasrelations remain asobserved, no schema or resultnormalization. Eachsuppliedcallattempt1,pointersstable; flood andcopyfill before==after. Only flood_fill:in-place changesinput in eachprofile; readonlyinplace errors retained. Exacttypederror module/name/qualname/message/args and warningcategory/message order preserved. No fabricated missingfield/golden and no numerical/APIcorrectness inferred from decoder."
+    },
+    {
+      "gate": "Full32 and software NumPy state",
+      "result": "PASS_CAPTURE_SCOPE",
+      "evidence": "Everyrow caller_restore.saved==actual andexact32 true; target-immediate before/after andafter-observer raw32 parse against approvedABI offsets0/4/28(control/status/MXCSR), all960rowFEnv records retained. Bothprocess initial/final pairs parse andequalexact32. NumPypolicy/handleridentity/buffer stable before/after eachsuppliedcall. Genuinecaptured crossprofile target-before/after x87status andMXCSR differ for all96IDs; rawcaller/afterobserver and handleridentity also differ. Thisreview does NOT clear/mask/canonicalize/drop or deem these hardwarefields diagnostic; futurecandidate parity must honor each actualreference incomingstate/scope."
+    },
+    {
+      "gate": "Actual originals/provenance and helper counter limits",
+      "result": "PASS_WITH_EXPLICIT_SCOPE",
+      "evidence": "Rootadmitted runtime/source/origins/METADATA+RECORD/helper ABI32 andcold/cachedprefix source reuse; actualcapture runtimeidentity equals exactprofileGO andprecallfreeze. Capturedtarget/providerbody counters are original computation underGO, not forbiddennewreviewcalls. compiled_provider_attempted86/profile counts profilerobserved ndarray.sum in originalhelperpath; it is NOT a measured count of Cython floodkernel entries. Nestedflood51/profile is explicit; wholecompiled-helper per-call count not invented. Referencefourname identity established in admittedruntimeprefixes, notrecapturedaliases."
+    },
+    {
+      "gate": "Independent source/read-only scope",
+      "result": "PASS",
+      "evidence": "Onlystdlib JSON/hash/zlib/base64/struct/math-metadata/nativeWindowsGit/source reads. No NumPy/SciPy/skimage/ownedmodule imported byreview; no test/original/provider/native/helper body, build, environment, download, timing, hosteddispatch or largebinaryhash executed. Modern terminal not inferred from livehandle; rootnotify/actualexit0 required and verified."
+    }
+  ],
+  "profile_differences": {
+    "semantic_outcome_fields": [
+      {
+        "id": "flood_fill:new-value-out-of-range",
+        "different_fields": [
+          "result",
+          "error",
+          "warnings",
+          "aliases"
+        ],
+        "minimum_error": null,
+        "modern_error": {
+          "module": "builtins",
+          "name": "OverflowError",
+          "qualname": "OverflowError",
+          "message": "Python integer 300 out of bounds for uint8",
+          "args": {
+            "container": "tuple",
+            "items": [
+              "Python integer 300 out of bounds for uint8"
+            ]
+          }
+        },
+        "minimum_warnings": [
+          {
+            "category": "DeprecationWarning",
+            "message": "NumPy will stop allowing conversion of out-of-bound Python integers to integer arrays.  The conversion of 300 to uint8 will fail in the future.\nFor the old behavior, usually:\n    np.array(value).astype(dtype)`\nwill give the desired result (the cast overflows)."
+          }
+        ],
+        "modern_warnings": []
+      }
+    ],
+    "full_top_level_difference_counts": {
+      "target_immediate": 96,
+      "after_observer_fenv": 96,
+      "caller_restore": 96,
+      "result": 1,
+      "error": 1,
+      "warnings": 1,
+      "aliases": 1
+    },
+    "target_immediate_component_difference_counts": {
+      "before/status": 96,
+      "before/mxcsr": 96,
+      "before/raw": 96,
+      "after/status": 96,
+      "after/mxcsr": 96,
+      "after/raw": 96,
+      "numpy_before": 96,
+      "numpy_after": 96
+    },
+    "disposition": "Bothoriginalprofiles/rawbytes remainimmutable. Minimum uint8value300 returns withDeprecationWarning;modern raisesOverflowError. All96profilepairs preserve their distincthardwareincoming/outgoing/statewords. No combined-profile gold constructed."
+  },
+  "findings": [],
+  "gaps": [
+    "This is raw observation/source-origin/journal/payload integrity admission recommendation only, not native or publicAPI parity.",
+    "No independent per-Cython-kernel call counter in captured source; sourceallowlist/whitelist/controller plus admittedmoduleorigin are provenance. Do not relabel ndarray.sumcounter as kerneltelemetry.",
+    "Only96fixedboundedndarrayrecipes/profile observed. 0D/arbitraryobject/structured/string/datetime/userprotocol/large-footprint/tolerance/shape/extrema/platform domains remain sourcequarantined/unassessed ascontracted.",
+    "Full Windows/default-int/intp/floatingpolicy/FPincoming and callback domains not established by Linux1.24/2.5 rawrows. Fullhardwarewords retained, notportablynormalized.",
+    "Native owningcompleteoperations/Pythonfrontend/installedSDK/scalarSIMD/globaloptionalworkerdefault1/hotswap/genuine4profiles andone-threadoriginalperformance remainunimplemented/unproved here."
+  ],
+  "authority": {
+    "future_original_budget": 0,
+    "all192approved_supplied_calls_consumed": true,
+    "retry_authority": false,
+    "native_authoring_authorized_by_this_review": false,
+    "root_raw_admission_pending": true
+  },
+  "waste_reuse": {
+    "capture": "Bothactualprofiles COMPLETE firstattempt, no capturefailure/retry or missingrow. Sourcefirst404/tokenfailure andreadinessgeneratorfailure remainimmutablehistory, notreplayed.",
+    "review": "reconstruct_v1 completed minimum validation/decompression, thenKeyError from assumingmoderncommand repeatedreadiness_sha256. Actualmoderncommand binds minimum_transition_sha256. Failedscript/receipt retained; reconstruct_v2 validates actualmoderntransition+GOreadiness and reuses finishedminimumdecode by immutable raw/journalhash. Onlymodernpayloads decoded in v2; no duplicatepayloaddecompression. Small metadata/base/alias/field comparisons no science.",
+    "cost": "Failedrawreview command0.68s; correctedpass0.92s. Otherelapsedunknown; no experimentrerun to measurewaste.",
+    "next_correction": "Root existingfloodpacket records192consumed/192complete,157returns35errors andprofileFP/error differences; independentrawPASS then root rawadmission BEFORE anynative authoring. No automaticcapture/resume/retry engine."
+  },
+  "execution_now": {
+    "new_original_calls": 0,
+    "science_imports": 0,
+    "tests": 0,
+    "native": 0,
+    "helper": 0,
+    "build": 0,
+    "download": 0,
+    "timing": 0,
+    "largearchive_core_binary_hash": 0,
+    "hosted": 0
+  },
+  "next_owner_trigger": "Root independent finalrawadmission/sourcecontract state update in existingplan/ledger/checklist, then separatelyassignnativefullfamily only afterrawgate. SuppliedoriginalGO exhausted; no newcapture. C275criticalpath andotherworkers remainuntouched.",
+  "terminal": "Review terminal; no livejob/process launched. Minimum andmodernactualcapture exits0 verified; handedoffraw/source/GO remainunchanged."
+}

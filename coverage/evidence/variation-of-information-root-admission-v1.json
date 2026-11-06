@@ -1,0 +1,44 @@
+{
+  "schema": "variation-of-information-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_SAVED8_PRIVATE_COMPONENT_NOT_GENUINE_OR_FULL_API",
+  "source": "b331a559af038ef2231f5327b864627513bdc2d8",
+  "independent_review": {
+    "path": "build/variation-of-information-independent-review-v1/review-v1.json",
+    "sha256": "8186a89dbfbe3293a71067387a76e30d7d1aaec38525d547c2ac6b24688041de"
+  },
+  "handoff": {
+    "path": "build/variation-of-information-v1/handoff-v1.json",
+    "sha256": "6a95087ca81d955aade678b4f6c303c7a3fc2aa36ac9375588d188406b67aaa2"
+  },
+  "scope": {
+    "original_cases_per_profile": 8,
+    "profiles": [
+      "NumPy1.24.4",
+      "NumPy2.5.4"
+    ],
+    "saved_numeric_returns_per_profile": 7,
+    "saved_errors_per_profile": 1,
+    "private_public_XML": 112,
+    "exact_public_observations": 64,
+    "native_modes": [
+      "normal",
+      "true-scalar",
+      "ASanUBSan"
+    ],
+    "native_saved_results_per_mode": 21,
+    "native_controls_per_mode": 9,
+    "assembled_SDK_checks_per_mode": 6,
+    "MSVC_compile_only_TUs": 4
+  },
+  "ownership": "NativeCSR/image counts+entropy/reductions/log2. NumPy prefix membership/normalization and SciPyrepresentation/coalescing provider frontiers remain explicit. GenericGNUx86 right-destination multiply addresses demonstrated NaNoperandpriority without outputmask/tolerance; fallbackplatforms/largeBLASassoc unproved.",
+  "dependency_gap": "Old donor95 counts small-fallback/ABI scope only, not currentdensity leaf/current105SDK; R owns versioned affecteddependency successor using admitted b87 currentobjects and meaningful dense candidate-only controls. No whole105SDK/genuine inference.",
+  "pending": [
+    "Current density count dependency and assembled exportedtarget projection",
+    "Broader dtype/table/shape/layout/error/callback/FP/nativeprovider domains",
+    "Windows NaN/runtime and otherbackend/platform/libm exactness",
+    "Shared wholecore/globalbudget/hotswap/genuine installed completeSDK/fourprofiles",
+    "Executable bound one-thread original-public performance and main delivery"
+  ],
+  "waste_review": "Reuse117proof independentreview and existing8originalrows, retain brace/v2NaNfailures and source-ordered fix. No tests/original/helper/build/download/science/largehash replay in rootadmission. Currentdependency successor affected checks only, no delay275."
+}

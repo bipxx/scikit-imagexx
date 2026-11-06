@@ -1,0 +1,34 @@
+{
+  "schema": "current275-family-measurement-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_UNBOUND_SOURCE_INTERFACE_ONLY",
+  "source": "95e64f135c7d3d8cbef7c8acb543ed31ea86c079",
+  "product_projection_source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "handoff": {
+    "path": "build/current275-family-measurement-v1/handoff-v1.json",
+    "sha256": "11993e0686731f18db77a69d5ee8b59c692d993440789cd0c15c0ace427ec1db"
+  },
+  "independent_review": {
+    "path": "build/current275-family-measurement-independent-review-v1/review-v1.json",
+    "sha256": "ddf8721d4384de2c8c38d3425c174bed013a9d3a68303b655aeba5173f2654aa"
+  },
+  "files_verified": 10,
+  "reused_scope": "32smallproofs/183prototype+8affectedcontrols eachPython independently authenticated; exact retained3548/f957/C1/entry-stop/pathfinally/postbatch/FP/source guards. No science rerun.",
+  "binding_review": "Actual MARKpass0/sample_entry/flattenedfingerprint vs RadonCLI1..8/sample/nestedsource_before and strict25/24binding keysets independently reviewed; current source contexts/SDK105 prospective only. Root rechecked active manifest/provider/helper actual NULLs and source pins.",
+  "pending": [
+    "Actual8c wholeproduct/fourprofile/installedSDK/stager root admission",
+    "Actual producer/source/runtime/core/SDK/root/helper binding and affected bothPython guards",
+    "Real entry zero-timing cohorts and actual hosthelper",
+    "Separate timing GO, fixedone-thread original cases/raw/allloss independent admission",
+    "FullAPI/platform/provider and main delivery"
+  ],
+  "authority": {
+    "science": 0,
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "timing": 0,
+    "hosted": 0
+  },
+  "waste_review": "Reused admittedprototypes and independentreceipt, read only10source/manifest smallpins and sevenhelperpins; no repeated tests/archivehash/download or new scheduler. Next owner actual binding after genuine42306808073 outcomes; no source correction required."
+}

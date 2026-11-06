@@ -1,0 +1,115 @@
+{
+  "schema": "flood-fill-raw-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_192_SAVED_ORIGINAL_OBSERVATIONS_NOT_NATIVE_PARITY",
+  "source": "7c14ee863934a2a6c5370d0ca699d3d299fba166",
+  "controller_sha256": "ff583101f34d397ef31e9a38429275bb2080b8e955f5121cde6054565d1a99b6",
+  "binding_sha256": "71c093112ca3a57c311154aa6e623ac6af5293063998747c4337d2dcae0c7341",
+  "root_readiness_sha256": "37d16b624bb36c954f05e2ebe0b720f76948227e83ef5cf2c4140837df8ef95f",
+  "independent_review": {
+    "path": "build/flood-fill-raw-independent-review-v1/review-v1.json",
+    "sha256": "64c9b3509d8453eb575915358aed8ea5ac5fa4206a3649018cbe1b7f8e06e831"
+  },
+  "raw_files": [
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/observations.json",
+      "bytes": 595847,
+      "sha256": "e7e68862dac9a03ef0522b618b0c185e682745bc15244c8b46dcf2de6e3dff32"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/journal.jsonl",
+      "bytes": 350120,
+      "sha256": "3a71c4861fd531aed1c1aa420916b9663ee9b3c6af1b5d1d978661df36a253b2"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/terminal.json",
+      "bytes": 12375,
+      "sha256": "22ae598336a5a5c441f540a6d66c7c0ca19d0a5efa0f1d68ca6f96914be33463"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-capture-v1/precall-freeze.json",
+      "bytes": 8088,
+      "sha256": "5f152d8d6254557e568aeda2386705ef00dd3977e2e5f700e868a651dd59b14a"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-GO-v1.json",
+      "bytes": 14066,
+      "sha256": "0ee261c8d50f0afee4543cfd263b10f570673fb57722f605a7984ac27a4b7ba1"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-command-v1.json",
+      "bytes": 1159,
+      "sha256": "8cdf3035d43bfcc452c55f10ce9afb526ec75126dc4ab3d54458f059d660c4f2"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/minimum-process-v1.json",
+      "bytes": 21,
+      "sha256": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/observations.json",
+      "bytes": 593328,
+      "sha256": "cdb77e2bded352193b83627dd406e996ec7d53a55558486f1ff4c3f60063e74c"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/journal.jsonl",
+      "bytes": 347873,
+      "sha256": "1d8f26dd4cd352d75059ead4d2085528baeb3cefa0c990d0e5ca8e9274ae6383"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/terminal.json",
+      "bytes": 12325,
+      "sha256": "1effef43fd3785097c0fc9c637949c42efd282c0f4a29b235fb9ce67519ea020"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-capture-v1/precall-freeze.json",
+      "bytes": 8057,
+      "sha256": "e7cd49d586e3052f1d4bdb4a36368b1eec3e8d122be8f4686c24f73b3324f8b6"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-GO-v1.json",
+      "bytes": 14029,
+      "sha256": "7e2b53bebb3b75ef9162b5fdf8b61693c01c27eb7a191764148e27e4683b9801"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-command-v1.json",
+      "bytes": 1163,
+      "sha256": "f6db5f6d29887fe7e69da10c9092405117c448f6e8343ac3b473e829acd84326"
+    },
+    {
+      "path": "build/flood-fill-reference-v1/modern-process-v1.json",
+      "bytes": 21,
+      "sha256": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2"
+    }
+  ],
+  "scope": {
+    "canonical_apis": 2,
+    "public_names": 4,
+    "cases_per_profile": 96,
+    "consumed_calls": 192,
+    "completed": 192,
+    "returns": 157,
+    "errors": 35,
+    "journal_events": 384,
+    "caller_full32_restores": 192,
+    "process_full32_restores": 2,
+    "decoded_array_occurrences": 601,
+    "decoded_scalar_occurrences": 8,
+    "logical_bytes": 17238
+  },
+  "required_profile_semantics": "Minimum79return17error versusmodern78return18error. uint8value300 minimumreturns+DeprecationWarning,modernOverflowError. All96pairs actualtarget incoming/outgoing x87SW/MXCSR differ; retain as semantic perprofile witnesses, not generic diagnostic normalization. Exact32caller/process restoration holds.",
+  "telemetry_limit": "compiled_provider_attempted86 is ndarray.sum counter, NOT perCythonkernel counter. Sourceorigin/whitelist/actualpubliccall observations establish captured output scope; no fabricated kernel instrumentation claim.",
+  "pending": [
+    "Owning native operations and complete SDK/Pythonfrontend perprofile parity",
+    "Applicable scalar/SIMD and optionalglobalworkers default1 with justified orderedserial cores",
+    "Shared installed genuinehot-swap and fourprofile release",
+    "Executable sourcebound consumer/realcohorts and one-thread original-public performance",
+    "Fulldtype/protocol/tolerance/error/FP/platform/quarantined domains"
+  ],
+  "authority": {
+    "future_original_calls": 0,
+    "retries": false,
+    "new_timing": false
+  },
+  "waste_review": "Bothprofiles captured once, raw independentlydecoded once, failedreview parser retained and minimumdecode reusedbyhash. Root verified actual exits/192journalevents perprofile beforetransition, now authenticates smallreview/rawfiles without repeating decompression/science/helper/test/build. Next bounded native family follows existing frozen contracts/primitive reuse, no recapture or extra queue."
+}

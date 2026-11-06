@@ -1,0 +1,27 @@
+{
+  "schema": "variation-of-information-current-counts-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_CURRENT_COUNT_DEPENDENCY_AND_ASSEMBLED_SDK_NOT_WHOLE105",
+  "source": "1a060891f33ea058d671491957ebfaec0044bb5e",
+  "handoff": {
+    "path": "build/variation-of-information-current-counts-v2/handoff-v2.json",
+    "sha256": "b46c0396e7faf629439a58f70bbb92d864cac5dfa436c6e833be867759f5e37a"
+  },
+  "authenticated_source_files": 6,
+  "authenticated_small_proofs": 167,
+  "public_XML": 160,
+  "full_saved_rows_equal_predecessor": 64,
+  "source_review": "Read all new nativecontrols/public/sourceguards. N4096/4099 4x8 dense vs68x72 fallback, logical32/fullN bounds, nonmutation refusal, workers0/1/4 and explicit1 overglobal4; candidate-only equivalence, not new original gold. NewTUs include same complete control body via installedpublicheader; original VI/SDK/golds unchanged.",
+  "dependency_review": "CanonicalLF all5actualcurrent dependencies match intake; exact b87 objects reused per modes and extraction/linkmaps retained. Currentdensity dependency gap closed within tested scopes, no whole105SDK/genuine credit.",
+  "SDK_scope": "Relocated exportedtarget assembled96+currentb87+VI,18controls normal+disabled; no source include leak, actual count/VI own archive extraction. Required actual source-derived wholeSDK/genuine later.",
+  "pending": [
+    "Selective shared current-count projection and actual genuine whole105 or source-derived SDK census",
+    "HardwareFP/fullAPI/provider/protocol/error/large-table0ULP/platform/log/backend frontiers unchanged",
+    "Executable benchmark consumer/cohorts/one-thread original performance and all losses pending",
+    "Current branch intentionally retains ancestor old shared counts source; root sole integrator must selectively project six new files plus admitted VI family onto actual current e8 shared dependency, not blind-merge private ancestry.",
+    "Broader source libm/log/reduction/BLAS association and nonGNU Windows signedNaN/runtime parity remain unobserved; prior MSVC algorithm compile evidence reused, no new runtime credit.",
+    "Old original rows have no full32 target incoming/outgoing witnesses; actual hardwareFP parity, arbitrary callbacks/concurrency/protocols/CSR formats/negative/nonfinite domains remain frontiers.",
+    "Independent root successor admission before any shared/genuine/benchmark authority; current275 not held."
+  ],
+  "waste_review": "Authenticated167smallproofs and sixnewfiles, reused prior8186/11af saved-original admission and exact oldVI bytes; no scientific/native/helper/test/build/download/performance rerun. Two metadata setup failures retained, corrected sourceguards only. Root one nonexistent guessed testfilename read corrected by actual handoff filenames; no effect on source/evidence. Next selective shared integration after275 freeze delivery compatible; executableconsumer separate family lane ongoing."
+}

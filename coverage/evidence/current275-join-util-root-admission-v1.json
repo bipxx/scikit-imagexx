@@ -1,0 +1,71 @@
+{
+  "schema": "current275-join-util-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_UNBOUND_AFFECTED_FIVE_API_EXECUTABLE_SOURCE_NOT_MEASUREMENT",
+  "source": "7b01014e5d407e67689eb22ef89c3682e56e27dc",
+  "prospective_source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "handoff": {
+    "path": "build/current275-join-util-measurement-v1/handoff-v1.json",
+    "sha256": "80b53bedaa025052db48516afea255bce2f252c18454dcea2a453ce8311f8773"
+  },
+  "authenticated_files": 5,
+  "authenticated_small_proofs": 30,
+  "unchanged_functions": [
+    "sha",
+    "verify_source_state",
+    "verify_helper_state",
+    "finish_probe",
+    "driver_argv",
+    "validate_util_entry",
+    "main",
+    "write_json",
+    "prepare_host_helper",
+    "scoped_binding",
+    "scoped_measurement",
+    "measurement_commands"
+  ],
+  "changed_functions": [
+    "read_manifest",
+    "validate_bound_manifest",
+    "prepare_cohorts",
+    "run_cohorts",
+    "run_measurements",
+    "validate_reports"
+  ],
+  "independent_source_review": "Read exactsixfunctiondiff vs admitted57072; changes five-route scope/positive genuine SDKcount/contextv3 and exactc7 standalone reportreader. C1/finalizer/helper/realentry-stop/oncepostbatch/sharedsampler untouched. c7function exact aftercontextpath inverse; firstcases/nativeentries/returncounts exactfrozenpriorfive routes.",
+  "benchmark_scope": {
+    "APIs": [
+      "segmentation.join_segmentations",
+      "util.crop",
+      "util.slice_along_axes",
+      "util.view_as_blocks",
+      "util.view_as_windows"
+    ],
+    "cohorts": 5,
+    "cases": 32,
+    "raw_samples": 448,
+    "warm_groups": 64,
+    "driver_families": 4,
+    "case_counts": {
+      "JOIN": 8,
+      "crop": 8,
+      "slice": 8,
+      "blocks": 4,
+      "windows": 4
+    },
+    "workers": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "scope_semantics": "Fixed proposed new one-thread original-public comparison for e03JOIN/f48utility changes only. No actualcalls/measurements authorized; no alleged improvement or favorable retime."
+  },
+  "actual_authority": "Producer/preparedsource/runtime/core/SDK/root/helper/GO/deadline remainUNBOUND; targets0. Failed8cminimumCAPI source cannot bind asqualified. Prospective8c historical; correctedsource needs admittedmetadata interface refresh.",
+  "pending": [
+    "Corrected genuine product and fourprofile/SDK/stager root admission",
+    "Versioned actualsource/runtime/core/SDK/root/helper bindings and affectedsourcechecks",
+    "Five actual firstcohorts+oncepostbatch verification",
+    "Separate measurementGO and all32publicone-thread raw/loss admissions",
+    "Fullcontract/provider/class/FP/Windows domains and main delivery"
+  ],
+  "waste_review": "Exclude unchangedgrid/ARE/contingency/boundary/ellipse workloads ratherthan blanketretiming; priorraw historical/conditional only. Reuseengine/57072/c7 and80purechecks/version, no science/tests/build/download/timing/archivehash. Root guessedoldprobe path then compared unchanged57072probe inc7 instead ofactual standalonec7reader; failedread/assertion stopped dependentadmission. ResolvedfromactualGit tree/admission filename; no candidate defect or evidencewaiver. Manualworkflow registration from exactreviewedbytes permitted; notdispatch."
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "mark-lbp-radon-util-complete-readiness-admission-v1",
+  "passed": true,
+  "status": "PASS_EXACT_COMPLETE_140_SOURCE_COMMAND_BOTH_RETAINED_PYTHONS",
+  "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "workflow_sha256": "06d6b0d592dbca7d4b58faf38b17de7557f32324d481c4d8563657db023611b1",
+  "runner_sha256": "3bc8675c89d9cba69a410a2ea87c5131799577d25fb9001cdc12c2b3e2f7df98",
+  "authority_sha256": "1173c01006e0ae834e8573d3522a1c4392a10368f5df826054837967bdbed6d6",
+  "source_selectors": 140,
+  "normal_conftest_plugins": true,
+  "no_failfast": true,
+  "science_calls": 0,
+  "profiles": {
+    "windows311": {
+      "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]",
+      "executable": "C:\\Users\\HEQ\\AppData\\Roaming\\uv\\python\\cpython-3.11.11-windows-x86_64-none\\python.exe",
+      "collected": 3247,
+      "xml": {
+        "tests": 3255,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 288.125,
+      "proofs": {
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\command.json": "51729c535839eb9cb1f05692b01c1af04888fc4571edb44e2beba74ae4234dd8",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\plugins.json": "fa81a330ce46eaf28dd9cb866dadb0dbe8c365e44412e125b3f1ae8ae591adca",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\testIDs.json": "61f2c1b01ecf7a892d1caafebe786db03118e7609fc40d90641fc329a32c3286",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\terminal.json": "c45ba490a7ca6f3b6189b85269af49c840db294012efcf7bf76b680307380a97",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\results.xml": "c82aa115c9ab73eb4e5a75c94f9af91e9985e296d358468a78669960e060b55d"
+      }
+    },
+    "windows313": {
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+      "collected": 3247,
+      "xml": {
+        "tests": 3255,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 267.8895370999817,
+      "proofs": {
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\command.json": "10f071ad4c2b002e1e7f217a7c285444f1e472d4581bfe610f94635cda1c622a",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\plugins.json": "d5cf0330c96ee6581f90b21c3afc0566fdfb6b39460202d67cb60dd14820ee3c",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\testIDs.json": "61f2c1b01ecf7a892d1caafebe786db03118e7609fc40d90641fc329a32c3286",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\terminal.json": "bb819a09347cbf81ade0f4b400e389dbdba975815f75cc023b6e18a85a132761",
+        "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\results.xml": "6a330eff5bf43f39c0d0967ad68d41cb7acb6e31c877b323f43c0924a1de6678"
+      }
+    }
+  },
+  "previous_failed_barriers": "coverage/evidence/mark-lbp-radon-util-sourcebarrier-failure-v1.json",
+  "scope": "Actual full command/configuration/IDs/XML independently inspected; supersedes pending-readiness claim only. Genuine qualification, wholeSDK/hotswap/performance/main delivery remain pending.",
+  "waste_review": "Reader-only correction required both complete barriers. Numerical/SDK/performance not replayed. Root metadata argv suffix assumption four vs actual three stopped before admission/dispatch; corrected actual recorded argv comparison, no checks waived or tests repeated. Next root exact-source four-profile dispatch."
+}

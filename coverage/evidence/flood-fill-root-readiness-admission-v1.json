@@ -1,0 +1,68 @@
+{
+  "schema": "flood-fill-root-readiness-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_ACTUAL_ZERO_BODY_READINESS_NO_ORIGINAL_AUTHORITY",
+  "source": "7c14ee863934a2a6c5370d0ca699d3d299fba166",
+  "controller_sha256": "ff583101f34d397ef31e9a38429275bb2080b8e955f5121cde6054565d1a99b6",
+  "binding_sha256": "71c093112ca3a57c311154aa6e623ac6af5293063998747c4337d2dcae0c7341",
+  "independent_review": {
+    "path": "build/flood-fill-readiness-independent-review-v1/review-v1.json",
+    "sha256": "7dc87f6ef09047e43250148f90bc12485a5999127114de9645766176c191032e"
+  },
+  "source_files_verified": {
+    "tests/flood_fill_contract.py": "2349b80f280641a2e3269278665dea6285fd5d80f8b975d0071a453267516323",
+    "tests/flood_fill_readiness.py": "305ddac4359fa02a48339db3ee5a68e3d7c173ef0a9b05f40e85172770dadf2b",
+    "tests/flood_fill_observer.py": "191702f03768c32eeecea2c69658350062935ff12c4a90daa5a491047a21fd3a",
+    "tests/flood_fill_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/flood_fill_capture_controller.py": "ff583101f34d397ef31e9a38429275bb2080b8e955f5121cde6054565d1a99b6",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "coverage/contracts/flood-fill-v1.json": "9c7c5ca081652d7068f5c08a6f0fd00dbd685811aeef7cc7165054a6777214fd",
+    "coverage/contracts/flood-fill-readiness-v1.json": "74dce072675b2dcf76a453826c64daf7a6f3cb0284ff3a916af593fdacbd4d9c",
+    "tests/fixtures/flood_fill_sources_v1.json": "46bee1c00d172276e3d35bd819f41793da09e959d59266d13a45767abf55a481"
+  },
+  "prefixes": {
+    "minimum": [
+      {
+        "path": "build/flood-fill-readiness-v1/minimum-flood-cold-v1/terminal.json",
+        "sha256": "86a66e17fb9bce96267fd92d3a6c98b80fbb419a4f03987d57c4c7e47f12f1a5"
+      },
+      {
+        "path": "build/flood-fill-readiness-v1/minimum-flood-cached-v1/terminal.json",
+        "sha256": "4f44b48620c248d75a122e250b7e523886bc2504ab7ea7bf283bece7354a1e2c"
+      },
+      {
+        "path": "build/flood-fill-readiness-v1/minimum-flood_fill-cold-v1/terminal.json",
+        "sha256": "a2322869fd99293a66d6fbe2ae50d160985be9703776c67c7231a5859fd5c2b2"
+      },
+      {
+        "path": "build/flood-fill-readiness-v1/minimum-flood_fill-cached-v1/terminal.json",
+        "sha256": "f2ae554bc24f4fd674f8d014afabcb561b794363a04edccad9d4d8e1872bc249"
+      }
+    ],
+    "modern": [
+      {
+        "path": "build/flood-fill-readiness-v1/modern-flood-cold-v1/terminal.json",
+        "sha256": "debeaef599b675892120c58072a67fcf74c9b4d4f4ff6194a6cbb07cfdec224b"
+      },
+      {
+        "path": "build/flood-fill-readiness-v1/modern-flood-cached-v1/terminal.json",
+        "sha256": "68d75b4be167d1ae25a6537b2905d68b5a9b2325c2524c5ef94dd74ce5d02715"
+      },
+      {
+        "path": "build/flood-fill-readiness-v1/modern-flood_fill-cold-v1/terminal.json",
+        "sha256": "5edcaeea2d8fd448af61e54dec1be18804909fb1a39406b610ab2828ac38e8fe"
+      },
+      {
+        "path": "build/flood-fill-readiness-v1/modern-flood_fill-cached-v1/terminal.json",
+        "sha256": "90cc8026f39a227c2baa97fa7e0893b1fb9f9b403953af3bbf459723d97eb8c6"
+      }
+    ]
+  },
+  "original_calls": 0,
+  "native_calls": 0,
+  "scope": "Bounded96recipes/profile, two canonical APIs/four names; helper ATTRIBUTE request refusal not Cython body tracing. Source5eb geometry/admitted0c40/helper runtime reused. New reference capture requires separate exact GO, raw admission before native work; no wholeAPI/genuine/performance credit.",
+  "waste_review": "Reuse independent104proof review and existing corrected one-shot controller/helper/typed codec; no scientific/prefix/build/binaryhash replay. Root checks source/8prefix bindings/full32 actual metadata; next minimum96only then inspect actual terminal/journal before modern authority."
+}

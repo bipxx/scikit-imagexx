@@ -1,0 +1,283 @@
+{
+  "schema": "current275-join-util-measurement-controller-handoff-v1",
+  "status": "FROZEN_UNBOUND_AFFECTED_API_SOURCE_PREPARATION_NO_EXECUTION_AUTHORITY",
+  "source": "7b01014e5d407e67689eb22ef89c3682e56e27dc",
+  "base": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "branch": "bench/current275-join-util-v1",
+  "worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current275-join-util-measurement-v1",
+  "source_clean": true,
+  "files": {
+    ".github/workflows/join-util-current275-initial.yml": {
+      "sha256": "d28415101f38a8c092d7f69c796e2289b70a25fbbaa7e718ebe3b47060b2e064",
+      "bytes": 13422
+    },
+    "coverage/contracts/join-util-current275-controller-v1.json": {
+      "sha256": "600ddcddb36e147fd24b183f3723c85dec15dd1148553dec1b7e2c79593b89e5",
+      "bytes": 18300
+    },
+    "coverage/contracts/join-util-current275-measurement-v1.json": {
+      "sha256": "c0c2e653dd4a07b238d8806565e268e71f1740d8b7a042fd439b66b57ef21860",
+      "bytes": 34937
+    },
+    "tests/test_join_util_current275_controller.py": {
+      "sha256": "40417be9276f55c5383c91e610ab9a6772d1383952b496216f323a8e4f3c424d",
+      "bytes": 27732
+    },
+    "tools/join_util_current275_probe.py": {
+      "sha256": "3bf9b446d2df80881d131895e0f7e8dbf62998fc116e8c181c279a334bcd1f6f",
+      "bytes": 37003
+    }
+  },
+  "admitted_source_inputs": [
+    {
+      "path": "coverage/evidence/join-util-views-bound-controller-source-admission-v4.json",
+      "sha256": "6700d180a75281ef7bc7d24011776a44f37d02331984c8fc568071837cf3d4ce"
+    },
+    {
+      "path": "coverage/evidence/join-util-views-report-order-source-admission-v5.json",
+      "sha256": "8cb4c0628be5005767eb2f63f9f8dd7e9a49a22920de6dcb9a3f10ceec4b807b"
+    },
+    {
+      "path": "build/mark-lbp-radon-util-join-reader-root-admission-v1/admission-v1.json",
+      "sha256": "39b66e694ec8fb16c5b702841576590a67112add805bb49b8f557407bb2896e1"
+    }
+  ],
+  "source_templates": {
+    "controller": "57072ba25f38785e79d930951a56ab4adfc0583f",
+    "report_only_correction": "c7cd06fc7bb7e6d05353b35463f020633c5589d4",
+    "preservation": "Old57072 bound manifest/probe/workflow/test source retained under ignored57072-prefixed snapshots; oldsource commits/failedcampaign/raws/c7replay untouched, no parent ancestry merge"
+  },
+  "scope": {
+    "APIs": [
+      "segmentation.join_segmentations",
+      "util.crop",
+      "util.slice_along_axes",
+      "util.view_as_blocks",
+      "util.view_as_windows"
+    ],
+    "cohorts": 5,
+    "cases": 32,
+    "raw_samples": 448,
+    "warm_groups": 64,
+    "driver_families": 4,
+    "case_counts": {
+      "JOIN": 8,
+      "crop": 8,
+      "slice": 8,
+      "blocks": 4,
+      "windows": 4
+    },
+    "workers": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "scope_semantics": "Fixed proposed new one-thread original-public comparison for e03JOIN/f48utility changes only. No actualcalls/measurements authorized; no alleged improvement or favorable retime."
+  },
+  "active_files": {
+    "workflow": ".github/workflows/join-util-current275-initial.yml",
+    "probe": "tools/join_util_current275_probe.py",
+    "manifest": "coverage/contracts/join-util-current275-measurement-v1.json",
+    "source_context": "coverage/contracts/join-util-current275-controller-v1.json",
+    "tests": "tests/test_join_util_current275_controller.py"
+  },
+  "actual_authority": "Every active actual producer/run/revision/artifact/prepared_source/core/runtime/SDKcount/rootadmission/stager/source revision/probe/roothelperreceipt/library/GO/deadline fieldNULL/UNBOUND. Only prospective_source8c/current275/SDK105 and static source/helper pins declared; old271 genuine bindings not transplanted.",
+  "driver_interface": {
+    "context": "coverage/contracts/next-util-benchmark-execution-v3.json",
+    "strict_driver_binding_keys": 24,
+    "source_pins": 49,
+    "helper_source_pins": 7,
+    "CLI": "Allfive util-executor routes use existing --first-cohort --api --case --root-binding; no --deadline-utc. Timing adds existing --measurement-go, never --first-cohort/casefilter.",
+    "frames": "Real measure<-execute from benchmarks/next_util_execution.py, caller.f_locals sameadmitted contracts; actualexplicit pass_index0. Dedicated1 historical reader branch retained/sourcechecked but no dedicatedAPI execution inthiscampaign.",
+    "native_roles": "Original/public topcalls1+native/public1 percohort; exactexisting returnmarkers/getters/input-output-alias/state/full32 restoration; JOIN exactArrayMapclass frontierOPEN",
+    "case_methods": "All original fiveAPI recipe bodies/pools/bounds/method/Montage bytes unchanged; borrowedview and copycases/allslowercases retained. Onlycohort/family subset selected, no casecherrypick."
+  },
+  "unrelated_evidence": {
+    "regular-grid": {
+      "executed": false,
+      "source_dependencies": {
+        "python/skimagexx/_regular_grid.py": {
+          "prior_canonical_sha256": "23a7130119cafd2c65140e3a32f4d01a5c57fb10b50f6c5500f036d05ac721de",
+          "current_canonical_sha256": "23a7130119cafd2c65140e3a32f4d01a5c57fb10b50f6c5500f036d05ac721de"
+        },
+        "src/regular_grid.cpp": {
+          "prior_canonical_sha256": "1089c8c39ff4c50a3418878e3d2e23771642dc364a491b9dd87b30eb4f801c5a",
+          "current_canonical_sha256": "1089c8c39ff4c50a3418878e3d2e23771642dc364a491b9dd87b30eb4f801c5a"
+        },
+        "src/bind_regular_grid.cpp": {
+          "prior_canonical_sha256": "fc77fc135c46227d91390a7e75cc8f8bfdce7e3ae832ece49c84b61c5eaacb74",
+          "current_canonical_sha256": "fc77fc135c46227d91390a7e75cc8f8bfdce7e3ae832ece49c84b61c5eaacb74"
+        },
+        "include/skimagexx/regular_grid.hpp": {
+          "prior_canonical_sha256": "25f4ca4351cdfe585850fa9efe9a31fb74ca9f09473d9383606f79eca3404489",
+          "current_canonical_sha256": "25f4ca4351cdfe585850fa9efe9a31fb74ca9f09473d9383606f79eca3404489"
+        }
+      },
+      "changed": [],
+      "scope": "Not selected: prior timings remain historical within originala6/271runtime/profile. Root may reuse only after matching remaining exactruntime/CPU/toolchain/consumer dependencies. Shared commoncontext pins regulargrid sources statically but does not require its cohort; no performance result invented."
+    },
+    "boundary": {
+      "executed": false,
+      "source_dependencies": {
+        "python/skimagexx/_find_boundaries.py": {
+          "prior_canonical_sha256": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1",
+          "current_canonical_sha256": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1"
+        },
+        "src/find_boundaries.cpp": {
+          "prior_canonical_sha256": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547",
+          "current_canonical_sha256": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547"
+        },
+        "src/bind_find_boundaries.cpp": {
+          "prior_canonical_sha256": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+          "current_canonical_sha256": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961"
+        },
+        "include/skimagexx/find_boundaries.hpp": {
+          "prior_canonical_sha256": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+          "current_canonical_sha256": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854"
+        }
+      },
+      "changed": [],
+      "scope": "Not selected: prior timings remain historical within originala6/271runtime/profile. Root may reuse only after matching remaining exactruntime/CPU/toolchain/consumer dependencies. Shared commoncontext pins regulargrid sources statically but does not require its cohort; no performance result invented."
+    },
+    "ellipse": {
+      "executed": false,
+      "source_dependencies": {
+        "benchmarks/ellipse_perimeter.py": {
+          "prior_canonical_sha256": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",
+          "current_canonical_sha256": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90"
+        },
+        "src/draw_ellipse_perimeter.cpp": {
+          "prior_canonical_sha256": "1e154ef4c05c9b86cf9f7e9093485f9e0a58738e09ee0efca24452703121a099",
+          "current_canonical_sha256": "1e154ef4c05c9b86cf9f7e9093485f9e0a58738e09ee0efca24452703121a099"
+        },
+        "src/bind_draw_ellipse_perimeter.cpp": {
+          "prior_canonical_sha256": "6b9acbb59c3e39d71ab5f4e732db1c9a06b002a5d2536171be306d25ac733d5f",
+          "current_canonical_sha256": "6b9acbb59c3e39d71ab5f4e732db1c9a06b002a5d2536171be306d25ac733d5f"
+        },
+        "include/skimagexx/draw_ellipse_perimeter.hpp": {
+          "prior_canonical_sha256": "5caadc0f22f05cbe0b2d82f3fd2fd6f81925ed2ccebfced4c2ed56e0a3d825c0",
+          "current_canonical_sha256": "5caadc0f22f05cbe0b2d82f3fd2fd6f81925ed2ccebfced4c2ed56e0a3d825c0"
+        }
+      },
+      "changed": [],
+      "scope": "Not selected: prior timings remain historical within originala6/271runtime/profile. Root may reuse only after matching remaining exactruntime/CPU/toolchain/consumer dependencies. Shared commoncontext pins regulargrid sources statically but does not require its cohort; no performance result invented."
+    },
+    "ARE-contingency": {
+      "executed": false,
+      "source_dependencies": {
+        "include/skimagexx/label_pair_metrics.hpp": {
+          "prior_canonical_sha256": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+          "current_canonical_sha256": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66"
+        },
+        "python/skimagexx/_label_pair_metrics.py": {
+          "prior_canonical_sha256": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486",
+          "current_canonical_sha256": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486"
+        },
+        "src/bind_label_pair_metrics.cpp": {
+          "prior_canonical_sha256": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+          "current_canonical_sha256": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5"
+        },
+        "src/label_pair_metrics.cpp": {
+          "prior_canonical_sha256": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+          "current_canonical_sha256": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079"
+        }
+      },
+      "changed": [],
+      "scope": "Not selected: prior timings remain historical within originala6/271runtime/profile. Root may reuse only after matching remaining exactruntime/CPU/toolchain/consumer dependencies. Shared commoncontext pins regulargrid sources statically but does not require its cohort; no performance result invented."
+    }
+  },
+  "regular_grid_disposition": "Fourexact oldprepared source hashes match current frontend/leaf/binder/header. Sharedcommoncontext requires static sourcevalidation ofgrid dependency but neither strictbinding nor load_measurement requires gridcohort/family. Excluded8grid cases; rawprior evidence preservedwithin a6/271runtime scope. Root must matchotheractual runtime/compiler/CPU/case dependencies before accepting any current release reuse.",
+  "other_exclusions": "ARE/contingency,boundary,ellipse each4direct canonicaldeps match retained priora6 preparedsource. No unrelatedcalls authorized, no oldspeedup numbers relabeled current. Shared metadata/source fingerprint changes require currentbinding, not automatic retiming ofunchanged kernels.",
+  "source_code_reuse": {
+    "unchanged_probe_functions": [
+      "sha",
+      "verify_source_state",
+      "verify_helper_state",
+      "finish_probe",
+      "driver_argv",
+      "validate_util_entry",
+      "main",
+      "write_json",
+      "prepare_host_helper",
+      "scoped_binding",
+      "scoped_measurement",
+      "measurement_commands"
+    ],
+    "changed_probe_functions": [
+      "read_manifest",
+      "validate_bound_manifest",
+      "prepare_cohorts",
+      "run_cohorts",
+      "run_measurements",
+      "validate_reports"
+    ],
+    "report_reader": "Actualc7 validate_reports exactsource except active nextutilcontextv2->v3 path. Keeps utilpass0 vsdedicated1/order/loop/calibration/warmup/median/nativeacceptance/FP/authority/allloss guards.",
+    "new_engine": false,
+    "new_scheduler": false,
+    "production_or_benchmark_driver_delta": false
+  },
+  "authority_safety": {
+    "first_cohort": "Unchanged original/native counters, actualrealentry stop before samplerbody and admitted innernonstopping-profiler fallback; no retry",
+    "C1": "Unchanged restorethen smallsource/HEAD/clean/context/binding/GO/helper reauthentication before terminalPASS; once-after-five-route batch offline core/runtime/SDK verifier before summaryPASS",
+    "parentGO": "Existing schema parent ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON distinctfrom0timed first-cohort GOs; scopedmeasurement envelopes retainfixed families/caseIDs, workflowrun_measurements requires completepostbatch firstcohort summary.",
+    "helper": "ExactsourcebuiltF1 sevenfiles. Existing builder once onactual measurementhost beforecohorts, external receipt digest/sealed library+toolchain/ABI/controls, recursive smallbundle collector; no producerhost binary identity assumption or0c40exemption.",
+    "slower_cases": "Official previous JOIN0/8,crop0/8,slice0/8,blocks0/4,windows0/4 remain oldobservedlosses. Newcandidate has no measured result; all32cases fixed for futureauthority."
+  },
+  "tests": {
+    "initial_source_module": "53PASS eachWindows311.11/313.14 normalconftest/plugins/0science",
+    "added_changed_closure": "27PASS each sameversions: currenthash/provenance check +2c7positive sourceoffset/allloss controls +24actualboundmetadata refusal controls. No union claimed as productreadiness.",
+    "inert_scope": "Actualprobe UNBOUND/boundpreimport request refusal cold+cached, sourceframe/native/FP/alias/getter controls, C1 poststopterminal mutationrefusals, oncepostbatch verifierfailures, sourceonly conditionalmeasurementcommands, syntheticreportorder/loss/calibrationrefusals, fake rootreceipts currentSDK105 positive+23tamper refuses0process/body.",
+    "Actionlint": "PASSnewworkflow, inlinePython blocks compiled inactualsource guards; optionaloutside lintersdisabled"
+  },
+  "proof_index": {
+    "path": "build/current275-join-util-measurement-v1/proof-index-v1.json",
+    "sha256": "13a8eae06a17b3f02056f2da0de6314a9d911e8569baed47f341ecd946433f3a",
+    "count": 30,
+    "bytes": 525505
+  },
+  "author_gate": {
+    "path": "build/current275-join-util-measurement-v1/final-author-gate-v1.json",
+    "sha256": "a8d6e1add90bf89eec90f2e23495ea46a06f8f3ef64f1b91cfb4aaadfa555536"
+  },
+  "gates": {
+    "scoped_source_inert_interface": "PASS",
+    "source_case_method_subset_and_c7reuse": "PASS",
+    "root_independent_controller_admission": "PENDING",
+    "current8c_completebarriers_and_genuine4profile_SDK105_stager": "ROOT_OWNED_PENDING_NO_INFERENCE",
+    "actualproducer_runtime_core_helper_rootbindings": "PENDING_NULL",
+    "fiveactual_firstcohorts_and_postbatch_verifier": "PENDING",
+    "root32case_measurementGO_and_publictiming": "PENDING_NOT_EXECUTED",
+    "fullAPI_ArrayMap_provider_Windows_domains": "OPEN",
+    "main_publication_or_registration": "ROOT_RESERVED_NOT_PERFORMED"
+  },
+  "failures_preserved": [
+    "Original57072 hostedtiming campaign remainsfailed despite laterc7 report-only reader/replay correction; no realrawfiles/summaryhistory rewritten",
+    "Previous original32affectedcase losses unchanged; no favorable retime",
+    "No source/test failure inthisnewcontroller packet. Initialread-onlyWindowsglob/cwd lookups had preventablelocator errors, corrected before source mutation/dependentexecution; no scientific bodies touched."
+  ],
+  "waste_reuse": {
+    "reused": "Existing57072 observer/C1/helper/workflow/percase validator plus c7reportfix/source controls, admitted8cdrivers/commoncontext v3 and fixedcases,16directexcludeddependency sourcehash matches. No environment/archive/core rehash or newmeasurement machinery.",
+    "avoided": "Do not repeat unchanged grid/ARE/contingency/boundary/ellipse cases automatically. Authentication ofsharedgrid source is notauthorization or requirement toinvoke itscohort.",
+    "observed_cost": "53puretests/version ~2s;27addedchecks/version ~2s. Othermetadata/packagingcost notseparatelymeasured; no work rerun forwaste measurement.",
+    "next_owner": "root independent controller review/actualbinding owner",
+    "next_trigger": "This immutable UNBOUND source may be admitted without waiting genuine data. Rootlater matches actualcurrent275 producer/runtime/SDK/stager/helper records, authorizes fivefirstcohorts then separatefixed32case measurementGO. Priorunrelatedtimings retain originalscope until dependency match; no automatic global repeat.",
+    "plan_correction": "Benchmark changed APIs againstoriginal with fixed oldcasepool; source/context metadata-only dependency doesnotmandate unrelated timingcampaign."
+  },
+  "requirements": "RootAGENTS/currentcontrollerarea read; sole5familyfiles isolatedchild8c, preserveothers/currentrootmain/8c/readiness/plan/ledger/checklist. Existingartifact/sourcecontroller infrastructure reused, [skipci] privatecommit, raw/canonical hashdomains explicit; onefrozenhandoff.",
+  "authority": {
+    "original_calls": 0,
+    "native_target_calls": 0,
+    "helper_calls": 0,
+    "sampler_body_calls": 0,
+    "scientific_imports": 0,
+    "builds": 0,
+    "new_environments": 0,
+    "downloads": 0,
+    "timed_batches": 0,
+    "hosted_dispatches": 0,
+    "main_mutations": 0,
+    "product_source_edits": 0
+  },
+  "terminal_handles": "Allsource/inert checks andActionlint terminal0; no authorlive scientific/hosted handle",
+  "next_owner": "root independent admission and main/publication/binding",
+  "next_trigger": "FrozenUNBOUND source only; actualexecution requires newgenuine/rootGOs, no qualification delay"
+}

@@ -1,0 +1,244 @@
+{
+  "schema": "current275-family-measurement-independent-review-v1",
+  "status": "PASS_SCOPED_UNBOUND_SOURCE_INTERFACE_NO_EXECUTION_ADMISSION",
+  "source": "95e64f135c7d3d8cbef7c8acb543ed31ea86c079",
+  "base_product_source_projection": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "handoff": {
+    "path": "build/current275-family-measurement-v1/handoff-v1.json",
+    "sha256": "11993e0686731f18db77a69d5ee8b59c692d993440789cd0c15c0ace427ec1db"
+  },
+  "authentication": {
+    "path": "build/current275-family-measurement-independent-review-v1/authentication-v1.json",
+    "sha256": "27ace347f8b52b8c301af4521cc861cf774ab05adc327cb7a4ef557d908bb33e"
+  },
+  "ownership": "Only ignored independent-review directory written. Candidate95e64,product8c,frozen3548/f957 and all source/evidence/main/shared edits preserved. No reviewed module imported or test/scientific code executed.",
+  "checks": [
+    {
+      "gate": "Exact source/proof and selective ancestry",
+      "result": "PASS_SCOPED",
+      "evidence": "Clean nativeWindowsGit95e64,10controller/manifest/workflow/test files only versus8c.32smallproofs119315bytes authenticated. Admitted3548/f957 contracts v1 retained byteexact; v2 manifests record exactcurrent->predecessor rawbyte inverses. Root admissions3cf/1ed/39b read/hash authenticated. No product source authored or private controller ancestry merged."
+    },
+    {
+      "gate": "8c source projection and active contexts",
+      "result": "PASS_SOURCE_ONLY",
+      "evidence": "Prospective8c=275images/278registered/222product/105SDK/35families/70checks, explicitlyUNBOUND_NOT_GENUINE. Product e4->8c exact3metadata delta independently checked:JOINWindowsfixture-v2,test_JOINWindowsFENV,qualifier. Allcurrent benchmarkcanonical maps matchactualsource:MARK/LBP79canonical+79raw;Radon34canonical and actualfirstcohortrawmapNone. Both7F1sourcepins exactunchanged. ActiveMARKv4/LBPv3/Radonv2 and currentqualification/source/export contracts pinned; actual producer revision not inferred from prospective8c."
+    },
+    {
+      "gate": "Preserved controller code and source-stage test reuse",
+      "result": "PASS_AFFECTED_SCOPE",
+      "evidence": "Radon18probe function sources exactf957 (including pre-envelope driver_adapter original_path/try/finally listrestoration for return/importfailure). MARK15of18 unchanged3548; only read_manifest/verify_source_state/prepare_cohorts currentcontext/SDK actualpositivecount adaptations. Actual SDK_members remainsNone; futurecount must be positiveint and equal authenticated runtime map, not obsolete104.183inertpure checks/version on e4 prototype authenticated;8affected8csource/inverse/UNBOUND controls/version pass, normalconftest/plugins and0science. Reuse justified by exactcode preservation and explicit3extra source dependencies; neither scope is realcohort/fullsourcebarrier."
+    },
+    {
+      "gate": "Strict binding API and source ownership",
+      "result": "PASS_STATIC",
+      "evidence": "Actual prepare_cohorts common+perroute dict keys equal actual driver literal requiredsets:MARK25 andRadon24, not guessed schemas. Context/route/basecontractSHA/go/binding/interpreter/preparedsource/producer/core/runtime/rootreceipts separate. Radon helperauthority remains outerGO; no extra unsupportedinner fields. MARK/LBP uses live SDK map; Radon uses authenticated runtime SDK census. Driver load_binding/validate_binding stay sourcebound before scientificimports/calls and shared helper resolved from preparedsnapshot."
+    },
+    {
+      "gate": "Real sampler frame/order/fingerprint interfaces",
+      "result": "PASS_STATIC",
+      "evidence": "MARK/LBP actual measure<-sample_entry<-execute uses literalpass0, firstcase0,8MARK+4LBP cases; reports flatten sourcefingerprint and include metadata.source_before; collector checks authoritativeflattened fields. Radon actual measure<-sample<-execute uses explicitCLI1..8 passedas cli.pass_index with enumerate caseindex; collector checks nested metadata.source_before and command-derived order. Source-focusednew tests inspect exactreal AST and metadatashapes, retaining separate dialects instead of forcingMARKpass0 on Radon."
+    },
+    {
+      "gate": "Native/FP/sampler stop and caller restoration",
+      "result": "PASS_STATIC_PENDING_GENUINE",
+      "evidence": "Unchanged admitted stop path counts original/nativepubliccalls once, checks installednamespace/builtin C-return ownership/defaultworker1/input+output descriptors/aliases/target-immediateFP/full32caller and NumPypolicy. Realmeasure call-entry guard chains observer then raises if absent/nonstopping; samplerbody unauthorized under firstcohortGO. Outerfinally restores trace/profile/argv/path/worker/fallback/NumPystate/full32 before finish_probe validates authority. MARK getter1 versusLBPgetter0+prepare/binary/assignmarkers explicit; outerprofiler pausedduringinner observer, no invented directC++snapshot/getter count."
+    },
+    {
+      "gate": "Finalizer/postbatch and separate measurement authority",
+      "result": "PASS_STATIC",
+      "evidence": "Inheritedfinish_probe authenticatesHEAD/clean/sourcepins/context/binding/GO/probe/helperreceipt/digest/deadline AFTERouterrestore and BEFOREterminalPASS; failurediagnostic raises. BothdistinctAPI terminals required perworkflow, then exactlyone expensive offline installedcore/runtime/SDK verifier before summaryPASS with runtime/manifest pins before/after. Conditionalchild timingmanifest derives only from independentlyrootauthorized parentGO plus bothterminalPASS/postbatchPASS; no timing from cohort-onlyGO. Sourcechecks do not substitute actualnative/cohort evidence."
+    },
+    {
+      "gate": "Method/cases/raw reporting/all losses",
+      "result": "PASS_FROZEN_SCOPE",
+      "evidence": "Both execution_scope objects and helper configs exactlypredecessor. Cases and CLIargv unchanged:MARK/LBP12cases/168samples/24warmgroups;Radon16/224/32;worker1,7repeat,100ms minimumsample,250ms minimumwarm, noautomaticretry/alllosses. Existing collector reconstructs caseIDs/loops/accepted rawsample durations/medians/warmgroups/order/journal and classifications; no hiddenloss drop or source-baseline replacement. Combined28/392/56/fourcohorts is arithmetic only, not an authorized experiment."
+    },
+    {
+      "gate": "Workflows and actualUNBOUND boundary",
+      "result": "PASS_SOURCE_ONLY",
+      "evidence": "Manualworkflow_dispatch only; both use v2manifests. Status/actualproducer API/source/repository/success/artifactdigest gate precedes download/offlineinstall, then exactsource/offlineverifier, fresh-host sourcebuiltF1 once, twozero-timingcohorts, conditionalmeasurement and validate_reports. Inline5Pythonblocks/workflow compile as staticdocuments; retainedactionlintPASS (optionalexternaltoolsdisabled). Actual producer/run/revision/artifact/prepared_source/runtime/core/SDKcount/root/stager/helperreceipt/library/rootGO/deadline/completedcohort fields allNone/UNBOUND. MARKprobepinNone intentionallyawaitsactualbinding; Radonprobepin is a staticsourcefact. Neither provides actualGO. Workflow registration IDs and prospective105 are not execution authority."
+    }
+  ],
+  "findings": [],
+  "required_changes_for_this_scoped_review": [],
+  "retained_scope": {
+    "status": "PASS_SOURCE_INTERFACE_AUTHENTICATION",
+    "source": "95e64f135c7d3d8cbef7c8acb543ed31ea86c079",
+    "base": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+    "controller_files": 10,
+    "proofs": 32,
+    "proof_bytes": 119315,
+    "families": {
+      "mark-lbp": {
+        "changed_probe_functions": [
+          "read_manifest",
+          "verify_source_state",
+          "prepare_cohorts"
+        ],
+        "unchanged_functions": 15,
+        "canonical_pins": 79,
+        "raw_pins": 79,
+        "strict_driver_binding_keys": 25,
+        "execution_scope": {
+          "untimed_topcalls": {
+            "original": 2,
+            "native": 2
+          },
+          "canonical_cases": 12,
+          "canonical_raw_samples": 168,
+          "warmup_groups": 24,
+          "repeat": 7,
+          "target_ms": 100,
+          "warmup_min_ms": 250,
+          "workers": 1,
+          "reference_threadpools": 1,
+          "single_host_same_installed_runtime": true,
+          "no_automatic_retry": true,
+          "retain_all_losses": true
+        },
+        "interface": {
+          "source_projection": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+          "scope": "UNBOUND source-only projection, no actual genuine runtime authority",
+          "sampler_bridge": "sample_entry",
+          "parity_caller": "execute",
+          "sampler": "measure",
+          "report_source": "metadata flattened fingerprint fields plus metadata.source_before",
+          "pass_index": "explicit literal0",
+          "binding": "Strict existing family envelope, separate per-cohort binding/GO and conditional parent measurement GO; no extra driverbinding keys"
+        },
+        "actual_authority": "NULL_UNBOUND",
+        "helper7_unchanged": true
+      },
+      "finite-radon": {
+        "changed_probe_functions": [],
+        "unchanged_functions": 18,
+        "canonical_pins": 34,
+        "raw_pins": "UNBOUND",
+        "strict_driver_binding_keys": 24,
+        "execution_scope": {
+          "untimed_topcalls": {
+            "original": 2,
+            "native": 2
+          },
+          "canonical_cases": 16,
+          "canonical_raw_samples": 224,
+          "warmup_groups": 32,
+          "repeat": 7,
+          "target_ms": 100,
+          "warmup_min_ms": 250,
+          "workers": 1,
+          "reference_threadpools": 1,
+          "single_host_same_installed_runtime": true,
+          "no_automatic_retry": true,
+          "retain_all_losses": true
+        },
+        "interface": {
+          "source_projection": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+          "scope": "UNBOUND source-only projection, no actual genuine runtime authority",
+          "sampler_bridge": "sample",
+          "parity_caller": "execute",
+          "sampler": "measure",
+          "report_source": "metadata.source_before",
+          "pass_index": "explicit CLI1..8",
+          "binding": "Strict existing family envelope, separate per-cohort binding/GO and conditional parent measurement GO; no extra driverbinding keys"
+        },
+        "actual_authority": "NULL_UNBOUND",
+        "helper7_unchanged": true
+      }
+    },
+    "retained_pure": {
+      "windows311-source-v1": {
+        "nodes": 183,
+        "source_only": true,
+        "normal_conftest": true,
+        "plugins": true,
+        "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]"
+      },
+      "windows311-source8c-v1": {
+        "nodes": 8,
+        "source_only": true,
+        "normal_conftest": true,
+        "plugins": true,
+        "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]"
+      },
+      "windows313-source-v1": {
+        "nodes": 183,
+        "source_only": true,
+        "normal_conftest": true,
+        "plugins": true,
+        "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]"
+      },
+      "windows313-source8c-v1": {
+        "nodes": 8,
+        "source_only": true,
+        "normal_conftest": true,
+        "plugins": true,
+        "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]"
+      }
+    },
+    "product8c_metadata_delta": [
+      "coverage/contracts/join-windows-fenv-fixture-v2.json",
+      "tests/test_join_windows_fenv.py",
+      "tools/public_qualification.py"
+    ],
+    "reviewed_execution": {
+      "tests": 0,
+      "science": 0,
+      "helper": 0,
+      "native": 0,
+      "build": 0,
+      "timing": 0,
+      "download": 0,
+      "dispatch": 0,
+      "largehash": 0
+    }
+  },
+  "pending": [
+    {
+      "gate": "Root independent controller source admission",
+      "owner": "root",
+      "trigger": "Review exact95e64/sourceinterface+thisreceipt. Source-only reusable preparation; no actualbindings/cohort authority."
+    },
+    {
+      "gate": "Exact-source complete product source barriers and genuine4profiles",
+      "owner": "root",
+      "trigger": "Actual complete workflow sourcecommand bothsupportedPythons with normalconftest/plugins, source-qualified wholeproduct/core/exportedSDK/stager/root admission. Running8c barriers and productqualification are independent; this review infers no outcome."
+    },
+    {
+      "gate": "Actual producer/runtime/core/SDK/source/helper/root bindings",
+      "owner": "root authorized binding author",
+      "trigger": "Bind actual admitted producer/run/artifact/preparedsource/runtime/core/SDK/rootreceipts/sourcehashes/currentprobe/deadline after genuine qualification. Preserve sourcebuiltF1 hostpreparation and externalreceipt controls; no stale299/271 or previoushost helper substitution."
+    },
+    {
+      "gate": "RealAPI zero-timing cohorts and postbatch identity",
+      "owner": "root explicitGO/execution",
+      "trigger": "FourdistinctAPI cohorts only ifrootchooses bothworkflows; genuineinstalledownership/parity/frame/stop/callerrestoration/C1/runtimeverifier mustactuallypass, notinerttestinference. Failure stops remainingcohorts/timing without retry."
+    },
+    {
+      "gate": "Separate measurementGO/public one-thread performance/release",
+      "owner": "root",
+      "trigger": "Explicitrootparent timingauthority after genuine/cohort gates, unchangedcases/methods/alllosses, rawreconstruction and independentadmission. FullWindows/provider/platform/domain/performance/release/mainfrontiers remainopen."
+    }
+  ],
+  "waste_reuse": {
+    "reuse": "Admitted3548/f957 code, F1seven sources,183initialinertnodes/version and exactcurrent8c8affectednodes reused; no unchanged experiment/build/test run or binary/archive/core hash replay. Olda744 pathleak and e4failedproductbarrier preservedfailed.",
+    "review_parser_failures": "Initialaudit_v1 had else24 syntax and stopped before any sourceauthentication execution; correctedv2 then assumed identicalliteral firstcohortstatus acrossMARK/Radon;v3 recognized predecessor-specific statuses but wrongly requiredMARKactualprobepin rather than its intentionallyUNBOUNDNone. v4 compares exactpredecessorstatus and preserves MARKNone/Radonstaticpin distinction andpasses. Allauditversions retained, no candidate/source defect or reviewed execution. Repeated32smallreceipt reads from reviewer assumptions were avoidable.",
+    "cost": "Reviewaudit commands retained observed10s(initialsessionSyntaxError),8.92s,0.75s,2.21s; author183nodes approximately12s/version and8nodes<1s reused. Otherelapsedunknown; no rerun for costmeasurement.",
+    "next_correction": "Reviewed, no source change required. Root existingpacket records scopedsource/interfacePASS and actualproduct/binding/cohort/timing gatespending; manualworkflowregistration must not be mistaken for authority."
+  },
+  "execution_now": {
+    "tests": 0,
+    "reviewed_modules_imported": 0,
+    "science": 0,
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "build": 0,
+    "download": 0,
+    "timing": 0,
+    "dispatch": 0,
+    "largearchive_core_hash": 0
+  },
+  "next_owner_trigger": "Root independent admission then genuine-binding owner after actual productqualification. No newqueue, main/source edits or automaticexecution. Ccurrent275 and futureflood remain independent; root retains dispatch/main/delivery.",
+  "terminal": "Review terminal; no running job spawned. Frozen95e64/source/handoff bytes unchanged and clean."
+}
