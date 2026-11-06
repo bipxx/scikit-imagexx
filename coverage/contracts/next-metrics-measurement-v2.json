@@ -1,0 +1,1288 @@
+{
+  "schema": "next-metrics-measurement-v1",
+  "status": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "producer": {
+    "run": null,
+    "revision": null,
+    "artifact": null,
+    "sha256": null
+  },
+  "prepared_source": null,
+  "SDK_members": null,
+  "core_sha256": null,
+  "benchmark_fingerprint": null,
+  "benchmark_source_sha256": {
+    "CMakeLists.txt": "281515299174bfc4aa76ead2da1b2bb3b7ed9cf5278a263ef036bedc0d31c347",
+    "benchmarks/array_views.py": "78a5aaa7865ce0e5b6cfcbc23a194502035bf1905b8ffd18479e0e9e43954e83",
+    "benchmarks/crop.py": "a95f154789a3832ad762c18dd1cb99f12158bdb3fae014c4d06d1b4ea659fb4d",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "benchmarks/ellipse_perimeter.py": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",
+    "benchmarks/find_boundaries.py": "bfa12ae19b78c7b891d6dbb1a3388d5cb41ca20e972b4dc25eb097b45d6eb8dc",
+    "benchmarks/join_segmentations.py": "a1d74e213a8f5846a36a5a7e0855d67f1d536f9a311d3ebcc7a9d655c97baff6",
+    "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+    "benchmarks/next_util_execution.py": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "benchmarks/regular_grid.py": "9955f3eedf15ee621430db6a95ad7acfb54599b8ce7b02182d31106892a83b52",
+    "benchmarks/slice_along_axes.py": "44d06601a3f4455fec8e7bd13e04cdeada6ce6d9026404c0b328050a1d9ad396",
+    "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
+    "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
+    "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
+    "coverage/contracts/find-boundaries-benchmark-binding-v2.json": "1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4",
+    "coverage/contracts/find-boundaries-benchmark-binding-v3.json": "fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba",
+    "coverage/contracts/find-boundaries-benchmark-binding-v4.json": "8ad09d6c73f47d017a5da741d60e18049abe6425042725e29c6e233eab2e8ff7",
+    "coverage/contracts/find-boundaries-benchmark-binding-v5.json": "50755fc357ea074f77178f0d58d49aa9edb2a9434512a30c8b460f523d8a0454",
+    "coverage/contracts/find-boundaries-f-row-source-context-v1.json": "f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29",
+    "coverage/contracts/find-boundaries-frontend-v1.json": "d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f",
+    "coverage/contracts/find-boundaries-frontend-v2.json": "2f9ce9ff4114240cfd9e375233f43291cc14a0f054a4b6395920652a6dfa5406",
+    "coverage/contracts/find-boundaries-frontend-v3.json": "3dc3e688422b4abb7335f3fd926e3b925e0fc0f1fbb28deccb158a95d6236703",
+    "coverage/contracts/find-boundaries-frontend-v4.json": "67dcfcee991ba9373537693cbe3bf48ee47a58c4341deddd5a8919886c67c894",
+    "coverage/contracts/find-boundaries-sdk-v3.json": "e205d1f4267fdd4e6a770529f0a6eb1d94b12ffa8a30a9cd895a79db36620430",
+    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1",
+    "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+    "coverage/contracts/next-util-benchmark-execution-v1.json": "1a8cae4d5952f0d1a7b4eff58c6ca6ef2ce89a5250c4a2720fcf1fe388ac1cca",
+    "coverage/contracts/next-util-benchmark-execution-v2.json": "3f88c8dcdb0529bc0bd036b5d90006dc0c7f7dc873fd754179895e0574fdbc3d",
+    "coverage/contracts/util-views-density-additive-context-v1.json": "608865130cc3ff264c695ead40eb10f9d102c5cca4f6440d696b22aefa754c1a",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "include/skimagexx/array_views.hpp": "40e306307f6f390b9431cbcccab39fa7f0522b329c62b862e796dd47873a1bb5",
+    "include/skimagexx/component_consumers.hpp": "1b696a8473a05d976339f557967f0a1fecd88f79216bbc99d8ba50a28a21a2a3",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "include/skimagexx/join_segmentations.hpp": "564513250464f0c2ea1b02d7a07f44c4fc44568c6fbef56927633fbbb1717b6b",
+    "include/skimagexx/regular_grid.hpp": "25f4ca4351cdfe585850fa9efe9a31fb74ca9f09473d9383606f79eca3404489",
+    "include/skimagexx/slice_along_axes.hpp": "ee700666e63a0ad2bdc088e9a1b5030865d77f70848c9e5ca20ad7d0803c6a5f",
+    "python/skimagexx/_array_views.py": "c05a736ca423e2f9f7a26c78d2a0009d7d4d288bf4fb3a87c40eb72a9d8428c8",
+    "python/skimagexx/_component_consumers.py": "f2643c25de70277fcbd30ba1a2e9774b20ae637137e1e8610eb3cd500f90fadd",
+    "python/skimagexx/_crop.py": "18f64b57c8a1c6f7a6ef5bb400802fba519e0cb89dc6e66ef147253360d6185f",
+    "python/skimagexx/_join_segmentations.py": "77f82546eb9669b68a2f70a3caa601ce6f5e247a4b1c1547574d9c75a5a7eef3",
+    "python/skimagexx/_regular_grid.py": "23a7130119cafd2c65140e3a32f4d01a5c57fb10b50f6c5500f036d05ac721de",
+    "python/skimagexx/_slice_along_axes.py": "f2669e86976ccad307f98e19e1b24f70f5d5b2076ca01700c58c7f5bc718e29f",
+    "python/skimagexx/coverage.py": "8848de0268e1e719ca6386234f314b4608ee0d57dcd81574202a36ea4b382256",
+    "src/bind_component_consumers.cpp": "5c3569804ca11f12fcc0ba077922d2e9e047a0e30fb04fdf790f839efac25ec4",
+    "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+    "src/bind_join_segmentations.cpp": "3fda515922b53ddb1e35aa629f9ef49fd6ce988cf557a8fcdc0e15e376e93317",
+    "src/bind_regular_grid.cpp": "fc77fc135c46227d91390a7e75cc8f8bfdce7e3ae832ece49c84b61c5eaacb74",
+    "src/bind_util_views.cpp": "85f6d992d7e0cabdb80ecfadafa3d8161ad56c31a39c4ffdacd9d4a70c91d2bd",
+    "src/component_consumers.cpp": "faf804a7f3db07a960c90466a27833ef9d36ab72bcf7859cc67f0dea3bd0ef20",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "src/join_segmentations.cpp": "b201d5a3bd36cbe64c8c0d658f6ce5b3ba0b7ad6f1e320c2c97d8aaba8646c54",
+    "src/regular_grid.cpp": "1089c8c39ff4c50a3418878e3d2e23771642dc364a491b9dd87b30eb4f801c5a",
+    "src/simd_component_consumers_avx2.cpp": "4607b7de4ee46ae190687a508345c0495e255b292f25c217507b4c651e6b64cf",
+    "src/util_views.cpp": "92505cc402be2a89f05f778b732a4c9cb47433fd392ddcfdab883ea31c603868",
+    "tests/test_crop_benchmark.py": "a75acadca9c76ff6b3eb032b983934f0a9129a73ee1df6ae479d4acc875bbc91",
+    "tests/test_find_boundaries_public.py": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "tests/test_util_views_source.py": "7024f87fe0dc46bf2092897b63e1fd78715d863f2a33e8f5a91f55d823edae4d",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tools/join_source_context.py": "2afd50524e6ff269cfa16396d176552098fe1cae6c525f6aa5c9df4d4c677e32",
+    "tools/label_pair_benchmark_context.py": "3cf4d2debaebc6df1644d0a169c347c6c910d105afa77cb06dd94d3fd7ba8252",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "families": {
+    "label_pair_metrics": {
+      "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+      "cases": 8
+    },
+    "find_boundaries": {
+      "contract": "coverage/contracts/find-boundaries-benchmark-binding-v5.json",
+      "cases": 8
+    },
+    "join_segmentations": {
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "cases": 8,
+      "case_ids": [
+        "u8-labels-C",
+        "u8-maps-reverse",
+        "i16-labels-F",
+        "i16-maps-C",
+        "u16-labels-C",
+        "u16-maps-F",
+        "i32-labels-reverse",
+        "i32-maps-C"
+      ]
+    },
+    "crop": {
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "cases": 8,
+      "case_ids": [
+        "view-C",
+        "view-F",
+        "view-reverse",
+        "view-3D",
+        "copy-C",
+        "copy-F",
+        "copy-reverse-K",
+        "copy-object-provider"
+      ]
+    },
+    "regular_grid": {
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "cases": 8,
+      "case_ids": [
+        "doc2d",
+        "dense2d",
+        "thin3d",
+        "permuted-readonly",
+        "rank8",
+        "half-even-down",
+        "half-even-up",
+        "large-shape-metadata"
+      ]
+    },
+    "slice_along_axes": {
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "cases": 8,
+      "case_ids": [
+        "view-C",
+        "copy-C",
+        "view-F",
+        "copy-F-C-order",
+        "reverse-view",
+        "reverse-copy",
+        "permuted-axes",
+        "negative-bound-copy"
+      ]
+    },
+    "array_views": {
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "cases": 8,
+      "case_ids": [
+        "view_as_blocks/C",
+        "view_as_blocks/F",
+        "view_as_blocks/reverse",
+        "view_as_blocks/readonly",
+        "view_as_windows/C",
+        "view_as_windows/F",
+        "view_as_windows/reverse",
+        "view_as_windows/readonly"
+      ]
+    }
+  },
+  "first_cohort": {
+    "status": "PROSPECTIVE_UNBOUND_NO_GENUINE_AUTHORITY",
+    "source_revision": null,
+    "probe_path": "tools/next_metrics_first_cohort_probe.py",
+    "probe_sha256": null,
+    "root_admission_path": null,
+    "root_admission_sha256": null,
+    "root_stager_path": null,
+    "root_stager_sha256": null,
+    "core_member": null,
+    "source_files_raw_sha256": {
+      "CMakeLists.txt": "281515299174bfc4aa76ead2da1b2bb3b7ed9cf5278a263ef036bedc0d31c347",
+      "benchmarks/array_views.py": "78a5aaa7865ce0e5b6cfcbc23a194502035bf1905b8ffd18479e0e9e43954e83",
+      "benchmarks/crop.py": "a95f154789a3832ad762c18dd1cb99f12158bdb3fae014c4d06d1b4ea659fb4d",
+      "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+      "benchmarks/ellipse_perimeter.py": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",
+      "benchmarks/find_boundaries.py": "bfa12ae19b78c7b891d6dbb1a3388d5cb41ca20e972b4dc25eb097b45d6eb8dc",
+      "benchmarks/join_segmentations.py": "a1d74e213a8f5846a36a5a7e0855d67f1d536f9a311d3ebcc7a9d655c97baff6",
+      "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+      "benchmarks/next_util_execution.py": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+      "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+      "benchmarks/regular_grid.py": "9955f3eedf15ee621430db6a95ad7acfb54599b8ce7b02182d31106892a83b52",
+      "benchmarks/slice_along_axes.py": "44d06601a3f4455fec8e7bd13e04cdeada6ce6d9026404c0b328050a1d9ad396",
+      "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
+      "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
+      "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
+      "coverage/contracts/find-boundaries-benchmark-binding-v2.json": "1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4",
+      "coverage/contracts/find-boundaries-benchmark-binding-v3.json": "fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba",
+      "coverage/contracts/find-boundaries-benchmark-binding-v4.json": "8ad09d6c73f47d017a5da741d60e18049abe6425042725e29c6e233eab2e8ff7",
+      "coverage/contracts/find-boundaries-benchmark-binding-v5.json": "50755fc357ea074f77178f0d58d49aa9edb2a9434512a30c8b460f523d8a0454",
+      "coverage/contracts/find-boundaries-f-row-source-context-v1.json": "f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29",
+      "coverage/contracts/find-boundaries-frontend-v1.json": "d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f",
+      "coverage/contracts/find-boundaries-frontend-v2.json": "2f9ce9ff4114240cfd9e375233f43291cc14a0f054a4b6395920652a6dfa5406",
+      "coverage/contracts/find-boundaries-frontend-v3.json": "3dc3e688422b4abb7335f3fd926e3b925e0fc0f1fbb28deccb158a95d6236703",
+      "coverage/contracts/find-boundaries-frontend-v4.json": "67dcfcee991ba9373537693cbe3bf48ee47a58c4341deddd5a8919886c67c894",
+      "coverage/contracts/find-boundaries-sdk-v3.json": "e205d1f4267fdd4e6a770529f0a6eb1d94b12ffa8a30a9cd895a79db36620430",
+      "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1",
+      "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+      "coverage/contracts/next-util-benchmark-execution-v1.json": "1a8cae4d5952f0d1a7b4eff58c6ca6ef2ce89a5250c4a2720fcf1fe388ac1cca",
+      "coverage/contracts/next-util-benchmark-execution-v2.json": "3f88c8dcdb0529bc0bd036b5d90006dc0c7f7dc873fd754179895e0574fdbc3d",
+      "coverage/contracts/util-views-density-additive-context-v1.json": "608865130cc3ff264c695ead40eb10f9d102c5cca4f6440d696b22aefa754c1a",
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "include/skimagexx/array_views.hpp": "40e306307f6f390b9431cbcccab39fa7f0522b329c62b862e796dd47873a1bb5",
+      "include/skimagexx/component_consumers.hpp": "1b696a8473a05d976339f557967f0a1fecd88f79216bbc99d8ba50a28a21a2a3",
+      "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+      "include/skimagexx/join_segmentations.hpp": "564513250464f0c2ea1b02d7a07f44c4fc44568c6fbef56927633fbbb1717b6b",
+      "include/skimagexx/regular_grid.hpp": "25f4ca4351cdfe585850fa9efe9a31fb74ca9f09473d9383606f79eca3404489",
+      "include/skimagexx/slice_along_axes.hpp": "ee700666e63a0ad2bdc088e9a1b5030865d77f70848c9e5ca20ad7d0803c6a5f",
+      "python/skimagexx/_array_views.py": "c05a736ca423e2f9f7a26c78d2a0009d7d4d288bf4fb3a87c40eb72a9d8428c8",
+      "python/skimagexx/_component_consumers.py": "f2643c25de70277fcbd30ba1a2e9774b20ae637137e1e8610eb3cd500f90fadd",
+      "python/skimagexx/_crop.py": "18f64b57c8a1c6f7a6ef5bb400802fba519e0cb89dc6e66ef147253360d6185f",
+      "python/skimagexx/_join_segmentations.py": "77f82546eb9669b68a2f70a3caa601ce6f5e247a4b1c1547574d9c75a5a7eef3",
+      "python/skimagexx/_regular_grid.py": "23a7130119cafd2c65140e3a32f4d01a5c57fb10b50f6c5500f036d05ac721de",
+      "python/skimagexx/_slice_along_axes.py": "f2669e86976ccad307f98e19e1b24f70f5d5b2076ca01700c58c7f5bc718e29f",
+      "python/skimagexx/coverage.py": "8848de0268e1e719ca6386234f314b4608ee0d57dcd81574202a36ea4b382256",
+      "src/bind_component_consumers.cpp": "5c3569804ca11f12fcc0ba077922d2e9e047a0e30fb04fdf790f839efac25ec4",
+      "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+      "src/bind_join_segmentations.cpp": "3fda515922b53ddb1e35aa629f9ef49fd6ce988cf557a8fcdc0e15e376e93317",
+      "src/bind_regular_grid.cpp": "fc77fc135c46227d91390a7e75cc8f8bfdce7e3ae832ece49c84b61c5eaacb74",
+      "src/bind_util_views.cpp": "85f6d992d7e0cabdb80ecfadafa3d8161ad56c31a39c4ffdacd9d4a70c91d2bd",
+      "src/component_consumers.cpp": "faf804a7f3db07a960c90466a27833ef9d36ab72bcf7859cc67f0dea3bd0ef20",
+      "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+      "src/join_segmentations.cpp": "b201d5a3bd36cbe64c8c0d658f6ce5b3ba0b7ad6f1e320c2c97d8aaba8646c54",
+      "src/regular_grid.cpp": "1089c8c39ff4c50a3418878e3d2e23771642dc364a491b9dd87b30eb4f801c5a",
+      "src/simd_component_consumers_avx2.cpp": "4607b7de4ee46ae190687a508345c0495e255b292f25c217507b4c651e6b64cf",
+      "src/util_views.cpp": "92505cc402be2a89f05f778b732a4c9cb47433fd392ddcfdab883ea31c603868",
+      "tests/test_crop_benchmark.py": "a75acadca9c76ff6b3eb032b983934f0a9129a73ee1df6ae479d4acc875bbc91",
+      "tests/test_find_boundaries_public.py": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/test_util_views_source.py": "7024f87fe0dc46bf2092897b63e1fd78715d863f2a33e8f5a91f55d823edae4d",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+      "tools/join_source_context.py": "2afd50524e6ff269cfa16396d176552098fe1cae6c525f6aa5c9df4d4c677e32",
+      "tools/label_pair_benchmark_context.py": "3cf4d2debaebc6df1644d0a169c347c6c910d105afa77cb06dd94d3fd7ba8252",
+      "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+    },
+    "routes": {
+      "metrics-are": {
+        "kind": "dedicated",
+        "api": "metrics.adapted_rand_error",
+        "driver": "benchmarks/label_pair_metrics.py",
+        "owned_module": "skimagexx._label_pair_metrics",
+        "acceptance_function": "_are_from_i64",
+        "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+        "first_case": {
+          "id": "metrics.adapted_rand_error/tiny",
+          "api": "metrics.adapted_rand_error",
+          "shape": [
+            2,
+            3
+          ],
+          "layout": "C",
+          "labels": 3,
+          "dtype": "int64",
+          "normalize": false,
+          "ignore": [
+            0
+          ],
+          "alpha": 0.5
+        },
+        "native_entries": [
+          "label_pair_rand_terms",
+          "label_pair_rand_divide",
+          "label_pair_rand_divide",
+          "label_pair_rand_fscore",
+          "label_pair_rand_error"
+        ],
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--threads",
+          "1",
+          "--repeat",
+          "7",
+          "--api",
+          "metrics.adapted_rand_error"
+        ]
+      },
+      "metrics-contingency": {
+        "kind": "dedicated",
+        "api": "metrics.contingency_table",
+        "driver": "benchmarks/label_pair_metrics.py",
+        "owned_module": "skimagexx._contingency_table",
+        "acceptance_function": "contingency_table",
+        "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+        "first_case": {
+          "id": "metrics.contingency_table/tiny",
+          "api": "metrics.contingency_table",
+          "shape": [
+            2,
+            3
+          ],
+          "layout": "C",
+          "labels": 3,
+          "dtype": "int64",
+          "normalize": false,
+          "ignore": [
+            0
+          ],
+          "alpha": 0.5
+        },
+        "native_entries": [
+          "label_pair_counts_preweighted"
+        ],
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--threads",
+          "1",
+          "--repeat",
+          "7",
+          "--api",
+          "metrics.contingency_table"
+        ]
+      },
+      "boundary": {
+        "kind": "dedicated",
+        "api": "segmentation.find_boundaries",
+        "driver": "benchmarks/find_boundaries.py",
+        "owned_module": "skimagexx._find_boundaries",
+        "acceptance_function": "find_boundaries",
+        "native_result_kind": "true",
+        "contract": "coverage/contracts/find-boundaries-benchmark-binding-v5.json",
+        "first_case": {
+          "id": "cross-thick",
+          "shape": [
+            3,
+            3
+          ],
+          "dtype": "uint8",
+          "layout": "C",
+          "mode": "thick",
+          "connectivity": 1,
+          "background": 0,
+          "pattern": "cross",
+          "readonly": false
+        },
+        "native_entries": [
+          "find_boundaries_into"
+        ],
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--threads",
+          "1",
+          "--repeat",
+          "7"
+        ],
+        "root_binding_flag": "--root-binding"
+      },
+      "join": {
+        "kind": "util-executor",
+        "execution_route": "join",
+        "api": "segmentation.join_segmentations",
+        "driver": "benchmarks/join_segmentations.py",
+        "owned_module": "skimagexx._join_segmentations",
+        "acceptance_function": "join_segmentations",
+        "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+        "first_case": {
+          "id": "u8-labels-C",
+          "dtype": "uint8",
+          "shape": [
+            129,
+            131
+          ],
+          "layout": "C",
+          "mapping": false,
+          "left_count": 8,
+          "right_count": 8,
+          "left_scale": 1,
+          "right_scale": 1
+        },
+        "native_entries": [
+          "join_encode"
+        ],
+        "native_return_counts": {
+          "join_encode": 1,
+          "join_divmod": 0
+        },
+        "native_worker_getters": 0,
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "segmentation.join_segmentations",
+          "--case",
+          "u8-labels-C",
+          "--threads",
+          "1",
+          "--repeat",
+          "7"
+        ],
+        "root_binding_flag": "--root-binding",
+        "cases": [
+          {
+            "id": "u8-labels-C",
+            "dtype": "uint8",
+            "shape": [
+              129,
+              131
+            ],
+            "layout": "C",
+            "mapping": false,
+            "left_count": 8,
+            "right_count": 8,
+            "left_scale": 1,
+            "right_scale": 1
+          },
+          {
+            "id": "u8-maps-reverse",
+            "dtype": "uint8",
+            "shape": [
+              129,
+              131
+            ],
+            "layout": "reverse",
+            "mapping": true,
+            "left_count": 8,
+            "right_count": 8,
+            "left_scale": 1,
+            "right_scale": 1
+          },
+          {
+            "id": "i16-labels-F",
+            "dtype": "int16",
+            "shape": [
+              257,
+              257
+            ],
+            "layout": "F",
+            "mapping": false,
+            "left_count": 32,
+            "right_count": 8,
+            "left_scale": 7,
+            "right_scale": 7
+          },
+          {
+            "id": "i16-maps-C",
+            "dtype": "int16",
+            "shape": [
+              257,
+              257
+            ],
+            "layout": "C",
+            "mapping": true,
+            "left_count": 32,
+            "right_count": 8,
+            "left_scale": 7,
+            "right_scale": 7
+          },
+          {
+            "id": "u16-labels-C",
+            "dtype": "uint16",
+            "shape": [
+              257,
+              257
+            ],
+            "layout": "C",
+            "mapping": false,
+            "left_count": 32,
+            "right_count": 8,
+            "left_scale": 7,
+            "right_scale": 7
+          },
+          {
+            "id": "u16-maps-F",
+            "dtype": "uint16",
+            "shape": [
+              257,
+              257
+            ],
+            "layout": "F",
+            "mapping": true,
+            "left_count": 32,
+            "right_count": 8,
+            "left_scale": 7,
+            "right_scale": 7
+          },
+          {
+            "id": "i32-labels-reverse",
+            "dtype": "int32",
+            "shape": [
+              511,
+              513
+            ],
+            "layout": "reverse",
+            "mapping": false,
+            "left_count": 32,
+            "right_count": 8,
+            "left_scale": 7,
+            "right_scale": 7
+          },
+          {
+            "id": "i32-maps-C",
+            "dtype": "int32",
+            "shape": [
+              511,
+              513
+            ],
+            "layout": "C",
+            "mapping": true,
+            "left_count": 32,
+            "right_count": 8,
+            "left_scale": 7,
+            "right_scale": 7
+          }
+        ],
+        "ArrayMap_class_frontier": "OPEN_EXACT_CLASS_IDENTITY"
+      },
+      "crop": {
+        "kind": "util-executor",
+        "execution_route": "crop",
+        "api": "util.crop",
+        "driver": "benchmarks/crop.py",
+        "owned_module": "skimagexx._crop",
+        "acceptance_function": "crop",
+        "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+        "first_case": {
+          "id": "view-C",
+          "shape": [
+            512,
+            513
+          ],
+          "dtype": "uint8",
+          "layout": "C",
+          "width": 1,
+          "copy": false,
+          "order": "K",
+          "payload_provider": false
+        },
+        "native_entries": [
+          "crop_view"
+        ],
+        "native_return_counts": {
+          "crop_view": 1,
+          "crop_copy_into": 0
+        },
+        "native_worker_getters": 0,
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "util.crop",
+          "--case",
+          "view-C",
+          "--threads",
+          "1",
+          "--repeat",
+          "7"
+        ],
+        "root_binding_flag": "--root-binding",
+        "cases": [
+          {
+            "id": "view-C",
+            "shape": [
+              512,
+              513
+            ],
+            "dtype": "uint8",
+            "layout": "C",
+            "width": 1,
+            "copy": false,
+            "order": "K",
+            "payload_provider": false
+          },
+          {
+            "id": "view-F",
+            "shape": [
+              257,
+              263
+            ],
+            "dtype": "int16",
+            "layout": "F",
+            "width": 2,
+            "copy": false,
+            "order": "ignored",
+            "payload_provider": false
+          },
+          {
+            "id": "view-reverse",
+            "shape": [
+              257,
+              263
+            ],
+            "dtype": "float64",
+            "layout": "reverse",
+            "width": 1,
+            "copy": false,
+            "order": "K",
+            "payload_provider": false
+          },
+          {
+            "id": "view-3D",
+            "shape": [
+              31,
+              37,
+              41
+            ],
+            "dtype": "float32",
+            "layout": "C",
+            "width": 1,
+            "copy": false,
+            "order": "K",
+            "payload_provider": false
+          },
+          {
+            "id": "copy-C",
+            "shape": [
+              512,
+              513
+            ],
+            "dtype": "float32",
+            "layout": "C",
+            "width": 1,
+            "copy": true,
+            "order": "C",
+            "payload_provider": false
+          },
+          {
+            "id": "copy-F",
+            "shape": [
+              257,
+              263
+            ],
+            "dtype": "float64",
+            "layout": "F",
+            "width": 2,
+            "copy": true,
+            "order": "F",
+            "payload_provider": false
+          },
+          {
+            "id": "copy-reverse-K",
+            "shape": [
+              257,
+              263
+            ],
+            "dtype": "int16",
+            "layout": "reverse",
+            "width": 1,
+            "copy": true,
+            "order": "K",
+            "payload_provider": false
+          },
+          {
+            "id": "copy-object-provider",
+            "shape": [
+              16,
+              17
+            ],
+            "dtype": "object",
+            "layout": "C",
+            "width": 1,
+            "copy": true,
+            "order": "K",
+            "payload_provider": true
+          }
+        ],
+        "ArrayMap_class_frontier": null
+      },
+      "regular-grid": {
+        "kind": "util-executor",
+        "execution_route": "regular-grid",
+        "api": "util.regular_grid",
+        "driver": "benchmarks/regular_grid.py",
+        "owned_module": "skimagexx._regular_grid",
+        "acceptance_function": "regular_grid",
+        "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+        "first_case": {
+          "id": "doc2d",
+          "shape": [
+            20,
+            40
+          ],
+          "points": 8,
+          "carrier": "tuple"
+        },
+        "native_entries": [
+          "regular_grid_prepare",
+          "regular_grid_finish"
+        ],
+        "native_return_counts": {
+          "regular_grid_prepare": 1,
+          "regular_grid_finish": 1
+        },
+        "native_worker_getters": 0,
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "util.regular_grid",
+          "--case",
+          "doc2d",
+          "--threads",
+          "1",
+          "--repeat",
+          "7"
+        ],
+        "root_binding_flag": "--root-binding",
+        "cases": [
+          {
+            "id": "doc2d",
+            "shape": [
+              20,
+              40
+            ],
+            "points": 8,
+            "carrier": "tuple"
+          },
+          {
+            "id": "dense2d",
+            "shape": [
+              20,
+              40
+            ],
+            "points": 32,
+            "carrier": "tuple"
+          },
+          {
+            "id": "thin3d",
+            "shape": [
+              3,
+              20,
+              40
+            ],
+            "points": 8,
+            "carrier": "tuple"
+          },
+          {
+            "id": "permuted-readonly",
+            "shape": [
+              40,
+              3,
+              20
+            ],
+            "points": 8,
+            "carrier": "readonly-reverse"
+          },
+          {
+            "id": "rank8",
+            "shape": [
+              1,
+              2,
+              1,
+              3,
+              1,
+              4,
+              1,
+              5
+            ],
+            "points": 12,
+            "carrier": "tuple"
+          },
+          {
+            "id": "half-even-down",
+            "shape": [
+              25
+            ],
+            "points": 10,
+            "carrier": "tuple"
+          },
+          {
+            "id": "half-even-up",
+            "shape": [
+              35
+            ],
+            "points": 10,
+            "carrier": "tuple"
+          },
+          {
+            "id": "large-shape-metadata",
+            "shape": [
+              4093,
+              13,
+              997
+            ],
+            "points": 6000,
+            "carrier": "tuple"
+          }
+        ],
+        "ArrayMap_class_frontier": null
+      },
+      "slice": {
+        "kind": "util-executor",
+        "execution_route": "slice",
+        "api": "util.slice_along_axes",
+        "driver": "benchmarks/slice_along_axes.py",
+        "owned_module": "skimagexx._slice_along_axes",
+        "acceptance_function": "slice_along_axes",
+        "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+        "first_case": {
+          "id": "view-C",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "C",
+          "copy": false,
+          "dtype": "int16",
+          "slices": [
+            [
+              32,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        "native_entries": [
+          "util_slice_view"
+        ],
+        "native_return_counts": {
+          "util_slice_view": 1,
+          "util_slice_copy_into": 0
+        },
+        "native_worker_getters": 0,
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "util.slice_along_axes",
+          "--case",
+          "view-C",
+          "--threads",
+          "1",
+          "--repeat",
+          "7"
+        ],
+        "root_binding_flag": "--root-binding",
+        "cases": [
+          {
+            "id": "view-C",
+            "shape": [
+              512,
+              513
+            ],
+            "layout": "C",
+            "copy": false,
+            "dtype": "int16",
+            "slices": [
+              [
+                32,
+                480
+              ]
+            ],
+            "axes": null
+          },
+          {
+            "id": "copy-C",
+            "shape": [
+              512,
+              513
+            ],
+            "layout": "C",
+            "copy": true,
+            "dtype": "int16",
+            "slices": [
+              [
+                32,
+                480
+              ]
+            ],
+            "axes": null
+          },
+          {
+            "id": "view-F",
+            "shape": [
+              512,
+              513
+            ],
+            "layout": "F",
+            "copy": false,
+            "dtype": "float64",
+            "slices": [
+              [
+                32,
+                480
+              ],
+              [
+                16,
+                496
+              ]
+            ],
+            "axes": [
+              0,
+              1
+            ]
+          },
+          {
+            "id": "copy-F-C-order",
+            "shape": [
+              512,
+              513
+            ],
+            "layout": "F",
+            "copy": true,
+            "dtype": "float64",
+            "slices": [
+              [
+                32,
+                480
+              ],
+              [
+                16,
+                496
+              ]
+            ],
+            "axes": [
+              0,
+              1
+            ]
+          },
+          {
+            "id": "reverse-view",
+            "shape": [
+              512,
+              513
+            ],
+            "layout": "reverse",
+            "copy": false,
+            "dtype": "uint8",
+            "slices": [
+              [
+                0,
+                480
+              ]
+            ],
+            "axes": null
+          },
+          {
+            "id": "reverse-copy",
+            "shape": [
+              512,
+              513
+            ],
+            "layout": "reverse",
+            "copy": true,
+            "dtype": "uint8",
+            "slices": [
+              [
+                0,
+                480
+              ]
+            ],
+            "axes": null
+          },
+          {
+            "id": "permuted-axes",
+            "shape": [
+              64,
+              65,
+              66
+            ],
+            "layout": "C",
+            "copy": false,
+            "dtype": "int32",
+            "slices": [
+              [
+                1,
+                60
+              ],
+              [
+                2,
+                62
+              ]
+            ],
+            "axes": [
+              2,
+              0
+            ]
+          },
+          {
+            "id": "negative-bound-copy",
+            "shape": [
+              512,
+              513
+            ],
+            "layout": "C",
+            "copy": true,
+            "dtype": "int16",
+            "slices": [
+              [
+                -480,
+                -16
+              ]
+            ],
+            "axes": [
+              1
+            ]
+          }
+        ],
+        "ArrayMap_class_frontier": null
+      },
+      "blocks": {
+        "kind": "util-executor",
+        "execution_route": "views",
+        "api": "util.view_as_blocks",
+        "driver": "benchmarks/array_views.py",
+        "owned_module": "skimagexx._array_views",
+        "acceptance_function": "view_as_blocks",
+        "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+        "first_case": {
+          "id": "view_as_blocks/C",
+          "api": "util.view_as_blocks",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "C",
+          "dtype": "int16",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        "native_entries": [
+          "util_view_as_blocks"
+        ],
+        "native_return_counts": {
+          "util_view_as_blocks": 1
+        },
+        "native_worker_getters": 0,
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "util.view_as_blocks",
+          "--case",
+          "view_as_blocks/C",
+          "--threads",
+          "1",
+          "--repeat",
+          "7"
+        ],
+        "root_binding_flag": "--root-binding",
+        "cases": [
+          {
+            "id": "view_as_blocks/C",
+            "api": "util.view_as_blocks",
+            "shape": [
+              512,
+              516
+            ],
+            "layout": "C",
+            "dtype": "int16",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          },
+          {
+            "id": "view_as_blocks/F",
+            "api": "util.view_as_blocks",
+            "shape": [
+              512,
+              516
+            ],
+            "layout": "F",
+            "dtype": "float64",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          },
+          {
+            "id": "view_as_blocks/reverse",
+            "api": "util.view_as_blocks",
+            "shape": [
+              512,
+              516
+            ],
+            "layout": "reverse",
+            "dtype": "uint8",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          },
+          {
+            "id": "view_as_blocks/readonly",
+            "api": "util.view_as_blocks",
+            "shape": [
+              16,
+              18
+            ],
+            "layout": "readonly",
+            "dtype": "object",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          }
+        ],
+        "ArrayMap_class_frontier": null
+      },
+      "windows": {
+        "kind": "util-executor",
+        "execution_route": "views",
+        "api": "util.view_as_windows",
+        "driver": "benchmarks/array_views.py",
+        "owned_module": "skimagexx._array_views",
+        "acceptance_function": "view_as_windows",
+        "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+        "first_case": {
+          "id": "view_as_windows/C",
+          "api": "util.view_as_windows",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "C",
+          "dtype": "int16",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        "native_entries": [
+          "util_view_as_windows"
+        ],
+        "native_return_counts": {
+          "util_view_as_windows": 1
+        },
+        "native_worker_getters": 0,
+        "sampler": "tools/montage_sustained.py",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "util.view_as_windows",
+          "--case",
+          "view_as_windows/C",
+          "--threads",
+          "1",
+          "--repeat",
+          "7"
+        ],
+        "root_binding_flag": "--root-binding",
+        "cases": [
+          {
+            "id": "view_as_windows/C",
+            "api": "util.view_as_windows",
+            "shape": [
+              512,
+              516
+            ],
+            "layout": "C",
+            "dtype": "int16",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          },
+          {
+            "id": "view_as_windows/F",
+            "api": "util.view_as_windows",
+            "shape": [
+              512,
+              516
+            ],
+            "layout": "F",
+            "dtype": "float64",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          },
+          {
+            "id": "view_as_windows/reverse",
+            "api": "util.view_as_windows",
+            "shape": [
+              512,
+              516
+            ],
+            "layout": "reverse",
+            "dtype": "uint8",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          },
+          {
+            "id": "view_as_windows/readonly",
+            "api": "util.view_as_windows",
+            "shape": [
+              16,
+              18
+            ],
+            "layout": "readonly",
+            "dtype": "object",
+            "parameter": [
+              2,
+              3
+            ],
+            "step": 1,
+            "copy": false,
+            "payload_provider": false,
+            "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+          }
+        ],
+        "ArrayMap_class_frontier": null
+      }
+    }
+  },
+  "execution_scope": {
+    "untimed_topcalls": {
+      "original": 9,
+      "native": 9
+    },
+    "canonical_cases": 56,
+    "canonical_raw_samples": 784,
+    "warmup_groups": 112,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "reference_threadpools": 1,
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true
+  },
+  "qualification": "Exact-source complete source barriers + four-profile whole-product/SDK/stager admission required; no source readiness inferred.",
+  "binding_gate": "All actual fields remain UNBOUND.56cases/784samples/112warmgroups/9cohorts are proposal only; root chooses authorized subset/budget and actual bindings after independent review. No automatic dispatch.",
+  "runtime_sha256": null,
+  "prospective_source": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
+  "predecessor": {
+    "source": "20b9d4e70e091ab84f334bf5823d1d4242933b20",
+    "measurement_sha256": "c5459f3e577935eab44a353aa8ddf5cc819048c30bcc309418abd585cd121265"
+  },
+  "helper": {
+    "mode": "source-built-v1",
+    "source_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "receipt_sha256": null,
+    "library_sha256": null,
+    "root_GO": null,
+    "prepare_once_on_actual_host": true,
+    "collect_recursive": true
+  },
+  "ellipse_reuse": {
+    "cases": 12,
+    "status": "PENDING_DEPENDENCY_MATCHED_ROOT_DECISION",
+    "scope": "Prior admitted eighteen-pin/ten-report dependency scope must match; not included in proposed56cases."
+  }
+}
