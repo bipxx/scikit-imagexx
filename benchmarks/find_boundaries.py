@@ -13,7 +13,7 @@ import sys
 import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v1.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v2.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -93,6 +93,30 @@ def load_root_binding(path, raw_contract):
     return contract,binding,hashlib.sha256(raw_binding).hexdigest()
 
 
+def validate_source_closure(contract):
+    """Authenticate the Windows admission-test successor against frozen v1."""
+    successor=contract['runtime_successor']
+    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v1.json'
+    raw=(ROOT/successor['contract']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060'
+    previous=json.loads(raw)
+    assert {k:v for k,v in contract.items()if k not in ('source_closure','runtime_successor')}=={k:v for k,v in previous.items()if k!='source_closure'}
+    assert set(contract['source_closure'])==set(previous['source_closure'])
+    for name,pin in contract['source_closure'].items():
+        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        assert hashlib.sha256(raw).hexdigest()==pin,name
+        if name=='tests/test_find_boundaries_public.py':fragments=successor['public_test_inverse']
+        elif name=='benchmarks/find_boundaries.py':fragments=successor['driver_inverse']
+        else:
+            assert pin==previous['source_closure'][name],name
+            continue
+        for fragment in fragments:
+            current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()
+            assert current and raw.count(current)==1
+            raw=raw.replace(current,predecessor,1)
+        assert hashlib.sha256(raw).hexdigest()==previous['source_closure'][name],name
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--threads',type=int,choices=[1],default=1);parser.add_argument('--repeat',type=int,choices=[7],default=7)
@@ -101,7 +125,7 @@ def main():
     args=parser.parse_args();raw_contract=CONTRACT.read_bytes();contract,binding,binding_sha=load_root_binding(args.root_binding,raw_contract)
     assert contract['state']=='FROZEN_READY_FOR_ROOT_FIRST_COHORT','PROSPECTIVE: genuine input/root binding missing; no target imports or calls permitted'
     assert len(contract['cases'])==8 and all(case_bounds(s)for s in contract['cases'])
-    for name,pin in contract['source_closure'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    validate_source_closure(contract)
     assert contract['shared_CMake_sha256']and hashlib.sha256((ROOT/'CMakeLists.txt').read_bytes().replace(b'\r\n',b'\n')).hexdigest()==contract['shared_CMake_sha256']
     assert contract['genuine_core_sha256']and contract['prepared_run']and contract['prepared_artifact']
     deadline=args.deadline_utc or(datetime.now(timezone.utc)+timedelta(hours=1)).isoformat();assert datetime.now(timezone.utc)<datetime.fromisoformat(deadline)
