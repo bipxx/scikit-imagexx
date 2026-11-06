@@ -245,3 +245,34 @@ def test_boundary_local_snapshot_lookup_mutation_is_rejected(tmp_path):
     assert result.returncode!=0 and 'SAMPLER_BODY_FORBIDDEN'not in result.stderr
     failure=json.loads((folder/'results/boundary/failure.json').read_bytes())
     assert failure['type']=='KeyError'and 'snapshot'in failure['error']and failure['counts']==dict(original=1,native=1)
+
+
+def assert_ready_reference_pins(plan,contract,source):
+    assert plan['reference_source']=='cbcef227ffbf80b7e1cdf1cf5ed649c7ac58992f'
+    raw=plan['reference_files_raw_sha256'];canonical=contract['benchmark_source_sha256']
+    assert set(raw)==set(canonical) and len(raw)==13
+    assert {'tools/label_pair_benchmark_context.py','coverage/contracts/label-pair-metrics-benchmark-context-v1.json'}<=set(raw)
+    for name,pin in raw.items():
+        value=(source/name).read_bytes()
+        assert hashlib.sha256(value).hexdigest()==pin,name
+        assert hashlib.sha256(value.replace(b'\r\n',b'\n')).hexdigest()==canonical[name],name
+
+
+def test_source_ready_reference_pins_match_exact_producer():
+    source=Path(os.environ.get('NEXT_METRICS_PRODUCER_SOURCE',str(ROOT)))
+    assert_ready_reference_pins(PLAN,CONTRACT,source)
+    # Source-verifier pins are canonical LF; first-cohort raw pins preserve the
+    # actual mixed-newline source. This is an intentional distinct hash domain.
+    assert PLAN['reference_files_raw_sha256']['python/skimagexx/coverage.py']!=CONTRACT['benchmark_source_sha256']['python/skimagexx/coverage.py']
+
+
+@pytest.mark.parametrize('fault',('raw-is-canonical','canonical-is-raw','missing-context','stale-driver'))
+def test_source_ready_pin_domains_reject_stale_or_mixed_metadata(fault):
+    source=Path(os.environ.get('NEXT_METRICS_PRODUCER_SOURCE',str(ROOT)))
+    plan=json.loads(json.dumps(PLAN));contract=json.loads(json.dumps(CONTRACT));coverage='python/skimagexx/coverage.py'
+    if fault=='raw-is-canonical':plan['reference_files_raw_sha256'][coverage]=contract['benchmark_source_sha256'][coverage]
+    elif fault=='canonical-is-raw':contract['benchmark_source_sha256'][coverage]=plan['reference_files_raw_sha256'][coverage]
+    elif fault=='missing-context':
+        name='tools/label_pair_benchmark_context.py';plan['reference_files_raw_sha256'].pop(name);contract['benchmark_source_sha256'].pop(name)
+    else:contract['benchmark_source_sha256']['benchmarks/label_pair_metrics.py']='5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1'
+    with pytest.raises(AssertionError):assert_ready_reference_pins(plan,contract,source)

@@ -2,8 +2,8 @@
   "schema": "next-metrics-first-cohort-prospective-v1",
   "status": "SOURCE_ONLY_SCAFFOLD_NOT_EXECUTED_NOT_GENUINE_BOUND",
   "source_revision": null,
-  "source_scope": "Historical323 metrics/ellipse and08a boundary cases/methods retained; source interfaces now use actual ellipse fallback-runtime-v1 and boundary binding-v1 contracts captured from integration. Actual qualified source/run unknown; root binds a reviewed successor.",
-  "reference_source": "323deb004b9f268078ea5242d6609be21032d313",
+  "source_scope": "Exact source-ready cbcef227 prospective interfaces and immutable28case/method projection. Raw reference pins include metric guard helper/context; actual qualified producer/run/artifact/runtime/core/root admission remains UNBOUND. Root binds a separately reviewed successor after genuine minimum stager admission.",
+  "reference_source": "cbcef227ffbf80b7e1cdf1cf5ed649c7ac58992f",
   "routes": {
     "metrics-are": {
       "kind": "dedicated",
@@ -147,17 +147,19 @@
   },
   "source_git_blobs": null,
   "reference_files_raw_sha256": {
-    "benchmarks/label_pair_metrics.py": "5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1",
+    "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
     "benchmarks/ellipse_perimeter.py": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",
     "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
     "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
     "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
-    "python/skimagexx/coverage.py": "c8e78f3b10c1ddf9f0253375dd574ec0fe3fa0796af8b9b78062bf43794c1364",
+    "python/skimagexx/coverage.py": "acac7f7d0f59df2a7085c65541c09a87bd0734b6476afd8d0ca45cbce244269a",
     "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
     "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
     "benchmarks/find_boundaries.py": "cec658ce590bbc9a22a30b2974e6b98ddda58a2a1fd57978df04db5949d87cdf",
     "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
-    "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060"
+    "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
+    "tools/label_pair_benchmark_context.py": "01b3e2a75c3b2008557793b6328fd0cad778e8007d0c422d95370e603177c46f",
+    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1"
   },
   "budget": {
     "original_public_topcalls": 4,
