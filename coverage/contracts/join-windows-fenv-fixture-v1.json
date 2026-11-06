@@ -1,0 +1,36 @@
+{
+  "schema": "join-windows-fenv-fixture-v1",
+  "predecessor_source": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+  "public_test_path": "tests/test_join_segmentations_public.py",
+  "predecessor_raw_sha256": "c113a3dafb68a90bccc772d44af21fd0a4ed3f638dff534487d107cee854003c",
+  "current_raw_sha256": "c3fbd2964118f35b09665cc727663432b5cd89970abb96835799e989ea1810a9",
+  "inverse_replacements": [
+    [
+      "@pytest.mark.parametrize('spec',cases(),ids=lambda spec:spec['id'])",
+      "@pytest.fixture(scope='module')\ndef windows_fenv_backend():\n    if sys.platform=='linux':return None\n    from join_windows_fenv import backend\n    return backend()\n\n\n@pytest.mark.parametrize('spec',cases(),ids=lambda spec:spec['id'])"
+    ],
+    [
+      "def test_saved_original(target,spec):",
+      "def test_saved_original(target,spec,windows_fenv_backend):"
+    ],
+    [
+      "    libc=ctypes.CDLL(None)if linux else ctypes.CDLL('ucrtbase.dll')",
+      "    libc=ctypes.CDLL(None)if linux else None"
+    ],
+    [
+      "        libc.fetestexcept.argtypes=[ctypes.c_int];libc.fetestexcept.restype=ctypes.c_int\n        libc.fegetround.argtypes=[];libc.fegetround.restype=ctypes.c_int\n        libc.feclearexcept.argtypes=[ctypes.c_int];libc.feclearexcept.restype=ctypes.c_int\n        libc.feraiseexcept.argtypes=[ctypes.c_int];libc.feraiseexcept.restype=ctypes.c_int\n        libc.fesetround.argtypes=[ctypes.c_int];libc.fesetround.restype=ctypes.c_int\n        before=(libc.fetestexcept(0x1f),libc.fegetround())",
+      "        saved_flags,before=windows_fenv_backend.capture()"
+    ],
+    [
+      "        else:after=(libc.fetestexcept(0x1f),libc.fegetround())",
+      "        else:after=windows_fenv_backend.state()"
+    ],
+    [
+      "            assert libc.feclearexcept(0x1f)==0 and libc.feraiseexcept(before[0])==0\n            assert libc.fesetround(before[1])==0",
+      "            windows_fenv_backend.restore(saved_flags,before)"
+    ]
+  ],
+  "adapter_raw_sha256": "947245fd2c6bbd6ba52bac062d40671eeae3c011b333b3be8cc6792f088452b0",
+  "scope": "Only Windows fixture backend/opaque flag restore; Linux32byte branches, comparisons, golds, native code and benchmark bodies unchanged",
+  "original_budget": 0
+}

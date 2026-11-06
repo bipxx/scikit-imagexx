@@ -52,8 +52,15 @@ def target():
     return module,core
 
 
+@pytest.fixture(scope='module')
+def windows_fenv_backend():
+    if sys.platform=='linux':return None
+    from join_windows_fenv import backend
+    return backend()
+
+
 @pytest.mark.parametrize('spec',cases(),ids=lambda spec:spec['id'])
-def test_saved_original(target,spec):
+def test_saved_original(target,spec,windows_fenv_backend):
     module,core=target
     profile='minimum' if np.__version__.startswith('1.') else 'modern'
     fixture=json.loads((ROOT/'tests/fixtures/join_segmentations_originals_v1.json').read_text())
@@ -61,26 +68,20 @@ def test_saved_original(target,spec):
     # The retained Linux capture pins glibc x86-64 fenv_t to32bytes; all100
     # original rows preserved its complete bytes, including sticky flags.
     linux=sys.platform=='linux'
-    libc=ctypes.CDLL(None)if linux else ctypes.CDLL('ucrtbase.dll')
+    libc=ctypes.CDLL(None)if linux else None
     if linux:
         before=(ctypes.c_ubyte*32)();after=(ctypes.c_ubyte*32)()
         assert libc.fegetenv(ctypes.byref(before))==0
     else:
-        libc.fetestexcept.argtypes=[ctypes.c_int];libc.fetestexcept.restype=ctypes.c_int
-        libc.fegetround.argtypes=[];libc.fegetround.restype=ctypes.c_int
-        libc.feclearexcept.argtypes=[ctypes.c_int];libc.feclearexcept.restype=ctypes.c_int
-        libc.feraiseexcept.argtypes=[ctypes.c_int];libc.feraiseexcept.restype=ctypes.c_int
-        libc.fesetround.argtypes=[ctypes.c_int];libc.fesetround.restype=ctypes.c_int
-        before=(libc.fetestexcept(0x1f),libc.fegetround())
+        saved_flags,before=windows_fenv_backend.capture()
     try:
         actual=observe(module.join_segmentations,spec,np)
         if linux:assert libc.fegetenv(ctypes.byref(after))==0
-        else:after=(libc.fetestexcept(0x1f),libc.fegetround())
+        else:after=windows_fenv_backend.state()
     finally:
         if linux:assert libc.fesetenv(ctypes.byref(before))==0
         else:
-            assert libc.feclearexcept(0x1f)==0 and libc.feraiseexcept(before[0])==0
-            assert libc.fesetround(before[1])==0
+            windows_fenv_backend.restore(saved_flags,before)
     actual['controller_fenv']=dict(before=bytes(before).hex(),after=bytes(after).hex())if linux else dict(before=before,after=after,library='ucrtbase.dll',mask=0x1f)
     if os.environ.get('JOIN_RESULT_DIR'):
         retained=Path(os.environ['JOIN_RESULT_DIR']);retained.mkdir(exist_ok=True)

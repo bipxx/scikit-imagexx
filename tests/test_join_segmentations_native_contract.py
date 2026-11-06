@@ -15,6 +15,15 @@ def test_exact_source_dependency_closure():
         for name,pin in contract[group].items():
             # Exact admitted inverse authenticates current bytes before restoring historical benchmark bytes.
             raw=projection(ROOT,name)if name in context['sources']else(ROOT/name).read_bytes()
+            if name=='tests/test_join_segmentations_public.py':
+                fix=json.loads((ROOT/'coverage/contracts/join-windows-fenv-fixture-v1.json').read_bytes())
+                assert hashlib.sha256(raw).hexdigest()==fix['current_raw_sha256']
+                text=raw.decode()
+                for before,after in reversed(fix['inverse_replacements']):
+                    assert text.count(after)==1
+                    text=text.replace(after,before)
+                raw=text.encode()
+                assert hashlib.sha256(raw).hexdigest()==fix['predecessor_raw_sha256']
             assert hashlib.sha256(raw).hexdigest()==pin,name
     assert 'tests/fixtures/join_segmentations_originals_v1.hpp' in contract['source_raw_sha256']
     assert 'tests/fixtures/join_segmentations_originals_v1.json' in contract['reused_raw_sha256']
