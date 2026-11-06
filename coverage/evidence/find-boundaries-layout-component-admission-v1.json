@@ -1,0 +1,180 @@
+{
+  "status": "PASS_SCOPED_COMPONENT_REVIEW_CANDIDATE_UNREADY",
+  "source": "c8c8bb78c7ded91cdcc6dbccc01c113eba4613ea",
+  "base": "e89c56da43081307a8374e6fcab3b30c4fb63d57",
+  "source_clean_at_closeout": true,
+  "author_handoff": {
+    "path": "build/find-boundaries-layout-optimization-v1/handoff-v2.json",
+    "sha256": "642701d7b0885c6890a3bce2d520c71e70a3f921fcd08cb29acc36fffd45f6ea"
+  },
+  "independent_audit": {
+    "path": "build/find-boundaries-layout-independent-review-v1/audit-v1.json",
+    "sha256": "8e1696e4dc9952a665b47d8941d2b0c41509747a717e8f3beae329d2af2bb92b",
+    "script_sha256": "440e4d1f8a7d6d06b55e049d2c1f979d01247e54ecfc2bc6bd0b750bca6cf399",
+    "authenticated_small_proofs": 199,
+    "reused_large_or_binary_proof_pins": 6
+  },
+  "requirements": {
+    "applicable_rules": "Current root AGENTS.md and identical worktree AGENTS.md; execution prerequisites, dependency-scoped reuse, immutable versioned receipts, bounded closeout.",
+    "ownership": "Only ignored independent review directory; no author/source/shared/plan/main changes.",
+    "action_boundary": "Retained source and terminal proof inspected before dependent receipt; no failed check waived."
+  },
+  "blocking_findings": [],
+  "source_review": [
+    "Six family-file delta authenticated. Two strict inverse fragments reconstruct the complete shipping leaf exactly; 67 added leaf lines are the bounded non-subpixel strided ordinary-mode traversal.",
+    "Stride-sorted mixed-radix traversal decodes valid worker-chunk starts and resets wrapped coordinates without constructing one-past offsets. Neighbor offsets are invariant only when every extent is at least three; addressability bounds justify signed offset sums. Border partial offsets remain valid coordinates.",
+    "Canonical bool, signed background conversion and outer full-connectivity fusion preserve existing formulas and sentinel behavior. Singleton and minimum signed-stride cases remain within existing addressability frontiers.",
+    "Typed C-fast SSE2/interior path, subpixel path, header, binder, wrapper, saved golds and execution policy remain byte-identical to shipping dependencies.",
+    "Caller must prove nonoverlapping output and valid allocations/descriptors. Existing SDK validation does not establish arbitrary buffer capacity or self-overlap; Python binder allocates fresh output. No expanded alias domain is admitted.",
+    "Workers zero captures the existing process-global budget once, with default one and unchanged partition policy. No new worker global or pool. Private leaf and assembled-donor observations do not establish a final genuine whole-product ownership result."
+  ],
+  "retained_passed_scopes": {
+    "native": {
+      "normal": {
+        "existing_native_controls": 2868707,
+        "current_layout_FENV_controls": 2184934,
+        "saved_accepted": 112,
+        "rounded_refused": 4,
+        "SDK_controls": 1593220,
+        "worker1": 796610,
+        "worker4": 796610,
+        "default_global_restored": 1,
+        "scope": "Private native leaf and assembled prior donor SDK only; no whole current product."
+      },
+      "scalar": {
+        "existing_native_controls": 2868707,
+        "current_layout_FENV_controls": 2184934,
+        "saved_accepted": 112,
+        "rounded_refused": 4,
+        "SDK_controls": 1593220,
+        "worker1": 796610,
+        "worker4": 796610,
+        "default_global_restored": 1,
+        "scope": "Private native leaf and assembled prior donor SDK only; no whole current product."
+      },
+      "sanitize": {
+        "existing_native_controls": 2868707,
+        "current_layout_FENV_controls": 2184934,
+        "saved_accepted": 112,
+        "rounded_refused": 4,
+        "SDK_controls": 1593220,
+        "worker1": 796610,
+        "worker4": 796610,
+        "default_global_restored": 1,
+        "scope": "Private native leaf and assembled prior donor SDK only; no whole current product."
+      }
+    },
+    "XML": {
+      "public-minimum": {
+        "tests": 86,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "public-modern": {
+        "tests": 86,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "pure-windows311": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "pure-windows313": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "SIMD": "Retained normal compiler SSE2 integer comparison/min/max evidence and runtime-disable run authenticated. True compiler-scalar leaf disables OpenMP and both arithmetic vectorizers; inspected comparison mnemonic counts are zero. This does not claim absence of SIMD moves or scalar compilation of the entire donor archive.",
+    "sanitizers": "Retained changed-leaf and layout ASan+UBSan evidence has terminal exit zero. No rebuild or rerun during review.",
+    "FENV": "Existing assertions preserve advertised sticky exception flags and all four rounding modes. They do not prove exact 32-byte x87 environment/C2 restoration; no new full-state ABI guarantee is inferred.",
+    "SDK": "Actual installed exported-target assembled component in normal/scalar/sanitize modes, unchanged installed public header, exact selected leaf/member list, resolved config/archive/include ownership and current helper/fixture closure. Each mode records 1593220 controls, budgets one/four and restored global state. This is a modified donor SDK component, not a fresh whole current SDK qualification.",
+    "MSVC": "Changed leaf/helper/layout test compile-only retained; final FENV test compile-only retained. No Windows linked or runtime credit.",
+    "public": "86 passing XML nodes per minimum and modern profile in private changed-leaf extension; saved references reused plus bounded independent integer primitive layout oracle. Not genuine final whole core.",
+    "pure": "Three passing affected source checks per retained Windows Python 3.11/3.13; not the complete workflow barrier."
+  },
+  "performance_scope": {
+    "local_CPP_baseline_over_candidate_ratios": [
+      {
+        "case": "C-inner-control",
+        "elements": 130813,
+        "baseline_ms": 0.135546,
+        "candidate_ms": 0.135548,
+        "ratio": 0.999979
+      },
+      {
+        "case": "u16-inner-F",
+        "elements": 130813,
+        "baseline_ms": 3.62733,
+        "candidate_ms": 1.12532,
+        "ratio": 3.22338
+      },
+      {
+        "case": "i32-outer-reverse",
+        "elements": 65536,
+        "baseline_ms": 3.21976,
+        "candidate_ms": 0.824251,
+        "ratio": 3.90629
+      },
+      {
+        "case": "u16-outer-3d",
+        "elements": 7429,
+        "baseline_ms": 1.20808,
+        "candidate_ms": 0.541182,
+        "ratio": 2.23229
+      },
+      {
+        "case": "bool-inner-reverse",
+        "elements": 130813,
+        "baseline_ms": 2.18525,
+        "candidate_ms": 0.677221,
+        "ratio": 3.22678
+      }
+    ],
+    "interpretation": "Local one-thread diagnostic against previous CPP only; C-fast control neutral and four strided cases improved locally. No original-public or hosted final-core speed claim.",
+    "counter_correction": "Comparison candidate counter zeros are initialized unmeasured placeholders; only separate untimed diagnosis collected actual counters. Clarification retained without timing replay.",
+    "benchmark_binding": "Unchanged active v3 binding still fails closed for both new leaf and new SDK helper. Eight existing cases, method, sampler and provenance bytes unchanged; no stale guard bypass."
+  },
+  "pending_gates": [
+    "Root independently admits this component and assigns one shared integration author.",
+    "Versioned source-context/benchmark guard successor must bind changed leaf, SDK helper and selectors without changing sampler, cases or method; rerun only affected source checks first.",
+    "Complete actual workflow source-check command on both retained supported Windows Python versions with normal conftest/plugins and no fail-fast before hosted qualification.",
+    "Genuine integrated core/hot-swap/default-one shared worker ownership, relevant native/scalar/runtime-disable paths, actual installed whole SDK and platform validation.",
+    "Root-authorized exact-source one-thread original-public performance campaign with all historical cases and losers retained; local CPP comparisons cannot replace this gate.",
+    "Exact-source four-profile release qualification, independent product/stager admission and root main delivery."
+  ],
+  "preserved_domain_limits": [
+    "Unchanged rank/element/work/addressability/dtype/endian constraints and outer64 refusal.",
+    "Full-width subpixel behavior unchanged; no new full477 API, arbitrary layout alias, platform, or raw-FENV guarantee."
+  ],
+  "failure_retention": {
+    "author_predecessor": "handoff-v1 remains immutable; v2 corrects optional read-failure count from four to three only.",
+    "experiments": "All diagnosis/comparison and prior reports retained, including neutral control, historical original-public losers and counter-label clarification.",
+    "reviewer": "One optional counter-interpretation path guess failed; correct existing comparison-v1 path then inspected. No dependent mutation or scientific replay followed the failed path."
+  },
+  "reuse_and_waste": {
+    "reused": "Existing golds, native/header/runtime, sanitizer, public, installed-donor SDK, MSVC and local diagnostic receipts; 199 small records authenticated. Large SDK archives/core/object hashes not replayed.",
+    "avoidable": "Author optional read-path mistakes and reviewer one optional path guess; observed cost not separately measured. No duplicate scientific/build/timing work.",
+    "new_execution": {
+      "tests": 0,
+      "scientific_imports": 0,
+      "original_calls": 0,
+      "native_builds": 0,
+      "SDK_builds": 0,
+      "timing_batches": 0,
+      "downloads": 0,
+      "archive_core_rehashes": 0,
+      "source_edits": 0
+    }
+  },
+  "next_owner_trigger": {
+    "owner": "root / sole assigned shared integration author",
+    "trigger": "On root admission integrate earliest compatible bundle, update existing plan/ledger next gate, bind affected source guards, then require genuine/readiness/performance gates before release.",
+    "plan_correction": "Component ready for scoped root admission; candidate remains unready and active benchmark refusal is required until successor. No new tracking framework."
+  }
+}

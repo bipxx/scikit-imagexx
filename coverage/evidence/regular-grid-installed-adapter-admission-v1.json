@@ -1,0 +1,72 @@
+{
+  "schema": "regular-grid-installed-adapter-independent-root-review-v1",
+  "status": "PASS_SCOPED_762A_ADAPTER_SELECTOR_DELTA_NOT_RELEASE_READINESS",
+  "passed": true,
+  "source": "762a4934159d562d41908fae1415a3474e3eeed0",
+  "base": "47df67d4ae916701fdc15f5f9f536a4df9a58170",
+  "handoff": {
+    "path": "build/join-integration-v1/handoff-v4.json",
+    "sha256": "fa43f4e5818464881867ff73b205efae90c687cfc66d8a044ad84fea3ac82cbe"
+  },
+  "changed_files": [
+    ".github/workflows/ci.yml",
+    "coverage/contracts/current-public-qualification.json",
+    "coverage/contracts/regular-grid-native-v2.json",
+    "coverage/contracts/regular-grid-public-integration-context-v1.json",
+    "tests/test_public_qualification.py",
+    "tests/test_regular_grid_native_contract.py",
+    "tests/test_regular_grid_public.py",
+    "tests/test_util_metadata_source.py",
+    "tools/public_qualification.py"
+  ],
+  "small_receipts_authenticated": 44,
+  "production_golds_methods_unchanged": true,
+  "source_findings": [
+    "Actual installed public util alias shares identical package core; builtin entry ownership/getter/setter/default1 checked, explicit private component option preserved.",
+    "All49nodes retained:45saved+4unchangedaux; all prior numeric/state/FP assertions preserved; no skips/xfail/filter reduction. Same-interpreter old/newAST comparison used, no cross-version AST hash.",
+    "Qualifier parser/plan/child/dispatch/requiredcollector/sealer add whole49 group only to Linuxminimum/modern/debug normal/scalar. Exactly49required; all Windows existinggroups remain.",
+    "Actual CI argv selects full module with explicit Linuxcondition/privateoverride empty. New source contexts versioned, historical pins preserved.",
+    "Missing-profile sealer failure retained and corrected by explicit required-boundary rejection without incomplete-command waiver."
+  ],
+  "validation": {
+    "windows311": {
+      "source_subset": 31,
+      "seal_subset": 4,
+      "complete_barrier": false
+    },
+    "windows313": {
+      "source_subset": 31,
+      "seal_subset": 4,
+      "complete_barrier": false
+    }
+  },
+  "NumPy_setup": {
+    "minimum": {
+      "collected": 49,
+      "saved": 45,
+      "auxiliary": 4,
+      "numerical_nodes": 0,
+      "genuine_import_refusal": true
+    },
+    "modern": {
+      "collected": 49,
+      "saved": 45,
+      "auxiliary": 4,
+      "numerical_nodes": 0,
+      "genuine_import_refusal": true
+    }
+  },
+  "scope": "Preserves historical Linux flags mask0x3d/rounding plus NP policy/handler/buffer/error/warning/callback/input/type observations. No new claim of all rawx87 condition-bit preservation. Separate array-view capture-prefixC2 gate remains frozen/blocked; no helper/capture or source change from that lane is used here.",
+  "remaining_gates": [
+    "Independent boundary component admission then earliest compatible shared successor; do not wait unfinishedlabel lane",
+    "Complete actual final workflow source barrier both retained supportedversions/normalplugins/conftest/no-x; subsets/collection are not that gate",
+    "Genuine installed49 numerical passes on3Linuxprofiles normal/scalar and all Windows globalgroups, actualonecore/SDK/exportedtarget/hot-swap qualification",
+    "Exact-source4profile admission and original-public one-thread performance before main delivery; fullWindows/provider/API domains open"
+  ],
+  "execution": "Independent source/AST/44smallproof/XML review only;0tests/science/original/native/build/timing/download/archivehash. Prior passing review steps reused; corrected only intake metadata field interpretation.",
+  "retained_reviewer_failure": {
+    "path": "build/regular-grid-installed-adapter-independent-review-v1/review-input-failure-v1.json",
+    "reason": "Reviewer compared collected-list to integer49 and used summary field math_nodes_executed instead of actual numerical_nodes_executed; stopped before admission, corrected against actual retained terminal fields, no scientific replay."
+  },
+  "waste_review": "Reused47df component/math/golds/SDK scopes; reviewed only9file closure. Completebarriers deferred until compatible boundary merge avoids knowninvalidated replay. Root metadata shape error and author oldpartialfailure preserved. Nextowner root/C: admitreadycomponents, integrateonce, finalbarriers then genuinequalification."
+}

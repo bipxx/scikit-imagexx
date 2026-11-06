@@ -1,0 +1,118 @@
+{
+  "schema": "reference-capture-independent-raw-admission-v1",
+  "status": "PASS_SCOPED_RAW_CAPTURE_ADMISSION_PENDING_ROOT_PUBLICATION_AND_NATIVE_GO",
+  "passed": true,
+  "producer_handoff": {
+    "path": "build/reference-capture-results-v1/handoff-v1.json",
+    "sha256": "4ba8240dc053057bf8dc457b16c7c4790579af1a3d086ae496d32a998131f73b",
+    "bytes": 78001
+  },
+  "before_call_binding": {
+    "path": "build/reference-capture-results-v1/binding-review-v1.json",
+    "sha256": "88946bb219498fa3ccea1b64247f49ca537e95c61de62ba6f135044baa519920",
+    "bytes": 15684
+  },
+  "audit": {
+    "path": "build/reference-capture-independent-raw-review-v1/audit-v1.json",
+    "sha256": "5f2a9460852943c55d26a64d25000da28917ea34a7b89490693166d4a5ba96e1",
+    "bytes": 98515
+  },
+  "audit_source": {
+    "path": "build/reference-capture-independent-raw-review-v1/audit_v1.py",
+    "sha256": "6c0569f84145d5d3544ba497aaa50205e9348c7881f359b099c3b6e4f35b3694",
+    "bytes": 12179
+  },
+  "supplement": {
+    "path": "build/reference-capture-independent-raw-review-v1/supplement-v1.json",
+    "sha256": "ae9c1ee856ade67610399d6c7d4505c5cff44fd94ba1e6f05d42dbbbd1173995",
+    "bytes": 1934
+  },
+  "ownership": "Only ignored build/reference-capture-independent-raw-review-v1 outputs; no edits to source packets, shared files, plan/ledger, main or producer receipts.",
+  "sources": {
+    "slice": "b4e1d4e8525d76d39217135e0a1423e49509b3da",
+    "array_views": "ab88c7e1438014001338c78e5d38da6454eb6be4"
+  },
+  "counts": {
+    "authorized_originals": 548,
+    "consumed": 548,
+    "started": 548,
+    "completed": 548,
+    "results": 369,
+    "API_exceptions": 179,
+    "warnings": 3,
+    "FP_callbacks": 2,
+    "observer_failed": 0,
+    "retries": 0,
+    "unstarted": 0,
+    "uncompleted": 0,
+    "remaining_authorized": 0
+  },
+  "findings": [
+    {
+      "status": "PASS",
+      "area": "Authority and fidelity",
+      "finding": "Authenticated exact producer4ba handoff, before-call889 review, actual GO/controller/prospective/source pins and prior independent safety/readiness. Both native Windows Git source handles remain at their frozen clean source revisions. Frozen tracked JSON cases equal prospective and precall-freeze cases with JSON types preserved. Runtime identities match the independently admitted root-bound prefixes and frozen profiles. Existing admitted helper/library identity is reused; no archive/core/library rehash or runtime replay."
+    },
+    {
+      "status": "PASS",
+      "area": "Once-only journals and saved equality",
+      "finding": "All16 raw files match handed-off byte lengths/SHA256. Reconstructed548 adjacent started/completed pairs in exact recipe ID/API order, unique within each authorized family/profile. Every started top counter is i and completed i+1, with top1/refused0/non-target0 delta. Completed row and observations row are recursively type-exact equal, including bool versus int. No missing, retry, observer_failed or additional event. Exclusive capture directories/files plus fsync-before-call journal inspected. Exact launcher command/source/GO/budget/digest and terminal exit0 authenticated; each modern first pair follows its minimum final pair."
+    },
+    {
+      "status": "PASS",
+      "area": "State and exceptions",
+      "finding": "Every548 caller record saved/restored has byte-identical32-byte fenv plus internally consistent control/status/MXCSR fields. Minimum274 records retain set x87C2; modern274 have it clear. No target-immediate FENV change observed; this does not erase source warnings/callbacks. All target NP-policy/handler/buffer/print/profile/pointer checks passed, before/after encoded inputs unchanged. Slice records preserve105/56 and104/57 results/errors; arrayviews80/33 each. Exceptions remain actual API outcomes with exact module/type/message, never failed observer credit."
+    },
+    {
+      "status": "PASS",
+      "area": "Storage, protocol and payload observations",
+      "finding": "Independently checked all160 successful array-view result slot offsets against encoded live input shape/strides, including reversed/overlapping storage, bounded512 elements, dtype identity and base-chain bound. Checked3721 compressed payload occurrences/231260 decoded bytes and their SHA256/typed byte lengths;84 object-array payload occurrences retain exact saved values. Bounded retained-input object identity matrices and protocol events are preserved; no raw object-address serialization or graph inference. All34 declared mutation controls restored input bytes/metadata (slice3/profile including readonly error, views14/profile). Source observers and frozen recipes were inspected, not executed."
+    },
+    {
+      "status": "PASS_WITH_SCOPE_LIMIT",
+      "area": "Observable alias and profile fidelity",
+      "finding": "Slice same-storage pointer_delta is a relative alias observation. Nonsharing pointer_delta is process-specific diagnostic only, not a future cross-process parity promise; do not normalize or require its literal value. Empty/zero-sized view shares_memory may be false even with meaningful bounded storage metadata. Minimum empty-array-slices returns the original array with DeprecationWarning; modern raises exact ValueError. This is the sole error-outcome transition and must remain separate profile gold. No Windows or arbitrary NumPy/provider/source version credit."
+    }
+  ],
+  "source_safety_reuse": "Source/static safety is reused from previously independent admissions (slice effcd13 and arrayviews f8ba78), not self-admitted here. Raw-controller/source identities and observers are authenticated against those scopes. Helper f29ffd scope is trusted current-thread empty x87 stack, masked exceptions, Linux x86_64/glibc2.39 native fenv_t32/MXCSR offset28; no universal FENV guarantee.",
+  "gates": {
+    "passed": [
+      "Independent exact raw/source/GO/runtime/controller/root-prefix bindings",
+      "548 once-only authorized observations, durable journal/saved row equality and exact caller-state restoration",
+      "Bounded storage/payload/protocol/alias/mutation/exception/profile scope reviewed"
+    ],
+    "failed": [],
+    "pending": [
+      "Root acceptance of this raw review and exact saved fixture/source publication with source closure guards",
+      "Root-issued native implementation authority; raw admission grants no new original calls",
+      "Full API/domain contract and applicable provider/FP/type behavior closure",
+      "Standalone C++ complete operation, public hot-swap/native ownership, default1/single-global and applicable scalar/SIMD/worker disposition",
+      "Actual installed exported SDK complete-operation and compiler/platform qualification",
+      "Changed source guards and complete exact workflow source barriers on retained supported Pythons before hosted preparation",
+      "Exact-source genuine four-profile release qualification, one-thread public original performance and release/main delivery"
+    ]
+  },
+  "historical_failures": "Earlier libc.fesetenv C2-loss blocked prefixes, circular-v2 metadata/finalizer failures and all preceding receipts remain immutable. Actual v3/helper independent admissions supersede only that prefix gate; raw capture has no failed observer or retry. Independent audit-only Unicode/datetime width checker setup failures are retained in supplement and terminal traces, with no scientific effect.",
+  "execution": {
+    "scientific_imports": 0,
+    "original_calls": 0,
+    "target_calls": 0,
+    "native_calls": 0,
+    "tests": 0,
+    "builds": 0,
+    "timing_batches": 0,
+    "downloads": 0,
+    "source_publications": 0,
+    "source_shared_main_edits": 0
+  },
+  "waste_reuse": {
+    "reused": "Independent source safety, source/controller prefix, admitted helper and runtime identities; producer saved-only review used only as a cross-check after independent reconstruction. No unchanged scientific tests, original recaptures, build/archive/core authentication or benchmarks repeated.",
+    "observed_cost": "Audit success command0.54s and supplemental saved-data command2.26s; two subsecond audit-only setup failures corrected. Other inspection/review wall cost not measured. Payload occurrences count repeated saved encodings, not new calls or independent inputs.",
+    "avoidable": "Initial independent byte-length parser assumed dtype width suffix was always raw bytes and omitted Unicode code-unit multiplier/datetime units; fixed locally before accepting audit output.",
+    "next_plan_correction": "Raw review complete, reviewed no producer change. Root updates existing plan/ledger with this terminal raw admission and decides publication/native GO; do not reopen exhausted548-call budget or dispatch obsolete integration barriers."
+  },
+  "next_gate": {
+    "owner": "root",
+    "trigger": "Authenticate this frozen scoped review, publish only exact independently admitted saved-source files after dependency checks, and separately issue any native GO. Root alone assigns next shared integration after ready component admissions; reviewer does not self-dispatch."
+  }
+}
