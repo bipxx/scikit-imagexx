@@ -102,5 +102,11 @@
       "timed_batches": 0
     }
   },
-  "observed_MSVC_scope": "Actualleaf+unitTUcompile /fp:strict /openmp only; no Windowslink/runtime."
+  "observed_MSVC_scope": "Actualleaf+unitTUcompile /fp:strict /openmp only; no Windowslink/runtime.",
+  "true_scalar_correction": {
+    "proof": "build/label-pair-metrics-v1/counts-scalar-correction-v2.json",
+    "source_unchanged": true,
+    "prior_scalar_claim": "Rejected: explicit OpenMP pragma still vectorized despite prior flags; runtime478control result retained.",
+    "current": "native-counts-scalar-v2/scalar; no -fopenmp during compile; -U_OPENMP/no tree/no SLP;478controls PASS, vectorreport empty/keyvector opcodes absent."
+  }
 }
