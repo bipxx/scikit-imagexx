@@ -1,0 +1,27 @@
+{
+  "schema": "qualified-production-main-delivery-v1",
+  "qualified_source": "334e68e2e6717421501742365b6fe58328fc1019",
+  "qualification_run": 42140207750,
+  "shipping_merge": "8d19f322b4025ec57e149a0cb0dd1f6b070cee1b",
+  "remote_branch": "origin/main",
+  "production_git_blobs_equal": 493,
+  "production_source_sha256": "ab513b8efe337d621921813b0df5b77a90827be5985e76f92a60db9e11ec0ae9",
+  "native_partial_image_paths": 262,
+  "registered_functions": 265,
+  "admission": "coverage/evidence/draw-batch-whole-product-admission-v1.json",
+  "independent_admission_sha256": "a5a595dc58cb04044188f3d43af4cf2eae603da9d9275cd26f7375f2465aa3c3",
+  "retirement": {
+    "receipt": "build/draw-batch-qualification-v2/worktree-retirement-v1.json",
+    "sha256": "2c9aecfef8c123ff48dbbc4b596c3cca6bb7c86eabc839bf0f5304cdbc85132b",
+    "worktrees_removed": 4,
+    "verified_python_cache_files_retired": 247,
+    "build_bytes_preserved": 229254943,
+    "prefix_redirects": "coverage/work_items.json::artifact_archive_redirects"
+  },
+  "scope": "Main delivers exact admitted production source with newer administrative/benchmark publication metadata retained. No full477/classes/runtime/all-domain/native-speed completion. Historical failed trials/raws preserved. Removed source checkouts recover from their retained Git commits or authenticated source archives; all verification readers were released first.",
+  "closeout": {
+    "result": "Validated release merged andpushed;sourceprojection verified;fourcleanancestorWTs retired.",
+    "reuse": "No scientific reruns/downloads/baseline destruction duringdelivery/cleanup. Retainedwholeignoredbuild directories andrawpackages.",
+    "next": "Onecombinedready metrics/boundary/ellipse successor;completeactualsourcebarriers thenonefourprofilequalification, reuseminimumstagerforisolatedperformance."
+  }
+}
