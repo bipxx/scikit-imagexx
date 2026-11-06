@@ -37067,7 +37067,7 @@
       "kind": "implementation",
       "owner": "boundary_worker",
       "branch": "feature/join-segmentations-v1",
-      "state": "contracting",
+      "state": "contracted",
       "apis": [],
       "target_apis": [
         "segmentation.join_segmentations"
@@ -37083,10 +37083,10 @@
       "base_sha": "057b1e28ae2060fe58b05aca2c7a566c424a368d",
       "scope": "IndependentnextAPI source/test-first:fullintendedsignatureinclreturn_mapping/type/maps/shape/errors. Reuseexistingrelabel/ArrayMap/pairkeyprimitives; no originalcalls until source-safepeer/rootGO. Notincurrentready265.",
       "acceptance": "Declared public/hotswap/nativeSDK ownership,perfunctionparity,applicableSIMD/true-scalar andoptionalglobalworkersdefault1,isolated1threadoriginalcomparison,independentfullrelease. PartialpacketnotAPIcompletion.",
-      "current_checkpoint": "Liveworkerassignedsource/header/prospectiverecipes only; controller0dd/templates separatelyimmutableandUNBOUND. No neworiginal/native/timercredit.",
+      "current_checkpoint": "Frozen source-safe1cfd377 six family-only files/50recipes;112effective source/refused-intake checks. Independent root safetyPASSf381d6b7, exact source/runtime rootGOd5dbfc93 authorizes once-only50original topcalls/profile (100total); live resumed capture handle confirmed. No native/build/timing/API-completion credit.",
       "next_gate": {
         "owner": "boundary_worker",
-        "action": "Freeze exactsource/interface/saferesolvecases beforeimplementation/originalcapture; rootindependentsafetypeer/GO next. No sharedintegrationchanges."
+        "action": "Capture exactly frozen50cases/profile under source/runtime-bound rootGO and existing durable one-shot journal; never retry consumed calls. Validate saved outputs and freeze one successor for independent actual original admission. Native/class identity/SDK/worker/SIMD/performance/release remain pending."
       }
     },
     {
@@ -37112,6 +37112,31 @@
       "next_gate": {
         "owner": "metrics_integrator",
         "action": "Freeze exact upstream-source/interface/prospective safe cases and refused-intake evidence; independent safety peer/root GO before capture or implementation. Record evidence/reuse/waste and remaining gates."
+      }
+    },
+    {
+      "id": "regular-grid-current-batch-v1",
+      "kind": "implementation",
+      "owner": "readiness_reviewer",
+      "branch": "feature/regular-grid-v1",
+      "state": "contracting",
+      "apis": [],
+      "target_apis": [
+        "util.regular_grid"
+      ],
+      "owns": [
+        "include/skimagexx/regular_grid.hpp",
+        "python/skimagexx/_regular_grid.py",
+        "coverage/contracts/regular-grid-v1.json"
+      ],
+      "depends_on": [],
+      "base_sha": "ffaaa12f7a30428fd4160c45b9ecce7b1fe2b6e5",
+      "scope": "Existing477-key missing metadata API; concrete future consumer regular_seeds currently imports original regular_grid. Own exact shape/grid/slice/error interface first; no shared consumer changes until integration. Reuse existing regular-seeds structures.",
+      "acceptance": "Independent source-safe fullsignature/rounding/state/error reference plan and refused-intake checks before originals/implementation. Later hot-swap/installed standalone SDK parity, relevant one-thread original public-call overhead comparison, applicable CPU paths and exact supported-profile release. No SIMD/parallel benefit claimed for tiny view metadata.",
+      "current_checkpoint": "Live resumed author creating isolated source/test-first packet; no original/native/build/timing credit. Prior qualification/controller reviews stay immutable; root handles terminal current release independently.",
+      "next_gate": {
+        "owner": "readiness_reviewer",
+        "action": "Freeze source/interface/prospective safe cases and refused-intake evidence for independent safety peer/root GO before original capture or native implementation; closeout evidence/reuse/waste/remaining gates."
       }
     }
   ],
@@ -37814,13 +37839,13 @@
         "join-segmentations-current-batch-v1"
       ],
       "readiness_reviewer": [
-        "label-pair-metrics-current-batch-v1"
+        "regular-grid-current-batch-v1"
       ]
     },
     "current_three_agent_packets": {
       "metrics_integrator": "util-crop-current-batch-v1",
       "boundary_worker": "join-segmentations-current-batch-v1",
-      "readiness_reviewer": "label-pair-metrics-current-batch-v1"
+      "readiness_reviewer": "regular-grid-current-batch-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -38215,7 +38240,7 @@
     },
     "current_review_assignments": {
       "metrics_integrator": "Controller688cd583 frozen, independently scoped-PASSd328e673 and private branch pushed; actual bindings pending. Live next util.crop source-safe interface/reference packet in isolated worktree; no originals/build/timing before safety GO.",
-      "readiness_reviewer": "Source readiness57d003 and actual qualification bindingf2508746 PASS; controller688c metadata deltaPASSd328e673. Reviewer completed/released, available for frozen join/crop safety packet or terminal product admission; no queued message treated live execution.",
+      "readiness_reviewer": "Live regular_grid source/interface/refused-intake packet in isolated regular-grid-v1; concrete consumer regular_seeds still imports original grid. Prior independent reviews complete/frozen; root owns qualification admission while this worker authors new family.",
       "boundary_worker": "Controller0dd/templatesfrozenUNBOUND; nextjoin_segmentationssource/test-first packet only, no originalcalls."
     },
     "next_action": "Observe single exact cbce four-profile run42158336231; independently review actual versioned binding/controller, retain terminal artifacts once and admit. Reuse minimum Release stager for isolated28-case comparison; no separate prepare/source rewrite. Join source-safe packet remains separate.",

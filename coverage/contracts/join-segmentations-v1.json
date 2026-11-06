@@ -1,0 +1,1792 @@
+{
+  "schema": "join-segmentations-prospective-v1",
+  "state": "SOURCE_TEST_FIRST_NO_ORIGINAL_NATIVE_OR_TIMING",
+  "api": "segmentation.join_segmentations",
+  "signature": "(s1, s2, return_mapping: bool = False)",
+  "reference": "scikit-image==0.26.0",
+  "reference_header": {
+    "original_calls_authorized": 0,
+    "root_GO": null,
+    "safety_peer": null,
+    "planned_profiles": [
+      "minimum",
+      "modern"
+    ],
+    "maximum_future_public_topcalls": 100,
+    "calls_per_recipe_per_profile": 1,
+    "recipes": 50,
+    "max_input_elements_each": 192,
+    "max_factor": 8,
+    "max_encoded": 63,
+    "max_returned_map_entries": 64,
+    "max_dense_map_elements": 65,
+    "optional_map_protocol_recipe": "join_segmentations/int16-maps",
+    "native_calls": 0,
+    "timing_batches": 0,
+    "gate": "Independent source/Cython safety peer then explicit root GO binding exact source/runtime/recipes/observer and journal attempt; no implicit imports or original calls from recipe module."
+  },
+  "source": {
+    "join_python_fixture": "tests/fixtures/join_segmentations_upstream_v026.py.txt",
+    "join_canonical_lf_sha256": "8d1da1717bf35818f57156f88a94cd84a9527f48aff16d60e250b7d8045cd8be",
+    "join_functions": {
+      "join_segmentations": {
+        "start": 6,
+        "end": 73,
+        "canonical_lf_sha256": "a10a6c19acbee957b2251f98d9638acd04de22403af67349e94d1fc23d0a1357"
+      },
+      "relabel_sequential": {
+        "start": 76,
+        "end": 184,
+        "canonical_lf_sha256": "10a554c87de1bd13db2da9ee843ff2fb93a3ccf63e5e1f1d37361fb9df3f831f"
+      }
+    },
+    "map_array_python_sha256": "aaca3e8ec753ab84d793a39e7aa71db991d5d39dd457cba96d11b4aba1f2cfe2",
+    "Cython_sources": {
+      "_remap.pyx": {
+        "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/util/_remap.pyx",
+        "sha256": "3fa759e1626f87a09c0efe53d52bdb0194ee7f84d772662951645554f46ca95c"
+      },
+      "fused_numerics.pxd": {
+        "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/_shared/fused_numerics.pxd",
+        "sha256": "a0e05804f42685fd8e89943f6251e27e4e76f122be142b015a9ee25d5d6b89ba"
+      }
+    },
+    "license": "third_party/scikit-image-LICENSE.txt",
+    "license_sha256": "611d3207504dcb4a808df209d2e7c9b4f2e89fe690f84735c0d548160966b527"
+  },
+  "runtime_pins": {
+    "1.24.4": {
+      "numpy": "1.24.4",
+      "scipy": "1.15.3",
+      "remap_binary_sha256": "ec8b4ba7dc6b98f9e248b297ef194aae22396d96d145f9417dbe32858b22885e",
+      "scope": "Retained authenticated map-array runtime pin reused; no new binary hashing or original calls."
+    },
+    "2.5.4": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "remap_binary_sha256": "212d963ccbbe7b4200975a295dea92d25c4a918f8d33952b1acaef5e7d9a9213",
+      "scope": "Retained authenticated map-array runtime pin reused; no new binary hashing or original calls."
+    }
+  },
+  "full_intended_contract": {
+    "arguments": "s1,s2 positional or keyword; return_mapping annotated bool defaultFalse accepts Python truth protocol at LAST branch, after numerical work; preserve default/annotation/signature and exception ordering.",
+    "shape": "First compare s1.shape != s2.shape with exact source ValueError f-string; plain missing-shape carriers fail before conversion. No broadcast. Arbitrary matching rank/shape includes scalar and empty behavior.",
+    "validation_order": "relabel left: np.min negative check, then np.unique/in_vals[0], then dtype.kind iu check and source dtype sizing. Then same right. Final relabel runs on ACTUAL source factor product. Preserve readonly/endian/Cython buffer errors and shape-assignment warnings; do not normalize fixtures.",
+    "factor": "factor=s2.max()+np.uint8(1) uses ORIGINAL right labels. It is not max(s2_relabeled)+1. NumPy1/2 scalar promotion, fixed-width factor/product wrap, float promotion, source warnings/errors and encoded collisions are contract partitions; pair equivalence is not a general oracle.",
+    "labels": "Three source relabels preserve zero ONLY when present; other labels ascend by encoded sorted unique order and start1. Output dtype follows input dtype preservation, strict last<dtype.max comparison and np.min_scalar_type; j dtype need not match either input. Record intermediate factor/ranked/encoded descriptors, never infer from abstract join.",
+    "returns": "Falsey flag returns owning C-order ndarray j. Truthy returns exact tuple(j,map1,map2). Source maps are skimage.util._map_array.ArrayMap, their dtype/out_values preserve left/right label descriptors and values; provider class identity is an explicit source fact.",
+    "map_identity_aliases": "map1.in_values IS map2.in_values (same inverse-j.in_values ndarray); output-value arrays allocated separately; record class/module/name, cache None, max_str_lines4, keys/values descriptors, all pair/input identity+shares_memory+base topology. Do not replace identity with value equality.",
+    "map_behaviour": "Existing ArrayMap contracts cover len,repr,str,dtype,call/index/slices/boolean lookup,missing0,dense __array__(dtype/copy),mutable in/out attrs,_array cache and setitem->flatnonzero compaction. Reuse those corpora; one join-specific returned-map recipe checks lookups/dense/cache mutation and shared-key alias before/after.",
+    "input_and_state": "No input/pointer/shape/stride/dtype/writeability/alias mutation for ordinary cases, including errors. Preserve all warnings in order, NP error policy/handler/buffer/print options and protocol callback ordering; provider/callback/concurrent mutation remain named gates."
+  },
+  "source_safe_scope": "Finite nonnegative values0..7 except negative validation recipe; factor1..8 and encoded<=63 whenever integer pipeline proceeds. Uniform/mixed integer, shape/type/empty/endian/readonly error cases use equal bounded key/value and input/output lengths. Cython writable np_anyint/np_numeric views reject readonly/unsupported descriptors before unchecked loops. No short mapping arrays, forged storage, huge indices, overlap outputs, zero factor or wrap experiment.",
+  "cases": [
+    {
+      "id": "join_segmentations/int8-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int8",
+      "right_dtype": "int8",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": true
+    },
+    {
+      "id": "join_segmentations/int8-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int8",
+      "right_dtype": "int8",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/uint8-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint8",
+      "right_dtype": "uint8",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": false
+    },
+    {
+      "id": "join_segmentations/uint8-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint8",
+      "right_dtype": "uint8",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/int16-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": false
+    },
+    {
+      "id": "join_segmentations/int16-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": true
+    },
+    {
+      "id": "join_segmentations/uint16-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint16",
+      "right_dtype": "uint16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": false
+    },
+    {
+      "id": "join_segmentations/uint16-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint16",
+      "right_dtype": "uint16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/int32-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": false
+    },
+    {
+      "id": "join_segmentations/int32-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/uint32-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint32",
+      "right_dtype": "uint32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": false
+    },
+    {
+      "id": "join_segmentations/uint32-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint32",
+      "right_dtype": "uint32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/int64-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int64",
+      "right_dtype": "int64",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": false
+    },
+    {
+      "id": "join_segmentations/int64-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int64",
+      "right_dtype": "int64",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/uint64-labels",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint64",
+      "right_dtype": "uint64",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false,
+      "omit_flag": false
+    },
+    {
+      "id": "join_segmentations/uint64-maps",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint64",
+      "right_dtype": "uint64",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/all-zero",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "right": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/no-zero",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        1,
+        1,
+        3,
+        3,
+        7,
+        7,
+        1,
+        3
+      ],
+      "right": [
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/sparse-small",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        7,
+        7,
+        0,
+        3,
+        3,
+        7,
+        0
+      ],
+      "right": [
+        0,
+        7,
+        0,
+        7,
+        0,
+        7,
+        0,
+        7
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/shape-mismatch",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false,
+      "right_shape": [
+        4,
+        2
+      ]
+    },
+    {
+      "id": "join_segmentations/F",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "F",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/reverse",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "reverse",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/step",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "step",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/transpose",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "transpose",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/readonly-C",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "readonly-C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/readonly-F",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "int32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "readonly-F",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/rank-zero",
+      "api": "segmentation.join_segmentations",
+      "shape": [],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        2
+      ],
+      "right": [
+        3
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/rank-three",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        2,
+        2
+      ],
+      "left_dtype": "uint32",
+      "right_dtype": "uint32",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": false,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/dtype-metadata",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false,
+      "metadata": true
+    },
+    {
+      "id": "join_segmentations/mixed-u8-i16",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint8",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/mixed-i32-u16",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int32",
+      "right_dtype": "uint16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/mixed-u64-i64",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "uint64",
+      "right_dtype": "int64",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/negative-left",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        -1,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/float-left",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "float64",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/bool-left",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "bool",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/negative-right",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        -1,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/float-right",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "float64",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/bool-right",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "bool",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/empty",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        0,
+        3
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [],
+      "right": [],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/plain-list-left",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false,
+      "plain_list": true
+    },
+    {
+      "id": "join_segmentations/flag-none",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": null,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/flag-zero",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": 0,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/flag-one",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": 1,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/flag-empty-string",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": "",
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/flag-truthy-string",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": "yes",
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/flag-ambiguous",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false,
+      "flag_array": true
+    },
+    {
+      "id": "join_segmentations/same-object",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false,
+      "alias": "same"
+    },
+    {
+      "id": "join_segmentations/overlapping-inputs",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false,
+      "alias": "overlap"
+    },
+    {
+      "id": "join_segmentations/broadcast-readonly",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": "int16",
+      "right_dtype": "int16",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "broadcast",
+      "flag": true,
+      "map_protocols": false
+    },
+    {
+      "id": "join_segmentations/nonnative-endian",
+      "api": "segmentation.join_segmentations",
+      "shape": [
+        2,
+        4
+      ],
+      "left_dtype": ">i2",
+      "right_dtype": ">i2",
+      "left": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3
+      ],
+      "right": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "layout": "C",
+      "flag": true,
+      "map_protocols": false
+    }
+  ],
+  "reuse": {
+    "existing_paths": {
+      "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+      "include/skimagexx/component_consumers.hpp": "1b696a8473a05d976339f557967f0a1fecd88f79216bbc99d8ba50a28a21a2a3",
+      "src/component_consumers.cpp": "faf804a7f3db07a960c90466a27833ef9d36ab72bcf7859cc67f0dea3bd0ef20",
+      "src/bind_component_consumers.cpp": "5c3569804ca11f12fcc0ba077922d2e9e047a0e30fb04fdf790f839efac25ec4",
+      "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "python/skimagexx/_component_consumers.py": "f2643c25de70277fcbd30ba1a2e9774b20ae637137e1e8610eb3cd500f90fadd",
+      "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+      "tests/map_array_contract.py": "628fbd57fad09a97a61c3cb3e2b911db9a1486908a627614b3bae65607fdcb7b",
+      "coverage/contracts/map-array.json": "a13575972ebe39f0af87d3b18b9b7b0a7ba14f96ed9d60a24cdfe4a69c695ac8",
+      "coverage/contracts/component-consumers-public.json": "3386c9556342e01779805846d5f65921de9099e25c00310a7546dfdc644b86cc",
+      "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+      "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+      "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+      "tests/test_arraymap_dense_contracts.py": "a3a1d3477f72295f401ec75c626497780f9abba1e0990ca397c226ba17378144",
+      "tests/test_arraymap_provider_contracts.py": "c9a85f763be82f2746019c7639c540a1b0ea711d7cb1a4953eef13f88eccd437"
+    },
+    "smallest_path": "Reuse ComponentsView/ConsumerRaster transport+existing owned ArrayMap and existing uint64 unique/map semantics where contracts match. Add a bounded dedicated typed join leaf for source-ordered ranking/factor/product/dtype semantics; package one shared key ndarray into both existing map objects. No sparse/graph engine.",
+    "worker_caveat": "consumer_sorted_unique and consumer_map_into currently read active_workers internally; a join leaf cannot claim one immutable per-function snapshot simply by chaining them. Resolve explicit worker handoff or retain disclosed serial sorted core before implementation. Private label_pair pack_pairs is20bit counting/CSR and not a general join primitive; no dependency on unfinished265 ancestry.",
+    "class_caveat": "Owned ArrayMap class matches assessed behavior but has a different module/type identity from original. Root must explicitly decide admissible native returned-class scope; no provider constructor or exact-type parity claim made here."
+  },
+  "native_header_proposal": "Declaration-only design, not authored/compiled: bool join_segmentations_into(ComponentsView left,right, JoinResult& result,int workers=0). Result owns typed joined words, shared key vector and left/right back-label values plus output descriptor tags. Exact dtype policy/profile and owner/storage validation are admission gates; no new generic registry or mapper.",
+  "future_benchmark": {
+    "state": "PROSPECTIVE_ONLY_NO_DRIVER_OR_CALLS",
+    "api": "segmentation.join_segmentations",
+    "threads": 1,
+    "comparison": "public allocation-inclusive original vs installed native; include mapping construction when requested, not external map lookup actions.",
+    "sampler": "Reuse tools/montage_sustained.measure unchanged",
+    "proposed_cases": [
+      "tiny/u8/no-maps",
+      "tiny/i16/maps",
+      "medium/u16/no-maps",
+      "medium/u16/maps",
+      "large/i32/C/no-maps",
+      "large/i32/F/maps",
+      "large/u8/labels0..3/reverse",
+      "large/u16/maps/readonly-source-if-supported"
+    ],
+    "losses": "Retain all slower cases; original errors or unsupported domains are not speed wins. Root freezes actual source-safe benchmark cohort after parity/genuine preparation."
+  },
+  "unassessed": [
+    "Integer maxima causing factor wrap0/negative or product overflow/collisions, dtype-boundary promotions and warnings; full intended task scope, not authorized original cases.",
+    "Large labels, huge shape/allocations and map dense lengths; never invoke unbounded ArrayMap.__array__.",
+    "Custom return_mapping.__bool__, input ndarray subclasses/protocol providers, injected NumPy providers, callback mutation and concurrent mutation.",
+    "Object/complex/structured/string/half domains and exact error ordering beyond frozen safe recipes.",
+    "Full returned-map type identity/native class policy; provider injection corpus inherited scope does not prove every join return object."
+  ],
+  "gates": [
+    {
+      "name": "source/interface/safe-recipe freeze",
+      "owner": "family author",
+      "state": "PASSED_SOURCE_AND_REFUSED_INTAKE_ONLY",
+      "evidence": "build/join-segmentations-v1/{minimum,modern}-source-v1.xml:6pure/profile; {minimum,modern}-intake-v1.xml:50refused/profile. New closure-pin delta verified separately by dependency-v2 XML; no original results or implementation evidence."
+    },
+    {
+      "name": "independent safety peer",
+      "owner": "independent reader/root",
+      "state": "PENDING",
+      "evidence": "No independent result yet; recipe/Cython lengths/promotion bounds and observer reviewed before root GO."
+    },
+    {
+      "name": "one original cohort",
+      "owner": "root",
+      "state": "BLOCKED_NO_GO",
+      "evidence": "No original call authorized; source/runtime/recipe/observer hashes and existing once-only journal controller must be root-bound."
+    },
+    {
+      "name": "native/public/SDK/scalar-SIMD/global worker/performance/release",
+      "owner": "family author then root integration/admission",
+      "state": "PENDING_NOT_IMPLEMENTED",
+      "evidence": "No native header/leaf/binder/wrapper, registry, genuine package, public benchmark or release credit in this prospective packet."
+    }
+  ]
+}
