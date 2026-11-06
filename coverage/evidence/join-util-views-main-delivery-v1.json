@@ -1,0 +1,56 @@
+{
+  "schema": "root-qualified271-main-delivery-v1",
+  "status": "DELIVERED_EXACT_QUALIFIED271_PROJECTION_WITH_SCOPED68_PUBLIC_PERFORMANCE",
+  "passed": true,
+  "main_delivery": "ef4650275c3a78759c771649373ca79767c7064b",
+  "qualified_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "qualification": {
+    "run": 42262940227,
+    "receipt": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
+    "sha256": "15030efe83283c9bb29043150612b32501128c8028ce19b1c58c2454837dcd96",
+    "profiles": 4,
+    "public_XML_checks": 952116,
+    "SDK_checks": 256,
+    "corpora": 48
+  },
+  "performance": {
+    "receipt": "coverage/evidence/join-util-views-initial-performance-admission-v1.json",
+    "sha256": "48fc8f27f021950a6af668152aa8495eb2d549da3c14527ce401a82f9ab19377",
+    "cases": 68,
+    "samples": 952,
+    "wins": 34,
+    "losses": 34,
+    "timing_retries": 0,
+    "failed_hosted_run_preserved": 42278375082
+  },
+  "shipping_projection": {
+    "path": "build/join-util-views-delivery-v1/shipping-projection-v1.json",
+    "sha256": "011d8a1f3a4d08c81452262a010c2050a6d7fd58e754b8b05f6a68e3d62a84cb",
+    "production_sha256": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f",
+    "algorithm_SDK_frontend_qualifier_test_contract_delta": []
+  },
+  "source_counts": {
+    "public_keys": 477,
+    "native_partial_images": 271,
+    "upstream_only": 197,
+    "native_class_partial": 5,
+    "metadata": 3,
+    "exception_metadata_provider": 1,
+    "classes": 29,
+    "static_members": 284
+  },
+  "cleanup": {
+    "removed_worktrees": 3,
+    "names": [
+      "join-util-views-sourcebarrier-fix-v1",
+      "join-util-views-windows-bytepolicy-candidate-v1",
+      "join-util-views-windows-bytepolicy-v1"
+    ],
+    "actual_receipt": "build/join-util-views-delivery-v1/cleanup-results-v1.json",
+    "sha256": "3381a9097faddc9a8768015519ae5758a2d82428ff93032bf16a24c0449c8caa",
+    "conditions": "Allresolved workspacechildren, tracked/untrackedclean, ancestors ofmain, obsolete metadata-only and noactivesourceconsumer. Gitworktree remove0 each, no shellrecursive delete.",
+    "preserved": "Activea6baseline/optimization/future273/Radon source, raw archives/results, packages, environments, protecteddenied scratchpaths"
+  },
+  "remaining_gates": "FullAPI/class/member/domain/provider/platform and libraryspeed closure remain open; next273 genuine qualification live, Radonwitness/source and utility/JOIN optimizations independent.",
+  "waste_review": "Delivered earliest qualified product withoutwaitingfuturelanes. Reused exacta6 scientific/SDK/mode evidence and all68rawtimings; no duplicate CI campaign or unchangedexperiment. Metadata closeout corrected finalAPIsection handling beforewrite; no scientific gate changed."
+}

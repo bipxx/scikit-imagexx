@@ -4,7 +4,7 @@ Reference: scikit-image 0.26.0.
 
 This generated table describes source declarations. See the [execution plan](EXECUTION_PLAN.md) for the exact qualified source, accepted evidence and remaining gates.
 
-477 public callable names inventoried in 20 modules; 268 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 271 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -411,7 +411,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.disk_level_set` | native-partial | yes (partial input contract) | yes |
 | `segmentation.expand_labels` | upstream-only | pending | pending |
 | `segmentation.felzenszwalb` | upstream-only | pending | pending |
-| `segmentation.find_boundaries` | upstream-only | pending | pending |
+| `segmentation.find_boundaries` | native-partial | yes (partial input contract) | yes |
 | `segmentation.flood` | upstream-only | pending | pending |
 | `segmentation.flood_fill` | upstream-only | pending | pending |
 | `segmentation.inverse_gaussian_gradient` | upstream-only | pending | pending |
@@ -483,10 +483,10 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.random_noise` | upstream-only | pending | pending |
 | `util.regular_grid` | native-partial | yes (partial input contract) | yes |
 | `util.regular_seeds` | native-partial | yes (partial input contract) | yes |
-| `util.slice_along_axes` | upstream-only | pending | pending |
+| `util.slice_along_axes` | native-partial | yes (partial input contract) | yes |
 | `util.unique_rows` | native-partial | yes (partial input contract) | yes |
-| `util.view_as_blocks` | upstream-only | pending | pending |
-| `util.view_as_windows` | upstream-only | pending | pending |
+| `util.view_as_blocks` | native-partial | yes (partial input contract) | yes |
+| `util.view_as_windows` | native-partial | yes (partial input contract) | yes |
 
 ## Class member inventory
 
@@ -524,4 +524,6 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.FailedEstimationAccessError` | 13 | pending |
 | `util.PendingSkimage2Change` | 10 | pending |
 
-Private cumulative crop/regular_grid integration adds source-bound binary/shape defaults and complete SDK calls through the existing component-consumer family. Current source-derived scope is268 image routes/271registered,212product members/100SDK members,32families64SDK checks. These counts are source closure only. Crop coercion, allocation/order/object metadata and grid scalar FP/nonvector/object partitions retain explicit providers; serial metadata and memcpy transport do not establish SIMD/parallel speed. Exact-source genuine ownership/hot-swap/global workers, exported SDK, Windows/default-int/libm/full API and one-thread public-original performance remain pending.
+Historical private268 checkpoint (not current dispatch state): private cumulative crop/regular_grid integration adds source-bound binary/shape defaults and complete SDK calls through the existing component-consumer family. Current source-derived scope is268 image routes/271registered,212product members/100SDK members,32families64SDK checks. These counts are source closure only. Crop coercion, allocation/order/object metadata and grid scalar FP/nonvector/object partitions retain explicit providers; serial metadata and memcpy transport do not establish SIMD/parallel speed. Exact-source genuine ownership/hot-swap/global workers, exported SDK, Windows/default-int/libm/full API and one-thread public-original performance remain pending.
+
+Current delivered source (2026-11-06): main `ef465027` ships 271 partial image paths / 274 registered functions, 216 product members and 102 SDK members across 32 families. [Four-profile admission](evidence/join-util-views-whole-product-admission-v1.json) and [68-case public one-thread evidence](../benchmarks/join-util-views-minimum-initial-v1/README.md) pass within their scopes: 34 wins and 34 losses remain explicit. Full domains/classes/platforms/provider ownership and loss optimization remain open. See the [per-API checklist](COVERAGE_CHECKLIST.md).

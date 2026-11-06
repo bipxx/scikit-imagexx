@@ -17,15 +17,15 @@ Updated: 2026-11-06. Shipping classifications come from [api.json](api.json); pe
 
 | Inventory category | Public keys | Meaning |
 |---|---:|---|
-| `native-partial` | 265 | Native image paths with incomplete or unassessed full-contract partitions. |
+| `native-partial` | 271 | Native image paths with incomplete or unassessed full-contract partitions. |
 | `native-class-partial` | 5 | Classes with only part of computation/state/member ownership closed. |
 | `metadata` | 3 | Metadata operations; applicability and full public contract still need explicit disposition. |
 | `exception-metadata-provider` | 1 | Exception/class metadata provider; not a native image algorithm. |
-| `upstream-only` | 203 | Shipping implementation still uses the upstream path. |
+| `upstream-only` | 197 | Shipping implementation still uses the upstream path. |
 
 Total: **477 public keys**, including **29 classes and 284 statically inventoried member paths**. Static members are additional contract work, not 284 extra top-level APIs. Current member classifications: 63 native-class-member-partial, 11 exception-metadata members and 210 upstream-only; none of those labels establishes full member closure. Runtime-returned objects and discovered members remain open below.
 
-The shipped 265 partial image paths have [four-profile admission](evidence/next-metrics-whole-product-admission-v1.json). This is bounded release credit, not full parity. The latest published 28-case cohort has [18 wins and 10 losses](../benchmarks/next-metrics-minimum-initial-v1/README.md); it does not establish library-wide speed superiority.
+The shipped 271 partial image paths have [four-profile admission](evidence/join-util-views-whole-product-admission-v1.json), delivered in main `ef465027`. This is bounded release credit, not full parity. The latest published 68-case cohort has [34 wins and 34 losses](../benchmarks/join-util-views-minimum-initial-v1/README.md); it does not establish library-wide speed superiority. The earlier 265-product [18 wins and 10 losses](../benchmarks/next-metrics-minimum-initial-v1/README.md) remains historical evidence.
 
 ## Completion gates for every API and applicable member
 
@@ -41,28 +41,28 @@ The shipped 265 partial image paths have [four-profile admission](evidence/next-
 | B — speed | Allocation-inclusive actual public calls vs original scikit-image with one thread. Freeze cases, sampling, warmup and acceptance before calls; preserve raw journals and every slower case. Separate local C++ diagnostics, controlled prior-C++ comparisons and optional-worker scaling from original-public speed claims. |
 | R — delivery | Exact source, complete workflow source checks on both retained Pythons with normal conftest/plugins, required genuine four-profile qualification and independent SDK/product admission, reviewed performance disposition, final shipping projection, main merge/push and eligible cleanup. Partial runs and collection audits do not close this gate. |
 
-## Current cumulative increment: six new public APIs
+## Delivered increment: six new public APIs
 
-The candidate is **271 partial image paths** at source `a6bae9ac86dbba362537758784edf06c973e9c53` (216 product files, 102 SDK files); production code is unchanged from b557. It has not been delivered to main.
+Main delivers **271 partial image paths** at source `a6bae9ac86dbba362537758784edf06c973e9c53` (216 product files, 102 SDK files); production code is unchanged from b557. Exact shipping projection passed and main merge `ef465027` was pushed. Three clean, merged obsolete metadata worktrees were removed; active source, packages, raw evidence and environments were preserved.
 
 - [x] Compatible private native components and retained original-reference evidence reviewed for the six paths below.
 - [x] Shared registry, single-core bindings, SDK hooks, installed-source selectors and explicit test-helper preparation/collection wired.
 - [x] [Independent source review](evidence/join-util-views-final-source-admission-v1.json) and [five-test metadata repair](evidence/join-util-views-sourcebarrier-fix-admission-v1.json).
 - [x] [Byte-preserving checkout policy](evidence/join-util-views-windows-bytepolicy-admission-v1.json) and [complete faithful source readiness](evidence/join-util-views-source-readiness-v3.json): 3,035 cases plus 8 subtests on each retained Python with core.autocrlf=true; no failures/errors/skips/scientific imports. Production blobs remain unchanged from the predecessor.
 - [x] [Current a6 complete source readiness](evidence/join-util-views-source-readiness-v4.json): 3,056 tests plus 8 subtests on each retained Python, normal conftest/plugins, zero science; the earlier v3 scope above remains historical.
-- [x] [Exact-source four-profile genuine product/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) for a6bae9/run42262940227: 952,116 public XML checks, 12,202 hosted source XML checks, 256 SDK checks and 48 corpora, all zero failures/errors/skips. Product216/SDK102/32families and each actual core/runtime/source/selector/helper scope admitted. Seven archives and their profile/stage seals authenticated once. Prior failed campaigns remain failed; main is still265 until performance/delivery gates close.
+- [x] [Exact-source four-profile genuine product/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) for a6bae9/run42262940227: 952,116 public XML checks, 12,202 hosted source XML checks, 256 SDK checks and 48 corpora, all zero failures/errors/skips. Product216/SDK102/32families and each actual core/runtime/source/selector/helper scope admitted. Seven archives and their profile/stage seals authenticated once. Prior failed campaigns remain failed; main now ships271 after scoped performance admission and exact-source delivery.
 - [x] [Bound controller v3 source admission](evidence/join-util-views-bound-controller-source-admission-v3.json) passes for its fixed56-case scope. Actual host helper and real zero-body cohorts are pending. The frozen v4 successor `57072ba25f38785e79d930951a56ab4adfc0583f` includes the 12 frozen ellipse workloads because prior dependency/runtime/core reuse does not match: fixed 10 API cohorts/68 cases/952 samples/136 warmup groups. [Independent v4 source admission](evidence/join-util-views-bound-controller-source-admission-v4.json) passes; all ten real cohorts passed and all 68 measurements completed. The report-only failure and correction are recorded below.
 - [x] Actual run42278375082 passed ten real cohorts and completed all 68 measurements, then failed the final validator: utility drivers use frozen pass0 while the validator assumed pass1. [Independent raw review](evidence/join-util-views-failed-campaign-raw-review-v2.json) reconstructs all 952 samples/136 warmup groups/1,508 batches: 34 wins and 34 losses. [Root scoped performance admission](evidence/join-util-views-initial-performance-admission-v1.json) now passes after independently reviewed c7 report-only correction and complete retained-output validation. [All cases and raw journals](../benchmarks/join-util-views-minimum-initial-v1/README.md) are published; optimization remains open. Preserve the failed campaign, raw ordering and all losses; no timing rerun. Prior ellipse10wins/2losses remain historical.
-- [ ] Final source projection, main merge/push and safe eligible worktree/build cleanup.
+- [x] Final source projection, main merge/push `ef465027`, and safe removal of three clean merged obsolete metadata worktrees. Active baseline/optimization worktrees and raw/package/environment evidence retained.
 
 | API | Existing private/reference scope | Remaining release work |
 |---|---|---|
-| `segmentation.join_segmentations` | Integer-label composition and complete private operation; returned ArrayMap class/protocol frontiers remain explicit. | Scoped whole-core/SDK and public comparison admitted (8 cases, 8 losses); class/domain closure, optimization and delivery remain. |
-| `util.crop` | View geometry and real POD copying; object/zero-item/subclass provider scopes disclosed. | Scoped genuine SDK/public and comparison admitted (8 cases, 8 losses); platform/domain frontiers, optimization and delivery remain. |
-| `util.regular_grid` | Source-faithful grid preparation/finish and complete private SDK; full 49-node saved Linux selector wired. | Scoped genuine runs and comparison admitted (8 cases, 8 wins); Windows/default-integer/libm domains and delivery remain. |
-| `util.slice_along_axes` | Saved source/error/view/copy observations and native geometry/POD transport; FP envelope admitted. | Scoped installed core/SDK, saved-domain and comparison admitted (8 cases, 8 losses); providers/platforms, optimization and delivery remain. |
-| `util.view_as_blocks` | Integral borrowed geometry/strides; NumPy representation/provider boundaries explicit. | Scoped installed core/SDK, own cohort and comparison admitted (4 cases, 4 losses); full domains/platforms, optimization and delivery remain. |
-| `util.view_as_windows` | Integral borrowed sliding-window geometry/strides; provider and metadata overflow frontiers explicit. | Scoped installed core/SDK, separate cohort and comparison admitted (4 cases, 4 losses); full domains/platforms, optimization and delivery remain. |
+| `segmentation.join_segmentations` | Integer-label composition and complete private operation; returned ArrayMap class/protocol frontiers remain explicit. | Scoped whole-core/SDK and public comparison admitted (8 cases, 8 losses); class/domain closure, optimization remains; delivered in ef465027. |
+| `util.crop` | View geometry and real POD copying; object/zero-item/subclass provider scopes disclosed. | Scoped genuine SDK/public and comparison admitted (8 cases, 8 losses); platform/domain frontiers, optimization remains; delivered in ef465027. |
+| `util.regular_grid` | Source-faithful grid preparation/finish and complete private SDK; full 49-node saved Linux selector wired. | Scoped genuine runs and comparison admitted (8 cases, 8 wins); Windows/default-integer/libm domains remain; delivered in ef465027. |
+| `util.slice_along_axes` | Saved source/error/view/copy observations and native geometry/POD transport; FP envelope admitted. | Scoped installed core/SDK, saved-domain and comparison admitted (8 cases, 8 losses); providers/platforms, optimization remains; delivered in ef465027. |
+| `util.view_as_blocks` | Integral borrowed geometry/strides; NumPy representation/provider boundaries explicit. | Scoped installed core/SDK, own cohort and comparison admitted (4 cases, 4 losses); full domains/platforms, optimization remains; delivered in ef465027. |
+| `util.view_as_windows` | Integral borrowed sliding-window geometry/strides; provider and metadata overflow frontiers explicit. | Scoped installed core/SDK, separate cohort and comparison admitted (4 cases, 4 losses); full domains/platforms, optimization remains; delivered in ef465027. |
 
 Failed predecessor 42238215124 observation (2026-11-06; retained below). Its failures remain historical. Successor 42262940227 completed successfully on all four profiles and has independent admission above; performance and delivery remain pending:
 
@@ -3508,11 +3508,13 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-segmentation-join-segmentations"></a>
 - [ ] **`segmentation.join_segmentations`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `int8, uint8, int16, uint16, int32, uint32, int64, uint64`.
   - Signature: `(s1, s2, return_mapping: bool = False)`.
   - Required focus: dtype overflow, mapping objects, return_mapping and zero labels. Cases to close: sparse huge label pairs and mapping round trips.
   - Easiest remaining route: Pair-label encode then stable sequential relabel with inverse mappings.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: parity [tests/test_join_segmentations_integration.py](../tests/test_join_segmentations_integration.py); benchmark [benchmarks/join_segmentations.py](../benchmarks/join_segmentations.py).
+
+  - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
 
 <a id="api-segmentation-mark-boundaries"></a>
 - [ ] **`segmentation.mark_boundaries`** — full contract closed.
@@ -3934,11 +3936,13 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-util-crop"></a>
 - [ ] **`util.crop`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
   - Signature: `(ar, crop_width, copy=False, order='K')`.
   - Required focus: scalar/tuple widths, negative/large crops, order and memory sharing. Cases to close: asymmetric N-D crops and C/F/negative strides.
   - Easiest remaining route: Return slice view or requested-order copy after crop-width normalization.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: parity [tests/test_util_metadata_integration.py](../tests/test_util_metadata_integration.py); benchmark [benchmarks/crop.py](../benchmarks/crop.py).
+
+  - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
 
 <a id="api-util-dtype-limits"></a>
 - [ ] **`util.dtype_limits`** — full contract closed.
@@ -4054,11 +4058,13 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-util-regular-grid"></a>
 - [ ] **`util.regular_grid`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float32, float64`.
   - Signature: `(ar_shape, n_points)`.
   - Required focus: n_points extremes, dimensionality and slice start/stop convention. Cases to close: anisotropic/tiny shapes and target counts.
   - Easiest remaining route: Choose rounded per-axis strides and slices for approximately uniform sample count.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: parity [tests/test_util_metadata_integration.py](../tests/test_util_metadata_integration.py); benchmark [benchmarks/regular_grid.py](../benchmarks/regular_grid.py).
+
+  - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
 
 <a id="api-util-regular-seeds"></a>
 - [ ] **`util.regular_seeds`** — full contract closed.
@@ -4070,11 +4076,13 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-util-slice-along-axes"></a>
 - [ ] **`util.slice_along_axes`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
   - Signature: `(image, slices, axes=None, copy=False)`.
   - Required focus: duplicate/negative axes, bounds and sharing. Cases to close: reordered/negative axes and copy flags.
   - Easiest remaining route: Normalize axes/slice pairs then return view or copy.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: parity [tests/test_util_views_integration.py](../tests/test_util_views_integration.py); benchmark [benchmarks/slice_along_axes.py](../benchmarks/slice_along_axes.py).
+
+  - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
 
 <a id="api-util-unique-rows"></a>
 - [ ] **`util.unique_rows`** — full contract closed.
@@ -4086,21 +4094,26 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-util-view-as-blocks"></a>
 - [ ] **`util.view_as_blocks`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
   - Signature: `(arr_in, block_shape)`.
   - Required focus: divisibility, dimensionality, contiguous assumptions and write sharing. Cases to close: C/F/noncontiguous arrays and block mutation.
   - Easiest remaining route: Construct validated reshape/strided block view.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: parity [tests/test_util_views_integration.py](../tests/test_util_views_integration.py); benchmark [benchmarks/array_views.py](../benchmarks/array_views.py).
+
+  - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
 
 <a id="api-util-view-as-windows"></a>
 - [ ] **`util.view_as_windows`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
   - Signature: `(arr_in, window_shape, step=1)`.
   - Required focus: scalar/vector step, shape, strides and dangerous overlap semantics. Cases to close: overlapping windows and negative/zero invalid steps.
   - Easiest remaining route: Construct rolling strided view with validated window/step.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: parity [tests/test_util_views_integration.py](../tests/test_util_views_integration.py); benchmark [benchmarks/array_views.py](../benchmarks/array_views.py).
+
+  - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
 
 </details>
+
 
 ## Class/member checklist — 29 classes, 284 static paths
 
