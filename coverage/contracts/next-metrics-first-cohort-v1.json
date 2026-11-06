@@ -1,8 +1,8 @@
 {
   "schema": "next-metrics-first-cohort-prospective-v1",
-  "status": "SOURCE_ONLY_SCAFFOLD_NOT_EXECUTED_NOT_GENUINE_BOUND",
-  "source_revision": null,
-  "source_scope": "Exact f13ae5ba prospective interfaces and immutable28case/method projection; source-only boundary bound-flow/Windows portability successors, not release readiness. Raw reference pins retain metric and boundary context predecessors. Actual producer/run/artifact/runtime/core/SDK/root fields remain UNBOUND pending genuine admission.",
+  "status": "ROOT_BOUND_GENUINE_FIRST_COHORT_PLAN_PENDING_EXECUTION_GO",
+  "source_revision": "683f0043a6cd6bb61626241a003ffd615ba48205",
+  "source_scope": "Actual independently admitted exact683/run42177447898 minimum product; historical f13 reference pins unchanged. Four real CLI cohorts and comparison remain unexecuted pending independent actual-binding review and root dispatch GO; runtime clocks supplied only by workflow inputs.",
   "reference_source": "f13ae5ba01680c40f8ee0ae42153bd9480119ab1",
   "routes": {
     "metrics-are": {
@@ -145,7 +145,26 @@
       "root_binding_flag": "--root-binding"
     }
   },
-  "source_git_blobs": null,
+  "source_git_blobs": {
+    "benchmarks/label_pair_metrics.py": "fca3fd0adf4be04b6cf64aca2d979de04ab0d2f4",
+    "benchmarks/ellipse_perimeter.py": "ed6cd58eb3da64c44f9b88b5fb15529aed6d9b58",
+    "benchmarks/draw_coordinates.py": "39f69b7764a6a48365befecc45e748b9d0cd3807",
+    "benchmarks/provenance.py": "f44f08ed2c0fb62b562c1d294beefd289dc50da4",
+    "tools/montage_sustained.py": "53b23ff4c03cbd957216e443ea962331fba9c437",
+    "python/skimagexx/coverage.py": "08aa410d9c6ab7e21194b0b603fb0087a3ef9dae",
+    "coverage/contracts/label-pair-metrics-benchmark-v1.json": "f5318110a221c08ef66a2d988f37b597b1195662",
+    "coverage/contracts/ellipse-perimeter.json": "cb76d9c37ba8138cfee676a40192b1930d3cc168",
+    "benchmarks/find_boundaries.py": "9db924afcdd4c9defb49d18d9ab38d4b3be2a0a4",
+    "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": "0e1f0ddf3667706ee5d9ab54f9fb10c483a202f4",
+    "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "6fb99546123e68ec6084b56c01e7ec3696bbc2dc",
+    "tools/label_pair_benchmark_context.py": "2be46ca3b866332371e4449eb834884269bd0248",
+    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d0969bb57452158fab1db1dd3e86ed0c50a2dfea",
+    "coverage/contracts/find-boundaries-benchmark-binding-v2.json": "6ef9d5dd5aaa53e2d65973450a0c2aed3c1ee36f",
+    "coverage/contracts/find-boundaries-frontend-v1.json": "716024bf3dcd1d4b1661fe2e5b8cbd412c5da0d1",
+    "coverage/contracts/find-boundaries-frontend-v2.json": "0a0cbebf96549a4ae5baa039afe15b69df34aafa",
+    "tests/test_find_boundaries_public.py": "01907a6fac6a105f01f5b845e94758b73f5d7b31",
+    "coverage/contracts/find-boundaries-benchmark-binding-v3.json": "8658305aeacf6d4a69dbee483daec6c3e2b37ce4"
+  },
   "reference_files_raw_sha256": {
     "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
     "benchmarks/ellipse_perimeter.py": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",

@@ -16,16 +16,37 @@ CONTRACT=json.loads((ROOT/'coverage/contracts/next-metrics-measurement-v1.json')
 PLAN=json.loads((ROOT/'coverage/contracts/next-metrics-first-cohort-v1.json').read_bytes())
 
 
-def test_unbound_contract_and_frozen_scope():
-    assert CONTRACT['status']=='UNBOUND_NO_DISPATCH_OR_SCIENTIFIC_CALLS'
-    assert set(CONTRACT['producer'].values())=={None}
-    assert all(CONTRACT[k]is None for k in ('prepared_source','core_sha256','runtime_sha256','benchmark_fingerprint','SDK_members'))
+def test_actual_bound_contract_and_frozen_scope():
+    source='683f0043a6cd6bb61626241a003ffd615ba48205'
+    assert CONTRACT['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON'
+    assert CONTRACT['producer']==dict(run='42177447898',revision=source,artifact='13485549510',sha256='aa1f57a094828980f83b3b78ed037d12184150618ed57b010c09a63b9074a769')
+    assert CONTRACT['prepared_source']['revision']==source and CONTRACT['SDK_members']==97
+    assert CONTRACT['core_sha256']=='a8d973aee81a7747fcd36c35983d52f6c813673cc04f6c7b873ce844cd379535'
+    assert CONTRACT['runtime_sha256']=='002eb67c67a00d37d30074cb95b8d79b2f4478da00530084376ef288b2360e4f'
+    assert CONTRACT['benchmark_fingerprint']==dict(source_sha256='906b5d0a24717da8cc6512d5cfec302e022a9384b89808897cc562478aef04c8',source_hash_schema='cpp-python-build-posix-lf-v2',source_hash_scope='CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py')
     first=CONTRACT['first_cohort']
-    assert first['status']=='UNBOUND' and first['source_revision']is None and first['source_files_raw_sha256']is None
-    assert all(first[k]is None for k in ('root_admission_path','root_admission_sha256','root_stager_path','root_stager_sha256'))
+    assert first['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS' and first['source_revision']==source
+    assert first['source_files_raw_sha256']==PLAN['reference_files_raw_sha256']
+    assert first['root_admission_path']=='coverage/evidence/next-metrics-whole-product-admission-v1.json'
+    assert first['root_admission_sha256']=='6992d2d4c460d85b6dd38b5327f8153536c0bc8893ec1a1d491db29bf798411a'
+    assert first['root_stager_path']=='coverage/evidence/next-metrics-minimum-stager-admission-v1.json'
+    assert first['root_stager_sha256']=='15a32c924aa3e93827e34e2035bfd53e79ab05b7a318967ab125fe5becbf4485'
+    for role in ('admission','stager'):
+        assert hashlib.sha256((ROOT/first['root_'+role+'_path']).read_bytes()).hexdigest()==first['root_'+role+'_sha256']
+    admission=json.loads((ROOT/first['root_admission_path']).read_bytes());stager=json.loads((ROOT/first['root_stager_path']).read_bytes())
+    assert admission['source']==stager['revision']==source and admission['passed']is admission['root_accepted']is True and admission['profiles']==4
+    assert str(admission['run'])==str(stager['run'])==CONTRACT['producer']['run']
+    assert str(stager['artifact'])==CONTRACT['producer']['artifact'] and stager['artifact_sha256']==CONTRACT['producer']['sha256']
+    assert stager['profile']=='minimum'and stager['status'].startswith('AUTHENTICATED_STAGED_UNACCEPTED')
+    assert admission['SDK_members']==stager['source_derived_closure']['SDK_members']==CONTRACT['SDK_members']
+    assert admission['product_members']==stager['source_derived_closure']['product_members']==206
     for kind in ('probe','prospective'):
         assert hashlib.sha256((ROOT/first[kind+'_path']).read_bytes()).hexdigest()==first[kind+'_sha256']
-    assert PLAN['source_revision']is None and PLAN['source_git_blobs']is None
+    assert PLAN['source_revision']==source and PLAN['status']=='ROOT_BOUND_GENUINE_FIRST_COHORT_PLAN_PENDING_EXECUTION_GO'
+    assert set(PLAN['source_git_blobs'])==set(first['source_files_raw_sha256'])
+    assert all(re.fullmatch('[0-9a-f]{40}',value)for value in PLAN['source_git_blobs'].values())
+    for name,pin in CONTRACT['benchmark_source_sha256'].items():assert CONTRACT['prepared_source']['files_sha256'][name]==pin
+    assert all(key not in CONTRACT and key not in PLAN for key in ('deadline_utc','execution_created_utc'))
     assert PLAN['budget']==dict(original_public_topcalls=4,native_public_topcalls=4,timed_batches=0)
     assert {r['api']for r in PLAN['routes'].values()}=={'metrics.adapted_rand_error','metrics.contingency_table','draw.ellipse_perimeter','segmentation.find_boundaries'}
     assert CONTRACT['families']==dict(label_pair_metrics=dict(contract='coverage/contracts/label-pair-metrics-benchmark-v1.json',cases=8),ellipse_perimeter=dict(contract='coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json',cases=12),find_boundaries=dict(contract='coverage/contracts/find-boundaries-benchmark-binding-v3.json',cases=8))
@@ -65,13 +86,34 @@ def test_workflow_reuses_exact_source_stager_and_unchanged_sample_gates():
 
 def test_actual_workflow_auth_stops_unbound_before_network(tmp_path,monkeypatch):
     target=tmp_path/'controller/coverage/contracts';target.mkdir(parents=True)
-    (target/'next-metrics-measurement-v1.json').write_text(json.dumps(CONTRACT))
+    unbound=json.loads(json.dumps(CONTRACT));unbound['status']='UNBOUND_NO_DISPATCH_OR_SCIENTIFIC_CALLS'
+    (target/'next-metrics-measurement-v1.json').write_text(json.dumps(unbound))
     monkeypatch.chdir(tmp_path)
     for key,value in dict(PRODUCER_RUN='1',PRODUCER_REVISION='a'*40,ARTIFACT_ID='2',ARTIFACT_SHA256='b'*64).items():monkeypatch.setenv(key,value)
     def refused(*a,**k):raise RuntimeError('NETWORK_FORBIDDEN')
     monkeypatch.setattr(subprocess,'check_output',refused)
     with pytest.raises(AssertionError,match='UNBOUND'):exec(compile(SCRIPTS[0],'<actual-auth>','exec'),{})
     assert not(tmp_path/'results').exists()
+
+
+@pytest.mark.parametrize('fault',('none','run','revision','artifact','sha256'))
+def test_actual_bound_workflow_auth_stops_at_network_or_wrong_input(tmp_path,monkeypatch,fault):
+    from datetime import datetime,timedelta,timezone
+    target=tmp_path/'controller/coverage/contracts';target.mkdir(parents=True)
+    (target/'next-metrics-measurement-v1.json').write_text(json.dumps(CONTRACT))
+    (tmp_path/'results').mkdir();monkeypatch.chdir(tmp_path)
+    values=dict(CONTRACT['producer'])
+    if fault!='none':values[fault]='1'if fault in('run','artifact')else('a'*40 if fault=='revision'else'b'*64)
+    for key,field in [('PRODUCER_RUN','run'),('PRODUCER_REVISION','revision'),('ARTIFACT_ID','artifact'),('ARTIFACT_SHA256','sha256')]:monkeypatch.setenv(key,values[field])
+    now=datetime.now(timezone.utc)
+    monkeypatch.setenv('EXECUTION_CREATED_UTC',(now-timedelta(seconds=1)).isoformat())
+    monkeypatch.setenv('DEADLINE_UTC',(now+timedelta(minutes=10)).isoformat())
+    monkeypatch.setenv('GITHUB_REPOSITORY','inert/no-network');attempts=[]
+    def refused(*a,**k):attempts.append(a);raise RuntimeError('NETWORK_FORBIDDEN')
+    monkeypatch.setattr(subprocess,'check_output',refused)
+    with pytest.raises(RuntimeError if fault=='none'else AssertionError):exec(compile(SCRIPTS[0],'<actual-bound-auth>','exec'),{})
+    assert len(attempts)==(1 if fault=='none'else 0)
+    assert (tmp_path/'results/execution-clock.json').exists()==(fault=='none')
 
 
 def test_actual_probe_rejects_unbound_before_import_or_git(tmp_path):
@@ -264,6 +306,29 @@ def test_source_ready_reference_pins_match_exact_producer():
     # Source-verifier pins are canonical LF; first-cohort raw pins preserve the
     # actual mixed-newline source. This is an intentional distinct hash domain.
     assert PLAN['reference_files_raw_sha256']['python/skimagexx/coverage.py']!=CONTRACT['benchmark_source_sha256']['python/skimagexx/coverage.py']
+    assert subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()==PLAN['source_revision']
+    for name,blob in PLAN['source_git_blobs'].items():
+        assert subprocess.check_output(['git','-C',str(source),'rev-parse',PLAN['source_revision']+':'+name],text=True).strip()==blob
+
+
+def test_actual_runtime_small_metadata_binding():
+    # Exact retained extracted metadata only; never read archive/core/wheel bytes.
+    folder=Path(os.environ['NEXT_METRICS_BINDING_METADATA'])
+    raw=(folder/'runtime.json').read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==CONTRACT['runtime_sha256']
+    runtime=json.loads(raw)
+    assert runtime['source']==CONTRACT['prepared_source']
+    assert len(runtime['wheels'])==14 and len(runtime['runtime']['sdk_sha256'])==CONTRACT['SDK_members']
+    core=CONTRACT['first_cohort']['core_member'].split('/',1)[1]
+    assert runtime['runtime']['packages_sha256']['skimagexx'][core]==CONTRACT['core_sha256']
+    stager=json.loads((ROOT/CONTRACT['first_cohort']['root_stager_path']).read_bytes())
+    for name,field in [('product.json','product_json_sha256'),('qualification.json','qualification_manifest_sha256')]:
+        assert hashlib.sha256((folder/name).read_bytes()).hexdigest()==stager[field]
+    product=json.loads((folder/'product.json').read_bytes());qualification=json.loads((folder/'qualification.json').read_bytes())
+    assert product['status']==product['provenance']['status']=='staged-unaccepted'
+    assert product['revision']==CONTRACT['producer']['revision']and product['profile']=='minimum'
+    assert product['provenance']['original_run']==CONTRACT['producer']['run']
+    assert qualification['passed']is qualification['no_timing']is True and qualification['source']==runtime['source']
 
 
 @pytest.mark.parametrize('fault',('raw-is-canonical','canonical-is-raw','missing-context','missing-boundary-context','stale-driver'))

@@ -1,0 +1,24 @@
+{
+  "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE265_ADMISSION",
+  "run": 42177447898,
+  "revision": "683f0043a6cd6bb61626241a003ffd615ba48205",
+  "profile": "minimum",
+  "artifact": 13485549510,
+  "artifact_sha256": "aa1f57a094828980f83b3b78ed037d12184150618ed57b010c09a63b9074a769",
+  "product_json_sha256": "e19fa54bf5659b0ec2f07a531d57cb534d4cb12d3af72c8826b642ebce33294d",
+  "qualification_raw_review_sha256": "ee17193287b3b653e90dfb4681a2c4fa6b81f78a0a7c55248b7d47b2c61591f9",
+  "qualification_manifest_sha256": "1b48f943565a786c69998a319624a63f89fa5e91f9cf793d48bbcbbdbd6abc61",
+  "verified_stage_files": 2565,
+  "verified_stage_bytes": 861770073,
+  "source_derived_closure": {
+    "product_members": 206,
+    "SDK_members": 97
+  },
+  "SDK_checks": 64,
+  "whole_qualification_sealed_records_rehashed_again": 0,
+  "closeout": {
+    "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+    "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+    "next_plan_change": "Root admits only after four terminal successful same-source profiles, all required SDK/runtime/corpora/XML gates, and three authenticated stagers. Staging alone is not acceptance."
+  }
+}
