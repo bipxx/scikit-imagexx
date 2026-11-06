@@ -37234,17 +37234,17 @@
       "base_sha": "d653b61a",
       "scope": "Source/test-first next W1 API from existing per-key roadmap. Reuse qualified find_boundaries and existing conversion/overlay primitives; inspect actual pinned upstream source before selecting contracts. No original/native API bodies or capture authorization; this packet must not delay finished271 candidate.",
       "acceptance": "Freeze bounded grayscale/RGB dtype/layout/color/outline/mode/background/error/provider/FP contracts including subpixel resampling frontier, exact pinned source, safe recipes and prospective one-thread benchmark. Both retained supported Python source guards and actual safe NumPy factory/REQUEST-refusal checks; no native/parity/performance credit without later independent safety/admission and original references.",
-      "current_checkpoint": "Dependency-ready source study assigned after independent00f review terminal CHANGES_REQUIRED718725bc. B owns its E1/F1 correction, C owns existing cumulative integration. No capture budget or native implementation authorization in this source packet.",
+      "current_checkpoint": "Actual zero-body readinessaa2c2048 independently passed24d28ddc/rootaccepted;75smallproofs, both actual runtimes+10negative prefixes, exactfull32 restores,0computation/observations. Originalbudget0. R next freezes complete guarded observer/capturecontroller and same-controller immediate0body prefix; root finalruntime/controllerGO required before250prospective calls.",
       "next_gate": {
-        "owner": "readiness_reviewer then root independent safety reviewer",
-        "action": "Freeze one coherent source/contract/intake/benchmark packet, disclose genuine difficult subpixel/provider frontiers and easiest implementation route. Root reviews before any original capture or native work; keep current release moving independently."
+        "owner": "boundary_worker independent prefix reviewer then root readiness",
+        "action": "Authenticate exact prefix/controller/source/runtime/refusal/full32 scope and retained controls without replay. No capture/native GO; future separately bound capture observer/controller and explicit root original budget are still required. Current271 qualification independent."
       }
     },
     {
       "id": "perimeter-source-first-v1",
       "kind": "reference",
       "owner": "boundary_worker",
-      "state": "assigned",
+      "state": "contracted",
       "apis": [],
       "target_apis": [
         "draw.polygon_perimeter",
@@ -37262,10 +37262,97 @@
       "base_sha": "d653b61a",
       "scope": "Coherent existing W1 perimeter pair, source/test-first only, reuse current rasterization/clipping primitives. Zero original/native/helper/sampler body authority; future packet does not delay current271 release.",
       "acceptance": "Pin actual upstream/helper source and dependencies; freeze bounded closure/order/duplicates/clipping versus filtering/shape/dtype/error/FP contracts including rectangle tiny/off-image behavior. Disclose optional third-party clipping/runtime gaps. Pure source guards both retained Windows Pythons and actual safe NumPy factories/cached-cold REQUEST refusals both profiles; proposed complete SDK/native and public1thread route. No parity/native/performance credit before later independent safety/capture/genuine gates.",
-      "current_checkpoint": "Assigned after corrected benchmark executor9e8 independently admitteda20b757f; worker free for next existing W1 coherent batch. Current integration exclusively C; capture budget0.",
+      "current_checkpoint": "TERMINAL_DEFERRED_DEPENDENCY: prior build/draw-border-batch-v1/border-deferred-v1.json and handoff-v1.json already pin full Matplotlib/AGG blocker, sources and proposed cases. Root missed this retained plan evidence before dispatch; new source inspection rediscovered it with0original/native calls. Reuse prior assessment and preserve any useful draft; no new contract/test campaign for unchanged blocker.",
       "next_gate": {
-        "owner": "boundary_worker then root independent source safety reviewer",
-        "action": "Freeze one source/contract/intake/benchmark packet with exact ownership/source/proofs/terminal/waste and easiest native reuse route. Root reviews optional dependency and source/storage safety before any original capture or implementation."
+        "owner": "root future pinned clipping/reference dependency admission",
+        "action": "Keep both APIs open. Reuse retained border-deferred assessment; resume only after a concrete changed dependency strategy or uncovered contract requires it. Current271 release and next independent source work proceed without Matplotlib install or repeated assessment."
+      }
+    },
+    {
+      "id": "draw-multiblock-lbp-source-first-v1",
+      "kind": "reference",
+      "owner": "boundary_worker",
+      "state": "assigned",
+      "apis": [],
+      "target_apis": [
+        "feature.draw_multiblock_lbp"
+      ],
+      "owns": [
+        "tests/draw_multiblock_lbp_contract.py",
+        "tests/test_draw_multiblock_lbp_intake.py",
+        "tests/test_draw_multiblock_lbp_reference.py",
+        "coverage/contracts/draw-multiblock-lbp-v1.json",
+        "benchmarks/draw_multiblock_lbp.py"
+      ],
+      "depends_on": [],
+      "base_sha": "9a303e65",
+      "scope": "Existing dependency-ready W1 fixed LBP display overlay; source/test-first only. Reuse existing rectangle/scatter/alpha and conversion primitives after actual source inspection. No original/native/helper/sampler bodies, new environment or current release dependency.",
+      "acceptance": "Pin actual upstream helper/source, freeze bit-to-neighbor order, center treatment, coordinates/clipping/slicing, colors/alpha, dtype/range/errors/mutation/provider/FP contracts and bounded factories; prospective original1thread benchmark plus complete SDK/native reuse route. Both retained Windows source guards and actual safe NumPy factory/cached-cold REQUEST refusal both profiles,0original/native calls.",
+      "current_checkpoint": "Additive source successorbd845fa8602c750e80f9335411d2c02c786c7522/h7904537d0644b28fdecc3ca8cbf7a551289f3e031d4e6246f5e9b347887e01f9 frozen:4newfiles,93v1recipes/5files exact, one actual3x3RGB repeated-overlap case added.6pure/version9safeNPsource/profile pass,0bodybudget. C independent coverage/storage delta review next; no original188GO.",
+      "next_gate": {
+        "owner": "metrics_integrator independent source/storage safety then root",
+        "action": "Review actual source/stage dtype/ordered8block semantics and93recipe storage bounds, reuse retained pure/NP controls and primitives. Do not count fullset_color as equivalent or authorize originals/native; source-only no186callGO. Future capture/runtime/fullFP/SDK/performance gates remain."
+      }
+    },
+    {
+      "id": "join-util-views-measurement-controller-v1",
+      "kind": "implementation",
+      "owner": "metrics_integrator",
+      "state": "assigned",
+      "apis": [],
+      "target_apis": [
+        "metrics.adapted_rand_error",
+        "metrics.contingency_table",
+        "segmentation.find_boundaries",
+        "segmentation.join_segmentations",
+        "util.crop",
+        "util.regular_grid",
+        "util.slice_along_axes",
+        "util.view_as_blocks",
+        "util.view_as_windows"
+      ],
+      "owns": [
+        ".github/workflows/next-metrics-initial.yml",
+        "tools/next_metrics_first_cohort_probe.py",
+        "coverage/contracts/next-metrics-measurement-v2.json",
+        "tests/test_next_metrics_controller_v2.py"
+      ],
+      "depends_on": [
+        "join-segmentations-current-batch-v1"
+      ],
+      "base_sha": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
+      "scope": "Separate source-only measurement controller child of frozen271 source. Reuse reviewed20b9 workflow/probe/manifest patterns and admitted9e8 executor; actual runtime/producer/core/root/helper/GO fields UNBOUND. This child does not mutate or delay9c92 qualification.",
+      "acceptance": "One existing-controller refresh for distinct per-API cohorts, source-built FP preparation on actual consumer host, existing stager/core/package/SDK/source auth, zero-body real sampler observer and separate measurement GO. Preserve cases/Montage/losses/provider frontiers; pure source/negative guards both retained Pythons, no original/native/helper/sampler bodies/timing/build/env/download/hosted authority.",
+      "current_checkpoint": "Minimal C1 controller b36754dc9d5183edeabb867274a75d901d59b7e7/e3cb1469aa457c53c752311c3d67f3ed445e04b8b07a69c748da042670ff467a frozen:2files/60pure/version, poststop source/helper/binding/GO checks beforeterminalPASS and existingverifier onceafterbatch before summary. Parent2c7c/failureede4 retained; actualinputsUNBOUND. B independent delta review pending.",
+      "next_gate": {
+        "owner": "readiness_reviewer independent reviewer then root admission",
+        "action": "Review exact frozen4file child/retained pure authority controls, nine distinct API cohorts and helper prep/collector, source/runtime/GO interfaces and disclosure of profile observer coverage. Derive actual intersection of67pins with5test-only458e changes; preserve frozenparent/cases/methods/legacy. No tests/science/body/timing replay or actual bindings; root genuine/firstcohort/measurementGO gates remain."
+      }
+    },
+    {
+      "id": "join-util-views-sourcebarrier-fix-v1",
+      "kind": "implementation",
+      "owner": "readiness_reviewer",
+      "state": "assigned",
+      "apis": [],
+      "target_apis": [],
+      "owns": [
+        "tests/test_public_qualification.py",
+        "tests/test_rank_corpus_sdk_scope.py",
+        "tests/test_ci_measurement_isolation.py",
+        "tests/test_join_segmentations_native_contract.py",
+        "tests/test_regular_grid_native_contract.py"
+      ],
+      "depends_on": [
+        "join-segmentations-current-batch-v1"
+      ],
+      "base_sha": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
+      "scope": "Source-only correction of actual complete3043-node barrier failure. Immutable9c92 and failed results retained; no production/runtime/native/gold/cases/method/workflow edits.",
+      "acceptance": "Fix actual smoke fixture profile, source-derived current SDK102/scope271 assertions and strict admitted benchmark predecessor projections in JOIN/grid source readers. Preserve all historical pins and actual input semantics; never skip/weaken checks. Affected pure guards both retained Pythons normalconftest/plugins; root independent admission and COMPLETE2barrier rerun before hosted work.",
+      "current_checkpoint": "Five-test-only frozen458e/f4ea9965 independently admitted304ea78a:all38old failures explicitly pass in43affected checks/version,23small proofs. Exact production fingerprint unchanged. Root COMPLETEv2 source commands nowlive32736/46166 on both retained versions, no partialunion/readiness/dispatch claim.",
+      "next_gate": {
+        "owner": "readiness_reviewer narrow test author then root independent admission",
+        "action": "Freeze minimal five-test-file source-only successor in separate worktree from9c92, preserve failed campaign and numerical source fingerprint. Root reviews actual full failure closure, then reruns complete actual workflow command on both supported Pythons; partial unions cannot satisfy readiness."
       }
     }
   ],
@@ -38368,19 +38455,19 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Sole shared integration author in build/worktrees/join-integration-v1; combines admitted b87 density,98df F-row,56ec util native and newly admitted659d F1 helper. Actual271 image/274 registered namespace derived privately; final candidate not frozen or qualified. Wire actual installed SDK/hot swap/selectors/helper preparation and collection, await B portable benchmark successor.",
-      "readiness_reviewer": "Independent00f executor review terminal CHANGES_REQUIRED718725bc (E1 zero-timing guard plus known F1 consumer). Source/test-first segmentation.mark_boundaries next existing W1 route now assigned in exclusive family files; zero original/native/sampler authority and no delay to current cumulative release.",
-      "boundary_worker": "Corrected benchmark9e8 independently admitteda20b757f,5delta/32proofs;168pure/version17NP-refusal/profile, actual inputs UNBOUND. C integrates exact executor. B now owns source/test-first draw polygon_perimeter+rectangle_perimeter W1 batch in exclusive files; no original/native authorization or current release delay."
+      "metrics_integrator": "C1 controller b36754dc/e3cb1469 frozen2file delta/60pure perversion; B independent review next. C independently reviews B additive LBP bd845fa8/7904537d 4newfiles/one real overlap recipe; no code/science replay.",
+      "readiness_reviewer": "Root admitted mark-prefix24d28ddc from actualaa2c2048, budget0. R now authors complete source/observer/capture-controller successor with guardedcapturemode and integrated0body prefix, no originalbody authorization; preserve d955/aa2c.",
+      "boundary_worker": "LBP additive bd845fa8/7904537d frozen,93old recipes exact+one new overlap,6pure/version9NP/profile; C independent review next. B independently reviews C1controller b36754dc/e3cb1469 2file poststop guard delta."
     },
-    "next_action": "C integrates admitted9e8 executor with659d F1 and all ready native components, fixes demonstrated stager schema failure, then freezes one exact-source candidate. Root admits final source, runs complete actual source barriers on both retained Pythons, promptly dispatches eligible four-profile qualification. B perimeter and R mark_boundaries source-first future batches are independent and must not delay this release; original/native budget0. Main remains265 partial APIs; historical failures and every loss retained.",
+    "next_action": "Root observes exact458e four-profile qualification42224231410 (all4jobs live) after complete readinessc6c91307. Retain terminal artifacts once and independently admit genuine/source/SDK/profile scope before actual measurement binding/GO/main delivery. C controller2c7c review found C1post-stop immutability gap; correct narrowly before anyperformance. B/R/C independent future reviews proceed without source/run mutation.",
     "current_checkpoint": {
         "main_image_names": 265,
         "qualified_image_names": 265,
         "prepared_source": "683f0043a6cd6bb61626241a003ffd615ba48205",
         "prepared_run": 42177447898,
-        "candidate_source": null,
+        "candidate_source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
         "candidate_image_names": 271,
-        "candidate_status": "DIRTY_SHARED_INTEGRATION_NOT_FROZEN_OR_QUALIFIED: all finished family inputs and F1 source659d/root2c314a70 plus corrected executor9e8/roota20b757f admitted. Private namespace271/274 derived. C composes final source/context/collector/SDK closure and corrects demonstrated stager expected_registry schema; no candidate run or speed credit.",
+        "candidate_status": "EXACT458e COMPLETE_SOURCE_READINESS_c6c91307 PASSED3035cases+8subtests/version. Hosted4profile run42224231410 active on exactsource; all4jobs live, no genuine/parity/performance/main271 admission yet. Failed9c92 and corrected458e proof scopes retained.",
         "performance_evidence": "benchmarks/next-metrics-minimum-initial-v1/README.md",
         "readiness_reviews": [
           {
@@ -38388,20 +38475,20 @@
             "sha256": "2c314a7095dc5088107df993e4f6e56f5eddd698de697963924a8bebc6b4c3db"
           }
         ],
-        "candidate_run": null,
-        "candidate_url": null,
-        "candidate_qualification_run": null,
+        "candidate_run": 42224231410,
+        "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42224231410",
+        "candidate_qualification_run": 42224231410,
         "candidate_evidence": null,
-        "candidate_qualification_status": "PENDING final source, complete2source barriers and exact four-profile qualification; shipped683 qualification remains admitted.",
-        "next_release_source": null,
+        "candidate_qualification_status": "IN_PROGRESS4PROFILE_RUN42224231410; four authoritative live job IDs127913560774/127913560983/127913561017/127913561150. No acceptance until terminal raw/genuine/exportedSDK/root admission.",
+        "next_release_source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
         "next_release_expected_images": 271,
-        "next_release_expected_product": null,
-        "next_release_expected_SDK": null,
+        "next_release_expected_product": 216,
+        "next_release_expected_SDK": 102,
         "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
         "optimization_prepare_run": 41967608976,
         "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-        "next_release_status": "PENDING_FINAL_FROZEN_SOURCE_AND_INDEPENDENT_ADMISSION; C sole shared author integrates admitted executor9e8 and F1. B perimeter and R mark_boundaries source/test-first future packets are independent, not release dependencies. Prior42158336231/42169444853 failures retained; shipped683/run42177447898 passed938528XML/256SDK/48corpora.",
-        "next_release_qualification_run": null,
+        "next_release_status": "ROOT_DISPATCHED_ONCE source458e/run42224231410 after full passing readinessc6c91307 and remoteverify. Four jobs IN_PROGRESS at observation-v1 under build/join-util-views-qualification-v1/42224231410. Root follows same run; no redispatch on observation timeout or duplicate downloads.",
+        "next_release_qualification_run": 42224231410,
         "optimization_comparison_run": 41969983206,
         "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
       },

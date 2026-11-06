@@ -1,0 +1,81 @@
+{
+  "schema": "mark-boundaries-independent-source-storage-safety-v1",
+  "status": "PASS_BOUNDED_SOURCE_STORAGE_ONLY_NO_CAPTURE_OR_NATIVE_GO",
+  "passed": true,
+  "source": "d95573cdd803e3c0829cf0af11f0eafd59ea6ce5",
+  "handoff_sha256": "6d2d16920d240d7c560f2aced2191046a751d17e1cb085ff410cb837834f2582",
+  "source_files": 5,
+  "proof_files": 35,
+  "cases_per_profile": 125,
+  "max_actual_marked_elements": 105,
+  "max_actual_physical_elements": 288,
+  "upstream_source_scope": {
+    "version": "scikit-image0.26.0 both retained installed distributions",
+    "module": "skimage.segmentation.boundaries",
+    "raw_and_canonical_module_sha256": "fbdbbf36d8813c09d00583d235063acb0911d842cd94628d482d5c5685818131",
+    "signature": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)",
+    "profiles": {
+      "minimum": {
+        "source_receipt": "build/mark-boundaries-source-first-v1/minimum-source-v2.json",
+        "source_receipt_sha256": "9f0880bb67a5d954dd7bf636cebe31120a0ccf723d53e4eb33853e59eb299710",
+        "dependency_receipt": "build/mark-boundaries-source-first-v1/minimum-dependencies-v1.json",
+        "dependency_receipt_sha256": "1f8e33c7551b5bc39b7e19963f2e2182a4f07a8944e9d5c14a5b4332c554ea8f",
+        "scipy": "1.15.3"
+      },
+      "modern": {
+        "source_receipt": "build/mark-boundaries-source-first-v1/modern-source-v2.json",
+        "source_receipt_sha256": "c688cfd37aa930838c6c576557cb5c0743cb5fd4beee08b9e589cc88f751b279",
+        "dependency_receipt": "build/mark-boundaries-source-first-v1/modern-dependencies-v1.json",
+        "dependency_receipt_sha256": "d8c3387c415ce697dfac1924602bf31780be2f467ccadbaa19d4fae9d4ffc7fb",
+        "scipy": "1.18.1"
+      }
+    },
+    "mechanism": "importlib.metadata file resolution and direct AST/text reads only,0scientific imports/target calls. Public export text plus dtype/gray2rgb/morphology/footprint/interpolation/filter dependency source retained. Existing find-boundaries observer module/dependency pins and source contracts reused. No distribution/archive/core hash replay or downloads."
+  },
+  "source_review": "Five source files only, exact actual recipes and bounded owned crop carriers with basic views; labels nonempty and small, vectors<=4, deterministic finite protocols. No forged pointer or unconstrained callback. Boolean-index/broadcast mismatches remain actual future observations. Nonfinite subpixel and wide outer frontiers quarantined. Gray/RGB ordinary composition is conversion plus direct overwrite; alpha blending cannot substitute. Subpixel requires true cubic mirror prefilter/interpolation including channel filtering; no linear substitution or full native claim.",
+  "retained_checks": [
+    {
+      "scope": "pure-v1-windows311",
+      "nodes": 143,
+      "status": "PASS",
+      "seconds": 0.9069999998901039
+    },
+    {
+      "scope": "pure-v1-windows313",
+      "nodes": 143,
+      "status": "PASS",
+      "seconds": 1.0610873999539763
+    },
+    {
+      "scope": "numpy-minimum-v1",
+      "nodes": 127,
+      "status": "PASS",
+      "seconds": 2.0304402240000003
+    },
+    {
+      "scope": "numpy-modern-v1",
+      "nodes": 127,
+      "status": "PASS",
+      "seconds": 2.0333583710000003
+    }
+  ],
+  "authority": {
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "sampler": 0,
+    "timing": 0
+  },
+  "remaining_gates": [
+    "Exact clean frozen controller/nativeWindowsGit/Linuxenv/runtime/source/module/signature and immediate full32/MXCSR target-refusal prefix, then separately bound root original capture GO",
+    "Exactly-once authorized reference capture and independent raw admission; no250call authorization inferred from prospective pool",
+    "Full public signature/type/layout/base/copy/alias/protocol/error/warning/FP and all mode/provider/domain parity, especially cubic subpixel/profile differences",
+    "Authorized complete native/public/standalone installedSDK operation, default1/global/optionalworkers/scalar-SIMD/sanitizer/MSVC/platform/genuine gates",
+    "Changed source projection/context and full workflow barriers both Pythons before genuine/exact-source four-profile qualification/root admission",
+    "Per-API one-thread public original performance/root GO with all losers, then root main delivery"
+  ],
+  "reuse_waste": {
+    "result": "Authenticated five sources and35small proofs; evaluated only standard-library recipe bounds, reused all143/127 author guards without replay. Existing crop/view carrier safety and runtime/helper evidence remain scoped dependencies, not capture GO.",
+    "next_owner_trigger": "R may prepare exact source/runtime/full32/MXCSR target-refusal prefix and inspect missing compiled cubic source without any original/native calls. Root must independently admit actual clean prefix and issue separate bound capture GO. Current271 candidate is not waiting for this packet."
+  }
+}

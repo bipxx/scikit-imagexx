@@ -1,0 +1,161 @@
+{
+  "schema": "draw-multiblock-lbp-independent-safety-review-v1",
+  "status": "CHANGES_REQUIRED_BOUNDED_RECIPE_COVERAGE_NOT_UNSAFE_STORAGE",
+  "source": "1da19e3fd5a87cf30224c43f62c8edadc13074b2",
+  "source_worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-multiblock-lbp-v1",
+  "reviewer": "metrics_integrator; independent of B source author; no producer/shared/main edits",
+  "producer_handoff": {
+    "path": "build/draw-multiblock-lbp-source-first-v1/handoff-v1.json",
+    "sha256": "1761d132acd30a218682a90f4c5491866d7b7cab64cf8982f34b593f7baa853f",
+    "bytes": 24285
+  },
+  "evidence": {
+    "path": "build/draw-multiblock-lbp-independent-safety-review-v1/source-evidence-audit-v1.json",
+    "sha256": "073e92aca9c582cdb0e5e7cf060f5d77b96401a49b23793375074b7ade538be7",
+    "bytes": 12002
+  },
+  "static_witness": {
+    "path": "build/draw-multiblock-lbp-independent-safety-review-v1/overlap-source-witness-v1.json",
+    "sha256": "1478d6066420c2d12e1d576ee3dc3cf8256162c861af33205c8b0c2e2577840b",
+    "bytes": 6538
+  },
+  "authentication": {
+    "source_files": 5,
+    "small_proofs": 32,
+    "bytes": 637227,
+    "source_profiles": "Retained installed scikit-image0.26.0 texture/colorconv/dtype source copies, identical exact raw pins across minimum/modern, all7actual AST function fragments reconstructed byte-exact to contract. Existing read-only source-intake/distribution identity evidence reused; no runtime or package import/replay.",
+    "clean_native_Windows_Git": true,
+    "raw_vs_canonical": "Five actual raw source hashes and32proof hashes checked; four source_freeze paths authenticate canonical-LF independently. Intentionally different CRLF intake raw/canonical pins preserved; no frozen normalization."
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "capture-readiness blocker; source fixture coverage",
+      "path": "tests/draw_multiblock_lbp_contract.py:cases / coverage/contracts/draw-multiblock-lbp-v1.json",
+      "problem": "The recipe named wrapped-overlap does not overlap:9x10,r=-7,c=-8,width=height2 gives eight disjoint4-pixel patches. None of93 frozen integer-geometry recipes has repeated patch overlap. This misses the ordered read-modify-write interaction that distinguishes this visualizer from all-at-once set_color gather/scatter.",
+      "evidence": "See authenticated static slice-index witness; no image arithmetic/original/NumPy/test calls. Witness3x3RGB,r=c=-3,width=height2 gives repeated intersections including image-center pixel(1,1), while normalized logical-center slice is empty.",
+      "required_correction": "Keep93 historical recipes frozen; add one bounded actual-overlap f32 recipe in a versioned successor (candidate witness27elements,code170,alpha0.3). Authenticate successor factory/contract/source guards and execute only affected pure and NumPy factory/request-refusal controls on both retained profiles. No original calls or performance expansion required now.",
+      "not_required": "No algorithm rewrite, mathematical oracle, extra benchmark framework, broad scientific replay, or capture authorization. Existing four prospective benchmark cases/method may remain frozen; future performance coverage decisions stay explicit."
+    }
+  ],
+  "gates": {
+    "passed": [
+      "Current root/applicable worktree AGENTS read; exclusive ignored review-directory output only, source five-file diff/clean HEAD verified and all32small receipts authenticated.",
+      "93exact recipe storage safety: maximum actual input270/output270, rank<=4, conservative10000-word broadcast temporaries, fixed upper8neighbor iterations; constructed arrays own live backing, signed/negative strides remain live, no forged buffers/unbounded descriptors/geometry loops.",
+      "Pinned source signature/order correct: both float64 color coercions before np.copy; originalimage.shape and grayscale stack from original; img_as_float; int neighbor offsets/in-placeheight thenwidth before centralcoordinates/bitmask; bit7top-left clockwise tobit0left, no logical(0,0) update.",
+      "Slice clipping/negative wrapping, scalar/code truth/casting/error order and 1D/0D/channel/rank/empty/color broadcast paths faithfully remain source-driven. Both malformed colors converted even if unused; no extra RGB-only or numericvalidation invented.",
+      "Float16/32/64 preservation and integer normalization source confirmed from actual _convert. Float32 first-product rounding and profile-dependent strong/weak alpha promotion remain measured-later partitions, not assumed f64 equivalence.",
+      "Alpha0/1, NaN/Inf and emptyregions are not short-circuited; literal source retains arithmetic/broadcast/warning/callback behavior. NoFMA/reassociation/hoisting/all-pixels RHS staging authorized.",
+      "Existing set_color whole-operation reuse explicitly refused: gather-all-RHS, color-product-first, f64 staging differ from live ordered block image-product-first/assignment. Reusable conversion/strided-copy/rectangle leaves are prerequisites only, not fullSDK credit.",
+      "Controlled ArrayProvider/AlphaProtocol bounds and setup-only codec are safe: retained actual arrays/strings, no rawobject pointers/arbitrary graph, no protocol invoked by codec, source-level input mutation/alias/result observation still pending observer.",
+      "Authenticated103pure per Win311/313 and101actual NumPy factory/request-refusal per1.24.4/2.5.4 profile reused, normal conftest/plugins. Source cold/cached import-request refusal guards intercept cached modules; malformed bindingbudget/contract/source/extra fields stop before request.",
+      "Full SDK proposal names complete owning operation with input copy/grayreplication/conversion and eight ordered blends, not primitive-only composition. Serial ordered update/globaldefault1/SIMD conditional scope and all unsupported/fullAPI/provider gaps remain open."
+    ],
+    "changes_required": [
+      "F1 actual-overlap recipe coverage before any capture GO; bounded source/storage safety itself passed, no unsafe current case found."
+    ],
+    "pending": [
+      "Root independent acceptance of a versioned source-coverage correction. This review does not admit missing API/native operation or authorize93x2=186originals.",
+      "Exact future observer/call/codec snapshots for output/input/base/strides/readonly/mutation/exception/protocol/warnings/callbacks, software NumPy policy/buffer and immediate flags/rounding. This packet has factories/codecs, no actual visualizer observer or saved original output.",
+      "Actual retained runtime/source/module identity, native Windows Git locator + explicit Linux env at real capture entry, full32FENV/MXCSR incoming/restored context and admitted helper domain (masked exceptions/empty x87 stack), deadline/budget/durable one-shot journal and root GO before any original/helper body.",
+      "Exactly separately authorized once-only capture, saved validation + independent raw/root admission; all NumPy1.24/2.5 differences/errors preserved, no recapture for favorable results.",
+      "One coherent complete C++/public/installed owning SDK implementation and full domains/provider/type/eventful FP/error partitions, hot-swap/singlecore/nativeownership/default1/globalworkers1,4 and meaningful scalar/SIMD disposition; fullsignature still open.",
+      "Root shared integration/exact-source COMPLETE barriers/genuine four-profile/exported find_package SDK/MSVC/release qualification and independent admission.",
+      "Actual genuine input/one-thread public original comparison for every advertised function/all raw losses, independent timing GO, then root main delivery/cleanup. Four planned benchmark cases remain unbound, no performance claim."
+    ]
+  },
+  "source_semantics_notes": {
+    "center": "Logical source-center block is excluded. Repeated wrapped neighbors can touch central IMAGE pixels in the proposed small witness; distinguish that from the normalized source-center slice, which is empty in this witness. No unobserved alias promise about arbitrary protocol output.",
+    "FP": "Recipe policies are data only here; not activated by source/factory review. Native dtype/product/sum/assignment plan must preserve live NumPy authority and stage events across profiles, including empty regions and strong/weak scalar differences.",
+    "storage": "Prospective benchmark maxima<=1million input elements and bounded source8updates are source-only metadata, not authorization or runtime proof.",
+    "workers_SIMD": "Ordered eight updates must remain serial; conversion/copy SIMD or shared worker snapshot reuse requires later actual parity evidence. No artificial workerpool or concurrency/nameplate/native-ownership credit."
+  },
+  "reuse": {
+    "producer_results": {
+      "pure-windows311-v2": {
+        "nodes": 103,
+        "terminal": {
+          "exit": 0,
+          "tests": 103,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 0.6559999999590218,
+          "science_attempts": [],
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_public_batches": 0
+        }
+      },
+      "pure-windows313-v2": {
+        "nodes": 103,
+        "terminal": {
+          "exit": 0,
+          "tests": 103,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 1.5146780000068247,
+          "science_attempts": [],
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_public_batches": 0
+        }
+      },
+      "numpy-minimum": {
+        "nodes": 101,
+        "terminal": {
+          "exit": 0,
+          "tests": 101,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 2.3752945650000044,
+          "original_calls": 0,
+          "native_calls": 0,
+          "sampler_body_calls": 0
+        }
+      },
+      "numpy-modern": {
+        "nodes": 101,
+        "terminal": {
+          "exit": 0,
+          "tests": 101,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 2.3976560560000024,
+          "original_calls": 0,
+          "native_calls": 0,
+          "sampler_body_calls": 0
+        }
+      }
+    },
+    "source_primitives": {
+      "src/draw_coordinates.cpp": "ad884377213da609fcec34a699729b661e2b0122e0f4e90bd261f47fe5090de5",
+      "include/skimagexx/draw_coordinates.hpp": "9ce8a402b50cee888aab919ef175beb41b20232f16ad6e5af435f2ff248f7ae1",
+      "src/draw_set_color.cpp": "21ae7f9f1eb8474e34c497ecd41374d446a4886f0d888cd5aef147b22b09d3be",
+      "include/skimagexx/draw_set_color.hpp": "258b593beb4753aebe4480745deec5c1d5f85e3501c3087d14f2902d8af88f5c",
+      "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+      "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+      "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+      "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+      "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+      "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+      "third_party/scikit-image-LICENSE.txt": "611d3207504dcb4a808df209d2e7c9b4f2e89fe690f84735c0d548160966b527"
+    },
+    "preserved_failed_pure": "Producer102PASS1assertionFAIL retained; source AST correction authenticated, final103each reused. No algorithms had run before failure.",
+    "review_executions": "Stdlib file/hash/AST/XML/Git + bounded static slice-index reasoning only. No tests/sourcefunctions/scientific imports/algorithm/original/helper/native/sampler/build/download/timing/large archive or core hashing."
+  },
+  "waste_review": {
+    "useful": "Reused exact source/32small receipts and existing primitives; static recipe audit caught missing overlap before irreversible original budgets or native assumptions.",
+    "avoidable": "Producer failed substring assertion retained; reviewer found misnamed overlap recipe that passing factory bounds could not establish. No expensive repetition, new framework or speculative implementation.",
+    "observed_producer_failed_seconds": 1.171000000089407,
+    "review_total_cost": "Unknown; no work replayed to measure cost.",
+    "next_owner": "root then B source author under explicit followup",
+    "next_trigger": "Root accepts finding and assigns minimal versioned recipe successor; independently inspect affected delta/reused source setup evidence, then prepare actual prefix/observer/FP gates before any original GO. Current271 release/controller lanes remain independent."
+  },
+  "original_calls": 0,
+  "native_calls": 0,
+  "helper_calls": 0,
+  "sampler_body_calls": 0,
+  "timed_batches": 0,
+  "tests_replayed": 0,
+  "source_edits": 0
+}

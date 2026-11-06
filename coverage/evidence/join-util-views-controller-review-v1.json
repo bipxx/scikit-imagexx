@@ -1,0 +1,125 @@
+{
+  "schema": "join-util-views-controller-independent-review-v1",
+  "status": "CHANGES_REQUIRED_POSTSTOP_SOURCE_IMMUTABILITY_GUARD",
+  "passed": false,
+  "source": "2c7c028aaad7156c14da56522b52ad8a4b6d004f",
+  "source_clean": true,
+  "handoff": {
+    "path": "build/join-util-views-measurement-controller-v1/handoff-v1.json",
+    "sha256": "26b0e13315a2185220b09804588138bf2f05cc509e8d43b0281d36e9969e6a3c"
+  },
+  "ownership": "Ignored review files only; no author/controller/producer/shared/main edits. Root/areaAGENTS read; otherworkers and complete barriers preserved.",
+  "authenticated": {
+    "owned_files": 4,
+    "owned_file_raw_sha256": {
+      ".github/workflows/next-metrics-initial.yml": "4188dd6a2b2a36681059a06fea606830b8b00dbc7d78cece5b60e57e842f3a8e",
+      "coverage/contracts/next-metrics-measurement-v2.json": "e8aad315f9e2dba5c992c905c2dcb0b9b726f600f58aecbd94d149a127c37d51",
+      "tests/test_next_metrics_controller_v2.py": "5f4b03be3bf0736a5380d6f7ca4bad4e22ef11345e6b3b94d6247c5e43540b19",
+      "tools/next_metrics_first_cohort_probe.py": "b0fcbeb0d437b89887dd52ef41bf7e502057ebb7c9573381dfd4e9f0f3b64879"
+    },
+    "retained_small_proof_files": 44,
+    "raw_git_blob_source_pins": 67,
+    "benchmark_canonical_pins": 67,
+    "helper_source_pins": 7,
+    "case_pool": 56,
+    "raw_samples": 784,
+    "warmup_groups": 112,
+    "distinct_API_cohorts": 9,
+    "actual_bindings": "ALL_UNBOUND",
+    "raw_canonical_domain_differences": []
+  },
+  "passed_scope": [
+    "Four-file exact clean2c7c/9c92 ancestry, handoff/index44small proof files and sourceaudit hashes authenticated; owned CRLF manifest handled as raw, distinct canonical stager domain preserved",
+    "All67raw pins equal9c92actualGit blobs and currentWT; all67canonical benchmark pins match; both67pin and7helperpin intersections with R458e fivechangedtests are empty",
+    "Nine distinct APIs, blocks/windows separate4case subsets of8existing views cases; fixed first-case proposals and source-bound old cases/methods retained; no external recipes/method overrides",
+    "Dedicated ARE/contingency/boundary deadline CLI and util first-cohort/api/case/root-binding CLI correctly distinguished; exact boundary-v5/util-executor-v2 contract hash scopes and execution-route views GOs preserved",
+    "Workflow validates successful exact public-qualification run/artifact/API digest/rootwhole4profile admission/stager product/runtime/source102SDK, installs/verifies offline before any helper/target, then prepares source-built F1 once on actualhost outside cohorts; all seven helper sourcepins/external receipt digest/env and recursivecollector are explicit",
+    "Probe one-original/one-native count/journal-before-call/acceptance/signature/installedcore checks and actualsampler-entrytrace plus executor mandatory nonstopping observer fallback establish intended zero-body control path; actualhost genuine proof remains pending",
+    "Util realexecute frame validates authenticatedinner C-return list, exact args/options/input/output/alias state, FP equality and full32 caller restoration beforestop; pureframes are metadata scopes only",
+    "Existing33line sampler report validation subtree byte-equal afterindentation:7samples/positivefinite loops/100ms samples/250ms warmup/calibration/alternatingorder/exactjournal/medians/speedups/all losses retained",
+    "42purechecks/version XML0failures/errors/skips, normalconftest/pluginautoload except cacheprovider disabled, cached/cold builtin importREQUEST refusal and metadata tamper controls authenticated without replay; actionlint0/fiveembeddedPython blocks retained"
+  ],
+  "findings": [
+    {
+      "id": "C1",
+      "severity": "required_before_actual_cohort_admission",
+      "file": "tools/next_metrics_first_cohort_probe.py",
+      "lines": "238-256 (driver run/controlled stop/finally/terminal), prechecks74-75",
+      "problem": "Controlled StopBeforeBody intentionally unwinds before normal next_util_execution.py294-297 and find_boundaries.py224 source/core/contract/binding final guards. Probe main has no postcall Git/source-byte/authority check before PASS terminal; run_cohorts accepts these terminals and writes nine-cohort PASS summary. Therefore per-cohort source immutability is not proved by current PASS receipts. A later existing verifier protects entry to timing but does not repair the earlier first-cohort receipt scope.",
+      "minimal_fix": "Reuse already-bound source/authority guards after controlled stop and state restoration before writing terminalPASS: exact HEAD/clean plus67small raw source pins and unchanged binding/GO/helper digest. Use existing verifier once after the cohort batch and before summaryPASS for core/runtime/SDK closure rather than inventing per-cohort largebinary rehash loops. Add pure/source guard exercising changed poststop source/authority and proving noPASS terminal/summary; preserve failed diagnostic. A separately explicit proof scope for any non-repeated core/runtime check must match actual verifier placement.",
+      "owner_trigger": "C/controller author versioned successor, root dispatch/admission authority. Only changed pure checks both retained versions; no target/original/helper/sampler calls or unchangedscience replay. R affected-delta independent review after frozen successor."
+    }
+  ],
+  "worker_getter_scope": {
+    "status": "DISCLOSED_LIMITATION_NOT_ADDITIONAL_BLOCKER",
+    "evidence": "Executor temporarily replaces outer sys.profile for native-denial/C-return capture; outer getters==[] cannot establish independent inner-interval absence. Authenticatedinner source returns/default1 pre/postcheck and frozenwrappercode reused. Handoff accurately says no newgetter-absence runtimeproof.",
+    "requirement": "Retain honest scope and actual default1/global ownership evidence during genuine first cohorts; never label the synthetic emptyouterlist as independent absence counting. No shadow framework requested."
+  },
+  "repair_intersection": {
+    "repair_source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
+    "repair_files": [
+      "tests/test_ci_measurement_isolation.py",
+      "tests/test_join_segmentations_native_contract.py",
+      "tests/test_public_qualification.py",
+      "tests/test_rank_corpus_sdk_scope.py",
+      "tests/test_regular_grid_native_contract.py"
+    ],
+    "cohort67_intersection": [],
+    "helper7_intersection": [],
+    "conclusion": "Repair does not invalidate prospective cohort/helper source pins; final whole prepared_source/revision/runtime must still bind actual shipping successor, no source mutation afterprepare."
+  },
+  "pending": [
+    "C1poststop guard successor and changedpurecontrols, independentaffected-delta admission",
+    "Root COMPLETE v2barrier terminal results; no partialreadinessclaim from42purechecks",
+    "Exact-source four-profile wholeproduct/exportedSDK/stager genuine admission then actualsource/run/artifact/runtime/core/SDK/rootbinding review",
+    "Actual measurementhost F1build/controlreceipt/library/externaldigest/env and collector; no helper body executed here",
+    "Root distinct explicit GO for nineuntimed firstcohorts; then independent actualcohort admission, separate measurementGO/one-thread originalperformance with all losses",
+    "FullArrayMap class/provider/domain gaps and rootmain publication remain open"
+  ],
+  "preserved_failures": [
+    "Authorv1syntaxcollection failures bothversions retained and no genuinecredit assigned; v2/v3sourcepasses not a completebarrier union",
+    "Parent9c92complete3043XML4failures34errors each preserved; R458e repair/root304eadmission does not by itself establish sourcebarrier readiness",
+    "Reviewer stdlibaudit-v1 misclassified ownedCRLFraw hash ascanonicalLF; corrected onlyaudit-v2 after directraw/LF comparison. No science/tests/source mutation or receipt waiver. Diagnostic print assumed dedicated routes carry local cases; corrected read from actual contract."
+  ],
+  "authority": {
+    "tests_rerun": 0,
+    "scientific_imports": 0,
+    "original_calls": 0,
+    "native_calls": 0,
+    "helper_body_calls": 0,
+    "sampler_body_calls": 0,
+    "timed_batches": 0,
+    "builds": 0,
+    "downloads": 0,
+    "large_archive_core_hash_replays": 0,
+    "hosted_dispatch": false
+  },
+  "reuse_waste": {
+    "reused": "All42purechecks/version, B9e8/F1admissions and old controlleroffline verifier/method evidence scopedreuse; authenticatedsmallreceipts and sourceonly, no unchanged scientific/core/archive replay.",
+    "avoidable": "Two stdlibreview diagnostic assumptions corrected/versioned; authorinitialsyntax failure retained. Missing poststopimmutable-source guard is a source-envelope dependency missed by synthetic preimport/frame tests; nextcontrol should cover actual terminal-write path.",
+    "observed_cost": "Retained finalsourcechecks5.016s/5.292s; independentread/hash/ASTmetadata costs notinstrumented. No replay forcost.",
+    "next_owner_trigger": "Root records C1 in existing packet and assigns C narrow four-filecontroller successor; after frozen affectedpurechecks, independent deltaadmission. Root livecompletebarriers and releasequalification proceed separately. No change to producer9c/458 or markd955/aa2c."
+  },
+  "review_evidence": {
+    "audit-failure-v1.json": {
+      "sha256": "b2b12754c056014f92ed8469356f790ee5d39ec183a97561a922bb5295c9f769",
+      "bytes": 551
+    },
+    "audit_v1.py": {
+      "sha256": "bf13ff950537564c8775e83938a489149900f0aadfec249032a7f579c160e993",
+      "bytes": 4098
+    },
+    "audit_v2.py": {
+      "sha256": "f533da3568a409743b1d248d42597f85020a340e7b8e0a31015a4d4c442269b0",
+      "bytes": 4062
+    },
+    "authentication-v1.json": {
+      "sha256": "22c222dd95ff24ac6a7692d63ca98a0014d1f148dcf3a5ccbc4084927ce3ec25",
+      "bytes": 3969
+    },
+    "proof-scope-v1.json": {
+      "sha256": "b1402861adcb6d07970ecf394ebd5b79a638a962cb638359a3a0c12ee4e561b1",
+      "bytes": 4337
+    }
+  }
+}

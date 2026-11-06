@@ -1,0 +1,31 @@
+{
+  "schema": "join-util-views-five-test-fix-independent-review-v1",
+  "status": "PASS_NARROW_TEST_REPAIR_COMPLETE_BARRIERS_STILL_REQUIRED",
+  "passed": true,
+  "source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
+  "base": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
+  "handoff_sha256": "f4ea996564c2bcb1350765005be22f7ddf8c107db96f08d904ebc9b854fe5d2b",
+  "files": 5,
+  "small_proofs": 23,
+  "results": [
+    {
+      "version": "311",
+      "affected_nodes": 43,
+      "previous_failed_nodes": 38,
+      "seconds": 5.640000000130385
+    },
+    {
+      "version": "313",
+      "affected_nodes": 43,
+      "previous_failed_nodes": 38,
+      "seconds": 3.623778099892661
+    }
+  ],
+  "review": "Actual18additions/6deletions inspected. Inert smoke fixture supplies required profile; exact current SDK102 and scope271/image271 replace stale current-source literals while historical profiles remain intact. JOIN/grid source checks authenticate current executor bytes through existing strict historical_bytes inverse before unchanged historical raw-hash checks; no skipped checks or changed immutable contracts.",
+  "production_projection": "Exact Git diff is only five test files, outside all production fingerprint inputs. ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f unchanged by dependency scope; no production/workflow/gold/case/method changes or rebuild/numerical rerun.",
+  "remaining_gates": [
+    "Root COMPLETE actual workflow source command BOTH retained supported Pythons, normalconftest/plugins/no-x/0science, on exact458e successor",
+    "Passing independent readiness then exact-source four-profile genuine/exportedSDK admission and authorized public performance/main delivery"
+  ],
+  "waste_reuse": "Retained failed9c92 complete barriers and scoped e4 source review; all38previous failures covered by43affected checks perversion. Reviewed5file delta/23small proofs; no unchanged image/numerical/helper/benchmark/archive work. Next root starts complete2barrier successor promptly; partial union never establishes readiness."
+}

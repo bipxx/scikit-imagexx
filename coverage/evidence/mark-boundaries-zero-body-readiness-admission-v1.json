@@ -1,0 +1,118 @@
+{
+  "schema": "mark-boundaries-readiness-independent-review-v1",
+  "status": "PASS_SCOPED_ACTUAL_ZERO_BODY_READINESS_NOT_CAPTURE_GO",
+  "passed": true,
+  "source": "d95573cdd803e3c0829cf0af11f0eafd59ea6ce5",
+  "incoming": {
+    "handoff": "build/mark-boundaries-capture-readiness-v1/handoff-v1.json",
+    "sha256": "aa2c204849487ec86ef7d7fb418e2261d394e6793e0726b0f4ce990f8674ac56",
+    "controller_sha256": "b30ae4e2185240b19791cd781e6c6f0534448f26866301acdbde1320625c390f",
+    "binding_sha256": "a1124b3c5ef8a8000bc0d7144607013e916d7f2cc995d995ca3d4aafcb2c73a9",
+    "prior_source_storage_review_sha256": "0fef4542f7f9b72dc51be6d7170b1c212973b1aaeb07f6182f1f4b0d13e494bd"
+  },
+  "ownership": "Only ignored build/mark-boundaries-readiness-independent-review-v1; no incoming/source/shared/plan/ledger/main edits or commit.",
+  "acceptance": [
+    {
+      "gate": "Exact local controller/source/clean worktree and small retained receipt authentication",
+      "state": "passed",
+      "evidence": "audit-v1.json: 75 proof hashes/sizes, nine source pins, native Windows Git clean exact HEAD; binding and prior admission hashes"
+    },
+    {
+      "gate": "Actual retained Linux minimum and modern entry setup",
+      "state": "passed",
+      "evidence": "Saved commands use wsl.exe --exec /usr/bin/env with five explicit =1 settings, native Windows git.exe linked worktree, exact interpreter/version/package RECORD/METADATA/dependency source/module/export/signature, exit 0; runtime identities reconstructed in audit-v1.json"
+    },
+    {
+      "gate": "Zero target/provider computation and entry refusal",
+      "state": "passed",
+      "evidence": "Two actual positive processes; aggregate four target attempts/refusals and four Python provider attempts/refusals, zero body lines and no observations/journal. One bounded fixture/profile unchanged. Trace CALL raises before first body LINE; counts and actual module identity checked."
+    },
+    {
+      "gate": "Immediate/caller/process FP restoration",
+      "state": "passed",
+      "evidence": "Four refusal controls/profile have identical immediate 32 bytes. Hardware-only fifth changes rounding and SSE sticky flags, then saved full32/MXCSR exactly restored. Five caller restorations/profile, fixture finally and process finally inspected; saved initial/final bytes equal."
+    },
+    {
+      "gate": "Ten prerequisite refusal prefixes",
+      "state": "passed",
+      "evidence": "Five synthetic malformed/missing metadata scenarios/profile executed through real controller subprocesses: missing/tampered binding, source pin, budget, controller pin. All exit0, no scientific imports, attempts, observations or journal; commands/terminals authenticated."
+    },
+    {
+      "gate": "Read-only review and admitted evidence reuse",
+      "state": "passed",
+      "evidence": "Stdlib receipt/source/AST readers and native Windows Git only; no incoming controller/helper/test/science/target/provider/native/sampler/timing execution, downloads, builds or archive/core rehash."
+    },
+    {
+      "gate": "Root readiness admission and original capture authorization",
+      "state": "pending",
+      "evidence": "This independent review supplies no original GO; all four budgets remain 0 and root_original_GO null."
+    }
+  ],
+  "compiled_scope": {
+    "small_scipy": "Actual saved _nd_image digest checked against installed RECORD on each profile; review independently compares recorded digest encoding and package identity, without rereading binary.",
+    "large_numpy": "Retained RECORD/path/size reused; actual_sha256 is null, not a fresh binary authentication.",
+    "c_call_guard": "Three compiled functions protected by identity in source; actual attempted/refused counts 0. Installed guard is not exercised compiled-provider refusal or cubic-computation evidence."
+  },
+  "helper_scope": {
+    "admission_sha256": "f29ffd78647252581ddc008392808bd16476debef02a07da1998e887f095f49b",
+    "library_sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+    "ABI": [
+      32,
+      0,
+      4,
+      8,
+      12,
+      20,
+      28,
+      8
+    ],
+    "reused": "Unchanged independently admitted Linux x86_64/glibc2.39 helper and prior ABI/restoration controls; library not rehashed/reexecuted. Same-thread empty x87 stack and masked exceptions scope only.",
+    "hardware_interpretation": "Retained glibc feraiseexcept(FE_DIVBYZERO) raises SSE bit4, not x87 bit4 here; hardware immediate x87 selected flags are clear. Exact saved raw32 restoration, rather than an invented flag-propagation expectation, is the acceptance evidence."
+  },
+  "changes_required": [],
+  "pending": [
+    "Root independently admits this readiness review; no budget or capture authority follows automatically.",
+    "Before any original computation: separately frozen exact-once capture controller and bound observer, cases, source/runtime identities, journal begin/end durable handling and restoration envelope; actual entry prerequisite checks and explicit root GO with exact budgets. Existing prefix intentionally exposes no capture mode or journal.",
+    "Compiled cubic implementation/source closure, subpixel full-contract and profile differences remain API/native-domain gates; this prefix exercises no provider computation and does not close them.",
+    "Independent raw admission after authorized once-only captures, complete native/public/SDK parity, genuine installed ownership, platform/default worker/scalar-SIMD gates, exact-source qualification and public one-thread original performance remain unfulfilled."
+  ],
+  "nonclaims": [
+    "No original computation or parity, native image ownership, genuine product, SDK, full platform ABI, performance or release readiness claim.",
+    "Prior 125 safe recipes/profile and source/storage controls reused; positive readiness materializes only the first bounded fixture/profile.",
+    "Ten negative cases are synthetic bad metadata in actual subprocesses; they are not ten positive scientific prefixes."
+  ],
+  "review_execution": {
+    "tests": 0,
+    "helper_calls": 0,
+    "original_calls": 0,
+    "provider_bodies": 0,
+    "native_bodies": 0,
+    "sampler_bodies": 0,
+    "timing_calls": 0,
+    "builds": 0,
+    "downloads": 0,
+    "large_archive_or_core_hashes": 0
+  },
+  "failure_waste_reuse": {
+    "incoming_failures": "None: two actual positive and ten expected-refusal subprocesses exit0. Historical source/helper failures retained in predecessor evidence.",
+    "reviewer_failures": "Initial exploratory schema key and absent output-directory write corrected. First audit wrongly demanded x87 divide-by-zero sticky flag; stopped, inspected actual source/state, retained reader-failure-v1.json and corrected only reader. No upstream proof or scientific evidence invalidated.",
+    "reuse": "75 small proof records authenticated; unchanged source/storage 125 recipes/profile, pure/NumPy setup and admitted helper/ABI evidence reused without campaigns. No archive/core/helper-library rehash.",
+    "avoidable_work": "Reader setup/schema and overstrong x87 expectation; elapsed cost unknown, no cost-measurement rerun.",
+    "next_plan_correction": "Root owns readiness admission and later separately authorized capture. Reuse this scoped prefix evidence while source/runtime/controller unchanged; do not mistake attempted entry for original computation or re-run unchanged preparation. Current release proceeds independently."
+  },
+  "evidence": {
+    "audit_v1.py": {
+      "path": "build/mark-boundaries-readiness-independent-review-v1/audit_v1.py",
+      "sha256": "b808fcfdb1dfb0641a3ad8adbe7b07da1618bc26414669ee24adbeddb9d4f3ef"
+    },
+    "audit-v1.json": {
+      "path": "build/mark-boundaries-readiness-independent-review-v1/audit-v1.json",
+      "sha256": "9e76d9c689b3d5552d9ca9818fa58bee0f55f1c865d07e5e169c98cc76df0ad3"
+    },
+    "reader-failure-v1.json": {
+      "path": "build/mark-boundaries-readiness-independent-review-v1/reader-failure-v1.json",
+      "sha256": "200f7e1f4ba0be4e24636b3dea8514c603555e603157dfe06c3502f5a6b6997e"
+    }
+  },
+  "next_owner_trigger": "Root: review immutable scoped receipt, admit readiness if accepted, then commission separately bound capture controller/observer and explicit GO. No worker action or polling pending."
+}

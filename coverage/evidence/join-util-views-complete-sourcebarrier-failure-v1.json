@@ -1,0 +1,434 @@
+{
+  "source": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
+  "status": "BOTH_COMPLETE_SOURCE_BARRIERS_FAILED_IDENTICAL_5_ROOT_CAUSES",
+  "profiles": {
+    "311": {
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 301.094000000041,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3043,
+          "failures": 4,
+          "errors": 34,
+          "skipped": 0
+        }
+      },
+      "terminal_sha256": "067a1fb4218d3b46971147e0ffff6fc84f5bd37d4f791ab7451c20e2a328d586",
+      "xml_sha256": "1f5ed3920bceddaba81ab1f1fde950f9f0b6e013942700f40cc3faf528879e3d",
+      "failed_cases": [
+        [
+          "failure",
+          "tests.test_public_qualification",
+          "test_fresh_child_tmp_path_fixture_creates_only_owned_parent"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[windows]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[modern]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[minimum]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[debug]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old68]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old71]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old83]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old85]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old86]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old87]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old88]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old89]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old90]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old91]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[stale247]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[foreign-name]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[extra-name]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[wrong-profile]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[missing-marker]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[missing-marker-false68]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[revision]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker0]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker1]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker2]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker3]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker4]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_statistics]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_percentile]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_bilateral]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_decisions]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_statistics]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_percentile]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_bilateral]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_decisions]"
+        ],
+        [
+          "failure",
+          "tests.test_ci_measurement_isolation",
+          "test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_smoke"
+        ],
+        [
+          "failure",
+          "tests.test_join_segmentations_native_contract",
+          "test_exact_source_dependency_closure"
+        ],
+        [
+          "failure",
+          "tests.test_regular_grid_native_contract",
+          "test_regular_grid_complete_dependency_closure"
+        ]
+      ]
+    },
+    "313": {
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 278.51989180012606,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3043,
+          "failures": 4,
+          "errors": 34,
+          "skipped": 0
+        }
+      },
+      "terminal_sha256": "cdc2ac901c65544bf51d04f80ad167c0af60a4dc75be89b46718d3b2c88167e5",
+      "xml_sha256": "bf758ace7ae047a98a7752704a23c2455c01e3647af2860da99f5bccd1d67b95",
+      "failed_cases": [
+        [
+          "failure",
+          "tests.test_public_qualification",
+          "test_fresh_child_tmp_path_fixture_creates_only_owned_parent"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[windows]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[modern]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[minimum]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_scope_uses_exact_source_derived_sdk_names[debug]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old68]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old71]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old83]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old85]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old86]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old87]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old88]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old89]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old90]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[old91]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[stale247]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[foreign-name]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[extra-name]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[wrong-profile]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[missing-marker]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[missing-marker-false68]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_current_wrong_sdk_or_scope_cannot_pass[revision]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker0]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker1]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker2]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker3]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_marker_boundary_rejects_malformed_values[marker4]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_statistics]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_percentile]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_bilateral]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[False-rank_decisions]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_statistics]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_percentile]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_bilateral]"
+        ],
+        [
+          "error",
+          "tests.test_rank_corpus_sdk_scope",
+          "test_actual_four_verifier_preflights_use_scope_after_runtime_authentication[True-rank_decisions]"
+        ],
+        [
+          "failure",
+          "tests.test_ci_measurement_isolation",
+          "test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_smoke"
+        ],
+        [
+          "failure",
+          "tests.test_join_segmentations_native_contract",
+          "test_exact_source_dependency_closure"
+        ],
+        [
+          "failure",
+          "tests.test_regular_grid_native_contract",
+          "test_regular_grid_complete_dependency_closure"
+        ]
+      ]
+    }
+  },
+  "same_failed_cases": true,
+  "hosted_dispatch_authorized": false,
+  "source_admission_scope": "Earlier e4f2e229 scoped source review is not readiness; its missed literal/source-reader closure is superseded for dispatch by these actual failures. Production/numerical fingerprint remains ac593be6 unchanged.",
+  "next_gate": "R minimal5test source-only correction, independent root affected-delta review, then COMPLETE actual workflow source commands on BOTH retained Pythons; no partialunion or scientific replay."
+}
