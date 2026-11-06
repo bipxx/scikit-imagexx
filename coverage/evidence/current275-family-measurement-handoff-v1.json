@@ -1,0 +1,284 @@
+{
+  "schema": "current275-family-measurement-controller-handoff-v1",
+  "status": "FROZEN_SOURCE_INTERFACE_PREPARATION_UNBOUND_NO_EXECUTION_AUTHORITY",
+  "source": "95e64f135c7d3d8cbef7c8acb543ed31ea86c079",
+  "base": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "branch": "bench/current275-family-measurement-v1",
+  "worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current275-family-measurement-v1",
+  "source_clean": true,
+  "files": {
+    ".github/workflows/finite-radon-initial.yml": {
+      "sha256": "d357a7390e1d2668b9761fd025fee279c1c40134c1760890a4040e86501bf50d",
+      "bytes": 13498
+    },
+    ".github/workflows/mark-lbp-initial.yml": {
+      "sha256": "82972274f745901851ab618a9a8390817f0d0e0bd81d3b2879e388486fb8d7c1",
+      "bytes": 13470
+    },
+    "coverage/contracts/finite-radon-measurement-v1.json": {
+      "sha256": "3989f0f76d3e340d06fa66ccc8f2bb4b580b8bf022da14762dc9b880a23af2e5",
+      "bytes": 13839
+    },
+    "coverage/contracts/finite-radon-measurement-v2.json": {
+      "sha256": "527a967dc969d26dc2c6e6763dd740f136a87271e6aa71a270b5309ba1dd64d6",
+      "bytes": 159038
+    },
+    "coverage/contracts/mark-lbp-measurement-v1.json": {
+      "sha256": "f433cec611d22115f997f36def083e90ae47e6ddfc5da56c65fd99d817abe9c5",
+      "bytes": 27014
+    },
+    "coverage/contracts/mark-lbp-measurement-v2.json": {
+      "sha256": "239723293ea22e7c168ec2a0d23821e1d0e557bdfbb47c071820a35ed317c1de",
+      "bytes": 175660
+    },
+    "tests/test_finite_radon_controller.py": {
+      "sha256": "cc076944f6fb3933f7063735e0787750a4a6ec37b53f607dc1771250025eb580",
+      "bytes": 22629
+    },
+    "tests/test_mark_lbp_controller.py": {
+      "sha256": "daefe7b5454658697bad0801caf19d603efc95dfccec9fb20160e22ea0408643",
+      "bytes": 24836
+    },
+    "tools/finite_radon_first_cohort_probe.py": {
+      "sha256": "c7487d4221ac7a7cd9dd5ba70334177f2ee1585ef0324472ff944f161af1e0a6",
+      "bytes": 35275
+    },
+    "tools/mark_lbp_first_cohort_probe.py": {
+      "sha256": "f9aac17b4d473bef1a2cad5751f0340eaf19de9ed976dc06a850f32c31d79040",
+      "bytes": 34317
+    }
+  },
+  "root_admitted_inputs": [
+    {
+      "path": "build/mark-lbp-controller-root-admission-v1/admission-v1.json",
+      "sha256": "3cf3cfb7a4e5df9345cfacf1b2ebb25f8cdf1c214c495cdbad1cd67994fa1b00"
+    },
+    {
+      "path": "build/finite-radon-controller-root-admission-v2/admission-v1.json",
+      "sha256": "1ed8419ab67cfad63a9a1bd3e3bb839e6ce228c662fe97856d8b29dd0119bbd6"
+    },
+    {
+      "path": "build/mark-lbp-radon-util-join-reader-root-admission-v1/admission-v1.json",
+      "sha256": "39b66e694ec8fb16c5b702841576590a67112add805bb49b8f557407bb2896e1"
+    }
+  ],
+  "ancestry": "Isolated e4 child fast-forwarded only admitted3metadata source files to8c; selectively imported3548 MARK/LBP4 and f957 Radon4, never merged private controller/source ancestors. No product source authored.",
+  "prospective_source": {
+    "revision": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+    "image_paths": 275,
+    "registered_functions": 278,
+    "product_members": 222,
+    "SDK_members": 105,
+    "SDK_families": 35,
+    "SDK_checks": 70,
+    "scope": "Source projection only, no genuine product/SDK authority"
+  },
+  "active_controller_manifests": [
+    "coverage/contracts/mark-lbp-measurement-v2.json",
+    "coverage/contracts/finite-radon-measurement-v2.json"
+  ],
+  "frozen_predecessors": [
+    "coverage/contracts/mark-lbp-measurement-v1.json exact3548",
+    "coverage/contracts/finite-radon-measurement-v1.json exactf957",
+    "3548/d426 oldhandoff and source3cf rootadmission",
+    "f957/01a04 and predecessor a744/path-finding d93 remain immutable"
+  ],
+  "actual_authority": "ALL actual producer/run/revision/artifact/prepared_source/runtime/core/SDKcount/root-admission/stager/source-revision/hosthelperreceipt/library/GO/deadline fields remainNULL/UNBOUND. Static source/probe/helper pins and prospective_source are sourcefacts only.",
+  "interfaces": {
+    "mark-lbp": {
+      "cases": 12,
+      "samples": 168,
+      "warm_groups": 24,
+      "canonical_pins": 79,
+      "raw_pins": 79,
+      "helper_source_pins": 7,
+      "changed_probe_functions": [
+        "read_manifest",
+        "verify_source_state",
+        "prepare_cohorts"
+      ],
+      "unchanged_probe_functions": 15,
+      "actual_strict_driver_binding_keys": 25,
+      "interface": {
+        "source_projection": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+        "scope": "UNBOUND source-only projection, no actual genuine runtime authority",
+        "sampler_bridge": "sample_entry",
+        "parity_caller": "execute",
+        "sampler": "measure",
+        "report_source": "metadata flattened fingerprint fields plus metadata.source_before",
+        "pass_index": "explicit literal0",
+        "binding": "Strict existing family envelope, separate per-cohort binding/GO and conditional parent measurement GO; no extra driverbinding keys"
+      }
+    },
+    "finite-radon": {
+      "cases": 16,
+      "samples": 224,
+      "warm_groups": 32,
+      "canonical_pins": 34,
+      "raw_pins": "UNBOUND",
+      "helper_source_pins": 7,
+      "changed_probe_functions": [],
+      "unchanged_probe_functions": 18,
+      "actual_strict_driver_binding_keys": 24,
+      "interface": {
+        "source_projection": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+        "scope": "UNBOUND source-only projection, no actual genuine runtime authority",
+        "sampler_bridge": "sample",
+        "parity_caller": "execute",
+        "sampler": "measure",
+        "report_source": "metadata.source_before",
+        "pass_index": "explicit CLI1..8",
+        "binding": "Strict existing family envelope, separate per-cohort binding/GO and conditional parent measurement GO; no extra driverbinding keys"
+      }
+    }
+  },
+  "binding_gate": "MARK/LBP prepares exactly25 existing strict driverbinding keys; Radon prepares exactly24 next_util allowedkeys. Per-cohort context SHA/route/binding/GO separate; helper authority lives in approved outerGO for Radon, no extra inner fields. Source-onlyAST audit matched actual constructed bindingkeys to actual driver literal sets.",
+  "changes": {
+    "MARK_LBP": "ActiveMARKv4/LBPv3 paths+sourcepin maps+sourceprojection; replace obsolete104 SDK literals in read_manifest/verify_source_state/prepare_cohorts/workflow with independentlyadmitted Radon authenticated-runtime positive-count pattern, actualSDK_members remainsNULL.15other probe function bodies unchanged.",
+    "Radon": "ActiveRadonv2 +sourceprojection/maps/manifest v2; all18 probe function bodies remain byte-identical to admittedf957, including actual path-restoration success/importfailure fix.",
+    "source8c_delta": "No prior benchmark pin changed under3file JOINreader/collector metadata fast-forward; explicitly add all3 as newrequired sourceclosure pins.79canonical+79raw MARK/LBP and34canonical Radon; actual Radon rawfirst-cohort sourcebinding remainsNULL.",
+    "methods": "Frozen8MARK+4LBP+16Radon cases unchanged, same Montage method/worker1/7repeat/100ms/250ms/alllosses; hypothetical combined28cases392samples56warmgroups/4cohorts is fixedscope arithmetic only, not authorized experiment."
+  },
+  "cohort_safety": {
+    "mandatory_realentry_stop": "Unchanged inherited approved direct actualmeasure entry guard, chainedobserver/finallyrestore and nonstopping-profiler fallback; body never authorized under first-cohort GO",
+    "poststop": "Unchanged finish_probe restoration then HEAD/clean/rawsource/context/binding/GO/helper receipt checks BEFORE terminalPASS. Core/runtime/SDK expensive closure checked once after each two-route batch by existing offline verifier BEFORE summaryPASS.",
+    "measurement_go": "Unchanged separate rootauthorized parent measurement manifest conditional on both terminalPASS + postbatch offline verification; no timing authority inferred from source/prototype/cohort-only GO",
+    "state": "Inputs/output alias/type/layout, immediate FP flags and full32caller restore/globalworkers/fallback preserved; installed singlecore/native markers genuine gate pending",
+    "getter_frontier": "MARK Python getter1; LBPgetter0 with prepare/binary/assign Creturns. Internal C++ snapshot remains source proof scope, not new direct per-call getter trace."
+  },
+  "helper": {
+    "source7": "Exact admitted F1 seven sourcepins reused; no old0c40 hash/path exemption",
+    "mode": "source-built-v1",
+    "prepare": "Existing source builder once separately on actual measurement host after genuine producer admission, before cohorts; external emitted receipt digest/library/toolchain/ABI/control identity authenticated",
+    "collector": "Both unchanged workflows recursively collect entire small helper bundle and sealed binding; compiler identity is not assumed to travel from qualification",
+    "actual_builds": 0
+  },
+  "tests": {
+    "initial_e4_prototype": {
+      "windows311": {
+        "exit_code": 0,
+        "seconds": 11.625,
+        "xml": {
+          "tests": 183,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "attempts": [],
+        "scientific_origins": [],
+        "original_calls": 0,
+        "helper_calls": 0,
+        "timed_batches": 0
+      },
+      "windows313": {
+        "exit_code": 0,
+        "seconds": 11.79193800012581,
+        "xml": {
+          "tests": 183,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "attempts": [],
+        "scientific_origins": [],
+        "original_calls": 0,
+        "helper_calls": 0,
+        "timed_batches": 0
+      }
+    },
+    "affected8c_source_closure": {
+      "windows311": {
+        "exit_code": 0,
+        "seconds": 0.40699999989010394,
+        "xml": {
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "attempts": [],
+        "scientific_origins": [],
+        "original_calls": 0,
+        "helper_calls": 0,
+        "timed_batches": 0
+      },
+      "windows313": {
+        "exit_code": 0,
+        "seconds": 0.5726211001165211,
+        "xml": {
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "attempts": [],
+        "scientific_origins": [],
+        "original_calls": 0,
+        "helper_calls": 0,
+        "timed_batches": 0
+      }
+    },
+    "scope": "183pure/inertnodes/version on e4 prototype, unchanged code/method/helper/report/C1 proof scope reused;8affected current8c projection/rawcanonical/inverse/UNBOUND-CLI nodes/version rerun normalconftest/plugins0science. Neither is genuine cohort/algorithm/performance or fullsource-readiness evidence.",
+    "new_controls": "Explicit MARK flattened fingerprint+source_before vs Radon nestedsource_before, real driver pass0 vs CLI1..8 AST/interfaces, exact predecessor controller inverse/current rawpins/casefreeze/allactualNULL checks",
+    "actionlint": "Both family workflowsPASS, optional external linters disabled; inline Python compile guards reused from183passing controls"
+  },
+  "proof_index": {
+    "path": "build/current275-family-measurement-v1/proof-index-v1.json",
+    "sha256": "0b660b8cf92ed77e9d5183a1590325a9cc1a065c332c9f0e31aaf1dac98142a6",
+    "count": 32,
+    "bytes": 119315
+  },
+  "author_gate": {
+    "path": "build/current275-family-measurement-v1/final-author-gate-v2.json",
+    "sha256": "4a06fe369bcd270a8e7c46165f48b54107455c6fa7fb4b390ef79d00fc37e9ff"
+  },
+  "workflow_registration": {
+    "source": "Root-reported main39b66274 registration only; no network/action performed byauthor",
+    "MARK_LBP_id": 409844802,
+    "Radon_id": 409844800,
+    "scope": "Manualworkflow registration is not runtime/execution authority; root controls any later source publication/binding/dispatch, no duplicate registration requested"
+  },
+  "gates": {
+    "scoped_source_interface_and_inert_controls": "PASS",
+    "preserved_oldcases_methods_C1_helper_schema": "PASS",
+    "root_independent_controller_admission": "PENDING",
+    "product8c_complete_source_barriers": "ROOT_OWNED_PENDING_NO_INFERENCE",
+    "exactsource_fourprofile_genuine_product_SDK_stager": "PENDING",
+    "actualproducer_runtime_core_SDK_hosthelper_rootbinding": "PENDING_ALL_UNBOUND",
+    "actualfirst_cohort_GOs_and_calls": "PENDING",
+    "conditional_parent_measurement_GO": "PENDING",
+    "publicone_thread_performance": "PENDING_NO_TIMING_OR_RETIME",
+    "fullAPI_Windows_provider_frontiers": "OPEN_AS_COMPONENTS"
+  },
+  "failures_preserved": [
+    "Olda744 Radon path-restoration failure d93/CHANGES_REQUIRED remains retained, f957 admittedsuccessor reused",
+    "Olde4 productcomplete3253/1readerFAIL sourcecampaign remainsFAILED; root corrected8c separately, never relabeled bycontroller",
+    "No pure/source command failed in this controllerpacket; paused e4WIP183proofs/checkpoint preserved, no abandon/replay"
+  ],
+  "waste_reuse": {
+    "reused": "3548/f957 existing controllers, helper7, currente4/8c source context shapes, all18Radon/15MARK function bodies, complete183node prototype proofs perversion; no newengine/framework/scheduler or binary/archive hashes.",
+    "necessary": "Current active contexts, source enums, strictSDK count guard and actual report/pass/frames required semantic interface review, not blindhash replacement.8c update affected only3extra metadata pins/projection and8source controls.",
+    "observed_cost": "Initial183nodes/version approximately12s; affected8nodes/version <1s; remaining smallsource/packagingcost not separately measured. No rerun to measure waste.",
+    "next_owner": "root independent controller admission then actualgenuine binding owner",
+    "next_trigger": "This frozenUNBOUND source may be reviewed while productqualification proceeds; actualexecution requires completeproductsource/genuine4profile/SDK/stager admissions, actualhosthelper and rootper-cohort/parentGO. Do not delay qualification waitingforgenuine fields inthispreparation.",
+    "plan_correction": "Reviewed; no product/sourcebarrier scheduling change. Manualworkflow registration must not be treated as authority."
+  },
+  "requirements": "Currentroot/applicableAGENTS, exclusive10familycontroller files only, preserve otherworkers/root source/readiness/scratch/main/plan/ledger/checklist. UTF8LF/whitespacechecked. No target/provider/original/helper/sampler/build/env/download/timing/hosted work.",
+  "authority": {
+    "original_calls": 0,
+    "native_calls": 0,
+    "provider_algorithm_calls": 0,
+    "helper_calls": 0,
+    "sampler_body_calls": 0,
+    "builds": 0,
+    "environments_created": 0,
+    "downloads": 0,
+    "timed_batches": 0,
+    "hosted_dispatches": 0,
+    "product_source_edits": 0,
+    "main_mutations": 0
+  },
+  "terminal_handles": "Both183 and8sourcecommands andActionlint terminal0; no author live scientific/hosted handle",
+  "next_owner": "root independent controller review",
+  "next_trigger": "ImmutableUNBOUND source/handoff; no genuine authority inferred"
+}

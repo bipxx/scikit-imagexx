@@ -1,0 +1,124 @@
+{
+  "schema": "variation-of-information-independent-review-v1",
+  "status": "PASS_SCOPED_PRIVATE_SAVED8_COMPONENT_FULL_API_AND_RELEASE_PENDING",
+  "source": "b331a559af038ef2231f5327b864627513bdc2d8",
+  "base": "3f5c6b1deba606b27bcc5fd0dca662f19166ac60",
+  "handoff": {
+    "path": "build/variation-of-information-v1/handoff-v1.json",
+    "sha256": "6a95087ca81d955aade678b4f6c303c7a3fc2aa36ac9375588d188406b67aaa2"
+  },
+  "authentication": {
+    "path": "build/variation-of-information-independent-review-v1/authentication-v1.json",
+    "sha256": "226244568ad529bda13c94672b9ac665aa2f40d3ac4a29f1ab35f48c0f66c4b8"
+  },
+  "ownership": "Only ignored review directory written. All12newfamilyfiles/frozenhandedbytes/shared/main leftunchanged. No tests or reviewedmodule imports executed.",
+  "passed_scoped_checks": [
+    {
+      "gate": "Exact source and retained proof authentication",
+      "evidence": "NativeWindowsGit clean b331,12addedfamilyfiles only,117smallproofs1,005,218bytes authenticated. No sharedregistry/build/workflow/main edits. Final component-v2 source identities match actualleaf/binder/header/frontend; reusedv1binder/header/frontend are exact unchanged bytes and only VIleaf changed."
+    },
+    {
+      "gate": "Pinned source order and saved words",
+      "evidence": "Retained29fdcanonical upstream read andauthenticated. Shapecheck is unconditional even suppliedtable. Pythonprefix reuses owned contingency path, followed by CSR row/column marginals, nonzero inverses, source-specific left/right diagonal products and duplicate summation in reverse firstcolumn encounter order, xlogx, serial reductions and marginal dot. Finalorder false-splits then false-merges. Seven2wordgoldens reconstructed directly from unchanged f931oldcontract; Noneimages AttributeError exactlegacytype/module/message retained."
+    },
+    {
+      "gate": "NaN correction source attribution",
+      "evidence": "Oldv2raw failure preserved: sixfinitePASS, allignored positiveNaN vs requirednegativeNaN. Retainedownnative intermediate diagnostic negativepx/py/entropies but positivedot isolates operation. Readonly DOUBLE_dot/OpenBLAS HASWELL smallN record loads right and multiplies left into right destination. Generic GNUx86_64 mulsd inlineasm follows that destination for every coefficient. No caseID/size/goldvalue/NaN branch, tolerance, copysign, outputconstant/post-FPmask or wholeprovider entropy escape. NonGNU fallback right*left is a finite proposal; oppositeNaN/platform/large-dot association remains unproved. Missing diagnostic argv explicitly disclosed, not reconstructed or replayed."
+    },
+    {
+      "gate": "Retained public outcomes",
+      "evidence": "Independently compared64actualobservations (8rows*2workerbudgets*4profile/modecells) to oldfullsavedrows, dictionary-equal without normalization: rawpayload/dtype/shape/strides/owning/base/alias/input+tablecache mutation/errors/warnings/NumPypolicy/callbacks.112XMLchecks=28/cell, zero failures/errors/skips/originalrequests. Guards forbid original/import/imageprovider and monkeypatched sparse matmul/NumPylog prevent entropy provider use. One assembled private core owns VI+counts+worker runtime; not actual publicnamespace/hotswap/defaultregistered production."
+    },
+    {
+      "gate": "Native scalar/control/sanitizer/globalbudget",
+      "evidence": "Normal/compiler-scalar/ASan+UBSan each21rawsaved outcomes (7*workers0/1/4) and9controls pass. Scalar flags actually disable compiler tree/SLP/OpenMPvectorization; scalar SSE multiply is deliberate percoefficient orderedFP, not claimed AVX throughput. Returnvalues capturedworkers checks/default1/restore1, malformedinput/sNaN/Inf/negative/nooutputmutation/refusalflag preservation and nonnearest refusal retained. Newleaf+unit instrumented; old runtime/donor partly uninstrumented, so no wholeproduct sanitizer claim."
+    },
+    {
+      "gate": "CSR bounds, ownership, ordering and provider boundaries",
+      "evidence": "Typedheader requires caller-owned stable spans and explicit capacities; rows/columns/nnz capped2^20. Native validatesindptr0/end/monotonic/negative/index bounds before traversal; bitclassifies sNaN/Inf/negative before FP arithmetic. Buffers read-only; output assigned only after success. Binder enforces1Dnativealignedcontiguous f64/i64 spans, lengths/storage and retains argument objects across releasedGIL. SuppliedCSR caches never sorted/mutated; private controls retain bytes and flags. Ordered entropy stays serial; imageSDK overload captures workers0 once and passes positive to count+entropy. Public Python count/provider and entropy phases read globalbudget separately around possible callbacks: no wholecall immutable-snapshot claim, callback/concurrent domains open."
+    },
+    {
+      "gate": "Explicit NumPy/SciPy computation disposition",
+      "evidence": "NumPy shape/protocol/dtype/copy/alignment/ignore-membership and weightnormalization plus SciPy class/index/storage are disclosed providers; unassessed coordinate-construction/coalescing suffix remains SciPy computation. Native owns VIentropy/log/reduction/coalescing/dot; no originalmetric or providerentropy forwarding. Private observedintegerimage recipes reach ownedpreweighted count path. Unsupported ordinary dtype/table/FENV/structured/externalprotocol domains refuse or remain unassessed, not silently counted native/fullparity."
+    },
+    {
+      "gate": "Installed component SDK and platform scope",
+      "evidence": "Actual relocated find_package(skimagexx) client uses exportedskimagexx::skimagexx, installed VI+labelpair headers (deps prove no sourceinclude leak), newleaf extracted from installedarchive and required label_pair_counts symbol resolves from olddonor.6completeimage/CSR controls eachnormal+runtime-disable PASS. Header LabelPairInput/LabelPairCsr/requireddeclarations prefix matches currentABI. Donor95 counts source is NOT byteexact currentdensity implementation; tested6pixel imagecases cannot take currentdense gate, so their packed-key and ordered normalization operations match semantically only. No currentlargerdense or whole105SDK/genuine proof.4MSVCTUs compile only; no Windows signedNaN/log/runtime parity."
+    },
+    {
+      "gate": "Pure source and prospective benchmark scope",
+      "evidence": "11sourceguards/version on retainedWin311/313, normalconftest/plugins and0scientificrequests/imports. Fourbounded dense/strided public benchmarkcases, Montage7/100ms/250warm/worker1/method/alllosspolicy source-only. Driver refuses UNBOUND before scientificrequest even cached. No executablebound comparison adapter, realcohort, larger-case referenceparity or timing exists."
+    }
+  ],
+  "findings": [],
+  "required_changes_for_this_scoped_component": [],
+  "SDK_dependency_disposition": {
+    "required_ABI_prefix_compatible": true,
+    "required_symbol": "detail::label_pair_counts(LabelPairInput const&,LabelPairCsr&,int)",
+    "required_symbol_resolved_in_retained_map": true,
+    "old_counts_not_current_source": true,
+    "current_counts_difference": "Current shipped source adds dense histogram path and factors packed-key preparation; SDK95 donor is oldcounts. All saved image recipes have6pixels and rows*columns>=6>6//4; current dense gate false, so their reachable packed-pair/ordered normalization operations match old path semantically. Larger/dense current-count integration not tested here.",
+    "whole105SDK": false,
+    "genuine": false,
+    "normal": "SDK VI complete controls=6 workers=1,4 restored=1 available=1 originals=0 timing=0\n",
+    "disabled": "SDK VI complete controls=6 workers=1,4 restored=1 available=0 originals=0 timing=0\n"
+  },
+  "limits": {
+    "advertised_registered_API": false,
+    "full_API_parity": false,
+    "genuine_product": false,
+    "whole_current105SDK": false,
+    "Windows_runtime_parity": false,
+    "one_thread_original_performance": false,
+    "hardware_FP": "Old8reference rows contain NumPy softwarepolicy/handler evidence but no target-immediate full32/x87/MXCSR input/output witness. Nearest/masked/gradual validation/refusal controls do not close hardwareFP parity. No maskingafter computation introduced.",
+    "accuracy": "0ULP means exactly the7observed numeric outputs plus one exacterror perprofile only. std::log2 vs NumPy/backend, larger reductions, different BLAS/ISA, signedNaN precedence and nonfinite/half/cast/platform domains remain unassessed."
+  },
+  "pending": [
+    {
+      "gate": "Root independent scoped admission",
+      "owner": "root",
+      "trigger": "Accept exactb331source+thisreceipt andretainoldcompile/NaNfailures. Sourcecomponent only, not registration/release."
+    },
+    {
+      "gate": "Selective shared integration and exact current dependency closure",
+      "owner": "sole assigned sharedintegrator then root",
+      "trigger": "Add actualmetrics namespace/registry/binder/CMake/installedSDK/qualificationselectors/defaultdtype/provider policy. Use currentshipped labelpair primitive and establish affected imageSDK/public/native dependency proof; olddonor95 cannot stand in for finalcurrentwholeproduct. Do not delay current275 for thisfuturelane."
+    },
+    {
+      "gate": "FullAPI/domain/backend/platform/FENV closure",
+      "owner": "familyworker under explicitrootfollowup",
+      "trigger": "Assess broad CSR sizes/duplicate/order/nonfinite/dtypes/errors/protocols/libm/BLASassociation and floatingstate with source-safe newwitness/authority if needed. Current8rows do not authorize new originalcalls or fullaccuracyclaim. WindowsMSVCcompile not runtime admission."
+    },
+    {
+      "gate": "Genuine exact-source fourprofile SDK/hotswap/globalownership release",
+      "owner": "root",
+      "trigger": "Fullsourcebarriers bothsupportedPythons then genuinewholecore/installedexportSDK/currentheaders/105oractualsource-derived census, strictdefaults/aliases/globalbudget and independentadmission."
+    },
+    {
+      "gate": "Executablebenchmark and one-thread public original performance",
+      "owner": "assigned familybenchmark author then root",
+      "trigger": "Future versionedgenuine/runtime/helper/source/contextbinding, publicparity largecases, zero-timingcohorts, separate timingGO, rawreconstruction/alllosses before any performance/release claim."
+    }
+  ],
+  "failure_history_and_waste": {
+    "preserved": "v1missingnamespacebrace stopped compile, no numericalcredit; v2signedNaNmismatch retainedfailed; v3genericoperand-order correction and finalvalidation controls reuse scoped successes. Oldpublicv1/sourcev1 records remain, finalv2 scopes authenticated.",
+    "preventable": "Missingbrace compile was avoidable setup. FailedNaN experiment is useful rejected numericalevidence isolating a real backend operand-order mismatch, not favorabletimingreplay.",
+    "review_reuse": "Existing117smallreceipts, actual64publicrecords and old16reference outcomes reviewed once without running tests/science/helper/native/build/timing/download or rehashing ELF/core/archive. Current/old source and ABI compared read-only; no full SDK campaign.",
+    "cost": "Aggregate author/reviewer wall/CPU unknown; retained per-command timing reused, no rerun to measure waste. Independent small-auth command0.65s, no failedreviewcontrol."
+  },
+  "execution_now": {
+    "tests": 0,
+    "reviewed_module_imports": 0,
+    "science": 0,
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "build": 0,
+    "timing": 0,
+    "download": 0,
+    "archive_core_binary_hash": 0,
+    "hosted": 0
+  },
+  "next_owner_trigger": "Root records scopedPASS/component-domain limits in existingVIpacket/plan/ledger/checklist, then chooses futureselectiveintegration; no main/source edit or next implementation authorized by this review. CurrentC275criticalpath/floodreadiness remainindependent.",
+  "terminal": "Review terminal; no live jobs created. Root retains finaladmission/integration/main/delivery authority."
+}

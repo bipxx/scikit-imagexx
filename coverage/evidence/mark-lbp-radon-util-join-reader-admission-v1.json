@@ -1,0 +1,48 @@
+{
+  "schema": "mark-lbp-radon-util-join-reader-root-admission-v1",
+  "status": "PASS_METADATA_ONLY_SUCCESSOR_FOR_REQUIRED_COMPLETE_BARRIER_RETRY_NOT_READINESS",
+  "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "predecessor": "e4af88887ad74ab17f01b6055840df7ca98b843a",
+  "handoff_sha256": "378e285ef678ac6ca744b6acec2969eb1b443c11f9a575fd9b7b9e5de84169ff",
+  "predecessor_source_admission_sha256": "caadd40a7c84f4b3504e6d67f78cc6fb4c2e9faecd7b04d9f223ec623b79d286",
+  "failed_complete_campaign": {
+    "path": "build/mark-lbp-radon-util-complete-barrier-failure-v1/admission-v1.json",
+    "sha256": "2e49c3a5cf88157682890225139a53a8b172853c176de67f1899bdf0657e67d2",
+    "status": "Both e4completebarriers3253XML/1FAIL remainfailed"
+  },
+  "root_review": [
+    "Exact3file delta only: sourceguard composes authenticated current61->capturedinput predecessor c3 before unchanged Windowsc3->c113 inverse and opaqueadapter9472 checks; actual currentpublicfixture/golds/asserttail/native/binder/SDK bytes untouched.",
+    "Root executed only the extracted pure current-source projection+same previously failed guard using trustedsourcebytes; full authenticated inverse/adapter check passes with no scientific imports or FP/helper calls.",
+    "Meaningful badbyte/removedFENVassertion refusals and sourceclosed collector/linkcontext checks passed10affectedtests eachretainedPython withnormalplugins. All oldrawcontracts pinned and unchanged, no hashsubstitution/waiver.",
+    "Read complete10literal-reader intake. Newcontext is explicitly source-collected; exactsource workflow command remains140selectors. Source/public150 counts are different."
+  ],
+  "scoped_evidence": {
+    "files": 3,
+    "smallproofs": 15,
+    "proofbytes": 28523,
+    "source_tests_each_retained_Python": 10
+  },
+  "reuse": "All prior independent shared84c+exportc9ac/caad source scopes and1128saved/144metadata/scalar-sanitizer-SDK proof unchanged/reused; no numerical/SDK/compile/sourceFP replay.",
+  "mandatory_next": "Execute COMPLETE actual140source-selector command bothretainedWindowsPython3.11.11/3.13.14, normalconftest/plugins/no fail-fast/science0, on8c4source intoNEWreadiness-v2/scratch-v2. Oldfailedoutputs remainimmutable. Partialpasses/collection/union cannotclose readiness.",
+  "pending": [
+    "Bothnewcompletebarriers actualPASS/sourceclean/fullXML/IDs/plugins",
+    "Then source/branch/space/workflow livepreconditions and one genuine fourprofile qualification",
+    "Actual root SDK/core/runtime/stager admission, separateboundcontroller/cohort/timing/main delivery",
+    "Full477/API/class/domain/provider/platform scope remainsopen"
+  ],
+  "execution": {
+    "scientific_calls": 0,
+    "originals": 0,
+    "native": 0,
+    "helper": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0
+  },
+  "waste_review": {
+    "avoidable": "One historical rawfile/hash reader missed at firstintegration; actualcompletebarrier exposed it. Newsource audit scoped all10readers beforefix, notjustprimaryfamily module.",
+    "reuse": "Small source-reader/context fix, scientific evidence remains valid exactscope; no producer/timing replay.",
+    "next_owner": "root complete140both-version barrier",
+    "next_trigger": "Passingactualnewterminals before anyhosted preparation/qualification, not unchangedretry."
+  }
+}

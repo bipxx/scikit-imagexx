@@ -1,0 +1,75 @@
+{
+  "schema": "mark-lbp-radon-util-complete-barrier-failure-v1",
+  "status": "FAILED_BOTH_COMPLETE_SOURCE_BARRIERS_HOSTED_DISPATCH_FORBIDDEN",
+  "source": "e4af88887ad74ab17f01b6055840df7ca98b843a",
+  "source_admission_sha256": "caadd40a7c84f4b3504e6d67f78cc6fb4c2e9faecd7b04d9f223ec623b79d286",
+  "profiles": {
+    "windows311": {
+      "exit": 1,
+      "XML": {
+        "tests": 3253,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "collected_ids": 3245,
+      "seconds": 302.7819999998901,
+      "failure": {
+        "node": "tests.test_join_windows_fenv::test_current_fixture_exact_predecessor_projection_and_adapter",
+        "kind": "failure",
+        "text": "def test_current_fixture_exact_predecessor_projection_and_adapter():\n        c=json.loads((ROOT/'coverage/contracts/join-windows-fenv-fixture-v1.json').read_bytes())\n        raw=(ROOT/c['public_test_path']).read_bytes()\n>       assert hashlib.sha256(raw).hexdigest()==c['current_raw_sha256']\nE       AssertionError: assert '61e39857131a...785cd874cc30e' == 'c3fbd2964118...9e989ea1810a9'\nE         \nE         - c3fbd2964118f35b09665cc727663432b5cd89970abb96835799e989ea1810a9\nE         + 61e39857131ac15513cf628d51f96658871f8ec30da571902ab785cd874cc30e\n\ntests\\test_join_windows_fenv.py:18: AssertionError"
+      },
+      "command_sha256": "3b423b781e873f2a6483e316f9b8df01c6dabaabe131f1b3e3b3cc8e01a0ae85",
+      "terminal_sha256": "2568c7fa3c274a51463d40b0ff55d5a83e51902eda5cfd7303ace99c9651cd0e",
+      "XML_sha256": "d640ac9d48f0af81ba4b3f7fc0930173173914fafd328095d288c16a1905888b",
+      "normal_conftest": true,
+      "normal_plugins": true,
+      "source_clean": true,
+      "science": 0
+    },
+    "windows313": {
+      "exit": 1,
+      "XML": {
+        "tests": 3253,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "collected_ids": 3245,
+      "seconds": 277.1842948999256,
+      "failure": {
+        "node": "tests.test_join_windows_fenv::test_current_fixture_exact_predecessor_projection_and_adapter",
+        "kind": "failure",
+        "text": "def test_current_fixture_exact_predecessor_projection_and_adapter():\n        c=json.loads((ROOT/'coverage/contracts/join-windows-fenv-fixture-v1.json').read_bytes())\n        raw=(ROOT/c['public_test_path']).read_bytes()\n>       assert hashlib.sha256(raw).hexdigest()==c['current_raw_sha256']\nE       AssertionError: assert '61e39857131a...785cd874cc30e' == 'c3fbd2964118...9e989ea1810a9'\nE         \nE         - c3fbd2964118f35b09665cc727663432b5cd89970abb96835799e989ea1810a9\nE         + 61e39857131ac15513cf628d51f96658871f8ec30da571902ab785cd874cc30e\n\ntests\\test_join_windows_fenv.py:18: AssertionError"
+      },
+      "command_sha256": "4df2be9f149e2834e0749da06f1d3b0427b1766d680b93b3edac820bbae97920",
+      "terminal_sha256": "671b894e994baee978093c6725c0c8306ec552a181d448f18bfb5a2e64e00f20",
+      "XML_sha256": "9890b67f9ea1863e4154e3f6be1a53b4ab9618252b7966d320adf0ef091b6da4",
+      "normal_conftest": true,
+      "normal_plugins": true,
+      "source_clean": true,
+      "science": 0
+    }
+  },
+  "selector_scope": "Exact complete140unique source selectors, normalconftest/plugins/no failfast; notpartial-union",
+  "failure_scope": "Historical Windows JOIN fixture sourceguard pins rawc3fbd296...; admitted e03 captured-input fixture extends samepublictest to raw61e39857... . Newactive source test/inverse reader didnotcompose that historical literal dependency. This is a sourceguard failure, no numerical output or Windows runtime failure.",
+  "retained": "Both failed full commands/XML/log/plugins/IDs and prior0e17 export review remain immutable. Sourceadmission allowed completechecks, notdispatch; no hosted campaign started.",
+  "required": "C versioned source-reader/context successor preserving bothhistoricalpins and authenticcaptured-input/currentWindowsadapter proof; sourcebyte/test metadata only, reuse unchanged numerical/SDK evidence. ROOT review then rerun COMPLETE affected140command BOTHversions onnewsource before hostedqualification.",
+  "execution": {
+    "scientific_calls": 0,
+    "originals": 0,
+    "native": 0,
+    "helper": 0,
+    "timing": 0,
+    "hosted_dispatches": 0
+  },
+  "waste_review": {
+    "avoidable": "One literal file/hash dependency omitted from author affected-module closure. Full normal-command barrier caught it before50minute hostedcampaign; no scientific evidence invalidation.",
+    "observed_process_seconds": {
+      "windows311": 302.7819999998901,
+      "windows313": 277.1842948999256
+    },
+    "next_owner": "metrics_integrator source-reader fix; root independentdelta+completebarriers",
+    "next_trigger": "Frozen newsource/affectedsourceguard proofs, notunchanged retry or pin-waiver."
+  }
+}

@@ -96,6 +96,20 @@ These rows describe bounded evidence, not additional shipping coverage. Main rem
 | `util.crop`, `util.slice_along_axes` (copy), `util.view_as_blocks`, `util.view_as_windows` | Candidate `f48fe19edeb336163249383d61a51b186ca610fa`; frozen component handoff and independent peer review retained. Private evidence reports 584 saved nodes in each of four profile/mode combinations; scalar/sanitizer evidence covers changed leaf/assembled SDK only. | [Root scoped component admission](evidence/util-view-boundary-root-admission-v1.json) passes. Dependent LBP copy closure, shared integration, genuine qualification and measured performance remain pending. Borrowed crop/slice and regular-grid paths are unchanged; copied slice shares the optimized POD copier. |
 | `transform.frt2`, `transform.ifrt2` | [Exceptional source admission](evidence/finite-radon-exceptional-source-admission-v1.json) and [raw admission v2](evidence/finite-radon-exceptional-raw-admission-v2.json): four fixed NaN/Inf recipes per profile, eight original calls consumed once; no native parity inferred from capture. | [Root exceptional-cast component admission](evidence/finite-radon-exceptional-native-admission-v1.json) passes on `1855377b4baea97293bc7eeb5cb8e2236ac427fc`: 1,344 strict saved worker/mode comparisons plus scoped SDK checks. Wider domains/platforms, genuine hot swap/whole installed SDK, benchmark binding and actual one-thread results remain pending. Old native evidence remains scoped to its captured domain. |
 
+## Current candidate and next-family gates
+
+Reconciled 2026-11-06 against retained receipts. These are scoped checkpoints, separate from the shipping snapshot and full-contract boxes below.
+
+| API / increment | Passed or retained evidence | Pending coverage / next owner |
+|---|---|---|
+| MARK, multiblock LBP, finite Radon; JOIN and utility optimizations | Cumulative candidate `8c4fb4307746a0eb5fac5d125b6384fa80e88621`: 275 partial image paths, 222 product files, 105 SDK files. [Root reader-fix admission](evidence/mark-lbp-radon-util-join-reader-admission-v1.json) preserves the historical JOIN fixture pins. Both complete source-barrier terminals report 3,255 XML checks, zero failures/errors/skips, zero scientific imports/calls and clean source: [Python 3.11](evidence/mark-lbp-radon-util-sourcebarrier-windows311-v2.json), [Python 3.13](evidence/mark-lbp-radon-util-sourcebarrier-windows313-v2.json). Actual complete source scope is **140 selectors**; 150 denotes numerical/public contract entries. | Root admission of the complete command/configuration/selector evidence remains pending. Then exact-source four-profile qualification, genuinely installed SDK/hot swap, actual one-thread public measurements, admission and delivery. Terminal summaries alone do not close release. Main stays 271. |
+| Earlier cumulative candidate | [Failed complete source barriers](evidence/mark-lbp-radon-util-sourcebarrier-failure-v1.json) each retained one historical JOIN literal-reader failure. Earlier `0e17d061` also omitted Radon star exports; the export and subsequent reader corrections are versioned successors. | Preserve failures; reuse unchanged numerical evidence only within its valid dependency scope. No relabeling or unchanged retry. |
+| MARK / LBP / Radon benchmarks | [Author handoff](evidence/current275-family-measurement-handoff-v1.json), source `95e64f135c7d3d8cbef7c8acb543ed31ea86c079`, aligns controllers with candidate `8c4fb430`. Retained 183 prototype checks and 8 affected checks per Python; timing and genuine authority fields are unbound. | Independent controller admission, actual qualified producer/runtime/core/SDK/helper binding, real entry cohorts and separate measurement authority. Workflow registration is not a performance result. Owner: root. |
+| `metrics.variation_of_information` | [Independent scoped review](evidence/variation-of-information-independent-review-v1.json), source `b331a559af038ef2231f5327b864627513bdc2d8`: 8 original saved cases per profile, 64 exact public observations, 112 private XML checks; scoped native scalar/sanitizer and assembled SDK evidence. Prior compile and NaN-sign failures retained; ordered multiply corrects demonstrated operand precedence. | Root admission and integration with current count dependencies; broad dtype/layout/table/error/FP/backend/platform parity, current whole installed SDK, genuine hot swap and original-public one-thread performance. Donor SDK95/old counts do **not** prove current density paths or SDK105. No shipped API promotion. |
+| `morphology.flood`, `morphology.flood_fill`; `segmentation` aliases | [Independent zero-body readiness review](evidence/flood-fill-readiness-independent-review-v1.json), source `7c14ee863934a2a6c5370d0ca699d3d299fba166`: bounded source/geometry, 96 recipes per profile, exact caller restoration and entry refusal controls. | Root readiness admission and separate reference authorization; original outcomes, native implementation, parity, complete SDK, workers/SIMD applicability, hot swap, benchmarks and release all remain pending. Four public names share two canonical operations; no duplicate algorithm credit. |
+
+The utility-to-LBP copy dependency is privately checked in the cumulative candidate (1,128 saved comparisons and 144 metadata controls), superseding the earlier pending private-dependency wording above. It does not establish genuine installed-product closure. No new scientific execution was started to update this checklist.
+
 ## Module index
 
 Counts are shipping inventory classifications, not full-contract completion percentages.
@@ -1209,6 +1223,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Easiest remaining route: Draw fixed nine-block LBP overlay through rectangle/alpha primitives.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
   - Current private gate: [Saved original admission](evidence/draw-multiblock-lbp-saved-raw-admission-v1.json) covers 94 cases per profile. [Independent private-component review](evidence/draw-multiblock-lbp-native-independent-review-v2.json) covers source 0e51dbc1e2c4741e243a91652d8c0b9771c96363: 1,128 target comparisons across two profiles, three scalar/SIMD modes and workers 1/4 pass. Of these, 1,048 complete records match and 80 differ only in post-return JSON collector MXCSR diagnostics, retained explicitly. Target FP and exact caller restoration remain strict. [Root scoped component admission](evidence/draw-multiblock-lbp-native-root-admission-v2.json) passes. [Private integration source/ABI review](evidence/draw-multiblock-lbp-private-integration-admission-v1.json) and [immutable handoff reconciliation](evidence/draw-multiblock-lbp-private-handoff-reconciliation-v1.json) pass in their scoped checks; the qualifier rejects the temporary conditional install rule, so genuine qualification is not passed. Normal enabled MARK/LBP integration is frozen at `2991881411972e6266f7e132c9dca8b7226a8567`; [root shared-source admission](evidence/mark-lbp-enabled-root-source-admission-v1.json) and [complete source barriers](evidence/mark-lbp-enabled-source-readiness-v1.json) pass (3,168 tests plus 8 subtests per retained Python). [Failed four-profile campaign admission](evidence/mark-lbp-enabled-failure-admission-v1.json) for299/run42280271105 preserves 956,246 XML checks with 48 identical LBP grayscale dtype-metadata failures (12 per profile), zero errors/skips, and 272 passing SDK checks. [Root-admitted binder correction](evidence/draw-multiblock-lbp-metadata-fix-admission-v1.json) at99d6c428 passes 1,128 saved target comparisons and 144 private metadata checks; it is entering shared integration. New genuine qualification and performance remain pending; no unchanged retry. Shared genuine core/installed SDK, full domains/platforms, one-thread original-public performance and delivery remain open. [Executable LBP benchmark source](evidence/lbp-benchmark-source-admission-v1.json) passes scoped independent review: 97 source/zero-body controls per Python, fixed four LBP cases and eight MARK cases through reused binding/F1/sampler logic. Actual genuine binding, outer cohorts and timing remain pending.
+  - Current scoped progress: Candidate `8c4fb430` includes admitted dtype-metadata repair `99d6c428` and private utility-copy dependency checks. Failed four-profile predecessor stays failed; successor genuine/performance/delivery remain pending.
 
 
 <a id="api-feature-fisher-vector"></a>
@@ -2863,6 +2878,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: image versus table input, ignore_labels, zeros and result order. Cases to close: merge/split partitions with known conditional entropies.
   - Easiest remaining route: Reuse normalized contingency counts and conditional entropy reductions.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current scoped progress: Private `b331a559` independent scoped review passes; see current-candidate table. Current dependency integration, broad parity, genuine installed SDK/hot swap and one-thread original benchmark remain pending.
 
 </details>
 
@@ -3022,6 +3038,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: seed bounds, tolerance promotion, connectivity versus footprint and NaN. Cases to close: exact/tolerant 2D/3D connected regions.
   - Easiest remaining route: Queue-based connected tolerance predicate from seed using shared offsets.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current scoped progress: Source/readiness `7c14ee86` independently reviewed with zero original bodies; see current-candidate table. References, native/parity/SDK/hot-swap/performance/release remain open; aliases share canonical operations.
 
 <a id="api-morphology-flood-fill"></a>
 - [ ] **`morphology.flood_fill`** — full contract closed.
@@ -3030,6 +3047,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: in_place, new_value casting, overlap and return identity. Cases to close: typed replacements and in-place aliases.
   - Easiest remaining route: Reuse flood mask then dtype-correct replacement into copy or original.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current scoped progress: Source/readiness `7c14ee86` independently reviewed with zero original bodies; see current-candidate table. References, native/parity/SDK/hot-swap/performance/release remain open; aliases share canonical operations.
 
 <a id="api-morphology-footprint-from-sequence"></a>
 - [ ] **`morphology.footprint_from_sequence`** — full contract closed.
@@ -3501,6 +3519,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: seed bounds, tolerance promotion, connectivity versus footprint and NaN. Cases to close: exact/tolerant 2D/3D connected regions.
   - Easiest remaining route: Exact alias of morphology.flood; reuse its route: Queue-based connected tolerance predicate from seed using shared offsets. No extra algorithm credit..
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current scoped progress: Source/readiness `7c14ee86` independently reviewed with zero original bodies; see current-candidate table. References, native/parity/SDK/hot-swap/performance/release remain open; aliases share canonical operations.
 
 <a id="api-segmentation-flood-fill"></a>
 - [ ] **`segmentation.flood_fill`** — full contract closed.
@@ -3510,6 +3529,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: in_place, new_value casting, overlap and return identity. Cases to close: typed replacements and in-place aliases.
   - Easiest remaining route: Exact alias of morphology.flood_fill; reuse its route: Reuse flood mask then dtype-correct replacement into copy or original. No extra algorithm credit..
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current scoped progress: Source/readiness `7c14ee86` independently reviewed with zero original bodies; see current-candidate table. References, native/parity/SDK/hot-swap/performance/release remain open; aliases share canonical operations.
 
 <a id="api-segmentation-inverse-gaussian-gradient"></a>
 - [ ] **`segmentation.inverse_gaussian_gradient`** — full contract closed.
@@ -3526,6 +3546,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: dtype overflow, mapping objects, return_mapping and zero labels. Cases to close: sparse huge label pairs and mapping round trips.
   - Easiest remaining route: Pair-label encode then stable sequential relabel with inverse mappings.
   - Evidence locators: parity [tests/test_join_segmentations_integration.py](../tests/test_join_segmentations_integration.py); benchmark [benchmarks/join_segmentations.py](../benchmarks/join_segmentations.py).
+  - Current scoped progress: Candidate `e03a0063`, composed in `8c4fb430`; captured-input private matrix admitted. Arbitrary incoming flags, returned-class domains, genuine integration and new performance pending; eight shipped losses retained.
 
   - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
   - Optimization candidate: [e03 captured-input private matrix admission](evidence/join-segmentations-matrix-admission-v2.json) passes 252 XML checks and 200 saved rows; authentic numerical incoming states and explicit metadata-only setup are the scope. Returned-class/full-FP/shared genuine/performance gates remain open; eight earlier losses are preserved.
@@ -3538,6 +3559,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Easiest remaining route: Reuse find_boundaries and color overlay with optional outline.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
   - Current private gate: [Saved original admission](evidence/mark-boundaries-saved-raw-admission-v2.json) covers 125 cases per profile (250 complete observations, 251 consumed calls including the retained failed attempt). One separately authorized fixed-codec witness closed the structured-error gap; no successful original rows were replayed. [Independent native successor admission](evidence/mark-boundaries-fp-successor-admission-v1.json) passes on source 6d4373b5720b5ee959c1d313e14e3d8f754085e4 for 1,500 saved worker/mode comparisons (125 cases per profile, workers 1/4, normal/disabled/scalar), including strict tiny-color target FP. Small RHS palette assignment remains explicit NumPy provider work. Genuine installation, platform/domain closure, one-thread original-public performance and delivery remain open. [Executable benchmark source review](evidence/mark-boundaries-benchmark-source-admission-v1.json) and [handoff reconciliation](evidence/mark-boundaries-benchmark-handoff-reconciliation-v1.json) pass on 446bde47e7462278389c0a87affb881ed775f1ec: 52 source/zero-body controls per Python, fixed 8 cases, no actual targets or timings. Genuine binding, outer first-cohort and separate timing GO remain pending.
+  - Current scoped progress: Candidate `8c4fb430`; scoped native/reference evidence above. Complete source terminals pass; exact-source genuine qualification, public performance and delivery remain pending.
 
 
 <a id="api-segmentation-morphological-chan-vese"></a>
@@ -3700,6 +3722,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
   - Current private gate: [Source/storage admission](evidence/finite-radon-source-storage-admission-v1.json) at d2109de2a0b7f07e27f0a892585cd7414e36bfbf: 54 recipes for this API, bounded factory/protocol scope only. [Controller admission](evidence/finite-radon-controller-admission-v1.json) and [saved-raw admission](evidence/finite-radon-saved-raw-admission-v1.json) now cover 108 original observations per profile (216 total consumed once, 61 returns and 47 errors per profile), preserving four runtime error-class differences. [Observed native admission](evidence/finite-radon-observed-native-admission-v2.json) at ee639c0c passes 1,296 strict saved comparisons (108 cases/profile, workers 1/4, normal/disabled/scalar), with target control/status/MXCSR and exact caller32 preserved. Scoped assembled SDK has 244 successful gold comparisons per mode; MSVC is compile-only. Wider exceptional casts/cancellation/half/object/temporal/protocol/platform domains, genuine hot swap/whole installed SDK and public one-thread performance remain open.
   - Candidate extension: [1855377b observed exceptional-cast component](evidence/finite-radon-exceptional-native-admission-v1.json) adds four NaN/Inf recipes per profile across both Radon APIs; all 1,344 old/new worker/mode comparisons pass. Other exceptional widths, payloads and positions remain open; no genuine/public performance credit.
+  - Current scoped progress: Candidate `8c4fb430` includes exceptional-cast component `1855377b` and corrected star exports; saved-domain evidence above. Full domains, genuine SDK/hot swap and public performance pending.
 
 <a id="api-transform-hough-circle"></a>
 - [ ] **`transform.hough_circle`** — full contract closed.
@@ -3750,6 +3773,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
   - Current private gate: [Source/storage admission](evidence/finite-radon-source-storage-admission-v1.json) at d2109de2a0b7f07e27f0a892585cd7414e36bfbf: 54 recipes for this API, bounded factory/protocol scope only. [Controller admission](evidence/finite-radon-controller-admission-v1.json) and [saved-raw admission](evidence/finite-radon-saved-raw-admission-v1.json) now cover 108 original observations per profile (216 total consumed once, 61 returns and 47 errors per profile), preserving four runtime error-class differences. [Observed native admission](evidence/finite-radon-observed-native-admission-v2.json) at ee639c0c passes 1,296 strict saved comparisons (108 cases/profile, workers 1/4, normal/disabled/scalar), with target control/status/MXCSR and exact caller32 preserved. Scoped assembled SDK has 244 successful gold comparisons per mode; MSVC is compile-only. Wider exceptional casts/cancellation/half/object/temporal/protocol/platform domains, genuine hot swap/whole installed SDK and public one-thread performance remain open.
   - Candidate extension: [1855377b observed exceptional-cast component](evidence/finite-radon-exceptional-native-admission-v1.json) retains owned inverse-prefix typed errors and strict FP/policy evidence for the four-recipe/profile extension shared with frt2. Wider exceptional domains, genuine installation and performance remain open.
+  - Current scoped progress: Candidate `8c4fb430` includes exceptional-cast component `1855377b` and corrected star exports; saved-domain evidence above. Full domains, genuine SDK/hot swap and public performance pending.
 
 <a id="api-transform-integral-image"></a>
 - [ ] **`transform.integral_image`** — full contract closed.
@@ -3957,6 +3981,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: scalar/tuple widths, negative/large crops, order and memory sharing. Cases to close: asymmetric N-D crops and C/F/negative strides.
   - Easiest remaining route: Return slice view or requested-order copy after crop-width normalization.
   - Evidence locators: parity [tests/test_util_metadata_integration.py](../tests/test_util_metadata_integration.py); benchmark [benchmarks/crop.py](../benchmarks/crop.py).
+  - Current scoped progress: Optimization `f48fe19e`, composed in `8c4fb430`; private component and dependent LBP checks retained. Genuine candidate qualification and fresh public performance acceptance pending; shipped losses retained.
 
   - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
   - Optimization candidate: [f48 scoped root admission](evidence/util-view-boundary-root-admission-v1.json) covers strided POD copy correctness; borrowed views unchanged. Dependent LBP/shared genuine/performance gates remain open; earlier eight benchmark losses are preserved.
@@ -4098,6 +4123,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: duplicate/negative axes, bounds and sharing. Cases to close: reordered/negative axes and copy flags.
   - Easiest remaining route: Normalize axes/slice pairs then return view or copy.
   - Evidence locators: parity [tests/test_util_views_integration.py](../tests/test_util_views_integration.py); benchmark [benchmarks/slice_along_axes.py](../benchmarks/slice_along_axes.py).
+  - Current scoped progress: Optimization `f48fe19e`, composed in `8c4fb430`; private component and dependent LBP checks retained. Genuine candidate qualification and fresh public performance acceptance pending; shipped losses retained.
 
   - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
   - Optimization candidate: [f48 scoped root admission](evidence/util-view-boundary-root-admission-v1.json) covers the shared copier used by copied slices; borrowed slices unchanged. Genuine integration and new performance remain open; earlier eight losses are preserved.
@@ -4117,6 +4143,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: divisibility, dimensionality, contiguous assumptions and write sharing. Cases to close: C/F/noncontiguous arrays and block mutation.
   - Easiest remaining route: Construct validated reshape/strided block view.
   - Evidence locators: parity [tests/test_util_views_integration.py](../tests/test_util_views_integration.py); benchmark [benchmarks/array_views.py](../benchmarks/array_views.py).
+  - Current scoped progress: Optimization `f48fe19e`, composed in `8c4fb430`; private component and dependent LBP checks retained. Genuine candidate qualification and fresh public performance acceptance pending; shipped losses retained.
 
   - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
   - Optimization candidate: [f48 scoped root admission](evidence/util-view-boundary-root-admission-v1.json) covers cached actual-platform integer metadata with existing validation/protocol behavior. Genuine integration and new performance remain open; earlier four losses are preserved.
@@ -4128,6 +4155,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: scalar/vector step, shape, strides and dangerous overlap semantics. Cases to close: overlapping windows and negative/zero invalid steps.
   - Easiest remaining route: Construct rolling strided view with validated window/step.
   - Evidence locators: parity [tests/test_util_views_integration.py](../tests/test_util_views_integration.py); benchmark [benchmarks/array_views.py](../benchmarks/array_views.py).
+  - Current scoped progress: Optimization `f48fe19e`, composed in `8c4fb430`; private component and dependent LBP checks retained. Genuine candidate qualification and fresh public performance acceptance pending; shipped losses retained.
 
   - Delivered scope: exact a6/main ef465027, [four-profile/installed SDK admission](evidence/join-util-views-whole-product-admission-v1.json) and [one-thread public cases with every loss](evidence/join-util-views-initial-performance-admission-v1.json). Full domain closure remains unchecked.
 

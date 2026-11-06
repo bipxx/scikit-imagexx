@@ -1,0 +1,132 @@
+{
+  "schema": "flood-fill-readiness-independent-review-v1",
+  "status": "PASS_SCOPED_ACTUAL_ZERO_BODY_READINESS_NO_ORIGINAL_AUTHORITY",
+  "passed": true,
+  "source": "7c14ee863934a2a6c5370d0ca699d3d299fba166",
+  "source_clean": true,
+  "controller_sha256": "ff583101f34d397ef31e9a38429275bb2080b8e955f5121cde6054565d1a99b6",
+  "binding_sha256": "71c093112ca3a57c311154aa6e623ac6af5293063998747c4337d2dcae0c7341",
+  "handoff": {
+    "path": "build/flood-fill-readiness-v1/handoff-v1.json",
+    "sha256": "d2fe2c55a9da68a3bd9f2ed499586a70b0d9385b60b0a0be2b2af0af817214e2",
+    "bytes": 11515
+  },
+  "proof_index": {
+    "path": "build/flood-fill-readiness-v1/proof-index-v1.json",
+    "sha256": "e3d9f5bcbc5605a8babf14273c2a3d1ae7ac7592d19cd07aa4130293ae2437e2",
+    "bytes": 20694
+  },
+  "audit": {
+    "path": "build/flood-fill-readiness-independent-review-v1/audit-v1.json",
+    "sha256": "f7fa4a3395eb7a7a6a7b74f46a9ded4d4d7e75a508066d88126a1f04e9f0aef1",
+    "bytes": 10492
+  },
+  "audit_source": {
+    "path": "build/flood-fill-readiness-independent-review-v1/audit_v1.py",
+    "sha256": "730c02cb35f3aa3dcf16265034c45bdc7990261ad4ee05858fe2bf27119d9c82",
+    "bytes": 6599
+  },
+  "reuse_analysis": {
+    "path": "build/flood-fill-readiness-independent-review-v1/reuse-analysis-v1.json",
+    "sha256": "5878b64d593fc6f47aed2ee8ce0f71c32f56404c8c787ec815071bb9a0174674",
+    "bytes": 270
+  },
+  "source_safety": {
+    "path": "build/flood-fill-source-root-admission-v1/admission-v1.json",
+    "sha256": "9e35b5401f5983ed7fdb10ecaa4d6a04a3264543241dc9089bae7992dda7460a"
+  },
+  "small_proofs_authenticated": 104,
+  "source_pins_authenticated": 12,
+  "changed_family_files": 7,
+  "predecessor_source": "5eb515a92cf37b905e2d469c8d24f1c0028959fc",
+  "original_seven_family_files_unchanged": true,
+  "applicable_rules": "Root and worktree AGENTS read; exclusive ignored review outputs only. Root reserves source admission/GO/plan/checklist/main. No source edits, tests/science/original/native/helper/build/timing/download/large hashes in review.",
+  "reviewed_code": [
+    "Entry validates explicit null GO/zero binding budgets, exact fixed96 unique IDs split45/51, controller/source/safety/helper source+compiler/admission pins and native Windows Git HEAD/clean identity before science; no boolean budget acceptance.",
+    "Actual executable prefix and capture share validate/runtime/helper/module/observer/target wrapper/trace/FENV machinery. Both real target code objects and exact source filename are refused on Python CALL before body; direct and actual observer-wrapper paths each run once. Cold/cached module import REQUEST is explicit and all four public aliases resolve to two canonical functions.",
+    "Actual neighborhood/np.pad Python entries refused. Cython helper is refused by actual module attribute lookup before dispatch; this proves a real request boundary, not instrumented Cython-body line coverage. Temporary module class restores in finally. No original result computation or gold evidence comes from these prefixes.",
+    "Approved0c40 helper source/compiler/admission pins, layout32/MXCSRoffset28/glibc2.39 and runtime full-state controls retained. Eight prefixes restore caller/process exact32, with sticky/rounding disturbance plus two typed-metadata controls each. Existing admitted binary identity is reused; actual origins/path/size/ABI/control checks are not a fresh binary content hash.",
+    "Capture requires separate digest-bound profile/source/controller/binding/runtime/readiness/four-prefix/helper/case-list/budget/deadline/exclusive-directory GO. mkdir/exclusive freeze and durable started/completed journal prohibit silent overwrite/retry. Source and binding checked at entry/final trust boundary; per-case GO digest/deadline only, no repeated large source/hash loop.",
+    "One-shot capture loop AST is exactly corrected49a958 predecessor on same interpreter; typed exception codec bytes exactly reused. Failure tests exercise actual loop and terminal AST with inert calls for observer/codec/state/postvalidation/started/completed/failure-writer/restore faults. Original and propagated errors, consumed attempts, partial writes and caller-restore diagnostics remain; no fabricated completed row.",
+    "Fill nested flood is allowed only while active fill, counted separately from one supplied top-level entry; nested flood return does not clear fill inside scope. Aliases confer no extra budgets. Immutable source makes this a source-bound allowance, not independent evidence of future observed nested counts.",
+    "Typed observer snapshots arrays/scalars/complex/containers/layout/raw words/aliases/mutation/pointer stability, warning and error module/name/qualname/message/typed args; immediate NumPy+32 hardware observations sit in controller wrapper. Unknown unsupported exception data fails serialization/whole capture without retry; it is not silently stringified or normalized. No claim all future real errors are already codec-observed."
+  ],
+  "actual_evidence": {
+    "prefixes": 8,
+    "profiles": [
+      "minimum Python3.11.14 NumPy1.24.4 SciPy1.15.3",
+      "modern Python3.13.8 NumPy2.5.4 SciPy1.18.1"
+    ],
+    "actual_request_totals": {
+      "target_attempted": 16,
+      "target_refused": 16,
+      "provider_attempted": 16,
+      "provider_refused": 16,
+      "compiled_provider_attempted": 8,
+      "compiled_provider_refused": 8,
+      "target_body_lines": 0,
+      "provider_body_lines": 0
+    },
+    "caller_controls": 48,
+    "typed_metadata_controls": 16,
+    "NumPy_only_factories": 192,
+    "inert_success_error_observations": 384,
+    "inert_alias_mutation_warning_controls": 4,
+    "pre_science_real_authority_refusals": 6,
+    "pure_source_controls_per_Windows_version": 20,
+    "original_computation": 0,
+    "recipe_observations_in_actual_prefixes": 0,
+    "journals_created": 0,
+    "live_handles": "All retained author processes terminal0; no review subprocess remains live."
+  },
+  "findings": [],
+  "gates_passed": [
+    "Source/storage root scope reused unchanged; seven old family source bytes preserved",
+    "104 small proof hashes/size and 12 binding source pins authenticated; source clean exact7c14",
+    "Actual same-code eight cold/cached prefixes, target/provider CALL refusal and compiled ATTRIBUTE request refusal; zero body lines/observations/journals",
+    "Both-profile all96 NumPy factory plus inert typed observer transport and aliases, full32 caller/process restore",
+    "Exact predecessor one-shot writer and typed codec reuse; 20 pure controls per retained Windows version with normal conftest/plugins; six pre-science invalid authority refusals"
+  ],
+  "gates_pending": [
+    {
+      "gate": "Root independent readiness admission and separately bound first-profile original GO",
+      "owner": "root",
+      "authority": "All original GO fields remain None; maximum192 future supplied calls is prospective only. No execution authority from this review."
+    },
+    {
+      "gate": "Actual original results/real error codec closure/raw admission",
+      "owner": "root-authorized family capture then independent reviewer",
+      "scope": "Future profile process must use exact frozen controller/source/runtime/IDs/helper and unique journal, no retries. Existing success/error outputs are inert stand-ins only."
+    },
+    {
+      "gate": "Owning native/public/complete SDK/hot-swap/default1 optional workers/scalar SIMD/genuine four-profile parity/one-thread original performance",
+      "owner": "future assigned family worker and root integration/admission",
+      "scope": "No algorithm/native/performance/whole API parity established by setup readiness. Source quarantined object/structured/0D/arbitrary protocols and broader tolerance/platform domains remain open."
+    },
+    {
+      "gate": "Future root-bound GO actual metadata check",
+      "owner": "root and assigned capture owner",
+      "scope": "Authenticate exact GO/readiness/prefix/runtime/controller/binding/IDs/deadline/journal before first dependent capture; no GO exists now."
+    }
+  ],
+  "reuse_waste": {
+    "result": "Reviewed, no source change required within bounded readiness scope.",
+    "reused": "Root source/storage9e35, original96 cases, approved0c40 ABI restoration, retained compiled identities, exact corrected49 one-shot loop and exact typed codec, all passing setup/pure receipts. No tests/science/binary hashes repeated.",
+    "preserved_failures": "Source-first404/token errors and failed mechanical adapter generator remain retained in author handoff; none consumed original budget. Review had one harmless wrong-order terminal pathname read, corrected by directory inventory; no executed setup or source changed.",
+    "cost": "Only small metadata authentication/source reading; aggregate review cost unknown, no reruns to measure it.",
+    "next_plan_correction": "Root existing flood packet next gate may move from independent readiness review to root readiness admission/first-profile exact binding+GO, with original budget0 until explicit issue. Current275 gates independent."
+  },
+  "review_execution": {
+    "science_imports": 0,
+    "tests": 0,
+    "original_calls": 0,
+    "native_calls": 0,
+    "helper_calls": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_hashes": 0,
+    "source_edits": 0
+  },
+  "next_owner_trigger": "Root checks this exact frozen receipt then admits scoped readiness and, if chosen, separately binds first-profile original GO. Capture remains forbidden before that actual GO; do not delay current275 or alter VIb331/h6a95."
+}
