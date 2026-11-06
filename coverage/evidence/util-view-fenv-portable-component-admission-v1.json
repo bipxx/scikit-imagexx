@@ -1,0 +1,66 @@
+{
+  "schema": "util-view-F1-independent-review-v1",
+  "status": "PASS_SCOPED_TEST_ONLY_COMPONENT_NOT_GENUINE_QUALIFICATION",
+  "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+  "handoff": {
+    "path": "build\\util-view-fenv-portable-v1\\handoff-v1.json",
+    "sha256": "5d23f024a9ac49a3c84a73f79cf378e72b41080ac615476e5f7bf3e6ea4631a2"
+  },
+  "authenticated_source_files": 7,
+  "authenticated_proof_files": 51,
+  "exact_public_inverse": true,
+  "identical_inner_FP_AST": true,
+  "actual_helper_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+  "receipt_sha256": "f5f0f37f27595942a1d310df751eeb37ff93c9ac1e7a2ddb630b8cc1b77526a3",
+  "controls": [
+    {
+      "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+      "positive": 32,
+      "negative": 6,
+      "exact_initial_final": true
+    },
+    {
+      "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+      "positive": 32,
+      "negative": 6,
+      "exact_initial_final": true
+    }
+  ],
+  "saved_validation": [
+    {
+      "scope": "pure-v1-windows311",
+      "nodes": 19,
+      "status": "PASS",
+      "seconds": 0.5160000000614673
+    },
+    {
+      "scope": "pure-v1-windows313",
+      "nodes": 19,
+      "status": "PASS",
+      "seconds": 0.7492349999956787
+    },
+    {
+      "scope": "runtime-v1/minimum/normal",
+      "nodes": 322,
+      "status": "PASS",
+      "seconds": 44.430704284
+    },
+    {
+      "scope": "runtime-v1/modern/normal",
+      "nodes": 322,
+      "status": "PASS",
+      "seconds": 38.948567905000004
+    }
+  ],
+  "scope": "Source and retained small artifact/control/terminal/XML review; no new compiler/helper/native/original/scientific/sampler execution. Compiler/header identities recorded in pinned receipt; unchanged GNU13 toolchain identity scope reused from prior admitted helper. Not a hosted source barrier or product admission.",
+  "remaining_gates": [
+    "C sole shared integrator selective7-file import, historical literal source reader adapter, .c source-copy closure and actual prepare/env/collector wiring",
+    "Complete affected integrated source guards and complete actual workflow source barriers both retained supported Pythons before hosted preparation",
+    "Genuine exact-source four-profile product/SDK qualification and independent aggregate/root admission; Windows saved-domain scope remains pending",
+    "Relevant one-thread public original performance/root GO and main delivery inherited from component, not altered by test-only remedy"
+  ],
+  "waste_reuse": {
+    "result": "Reused prior admitted source and retained passing scopes; reviewed only seven-file successor and new small output. No duplicate scientific run.",
+    "next_owner_trigger": "C imports seven exact files and wires source/environment/collector closure; B updates legacy benchmark FP consumer to this admitted source-built interface; root independently admits final integrated source and runs full required barriers."
+  }
+}
