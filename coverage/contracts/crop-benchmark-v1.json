@@ -1,0 +1,136 @@
+{
+  "schema": "crop-benchmark-v1",
+  "state": "PROSPECTIVE_GENUINE_PRODUCT_AND_ROOT_BINDING_REQUIRED",
+  "api": "util.crop",
+  "cases": [
+    {
+      "id": "view-C",
+      "shape": [
+        512,
+        513
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "width": 1,
+      "copy": false,
+      "order": "K",
+      "payload_provider": false
+    },
+    {
+      "id": "view-F",
+      "shape": [
+        257,
+        263
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "width": 2,
+      "copy": false,
+      "order": "ignored",
+      "payload_provider": false
+    },
+    {
+      "id": "view-reverse",
+      "shape": [
+        257,
+        263
+      ],
+      "dtype": "float64",
+      "layout": "reverse",
+      "width": 1,
+      "copy": false,
+      "order": "K",
+      "payload_provider": false
+    },
+    {
+      "id": "view-3D",
+      "shape": [
+        31,
+        37,
+        41
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "width": 1,
+      "copy": false,
+      "order": "K",
+      "payload_provider": false
+    },
+    {
+      "id": "copy-C",
+      "shape": [
+        512,
+        513
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "width": 1,
+      "copy": true,
+      "order": "C",
+      "payload_provider": false
+    },
+    {
+      "id": "copy-F",
+      "shape": [
+        257,
+        263
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "width": 2,
+      "copy": true,
+      "order": "F",
+      "payload_provider": false
+    },
+    {
+      "id": "copy-reverse-K",
+      "shape": [
+        257,
+        263
+      ],
+      "dtype": "int16",
+      "layout": "reverse",
+      "width": 1,
+      "copy": true,
+      "order": "K",
+      "payload_provider": false
+    },
+    {
+      "id": "copy-object-provider",
+      "shape": [
+        16,
+        17
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "width": 1,
+      "copy": true,
+      "order": "K",
+      "payload_provider": true
+    }
+  ],
+  "sampler": {
+    "module": "tools/montage_sustained.py",
+    "function": "measure",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "raw_samples": 112,
+    "warmup_groups": 16
+  },
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "retain_all_losses": true,
+  "source_pins": {
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+    "python/skimagexx/_crop.py": "18f64b57c8a1c6f7a6ef5bb400802fba519e0cb89dc6e66ef147253360d6185f",
+    "benchmarks/crop.py": "682357abe3cbf5611005bc2b9cdc4d006a39c1d1619b6cfc8dc8438a68441259",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tests/fixtures/crop_upstream_v0_26.py.txt": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac"
+  },
+  "root_GO": "No original/timing authorized. Future genuine integrated product/root actual-input admission and separate safe benchmark GO required.",
+  "provider_scope": "Coercion/width Python arithmetic, NumPy view/scalar materialization and dtype/order allocation; numeric array payload copy C++; object and nonnumeric/scalar copies NumPy. No library speed claim."
+}

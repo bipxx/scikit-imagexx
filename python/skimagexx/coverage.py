@@ -34,7 +34,7 @@ NATIVE_FUNCTIONS = {
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
-    'util': ('montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
+    'util': ('crop','regular_grid','montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
 
@@ -333,6 +333,8 @@ def class_contract(api):
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api=='util.crop':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
+    if api=='util.regular_grid':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float32','float64')
     if api=='segmentation.join_segmentations':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='draw.set_color':return ('float32','float64')
@@ -547,6 +549,12 @@ def default_call(api, image):
         return (image,),{'max_size':max(1,image.size//256)}
     if api=='morphology.remove_small_holes':return (image,),{'max_size':4}
     if api=='segmentation.clear_border':return (image,),{'buffer_size':1 if min(image.shape)>2 else 0}
+    if api=='util.crop':
+        import numpy as np
+        return (np.arange(20,dtype=np.int64).astype(image.dtype).reshape(4,5),0),{'copy':False,'order':'K'}
+    if api=='util.regular_grid':
+        import numpy as np
+        return (np.array([5,7],dtype=image.dtype),1 if image.dtype.kind=='b' else 6),{}
     if api=='segmentation.join_segmentations':
         import numpy as np
         return (np.array([0,0,1,1,2,2,3,3],dtype=image.dtype).reshape(2,4),
@@ -1069,7 +1077,25 @@ def join_segmentations_default_error(actual,expected):
     return 0.
 
 
+def util_metadata_default_error(api,actual,expected):
+    import numpy as np
+    if api=='util.crop':
+        join_segmentations_default_error(actual,expected)
+        assert actual.base.shape==expected.base.shape and actual.base.strides==expected.base.strides
+    else:
+        assert api=='util.regular_grid' and type(actual)is type(expected)is tuple and len(actual)==len(expected)
+        for a,b in zip(actual,expected):
+            assert type(a)is type(b)is slice
+            for x,y in zip((a.start,a.stop,a.step),(b.start,b.stop,b.step)):
+                assert type(x)is type(y)
+                if isinstance(x,np.generic):assert x.dtype==y.dtype and x.tobytes()==y.tobytes()
+                else:assert x==y
+    return 0.
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api in ('util.crop','util.regular_grid'):
+        util_metadata_default_error(api,actual,expected);return
     if api=='segmentation.join_segmentations':
         join_segmentations_default_error(actual,expected);return
     if api=='segmentation.find_boundaries':

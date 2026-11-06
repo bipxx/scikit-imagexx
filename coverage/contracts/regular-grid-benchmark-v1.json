@@ -1,0 +1,28 @@
+{
+  "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "api": "util.regular_grid",
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "threads": 1,
+    "repeats": 7,
+    "implementations": ["original public", "native public"],
+    "warmup_groups_each": 1,
+    "allocation_inclusive": true,
+    "image_allocations": false,
+    "return_validation": "Literal tuple/slice classes, None fields, active default-int scalar type/dtype/raw words. Never normalize NumPy slice scalars to Python integers.",
+    "required_prechecks": ["actual public namespace/native builtin ownership", "strict provider policy on ordinary vector path", "default1/current workers1; metadata operation deliberately serial", "FP/policy/input preservation", "exact source/runtime/core/root admission and root benchmark GO"],
+    "gates": "Reuse existing sustained sampler gates and retain all raw/losing rows; no benchmark executed by --plan."
+  },
+  "cases": [
+    {"id":"doc2d","shape":[20,40],"points":8,"carrier":"tuple"},
+    {"id":"dense2d","shape":[20,40],"points":32,"carrier":"tuple"},
+    {"id":"thin3d","shape":[3,20,40],"points":8,"carrier":"tuple"},
+    {"id":"permuted-readonly","shape":[40,3,20],"points":8,"carrier":"readonly-reverse"},
+    {"id":"rank8","shape":[1,2,1,3,1,4,1,5],"points":12,"carrier":"tuple"},
+    {"id":"half-even-down","shape":[25],"points":10,"carrier":"tuple"},
+    {"id":"half-even-up","shape":[35],"points":10,"carrier":"tuple"},
+    {"id":"large-shape-metadata","shape":[4093,13,997],"points":6000,"carrier":"tuple"}
+  ],
+  "unbound": {"source":null,"producer_run":null,"runtime":null,"core":null,"root_admission":null,"root_GO":null},
+  "frontiers": ["Windows/default-int scalar and reduction policy admission", "nonvector NumPy metadata-provider partition", "object/integer-protocol and scalar-type partitions beyond declared admission", "nonfinite/conversion-overflow and float-reduction/root rounding domains", "genuine integration/hot swap/performance/exact-source four-profile release"]
+}

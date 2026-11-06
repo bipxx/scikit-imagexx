@@ -1,5 +1,6 @@
 """Dtype tags are observable even though NumPy dtype equality ignores them."""
 import importlib
+import inspect
 import re
 import warnings
 import numpy as np
@@ -25,6 +26,15 @@ def calls(api,dtype):
     module,name=api.rsplit('.',1)
     reference=getattr(importlib.import_module('skimage.'+module),name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
+    if api in ('util.crop','util.regular_grid'):
+        from util_metadata_reference import reference as saved_reference
+        expected,scope,row=saved_reference(api,arguments,options,inspect.getsourcefile(reference),np,tagged=True)
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always');actual=native(*arguments,**options)
+        assert not notices
+        assert_default_parity(api,np.dtype(dtype),actual,expected)
+        if api=='util.crop':assert np.shares_memory(actual,arguments[0])and actual.base is arguments[0].base
+        return actual,expected,data
     if api=='draw.set_color':
         expected=set_color_default_result(reference,arguments,options)
         actual=set_color_default_result(native,arguments,options)
@@ -38,6 +48,8 @@ def calls(api,dtype):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api in ('util.crop','util.regular_grid'):
+        assert_default_parity(api,np.dtype(dtype),actual,expected);return
     if api=='segmentation.find_boundaries' or api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=image);return
     if api=='measure.regionprops':

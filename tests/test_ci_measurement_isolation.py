@@ -814,8 +814,8 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
     assert "str(ROOT / 'tests/test_api.py')" in feature_source
     contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
-    assert contract['scope']=='current266'
-    assert len(contract['image_paths'])==266 and len(contract['metadata_paths'])==3
+    assert contract['scope']=='current268'
+    assert len(contract['image_paths'])==268 and len(contract['metadata_paths'])==3
     assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py','tests/test_line_aa_reference.py','tests/test_line_aa_public.py','tests/test_line_aa_default.py'}<=set(contract['required_selectors'])
 
 

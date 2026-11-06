@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current266",
+  "scope": "current268",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -461,6 +461,7 @@
     "transform.rescale",
     "transform.resize",
     "util.compare_images",
+    "util.crop",
     "util.img_as_bool",
     "util.img_as_float",
     "util.img_as_float32",
@@ -472,6 +473,7 @@
     "util.label_points",
     "util.map_array",
     "util.montage",
+    "util.regular_grid",
     "util.regular_seeds",
     "util.unique_rows"
   ],
@@ -543,7 +545,9 @@
     "metrics.adapted_rand_error": "tests/test_label_pair_rand_public.py",
     "metrics.contingency_table": "tests/test_contingency_table_public.py",
     "segmentation.find_boundaries": "tests/test_find_boundaries_public.py",
-    "segmentation.join_segmentations": "tests/test_join_segmentations_integration.py"
+    "segmentation.join_segmentations": "tests/test_join_segmentations_integration.py",
+    "util.crop": "tests/test_util_metadata_integration.py",
+    "util.regular_grid": "tests/test_util_metadata_integration.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -670,7 +674,13 @@
     "tests/test_join_segmentations_public.py",
     "tests/test_join_segmentations_integration.py",
     "tests/test_join_segmentations_native_contract.py",
-    "tests/test_join_segmentations_benchmark.py"
+    "tests/test_join_segmentations_benchmark.py",
+    "tests/test_util_metadata_integration.py",
+    "tests/test_crop_public.py",
+    "tests/test_util_metadata_source.py",
+    "tests/test_crop_benchmark.py",
+    "tests/test_regular_grid_native_contract.py",
+    "tests/test_regular_grid_benchmark.py"
   ],
   "SDK_scope": "current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance",
   "required_client_families": [
@@ -712,6 +722,8 @@
     "include/skimagexx/draw_set_color.hpp",
     "include/skimagexx/label_pair_metrics.hpp",
     "include/skimagexx/find_boundaries.hpp",
-    "include/skimagexx/join_segmentations.hpp"
+    "include/skimagexx/join_segmentations.hpp",
+    "include/skimagexx/crop.hpp",
+    "include/skimagexx/regular_grid.hpp"
   ]
 }

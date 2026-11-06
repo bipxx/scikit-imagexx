@@ -73,6 +73,12 @@ jobs:
         run: python -m pytest -q tests/test_label_pair_rand_public.py tests/test_contingency_table_public.py tests/test_label_pair_metrics_default.py --junitxml=build/ci-artifacts/label-pair-metrics-disabled.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Genuine crop and grid metadata ownership normal
+        run: python -m pytest -q tests/test_crop_public.py tests/test_util_metadata_integration.py --junitxml=build/ci-artifacts/util-metadata-normal.xml
+      - name: Genuine crop and grid metadata ownership disabled
+        run: python -m pytest -q tests/test_crop_public.py tests/test_util_metadata_integration.py --junitxml=build/ci-artifacts/util-metadata-disabled.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Genuine JOIN public ownership and saved parity
         run: python -m pytest -q tests/test_join_segmentations_public.py tests/test_join_segmentations_integration.py tests/test_join_segmentations_native_contract.py tests/test_join_integration_source.py --junitxml=build/ci-artifacts/join-normal.xml
       - name: Genuine JOIN public ownership with SIMD disabled

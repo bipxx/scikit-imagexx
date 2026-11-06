@@ -291,7 +291,7 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current266'
+CURRENT_PRODUCT_SCOPE = 'current268'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics')
 CURRENT_SDK_CLIENT_SCOPE = 'current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
@@ -630,6 +630,17 @@ DRAW_SOURCE_PATHS += ('include/skimagexx/join_segmentations.hpp','src/join_segme
 DRAW_SOURCE_PATHS += ('tools/join_source_context.py','coverage/contracts/join-additive-source-context-v1.json')
 
 
+DRAW_SOURCE_PATHS += ('benchmarks/crop.py', 'coverage/contracts/crop-benchmark-v1.json', 'coverage/contracts/crop-native-v1.json', 'include/skimagexx/crop.hpp', 'python/skimagexx/_crop.py', 'src/bind_crop.cpp', 'src/crop.cpp', 'tests/cmake_consumer/crop_consumer.cpp', 'tests/crop_copy_diagnostic.cpp', 'tests/test_crop_benchmark.py', 'tests/test_crop_native.cpp', 'tests/test_crop_public.py', 'benchmarks/regular_grid.py', 'coverage/contracts/regular-grid-benchmark-v1.json', 'coverage/contracts/regular-grid-native-v1.json', 'coverage/contracts/regular-grid-v1.json', 'include/skimagexx/regular_grid.hpp', 'python/skimagexx/_regular_grid.py', 'src/bind_regular_grid.cpp', 'src/regular_grid.cpp', 'tests/cmake_consumer/regular_grid_consumer.hpp', 'tests/fixtures/regular_grid_originals_v1.hpp', 'tests/fixtures/regular_grid_originals_v1.json', 'tests/regular_grid_contract.py', 'tests/regular_grid_observer.py', 'tests/regular_grid_sdk_fixture.py', 'tests/test_regular_grid_benchmark.py', 'tests/test_regular_grid_native.cpp', 'tests/test_regular_grid_native_contract.py', 'tests/test_regular_grid_public.py', 'tests/test_regular_grid_reference.py', 'tests/test_regular_grid_saved_v1.py', 'tests/cmake_consumer/crop_component_consumer.hpp', 'tests/util_metadata_reference.py', 'tests/test_util_metadata_integration.py', 'tests/test_util_metadata_source.py', 'coverage/contracts/util-metadata-additive-context-v1.json')
+POST203_TESTS += ('test_crop_public.py','test_util_metadata_integration.py')
+
+
+DRAW_SOURCE_PATHS += ('tests/crop_contract.py', 'tests/crop_observer.py', 'tests/fixtures/crop_originals_v1.json', 'tests/fixtures/crop_upstream_v0_26.py.txt', 'coverage/contracts/crop-v1.json', 'tests/test_crop_reference.py', 'tests/test_crop_saved_reference.py')
+POST203_TESTS += ('test_util_metadata_source.py','test_crop_benchmark.py','test_regular_grid_native_contract.py','test_regular_grid_benchmark.py')
+
+
+DRAW_SOURCE_PATHS += ('tests/test_dtype_aliases.py','tests/test_dtype_metadata.py')
+
+
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
     groups = dict(_BASE_GROUPS)
@@ -920,7 +931,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -958,6 +969,7 @@ def current_install_layout(read_bytes, names, profile):
                and '__pycache__' not in PurePosixPath(n).parts and not n.endswith('/') and not n.endswith('.pyc')}
     headers = {n: n for n in names if n.startswith('include/') and not n.endswith('/')}
     require(sources and headers, 'current Python/header install closure absent')
+    require(all(n in headers for n in ('include/skimagexx/crop.hpp','include/skimagexx/regular_grid.hpp')) and all(n in sources for n in ('skimagexx/_crop.py','skimagexx/_regular_grid.py')), 'current util metadata install closure absent')
     require('include/skimagexx/join_segmentations.hpp' in headers and 'skimagexx/_join_segmentations.py' in sources,
             'current JOIN install closure absent')
     require('include/skimagexx/draw_coordinates.hpp' in headers
@@ -2151,7 +2163,7 @@ def sdk(out, state, journal):
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
-                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp')):
+                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()

@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "6dc68dbb32d97b3dfac9ceafdfef1ff80bcdd37e56789e0ac3c9ae090837d703",
+  "source_inventory_sha256": "249beaaf46a969caef118a808bdba0de0833156b2c275b124e34b80c42fa7339",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 266,
-      "upstream-only": 202
+      "native-partial": 268,
+      "upstream-only": 200
     },
     "kinds": {
       "callable": 448,
@@ -18198,21 +18198,36 @@
       "api": "util.crop",
       "kind": "callable",
       "signature": "(ar, crop_width, copy=False, order='K')",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "complex64",
+        "complex128"
+      ],
       "canonical_api": "util.crop",
       "identity_alias": false,
       "family": "metadata",
       "wave": "P",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Return slice view or requested-order copy after crop-width normalization",
+      "easiest_credible_path": "Audit/extend existing native implementation: Return slice view or requested-order copy after crop-width normalization",
       "mandatory_route_dependencies": [
         "array"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": null,
-      "next_concrete_action": "Capture provider/state calls for asymmetric N-D crops and C/F/negative strides; own the specified adapter and its scalar/tuple widths, negative/large crops, order and memory sharing contract. Split any native numerical backend into a separately qualified step.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered scalar/tuple widths, negative/large crops, order and memory sharing. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "scalar/tuple widths, negative/large crops, order and memory sharing",
       "parity_cases_to_freeze": "asymmetric N-D crops and C/F/negative strides",
       "numerical_policy": "Exact identity/sharing, strides, readonly flags, dtype, signatures, inheritance, warnings/errors and state transitions.",
@@ -18223,10 +18238,10 @@
         "kind": "noncompute-boundary",
         "specific_workload": "asymmetric N-D crops and C/F/negative strides",
         "one_worker_recipe": "Noncompute boundary: descriptor/signature/state/alias fixtures; optional microbenchmarks only when overhead matters, not image-kernel speed claims.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/crop.py"
       },
       "native_provider_frontier": "Own metadata or thin object-protocol wrapper is legitimate API behavior; Python/NumPy view/state machinery is not claimed as standalone C++ arithmetic.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_util_metadata_integration.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -18781,21 +18796,33 @@
       "api": "util.regular_grid",
       "kind": "callable",
       "signature": "(ar_shape, n_points)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "util.regular_grid",
       "identity_alias": false,
       "family": "metadata",
       "wave": "P",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Choose rounded per-axis strides and slices for approximately uniform sample count",
+      "easiest_credible_path": "Audit/extend existing native implementation: Choose rounded per-axis strides and slices for approximately uniform sample count",
       "mandatory_route_dependencies": [
         "array"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": null,
-      "next_concrete_action": "Capture provider/state calls for anisotropic/tiny shapes and target counts; own the specified adapter and its n_points extremes, dimensionality and slice start/stop convention contract. Split any native numerical backend into a separately qualified step.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered n_points extremes, dimensionality and slice start/stop convention. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "n_points extremes, dimensionality and slice start/stop convention",
       "parity_cases_to_freeze": "anisotropic/tiny shapes and target counts",
       "numerical_policy": "Exact identity/sharing, strides, readonly flags, dtype, signatures, inheritance, warnings/errors and state transitions.",
@@ -18806,10 +18833,10 @@
         "kind": "noncompute-boundary",
         "specific_workload": "anisotropic/tiny shapes and target counts",
         "one_worker_recipe": "Noncompute boundary: descriptor/signature/state/alias fixtures; optional microbenchmarks only when overhead matters, not image-kernel speed claims.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/regular_grid.py"
       },
       "native_provider_frontier": "Own metadata or thin object-protocol wrapper is legitimate API behavior; Python/NumPy view/state machinery is not claimed as standalone C++ arithmetic.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_util_metadata_integration.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

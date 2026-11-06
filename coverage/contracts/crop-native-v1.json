@@ -1,0 +1,209 @@
+{
+  "schema": "crop-native-v1",
+  "status": "PRIVATE_NATIVE_AND_RELOCATED_SDK_SAVED_PARITY_PASS_PENDING_INDEPENDENT_ADMISSION",
+  "api": "util.crop",
+  "signature": "(ar, crop_width, copy=False, order='K')",
+  "reference_fixture": "tests/fixtures/crop_originals_v1.json",
+  "reference_fixture_sha256": "cad3b7f4b5bd21573c30af67758912aecf379c710136f1baec5118dc2552b8f3",
+  "runtime_evidence": {
+    "retained_full_saved_parity_v4": {
+      "minimum": {
+        "normal": {
+          "nodes": 219,
+          "exit_code": 0,
+          "seconds": 2.298897547000003,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 190,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 219,
+          "exit_code": 0,
+          "seconds": 1.6498142840000014,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 190,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      },
+      "modern": {
+        "normal": {
+          "nodes": 219,
+          "exit_code": 0,
+          "seconds": 2.296411526,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 184,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 219,
+          "exit_code": 0,
+          "seconds": 1.6758654679999978,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 184,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      }
+    },
+    "changed_copy_only_v5": {
+      "minimum": {
+        "normal": {
+          "nodes": 27,
+          "exit_code": 0,
+          "seconds": 1.2954659139999762,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 24,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 27,
+          "exit_code": 0,
+          "seconds": 1.2941380940000045,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 24,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      },
+      "modern": {
+        "normal": {
+          "nodes": 27,
+          "exit_code": 0,
+          "seconds": 1.2965726329999825,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 24,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 27,
+          "exit_code": 0,
+          "seconds": 1.279722000999982,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 24,
+          "native_copy_returns": 24,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      }
+    },
+    "scope": "Preoptimization219nodes/cell retained for immutable view/provider/binder scopes; changed native copy source rechecked27affected nodes/cell. No complete release barrier claim.",
+    "same_value_F_reverse_layout_plumbing_v6": {
+      "minimum": {
+        "normal": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.3442771019999995,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.4248675970000004,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      },
+      "modern": {
+        "normal": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.3308670770000002,
+          "denied": [],
+          "workers": 1,
+          "AVX2": true,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        },
+        "disabled": {
+          "nodes": 4,
+          "exit_code": 0,
+          "seconds": 1.4102226409999998,
+          "denied": [],
+          "workers": 1,
+          "AVX2": false,
+          "native_view_returns": 4,
+          "native_copy_returns": 4,
+          "original_calls": 0,
+          "timed_batches": 0
+        }
+      }
+    }
+  },
+  "native_ownership": {
+    "view": "C++ owns raw step-one basic-slice clipping/extent/byte-offset geometry; builtin converts index objects via PySlice_Unpack then NumPy materializes exact ndarray/base/scalar semantics.",
+    "numeric_copy": "C++ exported crop_copy_into performs full cropped POD payload copy across signed source/output strides. Contiguous innermost runs use memcpy; Python numeric ndarray copy=True calls builtin into NumPy metadata allocation. Shared positive unit-stride coalescing preserves C last-axis run and enables ordinary F axis0; reversed/nonshared fallback remains word traversal.",
+    "SDK": "Installed relocated header and assembled donor archive export and execute BOTH crop_view and full crop_copy_into, including direct requested original-input crops and C/F/reverse/scalar/POD widths."
+  },
+  "providers": {
+    "coercion": "np.array(ar,copy=False), before any crop-width validation; preserves NumPy version/protocol semantics.",
+    "width": "Source-ordered Python Integral/sequence dispatch, shape-b arithmetic and copy truth protocols remain named metadata providers; general Python numeric/type engine not introduced.",
+    "view": "NumPy basic indexing materializes view/base/scalar types after native geometry. No whole original API forwarding.",
+    "allocation": "NumPy empty_like creates numeric dtype/order/layout; output transport C++ owned. CopyFalse does not inspect order.",
+    "copy": "Object shallow references, nonnumeric/structured dtype ownership, scalar copy outputs and invalid copy-order errors remain explicit np.array providers."
+  },
+  "worker_SIMD_disposition": "Geometry and copy are ordered serial C++ with no project SIMD specialization or worker lookup/pool. Global budget defaults1 and worker4 does not change metadata work; both project normal/disabled dispatch environments checked. std::memcpy implementation may use platform vector instructions independently of project SIMD flag.",
+  "gaps": [
+    "Standalone C++ SDK supports caller-owned valid geometry/POD memory, not Python coercion/object/type protocols; complete general Python semantics still use disclosed providers.",
+    "Private public frontend is not wired into util.py/registry; genuine integrated hot-swap/public ownership and single global worker instance remain root integration gates.",
+    "Object/non-numeric/structured/scalar copy payload remains provider computation, not C++ payload-copy credit.",
+    "Actual native Windows/MSVC/SDK and genuine exact-source four-profile qualification pending; retained private Linux1.24/2.5 component evidence only.",
+    "Relevant public original one-thread performance pending; no speed claim and no timing. All future losses retained.",
+    "General arbitrary user mutation/callback/subclass/forged or concurrent-storage domains beyond frozen safety cohort remain open; metadata/API closure is not redefined as108cases.",
+    "Unassessed zero-byte dtype V0 is not covered by saved-domain parity: SDK geometry currently requires nonzero itemsize; private copy refuses zero itemsize explicitly. Full crop API closure still requires this domain."
+  ],
+  "source_pins": {
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+    "python/skimagexx/_crop.py": "18f64b57c8a1c6f7a6ef5bb400802fba519e0cb89dc6e66ef147253360d6185f",
+    "tests/test_crop_native.cpp": "bf10a087ef7ef110d92eb1b0b3da974014c86f73756ee998aa6c85d6084fc4e0",
+    "tests/test_crop_public.py": "f9966b9935a6cabfa274af993624b3a3cecd59bf8f12eb142de300387f2a85a4"
+  },
+  "next_owner": "root independent implementation reviewer/integrator",
+  "next_trigger": "Independent packet admission before shared hook/genuine integration; source-only performance workload requires later actual measurement GO.",
+  "copy_context": {
+    "path": "build/util-crop-native-v1/copy-context-v1.json",
+    "sha256": "e41f6325817beab0c98136f754418ba39f021f8f02ee95492d35fc360d3786a5"
+  }
+}

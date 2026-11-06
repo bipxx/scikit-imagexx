@@ -9078,11 +9078,27 @@
       "api": "util.crop",
       "kind": "callable",
       "signature": "(ar, crop_width, copy=False, order='K')",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64",
+        "complex64",
+        "complex128"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_util_metadata_integration.py",
+      "benchmark": "benchmarks/crop.py",
+      "default_input_kind": "Bounded fixed metadata inputs with actual requested dtype; cached references authenticate actual source/arguments/options. Crop view/copy and serial grid arithmetic are partial native; coercion/allocation/object/scalar/FP providers, Windows/type domains and genuine/performance gates remain explicit."
     },
     {
       "api": "util.dtype_limits",
@@ -9274,11 +9290,24 @@
       "api": "util.regular_grid",
       "kind": "callable",
       "signature": "(ar_shape, n_points)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_util_metadata_integration.py",
+      "benchmark": "benchmarks/regular_grid.py",
+      "default_input_kind": "Bounded fixed metadata inputs with actual requested dtype; cached references authenticate actual source/arguments/options. Crop view/copy and serial grid arithmetic are partial native; coercion/allocation/object/scalar/FP providers, Windows/type domains and genuine/performance gates remain explicit."
     },
     {
       "api": "util.regular_seeds",

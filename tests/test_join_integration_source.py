@@ -16,8 +16,8 @@ def load(name,path):
 
 def test_join_single_target_and_existing_global_worker_wiring():
     cmake=(ROOT/'CMakeLists.txt').read_text();bindings=(ROOT/'src/bindings.cpp').read_text()
-    assert cmake.count('target_sources(skimagexx PRIVATE src/join_segmentations.cpp)')==1
-    assert cmake.count('target_sources(_core PRIVATE src/bind_join_segmentations.cpp)')==1
+    assert cmake.count('target_sources(skimagexx PRIVATE src/join_segmentations.cpp src/crop.cpp src/regular_grid.cpp)')==1
+    assert cmake.count('target_sources(_core PRIVATE src/bind_join_segmentations.cpp src/bind_crop.cpp src/bind_regular_grid.cpp)')==1
     assert cmake.count('set_source_files_properties(src/join_segmentations.cpp src/bind_join_segmentations.cpp')==2
     assert bindings.count('void bind_join_segmentations(pybind11::module_&);')==bindings.count('    bind_join_segmentations(m);')==1
     leaf=(ROOT/'src/join_segmentations.cpp').read_text()
@@ -48,10 +48,10 @@ def test_join_binary_registry_default_and_exact_checker_source():
 
 @pytest.mark.parametrize('profile',('minimum','modern','windows','debug'))
 def test_join_current_closed_source_plan_and_collector(profile):
-    q=load('join_source_qualification_'+profile,'tools/public_qualification.py');plan=q.plan(ROOT,profile,266)
+    q=load('join_source_qualification_'+profile,'tools/public_qualification.py');plan=q.plan(ROOT,profile,268)
     assert not plan['blockers']and plan['readiness_only']
-    assert (plan['registry']['image_count'],plan['registry']['registered_count'])==(266,269)
-    assert (plan['product_scope'],plan['product_members'],plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==('current266',208,98,32,64)
+    assert (plan['registry']['image_count'],plan['registry']['registered_count'])==(268,271)
+    assert (plan['product_scope'],plan['product_members'],plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==('current268',212,100,32,64)
     required={'test_join_segmentations_public.py','test_join_segmentations_integration.py','test_join_segmentations_native_contract.py','test_join_segmentations_benchmark.py'}
     assert required<=set(plan['public_groups']['public-post203'])
     current=q.current_contract(lambda name:(ROOT/name).read_bytes())

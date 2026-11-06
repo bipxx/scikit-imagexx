@@ -1,0 +1,72 @@
+{
+  "status": "SCOPED_IMPLEMENTATION_PENDING_INDEPENDENT_REVIEW_NOT_API_COMPLETION",
+  "api": "util.regular_grid",
+  "signature": "(ar_shape, n_points)",
+  "source_reference": "5750481bd1427311b92abda5c6943c6f3cc41c82",
+  "saved_publication": "52cdc1e54e1985567810bc3d4d5a0e7f5d39dcc2",
+  "source_raw_sha256": {
+    "include/skimagexx/regular_grid.hpp": "25f4ca4351cdfe585850fa9efe9a31fb74ca9f09473d9383606f79eca3404489",
+    "src/regular_grid.cpp": "1089c8c39ff4c50a3418878e3d2e23771642dc364a491b9dd87b30eb4f801c5a",
+    "src/bind_regular_grid.cpp": "fc77fc135c46227d91390a7e75cc8f8bfdce7e3ae832ece49c84b61c5eaacb74",
+    "python/skimagexx/_regular_grid.py": "23a7130119cafd2c65140e3a32f4d01a5c57fb10b50f6c5500f036d05ac721de",
+    "tests/regular_grid_sdk_fixture.py": "547d42c29dca04d3166d534223bcee45803255d25afab88c5139c0555f2c929e",
+    "tests/fixtures/regular_grid_originals_v1.hpp": "ccb25ec0f79c4a0f66a2acad6dae9c85b105f4ac7cc88674a05776d1791ea499",
+    "tests/cmake_consumer/regular_grid_consumer.hpp": "2e84cd6a03d7a24afc9cac5e96cecfd45bbca285c2e507ecb185b335db865400",
+    "tests/test_regular_grid_native.cpp": "d2eb522d5a00ddbcc18c09fe11526de089b8336e12d3e7ab6cc3d48939f454bc",
+    "tests/test_regular_grid_public.py": "d29dc4eab8c40b5781392d2dca2f575d5bd68fafbf69a9101a7f28904089c436",
+    "tests/test_regular_grid_reference.py": "9ae5309a6f3ecf9ca8273f38bf3d07f521a51a1e16570056509e069ffa794bb0",
+    "benchmarks/regular_grid.py": "10b62d1d6cf9c7d709ce54b1dca1cf86d1cda21a34631448fb515c657e2d1889",
+    "coverage/contracts/regular-grid-benchmark-v1.json": "ec3c65be90c1d33f78b0d2b7dcb4e6d7802c124b1f967f77208c9c4556173e41",
+    "tests/test_regular_grid_benchmark.py": "41ae7724a9e35e448fa0e19528cd0d8944869ea378f2577b2b1d2c29cb629884"
+  },
+  "reused_raw_sha256": {
+    "tests/fixtures/regular_grid_originals_v1.json": "e29d10edf77af031674bb2118281976512a08ba95496346e650ed96ddadfd80a",
+    "tests/test_regular_grid_saved_v1.py": "373c8ecfab3d29de3300bb29e14a8a6aa8bd097b30f42b2b85828623f7ec25e4",
+    "tests/regular_grid_contract.py": "c509e7fab916c4d22e2d76af467f01c72a4ef5d96e68356fde5d60f5f17883fa",
+    "tests/regular_grid_observer.py": "2967646f041ca7bd70a713237e5f32490240e068c91b81cf75ffc0e1131b009b",
+    "coverage/contracts/regular-grid-v1.json": "f9c408dac0032705f87ee63227602650ebfabe8a88ba89727facfe22f624e6ca",
+    "python/skimagexx/_regular_seeds.py": "22d05626e51af3917fa1869ff6c754ef7163f10d605e181bb02e99a3f4715a37",
+    "python/skimagexx/_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "native_operation": "skimagexx::regular_grid(ComponentsView shape,double points,unsigned default_integer_bytes=8)",
+  "native_domain": "1D bounded typed bool/signed/unsigned8/16/32/64 and finite float32/float64 metadata, native/swapped/negative-stride storage; source dtype-specific integer product wrap; serial native sort/inverse/root/floor-before-ties-even; typed output kind/all or signed64 start+step. Conversion nonfinite/out-of-range has explicit refusal.",
+  "provider_computation": [
+    "NumPy asanyarray and live dtype(int) scalar construction; default int is not assumed equal intp",
+    "NumPy scalar zero divisions/power preserve warn/raise/call and source final Python exponent error; source-specific scalar policy at boundary",
+    "Exact CPython big-integer product for builtin object-integer early full-slice branch; computed object-grid branch remains unsupported",
+    "Literal NumPy nonvector-shape metadata provider preserves invalid-prefix ordering/errors; this partition has no native arithmetic ownership"
+  ],
+  "workers": "Tiny ordered serial metadata; does not use an artificial SIMD/worker pool. Existing global default1 budget is not changed, including values1/4 and callback phases.",
+  "FP_scope": "Assessed retained Linux nearest-rounding/inexact baseline32. Source NumPy-zero warn/raise/call adds divide-by-zero flag4. Per-case controller restore is test isolation, not function behavior.",
+  "gates": {
+    "saved_raw": "PASS_ROOT_ADMITTED90_NO_RECAPTURE",
+    "private_public": "PASS_COMPLETE49_NODES_PER_RETAINED_LINUX_PROFILE_AFTER_FENV_FIXTURE_AND_COMPARISON_PHASE_CORRECTIONS",
+    "native_SDK": "PASS_NORMAL_COMPILER_SCALAR_ASAN_UBSAN_AND_ACTUAL_EXPORTED_CLIENT; scoped typed physical/source scalar semantics",
+    "Windows": "COMPILE_ONLY; actual default-int/intp/root-libm/ABI policy admission PENDING",
+    "benchmark": "PROSPECTIVE_UNBOUND_NO_TIMING",
+    "independent_integration_genuine_performance_release": "PENDING_ROOT"
+  },
+  "unmet_requirements": [
+    "actual Windows/default-int32/64 conversion/reduction/intp and root rounding admission; Linux int64 is not portable proof",
+    "nonvector NumPy provider computation and non-early object/protocol/subclass partitions remain outside native ownership",
+    "unadmitted NumPy scalar point types (including float32), negative NumPy scalar power policy, NaN/sNaN, nonfinite shape and conversion-overflow paths",
+    "float reduction ordering/root rounding and nondefault incoming FENV/rounding regimes beyond assessed cases",
+    "genuine public hot swap/default dispatch/one global ABI and all supported/unsupported generic-smoke partitions",
+    "one-thread original-public performance and exact-source complete four-profile release"
+  ],
+  "benchmark": {
+    "cases": 8,
+    "samples_if_authorized": 112,
+    "warmup_groups_if_authorized": 16,
+    "original_calls_now": 0,
+    "timing_now": 0
+  },
+  "comparison_phase": "Exact Python early predicate before converting integer points; after-comparison finish never repeats it. Complete typed-double SDK entry owns its single early comparison.",
+  "source_derived_witness": "shape(2**53+4),points2**53+3 returns NumPy(0,1) strided fields; old compiled core gives None fields and is retained as expected negative control; no original capture.",
+  "shared_consumer_unchanged": true,
+  "API_completion": false
+}

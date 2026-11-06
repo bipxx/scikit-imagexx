@@ -416,6 +416,21 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    if api in ('util.crop','util.regular_grid'):
+        from util_metadata_reference import reference
+        from crop_observer import encode as crop_encode
+        from regular_grid_observer import encode as grid_encode
+        encode=crop_encode if api=='util.crop'else grid_encode
+        before=(encode(args,np),dict(options))
+        expected,scope,row=reference(api,args,options,inspect.getsourcefile(getattr(original,name)),np)
+        actual=getattr(native,name)(*args,**options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected)
+        if api=='util.crop':
+            assert np.shares_memory(actual,args[0]) and actual is not args[0]
+            assert actual.ctypes.data==args[0].ctypes.data and actual.base is args[0].base
+        assert (encode(args,np),dict(options))==before
+        reference(api,args,options,inspect.getsourcefile(getattr(original,name)),np)
+        return
     if api=='segmentation.join_segmentations':
         expected,error,scope=join_reference_rows(args,options,inspect.getsourcefile(getattr(original,name)));assert error is None
         assert scope=='IDENTICAL_CAPTURED_ARRAYS_EFFECTIVE_FALSE_OPTION'
