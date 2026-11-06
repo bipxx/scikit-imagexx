@@ -93,7 +93,12 @@ def test_ellipse_protocol_conversion_order_and_provider_no_replay(monkeypatch):
         def __float__(self):events.append('angle');return 0.
     monkeypatch.setattr(compiled,'_ellipse_perimeter',lambda *a:seen.append(a) or token)
     monkeypatch.setattr(xx._core,'get_num_threads',lambda:pytest.fail('provider-onlybudgetlookup'))
-    assert call(Index('r',0),Index('c',0),Index('rr',2),Index('cr',3),Angle(),shape) is token
+    # This protocol test intentionally invokes a monkeypatched provider stub.
+    # Restore the qualification's strict fallback policy through monkeypatch.
+    compat=importlib.import_module('skimagexx._compat')
+    monkeypatch.setattr(compat,'_fallback_enabled',True)
+    with pytest.warns(xx.FallbackWarning,match=r'skimage\.draw\._draw\._ellipse_perimeter'):
+        assert call(Index('r',0),Index('c',0),Index('rr',2),Index('cr',3),Angle(),shape) is token
     assert events==['r','c','rr','cr','angle'] and seen==[(0,0,2,3,0.,shape)]
 
 

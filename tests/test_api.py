@@ -242,16 +242,60 @@ def test_signatures(native, original, name):
     assert inspect.signature(getattr(native, name)) == inspect.signature(getattr(original, name))
 
 
+@pytest.fixture(scope='module')
+def contingency_float_reference():
+    # default_call uses the same bounded six-label partition for every smoke
+    # shape/worker row. Keep the original CSR, including its physical storage,
+    # read-only by convention and check that each comparison leaves it intact.
+    from label_pair_metrics_observer import observation
+    cached = {}
+    def reference(dtype):
+        key = np.dtype(dtype).str
+        if key not in cached:
+            args, options = default_call('metrics.contingency_table', np.empty((2, 3), dtype))
+            try:
+                value = reference_metrics.contingency_table(*args, **options)
+            except TypeError as error:
+                cached[key] = (None, None, (type(error), str(error)))
+            else:
+                cached[key] = (value, observation(value, np), None)
+        value, before, error = cached[key]
+        if error is None:
+            assert observation(value, np) == before
+        return value, before, error
+    return reference
+
+
 @pytest.mark.parametrize('native,original,name,dtype,shape', VALUE_CASES,
                          ids=[f'{n.__name__}.{name}-{np.dtype(dtype).name}-{shape}'
                               for n, _, name, dtype, shape in VALUE_CASES])
-def test_every_native_function(native, original, name, dtype, shape):
+def test_every_native_function(native, original, name, dtype, shape, monkeypatch, contingency_float_reference):
     rng = np.random.default_rng(15)
     api = native.__name__.split('.', 1)[1]+'.'+name
     a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
+        if api == 'metrics.contingency_table':
+            # Float labels use the declared SciPy structural CSR suffix, not
+            # the integer native counting entry or whole-function fallback.
+            from label_pair_metrics_observer import observation
+            args, options = default_call(api, a)
+            before = observation(args, np)
+            expected, expected_before, error = contingency_float_reference(dtype)
+            assert inspect.isbuiltin(xx._core.label_pair_counts_preweighted)
+            monkeypatch.setattr(xx._core, 'label_pair_counts_preweighted',
+                                lambda *a, **k: pytest.fail('float labels reached native counts'))
+            if error is not None:
+                with pytest.raises(error[0]) as actual_error:
+                    getattr(native, name)(*args, **options)
+                assert str(actual_error.value) == error[1]
+            else:
+                actual = getattr(native, name)(*args, **options)
+                assert_default_parity(api, np.dtype(dtype), actual, expected, image=a)
+                assert observation(expected, np) == expected_before
+            assert observation(args, np) == before
+            return
         if api=='draw.set_color':
             args,options=default_call(api,a)
             with pytest.raises(NotImplementedError):getattr(native,name)(*args,**options)
