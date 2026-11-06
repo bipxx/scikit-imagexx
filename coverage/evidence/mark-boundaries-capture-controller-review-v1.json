@@ -1,0 +1,115 @@
+{
+  "schema": "mark-boundaries-capture-controller-independent-review-v1",
+  "status": "CHANGES_REQUIRED_FAILURE_DIAGNOSTIC_RETENTION_AND_ONCE_BOUNDARY_SOURCE_VALIDATION",
+  "passed": false,
+  "source": "39bb24a963ba4dbddcff643207ab90fac5ad61a3",
+  "controller_sha256": "a9e6da82c1fe99ae9354fc9a9c7972ccdfbdc74693c5d86a3cdb0e01bca05696",
+  "binding_sha256": "796644d5c012e59fa31fd8478e79aa97c2a72054e53af283f8b1c086e0050cc1",
+  "incoming": {
+    "path": "build/mark-boundaries-capture-controller-v1/handoff-v1.json",
+    "sha256": "7fe31aef8f02e53687d466eb6d84da23eac04162e2a9c42184435e7e4b84368f"
+  },
+  "ownership": "Only ignored independent-review directory. Applicable current root/worktree AGENTS read; no R/root/source/main/shared edits. Source458e/hosted42224231410 unchanged and no job outcome claim.",
+  "authenticated": {
+    "new_family_files": {
+      "coverage/contracts/mark-boundaries-capture-v1.json": {
+        "raw_sha256": "be07911848cbacf52e85a214387335382855233826325599440476368beea707",
+        "bytes": 3025
+      },
+      "tests/mark_boundaries_observer.py": {
+        "raw_sha256": "ae938402bc639954006ee567b48e629a1caf0c5560953ac53d7b208526e8528f",
+        "bytes": 3044
+      },
+      "tests/test_mark_boundaries_observer.py": {
+        "raw_sha256": "7b714b6c89ce4c82ecf73fbef6041afedcf928703da152a5fa7dbb07bfbd75c3",
+        "bytes": 1385
+      }
+    },
+    "new_small_proofs": 176,
+    "clean_native_Windows_Git": true,
+    "predecessor_source": "d95573cdd803e3c0829cf0af11f0eafd59ea6ce5",
+    "prefix_review_sha256": "24d28ddc306ec8414785b69d27559a0faf354c2ab930133663caeb3043546fce",
+    "old_nine_dependency_pins_unchanged": true,
+    "recipes": 125,
+    "profile_original_budget": 0,
+    "actual_GO": null,
+    "helper": "Unchanged admitted0c40 library,32byteABI/glibc2.39/x86_64, maskedexceptions/emptyx87/samethread scope reused; library/core/archive not rehashed or executed."
+  },
+  "passed_scope": [
+    "Only three additive family files vs admittedd955; all old source recipes/contracts/codecs/reused dependencies unchanged. Binding authenticates twelve current source pins and125unique exact ordered IDs plus cases digest.",
+    "Capture validate_go requires external digest and actual ROOT_AUTHORIZED_MARK_REFERENCE_ONCE, exact source/controller/binding/cases/helper/profile/runtime/independent-readiness and same-code prefix, integer125/profile250total/oneperrecipe budgets, native/sampler/timing/build0, exclusive outputdir/no_retry and active UTC deadline. ActualGO absent; all currentbudgets0.",
+    "Metadata/Git/source/runtime/package/dependency/compiled/helper ABI validation precedes permitted bodies; actual runtime equals admitted same-code prefix. Guarded target topcall is one per current recipe, protected Python/C providers only inside authorized target. No automatic retry/resume/filter path.",
+    "Durable exclusive precall-freeze and fsynced started precede target; completed row follows successful observer/caller restoration and incrementscompletedcount. Exceptions retain observer_failed or restore_failed records and stop; partial writer bytes and started markers are not silently retried. Failure diagnostic omission below remains.",
+    "Observer statically uses admitted bounded fixture and codec; actual before/after inputs, raw ndarray/scalar dtype/layout/strides/base/type, result type/identity/sharing/relative pointer diagnostics, object-slot relations, protocols, warnings/error args, software NP context and callback events preserved. It performs no new mutation experiment and catches ordinary target Exceptions only; EntryRefused is BaseException so cannot be mistaken for an original outcome.",
+    "Immediate target wrapper records full32 plus NumPy policy/handler rawdiagnosticID/buffer on return/error; success row keeps them and exact caller full32 restoration. Hardware/pointer/address IDs are explicitly diagnostics, not portable gold.",
+    "Actual v2 prefixes use same observe(target_call) envelope:2target+2Pythonprovider attempts/profile all refused before body lines; compiled attempts0. Immediate target pair including NP state equal. Five caller full32 restores/profile and full process restoration match. Integrated observer outer wrapper includes NumPy factory/codec changes; do not confuse its setup interval with immediate target pair.",
+    "V1 missing immediate terminal keyword retained as receipt-gap-v1. Removing only v2 observer_target_immediate keyword recovers v1 controller AST exactly on same interpreter. New writer positive/6negative v2 records and16v1negatives authenticated; no capture observations or journal.",
+    "Final affected17pure/version authenticated from XML/terminal/commands, normal conftest/plugins and zero scientific origins/requests; no tests rerun. Synthetic root-envelope positive/negative controls are metadata only and confer no capture authority."
+  ],
+  "findings": [
+    {
+      "id": "M1",
+      "severity": "Required before irreversible original capture: preserve already-collected failure diagnostics",
+      "path": "build/mark-boundaries-capture-controller-v1/controller_v2.py:195",
+      "lines": "195-209, terminal239",
+      "problem": "If target_call returns/raises an ordinary target outcome, its finally appends the immediate32/NumPy pair. If subsequent observe encoding/alias/state/JSON work fails, the call to observe never assigns row. observer_failed journal currently retains only exception/traceback/target_entries, not immediate_calls. Successful finally restoration is only attached when row is not None. Final capture terminal emits observer_target_immediate=None. Thus a consumed original followed by observer failure loses the existing immediate pair and per-case saved/restored32 evidence, even though original cannot be retried.",
+      "source_witness": "target_call finally appends immediate_calls unconditionally; row=observe(...) assignment is incomplete on observer exception; lines203/209/239 omit those records when rowNone. This is static failure-path reasoning, not an observed algorithm failure.",
+      "minimal_correction": "In a versioned successor, durably retain available immediate_calls and saved/actual full32 caller restoration for failure cases as well as success, before propagating. Preserve original exception/traceback/target-entry count and partial writer bytes; do not fabricate a result row or retry. A small pure stub control can exercise the actual failure-write/finally path after an inert supplied-call return and an injected observer/codec failure without original/helper/native bodies.",
+      "owner_trigger": "R/controller author under root dispatch; root independently admits affected delta and any required source/receipt controls before GO."
+    },
+    {
+      "id": "M2",
+      "severity": "Required execution-discipline correction; no changed numerical semantics",
+      "path": "build/mark-boundaries-capture-controller-v1/controller_v2.py:211",
+      "problem": "Every successful recipe rehashes all12 frozen source files after entry validation, then the same loop repeats once at profile end. Total current source payload274513bytes, so125successes reread34314125bytes/profile solely for unchanged source pins. Controlled admitted factory/protocol/target code has no source-file mutation boundary documented. No per-case compiled/core rehash was added, which is good; this additional whole source loop is nevertheless contrary to boundary-validation-once instruction.",
+      "minimal_correction": "Remove the per-case whole source loop and retain entry and profile-final source checks. Keep per-case deadline/GO-byte checks, journal and per-call restoration. If a concrete callback/source mutation boundary is actually intended, document it and authenticate only that changed boundary; no speculative framework or extra revalidation layer requested.",
+      "cost_scope": "Static byte count only, not elapsed/hash benchmark or a performance claim. No expensive experiment was run.",
+      "owner_trigger": "R/controller author narrow versioned successor; affected pure source/control review only, preserving old proofs."
+    }
+  ],
+  "changes_required": [
+    "M1 retain immediate/NumPy/per-case32 diagnostics on observer failures after a consumed call.",
+    "M2 remove or concretely justify redundant per-case whole source hashing; entry/final checks remain."
+  ],
+  "pending": [
+    "Root accepts findings and commissions narrow versioned successor; independently review affected controller/source/receipt delta and any invalidated same-code prefix writer proof only. No unchanged125recipe/helper/science campaign replay.",
+    "Root independently admits complete source/storage/observer/controller/prefix readiness then issues explicit exact-runtime/source/controller/profile/case-order/journal/budget/deadline GO. Current budgets0, no implicit250authorization.",
+    "Exactly authorized once-only capture, saved validation and independent raw admission; every consumed/failed/partial journal remains retained without retry.",
+    "Compiled cubic source/native closure, complete native/public/installed owningSDK/provider/platform/typedFP domains/default1/globalworkers/scalarSIMD, genuine exact-source qualification, one-thread public original performance and root main delivery."
+  ],
+  "review_execution": {
+    "tests": 0,
+    "scientific_imports": 0,
+    "controller_runs": 0,
+    "original_calls": 0,
+    "provider_bodies": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "sampler_bodies": 0,
+    "timing_calls": 0,
+    "builds": 0,
+    "downloads": 0,
+    "archive_or_core_hashes": 0
+  },
+  "failure_waste_reuse": {
+    "incoming": "V1 transient-immediate writer gap preserved; v2 actual processes and expected negative controls terminal0. Current review finds untested post-return observer failure retention gap before original budgets.",
+    "reader": "Two reader corrections retained: old prepared-fixture outer-equality assumption replaced by actual new observer/setup vs target-immediate scope; pure terminal receipts have no status key. Only reader changed and read-only audit rerun; incoming/test/source bytes untouched.",
+    "reuse": "Prior125recipe safety/oldprefix24d28 and helper0c40 ABI/controls/codec retained unchanged;176small proofs authenticated, no largebinary or scientific replays.",
+    "avoidable": "Missing observer-failure diagnostic path and duplicate source validation caught before any irreversible original call. Elapsed cost unknown; byte traffic static only, no cost rerun.",
+    "next_owner_trigger": "Root accepts/assigns R narrow successor, then independent affected-delta admission and explicit separate captureGO. Current release remains independent."
+  },
+  "evidence": {
+    "audit_v1.py": {
+      "path": "build/mark-boundaries-capture-controller-independent-review-v1/audit_v1.py",
+      "sha256": "e8d58c97e773033407b313fced8d6d2952105b847471b80a9047cb5ee4c80057"
+    },
+    "audit-v1.json": {
+      "path": "build/mark-boundaries-capture-controller-independent-review-v1/audit-v1.json",
+      "sha256": "6224b98aa55c754ec189fd515e088f0d589fd572dc4effc343e797a9fd50dbb5"
+    },
+    "reader-failure-v1.json": {
+      "path": "build/mark-boundaries-capture-controller-independent-review-v1/reader-failure-v1.json",
+      "sha256": "c0be3d65ef772bbb1ca73cb880f1bc3bbaa800e0e752531626fb6da038c976f8"
+    }
+  }
+}

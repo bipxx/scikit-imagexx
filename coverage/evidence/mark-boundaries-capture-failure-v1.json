@@ -1,0 +1,38 @@
+{
+  "status": "FAILED_OBSERVER_CODEC_AFTER_105_CONSUMED_CALLS_NO_RETRY",
+  "source": "39bb24a963ba4dbddcff643207ab90fac5ad61a3",
+  "controller_sha256": "d83af25a7d89f851ba2d10ee7de25992af6e473e34c695ffeb02a8bf529e37a5",
+  "binding_sha256": "f8da06ca1f41553518a5046087410715e3ffa7db20f15712b55f1c2ed4051d72",
+  "profile": "minimum",
+  "root_GO_sha256": "8fa7320be1acfaaaec3d1973e487d0252209c71c68044ce533ce910ac9e861da",
+  "completed_rows": 104,
+  "consumed_calls": 105,
+  "failed_case": "mark_boundaries/background-none",
+  "observed_original_error": "numpy.core._exceptions._UFuncOutputCastingError in retained traceback; bitwise_and int64-to-bool same_kind",
+  "codec_error": "Unsupported coordinate observation: ufunc",
+  "full_caller32_restored": true,
+  "full_process32_restored": true,
+  "raw_files": {
+    "build/mark-boundaries-capture-controller-v2/capture-v1/minimum/terminal.json": {
+      "bytes": 11029,
+      "sha256": "a25b2711b0d5a03d2d1ee1b26f5fea06943cbf17840cecbe44a55d217d2a4db9"
+    },
+    "build/mark-boundaries-capture-controller-v2/capture-v1/minimum/journal.jsonl": {
+      "bytes": 1195647,
+      "sha256": "cc9ff552280056e4b776c11cb33c10f8ec174c8ed49a7b2838528449664c1002"
+    },
+    "build/mark-boundaries-capture-controller-v2/capture-v1/minimum/precall-freeze.json": {
+      "bytes": 10817,
+      "sha256": "795fce1dae53d57d5f189a27d85c704eeacc5a73befd321bea48840add9cbf25"
+    }
+  },
+  "authority": {
+    "modern_GO_retired_unexecuted": true,
+    "remaining_minimum_calls": 20,
+    "automatic_resume_or_retry": false,
+    "failed_consumed_case_replay": false
+  },
+  "gap": "Failedcase original structured exceptionargs not encoded. Do not label it complete or recapture it under the exhausted per-recipe grant.",
+  "next_owner_trigger": "boundary_worker narrow family-local typed exception codec/source closure; root independently admits before any separate remaining-case capture authority. No unchangedmodern capture.",
+  "waste_review": "Useful original outcomes retained104; preventable codec-domain omission caught at105th call, full failure FP/caller restoration retained by repaired controller. No replay to measure cost. Originalbody computational error is distinct from observer serializer failure."
+}

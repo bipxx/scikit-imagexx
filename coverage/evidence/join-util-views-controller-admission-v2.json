@@ -1,0 +1,119 @@
+{
+  "schema": "join-util-views-controller-independent-review-v2",
+  "status": "PASS_SCOPED_C1_POSTSTOP_SOURCE_AUTHORITY_DELTA_NOT_EXECUTION_GO",
+  "passed": true,
+  "source": "b36754dc9d5183edeabb867274a75d901d59b7e7",
+  "ownership": "Only ignored build/join-util-views-controller-independent-review-v2 output; no author/source/shared/main/ledger/plan edits. Applicable root/worktree AGENTS read; other lanes preserved.",
+  "incoming": {
+    "path": "build/join-util-views-measurement-controller-v2/handoff-v2.json",
+    "sha256": "e3cb1469aa457c53c752311c3d67f3ed445e04b8b07a69c748da042670ff467a"
+  },
+  "predecessor": {
+    "source": "2c7c028aaad7156c14da56522b52ad8a4b6d004f",
+    "review": "build/join-util-views-controller-independent-review-v1/review-v1.json",
+    "review_sha256": "ede4d3e1e9e231aaf6775587eb785418b4f771aad745520ac5644cd17561b47c",
+    "scope": "Original four files/44 small proofs/67 source pins/7 helper pins/56 cases and784samples/112warmgroups reused without replay. Predecessor remains CHANGES_REQUIRED; successor closes C1 only."
+  },
+  "authenticated": {
+    "changed_files": {
+      "tests/test_next_metrics_controller_v2.py": "e5b2facf22b19bcf5b3b3d54a230e0ecddf40bb8625590e55c005b0c0cadcbdd",
+      "tools/next_metrics_first_cohort_probe.py": "11c4cdf378d5868dc9fafb12e3f5f0073a7c64c70510fabb26c37049ba960670"
+    },
+    "unchanged_workflow_manifest": {
+      ".github/workflows/next-metrics-initial.yml": "4188dd6a2b2a36681059a06fea606830b8b00dbc7d78cece5b60e57e842f3a8e",
+      "coverage/contracts/next-metrics-measurement-v2.json": "e8aad315f9e2dba5c992c905c2dcb0b9b726f600f58aecbd94d149a127c37d51"
+    },
+    "new_small_proofs": 35,
+    "clean_native_Windows_Git": true,
+    "unrelated_function_AST_equal": [
+      "driver_argv",
+      "validate_util_entry",
+      "read_manifest",
+      "write_json",
+      "prepare_host_helper",
+      "scoped_binding",
+      "scoped_measurement",
+      "prepare_cohorts",
+      "measurement_commands",
+      "run_measurements",
+      "validate_reports"
+    ],
+    "AST_scope": "Baseline and successor parsed on the same retained interpreter; no frozen cross-version AST hash assumption."
+  },
+  "findings": [],
+  "acceptance": [
+    {
+      "gate": "After controlled StopBeforeBody and outer restoration, authenticate before terminalPASS",
+      "state": "passed",
+      "evidence": "main finally restores trace/profile/argv/workers/fallback before finish_probe; finish_probe requires stopped+restored, unchanged raw binding/GO/probe, live deadline, HEAD/clean+67small pins, active contract and helper-binding/env/receipt/bundle digests. Failure writes poststop-source-authority diagnostic then raises before PASS."
+    },
+    {
+      "gate": "Nine guarded cohort terminals and postbatch offline identity closure",
+      "state": "passed",
+      "evidence": "run_cohorts requires poststop_source_authority_unchanged for every accepted terminal. After nine it checks controller manifest/runtime bytes, invokes existing snapshot ci_measurement_artifacts verify exactly once, saves verifier exit/log and requires return0; runtime/manifest checked again. Failure writes postbatch-identity diagnostic then raises without summaryPASS."
+    },
+    {
+      "gate": "No new largebinary poststop loop or unrelated source/method drift",
+      "state": "passed",
+      "evidence": "Two-file delta only; per-route entry core hash policy unchanged. Once-after-batch existing verifier handles installed core/runtime/SDK. Workflow/manifest raw-exact; all67source+7helper pins, schemas/cases/methods/allUNBOUND authority and eleven unrelated functions retained."
+    },
+    {
+      "gate": "Affected final pure controls both supported Windows versions",
+      "state": "passed",
+      "evidence": "Authenticated 60 XML/collected nodes each, no failures/errors/skips/scientific attempts/origins, normal conftest/plugins. Eighteen new cases comprise13 actual finish_probe metadata paths and5 actual run_cohorts synthetic-subprocess paths;42 predecessor controls retained."
+    },
+    {
+      "gate": "Actual genuine binding/host helper/firstcohort/measurement authority",
+      "state": "pending",
+      "evidence": "Synthetic metadata and inert cached module controls do not execute real targets, native, helper, verifier, sampler or measurement. All actual producer/runtime/core/SDK/root/cohort authority remains UNBOUND."
+    }
+  ],
+  "control_scope": {
+    "poststop": "Actual finish_probe write path called by saved tests: success and source/HEAD/dirty/binding/GO/probe/contract/helper-binding/helper-receipt/helper-env/deadline/restoration negatives. Fresh dirs; no PASS terminal on negatives.",
+    "postbatch": "Actual run_cohorts logic with synthetic successful child receipts and inert subprocess return objects. Success invokes one mocked verifier after nine; verifier failure/runtime-before/runtime-during/manifest mutation retain diagnostics and suppress summary. No verifier body runs.",
+    "limits": "These are source/metadata controls, not actual original/native cohorts or installed identity execution. A missing poststop field is rejected in source; no claim that an actual host cohort has exercised that rejection."
+  },
+  "worker_getter_scope": {
+    "status": "DISCLOSED_LIMITATION_RETAINED_NOT_ADDITIONAL_BLOCKER",
+    "detail": "Executor owns inner native-denial/C-return profile; empty outer getter list is not independent absence counting. Existing source-authenticated inner marker/default1 checks retained, no shadow profiler. Actual global/default1 ownership remains genuine-cohort gate."
+  },
+  "changes_required": [],
+  "pending": [
+    "Root independent acceptance/admission of this frozen affected C1 controller successor.",
+    "Exact-source whole-product/exportedSDK/stager four-profile admission and actual producer/run/artifact/runtime/core/SDK/root bindings; current458e/live42224231410 remain root-owned and no job outcome claimed here.",
+    "Actual measurement-host admitted F1 source-built helper preparation/full32controls/receipt/library/environment and recursive collection; no helper execution in this review.",
+    "Root explicit untimed firstcohort GO, all nine real one-original/one-native stop-before-sampler cohorts with successful poststop guards and once-postbatch offline verifier; independent actual cohort admission.",
+    "Separate root timing GO and one-thread public original comparison/all losses;56cases/784samples/112warmgroups still prospective, not an authorized budget. FullArrayMap exactclass/provider/domain/default1/SDK/MSVC/main delivery gaps remain as predecessor."
+  ],
+  "reuse_waste": {
+    "reused": "Predecessor four-file/44-proof review, unchanged workflow/manifest/actionlint/embedded workflow checks,67source+7helper pins and source/component/native/SDK/method evidence within original scopes. No unchanged campaigns or largearchive/core hashes.",
+    "failures": "Incoming predecessor C1 changes-required and historical syntax/barrier failures retained. Author inline metadata-audit syntax error retained in successor; no reviewer failures or tests replayed.",
+    "avoidable": "Earlier lack of actual epilogue immutability coverage is corrected by bounded terminal-write controls. Author v1/v2/v3 pure campaigns each had changed control inputs; no repeated favorable performance experiment. Overall elapsed waste unknown.",
+    "next_owner_trigger": "Root admits C1 delta if accepted, completes independent genuine/root binding and separately authorizes hosthelper/cohorts then measurement. Current release remains independent."
+  },
+  "review_execution": {
+    "test_runs": 0,
+    "controller_runs": 0,
+    "science_imports": 0,
+    "original_calls": 0,
+    "native_calls": 0,
+    "helper_calls": 0,
+    "verifier_calls": 0,
+    "sampler_body_calls": 0,
+    "timing_calls": 0,
+    "builds": 0,
+    "downloads": 0,
+    "largearchive_or_core_hashes": 0
+  },
+  "evidence": {
+    "audit_v2.py": {
+      "path": "build/join-util-views-controller-independent-review-v2/audit_v2.py",
+      "sha256": "5d21e8f26c234595c9921818a14ca4d5c7011b5b68dbe77768325bc14e8710ab"
+    },
+    "audit-v2.json": {
+      "path": "build/join-util-views-controller-independent-review-v2/audit-v2.json",
+      "sha256": "1ee724ba4e9eba2f49864d06f9a7d83f08820d6808631c382166176d17e35193"
+    }
+  },
+  "live_handles": "Incoming final pure jobs terminal0, confirmed by retained records. Review has no live execution jobs; no polling of independent qualification campaign."
+}

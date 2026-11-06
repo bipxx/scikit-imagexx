@@ -1,0 +1,32 @@
+{
+  "schema": "join-util-views-failed-campaign-scoped-root-admission-v1",
+  "status": "PASS_SCOPED_LINUX_RAW_AND_STAGED_BYTES_OVERALL_RELEASE_FAILED",
+  "source": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
+  "run": 42224231410,
+  "production_source_sha256": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f",
+  "whole_product_accepted": false,
+  "main_image_names": 265,
+  "retained_audit": {
+    "path": "build/join-util-views-qualification-v1/42224231410/independent-audit-v1.json",
+    "sha256": "947fcfd2881d7023b03201a62b9bf8cc64fd38024754a3a7115926c23a912d37"
+  },
+  "handoff_sha256": "e173b8e44888b0b6609b752130f4a45bcb4684e5fa11a63353fd1d59f7f89246",
+  "authenticated_small_proofs": 51,
+  "Linux_public_XML": {
+    "tests": 714990,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_checks": 192,
+  "corpora": 36,
+  "accepted_scope": "Three Linux exact458e genuine product/public/installedSDK seals and two corresponding stager byte/source/SDK identities; independent per-record audits reused, no archive/core rehash. This is preparation/scoped profile evidence only.",
+  "failed": "Windows92sourceguard failures; no Windows genuine seal/SDK/stager. Overall42224231410 remainsFAILED. No aggregate271release/performance admission.",
+  "measurement_gate": "Existing workflow requires successful producer; do not weaken it to measure failedrun. New b557 four-profile successor42238215124 must satisfy applicable producer/readiness gates before new actual measurement binding/GO.",
+  "pending": [
+    "Four exactsource profiles at b557, independent admission and source projection.",
+    "Actual successful-producer measurement binding, nine guarded sampler-entry cohorts, separate1thread timingGO/results/loss disposition.",
+    "Main271delivery/fullAPI closure."
+  ],
+  "waste_review": "Retained sixZIPs once, API digest checked while streaming;115454qualification records and2x2729stagefiles audited once. Root authenticates51small proofs and scope only, no numerical/scientific/build/timing/env/download/largehash replay. Failed Windows archive contains tooling XML/log only; preserve instead of reconstructing absent seal."
+}

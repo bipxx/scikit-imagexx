@@ -1,0 +1,153 @@
+{
+  "schema": "draw-multiblock-lbp-independent-safety-delta-review-v2",
+  "status": "PASS_SCOPED_SOURCE_STORAGE_DELTA_NO_CAPTURE_GO",
+  "passed": true,
+  "source": "bd845fa8602c750e80f9335411d2c02c786c7522",
+  "reviewer": "metrics_integrator; independent B source reviewer",
+  "ownership": "Only ignored build/draw-multiblock-lbp-independent-safety-review-v2 outputs; source/root/controller unchanged; applicable root/worktree AGENTS read; other active jobs preserved",
+  "handoff": {
+    "path": "build/draw-multiblock-lbp-source-first-v2/handoff-v2.json",
+    "sha256": "7904537d0644b28fdecc3ca8cbf7a551289f3e031d4e6246f5e9b347887e01f9",
+    "bytes": 12720
+  },
+  "predecessor_review": {
+    "path": "build/draw-multiblock-lbp-independent-safety-review-v1/review-v1.json",
+    "sha256": "198fdf2974f74a83d5ce7d06d6a1a8e2f4db0a1e7382baa254002f126c277152",
+    "bytes": 12948
+  },
+  "audit": {
+    "path": "build/draw-multiblock-lbp-independent-safety-review-v2/audit-v2.json",
+    "sha256": "ab9ac5773ecbfcb64e85021d0709954c4580a6cdcbe67da984cd26da5567fad2",
+    "bytes": 7651
+  },
+  "authenticated": {
+    "new_files": 4,
+    "new_small_proofs": 21,
+    "new_bytes": 30203,
+    "unchanged_v1_files": 5,
+    "historical_recipes": 93,
+    "added": 1,
+    "proposed_total": 94,
+    "benchmark_cases": 4,
+    "source_case_method": "All v1 raw bytes exact including four benchmark cases/Montage method/source fragments; new canonical sourcefreeze verified separately. Prior five-source32proof source/storage103pure/101NP scopes reused, not replayed."
+  },
+  "findings": [],
+  "closed_findings": [
+    {
+      "id": "F1",
+      "predecessor_status": "CHANGES_REQUIRED missing actual repeated-overlap recipe",
+      "closure": "Four additive files retain all old v1 bytes and add exact peer source-index witness.3x3RGBf32 r=c=-3,width=height2,code170,alpha0.3 repeats centralIMAGE pixel(1,1) in ordered patches0,2,4,6; normalized logical source-center slice is empty. No stronger geometric-center or blended-value claim."
+    }
+  ],
+  "passed_scope": [
+    "Exact clean bd845 HEAD/four-file additive diff over1da verified via native Windows Git; producer handoff7904537d and old independent review198fdf29 authenticated. Remove only four new files to recover old five-file packet byte-exact.",
+    "Exact source-index patch lists independently re-derived from literal pinned source two-axis basic-slice bounds using stdlib only and equal peer witness. Repeated destinations\u2014not computed image outputs\u2014are established.",
+    "New fixed source_safe recipe/bounds reject shape/alpha/r/code mutations; bounds168elementseed+27owningoutput, source upper8updates/10000broadcastwords, originalbudget0 remain controlled.",
+    "New fixture uses existing ordinary C-order168float32 ramp factory, first27 C-order seed values, reshape3x3x3 and copy; returns owning C float32 image with updated geometry/code/alpha and default colors. No blend, original/helper/native call or source algorithm introduced.",
+    "Composed old93+new1 proposal pool94 matches static context. Old93/4benchmarkcases/method/raw source/protocol/codec/performance plans unchanged, historical misnamed wrapped-overlap preserved as disjoint evidence.",
+    "New intake binding has strict key/schema/mode/budget and actual raw contract/canonical source pins; real import-request hooks cover cold/cached NumPy/feature and malformed budget/extra/contract/source refusal before scientific request. Test hooks restore through pytest monkeypatch.",
+    "Authenticated six pure checks per retainedWindows3.11/3.13 and nine actual NumPy factory/codec/request-refusal checks per1.24.4/2.5.4, normal conftest/plugins, zero failures/errors/skips; no replay. Owning f32 seed values/codec rawbytes/unchangedinput/events0 proven only in setup scope.",
+    "All actual original/helper/native/sampler/timing authority remains0/None. Existing full owning SDK/native/typed FP/globalworker/SIMD/provider/alias/source semantics limitations retained, not closed by a fixture."
+  ],
+  "pending": [
+    "Root independent admission/publication of this scoped source/storage delta; no API/native completion, new original budget or actual capture permission implied.",
+    "Freeze actual visualizer observer/controller/case dispatch. v2 cases() lists94 proposals, but v2 fixture/source_safe intentionally accepts only newcase; old93 use unchanged legacy fixture. Future prefix must compose this explicitly and verify actual setup before originals; no ready94case controller claimed.",
+    "Actual retained runtime/module/upstream source identity + native Windows Git locator/explicit Linux environment at real entry, source-bound helper/complete32FENV/MXCSR restore under supported masked/empty-x87 domain, policy/buffer/warning/callback/exception/input-output alias/ownership/protocol observation and durable one-shot call journal.",
+    "Root separately binds actual observer/prefix/runtime/FP and authorizes exact once-only original budget.94x2=188 and prior93x2=186 are arithmetic only, neither is GO. Then saved validation/independent raw/root admission without favorable recapture.",
+    "One coherent complete C++/public/owning installedSDK operation across full assessed signature and typed promotion/stagedFP/error/protocol/provider domains. FullAPI gaps remain open, no primitive-only parity substitute.",
+    "Actual hot-swap/nativeownership/single-global default1/workers1,4/scalar-SIMD disposition, exact-source integration/COMPLETE sourcebarriers/genuine four-profile/exported target/MSVC/release gates.",
+    "Relevant per-API one-thread public original benchmark/all raw losses and separate root measurement GO, then main delivery/cleanup. Current271 release/live42224231410 and C1 controller review independent and untouched."
+  ],
+  "source_semantics_limits": {
+    "center": "Central IMAGE pixel(1,1) repeated in four patches; normalized logical source-center slice empty. No claim that arbitrary wrapped neighbor can overwrite a nonempty normalized logical-center slice.",
+    "ordered_updates": "Witness covers repeated membership only; actual f32 first-product/add/assignment/nextread values, strong/weak profile promotion, alpha0/1/empty/FP events remain future original/native parity gates.",
+    "complete_operation": "Full copy/gray replication/conversion/eight ordered blends remains intended standalone C++/SDK end state. Existing whole set_color gather/f64 staging is not assumed equivalent.",
+    "storage": "New array owns27C-orderf32 values; controlled168elementseed dies after setup. No unsafe strides, protocol callbacks, arbitrary object graph or pointer payload added."
+  },
+  "retained_results": {
+    "pure-windows311-v2": {
+      "nodes": 6,
+      "terminal": {
+        "exit": 0,
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 0.26500000013038516,
+        "science_attempts": [],
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_public_batches": 0
+      }
+    },
+    "pure-windows313-v2": {
+      "nodes": 6,
+      "terminal": {
+        "exit": 0,
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 0.3693621000275016,
+        "science_attempts": [],
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_public_batches": 0
+      }
+    },
+    "numpy-minimum": {
+      "nodes": 9,
+      "terminal": {
+        "exit": 0,
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 1.8625983019999994,
+        "original_calls": 0,
+        "native_calls": 0,
+        "sampler_body_calls": 0
+      }
+    },
+    "numpy-modern": {
+      "nodes": 9,
+      "terminal": {
+        "exit": 0,
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "seconds": 1.907093164,
+        "original_calls": 0,
+        "native_calls": 0,
+        "sampler_body_calls": 0
+      }
+    }
+  },
+  "failures_and_waste": {
+    "current_new_failures": [],
+    "preserved": "Original v1 pure102PASS1assertionFAIL and peer missing-overlap review stay immutable; new delta closes coverage finding without relabelling or replay.",
+    "reuse": "Prior actual0.26source/gray2rgb/dtype pins, old93factory/protocol/storage/codec and103pure+101NP/profile proofs, four fixed benchmarkcases/Montagemethod, primitives/native/SDK proposal reused.",
+    "avoidable": "Missing overlap detected before original budgets/native implementation. One author locator query failed then reused retained launcher; no environment creation/expensive work. Review added only small-source/hash/XML/static-index reads.",
+    "observed_new_check_seconds": {
+      "pure-windows311-v2": 0.26500000013038516,
+      "pure-windows313-v2": 0.3693621000275016,
+      "numpy-minimum": 1.8625983019999994,
+      "numpy-modern": 1.907093164
+    },
+    "review_cost": "Unknown totalwall/token/financial cost; no work replayed to measure waste.",
+    "next_owner": "root",
+    "next_trigger": "Admit affected four-file source/storage delta, then separately assign actual observer/runtime/FP/prefix readiness and explicit GO. Do not self-dispatch188calls or delay current release."
+  },
+  "authority": {
+    "tests_replayed": 0,
+    "scientific_imports": 0,
+    "source_functions_executed": 0,
+    "original_calls": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "sampler_body_calls": 0,
+    "timed_batches": 0,
+    "builds": 0,
+    "downloads": 0,
+    "large_archive_core_hashes": 0,
+    "source_edits": 0,
+    "hosted_dispatch": false
+  }
+}

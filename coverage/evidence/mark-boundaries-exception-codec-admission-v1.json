@@ -1,0 +1,46 @@
+{
+  "schema": "mark-boundaries-exception-codec-independent-review-v1",
+  "status": "PASS_SCOPED_TYPED_EXCEPTION_DESCRIPTOR_SOURCE_NO_CAPTURE_GO",
+  "passed": true,
+  "source": "288244ca6e4b31685285d543b1ee49831ba566fe",
+  "incoming": {
+    "path": "build/mark-boundaries-exception-codec-v1/handoff-v1.json",
+    "sha256": "0ac72cb387476e01ec7f943c33ffb60ad836236c0f51b3704b2cff529abe02b6"
+  },
+  "authenticated": {
+    "additive_files": 5,
+    "old_source_pins": 12,
+    "small_proofs": 28,
+    "recipes_unchanged": 125,
+    "source_clean": true,
+    "exact_observer_inverse": true
+  },
+  "accepted_scope": [
+    "Family-local typed ufunc/dtype exceptionarg descriptors, nested container type and relative identity; metadata only, neverapplyufunc. Plain scalar dtype domain explicit; structured/subarray/metadata dtype cases refused.",
+    "Observer only replaces errorargsencoder and adds actual exceptionqualname; exact inverse recovers frozen observer. Sharedcodec/cases/old104rows/failed105records unchanged.",
+    "Retained NumPy1.24/2.5 actual exception sources, sixpure perWindowsPython and2safe descriptor tests eachprofile; no original/error constructor/provider/native/helper body."
+  ],
+  "findings": [],
+  "authority": {
+    "original_budget": 0,
+    "actual_GO": null
+  },
+  "gaps": [
+    "Consumed background-none case105 structured originalargs missing; schema cannot recreate/relabel it. No retry granted.",
+    "MARK remaining20minimum/125modern actualcontroller/newsource/runtime/codec/fullFP/journal/caseorder/budget/deadline binding and independent readiness before explicitGO.",
+    "LBP observer must independently wire/use component and close its error-domain/frontier gates before originalcapture; no automatic crossfamily admission.",
+    "Complete native/SDK/public/hotswap/scalarSIMD/workers/parity/performance/qualification gates."
+  ],
+  "execution": {
+    "tests": 0,
+    "scientific_imports": 0,
+    "original_calls": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_hashes": 0
+  },
+  "waste_review": "Concrete serializer failure addressed locally without editing frozen sharedcode or generic objectengine. Reused12pins/125recipes/104savedrows/helper/currentrelease.28smallproofs authenticated once; root first resultreader wrongly assumed NumPyexit_code/xml fields, then inspected actual NumPy exit/tests schema and corrected reader only, retaining failure and not replaying proof/science. No argsreconstruction/retry. NextB frozenremainingcontroller, root independent readiness/GO."
+}

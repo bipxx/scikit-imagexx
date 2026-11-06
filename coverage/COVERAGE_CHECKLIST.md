@@ -43,13 +43,13 @@ The shipped 265 partial image paths have [four-profile admission](evidence/next-
 
 ## Current cumulative increment: six new public APIs
 
-The candidate is **271 partial image paths** at source `458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8` (216 product files, 102 SDK files). It has not been delivered to main.
+The candidate is **271 partial image paths** at source `b557a42a13bcfa005d0bb5364e1c6744bd781d30` (216 product files, 102 SDK files). It has not been delivered to main.
 
 - [x] Compatible private native components and retained original-reference evidence reviewed for the six paths below.
 - [x] Shared registry, single-core bindings, SDK hooks, installed-source selectors and explicit test-helper preparation/collection wired.
 - [x] [Independent source review](evidence/join-util-views-final-source-admission-v1.json) and [five-test metadata repair](evidence/join-util-views-sourcebarrier-fix-admission-v1.json).
-- [x] [Complete source readiness](evidence/join-util-views-source-readiness-v2.json): 3,035 cases plus 8 subtests on each retained Python; no failures/errors/skips/scientific imports.
-- [ ] Four-profile genuine product/installed SDK admission. [Run 42224231410](https://github.com/bipxx/scikit-imagexx/actions/runs/42224231410): Windows failed in tooling guards before preparation (the later seal check also failed); modern, minimum and debug finished successfully but have no independent raw/SDK admission yet. The run is terminal and failed overall. The stored helper CRLF hash exactly matches hosted failure; byte-preserving checkout policy and successor readiness remain pending. Preserve all outcomes and inspect failures before any successor.
+- [x] [Byte-preserving checkout policy](evidence/join-util-views-windows-bytepolicy-admission-v1.json) and [complete faithful source readiness](evidence/join-util-views-source-readiness-v3.json): 3,035 cases plus 8 subtests on each retained Python with core.autocrlf=true; no failures/errors/skips/scientific imports. Production blobs remain unchanged from the predecessor.
+- [ ] Four-profile genuine product/installed SDK admission. [Successor run 42238215124](https://github.com/bipxx/scikit-imagexx/actions/runs/42238215124) is live on exact b557: Windows tooling guards now pass and all four profiles are building/qualifying. [Failed predecessor scoped admission](evidence/join-util-views-failed-campaign-scoped-admission-v1.json) retains three Linux profile seals/192 SDK checks/36 corpora and the failed Windows guard outcome; it remains failed overall. No mixed-source or whole-release acceptance.
 - [ ] Actual measurement controller/helper/runtime/core/SDK/root binding and each API’s real zero-body sampler-entry cohort accepted.
 - [ ] Separate original-public measurement GO, one-thread comparison, raw-result admission and every loss disposition.
 - [ ] Final source projection, main merge/push and safe eligible worktree/build cleanup.
@@ -76,10 +76,10 @@ The same increment contains reviewed density and F-layout boundary optimizations
 
 ## Next source/reference work
 
-- [ ] `segmentation.mark_boundaries`: [source/storage](evidence/mark-boundaries-source-safety-admission-v1.json) and [actual zero-body prefix](evidence/mark-boundaries-zero-body-readiness-admission-v1.json) are scoped admissions. Complete capture-capable controller/observer has independent readiness and explicit GO pending; current original budget is 0. Cubic mirror prefilter/zoom, channel filtering and profile differences remain native-computation work.
-- [ ] `feature.draw_multiblock_lbp`: [initial source review](evidence/draw-multiblock-lbp-source-review-v1.json) required a real repeated-overlap recipe; the additive 94-recipe successor is independently reviewed privately. Actual observer/runtime/full-FP prefix and explicit capture GO remain pending; budget 0. Ordered eight-block updates and float32 staging cannot be replaced by a generic blend.
+- [ ] `segmentation.mark_boundaries`: [source/storage](evidence/mark-boundaries-source-safety-admission-v1.json) and [actual zero-body prefix](evidence/mark-boundaries-zero-body-readiness-admission-v1.json) are scoped admissions. [Controller repair](evidence/mark-boundaries-capture-controller-admission-v2.json) passed scoped independent review. [Once-only minimum capture failed](evidence/mark-boundaries-capture-failure-v1.json) after 104 saved observations and 105 consumed calls: a NumPy casting error carried an unsupported ufunc argument. Exact failure/FP/restoration records are retained; the consumed case is incomplete and will not be silently retried. Modern capture is stopped; [Typed exception-codec source repair](evidence/mark-boundaries-exception-codec-admission-v1.json) passes scoped independent admission; the fixed remaining-case controller and new authority are pending. Cubic mirror prefilter/zoom, channel filtering and profile differences remain native-computation work.
+- [ ] `feature.draw_multiblock_lbp`: [initial source review](evidence/draw-multiblock-lbp-source-review-v1.json) required a real repeated-overlap recipe; the [additive 94-recipe successor](evidence/draw-multiblock-lbp-source-admission-v2.json) passes scoped source/storage review. Actual zero-body observer prefixes passed, but [complete controller review](evidence/draw-multiblock-lbp-controller-review-v1.json) requires failure-path caller-restoration diagnostics. The [repair review](evidence/draw-multiblock-lbp-controller-review-v2.json) closed that gap but caught an early-failure uninitialized diagnostic. The [one-initializer delta](evidence/draw-multiblock-lbp-controller-delta-admission-v3.json) passes narrow independent review, four affected pure/source checks per retained Python and both zero-body prefixes. Full readiness is explicitly false until typed exception-codec closure; budget 0. A separate worker is implementing the native family without claiming observed parity. Ordered eight-block updates and float32 staging cannot be replaced by a generic blend.
 - [ ] `draw.polygon_perimeter` and `draw.rectangle_perimeter`: reuse retained clipping assessment; pinned Matplotlib/AGG reference/native dependency strategy is still required. Do not repeat the already-recorded dependency discovery.
-- [ ] Performance controller C1 successor: post-stop source/authority checks and one post-batch verifier are privately reviewed; bind only after actual genuine product admission. No measurement authority is inferred from pure tests.
+- [ ] Performance controller C1 successor: [post-stop source/authority checks and one post-batch verifier](evidence/join-util-views-controller-admission-v2.json) pass scoped independent review; bind only after actual genuine product admission. No measurement authority is inferred from pure tests.
 
 ## Module index
 
@@ -1193,6 +1193,8 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: bit-to-neighbor orientation, center treatment and dtype/range. Cases to close: each individual bit and mixed block codes.
   - Easiest remaining route: Draw fixed nine-block LBP overlay through rectangle/alpha primitives.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current private gate: [Private controller review](evidence/draw-multiblock-lbp-controller-review-v1.json): source-safe 93+1 recipes and zero-body prefix scope only; failure-diagnostic successor has narrow independent admission; complete typed exception-codec/capture readiness remains pending, original budget 0. Native family implementation is private and unqualified. Full computation/parity/SDK/performance gates remain open.
+
 
 <a id="api-feature-fisher-vector"></a>
 - [ ] **`feature.fisher_vector`** — full contract closed.
@@ -3517,6 +3519,8 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: mode, background_label, subpixel upsampling, image dtype and color. Cases to close: inner/outer/subpixel boundaries and grayscale/RGB images.
   - Easiest remaining route: Reuse find_boundaries and color overlay with optional outline.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Current private gate: [Capture failure](evidence/mark-boundaries-capture-failure-v1.json): 104 minimum-profile rows saved, 105 calls consumed; ufunc-bearing error args leave one consumed observation incomplete. Modern capture stopped. [Typed exception-codec source closure](evidence/mark-boundaries-exception-codec-admission-v1.json) is admitted; remaining-controller readiness and authority are pending. Full computation/parity/SDK/performance gates remain open.
+
 
 <a id="api-segmentation-morphological-chan-vese"></a>
 - [ ] **`segmentation.morphological_chan_vese`** — full contract closed.

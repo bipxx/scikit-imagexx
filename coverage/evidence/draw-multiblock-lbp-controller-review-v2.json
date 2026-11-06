@@ -1,0 +1,109 @@
+{
+  "schema": "draw-multiblock-lbp-controller-independent-review-v2",
+  "status": "CHANGES_REQUIRED_EARLY_FAILURE_TERMINAL_LOCAL_INITIALIZATION",
+  "passed": false,
+  "source": "1f99434111c50109d47157b180d9d50aea2e14f7",
+  "controller_sha256": "520fc12062c42e9767756a95b52ef8d41369ad67648f1b351cef276795de20a2",
+  "binding_sha256": "cf2168bd9c02244f651eca81fcc0769e85160f7dc43eaa9ec84b4411aa561ae4",
+  "incoming": {
+    "path": "build/draw-multiblock-lbp-capture-controller-v1/handoff-v2.json",
+    "sha256": "d922448be218bc47b30fc82cd151f12a9696f5243b3927fded55dbba21127a95"
+  },
+  "predecessor": {
+    "source": "1f99434111c50109d47157b180d9d50aea2e14f7",
+    "handoff_sha256": "667151575558f1d2e242c18489878a42a50ba4263f12d84cf08e957b13bcd3d9",
+    "failed_review_sha256": "1bb432bf6f6a5bdd431c1b7833b4f93b5bbe017644be57acb398fe543a82471d",
+    "small_proofs_reused": 125
+  },
+  "ownership": "Only ignored build/draw-multiblock-lbp-controller-independent-review-v2 output; no author/root/source/shared/main/plan/ledger edits. Current root/worktree AGENTS read, other workers and live release preserved.",
+  "authenticated": {
+    "new_small_proofs": 51,
+    "clean_native_Windows_Git": true,
+    "tracked_source_unchanged": true,
+    "binding_delta": "controller_raw_sha256 only",
+    "source_pins_unchanged": 16,
+    "recipes": "Frozen93+1 unchanged",
+    "unchanged_top_level_functions": [
+      "dump",
+      "validate",
+      "append",
+      "np_state",
+      "check_deadline",
+      "validate_go"
+    ],
+    "actual_prefixes": 2,
+    "metadata_refusals": 4,
+    "pure_checks_per_version": 22
+  },
+  "closed_findings": [
+    {
+      "id": "L1",
+      "state": "passed_affected_delta",
+      "evidence": "After observe throws or post-return public-attempt/state validation fails, except retains original error+traceback; finally fills last_case_diagnostics with available immediate records, actual saved/restored caller32, target/public counts/no retry and durably appends failed_case_restoration. Terminal carries same last_case_diagnostics and immediate list. No completed/fabricated row and no second invocation. Inert actual-loop controls before_call/after_call/after_row authenticate actualfinally/journal semantics; terminal field carry is source-inspected rather than actual full terminal execution in those tests."
+    }
+  ],
+  "passed_scope": [
+    "All51newsmallproof hashes/sizes match handoff; predecessor125proof review and frozen16pins/runtime/helper/source scopes reused without rehash/replay.",
+    "Ignored controller/binding delta only, same frozen1f994 clean source; non-main validation/deadline/journal functions AST-identical on same interpreter; no percase source hash added.",
+    "Final22pure checks/version authenticate with normalconftest/plugins, scientific attempts/origins0, no failures/errors/skips. Three actualcaptureloop inert failure paths plus one delta guard are four new controls;18controller/source checks retained.",
+    "Both actualsamecode prefixes authenticate3target+2Pythonprovider attempts/profile all refused prebody, compiledattempts0; two immediate32/NPpairs and six caller full32 plus process restore eachprofile. Firstgray and added3x3overlap recipes reached existing observer request path only, no computed outputs/observations/journal.",
+    "Four changed actualmetadata refusals (tamperbinding/capture-noGO eachprofile) stop before scientificimports; all newprocesses terminal0. ActualGOabsent/currentbudgets0."
+  ],
+  "findings": [
+    {
+      "id": "L2",
+      "severity": "Required narrow failure-writer correction before complete-controller readiness",
+      "path": "build/draw-multiblock-lbp-capture-controller-v1/controller_v2.py",
+      "lines": "100,135-194,256",
+      "problem": "Successor changes terminal observer_target_immediate from a guarded expression to unconditional immediate_calls. That local is first assigned inside the runtime try at194, after imports/module identity/compiled checks. A runtime import or check failure before194 is caught and process state restored, but terminal256 then reads an uninitialized local, raisingUnboundLocalError and suppressing the original failure terminal. Prior guard avoided this on failure. This is introduced by the reviewed delta.",
+      "source_witness": {
+        "runtime_import_line": 136,
+        "first_immediate_initialization_line": 194,
+        "unconditional_terminal_read_line": 256,
+        "description": "Runtime import/identity/compiled-check failure before194 is caught and restored, then unconditional terminal local read raisesUnboundLocalError, suppressing original failure terminal."
+      },
+      "minimal_correction": "Initialize immediate_calls=[] with other main state before runtime try, or retain explicit availability guarding while preserving all collected post-call pairs. Add a small pure inert early-failure terminal/initialization control; preserve original error/traceback and restored process state. No algorithm/native/helper work or framework required.",
+      "scope": "Static control-flow counterexample; not an observed runtime/algorithm failure and not original consumption. Existing after-call L1 proof remains valid; only affected writer/controller identity/guards need successor review.",
+      "next_owner_trigger": "Root/controller author narrow versioned successor; independent affected-delta admission before anyGO."
+    }
+  ],
+  "changes_required": [
+    "L2 ensure early-runtime failure terminal can safely emit an empty immediate list without masking original error. L1 is closed within authenticated scope."
+  ],
+  "pending": [
+    "Root corrects L2 in versioned successor, preserves currentfailedreview/controller/binding/proofs, independently reviews affected delta/prefix identity scope.",
+    "Independent complete-controller/root readiness admission; actual explicit source/runtime/controller/profile/94orderedIDs/journal/deadline/budget rootGO. Originalbudget0; no implicit188authorization.",
+    "Only explicit once-only original capture and independent raw admission can establish observed outputs. Native/public/complete owningSDK/parity/provider/typedFP/platform/default1/SIMD/workers/hotswap/genuine/performance/release gates remain open."
+  ],
+  "review_execution": {
+    "test_runs": 0,
+    "incoming_controller_or_observer_runs": 0,
+    "scientific_imports": 0,
+    "original_calls": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "sampler_bodies": 0,
+    "timing": 0,
+    "builds": 0,
+    "environments": 0,
+    "downloads": 0,
+    "large_hashes": 0
+  },
+  "waste_reuse": {
+    "reused": "Prior125proof/16pin/93+1 source/storage/helper/runtime admission scopes;51smallnewproofs authenticated only. Mark70f9 frozen and not self-admitted, C/R/live release untouched.",
+    "failure_scope": "PredecessorL1 retained and nowfixed; newL2 is source-control-flow issue caught beforecalls. No reviewer script/test failures or expensive reruns.",
+    "avoidable": "New unconditional failure-terminal field widened local availability scope without early-failure control. One-line initialization and bounded pure guard suffice; do not replay unchanged campaigns for favorable results.",
+    "cost": "Unknown totalelapsed/token/financial cost; no rerun to measure waste.",
+    "next_owner_trigger": "Root author narrowly version L2fix, independent affectedwriter review, then separate actualGO. Current271release independent."
+  },
+  "evidence": {
+    "audit_v2.py": {
+      "path": "build/draw-multiblock-lbp-controller-independent-review-v2/audit_v2.py",
+      "sha256": "2f5904fe9f27e5505ba6429068e35ba76c90a684c840b59128c4bc1190ef9ae0"
+    },
+    "audit-v2.json": {
+      "path": "build/draw-multiblock-lbp-controller-independent-review-v2/audit-v2.json",
+      "sha256": "f20927da24b89e648b528b1ee156147e63df25c63857768fadcae27e5389b1ed"
+    }
+  }
+}

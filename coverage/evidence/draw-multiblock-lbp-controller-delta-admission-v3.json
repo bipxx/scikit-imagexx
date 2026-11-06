@@ -1,0 +1,124 @@
+{
+  "schema": "draw-multiblock-lbp-controller-independent-L2-review-v3",
+  "status": "PASS_SCOPED_L2_INITIALIZER_DELTA_CAPTURE_BLOCKED_TYPED_CODEC",
+  "passed": true,
+  "complete_controller_readiness": false,
+  "capture_GO_eligible": false,
+  "use_as_complete_GO_readiness": false,
+  "source": "1f99434111c50109d47157b180d9d50aea2e14f7",
+  "controller_sha256": "e444c3838cb32f5304b0296d1baab4a5bf74e680c30153979c2847491b3034b9",
+  "binding_sha256": "7a80688f5aab2a73be3840f0ca2a05e9a7b854e6f87758373d79f0bd123e64c7",
+  "incoming": {
+    "path": "build/draw-multiblock-lbp-capture-controller-v1/handoff-v3.json",
+    "sha256": "2811dcd076698cd5720511e7403ef0815008730ae700d37d07e1484ad85177bf",
+    "bytes": 10986
+  },
+  "predecessor_failed_review": {
+    "path": "build/draw-multiblock-lbp-controller-independent-review-v2/review-v2.json",
+    "sha256": "4cb5e0db7ef290a56fafdfca161e07600c818209e56cac464a9a84bd638c04ec",
+    "bytes": 7838
+  },
+  "audit": {
+    "path": "build/draw-multiblock-lbp-controller-independent-review-v3/audit-v3.json",
+    "sha256": "fe4f74196bbe3f490cf5dc09030d5b3e4696f857369dc7fb6248531a6a433271",
+    "bytes": 15341
+  },
+  "ownership": "Only ignored build/draw-multiblock-lbp-controller-independent-review-v3 outputs; currentroot/applicableAGENTS honored; source/controller/root/shared/main/C1/LBPpacket/barriers/jobs untouched.",
+  "authenticated": {
+    "new_small_proofs": 45,
+    "new_bytes": 94864,
+    "raw_controller_inverse_exact": true,
+    "controller_initializer_before_runtime_try": {
+      "initializer_line": 100,
+      "runtime_try_line": 135
+    },
+    "binding_semantic_delta": "controller_raw_sha256 only",
+    "binding_formatting": {
+      "v2_CRLF": 0,
+      "v3_CRLF": 270,
+      "canonical_LF_inverse_equal": true,
+      "raw_versions_each_authenticated": true,
+      "frozen_bytes_unchanged": true,
+      "authoring_intent": "Root confirms incidental Windows write_text default, not intentional contract change. Preserve frozen/authenticated CRLF bytes; future new files require explicit newlineLF."
+    },
+    "frozen_source16pins_and_runtime_helper": "Unchanged decoded binding and same clean1f994source; prior B51proofL1 review/125oldsourceproof scopes reused, no source/helper/runtime/largecompiled rehash.",
+    "actual_samecode_prefix_profiles": 2,
+    "metadata_refusals": 4,
+    "pure_checks_per_version": 4
+  },
+  "closed_findings": [
+    {
+      "id": "L2",
+      "scope": "Terminal local availability only; not complete-controller/original admission",
+      "evidence": "immediate_calls=[] is initialized with mainstate at100 before NumPy runtime try135. Removing that exact one bytefragment restorescontroller_v2 raw bytes. Same-interpreter main AST also equalsv2 after removing newAssign. Early caught failure therefore can pass initialized emptyimmediate list to unchanged unconditionalterminal writer, preserving available original failure/traceback and restoration control flow.",
+      "pure_proof": "Two actual source-fragment AST controls/version: one exact initializer inverse; one executes actual added assignment+actual terminalwriter with inert preconstructed earlyfailure context and checks original failure/traceback, empty immediate pairs/no journal/no observation. This does not execute live runtime-import failure or helper restoration; unchanged except/finally+priorL1 proof scope reused."
+    }
+  ],
+  "findings": [],
+  "external_blockers": [
+    {
+      "id": "TYPED_EXCEPTION_CODEC",
+      "status": "BLOCKED_BEFORE_CAPTURE_GO",
+      "evidence": "Root reports actual MARK105th-call UFuncOutputCastingError args serializer failure. LBP observer still uses legacy encode(exc.args,np); float-width/float-height frozen recipes involve integeroffset inplace ufunc casting error domain. Existing zero-body prefixes cannot establish typedufunc/dtype exception-argument coverage.",
+      "required": "Root-assigned additive typed exception-codec correction and LBPconsumer/observer/source binding closure + bounded setup controls on both retained profiles, independent admission and versionedprefix/actualGO identity. No originals or retries permitted by this review."
+    }
+  ],
+  "passed_scope": [
+    "Exact new controller/binding/launcher/terminal/command/XML/log45small hashes and sizes authenticate to handoff2811dcd0; predecessorfailedreview4cb5e0db and handoffv2 digest preserved.",
+    "One initializer is sole controller-source delta, raw inverse exact; validation/deadline/journal/profiler/L1error/restore/observation/GO code unchanged. No percase sourcehash loop, shadowprofiler or new framework.",
+    "Binding decodedJSON differs only controllerpin. Raw binding incidentally movedLF->CRLF from Windowswrite_text default; each version rawdigest authenticated (v3 7a80688f), canonical-LF formatting inverse recorded separately. No source normalization or rawhashwaiver, actualprefixes bindactualv3 bytes.",
+    "All4source checks each Win311/313 pass normalconftest/plugins;2new AST initializer/terminal controls+2unchangedobserver guards,0scientific attempts/origins. Inherited changed_inputs label saysL1; actualselectors/XML prove boundedL2 scope, no replay/relabelled22oldchecks.",
+    "Both retained real samecode zero-body prefixes bindv3controller/binding, identicalv2runtimeidentity/helper/source scope,3target+2provider attempts refused beforebody, compiledattempts0,2immediate FP/NumPypairs/profile,6exactcaller32restores and exactprocessinitial/final32.",
+    "Both prefixes materialize unchangeddefaultgray and added3x3f32overlap input via correctfixture dispatch, preserveinputs, write no payload observations/journal; this is preparation, not API output/reference capture.",
+    "Four metadata controls (tamperbinding and capture-noGO eachprofile) exit expected refusal with0scientific imports/target entries/observations/journal. All original/native/observation/samplerbudgets0; actualGO None.",
+    "Clean tracked1f994source under nativeWindowsGit; 16pins/93+1source/legacycodec/FENVhelper/runtime frozenidentity unchanged, prior reviewed scopes reused without repeating source/numerical/native/helper/build/timing work."
+  ],
+  "pending": [
+    "Root independent admission of this scopedL2 delta. PASS is not complete-controller readiness and must not be used as actualGO independent_readiness before typedcodec blocker closes.",
+    "Known typed exception-argument closure must cover LBP before any actual target call; version affected observer/codec/source/controller/binding pins, preserve all failed MARK/raw/source evidence and unknown terms, then admit exact changedsetup/prefix scope.",
+    "Full actual controller readiness and explicit rootGO bound to exact source/controller/binding/profile/runtime/helper/94ordereduniqueIDs/sourcepins/once-onlyjournal/deadline/callbudget. Originalbudget0;188 arithmetic is not permission.",
+    "Only separately authorized once-only original capture and independent saved/raw admission can establish LBP outputs/errors/warnings/FP/state/protocol/alias behavior. No favorable recapture or exception normalization.",
+    "Complete native/public/owning installedSDK operation plus full typedpromotion/provider/error/FP/platform/default1/globalworkers/scalar-SIMD/hot-swap/singlecore parity domains remain open.",
+    "Root shared source/integration/COMPLETE barriers/genuine exportedSDK/four-profile/release and perAPI one-thread public original performance/all losses/main delivery remain independent future gates."
+  ],
+  "worker_and_job_scope": "b557fullbarriers/source and currenthostedrelease ownedroot; BadditiveMARKcodec/Rartifact lanes untouched. No source or task dispatch by reviewer.",
+  "review_execution": {
+    "tests": 0,
+    "controller": 0,
+    "observer": 0,
+    "sourcefunctions": 0,
+    "scientific_imports": 0,
+    "originals": 0,
+    "helpers": 0,
+    "native": 0,
+    "builds": 0,
+    "timing": 0,
+    "large_hashes": 0
+  },
+  "original_budget_authorized": 0,
+  "actual_GO": null,
+  "waste_and_reuse": {
+    "reused": "B51proofL1 review/125olderproof/16pins/frozen93+1/actualruntime/helper/source scopes; authenticated45newsmallmetadata only. No test/science/observer/controller/helper/original/native/build/timing/env/download/largearchive-core replay.",
+    "preserved": "OriginalL1 and L2failedreviews/controllers/bindings/proofs retained, singleinitializerfix closesL2 only. Actual MARKserializationfailure remains blocking; no readiness waiver.",
+    "avoidable": "Root widened unconditionalterminal scope without early initialization in predecessor; independentreview caught beforeLBPcalls. Review initially overrequired rawbindinginverse despite incidental CRLF authoring; failed metadata assumption retained, corrected semantic comparison+rawauth with explicit formatting disclosure. Future authoring explicitUTF8/newlineLF.",
+    "evidence_of_review_correction": [
+      {
+        "path": "build/draw-multiblock-lbp-controller-independent-review-v3/audit-assumption-failure-v1.json",
+        "sha256": "a409a37814442ccc800ba258c3d31296f3fb6750965712010abad6ae6e9eda24",
+        "bytes": 555
+      },
+      {
+        "path": "build/draw-multiblock-lbp-controller-independent-review-v3/audit-assumption-correction-v2.json",
+        "sha256": "4bb5957f47c0247652c36074bf961b20535fb55ee5142641e3fd5fed49c20417",
+        "bytes": 494
+      }
+    ],
+    "observed_new_pure_seconds": {
+      "311": 1.297000000020489,
+      "313": 0.9967600998934358
+    },
+    "review_total_cost": "Unknown; no execution replayed to estimate costs.",
+    "next_owner": "root and assigned typedcodec author/independent reviewer",
+    "next_trigger": "Admit scopedL2 correction; keepLBPoriginals0 until typedcodec+consumer closure and independentcompletecontroller/source/runtime/prefix readiness; rootalone then may issue exactGO. Currentrelease proceeds independently."
+  }
+}

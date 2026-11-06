@@ -1,0 +1,54 @@
+{
+  "schema": "mark-boundaries-capture-controller-independent-review-v2",
+  "status": "PASS_SCOPED_M1_M2_REPAIR_NO_ORIGINAL_GO",
+  "passed": true,
+  "source": "39bb24a963ba4dbddcff643207ab90fac5ad61a3",
+  "controller_sha256": "d83af25a7d89f851ba2d10ee7de25992af6e473e34c695ffeb02a8bf529e37a5",
+  "binding_sha256": "f8da06ca1f41553518a5046087410715e3ffa7db20f15712b55f1c2ed4051d72",
+  "incoming": {
+    "path": "build\\mark-boundaries-capture-controller-v2\\handoff-v1.json",
+    "sha256": "70f9f04adf4ab795b7d9d9d0e5ba7607bf428862afa90c1d068fe94b3fb2a83c"
+  },
+  "predecessor": {
+    "review": "coverage/evidence/mark-boundaries-capture-controller-review-v1.json",
+    "sha256": "4aa9d921013d4260346df23e41d3e40da3d14b3f16309bf14457e27d4dcc2b70",
+    "retained": true
+  },
+  "authenticated": {
+    "small_proofs": 75,
+    "inverse_replacements": 7,
+    "unchanged_source_pins": 12,
+    "recipes": 125,
+    "actual_samecode_prefixes": [
+      "minimum",
+      "modern"
+    ],
+    "negative_records": 6
+  },
+  "closed": [
+    "M1 actual failure record assigned before writer; immediate NP/FP pair, original error/traceback/call count and caller saved/actual32 retained in second journal event and terminal, including partial first writer failure. No fake observation/completed row or retry.",
+    "M2 removes only percase12file loop; entry/final and percase authority/deadline/restoration remain.",
+    "Six actual-loop/terminal AST inert controls each Windows version cover success, observer, codec, state and partial writer failure. Normal conftest/plugins,0scientific imports. Source and prefix validation evidence reused at established scope."
+  ],
+  "findings": [],
+  "authority": {
+    "original_budget": 0,
+    "actual_GO": null
+  },
+  "pending": [
+    "Actual rootGO exact source/controller/binding/profile/runtime/125unique ordered recipes/journal/deadline/once-only budgets; zero currentauthority.",
+    "Once-only250prospective reference capture and independent raw admission.",
+    "Cubic native provider closure; full public/native/SDK/hot-swap/scalarSIMD/workers/parity/performance/exact-source release gates."
+  ],
+  "execution": {
+    "tests": 0,
+    "original_calls": 0,
+    "helper_calls": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "downloads": 0,
+    "timing": 0,
+    "large_hashes": 0
+  },
+  "waste_review": "Reused old176proof/source/helper admissions and75newsmall proofs; unchanged numerical/scientific campaigns not replayed. Two pre-entry locator failures retained by author, corrected before prefixes. One root reader requested wrong test filename; corrected from actual directory without mutation/replay. Nextroot: separately authorize capture only after all applicable readiness prerequisites, current budget0. Actual-prefix terminal locators are relative to incoming bundle, corrected reader after FileNotFound before final admission; no proof/test/source changed."
+}

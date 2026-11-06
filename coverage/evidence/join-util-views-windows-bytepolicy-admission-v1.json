@@ -1,0 +1,141 @@
+{
+  "schema": "join-util-views-windows-bytepolicy-independent-review-v1",
+  "status": "PASS_GITATTRIBUTES_ONLY_BYTE_POLICY_COMPLETE_BARRIERS_PENDING",
+  "passed": true,
+  "source": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+  "parent": "458e0fbcaca69b00d6ae385a0645f7dc6bfb31e8",
+  "changed_paths": [
+    ".gitattributes"
+  ],
+  "production_fingerprint_reuse": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f; all production tracked blobs unchanged",
+  "review_scope": "Direct committed source and terminal retained author evidence; handoff packaging may finish independently. No reliance on unfinished author assertions.",
+  "authenticated": {
+    "hosted_failures_reproduced": 92,
+    "versions": [
+      "3.11.11",
+      "3.13.14"
+    ],
+    "before_failed_per_version": 92,
+    "after_passed_per_version": 92,
+    "protected_dependency_paths": 251,
+    "intentional_CRLF_preserved": 9,
+    "observed_frozen_hashes_changed_by_old_checkout": 170
+  },
+  "findings": [],
+  "limitations": [
+    "Affected author selectors disabled pytest cacheprovider only; root COMPLETE actual workflow barrier must run both retained versions with normal conftest/plugins and faithful core.autocrlf=true.",
+    "No genuine or performance promotion: failed42224231410 preserved, exactsource four-profile successor pending both complete barriers."
+  ],
+  "proofs": {
+    "build/join-util-views-windows-bytepolicy-v1/checkout-before-command-v1.json": {
+      "sha256": "dcce6cf8c70d3f699e9ec4049843ef3b5bf51ccc2e208a351c4e2c21d1035219",
+      "bytes": 425
+    },
+    "build/join-util-views-windows-bytepolicy-v1/committed-projection-v1.json": {
+      "sha256": "e2a81028a88a14a186ee8d0db4466cb5c602bee5f3a4bd048f3310ea097b4563",
+      "bytes": 961
+    },
+    "build/join-util-views-windows-bytepolicy-v1/final-author-gate-v1.json": {
+      "sha256": "4d52872ac55c2571c7eb9b73abf0d715773ae965871b145c05401ad3c82540c4",
+      "bytes": 2013
+    },
+    "build/join-util-views-windows-bytepolicy-v1/raw-closure-after-v1.json": {
+      "sha256": "87cee8a65c7543412ad1b1cb8b75370ea7ba84e12f3890067e8e7c6663c81880",
+      "bytes": 93990
+    },
+    "build/join-util-views-windows-bytepolicy-v1/raw-closure-before-v1.json": {
+      "sha256": "37e8d4137b531f54914f723ef65fad87cee56d3cf96e3873de1a4a8bc638ba80",
+      "bytes": 128607
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-after-v1/collected.json": {
+      "sha256": "ed2e20d03a99ebeeae71119cdf03e17b09695046e266e80626d892fed32f8e36",
+      "bytes": 9304
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-after-v1/command.json": {
+      "sha256": "ed7ef073ba235130c6e2ba4c74be33d82e9c936269df5538e468507e1fb703d0",
+      "bytes": 10468
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-after-v1/terminal.json": {
+      "sha256": "a55af17e4ffc4d1bbb6c8e92ea69505159ab07c9a5cff5773477d8cdbaf04886",
+      "bytes": 196
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-before-v1/collected.json": {
+      "sha256": "ed2e20d03a99ebeeae71119cdf03e17b09695046e266e80626d892fed32f8e36",
+      "bytes": 9304
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-before-v1/command.json": {
+      "sha256": "743d9b9910d86d25780c1c94bf48b5e97b0832c99f95586e1c44e674948cd119",
+      "bytes": 10460
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-before-v1/terminal.json": {
+      "sha256": "72fd2a69279fd127bf5e3085bbc3a9f9554b0e70d66c91dfea182397e019dd7e",
+      "bytes": 196
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-after-v1/collected.json": {
+      "sha256": "ed2e20d03a99ebeeae71119cdf03e17b09695046e266e80626d892fed32f8e36",
+      "bytes": 9304
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-after-v1/command.json": {
+      "sha256": "2626ccfa8c7ddb09e5a14b5efbd601ab8b9b8478f18cc769ab33906b6fa2ff2d",
+      "bytes": 10460
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-after-v1/terminal.json": {
+      "sha256": "e22f6bc84dc146ef411c4aa2ca74a9e6b72f5b04ec32aee03f36537e79c37944",
+      "bytes": 196
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-before-v1/collected.json": {
+      "sha256": "ed2e20d03a99ebeeae71119cdf03e17b09695046e266e80626d892fed32f8e36",
+      "bytes": 9304
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-before-v1/command.json": {
+      "sha256": "2dcbadb656acf089c53907e28e5a490cb808057ec4153a31b1b85a7294ba5991",
+      "bytes": 10452
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-before-v1/terminal.json": {
+      "sha256": "84c93f95ca617ba5880fa23ca42764120a13b76e18582eb51cbfc25919ca01f6",
+      "bytes": 196
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-before-v1/tmp/test_synthetic_metadata_valida0/build-command.json": {
+      "sha256": "902e0f75fe0464a5b127786f83ab493c56102c08137daa6da2e3cbbcc54d6ef1",
+      "bytes": 785
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-before-v1/tmp/test_actual_genuine_helper_env0/stage/util-views-fenv/build-command.json": {
+      "sha256": "902e0f75fe0464a5b127786f83ab493c56102c08137daa6da2e3cbbcc54d6ef1",
+      "bytes": 785
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-after-v1/tmp/test_synthetic_metadata_valida0/build-command.json": {
+      "sha256": "0a59e3a3d1ac352ca6364baa99f52f6526c7258eaba68cdff3195b8374ee7cca",
+      "bytes": 785
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows313-after-v1/tmp/test_actual_genuine_helper_env0/stage/util-views-fenv/build-command.json": {
+      "sha256": "0a59e3a3d1ac352ca6364baa99f52f6526c7258eaba68cdff3195b8374ee7cca",
+      "bytes": 785
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-before-v1/tmp/test_synthetic_metadata_valida0/build-command.json": {
+      "sha256": "902e0f75fe0464a5b127786f83ab493c56102c08137daa6da2e3cbbcc54d6ef1",
+      "bytes": 785
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-before-v1/tmp/test_actual_genuine_helper_env0/stage/util-views-fenv/build-command.json": {
+      "sha256": "902e0f75fe0464a5b127786f83ab493c56102c08137daa6da2e3cbbcc54d6ef1",
+      "bytes": 785
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-after-v1/tmp/test_synthetic_metadata_valida0/build-command.json": {
+      "sha256": "0a59e3a3d1ac352ca6364baa99f52f6526c7258eaba68cdff3195b8374ee7cca",
+      "bytes": 785
+    },
+    "build/join-util-views-windows-bytepolicy-v1/windows311-after-v1/tmp/test_actual_genuine_helper_env0/stage/util-views-fenv/build-command.json": {
+      "sha256": "0a59e3a3d1ac352ca6364baa99f52f6526c7258eaba68cdff3195b8374ee7cca",
+      "bytes": 785
+    }
+  },
+  "execution": {
+    "tests": 0,
+    "scientific_imports": 0,
+    "original_calls": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "downloads": 0,
+    "large_hashes": 0
+  },
+  "waste_review": "Reused complete retained255path/251protected byte audit and terminal92-node proof, independently checked source ancestry/onlyattrs/policy semantics and12representative raw blobs. Cached-index materialization no-op retained; fresh checkout actualbytes validated before aftertests. Packaging not made a new serial prerequisite. Nextroot complete2barriers, no production rebuild or numerical replay for metadata repair."
+}
