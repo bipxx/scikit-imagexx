@@ -51,8 +51,19 @@ struct LabelPairCsr {
 // serial; only applicable independent preparation/fill spans may parallelize.
 bool label_pair_counts(const LabelPairInput&,LabelPairCsr&,int workers=0);
 
-// No generic sparse engine or native reduction/log claim in this first freeze.
-// Adapted Rand dot/scalar stages and VI sparse products/log2/reductions remain
-// explicit unclosed ownership gates. Captured CSR/FP/order facts are required
-// before a successor introduces their typed interfaces or advertises ownership.
+// Finite table=None adapted-Rand stages. Counts are exact integers: N<=2^20
+// bounds every dot/sum/pair total by2^40. These stages do not accept external
+// CSR objects. Python conversion/shape/alpha-error order remains a frontend
+// boundary. Deliver each scalar status before invoking the next stage because
+// callbacks can change subsequent NumPy policy. No hidden batched arithmetic.
+struct LabelPairRandTerms {double joint=0.,row=0.,column=0.;};
+struct LabelPairScalar64 {std::uint64_t bits=0;unsigned fp_status=0;};
+bool label_pair_rand_terms(const LabelPairInput&,LabelPairRandTerms&,int workers=0);
+bool label_pair_rand_divide(double numerator,double denominator,LabelPairScalar64&);
+bool label_pair_rand_fscore(const LabelPairRandTerms&,double alpha,LabelPairScalar64&);
+bool label_pair_rand_error(std::uint64_t fscore_bits,LabelPairScalar64&);
+
+// No generic sparse engine or VI reduction/log claim. Source-dependent CSR
+// object packing, normalization callbacks and supplied-table mutations remain
+// explicit ownership frontiers; no public API is advertised by these helpers.
 }

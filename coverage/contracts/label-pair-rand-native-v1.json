@@ -1,0 +1,23 @@
+{
+  "status": "PROSPECTIVE_FINITE_ARE_STAGES_FROZEN_BEFORE_CODE",
+  "reference": "Original0.26 _adapted_rand_error.py cdb0b245288e1b3dd00b36152dd9c20e91edbe1d99a07c8210a2907beb872640;48rows preserved in label-pair-metrics-v1.json",
+  "partition": "table=None, stable aligned i64 labels/counts partition, builtinfinitealpha in[0,1], nearest/gradual FP. No public registration or source-order conversion/shape/CSR packing claim. Suppliedtables remain provider/unassessed.",
+  "accuracy": "Exact0ULP f64 words including signedNaN/zero; actual NumPyfloat64 scalarboxing, tupleorder(are,precision,recall). No output-derived allowance.",
+  "integer_reductions": "N<=2^20 => all count/marginal dot/sum/pair totals<=2^40, exactly representable. Use owned integer joint/row/column pair totals, equivalent to source f64 dot-minus-total for this domain.",
+  "stages": [
+    "Nativecounts and exactpairterms",
+    "Alpha range error aftercounts, beforedivisions",
+    "precision=joint/row; deliver scalar-divide status before nextstage",
+    "recall=joint/column; deliver status before nextstage",
+    "fscore=joint/(alpha*row+(1-alpha)*column), literal roundedassociation; deliver status before subtraction",
+    "are=1-fscore, rawscalarboxing"
+  ],
+  "FP_status": "SDKinvalid1/divide2/over4/under8, callerfenvrestored eachstep. Frontend snapshots currentNumPypolicy at eachstage, mapsstatus to NumPyflags, delivers ignore/warn/raise/call. Print/log and FENV-changing callbacks remain explicit unassessed frontier; no silent forward.",
+  "tests_frozen": {
+    "saved": "Five table=None successes/profile: perfect,split-alpha0,merge-alpha1,quarter-alpha,singleton; badalpha error aftercounts.",
+    "native": "Five saved scalarwordsets and independent integer pairterms, policy/status order, source-input immutability; analytic integer threshold/global1/4/default andtypedrefusal/FP preservation.",
+    "binding": "Saved5\u00d7workers1/4; badalpha ordering; invalidwarn/call/raise/ignore andcallback policychange; actualbuiltin Creturns/onceworker/successwitness, no originals."
+  },
+  "VI": "Not implemented. NMI compensatednatural-logentropy notsource-equivalent; inspect NumPylog2 and SciPy sparseproduct/reduction order beforecode.",
+  "reuse": "Countssourcebody preserved byteexact; source algorithms and oldgoldrows unchanged; no neworiginals/env/fullcore/SDK/timing."
+}
