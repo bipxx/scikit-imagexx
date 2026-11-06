@@ -1,0 +1,37 @@
+{
+  "status": "PASS_SCOPED_FIVE_FILE_UNBOUND_EXECUTOR_SOURCE_ADMISSION",
+  "source": "446bde47e7462278389c0a87affb881ed775f1ec",
+  "predecessor": "6d4373b5720b5ee959c1d313e14e3d8f754085e4",
+  "files": {
+    "benchmarks/mark_boundaries_consumer.py": "8917a4d0ed9847b865e731c2045ba8f2fa58e574dc351ae031de47fd52de82ad",
+    "benchmarks/mark_boundaries_execution.py": "253a99be3016d135547abdb7d5d1caf7fb1e5188c38814c2ef1be9cc428201ed",
+    "tests/test_mark_boundaries_native_contract.py": "5c979f793c2ef31454efd69f45c833eca414c18c07b1d1b0071f4b70eeaa74f8",
+    "tests/test_mark_boundaries_benchmark_execution.py": "f54dfcd1ce9a5c726a6e67ee30e11792f45fed980542fa9e70588c84bd6d9748",
+    "coverage/contracts/mark-boundaries-benchmark-execution-v1.json": "414f5576802ed825c7026da88c27126d715e6a20f5cca1c99a54f01bbe2d63fa"
+  },
+  "proofs": {
+    "build/mark-boundaries-benchmark-v1/windows311-pure-v4/terminal.json": "8cf799685062e0eec2b352222ca51777ecc311a95db1e62e46d9b60f5ce2ff2a",
+    "build/mark-boundaries-benchmark-v1/windows311-pure-v4/command.json": "242ebdd3d9ca94140602231778b713f63d38911763eeaf612cd8e1d460634a1b",
+    "build/mark-boundaries-benchmark-v1/windows311-pure-v4/results.xml": "6016f4d45d03ac953f6f4c0d3649384000a3e52ca6d454293252bff687bd342e",
+    "build/mark-boundaries-benchmark-v1/windows313-pure-v4/terminal.json": "5f5f22926450e44025b887297400aa54d56e6524ad68b0003f41db12a0a5b2a1",
+    "build/mark-boundaries-benchmark-v1/windows313-pure-v4/command.json": "884338027f199bb08d019793098eb1be748a4822cba7a03fe2f3b4251f7a50b4",
+    "build/mark-boundaries-benchmark-v1/windows313-pure-v4/results.xml": "c89638535a10b6aaf5abfbf4cad53541a0af154cd929e014c71deeb19d68f669"
+  },
+  "review": "Read actual adapter, strict binding/separate measurementGO checks, native-entry/provider/input/FP assertions, real existing Montage entry guard and five replaced-profiler controls. Cases8/method/source-built F1 reused. Exact source inverses reproduce historical consumer/native-test bytes; no oldpin weakened. Finalv4 adds post-sampler state checks and portable source/runtime/method report metadata; no numeric/math/product changes.",
+  "scope": {
+    "checks_each_supported_python": 52,
+    "real_sampler_zero_body_controls": 5,
+    "separate_timing_GO_controls": 11,
+    "actual_original_calls": 0,
+    "actual_native_or_helper_calls": 0,
+    "timed_batches": 0
+  },
+  "pending": [
+    "Actual genuine product/source/runtime/core/SDK/helper/root binding",
+    "Outer MARK real first-cohort frame validation and poststop/postbatch identity admission; nine-API controller has no MARK route",
+    "Separate root timingGO and all8 one-thread original-public cases with raw/all-loss admission",
+    "Full domains/platforms/genuine release/delivery"
+  ],
+  "waste_review": "Reused retained52XML/source receipts without scientific/control reruns. Historical19synthetic Windows path-key failures retained; producerPOSIX key fixture corrected. No new engine, environment, binary/archive hashing or source-only claims of genuine performance.",
+  "next_owner_trigger": "After final immutable handoff reconciliation, C selectively imports five admitted files into its existing enabled successor once, and runs only affected source guards. Root genuine/measurement/delivery remain pending."
+}

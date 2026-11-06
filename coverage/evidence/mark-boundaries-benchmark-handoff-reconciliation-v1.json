@@ -1,0 +1,12 @@
+{
+  "status": "PASS_IMMUTABLE_HANDOFF_TO_INDEPENDENT_SOURCE_ADMISSION",
+  "source": "446bde47e7462278389c0a87affb881ed775f1ec",
+  "handoff_sha256": "46ffe559e87f9c0f044972a41fb8037c81b9ba9accbe709830ee618b324e77a0",
+  "review_sha256": "cb9a7f90136ce0ca16e37a1dda44a037a44de770ae989ec00155c1a5bd1342ec",
+  "source_files": 5,
+  "small_proofs": 26,
+  "proof_bytes": 273944,
+  "scope": "UNBOUND executable adapter/zero-body synthetic control scope only; no actual genuine cohort, target body or timing.",
+  "next": "C selectivefivefile intake; root actualgenuine/outercohort/timing gates remainpending.",
+  "waste_review": "Reconciled only immutablehandoff/smallproof metadata to already-reviewed exactbytes; no tests/science/SDK/benchmark replay."
+}

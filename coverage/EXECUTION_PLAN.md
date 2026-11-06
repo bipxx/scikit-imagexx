@@ -29,6 +29,8 @@ Private-LBP closeout/next correction (2026-11-06): root independently reviewed c
 
 Finite-Radon source/storage closeout (2026-11-06): B froze d2109de2/5932handoff22familyfiles, integer native/SDK invariants only,108originalrecipes unobserved. Root source/storage review admits54recipes/API with max56input/225physical/56outputelements/392additions, boundedcontrolledprotocols and exactreusedtypedcodec. No native/referenceparity admission. B next prepares onefixedobserverv2 controller using existingcorrectedMARK/LBP failurewriter/full32path; actualperAPI cached/cold REQUEST0body/readiness and separate rootGO required before108/profile originals. Floating/complex/protocol/Windows/fullSDK/performance remainopen. Waste review: priorheaderdonor setup failures retained; root reused source/factory116terminalmetadata, no numerical/science/build replay or newframework. Root duplicate state-value metadata assertion stoppedbeforewrite; scopednamedfield correction only, no science replay.
 
+MARK benchmark-source closeout (2026-11-06): R froze446bde47/46ffhandoff5files; root directreviewcb9a andimmutable26proof/273944B reconciliationPASS. Final52source/control nodes eachPython pass with0science/targets/helper/samplerbody/timing; 8cases/method preserved, actualgenuine/outerMARKcohort/separatetimingGO open. C selectivelyimports those exact5files into existingenabledsuccessor and selects affectedsourceguards; current271run staysunchanged. Waste review: exactnative/consumer historicalinverses preservepins, no extra numericaltests or reviewlayer; syntheticWindows path-key19failure and locatorfailure retained/corrected narrowly.
+
 ### Phases and exit conditions
 
 | Phase | Execute | Exit condition and reuse |
@@ -62,7 +64,7 @@ The previous drawing delivery `8d19f322b4025ec57e149a0cb0dd1f6b070cee1b` deliver
 | Owner | Current action | Required next gate / reuse |
 |---|---|---|
 | metrics_integrator | Normal enabled MARK/LBP successor from a6bae9 is live; temporary PRIVATE_LBP branches are being removed. | Exact admitted families, source-published saved raw/SDK consumers, strict install parser and platform-correct selectors; genuine core/SDK/hot swap/performance remain open. |
-| readiness_reviewer | Root-admitted MARK6d4373 successor is frozen; executable MARK benchmark adapter source work is live. | Reuse frozen8cases/method/sampler; strict actual-entry stop and negative controls; no originals/timing before genuine binding and root GO. |
+| readiness_reviewer | MARK446 benchmark adapter is independently admitted; C imports exact five files. R now authors the LBP executable benchmark consumer in a new successor. | Reuse frozen LBP cases/method and concrete MARK/common sampler logic; genuine binding/actual outer cohort and separate timing GO remain open, no target/timing bodies. |
 | boundary_worker | Finite Radon source/storage review passes on frozen d2109de2; guarded reference controller work is live. | Actual per-API cached/cold REQUEST refusal, full32 restoration/failure diagnostics, independent readiness then separate root GO before originals; all unobserved parity/full domains remain open. |
 | root | Main265; exacta6bae9 source barriers pass and four-profile42262940227 is live with watcher82134. | Inspect terminal profile/SDK/artifact evidence once; successful producer, actual binding/cohorts, one-thread results and final delivery remain required. |
 
