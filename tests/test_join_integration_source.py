@@ -40,7 +40,10 @@ def test_join_binary_registry_default_and_exact_checker_source():
     branch=smoke[smoke.index("        if api == 'segmentation.join_segmentations':"):]
     branch=branch[:branch.index("        if api == 'metrics.contingency_table':")]
     assert 'default_call(api,a)'in branch and '(*args,**options)'in branch and '(a)'not in branch
-    assert 'getattr(original,name)'not in branch and 'join_reference_rows(dtype)'in branch
+    import textwrap
+    parsed=ast.parse(textwrap.dedent(branch))
+    assert not any(isinstance(n,ast.Call)and isinstance(n.func,ast.Call)and isinstance(n.func.func,ast.Name)and n.func.func.id=='getattr'and isinstance(n.func.args[0],ast.Name)and n.func.args[0].id=='original'for n in ast.walk(parsed))
+    assert 'join_reference_rows(args,options,inspect.getsourcefile(getattr(original,name)))'in branch
 
 
 @pytest.mark.parametrize('profile',('minimum','modern','windows','debug'))
@@ -113,3 +116,73 @@ def test_join_shared_public_fixture_has_no_private_test_body_imports():
     first=target.body[0]
     assert isinstance(first,ast.If)and 'JOIN_COMPONENT_DIR'in ast.unparse(first.test)
     assert 'skimagexx._join_segmentations'in ast.get_source_segment(source,first)
+
+
+def source_check_argv(text):
+    import shlex
+    lines=[line.strip() for line in text.splitlines() if 'python -m pytest' in line and 'qualification-tool-guards.log' in line]
+    assert len(lines)==1
+    line=lines[0]
+    assert line.count('|')==1 and line.count('2>&1 |')==1
+    before,after=line.split('2>&1 |')
+    assert shlex.split(after)==['tee','build/qualification-tool-guards.log']
+    argv=shlex.split(before)
+    assert argv[:3]==['python','-m','pytest']
+    for name in ('tests/test_join_integration_source.py','tests/test_join_segmentations_native_contract.py','tests/test_join_segmentations_benchmark.py'):
+        assert argv.count(name)==1
+    return argv
+
+
+def test_join_actual_pytest_argv_and_sole_tee_target():
+    source_check_argv((ROOT/'.github/workflows/public-qualification.yml').read_text())
+
+
+def test_join_cache_authenticates_actual_inputs_options_and_upstream_source():
+    source=(ROOT/'tests/test_api.py').read_text()
+    tree=ast.parse(source)
+    fixture=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='join_reference_rows')
+    reference=next(n for n in fixture.body if isinstance(n,ast.FunctionDef)and n.name=='reference')
+    assert [a.arg for a in reference.args.args]==['args','options','source_path']
+    assert 'inspect.getsourcefile(getattr(original,name))' in source
+    assert 'SOURCE_DERIVED_EARLY_ERROR_EQUIVALENCE' in ast.get_source_segment(source,fixture)
+    assert 'encode(args,np)' in ast.get_source_segment(source,fixture)
+
+
+@pytest.mark.parametrize('mutation',('extra-tee-output','missing-selector','second-pipe'))
+def test_join_workflow_guard_rejects_shell_boundary_mutations(mutation):
+    text=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    if mutation=='extra-tee-output':text=text.replace('tee build/qualification-tool-guards.log','tee build/qualification-tool-guards.log tests/test_join_integration_source.py')
+    elif mutation=='missing-selector':text=text.replace(' tests/test_join_segmentations_benchmark.py','')
+    else:text=text.replace('2>&1 | tee','2>&1 | cat | tee')
+    with pytest.raises(AssertionError):source_check_argv(text)
+
+
+
+def test_join_unsupported_cache_equivalence_pins_complete_pre_error_dependency():
+    source=(ROOT/'tests/fixtures/join_segmentations_upstream_v026.py.txt').read_bytes().replace(b'\r\n',b'\n')
+    assert hashlib.sha256(source).hexdigest()=='8d1da1717bf35818f57156f88a94cd84a9527f48aff16d60e250b7d8045cd8be'
+    tree=ast.parse(source)
+    join=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='join_segmentations')
+    relabel=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='relabel_sequential')
+    assert ast.unparse(join.body[1].test)=='s1.shape != s2.shape'
+    assert ast.unparse(join.body[2].value)=='relabel_sequential(s1)'
+    assert ast.unparse(join.body[3].value)=='relabel_sequential(s2)'
+    assert [a.arg for a in relabel.args.args]==['label_field','offset']and relabel.args.defaults[0].value==1
+    prefix=ast.Module(body=relabel.body[1:8],type_ignores=[])
+    expected=ast.parse('''if offset <= 0:
+    raise ValueError("Offset must be strictly positive.")
+if np.min(label_field) < 0:
+    raise ValueError("Cannot relabel array that contains negative values.")
+offset = int(offset)
+in_vals = np.unique(label_field)
+if in_vals[0] == 0:
+    out_vals = np.concatenate([[0], np.arange(offset, offset + len(in_vals) - 1)])
+else:
+    out_vals = np.arange(offset, offset + len(in_vals))
+input_type = label_field.dtype
+if input_type.kind not in "iu":
+    raise TypeError("label_field must have an integer dtype")''')
+    assert ast.dump(prefix)==ast.dump(expected)
+    # No source invocation. Both prefixes parsed on this interpreter; full
+    # module canonical-byte pin authenticates signature/default/remaining code.
+    assert all(n.id not in ('s2','return_mapping','map_array','ArrayMap')for n in ast.walk(prefix)if isinstance(n,ast.Name))

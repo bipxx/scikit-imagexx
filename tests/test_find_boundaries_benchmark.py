@@ -75,7 +75,7 @@ def test_boundary_external_binding_preserves_original_driver_and_contract():
     assert hashlib.sha256(raw).hexdigest()==old['source_closure']['benchmarks/find_boundaries.py']
 
 
-@pytest.mark.parametrize('fault',('none','cases','basepin','source','runtimepin','stager','GO','CMake','bound-cases','bound-method'))
+@pytest.mark.parametrize('fault',('none','none-cached','cases','basepin','source','runtimepin','stager','GO','CMake','bound-cases','bound-method'))
 def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,fault):
     import importlib.util
     from datetime import datetime,timedelta,timezone
@@ -101,7 +101,7 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
     if fault=='GO':go['binding_sha256']='d'*64
     go_path.write_text(json.dumps(go))
     monkeypatch.setattr(driver.subprocess,'check_output',lambda argv,**kw:revision+'\n'if argv[-1]=='HEAD'else'')
-    if fault in ('none','bound-cases','bound-method'):
+    if fault in ('none','none-cached','bound-cases','bound-method'):
         effective,actual,binding_sha=driver.load_root_binding(path,raw_contract)
         assert actual==binding and effective['state']=='FROZEN_READY_FOR_ROOT_FIRST_COHORT' and binding_sha==hashlib.sha256(raw_binding).hexdigest()
         changed={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
@@ -113,23 +113,28 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
             target.write_bytes((ROOT/name).read_bytes())
         if fault=='bound-cases':effective['cases']=[]
         elif fault=='bound-method':effective['method_sha256']='0'*64
-        if fault!='none':
+        if fault in ('bound-cases','bound-method'):
             with pytest.raises(AssertionError):driver.validate_source_closure(effective)
             return
         driver.validate_source_closure(effective)
         # Exercise actual main through binding + source validation; stop at the
         # first scientific import, before any target or sampler body can run.
-        import importlib.abc
+        import builtins,types
         attempts=[]
-        class RefuseScience(importlib.abc.MetaPathFinder):
-            def find_spec(self,fullname,path=None,target=None):
-                if fullname.split('.')[0]in('numpy','scipy','skimage','skimagexx'):
-                    attempts.append(fullname);raise RuntimeError('BOUND_CLI_SCIENCE_REFUSED')
-        monkeypatch.setattr(sys,'meta_path',[RefuseScience(),*sys.meta_path])
+        original_import=builtins.__import__
+        def refuse_science(name,*args,**kwargs):
+            if name.split('.')[0]in('numpy','scipy','skimage','skimagexx'):
+                attempts.append(name);raise RuntimeError('BOUND_CLI_SCIENCE_REFUSED')
+            return original_import(name,*args,**kwargs)
         monkeypatch.setattr(sys,'path',list(sys.path))
         output=tmp_path/'never-bound-output.json'
         monkeypatch.setattr(sys,'argv',[str(ROOT/'benchmarks/find_boundaries.py'),'--root-binding',str(path),'--output',str(output)])
-        with pytest.raises(RuntimeError,match='BOUND_CLI_SCIENCE_REFUSED'):driver.main()
+        # Intercept the import request itself: a meta-path finder misses cached
+        # modules in the scientific qualification process. Restore live modules.
+        with monkeypatch.context() as import_boundary:
+            if fault=='none-cached':import_boundary.setitem(sys.modules,'numpy',types.ModuleType('numpy'))
+            import_boundary.setattr(builtins,'__import__',refuse_science)
+            with pytest.raises(RuntimeError,match='BOUND_CLI_SCIENCE_REFUSED'):driver.main()
         assert attempts==['numpy'] and not output.exists() and not output.with_suffix('.batches.jsonl').exists()
     else:
         with pytest.raises(AssertionError):driver.load_root_binding(path,raw_contract)
