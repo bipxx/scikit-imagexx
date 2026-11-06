@@ -1,0 +1,14 @@
+{
+  "schema": "finite-radon-public-exports-v1",
+  "predecessor_source": "0e17d061eaecebeb995b356e3842c142ebb3b4a0",
+  "source": "python/skimagexx/transform.py",
+  "current_raw_sha256": "155c3335ef0caa92ff6e071ab8316eb720e9cf0cad7528cd26e091f6cc53fdb9",
+  "predecessor_raw_sha256": "16ef724244974c69f760a910ef17f966f0bca7d63b995a4744afe753aa14e7b4",
+  "inverse_fragment": "__all__ += ['frt2','ifrt2']\n",
+  "guard": "tests/test_finite_radon_source.py",
+  "guard_raw_sha256": "ddaaf14cf55f501ea4cddbab3a943d303fb99b047236670cc2c35326b7ffbfbe",
+  "historical_guard_raw_sha256": "2c5b8e91d3a35076589fa85a8811b06ff88ae4b1ab311778a88357010cabce05",
+  "scope": "Only ordinary public __all__ export registration; all frontend/function/kernel/SDK/method/case/gold bodies unchanged",
+  "original_calls": 0,
+  "API_completion": false
+}

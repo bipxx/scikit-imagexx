@@ -231,3 +231,4 @@ __all__ += ['matrix_transform']
 
 
 from ._finite_radon import frt2, ifrt2
+__all__ += ['frt2','ifrt2']
