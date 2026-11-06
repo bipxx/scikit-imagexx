@@ -43,13 +43,13 @@ The shipped 265 partial image paths have [four-profile admission](evidence/next-
 
 ## Current cumulative increment: six new public APIs
 
-The candidate is **271 partial image paths** at source `b557a42a13bcfa005d0bb5364e1c6744bd781d30` (216 product files, 102 SDK files). It has not been delivered to main.
+The candidate is **271 partial image paths** at source `a6bae9ac86dbba362537758784edf06c973e9c53` (216 product files, 102 SDK files); production code is unchanged from b557. It has not been delivered to main.
 
 - [x] Compatible private native components and retained original-reference evidence reviewed for the six paths below.
 - [x] Shared registry, single-core bindings, SDK hooks, installed-source selectors and explicit test-helper preparation/collection wired.
 - [x] [Independent source review](evidence/join-util-views-final-source-admission-v1.json) and [five-test metadata repair](evidence/join-util-views-sourcebarrier-fix-admission-v1.json).
 - [x] [Byte-preserving checkout policy](evidence/join-util-views-windows-bytepolicy-admission-v1.json) and [complete faithful source readiness](evidence/join-util-views-source-readiness-v3.json): 3,035 cases plus 8 subtests on each retained Python with core.autocrlf=true; no failures/errors/skips/scientific imports. Production blobs remain unchanged from the predecessor.
-- [ ] Four-profile genuine product/installed SDK admission. [Run 42238215124](https://github.com/bipxx/scikit-imagexx/actions/runs/42238215124) failed on exact b557: all four source barriers passed, three Linux jobs succeeded, and Windows had 100 saved-JOIN setup failures because UCRT does not export feraiseexcept. The [retained audit](evidence/join-util-views-failed-campaign-audit-v2.json) preserves this failed campaign. [Independent test-fix admission](evidence/join-windows-fenv-fixture-admission-v1.json) passes for a6bae9ac86dbba362537758784edf06c973e9c53; both complete source barriers are running. A new exact-source four-profile qualification remains pending their terminal passing receipts. No mixed-source or whole-release acceptance.
+- [ ] Four-profile genuine product/installed SDK admission. [Run 42238215124](https://github.com/bipxx/scikit-imagexx/actions/runs/42238215124) failed on exact b557: all four source barriers passed, three Linux jobs succeeded, and Windows had 100 saved-JOIN setup failures because UCRT does not export feraiseexcept. The [retained audit](evidence/join-util-views-failed-campaign-audit-v2.json) preserves this failed campaign. [Independent test-fix admission](evidence/join-windows-fenv-fixture-admission-v1.json) passes for a6bae9ac86dbba362537758784edf06c973e9c53; [Both complete source barriers](evidence/join-util-views-source-readiness-v4.json) pass: 3,056 tests plus 8 subtests per Python, no failures/errors/skips/scientific imports. [Successor run 42262940227](https://github.com/bipxx/scikit-imagexx/actions/runs/42262940227) is live on exact a6bae9, watched through retained session 82134. No profile result or release acceptance is inferred. No mixed-source or whole-release acceptance.
 - [ ] Actual measurement controller/helper/runtime/core/SDK/root binding and each API’s real zero-body sampler-entry cohort accepted.
 - [ ] Separate original-public measurement GO, one-thread comparison, raw-result admission and every loss disposition.
 - [ ] Final source projection, main merge/push and safe eligible worktree/build cleanup.
@@ -63,7 +63,7 @@ The candidate is **271 partial image paths** at source `b557a42a13bcfa005d0bb536
 | `util.view_as_blocks` | Integral borrowed geometry/strides; NumPy representation/provider boundaries explicit. | Genuine installed core/SDK, full domains/platforms, own API cohort and public benchmark, delivery. |
 | `util.view_as_windows` | Integral borrowed sliding-window geometry/strides; provider and metadata overflow frontiers explicit. | Genuine installed core/SDK, full domains/platforms, separate API cohort and public benchmark, delivery. |
 
-Latest qualification observation (2026-11-06; the linked run is authoritative):
+Failed predecessor 42238215124 observation (2026-11-06; retained below). Successor 42262940227 has four live jobs; their qualification results are pending:
 
 | Profile | Hosted job result | Acceptance status |
 |---|---|---|

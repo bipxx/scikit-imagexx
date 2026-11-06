@@ -37396,10 +37396,10 @@
       "base_sha": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
       "scope": "Fix actualWindows testdependency before parity, not nativealgorithm. Preserve failed422382manifest/100nodes; sourceguards hadalreadyPASS.",
       "acceptance": "Use exportedCRT opaqueexception-flag capture/restore and rounding APIs, verifiedheaderABI/liveexports. Missingferaiseexcept mustnotbind/call. PreserveLinux complete32 path and existingflag/rounding equality. Pure liveWindows restore/probe bothretainedPythons, zero scientific imports; actual compatible retainedWindowscore saved50parity if feasiblewithoutnewenv/build, otherwiseexplicitpending. Add actualsourcebarrier guard selector; root completebothcommands and exactsource4profile successor.",
-      "current_checkpoint": "Root independent review PASS build/join-windows-fenv-fixture-independent-review-v1/review-v1.json. Actual complete source barriers live: Windows311 session66372 and Windows313 session18434; exacta6bae9 normalconftest/plugins/no-x/0science. No hosted dispatch until both terminal receipts pass.",
+      "current_checkpoint": "Root independent PASS; complete readinessb8614afa both3056+8/versionPASS0science normalconftest/plugins/sourceclean. Exacta6bae9 pushed; successor42262940227 dispatchedonce, fourjobs live. Watcher session82134; previous422382FAILED retained. Genuine/performance/main271 pending.",
       "next_gate": {
         "owner": "metrics_integrator narrow author then root independent readiness",
-        "action": "Isolatedfromb557 tests/workflow only, no CPP/Pythonproduct/fixture/gold/API/sampler changes. SnapshotexternalCRT binding once atentry; percall opaque flags/rounding fresh. Preservefailure, no skips/masking/relaxedparity. Rootreview+completebarriers before newhosteddispatch."
+        "action": "Root polls live watcher82134 for exacta6bae9 run42262940227, retains terminal artifacts once and independently admits fourprofiles/SDK/product. Failed priorcampaign remainsfailed. No unchangedsource retry, no timing before successfulproducer/rootbinding/firstcohort/separateGO."
       }
     },
     {
@@ -38540,15 +38540,15 @@
       "readiness_reviewer": "MARK6d4373 root scoped admission PASS; now source-first executable MARK benchmark consumer with existing sampler/guard infrastructure in new isolated successor, unchanged8cases/method. Genuine binding/firstcohort and timing GO pending; original/nativebody/timing0.",
       "boundary_worker": "IndependentLBP0e51 reviewdad3 frozenPASSscoped. NextnativefiniteRadon pair frt2/ifrt2 source+typedSDK+parity/benchconsumer in isolatedfamily, originalbudget0; exacthistoryscan foundunassignedonly."
     },
-    "next_action": "Main265; b557 run42238215124 failed 100 Windows JOIN setup nodes due to unexported UCRT feraiseexcept. Audit retained; test-only a6bae9 frozen pending root review, complete both source barriers and exact-source four-profile successor. No whole271 acceptance or measurement authority.",
+    "next_action": "Root polls live watcher82134/exacta6bae9 run42262940227 after completeb8614afa barriers passed. Retain terminal artifacts once, independently admit actual fourprofiles/core/SDK; no measurement until successfulproducer and actual rootbound zero-body cohorts. C privateLBPintegration, R MARKbenchmark adapter and B finiteRadon continue independently; original/timing0.",
     "current_checkpoint": {
         "main_image_names": 265,
         "qualified_image_names": 265,
         "prepared_source": "683f0043a6cd6bb61626241a003ffd615ba48205",
         "prepared_run": 42177447898,
-        "candidate_source": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+        "candidate_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
         "candidate_image_names": 271,
-        "candidate_status": "Main265; b557 run42238215124 failed 100 Windows JOIN setup nodes due to unexported UCRT feraiseexcept. Audit retained; test-only a6bae9 frozen pending root review, complete both source barriers and exact-source four-profile successor. No whole271 acceptance or measurement authority.",
+        "candidate_status": "LIVE exacta6bae9 run42262940227 after completeb8614afa sourcebarriersPASS; watcher82134/fourjobs live. Main265, candidate271 undelivered; failed422382 retained in history. No numerical/release/performance acceptance.",
         "performance_evidence": "benchmarks/next-metrics-minimum-initial-v1/README.md",
         "readiness_reviews": [
           {
@@ -38556,20 +38556,20 @@
             "sha256": "2c314a7095dc5088107df993e4f6e56f5eddd698de697963924a8bebc6b4c3db"
           }
         ],
-        "candidate_run": 42238215124,
-        "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42238215124",
-        "candidate_qualification_run": 42238215124,
+        "candidate_run": 42262940227,
+        "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42262940227",
+        "candidate_qualification_run": 42262940227,
         "candidate_evidence": null,
-        "candidate_qualification_status": "FAILED_WINDOWS_GENUINE_PHASE_SOURCEGUARDS_PASS; jobs allterminal, debug/modern/minimumSUCCESS, WindowsFAILED. Retainfailedmanifest/artifacts once, diagnose before successor.",
-        "next_release_source": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+        "candidate_qualification_status": "LIVE exacta6bae9 run42262940227 after completeb8614afa sourcebarriersPASS; watcher82134/fourjobs live. Main265, candidate271 undelivered; failed422382 retained in history. No numerical/release/performance acceptance.",
+        "next_release_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
         "next_release_expected_images": 271,
         "next_release_expected_product": 216,
         "next_release_expected_SDK": 102,
         "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
         "optimization_prepare_run": 41967608976,
         "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-        "next_release_status": "Main265; b557 run42238215124 failed 100 Windows JOIN setup nodes due to unexported UCRT feraiseexcept. Audit retained; test-only a6bae9 frozen pending root review, complete both source barriers and exact-source four-profile successor. No whole271 acceptance or measurement authority.",
-        "next_release_qualification_run": 42238215124,
+        "next_release_status": "LIVE exacta6bae9 run42262940227 after completeb8614afa sourcebarriersPASS; watcher82134/fourjobs live. Main265, candidate271 undelivered; failed422382 retained in history. No numerical/release/performance acceptance.",
+        "next_release_qualification_run": 42262940227,
         "optimization_comparison_run": 41969983206,
         "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
       },
