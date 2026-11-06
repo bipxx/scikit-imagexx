@@ -1,0 +1,155 @@
+{
+  "schema": "draw-multiblock-lbp-metadata-root-admission-v1",
+  "status": "PASS_SCOPED_GRAY_DTYPE_REPAIR_NOT_GENUINE_OR_RELEASE",
+  "source": "99d6c428e553154fd3e6bb7a82f7b53323b26d4b",
+  "base": "2991881411972e6266f7e132c9dca8b7226a8567",
+  "handoff_sha256": "b6aefca33672b8f241b87b7cfac24a1cd20be315e11c434a46e7eb9960c6ba0f",
+  "source_files": 6,
+  "authenticated_source_dependencies": 52,
+  "authenticated_small_proofs": 117,
+  "matrix": [
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "workers": 1,
+      "target_rows": 94,
+      "full_records": 94,
+      "post_JSON_only": 0,
+      "terminal_sha256": "d9bdb41b22a12e653ae597b989f93cae0773a49a83c26bd1940d4ad8ccbde2f2"
+    },
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "workers": 4,
+      "target_rows": 94,
+      "full_records": 82,
+      "post_JSON_only": 12,
+      "terminal_sha256": "27c18bca943ab60550927bd439e58d01b5da45e946e018c47ff8d1f9a71b24ee"
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "workers": 1,
+      "target_rows": 94,
+      "full_records": 82,
+      "post_JSON_only": 12,
+      "terminal_sha256": "77a5fab9b43429bd5cceaba7de94ab08347085dd395ae07bfdac21b09cc707e9"
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "workers": 4,
+      "target_rows": 94,
+      "full_records": 81,
+      "post_JSON_only": 13,
+      "terminal_sha256": "f3440fd235cda7d1315d929da165fd46db66bfeefba6e3bd9f70e4c798c0b6a6"
+    },
+    {
+      "profile": "minimum",
+      "mode": "scalar",
+      "workers": 1,
+      "target_rows": 94,
+      "full_records": 82,
+      "post_JSON_only": 12,
+      "terminal_sha256": "c8f54c5e329beae110f3a75d76f7eda0dae8614eba07257a82f59d4a4d37853a"
+    },
+    {
+      "profile": "minimum",
+      "mode": "scalar",
+      "workers": 4,
+      "target_rows": 94,
+      "full_records": 82,
+      "post_JSON_only": 12,
+      "terminal_sha256": "283425c0c3284b65c6ee80c50d99936ed67c8d6422639b1950dd68c364aa81cf"
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "workers": 1,
+      "target_rows": 94,
+      "full_records": 94,
+      "post_JSON_only": 0,
+      "terminal_sha256": "2cf1c2ccabab15f932525bf54f19e5759de25b851c4995f260f15ccd03241d4a"
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "workers": 4,
+      "target_rows": 94,
+      "full_records": 94,
+      "post_JSON_only": 0,
+      "terminal_sha256": "462c89ce9cfa5dfde933716547cf5a3286a12fc0bd0d63175418d25ecb51bb12"
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "workers": 1,
+      "target_rows": 94,
+      "full_records": 94,
+      "post_JSON_only": 0,
+      "terminal_sha256": "ba9b57fdd1aa32f4ca8cf957226fa02f789679cccfb7cae43eba915f6c3c7dd0"
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "workers": 4,
+      "target_rows": 94,
+      "full_records": 94,
+      "post_JSON_only": 0,
+      "terminal_sha256": "d82eb2810eb6be5e353e175e05a182dee943f2ed35b5e7a49cba061896df094e"
+    },
+    {
+      "profile": "modern",
+      "mode": "scalar",
+      "workers": 1,
+      "target_rows": 94,
+      "full_records": 94,
+      "post_JSON_only": 0,
+      "terminal_sha256": "ceb9203df9022807df1c0241c28e7f6f5f28d5665851fe516c036b785a9388ba"
+    },
+    {
+      "profile": "modern",
+      "mode": "scalar",
+      "workers": 4,
+      "target_rows": 94,
+      "full_records": 94,
+      "post_JSON_only": 0,
+      "terminal_sha256": "f26fa0c4f60872985b7bddd87a28cd755bc085aca5eeec288f7de88aa629d4f0"
+    }
+  ],
+  "saved_target_comparisons": 1128,
+  "strict_full_records": 1067,
+  "after_observer_JSON_MXCSR_only": 61,
+  "metadata_regression_tests": 144,
+  "Windows_pure_source_controls_each": 12,
+  "MSVC_changed_binder_compile_only": 1,
+  "root_review": [
+    "Exact binder inverse recovers299; sole production edit resolves gray floating result dtype from canonical scalar type, dropping metadata and normalizing byteorder at source gray2rgb representation boundary. RGB descriptor remains exact; frontend protocol/operation ordering, kernel, header, globalworkers and SDK ABI unchanged.",
+    "Original48failed qualification assertions and authentic gold bytes unchanged. New24-per-cell metadata controls cover gray/RGB native/swapped float16/32/64 and workers1/4, verify input bytes/metadata/alias/ownership and targetFP vs untagged candidate. RGB/swapped extensions are candidate-only controls, not new original observations.",
+    "Root independently compared all1128 retained portable records to authenticated94-row/profile transports.1067 fully equal;61 differ only at historically admitted post-observer JSON MXCSR path. Target-immediate FP/payload/errors/warnings/protocols/caller32 remain strict. No new mask or normalization."
+  ],
+  "SDK_disposition": "NumPy result descriptor-only binding correction; native POD/kernel/header/source unchanged, prior SDK scope reusable. New integration changes crop-copy dependency separately and must close affected saved/SDK evidence; no new wholeSDK admission here.",
+  "pending": [
+    "Sole shared author imports exact six family files, versioned source/benchmark-context inverse and genuine metadata regression selectors",
+    "Complete affected both-Python source guards then complete actual workflow barrier before hosted qualification",
+    "New genuine single-core exact-source four-profile qualification proving original12failed metadata nodes/profile pass",
+    "Actual successful runtime/core/SDK/stager/root binding and new original-public one-thread performance",
+    "Full API/provider/platform/customdtype domains and main delivery"
+  ],
+  "execution": {
+    "science": 0,
+    "tests": 0,
+    "originals": 0,
+    "builds": 0,
+    "timing": 0,
+    "downloads": 0,
+    "large_archive_core_hashes": 0
+  },
+  "waste_review": {
+    "result": "Source-backed metadata defect fixed within private observed scope; failed299 run remainsfailed.",
+    "reuse": "Existing raw94rows/profile, numerical/frontend/SDK/helper/donor and sourcecontrols; only affected binder compiled byauthor.",
+    "avoidable": "Missing tagged-gray partition reached four-profile campaign; new targeted regression closes that demonstrated test gap without weakening original shared assertions.",
+    "next_owner": "metrics_integrator sole shared author",
+    "next_trigger": "Exact fix intake plus active source contexts/dependency closure; root fullsource/readiness/genuine gates before next release dispatch."
+  }
+}
