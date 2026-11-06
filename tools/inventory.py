@@ -14,8 +14,9 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
            'restoration', 'segmentation', 'transform', 'util')
 
 DEDICATED_EVIDENCE = {}
-DEDICATED_EVIDENCE.update({'metrics.adapted_rand_error': ('tests/test_label_pair_rand_public.py','benchmarks/label_pair_metrics.py'), 'metrics.contingency_table': ('tests/test_contingency_table_public.py','benchmarks/label_pair_metrics.py')})
 for _names, _test, _benchmark in (
+    (('metrics.adapted_rand_error',),'tests/test_label_pair_rand_public.py','benchmarks/label_pair_metrics.py'),
+    (('metrics.contingency_table',),'tests/test_contingency_table_public.py','benchmarks/label_pair_metrics.py'),
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
     (('draw.polygon','draw.polygon2mask'),'tests/test_draw_polygon_public.py::test_draw_polygon_saved_public_pipeline','benchmarks/draw_polygon.py'),
     (('draw.bezier_curve',),'tests/test_bezier_curve_public.py::test_bezier_saved_public','benchmarks/bezier_curve.py'),

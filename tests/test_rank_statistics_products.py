@@ -822,7 +822,7 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
     scope = p.qualification_scope(ROOT)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current264', 199, 94, 31)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current264', 204, 96, 32)
     # Historical literal envelopes remain independently closed.
     historical_text=text.replace("CURRENT_PRODUCT_SCOPE = 'current264'\n",'')
     assert historical_text!=text
