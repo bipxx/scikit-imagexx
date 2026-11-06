@@ -1,0 +1,46 @@
+{
+  "status": "ROOT_ADMITTED_SCOPED_COMPONENT_FOR_ISOLATED_INTEGRATION_NOT_API_OR_RELEASE_COMPLETION",
+  "source": "c8217b152f359696a7dc0fdc6048938fddf16354",
+  "handoff": {
+    "path": "build/join-segmentations-v1/implementation-v1/handoff-v1.json",
+    "sha256": "cb3757b8d932457b6077557e352eadfdb480db385c541f6256c883fceb048001"
+  },
+  "independent_review": {
+    "path": "build/join-segmentations-implementation-independent-review-v1/review-v1.json",
+    "sha256": "f4bab18c84dafb6832fc0884f585672d100dddcc2eabed69ae6c00882027e762"
+  },
+  "accepted_scope": [
+    "Exact clean c821,14new family files only above admitted reference781; c821 vs d1 changes only3prospective sampler/source-guard metadata files, with executable inputs unchanged. Original100reference observations/root admission exhausted GO retained unchanged; no originals replayed.",
+    "SDK exposes and exercises the complete named skimagexx::join_segmentations operation, beyond primitive encode/divmod: bounded logical-C integer source reads, native original-right maximum+uint8(1) factor, relabels, separately wrapped product/sum, final relabel, optional backward maps, owned typed C-order labels and one owned keys object shared by both map views.",
+    "Positive-factor integer-plan SDK scope independently supported by literal saved original subsets36/34stage rows,35/33full returns and23/22mapped returns, extracted without target recomputation. Factor201 uint8 wrap, missing reverse entries, mixed-width product-before-promoted-add, typed original map values and300019pixel whole operation are retained controls.",
+    "Arithmetic source ordering inspected: product=extend(factor*a,product_type) precedes promotion/add into sum dtype; signed intermediate sign extension preserved. SSE2 low16-bit pmullw+paddw path implements same two-wrap ring arithmetic. Floating arithmetic is explicit float64 only and SDK full operation refuses floating plans; no NumPy replacement promotion engine implied.",
+    "Public wrapper preserves shape/error order then existing relabel stages, live NumPy scalar factor warning/promotion authority, native encode/unique/divmod/remap, late return_mapping truth and shared-key owned ArrayMap. Provider computation remains scalar/dtype/metadata and existing mapping protocol/advanced assignment authority; image-wide stage forwarding is refused in retained controls.",
+    "Retained private public finalnormal61nodes/profile comprise50gold rows+9other public checks+2source guards. RawFENV,input/state/errors/warnings/layout/map protocols are checked; upstream ArrayMap class identity and Python helper-frame provenance are explicitly excluded, not normalized into parity. Disabled-stage evidence reused only for literal unchanged stage bodies; no union is claimed as a full workflow barrier.",
+    "Native finalv3 normal/disabled/truecompiler-scalar and ASan+UBSan commands exit0;605716controls per workers1/4 are diagnostic counts. True scalar leaf uses SKIMAGEXX_JOIN_SCALAR plus both compiler vectorization-disable flags; normal disassembly contains pmullw/paddw. Existing ordered unique/sort/remap primitives and per-stage budgets reused. ASan applies new leaf/client, not a rebuilt donor library.",
+    "Installed SDK overlay CMake client uses actual find_package/exported target, exact include/archive prefix checks and whole-operation client. Genuine donor176member archive is copied and extended by normal.o to177members; normal+disabled clients default1 and workers1/4 pass. This is a changed-leaf overlay, not a newly qualified/genuine whole product. MSVC final binder/leaf pass compile-only.",
+    "Prospective8case benchmark source/intake guards refer to actual tools/montage_sustained.py:measure signature and remainUNBOUND,112samples/16warmgroups only if later authorized; realCLI refuses before science. No current performance claim."
+  ],
+  "pending_gates": [
+    "Root independent admission and single-author shared integration; family files can receive only explicitly scoped source credit, not full advertised API acceptance",
+    "Full SDK/domain closure: factor0/negative/overflowed original factor including uint8 rightmax255 remains unsupported; floating product/sum/division plans remain refused; broader mixed NumPy1/2 promotion domains need bounded source witnesses/implementation",
+    "Exact upstream ArrayMap class identity remains different; full declared class/protocol domain closure not established by normalized type-excluded private parity",
+    "Genuine one-extension integration: current public harness merges names from two private extensions with separate worker globals; true installed builtin/public/hot-swap/binary-arity/dtype/optional-worker behavior in one archive/core remains unverified",
+    "Genuine installed SDK/package and Windows linked runtime; current SDKoverlay and MSVC compile-only evidence do not close these gates",
+    "After changed integration, complete actual workflow source barriers on BOTH retained supported Pythons with normal conftest/plugins/no-x; private family runs disabled plugin autoload and are not substitutes",
+    "Exact-source four-profile release qualification and relevant isolated one-thread public-call original/native performance with genuine admitted inputs, real sampler entry, raw losing rows/journal retention"
+  ],
+  "integration_GO": {
+    "owner": "readiness_reviewer",
+    "scope": "Sole shared integration author in a new isolated candidate; current f13 qualification source/run remains immutable. Integrate admitted join component with current main reference-only updates and f13 source; no main delivery, hosted dispatch, original recapture or timing. Root independently admits integration before further dependent work.",
+    "original_calls_authorized": 0,
+    "current_ready_release_candidate": "f13ae5ba01680c40f8ee0ae42153bd9480119ab1",
+    "future_candidate_state": "private_unready_integration; do not create a second ready release candidate while f13 campaign remains live"
+  },
+  "closeout": {
+    "result": "Scoped peer review passed; no new defect requires numerical replay. Root accepts component evidence only in its declared source/runtime/domain scope.",
+    "reuse": "99 small peer-authenticated receipts, original100 rows and unchanged private native/public/SDK proofs reused. No build/original/timing/archive replay.",
+    "avoidable_work": "Reviewed, no new defect or process machinery; final integration and full API gates remain mandatory.",
+    "next_owner": "readiness_reviewer integration, then root independent admission",
+    "next_trigger": "Frozen isolated integration handoff with real dependency closure, genuine/worker/public-smoke gaps and next release gate explicit."
+  }
+}
