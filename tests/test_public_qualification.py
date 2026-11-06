@@ -2942,3 +2942,42 @@ def test_polygon_cold_intake_uses_direct_journal_process_and_keeps_admission(tmp
         assert '--junitxml='+str(out/(mode+'-public-polygon-intake.xml'))in command
         assert '--basetemp='+str(out/'pytest-tmp'/(mode+'-public-polygon-intake'))in command
     assert len([label for label,_,_ in calls if label.endswith('-admission')])==2
+
+
+def test_sdk_consumer_copy_keeps_boundary_and_metric_relative_headers(tmp_path, monkeypatch):
+    # Regression: source.zip contained these assessed inputs, but sdk() omitted
+    # them when assembling the relocated client's source tree (run42158336231).
+    required = (
+        'tests/cmake_consumer/find_boundaries_consumer.hpp',
+        'tests/cmake_consumer/label_pair_metrics_consumer.cpp',
+        'tests/test_component_consumers_native.cpp',
+        'tests/fixtures/find_boundaries_originals_v1.hpp',
+        'tests/label_pair_metrics_native_controls.hpp',
+        'tests/fixtures/label_pair_metrics_originals_v1.hpp',
+        'tests/fixtures/label_pair_rand_originals_v1.hpp',
+        'tests/contingency_preweighted_controls.hpp',
+    )
+    members = {name: (ROOT / name).read_bytes() for name in required}
+    members['tests/fixtures/bezier_curve_originals_v1.bin'] = b'old fixture remains copied'
+    members['tests/private_unrelated.hpp'] = b'not an SDK client dependency'
+    (tmp_path / 'package.json').write_text(json.dumps(dict(
+        product_scope=q.CURRENT_PRODUCT_SCOPE, SDK_sha256={})))
+    with zipfile.ZipFile(tmp_path / 'source.zip', 'w') as archive:
+        for name, data in members.items():
+            archive.writestr(name, data)
+
+    class SourceCopyComplete(Exception):
+        pass
+
+    def stop_before_tools(*args):
+        copied = tmp_path / 'consumer source'
+        for name in required:
+            assert (copied / name).read_bytes() == members[name], name
+        old = 'tests/fixtures/bezier_curve_originals_v1.bin'
+        assert (copied / old).read_bytes() == members[old]
+        assert not (copied / 'tests/private_unrelated.hpp').exists()
+        raise SourceCopyComplete
+
+    monkeypatch.setattr(q, 'tool_in', stop_before_tools)
+    with pytest.raises(SourceCopyComplete):
+        q.sdk(tmp_path, {}, object())
