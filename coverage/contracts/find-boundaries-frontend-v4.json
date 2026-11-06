@@ -1,0 +1,74 @@
+{
+  "schema": "find-boundaries-frontend-v1",
+  "status": "PRIVATE_BUILTIN_AND_SHIPPING_WRAPPER_SAVED_PARITY_PASS_PENDING_INDEPENDENT_PEER",
+  "api": "segmentation.find_boundaries",
+  "signature": "(label_img, connectivity=1, mode='thick', background=0)",
+  "reference_cases": 32,
+  "admitted_returns_per_profile": 28,
+  "source_error_rows_per_profile": 3,
+  "rounded_control_only_per_profile": 1,
+  "source_canonical_pins": {
+    "src/bind_find_boundaries.cpp": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+    "python/skimagexx/_find_boundaries.py": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1",
+    "tests/test_find_boundaries_public.py": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "src/find_boundaries.cpp": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2be056b23cf8838aba0295c5b3688d4b2c4ee30a14d3ef6665b6dac0d03218fd",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "tests/find_boundaries_contract.py": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c",
+    "tests/find_boundaries_observer.py": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473"
+  },
+  "native_entry": "find_boundaries_into",
+  "native_witness": "Wrapper local native_result is True iff actualCpp typedleaf accepted; actualbuiltin c_return separately asserted. Errors0calls, roundedcontrol1returnNone ->explicitNotImplementedError.",
+  "allocation": "NumPy empty_like(bool,orderK,subokFalse) preservesC/F/permutedowning result; subpixel Cempty. No min/max/reduction/unique/dilation/erosion arithmetic forwarded.",
+  "boundary": "Exactndarray/logicaldtype+nativebyteorder and current descriptor/shape afterallocation; boundedroot/owner checks; localownedallocation span supportslegitimatepermutedowningarrays; densepositiveKoutputaxes prove nooverlap; aliasintervalrefusal; inputownerretainedwhileGILreleased.",
+  "metadata": "Dtypemetadata is numericdescriptor admission, notpointeridentity; outputboolmetadata matchesraw. Noncanonicalbool normalizedonlywithinCpp. Readonly/signedstrided/stepped/F/transposedframesexact.",
+  "worker_and_FP": "Globalcurrentworker budget snapshottedONCEinsideCppAFTERallocation; actual1/4 savedrows and restoredparentbudget. NPpolicy/handler/fenv assertions, no callbacks/status changed forassessedexactdomain.",
+  "protocol": "Public unsupportedprotocolsrefusedafterone sourcefirstdtypeaccess; scalarsnotconverted/replayed. Private noconvert arguments and exactndarraytypes. Existingbytearray/memoryview-rootstoragegap explicit, no hiddenfallback.",
+  "proofs": {
+    "saved_and_controls_per_profile_mode": 77,
+    "modes": 4,
+    "additional_protocol_control_per_profile": 1,
+    "total_actual_pytest_nodes": 310,
+    "modern_extra_warning": "Twoadditionalallocationmutationcontrols emitactualNP2.5shape-assignmentDeprecationWarning; savedrowswarningsunchanged0."
+  },
+  "source_only_selectors": [
+    "tests/test_find_boundaries_frontend_contract.py"
+  ],
+  "installed_only": [
+    "tests/test_find_boundaries_public.py"
+  ],
+  "remaining": [
+    "No sharedregistry/publicmoduleexport/defaultwiring orwholegenuinecore claim.",
+    "Rounded64ordinarycontrol safeoriginalbutunported: explicitNotImplementedError, notnativeparitycredit; ordinary64outer/unsafeupstreamCcasts notforwarded.",
+    "Float/swap/rank0/emptyordinary/NPscalarconnectivity/protocol/provider-injection broaderdomains remain fullAPIbacklog.",
+    "Existingexternalbufferstoragefrontier notexpanded; no generalowner/cache framework.",
+    "Independentfrontend/SDK/shared/genuine/performance/release pending."
+  ],
+  "predecessor_binding": {
+    "contract": "coverage/contracts/find-boundaries-frontend-v1.json",
+    "sha256": "d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f",
+    "public_test_inverse": [
+      {
+        "current": "def test_find_boundaries_np_policy_and_fenv(owned):\n    libc=ctypes.CDLL('ucrtbase.dll')if os.name=='nt'else ctypes.CDLL(None)\n    mask=0x1f if os.name=='nt'else 0x3d\n    libc.fetestexcept.argtypes=[ctypes.c_int];libc.fetestexcept.restype=ctypes.c_int\n    libc.fegetround.argtypes=[];libc.fegetround.restype=ctypes.c_int\n    a=np.array([[0,1],[1,0]],dtype=np.uint32);policy=np.geterr();handler=np.geterrcall()\n    try:\n        np.seterr(all='raise');flags=libc.fetestexcept(mask);rounding=libc.fegetround()\n        owned.find_boundaries(a);assert libc.fetestexcept(mask)==flags and libc.fegetround()==rounding\n        assert np.geterr()==dict(divide='raise',over='raise',under='raise',invalid='raise')and np.geterrcall()is handler\n    finally:np.seterr(**policy);np.seterrcall(handler)\n",
+        "predecessor": "def test_find_boundaries_np_policy_and_fenv(owned):\n    libc=ctypes.CDLL(None)\n    if not hasattr(libc,'fetestexcept'):pytest.skip('C fenv entry unavailable')\n    libc.fetestexcept.argtypes=[ctypes.c_int];libc.fetestexcept.restype=ctypes.c_int\n    a=np.array([[0,1],[1,0]],dtype=np.uint32);policy=np.geterr();handler=np.geterrcall()\n    try:\n        np.seterr(all='raise');flags=libc.fetestexcept(0x3d);rounding=libc.fegetround()\n        owned.find_boundaries(a);assert libc.fetestexcept(0x3d)==flags and libc.fegetround()==rounding\n        assert np.geterr()==dict(divide='raise',over='raise',under='raise',invalid='raise')and np.geterrcall()is handler\n    finally:np.seterr(**policy);np.seterrcall(handler)\n"
+      }
+    ],
+    "scope": "Only Windows CRT portability in the admission test; prior native/numerical proofs unchanged."
+  },
+  "layout_successor": {
+    "contract": "coverage/contracts/find-boundaries-frontend-v2.json",
+    "sha256": "2f9ce9ff4114240cfd9e375233f43291cc14a0f054a4b6395920652a6dfa5406",
+    "context": "coverage/contracts/find-boundaries-layout-source-context-v1.json",
+    "context_sha256": "63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d"
+  },
+  "f_row_successor": {
+    "contract": "coverage/contracts/find-boundaries-frontend-v3.json",
+    "sha256": "3dc3e688422b4abb7335f3fd926e3b925e0fc0f1fbb28deccb158a95d6236703",
+    "context": "coverage/contracts/find-boundaries-f-row-source-context-v1.json",
+    "context_sha256": "f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29"
+  }
+}

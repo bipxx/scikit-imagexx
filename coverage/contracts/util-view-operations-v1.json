@@ -1,0 +1,92 @@
+{
+  "schema": "util-view-operations-native-component-v1",
+  "status": "PRIVATE_COMPONENT_PENDING_INDEPENDENT_ADMISSION",
+  "apis": [
+    "util.slice_along_axes",
+    "util.view_as_blocks",
+    "util.view_as_windows"
+  ],
+  "base": "762a4934159d562d41908fae1415a3474e3eeed0",
+  "private_ancestry_requires_selective_import": true,
+  "original_budget": 0,
+  "timed_batches": 0,
+  "raw_admission_sha256": "63bb915f2a1e5b395594347560a2e2177470a6d5ce783b3e7e3d2e140d590678",
+  "source_pins_raw_sha256": {
+    "src/util_views.cpp": "92505cc402be2a89f05f778b732a4c9cb47433fd392ddcfdab883ea31c603868",
+    "src/bind_util_views.cpp": "85f6d992d7e0cabdb80ecfadafa3d8161ad56c31a39c4ffdacd9d4a70c91d2bd",
+    "include/skimagexx/array_views.hpp": "40e306307f6f390b9431cbcccab39fa7f0522b329c62b862e796dd47873a1bb5",
+    "include/skimagexx/slice_along_axes.hpp": "ee700666e63a0ad2bdc088e9a1b5030865d77f70848c9e5ca20ad7d0803c6a5f",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "python/skimagexx/_array_views.py": "c05a736ca423e2f9f7a26c78d2a0009d7d4d288bf4fb3a87c40eb72a9d8428c8",
+    "python/skimagexx/_slice_along_axes.py": "f2669e86976ccad307f98e19e1b24f70f5d5b2076ca01700c58c7f5bc718e29f",
+    "tests/test_util_views_public.py": "191a5a24ce99a66cf01474f56a3a83a148af3faa29981dcfc3ec087e3848a09c",
+    "tests/test_util_views_native.cpp": "e4345902fe67db0067ae13c0fd816683961a8375e5d44d1f1c2b25fdf1f639b8",
+    "tests/cmake_consumer/util_views_consumer.hpp": "e5fb93191f16ef64919b1f65f273182b9337372835856404f1b567f41492f31b",
+    "tests/cmake_consumer/util_views_consumer.cpp": "8eaf6f16d9c75976874f0c8c62b025cc6c7e74d7e3d5c207f9bc612f68564ff0",
+    "tests/test_util_views_source.py": "83c7bbd7f8c747826bbd252ffdd49d4c128d316434c48a3c484ff0de9ab55dbc",
+    "tests/fixtures/util_views_originals_v1.json": "8a6378b76d9ca724e5f228de5a1d1d2b0e4735b61921d9515ef1f07c26fbb3c3",
+    "tests/fixtures/slice_along_axes_observer_captured_v1.py.txt": "f43bab62fa26ba91e0752d6f2946e0e641ba4dda58bfb0df1b419a468847ad70",
+    "tests/fixtures/array_views_observer_captured_v1.py.txt": "6c9a6fbd04fb3671ccc786e84d93319ade8442e14e1592d7020990bd22f2547c",
+    "tests/slice_along_axes_observer.py": "b150a02d5b0f840a999bc0a2c1e58bfc239b62bb63471e1e741488f0e3d61b4b",
+    "tests/array_views_observer.py": "6c9a6fbd04fb3671ccc786e84d93319ade8442e14e1592d7020990bd22f2547c",
+    "coverage/contracts/slice-along-axes-v2.json": "a0aaee15ab99e682e3e455e7701a88a3c4be336b005f9b06877eb7757161ff8f",
+    "benchmarks/slice_along_axes.py": "672b64ba3ccb19018429b881820d5121ca16b9466cc6b03e80cfab3de6fbd66b",
+    "benchmarks/array_views.py": "a66040926b976f9ae51aac6492f909bbfa52c2b5a951c6f00a1ddcb46973814d",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "historical_contracts": {
+    "coverage/contracts/slice-along-axes-v1.json": "497d15cf1b5c59f0df9e767f8c91f52b3d8af66e25d2bb4e622c88ae534058e2",
+    "coverage/contracts/util-array-views-v1.json": "681144dd6f3b5f41decc79e7ee29081abc226c07ecb407d928fcf4fc23955544"
+  },
+  "SDK": {
+    "complete_operations": [
+      "view_as_blocks",
+      "view_as_windows",
+      "slice_along_axes"
+    ],
+    "representation": "CropView complete borrowed descriptor for block/window; slice identity/borrowed/owned POD result, copy/move-safe accessor.",
+    "parameters": "Positive integral windows/steps/blocks and ptrdiff typed slice pairs/axes. Python protocols/bigints source-ordered at frontend."
+  },
+  "worker_disposition": "serial metadata and existing serial POD transport; no new globals; preserve process-global default1 budget",
+  "providers": {
+    "numpy": "Ordered parameter/protocol/FP conversion, as_strided DummyArray/base/readonly/owner, ordinary array representation, C allocation/dtype, object/reference/subclass .copy; unusual float/object/negative-step geometry retains named provider path, no whole original forwarding. Subclass view geometry and overflow-width metadata products remain provider-owned, preserving source attributes and wrapping errors.",
+    "native": "Complete integral block/window geometry and signed strides, normalized slice geometry and admitted crop POD byte transport incl packed/string/void.",
+    "zero_itemsize": "Borrowed block/window geometry allowed; slice indexing/copy remains NumPy provider."
+  },
+  "public_saved_parity": {
+    "profiles": [
+      "Python3.11.14/NumPy1.24.4/Linux",
+      "Python3.13.8/NumPy2.5.4/Linux"
+    ],
+    "rows": 548,
+    "raw": "All raw rows and controller fields unchanged. Instruction addresses/nonsharing pointer distances diagnostic only. Exact target captured incoming/outgoing FP flags checked separately from inherited observer context.",
+    "private_test_helper": "UTIL_VIEWS_FENV_HELPER exact admitted Linux helper0c40af72 full32 caller restoration; root integration must supply/collect this test dependency or independently admit portable successor. No product runtime dependency.",
+    "version_difference": "Minimum empty ndarray slices identity + DeprecationWarning; modern ValueError preserved."
+  },
+  "benchmark": {
+    "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "drivers": [
+      "benchmarks/slice_along_axes.py",
+      "benchmarks/array_views.py"
+    ],
+    "cases_per_driver": 8,
+    "repeat": 7,
+    "target_ms": 100,
+    "threads": 1,
+    "retain_all_losses": true
+  },
+  "remaining_gates": [
+    "Independent component admission",
+    "Shared namespace/build/selectors/collector/test-helper integration by assigned author",
+    "Complete workflow source barriers both supported Pythons normal plugins/conftest/no-x",
+    "Genuine integrated core/SDK/platform/hot-swap/globaldefault1 and four-profile qualification",
+    "One-thread original-public performance bound product and full domain/frontiers disclosure",
+    "Root selective owned-file import and main delivery; never merge unfinished private ancestry"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schema": "current-public-qualification-v1",
-  "scope": "current268",
+  "scope": "current271",
   "baseline_revision": "ea35a2481880301b8ce7b4eb2d77665adb813ca2",
   "baseline_image_paths": [
     "color.combine_stains",
@@ -475,7 +475,10 @@
     "util.montage",
     "util.regular_grid",
     "util.regular_seeds",
-    "util.unique_rows"
+    "util.slice_along_axes",
+    "util.unique_rows",
+    "util.view_as_blocks",
+    "util.view_as_windows"
   ],
   "metadata_paths": [
     "color.xyz_tristimulus_values",
@@ -547,7 +550,10 @@
     "segmentation.find_boundaries": "tests/test_find_boundaries_public.py",
     "segmentation.join_segmentations": "tests/test_join_segmentations_integration.py",
     "util.crop": "tests/test_util_metadata_integration.py",
-    "util.regular_grid": "tests/test_util_metadata_integration.py"
+    "util.regular_grid": "tests/test_util_metadata_integration.py",
+    "util.slice_along_axes": "tests/test_util_views_integration.py",
+    "util.view_as_blocks": "tests/test_util_views_integration.py",
+    "util.view_as_windows": "tests/test_util_views_integration.py"
   },
   "required_selectors": [
     "tests/test_footprint_shapes_public.py",
@@ -683,7 +689,15 @@
     "tests/test_regular_grid_benchmark.py",
     "tests/test_regular_grid_public.py",
     "tests/test_find_boundaries_layout_public.py",
-    "tests/test_find_boundaries_layout_integration.py"
+    "tests/test_find_boundaries_layout_integration.py",
+    "tests/test_label_pair_density_public.py",
+    "tests/test_find_boundaries_f_rows_public.py",
+    "tests/test_util_views_integration.py",
+    "tests/test_join_util_views_density_source.py",
+    "tests/test_util_views_public.py",
+    "tests/test_util_views_source.py",
+    "tests/test_next_util_benchmark_execution.py",
+    "tests/test_next_util_benchmark_factories.py"
   ],
   "SDK_scope": "current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance",
   "required_client_families": [
@@ -727,9 +741,16 @@
     "include/skimagexx/find_boundaries.hpp",
     "include/skimagexx/join_segmentations.hpp",
     "include/skimagexx/crop.hpp",
-    "include/skimagexx/regular_grid.hpp"
+    "include/skimagexx/regular_grid.hpp",
+    "include/skimagexx/array_views.hpp",
+    "include/skimagexx/slice_along_axes.hpp"
   ],
   "Linux_saved_grid_profiles": [
+    "minimum",
+    "modern",
+    "debug"
+  ],
+  "Linux_saved_util_views_profiles": [
     "minimum",
     "modern",
     "debug"

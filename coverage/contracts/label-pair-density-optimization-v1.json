@@ -1,0 +1,227 @@
+{
+  "schema": "label-pair-density-optimization-v1",
+  "status": "COMPONENT_ONLY_PENDING_INDEPENDENT_REVIEW_GENUINE_SOURCE_BINDING_AND_PERFORMANCE_GO",
+  "base_source": "416b5762ff749cc9033bac79e343c0d7259f2f07",
+  "dense_gate": {
+    "maximum_cells": 65536,
+    "samples_per_cell_minimum": 4,
+    "weighted_requires_uniform_row_bits": true
+  },
+  "source_files_raw_sha256": {
+    "src/label_pair_metrics.cpp": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+    "include/skimagexx/label_pair_metrics.hpp": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+    "src/bind_label_pair_metrics.cpp": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "python/skimagexx/_label_pair_metrics.py": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486",
+    "python/skimagexx/_contingency_table.py": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+    "tests/label_pair_metrics_native_controls.hpp": "251dc851fff47d46af303a47b793521e902e5e6e9c823cb077cef86bfe75644c",
+    "tests/test_label_pair_metrics_native.cpp": "967a6b168591b3db7da973da582fb6440ca95175e247da680ce996d485caa7c5",
+    "tests/test_label_pair_rand_native.cpp": "9ee06fa399533d65ca5ab519ba53c98ef21ca4f9b8fe9266df1b3f53fdc961ce",
+    "tests/test_label_pair_preweighted_native.cpp": "145ee5946cb1d9f315e140738ad2e4fb3ab9dd4737311172e4117f5c440705d2",
+    "tests/test_label_pair_density_native.cpp": "4fd1359b1ba97873b56a7d06535ed3c927f10ad3915a2f5e92cce7034405143c",
+    "tests/test_label_pair_density_public.py": "11005e73b7fa4cfdf034ae9a3eba14fc0171a1b9a0d74d9f604a6baee1528339",
+    "tests/test_label_pair_density_contract.py": "a4fde385114f2c562c722298ed125242d4214a6a53f6ccb821ae55291b4600d6",
+    "tests/cmake_consumer/label_pair_metrics_consumer.cpp": "5d44a967599eca5c43791f77995a05a958299f13f55b580bfd80918c3020a9eb",
+    "tests/fixtures/label_pair_metrics_originals_v1.hpp": "20184b5ef6739442c90f14b9c538e22905c12984a9e48ce3dc83d83622e84a8d",
+    "tests/fixtures/label_pair_rand_originals_v1.hpp": "68a7bfe953277420a9ff1a6796759b900a0366f39dd585b582ad99dc3f521d5e",
+    "tests/contingency_preweighted_controls.hpp": "b9efd5b212f13a465e888c100647af35970b00f688594a92058983174a447c2b",
+    "tests/label_pair_metrics_contract.py": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27",
+    "tests/label_pair_metrics_observer.py": "476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc",
+    "tests/test_contingency_table_public.py": "864743b66af9e456d68cc256b50d4f27a5b360ce0522c3bec252be8d013b37d6",
+    "tests/test_label_pair_rand_public.py": "5dba836440cf224d0a21a3ed59627b36310acdd0172e0c22db4a12104e066a9c",
+    "coverage/contracts/label-pair-metrics-v1.json": "f93108b85592744d4bff03122795e5c45039de39f85cfc7c7ec348b5a3e2ec96",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "src/simd.hpp": "848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141"
+  },
+  "shipping_inverse_fragments": [
+    {
+      "current": "            packed[i]=(static_cast<std::uint64_t>(truth[i])<<20)|static_cast<std::uint64_t>(test[i]);\n    });\n}\n// Bounded low-cardinality aggregation avoids sorting only when the complete\n// grid is small relative to the sample stream. Wider/sparser shapes retain\n// the original packed-key path. Counts fit uint32 because N<=2^20.\nbool dense_shape(std::size_t count,std::size_t rows,std::size_t columns,std::size_t& cells) {\n    constexpr std::size_t maximum_cells=65536; // at most256KiB of counters\n    if(rows>maximum_cells/columns)return false;\n    cells=rows*columns;return cells<=count/4;\n}\nstd::vector<std::uint32_t> dense_histogram(const std::int64_t* truth,const std::int64_t* test,\n    std::size_t count,std::size_t columns,std::size_t cells) {\n    std::vector<std::uint32_t> histogram(cells,0);\n    for(std::size_t i=0;i<count;++i)++histogram[std::size_t(truth[i])*columns+std::size_t(test[i])];\n    return histogram;\n}\nbool uniform_row_weights(const LabelPairWeightedInput& input,std::size_t rows,\n    std::vector<std::uint64_t>& words) {\n    words.assign(rows,0);std::vector<unsigned char> seen(rows,0);\n    for(std::size_t i=0;i<input.count;++i){\n        const auto row=std::size_t(input.truth[i]);std::uint64_t bits;std::memcpy(&bits,input.weights+i,8);\n        if(seen[row] && words[row]!=bits)return false;\n        seen[row]=1;words[row]=bits;\n    }\n    return true;\n}\n}\n\nbool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int workers) {\n",
+      "shipping": "            packed[i]=(static_cast<std::uint64_t>(truth[i])<<20)|static_cast<std::uint64_t>(test[i]);\n    });\n}\n}\n\nbool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int workers) {\n"
+    },
+    {
+      "current": "    }\n    Environment environment(input.normalize);\n    if(!environment.valid())return false;\n    std::size_t cells=0;\n    const auto rows=static_cast<std::size_t>(max_row)+1,columns=static_cast<std::size_t>(max_column)+1;\n    const bool dense=dense_shape(input.count,rows,columns,cells);\n    std::vector<std::uint64_t> keys;std::vector<std::uint32_t> histogram;\n    if(dense)histogram=dense_histogram(input.truth,input.test,input.count,columns,cells);\n    else {\n        keys.resize(input.count);\n        pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);\n        std::sort(keys.begin(),keys.end());\n    }\n    LabelPairCsr result;\n    result.rows=static_cast<std::size_t>(max_row)+1;\n    result.columns=static_cast<std::size_t>(max_column)+1;\n",
+      "shipping": "    }\n    Environment environment(input.normalize);\n    if(!environment.valid())return false;\n    std::vector<std::uint64_t> keys(input.count);\n    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);\n    std::sort(keys.begin(),keys.end());\n    LabelPairCsr result;\n    result.rows=static_cast<std::size_t>(max_row)+1;\n    result.columns=static_cast<std::size_t>(max_column)+1;\n"
+    },
+    {
+      "current": "        if(kept)inverse=1.0/static_cast<double>(kept);\n        else {volatile double zero=0.;inverse=zero/zero;}\n    }\n    auto append=[&](std::size_t row,std::int64_t column,std::size_t multiplicity) {\n        const bool ignored_row=is_ignored(static_cast<std::int64_t>(row));\n        double value;\n        if(!input.normalize)value=ignored_row?0.:static_cast<double>(multiplicity);\n        else {\n            const double weight=kept?(ignored_row?0.:inverse):inverse;\n            value=weight;\n            // Match per-pixel division followed by ordered duplicate addition.\n            // count/N or count*inverse would have different rounding.\n            for(std::size_t i=1;i<multiplicity;++i)value+=weight;\n        }\n        ++result.indptr[row+1];result.indices.push_back(column);result.data.push_back(value);\n    };\n    if(dense) {\n        for(std::size_t row=0;row<rows;++row)for(std::size_t column=0;column<columns;++column)\n            if(const auto n=histogram[row*columns+column])append(row,static_cast<std::int64_t>(column),n);\n    } else for(std::size_t first=0;first<keys.size();) {\n        std::size_t last=first+1;\n        while(last<keys.size()&&keys[last]==keys[first])++last;\n        append(static_cast<std::size_t>(keys[first]>>20),\n            static_cast<std::int64_t>(keys[first]&((UINT64_C(1)<<20)-1)),last-first);\n        first=last;\n    }\n    for(std::size_t row=0;row<result.rows;++row)result.indptr[row+1]+=result.indptr[row];\n",
+      "shipping": "        if(kept)inverse=1.0/static_cast<double>(kept);\n        else {volatile double zero=0.;inverse=zero/zero;}\n    }\n    for(std::size_t first=0;first<keys.size();) {\n        std::size_t last=first+1;\n        while(last<keys.size()&&keys[last]==keys[first])++last;\n        const auto row=static_cast<std::size_t>(keys[first]>>20);\n        const auto column=static_cast<std::int64_t>(keys[first]&((UINT64_C(1)<<20)-1));\n        const bool ignored_row=is_ignored(static_cast<std::int64_t>(row));\n        double value;\n        if(!input.normalize)value=ignored_row?0.:static_cast<double>(last-first);\n        else {\n            const double weight=kept?(ignored_row?0.:inverse):inverse;\n            value=weight;\n            // Match per-pixel division followed by ordered duplicate addition.\n            // count/N or count*inverse would have different rounding.\n            for(std::size_t i=first+1;i<last;++i)value+=weight;\n        }\n        ++result.indptr[row+1];result.indices.push_back(column);result.data.push_back(value);\n        first=last;\n    }\n    for(std::size_t row=0;row<result.rows;++row)result.indptr[row+1]+=result.indptr[row];\n"
+    },
+    {
+      "current": "        }\n    }\n    Environment environment(true);if(!environment.valid())return false;\n    LabelPairCsrStorage result;\n    result.rows=static_cast<std::size_t>(max_row)+1;\n    result.columns=static_cast<std::size_t>(max_column)+1;\n    result.indptr.assign(result.rows+1,0);\n    result.indices.resize(input.count);result.data.resize(input.count);\n    std::size_t cells=0;std::vector<std::uint64_t> row_words;\n    if(dense_shape(input.count,result.rows,result.columns,cells) && uniform_row_weights(input,result.rows,row_words)) {\n        const auto histogram=dense_histogram(input.truth,input.test,input.count,result.columns,cells);\n        std::size_t cursor=0;\n        for(std::size_t row=0;row<result.rows;++row){\n            result.indptr[row]=static_cast<std::int64_t>(cursor);\n            double weight;std::memcpy(&weight,&row_words[row],8);\n            for(std::size_t column=0;column<result.columns;++column){\n                const auto n=histogram[row*result.columns+column];\n                std::fill_n(result.indices.data()+cursor,n,static_cast<std::int64_t>(column));\n                std::fill_n(result.data.data()+cursor,n,weight);cursor+=n;\n            }\n        }\n        result.indptr[result.rows]=static_cast<std::int64_t>(cursor);\n        // Uniform row words make the complete source sorted buffers (including\n        // backing tails) deterministic. Keep the same ordered coalescer below.\n        // Mixed-weight rows retain the original unstable-sort path verbatim.\n    } else {\n    std::vector<std::uint64_t> keys(input.count);\n    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);\n    // Same row grouping as source coo_tocsr: stable input-pixel traversal.\n    for(auto key:keys)++result.indptr[std::size_t(key>>20)];\n    std::int64_t total=0;\n",
+      "shipping": "        }\n    }\n    Environment environment(true);if(!environment.valid())return false;\n    std::vector<std::uint64_t> keys(input.count);\n    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);\n    LabelPairCsrStorage result;\n    result.rows=static_cast<std::size_t>(max_row)+1;\n    result.columns=static_cast<std::size_t>(max_column)+1;\n    result.indptr.assign(result.rows+1,0);\n    result.indices.resize(input.count);result.data.resize(input.count);\n    // Same row grouping as source coo_tocsr: stable input-pixel traversal.\n    for(auto key:keys)++result.indptr[std::size_t(key>>20)];\n    std::int64_t total=0;\n"
+    },
+    {
+      "current": "        std::sort(row_values.begin(),row_values.end(),[](const auto& a,const auto& b){return a.first<b.first;});\n        for(std::size_t i=first;i<last;++i){result.indices[i]=row_values[i-first].first;result.data[i]=row_values[i-first].second;}\n    }\n    }\n    std::int64_t nnz=0,row_end=0;\n    for(std::size_t row=0;row<result.rows;++row) {\n        auto i=row_end;row_end=result.indptr[row+1];\n",
+      "shipping": "        std::sort(row_values.begin(),row_values.end(),[](const auto& a,const auto& b){return a.first<b.first;});\n        for(std::size_t i=first;i<last;++i){result.indices[i]=row_values[i-first].first;result.data[i]=row_values[i-first].second;}\n    }\n    std::int64_t nnz=0,row_end=0;\n    for(std::size_t row=0;row<result.rows;++row) {\n        auto i=row_end;row_end=result.indptr[row+1];\n"
+    }
+  ],
+  "shipping_leaf_canonical_sha256": "3a8870665e618ec22eb5b7b159162e06f2452745f547f6eeb7febf705958967a",
+  "benchmark_predecessor": {
+    "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+    "raw_sha256": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6"
+  },
+  "cases": [
+    {
+      "id": "metrics.adapted_rand_error/tiny",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        2,
+        3
+      ],
+      "layout": "C",
+      "labels": 3,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.adapted_rand_error/small",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        64,
+        65
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.adapted_rand_error/large-C",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.adapted_rand_error/large-F",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "F",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/tiny",
+      "api": "metrics.contingency_table",
+      "shape": [
+        2,
+        3
+      ],
+      "layout": "C",
+      "labels": 3,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/small",
+      "api": "metrics.contingency_table",
+      "shape": [
+        64,
+        65
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/large-C",
+      "api": "metrics.contingency_table",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/large-F",
+      "api": "metrics.contingency_table",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "F",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "unchanged_benchmark_files_raw_sha256": {
+    "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "tools/label_pair_benchmark_context.py": "01b3e2a75c3b2008557793b6328fd0cad778e8007d0c422d95370e603177c46f",
+    "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1"
+  },
+  "historical_public_result": {
+    "path": "benchmarks/next-metrics-minimum-initial-v1/label_pair_metrics.json",
+    "raw_sha256": "2d216b18e6d7f262547ec6808b1fdc7bf54e00321c8aaf2367f73ad7c5285086",
+    "losses": [
+      "metrics.adapted_rand_error/large-C",
+      "metrics.adapted_rand_error/large-F",
+      "metrics.contingency_table/large-C",
+      "metrics.contingency_table/large-F"
+    ]
+  },
+  "original_calls_authorized": 0,
+  "public_original_comparison_runs": 0,
+  "unchanged_header_raw_sha256": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+  "active_benchmark_still_frozen_and_will_refuse_changed_source": true,
+  "assessed_domain_expansion": false,
+  "ordered_serial": "Dense integer histogram, normalized repeated addition and duplicate coalescer remain ordered serial; no artificial parallelism. Existing fallback packed encoding retains SIMD/worker spans.",
+  "backing_storage": "CPP preweighted entire slot vectors equal shipping leaf, not merely CSR logical prefix. Mixed-row words use original sort fallback. Public SciPy structural packing may trim storage.",
+  "remaining": [
+    "Root independent component admission",
+    "Updated authenticated benchmark source context for changed leaf",
+    "Exact-source genuine core and exported SDK ownership",
+    "Complete workflow source barriers both retained Python versions",
+    "Exact-source four-profile qualification and independent admission",
+    "Root GO then frozen eight one-thread public original comparisons; preserve all old losses",
+    "Main integration and delivery"
+  ]
+}

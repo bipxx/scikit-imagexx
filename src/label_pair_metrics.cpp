@@ -39,6 +39,30 @@ void pack_pairs(const std::int64_t* truth,const std::int64_t* test,
             packed[i]=(static_cast<std::uint64_t>(truth[i])<<20)|static_cast<std::uint64_t>(test[i]);
     });
 }
+// Bounded low-cardinality aggregation avoids sorting only when the complete
+// grid is small relative to the sample stream. Wider/sparser shapes retain
+// the original packed-key path. Counts fit uint32 because N<=2^20.
+bool dense_shape(std::size_t count,std::size_t rows,std::size_t columns,std::size_t& cells) {
+    constexpr std::size_t maximum_cells=65536; // at most256KiB of counters
+    if(rows>maximum_cells/columns)return false;
+    cells=rows*columns;return cells<=count/4;
+}
+std::vector<std::uint32_t> dense_histogram(const std::int64_t* truth,const std::int64_t* test,
+    std::size_t count,std::size_t columns,std::size_t cells) {
+    std::vector<std::uint32_t> histogram(cells,0);
+    for(std::size_t i=0;i<count;++i)++histogram[std::size_t(truth[i])*columns+std::size_t(test[i])];
+    return histogram;
+}
+bool uniform_row_weights(const LabelPairWeightedInput& input,std::size_t rows,
+    std::vector<std::uint64_t>& words) {
+    words.assign(rows,0);std::vector<unsigned char> seen(rows,0);
+    for(std::size_t i=0;i<input.count;++i){
+        const auto row=std::size_t(input.truth[i]);std::uint64_t bits;std::memcpy(&bits,input.weights+i,8);
+        if(seen[row] && words[row]!=bits)return false;
+        seen[row]=1;words[row]=bits;
+    }
+    return true;
+}
 }
 
 bool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int workers) {
@@ -69,9 +93,16 @@ bool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int work
     }
     Environment environment(input.normalize);
     if(!environment.valid())return false;
-    std::vector<std::uint64_t> keys(input.count);
-    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);
-    std::sort(keys.begin(),keys.end());
+    std::size_t cells=0;
+    const auto rows=static_cast<std::size_t>(max_row)+1,columns=static_cast<std::size_t>(max_column)+1;
+    const bool dense=dense_shape(input.count,rows,columns,cells);
+    std::vector<std::uint64_t> keys;std::vector<std::uint32_t> histogram;
+    if(dense)histogram=dense_histogram(input.truth,input.test,input.count,columns,cells);
+    else {
+        keys.resize(input.count);
+        pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);
+        std::sort(keys.begin(),keys.end());
+    }
     LabelPairCsr result;
     result.rows=static_cast<std::size_t>(max_row)+1;
     result.columns=static_cast<std::size_t>(max_column)+1;
@@ -83,22 +114,27 @@ bool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int work
         if(kept)inverse=1.0/static_cast<double>(kept);
         else {volatile double zero=0.;inverse=zero/zero;}
     }
-    for(std::size_t first=0;first<keys.size();) {
-        std::size_t last=first+1;
-        while(last<keys.size()&&keys[last]==keys[first])++last;
-        const auto row=static_cast<std::size_t>(keys[first]>>20);
-        const auto column=static_cast<std::int64_t>(keys[first]&((UINT64_C(1)<<20)-1));
+    auto append=[&](std::size_t row,std::int64_t column,std::size_t multiplicity) {
         const bool ignored_row=is_ignored(static_cast<std::int64_t>(row));
         double value;
-        if(!input.normalize)value=ignored_row?0.:static_cast<double>(last-first);
+        if(!input.normalize)value=ignored_row?0.:static_cast<double>(multiplicity);
         else {
             const double weight=kept?(ignored_row?0.:inverse):inverse;
             value=weight;
             // Match per-pixel division followed by ordered duplicate addition.
             // count/N or count*inverse would have different rounding.
-            for(std::size_t i=first+1;i<last;++i)value+=weight;
+            for(std::size_t i=1;i<multiplicity;++i)value+=weight;
         }
         ++result.indptr[row+1];result.indices.push_back(column);result.data.push_back(value);
+    };
+    if(dense) {
+        for(std::size_t row=0;row<rows;++row)for(std::size_t column=0;column<columns;++column)
+            if(const auto n=histogram[row*columns+column])append(row,static_cast<std::int64_t>(column),n);
+    } else for(std::size_t first=0;first<keys.size();) {
+        std::size_t last=first+1;
+        while(last<keys.size()&&keys[last]==keys[first])++last;
+        append(static_cast<std::size_t>(keys[first]>>20),
+            static_cast<std::int64_t>(keys[first]&((UINT64_C(1)<<20)-1)),last-first);
         first=last;
     }
     for(std::size_t row=0;row<result.rows;++row)result.indptr[row+1]+=result.indptr[row];
@@ -209,13 +245,31 @@ bool label_pair_counts_preweighted(const LabelPairWeightedInput& input,
         }
     }
     Environment environment(true);if(!environment.valid())return false;
-    std::vector<std::uint64_t> keys(input.count);
-    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);
     LabelPairCsrStorage result;
     result.rows=static_cast<std::size_t>(max_row)+1;
     result.columns=static_cast<std::size_t>(max_column)+1;
     result.indptr.assign(result.rows+1,0);
     result.indices.resize(input.count);result.data.resize(input.count);
+    std::size_t cells=0;std::vector<std::uint64_t> row_words;
+    if(dense_shape(input.count,result.rows,result.columns,cells) && uniform_row_weights(input,result.rows,row_words)) {
+        const auto histogram=dense_histogram(input.truth,input.test,input.count,result.columns,cells);
+        std::size_t cursor=0;
+        for(std::size_t row=0;row<result.rows;++row){
+            result.indptr[row]=static_cast<std::int64_t>(cursor);
+            double weight;std::memcpy(&weight,&row_words[row],8);
+            for(std::size_t column=0;column<result.columns;++column){
+                const auto n=histogram[row*result.columns+column];
+                std::fill_n(result.indices.data()+cursor,n,static_cast<std::int64_t>(column));
+                std::fill_n(result.data.data()+cursor,n,weight);cursor+=n;
+            }
+        }
+        result.indptr[result.rows]=static_cast<std::int64_t>(cursor);
+        // Uniform row words make the complete source sorted buffers (including
+        // backing tails) deterministic. Keep the same ordered coalescer below.
+        // Mixed-weight rows retain the original unstable-sort path verbatim.
+    } else {
+    std::vector<std::uint64_t> keys(input.count);
+    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);
     // Same row grouping as source coo_tocsr: stable input-pixel traversal.
     for(auto key:keys)++result.indptr[std::size_t(key>>20)];
     std::int64_t total=0;
@@ -240,6 +294,7 @@ bool label_pair_counts_preweighted(const LabelPairWeightedInput& input,
         for(std::size_t i=first;i<last;++i)row_values[i-first]={result.indices[i],result.data[i]};
         std::sort(row_values.begin(),row_values.end(),[](const auto& a,const auto& b){return a.first<b.first;});
         for(std::size_t i=first;i<last;++i){result.indices[i]=row_values[i-first].first;result.data[i]=row_values[i-first].second;}
+    }
     }
     std::int64_t nnz=0,row_end=0;
     for(std::size_t row=0;row<result.rows;++row) {

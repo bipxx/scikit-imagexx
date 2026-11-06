@@ -55,10 +55,10 @@ def test_util_metadata_real_pytest_pipeline_and_SDK_closure():
 
 @pytest.mark.parametrize('profile',('minimum','modern','windows','debug'))
 def test_util_metadata_current_source_plan(profile):
-    q=load('util_metadata_qualifier_'+profile,'tools/public_qualification.py');result=q.plan(ROOT,profile,268)
+    q=load('util_metadata_qualifier_'+profile,'tools/public_qualification.py');result=q.plan(ROOT,profile,271)
     assert not result['blockers'],result['blockers']
-    assert result['registry']['registered_count']==271 and result['registry']['image_count']==268
-    assert result['product_members']==212 and result['SDK_members']==100
+    assert result['registry']['registered_count']==274 and result['registry']['image_count']==271
+    assert result['product_members']==216 and result['SDK_members']==102
     assert len(q.CURRENT_FAMILIES)==32
 
 
@@ -74,7 +74,7 @@ def test_util_metadata_descriptor_consumers_keep_source_bound_whole_results():
         assert ('tagged=True'in body)==(name=='test_dtype_metadata.py')
     text=(ROOT/'tests/test_dtype_metadata.py').read_text();tree=ast.parse(text)
     fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='compare')
-    first=fn.body[0];assert "('util.crop', 'util.regular_grid')"in ast.unparse(first.test)
+    first=next(n for n in fn.body if isinstance(n,ast.If)and "('util.crop', 'util.regular_grid')"in ast.unparse(n.test));assert "('util.crop', 'util.regular_grid')"in ast.unparse(first.test)
     assert 'assert_default_parity(api,np.dtype(dtype),actual,expected)'in ast.get_source_segment(text,first)
 
 
@@ -112,8 +112,8 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
     original=q.groups_for_source(ROOT);groups=q.applicable_public_groups(original,profile)
     assert all(groups[name]==value for name,value in original.items())
     if profile=='windows':assert groups==original
-    else:assert groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)and len(groups)==len(original)+1
-    plan=q.plan(ROOT,profile,268);assert not plan['blockers']
+    else:assert groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)and len(groups)==len(original)+2
+    plan=q.plan(ROOT,profile,271);assert not plan['blockers']
     assert plan['public_groups']==groups
     assert 'noWindows' in (ROOT/'tools/public_qualification.py').read_text()
     import argparse
@@ -148,9 +148,9 @@ def test_regular_grid_actual_dispatch_keeps_global_groups_and_adds_linux49(tmp_p
 def test_regular_grid_seal_refuses_incomplete_or_extra_saved_nodes(tmp_path,monkeypatch,count):
     q=load('grid_seal_'+str(count),'tools/public_qualification.py')
     q.GROUPS={'public-post203':('test_util_metadata_integration.py',)};q.CORPORA={}
-    state=dict(source={},profile='minimum',build_identity={},interpreter_provenance={},expected={'image_count':268},product_wheel='inert.whl')
+    state=dict(source={},profile='minimum',build_identity={},interpreter_provenance={},expected={'image_count':271},product_wheel='inert.whl')
     (tmp_path/'state.json').write_text(json.dumps(state))
-    labels={'initial-public-admission','actual-inventory','sdk-configure','sdk-build','sdk-list','sdk-normal','sdk-scalar','gather-build-identity-facts','capture-build-identity'}
+    labels={'prepare-util-views-fenv','initial-public-admission','actual-inventory','sdk-configure','sdk-build','sdk-list','sdk-normal','sdk-scalar','gather-build-identity-facts','capture-build-identity'}
     for mode in ('normal','scalar'):
         labels.update(mode+'-'+name for name in ('admission',*q.applicable_public_groups(q.GROUPS,'minimum'),'returned-maps','metrics-corpus'))
         for group in q.applicable_public_groups(q.GROUPS,'minimum'):

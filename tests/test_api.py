@@ -416,6 +416,16 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
+        from util_views_reference import reference
+        from crop_observer import encode
+        before=encode((args,options),np)
+        expected,scope,row=reference(api,args,options,inspect.getsourcefile(getattr(original,name)),np)
+        actual=getattr(native,name)(*args,**options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected)
+        assert np.shares_memory(actual,args[0])and actual is not args[0]
+        assert encode((args,options),np)==before
+        return
     if api in ('util.crop','util.regular_grid'):
         from util_metadata_reference import reference
         from crop_observer import encode as crop_encode

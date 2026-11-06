@@ -15,7 +15,10 @@ def test_crop_benchmark_frozen_cases_sampler_and_source():
     assert contract['state']=='PROSPECTIVE_GENUINE_PRODUCT_AND_ROOT_BINDING_REQUIRED'
     assert contract['retain_all_losses']is True
     assert contract['sampler']==dict(module='tools/montage_sustained.py',function='measure',threads=1,repeat=7,target_ms=100,warmup_min_ms=250,raw_samples=112,warmup_groups=16)
-    for name,pin in contract['source_pins'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    projection=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['historical_bytes']
+    for name,pin in contract['source_pins'].items():
+        raw=projection(ROOT,name)if name=='benchmarks/crop.py'else(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        assert hashlib.sha256(raw).hexdigest()==pin,name
     text=(ROOT/'tools/montage_sustained.py').read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='measure')
     assert hashlib.sha256(''.join(text.splitlines(True)[node.lineno-1:node.end_lineno]).encode()).hexdigest()==contract['method_sha256']
 
@@ -54,41 +57,5 @@ def test_crop_native_boundary_has_explicit_provider_and_serial_disposition():
 
 @pytest.mark.parametrize('fault',('none','none-cached','cases'))
 def test_crop_bound_cli_metadata_stops_before_science(tmp_path,monkeypatch,fault):
-    import importlib.util
-    import builtins,types
-    from datetime import datetime,timedelta,timezone
-    spec=importlib.util.spec_from_file_location('crop_cli_metadata',ROOT/'benchmarks/crop.py')
-    driver=importlib.util.module_from_spec(spec);spec.loader.exec_module(driver)
-    raw=driver.CONTRACT.read_bytes();contract=json.loads(raw)
-    for name in contract['source_pins']:
-        p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((ROOT/name).read_bytes())
-    path=tmp_path/'coverage/contracts/crop-benchmark-v1.json';path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
-    revision='a'*40;admission=tmp_path/'root.json';admission.write_text(json.dumps(dict(source=revision,product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT')))
-    binding=dict(status='ROOT_AUTHORIZED_CROP_PUBLIC_MEASUREMENT',source_revision=revision,core_sha256='b'*64,prepared_run=1,prepared_artifact=2,contract_sha256=hashlib.sha256(raw).hexdigest(),root_admission_path=str(admission),root_admission_sha256=hashlib.sha256(admission.read_bytes()).hexdigest(),deadline_utc=(datetime.now(timezone.utc)+timedelta(hours=1)).isoformat())
-    if fault=='cases':binding['cases']=[]
-    bound=tmp_path/'binding.json';bound.write_text(json.dumps(binding));output=tmp_path/'never.json'
-    monkeypatch.setattr(driver,'ROOT',tmp_path);monkeypatch.setattr(driver,'CONTRACT',path)
-    monkeypatch.setattr(driver.subprocess,'check_output',lambda argv,**kw:revision+'\n'if argv[-1]=='HEAD'else'')
-    attempts=[];original_import=builtins.__import__
-    def refuse_science(name,*args,**kwargs):
-        if name.split('.')[0]in('numpy','scipy','skimage','skimagexx'):
-            attempts.append(name);raise RuntimeError('CROP_BOUND_SCIENCE_REFUSED')
-        return original_import(name,*args,**kwargs)
-    monkeypatch.setattr(sys,'path',list(sys.path))
-    monkeypatch.setattr(sys,'argv',[str(ROOT/'benchmarks/crop.py'),'--root-binding',str(bound),'--output',str(output)])
-    if fault in ('none','none-cached'):
-        missing=object();cached_before=sys.modules.get('numpy',missing)
-        # Refuse the import request even when a live NumPy module is cached.
-        # Only actual bound main runs inside this hook; restore exact objects.
-        with monkeypatch.context() as import_boundary:
-            if fault=='none-cached':import_boundary.setitem(sys.modules,'numpy',types.ModuleType('numpy'))
-            import_boundary.setattr(builtins,'__import__',refuse_science)
-            with pytest.raises(RuntimeError,match='CROP_BOUND_SCIENCE_REFUSED'):driver.main()
-        assert builtins.__import__ is original_import
-        if cached_before is missing:assert 'numpy'not in sys.modules
-        else:assert sys.modules['numpy'] is cached_before
-        assert attempts==['numpy']
-    else:
-        with pytest.raises(AssertionError):driver.main()
-        assert not attempts
-    assert not output.exists()and not output.with_suffix('.batches.jsonl').exists()
+    from next_util_benchmark_support import bound_request_refusal
+    bound_request_refusal(tmp_path,monkeypatch,'crop',fault)

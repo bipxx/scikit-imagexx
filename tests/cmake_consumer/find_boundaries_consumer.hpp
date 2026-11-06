@@ -8,11 +8,61 @@
 #include <cstdint>
 #include <cstring>
 #include <functional>
+#include <limits>
 #include <numeric>
 #include <stdexcept>
 #include <vector>
 
 namespace skimagexx_test {
+// Independent clamped-neighbor controls for the F/F-to-C/C metadata route.
+// The SDK operation owns the computation; the test never composes its stages.
+template<class T>inline std::size_t find_boundaries_f_type(skimagexx::PixelType type,bool boolean,int workers) {
+    using namespace skimagexx;using namespace skimagexx::detail;
+    std::size_t checks=0;auto check=[&](bool v){++checks;if(!v)throw std::runtime_error("F-row boundary control failed");};
+    for(auto shape:{std::vector<std::size_t>{1,9},{2,9},{3,3},{5,7},{7,5},{17,33},{33,17},{513,517}}){
+        if(shape[0]>100 && sizeof(T)!=2)continue;
+        const auto h=shape[0],w=shape[1],n=h*w;std::vector<T> input(n+16,T(0));auto* data=input.data()+8;
+        for(std::size_t x=0;x<w;++x)for(std::size_t y=0;y<h;++y){
+            const auto code=(y/3+2*x/5)%5;
+            data[x*h+y]=boolean?T(code?code==1?2:255:0):code==4?std::numeric_limits<T>::max():T(code);
+        }
+        const auto before=input;ComponentsView view{data,type,false,false,shape,{std::ptrdiff_t(sizeof(T)),std::ptrdiff_t(h*sizeof(T))}};
+        auto at=[&](std::size_t y,std::size_t x){T v=data[x*h+y];return boolean?T(v!=0):v;};
+        for(auto mode:{FindBoundaryMode::thick,FindBoundaryMode::inner})for(unsigned connectivity:{1u,2u})
+        for(int bg:{0,2,-1,99}){
+            if(h>100 && (mode!=FindBoundaryMode::inner || connectivity!=2 || bg!=0))continue;
+            FindBoundaryParameters parameters{mode,connectivity,std::uint64_t(bg),bg!=99};
+            std::vector<std::uint8_t> expected(n);
+            for(std::size_t x=0;x<w;++x)for(std::size_t y=0;y<h;++y){
+                T low=std::numeric_limits<T>::max(),high=std::numeric_limits<T>::lowest();
+                for(int dx=-1;dx<=1;++dx)for(int dy=-1;dy<=1;++dy){
+                    if((dx!=0)+(dy!=0)>int(connectivity))continue;
+                    auto yy=dy<0?(y?y-1:0):dy>0?std::min(y+1,h-1):y;
+                    auto xx=dx<0?(x?x-1:0):dx>0?std::min(x+1,w-1):x;
+                    auto value=at(yy,xx);low=std::min(low,value);high=std::max(high,value);
+                }
+                expected[x*h+y]=(low!=high)&&(mode!=FindBoundaryMode::inner || !parameters.background_representable || std::uint64_t(at(y,x))!=parameters.background_bits);
+            }
+            for(int budget:{0,workers}){
+                std::vector<std::uint8_t> out(n+16,0xa7);const auto flags=std::fetestexcept(FE_ALL_EXCEPT),rounding=std::fegetround();
+                check(find_boundaries_into(view,parameters,out.data()+8,{1,std::ptrdiff_t(h)},budget));
+                check(std::fetestexcept(FE_ALL_EXCEPT)==flags&&std::fegetround()==rounding);
+                for(std::size_t i=0;i<n;++i)check(out[i+8]==expected[i]);
+                for(std::size_t i=0;i<8;++i)check(out[i]==0xa7&&out[n+8+i]==0xa7);
+                check(input==before);check(get_num_threads()==workers);
+            }
+        }
+    }
+    return checks;
+}
+inline std::size_t find_boundaries_f_rows(int workers) {
+    using namespace skimagexx;
+    const auto old=get_num_threads();struct Restore{int n;~Restore(){set_num_threads(n);}}restore{old};set_num_threads(workers);
+    return find_boundaries_f_type<std::uint8_t>(PixelType::boolean,true,workers)
+        +find_boundaries_f_type<std::uint8_t>(PixelType::uint8,false,workers)+find_boundaries_f_type<std::int8_t>(PixelType::int8,false,workers)
+        +find_boundaries_f_type<std::uint16_t>(PixelType::uint16,false,workers)+find_boundaries_f_type<std::int16_t>(PixelType::int16,false,workers)
+        +find_boundaries_f_type<std::uint32_t>(PixelType::uint32,false,workers)+find_boundaries_f_type<std::int32_t>(PixelType::int32,false,workers);
+}
 // New helper for the EXISTING component/segmentation installed-SDK family.
 // Root integration appends this include/default call; this header adds no family.
 inline std::size_t find_boundaries_consumer(int workers) {
@@ -69,6 +119,7 @@ inline std::size_t find_boundaries_consumer(int workers) {
         check(f_labels==saved_f);check(get_num_threads()==workers);
     }
     std::vector<std::size_t> unchanged{99};view.shape={0,2};check(!find_boundaries_shape(view,parameters.mode,unchanged));check(unchanged==std::vector<std::size_t>{99});
+    controls+=find_boundaries_f_rows(workers);
     return controls;
 }
 }

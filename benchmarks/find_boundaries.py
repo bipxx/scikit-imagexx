@@ -13,7 +13,7 @@ import sys
 import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v4.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v5.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -93,8 +93,21 @@ def load_root_binding(path, raw_contract):
     return contract,binding,hashlib.sha256(raw_binding).hexdigest()
 
 
+def f_row_predecessor(name, raw):
+    context_path=ROOT/'coverage/contracts/find-boundaries-f-row-source-context-v1.json'
+    assert hashlib.sha256(context_path.read_bytes()).hexdigest()=='f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29'
+    context=json.loads(context_path.read_bytes());item=context['sources'][name]
+    assert hashlib.sha256(raw).hexdigest()==item['current_canonical_lf_sha256'],name
+    for fragment in item['inverse_fragments']:
+        current,previous=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1;raw=raw.replace(current,previous,1)
+    assert hashlib.sha256(raw).hexdigest()==item['predecessor_canonical_lf_sha256'],name
+    return raw
+
+
 def layout_predecessor(name, raw):
     """Authenticate only the two independently admitted component changes."""
+    raw=f_row_predecessor(name,raw)
     context_path=ROOT/'coverage/contracts/find-boundaries-layout-source-context-v1.json'
     assert hashlib.sha256(context_path.read_bytes()).hexdigest()=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'
     context=json.loads(context_path.read_bytes());item=context['sources'][name]
@@ -109,22 +122,21 @@ def layout_predecessor(name, raw):
 
 
 def validate_source_closure(contract):
-    """Bind the layout component without changing frozen cases or provenance."""
-    successor=contract['layout_successor'];raw=(ROOT/successor['contract']).read_bytes()
+    successor=contract['f_row_successor'];raw=(ROOT/successor['contract']).read_bytes()
     assert set(successor)=={'contract','sha256','context','context_sha256','added_source_pins','driver_inverse','scope'}
-    assert successor['context']=='coverage/contracts/find-boundaries-layout-source-context-v1.json' and successor['context_sha256']=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'
-    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v3.json'
-    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba'
+    assert successor['context']=='coverage/contracts/find-boundaries-f-row-source-context-v1.json' and successor['context_sha256']=='f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29'
+    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v4.json'
+    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='8ad09d6c73f47d017a5da741d60e18049abe6425042725e29c6e233eab2e8ff7'
     previous=json.loads(raw)
     provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
-    excluded=provenance|{'source_closure','layout_successor'}
+    excluded=provenance|{'source_closure','f_row_successor'}
     assert {k:v for k,v in contract.items()if k not in excluded}=={k:v for k,v in previous.items()if k not in excluded}
     assert set(contract['source_closure'])==set(previous['source_closure'])|set(successor['added_source_pins'])
     for name,pin in contract['source_closure'].items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         assert hashlib.sha256(raw).hexdigest()==pin,name
-        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp'):
-            raw=layout_predecessor(name,raw)
+        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp','tests/test_find_boundaries_layout_contract.py'):
+            raw=f_row_predecessor(name,raw)
         elif name=='benchmarks/find_boundaries.py':
             for fragment in successor['driver_inverse']:
                 current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()

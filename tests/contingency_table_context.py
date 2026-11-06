@@ -12,6 +12,11 @@ PATHS = (
 
 def predecessor_bytes(root, path, *, source=None):
     raw = (Path(root)/path).read_bytes().replace(b'\r\n', b'\n') if source is None else source
+    if path in ('src/label_pair_metrics.cpp','tests/cmake_consumer/label_pair_metrics_consumer.cpp'):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('density_join_source_context',Path(root)/'tools/join_source_context.py')
+        helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)
+        raw=helper.predecessor_bytes(root,path,raw)
     if path in ('python/skimagexx/_label_pair_metrics.py','tests/test_label_pair_rand_public.py'):
         context_raw=(Path(root)/'coverage/contracts/label-pair-ARE-metadata-context-v1.json').read_bytes().replace(b'\r\n',b'\n')
         assert hashlib.sha256(context_raw).hexdigest()=='db0271f27b041cf17fb7d3e2a5f5843f3af8f2b2c813d5be4bb68c009a095773'

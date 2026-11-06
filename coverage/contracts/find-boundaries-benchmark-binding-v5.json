@@ -1,0 +1,294 @@
+{
+  "schema": "find-boundaries-benchmark-v1",
+  "state": "PROSPECTIVE_GENUINE_PRODUCT_AND_ROOT_BINDING_REQUIRED",
+  "api": "segmentation.find_boundaries",
+  "scope": "Eight bounded public allocation-inclusive cases; no whole API or library-wide speed claim; all slower results retained.",
+  "public_signature": "(label_img, connectivity=1, mode='thick', background=0)",
+  "cases": [
+    {
+      "id": "cross-thick",
+      "shape": [
+        3,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "cross",
+      "readonly": false
+    },
+    {
+      "id": "u8-thick-512",
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "u16-inner-F",
+      "shape": [
+        257,
+        509
+      ],
+      "dtype": "uint16",
+      "layout": "F",
+      "mode": "inner",
+      "connectivity": 2,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": true
+    },
+    {
+      "id": "i32-outer-reverse",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int32",
+      "layout": "reverse",
+      "mode": "outer",
+      "connectivity": 2,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "u8-subpixel",
+      "shape": [
+        127,
+        129
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": true
+    },
+    {
+      "id": "u16-outer-3d",
+      "shape": [
+        17,
+        19,
+        23
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "mode": "outer",
+      "connectivity": 3,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "bool-inner-reverse",
+      "shape": [
+        257,
+        509
+      ],
+      "dtype": "bool",
+      "layout": "reverse",
+      "mode": "inner",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "noncanonical-bool",
+      "readonly": true
+    },
+    {
+      "id": "u8-subpixel-1d",
+      "shape": [
+        513
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    }
+  ],
+  "source_closure": {
+    "src/bind_find_boundaries.cpp": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+    "python/skimagexx/_find_boundaries.py": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1",
+    "tests/test_find_boundaries_public.py": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "src/find_boundaries.cpp": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2be056b23cf8838aba0295c5b3688d4b2c4ee30a14d3ef6665b6dac0d03218fd",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "tests/find_boundaries_contract.py": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c",
+    "tests/find_boundaries_observer.py": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473",
+    "benchmarks/find_boundaries.py": "bfa12ae19b78c7b891d6dbb1a3388d5cb41ca20e972b4dc25eb097b45d6eb8dc",
+    "tests/fixtures/find_boundaries_originals_v1.hpp": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
+    "tests/cmake_consumer/find_boundaries_consumer.hpp": "9b0f44fe9827c175db78f6c8f22d0cdfa393244682c74a105c238b02b9456048",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "coverage/contracts/find-boundaries-layout-source-context-v1.json": "63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d",
+    "coverage/contracts/find-boundaries-layout-optimization-v1.json": "176b1e93c7b5634469787cd31562cbf71c7447e0191f11dc9c2105c38b05e08a",
+    "tests/test_find_boundaries_layout.cpp": "5ce1095a25fc26e163eeb6d77d129674191e705e05af9bb4382bdba9ebf83350",
+    "tests/test_find_boundaries_layout_public.py": "180e5e284e94a28b2dbf2d63636df92d398ac73071dc1e00a7d1192076512669",
+    "tests/test_find_boundaries_layout_contract.py": "52e704851b2e92a9a54e7ca0497047ee459e2e1f2cdcf797918d1181d4535005",
+    "coverage/contracts/find-boundaries-f-row-source-context-v1.json": "f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29",
+    "coverage/contracts/find-boundaries-f-row-optimization-v1.json": "21a30130021a07524ac7703b63eda1ae57535a355181ad01480ca0d550199c25",
+    "tests/test_find_boundaries_f_rows.cpp": "51f4ee7bdb25ac2d91e545665b8e3fc967a84f595769b14c03c67f62eebc8391",
+    "tests/test_find_boundaries_f_rows_public.py": "ca4d2015538bc98f98e187453e7ba511fed6ab0e40449d21d0534999f9f3d47b"
+  },
+  "shared_CMake_sha256": null,
+  "genuine_core_sha256": null,
+  "prepared_run": null,
+  "prepared_artifact": null,
+  "original_source_sha256": "fbdbbf36d8813c09d00583d235063acb0911d842cd94628d482d5c5685818131",
+  "runtime_dependencies": {
+    "1.24.4": {
+      "scipy": "1.15.3",
+      "ndimage_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe"
+    },
+    "2.5.4": {
+      "scipy": "1.18.1",
+      "ndimage_binary_sha256": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092"
+    }
+  },
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "sampler": {
+    "module": "tools/montage_sustained.py",
+    "function": "measure",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "raw_samples": 112
+  },
+  "first_cohort_gate": "Root independently reviews full source/runtime/product closure and real CLI stops before sampler, then binds genuine prepared core/CMake/run/artifact and freezes successor. No new original calls or timing authorized by this prospective contract.",
+  "excluded": "Ordinary wide extrema casts, rounded int64 controls, float, swapped, rank0, empty and protocols; these cases do not close those full intended contract partitions.",
+  "predecessor_binding": {
+    "contract": "coverage/contracts/find-boundaries-benchmark-v1.json",
+    "sha256": "77385be1aa49309a35e362b90739043c0de07190c22031c79103b3b33f9f08d4",
+    "driver_inverse": [
+      {
+        "current": "import sys\nimport subprocess\n",
+        "predecessor": "import sys\n"
+      },
+      {
+        "current": "coverage/contracts/find-boundaries-benchmark-binding-v1.json",
+        "predecessor": "coverage/contracts/find-boundaries-benchmark-v1.json"
+      },
+      {
+        "current": "def load_root_binding(path, raw_contract):\n    \"\"\"Use the existing external first-cohort envelope without altering recipes.\"\"\"\n    assert path is not None, 'PROSPECTIVE: genuine input/root binding missing; no target imports or calls permitted'\n    raw_binding=Path(path).read_bytes();binding=json.loads(raw_binding)\n    allowed={'status','source_root','source_revision','git_argv','genuine_root_admission_path','genuine_root_admission_sha256','product_kind','interpreter','source_files_sha256','installed_site','numpy','core_path','core_sha256','output_root','routes','prepared_source','producer','runtime_path','runtime_sha256','shared_CMake_sha256','genuine_root_stager_path','genuine_root_stager_sha256','base_contract_sha256','root_go_path'}\n    assert not set(binding)-allowed\n    assert binding['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS' and binding['product_kind']=='GENUINE_INSTALLED_WHOLE_PRODUCT'\n    assert binding['base_contract_sha256']==hashlib.sha256(raw_contract).hexdigest()\n    assert Path(binding['source_root']).resolve()==ROOT\n    prepared=binding['prepared_source'];producer=binding['producer']\n    assert set(producer)=={'run','revision','artifact','sha256'}\n    assert set(prepared)=={'revision','files_sha256'} and prepared['files_sha256']\n    revision=prepared['revision'];assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)\n    assert revision==binding['source_revision']==producer['revision']\n    assert subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()==revision\n    assert not subprocess.check_output(['git','-C',str(ROOT),'status','--porcelain'],text=True).strip()\n    def authenticated(field):\n        raw=Path(binding[field+'_path']).read_bytes()\n        assert hashlib.sha256(raw).hexdigest()==binding[field+'_sha256']\n        return json.loads(raw)\n    runtime=authenticated('runtime')\n    assert runtime['source']==prepared\n    assert runtime['runtime']['packages_sha256']['skimagexx'][Path(binding['core_path']).name]==binding['core_sha256']\n    authenticated('genuine_root_admission')\n    stager=authenticated('genuine_root_stager')\n    assert str(stager['run'])==str(producer['run']) and str(stager['artifact'])==str(producer['artifact'])\n    assert stager['revision']==revision and stager['artifact_sha256']==producer['sha256']\n    assert len(producer['sha256'])==64 and all(c in '0123456789abcdef' for c in producer['sha256'])\n    go=json.loads(Path(binding['root_go_path']).read_bytes())\n    assert go['binding_sha256']==hashlib.sha256(raw_binding).hexdigest() and 'boundary' in go['routes']\n    assert go['timed_batches']==0 and datetime.now(timezone.utc)<datetime.fromisoformat(go['deadline_utc'])\n    cmake=(ROOT/'CMakeLists.txt').read_bytes().replace(b'\\r\\n',b'\\n')\n    assert binding['shared_CMake_sha256']==prepared['files_sha256']['CMakeLists.txt']==hashlib.sha256(cmake).hexdigest()\n    contract=json.loads(raw_contract)\n    # Root provenance supplies only these five runtime fields. All recipes,\n    # sampler gates, method and source pins remain the tracked contract's values.\n    contract.update(state='FROZEN_READY_FOR_ROOT_FIRST_COHORT',shared_CMake_sha256=binding['shared_CMake_sha256'],genuine_core_sha256=binding['core_sha256'],prepared_run=producer['run'],prepared_artifact=producer['artifact'])\n    return contract,binding,hashlib.sha256(raw_binding).hexdigest()\n\n\n",
+        "predecessor": ""
+      },
+      {
+        "current": "    parser.add_argument('--root-binding',type=Path)\n    args=parser.parse_args();raw_contract=CONTRACT.read_bytes();contract,binding,binding_sha=load_root_binding(args.root_binding,raw_contract)\n",
+        "predecessor": "    args=parser.parse_args();raw_contract=CONTRACT.read_bytes();contract=json.loads(raw_contract)\n"
+      },
+      {
+        "current": "    core=Path(xx._core.__file__);core_sha=hashlib.sha256(core.read_bytes()).hexdigest();assert core_sha==contract['genuine_core_sha256'] and core.resolve()==Path(binding['core_path']).resolve()",
+        "predecessor": "    core=Path(xx._core.__file__);core_sha=hashlib.sha256(core.read_bytes()).hexdigest();assert core_sha==contract['genuine_core_sha256']"
+      },
+      {
+        "current": "    assert source_fingerprint(ROOT)==before and hashlib.sha256(core.read_bytes()).hexdigest()==core_sha and CONTRACT.read_bytes()==raw_contract and hashlib.sha256(args.root_binding.read_bytes()).hexdigest()==binding_sha\n",
+        "predecessor": "    assert source_fingerprint(ROOT)==before and hashlib.sha256(core.read_bytes()).hexdigest()==core_sha and CONTRACT.read_bytes()==raw_contract\n"
+      },
+      {
+        "current": "        avx2_available=avx2_available,**before,core_sha256=core_sha,threads=1,repeat=7,raw_samples=112,target_ms=100,\n        root_binding_sha256=binding_sha,prepared_run=contract['prepared_run'],prepared_artifact=contract['prepared_artifact'],\n",
+        "predecessor": "        avx2_available=avx2_available,**before,core_sha256=core_sha,threads=1,repeat=7,raw_samples=112,target_ms=100,\n"
+      }
+    ],
+    "scope": "External producer/root provenance only; original8cases, sourcebounds, fixture/checker, sampler, gate values and all timed-call bodies unchanged. Prepared-source files never rewritten."
+  },
+  "runtime_successor": {
+    "contract": "coverage/contracts/find-boundaries-benchmark-binding-v2.json",
+    "sha256": "1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4",
+    "public_test_inverse": [],
+    "driver_inverse": [
+      {
+        "current": "coverage/contracts/find-boundaries-benchmark-binding-v3.json",
+        "predecessor": "coverage/contracts/find-boundaries-benchmark-binding-v2.json"
+      },
+      {
+        "current": "def validate_source_closure(contract):\n    \"\"\"Authenticate the Windows admission-test successor against frozen v2.\"\"\"\n    successor=contract['runtime_successor']\n    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v2.json'\n    raw=(ROOT/successor['contract']).read_bytes()\n    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4'\n    previous=json.loads(raw)\n    # load_root_binding already authenticates exactly these runtime fields.\n    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}\n    assert {k:v for k,v in contract.items()if k not in provenance|{'source_closure','runtime_successor'}}=={k:v for k,v in previous.items()if k not in provenance|{'source_closure','runtime_successor'}}\n    assert set(contract['source_closure'])==set(previous['source_closure'])\n    for name,pin in contract['source_closure'].items():\n        raw=(ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')\n        assert hashlib.sha256(raw).hexdigest()==pin,name\n        if name=='tests/test_find_boundaries_public.py':fragments=successor['public_test_inverse']\n        elif name=='benchmarks/find_boundaries.py':fragments=successor['driver_inverse']\n        else:\n            assert pin==previous['source_closure'][name],name\n            continue\n        for fragment in fragments:\n            current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()\n            assert current and raw.count(current)==1\n            raw=raw.replace(current,predecessor,1)\n        assert hashlib.sha256(raw).hexdigest()==previous['source_closure'][name],name\n",
+        "predecessor": "def validate_source_closure(contract):\n    \"\"\"Authenticate the Windows admission-test successor against frozen v1.\"\"\"\n    successor=contract['runtime_successor']\n    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v1.json'\n    raw=(ROOT/successor['contract']).read_bytes()\n    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060'\n    previous=json.loads(raw)\n    assert {k:v for k,v in contract.items()if k not in ('source_closure','runtime_successor')}=={k:v for k,v in previous.items()if k!='source_closure'}\n    assert set(contract['source_closure'])==set(previous['source_closure'])\n    for name,pin in contract['source_closure'].items():\n        raw=(ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')\n        assert hashlib.sha256(raw).hexdigest()==pin,name\n        if name=='tests/test_find_boundaries_public.py':fragments=successor['public_test_inverse']\n        elif name=='benchmarks/find_boundaries.py':fragments=successor['driver_inverse']\n        else:\n            assert pin==previous['source_closure'][name],name\n            continue\n        for fragment in fragments:\n            current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()\n            assert current and raw.count(current)==1\n            raw=raw.replace(current,predecessor,1)\n        assert hashlib.sha256(raw).hexdigest()==previous['source_closure'][name],name\n"
+      }
+    ],
+    "scope": "Only bound runtime provenance separation and active contract path; exact5already-authenticated fields excluded from immutable contract comparison. All cases/method/bounds/sampler/native/timed bodies and public-test source pins unchanged; v2 Windows context retained as authenticated predecessor."
+  },
+  "layout_successor": {
+    "contract": "coverage/contracts/find-boundaries-benchmark-binding-v3.json",
+    "sha256": "fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba",
+    "context": "coverage/contracts/find-boundaries-layout-source-context-v1.json",
+    "context_sha256": "63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d",
+    "added_source_pins": {
+      "coverage/contracts/find-boundaries-layout-source-context-v1.json": "63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d",
+      "coverage/contracts/find-boundaries-layout-optimization-v1.json": "176b1e93c7b5634469787cd31562cbf71c7447e0191f11dc9c2105c38b05e08a",
+      "tests/test_find_boundaries_layout.cpp": "5ce1095a25fc26e163eeb6d77d129674191e705e05af9bb4382bdba9ebf83350",
+      "tests/test_find_boundaries_layout_public.py": "180e5e284e94a28b2dbf2d63636df92d398ac73071dc1e00a7d1192076512669",
+      "tests/test_find_boundaries_layout_contract.py": "818d32f6afee5f863d05ca8a25699e5b551395e3eb2347681454f48b63776e79"
+    },
+    "driver_inverse": [
+      {
+        "current": "ROOT=Path(__file__).resolve().parents[1]\nCONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v4.json'\n\n",
+        "predecessor": "ROOT=Path(__file__).resolve().parents[1]\nCONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v3.json'\n\n"
+      },
+      {
+        "current": "\ndef layout_predecessor(name, raw):\n    \"\"\"Authenticate only the two independently admitted component changes.\"\"\"\n    context_path=ROOT/'coverage/contracts/find-boundaries-layout-source-context-v1.json'\n    assert hashlib.sha256(context_path.read_bytes()).hexdigest()=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'\n    context=json.loads(context_path.read_bytes());item=context['sources'][name]\n    assert hashlib.sha256(raw).hexdigest()==item['current_sha256']\n    component=context['component_contract'];component_raw=(ROOT/component['path']).read_bytes()\n    assert hashlib.sha256(component_raw).hexdigest()==component['sha256']\n    for fragment in item['inverse']:\n        current,previous=fragment['current'].encode(),fragment['predecessor'].encode()\n        assert current and raw.count(current)==1;raw=raw.replace(current,previous,1)\n    assert hashlib.sha256(raw).hexdigest()==item['predecessor_sha256']\n    return raw\n\n\ndef validate_source_closure(contract):\n",
+        "predecessor": "\ndef validate_source_closure(contract):\n"
+      },
+      {
+        "current": "def validate_source_closure(contract):\n    \"\"\"Bind the layout component without changing frozen cases or provenance.\"\"\"\n    successor=contract['layout_successor'];raw=(ROOT/successor['contract']).read_bytes()\n    assert set(successor)=={'contract','sha256','context','context_sha256','added_source_pins','driver_inverse','scope'}\n    assert successor['context']=='coverage/contracts/find-boundaries-layout-source-context-v1.json' and successor['context_sha256']=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'\n    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v3.json'\n    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba'\n    previous=json.loads(raw)\n",
+        "predecessor": "def validate_source_closure(contract):\n    \"\"\"Authenticate the Windows admission-test successor against frozen v2.\"\"\"\n    successor=contract['runtime_successor']\n    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v2.json'\n    raw=(ROOT/successor['contract']).read_bytes()\n    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4'\n    previous=json.loads(raw)\n"
+      },
+      {
+        "current": "    previous=json.loads(raw)\n    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}\n",
+        "predecessor": "    previous=json.loads(raw)\n    # load_root_binding already authenticates exactly these runtime fields.\n    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}\n"
+      },
+      {
+        "current": "    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}\n    excluded=provenance|{'source_closure','layout_successor'}\n    assert {k:v for k,v in contract.items()if k not in excluded}=={k:v for k,v in previous.items()if k not in excluded}\n    assert set(contract['source_closure'])==set(previous['source_closure'])|set(successor['added_source_pins'])\n    for name,pin in contract['source_closure'].items():\n",
+        "predecessor": "    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}\n    assert {k:v for k,v in contract.items()if k not in provenance|{'source_closure','runtime_successor'}}=={k:v for k,v in previous.items()if k not in provenance|{'source_closure','runtime_successor'}}\n    assert set(contract['source_closure'])==set(previous['source_closure'])\n    for name,pin in contract['source_closure'].items():\n"
+      },
+      {
+        "current": "        assert hashlib.sha256(raw).hexdigest()==pin,name\n        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp'):\n            raw=layout_predecessor(name,raw)\n        elif name=='benchmarks/find_boundaries.py':\n            for fragment in successor['driver_inverse']:\n                current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()\n                assert current and raw.count(current)==1;raw=raw.replace(current,predecessor,1)\n        elif name in successor['added_source_pins']:\n            assert pin==successor['added_source_pins'][name];continue\n        else:assert pin==previous['source_closure'][name]\n        assert hashlib.sha256(raw).hexdigest()==previous['source_closure'][name],name\n",
+        "predecessor": "        assert hashlib.sha256(raw).hexdigest()==pin,name\n        if name=='tests/test_find_boundaries_public.py':fragments=successor['public_test_inverse']\n        elif name=='benchmarks/find_boundaries.py':fragments=successor['driver_inverse']\n        else:\n            assert pin==previous['source_closure'][name],name\n            continue\n        for fragment in fragments:\n            current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()\n            assert current and raw.count(current)==1\n            raw=raw.replace(current,predecessor,1)\n        assert hashlib.sha256(raw).hexdigest()==previous['source_closure'][name],name\n"
+      }
+    ],
+    "scope": "Only exact admitted layout leaf/SDK helper plus required source closure; five externally authenticated provenance fields remain prospective until actual root binding."
+  },
+  "f_row_successor": {
+    "contract": "coverage/contracts/find-boundaries-benchmark-binding-v4.json",
+    "sha256": "8ad09d6c73f47d017a5da741d60e18049abe6425042725e29c6e233eab2e8ff7",
+    "context": "coverage/contracts/find-boundaries-f-row-source-context-v1.json",
+    "context_sha256": "f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29",
+    "added_source_pins": {
+      "coverage/contracts/find-boundaries-f-row-source-context-v1.json": "f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29",
+      "coverage/contracts/find-boundaries-f-row-optimization-v1.json": "21a30130021a07524ac7703b63eda1ae57535a355181ad01480ca0d550199c25",
+      "tests/test_find_boundaries_f_rows.cpp": "51f4ee7bdb25ac2d91e545665b8e3fc967a84f595769b14c03c67f62eebc8391",
+      "tests/test_find_boundaries_f_rows_public.py": "ca4d2015538bc98f98e187453e7ba511fed6ab0e40449d21d0534999f9f3d47b"
+    },
+    "driver_inverse": [
+      {
+        "current": "import sys\nimport subprocess\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v5.json'\n\n\ndef case_specs():return json.loads(CONTRACT.read_bytes())['cases']\n\n",
+        "predecessor": "import sys\nimport subprocess\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v4.json'\n\n\ndef case_specs():return json.loads(CONTRACT.read_bytes())['cases']\n\n"
+      },
+      {
+        "current": "    contract.update(state='FROZEN_READY_FOR_ROOT_FIRST_COHORT',shared_CMake_sha256=binding['shared_CMake_sha256'],genuine_core_sha256=binding['core_sha256'],prepared_run=producer['run'],prepared_artifact=producer['artifact'])\n    return contract,binding,hashlib.sha256(raw_binding).hexdigest()\n\n\ndef f_row_predecessor(name, raw):\n    context_path=ROOT/'coverage/contracts/find-boundaries-f-row-source-context-v1.json'\n    assert hashlib.sha256(context_path.read_bytes()).hexdigest()=='f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29'\n    context=json.loads(context_path.read_bytes());item=context['sources'][name]\n    assert hashlib.sha256(raw).hexdigest()==item['current_canonical_lf_sha256'],name\n    for fragment in item['inverse_fragments']:\n        current,previous=fragment['current'].encode(),fragment['predecessor'].encode()\n        assert current and raw.count(current)==1;raw=raw.replace(current,previous,1)\n    assert hashlib.sha256(raw).hexdigest()==item['predecessor_canonical_lf_sha256'],name\n    return raw\n\n\ndef layout_predecessor(name, raw):\n    \"\"\"Authenticate only the two independently admitted component changes.\"\"\"\n    raw=f_row_predecessor(name,raw)\n    context_path=ROOT/'coverage/contracts/find-boundaries-layout-source-context-v1.json'\n    assert hashlib.sha256(context_path.read_bytes()).hexdigest()=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'\n    context=json.loads(context_path.read_bytes());item=context['sources'][name]\n    assert hashlib.sha256(raw).hexdigest()==item['current_sha256']\n",
+        "predecessor": "    contract.update(state='FROZEN_READY_FOR_ROOT_FIRST_COHORT',shared_CMake_sha256=binding['shared_CMake_sha256'],genuine_core_sha256=binding['core_sha256'],prepared_run=producer['run'],prepared_artifact=producer['artifact'])\n    return contract,binding,hashlib.sha256(raw_binding).hexdigest()\n\n\ndef layout_predecessor(name, raw):\n    \"\"\"Authenticate only the two independently admitted component changes.\"\"\"\n    context_path=ROOT/'coverage/contracts/find-boundaries-layout-source-context-v1.json'\n    assert hashlib.sha256(context_path.read_bytes()).hexdigest()=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'\n    context=json.loads(context_path.read_bytes());item=context['sources'][name]\n    assert hashlib.sha256(raw).hexdigest()==item['current_sha256']\n"
+      },
+      {
+        "current": "    return raw\n\n\ndef validate_source_closure(contract):\n    successor=contract['f_row_successor'];raw=(ROOT/successor['contract']).read_bytes()\n    assert set(successor)=={'contract','sha256','context','context_sha256','added_source_pins','driver_inverse','scope'}\n    assert successor['context']=='coverage/contracts/find-boundaries-f-row-source-context-v1.json' and successor['context_sha256']=='f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29'\n    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v4.json'\n    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='8ad09d6c73f47d017a5da741d60e18049abe6425042725e29c6e233eab2e8ff7'\n    previous=json.loads(raw)\n    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}\n    excluded=provenance|{'source_closure','f_row_successor'}\n    assert {k:v for k,v in contract.items()if k not in excluded}=={k:v for k,v in previous.items()if k not in excluded}\n    assert set(contract['source_closure'])==set(previous['source_closure'])|set(successor['added_source_pins'])\n    for name,pin in contract['source_closure'].items():\n        raw=(ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')\n        assert hashlib.sha256(raw).hexdigest()==pin,name\n        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp','tests/test_find_boundaries_layout_contract.py'):\n            raw=f_row_predecessor(name,raw)\n        elif name=='benchmarks/find_boundaries.py':\n            for fragment in successor['driver_inverse']:\n                current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()\n                assert current and raw.count(current)==1;raw=raw.replace(current,predecessor,1)\n",
+        "predecessor": "    return raw\n\n\ndef validate_source_closure(contract):\n    \"\"\"Bind the layout component without changing frozen cases or provenance.\"\"\"\n    successor=contract['layout_successor'];raw=(ROOT/successor['contract']).read_bytes()\n    assert set(successor)=={'contract','sha256','context','context_sha256','added_source_pins','driver_inverse','scope'}\n    assert successor['context']=='coverage/contracts/find-boundaries-layout-source-context-v1.json' and successor['context_sha256']=='63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d'\n    assert successor['contract']=='coverage/contracts/find-boundaries-benchmark-binding-v3.json'\n    assert hashlib.sha256(raw).hexdigest()==successor['sha256']=='fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba'\n    previous=json.loads(raw)\n    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}\n    excluded=provenance|{'source_closure','layout_successor'}\n    assert {k:v for k,v in contract.items()if k not in excluded}=={k:v for k,v in previous.items()if k not in excluded}\n    assert set(contract['source_closure'])==set(previous['source_closure'])|set(successor['added_source_pins'])\n    for name,pin in contract['source_closure'].items():\n        raw=(ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')\n        assert hashlib.sha256(raw).hexdigest()==pin,name\n        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp'):\n            raw=layout_predecessor(name,raw)\n        elif name=='benchmarks/find_boundaries.py':\n            for fragment in successor['driver_inverse']:\n                current,predecessor=fragment['current'].encode(),fragment['predecessor'].encode()\n                assert current and raw.count(current)==1;raw=raw.replace(current,predecessor,1)\n"
+      }
+    ],
+    "scope": "Exact admitted F-row source/SDK/test additions only; cases/method/sampler/provenance policy unchanged, actual runtime fields unbound."
+  }
+}

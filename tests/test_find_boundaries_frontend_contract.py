@@ -6,11 +6,15 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 def test_find_boundaries_frontend_source_closure():
-    value=json.loads((ROOT/'coverage/contracts/find-boundaries-frontend-v3.json').read_bytes())
+    value=json.loads((ROOT/'coverage/contracts/find-boundaries-frontend-v4.json').read_bytes())
+    frow=value['f_row_successor'];fraw=(ROOT/frow['contract']).read_bytes()
+    assert hashlib.sha256(fraw).hexdigest()==frow['sha256']
+    fold=json.loads(fraw)
+    assert {k:v for k,v in value.items()if k not in ('source_canonical_pins','f_row_successor')}=={k:v for k,v in fold.items()if k!='source_canonical_pins'}
     layout=value['layout_successor'];old_raw=(ROOT/layout['contract']).read_bytes()
     assert hashlib.sha256(old_raw).hexdigest()==layout['sha256']
     predecessor=json.loads(old_raw)
-    assert {k:v for k,v in value.items()if k not in ('source_canonical_pins','layout_successor')}=={k:v for k,v in predecessor.items()if k!='source_canonical_pins'}
+    assert {k:v for k,v in value.items()if k not in ('source_canonical_pins','layout_successor','f_row_successor')}=={k:v for k,v in predecessor.items()if k!='source_canonical_pins'}
     import runpy
     driver=runpy.run_path(str(ROOT/'benchmarks/find_boundaries.py'))
     assert value['api']=='segmentation.find_boundaries'
@@ -18,7 +22,7 @@ def test_find_boundaries_frontend_source_closure():
     assert binding['contract']=='coverage/contracts/find-boundaries-frontend-v1.json'
     assert hashlib.sha256(raw).hexdigest()==binding['sha256']=='d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f'
     previous=json.loads(raw)
-    assert {k:v for k,v in value.items()if k not in ('source_canonical_pins','predecessor_binding','layout_successor')}=={k:v for k,v in previous.items()if k!='source_canonical_pins'}
+    assert {k:v for k,v in value.items()if k not in ('source_canonical_pins','predecessor_binding','layout_successor','f_row_successor')}=={k:v for k,v in previous.items()if k!='source_canonical_pins'}
     assert set(value['source_canonical_pins'])==set(previous['source_canonical_pins'])
     for name,pin in value['source_canonical_pins'].items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')

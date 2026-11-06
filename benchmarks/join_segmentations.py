@@ -35,14 +35,10 @@ def fixture(spec,np):
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',action='store_true');args=parser.parse_args()
-    contract=json.loads(CONTRACT.read_bytes());bounds=[case_bounds(s) for s in contract['cases']]
-    if args.plan:
-        print(json.dumps(dict(state=contract['state'],cases=contract['cases'],bounds=bounds,method=contract['method']),indent=2));return
-    # No runnable measurement until genuine source/run/core/root admission is
-    # bound through the existing admitted controller. This packet adds no new
-    # dispatcher and must not import science or call original while unbound.
-    raise SystemExit('PROSPECTIVE_UNBOUND: genuine input and independent root benchmark GO required')
+    import sys
+    sys.path.insert(0,str(Path(__file__).resolve().parent))
+    from next_util_execution import execute
+    return execute('join',globals())
 
 
 if __name__=='__main__':main()

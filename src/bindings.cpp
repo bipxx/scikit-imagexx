@@ -81,6 +81,7 @@ void bind_find_boundaries(pybind11::module_&);
 void bind_join_segmentations(pybind11::module_&);
 void bind_crop(pybind11::module_&);
 void bind_regular_grid(pybind11::module_&);
+void bind_util_views(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -899,6 +900,7 @@ PYBIND11_MODULE(_core, m) {
     bind_join_segmentations(m);
     bind_crop(m);
     bind_regular_grid(m);
+    bind_util_views(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);

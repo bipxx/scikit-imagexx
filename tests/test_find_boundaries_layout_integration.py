@@ -12,18 +12,18 @@ ROOT=Path(__file__).resolve().parents[1]
 def test_layout_integrated_source_and_historical_driver_are_exact():
     driver=runpy.run_path(str(ROOT/'benchmarks/find_boundaries.py'))
     current=json.loads(driver['CONTRACT'].read_bytes());driver['validate_source_closure'](current)
-    data=json.loads((ROOT/'coverage/contracts/find-boundaries-layout-optimization-v1.json').read_bytes())
+    data=json.loads((ROOT/'coverage/contracts/find-boundaries-f-row-optimization-v1.json').read_bytes())
     for name,pin in data['source_files_raw_sha256'].items():
         assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
     raw=(ROOT/'src/find_boundaries.cpp').read_bytes().replace(b'\r\n',b'\n')
     assert hashlib.sha256(driver['layout_predecessor']('src/find_boundaries.cpp',raw)).hexdigest()==data['shipping_leaf_canonical_sha256']
-    previous=json.loads((ROOT/current['layout_successor']['contract']).read_bytes())
+    previous=json.loads((ROOT/current['f_row_successor']['contract']).read_bytes())
     assert current['cases']==data['cases']==previous['cases'] and len(current['cases'])==8
     assert current['sampler']==previous['sampler'] and current['method_sha256']==data['method_sha256']
     for name,pin in data['unchanged_benchmark_files_raw_sha256'].items():
         raw=(ROOT/name).read_bytes()
         if name=='benchmarks/find_boundaries.py':
-            for f in current['layout_successor']['driver_inverse']:
+            for f in current['f_row_successor']['driver_inverse']+previous['layout_successor']['driver_inverse']:
                 assert raw.count(f['current'].encode())==1
                 raw=raw.replace(f['current'].encode(),f['predecessor'].encode(),1)
         assert hashlib.sha256(raw).hexdigest()==pin,name

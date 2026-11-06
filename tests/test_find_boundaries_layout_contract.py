@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-DATA=json.loads((ROOT/'coverage/contracts/find-boundaries-layout-optimization-v1.json').read_bytes())
+DATA=json.loads((ROOT/'coverage/contracts/find-boundaries-f-row-optimization-v1.json').read_bytes())
 
 
 def test_layout_source_closure_and_exact_shipping_inverse():
@@ -36,3 +36,19 @@ def test_component_gate_and_unchanged_API_frontier():
     assert old['source_closure']['src/find_boundaries.cpp']!=DATA['source_files_raw_sha256']['src/find_boundaries.cpp']
     assert DATA['active_benchmark_still_frozen_and_will_refuse_changed_source']is True
     assert DATA['assessed_domain_expansion']is False
+
+
+def test_F_route_only_changes_metadata_and_frozen_driver_stays_closed():
+    import runpy
+    import pytest
+    raw=(ROOT/'src/find_boundaries.cpp').read_text()
+    fragment=DATA['shipping_inverse_fragments'][0]
+    predecessor=raw.replace(fragment['current'],fragment['shipping'],1)
+    assert hashlib.sha256(predecessor.encode()).hexdigest()==DATA['predecessor_leaf_canonical_sha256']
+    route=fragment['current']
+    assert 'return run<T,Boolean>'in route and 'get_num_threads'not in route
+    assert 'shape[0]>=3 && shape[1]>=3'in route and 'if constexpr(sizeof(T)<=4)'in route
+    driver=runpy.run_path(str(ROOT/'benchmarks/find_boundaries.py'))
+    with pytest.raises(AssertionError)as error:
+        driver['validate_source_closure'](json.loads((ROOT/DATA['benchmark_predecessor']['contract']).read_bytes()))
+    assert error.value.args==('src/find_boundaries.cpp',)

@@ -372,6 +372,18 @@ def validate_frozen_controller(name, canonical, expected, scope):
             'frozen R4 controller pin differs: ' + name)
 
 
+def util_views_fenv_files(directory, qualification, binding):
+    """Collect the qualified small test-helper bundle at either transport boundary."""
+    require(isinstance(binding,dict)and set(binding)=={'receipt','receipt_sha256'},'qualified FENV helper binding absent')
+    require(binding['receipt']=='util-views-fenv/receipt.json','qualified FENV helper path differs')
+    receipt=checked(directory,binding['receipt'],qualification)
+    require(sha(receipt)==binding['receipt_sha256'],'qualified FENV helper receipt changed')
+    helper=load(receipt);prefix='util-views-fenv/'
+    names={prefix+n for n in helper['files']}|{binding['receipt']}
+    require(names=={n for n in qualification['records']if n.startswith(prefix)},'qualified FENV bundle file set differs')
+    return {name:checked(directory,name,qualification)for name in sorted(names)}
+
+
 def validate_payload(path, qualification, profile, compare):
     """Validate a staged tree without manufacturing accepted product pins."""
     source = path / 'source'
@@ -391,6 +403,11 @@ def validate_payload(path, qualification, profile, compare):
     corpus = load(source / 'coverage/contracts/rank-statistics-benchmark.json')
     require(corpus['case_contract_sha256'] == cfg['case_contract_sha256']
             and len(corpus['case_inventory']) == 1379, 'fixed1379 corpus differs')
+    if profile!='windows'and scope['name']==CURRENT_PRODUCT_SCOPE:
+        require({'util.slice_along_axes','util.view_as_blocks','util.view_as_windows'}<=set(scope['functions']),'current staged scope lacks util views')
+        state_path=path/'qualification-evidence/state.json'
+        require(sha(state_path)==qualification['records']['state.json']['sha256'],'staged qualified state differs')
+        state=load(state_path);util_views_fenv_files(path,qualification,state.get('util_views_fenv'))
     runtime = load(path / 'runtime.json')
     require(runtime['schema'] == 'ci-offline-measurement-v1'
             and runtime['source'] == qualification['source'], 'runtime/source differs')
@@ -521,6 +538,9 @@ def stage(qualification_dir, verification_receipt, output, profile, artifact_run
                 'qualification-evidence/package.json': checked(qout, 'package.json', q),
                 'qualification-evidence/statistics-capsule.json': checked(qout, capsule + 'rank-statistics-artifacts.json', q),
                 'qualification-evidence/independent-verification.json': plain(verification_receipt)}
+    if profile!='windows'and scope['name']==CURRENT_PRODUCT_SCOPE:
+        require({'util.slice_along_axes','util.view_as_blocks','util.view_as_windows'}<=set(expected['functions']),'current qualified registry lacks util views')
+        selected.update(util_views_fenv_files(qout,q,state.get('util_views_fenv')))
     for name in ('build-identity.json', 'build-identity-facts.json', *identity['evidence_records']):
         safe(name)
         if name not in ('build-identity.json', 'build-identity-facts.json'):

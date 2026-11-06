@@ -171,6 +171,23 @@ template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     const Shape& shape,const std::vector<std::ptrdiff_t>& strides,
     std::size_t input_count,std::size_t output_count,int workers) {
     const auto rank=view.shape.size();
+    // Positive aligned F/F regular2D is the same symmetric footprint with axes
+    // exchanged. Reuse the existing C-row kernel without moving any pixels.
+    // Public intake already proved address arithmetic; the SDK caller retains
+    // the existing disjoint-allocation/nonoverlapping-output obligation.
+    if constexpr(sizeof(T)<=4) {
+        if(rank==2 && (parameters.mode==FindBoundaryMode::thick || parameters.mode==FindBoundaryMode::inner) &&
+           shape[0]>=3 && shape[1]>=3 &&
+           view.strides[0]==std::ptrdiff_t(sizeof(T)) && view.strides[1]==std::ptrdiff_t(shape[0]*sizeof(T)) &&
+           strides[0]==1 && strides[1]==std::ptrdiff_t(shape[0]) &&
+           reinterpret_cast<std::uintptr_t>(view.data)%alignof(T)==0) {
+            auto transposed=view;auto transposed_shape=shape;auto transposed_strides=strides;
+            std::swap(transposed.shape[0],transposed.shape[1]);std::swap(transposed.strides[0],transposed.strides[1]);
+            std::swap(transposed_shape[0],transposed_shape[1]);std::swap(transposed_strides[0],transposed_strides[1]);
+            // workers is the positive budget already captured by public intake.
+            return run<T,Boolean>(transposed,parameters,output,transposed_shape,transposed_strides,input_count,output_count,workers);
+        }
+    }
     if constexpr(sizeof(T)==8) {
         if(parameters.mode!=FindBoundaryMode::subpixel) {
             if(parameters.mode==FindBoundaryMode::outer)return false;

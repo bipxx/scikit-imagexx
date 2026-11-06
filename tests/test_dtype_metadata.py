@@ -26,6 +26,15 @@ def calls(api,dtype):
     module,name=api.rsplit('.',1)
     reference=getattr(importlib.import_module('skimage.'+module),name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
+    if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
+        from util_views_reference import reference as view_reference
+        expected,scope,row=view_reference(api,arguments,options,inspect.getsourcefile(reference),np,tagged=True)
+        with warnings.catch_warnings(record=True)as notices:
+            warnings.simplefilter('always');actual=native(*arguments,**options)
+        assert not notices
+        assert_default_parity(api,np.dtype(dtype),actual,expected)
+        assert np.shares_memory(actual,arguments[0])
+        return actual,expected,data
     if api in ('util.crop','util.regular_grid'):
         from util_metadata_reference import reference as saved_reference
         expected,scope,row=saved_reference(api,arguments,options,inspect.getsourcefile(reference),np,tagged=True)
@@ -48,6 +57,8 @@ def calls(api,dtype):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
+        assert_default_parity(api,np.dtype(dtype),actual,expected);return
     if api in ('util.crop','util.regular_grid'):
         assert_default_parity(api,np.dtype(dtype),actual,expected);return
     if api=='segmentation.find_boundaries' or api in ('metrics.adapted_rand_error','metrics.contingency_table'):

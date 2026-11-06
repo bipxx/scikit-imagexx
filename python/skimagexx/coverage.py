@@ -34,7 +34,7 @@ NATIVE_FUNCTIONS = {
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
-    'util': ('crop','regular_grid','montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
+    'util': ('slice_along_axes','view_as_blocks','view_as_windows','crop','regular_grid','montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
              'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
 }
 
@@ -46,10 +46,10 @@ MAX_TREE_PATHS = tuple('morphology.'+name for name in (
 def label_pair_contract(api):
     if api not in ('metrics.adapted_rand_error','metrics.contingency_table'):raise KeyError(api)
     return dict(api=api,implementation='native-partial',fully_native=False,
-        kernel='Bounded integer pair counts and exact finite table=None ARE scalar stages; contingency source-ordered preweighted duplicate coalescing',
+        kernel='Bounded dense integer histogram for<=65536cells and<=N/4, exact sort fallback and finite table=None ARE scalar stages; row-identical-bit preweighted full backing plus unchanged ordered coalescer',
         providers='NumPy reshape, isin and per-pixel normalization/FP callbacks; SciPy structural CSR/index/class factory. Unsupported contingency numeric suffix explicitly uses coordinate CSR provider without whole metric forwarding',
         metadata='Plain integer dtype tags normalized only in internal ARE views, preserving caller words/metadata; actual eight integer widths, not floating label coverage',
-        gaps='Supplied ARE tables, VI/log2/DDOT, nonuniform contingency weights, exceptional FENV/print-log and broad protocols remain open; trailing backing-tail payload unassessed',
+        gaps='Supplied ARE tables, VI/log2/DDOT, arbitrary nonuniform contingency weights, exceptional FENV/print-log and broad protocols remain open; full backing assessed only within admitted preweighted primitive scope',
         workers='One shared global snapshot, default1; integer packing parallel by threshold; duplicate coalescing ordered serial',
         performance='Prospective8case one-worker public comparison, no measurement or full qualification claimed')
 
@@ -333,6 +333,7 @@ def class_contract(api):
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
     if api=='util.crop':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
     if api=='util.regular_grid':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float32','float64')
     if api=='segmentation.join_segmentations':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
@@ -549,6 +550,12 @@ def default_call(api, image):
         return (image,),{'max_size':max(1,image.size//256)}
     if api=='morphology.remove_small_holes':return (image,),{'max_size':4}
     if api=='segmentation.clear_border':return (image,),{'buffer_size':1 if min(image.shape)>2 else 0}
+    if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
+        import numpy as np
+        shape=(4,5)if api=='util.slice_along_axes'else(4,6)
+        a=np.arange(np.prod(shape),dtype=np.int64).astype(image.dtype).reshape(shape)
+        if api=='util.slice_along_axes':return (a,[(1,3)if image.dtype.name=='int16'else(0,2)]),{'axes':None,'copy':False}
+        return (a,(2,2)),{}if api=='util.view_as_blocks'else{'step':1}
     if api=='util.crop':
         import numpy as np
         return (np.arange(20,dtype=np.int64).astype(image.dtype).reshape(4,5),0),{'copy':False,'order':'K'}
@@ -1093,7 +1100,22 @@ def util_metadata_default_error(api,actual,expected):
     return 0.
 
 
+def util_views_default_error(actual,expected):
+    import numpy as np
+    assert type(actual)is type(expected)is np.ndarray
+    assert actual.dtype.str==expected.dtype.str and actual.dtype.descr==expected.dtype.descr
+    assert actual.dtype.metadata==expected.dtype.metadata and actual.shape==expected.shape and actual.strides==expected.strides
+    for name in ('owndata','writeable','aligned','c_contiguous','f_contiguous'):
+        assert getattr(actual.flags,name)==getattr(expected.flags,name)
+    assert type(actual.base)is type(expected.base) and actual is not expected
+    assert not np.shares_memory(actual,expected)
+    assert actual.tobytes(order='C')==expected.tobytes(order='C')
+    return 0.
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
+        util_views_default_error(actual,expected);return
     if api in ('util.crop','util.regular_grid'):
         util_metadata_default_error(api,actual,expected);return
     if api=='segmentation.join_segmentations':

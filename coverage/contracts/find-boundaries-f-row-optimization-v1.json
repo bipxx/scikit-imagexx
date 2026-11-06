@@ -1,0 +1,210 @@
+{
+  "status": "COMPONENT_ONLY_PENDING_INDEPENDENT_REVIEW_GENUINE_SOURCE_BINDING_AND_PERFORMANCE_GO",
+  "api": "segmentation.find_boundaries",
+  "shipping_base": "e89c56da43081307a8374e6fcab3b30c4fb63d57",
+  "shipping_leaf_canonical_sha256": "9f910ba308ab90189c6a8c6386a1fbf40ffab9093437ad1f0dfad392e2c53885",
+  "shipping_inverse_fragments": [
+    {
+      "current": "    const auto rank=view.shape.size();\n    // Positive aligned F/F regular2D is the same symmetric footprint with axes\n    // exchanged. Reuse the existing C-row kernel without moving any pixels.\n    // Public intake already proved address arithmetic; the SDK caller retains\n    // the existing disjoint-allocation/nonoverlapping-output obligation.\n    if constexpr(sizeof(T)<=4) {\n        if(rank==2 && (parameters.mode==FindBoundaryMode::thick || parameters.mode==FindBoundaryMode::inner) &&\n           shape[0]>=3 && shape[1]>=3 &&\n           view.strides[0]==std::ptrdiff_t(sizeof(T)) && view.strides[1]==std::ptrdiff_t(shape[0]*sizeof(T)) &&\n           strides[0]==1 && strides[1]==std::ptrdiff_t(shape[0]) &&\n           reinterpret_cast<std::uintptr_t>(view.data)%alignof(T)==0) {\n            auto transposed=view;auto transposed_shape=shape;auto transposed_strides=strides;\n            std::swap(transposed.shape[0],transposed.shape[1]);std::swap(transposed.strides[0],transposed.strides[1]);\n            std::swap(transposed_shape[0],transposed_shape[1]);std::swap(transposed_strides[0],transposed_strides[1]);\n            // workers is the positive budget already captured by public intake.\n            return run<T,Boolean>(transposed,parameters,output,transposed_shape,transposed_strides,input_count,output_count,workers);\n        }\n    }\n    if constexpr(sizeof(T)==8) {\n",
+      "shipping": "    const auto rank=view.shape.size();\n    if constexpr(sizeof(T)==8) {\n"
+    },
+    {
+      "current": "// Walk the admitted signed-stride lattice once. Each worker decodes its first\n// position only; contiguous/F/reversed layouts then advance by byte strides.\n// Border clamping stays literal. Interior neighbors reuse invariant offsets.\ntemplate<class T,bool Boolean>\nvoid strided_regular(const ComponentsView& view,const FindBoundaryParameters& parameters,\n    std::uint8_t* output,const std::vector<std::ptrdiff_t>& output_strides,\n    std::size_t count,int workers,const std::vector<Delta>& near,const std::vector<Delta>& full) {\n    const auto rank=view.shape.size();\n    const T sentinel=std::numeric_limits<T>::max();\n    const bool inner=parameters.mode==FindBoundaryMode::inner;\n    const bool outer=parameters.mode==FindBoundaryMode::outer;\n    const bool fused=outer && parameters.connectivity==rank;\n    auto background=[&](T v){return parameters.background_representable &&\n        static_cast<std::uint64_t>(v)==parameters.background_bits;};\n    auto read=[&](std::ptrdiff_t offset){T v;std::memcpy(&v,static_cast<const char*>(view.data)+offset,sizeof(T));\n        if constexpr(Boolean)v=v!=0;return v;};\n    std::array<std::size_t,8> axes{};for(std::size_t d=0;d<rank;++d)axes[d]=d;\n    auto magnitude=[](std::ptrdiff_t s){return s<0?std::size_t(-(s+1))+1:std::size_t(s);};\n    std::sort(axes.begin(),axes.begin()+rank,[&](auto a,auto b){\n        const auto x=magnitude(view.strides[a]),y=magnitude(view.strides[b]);return x<y || (x==y && a<b);});\n    const bool has_interior=std::all_of(view.shape.begin(),view.shape.end(),[](auto n){return n>=3;});\n    auto offsets=[&](const std::vector<Delta>& neighbors){std::vector<std::ptrdiff_t> result;\n        if(has_interior)for(const auto& delta:neighbors){std::ptrdiff_t offset=0;for(std::size_t d=0;d<rank;++d)offset+=delta[d]*view.strides[d];result.push_back(offset);}return result;};\n    const auto near_offsets=offsets(near),full_offsets=fused?std::vector<std::ptrdiff_t>{}:offsets(full);\n    partition(count,workers,[&](std::size_t begin,std::size_t end,std::size_t){\n        Position p{};auto word=begin;\n        for(std::size_t i=0;i<rank;++i){auto d=axes[i];p[d]=word%view.shape[d];word/=view.shape[d];}\n        auto input_offset=offset_of(p,view.strides),output_offset=offset_of(p,output_strides);\n        for(auto index=begin;index<end;++index){\n            const auto center=read(input_offset);bool boundary=false;\n            if(!inner || !background(center)){\n                bool interior=has_interior;\n                for(std::size_t d=0;d<rank && interior;++d)interior=p[d]>0 && p[d]+1<view.shape[d];\n                auto neighbor_offset=[&](const Delta& delta){auto offset=input_offset;\n                    for(std::size_t d=0;d<rank;++d)if((delta[d]<0 && p[d])||(delta[d]>0 && p[d]+1<view.shape[d]))offset+=delta[d]*view.strides[d];return offset;};\n                T minimum=sentinel,maximum=std::numeric_limits<T>::lowest(),inverted_min=sentinel;\n                for(std::size_t k=0;k<near.size();++k){\n                    const auto value=read(interior?input_offset+near_offsets[k]:neighbor_offset(near[k]));\n                    minimum=std::min(minimum,value);maximum=std::max(maximum,value);\n                    if(fused)inverted_min=std::min(inverted_min,background(value)?sentinel:value);\n                }\n                boundary=maximum!=minimum;\n                if(outer && boundary && !background(center)){\n                    T original_max=maximum;\n                    if(!fused){original_max=std::numeric_limits<T>::lowest();\n                        for(std::size_t k=0;k<full.size();++k){\n                            const auto value=read(interior?input_offset+full_offsets[k]:neighbor_offset(full[k]));\n                            original_max=std::max(original_max,value);inverted_min=std::min(inverted_min,background(value)?sentinel:value);\n                        }\n                    }\n                    boundary=original_max!=inverted_min;\n                }\n            }\n            output[output_offset]=std::uint8_t(boundary);\n            // Update only valid positions; no one-past input/output pointer is\n            // formed, including a worker ending mid-row or at the final cell.\n            for(std::size_t i=0;i<rank;++i){const auto d=axes[i];\n                if(++p[d]<view.shape[d]){input_offset+=view.strides[d];output_offset+=output_strides[d];break;}\n                p[d]=0;input_offset-=std::ptrdiff_t(view.shape[d]-1)*view.strides[d];output_offset-=std::ptrdiff_t(view.shape[d]-1)*output_strides[d];\n            }\n        }\n    });\n}\n",
+      "shipping": ""
+    },
+    {
+      "current": "    if(!subpixel && !interior){\n        strided_regular<T,Boolean>(view,parameters,output,strides,output_count,team,near,full);\n        return true;\n    }\n",
+      "shipping": ""
+    }
+  ],
+  "source_files_raw_sha256": {
+    "src/find_boundaries.cpp": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547",
+    "tests/test_find_boundaries_layout.cpp": "5ce1095a25fc26e163eeb6d77d129674191e705e05af9bb4382bdba9ebf83350",
+    "tests/test_find_boundaries_layout_public.py": "60709cb15dc2d7131661bc042ff4a8bfeac3e71ff2809d417cf833e5b59522b5",
+    "tests/test_find_boundaries_layout_contract.py": "52e704851b2e92a9a54e7ca0497047ee459e2e1f2cdcf797918d1181d4535005",
+    "tests/cmake_consumer/find_boundaries_consumer.hpp": "9b0f44fe9827c175db78f6c8f22d0cdfa393244682c74a105c238b02b9456048",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "src/bind_find_boundaries.cpp": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+    "python/skimagexx/_find_boundaries.py": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1",
+    "tests/test_find_boundaries_native.cpp": "d32690d8768d54be4238c47d51e74d7fc05aed941fa384d3b976467431241e56",
+    "tests/test_find_boundaries_public.py": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+    "tests/fixtures/find_boundaries_originals_v1.hpp": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
+    "tests/find_boundaries_contract.py": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c",
+    "tests/find_boundaries_observer.py": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473",
+    "tests/test_find_boundaries_f_rows.cpp": "51f4ee7bdb25ac2d91e545665b8e3fc967a84f595769b14c03c67f62eebc8391",
+    "tests/test_find_boundaries_f_rows_public.py": "ca4d2015538bc98f98e187453e7ba511fed6ab0e40449d21d0534999f9f3d47b",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093"
+  },
+  "unchanged_header_raw_sha256": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+  "benchmark_predecessor": {
+    "contract": "coverage/contracts/find-boundaries-benchmark-binding-v3.json",
+    "raw_sha256": "fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba"
+  },
+  "cases": [
+    {
+      "id": "cross-thick",
+      "shape": [
+        3,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "cross",
+      "readonly": false
+    },
+    {
+      "id": "u8-thick-512",
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "u16-inner-F",
+      "shape": [
+        257,
+        509
+      ],
+      "dtype": "uint16",
+      "layout": "F",
+      "mode": "inner",
+      "connectivity": 2,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": true
+    },
+    {
+      "id": "i32-outer-reverse",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int32",
+      "layout": "reverse",
+      "mode": "outer",
+      "connectivity": 2,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "u8-subpixel",
+      "shape": [
+        127,
+        129
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": true
+    },
+    {
+      "id": "u16-outer-3d",
+      "shape": [
+        17,
+        19,
+        23
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "mode": "outer",
+      "connectivity": 3,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "bool-inner-reverse",
+      "shape": [
+        257,
+        509
+      ],
+      "dtype": "bool",
+      "layout": "reverse",
+      "mode": "inner",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "noncanonical-bool",
+      "readonly": true
+    },
+    {
+      "id": "u8-subpixel-1d",
+      "shape": [
+        513
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    }
+  ],
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "unchanged_benchmark_files_raw_sha256": {
+    "benchmarks/find_boundaries.py": "81e93fc95bf7946da314467e88951871750ed4f922d6cd958e29a1c784cc7640",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "historical_public_result": {
+    "path": "benchmarks/next-metrics-minimum-initial-v1/find_boundaries.json",
+    "raw_sha256": "ad2a42552e1b9a7fb13133dc13b310585838490da6505c3d9a8043510b84ab2b",
+    "source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+    "losses": [
+      "u16-inner-F",
+      "i32-outer-reverse",
+      "u16-outer-3d",
+      "bool-inner-reverse"
+    ]
+  },
+  "original_calls_authorized": 0,
+  "public_original_comparison_runs": 0,
+  "assessed_domain_expansion": false,
+  "active_benchmark_still_frozen_and_will_refuse_changed_source": true,
+  "change": "Only positive aligned2D F input / matching F uint8 output, both extents>=3, <=32bit, thick/inner: metadata axis swap calls unchanged C-row run with already-captured positive workers. No pixel copy/new core/thread framework.",
+  "frontiers": "Same typed exact-promotion/SDK capacity/disjoint-allocation guarantees, default1/global snapshot and providers. Outer/subpixel/wide/unaligned/reversed/other layouts retain identical current c8c8 paths. Dense operation not involved.",
+  "remaining_gates": [
+    "Independent component/source proof review",
+    "Sole shared integrator minimal new benchmark/source-guard context for changed leaf/SDK helper/new tests, preserving exact8cases/method/losses; current v3 driver intentionally remains frozen/refuses new source",
+    "Genuine exact-source full core/installed native ownership/exported SDK and all supported profiles/default1/workers/scalar-SIMD checks",
+    "Root genuine-input binding/GO before original-public8case comparison; local native CPP ratios do not predict original speedups",
+    "Complete required workflow source barriers, four-profile qualification, independent admission and root main delivery"
+  ],
+  "schema": "find-boundaries-f-row-optimization-v1",
+  "predecessor_source": "c8c8bb78c7ded91cdcc6dbccc01c113eba4613ea",
+  "predecessor_contract": {
+    "path": "coverage/contracts/find-boundaries-layout-optimization-v1.json",
+    "raw_sha256": "176b1e93c7b5634469787cd31562cbf71c7447e0191f11dc9c2105c38b05e08a"
+  },
+  "predecessor_leaf_canonical_sha256": "6b27086e96cda1ec7b6247920c67158d99418891a03dbfc9aab68d79f7297499",
+  "eligibility": {
+    "rank": 2,
+    "modes": [
+      "thick",
+      "inner"
+    ],
+    "maximum_item_bytes": 4,
+    "minimum_axis_extent": 3,
+    "input": "Aligned [item,shape0*item] positive strides",
+    "output": "[1,shape0] positive strides",
+    "pointer": "Unchanged borrowed pointer; caller-proved stable/disjoint backing and nonoverlapping output per unchanged header",
+    "workers": "Positive argument captured once by find_boundaries_into; no new read in metadata recursion"
+  }
+}

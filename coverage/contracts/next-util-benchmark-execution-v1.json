@@ -1,0 +1,884 @@
+{
+  "schema": "next-util-benchmark-execution-v1",
+  "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "base_source": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48",
+  "ancestry": "Private unfinished implementation base; selective import after independent review only, never merge.",
+  "unbound": {
+    "source": null,
+    "producer_run": null,
+    "producer_artifact": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "root_admission": null,
+    "root_GO": null
+  },
+  "sources": {
+    "benchmarks/join_segmentations.py": {
+      "current_canonical_sha256": "a1d74e213a8f5846a36a5a7e0855d67f1d536f9a311d3ebcc7a9d655c97baff6",
+      "predecessor_canonical_sha256": "36c99d15d52099ecba43c270e31ea11469dbeb2f5c49bf3fcb05f552a9e61fc2",
+      "inverse_fragments": [
+        {
+          "current": "\n\ndef main():\n    import sys\n    sys.path.insert(0,str(Path(__file__).resolve().parent))\n    from next_util_execution import execute\n    return execute('join',globals())\n\n\nif __name__=='__main__':main()\n",
+          "predecessor": "\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',action='store_true');args=parser.parse_args()\n    contract=json.loads(CONTRACT.read_bytes());bounds=[case_bounds(s) for s in contract['cases']]\n    if args.plan:\n        print(json.dumps(dict(state=contract['state'],cases=contract['cases'],bounds=bounds,method=contract['method']),indent=2));return\n    # No runnable measurement until genuine source/run/core/root admission is\n    # bound through the existing admitted controller. This packet adds no new\n    # dispatcher and must not import science or call original while unbound.\n    raise SystemExit('PROSPECTIVE_UNBOUND: genuine input and independent root benchmark GO required')\n\n\nif __name__=='__main__':main()\n"
+        }
+      ],
+      "frozen_functions": {
+        "case_specs": "0fd5bd195b0a8aeb51ec99265911ee5aee60fd70650e71c12e5be81cb559a903",
+        "case_bounds": "1769dc8c2eb00b2125721f3e2697e36ef158035d1ec452ffccdeb9f871c178c6",
+        "fixture": "82175b739aca72e7fb6fe609d5335f8edbd78293ac43e98d875d9514c128f072"
+      }
+    },
+    "benchmarks/crop.py": {
+      "current_canonical_sha256": "a95f154789a3832ad762c18dd1cb99f12158bdb3fae014c4d06d1b4ea659fb4d",
+      "predecessor_canonical_sha256": "682357abe3cbf5611005bc2b9cdc4d006a39c1d1619b6cfc8dc8438a68441259",
+      "inverse_fragments": [
+        {
+          "current": "\n\ndef main():\n    import sys\n    sys.path.insert(0,str(Path(__file__).resolve().parent))\n    from next_util_execution import execute\n    return execute('crop',globals())\n\n\nif __name__=='__main__':main()\n",
+          "predecessor": "\n\ndef main():\n    parser=argparse.ArgumentParser();parser.add_argument('--root-binding',type=Path);parser.add_argument('--output',type=Path,default=Path('build/crop-performance.json'))\n    args=parser.parse_args();raw=CONTRACT.read_bytes();contract=json.loads(raw)\n    assert args.root_binding is not None,'PROSPECTIVE: genuine product/root measurement binding required; no target imports/calls'\n    binding=json.loads(args.root_binding.read_bytes())\n    assert set(binding)=={'status','source_revision','core_sha256','prepared_run','prepared_artifact','contract_sha256','root_admission_path','root_admission_sha256','deadline_utc'}\n    assert binding['status']=='ROOT_AUTHORIZED_CROP_PUBLIC_MEASUREMENT'and binding['contract_sha256']==hashlib.sha256(raw).hexdigest()\n    assert binding['prepared_run']and binding['prepared_artifact']and len(binding['source_revision'])==40\n    admission_raw=Path(binding['root_admission_path']).read_bytes();assert hashlib.sha256(admission_raw).hexdigest()==binding['root_admission_sha256']\n    admission=json.loads(admission_raw);assert admission['source']==binding['source_revision']and admission['product_kind']=='GENUINE_INSTALLED_WHOLE_PRODUCT'\n    assert datetime.now(timezone.utc)<datetime.fromisoformat(binding['deadline_utc'])\n    assert subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()==binding['source_revision']\n    assert not subprocess.check_output(['git','-C',str(ROOT),'status','--porcelain'],text=True).strip()\n    assert not args.output.exists()and not args.output.with_suffix('.batches.jsonl').exists()\n    assert len(contract['cases'])==8 and all(source_safe(s)for s in contract['cases'])\n    for name,pin in contract['source_pins'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()==pin\n    sys.path[:0]=[str(ROOT/'tools'),str(ROOT/'benchmarks')]\n    from montage_sustained import measure\n    from provenance import source_fingerprint\n    import numpy as np,skimagexx as xx\n    upstream=importlib.import_module('skimage.util.arraycrop');owned=importlib.import_module('skimagexx._crop')\n    assert xx.util.crop is owned.crop and inspect.isbuiltin(xx._core.crop_view)and inspect.isbuiltin(xx._core.crop_copy_into)\n    assert xx.get_num_threads()==1 and all(os.environ[n]=='1'for n in('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS'))\n    assert hashlib.sha256(Path(xx._core.__file__).read_bytes()).hexdigest()==binding['core_sha256']\n    assert hashlib.sha256(Path(upstream.__file__).read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()=='558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac'\n    before=source_fingerprint(ROOT)\n    assert hashlib.sha256(inspect.getsource(measure).encode()).hexdigest()==contract['method_sha256']\n    rows=[]\n    for index,spec in enumerate(contract['cases']):\n        a,options=fixture(spec,np);frozen=a.copy();reference=lambda:upstream.crop(a,spec['width'],**options);native=lambda:xx.util.crop(a,spec['width'],**options)\n        expected=reference();calls=[];previous=sys.getprofile()\n        def guard(frame,event,value):\n            if event=='call'and frame.f_code is upstream.crop.__code__:raise AssertionError('candidate entered original crop')\n            if event=='c_return'and value in(xx._core.crop_view,xx._core.crop_copy_into):calls.append(value.__name__)\n        try:sys.setprofile(guard);actual=native()\n        finally:sys.setprofile(previous)\n        assert calls==(['crop_view','crop_copy_into']if spec['copy']and not spec['payload_provider']else['crop_view'])\n        assert type(actual)is type(expected)is np.ndarray and actual.dtype==expected.dtype and actual.shape==expected.shape and actual.strides==expected.strides\n        assert np.array_equal(actual,expected)and np.array_equal(a,frozen)\n        assert bool(np.shares_memory(actual,a))==bool(np.shares_memory(expected,a))\n        rows.append(dict(id=spec['id'],payload_provider=spec['payload_provider'],**measure(reference,native,7,100,journal=args.output.with_suffix('.batches.jsonl'),case_index=index,case_id=spec['id'],pass_index=0,deadline=binding['deadline_utc'])))\n    assert source_fingerprint(ROOT)==before and CONTRACT.read_bytes()==raw\n    args.output.write_text(json.dumps(dict(contract_sha256=hashlib.sha256(raw).hexdigest(),binding=binding,threads=1,retain_all_losses=True,rows=rows),indent=2)+'\\n')\n\n\nif __name__=='__main__':main()\n"
+        }
+      ],
+      "frozen_functions": {
+        "case_specs": "0fd5bd195b0a8aeb51ec99265911ee5aee60fd70650e71c12e5be81cb559a903",
+        "source_safe": "4ec64435afc0041c528e7f1e78088fe29d300bc008d9e4fdcd8d2ada18bafff4",
+        "fixture": "774a46a6a327ecca71282f4c10a4e7fc61ae1a37b0e8207c51a71c89deb5bb59"
+      }
+    },
+    "benchmarks/regular_grid.py": {
+      "current_canonical_sha256": "9955f3eedf15ee621430db6a95ad7acfb54599b8ce7b02182d31106892a83b52",
+      "predecessor_canonical_sha256": "10b62d1d6cf9c7d709ce54b1dca1cf86d1cda21a34631448fb515c657e2d1889",
+      "inverse_fragments": [
+        {
+          "current": "\n\ndef main():\n    import sys\n    sys.path.insert(0,str(Path(__file__).resolve().parent))\n    from next_util_execution import execute\n    return execute('regular-grid',globals())\n\n\nif __name__=='__main__':main()\n",
+          "predecessor": "\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',action='store_true');args=parser.parse_args()\n    contract=json.loads(CONTRACT.read_bytes());bounds=[case_bounds(row) for row in contract['cases']]\n    if args.plan:\n        print(json.dumps(dict(state=contract['state'],cases=contract['cases'],bounds=bounds,method=contract['method']),indent=2));return\n    raise SystemExit('PROSPECTIVE_UNBOUND: genuine input and independent root benchmark GO required')\n\n\nif __name__=='__main__':main()\n"
+        }
+      ],
+      "frozen_functions": {
+        "case_specs": "0fd5bd195b0a8aeb51ec99265911ee5aee60fd70650e71c12e5be81cb559a903",
+        "case_bounds": "b52c574290f27bd30120973d1f3538c9579437ed9b52dede7f8a26a8a8a5612e",
+        "fixture": "90d3a179a27c5fc000eac38917f186cfea9dc0762e57013763b03c80e2d29925"
+      }
+    },
+    "benchmarks/slice_along_axes.py": {
+      "current_canonical_sha256": "44d06601a3f4455fec8e7bd13e04cdeada6ce6d9026404c0b328050a1d9ad396",
+      "predecessor_canonical_sha256": "672b64ba3ccb19018429b881820d5121ca16b9466cc6b03e80cfab3de6fbd66b",
+      "inverse_fragments": [
+        {
+          "current": "\"\"\"Prospective allocation-inclusive public slicing; no execution before GO.\"\"\"\nimport argparse\nimport json\nimport math\nfrom pathlib import Path\n\n\n",
+          "predecessor": "\"\"\"Prospective allocation-inclusive public slicing; no execution before GO.\"\"\"\nimport argparse\nimport json\nfrom pathlib import Path\n\n\n"
+        },
+        {
+          "current": "    return dict(input_elements=n,max_output_elements=n,source_slices=len(row['slices']),source_axes=len(row['shape']),threads=1)\n\n\ndef fixture(row,np):\n    case_bounds(row);n=math.prod(row['shape'])\n    if row['dtype']=='object':image=np.array(['view-payload-'+str(i)for i in range(n)],dtype=object)\n    else:image=np.arange(n,dtype=np.int64).astype(row['dtype'])\n    image=image.reshape(row['shape'])\n    if row['layout']=='F':image=np.asfortranarray(image)\n    elif row['layout']=='reverse':image=image[...,::-1]\n    if row['layout']=='readonly':image.flags.writeable=False\n    return (image,[tuple(pair)for pair in row['slices']]),dict(axes=row['axes'],copy=row['copy'])\n\n\ndef main():\n    import sys\n    sys.path.insert(0,str(Path(__file__).resolve().parent))\n    from next_util_execution import execute\n    return execute('slice',globals())\n\n\nif __name__=='__main__':main()\n",
+          "predecessor": "    return dict(input_elements=n,max_output_elements=n,source_slices=len(row['slices']),source_axes=len(row['shape']),threads=1)\n\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',action='store_true');args=parser.parse_args()\n    if args.plan:print(json.dumps(dict(status='PROSPECTIVE_UNBOUND_NO_MEASUREMENT',cases=case_specs(),bounds=[case_bounds(r)for r in case_specs()],sampler='tools/montage_sustained.py:measure',repeat=7,warmup_groups_each=1,threads=1),indent=2));return\n    raise SystemExit('PROSPECTIVE_UNBOUND: independent source safety, original admission, native/genuine product and root performance GO required')\n\n\nif __name__=='__main__':main()\n"
+        }
+      ],
+      "frozen_functions": {
+        "case_specs": "0589f1460510f56905117c7d5da8d4a8f4ecfe803a6778dc2135715bcca0e25a",
+        "case_bounds": "5bbe9dbbf72251cae56e916e9a05a0c17e5f1631b52ed4e63d0bfc269dceca56"
+      }
+    },
+    "benchmarks/array_views.py": {
+      "current_canonical_sha256": "78a5aaa7865ce0e5b6cfcbc23a194502035bf1905b8ffd18479e0e9e43954e83",
+      "predecessor_canonical_sha256": "a66040926b976f9ae51aac6492f909bbfa52c2b5a951c6f00a1ddcb46973814d",
+      "inverse_fragments": [
+        {
+          "current": "import argparse\nimport json\nimport math\nfrom pathlib import Path\n\n\ndef case_specs():\n",
+          "predecessor": "import argparse\nimport json\nimport math\n\n\ndef case_specs():\n"
+        },
+        {
+          "current": "    return dict(input_elements=n,logical_view_elements=out,payload_copies=0,threads=1)\n\n\ndef fixture(row,np):\n    case_bounds(row);n=math.prod(row['shape'])\n    if row['dtype']=='object':image=np.array(['view-payload-'+str(i)for i in range(n)],dtype=object)\n    else:image=np.arange(n,dtype=np.int64).astype(row['dtype'])\n    image=image.reshape(row['shape'])\n    if row['layout']=='F':image=np.asfortranarray(image)\n    elif row['layout']=='reverse':image=image[...,::-1]\n    if row['layout']=='readonly':image.flags.writeable=False\n    return (image,tuple(row['parameter'])),({}if row['api']=='util.view_as_blocks'else dict(step=row['step']))\n\n\ndef main():\n    import sys\n    sys.path.insert(0,str(Path(__file__).resolve().parent))\n    from next_util_execution import execute\n    return execute('views',globals())\n\n\nif __name__=='__main__':main()\n",
+          "predecessor": "    return dict(input_elements=n,logical_view_elements=out,payload_copies=0,threads=1)\n\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',action='store_true');args=parser.parse_args()\n    if args.plan:\n        print(json.dumps(dict(status='PROSPECTIVE_UNBOUND_NO_MEASUREMENT',cases=case_specs(),bounds=[case_bounds(r)for r in case_specs()],sampler='tools/montage_sustained.py:measure',repeat=7,target_ms=100,warmup_groups_each=1,threads=1,retain_all_losses=True),indent=2));return\n    raise SystemExit('UNBOUND: exact genuine product/root performance GO required before scientific import/call')\n\n\nif __name__=='__main__':main()\n"
+        }
+      ],
+      "frozen_functions": {
+        "case_specs": "13ec5b4d2b669699f2ab743008ea2a9f2bb00eadad3b5b4ed286de5e2ad2d05b",
+        "case_bounds": "47e40c4fd6752e215622dd3168a76dc1fdcf903d2ffb8ae89e5652c21f6c3c8c"
+      }
+    },
+    "benchmarks/next_util_execution.py": {
+      "current_canonical_sha256": "3d7bd816a60cf43593366f9ebd0a7fb38e8dca36c3a0ad79256e3b70c5fc87f2",
+      "predecessor_canonical_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inverse_fragments": [
+        {
+          "current": "\"\"\"Six family public-call adapters over the existing sustained Montage sampler.\n\nNo target import until authenticated external whole-product/root authority.\nThe unified controller may stop the real measure call at its Python entry.\n\"\"\"\nimport argparse\nfrom datetime import datetime,timezone\nimport hashlib\nimport importlib\nimport inspect\nimport json\nimport os\nfrom pathlib import Path\nimport subprocess\nimport sys\nimport warnings\n\nCONTEXT='coverage/contracts/next-util-benchmark-execution-v1.json'\nLIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')\n\n\ndef digest(raw):return hashlib.sha256(raw).hexdigest()\n\n\ndef source_bytes(path):return Path(path).read_bytes().replace(b'\\r\\n',b'\\n')\n\n\ndef historical_bytes(root,name):\n    context=json.loads((Path(root)/CONTEXT).read_bytes());row=context['sources'][name]\n    raw=source_bytes(Path(root)/name);assert digest(raw)==row['current_canonical_sha256'],name\n    for fragment in row['inverse_fragments']:\n        a,b=fragment['current'].encode(),fragment['predecessor'].encode()\n        assert a and raw.count(a)==1,name\n        raw=raw.replace(a,b,1)\n    assert digest(raw)==row['predecessor_canonical_sha256'],name\n    return raw\n\n\ndef load_binding(path,controller_root,route):\n    if path is None:\n        raise SystemExit('PROSPECTIVE_UNBOUND: PROSPECTIVE: genuine product/root measurement binding required; no target imports/calls')\n    raw=Path(path).read_bytes();binding=json.loads(raw)\n    allowed={'status','source_root','source_revision','git_argv','genuine_root_admission_path','genuine_root_admission_sha256','product_kind','interpreter','source_files_sha256','installed_site','numpy','core_path','core_sha256','output_root','routes','prepared_source','producer','runtime_path','runtime_sha256','shared_CMake_sha256','genuine_root_stager_path','genuine_root_stager_sha256','base_contract_sha256','root_go_path'}\n    assert not set(binding)-allowed\n    assert binding['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS'and binding['product_kind']=='GENUINE_INSTALLED_WHOLE_PRODUCT'\n    context_raw=(Path(controller_root)/CONTEXT).read_bytes();assert binding['base_contract_sha256']==digest(context_raw)\n    context=json.loads(context_raw);root=Path(binding['source_root']).resolve()\n    assert (root/CONTEXT).read_bytes()==context_raw\n    source=binding['prepared_source'];producer=binding['producer']\n    assert set(source)=={'revision','files_sha256'}and source['files_sha256']\n    assert set(producer)=={'run','revision','artifact','sha256'}\n    revision=source['revision'];assert len(revision)==40 and set(revision)<=set('0123456789abcdef')\n    assert revision==binding['source_revision']==producer['revision']\n    git=binding['git_argv'];assert type(git)is list and len(git)==3 and git[1]=='-C'and all(type(x)is str for x in git)\n    assert git[2].replace('\\\\','/').casefold()==str(root).replace('\\\\','/').replace('/mnt/c/','C:/',1).casefold()\n    assert subprocess.check_output([*git,'rev-parse','HEAD'],text=True).strip()==revision\n    assert not subprocess.check_output([*git,'status','--porcelain'],text=True).strip()\n    def authenticated(field):\n        payload=Path(binding[field+'_path']).read_bytes();assert digest(payload)==binding[field+'_sha256'];return json.loads(payload)\n    runtime=authenticated('runtime');assert runtime['source']==source\n    assert runtime['runtime']['packages_sha256']['skimagexx'][Path(binding['core_path']).name]==binding['core_sha256']\n    admission=authenticated('genuine_root_admission')\n    assert admission['root_accepted']is True and admission['product_kind']=='GENUINE_INSTALLED_WHOLE_PRODUCT'\n    assert admission['source']==revision and str(admission['run'])==str(producer['run'])\n    stager=authenticated('genuine_root_stager')\n    assert str(stager['run'])==str(producer['run'])and str(stager['artifact'])==str(producer['artifact'])\n    assert stager['revision']==revision and stager['artifact_sha256']==producer['sha256']\n    assert len(producer['sha256'])==64 and set(producer['sha256'])<=set('0123456789abcdef')\n    go=json.loads(Path(binding['root_go_path']).read_bytes())\n    assert go['binding_sha256']==digest(raw)and route in go['routes']\n    assert go['timed_batches']==0 and datetime.now(timezone.utc)<datetime.fromisoformat(go['deadline_utc'])\n    assert source['files_sha256']['CMakeLists.txt']==binding['shared_CMake_sha256']==digest(source_bytes(root/'CMakeLists.txt'))\n    for name,row in context['sources'].items():\n        assert digest(source_bytes(Path(controller_root)/name))==row['current_canonical_sha256'],name\n        assert digest(source_bytes(root/name))==row['current_canonical_sha256'],name\n    for name,pin in context['production_source_canonical_sha256'].items():assert digest(source_bytes(root/name))==pin,name\n    assert Path(sys.executable).resolve()==Path(binding['interpreter']).resolve()\n    assert str(binding['numpy'])in context['supported_numpy']\n    return binding,context,go,digest(raw)\n\n\ndef load_measurement(path,binding,context,route,specs):\n    # Reuse the existing controller's root measurement manifest, distinct from\n    # its0timed first-cohort envelope. No local deadline or inferred authority.\n    assert path is not None,'Root measurement manifest required; first-cohort GO permits0timed batches'\n    raw=Path(path).read_bytes();authority=json.loads(raw)\n    assert authority['schema']=='next-metrics-measurement-v1'\n    assert authority['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON'\n    assert authority['prepared_source']==binding['prepared_source']\n    assert {k:str(v)for k,v in authority['producer'].items()}=={k:str(v)for k,v in binding['producer'].items()}\n    assert authority['core_sha256']==binding['core_sha256']and authority['runtime_sha256']==binding['runtime_sha256']\n    cohort=authority['first_cohort']\n    assert cohort['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS'and cohort['source_revision']==binding['source_revision']\n    assert cohort['root_admission_sha256']==binding['genuine_root_admission_sha256']\n    assert cohort['root_stager_sha256']==binding['genuine_root_stager_sha256']\n    assert cohort['source_files_raw_sha256'][CONTEXT]==binding['base_contract_sha256']\n    family=authority['families'][Path(context['routes'][route]['driver']).stem]\n    assert family['contract']==CONTEXT and family['cases']==len(specs)\n    if len(specs)!=len(context['routes'][route]['cases']):assert family['case_ids']==[s['id']for s in specs]\n    else:assert family.get('case_ids',[s['id']for s in specs])==[s['id']for s in specs]\n    scope=authority['execution_scope']\n    assert scope['workers']==1 and scope['repeat']==7 and scope['target_ms']==100 and scope['warmup_min_ms']==250\n    assert scope['single_host_same_installed_runtime']is scope['no_automatic_retry']is scope['retain_all_losses']is True\n    return digest(raw)\n\n\ndef make_case(route,module,spec,np):\n    if route=='crop':\n        image,options=module['fixture'](spec,np);return (image,spec['width']),options\n    return module['fixture'](spec,np)\n\n\ndef array_state(array,np,input_array=None):\n    # Inputs and ordinary POD outputs are bounded by frozen case_bounds. Object\n    # payloads are fixed strings; preserve identity separately, never raw pointers.\n    value=dict(type=[type(array).__module__,type(array).__name__],dtype=array.dtype.str,shape=list(array.shape),strides=list(array.strides),own=bool(array.flags.owndata),writeable=bool(array.flags.writeable),c=bool(array.flags.c_contiguous),f=bool(array.flags.f_contiguous),base_type=[type(array.base).__module__,type(array.base).__name__])\n    value['payload']=array.tolist()if array.dtype.hasobject else digest(array.tobytes())\n    if input_array is not None:\n        sharing=bool(np.shares_memory(array,input_array));value['shares_input']=sharing\n        value['pointer_delta']=int(array.ctypes.data-input_array.ctypes.data)if sharing else None\n    return value\n\n\ndef output_state(value,api,args,np):\n    if api=='util.regular_grid':\n        def field(v):\n            if v is None:return None\n            assert isinstance(v,np.integer)\n            return dict(type=[type(v).__module__,type(v).__name__],dtype=v.dtype.str,raw=v.tobytes().hex())\n        assert type(value)is tuple and all(type(s)is slice for s in value)\n        return [[field(v)for v in(s.start,s.stop,s.step)]for s in value]\n    if api=='segmentation.join_segmentations':\n        if type(value)is not tuple:return array_state(value,np)\n        labels,first,second=value\n        assert first.in_values is second.in_values\n        assert first._array is None and second._array is None\n        assert first._max_str_lines==second._max_str_lines==4\n        # Exact upstream ArrayMap class identity remains an explicitly open\n        # frontier; do not normalize it into a claimed equal class.\n        return dict(labels=array_state(labels,np),maps=[dict(keys=array_state(m.in_values,np),values=array_state(m.out_values,np))for m in(first,second)],shared_keys=True,cache=None,max_str_lines=4)\n    assert type(value)is np.ndarray\n    return array_state(value,np,args[0])\n\n\ndef fp_controller():\n    # Reuse the already admitted exact Linux x86_64 restore helper. Its delivery\n    # is an explicit future genuine/controller dependency, never built here.\n    import ctypes\n    path=Path(os.environ['UTIL_VIEWS_FENV_HELPER'])\n    assert digest(path.read_bytes())=='0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220'\n    libc=ctypes.CDLL(None);helper=ctypes.CDLL(str(path))\n    libc.fegetenv.argtypes=[ctypes.c_void_p];libc.fegetenv.restype=ctypes.c_int\n    libc.fetestexcept.argtypes=[ctypes.c_int];libc.fetestexcept.restype=ctypes.c_int\n    libc.fegetround.argtypes=[];libc.fegetround.restype=ctypes.c_int\n    helper.reference_fenv_restore.argtypes=[ctypes.c_void_p,ctypes.c_size_t];helper.reference_fenv_restore.restype=ctypes.c_int\n    def save():\n        state=(ctypes.c_uint32*8)();assert libc.fegetenv(ctypes.byref(state))==0;return state\n    def restore(state):\n        assert helper.reference_fenv_restore(ctypes.byref(state),32)==0\n        assert bytes(save())==bytes(state)\n    def flags():return dict(flags=libc.fetestexcept(0x3d),rounding=libc.fegetround())\n    return save,restore,flags\n\n\ndef expected_returns(api,spec):\n    if api=='segmentation.join_segmentations':return {'join_encode':1,'join_divmod':int(spec['mapping'])}\n    if api=='util.crop':return {'crop_view':1,'crop_copy_into':int(spec['copy']and not spec['payload_provider'])}\n    if api=='util.regular_grid':\n        import math\n        return {'regular_grid_prepare':1,'regular_grid_finish':int(math.prod(spec['shape'])>spec['points'])}\n    if api=='util.slice_along_axes':return {'util_slice_view':1,'util_slice_copy_into':int(spec['copy'])}\n    return {'util_'+api.split('.')[1]:1}\n\n\ndef execute(route,module):\n    parser=argparse.ArgumentParser(description=module.get('__doc__'))\n    parser.add_argument('--plan',action='store_true');parser.add_argument('--root-binding',type=Path)\n    parser.add_argument('--output',type=Path,default=Path('build/next-util-'+route+'.json'))\n    parser.add_argument('--first-cohort',action='store_true');parser.add_argument('--measurement-go',type=Path);parser.add_argument('--api');parser.add_argument('--case');parser.add_argument('--threads',type=int,choices=[1],default=1)\n    parser.add_argument('--repeat',type=int,choices=[7],default=7)\n    cli=parser.parse_args();controller_root=Path(module['__file__']).resolve().parents[1]\n    context=json.loads((controller_root/CONTEXT).read_bytes());description=context['routes'][route]\n    specs=module['case_specs']();assert specs==description['cases']\n    bounds=module.get('case_bounds',module.get('source_safe'))\n    assert all(bounds(s)for s in specs)\n    if cli.api is not None:assert cli.api in description['apis'];specs=[s for s in specs if s.get('api',description['apis'][0])==cli.api]\n    if cli.case is not None:specs=[s for s in specs if s['id']==cli.case]\n    assert specs,'Unknown or empty case selection'\n    if cli.plan:\n        print(json.dumps(dict(state='PROSPECTIVE_UNBOUND_NO_MEASUREMENT',cases=specs,bounds=[bounds(s)for s in specs],method=context['method'],unbound=context['unbound']),indent=2));return\n    binding,context,go,binding_sha256=load_binding(cli.root_binding,controller_root,route)\n    assert not(cli.first_cohort and cli.measurement_go),'Choose first-cohort or measurement authority'\n    measurement_sha256=None if cli.first_cohort else load_measurement(cli.measurement_go,binding,context,route,specs)\n    assert not cli.output.exists()and not cli.output.with_suffix('.batches.jsonl').exists()\n    sys.path[:0]=[str(controller_root/'tools'),str(controller_root/'benchmarks')]\n    from montage_sustained import measure\n    from provenance import source_fingerprint\n    assert digest(inspect.getsource(measure).encode())==context['method']['method_sha256']\n    # Import requests remain explicit so cached modules cannot bypass refusal.\n    import numpy as np\n    import skimage\n    import skimagexx as xx\n    assert skimage.__version__=='0.26.0'and np.__version__==binding['numpy']\n    assert all(os.environ[n]=='1'for n in LIMITS)and xx.get_num_threads()==1\n    core=Path(xx._core.__file__);assert core.resolve()==Path(binding['core_path']).resolve()\n    assert core.resolve().is_relative_to(Path(binding['installed_site']).resolve())\n    assert digest(core.read_bytes())==binding['core_sha256']and xx._core.__name__=='skimagexx._core'\n    xx.set_fallback_enabled(False)\n    source_before=source_fingerprint(Path(binding['source_root']));policy=np.geterr(),np.geterrcall(),np.getbufsize()\n    save,restore,flags=fp_controller();rows=[]\n    for index,spec in enumerate(specs):\n        api=spec.get('api',description['apis'][0]);family,name=api.split('.')\n        target=context['apis'][api];original_module=importlib.import_module(target['original_module'])\n        owned=importlib.import_module(target['owned_module']);reference=getattr(importlib.import_module('skimage.'+family),name);native=getattr(getattr(xx,family),name)\n        assert reference is getattr(original_module,name)and native is getattr(owned,name)\n        assert str(inspect.signature(reference))==str(inspect.signature(native))==target['signature']\n        assert digest(source_bytes(original_module.__file__))==target['original_source_canonical_sha256']\n        requirements=expected_returns(api,spec);entries={key:getattr(xx._core,key)for key in requirements}\n        assert all(inspect.isbuiltin(v)and v.__module__=='skimagexx._core'for v in entries.values())\n        args,options=make_case(route,module,spec,np)\n        inputs=[v for v in args if type(v)is np.ndarray];before=[array_state(v,np)for v in inputs]\n        caller=save();returns=[];accepted=[];prior=sys.getprofile();notices=[]\n        denied={reference.__code__}\n        for value in reference.__globals__.values():\n            if inspect.isfunction(value)and value.__module__.startswith('skimage.'):denied.add(value.__code__)\n        fallback=importlib.import_module('skimagexx._compat').fallback;denied.add(fallback.__code__)\n        def profile(frame,event,value):\n            if event=='call'and frame.f_code in denied:raise AssertionError('candidate entered whole original/helper/fallback')\n            if event=='c_return':\n                for key,entry in entries.items():\n                    if value is entry:returns.append(key)\n            if event=='return'and frame.f_code is native.__code__:accepted.append(True)\n        try:\n            restore(caller)\n            with warnings.catch_warnings(record=True)as expected_warnings:\n                warnings.simplefilter('always');expected=reference(*args,**options);reference_FP=flags()\n            restore(caller)\n            with warnings.catch_warnings(record=True)as actual_warnings:\n                warnings.simplefilter('always')\n                try:sys.setprofile(profile);actual=native(*args,**options);native_FP=flags()\n                finally:sys.setprofile(prior)\n            assert reference_FP==native_FP\n            notices=lambda ws:[(type(w.message).__module__,type(w.message).__name__,str(w.message))for w in ws]\n            assert notices(expected_warnings)==notices(actual_warnings)==[]\n            assert accepted==[True]and all(returns.count(k)==n for k,n in requirements.items())\n            expected_state=output_state(expected,api,args,np);actual_state=output_state(actual,api,args,np)\n            assert expected_state==actual_state\n            if api=='segmentation.join_segmentations':\n                expected_labels=expected[0]if type(expected)is tuple else expected\n                actual_labels=actual[0]if type(actual)is tuple else actual\n                assert not any(np.shares_memory(actual_labels,a)for a in args)and not np.shares_memory(actual_labels,expected_labels)\n            if api.startswith('util.view_as_'):assert np.shares_memory(actual,args[0])\n            if (api in ('util.crop','util.slice_along_axes')or api.startswith('util.view_as_'))and actual.dtype.hasobject:\n                assert all(a is b for a,b in zip(actual.flat,expected.flat))\n            assert [array_state(v,np)for v in inputs]==before\n            assert xx.get_num_threads()==1 and (np.geterr(),np.geterrcall(),np.getbufsize())==policy\n        finally:sys.setprofile(prior);restore(caller)\n        # Stable controller interface: caller locals at the real measure entry\n        # include spec/api/args/options/expected/actual/returns/accepted and FP.\n        # ROOT first-cohort GO permits0timed batches: the external observer must\n        # stop that entry. The driver refuses absent observer in that mode.\n        if cli.first_cohort:assert sys.getprofile()is not None,'Root first-cohort sampler-entry observer required; no timing authorized'\n        timing=measure(lambda:reference(*args,**options),lambda:native(*args,**options),7,100,journal=cli.output.with_suffix('.batches.jsonl'),case_index=index,case_id=spec['id'],pass_index=0,deadline=go['deadline_utc'])\n        rows.append(dict(case_id=spec['id'],api=api,actual_C_returns=returns,native_accepted=True,FP=native_FP,providers=target['providers'],return_class_frontier=([type(expected[1]).__module__,type(actual[1]).__module__]if api=='segmentation.join_segmentations'and spec['mapping']else None),**timing))\n        assert [array_state(v,np)for v in inputs]==before and xx.get_num_threads()==1\n        assert (np.geterr(),np.geterrcall(),np.getbufsize())==policy\n    assert source_fingerprint(Path(binding['source_root']))==source_before\n    assert digest(core.read_bytes())==binding['core_sha256']and digest(Path(cli.root_binding).read_bytes())==binding_sha256\n    assert digest((controller_root/CONTEXT).read_bytes())==binding['base_contract_sha256']\n    if cli.measurement_go:assert digest(cli.measurement_go.read_bytes())==measurement_sha256\n    cli.output.parent.mkdir(parents=True,exist_ok=True)\n    cli.output.write_text(json.dumps(dict(metadata=dict(**source_before,source_before=source_before,source_revision=binding['source_revision'],root_binding_sha256=binding_sha256,measurement_sha256=measurement_sha256,contract_sha256=binding['base_contract_sha256'],numpy=np.__version__,reference=skimage.__version__,python=sys.version,core_path=str(core),prepared_run=binding['producer']['run'],prepared_artifact=binding['producer']['artifact'],producer=binding['producer'],runtime_sha256=binding['runtime_sha256'],core_sha256=binding['core_sha256'],threads=1,repeat=7,target_ms=100,method_sha256=context['method']['method_sha256'],retain_all_losses=True),results=rows),indent=2)+'\\n')\n",
+          "predecessor": ""
+        }
+      ],
+      "frozen_functions": {}
+    },
+    "tests/test_crop_benchmark.py": {
+      "current_canonical_sha256": "a75acadca9c76ff6b3eb032b983934f0a9129a73ee1df6ae479d4acc875bbc91",
+      "predecessor_canonical_sha256": "2aa5e1c0ae391d984312f8c459fac0659303b5ea39989873557f50225c66cc59",
+      "inverse_fragments": [
+        {
+          "current": "    assert contract['state']=='PROSPECTIVE_GENUINE_PRODUCT_AND_ROOT_BINDING_REQUIRED'\n    assert contract['retain_all_losses']is True\n    assert contract['sampler']==dict(module='tools/montage_sustained.py',function='measure',threads=1,repeat=7,target_ms=100,warmup_min_ms=250,raw_samples=112,warmup_groups=16)\n    projection=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['historical_bytes']\n    for name,pin in contract['source_pins'].items():\n        raw=projection(ROOT,name)if name=='benchmarks/crop.py'else(ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')\n        assert hashlib.sha256(raw).hexdigest()==pin,name\n    text=(ROOT/'tools/montage_sustained.py').read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='measure')\n    assert hashlib.sha256(''.join(text.splitlines(True)[node.lineno-1:node.end_lineno]).encode()).hexdigest()==contract['method_sha256']\n\n",
+          "predecessor": "    assert contract['state']=='PROSPECTIVE_GENUINE_PRODUCT_AND_ROOT_BINDING_REQUIRED'\n    assert contract['retain_all_losses']is True\n    assert contract['sampler']==dict(module='tools/montage_sustained.py',function='measure',threads=1,repeat=7,target_ms=100,warmup_min_ms=250,raw_samples=112,warmup_groups=16)\n    for name,pin in contract['source_pins'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()==pin,name\n    text=(ROOT/'tools/montage_sustained.py').read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='measure')\n    assert hashlib.sha256(''.join(text.splitlines(True)[node.lineno-1:node.end_lineno]).encode()).hexdigest()==contract['method_sha256']\n\n"
+        },
+        {
+          "current": "\n@pytest.mark.parametrize('fault',('none','none-cached','cases'))\ndef test_crop_bound_cli_metadata_stops_before_science(tmp_path,monkeypatch,fault):\n    from next_util_benchmark_support import bound_request_refusal\n    bound_request_refusal(tmp_path,monkeypatch,'crop',fault)\n",
+          "predecessor": "\n@pytest.mark.parametrize('fault',('none','none-cached','cases'))\ndef test_crop_bound_cli_metadata_stops_before_science(tmp_path,monkeypatch,fault):\n    import importlib.util\n    import builtins,types\n    from datetime import datetime,timedelta,timezone\n    spec=importlib.util.spec_from_file_location('crop_cli_metadata',ROOT/'benchmarks/crop.py')\n    driver=importlib.util.module_from_spec(spec);spec.loader.exec_module(driver)\n    raw=driver.CONTRACT.read_bytes();contract=json.loads(raw)\n    for name in contract['source_pins']:\n        p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((ROOT/name).read_bytes())\n    path=tmp_path/'coverage/contracts/crop-benchmark-v1.json';path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)\n    revision='a'*40;admission=tmp_path/'root.json';admission.write_text(json.dumps(dict(source=revision,product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT')))\n    binding=dict(status='ROOT_AUTHORIZED_CROP_PUBLIC_MEASUREMENT',source_revision=revision,core_sha256='b'*64,prepared_run=1,prepared_artifact=2,contract_sha256=hashlib.sha256(raw).hexdigest(),root_admission_path=str(admission),root_admission_sha256=hashlib.sha256(admission.read_bytes()).hexdigest(),deadline_utc=(datetime.now(timezone.utc)+timedelta(hours=1)).isoformat())\n    if fault=='cases':binding['cases']=[]\n    bound=tmp_path/'binding.json';bound.write_text(json.dumps(binding));output=tmp_path/'never.json'\n    monkeypatch.setattr(driver,'ROOT',tmp_path);monkeypatch.setattr(driver,'CONTRACT',path)\n    monkeypatch.setattr(driver.subprocess,'check_output',lambda argv,**kw:revision+'\\n'if argv[-1]=='HEAD'else'')\n    attempts=[];original_import=builtins.__import__\n    def refuse_science(name,*args,**kwargs):\n        if name.split('.')[0]in('numpy','scipy','skimage','skimagexx'):\n            attempts.append(name);raise RuntimeError('CROP_BOUND_SCIENCE_REFUSED')\n        return original_import(name,*args,**kwargs)\n    monkeypatch.setattr(sys,'path',list(sys.path))\n    monkeypatch.setattr(sys,'argv',[str(ROOT/'benchmarks/crop.py'),'--root-binding',str(bound),'--output',str(output)])\n    if fault in ('none','none-cached'):\n        missing=object();cached_before=sys.modules.get('numpy',missing)\n        # Refuse the import request even when a live NumPy module is cached.\n        # Only actual bound main runs inside this hook; restore exact objects.\n        with monkeypatch.context() as import_boundary:\n            if fault=='none-cached':import_boundary.setitem(sys.modules,'numpy',types.ModuleType('numpy'))\n            import_boundary.setattr(builtins,'__import__',refuse_science)\n            with pytest.raises(RuntimeError,match='CROP_BOUND_SCIENCE_REFUSED'):driver.main()\n        assert builtins.__import__ is original_import\n        if cached_before is missing:assert 'numpy'not in sys.modules\n        else:assert sys.modules['numpy'] is cached_before\n        assert attempts==['numpy']\n    else:\n        with pytest.raises(AssertionError):driver.main()\n        assert not attempts\n    assert not output.exists()and not output.with_suffix('.batches.jsonl').exists()\n"
+        }
+      ],
+      "frozen_functions": {}
+    },
+    "tests/test_util_views_source.py": {
+      "current_canonical_sha256": "ec62a6dbb57a87c336f2a5d4749d1c19ad3f6ea6bf37c2bd678d94b333043960",
+      "predecessor_canonical_sha256": "83c7bbd7f8c747826bbd252ffdd49d4c128d316434c48a3c484ff0de9ab55dbc",
+      "inverse_fragments": [
+        {
+          "current": "    data=json.loads(CONTRACT.read_bytes())\n    assert data['original_budget']==data['timed_batches']==0\n    assert data['raw_admission_sha256']=='63bb915f2a1e5b395594347560a2e2177470a6d5ce783b3e7e3d2e140d590678'\n    context=json.loads((ROOT/'coverage/contracts/next-util-benchmark-execution-v1.json').read_bytes())\n    projection=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['historical_bytes']\n    for name,pin in data['source_pins_raw_sha256'].items():\n        raw=projection(ROOT,name)if name in context['sources']else(ROOT/name).read_bytes()\n        assert hashlib.sha256(raw).hexdigest()==pin,name\n    for name,pin in data['historical_contracts'].items():assert sha(ROOT/name)==pin,name\n    assert data['SDK']['complete_operations']==['view_as_blocks','view_as_windows','slice_along_axes']\n    assert data['worker_disposition']=='serial metadata and existing serial POD transport; no new globals; preserve process-global default1 budget'\n",
+          "predecessor": "    data=json.loads(CONTRACT.read_bytes())\n    assert data['original_budget']==data['timed_batches']==0\n    assert data['raw_admission_sha256']=='63bb915f2a1e5b395594347560a2e2177470a6d5ce783b3e7e3d2e140d590678'\n    for name,pin in data['source_pins_raw_sha256'].items():assert sha(ROOT/name)==pin,name\n    for name,pin in data['historical_contracts'].items():assert sha(ROOT/name)==pin,name\n    assert data['SDK']['complete_operations']==['view_as_blocks','view_as_windows','slice_along_axes']\n    assert data['worker_disposition']=='serial metadata and existing serial POD transport; no new globals; preserve process-global default1 budget'\n"
+        }
+      ],
+      "frozen_functions": {}
+    }
+  },
+  "production_source_canonical_sha256": {
+    "src/join_segmentations.cpp": "b201d5a3bd36cbe64c8c0d658f6ce5b3ba0b7ad6f1e320c2c97d8aaba8646c54",
+    "src/bind_join_segmentations.cpp": "3fda515922b53ddb1e35aa629f9ef49fd6ce988cf557a8fcdc0e15e376e93317",
+    "src/component_consumers.cpp": "faf804a7f3db07a960c90466a27833ef9d36ab72bcf7859cc67f0dea3bd0ef20",
+    "src/bind_component_consumers.cpp": "5c3569804ca11f12fcc0ba077922d2e9e047a0e30fb04fdf790f839efac25ec4",
+    "src/simd_component_consumers_avx2.cpp": "4607b7de4ee46ae190687a508345c0495e255b292f25c217507b4c651e6b64cf",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+    "src/regular_grid.cpp": "1089c8c39ff4c50a3418878e3d2e23771642dc364a491b9dd87b30eb4f801c5a",
+    "src/bind_regular_grid.cpp": "fc77fc135c46227d91390a7e75cc8f8bfdce7e3ae832ece49c84b61c5eaacb74",
+    "src/util_views.cpp": "92505cc402be2a89f05f778b732a4c9cb47433fd392ddcfdab883ea31c603868",
+    "src/bind_util_views.cpp": "85f6d992d7e0cabdb80ecfadafa3d8161ad56c31a39c4ffdacd9d4a70c91d2bd",
+    "python/skimagexx/_join_segmentations.py": "77f82546eb9669b68a2f70a3caa601ce6f5e247a4b1c1547574d9c75a5a7eef3",
+    "python/skimagexx/_component_consumers.py": "f2643c25de70277fcbd30ba1a2e9774b20ae637137e1e8610eb3cd500f90fadd",
+    "python/skimagexx/_crop.py": "18f64b57c8a1c6f7a6ef5bb400802fba519e0cb89dc6e66ef147253360d6185f",
+    "python/skimagexx/_regular_grid.py": "23a7130119cafd2c65140e3a32f4d01a5c57fb10b50f6c5500f036d05ac721de",
+    "python/skimagexx/_slice_along_axes.py": "f2669e86976ccad307f98e19e1b24f70f5d5b2076ca01700c58c7f5bc718e29f",
+    "python/skimagexx/_array_views.py": "c05a736ca423e2f9f7a26c78d2a0009d7d4d288bf4fb3a87c40eb72a9d8428c8",
+    "include/skimagexx/join_segmentations.hpp": "564513250464f0c2ea1b02d7a07f44c4fc44568c6fbef56927633fbbb1717b6b",
+    "include/skimagexx/component_consumers.hpp": "1b696a8473a05d976339f557967f0a1fecd88f79216bbc99d8ba50a28a21a2a3",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "include/skimagexx/regular_grid.hpp": "25f4ca4351cdfe585850fa9efe9a31fb74ca9f09473d9383606f79eca3404489",
+    "include/skimagexx/array_views.hpp": "40e306307f6f390b9431cbcccab39fa7f0522b329c62b862e796dd47873a1bb5",
+    "include/skimagexx/slice_along_axes.hpp": "ee700666e63a0ad2bdc088e9a1b5030865d77f70848c9e5ca20ad7d0803c6a5f",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "historical_contracts_raw_sha256": {
+    "coverage/contracts/join-segmentations-benchmark-v1.json": "aa69bfc3730fa0867277991e29e1a2d5556483ec627391c817f0e9e2a2d4b4c1",
+    "coverage/contracts/crop-benchmark-v1.json": "d3e17f54dd8b59427c4f51d9d65f4d50d0d990354bbd005d637138ec9f4e63bf",
+    "coverage/contracts/regular-grid-benchmark-v1.json": "ec3c65be90c1d33f78b0d2b7dcb4e6d7802c124b1f967f77208c9c4556173e41"
+  },
+  "routes": {
+    "join": {
+      "driver": "benchmarks/join_segmentations.py",
+      "cases": [
+        {
+          "id": "u8-labels-C",
+          "dtype": "uint8",
+          "shape": [
+            129,
+            131
+          ],
+          "layout": "C",
+          "mapping": false,
+          "left_count": 8,
+          "right_count": 8,
+          "left_scale": 1,
+          "right_scale": 1
+        },
+        {
+          "id": "u8-maps-reverse",
+          "dtype": "uint8",
+          "shape": [
+            129,
+            131
+          ],
+          "layout": "reverse",
+          "mapping": true,
+          "left_count": 8,
+          "right_count": 8,
+          "left_scale": 1,
+          "right_scale": 1
+        },
+        {
+          "id": "i16-labels-F",
+          "dtype": "int16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "F",
+          "mapping": false,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "i16-maps-C",
+          "dtype": "int16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "C",
+          "mapping": true,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "u16-labels-C",
+          "dtype": "uint16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "C",
+          "mapping": false,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "u16-maps-F",
+          "dtype": "uint16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "F",
+          "mapping": true,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "i32-labels-reverse",
+          "dtype": "int32",
+          "shape": [
+            511,
+            513
+          ],
+          "layout": "reverse",
+          "mapping": false,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "i32-maps-C",
+          "dtype": "int32",
+          "shape": [
+            511,
+            513
+          ],
+          "layout": "C",
+          "mapping": true,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        }
+      ],
+      "apis": [
+        "segmentation.join_segmentations"
+      ]
+    },
+    "crop": {
+      "driver": "benchmarks/crop.py",
+      "cases": [
+        {
+          "id": "view-C",
+          "shape": [
+            512,
+            513
+          ],
+          "dtype": "uint8",
+          "layout": "C",
+          "width": 1,
+          "copy": false,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "view-F",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "width": 2,
+          "copy": false,
+          "order": "ignored",
+          "payload_provider": false
+        },
+        {
+          "id": "view-reverse",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "float64",
+          "layout": "reverse",
+          "width": 1,
+          "copy": false,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "view-3D",
+          "shape": [
+            31,
+            37,
+            41
+          ],
+          "dtype": "float32",
+          "layout": "C",
+          "width": 1,
+          "copy": false,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-C",
+          "shape": [
+            512,
+            513
+          ],
+          "dtype": "float32",
+          "layout": "C",
+          "width": 1,
+          "copy": true,
+          "order": "C",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-F",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "float64",
+          "layout": "F",
+          "width": 2,
+          "copy": true,
+          "order": "F",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-reverse-K",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "int16",
+          "layout": "reverse",
+          "width": 1,
+          "copy": true,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-object-provider",
+          "shape": [
+            16,
+            17
+          ],
+          "dtype": "object",
+          "layout": "C",
+          "width": 1,
+          "copy": true,
+          "order": "K",
+          "payload_provider": true
+        }
+      ],
+      "apis": [
+        "util.crop"
+      ]
+    },
+    "regular-grid": {
+      "driver": "benchmarks/regular_grid.py",
+      "cases": [
+        {
+          "id": "doc2d",
+          "shape": [
+            20,
+            40
+          ],
+          "points": 8,
+          "carrier": "tuple"
+        },
+        {
+          "id": "dense2d",
+          "shape": [
+            20,
+            40
+          ],
+          "points": 32,
+          "carrier": "tuple"
+        },
+        {
+          "id": "thin3d",
+          "shape": [
+            3,
+            20,
+            40
+          ],
+          "points": 8,
+          "carrier": "tuple"
+        },
+        {
+          "id": "permuted-readonly",
+          "shape": [
+            40,
+            3,
+            20
+          ],
+          "points": 8,
+          "carrier": "readonly-reverse"
+        },
+        {
+          "id": "rank8",
+          "shape": [
+            1,
+            2,
+            1,
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "points": 12,
+          "carrier": "tuple"
+        },
+        {
+          "id": "half-even-down",
+          "shape": [
+            25
+          ],
+          "points": 10,
+          "carrier": "tuple"
+        },
+        {
+          "id": "half-even-up",
+          "shape": [
+            35
+          ],
+          "points": 10,
+          "carrier": "tuple"
+        },
+        {
+          "id": "large-shape-metadata",
+          "shape": [
+            4093,
+            13,
+            997
+          ],
+          "points": 6000,
+          "carrier": "tuple"
+        }
+      ],
+      "apis": [
+        "util.regular_grid"
+      ]
+    },
+    "slice": {
+      "driver": "benchmarks/slice_along_axes.py",
+      "cases": [
+        {
+          "id": "view-C",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "C",
+          "copy": false,
+          "dtype": "int16",
+          "slices": [
+            [
+              32,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "copy-C",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "C",
+          "copy": true,
+          "dtype": "int16",
+          "slices": [
+            [
+              32,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "view-F",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "F",
+          "copy": false,
+          "dtype": "float64",
+          "slices": [
+            [
+              32,
+              480
+            ],
+            [
+              16,
+              496
+            ]
+          ],
+          "axes": [
+            0,
+            1
+          ]
+        },
+        {
+          "id": "copy-F-C-order",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "F",
+          "copy": true,
+          "dtype": "float64",
+          "slices": [
+            [
+              32,
+              480
+            ],
+            [
+              16,
+              496
+            ]
+          ],
+          "axes": [
+            0,
+            1
+          ]
+        },
+        {
+          "id": "reverse-view",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "reverse",
+          "copy": false,
+          "dtype": "uint8",
+          "slices": [
+            [
+              0,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "reverse-copy",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "reverse",
+          "copy": true,
+          "dtype": "uint8",
+          "slices": [
+            [
+              0,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "permuted-axes",
+          "shape": [
+            64,
+            65,
+            66
+          ],
+          "layout": "C",
+          "copy": false,
+          "dtype": "int32",
+          "slices": [
+            [
+              1,
+              60
+            ],
+            [
+              2,
+              62
+            ]
+          ],
+          "axes": [
+            2,
+            0
+          ]
+        },
+        {
+          "id": "negative-bound-copy",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "C",
+          "copy": true,
+          "dtype": "int16",
+          "slices": [
+            [
+              -480,
+              -16
+            ]
+          ],
+          "axes": [
+            1
+          ]
+        }
+      ],
+      "apis": [
+        "util.slice_along_axes"
+      ]
+    },
+    "views": {
+      "driver": "benchmarks/array_views.py",
+      "cases": [
+        {
+          "id": "view_as_blocks/C",
+          "api": "util.view_as_blocks",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "C",
+          "dtype": "int16",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_blocks/F",
+          "api": "util.view_as_blocks",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "F",
+          "dtype": "float64",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_blocks/reverse",
+          "api": "util.view_as_blocks",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "reverse",
+          "dtype": "uint8",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_blocks/readonly",
+          "api": "util.view_as_blocks",
+          "shape": [
+            16,
+            18
+          ],
+          "layout": "readonly",
+          "dtype": "object",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_windows/C",
+          "api": "util.view_as_windows",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "C",
+          "dtype": "int16",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_windows/F",
+          "api": "util.view_as_windows",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "F",
+          "dtype": "float64",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_windows/reverse",
+          "api": "util.view_as_windows",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "reverse",
+          "dtype": "uint8",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_windows/readonly",
+          "api": "util.view_as_windows",
+          "shape": [
+            16,
+            18
+          ],
+          "layout": "readonly",
+          "dtype": "object",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        }
+      ],
+      "apis": [
+        "util.view_as_blocks",
+        "util.view_as_windows"
+      ]
+    }
+  },
+  "apis": {
+    "segmentation.join_segmentations": {
+      "original_module": "skimage.segmentation._join",
+      "owned_module": "skimagexx._join_segmentations",
+      "signature": "(s1, s2, return_mapping: bool = False)",
+      "original_source_canonical_sha256": "8d1da1717bf35818f57156f88a94cd84a9527f48aff16d60e250b7d8045cd8be",
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open"
+    },
+    "util.crop": {
+      "original_module": "skimage.util.arraycrop",
+      "owned_module": "skimagexx._crop",
+      "signature": "(ar, crop_width, copy=False, order='K')",
+      "original_source_canonical_sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+      "providers": "NumPy conversion/allocation/object payload copy"
+    },
+    "util.regular_grid": {
+      "original_module": "skimage.util._regular_grid",
+      "owned_module": "skimagexx._regular_grid",
+      "signature": "(ar_shape, n_points)",
+      "original_source_canonical_sha256": "64fcce3556f0cbf8cafd05a54ea3545b65b18bdcabbee25b953a21ba06875581",
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified"
+    },
+    "util.slice_along_axes": {
+      "original_module": "skimage.util._slice_along_axes",
+      "owned_module": "skimagexx._slice_along_axes",
+      "signature": "(image, slices, axes=None, copy=False)",
+      "original_source_canonical_sha256": "1a75717aa0236c350b51cdbb79d8787411d7151bec2dcd335a474823b2be1bac",
+      "providers": "NumPy allocation; crop POD transport"
+    },
+    "util.view_as_blocks": {
+      "original_module": "skimage.util.shape",
+      "owned_module": "skimagexx._array_views",
+      "signature": "(arr_in, block_shape)",
+      "original_source_canonical_sha256": "fc9ab1bdc09fa464828b6ee3ce96e610d04606b90c13a3ed58f80138e65c876b",
+      "providers": "NumPy as_strided metadata representation, no payload computation"
+    },
+    "util.view_as_windows": {
+      "original_module": "skimage.util.shape",
+      "owned_module": "skimagexx._array_views",
+      "signature": "(arr_in, window_shape, step=1)",
+      "original_source_canonical_sha256": "fc9ab1bdc09fa464828b6ee3ce96e610d04606b90c13a3ed58f80138e65c876b",
+      "providers": "NumPy as_strided metadata representation, no payload computation"
+    }
+  },
+  "supported_numpy": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "retain_all_losses": true,
+    "allocation_inclusive": true
+  },
+  "counts": {
+    "new_APIs": 6,
+    "CLI_drivers": 5,
+    "cases": 40,
+    "raw_samples": 560,
+    "warmup_groups": 80
+  },
+  "first_cohort_interface": "Real montage_sustained.measure entry; external observer reads execute caller.f_locals spec/api/args/options/expected/actual/returns/accepted/native_FP; stop before body. --api selects blocks/windows separately; --case exact frozen ID. Default order unchanged.",
+  "root_authority": "Existing boundary/offline first-cohort binding envelope; final campaign selection and measurement authorization remain root-owned. No campaign authorized by counts.",
+  "FENV_dependency": {
+    "environment": "UTIL_VIEWS_FENV_HELPER",
+    "sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+    "scope": "Previously admitted Linux x86_64 exact32byte restore helper; root must deliver/authenticate for genuine prechecks. No helper/native body executed here."
+  },
+  "measurement_interface": "--measurement-go existing next-metrics-measurement-v1 root manifest required before science, separate from --first-cohort0timed GO. Source/producer/runtime/core/root/context/family/selection/method fields must match. Actual final authority staysUNBOUND."
+}

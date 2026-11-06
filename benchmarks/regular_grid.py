@@ -28,11 +28,10 @@ def fixture(row,np):
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',action='store_true');args=parser.parse_args()
-    contract=json.loads(CONTRACT.read_bytes());bounds=[case_bounds(row) for row in contract['cases']]
-    if args.plan:
-        print(json.dumps(dict(state=contract['state'],cases=contract['cases'],bounds=bounds,method=contract['method']),indent=2));return
-    raise SystemExit('PROSPECTIVE_UNBOUND: genuine input and independent root benchmark GO required')
+    import sys
+    sys.path.insert(0,str(Path(__file__).resolve().parent))
+    from next_util_execution import execute
+    return execute('regular-grid',globals())
 
 
 if __name__=='__main__':main()

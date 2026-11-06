@@ -31,6 +31,7 @@ int main(int argc,char** argv) {
     const bool rand_only=argc==2&&std::string(argv[1])=="--rand-only";
     const bool preweighted_only=argc==2&&std::string(argv[1])=="--preweighted-only";
     if(argc!=1&&!rand_only&&!preweighted_only)return 2;
+    if(argc==1)std::cout<<"installed density controls="<<label_pair_controls::density()<<'\n';
     if(!rand_only&&!preweighted_only)std::cout << "installed label-pair controls=" << label_pair_controls::run()
               << "; originals=5; workers=1,4; restored=1; available="
               << skimagexx::has_avx2() << '\n';

@@ -1,0 +1,99 @@
+"""Exact bounded observer/setup CLI; target calls require a separate root GO."""
+import argparse
+import ctypes
+import hashlib
+import importlib
+import inspect
+import json
+from pathlib import Path
+import sys
+import warnings
+from slice_along_axes_contract import API,SIGNATURE,SOURCE_SHA256,SequenceProbe,BoundProbe,AxisProbe,CopyProbe,ImageProbe,fixture
+from crop_observer import encode as crop_encode,retain_object_payloads,object_payload_relations
+ROOT=Path(__file__).resolve().parents[1]
+CONTRACT=ROOT/'coverage/contracts/slice-along-axes-v1.json'
+
+
+def reference_runtime(root_go):
+    """Future source-pinned import only; this function never calls the target."""
+    assert root_go and root_go.get('status')=='ROOT_AUTHORIZED_SLICE_ALONG_AXES_REFERENCE_ONCE','NO_ROOT_GO: no scientific/target imports or calls'
+    raw=CONTRACT.read_bytes();contract=json.loads(raw)
+    assert root_go['api']==API and root_go['contract_sha256']==hashlib.sha256(raw).hexdigest()
+    assert root_go['upstream_canonical_lf_sha256']==SOURCE_SHA256
+    assert root_go['maximum_public_topcalls_per_profile']==len(contract['cases'])
+    assert root_go['native_calls']==root_go['timed_batches']==0
+    for name,pin in contract['source_dependencies_raw_sha256'].items():
+        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
+    from draw_coordinates_observer import scientific_profile
+    np=scientific_profile();module=importlib.import_module('skimage.util._slice_along_axes')
+    assert hashlib.sha256(Path(module.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==SOURCE_SHA256
+    assert str(inspect.signature(module.slice_along_axes))==SIGNATURE
+    public=importlib.import_module('skimage.util');assert public.slice_along_axes is module.slice_along_axes and 'slice_along_axes' in public.__all__
+    return np,module.slice_along_axes,dict(api=API,signature=SIGNATURE,numpy=np.__version__,source=str(module.__file__),upstream_canonical_lf_sha256=SOURCE_SHA256,original_calls=0,native_calls=0,timed_batches=0)
+
+
+def encode(value,np):
+    if isinstance(value,SequenceProbe):return dict(protocol='SequenceProbe',label=value.label,items=encode(value.items,np))
+    if isinstance(value,(BoundProbe,AxisProbe)):return dict(protocol=type(value).__name__,value=value.value,failure=value.failure)
+    if isinstance(value,CopyProbe):return dict(protocol='CopyProbe',value=value.value)
+    if isinstance(value,ImageProbe):return dict(protocol='ImageProbe',result=value.result,array=encode(value.array,np))
+    if type(value)is range:return dict(protocol='range',start=value.start,stop=value.stop,step=value.step)
+    if type(value)is slice:return dict(protocol='slice',start=encode(value.start,np),stop=encode(value.stop,np),step=encode(value.step,np))
+    if isinstance(value,(tuple,list)):return dict(container=type(value).__name__,items=[encode(v,np)for v in value])
+    if type(value)is dict:return {key:encode(v,np)for key,v in value.items()}
+    return crop_encode(value,np)
+
+
+def observe(call,spec,np):
+    """Exactly one supplied call. Setup uses only refused/success stand-ins."""
+    args,options,events,buffers=fixture(spec,np);before=encode((args,options,buffers),np);assert events==[]
+    retained=retain_object_payloads(buffers,np);pointers={name:a.ctypes.data for name,a in buffers.items()}
+    old=np.geterr(),np.geterrcall(),np.getbufsize();FP=[]
+    def handler(message,flags):FP.append(dict(message=message,flags=flags))
+    libc=ctypes.CDLL(None)if sys.platform=='linux'else None
+    def fenv():return None if libc is None else dict(flags=libc.fetestexcept(0x3d),rounding=libc.fegetround())
+    result=None;error=None
+    with warnings.catch_warnings(record=True)as notices:
+        warnings.simplefilter('always')
+        with np.errstate(**{'all':'warn',**spec['policy']},call=handler):
+            policy=np.geterr();FP_before=fenv()
+            try:result=call(*args,**options)
+            except Exception as exc:error=dict(module=type(exc).__module__,type=type(exc).__name__,message=str(exc))
+            FP_after=fenv();stable=np.geterr()==policy and np.geterrcall()is handler and np.getbufsize()==old[2]
+    # Freeze call outcomes and protocol events BEFORE any declared mutation.
+    after=encode((args,options,buffers),np);out=encode(result,np);source_events=list(events)
+    aliases={}
+    if isinstance(result,(np.ndarray,np.generic)):
+        for name,a in buffers.items():
+            sharing=bool(np.shares_memory(result,a))
+            aliases[name]=dict(identity=result is a,base_is_input=getattr(result,'base',None)is a,shares_memory=sharing,
+                pointer_delta=int(result.ctypes.data-a.ctypes.data)if isinstance(result,np.ndarray)else None,
+                pointer_delta_role='same-storage-relative-offset'if sharing else'nonsharing-diagnostic-only')
+    payload=None if not retained else object_payload_relations(result,retained,np)if error is None else dict(slots=[[name,index]for name,index,_ in retained],kind='error')
+    mutation=None
+    if error is None and spec['mutation']:
+        assert type(result)is np.ndarray and result.size>0 and result.dtype==np.dtype('int16')
+        index=(0,)*result.ndim;previous=result[index].copy();mutation_error=None
+        try:
+            try:result[index]=0
+            except Exception as exc:mutation_error=dict(type=type(exc).__name__,message=str(exc))
+            mutation=dict(action='set-first-to-zero',error=mutation_error,result=encode(result,np),buffers=encode(buffers,np))
+        finally:
+            if mutation_error is None:result[index]=previous
+        mutation['restored']=encode((args,options,buffers),np)==after
+        assert mutation['restored']
+    checks=dict(policy_unchanged=stable,state_restored=np.geterr()==old[0]and np.geterrcall()is old[1]and np.getbufsize()==old[2],buffer_pointers_stable=all(a.ctypes.data==pointers[name]for name,a in buffers.items()))
+    assert all(checks.values())
+    row=dict(id=spec['id'],api=API,before=before,after=after,result=out,result_type=dict(module=type(result).__module__,name=type(result).__name__),result_is_argument=result is args[0],aliases=aliases,object_payload_identity=payload,events=source_events,warnings=[dict(module=type(w.message).__module__,type=type(w.message).__name__,message=str(w.message))for w in notices],error=error,FP_events=FP,fenv_before=FP_before,fenv_after=FP_after,mutation=mutation,checks=checks,supplied_call_attempts=1)
+    json.dumps(row,allow_nan=False);return row
+
+
+def main():
+    parser=argparse.ArgumentParser(description='Reference-runtime setup only; never calls slice_along_axes')
+    parser.add_argument('--root-go',type=Path);args=parser.parse_args()
+    go=None if args.root_go is None else json.loads(args.root_go.read_bytes())
+    _,_,metadata=reference_runtime(go)
+    print(json.dumps(metadata,indent=2))
+
+
+if __name__=='__main__':main()

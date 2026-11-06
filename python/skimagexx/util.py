@@ -9,13 +9,15 @@ from ._unique_rows import unique_rows
 from ._regular_seeds import regular_seeds
 from ._crop import crop
 from ._regular_grid import regular_grid
+from ._array_views import view_as_blocks, view_as_windows
+from ._slice_along_axes import slice_along_axes
 from ._montage import montage
 from ._compat import fallback, module_attribute, native_image
 
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []
 
-__all__ = ['crop', 'regular_grid', 'montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64',
+__all__ = ['slice_along_axes', 'view_as_blocks', 'view_as_windows', 'crop', 'regular_grid', 'montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64',
            'img_as_ubyte', 'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits']
 
 _SUPPORTED = {np.bool_, np.uint8, np.int8, np.uint16, np.int16, np.uint32, np.int32,

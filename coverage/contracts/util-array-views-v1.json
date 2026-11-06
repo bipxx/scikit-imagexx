@@ -1,0 +1,2424 @@
+{
+  "schema": "util-array-views-source-prospective-v1",
+  "status": "SOURCE_TEST_FIRST_ZERO_ORIGINAL_NATIVE_BUILD_TIMING_AUTHORIZATION",
+  "apis": [
+    "util.view_as_blocks",
+    "util.view_as_windows"
+  ],
+  "signatures": {
+    "util.view_as_blocks": "(arr_in, block_shape)",
+    "util.view_as_windows": "(arr_in, window_shape, step=1)"
+  },
+  "upstream": {
+    "version": "0.26.0",
+    "module": "skimage.util.shape",
+    "fixture": "tests/fixtures/array_views_upstream_v026.py.txt",
+    "raw_and_canonical_lf_sha256": "fc9ab1bdc09fa464828b6ee3ce96e610d04606b90c13a3ed58f80138e65c876b",
+    "retained_source_profiles": {
+      "minimum": {
+        "numpy": "1.24.4",
+        "shape_source_same": true,
+        "stride_helper_raw_sha256": "6eb6396fed18409b881f609abdfa488a73289724d4bf993d0d4bcba19fa29a2b"
+      },
+      "modern": {
+        "numpy": "2.5.4",
+        "shape_source_same": true,
+        "stride_helper_raw_sha256": "0db57f30a81b00919e7922828cc23c4c32759c07a647639b76d1e157871fe862"
+      }
+    }
+  },
+  "source_facts": {
+    "view_as_blocks": [
+      "Exact signature(arr_in,block_shape), no decorator or input-coercing prefix. block_shape must be tuple before input metadata is read.",
+      "np.array(block_shape), positivity(any), block_shape.size vs arr_in.ndim, arr_shape modulus sum, then newshape=floor division concatenated with block dimensions. No explicit integral-type validation.",
+      "newstrides=(input strides*blockshape) concatenated with original strides, delegating actual ndarray construction/class/base/writability to imported NumPy as_strided. Signed strides preserved.",
+      "List/tuple/array-only providers generally lack ndim; memoryview has ndim/shape/strides and can reach constructor. NumPy scalar has metadata too, so its coercion/ownership is quarantined rather than falsely labeled an early type rejection."
+    ],
+    "view_as_windows": [
+      "Exact signature(arr_in,window_shape,step=1). isinstance(arr_in,np.ndarray) rejection occurs before window/step protocols. Subclasses admitted.",
+      "numbers.Number window repeats ndim times; len must equal ndim. Scalar numbers.Number step<1 rejects then repeats; sequence steps get only len check.",
+      "window_shape casts to arr_shape dtype, then too-large before too-small checks. Shape floats can truncate. Small finite scalar1.5 prospectively casts to1; no general float domain claim.",
+      "Basic slice(None,None,step) indexing occurs before output-index shape division; zero or float sequence steps fail during indexing. Negative sequence steps are NOT pre-rejected and are quarantined.",
+      "outputshape=((shape-window)//step+1)+window; outputstrides=input[slices].strides+input.strides, as_strided constructor owns view/base policy."
+    ],
+    "provider": [
+      "Both bodies compute metadata and delegate as_strided; no element numeric kernel. NumPy1.24 constructor np.array(copy=False,subok=False), interface DummyArray/asarray, dtype assignment. NumPy2.5 uses copy=None, _set_dtype, optional check_bounds not requested by skimage.",
+      "No source body promises a direct .base is input identity, writeability independent of input, subclass preservation, or no mutation. Observe actual base chain/NP providers separately.",
+      "No explicit warnings or np.errstate changes in skimage bodies; coercion/dtype/NumPy operations can raise or warn. Record version-specific errors/warnings/state verbatim, never infer them from docstrings."
+    ]
+  },
+  "cases": [
+    {
+      "id": "view_as_blocks/baseline",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_blocks/layout-F",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_blocks/layout-transpose",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "transpose",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_blocks/layout-reverse_rows",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "reverse_rows",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_blocks/layout-reverse_columns",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "reverse_columns",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_blocks/layout-reverse_all",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "reverse_all",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_blocks/layout-step_all",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "step_all",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_blocks/readonly",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": true,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-bool",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-int8",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-uint8",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-uint16",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-int32",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-uint32",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-int64",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-uint64",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-float16",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-float32",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-float64",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-complex64",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-complex128",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-S3",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "S3",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-U2",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "U2",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-V3",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "V3",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-packed",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "packed",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-object",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-datetime64[D]",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "datetime64[D]",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-timedelta64[D]",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "timedelta64[D]",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-tagged_i16",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "tagged_i16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/dtype-big_endian_i16",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "big_endian_i16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-list",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "list",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-tuple",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "tuple",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-python_scalar",
+      "api": "util.view_as_blocks",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "python_scalar",
+      "parameter": {
+        "container": "tuple",
+        "items": []
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-subclass",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "subclass",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-array_provider",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "array_provider",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-array_provider_error",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "array_provider_error",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-interface_provider",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "interface_provider",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/input-memoryview",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "memoryview",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/rank1",
+      "api": "util.view_as_blocks",
+      "shape": [
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/rank3",
+      "api": "util.view_as_blocks",
+      "shape": [
+        2,
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          1,
+          2,
+          3
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/rank0",
+      "api": "util.view_as_blocks",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": []
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/empty",
+      "api": "util.view_as_blocks",
+      "shape": [
+        0,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/singleton",
+      "api": "util.view_as_blocks",
+      "shape": [
+        1,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          1,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/parameter-zero",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          0,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/parameter-negative",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          -1,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/parameter-rank-mismatch",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/parameter-none",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": null,
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/baseline",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_windows/layout-F",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_windows/layout-transpose",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "transpose",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_windows/layout-reverse_rows",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "reverse_rows",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_windows/layout-reverse_columns",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "reverse_columns",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_windows/layout-reverse_all",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "reverse_all",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_windows/layout-step_all",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "step_all",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": true
+    },
+    {
+      "id": "view_as_windows/readonly",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": true,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-bool",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-int8",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-uint8",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-uint16",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-int32",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-uint32",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-int64",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-uint64",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-float16",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-float32",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-float64",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-complex64",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-complex128",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-S3",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "S3",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-U2",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "U2",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-V3",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "V3",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-packed",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "packed",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-object",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-datetime64[D]",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "datetime64[D]",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-timedelta64[D]",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "timedelta64[D]",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-tagged_i16",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "tagged_i16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/dtype-big_endian_i16",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "big_endian_i16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-list",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "list",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-tuple",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "tuple",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-python_scalar",
+      "api": "util.view_as_windows",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "python_scalar",
+      "parameter": {
+        "container": "tuple",
+        "items": []
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-numpy_scalar",
+      "api": "util.view_as_windows",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "numpy_scalar",
+      "parameter": {
+        "container": "tuple",
+        "items": []
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-subclass",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "subclass",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-array_provider",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "array_provider",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-array_provider_error",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "array_provider_error",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-interface_provider",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "interface_provider",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-memoryview",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "memoryview",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/rank1",
+      "api": "util.view_as_windows",
+      "shape": [
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/rank3",
+      "api": "util.view_as_windows",
+      "shape": [
+        2,
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          1,
+          2,
+          3
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/rank0",
+      "api": "util.view_as_windows",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": []
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/empty",
+      "api": "util.view_as_windows",
+      "shape": [
+        0,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/singleton",
+      "api": "util.view_as_windows",
+      "shape": [
+        1,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          1,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-zero",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          0,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-negative",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          -1,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-rank-mismatch",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-none",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": null,
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/non-tuple",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "list",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/non-divisible",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          3,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_blocks/invalid-parameter-before-provider",
+      "api": "util.view_as_blocks",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "array_provider_error",
+      "parameter": null,
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-scalar",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": 2,
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-float-scalar",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": 1.5,
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-bool-scalar",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": true,
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-list",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "list",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-numpy-scalar",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "np_scalar": "int64",
+        "value": 2
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-sequence-probe",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "sequence_probe": [
+          1,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/parameter-too-large",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          5,
+          2
+        ]
+      },
+      "step": 1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/step-scalar2",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 2,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/step-axis2",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": {
+        "container": "tuple",
+        "items": [
+          2,
+          3
+        ]
+      },
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/step-zero",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 0,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/step-negative",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": -1,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/step-axis-zero",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": {
+        "container": "tuple",
+        "items": [
+          0,
+          1
+        ]
+      },
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/step-float",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": 1.5,
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/step-rank-mismatch",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "ndarray",
+      "parameter": {
+        "container": "tuple",
+        "items": [
+          2,
+          2
+        ]
+      },
+      "step": {
+        "container": "tuple",
+        "items": [
+          1
+        ]
+      },
+      "mutation": false
+    },
+    {
+      "id": "view_as_windows/input-error-before-parameter",
+      "api": "util.view_as_windows",
+      "shape": [
+        4,
+        6
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "input_kind": "array_provider_error",
+      "parameter": null,
+      "step": 0,
+      "mutation": false
+    }
+  ],
+  "safety": {
+    "max_input_elements": 256,
+    "max_result_logical_elements": 512,
+    "max_rank": 3,
+    "valid_geometry_proofs": [
+      "Block i*b+j indexes within0..n-1 for positive integral divisors. Windows i*step+j within0..n-1 for positive integral steps and1<=window<=n. Signed strides compose known valid basic-slice input addresses.",
+      "Only crop fixture ordinary owned/reshaped/F/basic reverse/step backing arrays; no forged pointer or arbitrary as_strided input.",
+      "Observer checks EVERY returned logical address is a known live input element before payload read/alias mutation. Controlled scalar write only, preserve/restore in finally, no vector writes to overlap."
+    ],
+    "quarantined": [
+      "Negative tuple/list step values: source does not reject them before stride algebra; unsafe reach needs separate justification.",
+      "Block dimensions float/bool/object/huge/nonfinite or nested nonvector dimensions: uncertain constructor/schema behavior and signed arithmetic.",
+      "NumPy scalar blocks: reaches metadata/conversion, but allocation ownership is outside frozen live array carrier relation.",
+      "Arbitrary providers exposing shape/strides or forged __array_interface__, preexisting unsafe stride views, nonfinite/complex/custom shape numerics, overflowing geometry and massive virtual shapes.",
+      "Memmap/external storage lifetimes and arbitrary overridden ndarray array_function/getitem behavior beyond controlled crop TraceArray."
+    ]
+  },
+  "observer": {
+    "codec": "Reuse existing crop_observer.encode and object slot identity helpers; crop_contract fixture/materialization/protocol classes. No new type/storage engine.",
+    "scope": [
+      "Exact input/option/buffer words, dtype metadata/structured/object slots and output base chain/aliases/writability/layout.",
+      "One source-gated public call supplied only by eventual authorized one-shot controller; this CLI can ONLY perform zero-body intake.",
+      "Warning/category/message, errors, protocol order, FP handler/policy, print/profile/pointer state, observed view-overlap one-slot write and restored storage. External existing controller full fenv/MXCSR capture required after GO.",
+      "CLI authenticates external intake-only root envelope and exact source files/actual native Windows Git revision BEFORE explicit import numpy request. Cached/cold builtins import guards test real main entry. No MetaPath-only assumption."
+    ]
+  },
+  "standalone_CPP_proposal": {
+    "status": "PROPOSAL_ONLY_NO_HEADER_LEAF_BINDER_AUTHORED",
+    "operations": [
+      "array_view_as_blocks(CropView input,vector<ptrdiff_t> positive_integral_block_shape) -> full borrowed CropView with2*rank shape/strides",
+      "array_view_as_windows(CropView input,vector<ptrdiff_t> positive_integral_window_shape,vector<ptrdiff_t> positive_integral_step) -> full borrowed CropView with2*rank shape/strides"
+    ],
+    "reuse": "Root-admitted crop.hpp CropView and checked signed geometry style, no copy/element arithmetic. Crop component integration dependency must be present before implementation; not imported into this source packet.",
+    "ownership": "Caller retains actual input allocation/lifetime/writability; descriptor is complete view operation. Public binder must keep owner alive and reproduce measured NumPy base/writability semantics; NumPy construction remains explicitly a provider if used. Object dtype referent ownership stays at Python/NumPy boundary, POD SDK opaque bytes only.",
+    "validation": "Rank/type normalization at Python boundary; C++ validates consistent vectors, itemsize, checked multiply/add, signed stride bounds and nonzero dimensions. No unsigned wrap or pre-validation multiply. Standalone installed SDK tests perform actual element addressing, mutable backing and overlap demonstration, not only primitive geometry tests.",
+    "parallelism": "Tiny ordered O(rank) metadata, zero image-element numeric computation. Serial justified; no invented SIMD/thread loops. One process-global default1 ownership/hot-swap/native entry still required if advertised.",
+    "not_yet_owned": "No complete native, public parity or installed SDK execution credit. Exact provider/classes/error domains and scalar coercion pending evidence."
+  },
+  "budgets": {
+    "original_calls": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "timing_batches": 0
+  },
+  "gates": {
+    "passed": [
+      "Pinned0.26 actual installed source read without scientific imports/targets on min+modern, identical bytes; dependency implementation differences documented"
+    ],
+    "pending": [
+      "Independent source/storage-safety admission and root GO",
+      "Actual NumPy-only factory/refused-observer and CLI source-envelope checks both retained profiles; pure guards both Windows versions",
+      "Full actual Linux native-Windows-Git+explicit env prefix/module/GO/source/runtime checks immediately before future exactly-once reference capture",
+      "Authorized reference originals, source-bound raw admission, implementation, genuine singlecore/native/provider/SDK/hot-swap/scalar-SIMD applicability/default1 evidence",
+      "One-thread public-original performance, exact-source four-profile release, root delivery"
+    ]
+  },
+  "next_gate": {
+    "owner": "root independent source-safety reviewer",
+    "trigger": "Review frozen source-only recipes/address proofs/quarantines/SDK proposal and actual refused setup receipts, then decide source/runtime-bound GO; no originals or native work from this checkpoint."
+  }
+}

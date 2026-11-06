@@ -102,4 +102,45 @@ inline std::size_t run() {
 #endif
     return checks;
 }
+// Dense one-pair streams have an independent complete-storage expectation:
+// one logical repeated sum, followed by the unchanged sorted source words.
+// Non-dyadic weights distinguish ordered addition from count*weight.
+inline std::size_t density() {
+    std::size_t checks=0;const auto check=[&](bool v){++checks;if(!v)throw std::runtime_error("label-pair dense storage control failed");};
+    const auto initial=get_num_threads();check(initial==1);std::fenv_t caller;check(std::fegetenv(&caller)==0);
+    for(auto n:{std::size_t{4},std::size_t{31},std::size_t{262151}}){
+        std::vector<std::int64_t> truth(n,1),test(n,2);
+        for(int workers:{1,4}){set_num_threads(workers);
+            for(bool normalize:{false,true}){
+                const double weight=normalize?1./double(n):1.;double expected=weight;
+                for(std::size_t i=1;i<n;++i)expected+=weight;
+                const auto flags=std::fetestexcept(FE_ALL_EXCEPT),rounding=std::fegetround();LabelPairCsr result;
+                check(label_pair_counts({truth.data(),test.data(),n,nullptr,0,normalize},result));
+                check(result.rows==2&&result.columns==3&&result.indptr==std::vector<std::int64_t>({0,0,1}));
+                check(result.indices==std::vector<std::int64_t>{2}&&result.data.size()==1);
+                check(bits(result.data[0])==bits(expected)&&result.kept_samples==n&&result.normalization_fp_status==0);
+                check(std::fetestexcept(FE_ALL_EXCEPT)==flags&&std::fegetround()==rounding);
+            }
+            for(std::uint64_t word:{UINT64_C(0),bits(1./17.),UINT64_C(0x7ff8123456789abc),UINT64_C(0xfff8fedcba987654)}){
+                double value;std::memcpy(&value,&word,8);std::vector<double> weights(n,value);double expected=value;
+                for(std::size_t i=1;i<n;++i)expected+=value;
+                LabelPairCsrStorage result;const auto flags=std::fetestexcept(FE_ALL_EXCEPT),rounding=std::fegetround();
+                check(label_pair_counts_preweighted({truth.data(),test.data(),weights.data(),n},result));
+                check(result.rows==2&&result.columns==3&&result.indptr==std::vector<std::int64_t>({0,0,1}));
+                check(result.indices.size()==n&&result.data.size()==n&&bits(result.data[0])==bits(expected));
+                for(std::size_t i=0;i<n;++i){check(result.indices[i]==2);if(i)check(bits(result.data[i])==word);check(bits(weights[i])==word);}
+                check(std::fetestexcept(FE_ALL_EXCEPT)==flags&&std::fegetround()==rounding);
+            }
+            check(get_num_threads()==workers);
+        }
+    }
+    // The unnormalized dense integer path accepts all caller rounding modes.
+    const std::int64_t truth[]{0,0,0,0,0,0,0,0},test[]{0,0,0,0,0,0,0,0};
+    for(int rounding:{FE_TONEAREST,FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO}){
+        check(std::fesetround(rounding)==0);LabelPairCsr result;const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
+        check(label_pair_counts({truth,test,8,nullptr,0,false},result,1));check(result.data==std::vector<double>{8.});
+        check(std::fetestexcept(FE_ALL_EXCEPT)==flags&&std::fegetround()==rounding);
+    }
+    set_num_threads(initial);check(std::fesetenv(&caller)==0);check(get_num_threads()==1);return checks;
+}
 }
