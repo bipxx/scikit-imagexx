@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('segmentation.find_boundaries',),'tests/test_find_boundaries_public.py','benchmarks/find_boundaries.py'),
     (('metrics.adapted_rand_error',),'tests/test_label_pair_rand_public.py','benchmarks/label_pair_metrics.py'),
     (('metrics.contingency_table',),'tests/test_contingency_table_public.py','benchmarks/label_pair_metrics.py'),
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),

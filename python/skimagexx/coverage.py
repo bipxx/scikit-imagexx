@@ -8,7 +8,7 @@ DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
@@ -333,6 +333,7 @@ def class_contract(api):
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='draw.set_color':return ('float32','float64')
     if api in ('draw.polygon','draw.polygon2mask'):return ('uint8','float32','float64')
     if api == 'draw.line_nd':
@@ -377,6 +378,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='segmentation.find_boundaries':
+        import numpy as np
+        return (np.array([[0,1,0],[1,1,0]],dtype=image.dtype),),{}
     if api=='draw.polygon':return ([1,1,4],[1,5,2]),{}
     if api=='draw.polygon2mask':return ((6,7),[[1,1],[1,5],[4,2]]),{}
     if api=='draw.bezier_curve':return (0,0,1,4,6,6,1.),{}
@@ -1031,7 +1035,26 @@ def label_pair_default_error(api, actual, expected):
     return 0.0
 
 
+def find_boundaries_default_error(actual, expected, *, image=None):
+    """Exact bool output, allocation, layout and input independence."""
+    import numpy as np
+    assert type(actual) is type(expected) is np.ndarray
+    assert actual.dtype == expected.dtype == np.dtype('bool')
+    assert actual.dtype.metadata is expected.dtype.metadata is None
+    assert actual.shape == expected.shape and actual.strides == expected.strides
+    assert actual is not expected and not np.shares_memory(actual,expected)
+    for result in (actual,expected):
+        assert result.flags.owndata and result.base is None and result.flags.writeable and result.flags.aligned
+        if image is not None:assert not np.shares_memory(result,image)
+    assert actual.flags.c_contiguous == expected.flags.c_contiguous
+    assert actual.flags.f_contiguous == expected.flags.f_contiguous
+    assert actual.tobytes(order='C') == expected.tobytes(order='C')
+    return 0.0
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api=='segmentation.find_boundaries':
+        find_boundaries_default_error(actual,expected,image=image);return
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         label_pair_default_error(api,actual,expected);return
     """Shared assertion; previous scalar budgets keep their existing checker."""

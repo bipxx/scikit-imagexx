@@ -141,6 +141,12 @@ jobs:
         run: python -m pytest -q tests/test_draw_ellipse_perimeter_public.py tests/test_draw_ellipse_perimeter_default.py --junitxml=build/ci-artifacts/ellipse-perimeter-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Find boundaries saved public defaults and source checks
+        run: python -m pytest -q tests/test_find_boundaries_reference.py tests/test_find_boundaries_frontend_contract.py tests/test_find_boundaries_sdk_scope.py tests/test_find_boundaries_benchmark.py tests/test_find_boundaries_public.py tests/test_find_boundaries_intake.py tests/test_find_boundaries_benchmark_intake.py tests/test_find_boundaries_default.py --junitxml=build/ci-artifacts/find-boundaries-normal.xml
+      - name: Find boundaries saved public defaults with SIMD disabled
+        run: python -m pytest -q tests/test_find_boundaries_public.py tests/test_find_boundaries_default.py --junitxml=build/ci-artifacts/find-boundaries-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Freeze exact offline measurement artifacts
         shell: bash
         run: |
@@ -564,6 +570,12 @@ jobs:
         run: python -m pytest -q tests/test_ellipse_perimeter_reference.py tests/test_draw_ellipse_perimeter_public.py tests/test_draw_ellipse_perimeter_default.py tests/test_ellipse_perimeter_benchmark.py --junitxml=build/ci-artifacts/ellipse-perimeter-normal.xml
       - name: Ellipse perimeter saved public defaults with SIMD disabled
         run: python -m pytest -q tests/test_draw_ellipse_perimeter_public.py tests/test_draw_ellipse_perimeter_default.py --junitxml=build/ci-artifacts/ellipse-perimeter-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Find boundaries saved public defaults and source checks
+        run: python -m pytest -q tests/test_find_boundaries_reference.py tests/test_find_boundaries_frontend_contract.py tests/test_find_boundaries_sdk_scope.py tests/test_find_boundaries_benchmark.py tests/test_find_boundaries_public.py tests/test_find_boundaries_intake.py tests/test_find_boundaries_benchmark_intake.py tests/test_find_boundaries_default.py --junitxml=build/ci-artifacts/find-boundaries-normal.xml
+      - name: Find boundaries saved public defaults with SIMD disabled
+        run: python -m pytest -q tests/test_find_boundaries_public.py tests/test_find_boundaries_default.py --junitxml=build/ci-artifacts/find-boundaries-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - name: Freeze exact offline measurement artifacts

@@ -772,3 +772,5 @@ coverage/contracts/label-pair-ARE-metadata-context-v1.json -text
 coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json -text
 coverage/evidence/draw-batch-whole-product-admission-v1.json -text
 coverage/contracts/draw-polygon-metrics-runtime-v1.json -text
+coverage/contracts/find-boundaries*.json -text
+coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json -text

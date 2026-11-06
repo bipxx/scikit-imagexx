@@ -47,7 +47,7 @@ VALUE_CASES = [
     # Shape constructors use one descriptor carrier, not image dtype cases.
     for dtype in ((np.float64,) if (native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel'))
                   or (native is xx.measure and name in ('approximate_polygon','subdivide_polygon'))
-                  else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in LEVEL_SET_FUNCTIONS
+                  else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in (*LEVEL_SET_FUNCTIONS,'segmentation.find_boundaries')
                   else (np.uint8, np.float32, np.float64))
     for shape in (((4, 5), (7, 19), (519, 521))
                   if ((native is xx.restoration and name == 'denoise_tv_bregman')
@@ -296,7 +296,7 @@ def test_every_native_function(native, original, name, dtype, shape):
         assert str(actual_error.value)==str(error)
         return
     actual = getattr(native, name)(*args,**options)
-    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
+    if api=='segmentation.find_boundaries' or api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=a);return
     if api=='segmentation.relabel_sequential':
         # Compare sparse mapping vectors without dense ArrayMap conversion.

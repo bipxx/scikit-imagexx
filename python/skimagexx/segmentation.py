@@ -9,6 +9,8 @@ __path__ = []
 __all__ = ['clear_border','relabel_sequential']
 from ._level_set import checkerboard_level_set, disk_level_set
 __all__ += ['checkerboard_level_set','disk_level_set']
+from ._find_boundaries import find_boundaries
+__all__ += ['find_boundaries']
 
 
 @wraps(_consumers.clear_border)

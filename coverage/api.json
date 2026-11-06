@@ -6923,11 +6923,21 @@
       "api": "segmentation.find_boundaries",
       "kind": "callable",
       "signature": "(label_img, connectivity=1, mode='thick', background=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_find_boundaries_public.py",
+      "benchmark": "benchmarks/find_boundaries.py"
     },
     {
       "api": "segmentation.flood",

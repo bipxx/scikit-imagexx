@@ -10,9 +10,10 @@ import os
 from pathlib import Path
 import platform
 import sys
+import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-v1.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v1.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -52,11 +53,52 @@ def snapshot(array):
         c=bool(array.flags.c_contiguous),f=bool(array.flags.f_contiguous),base_type=type(array.base).__name__,
         raw_sha256=hashlib.sha256(array.tobytes(order='C')).hexdigest())
 
+def load_root_binding(path, raw_contract):
+    """Use the existing external first-cohort envelope without altering recipes."""
+    assert path is not None, 'PROSPECTIVE: genuine input/root binding missing; no target imports or calls permitted'
+    raw_binding=Path(path).read_bytes();binding=json.loads(raw_binding)
+    allowed={'status','source_root','source_revision','git_argv','genuine_root_admission_path','genuine_root_admission_sha256','product_kind','interpreter','source_files_sha256','installed_site','numpy','core_path','core_sha256','output_root','routes','prepared_source','producer','runtime_path','runtime_sha256','shared_CMake_sha256','genuine_root_stager_path','genuine_root_stager_sha256','base_contract_sha256','root_go_path'}
+    assert not set(binding)-allowed
+    assert binding['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS' and binding['product_kind']=='GENUINE_INSTALLED_WHOLE_PRODUCT'
+    assert binding['base_contract_sha256']==hashlib.sha256(raw_contract).hexdigest()
+    assert Path(binding['source_root']).resolve()==ROOT
+    prepared=binding['prepared_source'];producer=binding['producer']
+    assert set(producer)=={'run','revision','artifact','sha256'}
+    assert set(prepared)=={'revision','files_sha256'} and prepared['files_sha256']
+    revision=prepared['revision'];assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
+    assert revision==binding['source_revision']==producer['revision']
+    assert subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()==revision
+    assert not subprocess.check_output(['git','-C',str(ROOT),'status','--porcelain'],text=True).strip()
+    def authenticated(field):
+        raw=Path(binding[field+'_path']).read_bytes()
+        assert hashlib.sha256(raw).hexdigest()==binding[field+'_sha256']
+        return json.loads(raw)
+    runtime=authenticated('runtime')
+    assert runtime['source']==prepared
+    assert runtime['runtime']['packages_sha256']['skimagexx'][Path(binding['core_path']).name]==binding['core_sha256']
+    authenticated('genuine_root_admission')
+    stager=authenticated('genuine_root_stager')
+    assert str(stager['run'])==str(producer['run']) and str(stager['artifact'])==str(producer['artifact'])
+    assert stager['revision']==revision and stager['artifact_sha256']==producer['sha256']
+    assert len(producer['sha256'])==64 and all(c in '0123456789abcdef' for c in producer['sha256'])
+    go=json.loads(Path(binding['root_go_path']).read_bytes())
+    assert go['binding_sha256']==hashlib.sha256(raw_binding).hexdigest() and 'boundary' in go['routes']
+    assert go['timed_batches']==0 and datetime.now(timezone.utc)<datetime.fromisoformat(go['deadline_utc'])
+    cmake=(ROOT/'CMakeLists.txt').read_bytes().replace(b'\r\n',b'\n')
+    assert binding['shared_CMake_sha256']==prepared['files_sha256']['CMakeLists.txt']==hashlib.sha256(cmake).hexdigest()
+    contract=json.loads(raw_contract)
+    # Root provenance supplies only these five runtime fields. All recipes,
+    # sampler gates, method and source pins remain the tracked contract's values.
+    contract.update(state='FROZEN_READY_FOR_ROOT_FIRST_COHORT',shared_CMake_sha256=binding['shared_CMake_sha256'],genuine_core_sha256=binding['core_sha256'],prepared_run=producer['run'],prepared_artifact=producer['artifact'])
+    return contract,binding,hashlib.sha256(raw_binding).hexdigest()
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--threads',type=int,choices=[1],default=1);parser.add_argument('--repeat',type=int,choices=[7],default=7)
     parser.add_argument('--deadline-utc');parser.add_argument('--output',type=Path,default=Path('build/ci-find-boundaries.json'))
-    args=parser.parse_args();raw_contract=CONTRACT.read_bytes();contract=json.loads(raw_contract)
+    parser.add_argument('--root-binding',type=Path)
+    args=parser.parse_args();raw_contract=CONTRACT.read_bytes();contract,binding,binding_sha=load_root_binding(args.root_binding,raw_contract)
     assert contract['state']=='FROZEN_READY_FOR_ROOT_FIRST_COHORT','PROSPECTIVE: genuine input/root binding missing; no target imports or calls permitted'
     assert len(contract['cases'])==8 and all(case_bounds(s)for s in contract['cases'])
     for name,pin in contract['source_closure'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
@@ -75,7 +117,7 @@ def main():
     assert native is owned.find_boundaries and upstream is original.find_boundaries
     assert str(inspect.signature(native))==str(inspect.signature(upstream))==contract['public_signature']
     assert inspect.isbuiltin(entry)and entry.__module__==xx._core.__name__=='skimagexx._core'
-    core=Path(xx._core.__file__);core_sha=hashlib.sha256(core.read_bytes()).hexdigest();assert core_sha==contract['genuine_core_sha256']
+    core=Path(xx._core.__file__);core_sha=hashlib.sha256(core.read_bytes()).hexdigest();assert core_sha==contract['genuine_core_sha256'] and core.resolve()==Path(binding['core_path']).resolve()
     assert skimage.__version__=='0.26.0'
     assert hashlib.sha256(Path(original.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==contract['original_source_sha256']
     dependency=contract['runtime_dependencies'][np.__version__];assert scipy.__version__==dependency['scipy']
@@ -125,10 +167,11 @@ def main():
             actual_C_returns=calls,native_accepted=True,input=frozen,output=snapshot(actual),max_abs_error=0.,**timing))
         print(f"{spec['id']}: {timing['speedup']:.9f}x",flush=True)
     assert sum(sum(len(sequence)for sequence in row['samples_ms'])for row in rows)==112
-    assert source_fingerprint(ROOT)==before and hashlib.sha256(core.read_bytes()).hexdigest()==core_sha and CONTRACT.read_bytes()==raw_contract
+    assert source_fingerprint(ROOT)==before and hashlib.sha256(core.read_bytes()).hexdigest()==core_sha and CONTRACT.read_bytes()==raw_contract and hashlib.sha256(args.root_binding.read_bytes()).hexdigest()==binding_sha
     report=dict(metadata=dict(timestamp_utc=datetime.now(timezone.utc).isoformat(),platform=platform.platform(),python=sys.version,
         numpy=np.__version__,scipy=scipy.__version__,reference=skimage.__version__,cpu_model=cpu_model,logical_cpu_count=cpu_count,
         avx2_available=avx2_available,**before,core_sha256=core_sha,threads=1,repeat=7,raw_samples=112,target_ms=100,
+        root_binding_sha256=binding_sha,prepared_run=contract['prepared_run'],prepared_artifact=contract['prepared_artifact'],
         warmup_calibration_min_ms=250,deadline_utc=deadline,reference_pool_limits=limits,contract_sha256=hashlib.sha256(raw_contract).hexdigest(),
         method_sha256=contract['method_sha256'],harness_sha256=hashlib.sha256(Path(__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest(),scope=contract['scope']),results=rows)
     args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')

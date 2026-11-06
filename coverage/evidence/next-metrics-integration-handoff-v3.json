@@ -1,0 +1,1209 @@
+{
+  "schema": "next-metrics-integration-handoff-v3",
+  "status": "combined_local_source_ready_pending_independent_full_barriers",
+  "predecessor": {
+    "candidate": "ff2a538f8c40d068a191d7d82c3948692100805c",
+    "handoff": "coverage/evidence/next-metrics-integration-handoff-v2.json",
+    "sha256": "f37bae4ca8ba3e7da156f9a5b4856c3ae3c927415551a3444b5d6fae71344258",
+    "preserved": true
+  },
+  "ancestry": {
+    "main": "057b1e28ae2060fe58b05aca2c7a566c424a368d",
+    "boundary": "08a06b22bb4eceb580f3bf7f15a0a1664f9cc9f9",
+    "boundary_merge": "5b67abf6",
+    "latest_main_merge": "e5208351",
+    "full_family_lineage_preserved": true
+  },
+  "counts": {
+    "native_partial_image_paths": 265,
+    "native_functions": 268,
+    "product_members": 206,
+    "SDK_members": 97,
+    "SDK_families": 32,
+    "SDK_checks": 64,
+    "post203_selector_files": 120,
+    "required_selector_files": 121
+  },
+  "counts_scope": "Exact current265 sourceplan assertions PASS both supported Windows versions; these are candidate source declarations, not qualified or measured products.",
+  "changes": [
+    "Direct boundary header/leaf/binder/init/public segmentation/default/dtype registry, recognized inventory route and source extraction hooks. Original family algorithm bytes unchanged.",
+    "Existing component_consumers installed SDK family calls exact admitted helper workers1/4 from default; extracts helper AND fixture. No new SDKfamily. SDK glue syntax compile only, retained532320x4 helper proofs reused.",
+    "Typed bool/integer tiny0/1 canonical defaults and strict bool output allocation/layout/word/nonalias checker; generic API restricted actualuint8 descriptor carriers, nine alias/metadata dtypes.",
+    "Both preparation profiles gain boundary public normal/disabled checks before stager freeze; qualification source/installed selectors updated, no automatic timing route.",
+    "External --root-binding reuses existing controller envelope and one-way GO binding digest. Tracked8cases/bounds/sourcecontract/method/gates unchanged; only five provenance fields resolved in memory. Root admission/stager/runtime/GO/source/CMake/core checked; reports bind external hash and producer run/artifact; external bytes rechecked after timing.",
+    "New polygon successor authenticates six exact additive CMake fragments, four binder registration lines, full historical driver inverse; all prior compiler/numerical policies restored exactly."
+  ],
+  "source_contexts": {
+    "coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json": {
+      "raw_sha256": "b89c1021101571821c148e5ff16e6df095537f2e16ce8d35c9742fe8bc4f99a1",
+      "predecessor": "coverage/contracts/draw-polygon-draw-batch-runtime-v1.json",
+      "predecessor_sha256": "db0cd8c16175d24fef5096b7ee18ab95c62cf92f8ec13f7961ab527a92ff4627",
+      "recovered": {
+        "CMakeLists.txt": {
+          "predecessor_canonical_lf_sha256": "e9e50a794ea6a228b2b497aa57abae1d4b72c5f376a4140c07b5f2b0118f14a5",
+          "inverse_fragments": 6
+        },
+        "src/bindings.cpp": {
+          "predecessor_canonical_lf_sha256": "8373372a2df0b77206aed451a6079161352e5fd551a4b05658601d2abb5887d6",
+          "inverse_fragments": 4
+        },
+        "benchmarks/draw_polygon.py": {
+          "predecessor_canonical_lf_sha256": "7134e0d4ad49f099bfa737638300f345a0ee4f9a0fae3fa3630a5108ff84fa8c",
+          "inverse_fragments": 3
+        }
+      }
+    },
+    "coverage/contracts/find-boundaries-benchmark-binding-v1.json": {
+      "raw_sha256": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
+      "predecessor": "coverage/contracts/find-boundaries-benchmark-v1.json",
+      "predecessor_sha256": "77385be1aa49309a35e362b90739043c0de07190c22031c79103b3b33f9f08d4",
+      "recovered": {
+        "benchmarks/find_boundaries.py": {
+          "predecessor_canonical_lf_sha256": "daf853253d3315ad44f46cc1453228fa62321172f1ea56f35e22777a23fd7835",
+          "inverse_fragments": 7
+        }
+      }
+    }
+  },
+  "admitted_family_reuse": {
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "python/skimagexx/_find_boundaries.py": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2be056b23cf8838aba0295c5b3688d4b2c4ee30a14d3ef6665b6dac0d03218fd",
+    "src/bind_find_boundaries.cpp": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "src/fft_internal.hpp": "de440d5d4864c46d76ef70f7df41e0cad957c76fb0d429ac4906981153aae6c7",
+    "src/find_boundaries.cpp": "9f910ba308ab90189c6a8c6386a1fbf40ffab9093437ad1f0dfad392e2c53885",
+    "tests/cmake_consumer/find_boundaries_consumer.hpp": "ba46ec0259db0dbfd04c90b9843f10984463c8a0fc05ef90d6be47f499fba0b8",
+    "tests/fixtures/find_boundaries_originals_v1.hpp": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033"
+  },
+  "profiles": {
+    "minimum": {
+      "source_runs": {
+        "1": {
+          "directory": "build/next-metrics-integration-v1/successor-v2/pure-minimum-v1",
+          "xml": {
+            "tests": 178,
+            "failures": 5,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 1,
+            "seconds": 8.297000000020489,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        },
+        "3": {
+          "directory": "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v3",
+          "xml": {
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 0,
+            "seconds": 1.7340000001713634,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        },
+        "4": {
+          "directory": "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v4",
+          "xml": {
+            "tests": 97,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 0,
+            "seconds": 2.155999999959022,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        },
+        "5": {
+          "directory": "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v5",
+          "xml": {
+            "tests": 12,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 0,
+            "seconds": 0.5,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        }
+      },
+      "effective_source_node_union": 181,
+      "full_workflow_barrier": false,
+      "runtime": {
+        "normal": {
+          "xml": {
+            "tests": 61,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "outcome": {
+            "status": "PYTEST_PASS_PROCESS_RECEIPT_SERIALIZATION_FAILED",
+            "process_exit": 1,
+            "pytest_exit": 0,
+            "xml": {
+              "tests": 61,
+              "failures": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "xml_sha256": "0fe7a2a9a59ee63c5ba3b3551654d70542ce2ad83a0cd08183fe1ed468dc475f",
+            "raw_log_sha256": "cd779fdc246bb6d8cb5b8a24ad12d4099ea066b28e28f56612e270ea95af9cc9",
+            "failure": "Post-pytest JSON writer reached dtype metadata mappingproxy, before final global-state assertion/terminal write",
+            "scope": "Retained61actual checks PASS; process terminal itself remains failed. No native tests replayed. Lifecycle restoration is source/test-scoped; followup newprocess observer does not retroactively assert previousprocess state.",
+            "actual_original_calls": 0,
+            "timed_batches": 0,
+            "denied_original_attempts": "None: any denied attempt exits pytest immediately before61PASS"
+          },
+          "fresh_ownership": {
+            "status": "PASS",
+            "profile": "minimum",
+            "mode": "normal",
+            "core": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/next-metrics-integration-v1/boundary-v3/component-v1/minimum/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+            "core_identity_reused": "59f2d45dd4a946f578fe1c41119c89bd1e2203497e97fe1d6a11fbe8cbdfc037",
+            "entries": [
+              {
+                "name": "find_boundaries_into",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_counts_preweighted",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_rand_terms",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "get_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "set_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              }
+            ],
+            "same_module_across_three_APIs": true,
+            "default1": true,
+            "optional4": true,
+            "restored1": true,
+            "actual_has_avx2": true,
+            "original_calls": 0,
+            "algorithm_calls": 0,
+            "timed_batches": 0,
+            "scope": "Fresh observer verifies combined thin ownership/global controls only; does not relabel earlier process receiptwriter failure or prove genuine fullcore"
+          }
+        },
+        "disabled": {
+          "xml": {
+            "tests": 61,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "outcome": {
+            "status": "PYTEST_PASS_PROCESS_RECEIPT_SERIALIZATION_FAILED",
+            "process_exit": 1,
+            "pytest_exit": 0,
+            "xml": {
+              "tests": 61,
+              "failures": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "xml_sha256": "3e4ebc2cd64e3d645641e8f01c0902c0af4dab71f052552ea92b1388355607b4",
+            "raw_log_sha256": "9fb77a53bbc491472019cc644c868b80641dd20bc36dd84acefbffd20ac81b6c",
+            "failure": "Post-pytest JSON writer reached dtype metadata mappingproxy, before final global-state assertion/terminal write",
+            "scope": "Retained61actual checks PASS; process terminal itself remains failed. No native tests replayed. Lifecycle restoration is source/test-scoped; followup newprocess observer does not retroactively assert previousprocess state.",
+            "actual_original_calls": 0,
+            "timed_batches": 0,
+            "denied_original_attempts": "None: any denied attempt exits pytest immediately before61PASS"
+          },
+          "fresh_ownership": {
+            "status": "PASS",
+            "profile": "minimum",
+            "mode": "disabled",
+            "core": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/next-metrics-integration-v1/boundary-v3/component-v1/minimum/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+            "core_identity_reused": "59f2d45dd4a946f578fe1c41119c89bd1e2203497e97fe1d6a11fbe8cbdfc037",
+            "entries": [
+              {
+                "name": "find_boundaries_into",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_counts_preweighted",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_rand_terms",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "get_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "set_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              }
+            ],
+            "same_module_across_three_APIs": true,
+            "default1": true,
+            "optional4": true,
+            "restored1": true,
+            "actual_has_avx2": false,
+            "original_calls": 0,
+            "algorithm_calls": 0,
+            "timed_batches": 0,
+            "scope": "Fresh observer verifies combined thin ownership/global controls only; does not relabel earlier process receiptwriter failure or prove genuine fullcore"
+          }
+        }
+      }
+    },
+    "modern": {
+      "source_runs": {
+        "1": {
+          "directory": "build/next-metrics-integration-v1/successor-v2/pure-modern-v1",
+          "xml": {
+            "tests": 178,
+            "failures": 5,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 1,
+            "seconds": 8.161025700159371,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        },
+        "3": {
+          "directory": "build/next-metrics-integration-v1/boundary-v3/pure-modern-v3",
+          "xml": {
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 0,
+            "seconds": 1.809370799921453,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        },
+        "4": {
+          "directory": "build/next-metrics-integration-v1/boundary-v3/pure-modern-v4",
+          "xml": {
+            "tests": 97,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 0,
+            "seconds": 2.201553399907425,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        },
+        "5": {
+          "directory": "build/next-metrics-integration-v1/boundary-v3/pure-modern-v5",
+          "xml": {
+            "tests": 12,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "terminal": {
+            "exit_code": 0,
+            "seconds": 0.6774210000876337,
+            "attempts": [],
+            "scientific_origins": {},
+            "original_calls": 0,
+            "native_calls": 0,
+            "timed_batches": 0
+          }
+        }
+      },
+      "effective_source_node_union": 181,
+      "full_workflow_barrier": false,
+      "runtime": {
+        "normal": {
+          "xml": {
+            "tests": 61,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "outcome": {
+            "status": "PYTEST_PASS_PROCESS_RECEIPT_SERIALIZATION_FAILED",
+            "process_exit": 1,
+            "pytest_exit": 0,
+            "xml": {
+              "tests": 61,
+              "failures": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "xml_sha256": "e4deb4a75b50cb6c4c36dbc61d77a2e2fbe909ff972f39c4a6baa5f068cfbaa0",
+            "raw_log_sha256": "1ee7b4043d2a2209e437b90ffa05d2300fef3b7d89c19cb93c438c87407122cd",
+            "failure": "Post-pytest JSON writer reached dtype metadata mappingproxy, before final global-state assertion/terminal write",
+            "scope": "Retained61actual checks PASS; process terminal itself remains failed. No native tests replayed. Lifecycle restoration is source/test-scoped; followup newprocess observer does not retroactively assert previousprocess state.",
+            "actual_original_calls": 0,
+            "timed_batches": 0,
+            "denied_original_attempts": "None: any denied attempt exits pytest immediately before61PASS"
+          },
+          "fresh_ownership": {
+            "status": "PASS",
+            "profile": "modern",
+            "mode": "normal",
+            "core": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/next-metrics-integration-v1/boundary-v3/component-v1/modern/site/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+            "core_identity_reused": "1361543a028c8a7a014e2a907cfd6c9e491b73d4651252b6e791fe9665efd233",
+            "entries": [
+              {
+                "name": "find_boundaries_into",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_counts_preweighted",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_rand_terms",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "get_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "set_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              }
+            ],
+            "same_module_across_three_APIs": true,
+            "default1": true,
+            "optional4": true,
+            "restored1": true,
+            "actual_has_avx2": true,
+            "original_calls": 0,
+            "algorithm_calls": 0,
+            "timed_batches": 0,
+            "scope": "Fresh observer verifies combined thin ownership/global controls only; does not relabel earlier process receiptwriter failure or prove genuine fullcore"
+          }
+        },
+        "disabled": {
+          "xml": {
+            "tests": 61,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "outcome": {
+            "status": "PYTEST_PASS_PROCESS_RECEIPT_SERIALIZATION_FAILED",
+            "process_exit": 1,
+            "pytest_exit": 0,
+            "xml": {
+              "tests": 61,
+              "failures": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "xml_sha256": "fc4805366c1238bd2ff65d9235744aa557ca2f29523b2e480c93c40572a489b9",
+            "raw_log_sha256": "1e9c7730968186e35feea2e9db10c73fea739c55181a78d8a43560f98210a015",
+            "failure": "Post-pytest JSON writer reached dtype metadata mappingproxy, before final global-state assertion/terminal write",
+            "scope": "Retained61actual checks PASS; process terminal itself remains failed. No native tests replayed. Lifecycle restoration is source/test-scoped; followup newprocess observer does not retroactively assert previousprocess state.",
+            "actual_original_calls": 0,
+            "timed_batches": 0,
+            "denied_original_attempts": "None: any denied attempt exits pytest immediately before61PASS"
+          },
+          "fresh_ownership": {
+            "status": "PASS",
+            "profile": "modern",
+            "mode": "disabled",
+            "core": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/next-metrics-integration-v1/boundary-v3/component-v1/modern/site/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+            "core_identity_reused": "1361543a028c8a7a014e2a907cfd6c9e491b73d4651252b6e791fe9665efd233",
+            "entries": [
+              {
+                "name": "find_boundaries_into",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_counts_preweighted",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "label_pair_rand_terms",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "get_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              },
+              {
+                "name": "set_num_threads",
+                "type": "builtin_function_or_method",
+                "module": "skimagexx._core"
+              }
+            ],
+            "same_module_across_three_APIs": true,
+            "default1": true,
+            "optional4": true,
+            "restored1": true,
+            "actual_has_avx2": false,
+            "original_calls": 0,
+            "algorithm_calls": 0,
+            "timed_batches": 0,
+            "scope": "Fresh observer verifies combined thin ownership/global controls only; does not relabel earlier process receiptwriter failure or prove genuine fullcore"
+          }
+        }
+      }
+    }
+  },
+  "records": {
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v1/command.json": {
+      "bytes": 1666,
+      "sha256": "c0d7e182b21b4edc04d1cbac1fce61abcc2dad011381f35883cd476f5f815aa8"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v1/terminal.json": {
+      "bytes": 174,
+      "sha256": "6ce64ab4cafad124f26fc461ba8e7513a446fe8ffc03e3de363313e708ed4a85"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v1/results.xml": {
+      "bytes": 34744,
+      "sha256": "a3e7c98f42c74f544695c472ffff72396cb74f01c5f8328d032b647086cbc82d"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v3/command.json": {
+      "bytes": 1023,
+      "sha256": "0e70e46a7aab4d51696928c00fbd8953a2a67fb78b84f58c98e58adde9b4170d"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v3/terminal.json": {
+      "bytes": 175,
+      "sha256": "547fdc75d7e9e95635bf70ffe686096d23f1edba235447b0d41bfae9a877b7ad"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v3/results.xml": {
+      "bytes": 1026,
+      "sha256": "4929928b36491c1f075de99574a6435f7bc37b51d821cdc6972fabbf898b0488"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v4/command.json": {
+      "bytes": 942,
+      "sha256": "2cbc488bef490669c45d67c988a59326e8cc76a23176e066a92a36151aa20ffa"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v4/terminal.json": {
+      "bytes": 174,
+      "sha256": "48e13022a1e0e9e55b6e0a25b7ff23cd27fc782d161868fb7bc2c7bcf92502c7"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v4/results.xml": {
+      "bytes": 15089,
+      "sha256": "958787cf55ba48d65a3f448a1e95220af58f61a6dd480fde628097e8406cf104"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v5/command.json": {
+      "bytes": 827,
+      "sha256": "13285350d16a2edada762f65877e6250f5aa0059c96f0a5a5e20bec2f83ac9b4"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v5/terminal.json": {
+      "bytes": 160,
+      "sha256": "cf600b1514bf20a0dab55a7976992f668c21499a8df02ff6de7eb8bfbb3f3a22"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v5/results.xml": {
+      "bytes": 1927,
+      "sha256": "6d67765a088cf0624a80b3bb75e97a7e0201b140046360537de865bf43db4dc2"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/normal/command.json": {
+      "bytes": 2436,
+      "sha256": "ebfce069ef7da4d694b66b83a8eb7970e98c6078c4a38c22c773195f815105cf"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/normal/collected.json": {
+      "bytes": 6913,
+      "sha256": "02651b0994d8aee5ae51b34485984a96ffcfc225749d478c329ff2ff5ca27016"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/normal/results.xml": {
+      "bytes": 9287,
+      "sha256": "0fe7a2a9a59ee63c5ba3b3551654d70542ce2ad83a0cd08183fe1ed468dc475f"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/normal/outcome-metadata-v2.json": {
+      "bytes": 897,
+      "sha256": "278832202bd44c95dd7873d9165779493d88b3f938d98572df6a7079faa0ee9a"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/ownership-v1/minimum/normal/receipt.json": {
+      "bytes": 1363,
+      "sha256": "8a22e870bae705ebc869b61f4a7ea75be84511ae9811dcca5659c4a6da915722"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-minimum-normal-v1.log": {
+      "bytes": 2416,
+      "sha256": "cd779fdc246bb6d8cb5b8a24ad12d4099ea066b28e28f56612e270ea95af9cc9"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/disabled/command.json": {
+      "bytes": 2440,
+      "sha256": "1001f4c682d456b5ceae26f253887cbddcd942414b47e6774bb8d27283afd817"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/disabled/collected.json": {
+      "bytes": 6913,
+      "sha256": "02651b0994d8aee5ae51b34485984a96ffcfc225749d478c329ff2ff5ca27016"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/disabled/results.xml": {
+      "bytes": 9287,
+      "sha256": "3e4ebc2cd64e3d645641e8f01c0902c0af4dab71f052552ea92b1388355607b4"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/minimum/disabled/outcome-metadata-v2.json": {
+      "bytes": 897,
+      "sha256": "942f9adb9d22daa72ab0e93dfb1d1a205981b019aea808b23993cbba75a758b1"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/ownership-v1/minimum/disabled/receipt.json": {
+      "bytes": 1366,
+      "sha256": "8c13e5e682559bcdba75278a84691c14ec040db39dc01db6299ffaad7f436552"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-minimum-disabled-v1.log": {
+      "bytes": 2416,
+      "sha256": "9fb77a53bbc491472019cc644c868b80641dd20bc36dd84acefbffd20ac81b6c"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v1/command.json": {
+      "bytes": 1656,
+      "sha256": "92bd6a287a8a6fceb60b6c40203e68fd72ea6f50d80763977468c4cc3046698e"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v1/terminal.json": {
+      "bytes": 174,
+      "sha256": "e0a5b112bd3fcf0659d7c3afba9ff379e741b6a96e007b87093fc4f3294adb5d"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v1/results.xml": {
+      "bytes": 34744,
+      "sha256": "89611472713fad288ed15bbdf5fdc0e06aa15060d18efc06ee7356250e71bd91"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v3/command.json": {
+      "bytes": 1013,
+      "sha256": "51af9b4c04fcf50e34789a46b62302c7e09a62941c71f17c65869b41f612dd0b"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v3/terminal.json": {
+      "bytes": 174,
+      "sha256": "bc6542080c27c3ca5657f27a01b37eee617058b3d7db6e71869c840f34fa5f7f"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v3/results.xml": {
+      "bytes": 1026,
+      "sha256": "fffed469db8d795f8b97fa7c0b94f45cb9c8f53d69e73e5dc7a574162f9aa214"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v4/command.json": {
+      "bytes": 932,
+      "sha256": "932cc8b4260ea4ebb410595547bdbd3083a7aca0e4404cecf5c6a42052ffbef3"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v4/terminal.json": {
+      "bytes": 174,
+      "sha256": "a3ec61220a5eb87d1923d24a0d161ccb8ede287af95ff266f4ef55bf7b0f6800"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v4/results.xml": {
+      "bytes": 15089,
+      "sha256": "4d4ac70f4a58e11941c348c825cb14527111a28e22de5c4372801be178640ea1"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v5/command.json": {
+      "bytes": 817,
+      "sha256": "ee1d57c82ec75621a117e6933b619ba4d54d109d0cbc57c0c6177be732c0ff3b"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v5/terminal.json": {
+      "bytes": 175,
+      "sha256": "c6df59871e26e833b2db2efb9511439f85558707904540072ad3eeb658da02d6"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v5/results.xml": {
+      "bytes": 1927,
+      "sha256": "af6a404beaff7dd3c66516a10fb8b00292b25a7fe5ba7e6afc3c1c7ba4dea6e4"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/normal/command.json": {
+      "bytes": 2429,
+      "sha256": "1649d514ad5a557a49281f84fab6d46923f73ce68d747e6eaa3e1b26ee45f55c"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/normal/collected.json": {
+      "bytes": 6913,
+      "sha256": "02651b0994d8aee5ae51b34485984a96ffcfc225749d478c329ff2ff5ca27016"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/normal/results.xml": {
+      "bytes": 9287,
+      "sha256": "e4deb4a75b50cb6c4c36dbc61d77a2e2fbe909ff972f39c4a6baa5f068cfbaa0"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/normal/outcome-metadata-v2.json": {
+      "bytes": 897,
+      "sha256": "71cf74887f32fade2c93f1708dce3e8d0bad205802c583998aa9ad59748a875f"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/ownership-v1/modern/normal/receipt.json": {
+      "bytes": 1361,
+      "sha256": "c53f34969f142b4969f4aa55f3a7b7852f5288adf42872319b5bcb787a07b5be"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-modern-normal-v1.log": {
+      "bytes": 1770,
+      "sha256": "1ee7b4043d2a2209e437b90ffa05d2300fef3b7d89c19cb93c438c87407122cd"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/disabled/command.json": {
+      "bytes": 2433,
+      "sha256": "a9b5cfb196efefd5e0bfae9762d5eb22db079d93d1b7e5f367edbb898037f6a8"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/disabled/collected.json": {
+      "bytes": 6913,
+      "sha256": "02651b0994d8aee5ae51b34485984a96ffcfc225749d478c329ff2ff5ca27016"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/disabled/results.xml": {
+      "bytes": 9287,
+      "sha256": "fc4805366c1238bd2ff65d9235744aa557ca2f29523b2e480c93c40572a489b9"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-v1/modern/disabled/outcome-metadata-v2.json": {
+      "bytes": 897,
+      "sha256": "e9d620a65e3b1c0117d3c22677bd2064932268a47871cb3f5a2ef2c46975d1d9"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/ownership-v1/modern/disabled/receipt.json": {
+      "bytes": 1364,
+      "sha256": "28bf0ba7fd5b56df54cc9e0f29087aaf57c812dbbd44e939154d7270d243c723"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/runtime-modern-disabled-v1.log": {
+      "bytes": 1770,
+      "sha256": "1e9c7730968186e35feea2e9db10c73fea739c55181a78d8a43560f98210a015"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/component-v1/commands.json": {
+      "bytes": 5463,
+      "sha256": "df22712c0d1cafc385973545184dcf619f3603a64dc20cc177a550a60adedaf7"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/component-v1/terminal.json": {
+      "bytes": 203,
+      "sha256": "72e5a071327e8b4b09fe9590388dda9431d8e5bfa5ce52141c89287878b3ae8e"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/component-v1/SDK-glue.d": {
+      "bytes": 1286,
+      "sha256": "d4f52b413c0f073e6aa7db0090f7b21aa5a7bddf14461443d415e5feabf1618e"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/component-v1/minimum/identity.json": {
+      "bytes": 1309,
+      "sha256": "c7ad80b7b74218630d2e52905ae4d44bf1a71ff49d68b936265d2557bcdeb0f4"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/component-v1/modern/identity.json": {
+      "bytes": 1305,
+      "sha256": "2799a420fcb4a53d9c4ddbf0dd7b6eb6a95f7e798b5871e7b3b80922094c2d6a"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/build_component_v1.py": {
+      "bytes": 3775,
+      "sha256": "f1d089f48b0593e900a34a428a9fb88c550d670bfdb0e681e95e5faa3a543c39"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/run_runtime_v1.py": {
+      "bytes": 4152,
+      "sha256": "327d61e2453991c149fbb31de0b958bbb9e3d879e96987001544f1b4d1ae2486"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/recover_runtime_metadata_v2.py": {
+      "bytes": 1521,
+      "sha256": "2a87f9d2be23f7f2fad41bb5b0e26cef2d288ff916b994297e4edca016297925"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/observe_ownership_v1.py": {
+      "bytes": 1590,
+      "sha256": "7e7a0271f4363df6d1ccb0ee84d9cbe0eed063717d0b86917872d8a17df4e965"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/run_pure_v1.py": {
+      "bytes": 2677,
+      "sha256": "50f0695178aeef30d2de5d8c68026467a4ee16f7cc7be98f64e9cb746aab9ac0"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/run_pure_v2.py": {
+      "bytes": 2096,
+      "sha256": "0b06dfc412bfc3d664a33cef04063e1e148c66ea0ff707bba0b8d43065e50581"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/run_pure_v3.py": {
+      "bytes": 2094,
+      "sha256": "5458cb638221b90e6c85524566c7fd86b0aef046b62995e2f54f51ccbb07264a"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/run_pure_v4.py": {
+      "bytes": 2013,
+      "sha256": "2fe6b82f5e5ffa60f7b267a978d00bec197a66e5199dd7cbee3a853dfb8095d6"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/run_pure_v5.py": {
+      "bytes": 1904,
+      "sha256": "76d7ac3ee9b6ed56fd9a3cc2b9e66721d10cbb3d4c0a91912c196475510f00ad"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-minimum-v2.log": {
+      "bytes": 675,
+      "sha256": "cdc9275a63c7ddf318e69c1b17612688d7be2c6c036305f6466c0ee90c50e1d4"
+    },
+    "build/next-metrics-integration-v1/boundary-v3/pure-modern-v2.log": {
+      "bytes": 728,
+      "sha256": "c4d9ad674bbc1b832c85771926a39a09175d9600ef4d2ff1fc0e7d6598e00382"
+    },
+    "build/find-boundaries-vertical-independent-review-v1/review-v1.json": {
+      "bytes": 7172,
+      "sha256": "42e994d4b448001d0107de40a254692165f0045cc80b09703e60ae6abaa4738a"
+    },
+    "build/find-boundaries-v1/vertical-v1/handoff-v1.json": {
+      "bytes": 42935,
+      "sha256": "8745b069b736b605c9db28b9f1ada7da19abbfab09af840e34b99c16e471be0b"
+    }
+  },
+  "changed_source_pins": {
+    ".gitattributes": {
+      "raw_sha256": "8ffbfe012bf474763deb30a828fc7ee2074fe9ce33e5fbfed5a01e43c43f9cfa",
+      "canonical_lf_sha256": "ea56d53311eb325c000904b4b59a996161b12117d055ec8654070685fd8f58bb"
+    },
+    ".github/workflows/ci.yml": {
+      "raw_sha256": "11f80295a5b2bc3485eab364bf74f4b5e8b3676dde3076780640d75b45e04f88",
+      "canonical_lf_sha256": "11f80295a5b2bc3485eab364bf74f4b5e8b3676dde3076780640d75b45e04f88"
+    },
+    ".github/workflows/public-qualification.yml": {
+      "raw_sha256": "8a34d98b4d66c41c0dbbff5d7a4cc04d414a282e83f968fb1b298b222a3ee3e1",
+      "canonical_lf_sha256": "8a34d98b4d66c41c0dbbff5d7a4cc04d414a282e83f968fb1b298b222a3ee3e1"
+    },
+    "CMakeLists.txt": {
+      "raw_sha256": "272decb1538bb762c0dcf8e5abedd9a71a0d052c4de0c493ac3cc73d670933da",
+      "canonical_lf_sha256": "f371d1523ec28b5b8277ff3bee24540176424b8b52b9513ce93b1b2401f49985"
+    },
+    "benchmarks/coverage.py": {
+      "raw_sha256": "169eeb4e8dc048ccd8c76aa702ed67e5fc964f59f18f2cc7301c829c0f5aec88",
+      "canonical_lf_sha256": "cd657f4abf00470b28bce2035d0a2815b6ab779a2afcc46a082233d1660c7436"
+    },
+    "benchmarks/draw_polygon.py": {
+      "raw_sha256": "b049d18c67d8d2a3ebc02015fad2931f3768cbe2c6a2e830c6c87d6055dc8c82",
+      "canonical_lf_sha256": "b049d18c67d8d2a3ebc02015fad2931f3768cbe2c6a2e830c6c87d6055dc8c82"
+    },
+    "benchmarks/ellipse_perimeter.py": {
+      "raw_sha256": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90",
+      "canonical_lf_sha256": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90"
+    },
+    "benchmarks/find_boundaries.py": {
+      "raw_sha256": "cec658ce590bbc9a22a30b2974e6b98ddda58a2a1fd57978df04db5949d87cdf",
+      "canonical_lf_sha256": "cec658ce590bbc9a22a30b2974e6b98ddda58a2a1fd57978df04db5949d87cdf"
+    },
+    "benchmarks/label_pair_metrics.py": {
+      "raw_sha256": "5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1",
+      "canonical_lf_sha256": "5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1"
+    },
+    "coverage/API_IMPLEMENTATION_PATHS.json": {
+      "raw_sha256": "6a64f1e7428b19ba4b4de7ae0ce202af08570abbe45aa122f460670c69ac54ec",
+      "canonical_lf_sha256": "6a64f1e7428b19ba4b4de7ae0ce202af08570abbe45aa122f460670c69ac54ec"
+    },
+    "coverage/API_IMPLEMENTATION_PATHS.md": {
+      "raw_sha256": "26665812e6cc9f3f6f1235bd752a108d2198ec1ff87477f9b2fb791681a065de",
+      "canonical_lf_sha256": "26665812e6cc9f3f6f1235bd752a108d2198ec1ff87477f9b2fb791681a065de"
+    },
+    "coverage/README.md": {
+      "raw_sha256": "0bd4e71623bce181f1fffb7bab2e8f607d9418f95db5ea90f7846aeb3d335b5b",
+      "canonical_lf_sha256": "0bd4e71623bce181f1fffb7bab2e8f607d9418f95db5ea90f7846aeb3d335b5b"
+    },
+    "coverage/api.json": {
+      "raw_sha256": "e39b382b6bdd9f2e1253953430ef371617780d0e790e9af4b9bcd753c58d25cf",
+      "canonical_lf_sha256": "e39b382b6bdd9f2e1253953430ef371617780d0e790e9af4b9bcd753c58d25cf"
+    },
+    "coverage/contracts/contingency-table-frontend-v1.json": {
+      "raw_sha256": "b4166b7a5ebc2f81633be43be9f54e57c4b4681614bc6634f219eaa8803e8d9e",
+      "canonical_lf_sha256": "b4166b7a5ebc2f81633be43be9f54e57c4b4681614bc6634f219eaa8803e8d9e"
+    },
+    "coverage/contracts/contingency-table-source-context-v1.json": {
+      "raw_sha256": "8c65b7b4cd42bd8659a5538a985cb97284a1941e9d3e25c1877a3dc43611a9fc",
+      "canonical_lf_sha256": "8c65b7b4cd42bd8659a5538a985cb97284a1941e9d3e25c1877a3dc43611a9fc"
+    },
+    "coverage/contracts/current-public-qualification.json": {
+      "raw_sha256": "17e31b3bdcb5b9ccd0c4c93ffe2d6c23466895b703784b41f050391dbd4b5b64",
+      "canonical_lf_sha256": "17e31b3bdcb5b9ccd0c4c93ffe2d6c23466895b703784b41f050391dbd4b5b64"
+    },
+    "coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json": {
+      "raw_sha256": "b89c1021101571821c148e5ff16e6df095537f2e16ce8d35c9742fe8bc4f99a1",
+      "canonical_lf_sha256": "b89c1021101571821c148e5ff16e6df095537f2e16ce8d35c9742fe8bc4f99a1"
+    },
+    "coverage/contracts/draw-polygon-metrics-runtime-v1.json": {
+      "raw_sha256": "1c82e68961a4bc1aedfa60f5fe19b983ed064288bf042946a345d123b0f3e825",
+      "canonical_lf_sha256": "1c82e68961a4bc1aedfa60f5fe19b983ed064288bf042946a345d123b0f3e825"
+    },
+    "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": {
+      "raw_sha256": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
+      "canonical_lf_sha256": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0"
+    },
+    "coverage/contracts/find-boundaries-benchmark-binding-v1.json": {
+      "raw_sha256": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
+      "canonical_lf_sha256": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060"
+    },
+    "coverage/contracts/find-boundaries-benchmark-v1.json": {
+      "raw_sha256": "77385be1aa49309a35e362b90739043c0de07190c22031c79103b3b33f9f08d4",
+      "canonical_lf_sha256": "77385be1aa49309a35e362b90739043c0de07190c22031c79103b3b33f9f08d4"
+    },
+    "coverage/contracts/find-boundaries-frontend-v1.json": {
+      "raw_sha256": "d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f",
+      "canonical_lf_sha256": "d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f"
+    },
+    "coverage/contracts/find-boundaries-native-v1.json": {
+      "raw_sha256": "f4feca7d8ec7a0360fcb399eaf8997f83930a33f27fd9ad1ce1709eab36dc305",
+      "canonical_lf_sha256": "f4feca7d8ec7a0360fcb399eaf8997f83930a33f27fd9ad1ce1709eab36dc305"
+    },
+    "coverage/contracts/find-boundaries-sdk-v1.json": {
+      "raw_sha256": "292ff68e95dac9fd94234215d2506dea0cb881887a8d421ba18659bc2e277864",
+      "canonical_lf_sha256": "292ff68e95dac9fd94234215d2506dea0cb881887a8d421ba18659bc2e277864"
+    },
+    "coverage/contracts/find-boundaries-v1.json": {
+      "raw_sha256": "085aed6cd77364c09d33d1cae1e63ff189fdc7a2cb825b0ee259cb215faa06fc",
+      "canonical_lf_sha256": "085aed6cd77364c09d33d1cae1e63ff189fdc7a2cb825b0ee259cb215faa06fc"
+    },
+    "coverage/contracts/label-pair-ARE-metadata-context-v1.json": {
+      "raw_sha256": "db0271f27b041cf17fb7d3e2a5f5843f3af8f2b2c813d5be4bb68c009a095773",
+      "canonical_lf_sha256": "db0271f27b041cf17fb7d3e2a5f5843f3af8f2b2c813d5be4bb68c009a095773"
+    },
+    "coverage/contracts/label-pair-metrics-benchmark-v1.json": {
+      "raw_sha256": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+      "canonical_lf_sha256": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6"
+    },
+    "coverage/contracts/label-pair-metrics-native-v1.json": {
+      "raw_sha256": "9000fa4fb56ac30bb471aa59dbb188822342c1eb8b637eaa83fc4571b8c67520",
+      "canonical_lf_sha256": "9000fa4fb56ac30bb471aa59dbb188822342c1eb8b637eaa83fc4571b8c67520"
+    },
+    "coverage/contracts/label-pair-metrics-sdk-v1.json": {
+      "raw_sha256": "2f2a7f33f70540835f8afaef791765f25459b7197a5b8288ad14c8b25aa6130a",
+      "canonical_lf_sha256": "2f2a7f33f70540835f8afaef791765f25459b7197a5b8288ad14c8b25aa6130a"
+    },
+    "coverage/contracts/label-pair-metrics-v1.json": {
+      "raw_sha256": "f93108b85592744d4bff03122795e5c45039de39f85cfc7c7ec348b5a3e2ec96",
+      "canonical_lf_sha256": "f93108b85592744d4bff03122795e5c45039de39f85cfc7c7ec348b5a3e2ec96"
+    },
+    "coverage/contracts/label-pair-rand-native-v1.json": {
+      "raw_sha256": "9359293b03f7b3a4227aa7843865c128e5b617c3f4bc178a3210f8108e80746b",
+      "canonical_lf_sha256": "9359293b03f7b3a4227aa7843865c128e5b617c3f4bc178a3210f8108e80746b"
+    },
+    "coverage/evidence/next-metrics-integration-handoff-v1.json": {
+      "raw_sha256": "59a4e763098670e9f4d834ff4eed40668e890f61ea732a4151590617d9333a1b",
+      "canonical_lf_sha256": "59a4e763098670e9f4d834ff4eed40668e890f61ea732a4151590617d9333a1b"
+    },
+    "coverage/evidence/next-metrics-integration-handoff-v2.json": {
+      "raw_sha256": "f37bae4ca8ba3e7da156f9a5b4856c3ae3c927415551a3444b5d6fae71344258",
+      "canonical_lf_sha256": "f37bae4ca8ba3e7da156f9a5b4856c3ae3c927415551a3444b5d6fae71344258"
+    },
+    "include/skimagexx/find_boundaries.hpp": {
+      "raw_sha256": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+      "canonical_lf_sha256": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854"
+    },
+    "include/skimagexx/label_pair_metrics.hpp": {
+      "raw_sha256": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+      "canonical_lf_sha256": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66"
+    },
+    "pyproject.toml": {
+      "raw_sha256": "8bb611200035980a4df9e212d1d80c12ffa6890174fc851936976a51d6197866",
+      "canonical_lf_sha256": "8bb611200035980a4df9e212d1d80c12ffa6890174fc851936976a51d6197866"
+    },
+    "python/skimagexx/_contingency_table.py": {
+      "raw_sha256": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+      "canonical_lf_sha256": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27"
+    },
+    "python/skimagexx/_draw_ellipse_perimeter.py": {
+      "raw_sha256": "5a53921e9556fdbb2701f2d941ccea612ec44f0e019af7fe01cf066ce4eacd0f",
+      "canonical_lf_sha256": "5a53921e9556fdbb2701f2d941ccea612ec44f0e019af7fe01cf066ce4eacd0f"
+    },
+    "python/skimagexx/_find_boundaries.py": {
+      "raw_sha256": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1",
+      "canonical_lf_sha256": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1"
+    },
+    "python/skimagexx/_label_pair_metrics.py": {
+      "raw_sha256": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486",
+      "canonical_lf_sha256": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486"
+    },
+    "python/skimagexx/coverage.py": {
+      "raw_sha256": "acac7f7d0f59df2a7085c65541c09a87bd0734b6476afd8d0ca45cbce244269a",
+      "canonical_lf_sha256": "0d4397e680201ecc4ead7884c6f5ea4adc6b85750fa081ccebcac97c882090a0"
+    },
+    "python/skimagexx/metrics.py": {
+      "raw_sha256": "92969744cfa0b084dc62c085e61fd517e40978bb1dd3e55e99286588f03921f0",
+      "canonical_lf_sha256": "92969744cfa0b084dc62c085e61fd517e40978bb1dd3e55e99286588f03921f0"
+    },
+    "python/skimagexx/segmentation.py": {
+      "raw_sha256": "e425334204073eea3512f476161518d0010889a9132c4f6ca66d108df74313d2",
+      "canonical_lf_sha256": "e425334204073eea3512f476161518d0010889a9132c4f6ca66d108df74313d2"
+    },
+    "src/bind_find_boundaries.cpp": {
+      "raw_sha256": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+      "canonical_lf_sha256": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961"
+    },
+    "src/bind_label_pair_metrics.cpp": {
+      "raw_sha256": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+      "canonical_lf_sha256": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5"
+    },
+    "src/bindings.cpp": {
+      "raw_sha256": "aa0f398893934e410c7b77dd51b7183d06f0d3b19edd09cbb46eb11b59eb83bc",
+      "canonical_lf_sha256": "56bf7652f661f15fec61a2f7e2a41568828e491e1ff6e71ec9d2e48f7077422c"
+    },
+    "src/find_boundaries.cpp": {
+      "raw_sha256": "9f910ba308ab90189c6a8c6386a1fbf40ffab9093437ad1f0dfad392e2c53885",
+      "canonical_lf_sha256": "9f910ba308ab90189c6a8c6386a1fbf40ffab9093437ad1f0dfad392e2c53885"
+    },
+    "src/label_pair_metrics.cpp": {
+      "raw_sha256": "3a8870665e618ec22eb5b7b159162e06f2452745f547f6eeb7febf705958967a",
+      "canonical_lf_sha256": "3a8870665e618ec22eb5b7b159162e06f2452745f547f6eeb7febf705958967a"
+    },
+    "tests/cmake_consumer/CMakeLists.txt": {
+      "raw_sha256": "9eb60c62748c90f20a50c2bb4ea0e7bab3a2c8ff72b7d06530924f345694858f",
+      "canonical_lf_sha256": "9eb60c62748c90f20a50c2bb4ea0e7bab3a2c8ff72b7d06530924f345694858f"
+    },
+    "tests/cmake_consumer/find_boundaries_consumer.hpp": {
+      "raw_sha256": "ba46ec0259db0dbfd04c90b9843f10984463c8a0fc05ef90d6be47f499fba0b8",
+      "canonical_lf_sha256": "ba46ec0259db0dbfd04c90b9843f10984463c8a0fc05ef90d6be47f499fba0b8"
+    },
+    "tests/cmake_consumer/label_pair_metrics_consumer.cpp": {
+      "raw_sha256": "6ef618dc7459f78798142dcf27d94b2760405fccd5b8216d4d73bd536c2311a3",
+      "canonical_lf_sha256": "6ef618dc7459f78798142dcf27d94b2760405fccd5b8216d4d73bd536c2311a3"
+    },
+    "tests/contingency_preweighted_controls.hpp": {
+      "raw_sha256": "b9efd5b212f13a465e888c100647af35970b00f688594a92058983174a447c2b",
+      "canonical_lf_sha256": "b9efd5b212f13a465e888c100647af35970b00f688594a92058983174a447c2b"
+    },
+    "tests/contingency_table_context.py": {
+      "raw_sha256": "05660bdd160b46aaac4502c3b5c71c54244340f0ee25e5512efc7180d3776f00",
+      "canonical_lf_sha256": "05660bdd160b46aaac4502c3b5c71c54244340f0ee25e5512efc7180d3776f00"
+    },
+    "tests/find_boundaries_contract.py": {
+      "raw_sha256": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c",
+      "canonical_lf_sha256": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c"
+    },
+    "tests/find_boundaries_observer.py": {
+      "raw_sha256": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473",
+      "canonical_lf_sha256": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473"
+    },
+    "tests/fixtures/find_boundaries_originals_v1.hpp": {
+      "raw_sha256": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
+      "canonical_lf_sha256": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033"
+    },
+    "tests/fixtures/label_pair_metrics_originals_v1.hpp": {
+      "raw_sha256": "20184b5ef6739442c90f14b9c538e22905c12984a9e48ce3dc83d83622e84a8d",
+      "canonical_lf_sha256": "20184b5ef6739442c90f14b9c538e22905c12984a9e48ce3dc83d83622e84a8d"
+    },
+    "tests/fixtures/label_pair_rand_originals_v1.hpp": {
+      "raw_sha256": "68a7bfe953277420a9ff1a6796759b900a0366f39dd585b582ad99dc3f521d5e",
+      "canonical_lf_sha256": "68a7bfe953277420a9ff1a6796759b900a0366f39dd585b582ad99dc3f521d5e"
+    },
+    "tests/label_pair_metrics_contract.py": {
+      "raw_sha256": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27",
+      "canonical_lf_sha256": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27"
+    },
+    "tests/label_pair_metrics_native_controls.hpp": {
+      "raw_sha256": "07dea67653583d9e1455f53a5d4d374e2f16090fede8b7d3478be42485d28c86",
+      "canonical_lf_sha256": "07dea67653583d9e1455f53a5d4d374e2f16090fede8b7d3478be42485d28c86"
+    },
+    "tests/label_pair_metrics_observer.py": {
+      "raw_sha256": "476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc",
+      "canonical_lf_sha256": "476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc"
+    },
+    "tests/test_api.py": {
+      "raw_sha256": "6393ab44adc436abbae91fc064adce7c5a046ac1a4e45e7c0064f4726716c4ad",
+      "canonical_lf_sha256": "68d20001fbfbeef2af727f4cd27adcfcf22198dcf8f9fd4e79ef0bda8ac3af09"
+    },
+    "tests/test_ci_measurement_isolation.py": {
+      "raw_sha256": "17794a9d7d86868680d7a1b1df23d0559709521135471a7c63eef20b72b2b40b",
+      "canonical_lf_sha256": "17794a9d7d86868680d7a1b1df23d0559709521135471a7c63eef20b72b2b40b"
+    },
+    "tests/test_component_consumers_native.cpp": {
+      "raw_sha256": "9e037f798541093d306e4f0fd300e8ebbff8d83f2067ec5fdd2ff409dfe33107",
+      "canonical_lf_sha256": "9e037f798541093d306e4f0fd300e8ebbff8d83f2067ec5fdd2ff409dfe33107"
+    },
+    "tests/test_contingency_table_public.py": {
+      "raw_sha256": "864743b66af9e456d68cc256b50d4f27a5b360ce0522c3bec252be8d013b37d6",
+      "canonical_lf_sha256": "864743b66af9e456d68cc256b50d4f27a5b360ce0522c3bec252be8d013b37d6"
+    },
+    "tests/test_draw_ellipse_perimeter_public.py": {
+      "raw_sha256": "e8db99a1ae85ceca6b92be81635aea1505d9243261014a0e8720061e3d88bcb9",
+      "canonical_lf_sha256": "e8db99a1ae85ceca6b92be81635aea1505d9243261014a0e8720061e3d88bcb9"
+    },
+    "tests/test_draw_polygon_benchmark.py": {
+      "raw_sha256": "94ed05f8eea97f7cc9da0908502e48d22ebcff3e4851242dece8d1625588fb30",
+      "canonical_lf_sha256": "94ed05f8eea97f7cc9da0908502e48d22ebcff3e4851242dece8d1625588fb30"
+    },
+    "tests/test_dtype_aliases.py": {
+      "raw_sha256": "9f65b6e69e5eb39f337e002196eb2a262364d1e87d2126b15fc791d02fc19307",
+      "canonical_lf_sha256": "9f65b6e69e5eb39f337e002196eb2a262364d1e87d2126b15fc791d02fc19307"
+    },
+    "tests/test_dtype_metadata.py": {
+      "raw_sha256": "7a8cb990c314296a637202acfc4afc93b69d87017d9638a9d76f0f34cb6a1fec",
+      "canonical_lf_sha256": "7a8cb990c314296a637202acfc4afc93b69d87017d9638a9d76f0f34cb6a1fec"
+    },
+    "tests/test_ellipse_fallback_policy.py": {
+      "raw_sha256": "27f1213a7ced5b7ec06aa691dcb8cc5fca8d7cc07aaf37b8b21ae8d774dba3cf",
+      "canonical_lf_sha256": "27f1213a7ced5b7ec06aa691dcb8cc5fca8d7cc07aaf37b8b21ae8d774dba3cf"
+    },
+    "tests/test_ellipse_perimeter_benchmark.py": {
+      "raw_sha256": "7fb4a3332b32a1f8aa5172a9d3d4eb4c8b1d8d2a4dbfc1c506b09f19a2888e8b",
+      "canonical_lf_sha256": "7fb4a3332b32a1f8aa5172a9d3d4eb4c8b1d8d2a4dbfc1c506b09f19a2888e8b"
+    },
+    "tests/test_find_boundaries_benchmark.py": {
+      "raw_sha256": "75bbcf6839b0fa57b82de50311032e92f87c81e720eab06eccb290edbd85b290",
+      "canonical_lf_sha256": "75bbcf6839b0fa57b82de50311032e92f87c81e720eab06eccb290edbd85b290"
+    },
+    "tests/test_find_boundaries_benchmark_intake.py": {
+      "raw_sha256": "ac0e4bf8c70998f17d4b979283ca5ff4af68499355479ad0c7b178d683bbe609",
+      "canonical_lf_sha256": "ac0e4bf8c70998f17d4b979283ca5ff4af68499355479ad0c7b178d683bbe609"
+    },
+    "tests/test_find_boundaries_default.py": {
+      "raw_sha256": "eed5c133862a01173f13e4e50f2e527f3879d43345e3ab07c4f114a02f64263c",
+      "canonical_lf_sha256": "abfa45c9ac7feedb78fb7f1f804afe77925938379af6e0966a28720337eca8ea"
+    },
+    "tests/test_find_boundaries_frontend_contract.py": {
+      "raw_sha256": "2fab9ffda8ce5a4789163737a2d22a5dbb1e1eba1e86e8086907317f1d5ae231",
+      "canonical_lf_sha256": "2fab9ffda8ce5a4789163737a2d22a5dbb1e1eba1e86e8086907317f1d5ae231"
+    },
+    "tests/test_find_boundaries_intake.py": {
+      "raw_sha256": "4f91d630c1c5986353c8fbb0ee90d002a4e055c9d2a9ff8a1086bf89eb21758f",
+      "canonical_lf_sha256": "4f91d630c1c5986353c8fbb0ee90d002a4e055c9d2a9ff8a1086bf89eb21758f"
+    },
+    "tests/test_find_boundaries_native.cpp": {
+      "raw_sha256": "d32690d8768d54be4238c47d51e74d7fc05aed941fa384d3b976467431241e56",
+      "canonical_lf_sha256": "d32690d8768d54be4238c47d51e74d7fc05aed941fa384d3b976467431241e56"
+    },
+    "tests/test_find_boundaries_public.py": {
+      "raw_sha256": "d3b4699020146489c01a75ec29155167e438c0fcb222f30963c1eca5d86d2a15",
+      "canonical_lf_sha256": "d3b4699020146489c01a75ec29155167e438c0fcb222f30963c1eca5d86d2a15"
+    },
+    "tests/test_find_boundaries_reference.py": {
+      "raw_sha256": "018447b5f4804c9136f83a5b93595a45b88d15ed545d61fc9270b83c62368774",
+      "canonical_lf_sha256": "018447b5f4804c9136f83a5b93595a45b88d15ed545d61fc9270b83c62368774"
+    },
+    "tests/test_find_boundaries_sdk_scope.py": {
+      "raw_sha256": "9ff3f46656e97a9e88c1610cf0bb672a40fdabe543578d1ba8b6337ef7877db4",
+      "canonical_lf_sha256": "9ff3f46656e97a9e88c1610cf0bb672a40fdabe543578d1ba8b6337ef7877db4"
+    },
+    "tests/test_label_pair_metrics_benchmark.py": {
+      "raw_sha256": "64163a18e0d011310e7c7aebd548ca5de9f618001324e8df8b6276705ab3c468",
+      "canonical_lf_sha256": "64163a18e0d011310e7c7aebd548ca5de9f618001324e8df8b6276705ab3c468"
+    },
+    "tests/test_label_pair_metrics_benchmark_intake.py": {
+      "raw_sha256": "2b6737329eed245f0a0d2106ef4866ec00ba4f79d268454ae6749f81a1483c09",
+      "canonical_lf_sha256": "2b6737329eed245f0a0d2106ef4866ec00ba4f79d268454ae6749f81a1483c09"
+    },
+    "tests/test_label_pair_metrics_counts_binding.py": {
+      "raw_sha256": "1b6936bc37bdfe01ef5ec3fcce263735abcdc808469e63db7df24d8f02e7cafc",
+      "canonical_lf_sha256": "1b6936bc37bdfe01ef5ec3fcce263735abcdc808469e63db7df24d8f02e7cafc"
+    },
+    "tests/test_label_pair_metrics_default.py": {
+      "raw_sha256": "0d9ea75e8c9be7fbc55f865755a1337531b43e89c5174f2804b7fc6dc37ffa00",
+      "canonical_lf_sha256": "0d9ea75e8c9be7fbc55f865755a1337531b43e89c5174f2804b7fc6dc37ffa00"
+    },
+    "tests/test_label_pair_metrics_native.cpp": {
+      "raw_sha256": "7b58cd032fa3e67eb7b8ea41bce9e376b26da209f3fb67dd0a1915e7b025b435",
+      "canonical_lf_sha256": "7b58cd032fa3e67eb7b8ea41bce9e376b26da209f3fb67dd0a1915e7b025b435"
+    },
+    "tests/test_label_pair_metrics_reference.py": {
+      "raw_sha256": "5204f1b8e18729889aa9420659d10685a6c26c2d6f5b67b515eec1c8974d1cd2",
+      "canonical_lf_sha256": "5204f1b8e18729889aa9420659d10685a6c26c2d6f5b67b515eec1c8974d1cd2"
+    },
+    "tests/test_label_pair_preweighted_native.cpp": {
+      "raw_sha256": "145ee5946cb1d9f315e140738ad2e4fb3ab9dd4737311172e4117f5c440705d2",
+      "canonical_lf_sha256": "145ee5946cb1d9f315e140738ad2e4fb3ab9dd4737311172e4117f5c440705d2"
+    },
+    "tests/test_label_pair_rand_binding.py": {
+      "raw_sha256": "6d4ff50369938fe1d6a4d182d754f15c9ffa98a11b03d0ca226f06b4a31a3c0e",
+      "canonical_lf_sha256": "6d4ff50369938fe1d6a4d182d754f15c9ffa98a11b03d0ca226f06b4a31a3c0e"
+    },
+    "tests/test_label_pair_rand_native.cpp": {
+      "raw_sha256": "9ee06fa399533d65ca5ab519ba53c98ef21ca4f9b8fe9266df1b3f53fdc961ce",
+      "canonical_lf_sha256": "9ee06fa399533d65ca5ab519ba53c98ef21ca4f9b8fe9266df1b3f53fdc961ce"
+    },
+    "tests/test_label_pair_rand_public.py": {
+      "raw_sha256": "5dba836440cf224d0a21a3ed59627b36310acdd0172e0c22db4a12104e066a9c",
+      "canonical_lf_sha256": "5dba836440cf224d0a21a3ed59627b36310acdd0172e0c22db4a12104e066a9c"
+    },
+    "tests/test_public_qualification.py": {
+      "raw_sha256": "b8457d0cd988bd55367c7086e2e485cab11c47ea389f6b9c1ff4f6e0fb56f4a9",
+      "canonical_lf_sha256": "b8457d0cd988bd55367c7086e2e485cab11c47ea389f6b9c1ff4f6e0fb56f4a9"
+    },
+    "tests/test_rank_corpus_sdk_scope.py": {
+      "raw_sha256": "67313c76bb6fadcc3218bb3f954b3f77436c4f628c129384a83dd0f7acb74ee5",
+      "canonical_lf_sha256": "67313c76bb6fadcc3218bb3f954b3f77436c4f628c129384a83dd0f7acb74ee5"
+    },
+    "tests/test_rank_statistics_products.py": {
+      "raw_sha256": "d526d32644b8e901adbb002a321a594ff33c85819214c39dbcb09dcce80bd28d",
+      "canonical_lf_sha256": "d526d32644b8e901adbb002a321a594ff33c85819214c39dbcb09dcce80bd28d"
+    },
+    "third_party/scipy-sparse-LICENSE.txt": {
+      "raw_sha256": "f34ac3c2923d1b8969554b9d5b8cd7728156761d3b12f33f61998af64c576ee9",
+      "canonical_lf_sha256": "f34ac3c2923d1b8969554b9d5b8cd7728156761d3b12f33f61998af64c576ee9"
+    },
+    "tools/inventory.py": {
+      "raw_sha256": "7da5bdf2fbc6672a5baded450dc1a92cd7c783749156c3170f4f589b33cff533",
+      "canonical_lf_sha256": "9b6f58a9e741d4fd532b4fa6be33592e5082df19258791c91871f8398b59b68c"
+    },
+    "tools/public_qualification.py": {
+      "raw_sha256": "8469ddb85f89613bb75fce68544cba62b0746744ce66e57e1b67f16b35436f56",
+      "canonical_lf_sha256": "8469ddb85f89613bb75fce68544cba62b0746744ce66e57e1b67f16b35436f56"
+    }
+  },
+  "component_build": {
+    "status": "PASS_TWO_INITIALIZERS_TWO_NARROW_LINKS_SHARED_SDK_GLUE_SYNTAX",
+    "leaf_recompiles": 0,
+    "binder_recompiles": 0,
+    "fullcore_SDK_builds": 0,
+    "original_calls": 0,
+    "timed_batches": 0
+  },
+  "external_binding": {
+    "flag": "--root-binding",
+    "base_contract": "coverage/contracts/find-boundaries-benchmark-binding-v1.json",
+    "base_contract_raw_sha256": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
+    "driver_canonical_lf_sha256": "cec658ce590bbc9a22a30b2974e6b98ddda58a2a1fd57978df04db5949d87cdf",
+    "controller_owner": "boundary_worker",
+    "route": "boundary",
+    "fields": "Existing ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS envelope plus prepared_source FULL runtime.source dict; producer(run,revision,artifact,sha256); runtime_path/hash; CMake hash; stager path/hash; basecontract hash; root_go_path only. GO contains binding SHA, avoiding a reciprocal hash cycle.",
+    "metrics_and_ellipse": "No analogous unbound tracked runtime fields; existing external controller/rootcontract enforcement retained. Actual positive CLI/genuine binding remains a root gate."
+  },
+  "disclosures": {
+    "providers": "Boundary NumPy allocation/layout/class metadata; C++ typed extrema/comparison/bool decisions; unsupported rounded/wide ordinary extrema, ordinary64outer, float/swapped/rank0/empty/protocol/externalbuffer frontiers stay explicit.",
+    "paths": "Typed aligned positive-C-row <=32bit thick/inner interiors may vectorize baselineSSE2; scalar borders/strides/outer/subpixel remain. Runtime-disabled optionalAVX is not compiler-scalar proof; retained truecompiler-scalar component proof reused.",
+    "performance": "No neworiginal captures, timing batches or speed claim. Three APIs require relevant one-thread public-call original evidence; existing historical controllers/raw data remain source-specific."
+  },
+  "remaining_gates": [
+    "Independent integration review and COMPLETE actual workflow source-check command both retained Windows311/313 with normal conftest/plugins/no fail-fast on exact clean successor. Local181node unions are not that barrier.",
+    "Root readiness then one exact-source four-profile genuine release qualification including native ownership/SDK/default/hotswap/scalar scopes and independent product admission.",
+    "Root binds external consumer actualproducer/source/runtime/core/admission/stager/GO only after genuine minimum stager admission, performs realCLI stopped-before-sampler controls, then isolated one-thread original/native comparison; do not rewrite preparedsource or dispatch redundant minimumprepare.",
+    "Root main delivery and counts credit only after required admissions."
+  ],
+  "closeout": {
+    "result": "Local source181effective nodes/profile; boundary actual shared runtime61XMLPASS/profile across fourprofiles; fresh builtin/default1/optional4 observation4PASS; two initializer/narrowlinks and sharedSDKglue syntaxPASS. Overall runtime processes retain post-test receiptwriter exit1, not relabeled PASS.",
+    "reuse": "Frozen08a native/frontend/SDK objects and source pins reused; old two-metric local proofs retain only their established unchanged-family scope. No wholecore/SDK/env rebuild, original or timing, old archive rehash, or passing numerical replay.",
+    "avoidable_work": "Five stale source selector/count assertions/profile exposed during178-node bounded run; corrected only five. A scratch runner retained wrong output prefix; its retries failed mkdir before tests/overwrites, then fixed fresh prefix. Post-pytest writer mappingproxy serialization failed after61PASS/profile; retained logs/XML and recovered metadata without numerical replay. Report provenance extension reran only12boundary source guards/profile. Source/GUI wildcard probes and unobserved costs remain unknown.",
+    "next_owner": "root/readiness reviewer",
+    "next_trigger": "Clean final hash -> independent full sourcebarriers; root updates existing EXECUTION_PLAN/work_items terminal/sourcecounts and external-binding/stager nextgate. No duplicate fullbarrier started here."
+  }
+}

@@ -13,7 +13,7 @@ import sys
 import warnings
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = ROOT / 'coverage/contracts/draw-polygon-metrics-runtime-v1.json'
+CONTRACT = ROOT / 'coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json'
 REFERENCE = ROOT / 'coverage/contracts/draw-polygon-v1.json'
 
 
@@ -108,7 +108,7 @@ def validate_source_closure(contract):
     assert {k:v for k,v in contract.items() if k not in ('source_closure','scope','predecessor_binding')} == {k:v for k,v in predecessor.items() if k not in ('source_closure','scope')}
     assert set(contract['source_closure']) == set(predecessor['source_closure'])
     fragments = binding['CMake_inverse']
-    assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == '91c52b3d7b3f2e9a372221633bd2a307fe560f0cfbd4926711940e84ec900321'
+    assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == 'f24de5ec75cf8a864446b5fe8a345cd86a3681aecb79adc5b4a8ea76b1e00e0e'
     for name, pin in contract['source_closure'].items():
         raw = (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
         assert hashlib.sha256(raw).hexdigest() == pin
@@ -120,7 +120,7 @@ def validate_source_closure(contract):
             assert hashlib.sha256(raw).hexdigest() == predecessor['source_closure'][name]
         elif name == 'src/bindings.cpp':
             fragments = binding['binding_inverse']
-            assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == '991ffdb630da65bae03caf5e8059131e4ae3d3c2155fea480eda86af048ce43f'
+            assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == '6456e0d66a16f7fe990deb603cf80671401322e36aa28a4665d7be294981004e'
             for fragment in fragments:
                 current, previous = fragment['current'].encode(), fragment['predecessor'].encode()
                 assert current and raw.count(current) == 1
