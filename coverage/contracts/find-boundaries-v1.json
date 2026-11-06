@@ -213,16 +213,16 @@
       "layout": "C"
     },
     {
-      "id": "find_boundaries/signed-high-words",
+      "id": "find_boundaries/signed-inrange-rounded-words",
       "shape": [
         2,
         2
       ],
       "values": [
-        -9007199254740993,
-        0,
+        9007199254740992,
         9007199254740993,
-        9223372036854775807
+        9007199254740993,
+        9007199254740994
       ],
       "dtype": "int64",
       "mode": "thick",
@@ -231,21 +231,21 @@
       "layout": "C"
     },
     {
-      "id": "find_boundaries/unsigned-high-background",
+      "id": "find_boundaries/unsigned-u32-background",
       "shape": [
         2,
         2
       ],
       "values": [
         0,
-        9223372036854775809,
-        9223372036854775810,
-        18446744073709551615
+        2147483649,
+        2147483650,
+        4294967295
       ],
-      "dtype": "uint64",
+      "dtype": "uint32",
       "mode": "outer",
       "connectivity": 1,
-      "background": 9223372036854775809,
+      "background": 2147483649,
       "layout": "C"
     },
     {
@@ -659,11 +659,11 @@
     }
   ],
   "source_freeze": {
-    "include/skimagexx/find_boundaries.hpp": "8750519525d3b09aeb1a4962ca683cfd4daac74d5f841fa85315b7b2a1860e49",
-    "tests/find_boundaries_contract.py": "d2803bf8efceadfe50c1f5360c3499f0cab500153d74882914be809d06bac156",
-    "tests/find_boundaries_observer.py": "bbfe2e64cd8b26a1ccc0bab57e74541fa744f67c79717bb65554b1525e0f5904",
-    "tests/test_find_boundaries_reference.py": "46befc5dfcb4073f4c35b2386791f8db2e8c2d46abec013ad3baf71a4cc7ce5e",
-    "tests/test_find_boundaries_intake.py": "01c0b2526a64d7a6e7851d9fcc8f0a06f1b5247d56a600eff61d58b879ea0e59"
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "tests/find_boundaries_contract.py": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c",
+    "tests/find_boundaries_observer.py": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473",
+    "tests/test_find_boundaries_reference.py": "018447b5f4804c9136f83a5b93595a45b88d15ed545d61fc9270b83c62368774",
+    "tests/test_find_boundaries_intake.py": "4f91d630c1c5986353c8fbb0ee90d002a4e055c9d2a9ff8a1086bf89eb21758f"
   },
   "upstream_source": {
     "boundaries": {
@@ -740,7 +740,7 @@
     "subpixel": "Expanded extents2*s-1, ordinary output<=25positions; np.pad adds1edge border, 3^rank rolling windows stay within padded owned array. Dtype-max collision preserved exactly. Zero-axis case raises at source np.zeros negative extent before view_as_windows.",
     "errors": "List lacksdtype before any footprint/filter; connectivityNone fails its pure-Python comparison before footprint/filter; empty-subpixel negative allocation before rolling windows. Record actual errors, do not synthesize messages.",
     "shape_dtype_order": "Ordinary result comes from source empty_like/minmax/ufunc allocation, potentially K/F/permuted order. Captures must preserve this; no assumed C-only result. Subpixel uses source zeros_like Cexpanded buffer.",
-    "integer_semantics": "No floating label normalization: signed/u64 high words, max sentinel, noncanonicalbool conversion, arbitraryintbackground that cannot equal anyuint8label. Outer source expression evaluated literally, including high/nonzero background."
+    "integer_semantics": "SciPy min/max converts typed inputs to double, chooses extrema, casts back at every pass. All ordinary int8/16/32/u8/u16/u32 values AND generated dtype maxima are exact in double and cast-safe. Ordinary i64 thick control uses only [2^53,2^53+2], rounds nonexact2^53+1 but every rounded double remains in int64 range. No ordinary int64/u64 outer recipe: even low input labels may create unsafe dtype-max sentinels before erosion. Full-width uint64-max is retained ONLY in subpixel, whose integer unique/comparison path bypasses ndimage."
   },
   "prospective_call_budget_per_profile": {
     "top_find_boundaries": 32,
@@ -757,13 +757,15 @@
       "Existing execution.hpp partition/globalworker default1",
       "Existing direct-neighbor/reflection knowledge; do not allocate four morphology intermediates or add generic graph/sparse infrastructure"
     ],
-    "strict_integer_core": "Thick/inner exact neighborhood inequality. Outer max(fulloriginal)!=min(fullbackground-replaced-by-dtype-max). Subpixel source len(unique)>2 equivalent to two distinct original corner labels excluding dtype-max; center interstice itself guarantees sentinel presence.",
+    "strict_integer_core": "Exact integer leaf only for native bool/i8/u8/i16/u16/i32/u32 ordinary modes, or ordinary i64/u64 with all labels within exactly representable [-2^53,2^53] and mode!=outer. Wide nonexact ordinary control remains explicit next typed promotion/cast partition; no integer-only blanket equivalence. Subpixel full-width integer comparisons preserve sentinel collisions without morphology.",
     "padding_equivalence": "Radius1 reflect offsets duplicate endpoint neighbors just as clamping. For subpixel, edge padding duplicates existing corners and cannot introduce distinct labels.",
     "output": "Caller-owned canonicalbool byte output at explicit strides; output allocation/order/NumPymetadata remain frontend providers. Input borrowed only for call. No public high-level class.",
     "workers": "SDK workers0 reads existing globalbudget once; positive argument captured1..1024. Partition independent output positions, no new pool. SIMD actualproof pending, no forced claims.",
-    "header_is_prospective": "Freeze interface/source safety first. Native code, public/binder/parity/SDK/benchmark still unimplemented."
+    "header_is_prospective": "Successor header refines source double-staging frontier; native code/parity/SDK/benchmark still unimplemented.",
+    "outer": "For widths<=32, literal full-neighbor extrema after dtype-max substitution are double-exact and safe through every intermediate; 64bit ordinaryouter is not admitted in initial typed frontier."
   },
   "remaining_partitions": [
+    "Ordinary64 outer generated-max hazards excluded from originals; source-safe nonexact wide ordinary labels require actual double-promotion/cast stage semantics and FP facts before native credit. Eventual full domain stays open; no source UB executed.",
     "Public frontend source order for arbitrary scalar/connectivity/background/mode protocols, subclasses and dtype metadata; no whole original algorithm forwarding.",
     "Non-native endian, object/structured/complex/float, rank0, ordinary zero-axis inputs and rank>8: explicit assessed-provider/frontier work, not fabricated native errors.",
     "Source layout and empty-owner flags must be observed before allocating public native outputs; direct private entries revalidate after allocation boundary.",
@@ -781,5 +783,52 @@
     "segmentation.py actualpublic alias+coverage/default/inventory only after eligible family parity",
     "Pure and installed-only intake selectors separated fromfirst wiring; genuine SDK family reuse decision after interface",
     "No change to frozen334drawingcandidate or current release"
-  ]
+  ],
+  "revision": 2,
+  "predecessor": {
+    "source": "9dd8594ad8b95e657f27f3a04ef3c44b725581b9",
+    "cases": 32,
+    "reason": "Two source-unsafe wide ordinary extrema cases; preserve old prospective packet and peer REQUEST_CHANGES, no original calls."
+  },
+  "c_extrema_source_audit": {
+    "1.15.3": {
+      "ni_filters.c": {
+        "retained_locator": "build/blur-effect-tests-v1-private-v1/blur-test-first-v1/primary-source/1.15.3-ni_filters.c",
+        "raw_sha256": "e698ae4e27d161707e3eb4e58cb18c6186032acd52b4cefcb095d2ae6f3af63a"
+      },
+      "ni_support.c": {
+        "retained_locator": "build/blur-effect-tests-v1-private-v1/blur-test-first-v1/primary-source/1.15.3-ni_support.c",
+        "raw_sha256": "3d8291f4407bc78f6da0541d8585c1ad1236f1a743e175a815b7fac7b8befa4b"
+      },
+      "_filters.py": {
+        "retained_locator": "build/blur-effect-tests-v1-private-v1/blur-test-first-v1/primary-source/1.15.3-_filters.py",
+        "raw_sha256": "e821fbd5ae150dc9fdb616ae5a213504904e5416febcde421739f3fe52769c0c"
+      }
+    },
+    "1.18.1": {
+      "ni_filters.c": {
+        "retained_locator": "build/blur-effect-tests-v1-private-v1/blur-test-first-v1/primary-source/1.18.1-ni_filters.c",
+        "raw_sha256": "e698ae4e27d161707e3eb4e58cb18c6186032acd52b4cefcb095d2ae6f3af63a"
+      },
+      "ni_support.c": {
+        "retained_locator": "build/blur-effect-tests-v1-private-v1/blur-test-first-v1/primary-source/1.18.1-ni_support.c",
+        "raw_sha256": "465111b6a7369a8b4ae4aa4b51484c3d6521385f77c009d3c56231cde63f5976"
+      },
+      "_filters.py": {
+        "retained_locator": "build/blur-effect-tests-v1-private-v1/blur-test-first-v1/primary-source/1.18.1-_filters.py",
+        "raw_sha256": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223"
+      }
+    }
+  },
+  "intermediate_value_proof": [
+    "Nonseparable NI_MinOrMaxFilter CASE_MIN_OR_MAX_POINT reads typed labels into double tmp, CASE_FILTER_OUT/SAFE casts tmp into source dtype; no additive structure is supplied.",
+    "Separable NI_MinOrMaxFilter1D uses double input/output line buffers; ni_support CASE_COPY_DATA_TO_LINE casts to double and CASE_COPY_LINE_TO_DATA casts back at EACH axis. Python _min_or_max_filter assigns input=output for subsequent axes.",
+    "Under nearest rounding, all widths<=32 and dtype max remain exactly representable. Extrema and reflected endpoint duplicates select existing values; every subsequent cast stays inside declared dtype, including outer generated sentinel.",
+    "Revised wide ordinary case consists only of 2^53 and2^53+1 and2^53+2. Nearest double conversion maps middle to2^53; selected extrema stay in [2^53,2^53+2], far below int64 max. Every separable intermediate remains in the same set. This control is safe but outside initial exact-integer native frontier.",
+    "Full-width uint64 max subpixel never enters any morphology/line-buffer/C-extrema cast: source creates dtype-matched sentinel, pads dtype-preserving owned array, uses integer unique, and writes bool output."
+  ],
+  "scipy_filter_source_canonical_pins": {
+    "1.15.3": "e821fbd5ae150dc9fdb616ae5a213504904e5416febcde421739f3fe52769c0c",
+    "1.18.1": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223"
+  }
 }

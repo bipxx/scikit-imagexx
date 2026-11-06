@@ -18,8 +18,15 @@ struct FindBoundaryParameters {
 constexpr std::size_t find_boundaries_max_elements=16*1024*1024;
 constexpr std::size_t find_boundaries_max_neighbor_visits=64*1024*1024;
 // First typed frontier: native-endian bool or eight integer dtypes, rank1..8,
-// nonempty extents, addressable signed byte strides. No half/float or swapped
-// inputs. This shape helper reads no pixels/worker state, and changes shape
+// nonempty extents, addressable signed byte strides. Ordinary int64/uint64
+// require EVERY label in [-2^53,2^53] (unsigned lower bound0); their outer
+// mode is refused because generated dtype-max backgrounds can cast outside
+// range in upstream double-staged min/max intermediate stores. Subpixel
+// accepts full integer widths: it never enters SciPy morphology. Outside
+// this exact-promotion frontier, source rounds labels through double and
+// casts extrema back at each pass; do not claim exact-integer equivalence.
+// Nonexact-but-in-range wide-label behavior remains a future typed partition.
+// No half/float or swapped inputs. This shape helper reads no pixels/worker state, and changes shape
 // only on success. Subpixel extent is exactly2*s-1; other modes preserve shape.
 bool find_boundaries_shape(const ComponentsView&,FindBoundaryMode,
                            std::vector<std::size_t>& output_shape);
@@ -36,7 +43,7 @@ bool find_boundaries_shape(const ComponentsView&,FindBoundaryMode,
 // Independent output spans may partition with the existing worker dispatcher.
 // workers0 snapshots the existing process budget ONCE; defaultglobal1. A
 // positive argument is an already captured1..1024 budget, not a new pool.
-// Integer decisions make no floating-point policy/status change. SIMD claims
+// Within the exact-promotion frontier, integer decisions make no FP change. SIMD claims
 // require actual compiler evidence; no ordered reduction or float conversion.
 bool find_boundaries_into(const ComponentsView&,const FindBoundaryParameters&,
     std::uint8_t* output,const std::vector<std::ptrdiff_t>& output_strides,

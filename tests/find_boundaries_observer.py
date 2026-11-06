@@ -1,4 +1,8 @@
-"""Raw observer reusing the established encoder; no implicit captures."""
+"""Raw observer of source double-staged morphology; no implicit captures.
+
+Wide integer labels are not assumed exact: only source-safe in-range cases
+are prospective. Subpixel has a distinct integer sentinel/unique path.
+"""
 from contextlib import contextmanager
 import hashlib
 import importlib
@@ -23,13 +27,16 @@ SCIPY_SOURCE_PINS={
     '1.15.3':'2c5f7580a25c1c85a80fd6ad87ff7e63b1e053041b03410baa0558be6d580160',
     '1.18.1':'5361c28977347a3bc4ba1240aea0b341a72a803498a5600506c9964a61eeb9ad',
 }
+SCIPY_FILTER_PINS={'1.15.3': 'e821fbd5ae150dc9fdb616ae5a213504904e5416febcde421739f3fe52769c0c', '1.18.1': 'b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223'}
 
 
 def reference_runtime():
     np=scientific_profile();module=importlib.import_module('skimage.segmentation.boundaries')
     assert hashlib.sha256(Path(module.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==SOURCE_SHA256
     pins=dict(DEPENDENCY_SOURCE_PINS)
-    pins['scipy.ndimage._morphology']=SCIPY_SOURCE_PINS[importlib.metadata.version('scipy')]
+    version=importlib.metadata.version('scipy')
+    pins['scipy.ndimage._morphology']=SCIPY_SOURCE_PINS[version]
+    pins['scipy.ndimage._filters']=SCIPY_FILTER_PINS[version]
     sources={}
     for name,pin in pins.items():
         dependency=importlib.import_module(name);path=Path(dependency.__file__)

@@ -1,4 +1,6 @@
-"""Installed-only NumPy/SciPy fixture/observer intake; never run in pure prebuild."""
+"""Installed-only fixture/observer intake, after revised C-source safety peer.
+Never run in pure prebuild; ordinary int64/uint64 outer recipes are excluded.
+"""
 import pytest
 from find_boundaries_contract import cases
 from find_boundaries_observer import reference_runtime,without_original_activity,observe

@@ -17,6 +17,10 @@ def test_find_boundaries_prospective_scope_and_bounds():
     assert matrix['api']==API and matrix['public_signature']==SIGNATURE
     assert matrix['cases']==specs and len(specs)==len({s['id']for s in specs})==32
     assert {'thick','inner','outer','subpixel'}<={s['mode']for s in specs}
+    assert not any(s['mode']=='outer' and s['dtype']in('int64','uint64')for s in specs)
+    for s in specs:
+        if s['mode']!='subpixel' and s['dtype']in('int64','uint64'):
+            assert all(-(2**53+2)<=v<=2**53+2 for v in s['values'])
     assert {s['dtype']for s in specs}=={'bool','uint8','int8','uint16','int16','uint32','int32','uint64','int64'}
     for spec in specs:
         assert len(spec['values'])==math.prod(spec['shape']) and math.prod(spec['shape'])<=64
