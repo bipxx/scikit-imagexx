@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 ROOT=Path(__file__).parents[1]
-CONTRACT=json.loads((ROOT/'coverage/contracts/ellipse-perimeter-benchmark.json').read_bytes())
+CONTRACT=json.loads((ROOT/'coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json').read_bytes())
 CASES=CONTRACT['cases']
 
 
@@ -107,3 +107,26 @@ def test_ellipse_perimeter_benchmark_checker_corruption_controls(shape):
     if actual[0].size:
         changed=pair();changed[0].flat[0]=1
         with pytest.raises(AssertionError):driver.checked_output(changed,expected,np,snapshot,3,scalar)
+
+
+def test_ellipse_fallback_runtime_binding_preserves_historical_contract_and_body():
+    predecessor=CONTRACT['predecessor_binding']
+    raw=(ROOT/predecessor['contract']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==predecessor['sha256']
+    old=json.loads(raw)
+    for key,value in old.items():
+        if key not in ('status','frontend_source','source_closure'):assert CONTRACT[key]==value,key
+    assert set(CONTRACT['source_closure'])==set(old['source_closure'])
+    for path,pin in old['source_closure'].items():
+        if path!='python/skimagexx/_draw_ellipse_perimeter.py':assert CONTRACT['source_closure'][path]==pin
+    source=(ROOT/'python/skimagexx/_draw_ellipse_perimeter.py').read_bytes().replace(b'\r\n',b'\n')
+    assert hashlib.sha256(source).hexdigest()==CONTRACT['source_closure']['python/skimagexx/_draw_ellipse_perimeter.py']
+    for fragment in predecessor['source_inverse']:
+        current,previous=fragment['old'].encode(),fragment['new'].encode()
+        assert source.count(current)==1;source=source.replace(current,previous,1)
+    assert hashlib.sha256(source).hexdigest()==old['source_closure']['python/skimagexx/_draw_ellipse_perimeter.py']
+    driver=(ROOT/'benchmarks/ellipse_perimeter.py').read_bytes().replace(b'\r\n',b'\n')
+    current=b"CONTRACT=ROOT/'coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json'"
+    assert driver.count(current)==1
+    driver=driver.replace(current,b"CONTRACT=ROOT/'coverage/contracts/ellipse-perimeter-benchmark.json'")
+    assert hashlib.sha256(driver).hexdigest()==predecessor['driver_sha256']

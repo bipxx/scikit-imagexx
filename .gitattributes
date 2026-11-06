@@ -67,8 +67,6 @@ benchmarks/rank-statistics-counts-comparison.csv -text
 benchmarks/rank-statistics-counts-comparison-raw.zip -text
 coverage/contracts/max-tree.json -text
 coverage/evidence/max-tree-reference.json -text
-coverage/evidence/tv-chambolle-sdk-census-migration.json -text
-coverage/evidence/tv-chambolle-public-assertion-migration.json -text
 coverage/evidence/public-wave12.json -text
 coverage/evidence/temp-build-cleanup-followup-20261024.json -text
 coverage/evidence/merged-tv-worktree-cleanup-20261024.json -text
@@ -537,10 +535,7 @@ tests/test_profile_line_public.py -text
 benchmarks/profile_line.py -text
 tests/test_profile_benchmark.py -text
 tests/test_profile_line_native.cpp -text
-benchmarks/mesh-surface-area-minimum-initial.json -text
 
-tests/profile_line_cases.py -text
-tests/test_profile_line_public.py -text
 python/skimagexx/_profile_line.py -text
 python/skimagexx/_profile_line_checks.py -text
 src/bind_profile_line.cpp -text
@@ -744,16 +739,6 @@ coverage/contracts/region-stain-controller-v1-context.json -text
 coverage/contracts/regionprops-coords-scaled-prospective-v1.json -text
 coverage/contracts/regionprops-coords-scaled-reference-v1.json -text
 benchmarks/regionprops-performance-v3-same-host/* -text
-coverage/contracts/draw-bezier-v1.json -text
-.github/workflows/draw-batch-initial.yml -text
-tools/draw_batch_first_cohort_probe.py -text
-coverage/contracts/draw-batch-first-cohort-v1.json -text
-coverage/contracts/draw-batch-measurement-v1.json -text
-coverage/evidence/draw-batch-genuine-minimum-admission-v1.json -text
-benchmarks/draw-batch-minimum-initial-v1/** -text
-coverage/evidence/draw-batch-source-readiness-v2.json -text
-coverage/evidence/draw-batch-qualification-failure-v1.json -text
-coverage/evidence/draw-batch-whole-product-admission-v1.json -text
 coverage/contracts/regionprops-performance-state-coords-scaled-v1.json -text
 coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json -text
 coverage/contracts/regionprops-coords-scaled-benchmark-v1.json -text
@@ -763,6 +748,7 @@ coverage/contracts/draw-bezier-benchmark-v1.json -text
 coverage/contracts/draw-bezier-frontend-v1.json -text
 coverage/contracts/draw-bezier-native-v1.json -text
 coverage/contracts/draw-bezier-sdk-v1.json -text
+coverage/contracts/draw-bezier-v1.json -text
 tests/fixtures/bezier_curve_originals_v1.bin -text
 coverage/contracts/draw-set-color-benchmark.json -text
 coverage/contracts/draw-set-color.json -text
@@ -771,3 +757,20 @@ coverage/contracts/matrix-prescott-v1.json -text
 tests/fixtures/matrix_prescott_native.hpp -text
 coverage/contracts/draw-polygon-draw-batch-runtime-v1.json -text
 coverage/contracts/matrix-prescott-release-test-context-v1.json -text
+.github/workflows/draw-batch-initial.yml -text
+tools/draw_batch_first_cohort_probe.py -text
+coverage/contracts/draw-batch-first-cohort-v1.json -text
+coverage/contracts/draw-batch-measurement-v1.json -text
+coverage/evidence/draw-batch-genuine-minimum-admission-v1.json -text
+benchmarks/draw-batch-minimum-initial-v1/** -text
+coverage/evidence/draw-batch-source-readiness-v2.json -text
+coverage/evidence/draw-batch-qualification-failure-v1.json -text
+coverage/contracts/label-pair-metrics*.json -text
+coverage/contracts/label-pair-rand-native-v1.json -text
+coverage/contracts/contingency-table*.json -text
+coverage/contracts/label-pair-ARE-metadata-context-v1.json -text
+coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json -text
+coverage/evidence/draw-batch-whole-product-admission-v1.json -text
+coverage/contracts/draw-polygon-metrics-runtime-v1.json -text
+coverage/contracts/find-boundaries*.json -text
+coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json -text

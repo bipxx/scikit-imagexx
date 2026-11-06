@@ -93,7 +93,12 @@ def test_ellipse_protocol_conversion_order_and_provider_no_replay(monkeypatch):
         def __float__(self):events.append('angle');return 0.
     monkeypatch.setattr(compiled,'_ellipse_perimeter',lambda *a:seen.append(a) or token)
     monkeypatch.setattr(xx._core,'get_num_threads',lambda:pytest.fail('provider-onlybudgetlookup'))
-    assert call(Index('r',0),Index('c',0),Index('rr',2),Index('cr',3),Angle(),shape) is token
+    # This protocol test intentionally invokes a monkeypatched provider stub.
+    # Restore the qualification's strict fallback policy through monkeypatch.
+    compat=importlib.import_module('skimagexx._compat')
+    monkeypatch.setattr(compat,'_fallback_enabled',True)
+    with pytest.warns(xx.FallbackWarning,match=r'skimage\.draw\._draw\._ellipse_perimeter'):
+        assert call(Index('r',0),Index('c',0),Index('rr',2),Index('cr',3),Angle(),shape) is token
     assert events==['r','c','rr','cr','angle'] and seen==[(0,0,2,3,0.,shape)]
 
 
@@ -111,3 +116,26 @@ def test_ellipse_worker_snapshot_after_callback_and_owning_lifetime(monkeypatch)
         assert all(a is not b and not np.shares_memory(a,b) for a in first for b in other)
         for a,e in zip(first,copies):np.testing.assert_array_equal(a,e)
     finally:xx.set_num_threads(old)
+
+
+@pytest.mark.parametrize('protocol_shape',(False,True))
+@pytest.mark.parametrize('enabled',(False,True))
+def test_ellipse_provider_paths_follow_global_fallback_policy(protocol_shape,enabled,monkeypatch):
+    xx,call=public();compiled=importlib.import_module('skimage.draw._draw');seen=[];token=object()
+    entry=xx._core.draw_ellipse_perimeter
+    assert inspect.isbuiltin(entry)
+    monkeypatch.setattr(compiled,'_ellipse_perimeter',lambda *args:seen.append(args) or token)
+    shape=object() if protocol_shape else (16,20)
+    # The typed radius exceeds the native contract and declines before geometry.
+    radius=2 if protocol_shape else 32769
+    previous=xx.set_fallback_enabled(enabled)
+    try:
+        if enabled:
+            with pytest.warns(xx.FallbackWarning,match='skimage.draw._draw._ellipse_perimeter'):
+                assert call(0,0,radius,1,shape=shape) is token
+            assert seen==[(0,0,radius,1,0.,shape)]
+        else:
+            with pytest.raises(NotImplementedError,match='fallback is disabled'):
+                call(0,0,radius,1,shape=shape)
+            assert not seen
+    finally:xx.set_fallback_enabled(previous)

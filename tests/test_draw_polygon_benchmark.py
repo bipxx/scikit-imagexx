@@ -75,8 +75,7 @@ def test_frozen_reference_sampler_and_public_native_witnesses(prospect):
     driver, contract = prospect
     digest = lambda body: hashlib.sha256(body).hexdigest()
     assert digest(driver.REFERENCE.read_bytes()) == contract['reference_contract_sha256']
-    for name, pin in contract['source_closure'].items():
-        assert digest((ROOT / name).read_bytes().replace(b'\r\n', b'\n')) == pin
+    driver.validate_source_closure(contract)
     ellipse = json.loads((ROOT / 'coverage/contracts/ellipse-perimeter-benchmark.json').read_bytes())
     assert contract['method_sha256'] == ellipse['method_sha256']
     assert contract['native_entries'] == {
@@ -93,7 +92,35 @@ def test_current_polygon_context_preserves_historical_cases_and_driver(prospect)
     historical = ROOT / 'coverage/contracts/draw-polygon-runtime-v1.json'
     old = json.loads(historical.read_bytes())
     assert hashlib.sha256(historical.read_bytes()).hexdigest() == '6a40a1a7c82d534229f815296358c1e5b60fd5f5bf255b05c3d02ff7a426a636'
-    assert {k:v for k,v in current.items() if k not in ('source_closure','scope')} == {k:v for k,v in old.items() if k not in ('source_closure','scope')}
+    assert {k:v for k,v in current.items() if k not in ('source_closure','scope','predecessor_binding')} == {k:v for k,v in old.items() if k not in ('source_closure','scope','predecessor_binding')}
     source = (ROOT / 'benchmarks/draw_polygon.py').read_text()
+    for fragment in current['predecessor_binding']['driver_inverse']:
+        assert fragment['current'] and source.count(fragment['current']) == 1
+        source = source.replace(fragment['current'],fragment['predecessor'],1)
+    predecessor = json.loads((ROOT/current['predecessor_binding']['contract']).read_bytes())
+    assert hashlib.sha256(source.encode()).hexdigest() == predecessor['source_closure']['benchmarks/draw_polygon.py']
     restored = source.replace("CONTRACT = ROOT / 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'", "CONTRACT = ROOT / 'coverage/contracts/draw-polygon-runtime-v1.json'", 1)
     assert hashlib.sha256(restored.encode()).hexdigest() == '009f684108559dbcc27286cd10a5b7227a59e463fb3e08af0271dca0781404fe'
+
+
+@pytest.mark.parametrize('fault',('compiler-policy','extra-source','inverse-resealed','binding'))
+def test_metrics_polygon_source_context_rejects_tampering(prospect,monkeypatch,fault):
+    driver, contract = prospect
+    changed = copy.deepcopy(contract)
+    original_read = Path.read_bytes
+    cmake = (ROOT/'CMakeLists.txt').read_bytes().replace(b'\r\n',b'\n')
+    target = ROOT/('src/bindings.cpp' if fault == 'binding' else 'CMakeLists.txt')
+    if fault == 'binding':
+        cmake = target.read_bytes().replace(b'\r\n',b'\n').replace(b'bind_draw_polygon(m);',b'bind_draw_ellipse_perimeter(m);',1)
+    elif fault == 'compiler-policy':
+        assert b'-ffp-contract=off' in cmake
+        cmake = cmake.replace(b'-ffp-contract=off',b'-ffp-contract=fast',1)
+    elif fault == 'extra-source':
+        cmake += b'\n# unrelated source mutation\n'
+    else:
+        changed['predecessor_binding']['CMake_inverse'][0]['predecessor'] += '# tampered\n'
+    # Even resealing the current file pin cannot legitimize a predecessor change.
+    changed['source_closure'][target.relative_to(ROOT).as_posix()] = hashlib.sha256(cmake).hexdigest()
+    def read(path):return cmake if path == target else original_read(path)
+    monkeypatch.setattr(Path,'read_bytes',read)
+    with pytest.raises(AssertionError):driver.validate_source_closure(changed)

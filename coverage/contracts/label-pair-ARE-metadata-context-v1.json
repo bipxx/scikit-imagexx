@@ -1,0 +1,27 @@
+{
+  "schema": "label-pair-ARE-metadata-context-v1",
+  "predecessor": "a53b62d5ad755742206e8f32ed103d2e5968032c",
+  "scope": "Boundary-only integer metadata removal; all old math, order, errors and old test bodies recovered exactly",
+  "sources": {
+    "python/skimagexx/_label_pair_metrics.py": {
+      "current_canonical_lf_sha256": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486",
+      "predecessor_canonical_lf_sha256": "d22cf65f63062fb4085a88ffcfc7e5ec76e41907a6eb8cacefc46f78469aec12",
+      "inverse_fragments": [
+        {
+          "current": "    test=image_test.reshape(-1)\n    _core.label_pair_check_storage(image_true)\n    truth=image_true.reshape(-1)\n    if any(x.dtype.kind not in 'iu'or x.itemsize not in (1,2,4,8) for x in (truth,test)):\n        raise NotImplementedError('adapted Rand noninteger/metadata dtype providers remain unassessed')\n    if ignore_labels is None:ignore_labels=()\n    if type(ignore_labels)not in (tuple,list)or len(ignore_labels)>64 or any(type(x)is not int or not -2**63<=x<2**63 for x in ignore_labels):\n        raise NotImplementedError('adapted Rand ignore-label protocol remains unassessed')\n    # Conversion preserves each admitted integer word's value; larger/negative\n    # coordinates are refused by the native intake, without allocating by label.\n    # Metadata tags do not alter exact integer labels; strip only internal views.\n    if truth.dtype.metadata is not None:truth=truth.view(truth.dtype.str)\n    if test.dtype.metadata is not None:test=test.view(test.dtype.str)\n    truth=np.ascontiguousarray(truth,dtype=np.int64)\n    test=np.ascontiguousarray(test,dtype=np.int64)\n    if not truth.flags.aligned:truth=truth.copy(order='C')\n",
+          "predecessor": "    test=image_test.reshape(-1)\n    _core.label_pair_check_storage(image_true)\n    truth=image_true.reshape(-1)\n    if any(x.dtype.kind not in 'iu'or x.itemsize not in (1,2,4,8)or x.dtype.metadata is not None for x in (truth,test)):\n        raise NotImplementedError('adapted Rand noninteger/metadata dtype providers remain unassessed')\n    if ignore_labels is None:ignore_labels=()\n    if type(ignore_labels)not in (tuple,list)or len(ignore_labels)>64 or any(type(x)is not int or not -2**63<=x<2**63 for x in ignore_labels):\n        raise NotImplementedError('adapted Rand ignore-label protocol remains unassessed')\n    # Conversion preserves each admitted integer word's value; larger/negative\n    # coordinates are refused by the native intake, without allocating by label.\n    truth=np.ascontiguousarray(truth,dtype=np.int64)\n    test=np.ascontiguousarray(test,dtype=np.int64)\n    if not truth.flags.aligned:truth=truth.copy(order='C')\n"
+        }
+      ]
+    },
+    "tests/test_label_pair_rand_public.py": {
+      "current_canonical_lf_sha256": "5dba836440cf224d0a21a3ed59627b36310acdd0172e0c22db4a12104e066a9c",
+      "predecessor_canonical_lf_sha256": "49a08fe156a67bbb0f4c2a64b05e6d231237dc67d530f7c8765b8331305a8f3e",
+      "inverse_fragments": [
+        {
+          "current": "    assert calls==[getter,entry]and accepted==intake==[True]\n    assert [v.tobytes().hex()for v in result]==['0000000000000000','000000000000f03f','000000000000f03f']\n    assert [observation(v,np)for v in (truth,test)]==before\n\n\n@pytest.mark.parametrize('dtype',('int8','uint8','int16','uint16','int32','uint32','int64','uint64'))\n@pytest.mark.parametrize('unaligned',(False,True))\ndef test_public_integer_metadata_value_words_and_native_intake(dtype,unaligned):\n    import numpy as np,skimagexx as xx\n    from skimagexx._label_pair_metrics import adapted_rand_error,_are_from_i64\n    tagged=np.dtype(dtype,metadata={'tag':7})\n    owner=np.zeros(6*tagged.itemsize+int(unaligned),np.uint8)\n    truth=np.ndarray((2,3),dtype=tagged,buffer=owner,offset=int(unaligned))\n    truth[:]=[[0,1,1],[2,2,2]];test=truth.copy()\n    before=[observation(a,np)for a in(truth,test)];entry=xx._core.label_pair_rand_terms;getter=xx._core.get_num_threads\n    calls=[];accepted=[];intake=[];previous=sys.getprofile()\n    def trace(frame,event,value):\n        if event=='c_return'and(value is getter or value is entry):calls.append(value)\n        if event=='call'and frame.f_code is _are_from_i64.__code__:\n            arrays=[frame.f_locals[n]for n in('truth','test')]\n            intake.append(all(a.dtype==np.dtype('int64')and a.dtype.metadata is None and a.flags.aligned and a.flags.c_contiguous for a in arrays))\n        if event=='return'and frame.f_code is _are_from_i64.__code__:accepted.append(frame.f_locals.get('native_result')is not None)\n    try:\n        sys.setprofile(trace);result=adapted_rand_error(truth,test)\n    finally:sys.setprofile(previous)\n    # Same admitted perfect-label values and already captured exact words.\n    assert [a.tobytes().hex()for a in result]==['0000000000000000','000000000000f03f','000000000000f03f']\n    assert calls==[getter,entry]and accepted==intake==[True]\n    assert [observation(a,np)for a in(truth,test)]==before\n",
+          "predecessor": "    assert calls==[getter,entry]and accepted==intake==[True]\n    assert [v.tobytes().hex()for v in result]==['0000000000000000','000000000000f03f','000000000000f03f']\n    assert [observation(v,np)for v in (truth,test)]==before\n"
+        }
+      ]
+    }
+  }
+}

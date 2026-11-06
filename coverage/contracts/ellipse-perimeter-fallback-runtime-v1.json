@@ -1,0 +1,241 @@
+{
+  "api": "draw.ellipse_perimeter",
+  "status": "PROSPECTIVE_FALLBACK_POLICY_SOURCE_SUCCESSOR_NO_NEW_TIMING",
+  "scope": "Initial public-original versus public-native allocation-inclusive12case one-worker comparison; all losses retained. Typedsource-safe boundedaxis +two frozenunitrotationangles only; generalBezier, protocols, non64bit platforms and unsafe shortshape/overflow/nonfinite partitions remain open. No priorCPP KEEP or librarywide speed claim.",
+  "reference_contract_sha256": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
+  "reference_source": "0741be2f790ab4a1528be4a269c37d110ebca0af",
+  "native_source": "573f514ec9e1f9990928d0002be2e72521f716b4",
+  "frontend_source": "c580da7e4d5027661343bf3a0963f823e4feedd1",
+  "source_closure": {
+    "include/skimagexx/draw_ellipse_perimeter.hpp": "5caadc0f22f05cbe0b2d82f3fd2fd6f81925ed2ccebfced4c2ed56e0a3d825c0",
+    "src/draw_ellipse_perimeter.cpp": "1e154ef4c05c9b86cf9f7e9093485f9e0a58738e09ee0efca24452703121a099",
+    "src/bind_draw_ellipse_perimeter.cpp": "6b9acbb59c3e39d71ab5f4e732db1c9a06b002a5d2536171be306d25ac733d5f",
+    "python/skimagexx/_draw_ellipse_perimeter.py": "5a53921e9556fdbb2701f2d941ccea612ec44f0e019af7fe01cf066ce4eacd0f",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc"
+  },
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 168,
+  "warmup_groups": 24,
+  "cases": [
+    {
+      "id": "ellipse-perimeter/point",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        3,
+        -4,
+        0,
+        0
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/unit",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/unequal",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/flat",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        8
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/zero-axis",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        0,
+        8
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/translated-clip",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        4,
+        6,
+        3,
+        5
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          12
+        ]
+      }
+    },
+    {
+      "id": "ellipse-perimeter/unit-angle-positive",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {
+        "orientation": 0.3
+      }
+    },
+    {
+      "id": "ellipse-perimeter/unit-angle-negative",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "kwargs": {
+        "orientation": -0.5
+      }
+    },
+    {
+      "id": "ellipse-perimeter/medium-axis",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        64,
+        96
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/large-axis",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        0,
+        0,
+        4096,
+        6144
+      ],
+      "kwargs": {}
+    },
+    {
+      "id": "ellipse-perimeter/large-partclip",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        -1024,
+        3072,
+        4096,
+        6144
+      ],
+      "kwargs": {
+        "shape": [
+          512,
+          768
+        ]
+      }
+    },
+    {
+      "id": "ellipse-perimeter/fully-clipped-empty",
+      "api": "draw.ellipse_perimeter",
+      "args": [
+        -20000,
+        -20000,
+        64,
+        96
+      ],
+      "kwargs": {
+        "shape": [
+          8,
+          8
+        ]
+      }
+    }
+  ],
+  "max_points": 49164,
+  "max_coordinate_words": 98328,
+  "source_audit": {
+    "declarations": "Pinned0.26 _draw.pyx: Py_ssize_t center/radii/rd/cd/r/c/e2/err; native64bitintp partition. Rotation Cintcorners confined+-1; sqrt/trigcircleza0 exactchosenangles producew.5/fourmonotonicsegments, no recursion.",
+    "axis_arithmetic": "Sourceerr invariant and monotonebounds same independentlyreviewed nativeproof; R6144 conservative2err bound<2^63. Original orderedrecurrence maxrr+cr+3 mainiterations plusrr tips,4+2emissions. Centertranslationchecked; countbound49164, no forcing32768 to trigger parallel.",
+    "allocation": "Two coordinatePythonlists and finalintp arrays boundedby maxpoints;128bytes/point conservativeinteger/listpayload estimate, not exact RSS guarantee. Fullyclipped output canbeempty while recurrence remains bounded.",
+    "rotated": "Only0origin,radii1 at+.3/-.5, alreadycaptured source-proven no-recursionpartition; no neworiginal capture or generalBezier shortcut."
+  },
+  "validation": "Publicoriginal once then nativeonce beforetiming; cached original Pythoncode andcompiledc_call denied, original/providerpatches andprofile restored beforemeasure. One real builtinCreturn/nonNone/getter. Exactsnapshot words/container/dtype/metadata/rank/strides/own/base/aliases/FENV; selfalias rejects0D/empty. No thirdformulaoracle.",
+  "prebuild_selectors": [
+    "test_ellipse_perimeter_benchmark_source_bounds_and_pins",
+    "test_ellipse_perimeter_benchmark_import_refuses_science",
+    "test_ellipse_perimeter_benchmark_factory_original_refused",
+    "test_ellipse_perimeter_benchmark_rejects_unsafe_specs",
+    "test_ellipse_perimeter_benchmark_guards_and_timed_boundary"
+  ],
+  "installed_only_selector": "test_ellipse_perimeter_benchmark_checker_corruption_controls",
+  "original_calls": 0,
+  "timings": false,
+  "metadata_proof": {
+    "profiles": [
+      {
+        "profile": "minimum",
+        "source_only_nodes": 24,
+        "scientific_import_attempts": [],
+        "original_native_sampler_calls": 0
+      },
+      {
+        "profile": "modern",
+        "source_only_nodes": 24,
+        "scientific_import_attempts": [],
+        "original_native_sampler_calls": 0
+      }
+    ],
+    "scientific_checker_nodes": "3installed-only nodes authored, not executed in source-only packet",
+    "no_real_CLI": true
+  },
+  "closeout": {
+    "result": "Prospective12cases/168samples frozen,24purestdlib checks/profile PASS under global real-science import refusal,0algorithm/native/CLI/timer calls. Pending independent source review and eligible shipping core.",
+    "reuse": "Reused exact sustainedsampler/hardwaremetadata/sourcefingerprint/snapshot conventions from reviewed ellipsoid benchmark,58originalrecords/23unique returns/source-safe nativebounds. No newgold/reference/env/compiler/SDK/core/workflow/registry work. Larger geometries are source-bound prospectivecases, not newgold credit.",
+    "avoidable_work": "One initial reference-onlyWT lookup lacked later circleAA benchmark; immediately used retained ellipsoid driver template, no computation affected. Avoided scientific prebuild leakage by5explicit pureselectors;3numpy checker controls remain installed-only. No failed check or rejected experiment.",
+    "observed_cost": "24metadata checks1.88s minimum/1.53s modern; no separate waste/timing run.",
+    "next_owner_trigger": "Root/B independent benchmark source/closure/case audit; shared integrator restores reviewed3paths plus requiredcomponentcode and selects only5pureselectors prebuild, scientificchecker onlyinstalledstage. After sourcefreeze+actualalias+eligiblecomponent, root authorizes actualfirstcohort1original+1native/profile stopped at realmeasureCALL beforebody, then genuineproduct and isolated fixedone-worker hosted benchmark. No performance acceptance or rerun authorization from this packet."
+  },
+  "predecessor_binding": {
+    "contract": "coverage/contracts/ellipse-perimeter-benchmark.json",
+    "sha256": "e8ebc3418f958bc1416951a8f1302cf1597c775a7db89297f5df8dabf21058c9",
+    "delta": "Only policy-aware provider tail; ordinary native prefix/results and12cases/method/gates/history unchanged",
+    "source_inverse": [
+      {
+        "old": "from . import _core, _compat",
+        "new": "from . import _core"
+      },
+      {
+        "old": "        return _compat.fallback('draw._draw','_ellipse_perimeter',r,c,r_radius,c_radius,orientation,shape)",
+        "new": "        from skimage.draw._draw import _ellipse_perimeter\n        return _ellipse_perimeter(r,c,r_radius,c_radius,orientation,shape)"
+      },
+      {
+        "old": "    return _compat.fallback('draw._draw','_ellipse_perimeter',r,c,r_radius,c_radius,orientation,shape)",
+        "new": "    from skimage.draw._draw import _ellipse_perimeter\n    return _ellipse_perimeter(r,c,r_radius,c_radius,orientation,shape)"
+      }
+    ],
+    "driver_sha256": "449a61162bb5aea310be0523f07218ecb09c47c4e5c7dc4b4bdcd5da8a381929"
+  }
+}

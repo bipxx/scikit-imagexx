@@ -1,0 +1,83 @@
+{
+  "schema": "contingency-table-frontend-v1",
+  "status": "PROSPECTIVE_SOURCE_FROZEN_BEFORE_COMPONENT_EXECUTION",
+  "base": "a53b62d5ad755742206e8f32ed103d2e5968032c",
+  "policy": "exact0ULP logicalCSR plus capturedmetadata",
+  "saved_reference_ids": [
+    "contingency_table/duplicates",
+    "contingency_table/normalize-ignore",
+    "contingency_table/allignored-normalize",
+    "contingency_table/unequal-shapes-flat-match",
+    "contingency_table/readonly-reversed",
+    "contingency_table/empty",
+    "contingency_table/negative",
+    "contingency_table/bad-sparse-type"
+  ],
+  "original_call_budget": 0,
+  "timed_batch_budget": 0,
+  "interface": {
+    "public": "contingency_table(im_true,im_test,*,ignore_labels=None,normalize=False,sparse_type=\"matrix\")",
+    "private": "_core.label_pair_counts_preweighted(truth_i64,test_i64,weights_f64,workers)",
+    "native": "skimagexx::detail::label_pair_counts_preweighted(LabelPairWeightedInput,LabelPairCsrStorage&,workers=0)"
+  },
+  "prefix": "Literal test.reshape then truth.reshape, isin-ignore floatweights, optional in-place normalization/callback, then CURRENTcoordinates typed intake. No repeated prefix/re-ignore/redivide. Source buffer guard before copying and after callback boundary.",
+  "native_partition": "0<N<=2^20; coordinates0..2^20-1; alignedstable int64/i64/f64spans. +zero and one sharedpositive normalweight in[2^-20,1], or everyweight one identicalquietNaN. Mixednonzeroweights/SNaN/environmentrefusals retain already-evaluated literalSciPysuffix as numericalprovider.",
+  "physical_storage": "Nslotdata/indices after source-shaped rowgroup/sort/duplicateprefix writes; logicalnnz=indptr.back. Three-bufferstructuralCSR constructor selects actualsourceindexdtype and sourceprune rules. Sorted/canonical arrayflagsTrue; subsequentmatrixconversion preserves sourcecachedNone. Trailing backingpayload beyondlogicalarrays unassessed.",
+  "providers": [
+    "NumPyreshape/conversion/isin/per-pixelnormalization+FPpolicy",
+    "SciPy indexdtype/class/three-bufferstorage factory",
+    "Unsupported/error coordinate constructor is an explicitnumericalprovider, no wholeoriginalmetric forwarding/nativecredit"
+  ],
+  "prospective_controls": [
+    "8savedrows xworkers1/4 x2profiles normal/disabled",
+    "analyticFPcallback relabel+workers, raisesbeforeCSR",
+    "analyticcount_nonzero phase mutation mixedzero/nonzeroweights",
+    "structural-onlyfactory/no coordinatecoalescing",
+    "ordinaryunalignednormalization/private ABIrefusals",
+    "5savednativeCSRwords,large262151analyticpartition,FPrefusal/atomicoutput/global1/4/restore",
+    "existingcounts/AREunitobjects linked to newleaf for affectedpackinghelper",
+    "installedSDKdefault+focusedpreweighted route"
+  ],
+  "source_only_selectors": [
+    "tests/test_contingency_table_public.py::test_contingency_prospective_scope_without_science",
+    "tests/test_contingency_table_public.py::test_contingency_sdk_default_and_focused_source",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_manifest_and_source_order_without_science",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_header_scope_without_science",
+    "tests/test_label_pair_metrics_reference.py::test_contingency_context_rejects_tampered_source"
+  ],
+  "unassessed": [
+    "backingtailpayload beyondcapturedlogicalCSRarrays",
+    "arbitraryprotocol/subclass/dtype/suppliedweightednonuniform suffixes",
+    "changingFENV callbacks/native otherrounding modes",
+    "genuinewholeproduct/sharedregistry/APIperformance/release"
+  ],
+  "next_gate": "Independent source/component admission; root owns shared CMake/publicmetrics/registry/default/qualification/CI and any genuine/performance/release dispatch. No APIcount claim from private component.",
+  "active_source_context": {
+    "path": "coverage/contracts/contingency-table-source-context-v1.json",
+    "sha256": "8c65b7b4cd42bd8659a5538a985cb97284a1941e9d3e25c1877a3dc43611a9fc",
+    "helper": "tests/contingency_table_context.py",
+    "helper_sha256": "0eb1e417689f365f9f5ba1b90e689485a872c7eb3b1cafc97569392be3b4a1a5",
+    "exact_paths": [
+      "include/skimagexx/label_pair_metrics.hpp",
+      "src/label_pair_metrics.cpp",
+      "src/bind_label_pair_metrics.cpp",
+      "tests/cmake_consumer/label_pair_metrics_consumer.cpp",
+      "tests/test_label_pair_metrics_reference.py"
+    ]
+  },
+  "license": "third_party/scipy-sparse-LICENSE.txt",
+  "current_source_pins": {
+    "include/skimagexx/label_pair_metrics.hpp": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+    "src/label_pair_metrics.cpp": "3a8870665e618ec22eb5b7b159162e06f2452745f547f6eeb7febf705958967a",
+    "src/bind_label_pair_metrics.cpp": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+    "python/skimagexx/_contingency_table.py": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+    "tests/test_contingency_table_public.py": "864743b66af9e456d68cc256b50d4f27a5b360ce0522c3bec252be8d013b37d6",
+    "tests/test_label_pair_preweighted_native.cpp": "145ee5946cb1d9f315e140738ad2e4fb3ab9dd4737311172e4117f5c440705d2",
+    "tests/contingency_preweighted_controls.hpp": "b9efd5b212f13a465e888c100647af35970b00f688594a92058983174a447c2b",
+    "tests/cmake_consumer/label_pair_metrics_consumer.cpp": "6ef618dc7459f78798142dcf27d94b2760405fccd5b8216d4d73bd536c2311a3",
+    "tests/test_label_pair_metrics_reference.py": "5204f1b8e18729889aa9420659d10685a6c26c2d6f5b67b515eec1c8974d1cd2",
+    "tests/contingency_table_context.py": "0eb1e417689f365f9f5ba1b90e689485a872c7eb3b1cafc97569392be3b4a1a5",
+    "coverage/contracts/contingency-table-source-context-v1.json": "8c65b7b4cd42bd8659a5538a985cb97284a1941e9d3e25c1877a3dc43611a9fc",
+    "third_party/scipy-sparse-LICENSE.txt": "f34ac3c2923d1b8969554b9d5b8cd7728156761d3b12f33f61998af64c576ee9"
+  }
+}

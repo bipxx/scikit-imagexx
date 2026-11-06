@@ -2312,10 +2312,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color','_find_boundaries'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2356,14 +2356,14 @@ def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,262)
+    result=q.plan(ROOT,profile,265)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current262' and result['registry']['image_count']==262
-    assert result['product_members']==199 and result['SDK_members']==94
-    assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==104
+    assert result['product_scope']=='current265' and result['registry']['image_count']==265
+    assert result['product_members']==206 and result['SDK_members']==97
+    assert result['SDK_checks']==64 and 'current32 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==120
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==105
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==121
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2422,7 +2422,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current262' and result['record_verified']
+        assert result['product_scope']=='current265' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2436,11 +2436,11 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',262)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',265)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter') and len(q.FAMILIES)==23
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics') and len(q.FAMILIES)==23
     current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
     old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
     q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
@@ -2896,7 +2896,7 @@ def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',262)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',265)['blockers']
 
 
 @pytest.mark.parametrize('selector',(
@@ -2942,3 +2942,42 @@ def test_polygon_cold_intake_uses_direct_journal_process_and_keeps_admission(tmp
         assert '--junitxml='+str(out/(mode+'-public-polygon-intake.xml'))in command
         assert '--basetemp='+str(out/'pytest-tmp'/(mode+'-public-polygon-intake'))in command
     assert len([label for label,_,_ in calls if label.endswith('-admission')])==2
+
+
+def test_sdk_consumer_copy_keeps_boundary_and_metric_relative_headers(tmp_path, monkeypatch):
+    # Regression: source.zip contained these assessed inputs, but sdk() omitted
+    # them when assembling the relocated client's source tree (run42158336231).
+    required = (
+        'tests/cmake_consumer/find_boundaries_consumer.hpp',
+        'tests/cmake_consumer/label_pair_metrics_consumer.cpp',
+        'tests/test_component_consumers_native.cpp',
+        'tests/fixtures/find_boundaries_originals_v1.hpp',
+        'tests/label_pair_metrics_native_controls.hpp',
+        'tests/fixtures/label_pair_metrics_originals_v1.hpp',
+        'tests/fixtures/label_pair_rand_originals_v1.hpp',
+        'tests/contingency_preweighted_controls.hpp',
+    )
+    members = {name: (ROOT / name).read_bytes() for name in required}
+    members['tests/fixtures/bezier_curve_originals_v1.bin'] = b'old fixture remains copied'
+    members['tests/private_unrelated.hpp'] = b'not an SDK client dependency'
+    (tmp_path / 'package.json').write_text(json.dumps(dict(
+        product_scope=q.CURRENT_PRODUCT_SCOPE, SDK_sha256={})))
+    with zipfile.ZipFile(tmp_path / 'source.zip', 'w') as archive:
+        for name, data in members.items():
+            archive.writestr(name, data)
+
+    class SourceCopyComplete(Exception):
+        pass
+
+    def stop_before_tools(*args):
+        copied = tmp_path / 'consumer source'
+        for name in required:
+            assert (copied / name).read_bytes() == members[name], name
+        old = 'tests/fixtures/bezier_curve_originals_v1.bin'
+        assert (copied / old).read_bytes() == members[old]
+        assert not (copied / 'tests/private_unrelated.hpp').exists()
+        raise SourceCopyComplete
+
+    monkeypatch.setattr(q, 'tool_in', stop_before_tools)
+    with pytest.raises(SourceCopyComplete):
+        q.sdk(tmp_path, {}, object())

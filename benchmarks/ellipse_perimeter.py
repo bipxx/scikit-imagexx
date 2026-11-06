@@ -13,7 +13,7 @@ import sys
 import warnings
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/ellipse-perimeter-benchmark.json'
+CONTRACT=ROOT/'coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json'
 REFERENCE=ROOT/'coverage/contracts/ellipse-perimeter.json'
 
 
