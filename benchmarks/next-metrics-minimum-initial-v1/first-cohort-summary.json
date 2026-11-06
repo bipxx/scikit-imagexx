@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "original_public_topcalls": 4,
+  "native_public_topcalls": 4,
+  "timed_batches": 0,
+  "sampler_body_calls": 0,
+  "routes": [
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+      "route": "metrics-are",
+      "api": "metrics.adapted_rand_error",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+      "route": "metrics-contingency",
+      "api": "metrics.contingency_table",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+      "route": "ellipse",
+      "api": "draw.ellipse_perimeter",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+      "route": "boundary",
+      "api": "segmentation.find_boundaries",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true
+    }
+  ]
+}

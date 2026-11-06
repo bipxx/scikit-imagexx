@@ -1,0 +1,217 @@
+{
+  "schema": "next-metrics-initial-performance-root-admission-v1",
+  "passed": true,
+  "root_accepted": true,
+  "scope": "Initial scoped one-thread public-original comparison only; partial contracts,18wins10losses, no fullAPI parity or library-wide speed superiority.",
+  "producer": {
+    "run": "42177447898",
+    "revision": "683f0043a6cd6bb61626241a003ffd615ba48205",
+    "artifact": "13485549510",
+    "sha256": "aa1f57a094828980f83b3b78ed037d12184150618ed57b010c09a63b9074a769"
+  },
+  "benchmark": {
+    "run": "42191638073",
+    "artifact": 13489478349,
+    "artifact_sha256": "b5aafd70b243be64528f80f1c77320d71d19f10886686de564b2be76f4fc07a7",
+    "artifact_bytes": 2115950,
+    "files": 62,
+    "root_retention": {
+      "path": "build\\next-metrics-initial-results-v1\\retention-v1.json",
+      "sha256": "64608fb8f2017130e78242c51813e0e36d9353ece1e1057e765b4f1862e48aef",
+      "archive_API_authentication": "REUSED_ONCE_ROOT_NO_ARCHIVE_CORE_HASH"
+    }
+  },
+  "independent_review": {
+    "path": "coverage/evidence/next-metrics-initial-independent-review-v1.json",
+    "sha256": "7c4387bbd9baa862771f28b719d63f2746e16acccbbffb11652fac73e3c945ee"
+  },
+  "whole_product_admission": {
+    "path": "coverage/evidence/next-metrics-whole-product-admission-v1.json",
+    "sha256": "6992d2d4c460d85b6dd38b5327f8153536c0bc8893ec1a1d491db29bf798411a",
+    "profiles": 4,
+    "XML_checks": 938528,
+    "SDK_checks": 256,
+    "corpora": 48
+  },
+  "shipping_projection": {
+    "qualified_source": "683f0043a6cd6bb61626241a003ffd615ba48205",
+    "production_blobs": 502,
+    "source_sha256": "906b5d0a24717da8cc6512d5cfec302e022a9384b89808897cc562478aef04c8",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "comparison": "Actual conflict-free merged workingtree production tree byte-identical to qualified683 via git diff; filesystem canonical fingerprint identical. Qualifier/CI/conftest/benchmark/tools unchanged by main ancestry. Commit/push follows document/index checks."
+  },
+  "method": {
+    "source_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "cases": 28,
+    "accepted_samples": 392,
+    "warmup_groups": 56,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "reference_and_native_threads": 1,
+    "allocation_inclusive_public_calls": true,
+    "ordering": "Frozen pass1 order [0,1] iff(round+case_index+1)%2==0; otherwise[1,0]; original0/current1",
+    "batch_count": 625,
+    "minimum_accepted_batch_ns": 101894866,
+    "minimum_warmup_group_ns": 253168849,
+    "underlength_calibration_batches": 0,
+    "timed_loop_invocations": [
+      3871341,
+      5911075
+    ],
+    "journal": "Every batch_before/batch_after pair checked including exact case/function/round/ordinal/loops/phase/completion. Independent reconstruction starts loops1 and reproduces each warmup and accepted sample loop update; all625 batches and28measure_returned seals consumed in order with no leftovers. All392 accepted sample values independently elapsed_ns/loops/1e6; seven-element medians and ratios recomputed exactly, then reports/hosted summary cross-checked.",
+    "scope": "One initial same-host original/public-native comparison; no previous-C++ gain, general speed superiority, repeated-run confidence interval, or significance claim."
+  },
+  "cohorts": {
+    "routes": [
+      "metrics-are",
+      "metrics-contingency",
+      "ellipse",
+      "boundary"
+    ],
+    "status": "PASS_FOUR_REAL_CLI_STOPS_BEFORE_SAMPLER_BODY",
+    "original_topcalls": 4,
+    "native_topcalls": 4,
+    "sampler_body_calls": 0,
+    "timed_batches": 0,
+    "checks": "Each route has exactly four complete before/after original/native journal records, source-bound precall argv/route/core/binding, sampler-entry accepted/native counts and terminal. No failure/never-written outputs. Route command exits0, sampler-entry equals terminal payload, worker/fallback restoration true. Pinned actual probe/driver code checks nativeC-return lists, exact public/owned namespace and signature, default1, whole tuple/CSR/array output layout, unchanged inputs/pointers and NumPy FP policy before stop.",
+    "restoration_scope": "Terminal directly records worker/fallback outer state. Probe finally restores trace/profile/argv; raw hardware FENV snapshots are not separately stored in cohort records. Do not claim additional machine-state evidence.",
+    "clock": "Hosted generated binding/rootGO hashes/probe SHA/deadline match actual root dispatch inputs and authenticated source plan; all report timestamps inside that UTC input window. No local clock/deadline invented."
+  },
+  "result": {
+    "wins": 18,
+    "losses": 10,
+    "ties": 0,
+    "families": [
+      {
+        "family": "label_pair_metrics",
+        "cases": 8,
+        "wins": 4,
+        "losses": 4,
+        "ties": 0,
+        "raw_samples": 112
+      },
+      {
+        "family": "ellipse_perimeter",
+        "cases": 12,
+        "wins": 10,
+        "losses": 2,
+        "ties": 0,
+        "raw_samples": 168
+      },
+      {
+        "family": "find_boundaries",
+        "cases": 8,
+        "wins": 4,
+        "losses": 4,
+        "ties": 0,
+        "raw_samples": 112
+      }
+    ],
+    "loss_rows": [
+      {
+        "family": "label_pair_metrics",
+        "case_id": "metrics.adapted_rand_error/large-C",
+        "reference_ms": 8.627439785714285,
+        "current_ms": 9.812909583333333,
+        "original_over_current": 0.8791928339345447
+      },
+      {
+        "family": "label_pair_metrics",
+        "case_id": "metrics.adapted_rand_error/large-F",
+        "reference_ms": 11.9107507,
+        "current_ms": 12.1088197,
+        "original_over_current": 0.9836425840909994
+      },
+      {
+        "family": "label_pair_metrics",
+        "case_id": "metrics.contingency_table/large-C",
+        "reference_ms": 8.562625928571428,
+        "current_ms": 9.898035333333334,
+        "original_over_current": 0.8650833867742738
+      },
+      {
+        "family": "label_pair_metrics",
+        "case_id": "metrics.contingency_table/large-F",
+        "reference_ms": 12.742825,
+        "current_ms": 13.381595777777777,
+        "original_over_current": 0.952264977332632
+      },
+      {
+        "family": "ellipse_perimeter",
+        "case_id": "ellipse-perimeter/point",
+        "reference_ms": 0.0006253887460383902,
+        "current_ms": 0.001568475085537392,
+        "original_over_current": 0.398724054851097
+      },
+      {
+        "family": "ellipse_perimeter",
+        "case_id": "ellipse-perimeter/unit",
+        "reference_ms": 0.0017716637737012486,
+        "current_ms": 0.0018948069270328441,
+        "original_over_current": 0.9350101841117763
+      },
+      {
+        "family": "find_boundaries",
+        "case_id": "u16-inner-F",
+        "reference_ms": 1.864229177419355,
+        "current_ms": 6.310962789473685,
+        "original_over_current": 0.29539536828339086
+      },
+      {
+        "family": "find_boundaries",
+        "case_id": "i32-outer-reverse",
+        "reference_ms": 2.9947236153846153,
+        "current_ms": 5.417648181818182,
+        "original_over_current": 0.5527718882586384
+      },
+      {
+        "family": "find_boundaries",
+        "case_id": "u16-outer-3d",
+        "reference_ms": 0.7805556283783783,
+        "current_ms": 1.7809129076923076,
+        "original_over_current": 0.43828961259527055
+      },
+      {
+        "family": "find_boundaries",
+        "case_id": "bool-inner-reverse",
+        "reference_ms": 2.4379116041666666,
+        "current_ms": 4.585459538461538,
+        "original_over_current": 0.53166134903561
+      }
+    ],
+    "all_rows_retained": true,
+    "table": {
+      "path": "build/next-metrics-initial-independent-review-v1/per-case-v1.md",
+      "sha256": "d5603fd22959c9c949a8088b65aa6b22f0d03d48ece36fb1ebf55b88e0f7c99f"
+    },
+    "reconstruction": {
+      "path": "build/next-metrics-initial-independent-review-v1/reconstruction-v1.json",
+      "sha256": "57260e0e9385253a5cb0d709711d7a06d7c88b7be89dfa855a6506f671a6d6db"
+    }
+  },
+  "published_files_sha256": {
+    "benchmarks/next-metrics-minimum-initial-v1/ellipse_perimeter.batches.jsonl": "7d43a69459ff0eee6a2ab3c5de47be4861453cd83bed82c079fd896b86aeacfc",
+    "benchmarks/next-metrics-minimum-initial-v1/ellipse_perimeter.json": "60f875f6dcb0561fc9140adef0ff26e310328a42d6d96a38f09db461e60a9522",
+    "benchmarks/next-metrics-minimum-initial-v1/find_boundaries.batches.jsonl": "d2f9ae54d799f1ac48a79e9ffecebe211a9665d67242dbfdceb53846112ec9cf",
+    "benchmarks/next-metrics-minimum-initial-v1/find_boundaries.json": "ad2a42552e1b9a7fb13133dc13b310585838490da6505c3d9a8043510b84ab2b",
+    "benchmarks/next-metrics-minimum-initial-v1/first-cohort-summary.json": "bdb21dd0b21efc86a07732a213419605de55f7da334f95aa1b7426e0c629bf32",
+    "benchmarks/next-metrics-minimum-initial-v1/label_pair_metrics.batches.jsonl": "2691ed8c8c7d26dcf277eef53e21e2046f45ffd631d8cd526d3c10aa727aa7c5",
+    "benchmarks/next-metrics-minimum-initial-v1/label_pair_metrics.json": "2d216b18e6d7f262547ec6808b1fdc7bf54e00321c8aaf2367f73ad7c5285086",
+    "benchmarks/next-metrics-minimum-initial-v1/README.md": "a862835a66d96640b7238e13d49194bc8ed7db6f0e6186b90eebfa4f5a53e125",
+    "benchmarks/next-metrics-minimum-initial-v1/summary.json": "1cca319b8191190b9078fa2074f13a6529dec003608473466aecbe62da8dae6e"
+  },
+  "remaining_scope": [
+    "All10measured slower cases remain optimization backlog; no unchanged rerun",
+    "Full advertised477entries/classes/runtime discovery/provider ownership/API domains remain incomplete",
+    "Future private268candidate requires installed-grid saved-suite adapter/selector closure, complete source barriers, genuine four-profile qualification, SDK and public one-thread evidence"
+  ],
+  "closeout": {
+    "result": "Independent raw reconstruction accepted, existing exact qualified source admitted for main delivery with every loss disclosed.",
+    "reuse": "Reused genuine minimum product and all4release profiles; one new comparison, one2.1MB artifact download/API hash; no new package/core build or numerical replay.",
+    "avoidable_work": "Defaultbranch workflow404 corrected before dispatch; implicit GBK ledger read corrected. Root prospective projection used many Git subprocesses; final shipping check reuses one batched tree diff plus existing fingerprint helper. No work rerun to measure waste.",
+    "next_owner": "root with assigned family owners",
+    "next_trigger": "Commit/push validated projection promptly; profile measured boundary and large-label losses separately; close future installed-grid consumer gate before release readiness."
+  }
+}

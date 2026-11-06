@@ -13,7 +13,7 @@ import sys
 import warnings
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = ROOT / 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'
+CONTRACT = ROOT / 'coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json'
 REFERENCE = ROOT / 'coverage/contracts/draw-polygon-v1.json'
 
 
@@ -98,6 +98,44 @@ def checked_output(actual, expected, buffers, np, snapshot, bound, coordinates):
     return output
 
 
+def validate_source_closure(contract):
+    """Authenticate the metrics additions against the frozen drawing closure."""
+    binding = contract['predecessor_binding']
+    assert binding['contract'] == 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'
+    predecessor_raw = (ROOT / binding['contract']).read_bytes()
+    assert hashlib.sha256(predecessor_raw).hexdigest() == binding['sha256'] == 'db0cd8c16175d24fef5096b7ee18ab95c62cf92f8ec13f7961ab527a92ff4627'
+    predecessor = json.loads(predecessor_raw)
+    assert {k:v for k,v in contract.items() if k not in ('source_closure','scope','predecessor_binding')} == {k:v for k,v in predecessor.items() if k not in ('source_closure','scope')}
+    assert set(contract['source_closure']) == set(predecessor['source_closure'])
+    fragments = binding['CMake_inverse']
+    assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == 'f24de5ec75cf8a864446b5fe8a345cd86a3681aecb79adc5b4a8ea76b1e00e0e'
+    for name, pin in contract['source_closure'].items():
+        raw = (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
+        assert hashlib.sha256(raw).hexdigest() == pin
+        if name == 'CMakeLists.txt':
+            for fragment in fragments:
+                current, previous = fragment['current'].encode(), fragment['predecessor'].encode()
+                assert current and raw.count(current) == 1
+                raw = raw.replace(current,previous,1)
+            assert hashlib.sha256(raw).hexdigest() == predecessor['source_closure'][name]
+        elif name == 'src/bindings.cpp':
+            fragments = binding['binding_inverse']
+            assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == '6456e0d66a16f7fe990deb603cf80671401322e36aa28a4665d7be294981004e'
+            for fragment in fragments:
+                current, previous = fragment['current'].encode(), fragment['predecessor'].encode()
+                assert current and raw.count(current) == 1
+                raw = raw.replace(current,previous,1)
+            assert hashlib.sha256(raw).hexdigest() == predecessor['source_closure'][name]
+        elif name == 'benchmarks/draw_polygon.py':
+            for fragment in binding['driver_inverse']:
+                current, previous = fragment['current'].encode(), fragment['predecessor'].encode()
+                assert current and raw.count(current) == 1
+                raw = raw.replace(current,previous,1)
+            assert hashlib.sha256(raw).hexdigest() == predecessor['source_closure'][name]
+        else:
+            assert pin == predecessor['source_closure'][name]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--threads', type=int, choices=[1], default=1)
@@ -136,8 +174,7 @@ def main():
         assert binaries[name] == pin['sha256']
     assert hashlib.sha256(reference_raw).hexdigest() == contract['reference_contract_sha256']
     assert hashlib.sha256(inspect.getsource(measure).encode()).hexdigest() == contract['method_sha256']
-    for name, pin in contract['source_closure'].items():
-        assert hashlib.sha256((ROOT / name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == pin
+    validate_source_closure(contract)
     pools = {k: os.environ[k] for k in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS', 'BLIS_NUM_THREADS')}
     assert set(pools.values()) == {'1'} and xx.get_num_threads() == 1
     xx.set_fallback_enabled(False)

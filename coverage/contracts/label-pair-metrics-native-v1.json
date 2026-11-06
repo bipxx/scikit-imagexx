@@ -1,0 +1,112 @@
+{
+  "schema": "label-pair-metrics-native-v1",
+  "status": "COUNTS_COMPONENT_PASS_PENDING_INDEPENDENT_REVIEW_BINDER_SDK",
+  "reference_source": "6ada55872a5baf1f4ecbe081e2a076dd279f69ac",
+  "capture_admission": "c90e05cb023142d3d1c2f622f6fb5a294f6298bc35cd578924229f229891f4aa",
+  "original_fixture": {
+    "path": "tests/fixtures/label_pair_metrics_originals_v1.hpp",
+    "sha256": "20184b5ef6739442c90f14b9c538e22905c12984a9e48ce3dc83d83622e84a8d",
+    "records": 5,
+    "source_ids": [
+      "contingency_table/duplicates",
+      "contingency_table/normalize-ignore",
+      "contingency_table/allignored-normalize",
+      "contingency_table/unequal-shapes-flat-match",
+      "contingency_table/readonly-reversed"
+    ],
+    "transformation": "Exactrawf64bits; capturedC-order integerlabels andCSRindexvalues losslesslywidened tologicalint64SDKinterface. NotpublicCSRindexdtype/storage paritycredit."
+  },
+  "frozen_native_cases": [
+    "5once-capturedCSRreturns/workers1,4,defaultsnapshot",
+    "empty/countoverflow/null/raw-pointerdomainrefusalatomicoutput",
+    "negative/overlimitcoordinates/ignoredspan/workerrefusals",
+    "normalizedallignoredexactNaN+invalidstatus/callerFPflagrestore",
+    "nearest/x87/SSEonlyrounding/FTZDAZentryboundaries",
+    "unnormalizedexactcountsunderotherroundingmode",
+    "maxlabelshapeandholes",
+    "largeanalytic262151pixels5x7all35pairs/exactorderednormalizedhistogram/ignoredrow0/globalworkers1,4/defaultrestore"
+  ],
+  "numeric_policy": "0ULPlogicaldata words inclcapturedNaNs, exactlogicalindices/shape/explicitzeros; per-pixeldividebeforeliteralrepeatedcoalescing, no count/N orcount*inverse shortcut. Normalizationstatusinvalid1mapsNumPyinvalid8 onlyinlaterfrontend; preservescallerfullFENV. No Rand/VI reducer/logcandidatecode.",
+  "worker_SIMD": "Once defaultglobalorprovidedpositiveworker snapshot; existingpartition threshold256K forindependentintegerkeypacking only. Serialsort/run/FPcoalescing; compilerSIMDguardexcludesMSVCOpenMPsimd. Runtime-disableavailabledispatch isnottruecompiler-scalarproof.",
+  "proof_modes": [
+    "GNUstrictnormal",
+    "samebinaryruntime-disabled-honestcompilerSIMDscope",
+    "truecompiler-scalar fno-tree-vectorize/fno-tree-slp-vectorize/fno-openmp-simd",
+    "ASanUBSan newleaf+unit withretainedSDKruntime",
+    "actualMSVC leaf+unitcompileonly"
+  ],
+  "no_new_originals": true,
+  "not_claimed": [
+    "PublicSciPyCSRclass/indexwidth/backinggeometry",
+    "Native Rand/VI reductions/logs",
+    "Suppliedtablemutation/FPcallbacks/errorprefixownership",
+    "Genuineinstalledwholeproduct/platformspeed"
+  ],
+  "source_canonical_lf_sha256": {
+    "include/skimagexx/label_pair_metrics.hpp": "71d7ec54627afee213c335e5db01bda5fdc3eb165362087781e4715d562177b2",
+    "src/label_pair_metrics.cpp": "fd6a82c0ca743fbeaabf1d51e4dc0d2b09f006bce14f99dc7cb9ee651aa5ab46",
+    "tests/test_label_pair_metrics_native.cpp": "7b58cd032fa3e67eb7b8ea41bce9e376b26da209f3fb67dd0a1915e7b025b435",
+    "tests/label_pair_metrics_native_controls.hpp": "07dea67653583d9e1455f53a5d4d374e2f16090fede8b7d3478be42485d28c86",
+    "tests/fixtures/label_pair_metrics_originals_v1.hpp": "20184b5ef6739442c90f14b9c538e22905c12984a9e48ce3dc83d83622e84a8d"
+  },
+  "observed_proofs": {
+    "normal": {
+      "status": "PASS_NATIVE_COUNTS_COMPONENT_ONLY",
+      "mode": "normal",
+      "stdout": "label-pair native controls=478; originals=5; workers=1,4; restored=1; available=1\n",
+      "runtime_disabled_stdout": "label-pair native controls=478; originals=5; workers=1,4; restored=1; available=0\n",
+      "actual_new_leaf_sha256": "aee0ee5b71d5ef5ea7ed6fa2a1c6c6a35f63968034d0c61b09a188e361b69180",
+      "original_records": 5,
+      "reference_profile_words_identical": true,
+      "workers": [
+        1,
+        4
+      ],
+      "default_restored": 1,
+      "wholeSDKbuild": false,
+      "original_calls": 0,
+      "timed_batches": 0
+    },
+    "scalar": {
+      "status": "PASS_NATIVE_COUNTS_COMPONENT_ONLY",
+      "mode": "scalar",
+      "stdout": "label-pair native controls=478; originals=5; workers=1,4; restored=1; available=1\n",
+      "runtime_disabled_stdout": null,
+      "actual_new_leaf_sha256": "388a9d72f13e2d0af717938e78f5d36f7682f03252cb30638fbcab151c5eeab9",
+      "original_records": 5,
+      "reference_profile_words_identical": true,
+      "workers": [
+        1,
+        4
+      ],
+      "default_restored": 1,
+      "wholeSDKbuild": false,
+      "original_calls": 0,
+      "timed_batches": 0
+    },
+    "sanitize": {
+      "status": "PASS_NATIVE_COUNTS_COMPONENT_ONLY",
+      "mode": "sanitize",
+      "stdout": "label-pair native controls=478; originals=5; workers=1,4; restored=1; available=1\n",
+      "runtime_disabled_stdout": null,
+      "actual_new_leaf_sha256": "a12d823078bcea22caafd44a3c1c02f5e21151d32f00354a1aee8ae099192770",
+      "original_records": 5,
+      "reference_profile_words_identical": true,
+      "workers": [
+        1,
+        4
+      ],
+      "default_restored": 1,
+      "wholeSDKbuild": false,
+      "original_calls": 0,
+      "timed_batches": 0
+    }
+  },
+  "observed_MSVC_scope": "Actualleaf+unitTUcompile /fp:strict /openmp only; no Windowslink/runtime.",
+  "true_scalar_correction": {
+    "proof": "build/label-pair-metrics-v1/counts-scalar-correction-v2.json",
+    "source_unchanged": true,
+    "prior_scalar_claim": "Rejected: explicit OpenMP pragma still vectorized despite prior flags; runtime478control result retained.",
+    "current": "native-counts-scalar-v2/scalar; no -fopenmp during compile; -U_OPENMP/no tree/no SLP;478controls PASS, vectorreport empty/keyvector opcodes absent."
+  }
+}

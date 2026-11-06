@@ -1,0 +1,363 @@
+{
+  "schema": "next-metrics-integration-handoff-v1",
+  "status": "local-integration-ready-independent-review-pending",
+  "production_source": "4d446b6d9ffb838864a3d09c1477f93d6eedc13a",
+  "baseline_main": "8d19f322",
+  "counts": {
+    "native_partial_image_paths": 264,
+    "native_functions": 267,
+    "product_members": 204,
+    "SDK_members": 96,
+    "SDK_families": 32,
+    "SDK_checks": 64
+  },
+  "counts_scope": "Source-derived current264 plan asserted by retained purev3 source-plan tests; not qualified products.",
+  "components": {
+    "ARE": "a53 admitted; metadata boundary preserves inverse-pinned predecessor source",
+    "contingency": "9ca37384; independent review build/contingency-table-independent-review-v1/review-v1.json",
+    "ellipse": "c8a88954 policy; peer701d57b2; overlay296; retained fallback-runtime contract"
+  },
+  "profiles": {
+    "minimum": {
+      "normal": {
+        "retained_unaffected_passes": 38,
+        "corrected_cached_CSR_passes": 5,
+        "passed_node_union": 43,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "worker_default_and_restored": 1,
+        "optional_workers": 4,
+        "ownership_entries": 9,
+        "scope": "Affected local plumbing only; cached same-input gold at generic original callsites. Not new original observations or full source barrier."
+      },
+      "disabled": {
+        "retained_unaffected_passes": 38,
+        "corrected_cached_CSR_passes": 5,
+        "passed_node_union": 43,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "worker_default_and_restored": 1,
+        "optional_workers": 4,
+        "ownership_entries": 9,
+        "scope": "Affected local plumbing only; cached same-input gold at generic original callsites. Not new original observations or full source barrier."
+      }
+    },
+    "modern": {
+      "normal": {
+        "retained_unaffected_passes": 38,
+        "corrected_cached_CSR_passes": 5,
+        "passed_node_union": 43,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "worker_default_and_restored": 1,
+        "optional_workers": 4,
+        "ownership_entries": 9,
+        "scope": "Affected local plumbing only; cached same-input gold at generic original callsites. Not new original observations or full source barrier."
+      },
+      "disabled": {
+        "retained_unaffected_passes": 38,
+        "corrected_cached_CSR_passes": 5,
+        "passed_node_union": 43,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "worker_default_and_restored": 1,
+        "optional_workers": 4,
+        "ownership_entries": 9,
+        "scope": "Affected local plumbing only; cached same-input gold at generic original callsites. Not new original observations or full source barrier."
+      }
+    }
+  },
+  "pure_source_checks": {
+    "minimum": {
+      "v1": {
+        "tests": 149,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0
+      },
+      "v2": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "v3": {
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "modern": {
+      "v1": {
+        "tests": 149,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0
+      },
+      "v2": {
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "v3": {
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "source_pins": {
+    "python/skimagexx/_label_pair_metrics.py": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486",
+    "python/skimagexx/_contingency_table.py": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+    "python/skimagexx/metrics.py": "92969744cfa0b084dc62c085e61fd517e40978bb1dd3e55e99286588f03921f0",
+    "python/skimagexx/coverage.py": "726af7b8496dcd9b9d918a18ccd39d7422d5ac464698395a10197f1bde3f92c3",
+    "tests/test_label_pair_rand_public.py": "5dba836440cf224d0a21a3ed59627b36310acdd0172e0c22db4a12104e066a9c",
+    "tests/test_label_pair_metrics_default.py": "0d9ea75e8c9be7fbc55f865755a1337531b43e89c5174f2804b7fc6dc37ffa00",
+    "tests/test_label_pair_metrics_benchmark_intake.py": "2b6737329eed245f0a0d2106ef4866ec00ba4f79d268454ae6749f81a1483c09",
+    "tests/test_api.py": "25a90e6bef426973478c557b20ab9c26edce201970a192ce0ebdbcd1acbeadfe",
+    "tests/test_dtype_metadata.py": "f6044637c75327a96fbada92df1d5947ef0e9fafc078fd823543d50b849192ca",
+    "tests/test_dtype_aliases.py": "d0c544bb17c1a7f829de7071dd04c41cfde821e7b45e725d3989651a292cbdd7"
+  },
+  "records": {
+    "build/next-metrics-integration-v1/runtime-v2/minimum/normal/precall.json": {
+      "bytes": 4163,
+      "sha256": "123f8fbbafed23c87d54adc35fe9e86a3a8e54c4da8bcb29ca858b4c84b01ebf"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/minimum/normal/terminal.json": {
+      "bytes": 528,
+      "sha256": "25a4d25bf9f63e25dfe9ce3a3c4c3b87097c8be5a7142cf35f94cc97c063efa7"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/minimum/normal/collected.json": {
+      "bytes": 5052,
+      "sha256": "9bc2b9b991dd63eaad103afc59847d6c11731bb68aec58cf217470818d268c76"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/minimum/normal/results.xml": {
+      "bytes": 28858,
+      "sha256": "a6a688d163c261526b61000f5ef080129798413122363c7c8dde831855d0617f"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/normal/precall.json": {
+      "bytes": 4078,
+      "sha256": "338607571e3923476d742699e86057363a8aa98648d0892bc3c4595892f4783d"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/normal/terminal.json": {
+      "bytes": 379,
+      "sha256": "6f0cac58dca4e9bf7098b295e0c270135a495a9b647a37eff45c238305a39297"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/normal/collected.json": {
+      "bytes": 574,
+      "sha256": "b3b8bf3c384a98e8273948f308c871878daddc65dd6a102d113f55198b02b4d2"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/normal/results.xml": {
+      "bytes": 987,
+      "sha256": "c656f49f836873ee99df40337c811b6b397cf8631974e32df0d08cfd80508168"
+    },
+    "build/next-metrics-integration-v1/ownership-v2/minimum/normal/receipt.json": {
+      "bytes": 3225,
+      "sha256": "ff74d39b63aafac196f542e99a633017a2bb5661603ff5dfccffa6ba17907ff0"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/minimum/disabled/precall.json": {
+      "bytes": 4168,
+      "sha256": "465985c88f94fe58c4fc0fb9ee7b4d969d54bde36af99da7d3d62fb55c0341ed"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/minimum/disabled/terminal.json": {
+      "bytes": 533,
+      "sha256": "fbeb3aa9db0fa545207c5e19a2b7fabd42cde38938ab78ec2fefa1ef1c018fbb"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/minimum/disabled/collected.json": {
+      "bytes": 5052,
+      "sha256": "9bc2b9b991dd63eaad103afc59847d6c11731bb68aec58cf217470818d268c76"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/minimum/disabled/results.xml": {
+      "bytes": 28858,
+      "sha256": "82a244fbd2f9a0669a80e17e737c503903e01847852b2b965e9ef5aef25d7653"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/disabled/precall.json": {
+      "bytes": 4083,
+      "sha256": "ae0ec1a81cc1c0082494fd8f8f05a76d8ba39edb1cf2bdfcdc61ee524d737a83"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/disabled/terminal.json": {
+      "bytes": 379,
+      "sha256": "d3a1d124621bca1d0a7c61b354cb836630f370a6d481666e441ad5d2cf229cbe"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/disabled/collected.json": {
+      "bytes": 574,
+      "sha256": "b3b8bf3c384a98e8273948f308c871878daddc65dd6a102d113f55198b02b4d2"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/minimum/disabled/results.xml": {
+      "bytes": 987,
+      "sha256": "6f781cc242236c03784f5e34798a91abfb5bfaf763b4c0ed64c4166f8f1afb84"
+    },
+    "build/next-metrics-integration-v1/ownership-v2/minimum/disabled/receipt.json": {
+      "bytes": 3228,
+      "sha256": "543c7cf9ac8f88af7326e1d6e52a9712859efdcd644f795530c8bd7bf0424014"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/normal/precall.json": {
+      "bytes": 4153,
+      "sha256": "433d3a93fe256333ceeb48b072aa676d850b1f03bb758b7f6e9948c4351927fe"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/normal/terminal.json": {
+      "bytes": 533,
+      "sha256": "b7c47d181504fd5df31a63c1c915c1e19c54c72fa44ade8127cc37629bfd211e"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/normal/collected.json": {
+      "bytes": 5052,
+      "sha256": "9bc2b9b991dd63eaad103afc59847d6c11731bb68aec58cf217470818d268c76"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/normal/results.xml": {
+      "bytes": 28845,
+      "sha256": "57c6d3d5ce74daae9e2b274f670708c34b88ed8591b18aebe4b40e157aa27d58"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/normal/precall.json": {
+      "bytes": 4068,
+      "sha256": "7ae7bb4b389e63a4c92e93e11eb6de490e539607155d2011711e3592986f5c05"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/normal/terminal.json": {
+      "bytes": 378,
+      "sha256": "fcedf69f3b03f4eb849fff6a92e84a5479ce9bacfe5312eddda4e98c68098581"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/normal/collected.json": {
+      "bytes": 574,
+      "sha256": "b3b8bf3c384a98e8273948f308c871878daddc65dd6a102d113f55198b02b4d2"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/normal/results.xml": {
+      "bytes": 987,
+      "sha256": "707d16b26bfeda69957f2e423d3c9902621377fc61f7a3f28a1b1f2a4917d207"
+    },
+    "build/next-metrics-integration-v1/ownership-v2/modern/normal/receipt.json": {
+      "bytes": 3222,
+      "sha256": "81b1b84e25aae66f6661a506d1fd2ba10728395e1b206373ad1c6e3b785f3761"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/disabled/precall.json": {
+      "bytes": 4158,
+      "sha256": "661b1ca8c5846db9c10fcb28978ccff830484ca21fb4d195b809f7074da7b416"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/disabled/terminal.json": {
+      "bytes": 534,
+      "sha256": "8b25078bda1e052d9612bc7954b09028966285671521b27431c4c1339f053a64"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/disabled/collected.json": {
+      "bytes": 5052,
+      "sha256": "9bc2b9b991dd63eaad103afc59847d6c11731bb68aec58cf217470818d268c76"
+    },
+    "build/next-metrics-integration-v1/runtime-v2/modern/disabled/results.xml": {
+      "bytes": 28845,
+      "sha256": "6882d6271b20bab9c7a0d0d9419119fff3c85fa7dcd68c9c3487a0971b1be6ae"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/disabled/precall.json": {
+      "bytes": 4073,
+      "sha256": "df5a19e96e0f9a3ae8c20d1298078dbb8c47bf504dacbe9051637899cd991fca"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/disabled/terminal.json": {
+      "bytes": 379,
+      "sha256": "137d75c87659aced9b02d7225c43f1c5e45db10156e2de1c75d5e6e74e2ee19d"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/disabled/collected.json": {
+      "bytes": 574,
+      "sha256": "b3b8bf3c384a98e8273948f308c871878daddc65dd6a102d113f55198b02b4d2"
+    },
+    "build/next-metrics-integration-v1/runtime-cached-reference-v3/modern/disabled/results.xml": {
+      "bytes": 987,
+      "sha256": "e770b4c200b140fe94cae993be854cc49102c62ed45a2c9115181d65da22cdfd"
+    },
+    "build/next-metrics-integration-v1/ownership-v2/modern/disabled/receipt.json": {
+      "bytes": 3225,
+      "sha256": "b190e40b9bfa6267aad5621a40f4108ca1128e29bf8ec715c789088a82219022"
+    },
+    "build/next-metrics-integration-v1/pure-minimum-v1/results.xml": {
+      "bytes": 34060,
+      "sha256": "4b989412143c1d5d1a6cb6f8b3a09f2788904d10069dfa4119416c76c26d00ab"
+    },
+    "build/next-metrics-integration-v1/pure-minimum-v2/results.xml": {
+      "bytes": 644,
+      "sha256": "7cabc1257db4f238f6090170e2e8a83ef4381eed20f11e5b25fc37afa692e029"
+    },
+    "build/next-metrics-integration-v1/pure-minimum-v3/results.xml": {
+      "bytes": 3714,
+      "sha256": "78a08fad4430e2675ca8ede4bfa452ac78fcb64c776e885faada677b98a70dee"
+    },
+    "build/next-metrics-integration-v1/pure-modern-v1/results.xml": {
+      "bytes": 34060,
+      "sha256": "180c9b5dc9abf2dfa3f95ff2b4991198021b4c39ea35e117a5f38677df53b168"
+    },
+    "build/next-metrics-integration-v1/pure-modern-v2/results.xml": {
+      "bytes": 644,
+      "sha256": "61ea93a9e836521bc1dad01b9c94b98b49d675ab5e96eed544d4de80f27d66c8"
+    },
+    "build/next-metrics-integration-v1/pure-modern-v3/results.xml": {
+      "bytes": 3714,
+      "sha256": "5d27b6c9c0c0a724cbf2291638af86e3467ed2a3635d81156022f40fe15173bf"
+    },
+    "build/next-metrics-integration-v1/run_runtime_v2.py": {
+      "bytes": 5306,
+      "sha256": "6f5bd98030389d909bc5d7094be83329b00f72af566999404603288753a8ce0a"
+    },
+    "build/next-metrics-integration-v1/run_runtime_failed_v3.py": {
+      "bytes": 5747,
+      "sha256": "11aa2a58c2754022ed8cccd556c3d806bea8fe898a547d2aea0f999edfeac6fd"
+    },
+    "build/next-metrics-integration-v1/prepare_runtime_v2.py": {
+      "bytes": 1614,
+      "sha256": "3ab9a8e8c41b110cc457192c00f7f921769748aa75aa3c5be3181eecf477d89d"
+    },
+    "build/next-metrics-integration-v1/runtime-source-freeze-v2.json": {
+      "bytes": 157,
+      "sha256": "2236e755115674147e5c0e6c765fbbfbffe917adbbcae41300d9d0e642a5974f"
+    },
+    "build/next-metrics-integration-v1/runtime-setup-failure-v1.json": {
+      "bytes": 340,
+      "sha256": "483cba13ea57fe41670bbb283418bb2c678c79aa912ca2cc7334fd4ca743d121"
+    },
+    "build/next-metrics-integration-v1/ownership-setup-failure-v1.json": {
+      "bytes": 758,
+      "sha256": "86ad443a298d998c59c58184aedc1a0d9966f6d4d6b4bf57b89a59144bab00f9"
+    },
+    "build/next-metrics-integration-v1/observe_ownership_v1.py": {
+      "bytes": 1694,
+      "sha256": "4c829276be51620636ed08394b7169af93a3bad618fc8e92391c6651098c9329"
+    },
+    "build/next-metrics-integration-v1/observe_ownership_v2.py": {
+      "bytes": 1742,
+      "sha256": "b3f13883dcb12261aba7729edca225a0d32006d535423060250a50c0063dd3c5"
+    }
+  },
+  "implementation_changes": "Existing 16e6e58e shared source integration plus clean4d446b6d qualified-main sync. This closeout changes only this receipt; no production fix was required by local runtime.",
+  "scope": [
+    "Public metrics aliases/registry/defaults/full CSR and scalar tuple checkers",
+    "CMake native binder, BSD scipy sparse notice, installed SDK family and qualification selectors",
+    "NumPy-only actual eight-case benchmark fixture intake; metadata boundary using retained same-value words",
+    "Real builtin symbols in retained9ca thin core, same physical inode; process-global default1/optional4 and normal/disabled"
+  ],
+  "excluded": [
+    "variation_of_information",
+    "unfinished find_boundaries",
+    "new original metric calls",
+    "timing batches",
+    "new fullcore or SDK or environment builds",
+    "hosted dispatch",
+    "main delivery"
+  ],
+  "remaining_gates": [
+    "Root freezes final candidate then independent integration admission",
+    "Complete actual workflow source-check command on retained Windows3.11 and3.13 with normal conftest/plugins and no fail-fast; partial149 union does not satisfy it",
+    "Exact-source four-profile full qualification including genuine installed ownership, SDK and hot-swap coverage",
+    "Independent root product admission; no library-wide speed claim",
+    "Relevant one-thread public-call original performance evidence; prospective controller is not a timing result"
+  ],
+  "failure_preservation": {
+    "runtime_v2": "Retained five failed cached-CSR generic checks/profile; v3 corrected indptr ownership and authenticated complete saved metadata, rerunning only failed five.",
+    "pure_v1": "Retained146PASS+3stale timing-selector failures/profile; corrected3 only in v2. New metadata/source-plan22 in v3 remain separate.",
+    "ownership_v1": "Probe assumed pybind builtin self was module. Recorded failure; v2 verifies builtin/module/symbol identity and loaded-core samefile, records actual pybind record self type.",
+    "setup_v1": "Retained WSL Git .git-pointer failure before copying; WindowsGit sourcefreeze consumed by Linux."
+  },
+  "closeout": {
+    "result": "Local affected boundary/default/generic/intake union43PASS/profile, zero original calls/timing; builtin/control observations PASS fourprofiles.",
+    "reuse": "Frozen9ca thin cores hardlinked; copied shipping Python runtime-v2 retained. Component numerical/native/SDK evidence not replayed. No old handedoff bytes changed.",
+    "avoidable_work": "Cached CSR metadata reconstruction caused20 failing generic nodes, now corrected20 only; builtin-self assumption caused four bounded probe failures before setters/algorithms. Costs retained where measured, unknown otherwise. Several PowerShell wildcard probes failed without dependent mutation.",
+    "next_owner": "root",
+    "next_trigger": "Frozen handoff -> independent review -> complete exact workflow sourcebarrier; then qualified fullproduct. Consume minimum fullqualification stager via existing verifier, avoiding redundant minimumprepare per readiness reuse memo.",
+    "plan_update": "Root owns coverage/EXECUTION_PLAN.md and work_items; incorporate terminal local result, missing fullbarrier and minimum-stager reuse at transition."
+  }
+}

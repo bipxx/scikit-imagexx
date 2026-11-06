@@ -1,0 +1,194 @@
+{
+  "schema": "next-metrics-integration-handoff-v2",
+  "status": "corrected-source-ready-for-independent-full-barrier",
+  "supersedes": {
+    "candidate": "323deb004b9f268078ea5242d6609be21032d313",
+    "handoff": "coverage/evidence/next-metrics-integration-handoff-v1.json",
+    "handoff_sha256": "59a4e763098670e9f4d834ff4eed40668e890f61ea732a4151590617d9333a1b",
+    "readiness": "build/next-metrics-integration-readiness-v1/review-v1.json",
+    "readiness_sha256": "04c7acb5390f34e7050b43e20d1e7922a2ab4576d260ccd8f32fe15d8616072e",
+    "result": "Both complete normal-conftest/plugin source barriers2753nodes/3FAIL; preserved terminal failure. v1 local plumbing readiness never was a fullbarrier PASS."
+  },
+  "fixes": [
+    "Inventory metric routes moved from excluded standalone .update into existing trusted declaration/loop; extractor unchanged.",
+    "current264 source-derived census assertion now204product/96SDK/32families; historical envelope checks remain.",
+    "New immutable polygon metrics runtime successor with exact additive CMake/shared binder inverse and full driver inverse; activeCLI and sourceguard use same predecessor authentication. Original contract, firstcohort packets and raw measurements unchanged."
+  ],
+  "changed_canonical_lf_pins": {
+    ".gitattributes": "021a8ce41dbdb03693599091c095a525f596df50ac363196300a0f3688b71322",
+    "benchmarks/draw_polygon.py": "73b45b53590dbe82d44b203b18348d29447244375baf9901073d9037f7e49763",
+    "tests/test_draw_polygon_benchmark.py": "94ed05f8eea97f7cc9da0908502e48d22ebcff3e4851242dece8d1625588fb30",
+    "tests/test_rank_statistics_products.py": "b2d593bdd0619f77b67857f8b5d6b8d60cb630156f9ba1e0981ef8beb300eaaf",
+    "tools/inventory.py": "773a19163197452874e6b252000790c55c21ed1068e91e151902d654cc4a2c25",
+    "tools/public_qualification.py": "e096535d61e35fff83f183eaf022db59ba99cbdee5e04d96a5462094afa6ebe9",
+    "coverage/contracts/draw-polygon-metrics-runtime-v1.json": "1c82e68961a4bc1aedfa60f5fe19b983ed064288bf042946a345d123b0f3e825"
+  },
+  "source_context_recovery": {
+    "CMakeLists.txt": {
+      "predecessor_canonical_lf_sha256": "e9e50a794ea6a228b2b497aa57abae1d4b72c5f376a4140c07b5f2b0118f14a5",
+      "fragments": 6
+    },
+    "src/bindings.cpp": {
+      "predecessor_canonical_lf_sha256": "8373372a2df0b77206aed451a6079161352e5fd551a4b05658601d2abb5887d6",
+      "fragments": 2
+    },
+    "benchmarks/draw_polygon.py": {
+      "predecessor_canonical_lf_sha256": "7134e0d4ad49f099bfa737638300f345a0ee4f9a0fae3fa3630a5108ff84fa8c",
+      "fragments": 3
+    }
+  },
+  "source_checks": {
+    "minimum": {
+      "v2": {
+        "xml": {
+          "tests": 25,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        },
+        "terminal": {
+          "exit_code": 1,
+          "seconds": 1.7190000000409782,
+          "attempts": [],
+          "scientific_origins": {},
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0
+        }
+      },
+      "v3": {
+        "xml": {
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "terminal": {
+          "exit_code": 0,
+          "seconds": 0.3119999999180436,
+          "attempts": [],
+          "scientific_origins": {},
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0
+        }
+      }
+    },
+    "modern": {
+      "v2": {
+        "xml": {
+          "tests": 25,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        },
+        "terminal": {
+          "exit_code": 1,
+          "seconds": 1.626331300009042,
+          "attempts": [],
+          "scientific_origins": {},
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0
+        }
+      },
+      "v3": {
+        "xml": {
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "terminal": {
+          "exit_code": 0,
+          "seconds": 0.4470049999654293,
+          "attempts": [],
+          "scientific_origins": {},
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0
+        }
+      }
+    }
+  },
+  "records": {
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v2/command.json": {
+      "bytes": 1174,
+      "sha256": "0a4b4f9c0ab0d55a165735e6a5632f42c0def7d59e8e383963cadd2537c63a59"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v2/terminal.json": {
+      "bytes": 175,
+      "sha256": "65433324382461abb2d0e919b5567b33c99d6b2ef3912cb0a9461299b8ae4a81"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v2/results.xml": {
+      "bytes": 6157,
+      "sha256": "902657cdf606cdd0e1b4b523ca67dcc9f1eee32632ab2a0c143e06249e1d7666"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v3/command.json": {
+      "bytes": 1098,
+      "sha256": "204e104df213bf554f063604f8e68bde8998d97e2f62f8b66ec8f8bf58ddd479"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v3/terminal.json": {
+      "bytes": 175,
+      "sha256": "0c49c734a6e607dc182a592aac187cdf1aa4f0f564d940c94884a84c753e675d"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-minimum-v3/results.xml": {
+      "bytes": 1108,
+      "sha256": "d44bf5e96a082a3664ac39eb760412e56a62e0e4a595732b3446c7508b17d23d"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v2/command.json": {
+      "bytes": 1164,
+      "sha256": "d14eb63356df30bc91cd0f4cd56aaa2b6f19c030f0a107ba3e5fec09b8fefd98"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v2/terminal.json": {
+      "bytes": 174,
+      "sha256": "35e2b397802610dac068e3bf6f840db3fea4f20ac7d9845cefa8d8b0bf182ba7"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v2/results.xml": {
+      "bytes": 6157,
+      "sha256": "9b06e10c7eaade5817431163ad19a4999f2147fd273a2a183eb704c2e6283ace"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v3/command.json": {
+      "bytes": 1088,
+      "sha256": "26174aff2945a3bf1a48678cde7f69079e966bf7e7b7f500f8df332c81fef606"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v3/terminal.json": {
+      "bytes": 175,
+      "sha256": "7549b8a56eecb1ee259733bc12dedebbb8d873cca46105e17f87ac41eaed9809"
+    },
+    "build/next-metrics-integration-v1/successor-v2/pure-modern-v3/results.xml": {
+      "bytes": 1108,
+      "sha256": "7532bb9ab7a98454ce51125f204056ca2d7ed6c9a89202fe564f5cf761860437"
+    }
+  },
+  "local_runtime_reuse": {
+    "predecessor_handoff": "coverage/evidence/next-metrics-integration-handoff-v1.json",
+    "ten_source_pins_unchanged": true,
+    "retained_profile_union": 43,
+    "profiles": 4,
+    "scope": "Source-metadata/controller changes preserve metrics Python/C++ numerical runtime scope; no scientific/native/SDK/performance replay."
+  },
+  "counts": {
+    "native_partial_image_paths": 264,
+    "native_functions": 267,
+    "product_members": 204,
+    "SDK_members": 96,
+    "SDK_families": 32,
+    "SDK_checks": 64
+  },
+  "counts_scope": "current264 sourceplan test passed in bounded v2 selection both retained supported Windows Pythons. No product qualification count claim.",
+  "remaining_gates": [
+    "Independent review of this exact frozen successor",
+    "Rerun COMPLETE actual workflow source-check command on Windows311 and313 with normal conftest/plugins, no fail-fast; bounded unions are not the barrier",
+    "Root readiness and exact-source four-profile release qualification, genuine installed ownership and SDK/hotswap; root product admission",
+    "Relevant one-thread original public-call performance evidence under independent installed-product admission; existing packets stay source-specific historical"
+  ],
+  "closeout": {
+    "result": "Affected source union26nodes/profile: retained24passes plus correctedguard/newbindingnegative; v3 sixaffected checks PASS both supported Windows versions, no scientific imports/calls.",
+    "reuse": "Retained323local runtime/core/SDK component evidence and all failed fullbarriers; no old handoff bytes changed, builds/environments/downloads/timings0.",
+    "avoidable_work": "First targeted source successor missed shared binder sibling in same historical closure:25checks/profile24PASS+1FAIL (~1.65s/~1.56s XML totals), preserved. Corrected only affected6nodes/profile. Initial nativeGit blob --output wrote an empty ignored scratch; canonical predecessor restored via capturedlines, no source mutation or measurement. MixedCRLF inventorylines restored before testing; unrelated raw bytes preserved.",
+    "process_correction": "At next source closure update inspect all literal pins, not only first failing path; audit complete predecessor dependency closure before retry. Required next gate is complete actual barrier after cleanfreeze; do not reuse partial union as passing barrier.",
+    "next_owner": "root/readiness reviewer",
+    "next_trigger": "Freeze clean successor -> independent review and complete Win311/313barriers -> hosted readiness; root updates existing execution plan/work_items. Use eligible minimum fullqualification stager without redundant prepare."
+  }
+}

@@ -5899,21 +5899,39 @@
       "api": "metrics.adapted_rand_error",
       "kind": "callable",
       "signature": "(image_true=None, image_test=None, *, table=None, ignore_labels=(0,), alpha=0.5)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_label_pair_rand_public.py",
+      "benchmark": "benchmarks/label_pair_metrics.py"
     },
     {
       "api": "metrics.contingency_table",
       "kind": "callable",
       "signature": "(im_true, im_test, *, ignore_labels=None, normalize=False, sparse_type='matrix')",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_contingency_table_public.py",
+      "benchmark": "benchmarks/label_pair_metrics.py"
     },
     {
       "api": "metrics.hausdorff_distance",
@@ -6905,11 +6923,21 @@
       "api": "segmentation.find_boundaries",
       "kind": "callable",
       "signature": "(label_img, connectivity=1, mode='thick', background=0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_find_boundaries_public.py",
+      "benchmark": "benchmarks/find_boundaries.py"
     },
     {
       "api": "segmentation.flood",

@@ -291,9 +291,9 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current262'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter')
-CURRENT_SDK_CLIENT_SCOPE = 'current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance'
+CURRENT_PRODUCT_SCOPE = 'current265'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics')
+CURRENT_SDK_CLIENT_SCOPE = 'current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
 DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
@@ -486,8 +486,12 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tests/test_draw_set_color_reference.py',
     'tests/test_draw_set_color_default.py',
     'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json',
+    'coverage/contracts/draw-polygon-metrics-runtime-v1.json',
+    'coverage/contracts/draw-polygon-boundary-metrics-runtime-v1.json',
     'coverage/contracts/draw-set-color-native-v1.json',
 )
+DRAW_SOURCE_PATHS += ('include/skimagexx/label_pair_metrics.hpp', 'src/label_pair_metrics.cpp', 'src/bind_label_pair_metrics.cpp', 'python/skimagexx/_label_pair_metrics.py', 'python/skimagexx/_contingency_table.py', 'tests/label_pair_metrics_contract.py', 'tests/label_pair_metrics_observer.py', 'tests/test_label_pair_metrics_reference.py', 'tests/test_label_pair_metrics_counts_binding.py', 'tests/test_label_pair_rand_binding.py', 'tests/test_label_pair_rand_public.py', 'tests/test_contingency_table_public.py', 'tests/test_label_pair_metrics_default.py', 'tests/test_label_pair_metrics_benchmark.py', 'tests/test_label_pair_metrics_benchmark_intake.py', 'tests/test_label_pair_metrics_native.cpp', 'tests/test_label_pair_rand_native.cpp', 'tests/test_label_pair_preweighted_native.cpp', 'tests/label_pair_metrics_native_controls.hpp', 'tests/contingency_preweighted_controls.hpp', 'tests/contingency_table_context.py', 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp', 'tests/cmake_consumer/label_pair_metrics_consumer.cpp', 'coverage/contracts/label-pair-metrics-v1.json', 'coverage/contracts/label-pair-metrics-native-v1.json', 'coverage/contracts/label-pair-metrics-sdk-v1.json', 'coverage/contracts/label-pair-rand-native-v1.json', 'coverage/contracts/contingency-table-frontend-v1.json', 'coverage/contracts/contingency-table-source-context-v1.json', 'coverage/contracts/label-pair-metrics-benchmark-v1.json', 'coverage/contracts/label-pair-metrics-benchmark-context-v1.json', 'tools/label_pair_benchmark_context.py', 'benchmarks/label_pair_metrics.py', 'third_party/scipy-sparse-LICENSE.txt', 'coverage/contracts/label-pair-ARE-metadata-context-v1.json', 'tests/test_ellipse_fallback_policy.py', 'coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json')
+DRAW_SOURCE_PATHS += ('include/skimagexx/find_boundaries.hpp', 'src/find_boundaries.cpp', 'src/bind_find_boundaries.cpp', 'python/skimagexx/_find_boundaries.py', 'tests/find_boundaries_contract.py', 'tests/find_boundaries_observer.py', 'tests/test_find_boundaries_reference.py', 'tests/test_find_boundaries_frontend_contract.py', 'tests/test_find_boundaries_intake.py', 'tests/test_find_boundaries_public.py', 'tests/test_find_boundaries_native.cpp', 'tests/test_find_boundaries_sdk_scope.py', 'tests/test_find_boundaries_benchmark.py', 'tests/test_find_boundaries_benchmark_intake.py', 'tests/test_find_boundaries_default.py', 'tests/cmake_consumer/find_boundaries_consumer.hpp', 'tests/fixtures/find_boundaries_originals_v1.hpp', 'coverage/contracts/find-boundaries-v1.json', 'coverage/contracts/find-boundaries-native-v1.json', 'coverage/contracts/find-boundaries-frontend-v1.json', 'coverage/contracts/find-boundaries-sdk-v1.json', 'coverage/contracts/find-boundaries-benchmark-v1.json', 'coverage/contracts/find-boundaries-benchmark-binding-v1.json', 'coverage/contracts/find-boundaries-frontend-v2.json', 'coverage/contracts/find-boundaries-benchmark-binding-v2.json', 'coverage/contracts/find-boundaries-benchmark-binding-v3.json', 'benchmarks/find_boundaries.py')
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
@@ -587,7 +591,7 @@ GROUPS = {
                       'test_matrix_transform_numpy124_skylakex_certificate.py','test_matrix_prescott_public.py'),
     'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
     'public-MaxTree-fixes': ('test_max_tree_dtype_metadata.py', 'test_max_tree_sdk_oracle.py'),
-    'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
+    'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py', 'test_find_boundaries_public.py', 'test_find_boundaries_intake.py', 'test_find_boundaries_benchmark_intake.py', 'test_find_boundaries_default.py'),
     'metrics-leaf-half': ('test_metrics_leaf_simd.py', 'test_metrics_half_loads.py', 'test_metrics_public.py',
                           'test_metrics_reverse_simd.py::test_reverse_original_policy_values_and_warnings'),
     'metrics-policies': ('test_metrics_reductions.py',),
@@ -595,7 +599,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_regionprops_coords_scaled_reference.py', 'test_regionprops_coords_scaled_public.py', 'test_regionprops_coords_scaled_sdk_scope.py', 'test_regionprops_coords_scaled_benchmark.py',
+POST203_TESTS = ('test_find_boundaries_reference.py','test_find_boundaries_frontend_contract.py','test_find_boundaries_sdk_scope.py','test_find_boundaries_benchmark.py','test_find_boundaries_public.py','test_find_boundaries_intake.py','test_find_boundaries_benchmark_intake.py','test_find_boundaries_default.py','test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_regionprops_coords_scaled_reference.py', 'test_regionprops_coords_scaled_public.py', 'test_regionprops_coords_scaled_sdk_scope.py', 'test_regionprops_coords_scaled_benchmark.py',
     'test_draw_polygon_reference.py',
     'test_draw_polygon_public.py',
     'test_draw_polygon_default.py',
@@ -612,6 +616,9 @@ POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.
     'test_draw_set_color_default.py',
     'test_draw_set_color_benchmark.py',
 )
+
+
+POST203_TESTS += ('test_label_pair_metrics_reference.py', 'test_label_pair_metrics_counts_binding.py', 'test_label_pair_rand_binding.py', 'test_label_pair_rand_public.py', 'test_contingency_table_public.py', 'test_label_pair_metrics_default.py', 'test_label_pair_metrics_benchmark.py', 'test_label_pair_metrics_benchmark_intake.py')
 
 
 def groups_for_source(root):
@@ -904,7 +911,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -971,6 +978,7 @@ def current_install_layout(read_bytes, names, profile):
             'current Bezier install closure absent')
     require('include/skimagexx/draw_set_color.hpp' in headers and 'skimagexx/_draw_set_color.py' in sources,
             'current set-color install closure absent')
+    require('include/skimagexx/find_boundaries.hpp' in headers and 'skimagexx/_find_boundaries.py' in sources, 'current find_boundaries install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
@@ -1751,6 +1759,22 @@ def draw_admission(core, draw, wrapper, registered, circle_wrapper, line_aa_wrap
             'line-AA public signature differs')
 
 
+def label_pair_admission(core, metrics, registered):
+    """Bound public aliases and real shared-core entries; no numerical calls here."""
+    for name,module,signature in (
+        ('adapted_rand_error','_label_pair_metrics','(image_true=None, image_test=None, *, table=None, ignore_labels=(0,), alpha=0.5)'),
+        ('contingency_table','_contingency_table',"(im_true, im_test, *, ignore_labels=None, normalize=False, sparse_type='matrix')")):
+        wrapper=importlib.import_module('skimagexx.'+module)
+        require(wrapper._core is core,'label-pair alternate worker state')
+        function=vars(metrics).get(name)
+        require(callable(function)and function is vars(wrapper).get(name)and function.__module__=='skimagexx.'+module,'label-pair public forwarding/alias')
+        require(str(inspect.signature(function))==signature,'label-pair public signature differs')
+        require(metrics.__all__.count(name)==1 and tuple(registered).count('metrics.'+name)==1,'label-pair duplicate/missing registry/export')
+    for name in ('label_pair_counts','label_pair_counts_preweighted','label_pair_rand_terms','label_pair_rand_divide','label_pair_rand_fscore','label_pair_rand_error','label_pair_check_storage'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry)and entry.__module__==core.__name__ and entry.__name__==name,'label-pair compiled entry missing/forwarded: '+name)
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -1767,6 +1791,7 @@ def admission(out, state):
     for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction', '_normalized_mutual_information', '_h_extrema'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
+    label_pair_admission(xx._core,importlib.import_module('skimagexx.metrics'),coverage.native_functions())
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
     require(sum(coverage.execution_kind(n) == 'native' for n in coverage.native_functions()) == state['expected']['image_count'], 'image/helper count mismatch')
     require(len(coverage.native_functions()) == state['expected']['registered_count']
@@ -2112,7 +2137,10 @@ def sdk(out, state, journal):
     with zipfile.ZipFile(out / 'source.zip') as archive:
         for name in archive.namelist():
             if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')
-                    or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp')):
+                    or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
+                                'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
+                                'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
+                                'tests/contingency_preweighted_controls.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()

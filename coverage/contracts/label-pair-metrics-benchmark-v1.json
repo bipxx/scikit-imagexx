@@ -1,0 +1,168 @@
+{
+  "schema": "label-pair-metrics-benchmark-v1",
+  "status": "PROSPECTIVE_NO_ORIGINAL_NATIVE_OR_TIMING_CALLS",
+  "scope": "Initial public-original versus public-native allocation-inclusive8case one-worker comparison; all losses retained. ARE bounded finite table=None, contingency preweighted uniform-normal/zero counts with named NumPy prefix and structural SciPy CSR providers; no VI/suppliedtable/broadprotocol/wholelibrary/priorCPP speed claim.",
+  "threads": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_min_ms": 250,
+  "raw_samples": 112,
+  "warmup_groups": 16,
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "source_closure": {
+    "include/skimagexx/label_pair_metrics.hpp": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+    "src/label_pair_metrics.cpp": "3a8870665e618ec22eb5b7b159162e06f2452745f547f6eeb7febf705958967a",
+    "src/bind_label_pair_metrics.cpp": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+    "python/skimagexx/_label_pair_metrics.py": "ec72d9f86cf82f221d77d0c4ffee6675f25bf4b2530fa71b16f7d22fcf423486",
+    "python/skimagexx/_contingency_table.py": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+    "python/skimagexx/metrics.py": "92969744cfa0b084dc62c085e61fd517e40978bb1dd3e55e99286588f03921f0",
+    "python/skimagexx/coverage.py": "726af7b8496dcd9b9d918a18ccd39d7422d5ac464698395a10197f1bde3f92c3",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "upstream_sources": {
+    "skimage/metrics/_contingency_table.py": "e334f4ec16ac3c2bd9fb0c533e8ca454029c914c8649d5322b6f0cc5adbdbf62",
+    "skimage/metrics/_adapted_rand_error.py": "cdb0b245288e1b3dd00b36152dd9c20e91edbe1d99a07c8210a2907beb872640"
+  },
+  "cases": [
+    {
+      "id": "metrics.adapted_rand_error/tiny",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        2,
+        3
+      ],
+      "layout": "C",
+      "labels": 3,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.adapted_rand_error/small",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        64,
+        65
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.adapted_rand_error/large-C",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.adapted_rand_error/large-F",
+      "api": "metrics.adapted_rand_error",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "F",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/tiny",
+      "api": "metrics.contingency_table",
+      "shape": [
+        2,
+        3
+      ],
+      "layout": "C",
+      "labels": 3,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/small",
+      "api": "metrics.contingency_table",
+      "shape": [
+        64,
+        65
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/large-C",
+      "api": "metrics.contingency_table",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "C",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": false,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "id": "metrics.contingency_table/large-F",
+      "api": "metrics.contingency_table",
+      "shape": [
+        512,
+        512
+      ],
+      "layout": "F",
+      "labels": 64,
+      "dtype": "int64",
+      "normalize": true,
+      "ignore": [
+        0
+      ],
+      "alpha": 0.5
+    }
+  ],
+  "max_pixels": 262144,
+  "max_labels": 64,
+  "output_policy": "0ULP fullscalar tuple/whole CSR shape,class,indices,dtype,flags,bases,strides,cache,logicalwords and nonalias; trailing backingpayload unassessed.",
+  "source_safety": "Ordinary shape2 integer ndarrays; max512x512, labels0..63, N>=6. COO allocation O(N), max64x64 CSR. Pair sums <=N*(N-1)<2^36. No unchecked helper inputs. Fixture materialization outside timing. Newlarge cases not original gold. Each true nonignored label occurs at leasttwice and nonignoredN exceeds totaltestlabels, so both ARE pair denominators are positive; jointzero is permitted.",
+  "first_cohort_gate": "Root separate GO after source peer and eligible genuine installed product; actual CLI stop at measure CALL before body, firstcase only.",
+  "remaining": [
+    "Independent source and full shared barrier",
+    "Actual NumPy-only factory intake both profiles with originals refused",
+    "Genuine installed input/source/runtime/core authentication",
+    "Root authorized actual firstcohort and onehost benchmark; no timing has occurred"
+  ],
+  "selection": "Default8cases112samples16warmgroups; optional --api oneAPI selects its4frozen cases56samples8warmgroups, no parameter/policy change; untimed firstcohort onlyafterrootGO."
+}

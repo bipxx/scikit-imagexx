@@ -8,12 +8,12 @@ DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
-    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information'),
+    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
     'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
@@ -41,6 +41,17 @@ NATIVE_FUNCTIONS = {
 
 MAX_TREE_PATHS = tuple('morphology.'+name for name in (
     'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing'))
+
+
+def label_pair_contract(api):
+    if api not in ('metrics.adapted_rand_error','metrics.contingency_table'):raise KeyError(api)
+    return dict(api=api,implementation='native-partial',fully_native=False,
+        kernel='Bounded integer pair counts and exact finite table=None ARE scalar stages; contingency source-ordered preweighted duplicate coalescing',
+        providers='NumPy reshape, isin and per-pixel normalization/FP callbacks; SciPy structural CSR/index/class factory. Unsupported contingency numeric suffix explicitly uses coordinate CSR provider without whole metric forwarding',
+        metadata='Plain integer dtype tags normalized only in internal ARE views, preserving caller words/metadata; actual eight integer widths, not floating label coverage',
+        gaps='Supplied ARE tables, VI/log2/DDOT, nonuniform contingency weights, exceptional FENV/print-log and broad protocols remain open; trailing backing-tail payload unassessed',
+        workers='One shared global snapshot, default1; integer packing parallel by threshold; duplicate coalescing ordered serial',
+        performance='Prospective8case one-worker public comparison, no measurement or full qualification claimed')
 
 
 def matrix_transform_contract():
@@ -321,6 +332,8 @@ def class_contract(api):
 
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='draw.set_color':return ('float32','float64')
     if api in ('draw.polygon','draw.polygon2mask'):return ('uint8','float32','float64')
     if api == 'draw.line_nd':
@@ -365,6 +378,9 @@ def needs_color_input(api):
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='segmentation.find_boundaries':
+        import numpy as np
+        return (np.array([[0,1,0],[1,1,0]],dtype=image.dtype),),{}
     if api=='draw.polygon':return ([1,1,4],[1,5,2]),{}
     if api=='draw.polygon2mask':return ((6,7),[[1,1],[1,5],[4,2]]),{}
     if api=='draw.bezier_curve':return (0,0,1,4,6,6,1.),{}
@@ -537,6 +553,12 @@ def default_call(api, image):
         # separately tests default and wide channel depths.
         options={'n_bins':16} if api.rsplit('.',1)[1]=='windowed_histogram' else {}
         return (image,np.ones((3,)*image.ndim,np.uint8)),options
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
+        import numpy as np
+        # Frozen six-label value partition; image is the actual integer-dtype carrier.
+        labels=np.array([[0,1,1],[2,2,2]],dtype=image.dtype)
+        test=labels.copy() if api=='metrics.adapted_rand_error' else np.array([[0,2,2],[1,1,2]],dtype=image.dtype)
+        return (labels,test),{}
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}
     if api in ('measure.label','morphology.label'):
@@ -984,7 +1006,57 @@ def ellipsoid_default_error(image, actual, expected):
     return 0.
 
 
+def label_pair_default_error(api, actual, expected):
+    """Exact whole CSR/scalar tuple; never coerce a sparse result to object dtype."""
+    import numpy as np
+    def array(value):
+        base=value.base
+        return (type(value).__module__,type(value).__name__,value.dtype.str,value.dtype.descr,
+                value.dtype.metadata,value.shape,value.strides,bool(value.flags.owndata),
+                bool(value.flags.writeable),bool(value.flags.aligned),bool(value.flags.c_contiguous),
+                bool(value.flags.f_contiguous),type(base).__name__,getattr(base,'shape',None),
+                getattr(base,'strides',None),value.tobytes(order='C'))
+    if api=='metrics.adapted_rand_error':
+        assert type(actual) is type(expected) is tuple and len(actual)==len(expected)==3
+        for a,e in zip(actual,expected):
+            assert type(a) is type(e) and isinstance(a,np.float64)
+            assert a.dtype==e.dtype and a.tobytes()==e.tobytes()
+    elif api=='metrics.contingency_table':
+        assert type(actual) is type(expected) and actual is not expected
+        assert actual.format==expected.format=='csr' and actual.shape==expected.shape
+        assert actual.dtype==expected.dtype and actual.dtype.metadata==expected.dtype.metadata
+        assert actual.__dict__.get('_has_sorted_indices')==expected.__dict__.get('_has_sorted_indices')
+        assert actual.__dict__.get('_has_canonical_format')==expected.__dict__.get('_has_canonical_format')
+        aa=[actual.indptr,actual.indices,actual.data];ee=[expected.indptr,expected.indices,expected.data]
+        assert [array(a)for a in aa]==[array(e)for e in ee]
+        assert [(a is b,bool(np.shares_memory(a,b)),a.base is b.base)for a in aa for b in aa]==[(a is b,bool(np.shares_memory(a,b)),a.base is b.base)for a in ee for b in ee]
+        assert all(a is not e and not np.shares_memory(a,e)for a in aa for e in ee)
+    else:raise KeyError(api)
+    return 0.0
+
+
+def find_boundaries_default_error(actual, expected, *, image=None):
+    """Exact bool output, allocation, layout and input independence."""
+    import numpy as np
+    assert type(actual) is type(expected) is np.ndarray
+    assert actual.dtype == expected.dtype == np.dtype('bool')
+    assert actual.dtype.metadata is expected.dtype.metadata is None
+    assert actual.shape == expected.shape and actual.strides == expected.strides
+    assert actual is not expected and not np.shares_memory(actual,expected)
+    for result in (actual,expected):
+        assert result.flags.owndata and result.base is None and result.flags.writeable and result.flags.aligned
+        if image is not None:assert not np.shares_memory(result,image)
+    assert actual.flags.c_contiguous == expected.flags.c_contiguous
+    assert actual.flags.f_contiguous == expected.flags.f_contiguous
+    assert actual.tobytes(order='C') == expected.tobytes(order='C')
+    return 0.0
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api=='segmentation.find_boundaries':
+        find_boundaries_default_error(actual,expected,image=image);return
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
+        label_pair_default_error(api,actual,expected);return
     """Shared assertion; previous scalar budgets keep their existing checker."""
     if api=='draw.set_color':
         set_color_default_error(image,actual,expected);return
@@ -1166,6 +1238,7 @@ def parity_tolerance(api, dtype, image=None, expected=None):
                'morphology.star', 'morphology.footprint_from_sequence'):
         return (0., 0.)
     if api in ('morphology.h_maxima','morphology.h_minima'):return (0.,0.)
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return (0.,0.)
     if api=='metrics.normalized_mutual_information':
         # Prospective entropy/ratio policy; exact counts, metadata and events
         # have separate assertions in the frozen214-case public contract.

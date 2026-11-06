@@ -1,0 +1,223 @@
+{
+  "schema": "join-crop-grid-independent-shared-delta-review-v3",
+  "status": "PASS_SCOPED_SHARED_SOURCE_DELTA_NOT_READY_OR_GENUINE_ADMISSION",
+  "source": "47df67d4ae916701fdc15f5f9f536a4df9a58170",
+  "base": "8c22dd6a729ac96e7b84fdd261294601a98748e3",
+  "candidate_handoff": {
+    "path": "build/join-integration-v1/handoff-v3.json",
+    "sha256": "1e7a182247c8bd4fccc13190c66049954a75d0918213d3ccaa1b40c58e51174c"
+  },
+  "reviewer": "boundary_worker; independent of shared integration author metrics_integrator",
+  "ownership": "Only ignored build/join-integration-independent-review-v3 audit/receipt outputs; no source/shared/main/plan/producer/controller edits. Native Windows Git clean source/ancestry inspected. Current root action-boundary AGENTS rule and worktree rules applied.",
+  "findings": [
+    {
+      "area": "Admission prerequisites and exact source projection",
+      "result": "PASS",
+      "detail": "Actual clean47df descends admitted8c22. Handoff and predecessor/component receipts authenticated. Exact59 frozen source files:32 family imports match admitted cropabaf/grid7dfa Git blob bytes and handoff raw pins,27 shared paths exhaust remaining delta. No family native/header/binder/wrapper/gold/benchmark method rewrite. All86 small retained receipts authenticate; no large archive/core reading."
+    },
+    {
+      "area": "Existing core, namespace and compilation policy",
+      "result": "PASS_SOURCE_ONLY",
+      "detail": "One existing skimagexx target gains crop/regular_grid leaves; existing _core gains binders once each; one declaration/registration each. util imports actual family wrappers and registry/inventory expose scoped native-partial paths. MSVC/GNU strict FP flags added for affected TUs. Three current canonical shared inverses reconstruct admitted8c22 CMake/bindings/coverage exactly; older historical source closure reuses admitted8c22 context. regular_seeds and683 boundary repair unchanged. Existing mutable global budget ABI is reused; tiny metadata remains serial."
+    },
+    {
+      "area": "Source-bound and tagged generic consumers",
+      "result": "PASS_SCOPED_PLUMBING",
+      "detail": "Crop cache authenticates fixture/source/NumPy profile, exact fixed requested dtype4x5 values, binary width0 andFalse/K options; tagged equivalence explicitly labeled and restricted to inert known str->str metadata. Grid cache authenticates exact requested dtype2vector and builtin point1forbool/6otherwise, finite exact product/sort/inverse prefix, default-int NumPy scalar slice fields. Source-derived grid/type/tag equivalence is not falsely labeled identical capture. No original API calls in changed generic/dtype alias/tag branches. Whole output dtype/metadata/layout/base/storage or tuple/slice/scalar type/raw words checked. Retained50requests29refusals and25actual descriptor-body/50standin calls/profile match exact source pins; no candidate numerical parity credit."
+    },
+    {
+      "area": "Actual selectors and collector boundary",
+      "result": "PASS_STATIC_ONLY",
+      "detail": "New source-only selectors occur once in actual public-qualification pytest argv before2>&1|tee; collector has sole expected log target. Required131 selectors and source POST203130 entries are consistent with recorded current268/271registered closure. CI normal/disabled selectors include crop and util metadata integration. Retained65passing/6failed initial scope plus corrected6 and later9+3 source subsets per Windows version remain correctly labeled partial affected evidence, not a complete workflow barrier."
+    },
+    {
+      "area": "SDK aggregate and source-copy closure",
+      "result": "PASS_SOURCE_AND_REUSED_SYNTAX_ONLY",
+      "detail": "Existing32 required SDK families remain unchanged; actual legacy/new qualifier file routing verified. Existing component_consumers TU includes and calls complete crop view/PODcopy plus regular_grid operations under requested workers. Crop helper sets/restores budget itself. New regular_grid helper retains its relative fixture; sdk source-copy condition includes cmake consumer headers and exact regular_grid_originals_v1.hpp, alongside older dependencies. Existing GNU5.2363491s/MSVC2.0459186s syntax-only receipts authenticate exact47df aggregateTU. No link/runtime/exported-target/genuine SDK acceptance inferred."
+    },
+    {
+      "area": "Concrete remaining genuine grid saved-row test gap",
+      "result": "PENDING_BEFORE_FINAL_RELEASE_FREEZE",
+      "detail": "tests/test_regular_grid_public.py loads REGULAR_GRID_COMPONENT_DIR/_regular_grid_core*.so. It cannot currently prove full saved49-node parity through genuine skimagexx.util/core. Current qualifier selects source/default dtype integration coverage; this is useful partial evidence. Root/integration owner must provide/select a genuine installed-core adapter or equivalent full saved-domain coverage before claiming that mandatory genuine family parity gate. Reuse raw90 originals unchanged; no recapture or broad class/type engine required."
+    },
+    {
+      "area": "Conservative claims and inherited frontiers",
+      "result": "PASS_DISCLOSED",
+      "detail": "Candidate is explicitly PRIVATE_UNREADY. Crop providers/object/scalar/nonzero-itemsize gap, grid default-int/Windows/intp/FP/provider/wide-count domains, JOIN literal factor/promotion/wrap/SDK nonpositive/floating plans/exact upstream ArrayMap identity remain open. Historical crop handoff says namespace not wired: source wiring is now present, but genuine installed execution stays pending. Exact683 qualification is source-specific and cannot qualify47df executable additions."
+    }
+  ],
+  "unmet_gates": [
+    {
+      "gate": "Root independent scoped source admission",
+      "owner": "root",
+      "trigger": "Admit this exact47df scoped delta review; not readiness/dispatch authority"
+    },
+    {
+      "gate": "Final genuine installed grid saved-row adapter/selector closure",
+      "owner": "root assigned sole integration author",
+      "trigger": "Resolve private-extension-only test_regular_grid_public.py setup for actual installed public/core and retain full saved-domain expectations; amend final source/required selector closure as needed before readiness"
+    },
+    {
+      "gate": "Complete affected workflow source-check command",
+      "owner": "root release/integration owner",
+      "trigger": "Execute actual complete selectors with normal conftest/plugins on both retained supported Python versions and no fail-fast after final source freeze; preserved partial scopes cannot substitute"
+    },
+    {
+      "gate": "Actual genuine whole product and SDK operations",
+      "owner": "root release owner",
+      "trigger": "Actual util import/hot-swap/default/binary/dtype/provider/class/input/FP checks through one installed core/default1/workers/scalar-disabled applicability; actual installed find_package/exported-target SDK composition on final source/platforms"
+    },
+    {
+      "gate": "Exact-source qualification/admission",
+      "owner": "root independent release admission",
+      "trigger": "Four profile final-source release qualification and product/runtime/stager admission; retain independent profile cores and no683 reuse beyond unchanged component scope"
+    },
+    {
+      "gate": "Original-public one-thread performance",
+      "owner": "root benchmark owner",
+      "trigger": "Genuine bound implementation and explicit root performanceGO; crop/grid prospective8cases112samples16warmgroups each remain pending, grid non-plan CLI currently refuses. JOIN performance remains separate. Retain losses/no retry"
+    },
+    {
+      "gate": "Full API/domain closure and delivery",
+      "owner": "root and scoped family owners",
+      "trigger": "Close/disclose inherited provider/SDK/platform/class domains accurately; root shipping projection/main merge/push only after mandatory admission/release/performance gates"
+    }
+  ],
+  "reuse": {
+    "originals": "JOIN100,crop216,grid90 exhausted observations and independent admissions reused; no new original calls",
+    "native_component": "Admitted c821/abaf/7dfa private native/public/scalar/sanitizer/SDK scope retained without replay; source family bytes identical. Existing whole-product683 admission not applied to new source.",
+    "affected_evidence": {
+      "build/crop-grid-integration-v1/windows311-descriptor-source-v3/results.xml": {
+        "tests": 9,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "build/crop-grid-integration-v1/windows311-final-source-v4/results.xml": {
+        "tests": 3,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "build/crop-grid-integration-v1/windows311-source-corrected-v2/results.xml": {
+        "tests": 6,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "build/crop-grid-integration-v1/windows311-source-v1/results.xml": {
+        "tests": 71,
+        "errors": 0,
+        "failures": 6,
+        "skipped": 0
+      },
+      "build/crop-grid-integration-v1/windows313-descriptor-source-v3/results.xml": {
+        "tests": 9,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "build/crop-grid-integration-v1/windows313-final-source-v4/results.xml": {
+        "tests": 3,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "build/crop-grid-integration-v1/windows313-source-corrected-v2/results.xml": {
+        "tests": 6,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "build/crop-grid-integration-v1/windows313-source-v1/results.xml": {
+        "tests": 71,
+        "errors": 0,
+        "failures": 6,
+        "skipped": 0
+      }
+    },
+    "intake": {
+      "minimum": {
+        "requests": 50,
+        "refusals": 29,
+        "descriptor_bodies": 25,
+        "standins": 50,
+        "source_pins": 5
+      },
+      "modern": {
+        "requests": 50,
+        "refusals": 29,
+        "descriptor_bodies": 25,
+        "standins": 50,
+        "source_pins": 5
+      }
+    },
+    "aggregate_syntax": {
+      "gnu": {
+        "exit": 0,
+        "seconds": 5.236349100014195,
+        "scope": "syntax-only actual future source headers/fixture paths, no link/runtime/full SDK or core build"
+      },
+      "msvc": {
+        "exit": 0,
+        "seconds": 2.0459185999352485,
+        "scope": "MSVC /Zs syntax-only, no object/link/runtime/full SDK or core build"
+      }
+    }
+  },
+  "execution": {
+    "original_calls": 0,
+    "scientific_imports": 0,
+    "NumPy_operations": 0,
+    "tests_rerun": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "timed_batches": 0,
+    "downloads": 0,
+    "large_archive_core_rehashes": 0,
+    "dispatches": 0,
+    "source_edits": 0
+  },
+  "waste_review": {
+    "avoidable": "Review first asserted root/worktree AGENTS byteidentity despite latest root-only action-boundary addition; second assumed universal SDK consumer.cpp names despite established legacy test_native.cpp split. Both were reviewer setup assumptions, not candidate faults. Failed ignored audit versions/receipts retained; corrected local static reader then PASS; no test/scientific/source dependent work. One rg wildcard/guessed script-path lookup and one guessed component consumer path failed harmlessly before corrected direct source inspection.",
+    "observed_costs": "Failed first audit0.51105s; second command including full rule reads5.1899584s; corrected complete static audit4.5543615s. Other static review time unknown, no rerun to estimate waste.",
+    "reuse": "All unchanged originals/native/component and retained source/intake/syntax proofs reused by actual source/hash scope. No unnecessary full barrier/build/environment/measurement campaign.",
+    "next_plan_correction": "Root existing cumulative integration action:47df scoped shared-source review PASS, candidate remains unready. Name genuine grid full saved-row adapter/selector step before final workflow barrier/genuine qualification; root owns plan/work_items/main."
+  },
+  "next_owner": "root admission/release owner; sole integration author for concrete final-source test adapter/selector closure",
+  "next_trigger": "Review exact scoped PASS/unmet gates, then assign necessary final-source genuine parity adaptation and required complete source/genuine/release gates. No new review layer or unchanged evidence replay from this receipt.",
+  "audit": {
+    "path": "build/join-integration-independent-review-v3/audit-v3.json",
+    "sha256": "6243511953f9b1082b5d740b1911184a346a6e2bb1109fcb2d1d45689f5577b7"
+  },
+  "proofs": {
+    "audit-failure-v1.json": {
+      "sha256": "4c9472869b8d438d391bca1f1dd2f65bc14ee5d46d23aa9633a34e2491438789",
+      "bytes": 566
+    },
+    "audit-failure-v2.json": {
+      "sha256": "838af01e3cc55c9082ac3aa8cfc9acfafa39014a5859c12c0bff58d6342ee6ff",
+      "bytes": 656
+    },
+    "audit-v3.json": {
+      "sha256": "6243511953f9b1082b5d740b1911184a346a6e2bb1109fcb2d1d45689f5577b7",
+      "bytes": 15836
+    },
+    "audit_v1.py": {
+      "sha256": "03c35758f784d42bc085edb98929747a91d9b4fea3b57802e6eb65c68c680221",
+      "bytes": 7336
+    },
+    "audit_v2.py": {
+      "sha256": "3db68451aa628d098d7418d51e7b35ca84c9f69baec17ac1ac1ab6c4950e66cb",
+      "bytes": 7459
+    },
+    "audit_v3.py": {
+      "sha256": "c9ed577ff86e8cd927729c69c00909e3021ce4ef98e69f524488099e1ffcee9c",
+      "bytes": 7603
+    },
+    "finalize_review_v3.py": {
+      "sha256": "dad2bf614cb7c2f6aab7f1f1fc11e7c667505f2a69e815a355a00aa8bee551fa",
+      "bytes": 10587
+    }
+  }
+}

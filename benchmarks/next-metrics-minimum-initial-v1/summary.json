@@ -1,0 +1,57 @@
+{
+  "families": {
+    "label_pair_metrics": {
+      "raw_samples": 112,
+      "wins": [
+        "metrics.adapted_rand_error/tiny",
+        "metrics.adapted_rand_error/small",
+        "metrics.contingency_table/tiny",
+        "metrics.contingency_table/small"
+      ],
+      "losses": [
+        "metrics.adapted_rand_error/large-C",
+        "metrics.adapted_rand_error/large-F",
+        "metrics.contingency_table/large-C",
+        "metrics.contingency_table/large-F"
+      ],
+      "ties": []
+    },
+    "ellipse_perimeter": {
+      "raw_samples": 168,
+      "wins": [
+        "ellipse-perimeter/unequal",
+        "ellipse-perimeter/flat",
+        "ellipse-perimeter/zero-axis",
+        "ellipse-perimeter/translated-clip",
+        "ellipse-perimeter/unit-angle-positive",
+        "ellipse-perimeter/unit-angle-negative",
+        "ellipse-perimeter/medium-axis",
+        "ellipse-perimeter/large-axis",
+        "ellipse-perimeter/large-partclip",
+        "ellipse-perimeter/fully-clipped-empty"
+      ],
+      "losses": [
+        "ellipse-perimeter/point",
+        "ellipse-perimeter/unit"
+      ],
+      "ties": []
+    },
+    "find_boundaries": {
+      "raw_samples": 112,
+      "wins": [
+        "cross-thick",
+        "u8-thick-512",
+        "u8-subpixel",
+        "u8-subpixel-1d"
+      ],
+      "losses": [
+        "u16-inner-F",
+        "i32-outer-reverse",
+        "u16-outer-3d",
+        "bool-inner-reverse"
+      ],
+      "ties": []
+    }
+  },
+  "scope": "Initial current/public-original comparison only; all losses retained, no previous-C++ gain or whole-product qualification claim."
+}

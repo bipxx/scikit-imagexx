@@ -1,0 +1,168 @@
+{
+  "schema": "slice-along-axes-independent-source-storage-safety-review-v1",
+  "status": "PASS_SCOPED_SOURCE_STORAGE_SAFETY_NO_REFERENCE_AUTHORIZATION",
+  "source": "b4e1d4e8525d76d39217135e0a1423e49509b3da",
+  "source_locator": "build/worktrees/slice-along-axes-v1",
+  "reviewed_utc": "2026-11-06T08:57:43.004716+00:00",
+  "handoff": {
+    "path": "build\\slice-along-axes-v1\\handoff-v1.json",
+    "sha256": "3f676174fb503bb13467996bf5f7f02ff4402adc8ff49fa62e6ae841579f9833"
+  },
+  "audit": {
+    "path": "build/slice-along-axes-independent-review-v1/audit-v1.json",
+    "sha256": "a8fb7d5facfe5af19d03dca955945d3ba869881d3e10864968f0c653a54b662b",
+    "script": "build/slice-along-axes-independent-review-v1/audit_v2.py",
+    "script_sha256": "bd243b00c4e83302559d5c5584d7782151190b523ebd7d31840ea9d4befcb608"
+  },
+  "applicable_rules": {
+    "root_sha256": "be875a7984d4a80926dec6130485844a6bf69585dcd87b99d6ddb6b7e3d42253",
+    "worktree_sha256": "994d57af9e754b6aee7d6a1488c74eccc1b3785c4eb8d14d4676ce49e9e29675",
+    "read": true,
+    "current_root_action_boundary_rule": "Each failed check stops dependent actions; mandatory complete checks cannot be replaced by smaller proxies. No new source/science check executed here."
+  },
+  "authenticated": {
+    "new_owned_files": 8,
+    "source_and_reused_dependency_pins": 12,
+    "small_proofs": 22,
+    "test_configuration_pins": 3,
+    "clean_frozen_source": true
+  },
+  "source_findings": [
+    "Actual0.26 installed source/export receipts both profiles pin1a75717a module and518bc501 public util/__init__.py export, match frozen fixture/signature(image,slices,axes=None,copy=False). No order keyword. Catalog doc axes-int claim differs from implementation: nonempty explicit axes requires len; negative axes reject.",
+    "Ordered source: false slices exact-image identity before image metadata/axes/copy; default-axis more-slices check or explicit length check; uniqueness before range; zip/pair unpack; negative a/b modulo dimension before order/bounds; basic slice tuple getitem once; copy truth then result.base then default copy(). Owned custom results can skip copy and empty slices ignore even raising copy/huge axes.",
+    "All161 frozen recipes independently inspected using stdlib integer backing certificates, without author factory/source_safe/NumPy execution. Actual logical backing maximum24elements, physical maximum80; declared ceilings256/4096 and object retention512 respected. Ordinary basic step-one indexing can only return subset input cardinality or raise; huge/negative/noninteger bounds pass source ordering/errors before standard bounded indexing, never unchecked stride fabrication.",
+    "C/F/transposed/permuted/reverse/step/readonly carriers use reviewed existing crop factory basic views/owned repeats. dtype words/packed/object storage stay in valid owned allocations; no arbitrary pointer, forged array interface or as_strided input admitted. Closed controlled bound/axis/sequence/copy probes only return known small indices or documented errors.",
+    "Controlled ImageProbe getitem returns safe array[index], full bounded F-copy, two-item list or raises; no uncontrolled callback storage. Distinct object shallow-copy identity witness retained. Mutation recipes restricted to nonemptyint16 C-backed arrays; one scalar assignment/caught readonly failure and finally restore; no vector overlap writes or unexpected data expansion.",
+    "Unknown input kinds/layout/protocols, negative/bool shape extents, oversized/ragged/deep parameters, out-of-bound probe schemas, nonfinite values and undeclared policy/mutation cases are excluded by frozen source admission filters/retained negative controls. Future policy/protocol/full-domain behavior remains unobserved; no source-derived expected output substituted for originals.",
+    "Actual setup main/runpy entry tested in isolated cold and pre-cached scientific-module subprocesses using builtins import-request refusal, not MetaPath-only interception. Positive-shaped inert test binding stops at first numpy request; unbound stops before imports. This is import-boundary/setup evidence only, not actual root source/runtime/full-envelope authority or a capture-prefix proof.",
+    "SDK header is deliberately declaration-only: named complete operation returns identity/view/owned-C-copy result proposal, reusing admitted crop geometry/copy. Crop header absent from base; no compile/native ownership credit. Serial O(rank)+copy operation justified, no artificial SIMD/workers. Python object/protocol/base semantics and ptrdiff/intp/default-int boundaries stay explicit future frontend gates.",
+    "Eight prospective benchmark specs have fixed bounded source shapes/axes/one-thread intent and existing montage sampler signature; no benchmark execution, native public ownership or one-thread speed evidence."
+  ],
+  "retained_validation": {
+    "minimum-source-v1": {
+      "XML": {
+        "tests": 184,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "elapsed_seconds": 1.7207804320000122,
+      "scope": "Private family/setup controls; handed-off plugin autoload disabled, not a full workflow source barrier"
+    },
+    "minimum-source-v2": {
+      "XML": {
+        "tests": 185,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "elapsed_seconds": 1.5270567339999843,
+      "scope": "Private family/setup controls; handed-off plugin autoload disabled, not a full workflow source barrier"
+    },
+    "minimum-intake-v1": {
+      "XML": {
+        "tests": 347,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "elapsed_seconds": 2.0558094400000044,
+      "scope": "Private family/setup controls; handed-off plugin autoload disabled, not a full workflow source barrier"
+    },
+    "modern-source-v1": {
+      "XML": {
+        "tests": 184,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "elapsed_seconds": 2.143138860999997,
+      "scope": "Private family/setup controls; handed-off plugin autoload disabled, not a full workflow source barrier"
+    },
+    "modern-source-v2": {
+      "XML": {
+        "tests": 185,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "elapsed_seconds": 1.4885124980000057,
+      "scope": "Private family/setup controls; handed-off plugin autoload disabled, not a full workflow source barrier"
+    },
+    "modern-intake-v1": {
+      "XML": {
+        "tests": 347,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "elapsed_seconds": 2.2573211050000026,
+      "scope": "Private family/setup controls; handed-off plugin autoload disabled, not a full workflow source barrier"
+    }
+  },
+  "scope_limits": [
+    "185current family source guards/profile and347NumPy-only setup controls/profile reused.184sourcev1 is historical only. Private plugin-autoload-disabled control scope is not a complete normal-plugin workflow source barrier, genuine runtime or release gate.",
+    "Intake controls observe refused/deterministic stand-ins, not the actual original. All original outcomes remain unknown;161/profile=322 prospective observations are NOT authorized.",
+    "Current observer setup verifies contract/dependency/module/export import boundary but is not a full frozen source/clean Git/runtime/GO controller. Exact actual nativeWindowsGit plus explicitLinuxenv/source/module/runtime/rootGO prefix and fullLinuxFENV/MXCSR/controller restoration before any original call remain mandatory and pending.",
+    "This review covers B-authored eight new files. Existing four crop/codec dependency files match admitted main base and are reused; no self-source-admission of earlier shared code.",
+    "No API/domain/platform/native/public/installed SDK/genuine/performance/release admission from this source-safe checkpoint."
+  ],
+  "provenance_corrections": {
+    "source_export": "Initial nonexistent __init__.pyi locator failed before fixture/target mutation; actual distribution-listed __init__.py locator/source/export recovery receipts authenticated.",
+    "receipt_collision": "Initial minimum/modern source provenance JSON names were overwritten by test JSON. Historical overwritten receipt bytes are unavailable, not reconstructed or claimed authenticated. Fresh distinct provenance-v2 saved-only source reads match exact fixture/installed0.26 files; XML/testv1 receipts retained. No target/original consumed.",
+    "independent_audit": "First audit incorrectly required current root AGENTS equal frozen branch AGENTS. Root added action-boundary enforcement. Stopped before dependent pass; read applicable branch/current rules, preserved v1 script/failure, versioned stdlib helper authenticates each rule version separately. Source/safety acceptance unchanged."
+  },
+  "gates": {
+    "passed": [
+      "Independent exact frozen source/installed-source/export/dependency/proof authentication",
+      "Scoped source/storage safety for all161prospective recipes and closed protocol/quarantine domains",
+      "Retained private family185source+347actualNumPy-only setup controls/profile reused with declared scope; actual cold/cached main refusal validated by retained XML/code",
+      "Complete-operation SDK/serial ownership proposal honest and no native implementation imported"
+    ],
+    "failed_retained": [
+      "Historical export-locator/receipt-name setup defects disclosed and corrected with distinct provenance receipts; no scientific consequence",
+      "Independent rule-file-equality audit assumption failed before pass; successor metadata audit passes"
+    ],
+    "pending": [
+      "Root source/runtime-bound reference GO; budget remains0, future322proposals not authorization",
+      "Existing durable exactly-once controller frozen at actual runtime prefix with nativeWindowsGit/explicitLinuxenv/source/observer/codec/module/signature/profile/fullFENV-MXCSR/rootGO/exclusive journal checks before calls",
+      "Authorized actual original capture and independent raw admission, with no consumed-call retries",
+      "Implementation after GO with admitted crop dependency integration/explicit overlay and complete installed SDK named operation",
+      "Public/hot-swap/installed native ownership/default1/applicable workers/SIMD disclosure, dtype/protocol/alias/copy/FP/error/platform full parity",
+      "Relevant one-thread public-original performance, genuine exact-source four-profile release and root main delivery"
+    ]
+  },
+  "execution": {
+    "author_functions_or_tests_run": 0,
+    "NumPy_imports": 0,
+    "scientific_imports": 0,
+    "original_calls": 0,
+    "native_calls": 0,
+    "builds": 0,
+    "timing_batches": 0,
+    "downloads": 0,
+    "archives_or_cores_rehashed": 0,
+    "source_edits": 0
+  },
+  "reuse_waste": {
+    "reuse": "Authenticated22small proofs and12source/dependency pins, parsed retained XML and all161frozen recipe dictionaries. Existing185/347 passing controls, crop factory/codec/object identity and sampler infrastructure reused. No author function/test/NumPy/science/original/native/build/timing/download/archive hash replay.",
+    "avoidable": "Author export locator assumption and provenance/test filename collision are prevented-repeat setup issues; lost historical bytes disclosed and recovery source reads scoped honestly. Independent reviewer overstrict AGENTS equality produced0.46s failed metadata check; corrected helper only, no dependent source action or test rerun. Broader review time unknown.",
+    "next_plan_correction": "Existing slice-along-axes packet becomes independently source/storage-safe within161recipes; root decides source/runtime-bound GO and actual frozen controller prefix next. No source correction requested; reviewed, no change."
+  },
+  "next_gate": {
+    "owner": "root reference admission/GO owner",
+    "trigger": "Use exactb4e1d4e8/contract497d15cf and this scoped peer; decide root source/runtime-bound budget/GO, then authenticate actual frozen one-shot capture prefix before consuming any original calls. Reuse current setup evidence within unchanged scope. Root updates existing plan/work_items; no additional audit layer or source/test replay requested."
+  },
+  "evidence": {
+    "audit": "build/slice-along-axes-independent-review-v1/audit-v1.json",
+    "handoff": "build/slice-along-axes-v1/handoff-v1.json",
+    "audit_input_failure": {
+      "path": "build/slice-along-axes-independent-review-v1/audit-input-failure-v1.json",
+      "sha256": "947527041fe37b7bc53403b3f39b3abe07cd6ddbd20f5f8cd6fed88ea8400f4f"
+    },
+    "historical_failed_script": {
+      "path": "build/slice-along-axes-independent-review-v1/audit_v1.py",
+      "sha256": "427c04d6a4b93abab07e8256a6a7360c593fbbc989cd2744335a211623f65a01"
+    }
+  }
+}

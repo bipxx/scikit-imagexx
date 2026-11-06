@@ -1,0 +1,683 @@
+{
+  "schema": "draw-polygon-benchmark-prospective-v1",
+  "state": "SOURCE_CLOSURE_READY_PENDING_ACTUAL_CLI_AND_GENUINE_PRODUCT",
+  "apis": [
+    "draw.polygon",
+    "draw.polygon2mask"
+  ],
+  "reference_version": "0.26.0",
+  "cases": [
+    {
+      "id": "draw.polygon/tiny-triangle",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "draw.polygon/medium-rectangle",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          254
+        ],
+        [
+          254,
+          254
+        ],
+        [
+          254,
+          2
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        256,
+        256
+      ]
+    },
+    {
+      "id": "draw.polygon/large-concave",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          510
+        ],
+        [
+          180,
+          180
+        ],
+        [
+          510,
+          510
+        ],
+        [
+          510,
+          1
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "draw.polygon/strided-int32",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          126
+        ],
+        [
+          126,
+          126
+        ],
+        [
+          126,
+          1
+        ]
+      ],
+      "carrier": "strided",
+      "dtype": "int32",
+      "shape": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "draw.polygon/negative-unclipped",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          -6,
+          -8
+        ],
+        [
+          -6,
+          48
+        ],
+        [
+          40,
+          48
+        ],
+        [
+          40,
+          -8
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float32",
+      "shape": null
+    },
+    {
+      "id": "draw.polygon/empty-clip",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        0,
+        64
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/tiny-triangle",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/medium-rectangle-F",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          254
+        ],
+        [
+          254,
+          254
+        ],
+        [
+          254,
+          2
+        ]
+      ],
+      "carrier": "F",
+      "dtype": "float64",
+      "shape": [
+        256,
+        256
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/large-concave",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          510
+        ],
+        [
+          180,
+          180
+        ],
+        [
+          510,
+          510
+        ],
+        [
+          510,
+          1
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/strided-f32",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          126
+        ],
+        [
+          126,
+          126
+        ],
+        [
+          126,
+          1
+        ]
+      ],
+      "carrier": "strided",
+      "dtype": "float32",
+      "shape": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/many-vertices",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/outside",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          100,
+          100
+        ],
+        [
+          100,
+          120
+        ],
+        [
+          120,
+          100
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "int32",
+      "shape": [
+        8,
+        9
+      ]
+    }
+  ],
+  "worker_count": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_calibration_min_ms": 250,
+  "raw_samples": 168,
+  "timed_boundary": "Public function including source normalization/numeric bounds providers, native preparation/classification, Python allocation and native coordinate emission or bool scatter; sampler destroys each result. Fixtures/auth/parity/spies are outside timing.",
+  "scope": "Twelve bounded one-worker public polygon raster workloads. Numeric min/max/ceil bounds, structural conversion/allocation remain explicit providers; no full API ownership, library-wide speed, prior-C++ KEEP or four-profile acceptance claim. Publish every slower case. Active reviewed native/frontend source closure; original prospective contract retained byte-exact. Current4ac-based polygon-only composition; historical978runtime remainsimmutable. No captured-key experiment, newwholeproduct or performanceadmission. Coherent draw-batch source context; polygon cases, arithmetic and timed calls unchanged. Current metrics integration adds only label-pair source/binder/strict controls/tests and sparse BSD notice in CMake; exact inverse restores drawing compiler/numerical policies and historical driver bodies. The two label-pair declaration/call additions in the shared binder also invert exactly to its historical drawing closure.",
+  "native_entries": {
+    "draw.polygon": [
+      "draw_polygon_prepare",
+      "draw_polygon_coords_into"
+    ],
+    "draw.polygon2mask": [
+      "draw_polygon_prepare",
+      "draw_polygon_mask_into"
+    ]
+  },
+  "source_safety": "Equal nonempty finite integer-valued coordinate columns, 1..64 vertices, magnitude<=512, two ordinary nonnegative shape ints<=512 or polygon None. Float32 casts exact; no readonly/rank/error/unequal/shortshape/exceptional original recipes. At most512^2 scan points,64Mi edge tests; bounds provider source order preserved.",
+  "reference_contract_sha256": "bc19b2840df53b11d660e87b74a81c8590a7ff9ab015ec3695c34fa58e5e07fa",
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "source_closure": {
+    "benchmarks/draw_polygon.py": "73b45b53590dbe82d44b203b18348d29447244375baf9901073d9037f7e49763",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "CMakeLists.txt": "b19eb0b1acb8ad74b2511a36082ac9085b99ffcbb3aee672f4b86a9dd75bf6a4",
+    "src/bindings.cpp": "bf58505be42bff1c19ef2a26d27a7492990fd5bd233251b8cf35742a666e5b54",
+    "include/skimagexx/draw_polygon.hpp": "7ff0addcf9ff5076adb0ea166fa5d7074c8fbb4330d5d0b8243ae9a9b08257d9",
+    "src/draw_polygon.cpp": "268a54977e6f03890eab6002b042a92764e6d63840d61f2d81186afdbbbc861f",
+    "src/bind_draw_polygon.cpp": "fa48e374663bcc87f9fccf56d0b89791ba455a2a838341faaba85ee3b0da9c7d",
+    "python/skimagexx/_draw_polygon.py": "1d2c7f1310eb8d9da24338bdedc17f3df2b18d5391da820ba867a18231dd0a4b",
+    "python/skimagexx/draw.py": "bdeff164a5d98a0b0d1bf1e854e799f52914b75a293ff0cdd0a4086e3a0034ea",
+    "python/skimagexx/_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357",
+    "src/polygon.hpp": "ec399d2fb4848b648d079e0dc4757a26064c140605af6671be58335615727a36",
+    "src/polygon.cpp": "cbab61ab080242f55d95d8adff50588f31374bb2b1f665204caaea44f427ef23",
+    "src/simd_polygon_avx2.cpp": "662a2ea05e3c50d5546d1ebd1d5e608d046cafd2773fa981bcdb9043bed10f9f",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "src/image.cpp": "17a224f0aa15be6591867d1a07b5b957ffdcec1983d072f19e48277eafec3452",
+    "src/simd.hpp": "848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2be056b23cf8838aba0295c5b3688d4b2c4ee30a14d3ef6665b6dac0d03218fd"
+  },
+  "execution_before_separate_root_GO": {
+    "original_calls": 0,
+    "native_calls": 0,
+    "timed_batches": 0,
+    "builds": 0
+  },
+  "next_gate": "Source-only guard proofs and independent prospective safety/benchmark review; actual fixtures with originals refused before actual CLI/genuine product/measurement. No neworiginals authorized by this contract.",
+  "dtype_role": "dtype selects array-carrier storage only; list carriers contain literal Python ints and preserve original np.atleast_1d inference. No list float32 storage claim.",
+  "output_checker_successor": "PeerF1: require distinct identity from every input and original output even for emptyarrays; never exclude other is value. checked_output is shared by driver and NumPy-only negative intake, outside timing.",
+  "predecessor_binding": {
+    "contract": "coverage/contracts/draw-polygon-draw-batch-runtime-v1.json",
+    "sha256": "db0cd8c16175d24fef5096b7ee18ab95c62cf92f8ec13f7961ab527a92ff4627",
+    "CMake_inverse": [
+      {
+        "current": "target_sources(skimagexx PRIVATE src/draw_set_color.cpp src/label_pair_metrics.cpp)\n",
+        "predecessor": "target_sources(skimagexx PRIVATE src/draw_set_color.cpp)\n"
+      },
+      {
+        "current": "    target_sources(_core PRIVATE src/bind_draw_set_color.cpp src/bind_label_pair_metrics.cpp)\n",
+        "predecessor": "    target_sources(_core PRIVATE src/bind_draw_set_color.cpp)\n"
+      },
+      {
+        "current": "    set_source_files_properties(src/label_pair_metrics.cpp src/bind_label_pair_metrics.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")\n",
+        "predecessor": ""
+      },
+      {
+        "current": "    set_source_files_properties(src/label_pair_metrics.cpp src/bind_label_pair_metrics.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")\n",
+        "predecessor": ""
+      },
+      {
+        "current": "    foreach(_label_pair_unit IN ITEMS label_pair_metrics label_pair_rand label_pair_preweighted)\n        add_executable(test_${_label_pair_unit}_native tests/test_${_label_pair_unit}_native.cpp)\n        target_link_libraries(test_${_label_pair_unit}_native PRIVATE skimagexx)\n        if(MSVC)\n            target_compile_options(test_${_label_pair_unit}_native PRIVATE /UNDEBUG /fp:strict)\n        else()\n            target_compile_options(test_${_label_pair_unit}_native PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)\n        endif()\n        add_test(NAME ${_label_pair_unit}_native COMMAND test_${_label_pair_unit}_native)\n    endforeach()\n",
+        "predecessor": ""
+      },
+      {
+        "current": "install(FILES LICENSE third_party/scikit-image-LICENSE.txt third_party/svml-LICENSE.txt third_party/numpy-LICENSE.txt third_party/scipy-ndimage-LICENSE.txt third_party/scipy-rank1d-LICENSE.txt third_party/scipy-sparse-LICENSE.txt third_party/lapack-LICENSE.txt DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/scikit-imagexx)\n",
+        "predecessor": "install(FILES LICENSE third_party/scikit-image-LICENSE.txt third_party/svml-LICENSE.txt third_party/numpy-LICENSE.txt third_party/scipy-ndimage-LICENSE.txt third_party/scipy-rank1d-LICENSE.txt third_party/lapack-LICENSE.txt DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/scikit-imagexx)\n"
+      }
+    ],
+    "driver_inverse": [
+      {
+        "current": "CONTRACT = ROOT / 'coverage/contracts/draw-polygon-metrics-runtime-v1.json'",
+        "predecessor": "CONTRACT = ROOT / 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'"
+      },
+      {
+        "current": "def validate_source_closure(contract):\n    \"\"\"Authenticate the metrics additions against the frozen drawing closure.\"\"\"\n    binding = contract['predecessor_binding']\n    assert binding['contract'] == 'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json'\n    predecessor_raw = (ROOT / binding['contract']).read_bytes()\n    assert hashlib.sha256(predecessor_raw).hexdigest() == binding['sha256'] == 'db0cd8c16175d24fef5096b7ee18ab95c62cf92f8ec13f7961ab527a92ff4627'\n    predecessor = json.loads(predecessor_raw)\n    assert {k:v for k,v in contract.items() if k not in ('source_closure','scope','predecessor_binding')} == {k:v for k,v in predecessor.items() if k not in ('source_closure','scope')}\n    assert set(contract['source_closure']) == set(predecessor['source_closure'])\n    fragments = binding['CMake_inverse']\n    assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == '91c52b3d7b3f2e9a372221633bd2a307fe560f0cfbd4926711940e84ec900321'\n    for name, pin in contract['source_closure'].items():\n        raw = (ROOT / name).read_bytes().replace(b'\\r\\n', b'\\n')\n        assert hashlib.sha256(raw).hexdigest() == pin\n        if name == 'CMakeLists.txt':\n            for fragment in fragments:\n                current, previous = fragment['current'].encode(), fragment['predecessor'].encode()\n                assert current and raw.count(current) == 1\n                raw = raw.replace(current,previous,1)\n            assert hashlib.sha256(raw).hexdigest() == predecessor['source_closure'][name]\n        elif name == 'src/bindings.cpp':\n            fragments = binding['binding_inverse']\n            assert hashlib.sha256(json.dumps(fragments,sort_keys=True,separators=(',',':')).encode()).hexdigest() == '991ffdb630da65bae03caf5e8059131e4ae3d3c2155fea480eda86af048ce43f'\n            for fragment in fragments:\n                current, previous = fragment['current'].encode(), fragment['predecessor'].encode()\n                assert current and raw.count(current) == 1\n                raw = raw.replace(current,previous,1)\n            assert hashlib.sha256(raw).hexdigest() == predecessor['source_closure'][name]\n        elif name == 'benchmarks/draw_polygon.py':\n            for fragment in binding['driver_inverse']:\n                current, previous = fragment['current'].encode(), fragment['predecessor'].encode()\n                assert current and raw.count(current) == 1\n                raw = raw.replace(current,previous,1)\n            assert hashlib.sha256(raw).hexdigest() == predecessor['source_closure'][name]\n        else:\n            assert pin == predecessor['source_closure'][name]\n\n\n",
+        "predecessor": ""
+      },
+      {
+        "current": "    validate_source_closure(contract)\n",
+        "predecessor": "    for name, pin in contract['source_closure'].items():\n        assert hashlib.sha256((ROOT / name).read_bytes().replace(b'\\r\\n', b'\\n')).hexdigest() == pin\n"
+      }
+    ],
+    "scope": "Exact full-file inverse; all old recipes, output checks, sampler, worker and timed-call bodies unchanged. No historical raw evidence rebound.",
+    "binding_inverse": [
+      {
+        "current": "void bind_label_pair_metrics(pybind11::module_&);\n",
+        "predecessor": ""
+      },
+      {
+        "current": "    bind_label_pair_metrics(m);\n",
+        "predecessor": ""
+      }
+    ]
+  }
+}
