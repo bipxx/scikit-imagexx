@@ -1,0 +1,46 @@
+{
+  "schema": "label-pair-metrics-benchmark-context-v1",
+  "contract": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+  "contract_raw_sha256": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+  "scope": "Only boundary registry/default/checker additions in shared coverage, and sourceguard import/call in metricdriver; full inverses preserve every old metrics numerical/default/fixture/sampler/timed-call body. Historical benchmark contract/report path/raw bytes immutable.",
+  "sources": {
+    "python/skimagexx/coverage.py": {
+      "current_canonical_lf_sha256": "0d4397e680201ecc4ead7884c6f5ea4adc6b85750fa081ccebcac97c882090a0",
+      "predecessor_canonical_lf_sha256": "726af7b8496dcd9b9d918a18ccd39d7422d5ac464698395a10197f1bde3f92c3",
+      "predecessor_source": "ff2a538f8c40d068a191d7d82c3948692100805c",
+      "inverse_fragments": [
+        {
+          "current": "    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries'),\n",
+          "predecessor": "    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set'),\n"
+        },
+        {
+          "current": "    if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')\n",
+          "predecessor": ""
+        },
+        {
+          "current": "    if api=='segmentation.find_boundaries':\n        import numpy as np\n        return (np.array([[0,1,0],[1,1,0]],dtype=image.dtype),),{}\n",
+          "predecessor": ""
+        },
+        {
+          "current": "def find_boundaries_default_error(actual, expected, *, image=None):\n    \"\"\"Exact bool output, allocation, layout and input independence.\"\"\"\n    import numpy as np\n    assert type(actual) is type(expected) is np.ndarray\n    assert actual.dtype == expected.dtype == np.dtype('bool')\n    assert actual.dtype.metadata is expected.dtype.metadata is None\n    assert actual.shape == expected.shape and actual.strides == expected.strides\n    assert actual is not expected and not np.shares_memory(actual,expected)\n    for result in (actual,expected):\n        assert result.flags.owndata and result.base is None and result.flags.writeable and result.flags.aligned\n        if image is not None:assert not np.shares_memory(result,image)\n    assert actual.flags.c_contiguous == expected.flags.c_contiguous\n    assert actual.flags.f_contiguous == expected.flags.f_contiguous\n    assert actual.tobytes(order='C') == expected.tobytes(order='C')\n    return 0.0\n\n\n",
+          "predecessor": ""
+        },
+        {
+          "current": "    if api=='segmentation.find_boundaries':\n        find_boundaries_default_error(actual,expected,image=image);return\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "benchmarks/label_pair_metrics.py": {
+      "current_canonical_lf_sha256": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+      "predecessor_canonical_lf_sha256": "5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1",
+      "predecessor_source": "412d228ae870d4dab50446cecf37b96881837739",
+      "inverse_fragments": [
+        {
+          "current": "    from label_pair_benchmark_context import validate_source_closure\n    validate_source_closure(ROOT,contract)\n",
+          "predecessor": "    for name,pin in contract['source_closure'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest()==pin,name\n"
+        }
+      ]
+    }
+  }
+}

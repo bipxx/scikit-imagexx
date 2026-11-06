@@ -84,7 +84,8 @@ def main():
     contract_raw=CONTRACT.read_bytes();contract=json.loads(contract_raw)
     assert skimage.__version__=='0.26.0' and np.__version__ in('1.24.4','2.5.4')
     assert hashlib.sha256(inspect.getsource(measure).encode()).hexdigest()==contract['method_sha256']
-    for name,pin in contract['source_closure'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    from label_pair_benchmark_context import validate_source_closure
+    validate_source_closure(ROOT,contract)
     upstream={n:importlib.import_module('skimage.metrics.'+m)for n,m in(('contingency_table','_contingency_table'),('adapted_rand_error','_adapted_rand_error'))}
     for name,module in upstream.items():assert hashlib.sha256(Path(module.__file__).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==contract['upstream_sources']['skimage/metrics/'+module.__name__.rsplit('.',1)[1]+'.py']
     original=importlib.import_module('skimage.metrics');owned=importlib.import_module('skimagexx.metrics')

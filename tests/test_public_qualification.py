@@ -2312,10 +2312,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color','_find_boundaries'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()

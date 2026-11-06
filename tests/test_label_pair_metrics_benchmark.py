@@ -22,7 +22,9 @@ def test_label_pair_benchmark_sources_method_and_bounds():
     assert {s['api']for s in cases}=={'metrics.adapted_rand_error','metrics.contingency_table'}
     bounds=[driver().source_safe(s)for s in cases];assert max(b['pixels']for b in bounds)==262144
     assert max(b['source_pair_sum_bound']for b in bounds)<2**36
-    for path,pin in CONTRACT['source_closure'].items():assert hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+    spec=importlib.util.spec_from_file_location('label_pair_benchmark_context',ROOT/'tools/label_pair_benchmark_context.py')
+    context=importlib.util.module_from_spec(spec);spec.loader.exec_module(context)
+    context.validate_source_closure(ROOT,CONTRACT)
     text=(ROOT/'tools/montage_sustained.py').read_text();fn=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='measure')
     assert hashlib.sha256(''.join(text.splitlines(keepends=True)[fn.lineno-1:fn.end_lineno]).encode()).hexdigest()==CONTRACT['method_sha256']
 
@@ -76,3 +78,34 @@ def test_label_pair_benchmark_restores_instrumentation_before_real_measure():
     assert 'source_fingerprint(ROOT)==before'in source and 'CONTRACT.read_bytes()==contract_raw'in source
     assert "frame.f_locals.get('native_result')is not None"in source
     assert 'label_pair_default_error(spec['in source
+
+
+def test_label_pair_active_CLI_keeps_contract_and_uses_predecessor_guard():
+    text=(ROOT/'benchmarks/label_pair_metrics.py').read_text()
+    assert "CONTRACT=ROOT/'coverage/contracts/label-pair-metrics-benchmark-v1.json'" in text
+    assert 'from label_pair_benchmark_context import validate_source_closure' in text
+    assert text.index('validate_source_closure(ROOT,contract)')<text.index('expected=reference(*arguments,**options)')
+    assert 'contract_sha256=hashlib.sha256(contract_raw).hexdigest()' in text
+    raw=(ROOT/'coverage/contracts/label-pair-metrics-benchmark-v1.json').read_bytes()
+    assert hashlib.sha256(raw).hexdigest()=='5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6'
+
+
+@pytest.mark.parametrize('fault',('metrics-checker','driver-fixture','resealed-context'))
+def test_label_pair_predecessor_context_rejects_tampering(monkeypatch,fault):
+    spec=importlib.util.spec_from_file_location('label_pair_benchmark_context_negative',ROOT/'tools/label_pair_benchmark_context.py')
+    context=importlib.util.module_from_spec(spec);spec.loader.exec_module(context)
+    read=Path.read_bytes
+    if fault=='metrics-checker':
+        target=ROOT/'python/skimagexx/coverage.py';raw=read(target)
+        old=b'assert a.dtype==e.dtype and a.tobytes()==e.tobytes()';assert raw.count(old)==1
+        raw=raw.replace(old,b'assert a.dtype==e.dtype',1)
+    elif fault=='driver-fixture':
+        target=ROOT/'benchmarks/label_pair_metrics.py';raw=read(target)
+        old=b'truth=(base%spec[\'labels\']).reshape(spec[\'shape\'])';assert raw.count(old)==1
+        raw=raw.replace(old,b'truth=(base%2).reshape(spec[\'shape\'])',1)
+    else:
+        target=ROOT/'coverage/contracts/label-pair-metrics-benchmark-context-v1.json';value=json.loads(read(target))
+        value['sources']['python/skimagexx/coverage.py']['predecessor_canonical_lf_sha256']='0'*64
+        raw=json.dumps(value).encode()
+    monkeypatch.setattr(Path,'read_bytes',lambda path:raw if path==target else read(path))
+    with pytest.raises(AssertionError):context.validate_source_closure(ROOT,CONTRACT)

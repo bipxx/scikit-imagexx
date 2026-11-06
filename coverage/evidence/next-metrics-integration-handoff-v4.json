@@ -1,0 +1,154 @@
+{
+  "schema": "next-metrics-integration-handoff-v4",
+  "status": "corrected_metadata_source_ready_pending_complete_independent_barriers",
+  "predecessor": {
+    "source": "412d228ae870d4dab50446cecf37b96881837739",
+    "handoff": "coverage/evidence/next-metrics-integration-handoff-v3.json",
+    "handoff_sha256": "851de288952c778102df77ed3ce1e2643135e20d116149aab66c532fd4b9f977",
+    "full_failed_review": "build/next-metrics-integration-readiness-v1/review-v3.json",
+    "full_failed_review_sha256": "9b8dddf4bf02dedeed1f2d0f87e22969eddd533dee4c98427b0b5281d2607639",
+    "preserved": true
+  },
+  "fixes": [
+    "Synthetic positive current_metadata_artifact now independently enumerates inert find_boundaries.hpp and _find_boundaries.py. Strict currentwheel validator and all negative controls unchanged.",
+    "Stable label-pair-metrics-benchmark-v1.json contract/report path/raw bytes retained. New authenticated context and29line sourcehelper validate exact currentcoverage->historical726af7 bytes and currentmetricdriver->412driver bytes, then enforce every original8path closure hash. RealCLI and sourceguard call samehelper; helper/context included in existing qualification source closure."
+  ],
+  "source_context": {
+    "path": "coverage/contracts/label-pair-metrics-benchmark-context-v1.json",
+    "canonical_lf_sha256": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1",
+    "helper": "tools/label_pair_benchmark_context.py",
+    "recovered": {
+      "python/skimagexx/coverage.py": {
+        "current_canonical_lf_sha256": "0d4397e680201ecc4ead7884c6f5ea4adc6b85750fa081ccebcac97c882090a0",
+        "predecessor_canonical_lf_sha256": "726af7b8496dcd9b9d918a18ccd39d7422d5ac464698395a10197f1bde3f92c3",
+        "inverse_fragments": 5
+      },
+      "benchmarks/label_pair_metrics.py": {
+        "current_canonical_lf_sha256": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+        "predecessor_canonical_lf_sha256": "5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1",
+        "inverse_fragments": 1
+      }
+    },
+    "all_original_closure_paths_inspected": 8,
+    "sole_changed_original_closure_path": "python/skimagexx/coverage.py"
+  },
+  "stable_contract": {
+    "path": "coverage/contracts/label-pair-metrics-benchmark-v1.json",
+    "raw_sha256": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
+    "cases": 8,
+    "raw_samples": 112,
+    "warmup_groups": 16,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "unchanged": true
+  },
+  "controller_effect": "No activecontract/route/reportcollector path churn. Actualfuture binding must refresh metricdriver/helper/context/sourcepins to finalqualifiedsource in reviewed root successor; no producerfields bound by this task.",
+  "source_checks": {
+    "minimum": {
+      "xml": {
+        "tests": 31,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 1.702999999979511,
+        "attempts": [],
+        "scientific_origins": {},
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0
+      }
+    },
+    "modern": {
+      "xml": {
+        "tests": 31,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 1.8516679999884218,
+        "attempts": [],
+        "scientific_origins": {},
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0
+      }
+    }
+  },
+  "records": {
+    "build/next-metrics-integration-v1/source-successor-v4/pure-minimum-v1/command.json": {
+      "bytes": 1066,
+      "sha256": "6e71ce91ed479b4e8201bdc5827d063e2c6298bd5eef34832029919d78784451"
+    },
+    "build/next-metrics-integration-v1/source-successor-v4/pure-minimum-v1/terminal.json": {
+      "bytes": 174,
+      "sha256": "068b8a73760d7e19b1c2991506f8fa6dc3f48e694dfe3f4ab43faf2a39e88113"
+    },
+    "build/next-metrics-integration-v1/source-successor-v4/pure-minimum-v1/results.xml": {
+      "bytes": 5084,
+      "sha256": "f537c341918ce51f487ce202c94084320d18cae3b58dfed15f00916583b77080"
+    },
+    "build/next-metrics-integration-v1/source-successor-v4/pure-modern-v1/command.json": {
+      "bytes": 1056,
+      "sha256": "035be180424c60b8db8a5d926f9b904b031c7cf92b83502c167abb07e9a8a915"
+    },
+    "build/next-metrics-integration-v1/source-successor-v4/pure-modern-v1/terminal.json": {
+      "bytes": 175,
+      "sha256": "082ada833f66e5a4d35417ddeda67f4514adb192734e2194b57aa9529509c9dc"
+    },
+    "build/next-metrics-integration-v1/source-successor-v4/pure-modern-v1/results.xml": {
+      "bytes": 5084,
+      "sha256": "a9b0e66935a0b65db744d4aab340159e838afab67df33e17bc4cea984e81bb0e"
+    }
+  },
+  "changed_source_pins": {
+    "benchmarks/label_pair_metrics.py": {
+      "raw_sha256": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+      "canonical_lf_sha256": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a"
+    },
+    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": {
+      "raw_sha256": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1",
+      "canonical_lf_sha256": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1"
+    },
+    "tests/test_label_pair_metrics_benchmark.py": {
+      "raw_sha256": "446006e370a2e0e9959304eb438c1fe7ea2e808c4f39886feeed6ec8a0159890",
+      "canonical_lf_sha256": "27eefb5ff86754534d971899fffee9328c3c5c966d42211a9df31a97a94c0fa3"
+    },
+    "tests/test_public_qualification.py": {
+      "raw_sha256": "e9034a6227804fdeee685e4099c41893164a17f7a73757837d526037fdeac753",
+      "canonical_lf_sha256": "e9034a6227804fdeee685e4099c41893164a17f7a73757837d526037fdeac753"
+    },
+    "tools/label_pair_benchmark_context.py": {
+      "raw_sha256": "01b3e2a75c3b2008557793b6328fd0cad778e8007d0c422d95370e603177c46f",
+      "canonical_lf_sha256": "01b3e2a75c3b2008557793b6328fd0cad778e8007d0c422d95370e603177c46f"
+    },
+    "tools/public_qualification.py": {
+      "raw_sha256": "2c31b830f0703ade774e535fa7d4142eb88ce83cb26865dc5307a1ce337dc677",
+      "canonical_lf_sha256": "2c31b830f0703ade774e535fa7d4142eb88ce83cb26865dc5307a1ce337dc677"
+    }
+  },
+  "counts": {
+    "native_partial_image_paths": 265,
+    "native_functions": 268,
+    "product_members": 206,
+    "SDK_members": 97,
+    "SDK_families": 32,
+    "SDK_checks": 64
+  },
+  "reuse_scope": "No productionPython/C++/header bytes changed from412. Retain previous runtime/SDK/component scientific evidence only in original scoped proofs; no runtime/SDK/numerical/performance replay. Earlier process receiptwriter failures and all fullbarrier failures remain explicit.",
+  "remaining_gates": [
+    "Independent review and passing COMPLETE actual workflow source-check command both retained Windows311/313 with normal conftest/plugins/no fail-fast on this exact clean successor;31affected nodes/profile do not replace it.",
+    "Root readiness then genuine exactsource4profile qualification/rootproduct+minimumstager admission. No hosteddispatch or mainpush here.",
+    "Root externally binds actual qualified producer/source/run/artifact/core/runtime/SDK/receipts, actual4CLI stop-before-sampler proofs, then isolated one-thread original/native28case comparison; source never rewritten after preparation."
+  ],
+  "closeout": {
+    "result": "Two demonstrated metadata dependencies corrected together; affected31source nodes/profile PASS both supported versions under global science refusal; zero newruntime/native/SDK/original/timing/build work.",
+    "reuse": "Preserved oldcontract/cases/method/raw reports, every412failure and immutable predecessorhandoff. Exact byte inverses and source-only test controls replace no scientific gate.",
+    "avoidable_work": "Bothmissed source dependencies were preventable integration metadata omissions. Audited all8closurepaths and activeCLI/driver/report contract together before one bounded retry; no new failed retry. Copied runner changed-input prose is historical wording, actual recorded selectors/currentsource and thishandoff define corrected scope. Unobserved costs remainunknown.",
+    "next_owner": "root/readiness reviewer",
+    "next_trigger": "Clean final hash -> complete actualtwo barriers; root updates existing EXECUTION_PLAN/work_items terminal failure/correction and retains stager reuse/UNBOUND controller gates. No duplicate fullbarrier started here."
+  }
+}
