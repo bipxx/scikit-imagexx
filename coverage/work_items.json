@@ -17842,7 +17842,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -17864,7 +17864,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -26851,7 +26851,7 @@
             "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
             "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
           },
-          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs\u00d77paired rounds\u00d73profiles; one worker, all regressions retained."
+          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs×7paired rounds×3profiles; one worker, all regressions retained."
         }
       }
     },
@@ -32139,7 +32139,7 @@
           },
           "native_contract_checks": 184,
           "native_pending": 0,
-          "scope": "184 actual installed C++SDK consumer tests:23families\u00d7normal/scalar\u00d74profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
+          "scope": "184 actual installed C++SDK consumer tests:23families×normal/scalar×4profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
         }
       }
     },
@@ -35302,7 +35302,7 @@
           "acceptance_pass": false
         }
       },
-      "native_check_unit": "946 case/worker combinations per mode\u00d76=5676;25,836 grouped assertions each mode, not independent-case credit.",
+      "native_check_unit": "946 case/worker combinations per mode×6=5676;25,836 grouped assertions each mode, not independent-case credit.",
       "genuine_preparation": {
         "status": "verified_private_prepare_only",
         "run": 40790763016,
@@ -36345,7 +36345,7 @@
         "draw-polygon-reference-v1"
       ],
       "acceptance": "Roottypedreviewd11f4d48 accepteded8f; existing24referenceIDs/profile,17success/7sourceprefixerrors. Exactc,r classifierreuse, singlelabelsraster/rowprefix, scalar/SIMD/optionalworkers/default1/FENV/refusal/analyticparallelcontrols andactualMSVC. No neworiginal/fullSDK/core/env/timing; explicitnumericboundsprovider/generalcontractgapsstayopen.",
-      "current_checkpoint": "Nativeb8ae4e7a (bc14production/385fPIC) independentlyacceptede319ad96:17originalsuccessIDs\u00d7workers1/4 across4modes,1580041controls/mode;61+55+16smallproofs. OneMXCSRmask fix+portableUCRTtestdelta targeted16controls/mode, oldmath/golds reused. No platform/genuine/API/performancecredit.",
+      "current_checkpoint": "Nativeb8ae4e7a (bc14production/385fPIC) independentlyacceptede319ad96:17originalsuccessIDs×workers1/4 across4modes,1580041controls/mode;61+55+16smallproofs. OneMXCSRmask fix+portableUCRTtestdelta targeted16controls/mode, oldmath/golds reused. No platform/genuine/API/performancecredit.",
       "next_gate": {
         "owner": "qualification251_readiness",
         "action": "Restoreonlyaccepted4nativepaths into260candidate; strictFP/unit/exportsourceclosure andgenuineplatform/performance gates remain."
@@ -36360,7 +36360,7 @@
           },
           "native_contract_checks": 136,
           "native_pending": 0,
-          "scope": "17savedreturnIDs\u00d7workers1/4\u00d74modes; zero pending onlyinthisboundednativepartition. BroaderAPI/provider/FP/SDK/platform/genuine/performance completion remainsopen."
+          "scope": "17savedreturnIDs×workers1/4×4modes; zero pending onlyinthisboundednativepartition. BroaderAPI/provider/FP/SDK/platform/genuine/performance completion remainsopen."
         }
       }
     },
@@ -36461,7 +36461,7 @@
         "draw-polygon-sdk-v1",
         "draw-polygon-benchmark-v1"
       ],
-      "current_checkpoint": "bd16 genuine42027790280 admitted98576c94/195product92SDK16882XML0bad/core dcb2/PF74f929. Fixedv3run42032588452 scientificDISCARD independently16e3691b/f06426ad:1568samples5032events,5failedpairs8inequalities; sparse2DctorCPP+10.6/+12.3%,large3Dsparse+5.7%onepair,twoflatCPPstainnormalizedfails. Warmtargets1.14\u20131.23xgains cannotwaive;8wins20originallosses eachpass,24rawCPPincreases. No260shipping/fourprofile/speedacceptance.",
+      "current_checkpoint": "bd16 genuine42027790280 admitted98576c94/195product92SDK16882XML0bad/core dcb2/PF74f929. Fixedv3run42032588452 scientificDISCARD independently16e3691b/f06426ad:1568samples5032events,5failedpairs8inequalities; sparse2DctorCPP+10.6/+12.3%,large3Dsparse+5.7%onepair,twoflatCPPstainnormalizedfails. Warmtargets1.14–1.23xgains cannotwaive;8wins20originallosses eachpass,24rawCPPincreases. No260shipping/fourprofile/speedacceptance.",
       "next_gate": {
         "owner": "root",
         "action": "Publish everyrawsample/journal/ratio/loss in existingDISCARDcapsule; no retry/noiseattribution/waiver. A source+profile constructorbottleneck review: preparealreadystridedwalk and1609bytes/15relocations identical, no divisionpatch. LocalcProfile metadata~71%isdiagnostic only, nothostcausereproduction. Newmaterialproposal requirespeer/genuine/newfixedexperiment; polygon12measurement/full4release remain."
@@ -36906,11 +36906,11 @@
       "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
       "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
       "next_gate": {
-        "owner": "integrator",
-        "action": "Push exactproductionmainmerge andretireonlycleansourceancestorWTs afterreadersrelease. Keepallrawbaselinepackages. Subsequentpartial-domain/performancegaps stayopen; no unchangedbenchmarkretry."
+        "owner": "root",
+        "action": "Delivery/eligible ancestor cleanup already closed. After current release/performance gate, prioritize source-faithful intake overhead around _vertices with all12workload holdouts; owning-C storage fastpath remains an unproved secondary hypothesis, no new numerical/provider/order/guard change authorized by diagnostic."
       },
       "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
-      "current_checkpoint": "Family6432d023 independentlyPASS2093e177:19familypaths,160component/6pure andcurrent4acassembledSDK92 normal526515controls. Rootsharedaffectedsource279uniqueassertions/profile PASS; nofullprebuild/genuine/performance/releasecredit. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production. Exact334whole-release ROOTADMITTED/a5a595dc:933088XML0bad,248SDK,48corpora,3stagers; source493equalsmainshipping. Drawingbenchmark28/32with4losses retained; partialcontracts only.",
+      "current_checkpoint": "Family6432d023 independentlyPASS2093e177:19familypaths,160component/6pure andcurrent4acassembledSDK92 normal526515controls. Rootsharedaffectedsource279uniqueassertions/profile PASS; nofullprebuild/genuine/performance/releasecredit. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production. Exact334whole-release ROOTADMITTED/a5a595dc:933088XML0bad,248SDK,48corpora,3stagers; source493equalsmainshipping. Drawingbenchmark28/32with4losses retained; partialcontracts only. Root intrusive diagnostic build/polygon-bottleneck-profile-v2/diagnosis-v2.json uses exact frozen factory: _vertices60.9-71.5% cumulative, allnativeentries4.6-9.4% self time. Not causal hosted latency or acceptance; raw4losses/8wins unchanged. v1manual-carrier mismatch retained as nonmatching.",
       "waste_review": "Sourceprebuild reuse770b missed3active literal/hash/selector dependencies and normalconftest scope; retain failed421355 and invalidateits readiness claim. Ccorrected complete2708+8subtests perinterpreter, no partialunion. Preserve production-identical db4genuine/448timings; no numerical rerun for metadata. Rootnext: independentlyadmit running334campaign before main delivery.",
       "source_sha": "334e68e2e6717421501742365b6fe58328fc1019"
     },
@@ -37027,10 +37027,10 @@
       "base_sha": "db4f59b8aa69840591266e607e253a8611676ced",
       "scope": "Independent next vertical family while frozen drawing candidate validates. No shared wiring or delay to current release. Reuse existing primitives; implement a minimal owned label-pair count primitive only if absent. Preserve full three-API scope, explicit unassessed partitions and SciPy sparse object-factory ownership.",
       "acceptance": "Declared per-function Python signature/type/shape/mutation/error/warning/FP parity, native typed SDK and ownership, applicable scalar/SIMD/process-global optional workers default1, one-thread original benchmarks with losses, independent admission and supported release. Bounded partitions are not full API completion.",
-      "current_checkpoint": "Combined cbcef227 frozen; source-declared265 images/268 functions/206 product/97SDK/32families64checks. Complete retained source barriers PASS57d003 root-admitted; exact four-profile run42158336231 live. No new main/native/performance credit until remaining gates. Earlier323/412 failures retained; VI binary log2/DDOT remains open.",
+      "current_checkpoint": "cbce source readiness57d passed, but modern42158336231 genuine qualification failed SDKcopy+26harness checks (retained command/XML outcomes). SDK-only402f fixes5header copy and complete source2774+8/profile PASS55d, productionfp906b unchanged. Two-test successor now authoring; no main/native/performance credit. Prior323/412 failures and current partial campaign remain. Successor f13 independently ready af94/1791; actual42169444853 live with four source guards passed. Old421583 all failed; SDK/harness/fenv/source-binding corrections and failures retained.",
       "next_gate": {
         "owner": "root",
-        "action": "Observe exact cbce qualification42158336231; admit terminal four-profile product/SDK/ownership evidence independently, bind reviewed isolated benchmark consumer, run one-worker original comparisons, then deliver validated projection. Source readiness and shared freeze are closed; prior failures retained."
+        "action": "Observe existing exact f13 run42169444853 to terminal, retain artifacts once, independently admit actual product/stagers. Then bind reviewed UNBOUND eba consumer and authorize isolated one-thread public comparisons. No unchanged campaign retry or separate preparation."
       },
       "source_sha": "9ca37384657fae0089bbc8982025053833e6e2f3"
     },
@@ -37055,10 +37055,10 @@
       "base_sha": "f0c91244f29f7ea8294577ed7ba33d277ef7e24a",
       "scope": "Independent vertical family; full public signature/modes/connectivity/background/subpixel remain intended scope. First source audit/header/safe reference cases, no original calls until root source-safety admission. No shared wiring, no current334 release changes.",
       "acceptance": "Per-function parity and hot-swap, native SDK ownership, applicable scalar/SIMD/default1 optional global workers, one-thread original comparison and independent release admission. No forwarding whole original algorithm or credit for untested domains.",
-      "current_checkpoint": "Completevertical08a06/8745 independentlyPASS42e994d4:source31pins,310privatefrontend,admitted64originals,nativeSIMD/scalar/ASan andassembledSDK95controls532320x4/MSVCcompileonly,8prospectivebenchmarkcases. Sharedintegrationongoing; no genuine/performance/releasecredit.",
+      "current_checkpoint": "Completevertical08a06/8745 independentlyPASS42e994d4:source31pins,310privatefrontend,admitted64originals,nativeSIMD/scalar/ASan andassembledSDK95controls532320x4/MSVCcompileonly,8prospectivebenchmarkcases. Sharedintegrationongoing; no genuine/performance/releasecredit. Successor f13 independently ready af94/1791; actual42169444853 live with four source guards passed. Old421583 all failed; SDK/harness/fenv/source-binding corrections and failures retained.",
       "next_gate": {
         "owner": "root",
-        "action": "Boundary08a component is frozen and integrated into exact cbce candidate. Await current qualification42158336231, actual installed ownership and eight-case one-worker benchmark admission; no kernel rewrite or repeat component evidence. Boundary worker now owns separate join contract packet."
+        "action": "Observe existing exact f13 run42169444853 to terminal, retain artifacts once, independently admit actual product/stagers. Then bind reviewed UNBOUND eba consumer and authorize isolated one-thread public comparisons. No unchanged campaign retry or separate preparation."
       },
       "source_sha": "08a06b22bb4eceb580f3bf7f15a0a1664f9cc9f9"
     },
@@ -37067,7 +37067,7 @@
       "kind": "implementation",
       "owner": "boundary_worker",
       "branch": "feature/join-segmentations-v1",
-      "state": "contracted",
+      "state": "validating",
       "apis": [],
       "target_apis": [
         "segmentation.join_segmentations"
@@ -37083,10 +37083,10 @@
       "base_sha": "057b1e28ae2060fe58b05aca2c7a566c424a368d",
       "scope": "IndependentnextAPI source/test-first:fullintendedsignatureinclreturn_mapping/type/maps/shape/errors. Reuseexistingrelabel/ArrayMap/pairkeyprimitives; no originalcalls until source-safepeer/rootGO. Notincurrentready265.",
       "acceptance": "Declared public/hotswap/nativeSDK ownership,perfunctionparity,applicableSIMD/true-scalar andoptionalglobalworkersdefault1,isolated1threadoriginalcomparison,independentfullrelease. PartialpacketnotAPIcompletion.",
-      "current_checkpoint": "Frozen source-safe1cfd377 six family-only files/50recipes;112effective source/refused-intake checks. Independent root safetyPASSf381d6b7, exact source/runtime rootGOd5dbfc93 authorizes once-only50original topcalls/profile (100total); live resumed capture handle confirmed. No native/build/timing/API-completion credit.",
+      "current_checkpoint": "Root admits100 originals via independent5b251; reference781 frozen and no replay budget remains. Implementation c821/handoff cb3757 freezes native/public/complete changed-leaf installed SDK scoped evidence; full factor0/floating/exact ArrayMap/genuine single-global worker/performance/release gates remain open.",
       "next_gate": {
-        "owner": "boundary_worker",
-        "action": "Capture exactly frozen50cases/profile under source/runtime-bound rootGO and existing durable one-shot journal; never retry consumed calls. Validate saved outputs and freeze one successor for independent actual original admission. Native/class identity/SDK/worker/SIMD/performance/release remain pending."
+        "owner": "readiness_reviewer",
+        "action": "Independently review frozen implementation source and retained evidence; root admits before one shared integration author. Preserve unsupported domains and provider boundaries, no unchanged scientific replay."
       }
     },
     {
@@ -37094,7 +37094,7 @@
       "kind": "implementation",
       "owner": "metrics_integrator",
       "branch": "feature/util-crop-v1",
-      "state": "contracting",
+      "state": "implementing",
       "apis": [],
       "target_apis": [
         "util.crop"
@@ -37108,18 +37108,18 @@
       "base_sha": "04f54f6c7c671770d8b91b3712f567964a783e10",
       "scope": "Existing477-key missing metadata/view API; exact full signature and alias/error/state interface first. Reuse array/view/copy machinery; no speculative framework or artificial SIMD for view construction. No shared integration changes.",
       "acceptance": "Independent prospective source-safe parity plan and refused-intake checks before original capture/native implementation. Later full hot-swap/state/installed SDK contracts and relevant one-thread original public-call performance, exact release and independent admission; no premature advertised credit.",
-      "current_checkpoint": "Live resumed author source/test-first only; previous controller688c frozen and independent deltaPASSd328e673, actual benchmark bindings pending. No originals/build/native/timing authorized in crop intake.",
+      "current_checkpoint": "Actual9c1 capture216 independently admitted e912 with reused source-safety3e1d and223saved-only checks/profile. Root crop-reference-admission-v1 grants native implementation GO only; original budget exhausted. Nonsharing pointer offsets are diagnostics, not parity promises.",
       "next_gate": {
         "owner": "metrics_integrator",
-        "action": "Freeze exact upstream-source/interface/prospective safe cases and refused-intake evidence; independent safety peer/root GO before capture or implementation. Record evidence/reuse/waste and remaining gates."
+        "action": "Implement coherent crop native/public/complete installed SDK family, source-faithful coercion/order/object identity/zeroD/copy/alias/error semantics; prospective benchmark guards only. No originals/timing/shared integration; independent admission then genuine/public performance/release remain."
       }
     },
     {
       "id": "regular-grid-current-batch-v1",
       "kind": "implementation",
-      "owner": "readiness_reviewer",
+      "owner": "boundary_worker",
       "branch": "feature/regular-grid-v1",
-      "state": "contracting",
+      "state": "implementing",
       "apis": [],
       "target_apis": [
         "util.regular_grid"
@@ -37133,10 +37133,10 @@
       "base_sha": "ffaaa12f7a30428fd4160c45b9ecce7b1fe2b6e5",
       "scope": "Existing477-key missing metadata API; concrete future consumer regular_seeds currently imports original regular_grid. Own exact shape/grid/slice/error interface first; no shared consumer changes until integration. Reuse existing regular-seeds structures.",
       "acceptance": "Independent source-safe fullsignature/rounding/state/error reference plan and refused-intake checks before originals/implementation. Later hot-swap/installed standalone SDK parity, relevant one-thread original public-call overhead comparison, applicable CPU paths and exact supported-profile release. No SIMD/parallel benefit claimed for tiny view metadata.",
-      "current_checkpoint": "Live resumed author creating isolated source/test-first packet; no original/native/build/timing credit. Prior qualification/controller reviews stay immutable; root handles terminal current release independently.",
+      "current_checkpoint": "Actual90 originals independently admitted76f2 with prior safety d916; root regular-grid-reference-admission-v1 grants native implementation GO. Raw observations retained, tracked saved fixture/guards pending. Linux integer/FP scope is not platform-wide parity.",
       "next_gate": {
-        "owner": "readiness_reviewer",
-        "action": "Freeze source/interface/prospective safe cases and refused-intake evidence for independent safety peer/root GO before original capture or native implementation; closeout evidence/reuse/waste/remaining gates."
+        "owner": "boundary_worker",
+        "action": "Publish exact saved raw fixture and saved-only guards, then implement coherent native/public/complete SDK family without recapture. Preserve source rounding/order/type/FP/error behavior and explicit platform gaps. Root owns existing regular_seeds consumer/shared integration; prospective benchmarks only."
       }
     }
   ],
@@ -37812,9 +37812,9 @@
   },
   "execution_policy": {
     "active_workers": [
-      "next_family_contract",
-      "qualification251_readiness",
-      "tiny_line_implementation"
+      "metrics_integrator",
+      "boundary_worker",
+      "readiness_reviewer"
     ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
@@ -37825,9 +37825,9 @@
     "implementation_goal_status": "active",
     "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
-      "tiny_line_implementation",
-      "qualification251_readiness",
-      "next_family_contract"
+      "crop_native",
+      "regular_grid_native",
+      "join_independent_review"
     ],
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
@@ -37836,16 +37836,16 @@
         "util-crop-current-batch-v1"
       ],
       "boundary_worker": [
-        "join-segmentations-current-batch-v1"
+        "regular-grid-current-batch-v1"
       ],
       "readiness_reviewer": [
-        "regular-grid-current-batch-v1"
+        "join-segmentations-current-batch-v1"
       ]
     },
     "current_three_agent_packets": {
       "metrics_integrator": "util-crop-current-batch-v1",
-      "boundary_worker": "join-segmentations-current-batch-v1",
-      "readiness_reviewer": "regular-grid-current-batch-v1"
+      "boundary_worker": "regular-grid-current-batch-v1",
+      "readiness_reviewer": "join-segmentations-current-batch-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -38239,11 +38239,11 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Controller688cd583 frozen, independently scoped-PASSd328e673 and private branch pushed; actual bindings pending. Live next util.crop source-safe interface/reference packet in isolated worktree; no originals/build/timing before safety GO.",
-      "readiness_reviewer": "Live regular_grid source/interface/refused-intake packet in isolated regular-grid-v1; concrete consumer regular_seeds still imports original grid. Prior independent reviews complete/frozen; root owns qualification admission while this worker authors new family.",
-      "boundary_worker": "Controller0dd/templatesfrozenUNBOUND; nextjoin_segmentationssource/test-first packet only, no originalcalls."
+      "metrics_integrator": "Crop182 identity/setup successor frozen00d:135pure+248actualNumPy-only checks/profile and real locator/env PASS, independent delta review pending. Worker now independently reconstructs join781 raw100calls/200events, no replay.",
+      "readiness_reviewer": "SDK-only402f independent full source PASS55d162be; now sole shared2-test admission-fixture successor author, preserving SDK fix. Inspect retained26modern shared/ellipse failures, validate affected cases on actual runtimes; no production code/build/timing changes.",
+      "boundary_worker": "Join781 capture frozena746:100authorized calls,37returns/13errors per profile, GO exhausted/no replay, source6 immutable. Worker now independently reviews crop182 bounded identity/setup delta; no source edits."
     },
-    "next_action": "Observe single exact cbce four-profile run42158336231; independently review actual versioned binding/controller, retain terminal artifacts once and admit. Reuse minimum Release stager for isolated28-case comparison; no separate prepare/source rewrite. Join source-safe packet remains separate.",
+    "next_action": "Inspect all current42158336231 failed command/XML outcomes before successor dispatch. SDK-only402f source PASS55d but26modern admission-fixture failures remain; batch binary contingency smoke and explicit ellipse fallback setup corrections, affected real-runtime validation, complete exact source readiness and independent admission before next4profile run. Reuse once-retained artifacts/minimum stager; no separate prepare.",
     "current_checkpoint": {
       "main_image_names": 262,
       "qualified_image_names": 262,
@@ -38271,7 +38271,7 @@
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "SOURCE_READINESS_PASS57d003_ROOT_ADMITTED; exact cbcef227 four-profile run42158336231 live. Both retained complete source barriers2773cases+8subtests/zero bad; release/product/performance pending. Failed412/323 retained.",
+      "next_release_status": "CAMPAIGN42158336231_TERMINAL_FAILURE_ALL4; modern SDKcopy+24binary-smoke+2ellipse fixture failures retained, other profile artifacts retaining once for full diagnosis. SDK-only402f fullsource2774+8 PASS55d does not close remaining harness blockers. Two-test successor pending; no dispatch/performance credit.",
       "next_release_qualification_run": 42158336231,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."

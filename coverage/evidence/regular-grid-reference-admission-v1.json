@@ -1,0 +1,88 @@
+{
+  "status": "ROOT_ADMITTED_SCOPED_REFERENCE_NATIVE_IMPLEMENTATION_GO_NOT_API_COMPLETION",
+  "source": "5750481bd1427311b92abda5c6943c6f3cc41c82",
+  "independent_review": {
+    "path": "build/regular-grid-original-independent-review-v1/review-v1.json",
+    "sha256": "76f2b1bfc2ee14b31d58e0fa2886218ee76eb1d4f7dac87a4b624c3ae39502f5"
+  },
+  "handoff": {
+    "path": "build/regular-grid-v1/handoff-v2.json",
+    "sha256": "2e0078d76517cfa21a48f442b518b440a3b0ff2903ad2f4fdf5b225ca442b36a"
+  },
+  "root_GO": {
+    "path": "build/regular-grid-v1/root-go-v1.json",
+    "sha256": "a54eb4380e24ebd504aa8dd932946c20dbcd5c7f16f1fb0258f2c6056e1db2e4",
+    "maximum": 90,
+    "actual": 90,
+    "remaining": 0,
+    "state": "EXHAUSTED_NO_REPLAY"
+  },
+  "profiles": {
+    "minimum": {
+      "started": 45,
+      "completed": 45,
+      "unique_ids": 45,
+      "returns": 36,
+      "errors": 9,
+      "error_classes": {
+        "ZeroDivisionError": 5,
+        "TypeError": 2,
+        "ValueError": 1,
+        "FloatingPointError": 1
+      },
+      "warnings": 3,
+      "callbacks": 3,
+      "fenv_changed_rows": [
+        "numpy-zero-warn",
+        "numpy-zero-raise",
+        "numpy-zero-call"
+      ],
+      "default_int": "<i8",
+      "intp": "<i8",
+      "source": "64fcce3556f0cbf8cafd05a54ea3545b65b18bdcabbee25b953a21ba06875581"
+    },
+    "modern": {
+      "started": 45,
+      "completed": 45,
+      "unique_ids": 45,
+      "returns": 36,
+      "errors": 9,
+      "error_classes": {
+        "ZeroDivisionError": 5,
+        "TypeError": 2,
+        "ValueError": 1,
+        "FloatingPointError": 1
+      },
+      "warnings": 3,
+      "callbacks": 3,
+      "fenv_changed_rows": [
+        "numpy-zero-warn",
+        "numpy-zero-raise",
+        "numpy-zero-call"
+      ],
+      "default_int": "<i8",
+      "intp": "<i8",
+      "source": "64fcce3556f0cbf8cafd05a54ea3545b65b18bdcabbee25b953a21ba06875581"
+    }
+  },
+  "native_implementation_GO": {
+    "owner": "boundary_worker",
+    "scope": "Implement source-faithful native/public/complete installed SDK operation in family-specific files; reuse admitted original observations, document uncovered domains without substituting a narrower completion target. Root reserves shared integration and admission.",
+    "original_calls_authorized": 0,
+    "benchmarks": "Prospective cases/source guards only until genuine product and actual-input admission; no timing authorized by this receipt."
+  },
+  "remaining_gates": [
+    "independent implementation admission",
+    "genuine integrated hot-swap and one global default1 worker budget",
+    "full declared API/type/platform/domain closure",
+    "one-thread public original performance",
+    "exact-source four-profile qualification and main delivery"
+  ],
+  "closeout": {
+    "result": "90 original calls admitted within retained profile/recipe scope; reference budget exhausted.",
+    "reuse": "Existing independent source safety and raw capture reconstruction; no original or scientific replay.",
+    "avoidable_work": "Reviewed retained limitations; no new reporting framework or rerun.",
+    "next_owner": "boundary_worker",
+    "next_trigger": "Native/public/installed SDK implementation; regular-grid also needs tracked saved fixture/guards. Nonsharing crop pointer deltas remain diagnostics; regular-grid Linux int64 is not a portable default-int guarantee."
+  }
+}

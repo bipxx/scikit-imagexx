@@ -1,0 +1,115 @@
+{
+  "status": "ROOT_ADMITTED_ORIGINAL_REFERENCE_ONLY_NOT_NATIVE_PARITY",
+  "source": "78115e3c6549b27bfccc1af354cd9024b24dac53",
+  "captured_reference_source": "1cfd37713062ee63e464c8abbe06ebd8518d01fc",
+  "handoff": {
+    "path": "build\\join-segmentations-v1\\handoff-v2.json",
+    "sha256": "a7466a591bb0055e7a62a3dd432f0d546ce520289fa505b7fb2c21d8edeb43e8"
+  },
+  "independent_raw_review": {
+    "path": "build\\join-segmentations-original-independent-review-v1\\review-v1.json",
+    "sha256": "5b2512331544dab2905deb3e0c38826b8bfde84d4f467c2aa8fab76d8d5095b9"
+  },
+  "root_GO": {
+    "path": "build/join-segmentations-v1/root-go-v1.json",
+    "sha256": "d5dbfc9392c0bf302577ca8a65f54b440f75387709f38fcb06e8f7f2d4d84f70",
+    "state": "CONSUMED_COMPLETE_NO_REPLAY",
+    "maximum": 100,
+    "actual": 100,
+    "remaining": 0
+  },
+  "source_safety": {
+    "path": "build/join-segmentations-independent-review-v1/review-v1.json",
+    "sha256": "f381d6b76189eeaf5acc123f01205918713d3d9ccfa672e64b12f1bf038ca841"
+  },
+  "raw_validation": {
+    "path": "build/join-segmentations-v1/saved-raw-validation-v2.json",
+    "sha256": "d29617d9f9f9d1f3f3e4c931fe9f4f03b2def1a97b157747a065ef51cc6dfb05",
+    "profiles": {
+      "minimum": {
+        "rows": 50,
+        "returns": 37,
+        "errors": 13,
+        "mapped_returns": 25,
+        "warning_rows": 0,
+        "warning_count": 0,
+        "error_classes": {
+          "ValueError": 7,
+          "TypeError": 5,
+          "AttributeError": 1
+        },
+        "protocol_rows": [
+          "join_segmentations/int16-maps"
+        ],
+        "journal_sha256": "da845f63b9ca62aabf63a6b1c57b73aefc2cab0da8ba72912d9869df21e0c27f",
+        "observations_sha256": "c16858e4af6d555f0a4e85abd7b1aedbb17d058e4b47c3481245d97a70df9dc8"
+      },
+      "modern": {
+        "rows": 50,
+        "returns": 37,
+        "errors": 13,
+        "mapped_returns": 25,
+        "warning_rows": 44,
+        "warning_count": 176,
+        "error_classes": {
+          "ValueError": 7,
+          "TypeError": 5,
+          "AttributeError": 1
+        },
+        "protocol_rows": [
+          "join_segmentations/int16-maps"
+        ],
+        "journal_sha256": "d95a5926b8380c6cc5705c58c687b304ca206c08f06929912d8e4097b4a89e3c",
+        "observations_sha256": "9b7124c182774ce262285087abad56d4dfaa64654ad2dfae1dafd76fa3d833f6"
+      }
+    },
+    "actual_public_topcalls": 100,
+    "started": 100,
+    "completed": 100,
+    "observer_failed": 0,
+    "unpaired": 0,
+    "source_errors": 26,
+    "mapped_returns": 50,
+    "protocol_sequences": 2,
+    "protocol_sequence_scope": "One frozen int16-maps sequence per profile only;9declared actions each. No extra original relabel/map cohort."
+  },
+  "saved_fixture": {
+    "path": "tests/fixtures/join_segmentations_originals_v1.json",
+    "sha256": "0cb7da5d981bf95eb8895278bf9acc638ba3acd236625c48a00aa632a1b0a340",
+    "rows": 100,
+    "serialization": "Every decoded row equals retained original journal.completed.row and observations.json; raw-byte hashes kept separately. All errors/warnings/frame/type/cache/aliases/FP diagnostics retained; no mathematical expected-output computation or normalization."
+  },
+  "saved_tests_reused": [
+    {
+      "profile": "minimum",
+      "path": "build/join-segmentations-v1/minimum-saved-v1.xml",
+      "nodes": 5,
+      "seconds": 0.28199999989010394,
+      "scientific_imports": 0
+    },
+    {
+      "profile": "modern",
+      "path": "build/join-segmentations-v1/modern-saved-v1.xml",
+      "nodes": 5,
+      "seconds": 0.3398647999856621,
+      "scientific_imports": 0
+    }
+  ],
+  "original_replays": 0,
+  "native_implementation": false,
+  "API_completion": false,
+  "remaining_gates": [
+    "native implementation with explicit standalone SDK ownership",
+    "public hot-swap/data/type/alias/warning/error contract and exact returned-class identity frontier",
+    "actual scalar/SIMD and optional process-global workers default1",
+    "relevant one-thread public-call original performance",
+    "exact-source four-profile qualification and independent main delivery"
+  ],
+  "closeout": {
+    "result": "100once-only references independently admitted;37returns13errors per profile and176modern warnings retained verbatim.",
+    "reuse": "Independent116proof/100journal-pair reconstruction and10saved-only guards reused; root authenticates receipt, not a scientific replay.",
+    "avoidable_work": "Three zero-call setup failures and corrected saved-only event predicate preserved, source6 unchanged. WindowsGit/WSLenv rule added to AGENTS to prevent repeat.",
+    "next_owner": "boundary_worker",
+    "next_trigger": "Root native implementation GO after current independent crop delta review closes; reference packet may merge now, no join addition to current265 release."
+  }
+}

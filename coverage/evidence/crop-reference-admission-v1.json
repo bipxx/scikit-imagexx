@@ -1,0 +1,76 @@
+{
+  "status": "ROOT_ADMITTED_SCOPED_REFERENCE_NATIVE_IMPLEMENTATION_GO_NOT_API_COMPLETION",
+  "source": "9c1eddcb50241866fc9eb1a51ca545c7e3011cdf",
+  "independent_review": {
+    "path": "build/util-crop-original-independent-review-v1/review-v1.json",
+    "sha256": "e91246c0a32819a5b3d7278faffc7c5d1d126d47fb78549fdf17462c271cdd7b"
+  },
+  "handoff": {
+    "path": "build/util-crop-v2/handoff-v3.json",
+    "sha256": "d31d3588b106814e42d3604c9975154091ac1baa57e988e9499e2658d83a2eb0"
+  },
+  "root_GO": {
+    "path": "build/util-crop-v2/root-go-v1.json",
+    "sha256": "a20a534ad80786e7290bee3a78b942da498b57c70f6c571764f8bf0b82641377",
+    "maximum": 216,
+    "actual": 216,
+    "remaining": 0,
+    "state": "EXHAUSTED_NO_REPLAY"
+  },
+  "profiles": {
+    "minimum": {
+      "starts": 108,
+      "completed": 108,
+      "unique_ids": 108,
+      "returns": 93,
+      "errors": 15,
+      "error_classes": {
+        "TypeError": 6,
+        "ValueError": 4,
+        "RuntimeError": 3,
+        "IndexError": 1,
+        "KeyError": 1
+      },
+      "protocol_rows": 10,
+      "object_identity_rows": 5,
+      "reused_saved_only_checks": 223
+    },
+    "modern": {
+      "starts": 108,
+      "completed": 108,
+      "unique_ids": 108,
+      "returns": 90,
+      "errors": 18,
+      "error_classes": {
+        "ValueError": 8,
+        "TypeError": 5,
+        "RuntimeError": 3,
+        "IndexError": 1,
+        "KeyError": 1
+      },
+      "protocol_rows": 10,
+      "object_identity_rows": 5,
+      "reused_saved_only_checks": 223
+    }
+  },
+  "native_implementation_GO": {
+    "owner": "metrics_integrator",
+    "scope": "Implement source-faithful native/public/complete installed SDK operation in family-specific files; reuse admitted original observations, document uncovered domains without substituting a narrower completion target. Root reserves shared integration and admission.",
+    "original_calls_authorized": 0,
+    "benchmarks": "Prospective cases/source guards only until genuine product and actual-input admission; no timing authorized by this receipt."
+  },
+  "remaining_gates": [
+    "independent implementation admission",
+    "genuine integrated hot-swap and one global default1 worker budget",
+    "full declared API/type/platform/domain closure",
+    "one-thread public original performance",
+    "exact-source four-profile qualification and main delivery"
+  ],
+  "closeout": {
+    "result": "216 original calls admitted within retained profile/recipe scope; reference budget exhausted.",
+    "reuse": "Existing independent source safety and raw capture reconstruction; no original or scientific replay.",
+    "avoidable_work": "Reviewed retained limitations; no new reporting framework or rerun.",
+    "next_owner": "metrics_integrator",
+    "next_trigger": "Native/public/installed SDK implementation; regular-grid also needs tracked saved fixture/guards. Nonsharing crop pointer deltas remain diagnostics; regular-grid Linux int64 is not a portable default-int guarantee."
+  }
+}
