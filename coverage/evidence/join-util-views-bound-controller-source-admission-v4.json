@@ -1,0 +1,95 @@
+{
+  "schema": "root-bound-measurement-source-admission-v4",
+  "status": "PASS_INDEPENDENT_BOUND68_SOURCE_ONLY_ACTUAL_HOST_COHORT_TIMING_PENDING",
+  "source": "57072ba25f38785e79d930951a56ab4adfc0583f",
+  "base": "76c93138a62aaa7077e8f0d9b59ed10c4852efc0",
+  "handoff_sha256": "98fc3de055dcc4e14cfcb225927b465ace4c36c1b4b8a3444a7c1cabc022223d",
+  "changed_files": [
+    ".github/workflows/next-metrics-initial.yml",
+    "coverage/contracts/next-metrics-controller-binding-v4.json",
+    "coverage/contracts/next-metrics-measurement-v4.json",
+    "tests/test_next_metrics_controller_v4.py",
+    "tools/next_metrics_first_cohort_probe.py"
+  ],
+  "proofs_authenticated": 12,
+  "small_proof_bytes": 74214,
+  "scope": {
+    "distinct_API_cohorts": 10,
+    "measured_reports": 9,
+    "canonical_cases": 68,
+    "canonical_raw_samples": 952,
+    "warmup_groups": 136,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "untimed_topcalls": {
+      "original": 10,
+      "native": 10
+    },
+    "execution_scope": {
+      "untimed_topcalls": {
+        "original": 10,
+        "native": 10
+      },
+      "canonical_cases": 68,
+      "canonical_raw_samples": 952,
+      "warmup_groups": 136,
+      "repeat": 7,
+      "target_ms": 100,
+      "warmup_min_ms": 250,
+      "workers": 1,
+      "reference_threadpools": 1,
+      "single_host_same_installed_runtime": true,
+      "no_automatic_retry": true,
+      "retain_all_losses": true
+    },
+    "prior_ellipse_results": {
+      "wins": 10,
+      "losses": 2,
+      "status": "PRESERVED_HISTORICAL_NOT_CURRENT_RUNTIME_REUSE"
+    },
+    "current_ellipse_performance": "PENDING_ACTUAL_CURRENT12CASES_NOT_RUN",
+    "helper": {
+      "mode": "source-built-v1",
+      "prepare_once_on_actual_host": true,
+      "receipt_sha256": null,
+      "library_sha256": null,
+      "root_GO": null
+    }
+  },
+  "source_checks": {
+    "windows311": {
+      "tests": 87,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "windows313": {
+      "tests": 87,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "passed": [
+    "Exact five-file Git/raw/canonical projection and all small handoff proofs",
+    "Actual a6/42262940227 artifact/runtime/core/SDK102/root binding unchanged from independently admitted v3",
+    "Ten distinct routes, all previous nine byte-equivalent and actual historical ellipse route/12cases/method retained",
+    "Every probe function exactly reconstructs admitted predecessor after declared count/path inverse; C1 enforced stop/poststop authority, native ownership and postbatch verifier unchanged",
+    "Workflow order/authority/offline install/helper-once/first-cohort barrier unchanged",
+    "Current87 selected checks each retained Python passed with normal conftest/plugins and no scientific imports or bodies; not a full-product source-barrier claim"
+  ],
+  "pending": [
+    "Root actual hosted dispatch with fresh UTC deadline",
+    "Actual host helper/identity and ten real zero-body cohorts",
+    "One fixed68 comparison/all952samples/136warmupgroups and independent raw/loss admission",
+    "Final shipping projection/main delivery/full API closure"
+  ],
+  "waste_review": {
+    "reuse": "Admitted v3 binding, C1/native/helper/method and saved ellipse cases; no science/test/archive/core/corpus replay",
+    "avoidable": "No new setup failures in this review",
+    "next_owner_trigger": "Root dispatch one eligible existing hosted workflow promptly; no unrelated publication prerequisite"
+  },
+  "science_or_timing_executed": false
+}

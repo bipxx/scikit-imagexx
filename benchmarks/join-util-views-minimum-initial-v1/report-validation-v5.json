@@ -1,0 +1,19 @@
+{
+  "status": "PASS_REPORT_ONLY_RETAINED_OUTPUT_VALIDATION",
+  "tool_source": "c7cd06fc7bb7e6d05353b35463f020633c5589d4",
+  "root_admission_sha256": "8cb4c0628be5005767eb2f63f9f8dd7e9a49a22920de6dcb9a3f10ceec4b807b",
+  "manifest_sha256": "a06539e559eccd9553dd0da843c1424fe6618ae97cb110dfff3d7c68d5735dad",
+  "retention_sha256": "7fc2234b42b9f71379e1f42d85e469bd932c644d3d944c2c509d41d1e31b7849",
+  "failed_hosted_campaign_status": "failure",
+  "summary_sha256": "fcca63e6b5a9d437de156e2bf5a8e5f67167ff988538ba38b51a048836631f69",
+  "reports": 9,
+  "cases": 68,
+  "samples": 952,
+  "warmup_groups": 136,
+  "authority_relocation": "In-memory absolute Linux path to exact local file; original binding/measurement payloads unchanged.",
+  "new_original_calls": 0,
+  "new_native_calls": 0,
+  "new_helper_calls": 0,
+  "new_sampler_calls": 0,
+  "new_timing_runs": 0
+}

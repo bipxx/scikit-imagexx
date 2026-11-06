@@ -1,0 +1,30 @@
+{
+  "schema": "root-report-only-order-source-admission-v5",
+  "status": "PASS_MINIMAL_REPORT_VALIDATOR_SOURCE_ONLY_ACTUAL_RETAINED_OUTPUT_REPLAY_AUTHORIZED",
+  "passed": true,
+  "source": "c7cd06fc7bb7e6d05353b35463f020633c5589d4",
+  "base": "57072ba25f38785e79d930951a56ab4adfc0583f",
+  "handoff_sha256": "94a8903aa4603f6a229bf2d8c17f49e040b2f29d43675e1a470f2e5795397b68",
+  "files": {
+    "tools/validate_join_util_views_reports_v5.py": {
+      "raw_sha256": "1257fe15bd3c95112ee1e0011b16a2bd2ba78b584b7b424cc8360883bb021d0b",
+      "canonical_LF_sha256": "1257fe15bd3c95112ee1e0011b16a2bd2ba78b584b7b424cc8360883bb021d0b"
+    },
+    "tests/test_join_util_views_report_order_v5.py": {
+      "raw_sha256": "19c6e33bbdeeac7d992bb89b80436cfe7acfc1f176b942895b42c8f82197d64d",
+      "canonical_LF_sha256": "19c6e33bbdeeac7d992bb89b80436cfe7acfc1f176b942895b42c8f82197d64d"
+    },
+    "coverage/contracts/join-util-views-report-order-v5.json": {
+      "raw_sha256": "2a6a98a494b0f5143ba87c3aa273eb819f0f04ff91daebfd9df952ced77f18a8",
+      "canonical_LF_sha256": "2a6a98a494b0f5143ba87c3aa273eb819f0f04ff91daebfd9df952ced77f18a8"
+    }
+  },
+  "source_checks_each_python": 14,
+  "function_inverse": "Every inherited validate_reports line exact except two-line utilpass0/dedicatedpass1 correction. Actual frozen sampler/callerAST and syntheticbothcaseindices/positiveandnegative corruption controls inspected.",
+  "raw_review_sha256": "7186b43024ed1ca2b16eddf73d775cf6e87423aa4bd7c2783c49c30cbf4cf14f",
+  "raw_scope": "Independent7186 reconstructs68cases/952samples/136warmgroups/1508batches/34wins34losses. Hosted42278375082 remainsfailure; no root finalperformance admission until corrected full report validation passes.",
+  "admitted_raw_review_proofs": 7,
+  "adapter_review": "Standard-library read-only metadata. AbsoluteLinuxauthority locations remapped in-memory to exactlocalfilepayloads, hashes unchanged. Newoutput-only strict summary sink, originalfailedsummary remains absent. No measurement/helper/native/science entrypoints.",
+  "next_owner_trigger": "Root execute frozen CLI ONCE over exact retained203file campaign in new replay-v1 output; validate allreports and compare successor summary to independent reconstruction. Never repeat timings or relabel hostedfailure.",
+  "waste_review": "Actual output retained, minimal report-only correction. Reused source guards/18rawseals, no numerical/build/test/archive/core replay. Scientific/hardware scope not expanded."
+}

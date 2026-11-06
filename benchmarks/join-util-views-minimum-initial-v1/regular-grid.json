@@ -1,0 +1,3313 @@
+{
+  "metadata": {
+    "source_sha256": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "source_revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+    "root_binding_sha256": "b780a17d95564b7fab0e3540a727d35b49f93f3b6574f92f144483d9fdc1b87e",
+    "measurement_sha256": "c7a3de8da861c933f6a877d1d32c5d23478a9a43dcaca0bb3c88d8d6d0f66816",
+    "contract_sha256": "3f88c8dcdb0529bc0bd036b5d90006dc0c7f7dc873fd754179895e0574fdbc3d",
+    "numpy": "1.24.4",
+    "reference": "0.26.0",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "core_path": "/home/runner/work/_temp/runtime/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "prepared_run": "42262940227",
+    "prepared_artifact": "13528655843",
+    "producer": {
+      "run": "42262940227",
+      "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "artifact": "13528655843",
+      "sha256": "73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e"
+    },
+    "runtime_sha256": "6d41b7036debf39346a0439a28c81df242aa489299663905a3ca57a1ec5e1e5f",
+    "core_sha256": "5e23ad1198f3188b308491edcef41b1539e0f3f27a15c8ed5849cbb9f63ed1aa",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "retain_all_losses": true
+  },
+  "results": [
+    {
+      "case_id": "doc2d",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.02309205550009982,
+      "cpp_ms": 0.005004778801216026,
+      "speedup": 4.614001221090745,
+      "samples_ms": [
+        [
+          0.023138424327579288,
+          0.023105182659424663,
+          0.02296065608678184,
+          0.02309205550009982,
+          0.022964726761694438,
+          0.02310299001597444,
+          0.023068950783447166
+        ],
+        [
+          0.005218199237699238,
+          0.005004778801216026,
+          0.005025769441664128,
+          0.005034917755539046,
+          0.004961378573617618,
+          0.0049844436583261435,
+          0.004984881414701803
+        ]
+      ],
+      "loops": [
+        [
+          4982,
+          4971,
+          4978,
+          5009,
+          4981,
+          5008,
+          4978
+        ],
+        [
+          23088,
+          22039,
+          22979,
+          22883,
+          22841,
+          23180,
+          23072
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        269635394,
+        252254134
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 64391,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1786,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 42197283,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 4868,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 112927366,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 4958,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114446354,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 25228,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 4559,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 22832032,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 22963,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115928824,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 22780,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113468050,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 4982,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115275630,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 23088,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 120477784,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 22039,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 110300320,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 4971,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114855863,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 4978,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114298146,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 22979,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115487156,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 22883,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115214023,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 5009,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115668106,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 4981,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114387304,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 22841,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113322848,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 23180,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115539404,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 5008,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115699774,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 4978,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114837237,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "doc2d",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 23072,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115011184,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "dense2d",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.02330891941688601,
+      "cpp_ms": 0.004982759153889588,
+      "speedup": 4.677914122879258,
+      "samples_ms": [
+        [
+          0.023285520096950108,
+          0.02330891941688601,
+          0.023151684029185247,
+          0.023605281803542672,
+          0.02329550533661741,
+          0.02337488879886571,
+          0.0233512587398374
+        ],
+        [
+          0.004970002202262717,
+          0.0049946130774882235,
+          0.004995005472312703,
+          0.004982759153889588,
+          0.004976853162911611,
+          0.0049690788938416925,
+          0.005048787979605945
+        ]
+      ],
+      "loops": [
+        [
+          4951,
+          4939,
+          4934,
+          4968,
+          4872,
+          4937,
+          4920
+        ],
+        [
+          23158,
+          23139,
+          23025,
+          23023,
+          23080,
+          23107,
+          23144
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        280144759,
+        255559189
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 52869,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2176,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 50928454,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 4914,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113762522,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 4968,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115400914,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 22152,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5192,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 25857454,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23092,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115003799,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 23092,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114675784,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 23158,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115095311,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 4951,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115286610,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 4939,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115122753,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 23139,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115570352,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 23025,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115010001,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 4934,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114230409,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 4968,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117271040,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 23023,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114718064,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 23080,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114865771,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 4872,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113495702,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 4937,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115401826,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 23107,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114820506,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 23144,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116849149,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "dense2d",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 4920,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114888193,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "thin3d",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.03294314297969688,
+      "cpp_ms": 0.005878122358974358,
+      "speedup": 5.6043649600796925,
+      "samples_ms": [
+        [
+          0.03308309096093527,
+          0.032891576071325854,
+          0.03294314297969688,
+          0.033216106559725005,
+          0.03271332053133122,
+          0.035188979237770195,
+          0.03287632242275925
+        ],
+        [
+          0.005878122358974358,
+          0.00586569010989011,
+          0.005881568448434153,
+          0.005840037027566102,
+          0.005930948253097704,
+          0.0059120504383702935,
+          0.00586684896154637
+        ]
+      ],
+      "loops": [
+        [
+          3507,
+          3477,
+          3497,
+          3491,
+          3463,
+          3516,
+          3269
+        ],
+        [
+          19500,
+          19565,
+          19606,
+          19553,
+          19692,
+          19390,
+          19452
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        284909363,
+        250220228
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 67135,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1713,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 57595716,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3421,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 111694675,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3523,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115551837,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 32831,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3503,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 20766999,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 19399,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113509558,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 19654,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115910840,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 3507,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116022400,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 19500,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114623386,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 19565,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114762227,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 3477,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114364010,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 3497,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115202171,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 19606,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115314031,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 19553,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114190244,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 3491,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115957428,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 3463,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113286229,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 19692,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116792233,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 19390,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114634658,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 3516,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 123724451,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 3269,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 107472698,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "thin3d",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 19452,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114121946,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "permuted-readonly",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.03214109017308766,
+      "cpp_ms": 0.005415688388458831,
+      "speedup": 5.934811582140199,
+      "samples_ms": [
+        [
+          0.03214109017308766,
+          0.03207326131917272,
+          0.03228489514779699,
+          0.032169981195621665,
+          0.03204244223776224,
+          0.03205487768180552,
+          0.03315597686733557
+        ],
+        [
+          0.005440068393343988,
+          0.005457847776726585,
+          0.005395493474443547,
+          0.005415688388458831,
+          0.005440397457028491,
+          0.005379948673068736,
+          0.0053706128836077845
+        ]
+      ],
+      "loops": [
+        [
+          3582,
+          3578,
+          3586,
+          3563,
+          3575,
+          3589,
+          3588
+        ],
+        [
+          21274,
+          21140,
+          21071,
+          21315,
+          21235,
+          21139,
+          21376
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        285723200,
+        363224288
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 65733,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1750,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 56766922,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3546,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114223546,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3571,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114666999,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 24696,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 4657,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 27349111,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 19583,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 106221011,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21202,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116055231,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21010,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113574239,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 21274,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115732015,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 3582,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115129385,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 3578,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114758129,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 21140,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115378902,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 21071,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113688443,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 3586,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115773634,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 3563,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114621643,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 21315,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115435398,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 21235,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115526840,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 3575,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114551731,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 3589,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115044956,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 21139,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113726735,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 21376,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114802221,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "permuted-readonly",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 3588,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118963645,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "rank8",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.05463450902184236,
+      "cpp_ms": 0.009557770385732061,
+      "speedup": 5.716239961508316,
+      "samples_ms": [
+        [
+          0.05480886244645407,
+          0.055013282039066226,
+          0.054614423720707794,
+          0.05461638841405508,
+          0.05462369563152897,
+          0.05463450902184236,
+          0.0557044541567696
+        ],
+        [
+          0.009710675979047144,
+          0.00948784606940809,
+          0.009553832687072022,
+          0.009578774962618376,
+          0.00954014892553723,
+          0.009557770385732061,
+          0.00956714451923876
+        ]
+      ],
+      "loops": [
+        [
+          2101,
+          2099,
+          2091,
+          2106,
+          2106,
+          2106,
+          2105
+        ],
+        [
+          12027,
+          11843,
+          12121,
+          12038,
+          12006,
+          12055,
+          12033
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        300603901,
+        261816293
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 88486,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1300,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 72386229,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2066,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113744197,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2089,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114384989,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 34134,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 3370,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 32401725,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 11961,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114178783,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12048,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115201651,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 2101,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115153420,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 12027,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116790300,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 11843,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112364561,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 2099,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115472879,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 2091,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114198760,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 12121,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115802006,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 12038,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115309293,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 2106,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115022114,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 2106,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115037503,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 12006,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114539028,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 12055,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115218922,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 2106,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115060276,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 2105,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117257876,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "rank8",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 12033,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115121450,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "half-even-down",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.021203840306961447,
+      "cpp_ms": 0.004203706399735031,
+      "speedup": 5.044082124360058,
+      "samples_ms": [
+        [
+          0.021203840306961447,
+          0.021139785951327435,
+          0.021283555147058826,
+          0.021127414877868247,
+          0.02126541219691403,
+          0.021175919193786984,
+          0.021330301233658627
+        ],
+        [
+          0.004232220465252164,
+          0.004203706399735031,
+          0.004213531746902073,
+          0.004221571480911555,
+          0.004174300161515307,
+          0.004191059564428312,
+          0.004198846137026239
+        ]
+      ],
+      "loops": [
+        [
+          5473,
+          5424,
+          5440,
+          5404,
+          5444,
+          5408,
+          5431
+        ],
+        [
+          27383,
+          27173,
+          27357,
+          27294,
+          27242,
+          27550,
+          27440
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        277518905,
+        252770972
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 50013,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2300,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 48983758,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 5400,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113954161,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 5450,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114530973,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 20969,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5485,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 23109552,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 27295,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115819459,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 27102,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113820992,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 27383,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115890893,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 5473,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116048618,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 5424,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114662199,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 27173,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114227314,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 27357,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115269588,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 5440,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115782540,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 5404,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114172550,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 27294,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115223572,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 27242,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113716285,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 5444,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115768904,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 5408,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114519371,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 27550,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115463691,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 27440,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115216338,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "half-even-down",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 5431,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115844866,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "half-even-up",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.021070871103777044,
+      "cpp_ms": 0.004186850224117198,
+      "speedup": 5.032630730949986,
+      "samples_ms": [
+        [
+          0.021215737064997235,
+          0.020988509500092234,
+          0.02094996277372263,
+          0.020973610564663025,
+          0.02108693873085339,
+          0.021070871103777044,
+          0.021080178636863317
+        ],
+        [
+          0.004200274335957619,
+          0.0041854260043827606,
+          0.004179960876369327,
+          0.004178946461672664,
+          0.004190890584686944,
+          0.004186850224117198,
+          0.004189366184876397
+        ]
+      ],
+      "loops": [
+        [
+          5431,
+          5421,
+          5480,
+          5490,
+          5484,
+          5454,
+          5458
+        ],
+        [
+          27182,
+          27380,
+          27477,
+          27513,
+          27519,
+          27441,
+          27467
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        278376874,
+        365154613
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 49774,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2311,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 49401831,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 5380,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114917477,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 5384,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114007792,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 23223,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 4952,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 21139137,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 26940,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113446099,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 27310,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114774430,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 27364,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115771724,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 5431,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115222668,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 27182,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114171857,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 27380,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114596964,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 5421,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113778710,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 5480,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114805796,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 27477,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114852785,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 27513,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114975354,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 5490,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115145122,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 5484,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115640772,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 27519,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115329118,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 27441,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114891357,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 5454,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114920531,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 5458,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115055615,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "half-even-up",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 27467,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115069321,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "large-shape-metadata",
+      "api": "util.regular_grid",
+      "actual_C_returns": [
+        "regular_grid_prepare",
+        "regular_grid_finish"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy default-int scalar representation; serial core; Windows/default-int policy separately qualified",
+      "return_class_frontier": null,
+      "reference_ms": 0.03294472582025677,
+      "cpp_ms": 0.005906050907778007,
+      "speedup": 5.578131027768493,
+      "samples_ms": [
+        [
+          0.03303937791690381,
+          0.032909261706406207,
+          0.03297683748211731,
+          0.03281480905963303,
+          0.03294472582025677,
+          0.03298908908622171,
+          0.03293181760825925
+        ],
+        [
+          0.00585596168893857,
+          0.005931626152044401,
+          0.005906050907778007,
+          0.005920492142563682,
+          0.005907512895752896,
+          0.0058480146401602715,
+          0.005870279328756675
+        ]
+      ],
+      "loops": [
+        [
+          3514,
+          3481,
+          3495,
+          3488,
+          3505,
+          3491,
+          3487
+        ],
+        [
+          19681,
+          19639,
+          19388,
+          19472,
+          19425,
+          19467,
+          19665
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        285227964,
+        256822980
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 66625,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1727,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 57938687,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3428,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114884514,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3432,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 112338138,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 24826,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 4633,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 27159390,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 19618,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114523547,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 19700,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115115217,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 19681,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115251182,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 3514,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116100374,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 3481,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114557140,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 19639,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116491206,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 19388,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114506515,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 3495,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115254047,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 3488,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114458054,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 19472,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115283823,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 19425,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114753438,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 3505,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115471264,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 3491,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115164910,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 19467,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113843301,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 19665,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115439043,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "large-shape-metadata",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 3487,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114833248,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    }
+  ]
+}

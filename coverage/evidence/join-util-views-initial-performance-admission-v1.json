@@ -1,0 +1,301 @@
+{
+  "schema": "root-join-util-views-initial-performance-admission-v1",
+  "status": "PASS_SCOPED_FIXED68_ONE_THREAD_PUBLIC_EVIDENCE_ALL34LOSSES_RETAINED_MAIN_DELIVERY_NEXT",
+  "passed": true,
+  "root_accepted": true,
+  "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "producer": {
+    "run": "42262940227",
+    "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+    "artifact": "13528655843",
+    "sha256": "73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e"
+  },
+  "whole_product_admission": {
+    "path": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
+    "sha256": "15030efe83283c9bb29043150612b32501128c8028ce19b1c58c2454837dcd96",
+    "profiles": 4,
+    "public_XML_checks": 952116,
+    "SDK_checks": 256,
+    "corpora": 48,
+    "product_members": 216,
+    "SDK_members": 102
+  },
+  "benchmark": {
+    "run": 42278375082,
+    "controller_source": "57072ba25f38785e79d930951a56ab4adfc0583f",
+    "hosted_status": "failure",
+    "failure": "Final validator assumed pass1 for frozenutilpass0 after all68measurements and tenfirstcohorts completed. Failedstatus/raw/summaryabsence preserved.",
+    "artifact": 13535300683,
+    "artifact_bytes": 4900669,
+    "artifact_sha256": "fe8bf7bc5f76a16baaa9748a3be983d2cb24ebd18f61b80ff8c19867909c32b1",
+    "retention_sha256": "7fc2234b42b9f71379e1f42d85e469bd932c644d3d944c2c509d41d1e31b7849"
+  },
+  "independent_raw_review": {
+    "path": "coverage/evidence/join-util-views-failed-campaign-raw-review-v2.json",
+    "sha256": "7186b43024ed1ca2b16eddf73d775cf6e87423aa4bd7c2783c49c30cbf4cf14f",
+    "reconstruction_sha256": "fadad1baf94c87b0748ac35d8fb3bb6b55b23840c7b91970cf915786c7d730af"
+  },
+  "report_only_correction": {
+    "source": "c7cd06fc7bb7e6d05353b35463f020633c5589d4",
+    "source_admission_path": "coverage/evidence/join-util-views-report-order-source-admission-v5.json",
+    "source_admission_sha256": "8cb4c0628be5005767eb2f63f9f8dd7e9a49a22920de6dcb9a3f10ceec4b807b",
+    "receipt_sha256": "8922c64c608abd2a4b362facd43e2ed63b070e0df665797eca3db6231fa20c87",
+    "actual_status": "PASS_REPORT_ONLY_RETAINED_OUTPUT_VALIDATION",
+    "new_timing_runs": 0,
+    "summary_sha256": "fcca63e6b5a9d437de156e2bf5a8e5f67167ff988538ba38b51a048836631f69",
+    "summary_equals_independent_reconstruction": true,
+    "old_summary_present": false
+  },
+  "method": {
+    "source_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "cases": 68,
+    "accepted_samples": 952,
+    "warmup_groups": 136,
+    "journal_batches": 1508,
+    "underlength_accepted_samples": 0,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "reference_threads": 1,
+    "native_workers": 1,
+    "allocation_inclusive_public_calls": true,
+    "ordering": "Frozenutilityexecutor pass0; dedicateddrivers pass1. Every calibration/loop update/batch pair/seal/median/ratio/alternating order independently reconstructed.",
+    "timed_loop_invocations": [
+      9237881,
+      11448738
+    ]
+  },
+  "results": {
+    "wins": 34,
+    "losses": 34,
+    "ties": 0,
+    "by_API": {
+      "metrics.adapted_rand_error": {
+        "cases": 4,
+        "wins": 4,
+        "losses": 0,
+        "ties": 0
+      },
+      "metrics.contingency_table": {
+        "cases": 4,
+        "wins": 4,
+        "losses": 0,
+        "ties": 0
+      },
+      "segmentation.find_boundaries": {
+        "cases": 8,
+        "wins": 8,
+        "losses": 0,
+        "ties": 0
+      },
+      "segmentation.join_segmentations": {
+        "cases": 8,
+        "wins": 0,
+        "losses": 8,
+        "ties": 0
+      },
+      "util.crop": {
+        "cases": 8,
+        "wins": 0,
+        "losses": 8,
+        "ties": 0
+      },
+      "util.regular_grid": {
+        "cases": 8,
+        "wins": 8,
+        "losses": 0,
+        "ties": 0
+      },
+      "util.slice_along_axes": {
+        "cases": 8,
+        "wins": 0,
+        "losses": 8,
+        "ties": 0
+      },
+      "util.view_as_blocks": {
+        "cases": 4,
+        "wins": 0,
+        "losses": 4,
+        "ties": 0
+      },
+      "util.view_as_windows": {
+        "cases": 4,
+        "wins": 0,
+        "losses": 4,
+        "ties": 0
+      },
+      "draw.ellipse_perimeter": {
+        "cases": 12,
+        "wins": 10,
+        "losses": 2,
+        "ties": 0
+      }
+    },
+    "family_scopes": {
+      "metrics-are": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [
+          "metrics.adapted_rand_error/tiny",
+          "metrics.adapted_rand_error/small",
+          "metrics.adapted_rand_error/large-C",
+          "metrics.adapted_rand_error/large-F",
+          "metrics.contingency_table/tiny",
+          "metrics.contingency_table/small",
+          "metrics.contingency_table/large-C",
+          "metrics.contingency_table/large-F"
+        ],
+        "losses": [],
+        "ties": []
+      },
+      "boundary": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [
+          "cross-thick",
+          "u8-thick-512",
+          "u16-inner-F",
+          "i32-outer-reverse",
+          "u8-subpixel",
+          "u16-outer-3d",
+          "bool-inner-reverse",
+          "u8-subpixel-1d"
+        ],
+        "losses": [],
+        "ties": []
+      },
+      "join": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [],
+        "losses": [
+          "u8-labels-C",
+          "u8-maps-reverse",
+          "i16-labels-F",
+          "i16-maps-C",
+          "u16-labels-C",
+          "u16-maps-F",
+          "i32-labels-reverse",
+          "i32-maps-C"
+        ],
+        "ties": []
+      },
+      "crop": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [],
+        "losses": [
+          "view-C",
+          "view-F",
+          "view-reverse",
+          "view-3D",
+          "copy-C",
+          "copy-F",
+          "copy-reverse-K",
+          "copy-object-provider"
+        ],
+        "ties": []
+      },
+      "regular-grid": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [
+          "doc2d",
+          "dense2d",
+          "thin3d",
+          "permuted-readonly",
+          "rank8",
+          "half-even-down",
+          "half-even-up",
+          "large-shape-metadata"
+        ],
+        "losses": [],
+        "ties": []
+      },
+      "slice": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [],
+        "losses": [
+          "view-C",
+          "copy-C",
+          "view-F",
+          "copy-F-C-order",
+          "reverse-view",
+          "reverse-copy",
+          "permuted-axes",
+          "negative-bound-copy"
+        ],
+        "ties": []
+      },
+      "blocks": {
+        "cases": 4,
+        "raw_samples": 56,
+        "wins": [],
+        "losses": [
+          "view_as_blocks/C",
+          "view_as_blocks/F",
+          "view_as_blocks/reverse",
+          "view_as_blocks/readonly"
+        ],
+        "ties": []
+      },
+      "windows": {
+        "cases": 4,
+        "raw_samples": 56,
+        "wins": [],
+        "losses": [
+          "view_as_windows/C",
+          "view_as_windows/F",
+          "view_as_windows/reverse",
+          "view_as_windows/readonly"
+        ],
+        "ties": []
+      },
+      "ellipse": {
+        "cases": 12,
+        "raw_samples": 168,
+        "wins": [
+          "ellipse-perimeter/unequal",
+          "ellipse-perimeter/flat",
+          "ellipse-perimeter/zero-axis",
+          "ellipse-perimeter/translated-clip",
+          "ellipse-perimeter/unit-angle-positive",
+          "ellipse-perimeter/unit-angle-negative",
+          "ellipse-perimeter/medium-axis",
+          "ellipse-perimeter/large-axis",
+          "ellipse-perimeter/large-partclip",
+          "ellipse-perimeter/fully-clipped-empty"
+        ],
+        "losses": [
+          "ellipse-perimeter/point",
+          "ellipse-perimeter/unit"
+        ],
+        "ties": []
+      }
+    }
+  },
+  "cohorts": {
+    "real_distinct_API_routes": 10,
+    "original_topcalls": 10,
+    "native_topcalls": 10,
+    "sampler_body_calls": 0,
+    "poststop_source_authority_verified": true,
+    "postbatch_offline_identity_verified": true,
+    "helper_scope": "Actual measurementhost sourcebuiltF1/32positive6negative controls,7approvedsourcepins/4buildinputs. No producerhost helper transplant or invented hardware evidence."
+  },
+  "loss_disposition": {
+    "all_34_losses": "Retained open optimization work, no speed superiority claim",
+    "utility24": "C profiles/optimizes demonstrated copy loops and repeated intp construction; no gain yet admitted.",
+    "JOIN8": "R profiles/optimizes separately using existingqualifiedpackage; no gain yet admitted.",
+    "ellipse2": "Tinycase wrapper/allocation frontier stays open; no favorable retiming."
+  },
+  "limitations": [
+    "PartialAPI contracts and minimumprofile fixedcase performance, not full477/class/domain/provider closure",
+    "No library-wide speed/prior-C++ gain/significance claim",
+    "Providerrepresentation/objectcopy/NumPypolicy and returnedArrayMapclass frontiers stayexplicit",
+    "Future273, Radon, completeWindowsFP and lateroptimizations need separate evidence"
+  ],
+  "delivery_gate": "Final shipping projection against exactqualifieda6, conflict/index/document checks then mainmerge/push promptly; do not wait future273.",
+  "waste_review": "Reused all952timings/1508batches/qualifiedproduct; only validator metadata corrected and fullreportvalidation replayed. No timing/qualification/build/download/archivecorehash replay. Initial receipt writer plural-key typo stopped before any output; explicit classification map fixes metadata only."
+}

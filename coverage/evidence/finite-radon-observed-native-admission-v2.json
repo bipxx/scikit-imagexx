@@ -1,0 +1,126 @@
+{
+  "schema": "root-finite-radon-observed-native-admission-v2",
+  "status": "PASS_SCOPED216_OBSERVED_NATIVE_COMPONENT_NOT_FULL_API_OR_GENUINE_RELEASE",
+  "passed": true,
+  "source": "ee639c0c19cc93be1a1751f7c6ac2c9b107bad4c",
+  "handoff_sha256": "290954d90d0e2756b1036c367e700bb5391a243a5ca095d4a013014703b60e0f",
+  "changed_files": 12,
+  "cumulative_files": 32,
+  "authenticated_source_dependencies": 50,
+  "authenticated_proofs": 192,
+  "proof_bytes": 17261590,
+  "matrix": [
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "strict_saved": 216,
+      "generic": 35,
+      "nodes": 251
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "strict_saved": 216,
+      "generic": 35,
+      "nodes": 251
+    },
+    {
+      "profile": "minimum",
+      "mode": "scalar",
+      "strict_saved": 216,
+      "generic": 35,
+      "nodes": 251
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "strict_saved": 216,
+      "generic": 35,
+      "nodes": 251
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "strict_saved": 216,
+      "generic": 35,
+      "nodes": 251
+    },
+    {
+      "profile": "modern",
+      "mode": "scalar",
+      "strict_saved": 216,
+      "generic": 35,
+      "nodes": 251
+    }
+  ],
+  "strict_saved_assessments": 1296,
+  "generic_controls": 210,
+  "SDK_saved_successful_comparisons_each_mode": 244,
+  "SDK_scope": "Assembled exported target own leaf/client only, normal/runtime-disable/scalar/sanitizer; historical terminal NOT_REFERENCE_PARITY title does not establish genuine package. Actual golden comparison/assertion clients inspected.",
+  "source_review": "Read native/header/binder/frontend delta and full strict observer consumer. Integer projections use captured worker budget; float reductions/casts/warnings remain ordered caller-thread. Pairwise source association and synchronous source pre-cast four-errorflag preparation observed; no after-call golden status restoration. NumPy representation/policy/error metadata explicit providers.",
+  "projection": "Historical portable_record removes address-only rawFENV/handler/nonsharing-pointer diagnostics; control/status/MXCSR preserved, localcaller exact32 retained. All216record transports match root admitted raw SHA; full payload JSON compared, no payload/data recapture.",
+  "failure_history": {
+    "minimum/baseline-v1": {
+      "exit": 1,
+      "nodes": 216,
+      "failed": 56,
+      "errors": 0,
+      "seconds": 2.6366528740000064,
+      "original_calls": 0,
+      "timing": 0
+    },
+    "minimum/extended-v1": {
+      "exit": 1,
+      "nodes": 216,
+      "failed": 8,
+      "errors": 0,
+      "seconds": 1.8776332950000096,
+      "original_calls": 0,
+      "timing": 0
+    },
+    "minimum/cast-phase-v2": {
+      "exit": 0,
+      "nodes": 216,
+      "failed": 0,
+      "errors": 0,
+      "seconds": 2.070469093,
+      "original_calls": 0,
+      "timing": 0
+    },
+    "modern/baseline-v1": {
+      "exit": 1,
+      "nodes": 216,
+      "failed": 56,
+      "errors": 0,
+      "seconds": 2.5580916170000023,
+      "original_calls": 0,
+      "timing": 0
+    },
+    "modern/extended-v1": {
+      "exit": 0,
+      "nodes": 216,
+      "failed": 0,
+      "errors": 0,
+      "seconds": 1.6748535950000019,
+      "original_calls": 0,
+      "timing": 0
+    },
+    "modern/cast-phase-v2": {
+      "exit": 0,
+      "nodes": 216,
+      "failed": 0,
+      "errors": 0,
+      "seconds": 2.0760199529999994,
+      "original_calls": 0,
+      "timing": 0
+    }
+  },
+  "pending": [
+    "Genuine shared registration/hot-swap/full exported SDK and exact-source fourprofile qualification",
+    "Full domains, larger exceptional vector casts/cancellation/half and exotic protocols, otherISA/Windows/defaultint/runtime partitions",
+    "Actual one-thread original public performance/all-loss review",
+    "Main delivery and cleanup"
+  ],
+  "waste_review": "Authenticated changed small source/17MB diagnostic proofs once and compared retained1296records without invoking algorithms. Reused admitted216originals and runtime/helper/codec, no original/timing/build/archive replay. One inspection guessed obsolete sdk-normal-v1 locator; corrected using actual native-normal-v4 receipt before admission.",
+  "next_owner_trigger": "Root selective shared integration only after earliest current271 delivery/future273 eligibility; B separately authors frozen benchmark source. Do not merge49private ancestry wholesale."
+}

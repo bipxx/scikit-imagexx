@@ -1,0 +1,83 @@
+{
+  "schema": "root-mark-lbp-enabled-source-admission-v1",
+  "status": "PASS_INDEPENDENT_COMBINED_SOURCE_ONLY_COMPLETE_BARRIERS_GENUINE_AND_PERFORMANCE_PENDING",
+  "source": "2991881411972e6266f7e132c9dca8b7226a8567",
+  "review_sha256": "e0ccf15f3a8c1ff90db50cbe4741824a8f62f9adeefa475ed95e18e66d59cd0f",
+  "handoff": {
+    "path": "build/mark-lbp-enabled-integration-v1/handoff-v1.json",
+    "sha256": "b47ea51a61da9117795e066a16e3411d277d55fad78b482614031be2b62bac4f"
+  },
+  "passed": true,
+  "reviewed_shared_surfaces": [
+    "ordinary CMake/static library/_core registration and strictFP",
+    "public namespaces/__all__/registry/default parity ownership",
+    "real qualifier argparse group/seal267and188/platformselector/SDKcopy+exportedtarget wiring",
+    "versioned benchmark sourcecontexts and unchanged admitted native/frontends"
+  ],
+  "independent_review_proofs": 7,
+  "native_component_blobs_verified": 8,
+  "counts": {
+    "images": 273,
+    "registered": 276,
+    "profiles": {
+      "windows": {
+        "product": 220,
+        "SDK": 104,
+        "families": 34,
+        "checks": 68
+      },
+      "modern": {
+        "product": 220,
+        "SDK": 104,
+        "families": 34,
+        "checks": 68
+      },
+      "minimum": {
+        "product": 220,
+        "SDK": 104,
+        "families": 34,
+        "checks": 68
+      },
+      "debug": {
+        "product": 220,
+        "SDK": 104,
+        "families": 34,
+        "checks": 68
+      }
+    }
+  },
+  "barrier": {
+    "path": "build/mark-lbp-enabled-independent-review-v1/sourcebarrier-argv-v1.json",
+    "sha256": "8963b5abe004d1a677f47d238925b45e8a32e9ee3d57f1ba348050ce881ae252",
+    "workflow_sha256": "14782d2f4939da360131ea77be2e5d1dfa1a5be6e840740cf9f3a4c0d9c8776f",
+    "selectors": 134,
+    "profiles": {
+      "windows311": {
+        "executable": "C:\\Users\\HEQ\\AppData\\Roaming\\uv\\python\\cpython-3.11.11-windows-x86_64-none\\python.exe",
+        "normal_conftest": true,
+        "plugin_autoload": true,
+        "fail_fast": false,
+        "executed": false
+      },
+      "windows313": {
+        "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+        "normal_conftest": true,
+        "plugin_autoload": true,
+        "fail_fast": false,
+        "executed": false
+      }
+    },
+    "executions": 0,
+    "requirement": "Root source admission then exact complete guarded command eachruntime with normalconftest/plugins/0science/no-x; use existingroot refusal/bootstrap launcher, version onlyactualsource/workflow/locators/outputprovenance. Plain plan -m pytest is not itself a science-refused launch."
+  },
+  "pending": [
+    "Root independent combinedsource admission, then COMPLETE actualworkflow source barriers on both retainedWindowsPythons. Currentpartial affectedauthor runs/sourceplan are notreadiness.",
+    "Exact299/source-successor fourprofile genuine ordinary singlecore/package/runtime/publichotswap/defaultdtype/metadata/provider/worker/globalownership and current104SDK/exportedtarget68client runtime admission. Compiles do notclose these.",
+    "Linux267MARK/188LBP genuine installed savedconsumers, actualsourcebuiltF1host receipt/library/control/packagecollector provenance and stricttarget/callerFP admission.",
+    "CompleteWindows captured-observation/protocol/FP portability remainsopen; platform-neutral28numeric/dtype/shape/refusal/worker consumers do not replace Linuxfullcapture or fullWindowsparity.",
+    "Reviewed outer MARK/LBP benchmarkroutes/poststop/onceoffline wholepackage verifier/actualgenuine source/runtime/core/SDK/helper/rootbindings, actualsampler0body cohorts and separate one-thread original timingGO/allcases/alllosers. Existingcurrent271 tenAPI measurement is separate.",
+    "Unassessed/unsupported/provider/fullAPI/domain/platform/frontier/performance and rootmain/checklistdelivery gates remain; source273 registrations do notmeanfull477parity or general speed superiority."
+  ],
+  "next_owner_trigger": "Root execute COMPLETE actual134selector guarded source command on both retainedPython now; no partial union. Genuine and performance pending. Current271 failed report-validator campaign is separate and preserved.",
+  "waste_review": "Reused admitted kernel/raw/method/private numerical proof and R91source/72proof authentication, reviewed actual shared diff and seven small independent receipts; no science/build/archive replay. Next change is new299complete barrier, not refresh of earlier partialruns."
+}

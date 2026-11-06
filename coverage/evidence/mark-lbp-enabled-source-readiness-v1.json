@@ -1,0 +1,54 @@
+{
+  "status": "PASS_COMPLETE_ACTUAL_WORKFLOW_SOURCE_BARRIERS_BOTH_RETAINED_PYTHONS",
+  "source": "2991881411972e6266f7e132c9dca8b7226a8567",
+  "workflow_sha256": "14782d2f4939da360131ea77be2e5d1dfa1a5be6e840740cf9f3a4c0d9c8776f",
+  "root_source_admission_sha256": "0919095ebd8724792b859d2de413e444d9eddd6526ced25a3dcda2841bed690b",
+  "selectors": 134,
+  "profiles": {
+    "windows311": {
+      "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]",
+      "executable": "C:\\Users\\HEQ\\AppData\\Roaming\\uv\\python\\cpython-3.11.11-windows-x86_64-none\\python.exe",
+      "collected": 3168,
+      "xml": {
+        "tests": 3176,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 272.155999999959,
+      "normal_conftest_plugins": true,
+      "source_clean": true,
+      "science_import_requests": 0
+    },
+    "windows313": {
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+      "collected": 3168,
+      "xml": {
+        "tests": 3176,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 255.44034139998257,
+      "normal_conftest_plugins": true,
+      "source_clean": true,
+      "science_import_requests": 0
+    }
+  },
+  "proofs": {
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows311-v1/terminal.json": "bf71e51a6f159fb5f500559b406a88b86b972f1ff6817e2248c64dfa8c5e6686",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows311-v1/command.json": "b40320afdbdb19030a9461b8a58b1dbcbdab8a2788fea81b9f9dfa5e4a69765c",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows311-v1/testIDs.json": "d9192178689ff29fc83902a598a6aa4d5908d55f0a0adef363300b0b5f0f3874",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows311-v1/plugins.json": "3e77da38b016c69024655e5c179c1ca5a2ba62425eb2b2073746e64fab502912",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows311-v1/results.xml": "8ba68c5ae7d1f5f150a5b2df410c7a6ea234eb5dabda9adc0ec02ff7e8eae309",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows313-v1/terminal.json": "3581721e1b55794ab80cb26d2199b1a447deba9e4f0fa329085c629e12ebc64b",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows313-v1/command.json": "45fa7166b413dd4068403fef2bd53169b4db21217d9a44373d0e9e80a53f487d",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows313-v1/testIDs.json": "d9192178689ff29fc83902a598a6aa4d5908d55f0a0adef363300b0b5f0f3874",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows313-v1/plugins.json": "e67ff4c0bb5ac6e1444ad98d3029d647880c77b73294f2e95c058d182475af66",
+    "build/mark-lbp-enabled-readiness-v1/sourcebarrier-windows313-v1/results.xml": "1d57078cae8d69053793284798fffe68bd87bbf00533ec085c559a52e6057bd7"
+  },
+  "scientific_execution": false,
+  "scope": "Complete3168collected+8subtests each runtime, no partial union; genuine4profiles/installed104SDK/performance/fullAPI/main pending. Actual local3.11.11/3.13.14 versus hosted3.11.17/3.13.16 disclosed.",
+  "waste_review": "New299shared source dependency closure required this full barrier; existing launcher reused, no setup/source failures or unchanged numerical rerun. Next root dispatches exact299 qualification promptly."
+}

@@ -1,0 +1,229 @@
+{
+  "status": "PASS",
+  "original_public_topcalls": 10,
+  "native_public_topcalls": 10,
+  "timed_batches": 0,
+  "sampler_body_calls": 0,
+  "poststop_source_authority_unchanged": true,
+  "postbatch_offline_identity_verified": true,
+  "routes": [
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "metrics-are",
+      "api": "metrics.adapted_rand_error",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "metrics-contingency",
+      "api": "metrics.contingency_table",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "boundary",
+      "api": "segmentation.find_boundaries",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "join",
+      "api": "segmentation.join_segmentations",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "ArrayMap_class_frontier": "OPEN_EXACT_CLASS_IDENTITY",
+      "marker_evidence": "Authenticated execute native observer returns; outer profile paused during that call",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "crop",
+      "api": "util.crop",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "ArrayMap_class_frontier": null,
+      "marker_evidence": "Authenticated execute native observer returns; outer profile paused during that call",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "regular-grid",
+      "api": "util.regular_grid",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "ArrayMap_class_frontier": null,
+      "marker_evidence": "Authenticated execute native observer returns; outer profile paused during that call",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "slice",
+      "api": "util.slice_along_axes",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "ArrayMap_class_frontier": null,
+      "marker_evidence": "Authenticated execute native observer returns; outer profile paused during that call",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "blocks",
+      "api": "util.view_as_blocks",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "ArrayMap_class_frontier": null,
+      "marker_evidence": "Authenticated execute native observer returns; outer profile paused during that call",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "windows",
+      "api": "util.view_as_windows",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "ArrayMap_class_frontier": null,
+      "marker_evidence": "Authenticated execute native observer returns; outer profile paused during that call",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "route": "ellipse",
+      "api": "draw.ellipse_perimeter",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    }
+  ]
+}

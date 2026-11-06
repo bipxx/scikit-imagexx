@@ -1,0 +1,428 @@
+{
+  "schema": "join-util-views-independent-failed-campaign-raw-review-v1",
+  "status": "PASS_SCOPED_ALL68_RETAINED_RAW_RECONSTRUCTION_HOSTED_REPORT_VALIDATION_FAILURE_PRESERVED",
+  "passed": true,
+  "consumer_source": "57072ba25f38785e79d930951a56ab4adfc0583f",
+  "producer": {
+    "run": "42262940227",
+    "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+    "artifact": "13528655843",
+    "sha256": "73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e"
+  },
+  "measurement_run": "42278375082",
+  "hosted_terminal": "failure",
+  "hosted_summary_present": false,
+  "retention": {
+    "path": "build\\join-util-views-initial-results-v1\\retention-v1.json",
+    "sha256": "7fc2234b42b9f71379e1f42d85e469bd932c644d3d944c2c509d41d1e31b7849",
+    "archive_API_authentication": "REUSED_ONCE_NO_ARCHIVE_CORE_CORPUS_HASH"
+  },
+  "raw_reconstruction": {
+    "path": "build/join-util-views-raw-independent-review-v1/reconstruction-v2.json",
+    "sha256": "fadad1baf94c87b0748ac35d8fb3bb6b55b23840c7b91970cf915786c7d730af"
+  },
+  "raw_files": {
+    "metrics-are.json": {
+      "sha256": "0b3f27da7e66f671195a72552b8a1962270b8206b77aefd297e072879c793322",
+      "bytes": 230174
+    },
+    "metrics-are.batches.jsonl": {
+      "sha256": "84254111765d5ac5b1e88da69013ae12bd8f91379c42d7968c87d6080b362f10",
+      "bytes": 121486
+    },
+    "boundary.json": {
+      "sha256": "90f4f15be841a82cd70ed3b449841d1bc6543d00128b96438c54437fc7c76b6a",
+      "bytes": 88229
+    },
+    "boundary.batches.jsonl": {
+      "sha256": "bbb8602ea7b9a75166c93df799ff183087a89cc817b2fd87d3c295d438f3d38f",
+      "bytes": 110754
+    },
+    "join.json": {
+      "sha256": "5608a098db030cc2cb1bdedbb0f49808fe924a13d389304f46ab0bf30caf372a",
+      "bytes": 77706
+    },
+    "join.batches.jsonl": {
+      "sha256": "aed2d8f19665200b5dcb715105dccb3ea540734c101276a01be22e642508293b",
+      "bytes": 107689
+    },
+    "crop.json": {
+      "sha256": "e74e89381b97efc38d6b9a5d42a49102d38be31c1ca81f911bb5c4a7b44abea1",
+      "bytes": 80945
+    },
+    "crop.batches.jsonl": {
+      "sha256": "9c1497ca990c61ecf3275db572a6c946595c57a8681e4e22e5de2e72126728bd",
+      "bytes": 113758
+    },
+    "regular-grid.json": {
+      "sha256": "43261394176c60c2d72f78d9fbc71f6a6732b0dbca97cfadf308698aa4545cc4",
+      "bytes": 81167
+    },
+    "regular-grid.batches.jsonl": {
+      "sha256": "60eb0a6ce16b4a878a42bfb39b03523693bf735f62aaffb7da2942b149d00feb",
+      "bytes": 113156
+    },
+    "slice.json": {
+      "sha256": "46e4ea35be2c1e4070482b9b5b3e62da5c7bf91f298f1745d706434acac15637",
+      "bytes": 80453
+    },
+    "slice.batches.jsonl": {
+      "sha256": "18c07a5a35617415e08cf8dd06cd184e1fd77451f8fee537c7e294d1cedcb87c",
+      "bytes": 113054
+    },
+    "blocks.json": {
+      "sha256": "346c104a9f9ce74583213f97e4a30e37f8dadccd02b357632aa3a13854ece33a",
+      "bytes": 41590
+    },
+    "blocks.batches.jsonl": {
+      "sha256": "d3c96371daf05730b515579ec61c84fbdfdc4f9e10ad25caabc288bc425cbd33",
+      "bytes": 58105
+    },
+    "windows.json": {
+      "sha256": "33326fa3c308e38fb8c7bdac210b887a5ad6cddce48b77e93a9784224633b6d6",
+      "bytes": 41684
+    },
+    "windows.batches.jsonl": {
+      "sha256": "f4ddbb1c7852b543146e98a33017f62203b3c2b153c35cfa4cd267f6c97995b9",
+      "bytes": 58367
+    },
+    "ellipse.json": {
+      "sha256": "ee852aa62545987173eed516fbaf53624646097992245bb5cb722725998bade6",
+      "bytes": 149772
+    },
+    "ellipse.batches.jsonl": {
+      "sha256": "1a2d83507a3404ecbbd296d301c3d356100d2835ab0be0373e9c513836dc7edc",
+      "bytes": 190899
+    }
+  },
+  "proofs": {
+    "closeout-v1.log": {
+      "sha256": "5df89e61a6d777af0a5c64f31b6f7130d70c2d87d0f9aec8081b6120ea33f6ba",
+      "bytes": 462
+    },
+    "closeout_v1.py": {
+      "sha256": "4a7df21249d50a3fdecc85db82358f69521eb0de65f60d8eefbf550ddbcd2940",
+      "bytes": 11305
+    },
+    "reconstruct-v1.log": {
+      "sha256": "13cca2e85d33371ed05b949430880848c1ede5401f4a12d936f1b03c852189e2",
+      "bytes": 315
+    },
+    "reconstruct-v2.log": {
+      "sha256": "3a05ad3d5085a0ed6465aed8864979dc89969ec73d0b8998ec2c37bf6990680d",
+      "bytes": 295
+    },
+    "reconstruction-v2.json": {
+      "sha256": "fadad1baf94c87b0748ac35d8fb3bb6b55b23840c7b91970cf915786c7d730af",
+      "bytes": 166708
+    },
+    "reconstruct_v1.py": {
+      "sha256": "1233b139416706a5c8e87446384b19d904889ebf882007088a2d329c06dd00c2",
+      "bytes": 16930
+    },
+    "reconstruct_v2.py": {
+      "sha256": "484220465f1783ce3582ad1c59693b1545a707cbff20e4505c59743dc3014d0a",
+      "bytes": 18562
+    }
+  },
+  "ownership": "Newignored reader/review evidence only. CurrentrootAGENTS read; source57072/rootdocs/Cfutureworkflow/future273 untouched. Root retains independent raw/source/performance admission and report-only replay authority.",
+  "diagnosis": {
+    "failing_gate": "tools/next_metrics_first_cohort_probe.py validate_reports expected_order line522 on frozen57072; one universal +1 offset",
+    "actual_sampler": "Frozen Montage (round_id+case_index+pass_index)%2, exactmethodSHA unchanged",
+    "source_offsets": {
+      "metrics-are": {
+        "path": "benchmarks/label_pair_metrics.py",
+        "pass_index": 1,
+        "canonical_sha256": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a"
+      },
+      "boundary": {
+        "path": "benchmarks/find_boundaries.py",
+        "pass_index": 1,
+        "canonical_sha256": "bfa12ae19b78c7b891d6dbb1a3388d5cb41ca20e972b4dc25eb097b45d6eb8dc"
+      },
+      "join": {
+        "path": "benchmarks/next_util_execution.py",
+        "pass_index": 0,
+        "canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d"
+      },
+      "crop": {
+        "path": "benchmarks/next_util_execution.py",
+        "pass_index": 0,
+        "canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d"
+      },
+      "regular-grid": {
+        "path": "benchmarks/next_util_execution.py",
+        "pass_index": 0,
+        "canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d"
+      },
+      "slice": {
+        "path": "benchmarks/next_util_execution.py",
+        "pass_index": 0,
+        "canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d"
+      },
+      "blocks": {
+        "path": "benchmarks/next_util_execution.py",
+        "pass_index": 0,
+        "canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d"
+      },
+      "windows": {
+        "path": "benchmarks/next_util_execution.py",
+        "pass_index": 0,
+        "canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d"
+      },
+      "ellipse": {
+        "path": "benchmarks/ellipse_perimeter.py",
+        "pass_index": 1,
+        "canonical_sha256": "a2b9fc37b50ae8045dfecf6ea94d522ab6989500f8d5724f502eb9d046d5fd90"
+      }
+    },
+    "incorrect_hardcoded_pass1_rows": 40,
+    "correct_dedicated_pass1_rows": 28,
+    "first_incorrect_scope": "join firstcase case_index0: actualpass0 firstorder[0,1], incorrectpass1 expectation[1,0]",
+    "cause": "Util source has always supplied literalpass_index0, dedicated drivers1. Validator copied the older dedicated expectation into expanded util scope. Reports/journals/method are source-faithful; no measurement-order defect found.",
+    "minimal_fix": "For these frozenroutes, derive expectedorder from pinned actual measure call offset: util-executor0, dedicated1; preserve round+case_index formula. Reject unreviewed kinds/offsets. Add positive/negative source-bound order controls. No source/driver/pass-index/report/rawdata/case/method change, no broad newcontroller/preflight.",
+    "failure_semantics": "Originalsampleorder gate remains FAILED and run terminalFAILURE. This separate independent rawassessment does not relabel campaign or create hostedsummary. Root must independently admit a metadata-only validator successor before replaying ONLY retained-output validation."
+  },
+  "results": {
+    "reports": 9,
+    "cases": 68,
+    "samples": 952,
+    "warmup_groups": 136,
+    "batches": 1508,
+    "wins": 34,
+    "losses": 34,
+    "ties": 0,
+    "timed_loop_invocations": [
+      9237881,
+      11448738
+    ],
+    "underlength_batches": 0,
+    "minimum_warmup_group_ns": 250220228,
+    "families": {
+      "metrics-are": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [
+          "metrics.adapted_rand_error/tiny",
+          "metrics.adapted_rand_error/small",
+          "metrics.adapted_rand_error/large-C",
+          "metrics.adapted_rand_error/large-F",
+          "metrics.contingency_table/tiny",
+          "metrics.contingency_table/small",
+          "metrics.contingency_table/large-C",
+          "metrics.contingency_table/large-F"
+        ],
+        "losses": [],
+        "ties": []
+      },
+      "boundary": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [
+          "cross-thick",
+          "u8-thick-512",
+          "u16-inner-F",
+          "i32-outer-reverse",
+          "u8-subpixel",
+          "u16-outer-3d",
+          "bool-inner-reverse",
+          "u8-subpixel-1d"
+        ],
+        "losses": [],
+        "ties": []
+      },
+      "join": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [],
+        "losses": [
+          "u8-labels-C",
+          "u8-maps-reverse",
+          "i16-labels-F",
+          "i16-maps-C",
+          "u16-labels-C",
+          "u16-maps-F",
+          "i32-labels-reverse",
+          "i32-maps-C"
+        ],
+        "ties": []
+      },
+      "crop": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [],
+        "losses": [
+          "view-C",
+          "view-F",
+          "view-reverse",
+          "view-3D",
+          "copy-C",
+          "copy-F",
+          "copy-reverse-K",
+          "copy-object-provider"
+        ],
+        "ties": []
+      },
+      "regular-grid": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [
+          "doc2d",
+          "dense2d",
+          "thin3d",
+          "permuted-readonly",
+          "rank8",
+          "half-even-down",
+          "half-even-up",
+          "large-shape-metadata"
+        ],
+        "losses": [],
+        "ties": []
+      },
+      "slice": {
+        "cases": 8,
+        "raw_samples": 112,
+        "wins": [],
+        "losses": [
+          "view-C",
+          "copy-C",
+          "view-F",
+          "copy-F-C-order",
+          "reverse-view",
+          "reverse-copy",
+          "permuted-axes",
+          "negative-bound-copy"
+        ],
+        "ties": []
+      },
+      "blocks": {
+        "cases": 4,
+        "raw_samples": 56,
+        "wins": [],
+        "losses": [
+          "view_as_blocks/C",
+          "view_as_blocks/F",
+          "view_as_blocks/reverse",
+          "view_as_blocks/readonly"
+        ],
+        "ties": []
+      },
+      "windows": {
+        "cases": 4,
+        "raw_samples": 56,
+        "wins": [],
+        "losses": [
+          "view_as_windows/C",
+          "view_as_windows/F",
+          "view_as_windows/reverse",
+          "view_as_windows/readonly"
+        ],
+        "ties": []
+      },
+      "ellipse": {
+        "cases": 12,
+        "raw_samples": 168,
+        "wins": [
+          "ellipse-perimeter/unequal",
+          "ellipse-perimeter/flat",
+          "ellipse-perimeter/zero-axis",
+          "ellipse-perimeter/translated-clip",
+          "ellipse-perimeter/unit-angle-positive",
+          "ellipse-perimeter/unit-angle-negative",
+          "ellipse-perimeter/medium-axis",
+          "ellipse-perimeter/large-axis",
+          "ellipse-perimeter/large-partclip",
+          "ellipse-perimeter/fully-clipped-empty"
+        ],
+        "losses": [
+          "ellipse-perimeter/point",
+          "ellipse-perimeter/unit"
+        ],
+        "ties": []
+      }
+    },
+    "all_losses_retained": true,
+    "all9measurement_command_exits_zero": true
+  },
+  "passed_gates": [
+    "Root once-only API/archive retention13535300683/fe8bf7bc/4900669B/203members reused; failedrun/source/workflow binding retained. No archive/core/corpus hashing/download or computationalbody replay.",
+    "Actual frozen57072/a6clean source, runtime6d41/core5e23/102SDK/14wheels/qualified271whole-root/stager/API73276/fpac593 metadata verified. Source67raw/canonical pins and allapproved7F1sourcepins match; staged-unaccepted inputlabels retained.",
+    "Actual hosthelper built once/exit0, ABI/source/context/compiler/header/currentemittedlibrary/receipt/externalbinding/file pins and actual32positive+6negative matrix/code/restoration controls validated fromsaveddata; no helperexecution here.",
+    "All10 real publicoriginal/native CLI cohort command/argv/source/rootbinding/GO/probe/helper/deadline/onecall budgets/accepted/journals/terminal/sourceauthority proofs validated. C1poststop and oncepostbatch offlineidentity markers PASS; exact9 measurementcommands and scopedauthorities checked.",
+    "Every measurementcommand exit0 and once before/after offlineidentity verify receipt binds sameactualruntime/source. All9reports and complete rawjournals exist before finalreport failure.",
+    "Independent priorreconstruction primitives reused: loopsstart1, exactadaptive1.15calibration, warmup lastbatch>=100ms plus summed>=250ms, every before/after pair/arm/round/ordinal/case/pass, normalized952samples/loops/sevenmedians/ratios/return seals, no leftover/interleavedevents; all68rows match actualsourcepassoffset.",
+    "Actual builtin return lists/source-derived util count requirements and dedicated native/getter markers, allnativeaccepted/maxerror0, utilityFPflags/rounding/providerfrontiers and report/root identities checked; exactFP/source ownership proof scopes preserved, no additional uncaptured hardware evidence claimed.",
+    "All34losses/34wins including previousellipse10/2 in currentrun preserved; no favorable retry, report filtering, source/method/order normalization or oldresult relabel."
+  ],
+  "FP_scope": "Utility reports record flags/rounding and sixutil cohortterminals record caller_full32_restored plus source-authenticated reference/native equality checks. Actualhost helper has full32 matrix. Legacy dedicated metric/draw/boundary reports use their frozen snapshot/FP contracts and worker/fallback restoration; do not invent rawfull32 cohortfields beyond retained records.",
+  "helper": {
+    "receipt_sha256": "d418addf123b6a71c00305138a227d5294f0ae6ed111841581b15cfe8c1bb541",
+    "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+    "ABI": [
+      32,
+      0,
+      4,
+      8,
+      12,
+      20,
+      28,
+      8
+    ],
+    "controls": [
+      {
+        "path": "controls-0.json",
+        "full_positive_matrix": 32,
+        "exact_negative_codes": 6,
+        "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ]
+      }
+    ],
+    "host_source_files": 4,
+    "approved_source_authority_files": 7,
+    "new_executions": 0
+  },
+  "pending_gates": [
+    "Root independently admit exactraw assessment, alllosses and minimal report-only source successor/order guard controls.",
+    "Only then replay corrected report-validation over these exact retained reports/journals. No measurement redispatch/timing rerun; oldcampaign remainsfailure, any newvalidation receipt separate.",
+    "Independent performance publication/result scope/main delivery and fullAPI/platform/provider/frontier/library-wide speed limitations; no speed superiority inferred from halfcase wins."
+  ],
+  "preserved_failures": {
+    "hosted": "Terminal42278375082 FAILURE at reportvalidation; no summary.json fabricated.",
+    "reader": "Initial v1 stopped before raw reconstruction at overbroad equality between hostbuilder4sourcepins and authority7files. Actual pinned builder SOURCES tuple is4; v2 checks exact4 + all7approvedpins, preserves failedv1/log. No productgate changed or scientific/native/timing rerun."
+  },
+  "waste_review": {
+    "reuse": "Existing admitted reconstruct_v1 calibration/journal/median primitives adapted to actualsource route pass offsets and util metadata. Retained API/archive seal/271genuine/source/helper/cohort receipts reused; exactsource pure metadata command constructors used for remote argv checks.",
+    "avoidable": "One smallreader metadata-source-set assumption corrected as above; oldfailure preserved, dependentassessment stopped. Rawreconstruction v2 passed first68row run; no duplicate measurement/build/download/largehash or scientific tests. Finalreceipt proofindex initially captured its active redirected log; corrected v2 metadata only after terminal, predecessor preserved. No rawreading/calculation replay.",
+    "cost": "Metadata/rawreading elapsed notinstrumented; unknown. No replay to calculatewaste. Timed original/native loopinvocations reported only fromexisting1508batches, notnewcalls.",
+    "next_plan_correction": "Root current271 initialcomparison packet becomes terminalFAILEDreportgate with valid68rawcandidate evidence/rootreviewpending; author+independentlyreview minimal source-derived validation-only successor, then one retained-output report-validation replay. Do notredispatch measurement or waitfuture273."
+  },
+  "execution": {
+    "new_original_calls": 0,
+    "new_native_calls": 0,
+    "new_helper_calls": 0,
+    "new_sampler_calls": 0,
+    "new_science_imports": 0,
+    "new_tests": 0,
+    "new_builds": 0,
+    "new_environments": 0,
+    "new_downloads": 0,
+    "new_timing_runs": 0,
+    "archive_core_corpus_hashes": 0,
+    "source_edits": 0
+  },
+  "next_owner_trigger": "Root independently admits this frozen assessment and minimal metadata-only source successor, then explicitly authorizes/replays ONLY validation using unchanged retained68reports/rawjournals; independently admits/publishes scopedperformance/alllosses and main delivery. No timing retry or campaign relabel.",
+  "metadata_predecessor": {
+    "path": "review-v1.json",
+    "sha256": "497d736d081490dc372bfc615356c8361bb5527ca65acd3b7a2ef3147b9dca5a",
+    "correction": "Final writer log was indexed while active; v2 pins now-terminal log. No authority/raw/source/assessment fields changed; no reconstruction/helper/cohort/validation replay."
+  }
+}

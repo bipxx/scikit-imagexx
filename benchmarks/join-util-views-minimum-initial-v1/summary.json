@@ -1,0 +1,137 @@
+{
+  "families": {
+    "metrics-are": {
+      "raw_samples": 112,
+      "wins": [
+        "metrics.adapted_rand_error/tiny",
+        "metrics.adapted_rand_error/small",
+        "metrics.adapted_rand_error/large-C",
+        "metrics.adapted_rand_error/large-F",
+        "metrics.contingency_table/tiny",
+        "metrics.contingency_table/small",
+        "metrics.contingency_table/large-C",
+        "metrics.contingency_table/large-F"
+      ],
+      "losses": [],
+      "ties": []
+    },
+    "boundary": {
+      "raw_samples": 112,
+      "wins": [
+        "cross-thick",
+        "u8-thick-512",
+        "u16-inner-F",
+        "i32-outer-reverse",
+        "u8-subpixel",
+        "u16-outer-3d",
+        "bool-inner-reverse",
+        "u8-subpixel-1d"
+      ],
+      "losses": [],
+      "ties": []
+    },
+    "join": {
+      "raw_samples": 112,
+      "wins": [],
+      "losses": [
+        "u8-labels-C",
+        "u8-maps-reverse",
+        "i16-labels-F",
+        "i16-maps-C",
+        "u16-labels-C",
+        "u16-maps-F",
+        "i32-labels-reverse",
+        "i32-maps-C"
+      ],
+      "ties": []
+    },
+    "crop": {
+      "raw_samples": 112,
+      "wins": [],
+      "losses": [
+        "view-C",
+        "view-F",
+        "view-reverse",
+        "view-3D",
+        "copy-C",
+        "copy-F",
+        "copy-reverse-K",
+        "copy-object-provider"
+      ],
+      "ties": []
+    },
+    "regular-grid": {
+      "raw_samples": 112,
+      "wins": [
+        "doc2d",
+        "dense2d",
+        "thin3d",
+        "permuted-readonly",
+        "rank8",
+        "half-even-down",
+        "half-even-up",
+        "large-shape-metadata"
+      ],
+      "losses": [],
+      "ties": []
+    },
+    "slice": {
+      "raw_samples": 112,
+      "wins": [],
+      "losses": [
+        "view-C",
+        "copy-C",
+        "view-F",
+        "copy-F-C-order",
+        "reverse-view",
+        "reverse-copy",
+        "permuted-axes",
+        "negative-bound-copy"
+      ],
+      "ties": []
+    },
+    "blocks": {
+      "raw_samples": 56,
+      "wins": [],
+      "losses": [
+        "view_as_blocks/C",
+        "view_as_blocks/F",
+        "view_as_blocks/reverse",
+        "view_as_blocks/readonly"
+      ],
+      "ties": []
+    },
+    "windows": {
+      "raw_samples": 56,
+      "wins": [],
+      "losses": [
+        "view_as_windows/C",
+        "view_as_windows/F",
+        "view_as_windows/reverse",
+        "view_as_windows/readonly"
+      ],
+      "ties": []
+    },
+    "ellipse": {
+      "raw_samples": 168,
+      "wins": [
+        "ellipse-perimeter/unequal",
+        "ellipse-perimeter/flat",
+        "ellipse-perimeter/zero-axis",
+        "ellipse-perimeter/translated-clip",
+        "ellipse-perimeter/unit-angle-positive",
+        "ellipse-perimeter/unit-angle-negative",
+        "ellipse-perimeter/medium-axis",
+        "ellipse-perimeter/large-axis",
+        "ellipse-perimeter/large-partclip",
+        "ellipse-perimeter/fully-clipped-empty"
+      ],
+      "losses": [
+        "ellipse-perimeter/point",
+        "ellipse-perimeter/unit"
+      ],
+      "ties": []
+    }
+  },
+  "scope": "Current one-thread public original comparison only; all losses retained; no whole-product qualification or prior-C++ speed claim."
+}
