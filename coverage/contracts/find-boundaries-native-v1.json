@@ -1,0 +1,54 @@
+{
+  "schema": "find-boundaries-native-v1",
+  "status": "ANALYTIC_COMPONENT_ONLY_PENDING_SAVED_GOLD_AND_INDEPENDENT_PEER",
+  "header_source": "ad6290add52ea245b3aeac468ca8a8a71247c7e2",
+  "header_raw_sha256": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+  "leaf_raw_sha256": "33a6d15f3df380c9c2515cb953da69c969dafd3942ae7ba20f49a2a925657224",
+  "test_raw_sha256": "f0f891b95bdee37f552b01f8ad92fd72eda3c9cd26ec64d810080dcdb93c8d38",
+  "namespace": "skimagexx::detail",
+  "interface": [
+    "find_boundaries_shape",
+    "find_boundaries_into"
+  ],
+  "scope": "Frozen header exact-safe bool/eight-integer typed domain, subpixel fullwidth, ordinary64 exactlabelrange and noouter; unsupported rounded ordinary source control not claimed native.",
+  "algorithm": "One source-faithful radius1 reflect/clamped integer extrema neighborhood; fullouter replacement-min literal; subpixel distinct-nonsentinel corner labels. Shared existing ComponentsView/PixelType/execution.hpp only, no full morphology buffers/graph/backend forwarding.",
+  "trust_boundary": "Descriptor/type/rank/shape/stride/worker/overflow/cost checked once; ordinary64 values scanned before writes. Raw SDK caller must prove backing capacity/disjointness/nonoverlap/lifetime; exact pointer alias refused but no fabricated allocation introspection.",
+  "workers": "Default0 snapshots existing get_num_threads once; explicit1..1024 no getter. Existing parallel_min threshold, partition independent outputs, no new pool, global restored1 by controls.",
+  "floating_point": "Integer-only exact frontier leaves caller status/rounding unchanged; fenv assertions passed; no FP calls in leaf.",
+  "analytic_proofs": {
+    "normal": 672032,
+    "runtime_disabled": 672032,
+    "true_compiler_scalar": 672032,
+    "ASan_UBSan": 672032,
+    "additional_storage_normal": 72,
+    "additional_storage_scalar": 72,
+    "additional_storage_sanitize": 72,
+    "source_inverse_reuses_old_analytic_bodies": true,
+    "MSVC": "leaf/test compile-only PASS; no Windows runtime link"
+  },
+  "golds": "Not inserted/read as native oracle in this packet; raworiginal independent admission/goldprojection remains root gate.",
+  "codegen": {
+    "normal": {
+      "compiler_vectorized_loop_reports": 0,
+      "has_GOMP_parallel": true,
+      "packed_integer_arithmetic_mnemonics": []
+    },
+    "compiler-scalar": {
+      "compiler_vectorized_loop_reports": 0,
+      "has_GOMP_parallel": false,
+      "packed_integer_arithmetic_mnemonics": []
+    },
+    "sanitize": {
+      "compiler_vectorized_loop_reports": 0,
+      "has_GOMP_parallel": true,
+      "packed_integer_arithmetic_mnemonics": []
+    }
+  },
+  "remaining": [
+    "Saved-reference parity and rounded64 domain disposition",
+    "Independent source/native review",
+    "Python binder/frontend, public ownedC/default/dtype/alias checks",
+    "Installed SDK consumer existingfamily and actualgenuine/fullprofile release",
+    "Actual benchmark/performance; no speedclaim or algorithm SIMD claim"
+  ]
+}
