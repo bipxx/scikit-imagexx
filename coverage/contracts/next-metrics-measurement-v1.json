@@ -20,11 +20,16 @@
     "python/skimagexx/coverage.py": "0d4397e680201ecc4ead7884c6f5ea4adc6b85750fa081ccebcac97c882090a0",
     "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
     "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
-    "benchmarks/find_boundaries.py": "cec658ce590bbc9a22a30b2974e6b98ddda58a2a1fd57978df04db5949d87cdf",
+    "benchmarks/find_boundaries.py": "81e93fc95bf7946da314467e88951871750ed4f922d6cd958e29a1c784cc7640",
     "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
     "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
     "tools/label_pair_benchmark_context.py": "01b3e2a75c3b2008557793b6328fd0cad778e8007d0c422d95370e603177c46f",
-    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1"
+    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1",
+    "coverage/contracts/find-boundaries-benchmark-binding-v2.json": "1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4",
+    "coverage/contracts/find-boundaries-frontend-v1.json": "d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f",
+    "coverage/contracts/find-boundaries-frontend-v2.json": "2f9ce9ff4114240cfd9e375233f43291cc14a0f054a4b6395920652a6dfa5406",
+    "tests/test_find_boundaries_public.py": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+    "coverage/contracts/find-boundaries-benchmark-binding-v3.json": "fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba"
   },
   "families": {
     "label_pair_metrics": {
@@ -36,7 +41,7 @@
       "cases": 12
     },
     "find_boundaries": {
-      "contract": "coverage/contracts/find-boundaries-benchmark-binding-v1.json",
+      "contract": "coverage/contracts/find-boundaries-benchmark-binding-v3.json",
       "cases": 8
     }
   },
@@ -46,7 +51,7 @@
     "probe_path": "tools/next_metrics_first_cohort_probe.py",
     "probe_sha256": "d7aead4ab5c885889b005ec4a7910bc6ae67bd9178f8ee525e38f5afe96977c9",
     "prospective_path": "coverage/contracts/next-metrics-first-cohort-v1.json",
-    "prospective_sha256": "3c16dcf2cea979081e968039758d89e9e2815fe2fa11df3ddeeef79392802f80",
+    "prospective_sha256": "632df1d8c3f3b59682b22753236920efaff0c8c40724dafdee4f025856ee2fb4",
     "root_admission_path": null,
     "root_admission_sha256": null,
     "root_stager_path": null,

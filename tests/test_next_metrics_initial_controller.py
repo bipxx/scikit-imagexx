@@ -28,7 +28,7 @@ def test_unbound_contract_and_frozen_scope():
     assert PLAN['source_revision']is None and PLAN['source_git_blobs']is None
     assert PLAN['budget']==dict(original_public_topcalls=4,native_public_topcalls=4,timed_batches=0)
     assert {r['api']for r in PLAN['routes'].values()}=={'metrics.adapted_rand_error','metrics.contingency_table','draw.ellipse_perimeter','segmentation.find_boundaries'}
-    assert CONTRACT['families']==dict(label_pair_metrics=dict(contract='coverage/contracts/label-pair-metrics-benchmark-v1.json',cases=8),ellipse_perimeter=dict(contract='coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json',cases=12),find_boundaries=dict(contract='coverage/contracts/find-boundaries-benchmark-binding-v1.json',cases=8))
+    assert CONTRACT['families']==dict(label_pair_metrics=dict(contract='coverage/contracts/label-pair-metrics-benchmark-v1.json',cases=8),ellipse_perimeter=dict(contract='coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json',cases=12),find_boundaries=dict(contract='coverage/contracts/find-boundaries-benchmark-binding-v3.json',cases=8))
     assert CONTRACT['execution_scope']['canonical_cases']==sum(f['cases']for f in CONTRACT['families'].values())==28
     assert CONTRACT['execution_scope']['canonical_raw_samples']==14*CONTRACT['execution_scope']['canonical_cases']==392
     assert CONTRACT['execution_scope']['warmup_groups']==2*CONTRACT['execution_scope']['canonical_cases']==56
@@ -248,10 +248,10 @@ def test_boundary_local_snapshot_lookup_mutation_is_rejected(tmp_path):
 
 
 def assert_ready_reference_pins(plan,contract,source):
-    assert plan['reference_source']=='cbcef227ffbf80b7e1cdf1cf5ed649c7ac58992f'
+    assert plan['reference_source']=='f13ae5ba01680c40f8ee0ae42153bd9480119ab1'
     raw=plan['reference_files_raw_sha256'];canonical=contract['benchmark_source_sha256']
-    assert set(raw)==set(canonical) and len(raw)==13
-    assert {'tools/label_pair_benchmark_context.py','coverage/contracts/label-pair-metrics-benchmark-context-v1.json'}<=set(raw)
+    assert set(raw)==set(canonical) and len(raw)==18
+    assert {'tools/label_pair_benchmark_context.py','coverage/contracts/label-pair-metrics-benchmark-context-v1.json','coverage/contracts/find-boundaries-benchmark-binding-v2.json','coverage/contracts/find-boundaries-benchmark-binding-v3.json','coverage/contracts/find-boundaries-frontend-v1.json','coverage/contracts/find-boundaries-frontend-v2.json','tests/test_find_boundaries_public.py'}<=set(raw)
     for name,pin in raw.items():
         value=(source/name).read_bytes()
         assert hashlib.sha256(value).hexdigest()==pin,name
@@ -266,7 +266,7 @@ def test_source_ready_reference_pins_match_exact_producer():
     assert PLAN['reference_files_raw_sha256']['python/skimagexx/coverage.py']!=CONTRACT['benchmark_source_sha256']['python/skimagexx/coverage.py']
 
 
-@pytest.mark.parametrize('fault',('raw-is-canonical','canonical-is-raw','missing-context','stale-driver'))
+@pytest.mark.parametrize('fault',('raw-is-canonical','canonical-is-raw','missing-context','missing-boundary-context','stale-driver'))
 def test_source_ready_pin_domains_reject_stale_or_mixed_metadata(fault):
     source=Path(os.environ.get('NEXT_METRICS_PRODUCER_SOURCE',str(ROOT)))
     plan=json.loads(json.dumps(PLAN));contract=json.loads(json.dumps(CONTRACT));coverage='python/skimagexx/coverage.py'
@@ -274,5 +274,40 @@ def test_source_ready_pin_domains_reject_stale_or_mixed_metadata(fault):
     elif fault=='canonical-is-raw':contract['benchmark_source_sha256'][coverage]=plan['reference_files_raw_sha256'][coverage]
     elif fault=='missing-context':
         name='tools/label_pair_benchmark_context.py';plan['reference_files_raw_sha256'].pop(name);contract['benchmark_source_sha256'].pop(name)
+    elif fault=='missing-boundary-context':
+        name='coverage/contracts/find-boundaries-frontend-v2.json';plan['reference_files_raw_sha256'].pop(name);contract['benchmark_source_sha256'].pop(name)
     else:contract['benchmark_source_sha256']['benchmarks/label_pair_metrics.py']='5926bb46a4502c2169c772bce3f2be4785130afe6b076cad4f620c2d1d14eff1'
     with pytest.raises(AssertionError):assert_ready_reference_pins(plan,contract,source)
+
+
+def test_boundary_portability_refresh_preserves_cases_and_provenance_schema():
+    source=Path(os.environ.get('NEXT_METRICS_PRODUCER_SOURCE',str(ROOT)))
+    active=PLAN['routes']['boundary']['contract']
+    assert active=='coverage/contracts/find-boundaries-benchmark-binding-v3.json'
+    current=json.loads((source/active).read_bytes())
+    previous=json.loads((source/current['runtime_successor']['contract']).read_bytes())
+    assert {k:v for k,v in current.items()if k not in ('source_closure','runtime_successor')}=={k:v for k,v in previous.items()if k not in ('source_closure','runtime_successor')}
+    assert len(current['cases'])==8 and current['cases'][0]==PLAN['routes']['boundary']['first_case']
+    assert all(current[k]is None for k in ('shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'))
+    frontend='coverage/contracts/find-boundaries-frontend-v2.json'
+    assert current['source_closure']['tests/test_find_boundaries_public.py']==CONTRACT['benchmark_source_sha256']['tests/test_find_boundaries_public.py']
+    assert json.loads((source/frontend).read_bytes())['source_canonical_pins']['tests/test_find_boundaries_public.py']==current['source_closure']['tests/test_find_boundaries_public.py']
+    driver=ast.parse((source/PLAN['routes']['boundary']['driver']).read_bytes())
+    loader=next(n for n in driver.body if isinstance(n,ast.FunctionDef)and n.name=='load_root_binding')
+    allowed=next(n.value for n in loader.body if isinstance(n,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='allowed'for t in n.targets))
+    fields=ast.literal_eval(allowed)
+    assert {'base_contract_sha256','prepared_source','producer','runtime_path','runtime_sha256','root_go_path','genuine_root_stager_path','genuine_root_stager_sha256'}<=fields
+    assert 'cases'not in fields and 'method_sha256'not in fields
+
+
+def test_boundary_bound_source_validation_keeps_exact_provenance_separation():
+    source=Path(os.environ.get('NEXT_METRICS_PRODUCER_SOURCE',str(ROOT)))
+    tree=ast.parse((source/PLAN['routes']['boundary']['driver']).read_bytes())
+    validator=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='validate_source_closure')
+    fields=next(n.value for n in validator.body if isinstance(n,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='provenance'for t in n.targets))
+    assert ast.literal_eval(fields)=={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
+    main=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='main')
+    load=next(i for i,n in enumerate(main.body)if any(isinstance(c,ast.Call)and isinstance(c.func,ast.Name)and c.func.id=='load_root_binding'for c in ast.walk(n)))
+    validate=next(i for i,n in enumerate(main.body)if isinstance(n,ast.Expr)and isinstance(n.value,ast.Call)and isinstance(n.value.func,ast.Name)and n.value.func.id=='validate_source_closure')
+    science=next(i for i,n in enumerate(main.body)if isinstance(n,ast.Import)and any(a.name=='numpy'for a in n.names))
+    assert load<validate<science

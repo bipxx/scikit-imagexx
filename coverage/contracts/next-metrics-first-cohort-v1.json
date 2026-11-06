@@ -2,8 +2,8 @@
   "schema": "next-metrics-first-cohort-prospective-v1",
   "status": "SOURCE_ONLY_SCAFFOLD_NOT_EXECUTED_NOT_GENUINE_BOUND",
   "source_revision": null,
-  "source_scope": "Exact source-ready cbcef227 prospective interfaces and immutable28case/method projection. Raw reference pins include metric guard helper/context; actual qualified producer/run/artifact/runtime/core/root admission remains UNBOUND. Root binds a separately reviewed successor after genuine minimum stager admission.",
-  "reference_source": "cbcef227ffbf80b7e1cdf1cf5ed649c7ac58992f",
+  "source_scope": "Exact f13ae5ba prospective interfaces and immutable28case/method projection; source-only boundary bound-flow/Windows portability successors, not release readiness. Raw reference pins retain metric and boundary context predecessors. Actual producer/run/artifact/runtime/core/SDK/root fields remain UNBOUND pending genuine admission.",
+  "reference_source": "f13ae5ba01680c40f8ee0ae42153bd9480119ab1",
   "routes": {
     "metrics-are": {
       "kind": "dedicated",
@@ -117,7 +117,7 @@
       "owned_module": "skimagexx._find_boundaries",
       "acceptance_function": "find_boundaries",
       "native_result_kind": "true",
-      "contract": "coverage/contracts/find-boundaries-benchmark-binding-v1.json",
+      "contract": "coverage/contracts/find-boundaries-benchmark-binding-v3.json",
       "first_case": {
         "id": "cross-thick",
         "shape": [
@@ -155,11 +155,16 @@
     "python/skimagexx/coverage.py": "acac7f7d0f59df2a7085c65541c09a87bd0734b6476afd8d0ca45cbce244269a",
     "coverage/contracts/label-pair-metrics-benchmark-v1.json": "5b4f3935966aa048eb2d06666a1ea6f548a43d08edd7d43ff68ccd8a211bdfa6",
     "coverage/contracts/ellipse-perimeter.json": "a3b972278d800f4d236029a4289d04b70a08d9d49a9c8c5b5edd8d8b4f304919",
-    "benchmarks/find_boundaries.py": "cec658ce590bbc9a22a30b2974e6b98ddda58a2a1fd57978df04db5949d87cdf",
+    "benchmarks/find_boundaries.py": "81e93fc95bf7946da314467e88951871750ed4f922d6cd958e29a1c784cc7640",
     "coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json": "d5dd12958e92426939e8527ceb9583233454dff83c97a0c39e1f0d3118fd25f0",
     "coverage/contracts/find-boundaries-benchmark-binding-v1.json": "0839fbdf060d31aecd132ee217f665c276787432d2d22746c2da3da6ccf67060",
     "tools/label_pair_benchmark_context.py": "01b3e2a75c3b2008557793b6328fd0cad778e8007d0c422d95370e603177c46f",
-    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1"
+    "coverage/contracts/label-pair-metrics-benchmark-context-v1.json": "d380c13f49e7c59c6fdad0aae9bb5dddbf88a6f338a657fee463aba6b3d229a1",
+    "coverage/contracts/find-boundaries-benchmark-binding-v2.json": "1344bfcbcfe95e8bda5737728580e3f53d533175266086994341e81c73cb6da4",
+    "coverage/contracts/find-boundaries-frontend-v1.json": "d802c08de30626beb18501f90de95c8636a0762a9f1778a05b3faa4ee72ee55f",
+    "coverage/contracts/find-boundaries-frontend-v2.json": "2f9ce9ff4114240cfd9e375233f43291cc14a0f054a4b6395920652a6dfa5406",
+    "tests/test_find_boundaries_public.py": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+    "coverage/contracts/find-boundaries-benchmark-binding-v3.json": "fc5114d69b1004960155003984521a4a30b78995b715dd4fcd6a30f4c77467ba"
   },
   "budget": {
     "original_public_topcalls": 4,
