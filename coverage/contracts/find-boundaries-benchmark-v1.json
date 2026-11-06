@@ -1,0 +1,166 @@
+{
+  "schema": "find-boundaries-benchmark-v1",
+  "state": "PROSPECTIVE_GENUINE_PRODUCT_AND_ROOT_BINDING_REQUIRED",
+  "api": "segmentation.find_boundaries",
+  "scope": "Eight bounded public allocation-inclusive cases; no whole API or library-wide speed claim; all slower results retained.",
+  "public_signature": "(label_img, connectivity=1, mode='thick', background=0)",
+  "cases": [
+    {
+      "id": "cross-thick",
+      "shape": [
+        3,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "cross",
+      "readonly": false
+    },
+    {
+      "id": "u8-thick-512",
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "thick",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "u16-inner-F",
+      "shape": [
+        257,
+        509
+      ],
+      "dtype": "uint16",
+      "layout": "F",
+      "mode": "inner",
+      "connectivity": 2,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": true
+    },
+    {
+      "id": "i32-outer-reverse",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "int32",
+      "layout": "reverse",
+      "mode": "outer",
+      "connectivity": 2,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "u8-subpixel",
+      "shape": [
+        127,
+        129
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": true
+    },
+    {
+      "id": "u16-outer-3d",
+      "shape": [
+        17,
+        19,
+        23
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "mode": "outer",
+      "connectivity": 3,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    },
+    {
+      "id": "bool-inner-reverse",
+      "shape": [
+        257,
+        509
+      ],
+      "dtype": "bool",
+      "layout": "reverse",
+      "mode": "inner",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "noncanonical-bool",
+      "readonly": true
+    },
+    {
+      "id": "u8-subpixel-1d",
+      "shape": [
+        513
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "mode": "subpixel",
+      "connectivity": 1,
+      "background": 0,
+      "pattern": "blocks",
+      "readonly": false
+    }
+  ],
+  "source_closure": {
+    "src/bind_find_boundaries.cpp": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+    "python/skimagexx/_find_boundaries.py": "2e58abab1ebbc528397df1119bb32ae2a6b04bb9670d1f8046afe2b0707c4ed1",
+    "tests/test_find_boundaries_public.py": "d3b4699020146489c01a75ec29155167e438c0fcb222f30963c1eca5d86d2a15",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "src/find_boundaries.cpp": "9f910ba308ab90189c6a8c6386a1fbf40ffab9093437ad1f0dfad392e2c53885",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2be056b23cf8838aba0295c5b3688d4b2c4ee30a14d3ef6665b6dac0d03218fd",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "tests/find_boundaries_contract.py": "00181475cc002aecb4b744263fb3aef1942d89070bdbef787821f434a0dc2d4c",
+    "tests/find_boundaries_observer.py": "bbfa84f6e013f2daa9ca0b4914853612f72b209fee03b9577b9e91f552917473",
+    "benchmarks/find_boundaries.py": "f4f074ad2dc0f834431a5a65cda8e7fd2347dd8f5a89d2618211eadb4690a82f",
+    "tests/fixtures/find_boundaries_originals_v1.hpp": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
+    "tests/cmake_consumer/find_boundaries_consumer.hpp": "ba46ec0259db0dbfd04c90b9843f10984463c8a0fc05ef90d6be47f499fba0b8",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "shared_CMake_sha256": null,
+  "genuine_core_sha256": null,
+  "prepared_run": null,
+  "prepared_artifact": null,
+  "original_source_sha256": "fbdbbf36d8813c09d00583d235063acb0911d842cd94628d482d5c5685818131",
+  "runtime_dependencies": {
+    "1.24.4": {
+      "scipy": "1.15.3",
+      "ndimage_binary_sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe"
+    },
+    "2.5.4": {
+      "scipy": "1.18.1",
+      "ndimage_binary_sha256": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092"
+    }
+  },
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "sampler": {
+    "module": "tools/montage_sustained.py",
+    "function": "measure",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "raw_samples": 112
+  },
+  "first_cohort_gate": "Root independently reviews full source/runtime/product closure and real CLI stops before sampler, then binds genuine prepared core/CMake/run/artifact and freezes successor. No new original calls or timing authorized by this prospective contract.",
+  "excluded": "Ordinary wide extrema casts, rounded int64 controls, float, swapped, rank0, empty and protocols; these cases do not close those full intended contract partitions."
+}
