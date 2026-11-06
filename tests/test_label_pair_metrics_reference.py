@@ -30,7 +30,18 @@ def test_label_pair_header_scope_without_science():
     text=(ROOT/'include/skimagexx/label_pair_metrics.hpp').read_text()
     assert 'bool label_pair_counts(const LabelPairInput&,LabelPairCsr&,int workers=0);'in text
     assert 'namespace skimagexx::detail'in text
-    assert 'explicit zero'in text and 'integer_count/N'in text and 'unclosed ownership gates'in text
+    assert 'explicit zero'in text and 'integer_count/N'in text
+    assert 'bool label_pair_rand_terms(const LabelPairInput&,LabelPairRandTerms&,int workers=0);'in text
+    assert 'No generic sparse engine or VI reduction/log claim'in text
+    rand=json.loads((ROOT/'coverage/contracts/label-pair-rand-native-v1.json').read_bytes())
+    assert rand['accuracy'].startswith('Exact0ULP')and rand['partition'].startswith('table=None')
+    for path,pin in rand.get('current_source_pins',{}).items():
+        assert hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+    tree=ast.parse((ROOT/'python/skimagexx/_label_pair_metrics.py').read_bytes())
+    public=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='adapted_rand_error')
+    assert [a.arg for a in public.args.args]==['image_true','image_test']
+    assert [a.arg for a in public.args.kwonlyargs]==['table','ignore_labels','alpha']
+    assert public.args.vararg is None and public.args.kwarg is None
     assert data_status()in('PROSPECTIVE_PRECAPTURE_NOT_NATIVE_PARITY','ORIGINAL_CAPTURED_PENDING_NATIVE')
 
 

@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <array>
 #include <cfenv>
+#include <cmath>
+#include <cstring>
 #include <utility>
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
 #include <xmmintrin.h>
@@ -100,5 +102,80 @@ bool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int work
     result.normalization_fp_status=input.normalize?status():0;
     output=std::move(result);
     return true;
+}
+
+bool label_pair_rand_terms(const LabelPairInput& input,LabelPairRandTerms& output,int workers) {
+    if(input.normalize)return false;
+    LabelPairCsr counts;
+    if(!label_pair_counts(input,counts,workers))return false;
+    std::vector<std::uint64_t> columns(counts.columns,0);
+    std::uint64_t joint=0,rows=0;
+    for(std::size_t r=0;r<counts.rows;++r) {
+        std::uint64_t total=0;
+        for(auto i=counts.indptr[r];i<counts.indptr[r+1];++i) {
+            const auto count=static_cast<std::uint64_t>(counts.data[std::size_t(i)]);
+            joint+=count*(count?count-1:0);total+=count;
+            columns[std::size_t(counts.indices[std::size_t(i)])]+=count;
+        }
+        rows+=total*(total?total-1:0);
+    }
+    std::uint64_t cols=0;
+    for(const auto count:columns)cols+=count*(count?count-1:0);
+    output={static_cast<double>(joint),static_cast<double>(rows),static_cast<double>(cols)};
+    return true;
+}
+
+namespace {
+bool finite_word(double value) noexcept {
+    std::uint64_t bits;std::memcpy(&bits,&value,sizeof(bits));
+    return (bits&UINT64_C(0x7ff0000000000000))!=UINT64_C(0x7ff0000000000000);
+}
+bool integer_pair_total(double value) noexcept {
+    return finite_word(value)&&value>=0.&&value<=0x1p40
+        &&static_cast<double>(static_cast<std::uint64_t>(value))==value;
+}
+bool rand_environment() noexcept {
+    if(std::fegetround()!=FE_TONEAREST)return false;
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+    if(_mm_getcsr()&((3u<<13)|(1u<<15)|(1u<<6)))return false;
+#endif
+    return true;
+}
+void scalar_result(double value,LabelPairScalar64& output) noexcept {
+    std::memcpy(&output.bits,&value,sizeof(value));output.fp_status=status();
+}
+}
+
+bool label_pair_rand_divide(double numerator,double denominator,LabelPairScalar64& output) {
+    if(!integer_pair_total(numerator)||!integer_pair_total(denominator)
+       ||numerator>denominator||!rand_environment())return false;
+    Environment environment(true);if(!environment.valid())return false;
+    volatile double first=numerator,second=denominator;
+    scalar_result(first/second,output);return true;
+}
+
+bool label_pair_rand_fscore(const LabelPairRandTerms& terms,double alpha,LabelPairScalar64& output) {
+    if(!integer_pair_total(terms.joint)||!integer_pair_total(terms.row)
+       ||!integer_pair_total(terms.column)||terms.joint>terms.row||terms.joint>terms.column
+       ||!finite_word(alpha)||alpha<0.||alpha>1.||!rand_environment())return false;
+    Environment environment(true);if(!environment.valid())return false;
+    // Literal source scalar association; contraction/reassociation is disabled.
+    volatile double weight=alpha,row=terms.row,column=terms.column,joint=terms.joint;
+    volatile double first=weight*row;
+    volatile double other=1.-weight;
+    volatile double second=other*column;
+    volatile double denominator=first+second;
+    scalar_result(joint/denominator,output);return true;
+}
+
+bool label_pair_rand_error(std::uint64_t bits,LabelPairScalar64& output) {
+    const bool quiet_nan=(bits&UINT64_C(0x7ff8000000000000))==UINT64_C(0x7ff8000000000000);
+    double fscore;std::memcpy(&fscore,&bits,sizeof(fscore));
+    // A rounded convex denominator can place fscore just above1. This bounded
+    // stage accepts [0,2] plus quiet NaNs, never signaling NaNs/infinities.
+    if((!quiet_nan&&(!finite_word(fscore)||fscore<0.||fscore>2.))||!rand_environment())return false;
+    Environment environment(true);if(!environment.valid())return false;
+    volatile double value=fscore;
+    scalar_result(1.-value,output);return true;
 }
 }

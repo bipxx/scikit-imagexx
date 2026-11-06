@@ -1,5 +1,5 @@
 {
-  "status": "PROSPECTIVE_FINITE_ARE_STAGES_FROZEN_BEFORE_CODE",
+  "status": "FINITE_ARE_COMPONENT_PUBLIC_SHAPED_PASS_PENDING_INDEPENDENT_REVIEW",
   "reference": "Original0.26 _adapted_rand_error.py cdb0b245288e1b3dd00b36152dd9c20e91edbe1d99a07c8210a2907beb872640;48rows preserved in label-pair-metrics-v1.json",
   "partition": "table=None, stable aligned i64 labels/counts partition, builtinfinitealpha in[0,1], nearest/gradual FP. No public registration or source-order conversion/shape/CSR packing claim. Suppliedtables remain provider/unassessed.",
   "accuracy": "Exact0ULP f64 words including signedNaN/zero; actual NumPyfloat64 scalarboxing, tupleorder(are,precision,recall). No output-derived allowance.",
@@ -19,5 +19,64 @@
     "binding": "Saved5\u00d7workers1/4; badalpha ordering; invalidwarn/call/raise/ignore andcallback policychange; actualbuiltin Creturns/onceworker/successwitness, no originals."
   },
   "VI": "Not implemented. NMI compensatednatural-logentropy notsource-equivalent; inspect NumPylog2 and SciPy sparseproduct/reduction order beforecode.",
-  "reuse": "Countssourcebody preserved byteexact; source algorithms and oldgoldrows unchanged; no neworiginals/env/fullcore/SDK/timing."
+  "reuse": "Countssourcebody preserved byteexact; source algorithms and oldgoldrows unchanged; no neworiginals/env/fullcore/SDK/timing.",
+  "public_bridge_prospective": {
+    "signature": "adapted_rand_error(image_true=None,image_test=None,*,table=None,ignore_labels=(0,),alpha=0.5)",
+    "partition": "Exact plaininteger ndarrays, same shape,0<N<=2^20; nativeacceptednonnegative20bitlabelwords; builtinint tuple/list ignores<=64/signedi64; no suppliedtable.",
+    "stages": "Conditionalshapeequality beforetableNI; source test.reshape then truth.reshape, each existingstorageguard beforepotentialcopy; integerconversionprovider; ownedcounts/terms; delayedalpha; stagedscalar delivery.",
+    "new_actual_boundary": "Familyprivate label_pair_check_storage delegates existingstorageguard to protect sourcebefore NumPycopy; converted privatearrays retain independentlycallable typedABI validation.",
+    "tests_frozen_before_calls": 31,
+    "original_call_budget": 0,
+    "timed_batch_budget": 0,
+    "pending": "No sharedregistration/genuine/performance/release; externalbufferowners/subclasses/nonfinite/protocol/printlog/FENVchangingcallback frontier explicit."
+  },
+  "observed": {
+    "native_controls": {
+      "per_mode": 148,
+      "normal_and_runtime_disabled": 296,
+      "true_compiler_scalar": 148,
+      "ASan_UBSan": 148,
+      "total": 592
+    },
+    "private_binding": {
+      "base25_per_mode": 100,
+      "huge_int_alpha_delta": 4,
+      "distinct_warning_sites_delta": 4,
+      "union_unique": 108,
+      "modes": 4
+    },
+    "public_shaped_bridge": {
+      "per_mode": 31,
+      "modes": 4,
+      "total": 124,
+      "original_algorithm_calls": 0,
+      "actual_C_return_and_once_global_witness": true
+    },
+    "relocated_SDK": {
+      "per_mode": 82,
+      "normal_and_runtime_disabled_total": 164,
+      "SDKfiles": 95,
+      "archivemembers": 177,
+      "only_newleaf_header": true
+    },
+    "MSVC": "Initial ARE leaf/unit/binder/client4TUs plus changed storage-entry binder1TU successor compile only; no Windowslink/runtime."
+  },
+  "current_source_pins": {
+    "include/skimagexx/label_pair_metrics.hpp": "89457c1fe24fe06ce11e49bb81da3aadce976b43aa3834dbee8a346dd034022a",
+    "src/label_pair_metrics.cpp": "617dfb3f219dcf0b8bc36234b38ea5cd3ae35dca03bcecc5462074582c631be9",
+    "src/bind_label_pair_metrics.cpp": "c5c2062c6c7474beaa69448a7cb2af6db1082a359d5e29d52712fab061725ec5",
+    "python/skimagexx/_label_pair_metrics.py": "2e7c80e2676b79c48efd19f29708900b1a003f3b33426e2fae3c8c08894bfbb4",
+    "tests/test_label_pair_rand_native.cpp": "9ee06fa399533d65ca5ab519ba53c98ef21ca4f9b8fe9266df1b3f53fdc961ce",
+    "tests/test_label_pair_rand_binding.py": "6d4ff50369938fe1d6a4d182d754f15c9ffa98a11b03d0ca226f06b4a31a3c0e",
+    "tests/test_label_pair_rand_public.py": "e9e0a4a054746fbcc1eef88e4a776fe4307d128a4f77229e785499d9e2f35d19",
+    "tests/fixtures/label_pair_rand_originals_v1.hpp": "68a7bfe953277420a9ff1a6796759b900a0366f39dd585b582ad99dc3f521d5e",
+    "tests/cmake_consumer/label_pair_metrics_consumer.cpp": "21307c1aa51b791254067d2db7ae28f3a671ca438ffa697c495576b266c0dcff"
+  },
+  "remaining": [
+    "IndependentAREsource/evidence acceptance",
+    "Sharedregistry/publicalias/hot-swap integration and installedgenuine/publicperformance/release gates",
+    "Publiccontingency CSRclass/index/base-capacity and normalizationcallbacks; suppliedtablemutations remain explicitunassessed",
+    "VI actualf64log2/DDOT/reduction provenance unclosed; no VIcode/approximation",
+    "Missing-handler message/protocolproviders/printlog/FENVchangingcallbacks and broadexternalbufferowners remain unassessed."
+  ]
 }

@@ -24403,10 +24403,10 @@
   "native_calls": 0,
   "timed_batches": 0,
   "source_freeze": {
-    "include/skimagexx/label_pair_metrics.hpp": "71d7ec54627afee213c335e5db01bda5fdc3eb165362087781e4715d562177b2",
+    "include/skimagexx/label_pair_metrics.hpp": "89457c1fe24fe06ce11e49bb81da3aadce976b43aa3834dbee8a346dd034022a",
     "tests/label_pair_metrics_contract.py": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27",
     "tests/label_pair_metrics_observer.py": "476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc",
-    "tests/test_label_pair_metrics_reference.py": "490a69111d2195d1045b2d3b9e358dfe9eeef892cfe6ec2c3a39c17a4ee7f7d9"
+    "tests/test_label_pair_metrics_reference.py": "67808baeee3527629162eb36705dfaa6f5212e87cb9fa31cfba0833cce559302"
   },
   "upstream_sources": {
     "skimage/metrics/_contingency_table.py": "e334f4ec16ac3c2bd9fb0c533e8ca454029c914c8649d5322b6f0cc5adbdbf62",
@@ -24491,6 +24491,7 @@
   "captured_reference_vs_initial_ownership": {
     "captured": "All24recipes/profile including CSRclass/error/FP/mutation facts are retained unchanged.",
     "initial_owned": "Bounded integerlabel-pair counts/per-pixel normalization/coalescing and typedlogicalCSR only; no publicAPI/nativeRand/VIreduction/logownership implied.",
-    "provided_tables": "Explicit provider/unassessed native route; profile-specific mutations/errorprefix retained, no original forwarding/nativecredit."
+    "provided_tables": "Explicit provider/unassessed native route; profile-specific mutations/errorprefix retained, no original forwarding/nativecredit.",
+    "ARE_successor": "Finite table=None public-shaped callable with exactinteger reductions/stagedf64 helpers; registry/publicalias/genuine/performance pending. Publiccontingency CSRpacking, suppliedtable mutation and VI remain unclosed."
   }
 }

@@ -7,7 +7,8 @@
   "required_source_dependencies": [
     "tests/cmake_consumer/label_pair_metrics_consumer.cpp",
     "tests/label_pair_metrics_native_controls.hpp",
-    "tests/fixtures/label_pair_metrics_originals_v1.hpp"
+    "tests/fixtures/label_pair_metrics_originals_v1.hpp",
+    "tests/fixtures/label_pair_rand_originals_v1.hpp"
   ],
   "proof_boundary": "New installed client TU, relocated find_package/exported target, actual dependency/map resolution. Normal and actual runtime-disabled modes; compiler-scalar/sanitizer arithmetic proven separately by native packet.",
   "remaining": [
@@ -39,5 +40,12 @@
     "return_witness": "actual builtin c_return and nonNone native_result; one get_num_threads call",
     "logical_indices": "int64 explicit SDK/binder ABI; not public SciPy index ABI credit"
   },
-  "MSVC": "Actual new binder and installed-client TU compile /fp:strict /openmp; no Windowslink/runtime."
+  "MSVC": "Actual new binder and installed-client TU compile /fp:strict /openmp; no Windowslink/runtime.",
+  "ARE_successor": {
+    "status": "Componentinstalled82normal+82runtime_disabledPASS",
+    "dependency": "tests/fixtures/label_pair_rand_originals_v1.hpp",
+    "defaultselection": "Existingnewfamily client default runs count+Rand controls; --rand-only runs affectedAREcontrols only",
+    "archive": "Same95files/177members; oneheader/leaf append to read-only genuineSDK94; no fullSDK rebuild",
+    "still_not": "Fullgenuine/public3API/Windowsruntime/performance acceptance"
+  }
 }
