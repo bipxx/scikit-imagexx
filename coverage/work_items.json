@@ -37396,7 +37396,7 @@
       "base_sha": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
       "scope": "Fix actualWindows testdependency before parity, not nativealgorithm. Preserve failed422382manifest/100nodes; sourceguards hadalreadyPASS.",
       "acceptance": "Use exportedCRT opaqueexception-flag capture/restore and rounding APIs, verifiedheaderABI/liveexports. Missingferaiseexcept mustnotbind/call. PreserveLinux complete32 path and existingflag/rounding equality. Pure liveWindows restore/probe bothretainedPythons, zero scientific imports; actual compatible retainedWindowscore saved50parity if feasiblewithoutnewenv/build, otherwiseexplicitpending. Add actualsourcebarrier guard selector; root completebothcommands and exactsource4profile successor.",
-      "current_checkpoint": "Frozen a6bae9ac86dbba362537758784edf06c973e9c53; handoff build/join-windows-fenv-fixture-v1/handoff-v1.json e2b1fb05935163305259a7a99989ce5d6c484664046d9336520069ff09d612d6. Author affected source checks pass both retained Windows Pythons; 50 retained genuine-product cases pass locally with zero originals. Root independent review, complete source barriers and exact-source four-profile successor pending; failed campaign retained.",
+      "current_checkpoint": "Root independent review PASS build/join-windows-fenv-fixture-independent-review-v1/review-v1.json. Actual complete source barriers live: Windows311 session66372 and Windows313 session18434; exacta6bae9 normalconftest/plugins/no-x/0science. No hosted dispatch until both terminal receipts pass.",
       "next_gate": {
         "owner": "metrics_integrator narrow author then root independent readiness",
         "action": "Isolatedfromb557 tests/workflow only, no CPP/Pythonproduct/fixture/gold/API/sampler changes. SnapshotexternalCRT binding once atentry; percall opaque flags/rounding fresh. Preservefailure, no skips/masking/relaxedparity. Rootreview+completebarriers before newhosteddispatch."
@@ -38536,8 +38536,8 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "422382 audit00f2/4365 frozen: only100WindowsJOINsetup failures from missingucrtbase.feraiseexcept. Now author isolatedWindows FENVfixture/exported-API correction fromb557; privateLBPintegration heldunchanged.",
-      "readiness_reviewer": "LBP0e51/7811 frozenobserved94closure; now independently inspect and narrow-correct MARK496tiny palette targetUF16, include freshfixed-codec125thmin case via raw3eb0; original/timing0.",
+      "metrics_integrator": "Windows a6bae9 frozen root independent PASS; now resumed private LBP integration of root-admitted0e51/dad3 successor, exactfamily/shared ABI source/SDK consumers only. No fullbuild/env/original/timing/hosted; releaseRC untouched.",
+      "readiness_reviewer": "MARK6d4373 root scoped admission PASS; now source-first executable MARK benchmark consumer with existing sampler/guard infrastructure in new isolated successor, unchanged8cases/method. Genuine binding/firstcohort and timing GO pending; original/nativebody/timing0.",
       "boundary_worker": "IndependentLBP0e51 reviewdad3 frozenPASSscoped. NextnativefiniteRadon pair frt2/ifrt2 source+typedSDK+parity/benchconsumer in isolatedfamily, originalbudget0; exacthistoryscan foundunassignedonly."
     },
     "next_action": "Main265; b557 run42238215124 failed 100 Windows JOIN setup nodes due to unexported UCRT feraiseexcept. Audit retained; test-only a6bae9 frozen pending root review, complete both source barriers and exact-source four-profile successor. No whole271 acceptance or measurement authority.",

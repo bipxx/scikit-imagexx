@@ -1,0 +1,23 @@
+{
+  "status": "PASS_INDEPENDENT_SCOPED_SIX_FILE_TEST_FIX",
+  "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "predecessor": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+  "handoff_sha256": "e2b1fb05935163305259a7a99989ce5d6c484664046d9336520069ff09d612d6",
+  "source_files": [
+    ".github/workflows/public-qualification.yml",
+    "coverage/contracts/join-windows-fenv-fixture-v1.json",
+    "tests/join_windows_fenv.py",
+    "tests/test_join_segmentations_native_contract.py",
+    "tests/test_join_segmentations_public.py",
+    "tests/test_join_windows_fenv.py"
+  ],
+  "authenticated_small_proofs": 33,
+  "proof_bytes": 85664,
+  "review": "Actual diff inspected: exported opaque flag capture/restore; no reconstruction or missing raiser; original Linux full32 branch retained; exact predecessor inverse and actual workflow selector. SDK fexcept_t ABI and live control receipts checked. Local genuine50 trace guard is independent of observer profiler; no hosted/scalar qualification credit.",
+  "pending": [
+    "COMPLETE actual source barriers both retained Python versions",
+    "Exact-source four-profile genuine qualification and independent admission",
+    "Existing one-thread original-public benchmark and delivery gates"
+  ],
+  "waste_review": "Reused retained small proofs and local genuine50; no scientific replay, archive/core/corpus hashing, builds or downloads. Root initial runner lookup used wrong filename, corrected from actual directory before mutation."
+}

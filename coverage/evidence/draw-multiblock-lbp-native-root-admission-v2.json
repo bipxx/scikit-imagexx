@@ -1,0 +1,25 @@
+{
+  "status": "PASS_SCOPED_PRIVATE_COMPONENT_INDEPENDENT_REVIEW_ADMITTED",
+  "source": "0e51dbc1e2c4741e243a91652d8c0b9771c96363",
+  "independent_review": {
+    "path": "build/draw-multiblock-lbp-native-independent-review-v2/review-v2.json",
+    "sha256": "dad3ebffb3f19aa3390a9368148b4f3f80afefba45afeb20b237bc8d1eae61ac"
+  },
+  "scope": {
+    "public_target_comparisons": 1128,
+    "complete_record_matches": 1048,
+    "post_return_collector_diagnostics": 80,
+    "original_cases_per_profile": 94,
+    "private_SDK_return_payloads_per_profile": 71,
+    "source_files": 22
+  },
+  "review": "Supervised independent reconstruction algorithm and retained raw/SDK closure reports. Target-immediate FP, API semantics and caller exact32 remain strict; only named post-return JSON diagnostics excluded from API pass count, raw failures retained. Private bridge/assembled SDK not genuine shared installed whole-core proof.",
+  "pending": [
+    "genuine shared single-core integration and installed SDK",
+    "supported platform/full-domain closure",
+    "one-thread original-public performance",
+    "exact-source release/delivery"
+  ],
+  "waste_review": "Reused independent admitted raw reconstruction and small review proofs; no observation/corpus/archive rehash or computation replay.",
+  "next_owner_trigger": "C selectively imports frozen successor into private integration; root retains genuine/performance/release admission."
+}
