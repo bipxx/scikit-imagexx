@@ -37029,8 +37029,8 @@
       "acceptance": "Declared per-function Python signature/type/shape/mutation/error/warning/FP parity, native typed SDK and ownership, applicable scalar/SIMD/process-global optional workers default1, one-thread original benchmarks with losses, independent admission and supported release. Bounded partitions are not full API completion.",
       "current_checkpoint": "Combined cbcef227 frozen; source-declared265 images/268 functions/206 product/97SDK/32families64checks. Complete retained source barriers PASS57d003 root-admitted; exact four-profile run42158336231 live. No new main/native/performance credit until remaining gates. Earlier323/412 failures retained; VI binary log2/DDOT remains open.",
       "next_gate": {
-        "owner": "metrics_integrator",
-        "action": "Freezecombinedready source afteradditiveboundaryhooks/externalbinding closure; rootindependentfullactualsourcebarriersbothruntimes beforeone4profilequalification. ReuseminimumRelease stagerforperformance, no redundantpreparebuild."
+        "owner": "root",
+        "action": "Observe exact cbce qualification42158336231; admit terminal four-profile product/SDK/ownership evidence independently, bind reviewed isolated benchmark consumer, run one-worker original comparisons, then deliver validated projection. Source readiness and shared freeze are closed; prior failures retained."
       },
       "source_sha": "9ca37384657fae0089bbc8982025053833e6e2f3"
     },
@@ -37057,8 +37057,8 @@
       "acceptance": "Per-function parity and hot-swap, native SDK ownership, applicable scalar/SIMD/default1 optional global workers, one-thread original comparison and independent release admission. No forwarding whole original algorithm or credit for untested domains.",
       "current_checkpoint": "Completevertical08a06/8745 independentlyPASS42e994d4:source31pins,310privatefrontend,admitted64originals,nativeSIMD/scalar/ASan andassembledSDK95controls532320x4/MSVCcompileonly,8prospectivebenchmarkcases. Sharedintegrationongoing; no genuine/performance/releasecredit.",
       "next_gate": {
-        "owner": "metrics_integrator",
-        "action": "Integrateonlydirectsharedhooks beforecombinedfreeze; rootfullbarrier/genuine/performance/4profilegates. Boundaryworker nowisolatedconsumer author; sourcecomponent immutable."
+        "owner": "root",
+        "action": "Boundary08a component is frozen and integrated into exact cbce candidate. Await current qualification42158336231, actual installed ownership and eight-case one-worker benchmark admission; no kernel rewrite or repeat component evidence. Boundary worker now owns separate join contract packet."
       },
       "source_sha": "08a06b22bb4eceb580f3bf7f15a0a1664f9cc9f9"
     },
@@ -37087,6 +37087,31 @@
       "next_gate": {
         "owner": "boundary_worker",
         "action": "Freeze exactsource/interface/saferesolvecases beforeimplementation/originalcapture; rootindependentsafetypeer/GO next. No sharedintegrationchanges."
+      }
+    },
+    {
+      "id": "util-crop-current-batch-v1",
+      "kind": "implementation",
+      "owner": "metrics_integrator",
+      "branch": "feature/util-crop-v1",
+      "state": "contracting",
+      "apis": [],
+      "target_apis": [
+        "util.crop"
+      ],
+      "owns": [
+        "include/skimagexx/crop.hpp",
+        "python/skimagexx/_crop.py",
+        "coverage/contracts/util-crop-v1.json"
+      ],
+      "depends_on": [],
+      "base_sha": "04f54f6c7c671770d8b91b3712f567964a783e10",
+      "scope": "Existing477-key missing metadata/view API; exact full signature and alias/error/state interface first. Reuse array/view/copy machinery; no speculative framework or artificial SIMD for view construction. No shared integration changes.",
+      "acceptance": "Independent prospective source-safe parity plan and refused-intake checks before original capture/native implementation. Later full hot-swap/state/installed SDK contracts and relevant one-thread original public-call performance, exact release and independent admission; no premature advertised credit.",
+      "current_checkpoint": "Live resumed author source/test-first only; previous controller688c frozen and independent deltaPASSd328e673, actual benchmark bindings pending. No originals/build/native/timing authorized in crop intake.",
+      "next_gate": {
+        "owner": "metrics_integrator",
+        "action": "Freeze exact upstream-source/interface/prospective safe cases and refused-intake evidence; independent safety peer/root GO before capture or implementation. Record evidence/reuse/waste and remaining gates."
       }
     }
   ],
@@ -37783,7 +37808,7 @@
     "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
     "worker_queues": {
       "metrics_integrator": [
-        "label-pair-metrics-current-batch-v1"
+        "util-crop-current-batch-v1"
       ],
       "boundary_worker": [
         "join-segmentations-current-batch-v1"
@@ -37793,7 +37818,7 @@
       ]
     },
     "current_three_agent_packets": {
-      "metrics_integrator": "label-pair-metrics-current-batch-v1",
+      "metrics_integrator": "util-crop-current-batch-v1",
       "boundary_worker": "join-segmentations-current-batch-v1",
       "readiness_reviewer": "label-pair-metrics-current-batch-v1"
     },
@@ -38189,8 +38214,8 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Controller-only successor for exact cbce pins and existing stager verifier; no producer mutation, source checks both retained versions, frozen UNBOUND handoff then independent review.",
-      "readiness_reviewer": "Complete source readiness PASS57d003 independently root-admitted; actual run42158336231 binding metadata review, then frozen controller successor independent review.",
+      "metrics_integrator": "Controller688cd583 frozen, independently scoped-PASSd328e673 and private branch pushed; actual bindings pending. Live next util.crop source-safe interface/reference packet in isolated worktree; no originals/build/timing before safety GO.",
+      "readiness_reviewer": "Source readiness57d003 and actual qualification bindingf2508746 PASS; controller688c metadata deltaPASSd328e673. Reviewer completed/released, available for frozen join/crop safety packet or terminal product admission; no queued message treated live execution.",
       "boundary_worker": "Controller0dd/templatesfrozenUNBOUND; nextjoin_segmentationssource/test-first packet only, no originalcalls."
     },
     "next_action": "Observe single exact cbce four-profile run42158336231; independently review actual versioned binding/controller, retain terminal artifacts once and admit. Reuse minimum Release stager for isolated28-case comparison; no separate prepare/source rewrite. Join source-safe packet remains separate.",
