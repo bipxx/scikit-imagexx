@@ -1,0 +1,724 @@
+{
+  "status": "ROOT_INDEPENDENTLY_ADMITTED_EXACT_SOURCE_WHOLE271_PRODUCT_NOT_FULL_LIBRARY_OR_SPEED",
+  "passed": true,
+  "root_accepted": true,
+  "profiles": 4,
+  "product_kind": "GENUINE_INSTALLED_WHOLE_PRODUCT",
+  "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "run": 42262940227,
+  "expected_images": 271,
+  "registered_functions": 274,
+  "product_members": 216,
+  "SDK_members": 102,
+  "SDK_families": 32,
+  "SDK_checks": 256,
+  "corpora": 48,
+  "XML": {
+    "tests": 952116,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_XML": {
+    "tests": 12202,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "production_source_sha256": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f",
+  "independent_audit": {
+    "path": "build/join-util-views-qualification-v1/42262940227/independent-audit-v5.json",
+    "sha256": "6e4b018beddef64b4d8c411e5c310078d5101c1a4a690aae64bcc65ea4e0a5c8"
+  },
+  "handoff": {
+    "path": "build/join-util-views-qualification-v1/42262940227/handoff-v2.json",
+    "sha256": "6b318bce9356c30e921a118345549aaa0f2ca723260bee7754573dc2178daf35"
+  },
+  "qualified_profiles": {
+    "minimum": {
+      "receipt": "minimum-raw-review.json",
+      "receipt_sha256": "d4a4c6ccf0b894c8ef49d113f409ba9409421cee9eed67a049e4106f513b02ef",
+      "core": {
+        "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+        "source_files": 2647,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "5e23ad1198f3188b308491edcef41b1539e0f3f27a15c8ed5849cbb9f63ed1aa"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+          "executable": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/bin/python",
+          "executable_sha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+          "base_interpreter": {
+            "path": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+            "sha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+            "version": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+            "major_minor": "3.11",
+            "cache_tag": "cpython-311",
+            "os_name": "posix"
+          },
+          "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+          "core": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+          "core_sha256": "5e23ad1198f3188b308491edcef41b1539e0f3f27a15c8ed5849cbb9f63ed1aa",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "networkx": "3.6.1",
+            "tifffile": "2026.3.3"
+          },
+          "origins": {
+            "numpy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/__init__.py",
+            "scipy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/scipy/__init__.py",
+            "skimage": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/skimage/__init__.py",
+            "pytest": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/pytest/__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": false,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        },
+        "scalar": {
+          "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+          "executable": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/bin/python",
+          "executable_sha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+          "base_interpreter": {
+            "path": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+            "sha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+            "version": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+            "major_minor": "3.11",
+            "cache_tag": "cpython-311",
+            "os_name": "posix"
+          },
+          "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+          "core": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/package/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+          "core_sha256": "5e23ad1198f3188b308491edcef41b1539e0f3f27a15c8ed5849cbb9f63ed1aa",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "networkx": "3.6.1",
+            "tifffile": "2026.3.3"
+          },
+          "origins": {
+            "numpy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy/__init__.py",
+            "scipy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/scipy/__init__.py",
+            "skimage": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/skimage/__init__.py",
+            "pytest": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/runtime-env/lib/python3.11/site-packages/pytest/__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": true,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        }
+      },
+      "XML": {
+        "tests": 238330,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "corpora": 12,
+      "sealed_records": 39897,
+      "sealed_bytes": 2268961270,
+      "helper": {
+        "receipt_sha256": "5df0878cd438a4147cde40cf12415b2011bcbb96e40f54e226abc60b49eb8beb",
+        "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+        "source_pins": {
+          "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+          "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+          "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+          "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b"
+        },
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "glibc": "2.39",
+        "compiler": {
+          "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+          "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+          "backend": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+          "backend_sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4",
+          "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+          "target": "x86_64-linux-gnu"
+        },
+        "controls": [
+          {
+            "path": "controls-0.json",
+            "positive": 32,
+            "negative": 6,
+            "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+            "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333"
+          }
+        ],
+        "files_seal_verified": 17,
+        "new_helper_executions": 0,
+        "scope": "Actual hosted source-built bundle/controls and553savednodes per mode; no local helper rerun"
+      },
+      "status": "PASS_PROFILE_ONLY_ROOT_AGGREGATE_PENDING"
+    },
+    "modern": {
+      "receipt": "modern-raw-review.json",
+      "receipt_sha256": "839ca36498ee1c87cfb0b726544c92b8154f1d235c7f8a44ad61fc980ec3ed8a",
+      "core": {
+        "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+        "source_files": 2647,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "ae8c75d484a25774b438d7f0474b8c98b67a13d913bb1b6c7ed78ae79bcd369f"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "executable": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/bin/python",
+          "executable_sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+          "base_interpreter": {
+            "path": "/opt/hostedtoolcache/Python/3.13.16/x64/bin/python3.13",
+            "sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+            "version": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "major_minor": "3.13",
+            "cache_tag": "cpython-313",
+            "os_name": "posix"
+          },
+          "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+          "core": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/package/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+          "core_sha256": "ae8c75d484a25774b438d7f0474b8c98b67a13d913bb1b6c7ed78ae79bcd369f",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "origins": {
+            "numpy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/numpy/__init__.py",
+            "scipy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/scipy/__init__.py",
+            "skimage": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/skimage/__init__.py",
+            "pytest": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/pytest/__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": false,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        },
+        "scalar": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "executable": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/bin/python",
+          "executable_sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+          "base_interpreter": {
+            "path": "/opt/hostedtoolcache/Python/3.13.16/x64/bin/python3.13",
+            "sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+            "version": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "major_minor": "3.13",
+            "cache_tag": "cpython-313",
+            "os_name": "posix"
+          },
+          "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+          "core": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/package/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+          "core_sha256": "ae8c75d484a25774b438d7f0474b8c98b67a13d913bb1b6c7ed78ae79bcd369f",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "origins": {
+            "numpy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/numpy/__init__.py",
+            "scipy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/scipy/__init__.py",
+            "skimage": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/skimage/__init__.py",
+            "pytest": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/modern/runtime-env/lib/python3.13/site-packages/pytest/__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": true,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        }
+      },
+      "XML": {
+        "tests": 238330,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "corpora": 12,
+      "sealed_records": 37822,
+      "sealed_bytes": 2218134067,
+      "helper": {
+        "receipt_sha256": "ae0db9fba2db8e781bc052b410471254f4ba232db0a0d79d9c59fe0559588a72",
+        "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+        "source_pins": {
+          "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+          "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+          "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+          "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b"
+        },
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "glibc": "2.39",
+        "compiler": {
+          "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+          "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+          "backend": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+          "backend_sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4",
+          "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+          "target": "x86_64-linux-gnu"
+        },
+        "controls": [
+          {
+            "path": "controls-0.json",
+            "positive": 32,
+            "negative": 6,
+            "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333"
+          }
+        ],
+        "files_seal_verified": 17,
+        "new_helper_executions": 0,
+        "scope": "Actual hosted source-built bundle/controls and553savednodes per mode; no local helper rerun"
+      },
+      "status": "PASS_PROFILE_ONLY_ROOT_AGGREGATE_PENDING"
+    },
+    "windows": {
+      "receipt": "windows-raw-review.json",
+      "receipt_sha256": "6bcc5eb1d7461bde57d91578f565d97f47bea601c78f7422ea97f67612a2b178",
+      "core": {
+        "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+        "source_files": 2647,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "8cc4c071b22f1dcfe8e40c014e2bb4a4367c0ebf3344097075d72180f2221034"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+          "executable": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Scripts\\python.exe",
+          "executable_sha256": "21bba195c88bcc007c8fd8e99603e9c0d82be1e08cff2f23bd5b2264f3148289",
+          "base_interpreter": {
+            "path": "C:\\hostedtoolcache\\windows\\Python\\3.13.16\\x64\\python.exe",
+            "sha256": "31fe10b4ed82a2f960af0ef9931f46a4b84ff286f8b6ffd9dee098cf4f10f17f",
+            "version": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+            "major_minor": "3.13",
+            "cache_tag": "cpython-313",
+            "os_name": "nt"
+          },
+          "platform": "Windows-2025Server-10.0.26100-SP0",
+          "core": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\package\\skimagexx\\_core.cp313-win_amd64.pyd",
+          "core_sha256": "8cc4c071b22f1dcfe8e40c014e2bb4a4367c0ebf3344097075d72180f2221034",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15",
+            "colorama": "0.4.6"
+          },
+          "origins": {
+            "numpy": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\numpy\\__init__.py",
+            "scipy": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\scipy\\__init__.py",
+            "skimage": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\skimage\\__init__.py",
+            "pytest": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\pytest\\__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": false,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        },
+        "scalar": {
+          "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+          "executable": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Scripts\\python.exe",
+          "executable_sha256": "21bba195c88bcc007c8fd8e99603e9c0d82be1e08cff2f23bd5b2264f3148289",
+          "base_interpreter": {
+            "path": "C:\\hostedtoolcache\\windows\\Python\\3.13.16\\x64\\python.exe",
+            "sha256": "31fe10b4ed82a2f960af0ef9931f46a4b84ff286f8b6ffd9dee098cf4f10f17f",
+            "version": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+            "major_minor": "3.13",
+            "cache_tag": "cpython-313",
+            "os_name": "nt"
+          },
+          "platform": "Windows-2025Server-10.0.26100-SP0",
+          "core": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\package\\skimagexx\\_core.cp313-win_amd64.pyd",
+          "core_sha256": "8cc4c071b22f1dcfe8e40c014e2bb4a4367c0ebf3344097075d72180f2221034",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15",
+            "colorama": "0.4.6"
+          },
+          "origins": {
+            "numpy": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\numpy\\__init__.py",
+            "scipy": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\scipy\\__init__.py",
+            "skimage": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\skimage\\__init__.py",
+            "pytest": "D:\\a\\scikit-imagexx\\scikit-imagexx\\build\\public-qualification\\windows\\runtime-env\\Lib\\site-packages\\pytest\\__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": true,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        }
+      },
+      "XML": {
+        "tests": 237126,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "corpora": 12,
+      "sealed_records": 37738,
+      "sealed_bytes": 2916386711,
+      "helper": null,
+      "status": "PASS_PROFILE_ONLY_ROOT_AGGREGATE_PENDING"
+    },
+    "debug": {
+      "receipt": "debug-raw-review.json",
+      "receipt_sha256": "dcccf8f8653602128cd15464267e94ebdda874afa5daa572d7ce0f04e3a784a1",
+      "core": {
+        "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+        "source_files": 2647,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "4de2d72481d14564018214b655fd95bcd72376b37000aef4060934a1a9c94803"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "executable": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/bin/python",
+          "executable_sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+          "base_interpreter": {
+            "path": "/opt/hostedtoolcache/Python/3.13.16/x64/bin/python3.13",
+            "sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+            "version": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "major_minor": "3.13",
+            "cache_tag": "cpython-313",
+            "os_name": "posix"
+          },
+          "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+          "core": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/package/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+          "core_sha256": "4de2d72481d14564018214b655fd95bcd72376b37000aef4060934a1a9c94803",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "origins": {
+            "numpy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/numpy/__init__.py",
+            "scipy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/scipy/__init__.py",
+            "skimage": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/skimage/__init__.py",
+            "pytest": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/pytest/__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": false,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        },
+        "scalar": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "executable": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/bin/python",
+          "executable_sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+          "base_interpreter": {
+            "path": "/opt/hostedtoolcache/Python/3.13.16/x64/bin/python3.13",
+            "sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+            "version": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "major_minor": "3.13",
+            "cache_tag": "cpython-313",
+            "os_name": "posix"
+          },
+          "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+          "core": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/package/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+          "core_sha256": "4de2d72481d14564018214b655fd95bcd72376b37000aef4060934a1a9c94803",
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ],
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "origins": {
+            "numpy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/numpy/__init__.py",
+            "scipy": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/scipy/__init__.py",
+            "skimage": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/skimage/__init__.py",
+            "pytest": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/debug/runtime-env/lib/python3.13/site-packages/pytest/__init__.py"
+          },
+          "source_image_count": 271,
+          "source_registered_count": 274,
+          "source_metadata_count": 3,
+          "scalar": true,
+          "thread_pools": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "BLIS_NUM_THREADS": "1"
+          },
+          "providers": "NumPy/SciPy preserve numerical/provider semantics; this is not pure C++ fitting. BLAS/OMP pools1, native workers1/4."
+        }
+      },
+      "XML": {
+        "tests": 238330,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 64,
+      "corpora": 12,
+      "sealed_records": 37735,
+      "sealed_bytes": 3343738763,
+      "helper": {
+        "receipt_sha256": "3c4cd42123d7b4e8f7a2f1503aa155071291f4106ff18f61223fd617f82cb6a8",
+        "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+        "source_pins": {
+          "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+          "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+          "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+          "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b"
+        },
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "glibc": "2.39",
+        "compiler": {
+          "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+          "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+          "backend": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+          "backend_sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4",
+          "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+          "target": "x86_64-linux-gnu"
+        },
+        "controls": [
+          {
+            "path": "controls-0.json",
+            "positive": 32,
+            "negative": 6,
+            "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333"
+          }
+        ],
+        "files_seal_verified": 17,
+        "new_helper_executions": 0,
+        "scope": "Actual hosted source-built bundle/controls and553savednodes per mode; no local helper rerun"
+      },
+      "status": "PASS_PROFILE_ONLY_ROOT_AGGREGATE_PENDING"
+    }
+  },
+  "stagers": {
+    "minimum": {
+      "receipt": "minimum-stager-review.json",
+      "receipt_sha256": "3144b0c418dc6cf6b70d7250f680969634029bfc81c0a7ce401498426750bba8",
+      "artifact": 13528655843,
+      "files": 2732,
+      "bytes": 880425502,
+      "accepted_alone": false
+    },
+    "modern": {
+      "receipt": "modern-stager-review.json",
+      "receipt_sha256": "aef2132c1d96ebdef00f93d7078f74781bba0290a11fcd8e1ee9ea7aa91dbd9b",
+      "artifact": 13526613974,
+      "files": 2732,
+      "bytes": 877448715,
+      "accepted_alone": false
+    },
+    "windows": {
+      "receipt": "windows-stager-review.json",
+      "receipt_sha256": "29b7083bbd0ea64ec142cdbb5e5b3e243d07a76f1d3ad4db3f1cfb8c63eb0eef",
+      "artifact": 13528063529,
+      "files": 2700,
+      "bytes": 880379920,
+      "accepted_alone": false
+    }
+  },
+  "archive_domains": {
+    "archive_count": 7,
+    "archive_bytes": 6450799936,
+    "sealed_records": 153192,
+    "sealed_bytes": 10747220811,
+    "stage_files": 8164,
+    "stage_bytes": 2638254137
+  },
+  "root_scope": "Supervised existing verification code and actual73small receipts/source/prebuild/selector/runtime/core/SDK/helper/corpus seals. No archive/core/sealedrecord/corpus rehash, no numerical/native/build replay. Stage status remains staged-unaccepted; this independent wholeproduct admission is separate.",
+  "pending": [
+    "Actual original-public one-thread controller/runtime/core/SDK/helper/root binding and real nine CLI cohorts",
+    "Separate authorized timing with full56cases/784samples/112warmgroups and all-loss raw admission",
+    "Final main shipping projection/merge/push/eligible cleanup",
+    "Full477API/class/domain/platform/provider closure; no library-wide speed superiority"
+  ],
+  "waste_review": "Reused seven once-authenticatedarchives/153192seals/8164stagefiles and completebothsourcebarriers. Peer metadata aggregate failures on pytestsubtests/classnames/directpolygon command were retained/corrected in versionedv5 without redoing scientific/large proof.",
+  "next_owner_trigger": "Root binds actual minimum stager13528655843/73276b66/runtime/core/SDK and new controller successor; affected source guards on both retained Pythons + independent bound-source review before hosted firstcohort/timing execution. Main265 remainsuntil remaining delivery gates pass."
+}

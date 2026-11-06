@@ -1,0 +1,31 @@
+{
+  "status": "PASS_SCOPED_BOUND56_CONTROLLER_SOURCE_NO_DISPATCH_ELLIPSE_SCOPE_PENDING_SUCCESSOR",
+  "passed": true,
+  "source": "76c93138a62aaa7077e8f0d9b59ed10c4852efc0",
+  "producer": {
+    "run": "42262940227",
+    "revision": "a6bae9ac86dbba362537758784edf06c973e9c53",
+    "artifact": "13528655843",
+    "sha256": "73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e"
+  },
+  "handoff_sha256": "51f182501e2941ab0c062cd2b91251ad4ef0b422d2227de16a9c70e63063ec58",
+  "source_files": 9,
+  "authenticated_small_proofs": 15,
+  "checks_per_python": 86,
+  "review": "Read exactdiff: v3manifest paths +smallrootmetadata validator; unchanged C1/native/measurement method functions retained, oldUNBOUNDv2 refusal tested on exactprototype bytes. Actualwhole/rootstage/readiness raw bytes and Gitblobs match frozenpins, including intentionalCRLF. Actualminimum metadata binds runtime/core/SDK102/fpac593. Actualhost helper receipt/library stayNULL until one source-built control-approved build on thathost; no copiedhostbinary authority.",
+  "ellipse_mismatches": [
+    "python/skimagexx/coverage.py",
+    "benchmarks/find_boundaries.py",
+    "tools/label_pair_benchmark_context.py"
+  ],
+  "scope": {
+    "routes": 9,
+    "cases": 56,
+    "samples": 784,
+    "warm_groups": 112,
+    "scientific_bodies": 0,
+    "dispatches": 0
+  },
+  "next_owner_trigger": "Root authorized successor adds original12ellipse cases once because priorwhole-batch18pin/currentcore/runtime scope doesnotmatch. Preserve thisv3source/proofs and old10wins2losses; no dispatch until successor source/guards/rootreview passes.",
+  "waste_review": "Authenticated smallsource/Gitblob/guard metadata, no largearchive/core/corpus hash or computation replay. Ellipse reuse not silently waived or earlierresults relabeled; newproduct comparison requires changedscope successor."
+}

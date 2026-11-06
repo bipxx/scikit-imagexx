@@ -37406,7 +37406,7 @@
       "id": "finite-radon-pair-v1",
       "kind": "implementation",
       "owner": "boundary_worker",
-      "state": "source_storage_admitted_controller_assigned",
+      "state": "raw216_admitted_native_parity_assigned",
       "apis": [],
       "target_apis": [
         "transform.frt2",
@@ -37430,17 +37430,17 @@
       "base_sha": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
       "scope": "Dependency-ready finite Radon pair, no FFTbackend needed. Exact-name scan of fullplan/ledger/evidence/tests/include/src found only unassignedinventory, no prior work/blocker. This resumes full477scope while currentrelease/futureMARKandLBP remain independent.",
       "acceptance": "Own native/public/SDK source-contract/parity/benchmark family. Pin actual upstreamsource and runtime, freeze bounded complete input/error/layout/dtype/overflow/scalarpromotion contract and safe fixtures first; sourceguards bothretainedPythons/zerooriginalbudget. Implement source-faithful complete namedowning operations with reusedPOD/conversion/runtime primitives, scalar/SIMD andoptionalglobalworkers default1 capturedonce; integer wrap/reduction/inverse division matchprofile. Fullcontract/provider/platform frontiers stayexplicit. No public count/genuine/hotswap/one-threadoriginal speedclaim until requiredlatergates.",
-      "current_checkpoint": "Frozen d2109de2/5932handoff22files; root source/storage safety PASS build/finite-radon-source-safety-independent-review-v1/review-v1.json for108recipes/54perAPI, max56input/225physical/56output/392additions. Integer native/SDK invariants remain author scope, NOT original parity. Originalbudget0; B now prepares fixed one-shot observerv2 controller using correctedexisting MARK/LBP path.",
+      "current_checkpoint": "Rootcontroller49/b76a readinessPASS; minimum108 andmodern108 actualcaptures completeonce under separateGOs. Rootraw admission build/finite-radon-raw-admission-v1/admission-v1.json PASS216rows/216consumed, 506array+8scalar payloads/28464logicalbytes decodedonce. Eachprofile61returns47errors; four errorclass differences retained. Caller/process32 exact. No nativeparity/speed/genuine claim.",
       "next_gate": {
         "owner": "boundary_worker source/native family then root independent intake/reference authority",
-        "action": "B frozenfamily source/controller successor only: exactsource/runtime/typedcodec/fullFP and failurewriter checks; real per-API cached/cold REQUEST refusal with0bodies. Root independent complete readiness and separateGO before108/profile originals. No newenv/download/build/timing/currentRC/shared mutations; all native/full-domain/genuine/performance gates remainopen."
+        "action": "B NEW isolated native successor from49, reuse admitted216raw/frozenrecipes/SDK/runtime. Compare all108/profile workers1/4, strictvalues/errors/warnings/protocol/alias/targetFP/caller32; close source-faithful float/complex/cast/layout/domain gaps rather than labelinteger-only slice complete. Changedleaf/SDK/scalar/SIMD/sanitizer checks asinvalidated; no more originals/timing/fullbuild/env/download/shared/currentRC changes. One coherent full-observed-domain handoff, explicit remaining fullAPI/platform/genuine/perf gates."
       }
     },
     {
       "id": "mark-lbp-enabled-integration-v1",
       "kind": "implementation",
       "owner": "metrics_integrator",
-      "state": "assigned",
+      "state": "frozen_source_pending_root_review",
       "target_apis": [
         "segmentation.mark_boundaries",
         "feature.draw_multiblock_lbp"
@@ -37464,8 +37464,8 @@
         "draw-multiblock-lbp-source-first-v1",
         "mark-boundaries-source-first-v1"
       ],
-      "acceptance": "NEW isolated successor froma6, selectively import exactadmittedLBP0e51/22 and MARK6d4373/21 with existingreference/observerdeps. Remove temporary PRIVATE_LBP branches/config/headerexclusions and wire ordinary enabled complete operations, samecore/CMake/exportedSDK/publicroutes/registry. Strict existing current_install_layout/sourcecollector must accept actualsource without private-model emulation; derive actualcounts. Preserveoldcontracts via exactnarrow sourcecontexts only where literals trulychanged. Source-only affected checks BOTHretainedPythons normalconftest/plugins/0science; existingCMakeconfigure/affectedABI/clientcompile only asinvalidated. No newenv/download/fullproductbuild/original/nativepublic/timing/hosted untilrootnextgate. FullLinuxFPsaved suites require real source-built helper and cannotrunasWindowsfull32; freeze explicitselectors/platformfrontiers without skips or falseWindowsparity. Genuineonecore/completeinstalledSDK/hotswap/scalar/globalworkers/default1/fulloriginalbenchmark/fourprofilerelease pending. Rootalsoadmits MARKbenchmark446bde47/46ffhandoff: selectively import exactfivefiles after52v4/source reviewcb9a and26proof reconciliation. Add actualprebuild sourceguard selection; no actualouter MARKcohort/timing authority.",
-      "current_checkpoint": "Root direct5dprivate review and c222handoff reconciliationPASS72smallproofs. Qualifier conditionalinstall rejection retained. Normalenabled sourcewiring is the next usefulstep; no secondprivate installmodel.",
+      "acceptance": "NEW isolated successor froma6, selectively import exactadmittedLBP0e51/22 and MARK6d4373/21 with existingreference/observerdeps. Remove temporary PRIVATE_LBP branches/config/headerexclusions and wire ordinary enabled complete operations, samecore/CMake/exportedSDK/publicroutes/registry. Strict existing current_install_layout/sourcecollector must accept actualsource without private-model emulation; derive actualcounts. Preserveoldcontracts via exactnarrow sourcecontexts only where literals trulychanged. Source-only affected checks BOTHretainedPythons normalconftest/plugins/0science; existingCMakeconfigure/affectedABI/clientcompile only asinvalidated. No newenv/download/fullproductbuild/original/nativepublic/timing/hosted untilrootnextgate. FullLinuxFPsaved suites require real source-built helper and cannotrunasWindowsfull32; freeze explicitselectors/platformfrontiers without skips or falseWindowsparity. Genuineonecore/completeinstalledSDK/hotswap/scalar/globalworkers/default1/fulloriginalbenchmark/fourprofilerelease pending. Rootalsoadmits MARKbenchmark446bde47/46ffhandoff: selectively import exactfivefiles after52v4/source reviewcb9a and26proof reconciliation. Add actualprebuild sourceguard selection; no actualouter MARKcohort/timing authority. Latestadmittedbenchmark6cc0/cacf ninefiledelta supersedes sharedMARK446 envelope only through preservedcontext-v2/exacthistory; reconcile currentSDKclient/gold sourcepins once and rerun onlyaffected97/combinedsource guards, no numericalreplay.",
+      "current_checkpoint": "C froze29918814/b47ehandoff91files froma6, source-derived273/276/220product104SDK/34families68checks allplansclear. Authoraffected134+162+11/version andGNU5/MSVC2compile-onlyPASS0science; notcompletebarrier/genuine/runtime/performance. Rootindependent source admission and complete2commands next.",
       "next_gate": {
         "owner": "metrics_integrator source integration then root independent admission",
         "action": "One coherent frozen source/handoff; immutablefamilymath/frontends reused, no current271RC mutation/delay. Report exactchangedfiles/counts/selectors/missinggates/waste. Root retains fullbarriers/genuine/performance/main delivery."
@@ -37495,6 +37495,50 @@
       "next_gate": {
         "owner": "R source then root independent admission/C selective source integration",
         "action": "Freeze one coherent family benchmark source/handoff, cases/method unchanged, exactfiles/proofs/pendinggenuine/outercohort/timing/fullAPI/Windows scopes and waste/reuse. Sharedroot/workflow/current271source reserved; rootretains actualbinding/GO/admission/main."
+      }
+    },
+    {
+      "id": "join-util-views-qualified-artifact-review-v2",
+      "kind": "review",
+      "owner": "readiness_reviewer",
+      "state": "assigned",
+      "target_apis": [],
+      "apis": [],
+      "base_sha": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "owns": [
+        "build/join-util-views-qualification-v1/42262940227 retained artifacts/audit/receipts only"
+      ],
+      "acceptance": "Reuse rootprepared existing3readers/freezecontract and inspect actualsource/API/profilemetadata. Parent42262940227 MUSTterminalsuccess with4successfuljobs before7artifact retention; iffailure retaincondition/metadata and stopdependent intake, no source/qualification/acceptance waiver. APIstreamhash/download eachactualarchive once; sourcebound4profile seal records and3stage files once, allXML/SDK64/family32/corpora12/source216product102SDK/actualselectors/helper/solecore/sourcearchive/provenance checked from actualdata. No source/science/native/install/build/env/timing or artifact/corpus duplicatehash. Do not proofindex large copied corpora/binaries; smallreceipts only. Freezeone coherent independentlyscoped handoff; root aggregateadmission/delivery stillrequired.",
+      "current_checkpoint": "Modern/minimum/Windows jobsSUCCESS; debug128047332924 live, overallrun notterminal. Existingroot watcher82134 remainslive. Preparedreaders build/join-util-views-qualification-v1/42262940227; no artifactdownload yet. RLBP6cc0 sourcehandoff frozen awaitingrootindependentreview.",
+      "next_gate": {
+        "owner": "R actualterminal/artifactaudit then root aggregateadmission",
+        "action": "Read/setup existingreaders and actualprereqs now; execute onlyafter parentterminalsuccess. Retain allfailures/protectedarchives, no retrypartialdownloads or scientificreplay. Rootmonitors livejob and retains independent source/product/performance/main authority."
+      }
+    },
+    {
+      "id": "join-util-views-bound-measurement-v3",
+      "kind": "implementation",
+      "owner": "readiness_reviewer",
+      "state": "v4_frozen_pending_root_source_review",
+      "target_apis": [],
+      "apis": [],
+      "base_sha": "b36754dc9d5183edeabb867274a75d901d59b7e7",
+      "owns": [
+        "NEW bound measurement-controller worktree only",
+        ".github/workflows/next-metrics-initial.yml",
+        "tools/next_metrics_first_cohort_probe.py",
+        "coverage/contracts/next-metrics-measurement-v3.json",
+        "controller binding metadata/source tests and exact contexts",
+        "exact copies of root wholeproduct/stager/readiness receipt metadata"
+      ],
+      "depends_on": [
+        "join-util-views-qualified-artifact-review-v2"
+      ],
+      "acceptance": "Root independently admits actuala6/42262940227 whole271 source/profile/product (15030efe receipt); create NEWisolated controller successor fromb367, preserve frozenprototype v2. Bind actual minimumstager13528655843 digest73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e using retainedonce-seal; smallruntime/package/product/qualifier metadata only, no archive/core/corpus rehash or whole extraction/env/install. Actualpreparedsource/runtime/core/102SDK/fingerprint/rootreceipts and currentprobeSHA/source/helper7pins/9routes bound, methods/cases unchanged56/784samples/112warmgroups threads1 all-loss. Preserveoldunboundmanifest/tests via newv3path or exactversionedprojection, not weakenUNBOUND assertions; affectedsource/metadata tests BOTHretainedPython normalconftest/plugins/0science. FrozenC1poststop/postbatchcontrols preserved. Hosthelper mayonlybuild/probe once laterunderactualrootdispatch; newhostreceipt/library hashes remain unbound rather than fabricated. Compare actualprior18pin/10report ellipse dependency scope if readilyretained, reuseonlymatchingliteral/runtime scope; otherwiseexplicitpending and no retiming. No originals/native/helper/sampler/timing/newenv/build/download/hosted before root nextGO. One immutableboundsourcehandoff for root independentadmission/dispatch.",
+      "current_checkpoint": "Boundv3 source76c931 root4002 admitted. Bound68 v4 frozen57072ba25f38785e79d930951a56ab4adfc0583f/handoff98fc3de0; 87 author source controls per Python, no bodies/timing. Root independent five-file admission pending. Historical ellipse results/failures unchanged; fixed10cohorts/68cases/952samples/136warmgroups.",
+      "next_gate": {
+        "owner": "root independent v4 source admission, then actual hosted GO",
+        "action": "Review frozen57072ba2 five-file delta and actual87 author controls/version before actual hosted GO. Preserve v2/v3 and prior ellipse results. Actual helper/cohorts/timing unexecuted; no performance or release inference from source guards."
       }
     }
   ],
@@ -38597,19 +38641,19 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Private5d/c222handoff rootreview+72proofreconciliationPASS, install-rule failure retained. Now NEW mark-lbp-enabled-integration-v1 froma6: normalenabled MARK6d/LBP0e51 wiring, remove PRIVATE_LBP; no current271mutation/fullbuild/original/timing/hosted.",
-      "readiness_reviewer": "MARK446/46ff sourceadmissioncb9a + immutable26proofreconciliationPASS; Cimports5files. R now NEW LBP executablebenchmark source task, reuse fixedcases/existingMARK/F1/Montageguards, originals/native/helper/samplerbody/timing0.",
-      "boundary_worker": "d210/5932finiteRadon source/storage rootadmitted108recipes; now fixed typedobserverv2 capturecontroller/readiness using existingpath. Original/providerbody/nativebody/timing0 until independent realentry/FENV admission and rootGO."
+      "metrics_integrator": "Enabled MARK/LBP successor frozen29918814; root independent shared-source review and complete two-Python barriers pending. No genuine/hosted/performance admission implied. Current qualified271 remains separate.",
+      "readiness_reviewer": "Qualified271 artifact audit terminal and root15030 admitted. Bound68 measurement v4 frozen57072ba2; root independent five-file admission before actual hosted dispatch/cohorts/timing. No actual timing executed.",
+      "boundary_worker": "All216finiteRadon originals recordedonce/rootrawadmitted506array+8scalar payloads; B now NEW native/public/SDK parity successor againstall108/profile withfulltargetFP/error/protocol constraints, no furtheroriginal/timing authority."
     },
-    "next_action": "Root follows watcher82134/exacta6bae9 run42262940227; modern jobSUCCESS, threejobs live, no aggregateadmission. Existingretention/profile/stagereaders prepared sourcebound in build/join-util-views-qualification-v1/42262940227; execute only after actualterminal/APIartifact prerequisites. C normalenabled MARK/LBP integration, R LBPbenchmark executor, B finiteRadon capturecontroller remainindependent.",
+    "next_action": "Root independently admits frozen57072ba2 bound68 source before actual measurement dispatch. Qualified271/root15030 remains unshipped until raw/loss/final projection/main gates close. Separately review frozen29918814 future273 source and complete two-Python barriers; await finite-Radon frozen native handoff. This documentation update authorizes no new scientific execution.",
     "current_checkpoint": {
         "main_image_names": 265,
-        "qualified_image_names": 265,
-        "prepared_source": "683f0043a6cd6bb61626241a003ffd615ba48205",
-        "prepared_run": 42177447898,
+        "qualified_image_names": 271,
+        "prepared_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+        "prepared_run": 42262940227,
         "candidate_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
         "candidate_image_names": 271,
-        "candidate_status": "LIVE exacta6bae9 run42262940227 after completeb8614afa sourcebarriersPASS; watcher82134/fourjobs live. Main265, candidate271 undelivered; failed422382 retained in history. No numerical/release/performance acceptance.",
+        "candidate_status": "ROOT_ADMITTED_QUALIFIED271_UNSHIPPED_MAIN265; fourprofile/root15030PASS. Boundv3source4002PASS; v4fixed68case/10cohort comparison source pending because ellipse reuse failed recorded scope. No currentpublicperformance accepted yet.",
         "performance_evidence": "benchmarks/next-metrics-minimum-initial-v1/README.md",
         "readiness_reviews": [
           {
@@ -38620,8 +38664,8 @@
         "candidate_run": 42262940227,
         "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42262940227",
         "candidate_qualification_run": 42262940227,
-        "candidate_evidence": null,
-        "candidate_qualification_status": "LIVE exacta6bae9 run42262940227 after completeb8614afa sourcebarriersPASS; watcher82134/fourjobs live. Main265, candidate271 undelivered; failed422382 retained in history. No numerical/release/performance acceptance.",
+        "candidate_evidence": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
+        "candidate_qualification_status": "ROOT_INDEPENDENT_EXACT_SOURCE_FOUR_PROFILE_ADMISSION_PASS_15030EFE",
         "next_release_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
         "next_release_expected_images": 271,
         "next_release_expected_product": 216,
@@ -38629,7 +38673,7 @@
         "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
         "optimization_prepare_run": 41967608976,
         "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-        "next_release_status": "LIVE exacta6bae9 run42262940227 after completeb8614afa sourcebarriersPASS; watcher82134/fourjobs live. Main265, candidate271 undelivered; failed422382 retained in history. No numerical/release/performance acceptance.",
+        "next_release_status": "Qualifiedexacta6/42262940227/root15030; originalpublic68comparison/raw/loss/finalprojection/main gates remain. Future273source299 remainsunready/separate.",
         "next_release_qualification_run": 42262940227,
         "optimization_comparison_run": 41969983206,
         "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
@@ -39497,15 +39541,15 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "683f0043a6cd6bb61626241a003ffd615ba48205",
-    "run": 42177447898,
-    "image_paths": 265,
+    "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+    "run": 42262940227,
+    "image_paths": 271,
     "receipt": {
-      "path": "coverage/evidence/next-metrics-whole-product-admission-v1.json",
-      "sha256": "6992d2d4c460d85b6dd38b5327f8153536c0bc8893ec1a1d491db29bf798411a"
+      "path": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
+      "sha256": "15030efe83283c9bb29043150612b32501128c8028ce19b1c58c2454837dcd96"
     },
-    "scope": "Exact683 four-profile qualified265 declared partial image contracts; not full477 API/class/runtime/nativeownership closure. Independent initial public one-thread28cases18wins10losses retained separately in next-metrics-initial-performance-admission-v1.json.",
-    "production_source_sha256": "906b5d0a24717da8cc6512d5cfec302e022a9384b89808897cc562478aef04c8"
+    "scope": "Exacta6 four-profile qualified271 partialimage contracts, UNSHIPPED/main265. Performance/current68comparison/raw/main gates pending; no full477/class/domain/provider or librarywide speed closure.",
+    "production_source_sha256": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f"
   },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",

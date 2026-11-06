@@ -1,0 +1,32 @@
+{
+  "status": "PASS_SCOPED_UNBOUND_LBP_EXECUTOR_AND_SHARED_MARK_SUCCESSOR_SOURCE",
+  "passed": true,
+  "source": "6cc0b78b335fa95636e344dd8d271dde451e735b",
+  "base": "446bde47e7462278389c0a87affb881ed775f1ec",
+  "handoff_sha256": "cacf9d416ee98b9336471c734064463cabb2df75f47cfa6624a6f577ead64efc",
+  "source_snapshot_files": 29,
+  "selective_delta": [
+    "benchmarks/draw_multiblock_lbp_native.py",
+    "tests/test_draw_multiblock_lbp_native_source.py",
+    "benchmarks/draw_multiblock_lbp_execution.py",
+    "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v1.json",
+    "tests/test_draw_multiblock_lbp_benchmark_execution.py",
+    "benchmarks/mark_boundaries_execution.py",
+    "benchmarks/mark_boundaries_consumer.py",
+    "tests/test_mark_boundaries_benchmark_execution.py",
+    "coverage/contracts/mark-boundaries-benchmark-execution-v2.json"
+  ],
+  "unchanged_native_files": 20,
+  "small_proofs": 12,
+  "checks_per_python": 97,
+  "review": "Read actual MARK parameterization, immutable context-v2/exact446 inverses, thinLBP fixture/native-role hooks and source/binding/measurement tests. Same real Montage entry guard/F1/state/parity core reused; fourLBP/eightMARK cases and method unchanged. Shared metadata roles bind context/root product; no variable runtimecase override. LBP internalC++ worker snapshot is disclosed, Pythongetter0 expected; genuineglobal ownership remainspending. No algorithm/source/CPP math changes.",
+  "pending": [
+    "C selective9file/context closure against current source-published raw/SDK consumer changes",
+    "Actualgenuine product/runtime/core/SDK/F1/root binding",
+    "Outer actualMARK/LBP cohorts/source-authority and offlineidentity validation",
+    "SeparatetimingGO/all4LBP+8MARKcases/raw/allloss admission",
+    "FullAPI/platform/Windows/genuine release/delivery"
+  ],
+  "waste_review": "Reused native20/prior1128comparison/SDK and unchanged sharedsampler proof scopes. Authenticated small source/control receipts only; no scientific/control/numeric replay, newengine/environment/build/download or binary/archive hashes.",
+  "next_owner_trigger": "C imports exact9delta into enabled successor after root gate update, versioning only demonstrated combined-source literal/context dependencies; root retains actualgenuine/timing/admission/main."
+}

@@ -1,0 +1,36 @@
+{
+  "status": "PASS_INDEPENDENT_FIXED_CONTROLLER_AND_ACTUAL_ENTRY_READINESS",
+  "passed": true,
+  "source": "49a95896863b5aeb937e376f14f22e42083c49f0",
+  "controller_sha256": "ac271ba72c105509db1e1c288f16c662e06476f66180a42e972d9ee7eb0fe31a",
+  "binding_sha256": "fd036cfd530c13155927afc79376ad982d92af84646de831ee4e011a6e1f1cb7",
+  "handoff_sha256": "e5621d84d311d521fa8a54ebf4519a3cbf4e07352a0527e7d70df393b873bd48",
+  "changed_source_files": 5,
+  "source_pins": 31,
+  "authenticated_small_proofs": 288,
+  "proof_bytes": 1284985,
+  "counts": {
+    "actual_prefixes": 8,
+    "target_requests_refused": 16,
+    "python_provider_requests_refused": 16,
+    "compiled_sum_requests_refused": 8,
+    "target_body_lines": 0,
+    "provider_body_lines": 0,
+    "caller_exact32_controls": 48,
+    "inert_typed_exception_controls": 16,
+    "process_exact32": 8,
+    "original_computations": 0,
+    "original_observations": 0,
+    "journals": 0
+  },
+  "review": "Read source authority/typed observer/trace/profile entry and one-shot108 loop, deadline/source/hash guards, durable started/completed rows, failure-writer/partial diagnostics and exactcaller/process32 restore. Actualcold/cached prefixes perAPI/profile, runtime/path/source identity and16negative controls inspected; same-interpreter sourceguard reuse verified from retainedreceipts. Reused previously admitted bounded108recipe safety/helper/codecs; no scientific rerun.",
+  "original_GO": "NOT_YET_ISSUED",
+  "pending": [
+    "Separate root actualGO with fixed108/profile/216total deadline/freshoutput",
+    "Actual raw observation admission",
+    "Native/public/FP parity and float/complex/protocol/platform closure",
+    "Genuine core/completeSDK/hot-swap/one-thread performance/four-profile delivery"
+  ],
+  "waste_review": "Authenticated288smallsource/control receipts, not large libraries/core/archive/corpora. No additional proof execution or unchanged numerical replay. Failure evidence retained; independent source admission does not import unfinished native ancestry.",
+  "next_owner_trigger": "Root may issue exactone-call-per-recipe GO for each admitted profile then run actualcapture; stop on firstfault, preserveconsumed calls/no automaticretry."
+}

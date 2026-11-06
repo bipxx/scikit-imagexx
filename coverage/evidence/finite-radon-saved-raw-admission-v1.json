@@ -1,0 +1,250 @@
+{
+  "schema": "finite-radon-saved-raw-admission-v1",
+  "status": "PASS_SCOPED_216_ORIGINAL_OBSERVATIONS_BOTH_PROFILES",
+  "passed": true,
+  "source": "49a95896863b5aeb937e376f14f22e42083c49f0",
+  "controller_sha256": "ac271ba72c105509db1e1c288f16c662e06476f66180a42e972d9ee7eb0fe31a",
+  "binding_sha256": "fd036cfd530c13155927afc79376ad982d92af84646de831ee4e011a6e1f1cb7",
+  "profiles": {
+    "minimum": {
+      "rows": 108,
+      "returns": 61,
+      "errors": {
+        "UFuncTypeError": 21,
+        "AttributeError": 12,
+        "ValueError": 11,
+        "RuntimeError": 2,
+        "IndexError": 1
+      },
+      "caller_exact32": 108,
+      "source": "49a95896863b5aeb937e376f14f22e42083c49f0",
+      "runtime_identity": {
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/transform/finite_radon_transform.py",
+        "signatures": {
+          "frt2": "(a)",
+          "ifrt2": "(a)"
+        },
+        "sources": {
+          "skimage/transform/finite_radon_transform.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/transform/finite_radon_transform.py",
+          "numpy/core/_exceptions.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_exceptions.py",
+          "numpy/core/_methods.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_methods.py",
+          "numpy/core/fromnumeric.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/fromnumeric.py",
+          "numpy/core/numeric.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/numeric.py",
+          "numpy/__init__.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/__init__.py",
+          "skimage/__init__.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/__init__.py",
+          "skimage/transform/__init__.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/transform/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "relative": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "2ygzRqRDzeDIy03N3lZJBxTSw0460W_iwwrowgRY_IY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": []
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "relative": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "2ygzRqRDzeDIy03N3lZJBxTSw0460W_iwwrowgRY_IY"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ]
+      },
+      "GO_sha256": "6f7b969a3f461a58cd80c5c82b6a4e05d1f3e3466982060a585b3147b12084f2"
+    },
+    "modern": {
+      "rows": 108,
+      "returns": 61,
+      "errors": {
+        "TypeError": 4,
+        "UFuncTypeError": 17,
+        "AttributeError": 12,
+        "ValueError": 11,
+        "RuntimeError": 2,
+        "IndexError": 1
+      },
+      "caller_exact32": 108,
+      "source": "49a95896863b5aeb937e376f14f22e42083c49f0",
+      "runtime_identity": {
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/transform/finite_radon_transform.py",
+        "signatures": {
+          "frt2": "(a)",
+          "ifrt2": "(a)"
+        },
+        "sources": {
+          "skimage/transform/finite_radon_transform.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/transform/finite_radon_transform.py",
+          "numpy/_core/_exceptions.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_exceptions.py",
+          "numpy/_core/_methods.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_methods.py",
+          "numpy/_core/fromnumeric.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py",
+          "numpy/_core/numeric.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/numeric.py",
+          "numpy/__init__.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/__init__.py",
+          "skimage/__init__.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/__init__.py",
+          "skimage/transform/__init__.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/transform/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "relative": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "QFq-XI9SwdFbcbr70VVpMje24XQrxZhji3_AYmvMFXY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": []
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "relative": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "QFq-XI9SwdFbcbr70VVpMje24XQrxZhji3_AYmvMFXY"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ]
+      },
+      "GO_sha256": "cf196d723d515fd92f39638fb678b27a0dfa808320fe67eae8694a269a71608b"
+    }
+  },
+  "complete_rows": 216,
+  "total_consumed_original_calls": 216,
+  "unique_cases_per_profile": 108,
+  "decoded_array_payloads": 506,
+  "decoded_scalar_payloads": 8,
+  "decoded_logical_bytes": 28464,
+  "dtype_payload_counts": {
+    "<u4": 286,
+    "|b1": 8,
+    "|u1": 8,
+    "<u2": 8,
+    "<u8": 16,
+    "|i1": 8,
+    "<i2": 8,
+    "<i4": 8,
+    "<i8": 16,
+    "<f2": 8,
+    "<f4": 8,
+    "<f8": 76,
+    "<c8": 8,
+    "<c16": 8,
+    "|S3": 8,
+    "<U2": 8,
+    "<M8[D]": 8,
+    "<m8[D]": 8,
+    ">u4": 8
+  },
+  "raw_files": {
+    "build/finite-radon-reference-controller-v1/capture-v1/minimum/terminal.json": {
+      "sha256": "b2e500b54d467b52dd9977e2d4b2dc221dc798b8c96afdb6efe7c262d8f709ad",
+      "bytes": 12024
+    },
+    "build/finite-radon-reference-controller-v1/capture-v1/minimum/observations.json": {
+      "sha256": "26e5b6eb943dd5ddfc86db2ede250aea9966942b06efe1e4d88c75facbb4ea46",
+      "bytes": 607970
+    },
+    "build/finite-radon-reference-controller-v1/capture-v1/minimum/journal.jsonl": {
+      "sha256": "203e82c831aea1e72c3cbf616491bc51e812838009bb115688bcf26fa0a19a6d",
+      "bytes": 376517
+    },
+    "build/finite-radon-reference-controller-v1/capture-v1/minimum/precall-freeze.json": {
+      "sha256": "284c0b5cdc2ed6ff68a517764350c1b4b3538ff08d39388b6862df7388a9b1d0",
+      "bytes": 7734
+    },
+    "build/finite-radon-reference-controller-v1/capture-v1/modern/terminal.json": {
+      "sha256": "6b2c1bf8a282762f2a4de50fa9f9e3bcbee8e5e14258f9560fc113d10f5540eb",
+      "bytes": 11979
+    },
+    "build/finite-radon-reference-controller-v1/capture-v1/modern/observations.json": {
+      "sha256": "1e30b6a42c95fa7ac9384c5e97ebe72aaf1d2504629217468128b401b729b44f",
+      "bytes": 596195
+    },
+    "build/finite-radon-reference-controller-v1/capture-v1/modern/journal.jsonl": {
+      "sha256": "0bd6884763d39070f6f5a1e685eaf20d95b1ffc60e397179042b8a1c978a48cf",
+      "bytes": 370126
+    },
+    "build/finite-radon-reference-controller-v1/capture-v1/modern/precall-freeze.json": {
+      "sha256": "d72317c355cb65d4f797e720c09ef90fb2656cfcc65ef26ecd4c0547a32e0eab",
+      "bytes": 7717
+    }
+  },
+  "no_retry": true,
+  "normalization": "None: raw target/status/software/warnings/errors/protocol/collector/caller fields retained. This authenticates observations, not native results.",
+  "pending": [
+    "Exact native/public contract and incoming/outgoing FP comparison for all recorded cases",
+    "Floating/complex/protocol/platform full domain closure",
+    "Genuine core/hot swap/complete installed SDK",
+    "One-thread original-public benchmarks and release"
+  ],
+  "waste_review": "Decoded each actual payload once using stdlib, handling Unicode units and datetime units; preserved four semantically different dtype error outcomes across profiles. Rootmodern launcher index failed beforeprocess and was corrected using explicitargv, with originalGO retained; no original replay/native/build/timing.",
+  "next_owner_trigger": "B implements and compares source-faithful native operation against admitted216rows; source-only masks/unsupported domains are not parity. Root retains independent admission/genuine/performance/main."
+}
