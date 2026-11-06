@@ -750,3 +750,6 @@ tools/draw_batch_first_cohort_probe.py -text
 coverage/contracts/draw-batch-first-cohort-v1.json -text
 coverage/contracts/draw-batch-measurement-v1.json -text
 coverage/evidence/draw-batch-genuine-minimum-admission-v1.json -text
+benchmarks/draw-batch-minimum-initial-v1/** -text
+coverage/evidence/draw-batch-source-readiness-v2.json -text
+coverage/evidence/draw-batch-qualification-failure-v1.json -text

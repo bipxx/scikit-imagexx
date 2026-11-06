@@ -1,0 +1,37 @@
+{
+  "schema": "draw-batch-source-readiness-v2",
+  "status": "PASS_COMPLETE_SOURCE_BARRIERS_METADATA_SUCCESSOR_ONLY",
+  "source": "334e68e2e6717421501742365b6fe58328fc1019",
+  "parent": "db4f59b8aa69840591266e607e253a8611676ced",
+  "changed_paths": [
+    ".gitattributes",
+    "coverage/contracts/matrix-prescott-release-test-context-v1.json",
+    "tests/test_public_qualification.py",
+    "tools/public_qualification.py"
+  ],
+  "production_git_blobs_identical": 493,
+  "production_source_sha256": "ab513b8efe337d621921813b0df5b77a90827be5985e76f92a60db9e11ec0ae9",
+  "independent_review": {
+    "path": "build\\draw-batch-prebuild-independent-review-v2\\review.json",
+    "sha256": "46e330e2b0974d24db807808b238779a9588b222a9860d59bfc8885e97541295"
+  },
+  "complete_source_checks": {
+    "minimum": 2708,
+    "modern": 2708,
+    "subtests_each": 8,
+    "real_conftest": true,
+    "scientific_import_attempts": 0
+  },
+  "supersedes": "coverage/evidence/draw-batch-source-readiness-v1.json",
+  "invalidated_claim": "Earlier partial union incorrectly reused three literal source/selector dependent guards; all4 profiles of42135532859 failed before preparation. Prior readiness is not acceptance.",
+  "reused_evidence": {
+    "genuine_minimum_run": 42127381279,
+    "performance_run": 42132995271,
+    "scope": "Unchanged493production blobs permit carrying scoped genuine/SDK and32case performance evidence; raw db4 source identities remain unchanged."
+  },
+  "release_qualification": "PENDING one exact-source four-profile successor; no whole-product acceptance",
+  "closeout": {
+    "waste": "Preventable source-guard dependency miss retained; correction executes complete actual workflow command with normal setup on both retained interpreters. No native rebuild, originals or timings repeated.",
+    "next": "Root dispatch exact334 once, independently admit actual terminal results before delivery."
+  }
+}
