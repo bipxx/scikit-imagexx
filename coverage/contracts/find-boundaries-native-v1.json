@@ -1,17 +1,17 @@
 {
   "schema": "find-boundaries-native-v1",
-  "status": "ANALYTIC_COMPONENT_ONLY_PENDING_SAVED_GOLD_AND_INDEPENDENT_PEER",
+  "status": "SAVED_REFERENCE_AND_SIMD_COMPONENT_PASS_PENDING_INDEPENDENT_NATIVE_REVIEW",
   "header_source": "ad6290add52ea245b3aeac468ca8a8a71247c7e2",
   "header_raw_sha256": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
-  "leaf_raw_sha256": "33a6d15f3df380c9c2515cb953da69c969dafd3942ae7ba20f49a2a925657224",
-  "test_raw_sha256": "f0f891b95bdee37f552b01f8ad92fd72eda3c9cd26ec64d810080dcdb93c8d38",
+  "leaf_raw_sha256": "9f910ba308ab90189c6a8c6386a1fbf40ffab9093437ad1f0dfad392e2c53885",
+  "test_raw_sha256": "d32690d8768d54be4238c47d51e74d7fc05aed941fa384d3b976467431241e56",
   "namespace": "skimagexx::detail",
   "interface": [
     "find_boundaries_shape",
     "find_boundaries_into"
   ],
   "scope": "Frozen header exact-safe bool/eight-integer typed domain, subpixel fullwidth, ordinary64 exactlabelrange and noouter; unsupported rounded ordinary source control not claimed native.",
-  "algorithm": "One source-faithful radius1 reflect/clamped integer extrema neighborhood; fullouter replacement-min literal; subpixel distinct-nonsentinel corner labels. Shared existing ComponentsView/PixelType/execution.hpp only, no full morphology buffers/graph/backend forwarding.",
+  "algorithm": "One source-faithful radius1 reflect/clamped integer extrema neighborhood; fullouter replacement-min literal; subpixel distinct-nonsentinel corner labels. Shared existing ComponentsView/PixelType/execution.hpp only, no full morphology buffers/graph/backend forwarding. Minimalauto-vectorized2Dinterior thick/inner, C-contiguous/alignedinput/output, widths<=32, connectivity1/2. Exactsameexistingpartition once percall; genericborder/outer/strided/highrank/64bit routes retained.",
   "trust_boundary": "Descriptor/type/rank/shape/stride/worker/overflow/cost checked once; ordinary64 values scanned before writes. Raw SDK caller must prove backing capacity/disjointness/nonoverlap/lifetime; exact pointer alias refused but no fabricated allocation introspection.",
   "workers": "Default0 snapshots existing get_num_threads once; explicit1..1024 no getter. Existing parallel_min threshold, partition independent outputs, no new pool, global restored1 by controls.",
   "floating_point": "Integer-only exact frontier leaves caller status/rounding unchanged; fenv assertions passed; no FP calls in leaf.",
@@ -24,31 +24,62 @@
     "additional_storage_scalar": 72,
     "additional_storage_sanitize": 72,
     "source_inverse_reuses_old_analytic_bodies": true,
-    "MSVC": "leaf/test compile-only PASS; no Windows runtime link"
+    "MSVC": "Actualupdatedleaf/testcompile-only PASS",
+    "SIMD_new_normal": 73416,
+    "SIMD_new_disabled": 73416,
+    "SIMD_new_scalar": 73416,
+    "SIMD_new_sanitize": 73416,
+    "saved_per_normal_disabled_scalar_sanitize": 1402,
+    "parallel_interior_workers_normal": 2121785,
+    "parallel_interior_workers_scalar": 2121785,
+    "parallel_interior_workers_sanitize": 2121785
   },
-  "golds": "Not inserted/read as native oracle in this packet; raworiginal independent admission/goldprojection remains root gate.",
+  "golds": "Rootadmittedcapture64originalcalls projectedverbatim into0cfreference.56admittedreturnrecords\u00d7workers1/4=112numericwordcomparisons plus4nonexact64controlrefusals perGNUmode;6sourceerrorrows remainPythonboundarywork.",
   "codegen": {
     "normal": {
-      "compiler_vectorized_loop_reports": 0,
-      "has_GOMP_parallel": true,
-      "packed_integer_arithmetic_mnemonics": []
+      "vectorized_loop_reports": 32,
+      "packed_mnemonics": [
+        "paddw",
+        "pcmpeqb",
+        "pcmpeqd",
+        "pcmpeqw",
+        "pcmpgtb",
+        "pcmpgtd",
+        "pcmpgtw",
+        "pmaxsw",
+        "pmaxub",
+        "pminsw",
+        "pminub",
+        "psubd",
+        "psubusb",
+        "psubusw"
+      ],
+      "GOMP_parallel": true
     },
     "compiler-scalar": {
-      "compiler_vectorized_loop_reports": 0,
-      "has_GOMP_parallel": false,
-      "packed_integer_arithmetic_mnemonics": []
+      "vectorized_loop_reports": 0,
+      "packed_mnemonics": [],
+      "GOMP_parallel": false
     },
     "sanitize": {
-      "compiler_vectorized_loop_reports": 0,
-      "has_GOMP_parallel": true,
-      "packed_integer_arithmetic_mnemonics": []
+      "vectorized_loop_reports": 0,
+      "packed_mnemonics": [],
+      "GOMP_parallel": true
     }
   },
   "remaining": [
-    "Saved-reference parity and rounded64 domain disposition",
-    "Independent source/native review",
-    "Python binder/frontend, public ownedC/default/dtype/alias checks",
-    "Installed SDK consumer existingfamily and actualgenuine/fullprofile release",
-    "Actual benchmark/performance; no speedclaim or algorithm SIMD claim"
-  ]
+    "Independentnative source/evidence peer",
+    "Pythonfrontend/binder/parity/errors/protocol/owner/C-return witness",
+    "Existing-familyinstalledSDK/sourcefixtureclosure",
+    "Prospectivegenuinebenchmark/publicregistration/fullrelease; no timings/speedclaim",
+    "Widerrounded64ordinarytypedsemantics andunsafeupstreamCcast domains remain explicitbacklog"
+  ],
+  "simd_revision": 2,
+  "fixture": {
+    "path": "tests/fixtures/find_boundaries_originals_v1.hpp",
+    "raw_sha256": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
+    "records": 58,
+    "admitted": 56,
+    "rounded_control_refusals": 2
+  }
 }

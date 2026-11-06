@@ -73,6 +73,36 @@ template<class T,bool Boolean=false>T load(const ComponentsView& view,const Posi
     if constexpr(Boolean)result=result!=0;
     return result;
 }
+// Independent 2D interior pixels: caller proved disjoint storage; typed
+// pointer loads are admitted only for aligned positive C-contiguous input.
+// Borders and arbitrary-stride domains stay in the original scalar walker.
+#if defined(_MSC_VER)
+#define FIND_BOUNDARIES_RESTRICT __restrict
+#else
+#define FIND_BOUNDARIES_RESTRICT __restrict__
+#endif
+template<class T,bool Boolean,bool Full,bool Inner>
+void interior_row(const T* FIND_BOUNDARIES_RESTRICT input,
+    std::uint8_t* FIND_BOUNDARIES_RESTRICT output,std::size_t width,
+    std::size_t y,T background,bool background_exists) {
+    const auto row=y*width;
+    for(std::size_t x=1;x+1<width;++x) {
+        auto canonical=[](T value)->T {if constexpr(Boolean)return value!=0;else return value;};
+        const T center=canonical(input[row+x]);
+        T minimum=center,maximum=center;
+#define BOUNDARY_NEIGHBOR(offset) {const T v=canonical(input[offset]);minimum=std::min(minimum,v);maximum=std::max(maximum,v);}
+        BOUNDARY_NEIGHBOR(row+x-1) BOUNDARY_NEIGHBOR(row+x+1)
+        BOUNDARY_NEIGHBOR(row-width+x) BOUNDARY_NEIGHBOR(row+width+x)
+        if constexpr(Full) {
+            BOUNDARY_NEIGHBOR(row-width+x-1) BOUNDARY_NEIGHBOR(row-width+x+1)
+            BOUNDARY_NEIGHBOR(row+width+x-1) BOUNDARY_NEIGHBOR(row+width+x+1)
+        }
+#undef BOUNDARY_NEIGHBOR
+        output[row+x]=std::uint8_t((maximum!=minimum) &
+            (!Inner || !(background_exists && center==background)));
+    }
+}
+#undef FIND_BOUNDARIES_RESTRICT
 template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     const FindBoundaryParameters& parameters,std::uint8_t* output,
     const Shape& shape,const std::vector<std::ptrdiff_t>& strides,
@@ -101,10 +131,32 @@ template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     auto is_background=[&](T value) {return parameters.background_representable &&
         static_cast<std::uint64_t>(value)==parameters.background_bits;};
     const int team=output_count>=parallel_min?workers:1;
-    partition(output_count,team,[&](std::size_t begin,std::size_t end,std::size_t) {
+    const bool interior=sizeof(T)<=4 && !subpixel && parameters.mode!=FindBoundaryMode::outer &&
+        rank==2 && shape[0]>=3 && shape[1]>=3 &&
+        view.strides[1]==std::ptrdiff_t(sizeof(T)) && view.strides[0]==std::ptrdiff_t(shape[1]*sizeof(T)) &&
+        strides[1]==1 && strides[0]==std::ptrdiff_t(shape[1]) &&
+        reinterpret_cast<std::uintptr_t>(view.data)%alignof(T)==0;
+    using U=std::make_unsigned_t<T>;const U bits=static_cast<U>(parameters.background_bits);
+    T background;std::memcpy(&background,&bits,sizeof(T));
+    const bool background_exists=parameters.background_representable && static_cast<std::uint64_t>(background)==parameters.background_bits;
+    partition(interior?shape[0]:output_count,team,[&](std::size_t begin,std::size_t end,std::size_t) {
         Position p{},q{};
+        if(interior){begin*=shape[1];end*=shape[1];}
         for(auto index=begin;index<end;++index) {
-            position_of(index,shape,p);bool boundary=false;
+            position_of(index,shape,p);
+            if(interior && p[1]==1 && p[0]>0 && p[0]+1<shape[0]) {
+                auto* input=static_cast<const T*>(view.data);
+                const bool inner=parameters.mode==FindBoundaryMode::inner;
+                if(parameters.connectivity==1) {
+                    if(inner)interior_row<T,Boolean,false,true>(input,output,shape[1],p[0],background,background_exists);
+                    else interior_row<T,Boolean,false,false>(input,output,shape[1],p[0],background,background_exists);
+                } else {
+                    if(inner)interior_row<T,Boolean,true,true>(input,output,shape[1],p[0],background,background_exists);
+                    else interior_row<T,Boolean,true,false>(input,output,shape[1],p[0],background,background_exists);
+                }
+                index+=shape[1]-3;continue;
+            }
+            bool boundary=false;
             if(subpixel) {
                 std::array<std::size_t,8> odd{};std::size_t odd_count=0;
                 for(std::size_t d=0;d<rank;++d) {q[d]=p[d]/2;if(p[d]&1)odd[odd_count++]=d;}

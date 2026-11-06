@@ -6,6 +6,10 @@
 #include <cstdint>
 #include <cstring>
 #include <iostream>
+#include <cstdlib>
+#include <functional>
+#include <type_traits>
+#include "fixtures/find_boundaries_originals_v1.hpp"
 #include <limits>
 #include <numeric>
 #include <stdexcept>
@@ -98,7 +102,70 @@ void signed_stride_storage(){
  require(broadcast==std::array<std::uint8_t,4>{{1,1,1,1}});
  fixture<std::int32_t>({-1,-1,2},{3},FindBoundaryMode::inner,{0,0,1},1,std::uint64_t(-1));
 }
+template<class T>void simd_width(bool boolean=false){
+ const std::size_t height=9,width=41;std::vector<T> labels(height*width);
+ for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x){
+  int value=int((x/3+y/2)%5);
+  if constexpr(std::is_signed_v<T>)value-=2;
+  if(boolean)value=value%3==0?0:value%3==1?2:255;
+  labels[y*width+x]=static_cast<T>(value);
+ }
+ for(unsigned connectivity:{1u,2u})for(bool inner:{false,true}){
+  const T background=boolean?T(1):T(2);std::vector<std::uint8_t> truth(labels.size());
+  auto canonical=[&](T v)->T{return boolean?T(v!=0):v;};
+  for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x){
+   bool different=false;const auto center=canonical(labels[y*width+x]);
+   for(int dy=-1;dy<=1;++dy)for(int dx=-1;dx<=1;++dx){
+    if(unsigned(std::abs(dx)+std::abs(dy))>connectivity)continue;
+    const auto v=std::size_t(std::max<std::ptrdiff_t>(0,std::min<std::ptrdiff_t>(height-1,std::ptrdiff_t(y)+dy)));
+    const auto u=std::size_t(std::max<std::ptrdiff_t>(0,std::min<std::ptrdiff_t>(width-1,std::ptrdiff_t(x)+dx)));
+    different|=canonical(labels[v*width+u])!=center;
+   }
+   truth[y*width+x]=different&&(!inner||center!=background);
+  }
+  fixture<T>(labels,{height,width},inner?FindBoundaryMode::inner:FindBoundaryMode::thick,truth,connectivity,static_cast<std::uint64_t>(background),boolean);
+ }
+}
+void simd_controls(){simd_width<std::uint8_t>();simd_width<std::int8_t>();simd_width<std::uint16_t>();simd_width<std::int16_t>();simd_width<std::uint32_t>();simd_width<std::int32_t>();simd_width<std::uint8_t>(true);}
+void saved_controls(){
+ std::size_t accepted=0,refused=0;
+ for(const auto& row:find_boundaries_originals::rows()){
+  const auto item=row.input.size()/count(row.shape);
+  std::ptrdiff_t low=0,high=0;
+  for(std::size_t d=0;d<row.shape.size();++d){auto span=std::ptrdiff_t(row.shape[d]-1)*row.strides[d];low+=std::min<std::ptrdiff_t>(0,span);high+=std::max<std::ptrdiff_t>(0,span);}
+  std::vector<std::uint8_t> storage(std::size_t(high-low)+item+16,0xad);auto* base=storage.data()+8-low;
+  for(std::size_t i=0;i<count(row.shape);++i){auto index=i;std::ptrdiff_t offset=0;for(auto d=row.shape.size();d-->0;){offset+=std::ptrdiff_t(index%row.shape[d])*row.strides[d];index/=row.shape[d];}std::memcpy(base+offset,row.input.data()+i*item,item);}
+  const auto original=storage;ComponentsView view{base,row.type,false,false,row.shape,row.strides};std::vector<std::size_t> shape;
+  require(find_boundaries_shape(view,row.parameters.mode,shape));require(count(shape)==row.output.size());
+  for(int workers:{1,4}){
+   std::vector<std::uint8_t> output(row.output.size()+16,0xad);const auto accepted_now=find_boundaries_into(view,row.parameters,output.data()+8,row.output_strides,workers);
+   require(accepted_now==row.admitted);
+   if(!row.admitted){++refused;require(std::all_of(output.begin(),output.end(),[](auto v){return v==0xad;}));continue;}
+   ++accepted;
+   for(std::size_t i=0;i<row.output.size();++i){auto index=i;std::ptrdiff_t offset=0;for(auto d=shape.size();d-->0;){offset+=std::ptrdiff_t(index%shape[d])*row.output_strides[d];index/=shape[d];}require(output[8+offset]==row.output[i]);}
+   require(std::all_of(output.begin(),output.begin()+8,[](auto v){return v==0xad;}));require(std::all_of(output.end()-8,output.end(),[](auto v){return v==0xad;}));require(storage==original);
+  }
+ }
+ require(accepted==112);require(refused==4);std::cout<<"saved_accepted="<<accepted<<" rounded_control_refused="<<refused<<" ";
+}
+void interior_worker_controls(){
+ const std::size_t height=513,width=517;std::vector<std::uint8_t> input(height*width),output(input.size());
+ for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x)input[y*width+x]=((x+y)&1)?255:0;
+ ComponentsView view{input.data(),PixelType::boolean,false,false,{height,width},{std::ptrdiff_t(width),1}};
+ for(int budget:{4,1})for(unsigned connectivity:{1u,2u})for(bool inner:{false,true}) {
+  set_num_threads(budget);FindBoundaryParameters p{inner?FindBoundaryMode::inner:FindBoundaryMode::thick,connectivity,0,true};
+  require(find_boundaries_into(view,p,output.data(),{std::ptrdiff_t(width),1},0));
+  for(std::size_t i=0;i<output.size();++i)require(output[i]==(!inner||input[i]!=0));
+  require(get_num_threads()==budget);
+ }
+ set_num_threads(1);require(get_num_threads()==1);
+}
 int main(int argc,char** argv){
+ if(argc==2 && std::strcmp(argv[1],"--workers-only")==0){interior_worker_controls();std::cout<<"PASS interior-worker-controls="<<controls<<"\n";return 0;}
+ interior_worker_controls();
+ if(argc==2 && std::strcmp(argv[1],"--simd-only")==0){simd_controls();std::cout<<"PASS simd-controls="<<controls<<"\n";return 0;}
+ if(argc==2 && std::strcmp(argv[1],"--saved-only")==0){saved_controls();std::cout<<"PASS saved-controls="<<controls<<"\n";return 0;}
+ simd_controls();saved_controls();
  if(argc==2 && std::strcmp(argv[1],"--storage-only")==0){signed_stride_storage();std::cout<<"PASS additional storage controls="<<controls<<"\n";return 0;}
  signed_stride_storage();
  set_num_threads(1);require(get_num_threads()==1);
