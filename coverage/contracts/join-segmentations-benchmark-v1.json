@@ -1,0 +1,27 @@
+{
+  "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "api": "segmentation.join_segmentations",
+  "method": {
+    "sampler": "benchmarks/montage_sustained.py:measure",
+    "threads": 1,
+    "repeats": 7,
+    "warmup_groups_per_implementation_per_case": 1,
+    "timed_implementations": ["original public", "native public"],
+    "allocation_inclusive": true,
+    "mapping_protocols_inside_timed_body": false,
+    "required_prechecks": ["actual public namespace and C++ return", "strict provider policy", "default workers1 and fixed workers1", "saved-reference outputs/maps/keys identity", "FP policy/input immutability", "exact-source genuine runtime/core/root admission"],
+    "gates": "Reuse existing sustained sampler gates, raw losing rows and batch journal unchanged. No timing authorized by source-plan output."
+  },
+  "cases": [
+    {"id":"u8-labels-C","dtype":"uint8","shape":[129,131],"layout":"C","mapping":false,"left_count":8,"right_count":8,"left_scale":1,"right_scale":1},
+    {"id":"u8-maps-reverse","dtype":"uint8","shape":[129,131],"layout":"reverse","mapping":true,"left_count":8,"right_count":8,"left_scale":1,"right_scale":1},
+    {"id":"i16-labels-F","dtype":"int16","shape":[257,257],"layout":"F","mapping":false,"left_count":32,"right_count":8,"left_scale":7,"right_scale":7},
+    {"id":"i16-maps-C","dtype":"int16","shape":[257,257],"layout":"C","mapping":true,"left_count":32,"right_count":8,"left_scale":7,"right_scale":7},
+    {"id":"u16-labels-C","dtype":"uint16","shape":[257,257],"layout":"C","mapping":false,"left_count":32,"right_count":8,"left_scale":7,"right_scale":7},
+    {"id":"u16-maps-F","dtype":"uint16","shape":[257,257],"layout":"F","mapping":true,"left_count":32,"right_count":8,"left_scale":7,"right_scale":7},
+    {"id":"i32-labels-reverse","dtype":"int32","shape":[511,513],"layout":"reverse","mapping":false,"left_count":32,"right_count":8,"left_scale":7,"right_scale":7},
+    {"id":"i32-maps-C","dtype":"int32","shape":[511,513],"layout":"C","mapping":true,"left_count":32,"right_count":8,"left_scale":7,"right_scale":7}
+  ],
+  "unbound": {"source":null,"producer_run":null,"runtime":null,"core":null,"root_admission":null,"root_GO":null},
+  "frontiers": ["upstream exact ArrayMap class identity", "factor overflow/nonpositive scalar", "unreviewed dtype/provider promotion domains", "genuine binary arity/dtype smoke and public hot swap", "one-thread public performance and exact-source four-profile qualification"]
+}
