@@ -123,7 +123,8 @@ def test_source_identity_helper_closure_and_no_hidden_sampler():
     tree=ast.parse((ROOT/'tools/next_metrics_first_cohort_probe.py').read_text());functions={n.name:n for n in tree.body if isinstance(n,ast.FunctionDef)}
     prepare=ast.unparse(functions['prepare_host_helper']);assert 'util_views_fenv_build.py'in prepare and '--control-python'in prepare and 'rglob'in prepare
     assert "bundle.exists()"in prepare and "done.returncode == 0"in prepare
-    main=ast.unparse(functions['main']);assert 'helper_binding_sha256'in main and 'StopBeforeBody'in main
+    main=ast.unparse(functions['main']);assert 'helper_binding_sha256'in ast.unparse(functions['verify_helper_state'])and 'StopBeforeBody'in main
+    assert main.index('finish_probe(')>main.index('xx.set_fallback_enabled(fallback)')
     execute=ast.parse((ROOT/'benchmarks/next_util_execution.py').read_text())
     assert 'first_cohort_profile' in {n.name for n in execute.body if isinstance(n,ast.FunctionDef)}
     workflow=(ROOT/'.github/workflows/next-metrics-initial.yml').read_text()
@@ -179,3 +180,82 @@ def test_actual_bound_probe_metadata_reaches_import_request_refusal(monkeypatch,
     assert requests==(['numpy']if tamper=='none'else [])and builtins.__import__ is prior
     assert not (tmp_path/'first-cohort/blocks/calls.jsonl').exists()
     assert not (tmp_path/'first-cohort/blocks/never-written.json').exists()
+
+
+@pytest.mark.parametrize('mutation',('none','source','HEAD','dirty','binding','GO','probe','contract','helper-binding','helper-receipt','helper-env','deadline','restoration'))
+def test_actual_poststop_terminal_write_path_refuses_mutation(tmp_path,monkeypatch,mutation):
+    sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+    root=tmp_path/'source';root.mkdir();source=root/'small.py';source.write_text('# frozen')
+    contract=root/'contract.json';contract.write_text('{}')
+    bundle=tmp_path/'helper';bundle.mkdir();receipt=bundle/'receipt.json';receipt.write_text('{"synthetic_metadata_only":true}')
+    env=dict(UTIL_VIEWS_FENV_MODE='source-built-v1',UTIL_VIEWS_FENV_RECEIPT=str(receipt),UTIL_VIEWS_FENV_RECEIPT_SHA256=sha(receipt))
+    helper=tmp_path/'helper-binding.json';helper.write_text(json.dumps(dict(env=env,files={'receipt.json':sha(receipt)})))
+    folder=tmp_path/'first-cohort/blocks';folder.mkdir(parents=True)
+    binding=tmp_path/'binding.json';binding.write_text('{}');go_path=tmp_path/'go.json';go_path.write_text('{}')
+    bp,gp=sha(binding),sha(go_path)
+    value=dict(source_root=str(root),git_argv=['fixture-git'],source_revision='a'*40,source_files_sha256={'small.py':sha(source),'contract.json':sha(contract)},output_root=str(folder.parent),routes={'blocks':{'contract':'contract.json'}},base_contract_sha256=sha(contract))
+    go=dict(probe_sha256=sha(PROBE.__file__),helper_binding_sha256=sha(helper),deadline_utc='2099-01-01T00:00:00+00:00')
+    stopped=dict(route='blocks',counts=dict(original=1,native=1),timed_batches=0,sampler_body_calls=0)
+    def git(argv,**kwargs):
+        if argv[-2:]==['rev-parse','HEAD']:return ('b'*40 if mutation=='HEAD'else'a'*40)+'\n'
+        assert argv[-2:]==['status','--porcelain'];return ' M small.py'if mutation=='dirty'else ''
+    monkeypatch.setattr(PROBE.subprocess,'check_output',git)
+    for k,v in env.items():monkeypatch.setenv(k,v)
+    for k in ('GIT_DIR','GIT_WORK_TREE','UTIL_VIEWS_FENV_HELPER'):monkeypatch.delenv(k,raising=False)
+    if mutation=='source':source.write_text('# changed')
+    elif mutation=='binding':binding.write_text('{"changed":true}')
+    elif mutation=='GO':go_path.write_text('{"changed":true}')
+    elif mutation=='probe':go['probe_sha256']='0'*64
+    elif mutation=='contract':contract.write_text('{"changed":true}')
+    elif mutation=='helper-binding':helper.write_text('{}')
+    elif mutation=='helper-receipt':receipt.write_text('{"changed":true}')
+    elif mutation=='deadline':go['deadline_utc']='2000-01-01T00:00:00+00:00'
+    elif mutation=='helper-env':monkeypatch.setenv('UTIL_VIEWS_FENV_RECEIPT_SHA256','0'*64)
+    call=lambda:PROBE.finish_probe(folder,stopped,value,binding,go_path,go,bp,gp,mutation!='restoration')
+    if mutation=='none':
+        call();terminal=json.loads((folder/'terminal.json').read_text())
+        assert terminal['poststop_source_authority_unchanged']is True
+        assert terminal['outer_state_restored']is True
+        assert not (folder/'failure.json').exists()
+    else:
+        with pytest.raises(AssertionError):call()
+        assert not (folder/'terminal.json').exists()
+        failure=json.loads((folder/'failure.json').read_text())
+        assert failure['phase']=='poststop-source-authority'and failure['retry']is False
+    assert not (folder/'never-written.json').exists()
+
+
+@pytest.mark.parametrize('fault',('none','verifier','runtime','runtime-during-verifier','manifest'))
+def test_actual_batch_summary_requires_one_postbatch_verifier(tmp_path,monkeypatch,fault):
+    # Synthetic completed child receipts; neither child probe nor verifier runs.
+    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/next-metrics-measurement-v2.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
+    stage=tmp_path/'stage';stage.mkdir();runtime=stage/'runtime.json';runtime.write_text('{"synthetic_only":true}')
+    results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA)
+    manifest['runtime_sha256']=hashlib.sha256(runtime.read_bytes()).hexdigest()
+    manifest['first_cohort']['source_revision']='source'
+    authorities={name:dict(binding='binding',go='go')for name in ROUTES};seen=[]
+    def completed(command,**kwargs):
+        if 'verify'in command:
+            seen.append('verify')
+            assert not (results/'first-cohort-summary.json').exists()
+            if fault=='runtime-during-verifier':runtime.write_text('{"changed":true}')
+            return SimpleNamespace(returncode=int(fault=='verifier'))
+        cohort=command[-1];seen.append(cohort);folder=results/'first-cohort'/cohort;folder.mkdir(parents=True)
+        terminal=dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY',route=cohort,source='source',counts=dict(original=1,native=1),timed_batches=0,sampler_body_calls=0,outer_state_restored=True,poststop_source_authority_unchanged=True)
+        (folder/'terminal.json').write_text(json.dumps(terminal))
+        if len(seen)==9:
+            if fault=='runtime':runtime.write_text('{"changed":true}')
+            elif fault=='manifest':manifest_path.write_text('{"changed":true}')
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(PROBE.subprocess,'run',completed)
+    call=lambda:PROBE.run_cohorts(controller,results,manifest,'python',authorities)
+    if fault=='none':
+        call();assert seen[-1]=='verify'and seen.count('verify')==1
+        summary=json.loads((results/'first-cohort-summary.json').read_text());assert summary['postbatch_offline_identity_verified']is True
+    else:
+        with pytest.raises(AssertionError):call()
+        assert not (results/'first-cohort-summary.json').exists()
+        assert seen.count('verify')==(1 if fault in ('verifier','runtime-during-verifier')else 0)
+        failure=json.loads((results/'first-cohort-failure.json').read_text())
+        assert failure['phase']=='postbatch-identity'and failure['retry']is False
+        if fault=='verifier':assert json.loads((results/'first-cohort-identity-after-exit.json').read_text())['exit']==1

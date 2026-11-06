@@ -17,6 +17,44 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def verify_source_state(binding):
+    root=Path(binding['source_root']).resolve();git=binding['git_argv']
+    assert not os.environ.get('GIT_DIR')and not os.environ.get('GIT_WORK_TREE')
+    assert subprocess.check_output([*git,'rev-parse','HEAD'],text=True).strip()==binding['source_revision']
+    assert not subprocess.check_output([*git,'status','--porcelain'],text=True).strip()
+    for name,pin in binding['source_files_sha256'].items():assert sha(root/name)==pin,name
+
+
+def verify_helper_state(binding,go):
+    helper_binding=Path(binding['output_root']).parent/'helper-binding.json'
+    assert sha(helper_binding)==go['helper_binding_sha256']
+    helper=json.loads(helper_binding.read_bytes())
+    assert all(os.environ.get(k)==v for k,v in helper['env'].items())
+    assert set(helper['env'])=={'UTIL_VIEWS_FENV_MODE','UTIL_VIEWS_FENV_RECEIPT','UTIL_VIEWS_FENV_RECEIPT_SHA256'}
+    helper_root=Path(helper['env']['UTIL_VIEWS_FENV_RECEIPT']).parent
+    for name,pin in helper['files'].items():
+        path=(helper_root/name).resolve();assert path.is_relative_to(helper_root.resolve())and sha(path)==pin
+    assert not os.environ.get('UTIL_VIEWS_FENV_HELPER')
+
+
+def finish_probe(folder,stopped,binding,binding_path,go_path,go,binding_pin,go_pin,restored):
+    # Intentional sampler-entry stop bypasses driver epilogues. Re-establish
+    # their small source/authority envelope AFTER outer-state restoration.
+    folder=Path(folder)
+    try:
+        assert stopped and restored,'Outer state not restored'
+        assert sha(binding_path)==binding_pin and sha(go_path)==go_pin,'Poststop authority changed'
+        assert sha(__file__)==go['probe_sha256'],'Poststop probe changed'
+        assert datetime.now(timezone.utc)<datetime.fromisoformat(go['deadline_utc']),'Poststop GO expired'
+        verify_source_state(binding)
+        assert sha(Path(binding['source_root'])/binding['routes'][stopped['route']]['contract'])==binding['base_contract_sha256'],'Poststop active contract changed'
+        verify_helper_state(binding,go)
+    except BaseException as error:
+        write_json(folder/'failure.json',dict(phase='poststop-source-authority',type=type(error).__name__,error=str(error),counts=stopped.get('counts'),retry=False,outer_state_restored=restored))
+        raise
+    write_json(folder/'terminal.json',dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY',**stopped,outer_state_restored=True,poststop_source_authority_unchanged=True,core_runtime_SDK_scope='Pending once-after-batch offline verifier before summaryPASS'))
+
+
 def driver_argv(root,route,binding,output,deadline):
     argv=[str(Path(root)/route['driver']),*route['argv'],'--output',str(output)]
     if route['kind']=='util-executor':
@@ -57,9 +95,11 @@ def main():
     parser.add_argument('--root-go', type=Path, required=True)
     parser.add_argument('--route', required=True)
     args = parser.parse_args()
-    binding = json.loads(args.binding.read_bytes())
+    binding_raw=args.binding.read_bytes();binding_pin=hashlib.sha256(binding_raw).hexdigest()
+    binding = json.loads(binding_raw)
     assert binding.get('status') == 'ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS', 'UNBOUND: no scientific calls permitted'
-    go = json.loads(args.root_go.read_bytes())
+    go_raw=args.root_go.read_bytes();go_pin=hashlib.sha256(go_raw).hexdigest()
+    go = json.loads(go_raw)
     assert go['binding_sha256'] == sha(args.binding)
     assert go['probe_sha256'] == sha(__file__)
     assert go['timed_batches'] == 0
@@ -69,32 +109,19 @@ def main():
     assert datetime.now(timezone.utc) < datetime.fromisoformat(go['deadline_utc'])
     assert go['maximum_original_topcalls'] == go['maximum_native_topcalls'] == 1
     root = Path(binding['source_root']).resolve()
-    git = binding['git_argv']
-    assert not os.environ.get('GIT_DIR') and not os.environ.get('GIT_WORK_TREE')
-    assert subprocess.check_output([*git, 'rev-parse', 'HEAD'], text=True).strip() == binding['source_revision']
-    assert not subprocess.check_output([*git, 'status', '--porcelain'], text=True).strip()
+    verify_source_state(binding)
     assert sha(binding['genuine_root_admission_path']) == binding['genuine_root_admission_sha256']
     admission = json.loads(Path(binding['genuine_root_admission_path']).read_bytes())
     assert admission['source'] == binding['source_revision']
     assert admission['passed'] is True and admission['root_accepted'] is True and admission['profiles'] == 4
     assert binding['product_kind'] == 'GENUINE_INSTALLED_WHOLE_PRODUCT'
     assert Path(sys.executable).resolve() == Path(binding['interpreter']).resolve()
-    for name, pin in binding['source_files_sha256'].items():
-        assert sha(root / name) == pin
     for key in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS', 'BLIS_NUM_THREADS'):
         assert os.environ[key] == '1'
     assert os.environ['PYTHONDONTWRITEBYTECODE'] == '1'
     assert not os.environ.get('SKIMAGEXX_DISABLE_SIMD')
     route = binding['routes'][args.route]
-    helper_binding=Path(binding['output_root']).parent/'helper-binding.json'
-    assert sha(helper_binding)==go['helper_binding_sha256']
-    helper=json.loads(helper_binding.read_bytes())
-    assert all(os.environ.get(k)==v for k,v in helper['env'].items())
-    assert set(helper['env'])=={'UTIL_VIEWS_FENV_MODE','UTIL_VIEWS_FENV_RECEIPT','UTIL_VIEWS_FENV_RECEIPT_SHA256'}
-    helper_root=Path(helper['env']['UTIL_VIEWS_FENV_RECEIPT']).parent
-    for name,pin in helper['files'].items():
-        path=(helper_root/name).resolve();assert path.is_relative_to(helper_root.resolve())and sha(path)==pin
-    assert not os.environ.get('UTIL_VIEWS_FENV_HELPER')
+    verify_helper_state(binding,go)
     folder = Path(binding['output_root']) / args.route
     folder.mkdir(parents=True, exist_ok=False)  # Never replay a consumed route.
     output = folder / 'never-written.json'
@@ -249,8 +276,8 @@ def main():
         sys.argv = oldargv
         xx.set_num_threads(workers)
         xx.set_fallback_enabled(fallback)
-    save('terminal.json', dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY', **stopped,
-                               outer_state_restored=xx.get_num_threads() == workers and _compat._fallback_enabled == fallback))
+    finish_probe(folder,stopped,binding,args.binding,args.root_go,go,binding_pin,go_pin,
+                 xx.get_num_threads()==workers and _compat._fallback_enabled==fallback)
 
 
 def read_manifest(controller):
@@ -336,6 +363,7 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
 
 def run_cohorts(controller,results,manifest,python,authorities):
     results=Path(results);terminals=[]
+    manifest_path=Path(controller)/'coverage/contracts/next-metrics-measurement-v2.json';manifest_pin=sha(manifest_path)
     for cohort in manifest['first_cohort']['routes']:
         authority=authorities[cohort]
         command=[str(python),str(Path(controller)/manifest['first_cohort']['probe_path']),'--binding',authority['binding'],'--root-go',authority['go'],'--route',cohort]
@@ -347,9 +375,26 @@ def run_cohorts(controller,results,manifest,python,authorities):
         assert terminal['status']=='PASS_REAL_CLI_STOP_BEFORE_BODY'and terminal['route']==cohort
         assert terminal['source']==manifest['first_cohort']['source_revision']and terminal['counts']==dict(original=1,native=1)
         assert terminal['timed_batches']==terminal['sampler_body_calls']==0 and terminal['outer_state_restored']is True
+        assert terminal['poststop_source_authority_unchanged']is True
         terminals.append(terminal)
-    assert len(terminals)==9
-    write_json(results/'first-cohort-summary.json',dict(status='PASS',original_public_topcalls=9,native_public_topcalls=9,timed_batches=0,sampler_body_calls=0,routes=terminals))
+    try:
+        assert len(terminals)==9
+        assert sha(manifest_path)==manifest_pin,'Controller authority changed during cohorts'
+        # Large installed core/runtime/SDK closure is verified once for this batch.
+        # No extra per-route large-binary hash pass is introduced after the stop.
+        runtime=Path(controller).parent/'stage/runtime.json'
+        assert sha(runtime)==manifest['runtime_sha256'],'Postcohort runtime manifest changed'
+        verifier=[str(python),str(Path(controller).parent/'snapshot/tools/ci_measurement_artifacts.py'),'verify','--wheel-dir',str(Path(controller).parent/'stage/wheels'),'--artifact',str(runtime)]
+        with (results/'first-cohort-identity-after.log').open('w')as log:
+            checked=subprocess.run(verifier,stdout=log,stderr=subprocess.STDOUT)
+        write_json(results/'first-cohort-identity-after-exit.json',dict(exit=checked.returncode))
+        assert checked.returncode==0,'Postcohort installed core/runtime/SDK verifier failed'
+        assert sha(runtime)==manifest['runtime_sha256'],'Runtime manifest changed during verification'
+        assert sha(manifest_path)==manifest_pin,'Controller authority changed during cohorts'
+    except BaseException as error:
+        write_json(results/'first-cohort-failure.json',dict(phase='postbatch-identity',type=type(error).__name__,error=str(error),retry=False,completed_routes=len(terminals)))
+        raise
+    write_json(results/'first-cohort-summary.json',dict(status='PASS',original_public_topcalls=9,native_public_topcalls=9,timed_batches=0,sampler_body_calls=0,poststop_source_authority_unchanged=True,postbatch_offline_identity_verified=True,routes=terminals))
 
 
 def measurement_commands(snapshot,results,manifest,python,authorities,deadline):
