@@ -1,0 +1,48 @@
+{
+  "status": "PASS_COMPLETE_ACTUAL_WORKFLOW_SOURCE_BARRIERS_BOTH_SUPPORTED_PYTHONS",
+  "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "workflow_sha256": "04835f88050f51e813ffb8318f5860a0743ab9d852c1af489d9c73e8e6a436ba",
+  "profiles": {
+    "windows311": {
+      "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]",
+      "executable": "C:\\Users\\HEQ\\AppData\\Roaming\\uv\\python\\cpython-3.11.11-windows-x86_64-none\\python.exe",
+      "xml": {
+        "tests": 3064,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "collected": 3056,
+      "seconds": 290.56199999991804,
+      "terminal": "build/join-util-views-readiness-v1/sourcebarrier-windows311-v4/terminal.json"
+    },
+    "windows313": {
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+      "xml": {
+        "tests": 3064,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "collected": 3056,
+      "seconds": 265.3382356998045,
+      "terminal": "build/join-util-views-readiness-v1/sourcebarrier-windows313-v4/terminal.json"
+    }
+  },
+  "proofs": {
+    "build/join-util-views-readiness-v1/sourcebarrier-windows311-v4/terminal.json": "b8fa462890f75082a347ecbb987c80f2e7f0d729032f3d15376552f2e08ef912",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows311-v4/command.json": "88ef3dc65674b05afec4c4897e758f0ab1b49f6ff5a30e55fbc4e169b96f0be7",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows311-v4/testIDs.json": "950d1824c249c4ba69431d8e72f6cb496198e8c2e0a41f39a4fa38fbd57fc65b",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows311-v4/plugins.json": "710b85e0da0a6e6f2abb3df201648cef21203d90f59552af39bb62b83269232b",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows311-v4/results.xml": "2e6983ac7a9ea8751568052d815a394ab38c30e68fa7b1a22feaaca4ca8c40c5",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows313-v4/terminal.json": "c5b01a6e8bfb05d74c4c380b33ba6aee60727f1ca85644387dc4ad2a4b158152",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows313-v4/command.json": "3e1374e406ee9bfb0ee99849f5fbe51e2f50f54e0945e09783b6bde875d4358b",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows313-v4/testIDs.json": "950d1824c249c4ba69431d8e72f6cb496198e8c2e0a41f39a4fa38fbd57fc65b",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows313-v4/plugins.json": "db827d93a6f248ef8abe529b33293d521a69976ae4f9c82d42ea078b98f40424",
+    "build/join-util-views-readiness-v1/sourcebarrier-windows313-v4/results.xml": "e13606a433faed2a56640ca1f3ce21911b4b4801db9e2aefcdec997a9b38bacd"
+  },
+  "scope": "Normal conftest/plugin autoload/cacheprovider; no fail-fast, complete source command, scientific imports refused, zero original/native/timed calls. New21WindowsCRT controls included. Not numerical release qualification.",
+  "waste_review": "Reused existing v3 launcher with exactv4 source/output substitutions. Both complete commands required by changed test/workflow dependency closure; unchanged numerical/SDK/benchmark evidence not replayed. CLI workflow view unsupported --json failed read-only; corrected existing gh api endpoint.",
+  "next_owner_trigger": "Root one exact-source four-profile successor with live gh run watcher; main265 and public performance gate unchanged."
+}

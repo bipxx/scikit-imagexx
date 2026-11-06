@@ -27,7 +27,11 @@ def test_unbound_actual_authority_and_fixed_proposal(tmp_path):
     assert len(ROUTES)==9 and len({r['api']for r in ROUTES.values()})==9
     assert sum(v['cases']for v in DATA['families'].values())==56
     scope=DATA['execution_scope'];assert(scope['canonical_cases'],scope['canonical_raw_samples'],scope['warmup_groups'])==(56,784,112)
-    with pytest.raises(AssertionError,match='UNBOUND'):PROBE.read_manifest(ROOT)
+    # The historical v2 remains unbound even while a separately reviewed v3
+    # binds a real product. Exercise that original refusal with exact v2 bytes.
+    fixture=tmp_path/'coverage/contracts/next-metrics-measurement-v3.json'
+    fixture.parent.mkdir(parents=True);fixture.write_bytes(CONTRACT.read_bytes())
+    with pytest.raises(AssertionError,match='UNBOUND'):PROBE.read_manifest(tmp_path)
 
 
 @pytest.mark.parametrize('name',ROUTES)
@@ -228,7 +232,7 @@ def test_actual_poststop_terminal_write_path_refuses_mutation(tmp_path,monkeypat
 @pytest.mark.parametrize('fault',('none','verifier','runtime','runtime-during-verifier','manifest'))
 def test_actual_batch_summary_requires_one_postbatch_verifier(tmp_path,monkeypatch,fault):
     # Synthetic completed child receipts; neither child probe nor verifier runs.
-    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/next-metrics-measurement-v2.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
+    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/next-metrics-measurement-v3.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
     stage=tmp_path/'stage';stage.mkdir();runtime=stage/'runtime.json';runtime.write_text('{"synthetic_only":true}')
     results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA)
     manifest['runtime_sha256']=hashlib.sha256(runtime.read_bytes()).hexdigest()

@@ -281,12 +281,42 @@ def main():
 
 
 def read_manifest(controller):
-    path=Path(controller)/'coverage/contracts/next-metrics-measurement-v2.json'
+    path=Path(controller)/'coverage/contracts/next-metrics-measurement-v3.json'
     manifest=json.loads(path.read_bytes())
     assert manifest['schema']=='next-metrics-measurement-v1'
     assert manifest['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON','UNBOUND: no helper/target/sampler execution'
     assert manifest['first_cohort']['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS'
+    validate_bound_manifest(controller,manifest)
     return path,manifest
+
+
+def validate_bound_manifest(controller,manifest):
+    # Authenticate small root decisions before helper preparation or imports.
+    first=manifest['first_cohort'];producer=manifest['producer'];source=producer['revision']
+    admission_path=Path(controller)/first['root_admission_path'];stager_path=Path(controller)/first['root_stager_path']
+    assert sha(admission_path)==first['root_admission_sha256']and sha(stager_path)==first['root_stager_sha256']
+    admission=json.loads(admission_path.read_bytes());stager=json.loads(stager_path.read_bytes())
+    assert admission['passed']is admission['root_accepted']is True and admission['profiles']==4
+    assert admission['product_kind']=='GENUINE_INSTALLED_WHOLE_PRODUCT'
+    assert source==first['source_revision']==manifest['prepared_source']['revision']==admission['source']==stager['revision']
+    assert producer['run']==str(admission['run'])==str(stager['run'])and producer['artifact']==str(stager['artifact'])and producer['sha256']==stager['artifact_sha256']
+    assert stager['profile']=='minimum'and stager['status'].startswith('AUTHENTICATED_STAGED_UNACCEPTED')
+    assert admission['stagers']['minimum']['receipt_sha256']==first['root_stager_sha256']
+    assert manifest['SDK_members']==admission['SDK_members']==102
+    core=admission['qualified_profiles']['minimum']['core']
+    assert manifest['core_sha256']==core['core_sha256']and first['core_member']==core['sole_core']
+    assert len(manifest['prepared_source']['files_sha256'])==core['source_files']
+    assert manifest['benchmark_fingerprint']['source_sha256']==admission['production_source_sha256']
+    for name,pin in manifest['benchmark_source_sha256'].items():assert manifest['prepared_source']['files_sha256'][name]==pin,name
+    assert len(manifest['runtime_sha256'])==64 and set(manifest['runtime_sha256'])<=set('0123456789abcdef')
+    assert first['probe_sha256']==sha(Path(controller)/first['probe_path'])
+    assert len(first['routes'])==len({r['api']for r in first['routes'].values()})==9
+    scope=manifest['execution_scope']
+    assert tuple(scope[k]for k in('canonical_cases','canonical_raw_samples','warmup_groups','repeat','target_ms','warmup_min_ms','workers'))==(56,784,112,7,100,250,1)
+    assert scope['untimed_topcalls']==dict(original=9,native=9)and scope['no_automatic_retry']is scope['retain_all_losses']is True
+    # The future host builds its own helper. A producer-host binary/receipt is
+    # never authority for another host and remains deliberately unbound here.
+    assert manifest['helper']['receipt_sha256']is manifest['helper']['library_sha256']is manifest['helper']['root_GO']is None
 
 
 def write_json(path,value):
@@ -348,7 +378,7 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
     core=Path(site)/first['core_member'];assert core.resolve().is_relative_to(Path(site).resolve())and sha(core)==manifest['core_sha256']
     common=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',prepared_source=manifest['prepared_source'],producer=manifest['producer'],runtime_path=str(runtime.resolve()),runtime_sha256=manifest['runtime_sha256'],shared_CMake_sha256=manifest['prepared_source']['files_sha256']['CMakeLists.txt'],genuine_root_stager_path=str(stager.resolve()),genuine_root_stager_sha256=first['root_stager_sha256'],source_root=str(snapshot.resolve()),source_revision=first['source_revision'],git_argv=['git','-C',str(snapshot.resolve())],genuine_root_admission_path=str(admission.resolve()),genuine_root_admission_sha256=first['root_admission_sha256'],product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',interpreter=str(python),source_files_sha256=first['source_files_raw_sha256'],installed_site=str(site),numpy=json.loads(runtime.read_bytes())['runtime']['versions']['numpy'],core_path=str(core.resolve()),core_sha256=manifest['core_sha256'],output_root=str((results/'first-cohort').resolve()))
     for name,pin in common['source_files_sha256'].items():assert sha(snapshot/name)==pin
-    manifest_path=controller/'coverage/contracts/next-metrics-measurement-v2.json'
+    manifest_path=controller/'coverage/contracts/next-metrics-measurement-v3.json'
     index={}
     for cohort,route in routes.items():
         folder=results/('authority-'+cohort);folder.mkdir(exist_ok=False)
@@ -363,7 +393,7 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
 
 def run_cohorts(controller,results,manifest,python,authorities):
     results=Path(results);terminals=[]
-    manifest_path=Path(controller)/'coverage/contracts/next-metrics-measurement-v2.json';manifest_pin=sha(manifest_path)
+    manifest_path=Path(controller)/'coverage/contracts/next-metrics-measurement-v3.json';manifest_pin=sha(manifest_path)
     for cohort in manifest['first_cohort']['routes']:
         authority=authorities[cohort]
         command=[str(python),str(Path(controller)/manifest['first_cohort']['probe_path']),'--binding',authority['binding'],'--root-go',authority['go'],'--route',cohort]
