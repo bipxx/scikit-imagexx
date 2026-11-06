@@ -39,6 +39,8 @@ def cases():
     add('width-index-probe',width=seq(seq({'index_probe':1},0)))
     add('width-index-raises',width=seq(seq({'index_probe':'raise'},0)))
     add('coercion-error-before-width',input_kind='array_provider_error',width=None)
+    add('object-distinct-copy',input_kind='distinct_objects',dtype='object',shape=[2,2],width=0,copy=True)
+    add('zeroD-distinct-object',input_kind='distinct_objects',dtype='object',shape=[],width=0)
     return rows
 
 
@@ -67,13 +69,14 @@ def source_safe(spec):
     shape=spec['shape'];assert type(shape)is list and len(shape)<=4 and all(type(n)is int and 0<=n<=8 for n in shape)
     count=math.prod(shape);assert count<=MAX_INPUT_ELEMENTS
     assert all(type(spec[key])is str for key in ('dtype','input_kind','layout'))
-    assert spec['dtype']in DTYPES and spec['input_kind']in INPUTS and spec['layout']in LAYOUTS
+    assert spec['dtype']in DTYPES and spec['input_kind']in INPUTS+('distinct_objects',) and spec['layout']in LAYOUTS
     assert type(spec['readonly'])is bool
     if spec['layout']=='permute3':assert len(shape)==3
     elif spec['layout']!='C':assert len(shape)==2
     if spec['input_kind']in('python_scalar','numpy_scalar'):assert shape==[]
     if spec['input_kind']in('list','tuple'):assert len(shape)==2 and spec['dtype']=='int16'
     if spec['input_kind']=='memoryview':assert spec['dtype']=='int16'and spec['layout']=='C'
+    if spec['input_kind']=='distinct_objects':assert spec['dtype']=='object'and spec['layout']=='C'
     physical=count*(2**len(shape)if spec['layout']=='step_all'else 1);assert physical<=MAX_PHYSICAL_ELEMENTS
     _literal_safe(spec['width'])
     assert type(spec['copy'])is bool or(type(spec['copy'])is dict and set(spec['copy'])=={'bool_probe'}and(type(spec['copy']['bool_probe'])is bool or spec['copy']['bool_probe']=='raise'and type(spec['copy']['bool_probe'])is str))
@@ -143,6 +146,8 @@ def fixture(spec,np):
     elif dtype in('S3','U2','V3','object'):
         array=np.zeros(count,dtype=dt)
         for i in range(count):array[i]=('x','y',None,3)[i%4]if dtype=='object'else b'xy'if dtype in('S3','V3')else'\u00e9'
+        if spec['input_kind']=='distinct_objects':
+            for i in range(count):array[i]=''.join(('crop','-payload-',str(i%2),'-owned'))
     else:array=np.arange(count,dtype=np.int64).astype(dt)
     array=array.reshape(tuple(spec['shape']));buffers={'owner':array};layout=spec['layout']
     if layout=='F':array=np.asfortranarray(array)

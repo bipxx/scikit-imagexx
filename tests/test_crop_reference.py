@@ -9,7 +9,7 @@ import sys
 import pytest
 from crop_contract import API,SIGNATURE,cases,source_safe,MAX_INPUT_ELEMENTS,MAX_PHYSICAL_ELEMENTS
 ROOT=Path(__file__).parents[1]
-DATA=json.loads((ROOT/'coverage/contracts/crop-v1.json').read_bytes())
+DATA=json.loads((ROOT/'coverage/contracts/crop-v2.json').read_bytes())
 
 
 def test_crop_source_signature_order_and_provider_boundary():
@@ -130,3 +130,16 @@ def test_crop_future_capture_requires_actual_source_locator_before_original_budg
     assert 'REAL source locator' in gate and 'actual retained Linux runtime' in gate
     assert 'stubbed command is not proof' in gate and 'no new preflight framework' in gate
     assert DATA['source_safety']['original_calls']==0
+
+
+def test_crop_successor_preserves_historical_recipes_and_bounds_identity_scope():
+    previous=DATA['predecessor']
+    raw=(ROOT/previous['contract']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==previous['raw_sha256']
+    historical=json.loads(raw)
+    assert cases()[:106]==historical['cases']and len(cases())==108
+    assert [r['id']for r in cases()[106:]]==['crop/object-distinct-copy','crop/zeroD-distinct-object']
+    assert all(r['input_kind']=='distinct_objects'and r['dtype']=='object'for r in cases()[106:])
+    source=(ROOT/'tests/crop_observer.py').read_text()
+    assert 'value is original' in source and "result is original" in source
+    assert 'id('not in source and 'ctypes.addressof'not in source

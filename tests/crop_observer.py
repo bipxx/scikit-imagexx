@@ -7,7 +7,7 @@ import inspect
 from pathlib import Path
 import warnings
 import zlib
-from crop_contract import API,SIGNATURE,ArrayProvider,InterfaceProvider,IndexProbe,BoolProbe,SequenceProbe,fixture
+from crop_contract import API,SIGNATURE,ArrayProvider,InterfaceProvider,IndexProbe,BoolProbe,SequenceProbe,fixture,MAX_INPUT_ELEMENTS
 from draw_coordinates_observer import encode as encode_leaf,scientific_profile
 SOURCE_SHA256='558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac'
 
@@ -44,9 +44,31 @@ def encode(value,np):
     return encode_leaf(value,np)
 
 
+def retain_object_payloads(buffers,np):
+    """Retain only the bounded builtin payload slots of controlled input arrays."""
+    retained=[]
+    for name,array in buffers.items():
+        if array.dtype.kind=='O':
+            assert not array.dtype.fields and array.size<=MAX_INPUT_ELEMENTS
+            retained.extend((name,index,value)for index,value in enumerate(array.flat))
+    assert len(retained)<=2*MAX_INPUT_ELEMENTS
+    return retained
+
+
+def object_payload_relations(result,retained,np):
+    """Relational identity, never addresses or an arbitrary object graph."""
+    row=dict(slots=[[name,index]for name,index,_ in retained])
+    if isinstance(result,np.ndarray)and result.dtype.kind=='O':
+        assert not result.dtype.fields and result.size<=MAX_INPUT_ELEMENTS
+        row.update(kind='array',shape=list(result.shape),is_retained=[[value is original for _,_,original in retained]for value in result.flat])
+    else:row.update(kind='scalar',is_retained=[result is original for _,_,original in retained])
+    return row
+
+
 def observe(call,spec,np):
-    """Future one-body observation, never enabled by a test or this packet."""
+    """One supplied-call observation; setup tests use refused/deterministic stand-ins only."""
     args,options,events,buffers=fixture(spec,np);before=encode((args,options,buffers),np);assert not events
+    retained=retain_object_payloads(buffers,np)
     pointers={name:a.ctypes.data for name,a in buffers.items()};old=np.geterr(),np.geterrcall(),np.getbufsize();FP=[]
     def handler(message,flags):FP.append(dict(message=message,flags=flags))
     result=None;error=None
@@ -63,4 +85,5 @@ def observe(call,spec,np):
     if isinstance(result,(np.ndarray,np.generic)):
         for name,a in buffers.items():
             aliases[name]=dict(identity=result is a,base_is_input=getattr(result,'base',None)is a,shares_memory=bool(np.shares_memory(result,a)),pointer_delta=int(result.ctypes.data-a.ctypes.data)if isinstance(result,np.ndarray)else None)
-    return dict(id=spec['id'],before=before,after=encode((args,options,buffers),np),result=encode(result,np),result_type=dict(module=type(result).__module__,name=type(result).__name__),result_is_argument=result is args[0],aliases=aliases,events=list(events),warnings=[dict(module=type(w.message).__module__,type=type(w.message).__name__,message=str(w.message))for w in caught],error=error,FP_events=FP,checks=checks,original_body_budget=1)
+    payload_identity=None if not retained else object_payload_relations(result,retained,np)if error is None else dict(slots=[[name,index]for name,index,_ in retained],kind='error')
+    return dict(id=spec['id'],before=before,after=encode((args,options,buffers),np),result=encode(result,np),result_type=dict(module=type(result).__module__,name=type(result).__name__),result_is_argument=result is args[0],aliases=aliases,object_payload_identity=payload_identity,events=list(events),warnings=[dict(module=type(w.message).__module__,type=type(w.message).__name__,message=str(w.message))for w in caught],error=error,FP_events=FP,checks=checks,original_body_budget=1)

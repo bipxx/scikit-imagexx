@@ -1,0 +1,2169 @@
+{
+  "schema": "crop-prospective-reference-v2",
+  "status": "SOURCE_ONLY_PLAN_NO_ORIGINALS_IMPLEMENTATION_BUILDS_OR_TIMING_AUTHORIZED",
+  "api": "util.crop",
+  "signature": "(ar, crop_width, copy=False, order='K')",
+  "reference_version": "0.26.0",
+  "upstream": {
+    "module": "skimage.util.arraycrop",
+    "raw_and_canonical_lf_sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+    "fixture": "tests/fixtures/crop_upstream_v0_26.py.txt",
+    "profiles": {
+      "minimum": {
+        "profile": "minimum",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "upstream_path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/util/arraycrop.py",
+        "upstream_raw_sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+        "upstream_canonical_lf_sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+        "source_bytes": 2486,
+        "scope": "Read installed source and distribution metadata only; no NumPy/skimage package imports or original calls",
+        "original_calls": 0,
+        "native_calls": 0,
+        "builds": 0,
+        "timed_batches": 0
+      },
+      "modern": {
+        "profile": "modern",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "upstream_path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/util/arraycrop.py",
+        "upstream_raw_sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+        "upstream_canonical_lf_sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+        "source_bytes": 2486,
+        "scope": "Read installed source and distribution metadata only; no NumPy/skimage package imports or original calls",
+        "original_calls": 0,
+        "native_calls": 0,
+        "builds": 0,
+        "timed_batches": 0
+      }
+    }
+  },
+  "route": {
+    "source_base": "04f54f6c7c671770d8b91b3712f567964a783e10",
+    "inventory_entries": 477,
+    "api": "util.crop",
+    "current_implementation": "upstream-only",
+    "family": "metadata",
+    "effort": "S",
+    "prerequisites": [
+      "array"
+    ],
+    "all_other_477_routes_unchanged": true
+  },
+  "intended_scope": "Exact fullpublic scalar/sequence crop widths and sourcefirst coercion, negative/large widths, copy/order K/C/F/A, N-D/empty/zeroD, C/F/permuted/negative/step strides, dtype/class/layout/alias/base/readonly/errors/protocol/state. This packet is prospective and closes no parity or advertised API domain.",
+  "source_order": [
+    "np.array(ar,copy=False) before any width handling: preserve version-specific ndarray/coercion/protocol/error behavior; do not silently replace with asarray.",
+    "numbers.Integral dispatch, then crop_width[0], len and pair unpacking in the literal source branch order. Empty/wrong/nonnumeric widths remain source errors to observe.",
+    "Python slice(a, ar.shape[i]-b) for each pair; negative/huge Python integers are ordinary bounded slicing, not padding or an enlarged output. NumPy scalar arithmetic can have version-dependent warnings/errors; capture exactly.",
+    "copy truth evaluation follows slice construction. If false, order is ignored; ar[slices] may be a scalar for zeroD because slices=().",
+    "If true, np.array(ar[slices],order=order,copy=True) owns output construction and dtype/copy/order errors. K/A layout and object shallow references are provider semantics to preserve, not guessed."
+  ],
+  "cases": [
+    {
+      "id": "crop/width-zero",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-scalar",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-single-tuple",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          1
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-single-list",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "list",
+        "items": [
+          1
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-pair-tuple",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          1,
+          2
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-pair-list",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "list",
+        "items": [
+          1,
+          2
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-broadcast-pair",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-axis-pairs",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              2,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-axis-lists",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "list",
+        "items": [
+          {
+            "container": "list",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "list",
+            "items": [
+              2,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-bool",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": true,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-numpy-int64",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "np_scalar": "int64",
+        "value": 1
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-numpy-uint64",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "np_scalar": "uint64",
+        "value": 1
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-numpy-width-vector",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "width_array": [
+          1,
+          2
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-negative",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": -1,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-negative-pair",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          -2,
+          1
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-mixed-outside",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              -100,
+              100
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              -1
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-large",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1180591620717411303424,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-large-pair",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          1180591620717411303424,
+          -1180591620717411303424
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-False-order-K",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-False-order-C",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": "C"
+    },
+    {
+      "id": "crop/copy-False-order-F",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": "F"
+    },
+    {
+      "id": "crop/copy-False-order-A",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": "A"
+    },
+    {
+      "id": "crop/copy-False-order-invalid",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": "invalid"
+    },
+    {
+      "id": "crop/copy-False-order-None",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": null
+    },
+    {
+      "id": "crop/copy-False-order-0",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": 0
+    },
+    {
+      "id": "crop/copy-False-order-c",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": false,
+      "order": "c"
+    },
+    {
+      "id": "crop/copy-True-order-K",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-True-order-C",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": "C"
+    },
+    {
+      "id": "crop/copy-True-order-F",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": "F"
+    },
+    {
+      "id": "crop/copy-True-order-A",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": "A"
+    },
+    {
+      "id": "crop/copy-True-order-invalid",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": "invalid"
+    },
+    {
+      "id": "crop/copy-True-order-None",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": null
+    },
+    {
+      "id": "crop/copy-True-order-0",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": 0
+    },
+    {
+      "id": "crop/copy-True-order-c",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": "c"
+    },
+    {
+      "id": "crop/rank1",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        7
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/rank3",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        3,
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/rank4",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        2,
+        2
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/empty-leading",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        0,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/empty-trailing",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        0
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/zeroD-view",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/zeroD-copy",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/layout-F",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "F",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/layout-transpose",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "transpose",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/layout-reverse_rows",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_rows",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/layout-reverse_columns",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_columns",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/layout-reverse_all",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "reverse_all",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/layout-step_all",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "step_all",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/layout-permute3",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "permute3",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              0,
+              1
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-permuted3-K",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "permute3",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-permuted3-C",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "permute3",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "C"
+    },
+    {
+      "id": "crop/copy-permuted3-F",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "permute3",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "F"
+    },
+    {
+      "id": "crop/copy-permuted3-A",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "permute3",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "A"
+    },
+    {
+      "id": "crop/readonly-view",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": true,
+      "width": 1,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/readonly-copy",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": true,
+      "width": 1,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-bool",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-int8",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-uint8",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-uint16",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-int32",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-uint32",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-int64",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-uint64",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-float16",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-float32",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-float64",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-complex64",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-complex128",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-S3",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "S3",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-U2",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "U2",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-V3",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "V3",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-packed",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "packed",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-object",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-datetime64[D]",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "datetime64[D]",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-timedelta64[D]",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "timedelta64[D]",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-tagged_i16",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "tagged_i16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/dtype-big_endian_i16",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "big_endian_i16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-dtype-packed",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "packed",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-dtype-object",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-dtype-tagged_i16",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "tagged_i16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-dtype-complex128",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/zeroD-object-view",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/zeroD-packed-view",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [],
+      "dtype": "packed",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-list",
+      "api": "util.crop",
+      "input_kind": "list",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-tuple",
+      "api": "util.crop",
+      "input_kind": "tuple",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-python_scalar",
+      "api": "util.crop",
+      "input_kind": "python_scalar",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-numpy_scalar",
+      "api": "util.crop",
+      "input_kind": "numpy_scalar",
+      "shape": [],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-subclass",
+      "api": "util.crop",
+      "input_kind": "subclass",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-array_provider",
+      "api": "util.crop",
+      "input_kind": "array_provider",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-array_provider_error",
+      "api": "util.crop",
+      "input_kind": "array_provider_error",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-interface_provider",
+      "api": "util.crop",
+      "input_kind": "interface_provider",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/input-memoryview",
+      "api": "util.crop",
+      "input_kind": "memoryview",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-none",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": null,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-float",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1.5,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-empty",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": []
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-flat-length3",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          1,
+          2,
+          3
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-pair-length1",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-wrong-axes",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              1
+            ]
+          },
+          {
+            "container": "tuple",
+            "items": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-float-index",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              1.5,
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-error-literal-dict",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "literal_dict": true
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-truth-False",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": {
+        "bool_probe": false
+      },
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-truth-True",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": {
+        "bool_probe": true
+      },
+      "order": "K"
+    },
+    {
+      "id": "crop/copy-truth-raise",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": 1,
+      "copy": {
+        "bool_probe": "raise"
+      },
+      "order": "K"
+    },
+    {
+      "id": "crop/width-sequence-probe",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "sequence_probe": [
+          1,
+          2
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-index-probe",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "index_probe": 1
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/width-index-raises",
+      "api": "util.crop",
+      "input_kind": "ndarray",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": {
+        "container": "tuple",
+        "items": [
+          {
+            "container": "tuple",
+            "items": [
+              {
+                "index_probe": "raise"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/coercion-error-before-width",
+      "api": "util.crop",
+      "input_kind": "array_provider_error",
+      "shape": [
+        4,
+        5
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "readonly": false,
+      "width": null,
+      "copy": false,
+      "order": "K"
+    },
+    {
+      "id": "crop/object-distinct-copy",
+      "api": "util.crop",
+      "input_kind": "distinct_objects",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": true,
+      "order": "K"
+    },
+    {
+      "id": "crop/zeroD-distinct-object",
+      "api": "util.crop",
+      "input_kind": "distinct_objects",
+      "shape": [],
+      "dtype": "object",
+      "layout": "C",
+      "readonly": false,
+      "width": 0,
+      "copy": false,
+      "order": "K"
+    }
+  ],
+  "source_safety": {
+    "max_rank": 4,
+    "max_axis": 8,
+    "max_logical_input_elements": 256,
+    "max_physical_input_elements": 4096,
+    "max_actual_physical_elements": 80,
+    "max_result_elements": 60,
+    "width_integer_absolute_bound": 1180591620717411303424,
+    "known_owned_protocols_only": true,
+    "no_forged_array_interfaces": true,
+    "arbitrary_provider_mutation_or_concurrency": false,
+    "original_calls": 0
+  },
+  "capture_plan": {
+    "status": "NOT_AUTHORIZED_PENDING_INDEPENDENT_SOURCE_SAFETY_AND_ROOT_GO",
+    "proposed_cases_per_profile": 108,
+    "retained_numpy_profiles": [
+      "1.24.4",
+      "2.5.4"
+    ],
+    "original_body_topcalls_per_spec": 1,
+    "proposed_two_profile_total": 216,
+    "first_required_step": "Predecessor106source-safetyPASS but captureRC: review bounded payload-identity correction+2newrecipes after actualNumPy-only refused-original fixture/observer setup. Root alone grants actualsource/runtime original GO; no originals authorized here.",
+    "journal": "Reuse existing external per-call before/after/failure source/runtime controller discipline; unique output IDs, no retry of consumed rows; do not add a new dispatch framework.",
+    "actual_setup_gate": "Before any original calls, exercise the REAL source locator and clean-HEAD command on the actual retained Linux runtime. Native Windows Git against Windows-authored worktrees is the established working boundary; Linux Git cannot resolve a C:/ .git handle. Use retained native-Git/frozen-source identity discipline or a genuine clean Linux checkout, with existing setup checks. A stubbed command is not proof; no new preflight framework."
+  },
+  "observation_policy": {
+    "outputs": "Exact return class/scalar/container, dtype.str/descr/metadata/byteorder, logical payload bits, shape/strides/own/writeable/aligned/C/F, base class/shape/strides, identity/base-is-buffer/shares_memory and pointer deltas. Empty identity and memory-sharing recorded separately.",
+    "objects": "Stable builtin payload values plus bounded relational is-matrices from outputobjectarray elements or Pythonobject scalar to retained inputpayload slots BEFORE the suppliedcall. Slot labels are buffername+flatindex; no rawaddresses/generalobjectgraphs. Two added recipes use dynamic equal-but-distinct builtinstrings to expose reconstruction.",
+    "inputs": "Record arguments/buffers before/after, pointers, protocol events, source errors/warnings/FP callbacks and NumPy policy/handler/buffer restoration. Observer invokes supplied original exactly once; external authorized controller owns the budget.",
+    "pending_lifecycle": "After futurecapture, implementation parity still needs lifecycle/GC/returned-view mutation checks. NumPy-only observer setup proves codec/state/identity plumbing, never original crop outcomes."
+  },
+  "reuse_and_implementation_direction": {
+    "reuse": [
+      "Existing NumPy np.array/basic-slice/explicit-copy semantics from source; local adapter should preserve them rather than recreate ndarray ownership/layout rules.",
+      "tests/draw_coordinates_observer.encode for ordinary numeric metadata/payload; only crop-specific object/packed/large-scalar and alias observations are new.",
+      "Existing _unique_rows NumPy preparation/provider-disclosure pattern and _compat.native_array reviewed; native_array whitelist/image assumptions do not fit general crop and must not be reused as its input whitelist.",
+      "Existing bind_array_storage policy may apply only if a later native copy boundary is demonstrated and independently scoped."
+    ],
+    "proposed_first_implementation": "Owned small Python metadata adapter, with NumPy coercion/view/copy providers explicitly disclosed; no original crop forwarding. No crop.hpp/leaf/binder authored now, no native arithmetic or new image-kernel count claimed.",
+    "SIMD": "No SIMD or process-global parallelism for metadata view construction. Explicit copy acceleration is a separate measured bottleneck decision, not an assumed requirement.",
+    "workers": "Relevant public benchmarks run with process-global default1. Optional workers must not change metadata/alias semantics; no scaling benefit claimed."
+  },
+  "performance_plan": {
+    "required": true,
+    "scope": "One-thread allocationinclusive public crop calls versus original even when boundary overhead dominates. Planning route optional wording does not waive measurement.",
+    "proposed_cases": [
+      {
+        "id": "view-tiny-C",
+        "shape": [
+          8,
+          9
+        ],
+        "layout": "C",
+        "copy": false,
+        "order": "K"
+      },
+      {
+        "id": "view-large-C",
+        "shape": [
+          1024,
+          1024
+        ],
+        "layout": "C",
+        "copy": false,
+        "order": "K"
+      },
+      {
+        "id": "view-F",
+        "shape": [
+          256,
+          257
+        ],
+        "layout": "F",
+        "copy": false,
+        "order": "K"
+      },
+      {
+        "id": "view-negative",
+        "shape": [
+          256,
+          257
+        ],
+        "layout": "reverse_all",
+        "copy": false,
+        "order": "K"
+      },
+      {
+        "id": "copy-C",
+        "shape": [
+          256,
+          257
+        ],
+        "layout": "C",
+        "copy": true,
+        "order": "C"
+      },
+      {
+        "id": "copy-F",
+        "shape": [
+          256,
+          257
+        ],
+        "layout": "F",
+        "copy": true,
+        "order": "F"
+      },
+      {
+        "id": "copy-K-permuted3",
+        "shape": [
+          32,
+          33,
+          3
+        ],
+        "layout": "permute3",
+        "copy": true,
+        "order": "K"
+      },
+      {
+        "id": "view-empty",
+        "shape": [
+          0,
+          17
+        ],
+        "layout": "C",
+        "copy": false,
+        "order": "K"
+      }
+    ],
+    "dtype": "int16 unless later explicitly reviewed",
+    "width": "source-safe literal small asymmetric widths, empty uses zero; concrete benchmark source/cases still require safety admission",
+    "method": "Reuse unchanged sustained sampler:7rounds,100msminimum samples,250mswarmup/calibration,alternating publicoriginal/native order, rawsamples and every slowercase retained. No timing authorized.",
+    "next_gate": "Eligible genuine installed adapter/product plus source/runtime/root provenance and actual CLI stop-before-sampler controls before one isolated campaign; cannot substitute C++ inner-loop timing."
+  },
+  "unassessed": [
+    "Arbitrary/hostile __array_struct__, DLPack, malformed/forged array_interface pointers, external bytearray/span forgeries or concurrent input/metadata mutation.",
+    "Arbitrary user callback mutation, arbitrary object payload protocols/custom repr/serialization, allocation failures/huge shapes or unbounded sequence expansion.",
+    "Longdouble/platform-specific extended dtypes, padded/overlapping structured layouts or structured-object reference fields and subarray dtype constructors outside this frozen firstrecipe set.",
+    "Full intended API is not closed by the finite prospective cases; source capture, independent admission, implementation/default/hotswap/installed ownership and relevant public performance remain separate gates.",
+    "Ranks beyond the firstrecipe rank0..4 matrix and custom/subarray dtype/protocol combinations remain future source-contract partitions; no full intendedN-D/dtype/protocol closure is claimed."
+  ],
+  "source_canonical_lf_sha256": {
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/fixtures/crop_upstream_v0_26.py.txt": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/test_crop_intake.py": "1e1d5229f7b267437410eb0bebec66e4cef37ac473fec643a05ccb7500f0a70c"
+  },
+  "original_observations": {},
+  "gates": {
+    "source_intake": "Two retained installed source files identical; metadata/source only, no package algorithms imported.",
+    "source_pure_tests": "Changed sourceguards bothsupportedPythons and actualNumPy-only setup on1.24.4/2.5.4 required; final proof paths live in successorhandoff.",
+    "independent_safety": "Predecessor106static source-safetyPASS, captureobserverRC. This identity delta+2smallbuiltin-string recipes require independent successor review; rootGO still pending.",
+    "implementation": "NOT_AUTHORIZED in this bounded task.",
+    "original_capture": "NOT_AUTHORIZED; independently reviewed source/fixtures/observer and actual controller/root GO required.",
+    "release_and_performance": "PENDING eventual implementation; all relevant product/SDK/hotswap/nativeownership/scalar/SIMD/workers gates apply only to claimed domains."
+  },
+  "closeout": {
+    "owner": "crop family author",
+    "next_owner": "root/independent safety reader",
+    "next_trigger": "Review successor identity/actualNumPy-only setup/real configured Linux locator before root issues original GO. Preserve original771/93a; sharedplan/work_items remain root-owned.",
+    "waste_and_reuse": "Source-only reuse and observed costs are finalized in existing handoff; no originals/builds/native implementation or timing in this packet."
+  },
+  "predecessor": {
+    "source": "7719647a2ad10634bf2f64c922f95c6fb3760ac3",
+    "contract": "coverage/contracts/crop-v1.json",
+    "raw_sha256": "d8cd69a0ad63a97c5ade451bbc86400f61aca36681041636b5500fa60d4c735d",
+    "historical_recipes": 106,
+    "preserved": true
+  }
+}
