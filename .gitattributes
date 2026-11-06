@@ -761,3 +761,4 @@ coverage/contracts/matrix-prescott-reference-v1.json -text
 coverage/contracts/matrix-prescott-v1.json -text
 tests/fixtures/matrix_prescott_native.hpp -text
 coverage/contracts/draw-polygon-draw-batch-runtime-v1.json -text
+coverage/contracts/matrix-prescott-release-test-context-v1.json -text

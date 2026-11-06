@@ -1664,10 +1664,42 @@ def require_matrix_runtime_admission_successor(frozen, current, row):
     assert project(old) == project(current)
 
 
+def matrix_pipeline_predecessor_bytes(current):
+    """Invert only the accepted v3 C-return observer addition, never its golds."""
+    context = json.loads((ROOT/'coverage/contracts/matrix-prescott-v1.json').read_bytes())
+    name = 'tests/test_matrix_transform_native_pipeline.py'
+    assert hashlib.sha256(current).hexdigest() == context['source_pins_canonical_lf'][name]
+    addition = (b'ENTRY_V3 = BACKEND.matrix_transform_run_v3\n'
+                b'assert inspect.isbuiltin(ENTRY_V3) and ENTRY_V3.__module__ == BACKEND.__name__\n')
+    assert current.count(addition) == 1
+    current = current.replace(addition, b'')
+    current_call = b'(arg is ENTRY or arg is ENTRY_V2 or arg is ENTRY_V3)'
+    assert current.count(current_call) == 1
+    return current.replace(current_call, b'(arg is ENTRY or arg is ENTRY_V2)')
+
+
+def matrix_native_predecessor_bytes(name, current, frozen):
+    """Bind accepted Prescott additions before applying the unchanged old guard."""
+    raw = (ROOT/'coverage/contracts/matrix-prescott-release-test-context-v1.json').read_bytes().replace(b'\r\n', b'\n')
+    assert hashlib.sha256(raw).hexdigest() == '3f7f21eadcddd6afd7730351e3e93f0463ade0dc451416e48512840e6bec4ec3'
+    row = json.loads(raw)['sources'][name]
+    assert row['baseline_canonical_lf_sha256'] == frozen
+    assert hashlib.sha256(current).hexdigest() == row['current_canonical_lf_sha256']
+    for fragment in row['inverse_fragments']:
+        before, after = fragment['current'].encode(), fragment['baseline'].encode()
+        assert before and current.count(before) == 1
+        current = current.replace(before, after)
+    assert hashlib.sha256(current).hexdigest() == frozen
+    return current
+
+
 def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources():
+    from matrix_prescott_context import predecessor_bytes
     migration=json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
     for name,row in migration['modules'].items():
         old=row['original_utf8'].encode();new=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name == 'tests/test_matrix_transform_native_pipeline.py':
+            new = matrix_pipeline_predecessor_bytes(new)
         assert hashlib.sha256(old).hexdigest()==row['original_raw_sha256']
         assert hashlib.sha256(new).hexdigest()==row['current_canonical_lf_sha256']
         def project(raw):
@@ -1687,18 +1719,23 @@ def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources()
     for name,want in migration['frozen_implementation'].items():
         current = (ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         if name in updates:
+            current = predecessor_bytes(ROOT, source=current)
             require_matrix_runtime_admission_successor(want, current, updates[name])
         else:
+            if name in ('include/skimagexx/matrix_transform.hpp', 'src/matrix_transform.cpp',
+                        'src/bind_matrix_transform.cpp', 'tests/test_matrix_transform_native.cpp'):
+                current = matrix_native_predecessor_bytes(name, current, want)
             assert hashlib.sha256(current).hexdigest()==want
 
 
 @pytest.mark.parametrize('fault', (None, 'schema', 'old-source', 'old-pin', 'new-pin',
     'unbounded-functions', 'math-change', 'legacy-allowset-change'))
 def test_matrix_runtime_successor_never_relabels_old_math_or_widens_the_projection(fault):
+    from matrix_prescott_context import predecessor_bytes
     migration = json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
     name = 'python/skimagexx/_matrix_transform.py'
     row = migration['qualified_implementation_updates'][name]
-    current = (ROOT/name).read_bytes().replace(b'\r\n', b'\n')
+    current = predecessor_bytes(ROOT)
     if fault == 'schema':row['schema'] = 'unknown'
     elif fault == 'old-source':row['original_utf8'] += '\nchanged'
     elif fault == 'old-pin':row['original_canonical_lf_sha256'] = '0' * 64
@@ -1999,7 +2036,7 @@ def test_composed_skylakex_metadata_guard_is_required_and_selected(tmp_path, mon
         'test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
         'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
         'test_matrix_transform_skylakex_routing.py',
-        'test_matrix_transform_numpy124_skylakex_certificate.py')
+        'test_matrix_transform_numpy124_skylakex_certificate.py', 'test_matrix_prescott_public.py')
     synthetic_complete_plan(tmp_path)
     functions = ['filters.rank.' + n for n in q.R5] + sorted(
         q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH, q.RECONSTRUCTION_PATH, q.NMI_PATH} | set(q.MAX_TREE_PATHS) | set(q.H_EXTREMA_PATHS))
