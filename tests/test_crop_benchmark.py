@@ -52,10 +52,10 @@ def test_crop_native_boundary_has_explicit_provider_and_serial_disposition():
     assert 'CropPlan crop_view'in native and 'void crop_copy_into'in native
 
 
-@pytest.mark.parametrize('fault',('none','cases'))
+@pytest.mark.parametrize('fault',('none','none-cached','cases'))
 def test_crop_bound_cli_metadata_stops_before_science(tmp_path,monkeypatch,fault):
     import importlib.util
-    import importlib.abc
+    import builtins,types
     from datetime import datetime,timedelta,timezone
     spec=importlib.util.spec_from_file_location('crop_cli_metadata',ROOT/'benchmarks/crop.py')
     driver=importlib.util.module_from_spec(spec);spec.loader.exec_module(driver)
@@ -69,15 +69,24 @@ def test_crop_bound_cli_metadata_stops_before_science(tmp_path,monkeypatch,fault
     bound=tmp_path/'binding.json';bound.write_text(json.dumps(binding));output=tmp_path/'never.json'
     monkeypatch.setattr(driver,'ROOT',tmp_path);monkeypatch.setattr(driver,'CONTRACT',path)
     monkeypatch.setattr(driver.subprocess,'check_output',lambda argv,**kw:revision+'\n'if argv[-1]=='HEAD'else'')
-    attempts=[]
-    class Refuse(importlib.abc.MetaPathFinder):
-        def find_spec(self,fullname,path=None,target=None):
-            if fullname.split('.')[0]in('numpy','scipy','skimage','skimagexx'):
-                attempts.append(fullname);raise RuntimeError('CROP_BOUND_SCIENCE_REFUSED')
-    monkeypatch.setattr(sys,'meta_path',[Refuse(),*sys.meta_path]);monkeypatch.setattr(sys,'path',list(sys.path))
+    attempts=[];original_import=builtins.__import__
+    def refuse_science(name,*args,**kwargs):
+        if name.split('.')[0]in('numpy','scipy','skimage','skimagexx'):
+            attempts.append(name);raise RuntimeError('CROP_BOUND_SCIENCE_REFUSED')
+        return original_import(name,*args,**kwargs)
+    monkeypatch.setattr(sys,'path',list(sys.path))
     monkeypatch.setattr(sys,'argv',[str(ROOT/'benchmarks/crop.py'),'--root-binding',str(bound),'--output',str(output)])
-    if fault=='none':
-        with pytest.raises(RuntimeError,match='CROP_BOUND_SCIENCE_REFUSED'):driver.main()
+    if fault in ('none','none-cached'):
+        missing=object();cached_before=sys.modules.get('numpy',missing)
+        # Refuse the import request even when a live NumPy module is cached.
+        # Only actual bound main runs inside this hook; restore exact objects.
+        with monkeypatch.context() as import_boundary:
+            if fault=='none-cached':import_boundary.setitem(sys.modules,'numpy',types.ModuleType('numpy'))
+            import_boundary.setattr(builtins,'__import__',refuse_science)
+            with pytest.raises(RuntimeError,match='CROP_BOUND_SCIENCE_REFUSED'):driver.main()
+        assert builtins.__import__ is original_import
+        if cached_before is missing:assert 'numpy'not in sys.modules
+        else:assert sys.modules['numpy'] is cached_before
         assert attempts==['numpy']
     else:
         with pytest.raises(AssertionError):driver.main()
