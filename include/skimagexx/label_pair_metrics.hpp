@@ -63,6 +63,31 @@ bool label_pair_rand_divide(double numerator,double denominator,LabelPairScalar6
 bool label_pair_rand_fscore(const LabelPairRandTerms&,double alpha,LabelPairScalar64&);
 bool label_pair_rand_error(std::uint64_t fscore_bits,LabelPairScalar64&);
 
+// Source-ordered contingency suffix: weights were prepared before NumPy FP
+// callbacks, coordinates are their current values after those callbacks. No
+// normalization or ignore-label recomputation occurs here. Caller supplies
+// stable native aligned spans of count elements; count/label bounds as above.
+struct LabelPairWeightedInput {
+    const std::int64_t* truth=nullptr;
+    const std::int64_t* test=nullptr;
+    const double* weights=nullptr;
+    std::size_t count=0;
+};
+// Physical CSR backing buffers retain count slots. Only the prefix ending at
+// indptr.back() is logical data. Source-shaped backing capacity is preserved;
+// arbitrary trailing-base payload parity remains an unassessed public domain.
+struct LabelPairCsrStorage {
+    std::size_t rows=0,columns=0;
+    std::vector<std::int64_t> indptr,indices;
+    std::vector<double> data;
+};
+// First source-weight partition: +zero and one shared positive normal word in
+// [2^-20,1], or one quiet-NaN word in every slot. Mixed nonzero coefficients and
+// signaling NaNs refuse without modifying output/FP state. These invariants
+// make equal-key sorting ties immaterial to the logical repeated sum. Uses the
+// current global budget once for workers0; pair grouping/coalescing is serial.
+bool label_pair_counts_preweighted(const LabelPairWeightedInput&,LabelPairCsrStorage&,int workers=0);
+
 // No generic sparse engine or VI reduction/log claim. Source-dependent CSR
 // object packing, normalization callbacks and supplied-table mutations remain
 // explicit ownership frontiers; no public API is advertised by these helpers.

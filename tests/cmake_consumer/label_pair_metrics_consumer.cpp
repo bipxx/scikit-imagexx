@@ -1,5 +1,6 @@
 #include "../label_pair_metrics_native_controls.hpp"
 #include "../fixtures/label_pair_rand_originals_v1.hpp"
+#include "../contingency_preweighted_controls.hpp"
 #include <iostream>
 #include <string>
 
@@ -28,9 +29,11 @@ std::size_t rand_controls() {
 
 int main(int argc,char** argv) {
     const bool rand_only=argc==2&&std::string(argv[1])=="--rand-only";
-    if(argc!=1&&!rand_only)return 2;
-    if(!rand_only)std::cout << "installed label-pair controls=" << label_pair_controls::run()
+    const bool preweighted_only=argc==2&&std::string(argv[1])=="--preweighted-only";
+    if(argc!=1&&!rand_only&&!preweighted_only)return 2;
+    if(!rand_only&&!preweighted_only)std::cout << "installed label-pair controls=" << label_pair_controls::run()
               << "; originals=5; workers=1,4; restored=1; available="
               << skimagexx::has_avx2() << '\n';
-    std::cout<<"installed Rand controls="<<rand_controls()<<"; originals=5; workers=1,4; restored=1; available="<<skimagexx::has_avx2()<<'\n';
+    if(!preweighted_only)std::cout<<"installed Rand controls="<<rand_controls()<<"; originals=5; workers=1,4; restored=1; available="<<skimagexx::has_avx2()<<'\n';
+    if(!rand_only)std::cout<<"installed preweighted controls="<<contingency_preweighted_controls::run()<<"; originals=5; workers=1,4; restored=1; available="<<skimagexx::has_avx2()<<'\n';
 }

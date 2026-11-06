@@ -87,4 +87,34 @@ void bind_label_pair_metrics(py::module_& module) {
         if(!skimagexx::detail::label_pair_rand_error(bits,result))return py::none();
         return rand_scalar(result);
     });
+    module.def("label_pair_counts_preweighted",[](const py::array& truth,const py::array& test,
+        const py::array& weights,int workers)->py::object {
+        for(const auto* value:{&truth,&test,&weights}) {
+            const bool floating=value==&weights;
+            if(value->ndim()!=1||value->dtype().kind()!=(floating?'f':'i')||value->itemsize()!=8
+               ||!py::cast<bool>(value->dtype().attr("isnative"))
+               ||!(value->flags()&py::array::c_style)
+               ||!py::cast<bool>(value->attr("flags").attr("aligned")))return py::none();
+            skimagexx::bindings::check_array_storage(*value);
+        }
+        if(truth.size()!=test.size()||truth.size()!=weights.size())return py::none();
+        skimagexx::detail::LabelPairCsrStorage result;bool accepted;
+        {
+            py::gil_scoped_release release;
+            accepted=skimagexx::detail::label_pair_counts_preweighted({
+                static_cast<const std::int64_t*>(truth.data()),static_cast<const std::int64_t*>(test.data()),
+                static_cast<const double*>(weights.data()),static_cast<std::size_t>(truth.size())},result,workers);
+        }
+        if(!accepted)return py::none();
+        py::array_t<std::int64_t> indptr(static_cast<py::ssize_t>(result.indptr.size()));
+        py::array_t<std::int64_t> indices(static_cast<py::ssize_t>(result.indices.size()));
+        py::array_t<double> data(static_cast<py::ssize_t>(result.data.size()));
+        {
+            py::gil_scoped_release release;
+            std::memcpy(indptr.mutable_data(),result.indptr.data(),result.indptr.size()*sizeof(std::int64_t));
+            std::memcpy(indices.mutable_data(),result.indices.data(),result.indices.size()*sizeof(std::int64_t));
+            std::memcpy(data.mutable_data(),result.data.data(),result.data.size()*sizeof(double));
+        }
+        return py::make_tuple(py::make_tuple(result.rows,result.columns),indptr,indices,data);
+    },py::arg("truth").noconvert(),py::arg("test").noconvert(),py::arg("weights").noconvert(),py::arg("workers")=0);
 }

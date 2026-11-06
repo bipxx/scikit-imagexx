@@ -28,6 +28,17 @@ unsigned status() noexcept {
     return (flags&FE_INVALID?1u:0u)|(flags&FE_DIVBYZERO?2u:0u)
          | (flags&FE_OVERFLOW?4u:0u)|(flags&FE_UNDERFLOW?8u:0u);
 }
+void pack_pairs(const std::int64_t* truth,const std::int64_t* test,
+                std::size_t count,std::uint64_t* packed,int snapshot) {
+    const int team=count>=parallel_min?snapshot:1;
+    partition(count,team,[&](std::size_t first,std::size_t last,std::size_t) {
+#if defined(_OPENMP) && !defined(_MSC_VER)
+        #pragma omp simd
+#endif
+        for(std::size_t i=first;i<last;++i)
+            packed[i]=(static_cast<std::uint64_t>(truth[i])<<20)|static_cast<std::uint64_t>(test[i]);
+    });
+}
 }
 
 bool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int workers) {
@@ -59,15 +70,7 @@ bool label_pair_counts(const LabelPairInput& input,LabelPairCsr& output,int work
     Environment environment(input.normalize);
     if(!environment.valid())return false;
     std::vector<std::uint64_t> keys(input.count);
-    auto* packed=keys.data();const auto* truth=input.truth;const auto* test=input.test;
-    const int team=input.count>=parallel_min?snapshot:1;
-    partition(input.count,team,[&](std::size_t first,std::size_t last,std::size_t) {
-#if defined(_OPENMP) && !defined(_MSC_VER)
-        #pragma omp simd
-#endif
-        for(std::size_t i=first;i<last;++i)
-            packed[i]=(static_cast<std::uint64_t>(truth[i])<<20)|static_cast<std::uint64_t>(test[i]);
-    });
+    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);
     std::sort(keys.begin(),keys.end());
     LabelPairCsr result;
     result.rows=static_cast<std::size_t>(max_row)+1;
@@ -177,5 +180,78 @@ bool label_pair_rand_error(std::uint64_t bits,LabelPairScalar64& output) {
     Environment environment(true);if(!environment.valid())return false;
     volatile double value=fscore;
     scalar_result(1.-value,output);return true;
+}
+
+bool label_pair_counts_preweighted(const LabelPairWeightedInput& input,
+                                  LabelPairCsrStorage& output,int workers) {
+    // SciPy sparse source conventions, BSD-3-Clause notice retained in
+    // third_party/scipy-sparse-LICENSE.txt.
+    const int snapshot=workers==0?skimagexx::get_num_threads():workers;
+    if(snapshot<1||snapshot>1024||!input.count||input.count>label_pair_max_samples
+       ||!input.truth||!input.test||!input.weights||!rand_environment())return false;
+    std::int64_t max_row=0,max_column=0;
+    std::uint64_t common=0;bool nan_weights=false;
+    for(std::size_t i=0;i<input.count;++i) {
+        const auto row=input.truth[i],column=input.test[i];
+        if(row<0||row>label_pair_max_label||column<0||column>label_pair_max_label)return false;
+        max_row=std::max(max_row,row);max_column=std::max(max_column,column);
+        std::uint64_t bits;std::memcpy(&bits,input.weights+i,sizeof(bits));
+        const bool quiet_nan=(bits&UINT64_C(0x7ff8000000000000))==UINT64_C(0x7ff8000000000000);
+        if(quiet_nan) {
+            if(i&&(!nan_weights||bits!=common))return false;
+            nan_weights=true;common=bits;
+        } else {
+            if(nan_weights)return false;
+            if(bits==0)continue;
+            if(bits<UINT64_C(0x3eb0000000000000)||bits>UINT64_C(0x3ff0000000000000)
+               ||(common&&common!=bits))return false;
+            common=bits;
+        }
+    }
+    Environment environment(true);if(!environment.valid())return false;
+    std::vector<std::uint64_t> keys(input.count);
+    pack_pairs(input.truth,input.test,input.count,keys.data(),snapshot);
+    LabelPairCsrStorage result;
+    result.rows=static_cast<std::size_t>(max_row)+1;
+    result.columns=static_cast<std::size_t>(max_column)+1;
+    result.indptr.assign(result.rows+1,0);
+    result.indices.resize(input.count);result.data.resize(input.count);
+    // Same row grouping as source coo_tocsr: stable input-pixel traversal.
+    for(auto key:keys)++result.indptr[std::size_t(key>>20)];
+    std::int64_t total=0;
+    for(std::size_t row=0;row<result.rows;++row) {
+        const auto count=result.indptr[row];result.indptr[row]=total;total+=count;
+    }
+    result.indptr[result.rows]=total;
+    for(std::size_t i=0;i<input.count;++i) {
+        const auto row=std::size_t(keys[i]>>20);
+        const auto dest=std::size_t(result.indptr[row]++);
+        result.indices[dest]=static_cast<std::int64_t>(keys[i]&((UINT64_C(1)<<20)-1));
+        std::memcpy(result.data.data()+dest,input.weights+i,sizeof(double));
+    }
+    std::int64_t previous=0;
+    for(auto& pointer:result.indptr){const auto next=pointer;pointer=previous;previous=next;}
+    // Source column-sort comparator does not impose a stable tie order.
+    // Accepted weights have only one nonzero word (or all identical qNaNs).
+    std::vector<std::pair<std::int64_t,double>> row_values;
+    for(std::size_t row=0;row<result.rows;++row) {
+        const auto first=std::size_t(result.indptr[row]),last=std::size_t(result.indptr[row+1]);
+        row_values.resize(last-first);
+        for(std::size_t i=first;i<last;++i)row_values[i-first]={result.indices[i],result.data[i]};
+        std::sort(row_values.begin(),row_values.end(),[](const auto& a,const auto& b){return a.first<b.first;});
+        for(std::size_t i=first;i<last;++i){result.indices[i]=row_values[i-first].first;result.data[i]=row_values[i-first].second;}
+    }
+    std::int64_t nnz=0,row_end=0;
+    for(std::size_t row=0;row<result.rows;++row) {
+        auto i=row_end;row_end=result.indptr[row+1];
+        while(i<row_end) {
+            const auto column=result.indices[std::size_t(i)];
+            double value=result.data[std::size_t(i++)];
+            while(i<row_end&&result.indices[std::size_t(i)]==column)value+=result.data[std::size_t(i++)];
+            result.indices[std::size_t(nnz)]=column;result.data[std::size_t(nnz++)]=value;
+        }
+        result.indptr[row+1]=nnz;
+    }
+    output=std::move(result);return true;
 }
 }

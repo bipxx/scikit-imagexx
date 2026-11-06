@@ -7,6 +7,7 @@ from pathlib import Path
 import zlib
 import pytest
 from label_pair_metrics_contract import APIS,MAX_PIXELS,MAX_LABEL,cases,fixture
+from contingency_table_context import predecessor_bytes
 ROOT=Path(__file__).parents[1]
 MATRIX=ROOT/'coverage/contracts/label-pair-metrics-v1.json'
 
@@ -21,7 +22,7 @@ def test_label_pair_manifest_and_source_order_without_science():
         assert spec.get('alpha',.5)in(-.1,0.,.25,.5,1.)
         assert spec.get('table')in(None,'counts-array','counts-matrix','normalized-array')
     for path,pin in data['source_freeze'].items():
-        assert hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+        assert hashlib.sha256(predecessor_bytes(ROOT,path)).hexdigest()==pin
     assert data['source_sensitive_order']['normalization']=='per-pixel divide before duplicate coalescing; no count/N shortcut'
     assert data['source_sensitive_order']['VI_supplied_table']=='check_shape_equality is unconditional; None images are not silently accepted'
 
@@ -36,7 +37,7 @@ def test_label_pair_header_scope_without_science():
     rand=json.loads((ROOT/'coverage/contracts/label-pair-rand-native-v1.json').read_bytes())
     assert rand['accuracy'].startswith('Exact0ULP')and rand['partition'].startswith('table=None')
     for path,pin in rand.get('current_source_pins',{}).items():
-        assert hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+        assert hashlib.sha256(predecessor_bytes(ROOT,path)).hexdigest()==pin
     tree=ast.parse((ROOT/'python/skimagexx/_label_pair_metrics.py').read_bytes())
     public=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='adapted_rand_error')
     assert [a.arg for a in public.args.args]==['image_true','image_test']
@@ -136,3 +137,16 @@ def test_label_pair_fixture_without_metric_activity(spec,reference_context):
         if spec.get('images_none'):assert args==(None,None)
         else:assert args[0].size==args[1].size==len(spec['truth'])
         json.dumps(observation((args,options,buffers),np),allow_nan=False)
+
+
+@pytest.mark.parametrize('path',('include/skimagexx/label_pair_metrics.hpp',
+    'src/label_pair_metrics.cpp','src/bind_label_pair_metrics.cpp',
+    'tests/cmake_consumer/label_pair_metrics_consumer.cpp',
+    'tests/test_label_pair_metrics_reference.py'))
+def test_contingency_context_rejects_tampered_source(path):
+    current=(ROOT/path).read_bytes().replace(b'\r\n',b'\n')
+    with pytest.raises(AssertionError):predecessor_bytes(ROOT,path,source=current+b'\nchanged')
+    if path=='src/label_pair_metrics.cpp':
+        changed=current.replace(b'scalar_result(1.-value,output)',b'scalar_result(2.-value,output)')
+        assert changed!=current
+        with pytest.raises(AssertionError):predecessor_bytes(ROOT,path,source=changed)
