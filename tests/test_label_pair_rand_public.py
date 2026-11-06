@@ -142,3 +142,29 @@ def test_public_unaligned_ordinary_storage(unaligned):
     assert calls==[getter,entry]and accepted==intake==[True]
     assert [v.tobytes().hex()for v in result]==['0000000000000000','000000000000f03f','000000000000f03f']
     assert [observation(v,np)for v in (truth,test)]==before
+
+
+@pytest.mark.parametrize('dtype',('int8','uint8','int16','uint16','int32','uint32','int64','uint64'))
+@pytest.mark.parametrize('unaligned',(False,True))
+def test_public_integer_metadata_value_words_and_native_intake(dtype,unaligned):
+    import numpy as np,skimagexx as xx
+    from skimagexx._label_pair_metrics import adapted_rand_error,_are_from_i64
+    tagged=np.dtype(dtype,metadata={'tag':7})
+    owner=np.zeros(6*tagged.itemsize+int(unaligned),np.uint8)
+    truth=np.ndarray((2,3),dtype=tagged,buffer=owner,offset=int(unaligned))
+    truth[:]=[[0,1,1],[2,2,2]];test=truth.copy()
+    before=[observation(a,np)for a in(truth,test)];entry=xx._core.label_pair_rand_terms;getter=xx._core.get_num_threads
+    calls=[];accepted=[];intake=[];previous=sys.getprofile()
+    def trace(frame,event,value):
+        if event=='c_return'and(value is getter or value is entry):calls.append(value)
+        if event=='call'and frame.f_code is _are_from_i64.__code__:
+            arrays=[frame.f_locals[n]for n in('truth','test')]
+            intake.append(all(a.dtype==np.dtype('int64')and a.dtype.metadata is None and a.flags.aligned and a.flags.c_contiguous for a in arrays))
+        if event=='return'and frame.f_code is _are_from_i64.__code__:accepted.append(frame.f_locals.get('native_result')is not None)
+    try:
+        sys.setprofile(trace);result=adapted_rand_error(truth,test)
+    finally:sys.setprofile(previous)
+    # Same admitted perfect-label values and already captured exact words.
+    assert [a.tobytes().hex()for a in result]==['0000000000000000','000000000000f03f','000000000000f03f']
+    assert calls==[getter,entry]and accepted==intake==[True]
+    assert [observation(a,np)for a in(truth,test)]==before

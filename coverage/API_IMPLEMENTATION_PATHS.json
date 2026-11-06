@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "b5042909c9b4f2f9a4cd4225e123fc76a7fa452f854c18535a05786dc51db55f",
+  "source_inventory_sha256": "3b9da022a99dc913810a2cd9029e9ffef1686422a58dbe82cdfce61cdbe68a83",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 262,
-      "upstream-only": 206
+      "native-partial": 264,
+      "upstream-only": 204
     },
     "kinds": {
       "callable": 448,
@@ -12867,15 +12867,24 @@
       "api": "metrics.adapted_rand_error",
       "kind": "callable",
       "signature": "(image_true=None, image_test=None, *, table=None, ignore_labels=(0,), alpha=0.5)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "metrics.adapted_rand_error",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse contingency counts and self-pair-excluding n*(n-1) sums for joint and marginal totals; compute precision, recall and alpha-weighted error",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse contingency counts and self-pair-excluding n*(n-1) sums for joint and marginal totals; compute precision, recall and alpha-weighted error",
       "mandatory_route_dependencies": [
         "array",
         "histogram",
@@ -12884,7 +12893,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze exact tiny partitions, singleton/all-singleton cases and sparse large labels against pinned upstream, including ignore_labels, supplied table, alpha, singleton/all-singleton zero divisions and returned order; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered ignore_labels, supplied table, alpha, singleton/all-singleton zero divisions and returned order. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "ignore_labels, supplied table, alpha, singleton/all-singleton zero divisions and returned order",
       "parity_cases_to_freeze": "exact tiny partitions, singleton/all-singleton cases and sparse large labels",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12895,25 +12904,34 @@
         "kind": "compute",
         "specific_workload": "exact tiny partitions, singleton/all-singleton cases and sparse large labels",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/label_pair_metrics.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_label_pair_rand_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "metrics.contingency_table",
       "kind": "callable",
       "signature": "(im_true, im_test, *, ignore_labels=None, normalize=False, sparse_type='matrix')",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "metrics.contingency_table",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Stable pair-label counts into CSR sparse matrix/array adapter",
+      "easiest_credible_path": "Audit/extend existing native implementation: Stable pair-label counts into CSR sparse matrix/array adapter",
       "mandatory_route_dependencies": [
         "array",
         "histogram",
@@ -12922,7 +12940,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze sparse high-ID labels and all-ignored pixels against pinned upstream, including ignore_labels, normalization, sparse_type and label index range; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered ignore_labels, normalization, sparse_type and label index range. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "ignore_labels, normalization, sparse_type and label index range",
       "parity_cases_to_freeze": "sparse high-ID labels and all-ignored pixels",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12933,10 +12951,10 @@
         "kind": "compute",
         "specific_workload": "sparse high-ID labels and all-ignored pixels",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/label_pair_metrics.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_contingency_table_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

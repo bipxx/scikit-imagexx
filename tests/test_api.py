@@ -296,6 +296,8 @@ def test_every_native_function(native, original, name, dtype, shape):
         assert str(actual_error.value)==str(error)
         return
     actual = getattr(native, name)(*args,**options)
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=a);return
     if api=='segmentation.relabel_sequential':
         # Compare sparse mapping vectors without dense ArrayMap conversion.
         assert type(actual) is type(expected) is tuple and len(actual)==3

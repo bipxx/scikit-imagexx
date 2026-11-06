@@ -155,3 +155,13 @@ else()
     target_compile_options(draw_ellipse_perimeter_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math)
 endif()
 add_test(NAME installed_draw_ellipse_perimeter_consumer COMMAND draw_ellipse_perimeter_consumer "${SKIMAGEXX_ELLIPSE_PERIMETER_FIXTURES}" auto)
+
+# Exact counts, finite adapted-Rand stages and preweighted contingency share one family.
+add_executable(label_pair_metrics_consumer label_pair_metrics_consumer.cpp)
+target_link_libraries(label_pair_metrics_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(label_pair_metrics_consumer PRIVATE /UNDEBUG /fp:strict)
+else()
+    target_compile_options(label_pair_metrics_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
+endif()
+add_test(NAME installed_label_pair_metrics_consumer COMMAND label_pair_metrics_consumer)

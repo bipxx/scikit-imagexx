@@ -291,9 +291,9 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current262'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter')
-CURRENT_SDK_CLIENT_SCOPE = 'current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance'
+CURRENT_PRODUCT_SCOPE = 'current264'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics')
+CURRENT_SDK_CLIENT_SCOPE = 'current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
 DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
@@ -488,6 +488,7 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json',
     'coverage/contracts/draw-set-color-native-v1.json',
 )
+DRAW_SOURCE_PATHS += ('include/skimagexx/label_pair_metrics.hpp', 'src/label_pair_metrics.cpp', 'src/bind_label_pair_metrics.cpp', 'python/skimagexx/_label_pair_metrics.py', 'python/skimagexx/_contingency_table.py', 'tests/label_pair_metrics_contract.py', 'tests/label_pair_metrics_observer.py', 'tests/test_label_pair_metrics_reference.py', 'tests/test_label_pair_metrics_counts_binding.py', 'tests/test_label_pair_rand_binding.py', 'tests/test_label_pair_rand_public.py', 'tests/test_contingency_table_public.py', 'tests/test_label_pair_metrics_default.py', 'tests/test_label_pair_metrics_benchmark.py', 'tests/test_label_pair_metrics_benchmark_intake.py', 'tests/test_label_pair_metrics_native.cpp', 'tests/test_label_pair_rand_native.cpp', 'tests/test_label_pair_preweighted_native.cpp', 'tests/label_pair_metrics_native_controls.hpp', 'tests/contingency_preweighted_controls.hpp', 'tests/contingency_table_context.py', 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp', 'tests/cmake_consumer/label_pair_metrics_consumer.cpp', 'coverage/contracts/label-pair-metrics-v1.json', 'coverage/contracts/label-pair-metrics-native-v1.json', 'coverage/contracts/label-pair-metrics-sdk-v1.json', 'coverage/contracts/label-pair-rand-native-v1.json', 'coverage/contracts/contingency-table-frontend-v1.json', 'coverage/contracts/contingency-table-source-context-v1.json', 'coverage/contracts/label-pair-metrics-benchmark-v1.json', 'benchmarks/label_pair_metrics.py', 'third_party/scipy-sparse-LICENSE.txt', 'coverage/contracts/label-pair-ARE-metadata-context-v1.json', 'tests/test_ellipse_fallback_policy.py', 'coverage/contracts/ellipse-perimeter-fallback-runtime-v1.json')
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
@@ -612,6 +613,9 @@ POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.
     'test_draw_set_color_default.py',
     'test_draw_set_color_benchmark.py',
 )
+
+
+POST203_TESTS += ('test_label_pair_metrics_reference.py', 'test_label_pair_metrics_counts_binding.py', 'test_label_pair_rand_binding.py', 'test_label_pair_rand_public.py', 'test_contingency_table_public.py', 'test_label_pair_metrics_default.py', 'test_label_pair_metrics_benchmark.py', 'test_label_pair_metrics_benchmark_intake.py')
 
 
 def groups_for_source(root):
@@ -904,7 +908,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -1751,6 +1755,22 @@ def draw_admission(core, draw, wrapper, registered, circle_wrapper, line_aa_wrap
             'line-AA public signature differs')
 
 
+def label_pair_admission(core, metrics, registered):
+    """Bound public aliases and real shared-core entries; no numerical calls here."""
+    for name,module,signature in (
+        ('adapted_rand_error','_label_pair_metrics','(image_true=None, image_test=None, *, table=None, ignore_labels=(0,), alpha=0.5)'),
+        ('contingency_table','_contingency_table',"(im_true, im_test, *, ignore_labels=None, normalize=False, sparse_type='matrix')")):
+        wrapper=importlib.import_module('skimagexx.'+module)
+        require(wrapper._core is core,'label-pair alternate worker state')
+        function=vars(metrics).get(name)
+        require(callable(function)and function is vars(wrapper).get(name)and function.__module__=='skimagexx.'+module,'label-pair public forwarding/alias')
+        require(str(inspect.signature(function))==signature,'label-pair public signature differs')
+        require(metrics.__all__.count(name)==1 and tuple(registered).count('metrics.'+name)==1,'label-pair duplicate/missing registry/export')
+    for name in ('label_pair_counts','label_pair_counts_preweighted','label_pair_rand_terms','label_pair_rand_divide','label_pair_rand_fscore','label_pair_rand_error','label_pair_check_storage'):
+        entry=getattr(core,name,None)
+        require(inspect.isbuiltin(entry)and entry.__module__==core.__name__ and entry.__name__==name,'label-pair compiled entry missing/forwarded: '+name)
+
+
 def admission(out, state):
     package = out / 'package'; record = json.loads((out / 'package.json').read_text())
     verify_tree(package, record['members_sha256'])
@@ -1767,6 +1787,7 @@ def admission(out, state):
     for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction', '_normalized_mutual_information', '_h_extrema'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
     coverage = importlib.import_module('skimagexx.coverage')
+    label_pair_admission(xx._core,importlib.import_module('skimagexx.metrics'),coverage.native_functions())
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
     require(sum(coverage.execution_kind(n) == 'native' for n in coverage.native_functions()) == state['expected']['image_count'], 'image/helper count mismatch')
     require(len(coverage.native_functions()) == state['expected']['registered_count']

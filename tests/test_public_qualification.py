@@ -2356,14 +2356,14 @@ def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,262)
+    result=q.plan(ROOT,profile,264)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current262' and result['registry']['image_count']==262
-    assert result['product_members']==199 and result['SDK_members']==94
-    assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==104
+    assert result['product_scope']=='current264' and result['registry']['image_count']==264
+    assert result['product_members']==204 and result['SDK_members']==96
+    assert result['SDK_checks']==64 and 'current32 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==112
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==105
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==113
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2422,7 +2422,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current262' and result['record_verified']
+        assert result['product_scope']=='current264' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2436,11 +2436,11 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',262)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',264)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter') and len(q.FAMILIES)==23
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics') and len(q.FAMILIES)==23
     current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
     old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
     q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
@@ -2896,7 +2896,7 @@ def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',262)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',264)['blockers']
 
 
 @pytest.mark.parametrize('selector',(

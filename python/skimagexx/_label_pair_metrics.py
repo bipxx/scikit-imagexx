@@ -88,13 +88,16 @@ def adapted_rand_error(image_true=None,image_test=None,*,table=None,ignore_label
     test=image_test.reshape(-1)
     _core.label_pair_check_storage(image_true)
     truth=image_true.reshape(-1)
-    if any(x.dtype.kind not in 'iu'or x.itemsize not in (1,2,4,8)or x.dtype.metadata is not None for x in (truth,test)):
+    if any(x.dtype.kind not in 'iu'or x.itemsize not in (1,2,4,8) for x in (truth,test)):
         raise NotImplementedError('adapted Rand noninteger/metadata dtype providers remain unassessed')
     if ignore_labels is None:ignore_labels=()
     if type(ignore_labels)not in (tuple,list)or len(ignore_labels)>64 or any(type(x)is not int or not -2**63<=x<2**63 for x in ignore_labels):
         raise NotImplementedError('adapted Rand ignore-label protocol remains unassessed')
     # Conversion preserves each admitted integer word's value; larger/negative
     # coordinates are refused by the native intake, without allocating by label.
+    # Metadata tags do not alter exact integer labels; strip only internal views.
+    if truth.dtype.metadata is not None:truth=truth.view(truth.dtype.str)
+    if test.dtype.metadata is not None:test=test.view(test.dtype.str)
     truth=np.ascontiguousarray(truth,dtype=np.int64)
     test=np.ascontiguousarray(test,dtype=np.int64)
     if not truth.flags.aligned:truth=truth.copy(order='C')

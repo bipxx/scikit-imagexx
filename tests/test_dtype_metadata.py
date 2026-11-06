@@ -38,6 +38,8 @@ def calls(api,dtype):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=image);return
     if api=='measure.regionprops':
         # The typed seven-property/state checker requires the whole result list.
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)

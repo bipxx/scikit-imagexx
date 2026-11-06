@@ -44,6 +44,8 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     with warnings.catch_warnings(record=True) as notices:
         warnings.simplefilter('always');actual=native(*arguments,**options)
     assert [(type(w.message),str(w.message)) for w in notices]==[(type(w.message),str(w.message)) for w in expected_notices]
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=image);return
     if expected is image:assert actual is image
     if isinstance(expected,tuple):
         assert type(actual) is type(expected) and len(actual)==len(expected)

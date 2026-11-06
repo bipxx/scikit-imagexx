@@ -12,6 +12,19 @@ PATHS = (
 
 def predecessor_bytes(root, path, *, source=None):
     raw = (Path(root)/path).read_bytes().replace(b'\r\n', b'\n') if source is None else source
+    if path in ('python/skimagexx/_label_pair_metrics.py','tests/test_label_pair_rand_public.py'):
+        context_raw=(Path(root)/'coverage/contracts/label-pair-ARE-metadata-context-v1.json').read_bytes().replace(b'\r\n',b'\n')
+        assert hashlib.sha256(context_raw).hexdigest()=='db0271f27b041cf17fb7d3e2a5f5843f3af8f2b2c813d5be4bb68c009a095773'
+        context=json.loads(context_raw)
+        assert context['schema']=='label-pair-ARE-metadata-context-v1' and context['predecessor']=='a53b62d5ad755742206e8f32ed103d2e5968032c'
+        row=context['sources'][path]
+        assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256']
+        for fragment in row['inverse_fragments']:
+            current,previous=fragment['current'].encode(),fragment['predecessor'].encode()
+            assert current and raw.count(current)==1
+            raw=raw.replace(current,previous,1)
+        assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256']
+        return raw
     if path not in PATHS:
         return raw  # The caller's unchanged historical pin still applies.
     context_raw = (Path(root)/'coverage/contracts/contingency-table-source-context-v1.json').read_bytes().replace(b'\r\n', b'\n')
