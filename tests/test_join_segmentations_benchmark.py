@@ -1,5 +1,6 @@
 """Source/intake-only prospective benchmark controls, no scientific imports."""
 import importlib.util
+import ast
 import json
 from pathlib import Path
 import subprocess
@@ -14,7 +15,12 @@ def test_contract_bounds_and_sampler():
     contract=json.loads(module.CONTRACT.read_bytes())
     assert contract['state']=='PROSPECTIVE_UNBOUND_NO_MEASUREMENT'
     assert all(value is None for value in contract['unbound'].values())
-    assert contract['method']['sampler']=='benchmarks/montage_sustained.py:measure'
+    assert contract['method']['sampler']=='tools/montage_sustained.py:measure'
+    source,symbol=contract['method']['sampler'].split(':')
+    assert (ROOT/source).is_file()
+    function=next(n for n in ast.parse((ROOT/source).read_bytes()).body if isinstance(n,ast.FunctionDef) and n.name==symbol)
+    assert [a.arg for a in function.args.args]==['reference','native','repeat','target_ms']
+    assert [a.arg for a in function.args.kwonlyargs]==['journal','case_index','case_id','pass_index','deadline']
     assert len(contract['cases'])==8 and len({s['id'] for s in contract['cases']})==8
     for row in contract['cases']:assert module.case_bounds(row)
 

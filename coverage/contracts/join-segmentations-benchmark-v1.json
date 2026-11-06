@@ -2,7 +2,7 @@
   "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
   "api": "segmentation.join_segmentations",
   "method": {
-    "sampler": "benchmarks/montage_sustained.py:measure",
+    "sampler": "tools/montage_sustained.py:measure",
     "threads": 1,
     "repeats": 7,
     "warmup_groups_per_implementation_per_case": 1,

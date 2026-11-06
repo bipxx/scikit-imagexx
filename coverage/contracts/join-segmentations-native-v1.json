@@ -14,8 +14,8 @@
     "tests/test_join_segmentations_native.cpp": "e715200a056f380ed505b90f1cdec9df7892674361775177edfd3c6b679ff780",
     "tests/test_join_segmentations_public.py": "32f83ee5bcc6bdbf00e329dd0bae5f6ca36e0750e085cd2ec7003b6bd2d33a4b",
     "benchmarks/join_segmentations.py": "36c99d15d52099ecba43c270e31ea11469dbeb2f5c49bf3fcb05f552a9e61fc2",
-    "coverage/contracts/join-segmentations-benchmark-v1.json": "4497439f67838e393f835a969e84dc90a09dfde3c762fa677cda2801b987eb97",
-    "tests/test_join_segmentations_benchmark.py": "23845ba590e9f764cac1776e70c464c10d28bbccdcd11ffef9cad8ed8b3a64e5"
+    "coverage/contracts/join-segmentations-benchmark-v1.json": "aa69bfc3730fa0867277991e29e1a2d5556483ec627391c817f0e9e2a2d4b4c1",
+    "tests/test_join_segmentations_benchmark.py": "81891220c34fd1f5f897af1856d48810709f271ef26bc35734baa7068c2b8d2b"
   },
   "reused_raw_sha256": {
     "python/skimagexx/_component_consumers.py": "f2643c25de70277fcbd30ba1a2e9774b20ae637137e1e8610eb3cd500f90fadd",
