@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def test_exact_source_dependency_closure():
-    contract=json.loads((ROOT/'coverage/contracts/join-segmentations-native-v1.json').read_bytes())
+    contract=json.loads((ROOT/'coverage/contracts/join-segmentations-native-v2.json').read_bytes())
     assert contract['api']=='segmentation.join_segmentations' and contract['API_completion'] is False
     for group in ('source_raw_sha256','reused_raw_sha256'):
         for name,pin in contract[group].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name

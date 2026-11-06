@@ -266,16 +266,47 @@ def contingency_float_reference():
     return reference
 
 
+@pytest.fixture(scope='module')
+def join_reference_rows():
+    # Reuse the admitted100once-only originals, including exact output storage.
+    # The shared binary adapter matches their fixed2x4logical words/layout.
+    import base64,hashlib,json,zlib
+    from pathlib import Path
+    from draw_coordinates_observer import encode
+    raw=(Path(__file__).parent/'fixtures/join_segmentations_originals_v1.json').read_bytes()
+    assert hashlib.sha256(raw).hexdigest()=='0cb7da5d981bf95eb8895278bf9acc638ba3acd236625c48a00aa632a1b0a340'
+    data=json.loads(raw);profile='minimum'if np.__version__.startswith('1.')else'modern'
+    rows={row['id'].split('/')[-1]:row for row in data['profiles'][profile]['rows']};cached={}
+    def reference(dtype):
+        dtype=np.dtype(dtype)
+        if dtype.kind in 'bf':return None,rows['bool-left'if dtype.kind=='b'else'float-left']['error']
+        name=dtype.name+'-labels';row=rows[name];gold=row['result']
+        if name not in cached:
+            payload=zlib.decompress(base64.b64decode(gold['raw_zlib_base64']))
+            assert hashlib.sha256(payload).hexdigest()==gold['raw_sha256']
+            cached[name]=np.frombuffer(payload,np.dtype(gold['dtype'])).reshape(gold['shape']).copy()
+        assert encode(cached[name],np)==gold
+        return cached[name],None
+    return reference
+
+
 @pytest.mark.parametrize('native,original,name,dtype,shape', VALUE_CASES,
                          ids=[f'{n.__name__}.{name}-{np.dtype(dtype).name}-{shape}'
                               for n, _, name, dtype, shape in VALUE_CASES])
-def test_every_native_function(native, original, name, dtype, shape, monkeypatch, contingency_float_reference):
+def test_every_native_function(native, original, name, dtype, shape, monkeypatch, contingency_float_reference, join_reference_rows):
     rng = np.random.default_rng(15)
     api = native.__name__.split('.', 1)[1]+'.'+name
     a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
+        if api == 'segmentation.join_segmentations':
+            args,options=default_call(api,a)
+            _,error=join_reference_rows(dtype)
+            assert error[:2]==['builtins','TypeError']
+            with pytest.raises(TypeError) as actual:getattr(native,name)(*args,**options)
+            assert str(actual.value)==error[2]
+            return
         if api == 'metrics.contingency_table':
             # Float labels use the declared SciPy structural CSR suffix, not
             # the integer native counting entry or whole-function fallback.
@@ -325,6 +356,12 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    if api=='segmentation.join_segmentations':
+        expected,error=join_reference_rows(dtype);assert error is None
+        actual=getattr(native,name)(*args,**options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
+        join_reference_rows(dtype) # cached gold metadata/storage remains unchanged
+        return
     if api=='draw.set_color':
         expected=set_color_default_result(getattr(original,name),args,options)
         actual=set_color_default_result(getattr(native,name),args,options)

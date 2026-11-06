@@ -22,6 +22,15 @@ ROOT=Path(__file__).resolve().parents[1]
 
 @pytest.fixture(scope='module')
 def target():
+    if not os.environ.get('JOIN_COMPONENT_DIR'):
+        import skimagexx as xx
+        module=importlib.import_module('skimagexx._join_segmentations')
+        assert xx.segmentation.join_segmentations is module.join_segmentations
+        assert inspect.isbuiltin(xx._core.join_encode)and xx._core.join_encode.__module__=='skimagexx._core'
+        assert inspect.isbuiltin(xx._core.join_divmod)and xx._core.join_divmod.__module__=='skimagexx._core'
+        assert xx.get_num_threads()==1
+        xx.set_fallback_enabled(False)
+        return module,xx._core
     stage=Path(os.environ['JOIN_COMPONENT_DIR'])
     def extension(name,directory):
         path=next(directory.glob(name+'*.so'))
@@ -51,18 +60,33 @@ def test_saved_original(target,spec):
     expected=next(row for row in fixture['profiles'][profile]['rows'] if row['id']==spec['id'])
     # The retained Linux capture pins glibc x86-64 fenv_t to32bytes; all100
     # original rows preserved its complete bytes, including sticky flags.
-    assert sys.platform=='linux'
-    libc=ctypes.CDLL(None);before=(ctypes.c_ubyte*32)();after=(ctypes.c_ubyte*32)()
-    assert libc.fegetenv(ctypes.byref(before))==0
+    linux=sys.platform=='linux'
+    libc=ctypes.CDLL(None)if linux else ctypes.CDLL('ucrtbase.dll')
+    if linux:
+        before=(ctypes.c_ubyte*32)();after=(ctypes.c_ubyte*32)()
+        assert libc.fegetenv(ctypes.byref(before))==0
+    else:
+        libc.fetestexcept.argtypes=[ctypes.c_int];libc.fetestexcept.restype=ctypes.c_int
+        libc.fegetround.argtypes=[];libc.fegetround.restype=ctypes.c_int
+        libc.feclearexcept.argtypes=[ctypes.c_int];libc.feclearexcept.restype=ctypes.c_int
+        libc.feraiseexcept.argtypes=[ctypes.c_int];libc.feraiseexcept.restype=ctypes.c_int
+        libc.fesetround.argtypes=[ctypes.c_int];libc.fesetround.restype=ctypes.c_int
+        before=(libc.fetestexcept(0x1f),libc.fegetround())
     try:
         actual=observe(module.join_segmentations,spec,np)
-        assert libc.fegetenv(ctypes.byref(after))==0
-    finally:assert libc.fesetenv(ctypes.byref(before))==0
-    actual['controller_fenv']=dict(before=bytes(before).hex(),after=bytes(after).hex())
-    retained=Path(os.environ['JOIN_RESULT_DIR']);retained.mkdir(exist_ok=True)
-    (retained/(spec['id'].split('/')[-1]+'.json')).write_text(json.dumps(actual,indent=2)+'\n')
+        if linux:assert libc.fegetenv(ctypes.byref(after))==0
+        else:after=(libc.fetestexcept(0x1f),libc.fegetround())
+    finally:
+        if linux:assert libc.fesetenv(ctypes.byref(before))==0
+        else:
+            assert libc.feclearexcept(0x1f)==0 and libc.feraiseexcept(before[0])==0
+            assert libc.fesetround(before[1])==0
+    actual['controller_fenv']=dict(before=bytes(before).hex(),after=bytes(after).hex())if linux else dict(before=before,after=after,library='ucrtbase.dll',mask=0x1f)
+    if os.environ.get('JOIN_RESULT_DIR'):
+        retained=Path(os.environ['JOIN_RESULT_DIR']);retained.mkdir(exist_ok=True)
+        (retained/(spec['id'].split('/')[-1]+'.json')).write_text(json.dumps(actual,indent=2)+'\n')
     assert expected['controller_fenv']['before']==expected['controller_fenv']['after']
-    assert bytes(before)==bytes(after),'raw FENV preservation'
+    assert (bytes(before)==bytes(after)if linux else before==after),'raw FENV preservation'
     for key in ('error','input_before','input_after','returned_map_aliases','output_aliases','output_input_aliases','warnings','FP_events'):
         assert actual[key]==expected[key],key
     assert all(actual['checks'].values())
@@ -71,7 +95,7 @@ def test_saved_original(target,spec):
     else:
         assert actual['result']['joined']==expected['result']['joined']
         for left,right in zip(actual['result']['maps'],expected['result']['maps']):
-            assert left['type']==['_join_test_package._component_consumers','ArrayMap']
+            assert left['type']==[module.__package__+'._component_consumers','ArrayMap']
             assert right['type']==['skimage.util._map_array','ArrayMap']
             assert {k:v for k,v in left.items() if k!='type'}=={k:v for k,v in right.items() if k!='type'}
     # Native stages need not synthesize original Python helper-frame counters.
@@ -163,7 +187,7 @@ def test_warning_exception_precedes_factor_and_late_flag(target,monkeypatch):
         def __bool__(self):seen.append('flag');return True
     def forbidden(*args):raise RuntimeError('factor must follow relabel warnings')
     monkeypatch.setattr(core,'consumer_max',forbidden)
-    consumers=importlib.import_module('_join_test_package._component_consumers')
+    consumers=importlib.import_module(module.__package__+'._component_consumers')
     monkeypatch.setattr(consumers,'_mapping_notice',lambda:warnings.warn('JOIN_TEST_SHAPE_NOTICE',UserWarning))
     with warnings.catch_warnings():
         warnings.simplefilter('error',UserWarning)

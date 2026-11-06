@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('segmentation.join_segmentations',),'tests/test_join_segmentations_integration.py','benchmarks/join_segmentations.py'),
     (('segmentation.find_boundaries',),'tests/test_find_boundaries_public.py','benchmarks/find_boundaries.py'),
     (('metrics.adapted_rand_error',),'tests/test_label_pair_rand_public.py','benchmarks/label_pair_metrics.py'),
     (('metrics.contingency_table',),'tests/test_contingency_table_public.py','benchmarks/label_pair_metrics.py'),
@@ -178,6 +179,8 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
+            elif path=='segmentation.join_segmentations':
+                entries[-1]['default_input_kind']='Frozen2x4binary integer fields; positive original factor only. Partial native stages/composedintegerSDK; NumPy scalar promotion and existing owned ArrayMap providers; nonpositive/floatingSDK/exactupstreamclass/genuineownership/performance gates remain open.'
             elif path in ('draw.polygon','draw.polygon2mask'):
                 entries[-1]['default_input_kind']='Frozen Python-int triangle geometry; image dtype labels are descriptor-only, not coordinate or image-pixel dtype coverage. Owned raster/orderedintp/boolscatter; numeric bounds, conversions, allocation and unsupported protocol/shape/frontiers explicit providers.'
             elif path=='draw.bezier_curve':

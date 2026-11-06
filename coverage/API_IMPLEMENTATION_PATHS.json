@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "e39b382b6bdd9f2e1253953430ef371617780d0e790e9af4b9bcd753c58d25cf",
+  "source_inventory_sha256": "6dc68dbb32d97b3dfac9ceafdfef1ff80bcdd37e56789e0ac3c9ae090837d703",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,8 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 265,
-      "upstream-only": 203
+      "native-partial": 266,
+      "upstream-only": 202
     },
     "kinds": {
       "callable": 448,
@@ -16281,15 +16281,24 @@
       "api": "segmentation.join_segmentations",
       "kind": "callable",
       "signature": "(s1, s2, return_mapping: bool = False)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "segmentation.join_segmentations",
       "identity_alias": false,
       "family": "component",
       "wave": "W2",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Pair-label encode then stable sequential relabel with inverse mappings",
+      "easiest_credible_path": "Audit/extend existing native implementation: Pair-label encode then stable sequential relabel with inverse mappings",
       "mandatory_route_dependencies": [
         "array",
         "histogram",
@@ -16298,7 +16307,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze sparse huge label pairs and mapping round trips against pinned upstream, including dtype overflow, mapping objects, return_mapping and zero labels; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered dtype overflow, mapping objects, return_mapping and zero labels. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "dtype overflow, mapping objects, return_mapping and zero labels",
       "parity_cases_to_freeze": "sparse huge label pairs and mapping round trips",
       "numerical_policy": "Exact labels, background, connectivity, output dtype, integer counts, ties and aliasing.",
@@ -16309,10 +16318,10 @@
         "kind": "compute",
         "specific_workload": "sparse huge label pairs and mapping round trips",
         "one_worker_recipe": "Sparse/dense/noisy labels, all-background/all-connected, large label IDs, 2D/3D and strided outputs.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/join_segmentations.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_join_segmentations_integration.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

@@ -8,7 +8,7 @@ DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
@@ -333,6 +333,7 @@ def class_contract(api):
 def native_dtypes(api):
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api=='segmentation.join_segmentations':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='draw.set_color':return ('float32','float64')
     if api in ('draw.polygon','draw.polygon2mask'):return ('uint8','float32','float64')
@@ -546,6 +547,10 @@ def default_call(api, image):
         return (image,),{'max_size':max(1,image.size//256)}
     if api=='morphology.remove_small_holes':return (image,),{'max_size':4}
     if api=='segmentation.clear_border':return (image,),{'buffer_size':1 if min(image.shape)>2 else 0}
+    if api=='segmentation.join_segmentations':
+        import numpy as np
+        return (np.array([0,0,1,1,2,2,3,3],dtype=image.dtype).reshape(2,4),
+                np.array([0,1,1,0,0,1,1,0],dtype=image.dtype).reshape(2,4)),{}
     if api=='segmentation.relabel_sequential':return (image,),{'offset':3}
     if api.startswith('filters.rank.'):
         import numpy as np
@@ -1052,7 +1057,21 @@ def find_boundaries_default_error(actual, expected, *, image=None):
     return 0.0
 
 
+def join_segmentations_default_error(actual,expected):
+    import numpy as np
+    assert type(actual)is type(expected)is np.ndarray
+    assert actual.dtype.str==expected.dtype.str and actual.dtype.descr==expected.dtype.descr
+    assert actual.dtype.metadata==expected.dtype.metadata and actual.shape==expected.shape and actual.strides==expected.strides
+    for name in ('owndata','writeable','aligned','c_contiguous','f_contiguous'):
+        assert getattr(actual.flags,name)==getattr(expected.flags,name)
+    assert type(actual.base)is type(expected.base)and actual is not expected and not np.shares_memory(actual,expected)
+    assert actual.tobytes(order='C')==expected.tobytes(order='C')
+    return 0.
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api=='segmentation.join_segmentations':
+        join_segmentations_default_error(actual,expected);return
     if api=='segmentation.find_boundaries':
         find_boundaries_default_error(actual,expected,image=image);return
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
@@ -1244,7 +1263,7 @@ def parity_tolerance(api, dtype, image=None, expected=None):
         # have separate assertions in the frozen214-case public contract.
         return (2e-12,2e-13)
     if api=='restoration.denoise_tv_bregman' or api in MAX_TREE_PATHS:return (0.,0.)
-    if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.clear_border','segmentation.relabel_sequential'):
+    if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.clear_border','segmentation.relabel_sequential','segmentation.join_segmentations'):
         return (0.,0.)
     if api.startswith('filters.rank.'):return (0.,0.)
     if api.startswith('metrics.'):

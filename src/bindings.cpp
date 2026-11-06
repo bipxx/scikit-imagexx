@@ -78,6 +78,7 @@ void bind_bezier_curve(pybind11::module_&);
 void bind_draw_set_color(pybind11::module_&);
 void bind_label_pair_metrics(pybind11::module_&);
 void bind_find_boundaries(pybind11::module_&);
+void bind_join_segmentations(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -893,6 +894,7 @@ PYBIND11_MODULE(_core, m) {
     bind_draw_set_color(m);
     bind_label_pair_metrics(m);
     bind_find_boundaries(m);
+    bind_join_segmentations(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);

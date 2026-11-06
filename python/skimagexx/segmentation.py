@@ -11,6 +11,8 @@ from ._level_set import checkerboard_level_set, disk_level_set
 __all__ += ['checkerboard_level_set','disk_level_set']
 from ._find_boundaries import find_boundaries
 __all__ += ['find_boundaries']
+from ._join_segmentations import join_segmentations
+__all__ += ['join_segmentations']
 
 
 @wraps(_consumers.clear_border)

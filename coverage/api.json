@@ -6973,11 +6973,21 @@
       "api": "segmentation.join_segmentations",
       "kind": "callable",
       "signature": "(s1, s2, return_mapping: bool = False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_join_segmentations_integration.py",
+      "benchmark": "benchmarks/join_segmentations.py",
+      "default_input_kind": "Frozen2x4binary integer fields; positive original factor only. Partial native stages/composedintegerSDK; NumPy scalar promotion and existing owned ArrayMap providers; nonpositive/floatingSDK/exactupstreamclass/genuineownership/performance gates remain open."
     },
     {
       "api": "segmentation.mark_boundaries",
