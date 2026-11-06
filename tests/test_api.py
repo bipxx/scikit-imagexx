@@ -6,6 +6,7 @@ import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS
+from skimagexx.coverage import set_color_default_result
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
@@ -251,6 +252,10 @@ def test_every_native_function(native, original, name, dtype, shape):
     if dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
+        if api=='draw.set_color':
+            args,options=default_call(api,a)
+            with pytest.raises(NotImplementedError):getattr(native,name)(*args,**options)
+            return
         if api == 'util.map_array':
             args,options=default_call(api,a)
             with pytest.raises(TypeError) as expected:getattr(original,name)(*args,**options)
@@ -276,6 +281,11 @@ def test_every_native_function(native, original, name, dtype, shape):
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    if api=='draw.set_color':
+        expected=set_color_default_result(getattr(original,name),args,options)
+        actual=set_color_default_result(getattr(native,name),args,options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
+        return
     try:
         expected = getattr(original, name)(*args,**options)
     except (IndexError,ValueError,RuntimeError) as error:

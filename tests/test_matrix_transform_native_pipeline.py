@@ -34,6 +34,8 @@ if BACKEND is not xx._core:
     native._core = BACKEND
 ENTRY = BACKEND.matrix_transform_run
 ENTRY_V2 = BACKEND.matrix_transform_run_v2
+ENTRY_V3 = BACKEND.matrix_transform_run_v3
+assert inspect.isbuiltin(ENTRY_V3) and ENTRY_V3.__module__ == BACKEND.__name__
 assert inspect.isbuiltin(ENTRY_V2) and ENTRY_V2.__module__ == BACKEND.__name__
 assert inspect.isbuiltin(ENTRY) and ENTRY.__module__ == BACKEND.__name__
 assert native._core is BACKEND
@@ -315,7 +317,7 @@ def guarded(call):
     before=BACKEND.matrix_transform_completed()
     previous=sys.getprofile()
     def guard(frame,event,arg):
-        if event == 'c_call' and (arg is ENTRY or arg is ENTRY_V2):
+        if event == 'c_call' and (arg is ENTRY or arg is ENTRY_V2 or arg is ENTRY_V3):
             calls.append('real-checked-C++')
         if event == 'call' and frame.f_globals.get('__name__','').startswith('skimage.transform'):
             raise AssertionError('upstream transform algorithm/class forwarding: '+frame.f_code.co_name)

@@ -3,6 +3,10 @@
 #include <skimagexx/image.hpp>
 #include <skimagexx/line_aa.hpp>
 #include <skimagexx/circle_perimeter_aa.hpp>
+#include <skimagexx/draw_polygon.hpp>
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+#include <xmmintrin.h>
+#endif
 #include <cstring>
 #include <limits>
 #include <algorithm>
@@ -18,6 +22,87 @@ using namespace skimagexx::detail;
 namespace {
 std::size_t checks=0;
 void check(bool value){++checks;if(!value)throw std::runtime_error("installed drawing coordinate mismatch "+std::to_string(checks));}
+// Immutable saved words; mask/coords conversion is representation projection.
+void polygon(int workers){
+    const auto global=get_num_threads();std::fenv_t prior;check(std::fegetenv(&prior)==0);
+    const auto rounding=std::fegetround(),flags=std::fetestexcept(FE_ALL_EXCEPT);
+    struct Saved{const char* id;std::vector<double> r,c;DrawPolygonScan scan;std::size_t height,width;std::vector<std::intptr_t> rr,cc;std::vector<std::uint8_t> mask;};
+    const std::vector<Saved> saved={
+{"draw.polygon/triangle-list",{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+2},{0x1.0000000000000p+0,0x1.4000000000000p+2,0x1.0000000000000p+1},{{1,1},{4,5}},5,6,{1,1,1,1,1,2,2,2,3,3,4},{1,2,3,4,5,2,3,4,2,3,2},{0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,1,1,0,0,0,1,1,0,0,0,0,1,0,0,0}},
+{"draw.polygon/bowtie-strided",{0x0.0p+0,0x1.0000000000000p+2,0x0.0p+0,0x1.0000000000000p+2},{0x0.0p+0,0x1.0000000000000p+2,0x1.0000000000000p+2,0x0.0p+0},{{0,0},{4,4}},6,6,{0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,4,4},{0,4,0,1,3,4,0,1,2,3,4,0,1,3,4,0,4},{1,0,0,0,1,0,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0}},
+{"draw.polygon/epsilon-vertex",{0x1.0000000000000p-41,0x0.0p+0,0x1.8000000000000p+1},{0x1.0000000000000p-41,0x1.8000000000000p+1,0x0.0p+0},{{0,0},{3,3}},5,5,{0,0,1,1,2,3},{0,3,1,2,1,0},{1,0,0,1,0,0,1,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0}},
+{"draw.polygon/fully-negative",{-0x1.0000000000000p+2,-0x1.0000000000000p+1,-0x1.0000000000000p+1},{-0x1.8000000000000p+1,-0x1.8000000000000p+1,-0x1.0000000000000p+0},{{0,0},{-2,-1}},0,0,{},{},{}},
+{"draw.polygon2mask/triangle-list",{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+2},{0x1.0000000000000p+0,0x1.4000000000000p+2,0x1.0000000000000p+1},{{1,1},{4,5}},6,7,{1,1,1,1,1,2,2,2,3,3,4},{1,2,3,4,5,2,3,4,2,3,2},{0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0}},
+{"draw.polygon2mask/outside",{0x1.0000000000000p+3,0x1.0000000000000p+3,0x1.4000000000000p+3},{0x1.0000000000000p+3,0x1.4000000000000p+3,0x1.0000000000000p+3},{{8,8},{2,3}},3,4,{},{},{0,0,0,0,0,0,0,0,0,0,0,0}},
+    };
+    for(const auto& spec:saved){
+        DrawPolygonPlan plan;check(draw_polygon_prepare({spec.r.data(),spec.c.data(),spec.r.size()},spec.scan,plan,workers));
+        check(plan.count==spec.rr.size()&&plan.count==spec.cc.size());
+        const auto labels=plan.labels;const auto prefix=plan.row_offsets;
+        std::vector<std::intptr_t> rr(plan.count+2,-999),cc(plan.count+2,-999);
+        draw_polygon_coords_into(plan,rr.data()+1,cc.data()+1,workers);
+        check(rr.front()==-999&&rr.back()==-999&&cc.front()==-999&&cc.back()==-999);
+        check(std::equal(spec.rr.begin(),spec.rr.end(),rr.begin()+1)&&std::equal(spec.cc.begin(),spec.cc.end(),cc.begin()+1));
+        std::vector<std::uint8_t> mask(spec.mask.size()+2,91);draw_polygon_mask_into(plan,spec.height,spec.width,mask.data()+1,workers);
+        check(mask.front()==91&&mask.back()==91&&std::equal(spec.mask.begin(),spec.mask.end(),mask.begin()+1));
+        check(plan.labels==labels&&plan.row_offsets==prefix&&plan.row_offsets.back()==plan.count);
+        check(std::all_of(mask.begin()+1,mask.end()-1,[](auto v){return v<=1;}));
+        if(!plan.count){draw_polygon_coords_into(plan,nullptr,nullptr,workers);draw_polygon_mask_into(plan,0,0,nullptr,workers);}
+    }
+    // Inclusive rectangles: analytic row/column order and independent large spans.
+    for(std::size_t size:{std::size_t(3),std::size_t(513)}){
+        const double edge=double(size-1);std::array<double,4> r{0,0,edge,edge},c{0,edge,edge,0};
+        DrawPolygonPlan plan;check(draw_polygon_prepare({r.data(),c.data(),4},{{0,0},{std::intptr_t(size-1),std::intptr_t(size-1)}},plan,workers));
+        check(plan.count==size*size);
+        r.fill(-9);c.fill(-9); // Prepared plan owns geometry; no borrowed vertex storage.
+        std::vector<std::intptr_t> rr(plan.count+2,-999),cc(plan.count+2,-999);
+        draw_polygon_coords_into(plan,rr.data()+1,cc.data()+1,workers);
+        std::vector<std::uint8_t> mask(plan.count+2,91);draw_polygon_mask_into(plan,size,size,mask.data()+1,workers);
+        for(std::size_t i=0;i<plan.count;++i)check(rr[i+1]==std::intptr_t(i/size)&&cc[i+1]==std::intptr_t(i%size)&&mask[i+1]==1);
+        check(rr.front()==-999&&rr.back()==-999&&cc.front()==-999&&cc.back()==-999&&mask.front()==91&&mask.back()==91);
+    }
+    const std::array<double,4> r{0,0,2,2},c{0,2,2,0};DrawPolygonPlan plan;
+    check(draw_polygon_prepare({r.data(),c.data(),4},{{0,0},{2,2}},plan,workers));
+    const auto labels=plan.labels;const auto offsets=plan.row_offsets;const auto count=plan.count;const auto first=plan.first;const auto shape=plan.shape;
+    std::array<std::uint8_t,11> mask;mask.fill(91);const auto before=mask;
+    for(int fault=0;fault<4;++fault){
+        bool refused=false;
+        try{
+            if(fault==0)draw_polygon_mask_into(plan,2,2,mask.data()+1,workers);
+            if(fault==1)draw_polygon_mask_into(plan,std::numeric_limits<std::size_t>::max(),2,mask.data()+1,workers);
+            if(fault==2)draw_polygon_mask_into(plan,3,3,nullptr,workers);
+            if(fault==3)draw_polygon_mask_into(plan,3,3,mask.data()+1,0);
+        }catch(const std::invalid_argument&){refused=true;}
+        check(refused&&mask==before);
+    }
+    bool refused=false;try{draw_polygon_coords_into(plan,nullptr,nullptr,workers);}catch(const std::invalid_argument&){refused=true;}check(refused);
+    for(int fault=0;fault<8;++fault){
+        auto bad=r;DrawPolygonVertices vertices{bad.data(),c.data(),4};DrawPolygonScan scan{{0,0},{2,2}};
+        if(fault==0)vertices.count=0;
+        if(fault==1)vertices.rows=nullptr;
+        if(fault==2)bad[0]=std::numeric_limits<double>::infinity();
+        if(fault==3)bad[0]=std::numeric_limits<double>::quiet_NaN();
+        if(fault==4)scan.first[0]=-1;
+        if(fault==5)bad[0]=std::numeric_limits<double>::denorm_min();
+        if(fault==6)bad[0]=double(1<<21);
+        if(fault==7)vertices.count=draw_polygon_max_vertices+1;
+        check(!draw_polygon_prepare(vertices,scan,plan,workers));check(plan.labels==labels&&plan.row_offsets==offsets&&plan.count==count&&plan.first==first&&plan.shape==shape);
+    }
+    check(!draw_polygon_prepare({r.data(),c.data(),4},{{0,0},{2,2}},plan,0));
+    std::fesetround(FE_DOWNWARD);std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+    check(!draw_polygon_prepare({r.data(),c.data(),4},{{0,0},{2,2}},plan,workers));
+    check(std::fegetround()==FE_DOWNWARD&&std::fetestexcept(FE_ALL_EXCEPT)==FE_DIVBYZERO&&plan.labels==labels&&plan.row_offsets==offsets);
+    check(std::fesetenv(&prior)==0);
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+    const auto mxcsr=_mm_getcsr();_mm_setcsr((mxcsr&~0x6000u)|0x2000u);
+    const bool accepted=draw_polygon_prepare({r.data(),c.data(),4},{{0,0},{2,2}},plan,workers);
+    const auto after_mxcsr=_mm_getcsr();_mm_setcsr(mxcsr);
+    check(!accepted&&after_mxcsr==((mxcsr&~0x6000u)|0x2000u));
+    check(plan.labels==labels&&plan.row_offsets==offsets&&plan.count==count&&plan.first==first&&plan.shape==shape);
+#endif
+    check(get_num_threads()==global&&std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
+}
+
 // Exact radius2 words from frozen circle-aa/radius-2, pinned0.26 originals.
 void circle_aa(int workers){
     const auto global=get_num_threads();
@@ -150,11 +235,21 @@ void stages(int workers){
     check(get_num_threads()==global&&std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);
 }
 }
+int bezier_curve_consumer_controls(int argc,char** argv);
+int set_color_consumer_controls();
 int main(int argc,char** argv){
-    check(argc==1||(argc==2&&(std::string(argv[1])=="--line-aa-only"||std::string(argv[1])=="--circle-aa-only")));
-    const bool line_aa_only=argc==2&&std::string(argv[1])=="--line-aa-only",circle_aa_only=argc==2&&std::string(argv[1])=="--circle-aa-only";
+    check(argc==1||(argc==2&&(std::string(argv[1])=="--line-aa-only"||std::string(argv[1])=="--circle-aa-only"||std::string(argv[1])=="--polygon-only"||std::string(argv[1])=="--draw-batch-only")));
+    const bool line_aa_only=argc==2&&std::string(argv[1])=="--line-aa-only",circle_aa_only=argc==2&&std::string(argv[1])=="--circle-aa-only",polygon_only=argc==2&&std::string(argv[1])=="--polygon-only";
     check(get_num_threads()==1);
-    for(int workers:{1,4}){set_num_threads(workers);if(!line_aa_only&&!circle_aa_only)stages(workers);if(!circle_aa_only)line_aa(workers);if(!line_aa_only)circle_aa(workers);}
+    const bool draw_batch_only=argc==2&&std::string(argv[1])=="--draw-batch-only";
+    if(!draw_batch_only)for(int workers:{1,4}){set_num_threads(workers);if(!polygon_only){if(!line_aa_only&&!circle_aa_only)stages(workers);if(!circle_aa_only)line_aa(workers);if(!line_aa_only)circle_aa(workers);}if(argc==1||polygon_only)polygon(workers);}
     set_num_threads(1);check(get_num_threads()==1);
-    std::cout<<"installed drawing SDK controls="<<checks<<"; workers=1,4; default=1; AVX2="<<has_avx2()<<"; line_aa_only="<<line_aa_only<<"; circle_aa_only="<<circle_aa_only<<"\n";
+    if(argc==1||draw_batch_only){
+        char program[]="drawing SDK",fixture[]=SKIMAGEXX_BEZIER_FIXTURE_PATH,dispatch[]="auto";
+        char* arguments[]{program,fixture,dispatch};
+        check(bezier_curve_consumer_controls(3,arguments)==0);
+        check(set_color_consumer_controls()==0);
+        check(get_num_threads()==1);
+    }
+    std::cout<<"installed drawing SDK controls="<<checks<<"; workers=1,4; default=1; AVX2="<<has_avx2()<<"; line_aa_only="<<line_aa_only<<"; circle_aa_only="<<circle_aa_only<<"; polygon_only="<<polygon_only<<"\n";
 }

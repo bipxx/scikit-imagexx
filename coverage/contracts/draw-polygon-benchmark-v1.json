@@ -1,0 +1,611 @@
+{
+  "schema": "draw-polygon-benchmark-prospective-v1",
+  "state": "DRAFT_PROSPECTIVE_BEFORE_ANY_TARGET_CALL",
+  "apis": [
+    "draw.polygon",
+    "draw.polygon2mask"
+  ],
+  "reference_version": "0.26.0",
+  "cases": [
+    {
+      "id": "draw.polygon/tiny-triangle",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "draw.polygon/medium-rectangle",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          254
+        ],
+        [
+          254,
+          254
+        ],
+        [
+          254,
+          2
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        256,
+        256
+      ]
+    },
+    {
+      "id": "draw.polygon/large-concave",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          510
+        ],
+        [
+          180,
+          180
+        ],
+        [
+          510,
+          510
+        ],
+        [
+          510,
+          1
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "draw.polygon/strided-int32",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          126
+        ],
+        [
+          126,
+          126
+        ],
+        [
+          126,
+          1
+        ]
+      ],
+      "carrier": "strided",
+      "dtype": "int32",
+      "shape": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "draw.polygon/negative-unclipped",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          -6,
+          -8
+        ],
+        [
+          -6,
+          48
+        ],
+        [
+          40,
+          48
+        ],
+        [
+          40,
+          -8
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float32",
+      "shape": null
+    },
+    {
+      "id": "draw.polygon/empty-clip",
+      "api": "draw.polygon",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        0,
+        64
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/tiny-triangle",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "carrier": "list",
+      "dtype": "float64",
+      "shape": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/medium-rectangle-F",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          254
+        ],
+        [
+          254,
+          254
+        ],
+        [
+          254,
+          2
+        ]
+      ],
+      "carrier": "F",
+      "dtype": "float64",
+      "shape": [
+        256,
+        256
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/large-concave",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          510
+        ],
+        [
+          180,
+          180
+        ],
+        [
+          510,
+          510
+        ],
+        [
+          510,
+          1
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/strided-f32",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          126
+        ],
+        [
+          126,
+          126
+        ],
+        [
+          126,
+          1
+        ]
+      ],
+      "carrier": "strided",
+      "dtype": "float32",
+      "shape": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/many-vertices",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          112
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ],
+        [
+          112,
+          16
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "float64",
+      "shape": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "draw.polygon2mask/outside",
+      "api": "draw.polygon2mask",
+      "vertices": [
+        [
+          100,
+          100
+        ],
+        [
+          100,
+          120
+        ],
+        [
+          120,
+          100
+        ]
+      ],
+      "carrier": "C",
+      "dtype": "int32",
+      "shape": [
+        8,
+        9
+      ]
+    }
+  ],
+  "worker_count": 1,
+  "repeat": 7,
+  "target_ms": 100,
+  "warmup_calibration_min_ms": 250,
+  "raw_samples": 168,
+  "timed_boundary": "Public function including source normalization/numeric bounds providers, native preparation/classification, Python allocation and native coordinate emission or bool scatter; sampler destroys each result. Fixtures/auth/parity/spies are outside timing.",
+  "scope": "Twelve bounded one-worker public polygon raster workloads. Numeric min/max/ceil bounds, structural conversion/allocation remain explicit providers; no full API ownership, library-wide speed, prior-C++ KEEP or four-profile acceptance claim. Publish every slower case.",
+  "native_entries": {
+    "draw.polygon": [
+      "draw_polygon_prepare",
+      "draw_polygon_coords_into"
+    ],
+    "draw.polygon2mask": [
+      "draw_polygon_prepare",
+      "draw_polygon_mask_into"
+    ]
+  },
+  "source_safety": "Equal nonempty finite integer-valued coordinate columns, 1..64 vertices, magnitude<=512, two ordinary nonnegative shape ints<=512 or polygon None. Float32 casts exact; no readonly/rank/error/unequal/shortshape/exceptional original recipes. At most512^2 scan points,64Mi edge tests; bounds provider source order preserved.",
+  "reference_contract_sha256": "bc19b2840df53b11d660e87b74a81c8590a7ff9ab015ec3695c34fa58e5e07fa",
+  "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+  "source_closure": {
+    "benchmarks/draw_polygon.py": "1590732f91ebb951e61eee6511f3986c8ab38cf8f5bfceb1af5a62962716162d",
+    "benchmarks/draw_coordinates.py": "da27606ddd8e67a7631b172e5f98ff5ac2305afab5ec212c363acf081567b6fc",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "execution_before_separate_root_GO": {
+    "original_calls": 0,
+    "native_calls": 0,
+    "timed_batches": 0,
+    "builds": 0
+  },
+  "next_gate": "Source-only guard proofs and independent prospective safety/benchmark review; actual fixtures with originals refused before actual CLI/genuine product/measurement. No neworiginals authorized by this contract.",
+  "dtype_role": "dtype selects array-carrier storage only; list carriers contain literal Python ints and preserve original np.atleast_1d inference. No list float32 storage claim.",
+  "output_checker_successor": "PeerF1: require distinct identity from every input and original output even for emptyarrays; never exclude other is value. checked_output is shared by driver and NumPy-only negative intake, outside timing."
+}

@@ -1,0 +1,45 @@
+{
+  "status": "AUTHOR_PROOF_PENDING_INDEPENDENT_REVIEW",
+  "api": "draw.set_color",
+  "private_entry": "draw_set_color(image,rows,columns,color,alpha,workers,integer_product=False)->bool",
+  "native_entry": "skimagexx::detail::draw_set_color(SetColorView,int)",
+  "source": {
+    "include/skimagexx/draw_set_color.hpp": "258b593beb4753aebe4480745deec5c1d5f85e3501c3087d14f2902d8af88f5c",
+    "src/draw_set_color.cpp": "21ae7f9f1eb8474e34c497ecd41374d446a4886f0d888cd5aef147b22b09d3be",
+    "src/bind_draw_set_color.cpp": "afa0d9185dea87ad4292cc9fd591c6a061a132dba565a03b6e7c912222603933",
+    "python/skimagexx/_draw_set_color.py": "40c50f39f799331e613f346559884018490ee8272bea562cd5977c8d0829c440",
+    "tests/test_draw_set_color_native.cpp": "9bf1b9701cf84a4e96d12f9731794df44cfdbce1fd4aaf06436b3d38a33ca1e3",
+    "tests/cmake_consumer/draw_set_color_consumer.cpp": "d9bb2f5d66523305f625fe00c5e45c71694e491e1bb1284c929c454c135bf96a"
+  },
+  "arithmetic": "Preserve original weighted-color integer/f64 stage kind and f64 image*(1-alpha), then f64 sum. F32 image gathers promote exactly; assignment rounds once to f32 after all RHS values are staged. Gather-before-ordered-scatter preserves duplicates and operand/image aliases.",
+  "typed_scope": "Existing f64 domain unchanged. New mutable disjoint strided native f32 image: selected pixels finite abs<=16 and zero or normal; f64 arithmetic uses inherited coefficients; final nonzero magnitude must be >=2^-126 before once-rounded assignment. Post-arithmetic refusal restores entry fenv; no image writes. Aligned contiguous auxiliary pointers; public boundary copies only when needed. Unsupported f32 cast/subnormal/eventful partition remains provider.",
+  "SIMD": "Compiler packed independent result addition; no AVX2-specific claim. Scalar build disables compiler vectorizers. Runtime SIMD env does not disable compiler autoSIMD.",
+  "workers": "Snapshot globalbudget once at Python boundary; default1. Existing executor partition forindependent arithmetic atN*C>=262144; scatter alwaysordered serial. Compiler-scalar leaf noOpenMP.",
+  "SDK": "Assembled component from immutable genuine4acSDK91 plus ONLYnewheader/newleaf, relocated find_package targetclient. Not genuineSDK92.",
+  "proof_counts": {
+    "old_reference_originals_reused": 52,
+    "independent_integer_supplement_originals_reused": 2,
+    "new_float32_originals": 24,
+    "new_float32_public_nodes": 172,
+    "new_pure_saved_benchmark_nodes": 8,
+    "new_float32_native_controls_per_mode": 524300,
+    "native_modes": 4,
+    "parent_float_and_integer_native_proofs_reused": true,
+    "installed_current_controls_per_process": 22,
+    "installed_processes": 2,
+    "MSVC_compile_TUs": 4
+  },
+  "gaps": [
+    "non-f32/f64 image dtypes",
+    "f32 selected subnormals or nonzero final subnormal/tiny casts",
+    "exceptional FP and extreme operands",
+    "overlapping image storage",
+    "custom protocols and other coefficient dtypes",
+    "five of six saved source errors remain strict provider refusal",
+    "Windows runtime (compile-only)",
+    "public shipping alias until root integration",
+    "performance until genuine installed benchmarks and independent admission"
+  ],
+  "integer_product_successor": "Originalint64weightedcolor stage preserved; uint64mixedint64 staysf64 basedactualoperationwitnesses. Existingboundedintegerdomain retained.",
+  "float32_successor": "Actual NumPy stage evidence on both retained profiles, 12 once-only source cases/profile. Alpha capture values 0/.5/1; ordinary broader typed coefficients rely on unchanged bounded f64 arithmetic contract, not new exhaustive original coverage."
+}

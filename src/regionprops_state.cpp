@@ -57,6 +57,22 @@ std::array<std::size_t,3> locality_order(const std::array<std::ptrdiff_t,3>& str
     }
     return axes;
 }
+template<class Append>
+void coords_scaled_walk(const std::uint8_t* mask,std::size_t ndim,
+    const std::array<std::size_t,3>& shape,const std::array<std::ptrdiff_t,3>& strides,
+    const Append& append) {
+    if(ndim==2) {
+        for(std::size_t r=0;r<shape[0];++r) {
+            const auto* row=mask+std::ptrdiff_t(r)*strides[0];
+            for(std::size_t c=0;c<shape[1];++c)if(row[std::ptrdiff_t(c)*strides[1]])append(0,r,c);
+        }
+    } else {
+        for(std::size_t z=0;z<shape[0];++z)for(std::size_t r=0;r<shape[1];++r) {
+            const auto* row=mask+std::ptrdiff_t(z)*strides[0]+std::ptrdiff_t(r)*strides[1];
+            for(std::size_t c=0;c<shape[2];++c)if(row[std::ptrdiff_t(c)*strides[2]])append(z,r,c);
+        }
+    }
+}
 }
 
 bool prepare_regionprops_state(const ComponentsView& view,RegionPropsState& state) {
@@ -198,17 +214,7 @@ void regionprops_coords_strided_into(const RegionPropsState& state,std::size_t i
             std::memcpy(target+std::ptrdiff_t(a)*dimension_step,&coordinate,sizeof(coordinate));
         }
     };
-    if(ndim==2) {
-        for(std::size_t r=0;r<shape[0];++r) {
-            const auto* row=mask+std::ptrdiff_t(r)*strides[0];
-            for(std::size_t c=0;c<shape[1];++c)if(row[std::ptrdiff_t(c)*strides[1]])append(0,r,c);
-        }
-    } else {
-        for(std::size_t z=0;z<shape[0];++z)for(std::size_t r=0;r<shape[1];++r) {
-            const auto* row=mask+std::ptrdiff_t(z)*strides[0]+std::ptrdiff_t(r)*strides[1];
-            for(std::size_t c=0;c<shape[2];++c)if(row[std::ptrdiff_t(c)*strides[2]])append(z,r,c);
-        }
-    }
+    coords_scaled_walk(mask,ndim,shape,strides,append);
 }
 
 namespace {
@@ -225,7 +231,7 @@ public:
         if(std::fegetround()!=FE_TONEAREST)
             throw std::invalid_argument("RegionProperties scalar requires nearest rounding");
         #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
-        if(_mm_getcsr()&((1u<<15)|(1u<<6)))
+        if(_mm_getcsr()&((1u<<15)|(1u<<6)|(3u<<13)))
             throw std::invalid_argument("RegionProperties scalar requires gradual underflow");
         #endif
         if(std::feholdexcept(&original_))
@@ -266,5 +272,165 @@ RegionPropsScalar64 regionprops_extent_f64(double area,double area_bbox) {
         return {UINT64_C(0xfff8000000000000),regionprops_fp_invalid};
     volatile double value=area/area_bbox;
     return scalar_result(value,environment.flags());
+}
+
+namespace {
+bool coords_scaled_layout(std::size_t count,std::size_t ndim,int workers) noexcept {
+    return (ndim==2 || ndim==3) && workers>0
+        && count<=regionprops_coords_scaled_max_elements
+        && count<=std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/(ndim*sizeof(double));
+}
+bool coords_scaled_shape(const std::array<std::size_t,3>& shape,std::size_t ndim,
+                         std::size_t count,int workers,std::size_t& total) noexcept {
+    if(!coords_scaled_layout(count,ndim,workers))return false;
+    total=1;
+    for(std::size_t a=0;a<ndim;++a) {
+        if(shape[a]>regionprops_coords_scaled_max_extent
+           || (shape[a] && total>regionprops_coords_scaled_max_elements/shape[a]))return false;
+        total*=shape[a];
+    }
+    return count<=total;
+}
+bool coords_scaled_overlap(const void* first,std::size_t first_bytes,
+                           const void* second,std::size_t second_bytes) noexcept {
+    if(!first_bytes || !second_bytes)return false;
+    const auto a=reinterpret_cast<std::uintptr_t>(first),b=reinterpret_cast<std::uintptr_t>(second);
+    return a<=b ? b-a<first_bytes : a-b<second_bytes;
+}
+bool coords_scaled_parameters(const std::array<double,3>& values,std::size_t ndim) noexcept {
+    for(std::size_t a=0;a<ndim;++a) {
+        const auto bits=word<std::uint64_t>(reinterpret_cast<const char*>(&values[a]))&UINT64_C(0x7fffffffffffffff);
+        if(bits && (bits<UINT64_C(0x2ff0000000000000) || bits>UINT64_C(0x4ff0000000000000)))return false;
+    }
+    return true;
+}
+// Two fixed math consumers share FP context handling; no callbacks/allocations
+// or throwing arithmetic run while a worker's temporary context is installed.
+template<class Math> bool coords_scaled_math(std::size_t count,std::size_t ndim,int workers,const Math& math) {
+    try {
+        ScalarEnvironment environment;
+        if(!count)return true;
+        const int threads=count*ndim>=parallel_min ? int(std::min(count,std::size_t(workers))) : 1;
+        if(threads<=1){math(0,count);return true;}
+        std::fenv_t computation{};
+        if(std::fegetenv(&computation))throw std::runtime_error("cannot capture coords_scaled worker environment");
+        #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+        const auto computation_csr=_mm_getcsr();
+        #endif
+        partition(count,threads,[&](auto begin,auto end,auto) {
+            // The master already verified fenv support on this runtime.
+            std::fenv_t previous{};std::fegetenv(&previous);
+            #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+            const auto previous_csr=_mm_getcsr();
+            #endif
+            std::fesetenv(&computation);
+            #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+            _mm_setcsr(computation_csr);
+            #endif
+            math(begin,end);
+            std::fesetenv(&previous);
+            #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+            _mm_setcsr(previous_csr);
+            #endif
+        });
+        return true;
+    }catch(const std::invalid_argument&){return false;}
+}
+}
+
+bool regionprops_coords_scaled_local_into(const std::uint8_t* mask,std::size_t ndim,
+    const std::array<std::size_t,3>& shape,const std::array<std::ptrdiff_t,3>& strides,
+    std::size_t count,std::intptr_t* output,int workers) {
+    std::size_t total=0;
+    if(!coords_scaled_shape(shape,ndim,count,workers,total) || (total && !mask) || (count && !output))return false;
+    const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max());
+    std::size_t positive=0,negative=0;
+    for(std::size_t a=0;a<ndim;++a) {
+        if(strides[a]==std::numeric_limits<std::ptrdiff_t>::min())return false;
+        const auto step=std::size_t(strides[a]<0?-strides[a]:strides[a]);
+        auto& span=strides[a]<0?negative:positive;
+        if(shape[a] && step && shape[a]-1>(limit-span)/step)return false;
+        if(shape[a])span+=(shape[a]-1)*step;
+    }
+    if(!total)return true;
+    const auto address=reinterpret_cast<std::uintptr_t>(mask);
+    if(address<negative || address>std::numeric_limits<std::uintptr_t>::max()-positive-1)return false;
+    if(coords_scaled_overlap(reinterpret_cast<const void*>(address-negative),positive+negative+1,
+                             output,count*ndim*sizeof(std::intptr_t)))return false;
+    std::size_t point=0;bool mismatch=false;
+    const auto append=[&](std::size_t plane,std::size_t row,std::size_t column) {
+        // count/fill stability is a caller invariant; still do not overrun a
+        // supplied span if an invalid caller changes the mask between them.
+        if(point>=count){mismatch=true;return;}
+        if(ndim==2){output[point]=std::intptr_t(row);output[count+point]=std::intptr_t(column);}
+        else {output[point]=std::intptr_t(plane);output[count+point]=std::intptr_t(row);output[2*count+point]=std::intptr_t(column);}
+        ++point;
+    };
+    coords_scaled_walk(mask,ndim,shape,strides,append);
+    return !mismatch && point==count;
+}
+
+bool regionprops_coords_scaled_origin_into(std::intptr_t* coordinates,std::size_t count,
+    std::size_t ndim,const std::array<std::size_t,3>& shape,
+    const std::array<std::intptr_t,3>& origins,int workers) {
+    std::size_t total=0;
+    if(!coords_scaled_shape(shape,ndim,count,workers,total) || (count && !coordinates))return false;
+    for(std::size_t a=0;a<ndim;++a) {
+        if(origins[a]<-regionprops_coords_scaled_max_origin || origins[a]>regionprops_coords_scaled_max_origin)return false;
+        for(std::size_t p=0;p<count;++p) {
+            const auto value=coordinates[a*count+p];
+            if(value<0 || std::size_t(value)>=shape[a])return false;
+        }
+    }
+    if(!count)return true;
+    const int threads=count*ndim>=parallel_min ? int(std::min(count,std::size_t(workers))) : 1;
+    partition(count,threads,[&](auto begin,auto end,auto) {
+        for(std::size_t a=0;a<ndim;++a) {
+            auto* column=coordinates+a*count;const auto origin=origins[a];
+            #if defined(_OPENMP) && !defined(_MSC_VER)
+            #pragma omp simd
+            #endif
+            for(std::size_t p=begin;p<end;++p)column[p]+=origin;
+        }
+    });
+    return true;
+}
+
+bool regionprops_coords_scaled_multiply_f64_into(const std::intptr_t* coordinates,
+    std::size_t count,std::size_t ndim,const std::array<double,3>& spacing,double* output,int workers) {
+    if(!coords_scaled_layout(count,ndim,workers) || !coords_scaled_parameters(spacing,ndim)
+       || (count && (!coordinates || !output)))return false;
+    const auto size=count*ndim;
+    if(coords_scaled_overlap(coordinates,size*sizeof(std::intptr_t),output,size*sizeof(double)))return false;
+    constexpr auto bound=2*regionprops_coords_scaled_max_origin;
+    for(std::size_t p=0;p<size;++p)if(coordinates[p]<-bound || coordinates[p]>bound)return false;
+    return coords_scaled_math(count,ndim,workers,[&](std::size_t begin,std::size_t end) noexcept {
+        for(std::size_t a=0;a<ndim;++a) {
+            const auto* input=coordinates+a*count;auto* column=output+a*count;const auto scale=spacing[a];
+            #if defined(_OPENMP) && !defined(_MSC_VER)
+            #pragma omp simd
+            #endif
+            for(std::size_t p=begin;p<end;++p)column[p]=double(input[p])*scale;
+        }
+    });
+}
+
+bool regionprops_coords_scaled_add_f64_into(double* values,std::size_t count,std::size_t ndim,
+    const std::array<double,3>& offset,int workers) {
+    if(!coords_scaled_layout(count,ndim,workers) || !coords_scaled_parameters(offset,ndim) || (count && !values))return false;
+    const auto size=count*ndim;
+    for(std::size_t p=0;p<size;++p) {
+        const auto bits=word<std::uint64_t>(reinterpret_cast<const char*>(values+p))&UINT64_C(0x7fffffffffffffff);
+        if(bits && (bits<UINT64_C(0x2cb0000000000000) || bits>UINT64_C(0x5140000000000000)))return false;
+    }
+    return coords_scaled_math(count,ndim,workers,[&](std::size_t begin,std::size_t end) noexcept {
+        for(std::size_t a=0;a<ndim;++a) {
+            auto* column=values+a*count;const auto shift=offset[a];
+            #if defined(_OPENMP) && !defined(_MSC_VER)
+            #pragma omp simd
+            #endif
+            for(std::size_t p=begin;p<end;++p)column[p]+=shift;
+        }
+    });
 }
 }

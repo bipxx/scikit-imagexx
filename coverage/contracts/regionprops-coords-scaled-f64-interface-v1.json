@@ -1,0 +1,144 @@
+{
+  "schema": "regionprops-coords-scaled-f64-interface-v1",
+  "status": "SOURCE_ONLY_REVIEWABLE_ABI_DESIGN_NO_IMPLEMENTATION",
+  "base_reference": "51f3a50045774d67ed8a789d31edb88b5c93d592",
+  "accepted_capture_peer": "f568ac6df2b8ffdc0494e85108a861afb6041c3740d6eef7fec19510d9458d27",
+  "reference": "coverage/contracts/regionprops-coords-scaled-reference-v1.json",
+  "operation": "RegionProperties.coords_scaled f64ownedpartition; samepublic@property/fget(self), no newpublicfunction/argument/workerAPI",
+  "single_interface": "Fourfixedsource-phase entries appendedonlytoexistingregionprops_state.hpp/cpp. No workspace/plan class, phase-dispatch framework, genericarrayabstraction, newpool, or competingdesign.",
+  "CXX_entries": [
+    "regionprops_coords_scaled_local_into",
+    "regionprops_coords_scaled_origin_into",
+    "regionprops_coords_scaled_multiply_f64_into",
+    "regionprops_coords_scaled_add_f64_into"
+  ],
+  "private_core_entries": {
+    "regionprops_state_coords_scaled_local": "(mask,workers)->(freshowningFintpNxD,mask_shape_tuple) orNone; immutablemaskshape capturedatmaterialization, existingpopulation+localfill, no rereadmaskmetadata afterlater sourceattributes",
+    "regionprops_state_coords_scaled_origin_into": "(private_indices,source_origin_array,mask_shape_tuple,workers)->True orNone; calledONLYwhenindex_owned fromnativeproducer, notbecauseowndata; Noneleavesunchanged. BinderpadsactualDshape tofixedarray3 forCPP.",
+    "regionprops_state_coords_scaled_multiply_f64": "(absolute_intp,source_spacing,workers)->freshowningFf64NxD orNone; no silentcastofintegerspacingresult",
+    "regionprops_state_coords_scaled_add_f64_into": "(private_scaled_f64,source_offset,workers)->True orNone; calledONLYwhenmultiply_owned fromnativeproducer, notbecauseproviderresultowndata; Noneleavesunchanged."
+  },
+  "frontend_source_phase_skeleton": "mask = self.image\nworkers = _core.get_num_threads()  # one snapshot AFTER image, before local coordinates\nnative_local = _core.regionprops_state_coords_scaled_local(mask, workers)\nindex_owned = native_local is not None\nif index_owned:\n    indices, mask_shape = native_local  # shape captured by the binding at materialization\nelse:\n    indices = np.argwhere(mask)  # explicit unsupported prefix only\n    mask_shape = None\norigin = np.array([self.slice[i].start for i in range(self._ndim)])\norigin_owned = _core.regionprops_state_coords_scaled_origin_into(indices, origin, mask_shape, workers) if index_owned else None\nabsolute = indices if origin_owned is True else origin + indices\nspacing = self._spacing\nscaled = _core.regionprops_state_coords_scaled_multiply_f64(absolute, spacing, workers)\nmultiply_owned = scaled is not None\nif not multiply_owned: scaled = absolute * spacing\n# This read is AFTER multiplication, including any original FP warning/callback.\noffset = self._offset\nadd_owned = _core.regionprops_state_coords_scaled_add_f64_into(scaled, offset, workers) if multiply_owned else None\nnative_result = scaled if index_owned and origin_owned is True and multiply_owned and add_owned is True else None\nreturn scaled if add_owned is True else scaled + offset\n",
+  "phase_and_provider_rules": [
+    "Read self.image exactlyonce; capturemask beforeanylocal-coordinate work. Unsupportedmask usesnp.argwhere(capturedmask), neverwholegetterfallback.",
+    "FinishC-logicalargwherematerializationbeforeliteralcurrent_slice-originlist/np.array; thencompleteoriginadditionbeforereading_spacing. Neverusefrozenconstructororigins orpubliccoords+scale.",
+    "Read_spacingonce, completeownedmultiplyorliteralcapturedabsolute*spacing BEFORE reading_offsetonce. Unsupported/eventfulmultiply keepssamecapturedoperandarrays andliteralNumPystagehandlespolicy.",
+    "Read_offsetaftermultiply; supportedboundedf64additioninplace, otherwise capturedscaled+offsetonce. Neverre-readimage/slice/spacing orredoalready-completedarithmetic.",
+    "NativeResultnonnullmeansALL4ownedstages, notjustfinalCPPadd; Creturnwitnesses+stageacceptancelocals distinguishpartialproviderprefix/suffix. Integer-spacingi64 usesexplicitliteralnumeric suffixandgetsNOownedf64credit.",
+    "No monkeypatchedarrayfactories/frameintrospection/privatefieldinterposition/concurrentmutation/allocation-failure claims; ordinarysourceerrors/protocols atunsupportedstages retainedliteralwithoutconversion-replay."
+  ],
+  "storage_and_validation": {
+    "mask": "Exactnp.ndarray/nativebool,C/Ffirstfrontier; validaddressablebyte-spans andstrongowner retained. Reuseexistingpopulation; nonzerobytestrue. Capturedmaskstablefromcountthroughlocalfill, nopublicgettercallbacksinsideprefix. Readonlymasksarevalidconstinputs; donotrequirewriteability orcopyawayflags.",
+    "local_and_absolute": "PrivatefreshowningFnativeintp(N,D); N=CURRENTmaskpopulation, D2/3; countcapacityN*Dcheckedonce. Originadditionmayreuseprivateindexbufferafterboundedintpclassification. Unknown/provider-ownedargwhereview isnotmodifiedinplace.",
+    "output": "MultiplyallocatesfreshowningFf64(N,D), disjointfrommask/indices/parameterarrays. Successfuladdmayreuseunexposedprivatef64buffer becausefinaldtype/shape/ownership/layout equalfreshsourceufunc result; no retainedexternalaliases. EmptyN0 arraymustownbaseNone/C&F/zero strides exactlycaptured; C++mayreceiveNullpointerfor0count. Nevercacheorreturnreuseacrosspropertyreads, includingemptyarrays.",
+    "inplace_semantic_reason": "Onlyunexposedbuiltinprivateinteger/f64intermediates reused, aftererror-freeboundscheckedstage. No customcallbacks or policyerror canobserve/intercepttheseintermediates inownedpartition. Avoids2unnecessarytemporaryallocations; unsupportedstage leavesprefixoperandsunchangedandliteralNumPysuffixexecutesonce.",
+    "boundary_rule": "Logicaltypenum+nativebyteorder, neverdescriptoridentity. Eachprivatebindingisnewexternalentry: bindingdescriptor/span/capacitychecksonce; CPPentrydeclarednumericrangeadmissiononcebeforewritesalsoprotectsSDKcalls, withno duplicatebindingscan. Innerloopsconsumeestablishedinvariants. Origincannotassumeexternalintparrayscamefromlocalproducer. RecheckFPentryafteroffsetreadbecauseexternallyevaluatedsourcephasecanchangeFPstate. No repeatedmaskclassification/validationinsideinnerloops.",
+    "origin_and_promotion": "Sourceorigin np.arraycreatedonce fromliteralDreads. Nativeorigin onlyplainnativeintp; firstspacingfloat64/float32 withactualintp\u00d7spacing\u2192f64capture support, offsetintp/float32/float64 asobserved. Scalarbroadcast_spacingreadonlystride0 mustwork. No blindnormalizationofinteger-spacing tofloat64.",
+    "coefficient_payload_rule": "KeepcapturedNPcoefficientarraysforfallback. Descriptor/FPfrontier gates mustnot invokeunknownconversionprotocols orquietnonfinitevaluesbeforefallthrough. Copyf64bits without arithmetic; firstf32nativebridge admitszero/normalf32only, rawfinite/normalbitchecksbeforeexactdoubleconversion. Unsupportedrounding/FTZ/DAZ/nonfinite/subnormalf32 goesliteralcapturedsuffixwithoutnumericnormalizationeffects. Thisisnarrowformatadmission, notagenericdtypeengine.",
+    "coefficient_metadata": "Firstownedf64suffixrequires spacing/offsetdtype.metadata isNone; taggedcoefficientsremainliteralcapturedsuffixuntilanactualmetadatawitness. Logicaltypenum/nativebyteorderisrepresentationadmission, notpermissiontostripeventualresulttags.",
+    "private_provenance": "Freshprivateproducer provenancecontrols in-placecalls. Native-localarray is theONLYfgetinputtoorigin_into; native-multiplyarray is theONLYfgetinputtoadd_f64_into. Anownedbutprovider-created/customargwhere/ufuncarray mayhaveexternalaliases andMUSTstayliteralout-of-placesuffix. No genericownershiptoken/framework.",
+    "original_mask_shape": "Native-localbindingreturnsimmutabletuple(mask.shape)capturedwhilevalidating/fillinglocalcoordinates. OriginprivateABIexplicitlyreceivesthissnapshot, neverlatermask.shape/current_slice-derivedshape. TheexistingCPPshapeparameterremainsunchanged.",
+    "origin_external_boundary": "Everyprivatecallisnewexternalboundary. Bindingchecksdescriptor/span/capacity; CPPoriginentryvalidatesndim/count/shapeandoriginswithinbound, ANDscansalllocalintpvaluesonce against0<=coordinate<mask_shape[axis] BEFOREanyinplacewrite. Rejectnegative/INTP_MAX/INTP_MIN/out-of-shape inputorinvalidorigin witharrayunchanged. Validateboundedshapeproductwithoutoverflow; onlythenperformaddition. Shape/origin\u22642^20 andvalidatedlocalvaluesmakeeveryadditionrepresentable; neverevaluateanuncheckedsignedsumwhilevalidating. Do nottrustallegedpreviousstage/owndata. OneentryadmissionpasssharedbybindingandSDK, thenuncheckedinneraddloop; no per-inner-layerrepeat."
+  },
+  "bounded_f64_math": {
+    "dims": [
+      2,
+      3
+    ],
+    "maximum_mask_elements": 16777216,
+    "maximum_axis_extent": 1048576,
+    "maximum_absolute_origin": 1048576,
+    "new_spacing_offset": "signedzeroorfinitemagnitude[2^-256,2^256], symmetricnegativeallowed",
+    "proof": "Absoluteintegercoordinates\u22642^21, exactlyrepresentablef64. Multiply\u22642^277, add<2^278. Minimumcoefficientquantum\u22652^-308, so product/sum are normalorexactzero, noUF/OF/invalid/divide; no NPerror-policyqueries/callbackframework onacceptedpath. Keepseparatemultiply/add+ffp-contractoff for0ULP.",
+    "FP": "ReuseexistingScalarEnvironment withaccepted7adfCSRroundbits+nearest/FTZDAZ guards; falseBEFOREwrites forunsupportednewparameters/FP. No extrapolationtoeventful/nonnormalinputs."
+  },
+  "worker_SIMD": {
+    "snapshot": "Oneprivate_core.get_num_threads AFTERself.image, passsamepositiveintall4stages; nativefunctionsneverreadglobalagain. SDKcallerlikewisesnapshotsoperationonce.",
+    "small_work": "CapturedN\u22644, scalars/serialfineunder1or4; canonicalorderedmaskwalkserial.",
+    "dense_work": "Densecolumn-majororigin/mathloops reusecompilerSIMD/existingsimdhelpers andpartition(count,workers,...) onlywhenworthwhilepastactualparallel_min256*1024. No forcedpool/prefixframework. IfparallelFPimplemented, installandrestorecallerFPcontextinworkers; staleworkerroundingmustnotbeassumed. Serialfirstimplementationdoesnotclaimparallelcodegen/speed.",
+    "proof_required": "GCCnormal/runtime-disable/truecompiler-scalar/sanitizer plusactualMSVCaffectedTUcompile; reportrealpackedFPwidth honestly, no universalAVX2claim."
+  },
+  "one_SDK_consumer": {
+    "file": "tests/test_component_consumers_native.cpp",
+    "family": "Existingcomponent-consumersfamily, same31families/62processchecks",
+    "selector": "--regionprops-coords-scaled-only; defaultalsorunsnewcontrols",
+    "gold_id": "regionprops-coords-scaled/negative-anisotropic2d",
+    "mask_C_bytes": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "mask_shape": [
+      2,
+      2,
+      1
+    ],
+    "count": 3,
+    "origin": [
+      1,
+      1,
+      0
+    ],
+    "spacing": [
+      -0.5,
+      2.0,
+      0.0
+    ],
+    "offset": [
+      -3.0,
+      4.0,
+      0.0
+    ],
+    "final_F_words": [
+      "0xc00c000000000000",
+      "0xc00c000000000000",
+      "0xc010000000000000",
+      "0x4018000000000000",
+      "0x4020000000000000",
+      "0x4018000000000000"
+    ],
+    "gold_C_raw_sha256": "3e941fb5a47b6a219c91ca083fe4870fb322fff117d01f9f745229b49fc577f4",
+    "steps": "population\u2192localFintp[0,0,1,0,1,0]\u2192originstage\u2192spacingstage\u2192offsetstage, exactfrozengoldwords/guards; sameunderglobal1/4/defaultrestore. Add0population/nulloutputcontrolandnewspacing/offsetout-of-frontierbefore-writecontrol. No originalrecapture.",
+    "scope": "Standaloneactualinstalledclient+newleaf/headercomponent fromretainedSDK91donor, notnewfamily or genuinequalification; NumPyowning/emptyflags provenfrontend, notCarrayclient."
+  },
+  "parallel_ownership": {
+    "native_C": [
+      "include/skimagexx/regionprops_state.hpp frozen4entryABIunchanged",
+      "src/regionprops_state.cpp ONLYnew4phasefunctions/appends; existingnestedmaskloops/preparationalreadyprovedbyA,doNOTpatchthem",
+      "NEW tests/test_regionprops_coords_scaled_native.cpp andminimalnativecontract"
+    ],
+    "frontend_B": [
+      "src/bind_regionprops_state.cpp only4newbindings",
+      "python/skimagexx/_regionprops_state_class.py onlycoords_scaledpropertyflow",
+      "NEW tests/test_regionprops_coords_scaled_public.py andminimalfrontendcontract"
+    ],
+    "SDK_B_later": [
+      "tests/test_component_consumers_native.cpp existingcomponentfamily/focusedscaledselectoraftereligibleCnativePIC",
+      "onepuredefaultSDKscopeguardifneeded"
+    ],
+    "A": [
+      "Independentbottleneckprofiling/reviewlane; no duplicatedprepare/nested-loopimplementation"
+    ],
+    "root": [
+      "sharedCMake/qualifier/inventory/CI/benchmark/sourcecomposition",
+      "independentacceptance/publication"
+    ]
+  },
+  "minimal_validation": [
+    "Nativefixture derivesmask/prefixinputsfromsavedrecipe/currentlabel/cacheactions butEXPECTEDoutputsfromacceptedrawwords; 11f64cases, no candidate-generatedexpectations.",
+    "Frontendreuse24sequencegoldrows/72arrays, workers1/4 normal/runtime-disabled bothNPprofiles; actualbuiltinCreturn/all4nativeResult/getter1 for11f64cases, i64case explicitlyprovider-numericnotnativef64. Denyoriginalcoords_scaled.fget/imageargwhere onadvertisednativebranch; prefix/unsupported suffixspies prove noimageread/attribute/callbackreplay.",
+    "Onlynecessarynewstagefrontier/FP/no-write/alias/lifetime/empty controls; replayold9propertytests onlyifactualchangedfamilyinputs invalidatepriorproof.",
+    "OneSDKnegative-anisotropicgold+empty/guard/refusal/globalrestore control; nopreexistinglargeSDKfamilyrerun. Performancevsoriginalsingle-thread ONLYafterpublic/genuine product sourcefreeze andprospectivebenchmarkgate.",
+    "Oneactual-region suffix control mayuseNumPy-only0*inf callbackprimitive (nonewRegion originalcapture): unsupportedmultiplycallbackchanges_offset, whichmustbereadonlyafterthecallback; image remainsreadonce/nativeResultNone. Source-privatefieldinterposition is a recovery-order test, notnewnative-domaincredit.",
+    "Provenance-onlynegativecontrols: native-localreturnsNone thenproviderargwhere returnsanowningexternallyheldarray\u2014origin_into mustNOTbecalled; native-multiplyreturnsNone thenliteralufunc returnsanowningexternallyheldarray\u2014add_f64_into mustNOTbecalled. Verifyarraysnotmodified. Directprivate-origin callswithvalidowndata butINTP_MAX/MIN/negative/out-of-shapelocalvaluesmustrefuseunchangedbeforenewintegeraddition."
+  ],
+  "remaining_frontier": [
+    "Integer-spacingint64numeric suffix is explicitNEXTpartition; do notlosecapturedcaseorcoerceitsdtype.",
+    "Nonfinite/extreme/eventfulFP/print-log-call/customprotocols/otherpublicgeometry/privatefieldmutations remainliteralcapturedsuffixdomainsorunassessed; no wholeclassclaim.",
+    "Other34canonicalproperties, intensity/tables/extras/serialization/wholeclassidentity notpartofthisinterface.",
+    "Subnormalfloat32coefficient payloads outsidefirstf32bridge; retainliteralNumPysuffix, noconversion-before-refusal orf64ownershipclaim.",
+    "Taggedspacing/offset dtype metadata propagation unassessed; literal captured suffix required, no metadata-stripping nativecast."
+  ],
+  "next_gate": "Rootreviewthisversionedsuccessor(twoinplaceprovenancegates,maskshapeABIcarry,originexternalnumericadmission). ThenROOTGOforCnative/Bfrontendparallelimplementation; BSDKlateraftereligiblePIC. Header/CPPprototypes unchanged, no scientific/test/build replay."
+}

@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import pytest
 ROOT=Path(__file__).parents[1]
-CONTRACT=ROOT/'coverage/contracts/regionprops-performance-scalars-v2.json'
+CONTRACT=ROOT/'coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json'
 
 
 def load():

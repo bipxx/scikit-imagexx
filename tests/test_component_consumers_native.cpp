@@ -17,6 +17,61 @@ void require(bool value){if(!value)throw std::runtime_error("component consumer 
 std::size_t region_state_checks=0;
 // Installed SDK composition: visible population, separately visible box size,
 // and a cached area value are deliberately different state inputs.
+
+// Existing component-consumer family, also reached by its no-argument CTest.
+void regionprops_coords_scaled(int workers) {
+    using namespace skimagexx::detail;
+    auto check=[](bool v){++region_state_checks;require(v);};
+    const int previous=get_num_threads();set_num_threads(workers);
+    std::fenv_t environment;check(std::fegetenv(&environment)==0);
+    check(std::fesetround(FE_TONEAREST)==0);
+    std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(FE_DIVBYZERO);
+    const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
+    const std::array<std::size_t,3> shape{2,2,1};
+    const std::array<std::intptr_t,3> origin{1,1,0};
+    const std::array<double,3> spacing{-.5,2.,0.},offset{-3.,4.,0.};
+    // Actual frozen negative-anisotropic2d words, F permutation only.
+    const std::array<double,6> expected{-3.5,-3.5,-4.,6.,8.,6.};
+    for(int layout=0;layout<3;++layout) {
+        std::uint8_t storage[6]={0x91,1,1,1,0,0x91};auto* mask=storage+1;
+        std::array<std::ptrdiff_t,3> strides{2,1,0};
+        if(layout==1){strides={1,2,0};}
+        if(layout==2){mask=storage+4;strides={-2,-1,0};storage[1]=0;storage[4]=1;}
+        const std::vector<std::uint8_t> input(storage,storage+6);
+        std::intptr_t indices[8];std::fill(indices,indices+8,-91);double output[8];std::fill(output,output+8,-97.);
+        check(regionprops_coords_scaled_local_into(mask,2,shape,strides,3,indices+1,workers));
+        const std::intptr_t local[]{0,0,1,0,1,0};for(std::size_t i=0;i<6;++i)check(indices[i+1]==local[i]);
+        check(regionprops_coords_scaled_origin_into(indices+1,3,2,shape,origin,workers));
+        check(regionprops_coords_scaled_multiply_f64_into(indices+1,3,2,spacing,output+1,workers));
+        check(regionprops_coords_scaled_add_f64_into(output+1,3,2,offset,workers));
+        for(std::size_t i=0;i<6;++i)check(std::memcmp(output+1+i,&expected[i],sizeof(double))==0);
+        check(output[0]==-97.&&output[7]==-97.&&indices[0]==-91&&indices[7]==-91);
+        check(std::equal(input.begin(),input.end(),storage));check(std::fetestexcept(FE_ALL_EXCEPT)==flags);
+    }
+    // CURRENT edited mask count, independent of constructor/cached population.
+    const std::uint8_t edited[]{0,1,1,0};std::intptr_t indices[4];double output[4];
+    check(regionprops_coords_scaled_local_into(edited,2,shape,{2,1,0},2,indices,workers));
+    check(regionprops_coords_scaled_origin_into(indices,2,2,shape,origin,workers));
+    check(regionprops_coords_scaled_multiply_f64_into(indices,2,2,spacing,output,workers));
+    check(regionprops_coords_scaled_add_f64_into(output,2,2,offset,workers));
+    const double edited_expected[]{-3.5,-4.,8.,6.};check(std::memcmp(output,edited_expected,sizeof(output))==0);
+    const std::array<std::size_t,3> empty_shape{0,2,1};
+    check(regionprops_coords_scaled_local_into(nullptr,2,empty_shape,{2,1,0},0,nullptr,workers));
+    check(regionprops_coords_scaled_origin_into(nullptr,0,2,empty_shape,origin,workers));
+    check(regionprops_coords_scaled_multiply_f64_into(nullptr,0,2,spacing,nullptr,workers));
+    check(regionprops_coords_scaled_add_f64_into(nullptr,0,2,offset,workers));
+    std::intptr_t invalid[]{0,1,std::numeric_limits<std::intptr_t>::max(),0};
+    const std::vector<std::intptr_t> before(invalid,invalid+4);
+    check(!regionprops_coords_scaled_origin_into(invalid,2,2,shape,origin,workers));check(std::equal(before.begin(),before.end(),invalid));
+    const double untouched[4]={1.,2.,3.,4.};std::copy(untouched,untouched+4,output);
+    auto invalid_spacing=spacing;const std::uint64_t snan=UINT64_C(0x7ff0000000000001);std::memcpy(&invalid_spacing[1],&snan,8);
+    check(!regionprops_coords_scaled_multiply_f64_into(indices,2,2,invalid_spacing,output,workers));check(std::memcmp(output,untouched,sizeof(output))==0);check(std::fetestexcept(FE_ALL_EXCEPT)==flags);
+    check(std::fesetround(FE_DOWNWARD)==0);
+    check(!regionprops_coords_scaled_multiply_f64_into(indices,2,2,spacing,output,workers));check(std::memcmp(output,untouched,sizeof(output))==0);check(std::fegetround()==FE_DOWNWARD);
+    check(!regionprops_coords_scaled_add_f64_into(output,2,2,offset,workers));check(std::memcmp(output,untouched,sizeof(output))==0);
+    check(std::fesetenv(&environment)==0);set_num_threads(previous);check(get_num_threads()==previous);
+}
+
 void regionprops_scalars(int workers) {
     using namespace skimagexx::detail;
     auto check=[](bool value){++region_state_checks;require(value);};
@@ -222,7 +277,15 @@ void concurrent_configuration() {
 #endif
 }
 int main(int argc,char** argv) {
-    require(argc==1||(argc==2&&(std::string(argv[1])=="--regionprops-state-only"||std::string(argv[1])=="--regionprops-scalar-only"||std::string(argv[1])=="--regionprops-strided-only")));
+    require(argc==1||(argc==2&&(std::string(argv[1])=="--regionprops-state-only"||std::string(argv[1])=="--regionprops-scalar-only"||std::string(argv[1])=="--regionprops-strided-only"||std::string(argv[1])=="--regionprops-coords-scaled-only")));
+    if(argc==1||(argc==2&&std::string(argv[1])=="--regionprops-coords-scaled-only")){
+        for(int workers:{1,4}) {
+            if(workers==4){try{set_num_threads(4);}catch(const std::invalid_argument&){require(get_num_threads()==1);continue;}set_num_threads(1);}
+            regionprops_coords_scaled(workers);
+        }
+        set_num_threads(1);require(get_num_threads()==1);
+        if(argc==2){std::cout<<"installed coords_scaled controls="<<region_state_checks<<"; default="<<get_num_threads()<<"; AVX2="<<has_avx2()<<"\n";return 0;}
+    }
     if(argc==2&&std::string(argv[1])=="--regionprops-strided-only"){
         const bool available=has_avx2();
         for(int workers:{1

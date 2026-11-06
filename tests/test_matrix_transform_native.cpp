@@ -1,3 +1,4 @@
+#include "matrix_prescott_controls.hpp"
 // Fixed, versioned general finite cohorts. The independent NumPy/original
 // oracle reads this JSON verbatim; these are named data, not random fuzz.
 // MATRIX_COHORTS_BEGIN
@@ -225,6 +226,6 @@ int main(int argc,char**argv) {
     try {
         if(argc>=2 && std::string(argv[1])=="--stream") {stream(argc==3?std::stoi(argv[2]):1);return 0;}
         if(argc>=2 && std::string(argv[1])=="--stream-v2") {stream(argc==3?std::stoi(argv[2]):1,true);return 0;}
-        controls();cooperlake_controls();std::cout<<"matrix native checks "<<checks<<" PASS\n";return 0;
+        controls();cooperlake_controls();prescott_controls::run();std::cout<<"matrix native checks "<<checks<<" PASS\n";return 0;
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
 }

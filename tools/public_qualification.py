@@ -291,7 +291,7 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current258'
+CURRENT_PRODUCT_SCOPE = 'current262'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter')
 CURRENT_SDK_CLIENT_SCOPE = 'current31 required installed clients (23 legacy plus colocalization, footprint_shapes, recent prepared primitives, drawing coordinates, circle perimeter, line ND, ellipsoid and ellipse perimeter); source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
@@ -374,6 +374,18 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tools/region_stain_compare.py', 'benchmarks/stain_f32_holdouts.py',
     'coverage/contracts/region-stain-same-host-v1.json', 'tests/test_region_stain_compare.py',
     'tests/test_regionprops_performance_v2.py', 'tests/test_regionprops_strided_sdk_scope.py',
+    'tests/test_regionprops_coords_scaled_reference.py', 'tests/test_regionprops_coords_scaled_public.py',
+    'tests/test_regionprops_coords_scaled_sdk_scope.py', 'tests/test_regionprops_coords_scaled_native.cpp',
+    'coverage/contracts/regionprops-coords-scaled-prospective-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-reference-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-f64-interface-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-native-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-frontend-v1.json',
+    'coverage/contracts/regionprops-performance-state-coords-scaled-v1.json',
+    'coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json',
+    'benchmarks/regionprops_coords_scaled.py', 'coverage/contracts/regionprops-coords-scaled-benchmark-v1.json',
+    'tests/test_regionprops_coords_scaled_benchmark.py',
+    'tests/test_regionprops_coords_scaled_benchmark_intake.py',
     'include/skimagexx/draw_ellipsoid.hpp',
     'src/draw_ellipsoid.cpp',
     'src/bind_draw_ellipsoid.cpp',
@@ -413,7 +425,69 @@ DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordin
     'tests/cmake_consumer/ellipse_perimeter_fixtures.cmake',
     'benchmarks/ellipse_perimeter.py',
     'coverage/contracts/ellipse-perimeter-benchmark.json',
-    'tests/test_ellipse_perimeter_benchmark.py')
+    'tests/test_ellipse_perimeter_benchmark.py',
+    'include/skimagexx/draw_polygon.hpp',
+    'src/draw_polygon.cpp',
+    'src/bind_draw_polygon.cpp',
+    'python/skimagexx/_draw_polygon.py',
+    'tests/draw_polygon_contract.py',
+    'tests/draw_polygon_observer.py',
+    'tests/test_draw_polygon_reference.py',
+    'coverage/contracts/draw-polygon-v1.json',
+    'tests/test_draw_polygon_native.cpp',
+    'coverage/contracts/draw-polygon-native-v1.json',
+    'tests/test_draw_polygon_public.py',
+    'coverage/contracts/draw-polygon-frontend-v1.json',
+    'tests/test_draw_polygon_default.py',
+    'tests/test_draw_polygon_sdk_scope.py',
+    'benchmarks/draw_polygon.py',
+    'coverage/contracts/draw-polygon-benchmark-v1.json',
+    'tests/test_draw_polygon_benchmark.py',
+    'tests/test_draw_polygon_benchmark_intake.py',
+    'coverage/contracts/draw-polygon-dtype-tag-v1.json',
+    'tests/test_draw_polygon_dtype_tag_reference.py',
+    'coverage/contracts/draw-polygon-runtime-v1.json',
+    'coverage/contracts/draw-polygon-current-runtime-v1.json',
+
+    'benchmarks/bezier_curve.py',
+    'coverage/contracts/draw-bezier-benchmark-v1.json',
+    'coverage/contracts/draw-bezier-frontend-v1.json',
+    'coverage/contracts/draw-bezier-native-v1.json',
+    'coverage/contracts/draw-bezier-sdk-v1.json',
+    'coverage/contracts/draw-bezier-v1.json',
+    'include/skimagexx/bezier_curve.hpp',
+    'python/skimagexx/_bezier_curve.py',
+    'src/bezier_curve.cpp',
+    'src/bind_bezier_curve.cpp',
+    'tests/cmake_consumer/bezier_curve_consumer.cpp',
+    'tests/cmake_consumer/bezier_curve_fixture.cmake',
+    'tests/draw_bezier_contract.py',
+    'tests/draw_bezier_observer.py',
+    'tests/fixtures/bezier_curve_originals_v1.bin',
+    'tests/test_bezier_curve_benchmark.py',
+    'tests/test_bezier_curve_benchmark_intake.py',
+    'tests/test_bezier_curve_native.cpp',
+    'tests/test_bezier_curve_public.py',
+    'tests/test_draw_bezier_reference.py',
+    'tests/test_bezier_curve_default.py',
+    'benchmarks/draw_set_color.py',
+    'coverage/contracts/draw-set-color-benchmark.json',
+    'coverage/contracts/draw-set-color.json',
+    'include/skimagexx/draw_set_color.hpp',
+    'python/skimagexx/_draw_set_color.py',
+    'src/draw_set_color.cpp',
+    'src/bind_draw_set_color.cpp',
+    'tests/cmake_consumer/draw_set_color_consumer.cpp',
+    'tests/draw_set_color_contract.py',
+    'tests/draw_set_color_observer.py',
+    'tests/test_draw_set_color_benchmark.py',
+    'tests/test_draw_set_color_native.cpp',
+    'tests/test_draw_set_color_public.py',
+    'tests/test_draw_set_color_reference.py',
+    'tests/test_draw_set_color_default.py',
+    'coverage/contracts/draw-polygon-draw-batch-runtime-v1.json',
+    'coverage/contracts/draw-set-color-native-v1.json',
+)
 SDK_CLIENT_SCOPE = 'legacy23 independently linked installed clients; new colocalization/footprint_shapes headers are packaged, not client-qualified'
 TV_PATH = 'restoration.denoise_tv_chambolle'
 TV_SOURCE_PATHS = ('include/skimagexx/tv_chambolle.hpp', 'include/skimagexx/tv_reductions.hpp',
@@ -459,7 +533,17 @@ MATRIX_SOURCE_PATHS = ('include/skimagexx/matrix_transform.hpp', 'src/matrix_tra
     'coverage/evidence/matrix-transform-public-assertion-migration.json',
     'coverage/evidence/matrix-transform-public-source-successor-assertion.json',
     'coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json',
-    'tests/test_matrix_transform_numpy124_skylakex_certificate.py')
+    'tests/test_matrix_transform_numpy124_skylakex_certificate.py',
+    'coverage/contracts/matrix-prescott-reference-v1.json',
+    'coverage/contracts/matrix-prescott-v1.json',
+    'tests/fixtures/matrix_prescott_native.hpp',
+    'tests/matrix_prescott_context.py',
+    'tests/matrix_prescott_controls.hpp',
+    'tests/test_matrix_prescott_contract.py',
+    'tests/test_matrix_prescott_native.cpp',
+    'tests/test_matrix_prescott_public.py',
+    'coverage/contracts/matrix-prescott-release-test-context-v1.json',
+)
 RECONSTRUCTION_PATH = 'morphology.reconstruction'
 RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
@@ -500,7 +584,7 @@ GROUPS = {
     'public-Matrix': ('test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
                       'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
                       'test_matrix_transform_skylakex_routing.py',
-                      'test_matrix_transform_numpy124_skylakex_certificate.py'),
+                      'test_matrix_transform_numpy124_skylakex_certificate.py','test_matrix_prescott_public.py'),
     'public-MaxTree': ('test_max_tree_contracts.py', 'test_max_tree_public.py'),
     'public-MaxTree-fixes': ('test_max_tree_dtype_metadata.py', 'test_max_tree_sdk_oracle.py'),
     'public-consumers': ('test_component_consumers_public.py', 'test_arraymap_provider_pipeline.py'),
@@ -511,7 +595,23 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py')
+POST203_TESTS = ('test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_regionprops_coords_scaled_reference.py', 'test_regionprops_coords_scaled_public.py', 'test_regionprops_coords_scaled_sdk_scope.py', 'test_regionprops_coords_scaled_benchmark.py',
+    'test_draw_polygon_reference.py',
+    'test_draw_polygon_public.py',
+    'test_draw_polygon_default.py',
+    'test_draw_polygon_benchmark.py',
+    'test_draw_polygon_dtype_tag_reference.py',
+
+    'test_draw_bezier_reference.py',
+    'test_bezier_curve_public.py',
+    'test_bezier_curve_default.py',
+    'test_bezier_curve_benchmark.py',
+    'test_bezier_curve_benchmark_intake.py',
+    'test_draw_set_color_reference.py',
+    'test_draw_set_color_public.py',
+    'test_draw_set_color_default.py',
+    'test_draw_set_color_benchmark.py',
+)
 
 
 def groups_for_source(root):
@@ -523,6 +623,7 @@ def groups_for_source(root):
         groups['public-Li-u16'] = ('test_li_u16_pipeline.py',)
     if (Path(root) / CURRENT_SCOPE_CONTRACT).is_file():
         groups['public-post203'] = POST203_TESTS
+        groups['public-polygon-intake'] = ('test_draw_polygon_benchmark_intake.py',)
     return groups
 
 
@@ -778,6 +879,7 @@ def plan(root, profile, expected=None):
             require(set(registry['functions']) == set(contract['image_paths']) | set(contract['metadata_paths'])
                     and registry['image_count'] == len(contract['image_paths']), 'current registry has unmapped or stale image API scope')
             require(set(groups.get('public-post203', ())) == set(POST203_TESTS), 'current dedicated qualification group missing/stale')
+            require(groups.get('public-polygon-intake') == ('test_draw_polygon_benchmark_intake.py',), 'current cold polygon intake group missing/stale')
             names = [p.relative_to(root).as_posix() for prefix in ('python/skimagexx', 'include')
                      for p in (root / prefix).rglob('*') if p.is_file()]
             layout = current_install_layout(lambda name: (root / name).read_bytes(), names, profile)
@@ -802,7 +904,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -816,7 +918,7 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py'},
             'current qualification selector contract differs')
     return data
 
@@ -862,6 +964,13 @@ def current_install_layout(read_bytes, names, profile):
             'current ellipsoid install closure absent')
     require('include/skimagexx/draw_ellipse_perimeter.hpp' in headers and 'skimagexx/_draw_ellipse_perimeter.py' in sources,
             'current ellipse perimeter install closure absent')
+    require('include/skimagexx/draw_polygon.hpp' in headers
+            and 'skimagexx/_draw_polygon.py' in sources,
+            'current polygon install closure absent')
+    require('include/skimagexx/bezier_curve.hpp' in headers and 'skimagexx/_bezier_curve.py' in sources,
+            'current Bezier install closure absent')
+    require('include/skimagexx/draw_set_color.hpp' in headers and 'skimagexx/_draw_set_color.py' in sources,
+            'current set-color install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
@@ -1331,10 +1440,12 @@ def matrix_admission(core, transform, wrapper, registered, diagnostic_path=None)
     for name,want in (('matrix_transform_interface','matrix-transform-math-v1'),
                       ('matrix_transform_capabilities',31),
                       ('matrix_transform_v2_interface','matrix-transform-math-v2'),
-                      ('matrix_transform_v2_capabilities',63)):
+                      ('matrix_transform_v2_capabilities',63),
+                      ('matrix_transform_v3_interface','matrix-transform-math-v3'),
+                      ('matrix_transform_v3_capabilities',1023)):
         value=getattr(core,name,None)
         require(type(value) is type(want) and value==want, 'missing/wrong matrix capability: '+name)
-    for name in ('matrix_transform_run','matrix_transform_run_v2',
+    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_run_v3',
                  'matrix_transform_completed','matrix_transform_v2_completed'):
         entry=getattr(core,name,None)
         require(inspect.isbuiltin(entry) and entry.__name__==name and entry.__module__==core.__name__,
@@ -1797,6 +1908,7 @@ def child(out, group):
         os.environ['SKIMAGEXX_REGIONPROPS_ROWS_DIR'] = str(out / (mode + '-regionprops-state-rows'))
         os.environ['SKIMAGEXX_POINT_ROWS_DIR'] = str(out / (mode + '-regionprops-point-rows'))
         os.environ['SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR'] = str(out / (mode + '-regionprops-public-mutation-rows'))
+        os.environ['SKIMAGEXX_COORDS_SCALED_ROWS_DIR'] = str(out / (mode + '-regionprops-coords-scaled-rows'))
     result=pytest.main(args)
     if group == 'public-Matrix' and result==0:validate_matrix_rows(out/(mode+'-matrix-routes.json'))
     return result
@@ -1999,7 +2111,8 @@ def sdk(out, state, journal):
     sdk_source = out / 'consumer source'; sdk_source.mkdir()
     with zipfile.ZipFile(out / 'source.zip') as archive:
         for name in archive.namelist():
-            if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')):
+            if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')
+                    or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
@@ -2049,7 +2162,14 @@ def qualify(out):
     for mode in ('normal','scalar'):
         env = environment(package, scalar=mode == 'scalar')
         for group in ('admission', *GROUPS, 'returned-maps'):
-            journal.run(mode + '-' + group, [*base, '--group', group], env)
+            if group == 'public-polygon-intake':
+                # This NumPy-only guard must stay cold: _child admission imports the backend.
+                journal.run(mode + '-' + group, [python, '-m', 'pytest', '-q', '--capture=sys',
+                    str(ROOT / 'tests' / GROUPS[group][0]), '--junitxml=' + str(out / f'{mode}-{group}.xml'),
+                    '--basetemp=' + str(out / 'pytest-tmp' / (mode + '-' + group)),
+                    '-o', 'cache_dir=' + str(out / 'pytest-cache' / (mode + '-' + group))], env)
+            else:
+                journal.run(mode + '-' + group, [*base, '--group', group], env)
         if mode == 'normal':
             journal.run('actual-inventory', [*base, '--group', 'inventory'], env)
         journal.run(mode + '-metrics-corpus', [python, ROOT / 'benchmarks/metrics_reductions.py', '--check-only', '--threads', '1', '4', '--output', out / (mode + '-metrics-corpus.json')], env)

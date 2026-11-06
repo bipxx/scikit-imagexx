@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import pytest
+from matrix_prescott_context import predecessor_bytes
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'python/skimagexx/_matrix_transform.py'
 CERT = ROOT / 'coverage/evidence/matrix-numpy124-skylakex-certificate-v1.json'
@@ -12,7 +13,7 @@ COMMENT = '    # Exact F64 equivalence: coverage/evidence/matrix-numpy124-skylak
 
 def test_exact_inverse_preserves_all_math_and_runtime_guards():
     cert = json.loads(CERT.read_text())
-    source = SOURCE.read_bytes().replace(b'\r\n', b'\n')
+    source = predecessor_bytes(ROOT)
     assert hashlib.sha256(source).hexdigest() == cert['source_after_canonical_lf_sha256']
     assert source.count(COMMENT.encode()) == 1
     restored = source.replace(COMMENT.encode(), b'').replace(

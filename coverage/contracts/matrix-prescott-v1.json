@@ -1,0 +1,98 @@
+{
+  "schema": "matrix-prescott-implementation-v1",
+  "status": "COMPONENT_VALIDATED_PENDING_INDEPENDENT_GENUINE_RELEASE",
+  "source_base": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
+  "runtime_domain": {
+    "numpy": "1.24.4",
+    "umath_sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+    "blas_sha256": "554bde1d8a0c71d8dc21ae74de05c44da4fff5dbc6791a819f6acf5adfe90bd9",
+    "corename": "Prescott",
+    "blas_threads": 1,
+    "no_CPU_forcing": true,
+    "range": "existing finiteF64 abs2^-200..2^20 plus signedzero;K3..5",
+    "natural_Prescott_public_execution_observed": false
+  },
+  "profiles": {
+    "7": "Prescott0321GEMM orderedseparatemul/add",
+    "8": "Prescott0321GEMVN orderedseparatemul/add",
+    "9": "Prescott0321GEMVT originalAmod16=0 includingK5finalrowtail",
+    "10": "Prescott0321GEMVT originalAmod16=8 firstscalarpeel"
+  },
+  "private_interface": {
+    "name": "matrix-transform-math-v3",
+    "capabilities": 1023,
+    "legacy_v1_v2_preserved": true,
+    "source_sdk_helper": "detail::matrix_prescott_dot_f64",
+    "helper_preconditions": "prevalidatedownedK3..5 arrays/currentpolicy/domain;fullxincludinglastoperand;noallocation/globalstatequery"
+  },
+  "source_context": {
+    "live_wrapper_canonical_lf_sha256": "9e8bab6d658004d3bb688cf830f056d0ccce084a8d6a4f16963c0ba365b737d2",
+    "baseline_wrapper_canonical_lf_sha256": "98b850ec50e0e86f51ae330b183e21bd17820f62babf5af04e62c635258113de",
+    "inverse_fragments": [
+      {
+        "current": "frozenset(('Haswell', 'Cooperlake', 'Zen', 'SkylakeX', 'Prescott'))",
+        "baseline": "frozenset(('Haswell', 'Cooperlake', 'Zen', 'SkylakeX'))"
+      },
+      {
+        "current": "        if corename == 'Prescott' and (version != '1.24.4' or _checked_entry(7) is None):\n            return None\n",
+        "baseline": ""
+      },
+      {
+        "current": "    if 7 <= profile <= 10:\n        function = getattr(_core, 'matrix_transform_run_v3', None)\n        if (type(function) is BuiltinFunctionType and function.__name__ == 'matrix_transform_run_v3'\n                and function.__module__ == _core.__name__\n                and getattr(_core, 'matrix_transform_v3_interface', None) == 'matrix-transform-math-v3'\n                and getattr(_core, 'matrix_transform_v3_capabilities', None) == 1023):\n            return function\n        return None\n",
+        "baseline": ""
+      },
+      {
+        "current": "    if corename == 'Prescott' and version == '1.24.4':\n        if profile == 1:\n            return 7\n        if profile == 4:\n            return 8\n        if profile == 3:\n            # Literal original BLAS A alignment, BEFORE any convenient view/copy.\n            return 10 if matrix.ctypes.data & 8 else 9\n",
+        "baseline": ""
+      }
+    ],
+    "scope": "Exact4inversefragments restoreall4acwrapperbytes; oldSkylakexcertificate/migrationcontext remainimmutable. This is not frozenoldscriptvalidationagainstnewunrelatedsource."
+  },
+  "raw_reference": "coverage/contracts/matrix-prescott-reference-v1.json",
+  "raw_cases": 48,
+  "raw_words": 432,
+  "new_original_or_vendor_calls": 0,
+  "source_attribution": {
+    "version": "OpenBLAS0.3.21",
+    "commit": "b89fb708caa5a5a32de8f4306c4ff132e0228e9a",
+    "files": [
+      "kernel/x86_64/gemm_kernel_4x4_sse3.S",
+      "kernel/x86_64/dgemv_n.S",
+      "kernel/x86_64/dgemv_t.S"
+    ],
+    "notices": "ExactUniversityofTexasAustinper-fileBSDnotice+OpenBLASglobalBSDnotice retainedinsrc/matrix_transform.cpp"
+  },
+  "remaining_gates": [
+    "independentnative/frontend/SDK/sourcecontextreview",
+    "rootsharedsourceclosure+strictFPfroundingtarget/defaultSDKtests wiring",
+    "genuineinstallednewcorewithnaturallyselectedpinnedruntime",
+    "exactsourcefourprofilequalification",
+    "performanceevidenceagainstoriginalseparately,nospeedclaim"
+  ],
+  "scope_gaps": [
+    "No forcedCPUruntimeorwholeclass/APIcoverageinflation",
+    "PrescottcodeorderedserialsmallK;compilerpackedpathunclaimed",
+    "UnknownBLAS/NumPyotherthanexactpinsremainliteralprovider",
+    "Public/defaultonnewgenuinewholecoreawaited;privatecomponentnotregistrationcredit"
+  ],
+  "source_pins_canonical_lf": {
+    "include/skimagexx/matrix_transform.hpp": "bd51ac66daa42c80a98ba1eea5de075070218bd999c7da61f3b57c099bb0c259",
+    "src/matrix_transform.cpp": "65e7b126166a6554ca70cd4b7f9b6b31fc14db37d9e2573cb5cfc0dd7a771130",
+    "src/bind_matrix_transform.cpp": "1cb7eb9a32bde6dae7abcb545ef5a5c46e95c14d53d5ce0ca83720cc32ce2112",
+    "python/skimagexx/_matrix_transform.py": "9e8bab6d658004d3bb688cf830f056d0ccce084a8d6a4f16963c0ba365b737d2",
+    "tests/matrix_prescott_context.py": "aff3730ab6eb4a4841efdc3641fd39cdae63e934860df930821bc8bb5ac74b5c",
+    "tests/matrix_prescott_controls.hpp": "5e56df33eb0b50b9cf5725fa9905183104cd83669a84ab6aac70a74d42d8f627",
+    "tests/fixtures/matrix_prescott_native.hpp": "62f2d4fedeb9fb735af78fe8a2119dc11c7cf26c601e56eeb8fd6aa91dc48106",
+    "tests/test_matrix_prescott_native.cpp": "60dcef8ac7bfe5985f74a63118d57862e5eab6d249f073c7dc589dd1981df1f7",
+    "tests/test_matrix_prescott_public.py": "98efe86bad2314cd35c3e94131b06678ad3e7e19f370b52b347c6dfbb59ebb28",
+    "tests/test_matrix_prescott_contract.py": "528afd8033f2694a990590ba0da33dd0fc3837a18daf376766592d79a968768f",
+    "tests/test_matrix_transform_native_pipeline.py": "250eb5082af026ac0b049a028929b77200a77001a99d0c5e4ded47f9e4e2dd2a"
+  },
+  "test_recipe_scope": {
+    "OpenMP_enabled": "budgets1/4 raw48+432 analyticlarge controls",
+    "compiler_scalar": "newtestbudget1subsetofpriorpassedbudgets1/4;controlsotherwisetruecompilerscalar",
+    "portable_without_OpenMP": "budget4skippedlikeexistingSDKclient;noactualportableSDKrebuilt",
+    "SIMD": "normal/disabledactualwordproof;Prescottreductionorderedserial,nopackedSIMDspeedclaim",
+    "MSVC": "3actualTUcompileonly,nolocalMSVCSDKruntimeclaim"
+  }
+}

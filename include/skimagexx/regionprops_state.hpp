@@ -75,4 +75,54 @@ RegionPropsScalar64 regionprops_extent_f64(double area,double area_bbox);
 // nearest rounding/gradual underflow (invalid_argument). They allocate nothing,
 // run serially, read no worker state, and restore caller fenv including flags.
 // Status bits above are SDK-local: NumPy callback invalid uses flag8, not1.
+
+// coords_scaled source phases; declarations only in this design packet.
+// Shared first frontier: ndim2/3, product(shape)<=2^24, each extent<=2^20,
+// |current origin|<=2^20. Caller holds a stable, addressable bool mask and
+// count=its CURRENT nonzero population. No constructor population or origin.
+// All coordinate buffers are column-major Nxndim: element(d*N+p). The binding
+// supplies fresh owning F arrays; for N=0 it supplies the observed zero-stride
+// ndarray metadata and may pass nullptr here. No entry retains any pointer.
+// Capacity/byte-span/overlap checks belong to the external binding/SDK caller,
+// once before using each new externally read operand. Internal stages consume
+// established invariants; private intermediates must not be externally mutated.
+inline constexpr std::size_t regionprops_coords_scaled_max_elements=1u<<24;
+inline constexpr std::size_t regionprops_coords_scaled_max_extent=1u<<20;
+inline constexpr std::intptr_t regionprops_coords_scaled_max_origin=1<<20;
+// For the two f64 stages, new spacing/offset doubles are signed zero or finite,
+// with nonzero magnitude
+// in [2^-256,2^256]. With the integer bounds above, multiply/add stay normal or
+// exact zero (minimum nonzero quantum >=2^-308), and magnitudes remain <2^278.
+// Reuse the existing nearest/gradual FP guard including independent MXCSR round
+// bits. Numeric refusal/unsupported FP state returns false BEFORE any writes.
+// Accepted f64 work has no error-policy event; no NumPy geterr/callback delivery.
+// Same positive worker snapshot is passed through all stages; no global reread.
+// Small arrays stay serial; dense independent math may use the existing
+// partition/SIMD machinery, strict noncontracted multiply/add, and exact scalar
+// dispatch. A parallel implementation must install/restore the caller FP state
+// per worker; never assume an old OpenMP worker retained the caller's rounding.
+
+// 1. Materialize local argwhere coordinates BEFORE reading current slice starts.
+// Reuse the existing C-logical mask walk; mask strides are signed BYTES. N must
+// be established from this same stable mask before allocation/fill.
+bool regionprops_coords_scaled_local_into(const std::uint8_t* mask,
+    std::size_t ndim,const std::array<std::size_t,3>& shape,
+    const std::array<std::ptrdiff_t,3>& mask_strides,std::size_t count,
+    std::intptr_t* local_coordinates,int workers);
+// 2. Add CURRENT source-normalized intp origins BEFORE reading _spacing.
+// In-place is allowed only for the private owning index buffer. False leaves
+// every coordinate unchanged so the literal source addition can run once.
+bool regionprops_coords_scaled_origin_into(std::intptr_t* coordinates,
+    std::size_t count,std::size_t ndim,const std::array<std::size_t,3>& shape,
+    const std::array<std::intptr_t,3>& origins,int workers);
+// 3. Complete source f64 multiplication BEFORE reading _offset. Input absolute
+// coordinates obey stage2 bounds. Output is disjoint, caller-owned F double.
+// Integer-spacing results are NOT this f64 interface; retain literal suffix.
+bool regionprops_coords_scaled_multiply_f64_into(const std::intptr_t* coordinates,
+    std::size_t count,std::size_t ndim,const std::array<double,3>& spacing,
+    double* output,int workers);
+// 4. Add the subsequently captured offset in-place to the private F double
+// result. False leaves it unchanged for the literal source addition once.
+bool regionprops_coords_scaled_add_f64_into(double* values,std::size_t count,
+    std::size_t ndim,const std::array<double,3>& offset,int workers);
 }

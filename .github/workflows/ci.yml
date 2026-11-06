@@ -67,6 +67,33 @@ jobs:
         run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Draw batch saved public defaults normal
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-normal.xml
+      - name: Draw batch saved public defaults disabled
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-disabled.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Bezier NumPy-only benchmark checker intake
+        run: python -m pytest -q tests/test_bezier_curve_benchmark_intake.py --junitxml=build/ci-artifacts/bezier-benchmark-intake.xml
+      - name: Polygon fresh NumPy-only benchmark intake
+        run: python -m pytest -q tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-numpy-intake.xml
+      - name: Polygon saved defaults and installed boundary normal
+        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-normal.xml
+      - name: Polygon saved defaults and installed boundary disabled
+        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-disabled.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Region coords scaled fresh NumPy-only benchmark intake
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_benchmark_intake.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-numpy-intake.xml
+      - name: Region coords scaled saved public and installed SDK boundary normal
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_reference.py tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-normal.xml
+        env:
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-normal-rows
+      - name: Region coords scaled public and installed SDK boundary disabled
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-scalar-rows
       - name: Authenticate frozen original reconstruction source
         shell: bash
         run: |
@@ -85,9 +112,9 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as stream:
               stream.write('SKIMAGEXX_RECONSTRUCTION_PRIMARY_SOURCE=' + source.as_posix() + '\n')
           PY
-      - run: python -m pytest -q
+      - run: python -m pytest -q --ignore=tests/test_regionprops_coords_scaled_benchmark_intake.py --ignore=tests/test_draw_polygon_benchmark_intake.py
       - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
-      - run: python -m pytest -q
+      - run: python -m pytest -q --ignore=tests/test_regionprops_coords_scaled_benchmark_intake.py --ignore=tests/test_draw_polygon_benchmark_intake.py
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
       - run: cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
@@ -399,6 +426,33 @@ jobs:
         run: python -m pytest -q tests/test_regionprops_bbox_extent_public.py tests/test_regionprops_scalar_boundary_v2.py --junitxml=build/ci-artifacts/regionprops-scalars-scalar.xml
         env:
           SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Draw batch saved public defaults normal
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-normal.xml
+      - name: Draw batch saved public defaults disabled
+        run: python -m pytest -q tests/test_bezier_curve_public.py tests/test_bezier_curve_default.py tests/test_draw_set_color_public.py tests/test_draw_set_color_default.py tests/test_matrix_prescott_public.py --junitxml=build/ci-artifacts/draw-batch-disabled.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Bezier NumPy-only benchmark checker intake
+        run: python -m pytest -q tests/test_bezier_curve_benchmark_intake.py --junitxml=build/ci-artifacts/bezier-benchmark-intake.xml
+      - name: Polygon fresh NumPy-only benchmark intake
+        run: python -m pytest -q tests/test_draw_polygon_benchmark_intake.py --junitxml=build/ci-artifacts/draw-polygon-numpy-intake.xml
+      - name: Polygon saved defaults and installed boundary normal
+        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-normal.xml
+      - name: Polygon saved defaults and installed boundary disabled
+        run: python -m pytest -q tests/test_draw_polygon_public.py tests/test_draw_polygon_default.py --junitxml=build/ci-artifacts/draw-polygon-disabled.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Region coords scaled fresh NumPy-only benchmark intake
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_benchmark_intake.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-numpy-intake.xml
+      - name: Region coords scaled saved public and installed SDK boundary normal
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_reference.py tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-normal.xml
+        env:
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-normal-rows
+      - name: Region coords scaled public and installed SDK boundary disabled
+        run: python -m pytest -q tests/test_regionprops_coords_scaled_public.py tests/test_regionprops_coords_scaled_sdk_scope.py --junitxml=build/ci-artifacts/regionprops-coords-scaled-scalar.xml
+        env:
+          SKIMAGEXX_DISABLE_SIMD: '1'
+          SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-scalar-rows
       - name: RegionProperties saved state and shipping defaults
         run: python -m pytest -q tests/test_regionprops_state_reference.py tests/test_regionprops_state_public.py tests/test_regionprops_state_default.py tests/test_regionprops_point_witness.py tests/test_regionprops_public_mutation_reference.py tests/test_regionprops_public_mutation_public.py tests/test_regionprops_state_benchmark.py --junitxml=build/ci-artifacts/regionprops-state-normal.xml
         env:
@@ -685,6 +739,8 @@ jobs:
       - run: python benchmarks/ellipse_perimeter.py --threads 1 --repeat 7 --output build/ci-ellipse-perimeter.json
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/regionprops_scalars.py --threads 1 --repeat 7 --output build/ci-regionprops-scalars.json
+        if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+      - run: python benchmarks/draw_polygon.py --threads 1 --repeat 7 --output build/ci-draw-polygon.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
       - name: Verify measurement inputs remained immutable
         if: always()

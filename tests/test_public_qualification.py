@@ -1569,8 +1569,9 @@ def test_matrix_source_closure_is_required_before_build(tmp_path,monkeypatch,mis
 def synthetic_matrix_admission(monkeypatch):
     core=types.SimpleNamespace(__name__='skimagexx._core',get_num_threads=lambda:1,has_openmp=True,
         matrix_transform_interface='matrix-transform-math-v1',matrix_transform_capabilities=31,
-        matrix_transform_v2_interface='matrix-transform-math-v2',matrix_transform_v2_capabilities=63)
-    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_completed','matrix_transform_v2_completed'):
+        matrix_transform_v2_interface='matrix-transform-math-v2',matrix_transform_v2_capabilities=63,
+        matrix_transform_v3_interface='matrix-transform-math-v3',matrix_transform_v3_capabilities=1023)
+    for name in ('matrix_transform_run','matrix_transform_run_v2','matrix_transform_run_v3','matrix_transform_completed','matrix_transform_v2_completed'):
         def entry(*a,**kw):raise AssertionError('metadata-only entry never executes')
         entry.__name__=name;entry.__module__=core.__name__;entry.synthetic_builtin=True;setattr(core,name,entry)
     monkeypatch.setattr(q.inspect,'isbuiltin',lambda value:getattr(value,'synthetic_builtin',False))
@@ -1663,10 +1664,42 @@ def require_matrix_runtime_admission_successor(frozen, current, row):
     assert project(old) == project(current)
 
 
+def matrix_pipeline_predecessor_bytes(current):
+    """Invert only the accepted v3 C-return observer addition, never its golds."""
+    context = json.loads((ROOT/'coverage/contracts/matrix-prescott-v1.json').read_bytes())
+    name = 'tests/test_matrix_transform_native_pipeline.py'
+    assert hashlib.sha256(current).hexdigest() == context['source_pins_canonical_lf'][name]
+    addition = (b'ENTRY_V3 = BACKEND.matrix_transform_run_v3\n'
+                b'assert inspect.isbuiltin(ENTRY_V3) and ENTRY_V3.__module__ == BACKEND.__name__\n')
+    assert current.count(addition) == 1
+    current = current.replace(addition, b'')
+    current_call = b'(arg is ENTRY or arg is ENTRY_V2 or arg is ENTRY_V3)'
+    assert current.count(current_call) == 1
+    return current.replace(current_call, b'(arg is ENTRY or arg is ENTRY_V2)')
+
+
+def matrix_native_predecessor_bytes(name, current, frozen):
+    """Bind accepted Prescott additions before applying the unchanged old guard."""
+    raw = (ROOT/'coverage/contracts/matrix-prescott-release-test-context-v1.json').read_bytes().replace(b'\r\n', b'\n')
+    assert hashlib.sha256(raw).hexdigest() == '3f7f21eadcddd6afd7730351e3e93f0463ade0dc451416e48512840e6bec4ec3'
+    row = json.loads(raw)['sources'][name]
+    assert row['baseline_canonical_lf_sha256'] == frozen
+    assert hashlib.sha256(current).hexdigest() == row['current_canonical_lf_sha256']
+    for fragment in row['inverse_fragments']:
+        before, after = fragment['current'].encode(), fragment['baseline'].encode()
+        assert before and current.count(before) == 1
+        current = current.replace(before, after)
+    assert hashlib.sha256(current).hexdigest() == frozen
+    return current
+
+
 def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources():
+    from matrix_prescott_context import predecessor_bytes
     migration=json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
     for name,row in migration['modules'].items():
         old=row['original_utf8'].encode();new=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name == 'tests/test_matrix_transform_native_pipeline.py':
+            new = matrix_pipeline_predecessor_bytes(new)
         assert hashlib.sha256(old).hexdigest()==row['original_raw_sha256']
         assert hashlib.sha256(new).hexdigest()==row['current_canonical_lf_sha256']
         def project(raw):
@@ -1686,18 +1719,23 @@ def test_matrix_migration_authenticates_full_module_ast_and_all_frozen_sources()
     for name,want in migration['frozen_implementation'].items():
         current = (ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         if name in updates:
+            current = predecessor_bytes(ROOT, source=current)
             require_matrix_runtime_admission_successor(want, current, updates[name])
         else:
+            if name in ('include/skimagexx/matrix_transform.hpp', 'src/matrix_transform.cpp',
+                        'src/bind_matrix_transform.cpp', 'tests/test_matrix_transform_native.cpp'):
+                current = matrix_native_predecessor_bytes(name, current, want)
             assert hashlib.sha256(current).hexdigest()==want
 
 
 @pytest.mark.parametrize('fault', (None, 'schema', 'old-source', 'old-pin', 'new-pin',
     'unbounded-functions', 'math-change', 'legacy-allowset-change'))
 def test_matrix_runtime_successor_never_relabels_old_math_or_widens_the_projection(fault):
+    from matrix_prescott_context import predecessor_bytes
     migration = json.loads((ROOT/'coverage/evidence/matrix-transform-public-assertion-migration.json').read_bytes())
     name = 'python/skimagexx/_matrix_transform.py'
     row = migration['qualified_implementation_updates'][name]
-    current = (ROOT/name).read_bytes().replace(b'\r\n', b'\n')
+    current = predecessor_bytes(ROOT)
     if fault == 'schema':row['schema'] = 'unknown'
     elif fault == 'old-source':row['original_utf8'] += '\nchanged'
     elif fault == 'old-pin':row['original_canonical_lf_sha256'] = '0' * 64
@@ -1998,7 +2036,7 @@ def test_composed_skylakex_metadata_guard_is_required_and_selected(tmp_path, mon
         'test_matrix_transform_contracts.py', 'test_matrix_transform_public.py',
         'test_matrix_transform_native_pipeline.py', 'test_matrix_transform_binding.py',
         'test_matrix_transform_skylakex_routing.py',
-        'test_matrix_transform_numpy124_skylakex_certificate.py')
+        'test_matrix_transform_numpy124_skylakex_certificate.py', 'test_matrix_prescott_public.py')
     synthetic_complete_plan(tmp_path)
     functions = ['filters.rank.' + n for n in q.R5] + sorted(
         q.R6_PATHS | q.R7_PATHS | {q.TV_PATH, q.BREGMAN_PATH, q.MATRIX_PATH, q.RECONSTRUCTION_PATH, q.NMI_PATH} | set(q.MAX_TREE_PATHS) | set(q.H_EXTREMA_PATHS))
@@ -2274,10 +2312,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','draw'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2301,14 +2339,31 @@ def current_metadata_artifact(tmp_path):
     return product,archive,revision
 
 
+def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
+    tree=ast.parse((ROOT/'tools/public_qualification.py').read_bytes())
+    function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='sdk')
+    predicate=next(n.test for n in ast.walk(function) if isinstance(n,ast.If)
+                   and 'tests/fixtures/bezier_curve_originals_v1.bin' in ast.unparse(n.test))
+    expression=compile(ast.Expression(predicate),'<actual SDK source extraction>','eval')
+    selected=('tests/fixtures/bezier_curve_originals_v1.bin','tests/matrix_prescott_controls.hpp',
+              'tests/fixtures/matrix_prescott_native.hpp','tests/cmake_consumer/CMakeLists.txt',
+              'tests/test_matrix_transform_native.cpp')
+    for name in selected:
+        assert (ROOT/name).is_file() and eval(expression,{'name':name})
+    for name in ('tests/fixtures/','python/skimagexx/draw.py','coverage/api.json','tests/fixtures/unassessed.bin'):
+        assert not eval(expression,{'name':name})
+
+
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,258)
+    result=q.plan(ROOT,profile,262)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current258' and result['registry']['image_count']==258
-    assert result['product_members']==193 and result['SDK_members']==91
+    assert result['product_scope']=='current262' and result['registry']['image_count']==262
+    assert result['product_members']==199 and result['SDK_members']==94
     assert result['SDK_checks']==62 and 'current31 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==86
+    assert len(result['public_groups']['public-post203'])==104
+    assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==105
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2316,7 +2371,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert 'lib/cmake/skimagexx/skimagexxTargets-'+('debug' if profile=='debug' else 'release')+'.cmake' in layout['SDK_members']
 
 
-@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector'))
+@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector','missing-intake-group','mixed-intake'))
 def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypatch,fault):
     if fault=='unknown-api':
         registry=q.registry_expectation(ROOT)
@@ -2325,16 +2380,19 @@ def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypat
     else:
         groups=q.groups_for_source(ROOT)
         if fault=='missing-group':groups.pop('public-post203')
+        elif fault=='missing-intake-group':groups.pop('public-polygon-intake')
+        elif fault=='mixed-intake':groups['public-post203']+=('test_draw_polygon_benchmark_intake.py',)
         else:groups['public-post203']=tuple(n for n in groups['public-post203'] if n!='test_compare_images_public.py')
         monkeypatch.setattr(q,'groups_for_source',lambda _:groups)
     assert any('current qualification readiness:' in b for b in q.plan(ROOT,'modern')['blockers'])
 
 
-@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','wrong-scope'))
+@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','missing-cold-selector','wrong-scope'))
 def test_current_contract_rejects_missing_api_or_selector(fault):
     data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_text())
     if fault=='missing-api-map':data['post203_contracts'].pop('util.compare_images')
     elif fault=='missing-required-selector':data['required_selectors'].remove('tests/test_blur_effect_public.py')
+    elif fault=='missing-cold-selector':data['required_selectors'].remove('tests/test_draw_polygon_benchmark_intake.py')
     else:data['scope']='h_extrema23'
     with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
 
@@ -2364,7 +2422,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current258' and result['record_verified']
+        assert result['product_scope']=='current262' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2378,7 +2436,7 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',258)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',262)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
@@ -2814,3 +2872,73 @@ def test_current258_contract_requires_ellipse_perimeter(fault):
         selector={'reference':'tests/test_ellipse_perimeter_reference.py','public':'tests/test_draw_ellipse_perimeter_public.py','default':'tests/test_draw_ellipse_perimeter_default.py','benchmark':'tests/test_ellipse_perimeter_benchmark.py'}[fault]
         data['required_selectors'].remove(selector)
     with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode())
+
+
+@pytest.mark.parametrize('missing',(
+    'tests/test_regionprops_coords_scaled_reference.py',
+    'tests/test_regionprops_coords_scaled_public.py',
+    'tests/test_regionprops_coords_scaled_sdk_scope.py',
+    'tests/test_regionprops_coords_scaled_native.cpp',
+    'coverage/contracts/regionprops-coords-scaled-prospective-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-reference-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-f64-interface-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-native-v1.json',
+    'coverage/contracts/regionprops-coords-scaled-frontend-v1.json',
+    'coverage/contracts/regionprops-performance-state-coords-scaled-v1.json',
+    'coverage/contracts/regionprops-performance-scalars-coords-scaled-v1.json',
+    'benchmarks/regionprops_coords_scaled.py',
+    'coverage/contracts/regionprops-coords-scaled-benchmark-v1.json',
+    'tests/test_regionprops_coords_scaled_benchmark.py',
+    'tests/test_regionprops_coords_scaled_benchmark_intake.py',
+    'coverage/contracts/draw-polygon-current-runtime-v1.json',
+))
+def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
+    original=Path.is_file
+    absent=ROOT/missing
+    monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',262)['blockers']
+
+
+@pytest.mark.parametrize('selector',(
+    'tests/test_regionprops_coords_scaled_reference.py',
+    'tests/test_regionprops_coords_scaled_public.py',
+    'tests/test_regionprops_coords_scaled_sdk_scope.py',
+))
+def test_coords_scaled_contract_requires_installed_selectors(selector):
+    data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
+    data['required_selectors'].remove(selector)
+    with pytest.raises(q.QualificationError,match='selector contract differs'):
+        q.current_contract(lambda n:json.dumps(data).encode())
+
+
+def test_coords_scaled_contract_requires_benchmark_source_checks():
+    data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
+    data['required_selectors'].remove('tests/test_regionprops_coords_scaled_benchmark.py')
+    with pytest.raises(q.QualificationError,match='selector contract differs'):
+        q.current_contract(lambda n:json.dumps(data).encode())
+
+
+def test_polygon_cold_intake_uses_direct_journal_process_and_keeps_admission(tmp_path,monkeypatch):
+    groups=q.groups_for_source(ROOT)
+    assert groups['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
+    assert 'test_draw_polygon_benchmark_intake.py'not in groups['public-post203']
+    out=tmp_path/'qualification';out.mkdir();(out/'state.json').write_text(json.dumps(dict(source={},profile='minimum')))
+    calls=[]
+    monkeypatch.setattr(q,'source_state',lambda _: {})
+    monkeypatch.setattr(q,'Journal',lambda _:types.SimpleNamespace(run=lambda label,argv,env:calls.append((label,list(map(str,argv)),env))))
+    monkeypatch.setattr(q,'python_in',lambda _:Path(sys.executable))
+    monkeypatch.setattr(q,'GROUPS',{'public-polygon-intake':groups['public-polygon-intake']})
+    monkeypatch.setattr(q,'CORPORA',{})
+    monkeypatch.setattr(q,'environment',lambda package=None,scalar=False:{'scalar':scalar})
+    monkeypatch.setattr(q,'sdk',lambda *_:None)
+    q.qualify(out)
+    for mode in ('normal','scalar'):
+        admission=next(argv for label,argv,env in calls if label==mode+'-admission')
+        assert '_child'in admission and admission[-1]=='admission'
+        command=next(argv for label,argv,env in calls if label==mode+'-public-polygon-intake')
+        assert command[:5]==[sys.executable,'-m','pytest','-q','--capture=sys']
+        assert '_child'not in command
+        assert [arg for arg in command if arg.endswith('.py')]==[str(ROOT/'tests/test_draw_polygon_benchmark_intake.py')]
+        assert '--junitxml='+str(out/(mode+'-public-polygon-intake.xml'))in command
+        assert '--basetemp='+str(out/'pytest-tmp'/(mode+'-public-polygon-intake'))in command
+    assert len([label for label,_,_ in calls if label.endswith('-admission')])==2

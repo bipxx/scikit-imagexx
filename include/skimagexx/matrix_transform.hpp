@@ -7,6 +7,8 @@ namespace skimagexx {
 // not NumPy version ranges or a public/function capability registration.
 inline constexpr const char* matrix_transform_math_v2_interface = "matrix-transform-math-v2";
 inline constexpr std::uint32_t matrix_transform_math_v2_capabilities = 63;
+inline constexpr const char* matrix_transform_math_v3_interface = "matrix-transform-math-v3";
+inline constexpr std::uint32_t matrix_transform_math_v3_capabilities = 1023;
 enum class MatrixArithmeticProfile : std::uint32_t {
     unsupported = 0,
     // Audited Haswell OpenBLAS 0.3.21 / 0.3.34.106 GEMM, K=3..5,
@@ -24,6 +26,13 @@ enum class MatrixArithmeticProfile : std::uint32_t {
     // v2 ONLY: exact pinned OpenBLAS0.3.21 Cooperlake GEMV-N association.
     // N=1, K=3..5; this does not authenticate a CPU/runtime or other BLAS paths.
     cooperlake0321_gemv_nontransposed = 6,
+    // Exact authenticated OpenBLAS0.3.21 Prescott separate-mul/add trees.
+    // K3..5. GEMVT selects ORIGINAL BLAS A address modulo16 before copies;
+    // the8byte-peel and K5 final-component remainder affect association.
+    prescott0321_gemm = 7,
+    prescott0321_gemv_nontransposed = 8,
+    prescott0321_gemv_transposed_aligned = 9,
+    prescott0321_gemv_transposed_peeled = 10,
 };
 struct MatrixReadView {
     const void* data;
@@ -57,6 +66,19 @@ MatrixMapStatus matrix_transform_into(const MatrixReadView& points,
 MatrixMapStatus matrix_transform_into_v2(const MatrixReadView& points,
     const MatrixReadView& matrix, const MatrixWriteView& output,
     MatrixArithmeticProfile profile);
+// v3 adds only the four Prescott policies; v1/v2 continue rejecting them.
+MatrixMapStatus matrix_transform_into_v3(const MatrixReadView& points,
+    const MatrixReadView& matrix, const MatrixWriteView& output,
+    MatrixArithmeticProfile profile);
+namespace detail {
+// Prepared scalar arithmetic shared by the mapping and standalone SDK controls.
+// Caller supplies two read-only K-element arrays, K3..5, the admitted finite
+// normal domain, nearest/gradual FP, one of profiles7..10 and component<K.
+// No allocation, runtime/CPU query, worker read, provider or FP-policy mutation.
+// x includes its actual final operand (mapping callers explicitly append+1).
+double matrix_prescott_dot_f64(const double* x, const double* coefficients,
+    std::size_t k, MatrixArithmeticProfile profile, std::size_t component);
+}
 namespace simd {
 // Runtime-gated AVX2+FMA leaf, no validation; returns processed row count.
 std::size_t matrix_transform_fma(const MatrixReadView&, const double* coefficients,

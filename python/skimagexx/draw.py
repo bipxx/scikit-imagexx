@@ -7,8 +7,11 @@ from ._circle_perimeter_aa import circle_perimeter_aa
 from ._line_nd import line_nd
 from ._draw_ellipsoid import ellipsoid
 from ._draw_ellipse_perimeter import ellipse_perimeter
+from ._draw_polygon import polygon,polygon2mask
+from ._bezier_curve import bezier_curve
+from ._draw_set_color import set_color
 
-__all__=['line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter']
+__all__=['line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color']
 
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []

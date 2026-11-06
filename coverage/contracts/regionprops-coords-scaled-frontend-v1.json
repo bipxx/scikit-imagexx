@@ -1,0 +1,59 @@
+{
+  "status": "COMPONENT_PARITY_PASS_PENDING_INDEPENDENT_REVIEW_SHARED_SDK_AND_GENUINE",
+  "base": "bd16b09eaa54d4b5115c8185b441015c4a3d0bd7",
+  "interface": "29d86314601f2f479f71bb29d683c045b7c3c30c",
+  "reference": "51f3a50045774d67ed8a789d31edb88b5c93d592",
+  "property": "coords_scaled",
+  "reference_scope": "12savedsequences/profile/72originalarrays.11f64ownedfrontiers; integer-spacingi64 explicitliteralnumeric suffix; originalrawclass/golds unchanged, distinctbackendtype separatelyasserted.",
+  "core_entries": [
+    "regionprops_state_coords_scaled_local",
+    "regionprops_state_coords_scaled_origin_into",
+    "regionprops_state_coords_scaled_multiply_f64",
+    "regionprops_state_coords_scaled_add_f64_into"
+  ],
+  "source_order": "imageonce\u2192oneworkersnapshot\u2192localindices+immutablemaskshape\u2192originarray\u2192originstage\u2192spacingread/multiply\u2192offsetread/add",
+  "inplace_gates": "originonlyindex_owned; addonlymultiply_owned. Providerowningarrays mayhaveexternalaliases andarenotmodified.",
+  "boundaries": "Exactndarray/logicaltypenum/nativebyteorder/completeowner span. CoeffmetadataNone; f64rawcopy/f32normal-zero exactbridge; subnormalf32declinesbeforeconversion. Intpoffset<=2^53 exactconversion; widerintegeroffsetprovider. Inplacestages refusecoefficientoverlap.",
+  "existing_behavior_inverse": "ExactcanonicalLFoldbinder/class viaremovalofnewhelpers/4bindings/property; one-mask/coords/scalars/constructor untouched.",
+  "native_result": "NonnulliffALL4CPPstagesaccepted; partialproviderprefix/suffix explicit.",
+  "validation_plan": "Savedrows/global1/4 normal+runtime-disabled eachretainedprofile; realC-return/acceptance/getter/sourceorder. Provideralias/eventfulFP/privatebounds/nowrite/empty/lifetimecontrols. LinkonlyreleasedCleaf; no originals/timing/fullSDK/env.",
+  "native_public_API_credit": 0,
+  "remaining": [
+    "Integer-spacingarithmetic suffix",
+    "Tagged/subnormalf32/othercoefficientformats",
+    "Other34properties/fullclass/intensity/tables/serialization",
+    "Genuineproduct/SDK/qualification/performance"
+  ],
+  "source_pins_canonicalLF": {
+    "src/bind_regionprops_state.cpp": "5b1bc8cc12006f614d452460b5742c7ab5be1a3357cb7a4c81001812ee2cabc3",
+    "python/skimagexx/_regionprops_state_class.py": "fe85be5ab1a89e275f92c93bccc32e0dce688fc00543e03192f7887cba86819e",
+    "tests/test_regionprops_coords_scaled_public.py": "ea80dd5c6be2969d6d1fa8a44146a304c0f0aaaf508e85ba82c36f880dc909c1",
+    "include/skimagexx/regionprops_state.hpp": "11b22d5fcc1ecfc60e15c4bfe1a4b6d4d76d25406650d047529f9ca24fdf7a69"
+  },
+  "row_evidence": "Repeatableoptionalenv SKIMAGEXX_COORDS_SCALED_ROWS_DIR, defaultignoredROOT/build; actualrow+Creturns/acceptance/getters/events savedbeforecomparison. No incomingstate/intake replay.",
+  "observed_validation": {
+    "modes": 4,
+    "tests_per_mode": 37,
+    "total_tests": 148,
+    "saved_sequence_rows": 96,
+    "property_arrays": 288,
+    "full_four_stage_reads": 264,
+    "integer_spacing_provider_reads": 24,
+    "new_original_calls": 0,
+    "timed_batches": 0,
+    "MSVC": "actualbindercompileonlyPASS; thirdpartyC4819warningsretained, noWindowslink/runtimeclaim"
+  },
+  "native_dependency": {
+    "source": "eafc253a5440df2e0ea0c46c9e7e84ef51209ff6",
+    "production_source": "9a69f277e1820aba393e375ce0de34665d33a306",
+    "normal_PIC": "ff13012ec599b0678feb2130c603086e151a6365b8ea071facd54a7713e9c534",
+    "handoff": "build/regionprops-coords-scaled-native-v1/handoff.json",
+    "handoff_sha256": "c1b79dd498ccb95aa1bf2ff30722f6b5796c308e9b47a62d465c9a9fe5409c44",
+    "scope": "Physicalreleasednewleaf linked; C++sourceownedC, not copiedorrelabeled fromfrontendWT oldCPP"
+  },
+  "closeout": {
+    "result": "Fourmodes148PASSfirstattempt,96actualsavedrows/288arrays exact; all264f64readsactual4Creturns/fullacceptance,24integer-spacingreads partial/provider. Oldmethodsourceinverse exact. No originals/timing/fullSDK/env.",
+    "waste_and_reuse": "Reused physicalC PIC/SDK92archive/old2initializers/storageguards. Compiledonly2binders+oneMSVCTU andlinked2modules. Sourceinverse firstprobe includedoneextra removed-blocknewline; correctedinverse ruleonly. Smallmetadataencoderquery assumednonexistentbasekey, inspectedactualschema beforetests. No scientificreplay/renormalization/failednumericalexperiment.",
+    "next_owner_trigger": "Root/Aindependentfrontend+nativeadmission; rootsharedintegration/oneSDKconsumer+sourcequalification later. Do notimportwholebranchancestry oraccidentallypromotefailedbd16keyperformanceexperiment; oldbinderbase preservedonlybecauseownershiprequiresnew4bindings. BenchmarkpendingseparategenuineGO."
+  }
+}

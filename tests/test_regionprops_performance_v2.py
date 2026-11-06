@@ -39,12 +39,17 @@ def test_v2_fixed_baseline_cases_method_and_each_pair_limits():
 
 def test_v2_active_closures_and_immutable_timed_bodies():
     for filename,oldfile,driver in [('regionprops-performance-state-v2.json','regionprops-scalar-runtime-v1.json','regionprops_state.py'),('regionprops-performance-scalars-v2.json','regionprops-scalars-benchmark-v1.json','regionprops_scalars.py')]:
-        active=json.loads((ROOT/'coverage/contracts'/filename).read_bytes());old=json.loads((ROOT/'coverage/contracts'/oldfile).read_bytes())
+        successor=filename.replace('-v2.json','-coords-scaled-v1.json')
+        historical=json.loads((ROOT/'coverage/contracts'/filename).read_bytes())
+        active=json.loads((ROOT/'coverage/contracts'/successor).read_bytes());old=json.loads((ROOT/'coverage/contracts'/oldfile).read_bytes())
+        assert {k:v for k,v in active.items()if k not in ('source_closure','scope')}=={k:v for k,v in historical.items()if k not in ('source_closure','scope')}
+        historical_pins={'regionprops-performance-state-v2.json': '21cd6af114eb1e37bc3725e208ae1fe89ae38c875d8486291dba64ebe886b02d', 'regionprops-performance-scalars-v2.json': '52810ce7cf63e578267053702e92162f5b0368f8b01a80b50ad4c959b56ccdb0'}
+        assert hashlib.sha256((ROOT/'coverage/contracts'/filename).read_bytes()).hexdigest()==historical_pins[filename]
         assert active['cases']==old['cases']
         assert {k:v for k,v in active.items()if k not in ('source_closure','scope','native_entries')}=={k:v for k,v in old.items()if k not in ('source_closure','scope','native_entries')}
         for name,pin in active['source_closure'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
         current=(ROOT/'benchmarks'/driver).read_bytes().replace(b'\r\n',b'\n')
-        predecessor=current.replace(filename.encode(),oldfile.encode())
+        predecessor=current.replace(successor.encode(),oldfile.encode())
         if driver=='regionprops_scalars.py':assert hashlib.sha256(predecessor).hexdigest()==old['source_closure']['benchmarks/regionprops_scalars.py']
         else:
             predecessor=predecessor.replace(oldfile.encode(),b'regionprops-state-benchmark.json')

@@ -5,6 +5,7 @@ import numpy as np
 import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
+from skimagexx.coverage import set_color_default_result
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -33,6 +34,11 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     module,name=api.rsplit('.',1)
     original=getattr(importlib.import_module('skimage.'+module),name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
+    if api=='draw.set_color':
+        expected=set_color_default_result(original,arguments,options)
+        actual=set_color_default_result(native,arguments,options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)
+        return
     with warnings.catch_warnings(record=True) as expected_notices:
         warnings.simplefilter('always');expected=original(*arguments,**options)
     with warnings.catch_warnings(record=True) as notices:

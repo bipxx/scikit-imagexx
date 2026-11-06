@@ -98,6 +98,29 @@ class RegionProperties(_Provider):
         return native_result
 
     @property
+    def coords_scaled(self):
+        mask=self.image
+        workers=_core.get_num_threads()
+        native_local=_core.regionprops_state_coords_scaled_local(mask,workers)
+        index_owned=native_local is not None
+        if index_owned:
+            indices,mask_shape=native_local
+        else:
+            indices=np.argwhere(mask)
+            mask_shape=None
+        origin=np.array([self.slice[i].start for i in range(self._ndim)])
+        origin_owned=_core.regionprops_state_coords_scaled_origin_into(indices,origin,mask_shape,workers) if index_owned else None
+        absolute=indices if origin_owned is True else origin+indices
+        spacing=self._spacing
+        scaled=_core.regionprops_state_coords_scaled_multiply_f64(absolute,spacing,workers)
+        multiply_owned=scaled is not None
+        if not multiply_owned:scaled=absolute*spacing
+        offset=self._offset
+        add_owned=_core.regionprops_state_coords_scaled_add_f64_into(scaled,offset,workers) if multiply_owned else None
+        native_result=scaled if index_owned and origin_owned is True and multiply_owned and add_owned is True else None
+        return scaled if add_owned is True else scaled+offset
+
+    @property
     def coords(self):
         prepared = self._current_native_geometry()
         if prepared is None:

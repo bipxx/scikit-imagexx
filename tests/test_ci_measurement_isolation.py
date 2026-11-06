@@ -254,7 +254,8 @@ def test_original_timing_commands_and_corpora_preserved():
         'python benchmarks/line_nd.py --threads 1 --repeat 7 --output build/ci-line-nd.json',
         'python benchmarks/draw_ellipsoid.py --threads 1 --repeat 7 --output build/ci-ellipsoid.json',
         'python benchmarks/ellipse_perimeter.py --threads 1 --repeat 7 --output build/ci-ellipse-perimeter.json',
-        'python benchmarks/regionprops_scalars.py --threads 1 --repeat 7 --output build/ci-regionprops-scalars.json']
+        'python benchmarks/regionprops_scalars.py --threads 1 --repeat 7 --output build/ci-regionprops-scalars.json',
+        'python benchmarks/draw_polygon.py --threads 1 --repeat 7 --output build/ci-draw-polygon.json']
     assert len(ORIGINAL_COMMANDS['modern']) == 29 and len(ORIGINAL_COMMANDS['minimum']) == 1
     assert all('--threads 1' in c for cs in ORIGINAL_COMMANDS.values() for c in cs)
 
@@ -542,7 +543,7 @@ def test_prepare_only_retains_verified_minimum_artifact_without_timing():
     assert not minimum.lstrip().startswith('if:')
     steps = re.split(r'^      - ', minimum, flags=re.M)[1:]
     timed = [step for step in steps if step.startswith('run: python benchmarks/')]
-    assert len(timed) == 38 and all(condition in step for step in timed)
+    assert len(timed) == 39 and all(condition in step for step in timed)
     assert all(condition not in step for step in steps if step not in timed)
     assert minimum.count('ci_measurement_artifacts.py verify') == 2
     assert 'name: ci-performance-minimum' in minimum
@@ -558,15 +559,16 @@ def test_latest_only_keeps_all_gates_and_times_only_newest_batch():
     minimum = blocks['measure-minimum']
     timed = [s for s in re.split(r'^      - ', minimum, flags=re.M)[1:] if s.startswith('run: python benchmarks/')]
     skip = "(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
-    assert len(timed) == 38 and all(skip in s for s in timed[:-1])
+    assert len(timed) == 39 and all(skip in s for s in timed[:-1])
     assert skip not in timed[-1]
-    assert 'benchmarks/regionprops_state.py ' in timed[-7]
-    assert 'benchmarks/circle_perimeter_aa.py ' in timed[-6]
-    assert 'benchmarks/stains.py --half-only ' in timed[-5]
-    assert 'benchmarks/line_nd.py ' in timed[-4]
-    assert 'benchmarks/draw_ellipsoid.py ' in timed[-3]
-    assert 'benchmarks/ellipse_perimeter.py ' in timed[-2]
-    assert 'benchmarks/regionprops_scalars.py ' in timed[-1]
+    assert 'benchmarks/regionprops_state.py ' in timed[-8]
+    assert 'benchmarks/circle_perimeter_aa.py ' in timed[-7]
+    assert 'benchmarks/stains.py --half-only ' in timed[-6]
+    assert 'benchmarks/line_nd.py ' in timed[-5]
+    assert 'benchmarks/draw_ellipsoid.py ' in timed[-4]
+    assert 'benchmarks/ellipse_perimeter.py ' in timed[-3]
+    assert 'benchmarks/regionprops_scalars.py ' in timed[-2]
+    assert 'benchmarks/draw_polygon.py ' in timed[-1]
     assert '!inputs.latest_only' in blocks['measure'].lstrip().splitlines()[0]
     assert 'latest_only' not in blocks['numpy-minimum']
     assert 'latest_only' not in blocks['check'] and 'latest_only' not in blocks['debug-gil']
@@ -774,7 +776,7 @@ def test_historical_subdivision_harness_is_available_for_actual_inverse_guard_jo
         assert block.count(probe)==1 and block.count(fetch)==1
         assert block.index(probe)<block.index(fetch)<block.index('python -m pytest')
         assert "git cat-file -e '"+target+"'\n" in block
-    assert '- run: python -m pytest -q\n' in blocks['check']
+    assert '- run: python -m pytest -q --ignore=tests/test_regionprops_coords_scaled_benchmark_intake.py --ignore=tests/test_draw_polygon_benchmark_intake.py\n' in blocks['check']
     assert 'tests/test_subdivide_polygon_benchmark.py' in blocks['numpy-minimum']
     # These jobs use selected numerical files or artifact-only measurements,
     # and never collect the historical benchmark inverse guard.
@@ -810,8 +812,8 @@ def test_drawing_public_and_pipeline_gates_precede_source_freeze_and_registry_sm
     feature_source=(ROOT/'tools/run_feature_tests.py').read_text()
     assert "str(ROOT / 'tests/test_api.py')" in feature_source
     contract=json.loads((ROOT/'coverage/contracts/current-public-qualification.json').read_bytes())
-    assert contract['scope']=='current258'
-    assert len(contract['image_paths'])==258 and len(contract['metadata_paths'])==3
+    assert contract['scope']=='current262'
+    assert len(contract['image_paths'])==262 and len(contract['metadata_paths'])==3
     assert {'tests/test_draw_coordinates_public.py','tests/test_draw_coordinates_integration.py','tests/test_circle_perimeter_contract.py','tests/test_circle_perimeter_public.py','tests/test_line_aa_reference.py','tests/test_line_aa_public.py','tests/test_line_aa_default.py'}<=set(contract['required_selectors'])
 
 
@@ -934,3 +936,63 @@ def test_region_scalar_installed_preparation_source_and_fixture_gates():
     cmake=(ROOT/'CMakeLists.txt').read_text()
     assert 'src/regionprops_state.cpp src/bind_regionprops_state.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math"' in cmake
     assert hashlib.sha256((ROOT/'tests/fixtures/regionprops_scalar_native.bin').read_bytes()).hexdigest()=='51c97708e670151caa78abcfefd64a4dc8145d739645f371f783fbf5327e04d8'
+
+
+def test_coords_scaled_prebuild_keeps_numpy_intakes_installed():
+    import shlex
+    workflow=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    command=next(line.strip()for line in workflow.splitlines()
+                 if line.strip().startswith('python -m pytest -q --capture=sys'))
+    selected=set(shlex.split(command.split(' 2>&1 | tee ')[0]))
+    assert 'tests/test_regionprops_coords_scaled_reference.py' not in selected
+    assert 'tests/test_regionprops_coords_scaled_public.py' not in selected
+    assert not any('test_coords_scaled_controller_intake_originals_refused' in item for item in selected)
+    assert {'tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_prospective_scope_and_source',
+            'tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_sequences_and_accounting',
+            'tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_payload_words_and_declared_mutations',
+            'tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_sdk_default_and_focused_route',
+            'tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_reuses_installed_component_family'} <= selected
+    assert workflow.index(command)<workflow.index('tools/public_qualification.py all')
+
+
+def test_coords_scaled_installed_gates_keep_rows_and_dispatch_modes_separate():
+    source=(ROOT/'.github/workflows/ci.yml').read_text()
+    for job in ('check','numpy-minimum'):
+        block=jobs(source)[job]
+        steps={step.splitlines()[0].removeprefix('      - name: '):step
+               for step in re.split(r'(?=^      - name: )',block,flags=re.M)
+               if step.startswith('      - name: ')}
+        normal=steps['Region coords scaled saved public and installed SDK boundary normal']
+        scalar=steps['Region coords scaled public and installed SDK boundary disabled']
+        assert 'tests/test_regionprops_coords_scaled_reference.py ' in normal
+        for mode,step in (('normal',normal),('scalar',scalar)):
+            assert 'tests/test_regionprops_coords_scaled_public.py ' in step
+            assert 'tests/test_regionprops_coords_scaled_sdk_scope.py ' in step
+            assert '--junitxml=build/ci-artifacts/regionprops-coords-scaled-'+mode+'.xml' in step
+            assert 'SKIMAGEXX_COORDS_SCALED_ROWS_DIR: build/ci-artifacts/regionprops-coords-scaled-'+mode+'-rows' in step
+            assert block.index(step)>block.index('pip install')
+        assert "SKIMAGEXX_DISABLE_SIMD: '1'" in scalar
+        assert 'SKIMAGEXX_DISABLE_SIMD:' not in normal
+        if job=='numpy-minimum':
+            assert block.index(scalar)<block.index('ci_measurement_artifacts.py freeze')
+
+
+def test_coords_scaled_cold_intake_runs_fresh_outside_broad_pytest():
+    workflow=(ROOT/'.github/workflows/ci.yml').read_text()
+    blocks=jobs(workflow)
+    path='tests/test_regionprops_coords_scaled_benchmark_intake.py'
+    step=('      - name: Region coords scaled fresh NumPy-only benchmark intake\n'
+          '        run: python -m pytest -q '+path+' --junitxml=build/ci-artifacts/regionprops-coords-scaled-numpy-intake.xml\n')
+    broad='      - run: python -m pytest -q --ignore='+path
+    assert workflow.count(step)==2 and blocks['check'].count(broad)==2
+    assert '\n      - run: python -m pytest -q\n' not in workflow
+    for name in ('check','numpy-minimum'):
+        block=blocks[name]
+        assert block.count(step)==1 and block.count(path)==(3 if name=='check'else 1)
+        install=('python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" cmake'
+                 if name=='check'else 'python -m pip install --no-deps build/wheels/*.whl')
+        assert block.index(install)<block.index(step)<block.index('Region coords scaled saved public and installed SDK boundary normal')
+        assert not block.split(step,1)[1].startswith('        env:')
+        if name=='numpy-minimum':assert block.index(step)<block.index('ci_measurement_artifacts.py freeze')
+    q=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    assert path not in q

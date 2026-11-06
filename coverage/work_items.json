@@ -36872,7 +36872,7 @@
       "kind": "implementation",
       "owner": "tiny_line_implementation",
       "branch": "feature/polygon-batch-v1",
-      "state": "measured",
+      "state": "accepted",
       "apis": [],
       "target_apis": [
         "draw.polygon",
@@ -36907,18 +36907,19 @@
       "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
+        "action": "Push exactproductionmainmerge andretireonlycleansourceancestorWTs afterreadersrelease. Keepallrawbaselinepackages. Subsequentpartial-domain/performancegaps stayopen; no unchangedbenchmarkretry."
       },
       "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
-      "current_checkpoint": "Family6432d023 independentlyPASS2093e177:19familypaths,160component/6pure andcurrent4acassembledSDK92 normal526515controls. Rootsharedaffectedsource279uniqueassertions/profile PASS; nofullprebuild/genuine/performance/releasecredit. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production.",
-      "waste_review": "Sourceprebuild reuse770b missed3active literal/hash/selector dependencies and normalconftest scope; retain failed421355 and invalidateits readiness claim. Ccorrected complete2708+8subtests perinterpreter, no partialunion. Preserve production-identical db4genuine/448timings; no numerical rerun for metadata. Rootnext: independentlyadmit running334campaign before main delivery."
+      "current_checkpoint": "Family6432d023 independentlyPASS2093e177:19familypaths,160component/6pure andcurrent4acassembledSDK92 normal526515controls. Rootsharedaffectedsource279uniqueassertions/profile PASS; nofullprebuild/genuine/performance/releasecredit. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production. Exact334whole-release ROOTADMITTED/a5a595dc:933088XML0bad,248SDK,48corpora,3stagers; source493equalsmainshipping. Drawingbenchmark28/32with4losses retained; partialcontracts only.",
+      "waste_review": "Sourceprebuild reuse770b missed3active literal/hash/selector dependencies and normalconftest scope; retain failed421355 and invalidateits readiness claim. Ccorrected complete2708+8subtests perinterpreter, no partialunion. Preserve production-identical db4genuine/448timings; no numerical rerun for metadata. Rootnext: independentlyadmit running334campaign before main delivery.",
+      "source_sha": "334e68e2e6717421501742365b6fe58328fc1019"
     },
     {
       "id": "draw-bezier-current-batch-v1",
       "kind": "implementation",
       "owner": "tiny_line_implementation",
       "branch": "feature/draw-bezier-v1",
-      "state": "measured",
+      "state": "accepted",
       "apis": [],
       "target_apis": [
         "draw.bezier_curve"
@@ -36934,17 +36935,18 @@
       "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
+        "action": "Push exactproductionmainmerge andretireonlycleansourceancestorWTs afterreadersrelease. Keepallrawbaselinepackages. Subsequentpartial-domain/performancegaps stayopen; no unchangedbenchmarkretry."
       },
       "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
-      "current_checkpoint": "Final family55462f45517c953548c583aa8c17d033a795d28e independently reviewed PASS465fea03:20 source paths/74 small proofs; recurrence unchanged from safety-sealed48c,272 public checks, four native modes and assembled SDK92 evidence. References on main; current measured/genuine status follows below. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production."
+      "current_checkpoint": "Final family55462f45517c953548c583aa8c17d033a795d28e independently reviewed PASS465fea03:20 source paths/74 small proofs; recurrence unchanged from safety-sealed48c,272 public checks, four native modes and assembled SDK92 evidence. References on main; current measured/genuine status follows below. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production. Exact334whole-release ROOTADMITTED/a5a595dc:933088XML0bad,248SDK,48corpora,3stagers; source493equalsmainshipping. Drawingbenchmark28/32with4losses retained; partialcontracts only.",
+      "source_sha": "334e68e2e6717421501742365b6fe58328fc1019"
     },
     {
       "id": "draw-set-color-current-batch-v1",
       "kind": "implementation",
       "owner": "next_family_contract",
       "branch": "feature/draw-set-color-f32-v3",
-      "state": "measured",
+      "state": "accepted",
       "apis": [],
       "target_apis": [
         "draw.set_color"
@@ -36960,17 +36962,18 @@
       "acceptance": "Per-function declared-contract parity and hot-swap behavior; genuine native/installed SDK evidence, applicable scalar/SIMD/globalworker controls; fixed one-worker original comparison with all losses; independent review and exact-source four-profile qualification before release credit. No full-contract credit for a bounded partition.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
+        "action": "Push exactproductionmainmerge andretireonlycleansourceancestorWTs afterreadersrelease. Keepallrawbaselinepackages. Subsequentpartial-domain/performancegaps stayopen; no unchangedbenchmarkretry."
       },
       "scope": "Next independent coherent family batch; frozen4ac qualification42099127401 remains unchanged and delivers independently. Root owns shared wiring and main admission.",
-      "current_checkpoint": "F32 successor2667158 independently source-reviewed by root: build/draw-set-color-independent-review-v3/review.json SHA bc32f7027f9c71fa6b9282d83c3f09ad4447f7e5da30992d1a02a4ec6fffc497. Author metadata verification157d4b03 authenticates14 source/296 smallproof pins,24 originals,172 public/8 pure, four native modes and assembled SDK22x2. Parent allcontractkeys including52+A2 observations unchanged. MSVC compile-only standalone exit receipt absent; no Windows runtime credit. Scoped measured/genuine status follows below. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production."
+      "current_checkpoint": "F32 successor2667158 independently source-reviewed by root: build/draw-set-color-independent-review-v3/review.json SHA bc32f7027f9c71fa6b9282d83c3f09ad4447f7e5da30992d1a02a4ec6fffc497. Author metadata verification157d4b03 authenticates14 source/296 smallproof pins,24 originals,172 public/8 pure, four native modes and assembled SDK22x2. Parent allcontractkeys including52+A2 observations unchanged. MSVC compile-only standalone exit receipt absent; no Windows runtime credit. Scoped measured/genuine status follows below. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production. Exact334whole-release ROOTADMITTED/a5a595dc:933088XML0bad,248SDK,48corpora,3stagers; source493equalsmainshipping. Drawingbenchmark28/32with4losses retained; partialcontracts only.",
+      "source_sha": "334e68e2e6717421501742365b6fe58328fc1019"
     },
     {
       "id": "matrix-transform-prescott-release-fix-v1",
       "kind": "implementation",
       "owner": "qualification251_readiness",
       "branch": "fix/matrix-prescott-v1",
-      "state": "parity_passed",
+      "state": "accepted",
       "apis": [],
       "target_apis": [
         "transform.matrix_transform"
@@ -36984,11 +36987,12 @@
       "depends_on": [],
       "base_sha": "4ac77e4bc6f0f7bb26ba509c7f13869a4349a59e",
       "acceptance": "CloseobservedauthenticatedOpenBLAS0.3.21Prescottarithmetic viaexistingprofilearchitecture, exactsource/binaryclosure andboundedwitnesses; no corename-onlyallowlist orCPUforcing; preserveexistingprofiles/worker/SDK contracts. Independentreview+genuine supportedprofileacceptance required.",
-      "current_checkpoint": "Frozen clean source906ba318d4222f0030c5fc164469786a1d56dfcc, handoff build/matrix-prescott-native-v1/handoff-v1.json SHA2885e58ce0a6c3da33a519d1107fec4aaf9c56ad51a8f5d7ae6d16eb302bf83d:16 named paths/139 small proofs. All48 captured cases432words match across four native modes;348 targeted public passes,15 unique pure nodes/profile, relocated assembledSDK91 normal/disabled and3TU MSVC compile-only. Independent C review PASS9241cd8a sealed and published in coverage/evidence/matrix-prescott-source-admission-v1.json; old wrapper and C++ inverse independently reconstructed. No naturalPrescott public host or speed claim. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production.",
+      "current_checkpoint": "Frozen clean source906ba318d4222f0030c5fc164469786a1d56dfcc, handoff build/matrix-prescott-native-v1/handoff-v1.json SHA2885e58ce0a6c3da33a519d1107fec4aaf9c56ad51a8f5d7ae6d16eb302bf83d:16 named paths/139 small proofs. All48 captured cases432words match across four native modes;348 targeted public passes,15 unique pure nodes/profile, relocated assembledSDK91 normal/disabled and3TU MSVC compile-only. Independent C review PASS9241cd8a sealed and published in coverage/evidence/matrix-prescott-source-admission-v1.json; old wrapper and C++ inverse independently reconstructed. No naturalPrescott public host or speed claim. Initialdrawing42132995271 COMPLETE independentlyb82b:448samples,7untimedroutes,28/32wins and4polygonlosses retained. db4qualification42135532859 FAILEDall4beforepreparation on3stale sourceguards; invalid770b source-union retained. Corrected334 metadata-only preserves493productionblobs; C v2review46e3 actualcomplete2708+8subtests perWindows311/313 withnormalconftest/noSciimports. Root successor42140207750 IN_PROGRESS at334, no release acceptance. No new original/performance/genuine replay for unchanged production. Exact334whole-release ROOTADMITTED/a5a595dc:933088XML0bad,248SDK,48corpora,3stagers; source493equalsmainshipping. Drawingbenchmark28/32with4losses retained; partialcontracts only.",
       "next_gate": {
         "owner": "integrator",
-        "action": "Root owns existing exact334 successor42140207750 observation/independent raw admission, then named main delivery onlyif all release gates pass. No new dispatch/retry, no remeasurement. Preserve failed421355/db4 and invalid770b; fullactual source barriers are prerequisite, neverpartial-union substitutes."
-      }
+        "action": "Push exactproductionmainmerge andretireonlycleansourceancestorWTs afterreadersrelease. Keepallrawbaselinepackages. Subsequentpartial-domain/performancegaps stayopen; no unchangedbenchmarkretry."
+      },
+      "source_sha": "334e68e2e6717421501742365b6fe58328fc1019"
     },
     {
       "id": "label-pair-metrics-current-batch-v1",
@@ -38158,14 +38162,14 @@
       }
     },
     "current_review_assignments": {
-      "tiny_line_implementation": "find_boundaries rawdf7d4184 andellipseinstalleddelta701d57b2 PASS; now independent334whole-release metadataadmission fromrootaggregate5383c7ba.",
+      "tiny_line_implementation": "Exact334whole-releasea5a595dc andellipseinstalled701d57b2 PASS; independentcontingency9ca componentpeer inprogress.",
       "qualification251_readiness": "Find_boundaries admittedgold0cf2203b/nativeSIMD1e5efcf7 frozen; authoringonlyfamilybinder/frontend/SDKconsumerhpp/prospectivebench, no timing.",
       "next_family_contract": "Contingency9ca frozen/componentpeerpending; sole sharednext-metricsdraftauthor fromqualifiedcandidate334; preserveancestry/unionadditiveattrs, no runtimeprep beforecomponentpeer."
     },
-    "next_action": "Root monitors ONCE-dispatched exact334 four-profile42140207750, independently admits actualresults then delivers named productionprojection; no success claimednow. Retain faileddb4campaign421355 and invalidv1sourceclaim770b. Drawing421329/b82b publication shipped f0c91244; no retiming. Private label-paircounts064/dd3db80 peer/scalarflags correction closed; publicCSR/reduction/log scope remains open, no publicmetriccredit.",
+    "next_action": "Push admitted334mainmerge promptly; safeancestorWT retirement after readleases. Aindependentlyreviews frozencontingency9ca whileCauthorsnext-metricsdraft (no runtimebuilduntilcomponentpeer). Bfind_boundariesfrontend117713fe/native1e5efcf7 done, SDK/prospectivebench authoring; do notwaitunfinishedlane. VI actualbinarylog2/DDOT remainsopen; no recapture/retimeforbookkeeping.",
     "current_checkpoint": {
-      "main_image_names": 258,
-      "qualified_image_names": 258,
+      "main_image_names": 262,
+      "qualified_image_names": 262,
       "prepared_source": "db4f59b8aa69840591266e607e253a8611676ced",
       "prepared_run": 42127381279,
       "candidate_source": "334e68e2e6717421501742365b6fe58328fc1019",
@@ -38182,7 +38186,7 @@
       "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42127381279",
       "candidate_qualification_run": 42140207750,
       "candidate_evidence": "coverage/evidence/draw-batch-genuine-minimum-admission-v1.json",
-      "candidate_qualification_status": "TERMINAL_ALL4SUCCESS42140207750; root4sealedreviews+3stagersPASS5383c7ba:933088XML0bad/248SDK/48corpora; independentmetadataadmission/mainshipping pending.",
+      "candidate_qualification_status": "ROOT_ADMITTED exact334/a5a595dc;933088XML0bad/248SDK/48corpora,3stagers. Mainmergeindex493productionblobs match.",
       "next_release_source": "334e68e2e6717421501742365b6fe58328fc1019",
       "next_release_expected_images": 262,
       "next_release_expected_product": 199,
@@ -38190,10 +38194,16 @@
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "RootreconstructionPASS, independentmetadatareviewactive. Main258/qualifiedcf0 remainsuntilmerge; no newsourceperformanceclaim.",
+      "next_release_status": "Current334 admitted andshipping. Next-metricsDRAFT source264image/267func204product96SDK32families64checks notqualified; sourceonlyguardchecksallowed, componentpeerpending.",
       "next_release_qualification_run": 42140207750,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
+    },
+    "shared_integration_author": {
+      "agent": "next_family_contract",
+      "branch": "integrate/next-metrics-v1",
+      "worktree": "build/worktrees/next-metrics-v1",
+      "scope": "Draftsharedglueonly; rootretainsadmission/maindelivery; no genuine/runtimebuild/perf untilcomponentpeer."
     }
   },
   "parallel_review": {
