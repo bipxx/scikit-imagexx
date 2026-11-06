@@ -22,7 +22,10 @@ void bind_draw_multiblock_lbp(py::module_& m){
         skimagexx::CropView view;view.data=a.data();view.itemsize=std::size_t(n);for(py::ssize_t d=0;d<a.ndim();++d){view.shape.push_back(a.shape(d));view.strides.push_back(a.strides(d));}
         skimagexx::MultiblockLbpParameters p;p.prepare_only=true;
         auto out=skimagexx::draw_multiblock_lbp({view,type,!a.dtype().attr("isnative").cast<bool>(),half},p);
-        const auto dtype=k=='f'?a.dtype():py::dtype::of<double>();py::array result(dtype,out.shape);
+        // Source gray2rgb stacks three same-type planes before img_as_float:
+        // stacking resolves their canonical scalar dtype (metadata/byte order
+        // are not carried through). RGB's copied descriptor stays unchanged.
+        const auto dtype=k=='f'?(a.ndim()<3?py::dtype::from_args(a.dtype().attr("type")):a.dtype()):py::dtype::of<double>();py::array result(dtype,out.shape);
         auto dst=floating(result);
         skimagexx::CropView source;source.data=out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());source.itemsize=out.is_float32?4:8;source.shape=out.shape;std::ptrdiff_t stride=std::ptrdiff_t(source.itemsize);source.strides.resize(source.shape.size());for(std::size_t d=source.shape.size();d-->0;){source.strides[d]=stride;stride*=source.shape[d];}
         skimagexx::multiblock_lbp_assign(dst,{source,false});return result;
