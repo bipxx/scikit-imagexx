@@ -1,0 +1,67 @@
+{
+  "schema": "vi-cohort-value-diagnostic-v1",
+  "status": "SOURCE_INERT_ONLY_NO_EXECUTION_AUTHORITY",
+  "API": "metrics.variation_of_information",
+  "controller_predecessor": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "qualified_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "probe": "tools/vi_first_cohort_probe.py",
+  "driver_context": "coverage/contracts/variation-of-information-benchmark-execution-v5.json",
+  "first_case": {
+    "id": "metrics.variation_of_information/128x128/8/C",
+    "api": "metrics.variation_of_information",
+    "shape": [
+      128,
+      128
+    ],
+    "labels": 8,
+    "dtype": "int64",
+    "layout": "C",
+    "ignore": [
+      0
+    ]
+  },
+  "controller_dependencies": {
+    "tools/vi_first_cohort_probe.py": "b130ecdf8cbc26498fd050ac32a5f1ccdaa1afbaf6a51fbd4c8986fb1c0f1809",
+    "coverage/contracts/vi-measurement-v3.json": "2c6c87c20c1a91db0dc50e8a5bcac7d3c427a49d9e10697e497a24b7fba0c209"
+  },
+  "prepared_dependencies": {
+    "benchmarks/variation_of_information_execution.py": "d29f4656bfbe3767655967119e8a2f4bbef5d0ca6f080aeeab0e50ecded57a67",
+    "benchmarks/variation_of_information_consumer.py": "1ca6c0cc3bc6c26cf8baae128d0dab96f33edb99e10290969706956f9bd34144",
+    "benchmarks/variation_of_information_cases_v1.py": "dc773437ab4c79a21f590e746553df848208939ab2fd694e8bb4b244b18c6046",
+    "benchmarks/variation_of_information.py": "70cb54b7e9d6b975a591874a56cd08a2b0d7bb26a4696ab66fe31885719894ce",
+    "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+    "benchmarks/mark_boundaries_execution.py": "ff467aff85429349b925126d82b40a33f7b5dfb42af37ff3c6044c37c63d9365",
+    "coverage/contracts/variation-of-information-benchmark-execution-v5.json": "cede735cce8d6480e1e1e1185430be1e071f0bd4816da437196b1388d106d2e3",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+  },
+  "bounds": {
+    "output_shape": [
+      2
+    ],
+    "max_output_bytes_each": 32,
+    "input_arrays": 2,
+    "max_input_bytes_each": 131072,
+    "max_total_input_bytes": 262144
+  },
+  "scope": "Only traceback-observation of unchangedoneoriginal+onenative existingcohort,0samplerbody; no asserts/math/driver/probe changes or compensation.",
+  "expected_outcome": "Oldassertionfailure remainsnonzero; dtype/rawhex/FP/count/inputfingerprints retainedafteroldfinally. Successfuloldmandatorysamplerstop is0timing andnoinventedfailurevalues.",
+  "actual_authority": null,
+  "original_budget_now": 0,
+  "prospective_only": {
+    "original_topcalls": 1,
+    "native_topcalls": 1,
+    "sampler_body_calls": 0,
+    "timed_batches": 0
+  },
+  "pending": [
+    "Rootindependentsource/inertreview",
+    "FreshactualofflineDDAstage/F1host/oldprepare_cohorts/rootbinding+explicitnewdiagnosticGOwithexternalSHA",
+    "Oneactualminimumhostoriginal1/native1 diagnosticcohort onlyafterseparateGO; no execution now"
+  ]
+}
