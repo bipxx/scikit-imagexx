@@ -20,7 +20,8 @@ def test_exact_fix_projection_and_unchanged_checker_engines():
     c=json.loads(CONTEXT.read_bytes())
     from tools.join_source_context import integration_fix_predecessor_bytes
     for name,row in c['sources'].items():assert H(integration_fix_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==row['predecessor_canonical_lf_sha256'],name
-    for name,pin in c['unchanged_computation'].items():assert H((ROOT/name).read_bytes())==pin,name
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    for name,pin in c['unchanged_computation'].items():assert H(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin,name
     for key,pin in c['immutable_checker_functions'].items():
         path,name=key.split(':');text=(ROOT/path).read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name==name)
         assert H(ast.get_source_segment(text,node).encode())==pin
@@ -161,7 +162,7 @@ def test_sdk_shared_successor_exact_source_hashes_and_collector():
     assert c['predecessor_source']=='cd703fbda0442944b150c9529e09e0a40ab37c59'
     assert set(c['sources'])=={'tests/test_public_qualification.py','tools/join_source_context.py','tools/public_qualification.py'}
     for name,row in c['sources'].items():
-        from tools.rolling_ball_sentinel_context import predecessor_bytes as sentinel_predecessor
+        from tools.mark_lbp_fp_context import sentinel_predecessor_bytes as sentinel_predecessor
         raw=(ROOT/name).read_bytes();assert H(sentinel_predecessor(ROOT,name,raw).replace(b'\r\n',b'\n'))==row['current_canonical_lf_sha256']
         old=sdk_family_assertion_predecessor_bytes(ROOT,name,raw)
         assert H(old)==row['predecessor_canonical_lf_sha256']

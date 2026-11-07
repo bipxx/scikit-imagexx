@@ -1,0 +1,280 @@
+{
+  "status": "SOURCE_PLAN_NO_ORIGINAL_AUTHORITY",
+  "source": "3106c063a0d34af0af48a2f2f3928fade46c322d",
+  "source_signature": "find_boundaries(label_img, connectivity=1, mode=outer, background=0); mark_boundaries(image,label_img,color=(1,1,0),outline_color=None,mode=outer,background_label=0)",
+  "bounds": {
+    "label_elements_each": 12,
+    "label_backing_bytes_each": 96,
+    "image_backing_bytes": [
+      0,
+      0,
+      12,
+      144
+    ],
+    "max_result_elements": 36,
+    "max_result_bytes": 288,
+    "candidate_extrema_visits_each": 264,
+    "candidate_named_scratch_upper_bytes_each": 684,
+    "all_four_input_backing_bytes": 540,
+    "all_four_return_backing_bytes_upper": 456
+  },
+  "bounds_derivation": "rank2/cross size5:12*(2*5+6*2)=264 extrema visits; 57*12=684 named wide scratch bound from3106 including vector stores. Original full footprints are two length3 axis passes, no zoom/dilation iterations; source bounded3x4 only. Allocator/object overhead and actual latency unknown, no timing performed.",
+  "partition": {
+    "supported_proposed": "GNUx86_64 int64/uint64, C contiguous exact ndarray, integer0 background, nearest/maskedSSE, imageu8gray orf32RGB, nooutline; these4 witnesses only",
+    "not_authorized": [
+      "otherrounding/unmaskedexceptions",
+      "widefloat/outofrange/protocolbackground",
+      "F/reverse/step/readonly/permutedwideouter",
+      "WindowscastABI",
+      "largeroriginals",
+      "generaloldquarantineremoval"
+    ]
+  },
+  "authority": {
+    "actual_root_GO": null,
+    "original_bodies": 0,
+    "prefixes_executed": 0,
+    "minimum_prospective": 4,
+    "modern_prospective": 4,
+    "order": "Minimum4 only after exact runtime/helper/controller/readiness+rootGO; independent terminal/raw admission before separate modern4 GO.",
+    "old125_or_other_original_budget": 0
+  },
+  "schema": "mark-wide-outer-capture-contract-v2",
+  "cases": [
+    {
+      "id": "wide-outer/find-int64-small-3x4",
+      "api": "segmentation.find_boundaries",
+      "label_dtype": "int64",
+      "labels": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        0,
+        0,
+        1,
+        1
+      ],
+      "label_shape": [
+        3,
+        4
+      ],
+      "layout": "C",
+      "readonly": false,
+      "mode": "outer",
+      "background": 0,
+      "connectivity": 1,
+      "outline": null,
+      "color": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "id": "wide-outer/find-uint64-fullwidth-3x4",
+      "api": "segmentation.find_boundaries",
+      "label_dtype": "uint64",
+      "labels": [
+        0,
+        18446744073709551615,
+        18446744073709551614,
+        1,
+        9223372036854775807,
+        9223372036854775808,
+        9223372036854775809,
+        0,
+        9007199254740992,
+        9007199254740993,
+        9007199254740994,
+        2
+      ],
+      "label_shape": [
+        3,
+        4
+      ],
+      "layout": "C",
+      "readonly": false,
+      "mode": "outer",
+      "background": 0,
+      "connectivity": 1,
+      "outline": null,
+      "color": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "id": "wide-outer/mark-gray-u8-int64-small-3x4",
+      "api": "segmentation.mark_boundaries",
+      "label_dtype": "int64",
+      "labels": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        0,
+        0,
+        1,
+        1
+      ],
+      "image_dtype": "uint8",
+      "image_shape": [
+        3,
+        4
+      ],
+      "image": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "label_shape": [
+        3,
+        4
+      ],
+      "layout": "C",
+      "readonly": false,
+      "mode": "outer",
+      "background": 0,
+      "connectivity": 1,
+      "outline": null,
+      "color": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "id": "wide-outer/mark-RGB-f32-uint64-small-3x4",
+      "api": "segmentation.mark_boundaries",
+      "label_dtype": "uint64",
+      "labels": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        0,
+        0,
+        1,
+        1
+      ],
+      "image_dtype": "float32",
+      "image_shape": [
+        3,
+        4,
+        3
+      ],
+      "image": [
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75,
+        0,
+        0.25,
+        0.5,
+        0.75
+      ],
+      "label_shape": [
+        3,
+        4
+      ],
+      "layout": "C",
+      "readonly": false,
+      "mode": "outer",
+      "background": 0,
+      "connectivity": 1,
+      "outline": null,
+      "color": [
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "actual_original_GO": null,
+  "actual_original_budget": 0,
+  "bounds_source": {
+    "upstream": "skimage.segmentation.boundaries.mark_boundaries: _supported_float_type(image.dtype), img_as_float(...).astype(float_dtype),gray2rgb; _shared.utils new_float_type.get(dtype.char,np.float64)",
+    "uint8_gray_result": "3*4*3 float64 =288 bytes",
+    "float32_RGB_result": "3*4*3 float32 =144 bytes",
+    "four_results": "12+12+288+144=456 bytes",
+    "v1_bounds_failure": "v1 max144/total312 invalid, retained unchanged; no target or factory executed under that bound",
+    "actual_primary_raw_sha256": {
+      "skimage/segmentation/boundaries.py": "912753276982ca6a4e19910d0d30d2d61bfd6affa844823cf66352a2833c8252",
+      "skimage/_shared/utils.py": "4d46d199be4f83048f6bc4f540ca0c7941d64121407ec0de1fad04475d1c3c6d",
+      "skimage/util/dtype.py": "3d5bfb5388c980fa46d1283e4d60e10111c9a0f3189f24a0bca373dd668ff75c",
+      "skimage/color/colorconv.py": "4be075db2f7031e6c673d2443f0da3e75a5b0af1bf0398400a07e0cf83bb5f1a"
+    }
+  },
+  "frozen_source_pins": {
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/mark_boundaries_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667"
+  },
+  "cases_sha256": "685a47845f796a2f71558c7b2180b6f2f9ddb8e612ee7a3fd882d53bec7fad2f",
+  "successor_v3": {
+    "predecessor_source": "d2bbbf46b3753d2621f3f0315f8bf64ba85dffd3",
+    "prefix_fixture_invocations_per_process": 8,
+    "prefix_processes": 8,
+    "total_prefix_fixture_invocations": 64,
+    "inert_return_arrays_per_process": 1,
+    "inert_return_elements": 2,
+    "inert_return_dtype": "float64",
+    "inert_return_bytes_per_process": 16,
+    "original_future_per_profile": 4,
+    "original_future_total": 8,
+    "reason": "4explicit validators+1sameobserver entry refusal+2typederrors+1inertsuccess=8. No process executed; v2count32underclaimed actual64."
+  }
+}

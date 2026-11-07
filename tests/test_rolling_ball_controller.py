@@ -26,8 +26,9 @@ def test_unbound_source_scope_and_exact_family_recipes():
     argv=PROBE.driver_argv(ROOT,route,'binding.json','never.json')
     assert argv[0]==str(ROOT/route['driver'])and route['driver']not in argv[1:]and '--deadline-utc'not in argv
     assert argv[-2:]==['--root-binding','binding.json']and argv[argv.index('--case')+1]==c['cases'][0]['id']
-    for name,pin in DATA['benchmark_source_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin
-    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    for name,pin in DATA['benchmark_source_sha256'].items():assert H(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes().replace(b'\r\n',b'\n'),canonical=True))==pin
+    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():assert H(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
     for name,pin in DATA['helper']['source_sha256'].items():assert H((ROOT/name).read_bytes())==pin
 
 

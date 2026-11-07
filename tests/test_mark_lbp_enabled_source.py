@@ -8,12 +8,13 @@ H=lambda b:hashlib.sha256(b).hexdigest()
 def test_exact_admitted_components_without_family_rewrites():
     d=json.loads((ROOT/'coverage/contracts/mark-lbp-enabled-components-v1.json').read_bytes())
     assert d['source_budget']==0
-    context=json.loads((ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v6.json').read_bytes())
-    lbp=json.loads((ROOT/'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v5.json').read_bytes())
+    context=json.loads((ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v7.json').read_bytes())
+    lbp=json.loads((ROOT/'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v7.json').read_bytes())
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
+    from tools.mark_lbp_fp_context import predecessor_bytes
     for name,pin in d['source_files_raw_sha256'].items():
-        c,path=(context,'coverage/contracts/mark-boundaries-benchmark-execution-v6.json')if name in context['integrated_source_predecessors']else(lbp,'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v5.json')
-        raw=adapter['historical_bytes'](ROOT,name,context_path=path,section='integrated_source_predecessors')if name in c['integrated_source_predecessors']else(ROOT/name).read_bytes()
+        c,path=(context,'coverage/contracts/mark-boundaries-benchmark-execution-v7.json')if name in context['integrated_source_predecessors']else(lbp,'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v7.json')
+        raw=adapter['historical_bytes'](ROOT,name,context_path=path,section='integrated_source_predecessors')if name in c['integrated_source_predecessors']else predecessor_bytes(ROOT,name,(ROOT/name).read_bytes())
         assert H(raw)==pin,name
 
 def test_ordinary_single_core_build_and_public_routes():
@@ -112,7 +113,7 @@ def test_real_qualification_parser_and_exact_saved_group_count_guards(monkeypatc
 
 def test_active_benchmark_context_successors_preserve_exact_old_authority_and_source_bodies():
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
-    for name in ('mark-boundaries-benchmark-execution-v6.json','draw-multiblock-lbp-benchmark-execution-v5.json'):
+    for name in ('mark-boundaries-benchmark-execution-v7.json','draw-multiblock-lbp-benchmark-execution-v7.json'):
         current=json.loads((ROOT/'coverage/contracts'/name).read_bytes());p=current['predecessor_context'];raw=(ROOT/p['path']).read_bytes();assert H(raw)==p['raw_sha256'];old=json.loads(raw)
         mutable={'schema','successor_source_predecessors','source_files_canonical_sha256','historical_sources','historical_446_sources','route','predecessor_context','integration_scope','integrated_source_predecessors','reused_executor_canonical_sha256','common_boundary_canonical_sha256','metadata_fixture_canonical_sha256'}
         for key in old:

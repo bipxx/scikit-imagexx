@@ -80,6 +80,11 @@ def mark_boundaries(image,label_img,color=(1,1,0),outline_color=None,mode='outer
     legacy_string=isinstance(background_label,str)and np.lib.NumpyVersion(np.__version__)<'2.0.0'
     if legacy_string and selected!=2:
         raise NotImplementedError('mark legacy/string background mode partition is unassessed')
+    # A wide outer comparison against a floating/out-of-range background can
+    # promote full-width labels before equality. The existing native parameter
+    # carries only an exact typed word; do not silently erase scalar metadata.
+    if bits==64 and selected==2 and (type(background_label)not in(int,bool)or not representable):
+        raise NotImplementedError('mark wide-outer scalar comparison metadata frontier')
     try:mask=_core.mark_boundaries_mask(label_img,selected,word,representable,workers)
     except ValueError as error:
         if 'frontier'in str(error):raise NotImplementedError(str(error))from None

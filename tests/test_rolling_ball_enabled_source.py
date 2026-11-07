@@ -10,7 +10,9 @@ CONTEXT=ROOT/'coverage/contracts/rolling-ball-enabled-context-v1.json'
 EXPECTED_CONTEXT='a9f317747114b1766467f9c3624c3c7bce9b7ebbbb209bd0b1539d5b13c0b373'
 H=lambda b:hashlib.sha256(b).hexdigest()
 from tools.rolling_ball_sentinel_context import predecessor_bytes as sentinel_predecessor
-def historical(name):return sentinel_predecessor(ROOT,name,(ROOT/name).read_bytes())
+def historical(name):
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    return sentinel_predecessor(ROOT,name,predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))
 
 
 def qualifier():
@@ -101,17 +103,17 @@ def test_benchmark_context_successor_only_changes_source_projection():
 
 
 def test_actual_active_shared_benchmark_literal_dependencies():
-    # These are the exact current driver contexts; older contexts remain history.
+    # Frozen prior contexts retain their exact predecessor pins; active VI is checked below.
     for name in ('rolling-ball-benchmark-execution-v2.json','mark-boundaries-benchmark-execution-v6.json','draw-multiblock-lbp-benchmark-execution-v5.json','variation-of-information-benchmark-execution-v5.json'):
         c=json.loads((ROOT/'coverage/contracts'/name).read_bytes())
         for source,pin in c['source_files_canonical_sha256'].items():assert H(historical(source).replace(b'\r\n',b'\n'))==pin,(name,source)
         for field,source in (('common_boundary_canonical_sha256','benchmarks/mark_boundaries_execution.py'),('reused_executor_canonical_sha256','benchmarks/next_util_execution.py'),('metadata_fixture_canonical_sha256','tests/test_mark_boundaries_benchmark_execution.py')):
-            if field in c:assert H((ROOT/source).read_bytes().replace(b'\r\n',b'\n'))==c[field],(name,field)
+            if field in c:assert H(historical(source).replace(b'\r\n',b'\n'))==c[field],(name,field)
         assert all(value is None for value in c['unbound'].values())
 
     import runpy
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
-    path='coverage/contracts/variation-of-information-benchmark-execution-v5.json'
+    path='coverage/contracts/variation-of-information-benchmark-execution-v6.json'
     current=json.loads((ROOT/path).read_bytes())
     for name,row in current['historical_sources'].items():
         assert H(adapter['historical_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']

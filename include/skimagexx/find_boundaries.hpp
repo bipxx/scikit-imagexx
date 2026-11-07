@@ -19,13 +19,19 @@ constexpr std::size_t find_boundaries_max_elements=16*1024*1024;
 constexpr std::size_t find_boundaries_max_neighbor_visits=64*1024*1024;
 // First typed frontier: native-endian bool or eight integer dtypes, rank1..8,
 // nonempty extents, addressable signed byte strides. Ordinary int64/uint64
-// require EVERY label in [-2^53,2^53] (unsigned lower bound0); their outer
-// mode is refused because generated dtype-max backgrounds can cast outside
-// range in upstream double-staged min/max intermediate stores. Subpixel
-// accepts full integer widths: it never enters SciPy morphology. Outside
-// this exact-promotion frontier, source rounds labels through double and
-// casts extrema back at each pass; do not claim exact-integer equivalence.
-// Nonexact-but-in-range wide-label behavior remains a future typed partition.
+// thick/inner require EVERY label in [-2^53,2^53] (unsigned lower bound0).
+// Wide outer has a separate source-staged GNU x86_64 route: full input words
+// remain unchanged; extrema load through double and store to the source dtype
+// after EACH separable axis, including generated dtype-max backgrounds.
+// It requires an exact typed representable background word, nearest x87/SSE
+// rounding and masked SSE exceptions. Unrepresented scalar comparison
+// metadata remains a refused frontier. Its typed
+// cast ABI/semantic FP and original parity remain source-only validation gates;
+// other platforms/controls refuse before writes. No whole-domain claim follows
+// from the exact-integer small-label tests. Subpixel accepts full widths and
+// never enters SciPy morphology. Other rounded ordinary wide labels remain
+// unsupported. The staged64outer core is serial with one already-captured
+// process budget, to retain caller-observable source conversion FP effects.
 // No half/float or swapped inputs. This shape helper reads no pixels/worker state, and changes shape
 // only on success. Subpixel extent is exactly2*s-1; other modes preserve shape.
 bool find_boundaries_shape(const ComponentsView&,FindBoundaryMode,

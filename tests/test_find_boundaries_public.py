@@ -64,9 +64,9 @@ def test_find_boundaries_saved_public(spec,workers,owned,reference):
     else:assert returns==[]and accepted==[None]
     assert core.get_num_threads()==old
 
-@pytest.mark.parametrize('kind',['float32','swapped','rank9','readonly_output','wrong_output_dtype','aliased_output','nonexact64','outer64'])
+@pytest.mark.parametrize('kind',['float32','swapped','rank9','readonly_output','wrong_output_dtype','aliased_output','nonexact64','outer64-unrepresentable-background'])
 def test_find_boundaries_private_refusal_before_write(kind,owned):
-    a=np.array([[0,1],[1,0]],dtype=np.uint16);out=np.zeros(a.shape,dtype=bool);mode=0
+    a=np.array([[0,1],[1,0]],dtype=np.uint16);out=np.zeros(a.shape,dtype=bool);mode=0;background_representable=True
     if kind=='float32':a=a.astype(np.float32)
     elif kind=='swapped':a=a.astype(a.dtype.newbyteorder('>'))
     elif kind=='rank9':a=np.zeros((1,)*9,dtype=np.uint8);out=np.zeros(a.shape,dtype=bool)
@@ -74,8 +74,8 @@ def test_find_boundaries_private_refusal_before_write(kind,owned):
     elif kind=='wrong_output_dtype':out=np.zeros(a.shape,dtype=np.uint8)
     elif kind=='aliased_output':a=a.astype(bool);out=a
     elif kind=='nonexact64':a=np.array([[0,2**53+1],[1,0]],dtype=np.uint64)
-    elif kind=='outer64':a=a.astype(np.int64);mode=2
-    before=out.tobytes();assert owned._core.find_boundaries_into(a,out,1,mode,0,True,1)is None
+    elif kind=='outer64-unrepresentable-background':a=a.astype(np.int64);mode=2;background_representable=False
+    before=out.tobytes();assert owned._core.find_boundaries_into(a,out,1,mode,0,background_representable,1)is None
     assert out.tobytes()==before
 
 def test_find_boundaries_invalid_strides_and_external_storage(owned):

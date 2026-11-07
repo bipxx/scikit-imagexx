@@ -717,6 +717,22 @@ def groups_for_source(root):
     return groups
 
 
+DRAW_SOURCE_PATHS += (
+    'tools/mark_lbp_fp_context.py','coverage/contracts/mark-lbp-fp-integration-v1.json',
+    'coverage/contracts/mark-wide-outer-source-v1.json','coverage/contracts/mark-wide-comparison-fp-v1.json',
+    'coverage/contracts/mark-wide-compatibility-v1.json','coverage/contracts/mark-wide-outer-sdk-v1.json',
+    'coverage/contracts/mark-wide-outer-private-bridge-v1.json','coverage/contracts/mark-wide-outer-capture-v2.json',
+    'tests/fixtures/mark_wide_outer_originals_v1.json','tests/fixtures/mark_wide_outer_sdk_v1.hpp',
+    'tests/mark_wide_outer_capture.py','tests/mark_wide_outer_private_compare.py','tests/mark_wide_outer_sdk.py',
+    'tests/cmake_consumer/mark_wide_outer_consumer.cpp','tests/test_mark_wide_outer_public.py',
+    'tests/test_find_boundaries_wide_comparison_fp.cpp','tests/test_draw_multiblock_lbp_entry_fp.cpp',
+    'coverage/contracts/draw-multiblock-lbp-entry-fp-v1.json')
+
+
+# MARK_WIDE_INTEGRATION_SOURCE_CLOSURE
+DRAW_SOURCE_PATHS += ('benchmarks/draw_multiblock_lbp_execution.py', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v6.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v7.json', 'coverage/contracts/draw-multiblock-lbp-entry-fp-v1.json', 'coverage/contracts/find-boundaries-benchmark-binding-v6.json', 'coverage/contracts/find-boundaries-frontend-v5.json', 'coverage/contracts/find-boundaries-sdk-v4.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v7.json', 'coverage/contracts/mark-lbp-fp-integration-v1.json', 'coverage/contracts/mark-wide-comparison-fp-v1.json', 'coverage/contracts/mark-wide-compatibility-v1.json', 'coverage/contracts/mark-wide-outer-capture-v2.json', 'coverage/contracts/mark-wide-outer-private-bridge-v1.json', 'coverage/contracts/mark-wide-outer-sdk-v1.json', 'coverage/contracts/mark-wide-outer-source-v1.json', 'coverage/contracts/variation-of-information-benchmark-execution-v6.json', 'include/skimagexx/find_boundaries.hpp', 'python/skimagexx/_find_boundaries.py', 'python/skimagexx/_mark_boundaries.py', 'src/draw_multiblock_lbp.cpp', 'src/find_boundaries.cpp', 'tests/cmake_consumer/mark_wide_outer_consumer.cpp', 'tests/fixtures/mark_wide_outer_originals_v1.json', 'tests/fixtures/mark_wide_outer_sdk_v1.hpp', 'tests/mark_wide_outer_capture.py', 'tests/mark_wide_outer_private_compare.py', 'tests/mark_wide_outer_sdk.py', 'tests/test_draw_multiblock_lbp_benchmark_execution.py', 'tests/test_draw_multiblock_lbp_entry_fp.cpp', 'tests/test_draw_multiblock_lbp_entry_fp.py', 'tests/test_find_boundaries_native.cpp', 'tests/test_find_boundaries_public.py', 'tests/test_find_boundaries_wide_comparison_fp.cpp', 'tests/test_mark_lbp_fp_integration_source.py', 'tests/test_mark_wide_compatibility_source.py', 'tests/test_mark_wide_outer_capture.py', 'tests/test_mark_wide_outer_private_compare.py', 'tests/test_mark_wide_outer_public.py', 'tests/test_mark_wide_outer_sdk.py', 'tests/test_mark_wide_outer_source.py', 'tools/mark_lbp_fp_context.py')
+
+
 def applicable_public_groups(groups,profile):
     """Keep all global gates; add full Linux captured-grid parity explicitly."""
     require(profile in PROFILES,'unknown public-group profile')
@@ -725,6 +741,7 @@ def applicable_public_groups(groups,profile):
         selected['public-regular-grid-saved-linux']=('test_regular_grid_public.py',)
         selected['public-util-views-saved-linux']=('test_util_views_public.py',)
         selected['public-mark-saved-linux']=('test_mark_boundaries_public.py',)
+        selected['public-mark-wide-saved-linux']=('test_mark_wide_outer_public.py',)
         selected['public-lbp-saved-linux']=('test_draw_multiblock_lbp_public.py',)
         selected['public-lbp-metadata-linux']=('test_draw_multiblock_lbp_dtype_metadata.py',)
         selected['public-radon-saved-linux']=('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py')
@@ -2080,7 +2097,7 @@ def child(out, group):
         os.environ['MATRIX_TRANSFORM_PROOF_OUTPUT']=str(out/(mode+'-matrix-routes.json'))
     if group=='public-util-views-saved-linux':
         os.environ.update(util_views_fenv_environment(out,state))
-    if group in ('public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux'):
+    if group in ('public-mark-saved-linux','public-mark-wide-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux'):
         require(state['profile']!='windows','Linuxsavedfull32envelope forbidden onWindows')
         require(not os.environ.get('MARK_COMPONENT_DIR')and not os.environ.get('MARK_FENV_HELPER'),'GenuineMARKforbidsprivatebridge/helper')
         os.environ.update(util_views_fenv_environment(out,state))
@@ -2327,13 +2344,16 @@ def sdk(out, state, journal):
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
-                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/fixtures/flood_fill_sdk_original_v1.inc','tests/fixtures/rolling_ball_sdk_v1.bin','tests/fixtures/rolling_ball_sdk_dtypes_v1.bin','tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc')):
+                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/fixtures/flood_fill_sdk_original_v1.inc','tests/fixtures/rolling_ball_sdk_v1.bin','tests/fixtures/rolling_ball_sdk_dtypes_v1.bin','tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc','tests/fixtures/mark_wide_outer_sdk_v1.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
     configure = [cmake, '-S', sdk_source / 'tests/cmake_consumer', '-B', build, '-DCMAKE_BUILD_TYPE=' + config,
                  '-DCMAKE_PREFIX_PATH=' + str(prefix), '-DSKIMAGEXX_EXPECT_PREFIX=' + str(prefix), '-DSKIMAGEXX_EXPECT_OPENMP=ON',
                  '-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF', '-DCMAKE_DISABLE_FIND_PACKAGE_Python=ON', '-DCMAKE_DISABLE_FIND_PACKAGE_Python3=ON']
+    if state['profile']!='windows' and 'mark_boundaries' in families:
+        util_views_fenv_environment(out,state)
+        configure += ['-DSKIMAGEXX_FENV_HELPER='+str((out/'util-views-fenv/libutil_views_fenv_restore.so').resolve())]
     if os.name == 'nt':
         wheel_toolchain=read_windows_toolchain(out/'native-build',config)
         vswhere=shutil.which('vswhere')

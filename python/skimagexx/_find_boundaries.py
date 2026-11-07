@@ -7,9 +7,12 @@ _MODES={'thick':0,'inner':1,'outer':2,'subpixel':3}
 def find_boundaries(label_img, connectivity=1, mode='thick', background=0):
     """Find boundaries in the assessed integer/bool partition of skimage0.26.
 
-    All four modes are implemented in C++. Rounded wide ordinary values,
-    ordinary64 outer, float/swapped/protocol/rank0/empty-ordinary partitions
-    remain explicit unsupported frontiers; no original algorithm is forwarded.
+    All four modes are implemented in C++. The separate source-staged64 outer
+    route retains original words and typed per-axis morphology stores; its
+    GNUx64 nearest/masked conversion ABI and FP parity require validation.
+    Other rounded wide ordinary values, non-GNU wide outer, float/swapped/
+    protocol/rank0/empty-ordinary partitions remain explicit frontiers; no
+    original algorithm is forwarded.
     The caller keeps input storage/metadata stable for the duration of a call.
     """
     # The source first reads .dtype. Plain missing-dtype carriers preserve that

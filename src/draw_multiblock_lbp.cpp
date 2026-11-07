@@ -130,10 +130,11 @@ void write_word(const MultiblockLbpFloatView& v,std::ptrdiff_t offset,double val
 }
 unsigned multiblock_lbp_binary(const MultiblockLbpFloatView& a,const MultiblockLbpFloatView& b,const MultiblockLbpFloatView& out,bool plus){
     const auto n=count(out.image.shape);
-    // NumPy ufuncs clear arithmetic status immediately before their loop and
-    // report the loop's actual status. This is operation semantics, not a
-    // comparison mask or caller-state restoration. Never restore flags here.
-    std::feclearexcept(FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID);
+    // NumPy clears these arithmetic errors only when one is already pending.
+    // A no-error clear would destroy x87 condition/denormal sticky state.
+    // This is entry operation semantics, never an after-loop mask or restore.
+    constexpr int errors=FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID;
+    if(std::fetestexcept(errors))std::feclearexcept(errors);
     std::size_t k=0;
 #ifdef LBP_SSE2
     auto packed=[](const MultiblockLbpFloatView& v){std::ptrdiff_t stride=std::ptrdiff_t(v.image.itemsize);for(std::size_t d=v.image.shape.size();d-->0;){if(v.image.shape[d]>1&&v.image.strides[d]!=stride)return false;stride*=v.image.shape[d];}return !v.swapped;};

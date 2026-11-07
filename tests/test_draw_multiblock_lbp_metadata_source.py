@@ -14,7 +14,8 @@ H=lambda b:hashlib.sha256(b).hexdigest()
 
 def test_exact_binder_inverse_and_all_other_source_unchanged():
     assert H(historical_bytes(ROOT,D['source']))==D['predecessor_sha256']
-    for name,pin in D['unchanged_source_sha256'].items():assert H((ROOT/name).read_bytes())==pin,name
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    for name,pin in D['unchanged_source_sha256'].items():assert H(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin,name
     assert D['original_budget']==0 and D['API_completion']is False
 
 

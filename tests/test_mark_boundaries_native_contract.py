@@ -44,7 +44,8 @@ def test_native_successor_honest_scope_and_historical_failure_retained():
     for name,pin in d['source_files_canonical_LF_sha256'].items():
         raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         assert hashlib.sha256(raw).hexdigest()==pin
-    for name,pin in d['donor_header_canonical_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    for name,pin in d['donor_header_canonical_sha256'].items():assert hashlib.sha256(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes().replace(b'\r\n',b'\n'),canonical=True)).hexdigest()==pin
 
 
 def test_fresh_witness_closes_125th_case_without_changing_oldraw():

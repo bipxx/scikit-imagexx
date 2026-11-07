@@ -100,7 +100,7 @@ def test_actual_decorator_routes_scalar_metadata_without_algorithms(monkeypatch,
 
 
 def test_exact_current_source_context_and_unchanged_operation():
-    from tools.rolling_ball_sentinel_context import predecessor_bytes
+    from tools.mark_lbp_fp_context import sentinel_predecessor_bytes as predecessor_bytes
     context=json.loads((ROOT/'coverage/contracts/rolling-ball-sentinel-v1.json').read_bytes())
     for name,row in context['sources'].items():
         raw=(ROOT/name).read_bytes();old=predecessor_bytes(ROOT,name,raw)
@@ -118,7 +118,7 @@ def test_exact_current_source_context_and_unchanged_operation():
 
 @pytest.mark.parametrize('transport',('LF','CRLF'))
 def test_raw_canonical_and_common_entries_project_once(transport):
-    from tools.rolling_ball_sentinel_context import predecessor_bytes
+    from tools.mark_lbp_fp_context import sentinel_predecessor_bytes as predecessor_bytes
     from tools.join_source_context import rolling_predecessor_bytes,rolling_predecessor_raw_bytes
     c=json.loads((ROOT/'coverage/contracts/rolling-ball-sentinel-v1.json').read_bytes())
     for name in ('tools/join_source_context.py','tools/public_qualification.py','python/skimagexx/_rolling_ball.py'):
@@ -140,7 +140,8 @@ def test_current_native_driver_and_measurement_source_pins_are_exact():
     for name,pin in driver['source_files_canonical_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
     assert all(v is None for v in driver['unbound'].values())
     outer=json.loads((ROOT/'coverage/contracts/rolling-ball-measurement-v3.json').read_bytes())
-    for name,pin in outer['benchmark_source_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
-    for name,pin in outer['first_cohort']['source_files_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin,name
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    for name,pin in outer['benchmark_source_sha256'].items():assert H(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes().replace(b'\r\n',b'\n'),canonical=True))==pin,name
+    for name,pin in outer['first_cohort']['source_files_raw_sha256'].items():assert H(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin,name
     assert outer['families']['rolling_ball_native']['contract']=='coverage/contracts/rolling-ball-benchmark-execution-v3.json'
     assert all(outer[k] is None for k in ('prepared_source','SDK_members','core_sha256','runtime_sha256','deadline_utc','benchmark_fingerprint'))
