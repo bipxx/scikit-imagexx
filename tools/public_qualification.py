@@ -696,6 +696,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/variation-of-information-benchmark-exe
 
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/current281-integration-fixes-v1.json','tests/test_current281_integration_fixes_source.py')
+# Exact R1 source-reader successor; no production or selector change.
+DRAW_SOURCE_PATHS += ('coverage/contracts/current281-projection-v2.json',)
+
 
 
 def groups_for_source(root):

@@ -1,0 +1,37 @@
+{
+  "schema": "current281-projection-v2",
+  "predecessor_source": "cbb3d2cd993f71fff08bb4a548d9c456c7d2de60",
+  "sources": {
+    "tools/join_source_context.py": {
+      "current_canonical_lf_sha256": "cde051036e726eece3db1504e4d81e2b319378fa2c9e853d47ab304b83f88e62",
+      "predecessor_canonical_lf_sha256": "61c485e091ef6e0a6eccc8014ea90b046e214c05372e2e4592f088144cb2343e",
+      "inverse_fragments": [
+        {
+          "current": "\ndef integration_fix_predecessor_bytes(root,name,raw):\n    \"\"\"Exact three integration fixes before frozen188; no numerical projection.\"\"\"\n    successor=Path(root)/'coverage/contracts/current281-projection-v2.json'\n    if successor.is_file():\n        layer=json.loads(successor.read_bytes())\n        assert layer['predecessor_source']=='cbb3d2cd993f71fff08bb4a548d9c456c7d2de60'\n        if name in layer['sources']:\n            raw=raw.replace(b'\\r\\n',b'\\n');row=layer['sources'][name]\n            assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name\n            for fragment in row['inverse_fragments']:\n                current,old=fragment['current'].encode(),fragment['predecessor'].encode()\n                assert current and raw.count(current)==1,name\n                raw=raw.replace(current,old,1)\n            assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name\n    path=Path(root)/'coverage/contracts/current281-integration-fixes-v1.json'\n    if not path.is_file():return raw\n    context=json.loads(path.read_bytes())\n",
+          "predecessor": "\ndef integration_fix_predecessor_bytes(root,name,raw):\n    \"\"\"Exact three integration fixes before frozen188; no numerical projection.\"\"\"\n    path=Path(root)/'coverage/contracts/current281-integration-fixes-v1.json'\n    if not path.is_file():return raw\n    context=json.loads(path.read_bytes())\n"
+        },
+        {
+          "current": "\ndef rolling_predecessor_bytes(root,name,raw):\n    \"\"\"Exact enabled rolling-ball additions before the admitted a5 source.\"\"\"\n    return _rolling188_predecessor_bytes(root,name,integration_fix_predecessor_bytes(root,name,raw))\n\n\ndef _rolling188_predecessor_bytes(root,name,raw):\n    raw=raw.replace(b'\\r\\n',b'\\n')\n    path=Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json'\n    if not path.is_file():return raw\n",
+          "predecessor": "\ndef rolling_predecessor_bytes(root,name,raw):\n    \"\"\"Exact enabled rolling-ball additions before the admitted a5 source.\"\"\"\n    raw=integration_fix_predecessor_bytes(root,name,raw)\n    raw=raw.replace(b'\\r\\n',b'\\n')\n    path=Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json'\n    if not path.is_file():return raw\n"
+        },
+        {
+          "current": "    row=context['sources'][name]\n    assert row['predecessor_raw_sha256']==row['predecessor_canonical_lf_sha256']\n    assert hashlib.sha256(raw).hexdigest()==row['current_raw_sha256'],name\n    return _rolling188_predecessor_bytes(root,name,raw)\n\n\ndef correction_predecessor_bytes(root,name,raw):\n",
+          "predecessor": "    row=context['sources'][name]\n    assert row['predecessor_raw_sha256']==row['predecessor_canonical_lf_sha256']\n    assert hashlib.sha256(raw).hexdigest()==row['current_raw_sha256'],name\n    return rolling_predecessor_bytes(root,name,raw)\n\n\ndef correction_predecessor_bytes(root,name,raw):\n"
+        }
+      ]
+    },
+    "tools/public_qualification.py": {
+      "current_canonical_lf_sha256": "164d96a23bb9dabc6c52eaed32cd8ef2a07e52b33d8bb3ce3d53826770480265",
+      "predecessor_canonical_lf_sha256": "2e7d43f989d8e2650e511c465fd93d34b71136b614018b28e1a3f1f5c6954dd2",
+      "inverse_fragments": [
+        {
+          "current": "\n\nDRAW_SOURCE_PATHS += ('coverage/contracts/current281-integration-fixes-v1.json','tests/test_current281_integration_fixes_source.py')\n# Exact R1 source-reader successor; no production or selector change.\nDRAW_SOURCE_PATHS += ('coverage/contracts/current281-projection-v2.json',)\n\n\n\ndef groups_for_source(root):\n",
+          "predecessor": "\n\nDRAW_SOURCE_PATHS += ('coverage/contracts/current281-integration-fixes-v1.json','tests/test_current281_integration_fixes_source.py')\n\n\ndef groups_for_source(root):\n"
+        }
+      ]
+    }
+  },
+  "scope": "R1: one integration inverse per canonical/raw entry, shared strict rolling188-to-a5 helper. No production/case/method change.",
+  "actual_genuine_authority": null,
+  "actual_benchmark_authority": null
+}

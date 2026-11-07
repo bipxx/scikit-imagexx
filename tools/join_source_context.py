@@ -7,6 +7,18 @@ CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672
 
 def integration_fix_predecessor_bytes(root,name,raw):
     """Exact three integration fixes before frozen188; no numerical projection."""
+    successor=Path(root)/'coverage/contracts/current281-projection-v2.json'
+    if successor.is_file():
+        layer=json.loads(successor.read_bytes())
+        assert layer['predecessor_source']=='cbb3d2cd993f71fff08bb4a548d9c456c7d2de60'
+        if name in layer['sources']:
+            raw=raw.replace(b'\r\n',b'\n');row=layer['sources'][name]
+            assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+            for fragment in row['inverse_fragments']:
+                current,old=fragment['current'].encode(),fragment['predecessor'].encode()
+                assert current and raw.count(current)==1,name
+                raw=raw.replace(current,old,1)
+            assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
     path=Path(root)/'coverage/contracts/current281-integration-fixes-v1.json'
     if not path.is_file():return raw
     context=json.loads(path.read_bytes())
@@ -25,7 +37,10 @@ def integration_fix_predecessor_bytes(root,name,raw):
 
 def rolling_predecessor_bytes(root,name,raw):
     """Exact enabled rolling-ball additions before the admitted a5 source."""
-    raw=integration_fix_predecessor_bytes(root,name,raw)
+    return _rolling188_predecessor_bytes(root,name,integration_fix_predecessor_bytes(root,name,raw))
+
+
+def _rolling188_predecessor_bytes(root,name,raw):
     raw=raw.replace(b'\r\n',b'\n')
     path=Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json'
     if not path.is_file():return raw
@@ -50,7 +65,7 @@ def rolling_predecessor_raw_bytes(root,name,raw):
     row=context['sources'][name]
     assert row['predecessor_raw_sha256']==row['predecessor_canonical_lf_sha256']
     assert hashlib.sha256(raw).hexdigest()==row['current_raw_sha256'],name
-    return rolling_predecessor_bytes(root,name,raw)
+    return _rolling188_predecessor_bytes(root,name,raw)
 
 
 def correction_predecessor_bytes(root,name,raw):

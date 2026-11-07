@@ -107,3 +107,43 @@ def test_actual_metadata_and_collector_close_the_new_source_guard():
     assert CONTEXT.relative_to(ROOT).as_posix()in q['DRAW_SOURCE_PATHS']and Path(__file__).relative_to(ROOT).as_posix()in q['DRAW_SOURCE_PATHS']
     command=next(l.strip()for l in(ROOT/'.github/workflows/public-qualification.yml').read_text().splitlines()if l.strip().startswith('python -m pytest -q --capture=sys'))
     assert command.index('tests/test_current281_integration_fixes_source.py')<command.index('2>&1 | tee')
+
+
+@pytest.mark.parametrize('name',('python/skimagexx/coverage.py','tests/test_api.py','tests/util_views_fenv_restore.c'))
+@pytest.mark.parametrize('entry',('rolling_predecessor_bytes','rolling_predecessor_raw_bytes'))
+@pytest.mark.parametrize('crlf',(False,True))
+def test_R1_actual_raw_and_canonical_entries_apply_integration_once(name,entry,crlf,monkeypatch):
+    import tools.join_source_context as adapter
+    integration=json.loads(CONTEXT.read_bytes())['sources']
+    rolling=json.loads((ROOT/'coverage/contracts/rolling-ball-enabled-context-v1.json').read_bytes())['sources']
+    raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    if crlf:raw=raw.replace(b'\n',b'\r\n')
+    calls=[];original=adapter.integration_fix_predecessor_bytes
+    def counted(root,path,value):
+        calls.append(path)
+        return original(root,path,value)
+    monkeypatch.setattr(adapter,'integration_fix_predecessor_bytes',counted)
+    actual=getattr(adapter,entry)(ROOT,name,raw)
+    assert calls==[name]
+    if name in rolling:assert H(actual)==rolling[name]['predecessor_canonical_lf_sha256']
+    elif name in integration:assert H(actual)==integration[name]['predecessor_canonical_lf_sha256']
+    else:assert actual==(raw if entry.endswith('raw_bytes')else raw.replace(b'\r\n',b'\n'))
+
+
+def test_R1_successor_exact_inverse_collector_and_predecessor_refusal():
+    from tools import join_source_context as adapter
+    path=ROOT/'coverage/contracts/current281-projection-v2.json'
+    assert H(path.read_bytes())=='873b2f4f72476705c5854ca84f0b12c6aeb9d67301a047316ded521244c05b66'
+    c=json.loads(path.read_bytes());assert c['predecessor_source']=='cbb3d2cd993f71fff08bb4a548d9c456c7d2de60'
+    for name,row in c['sources'].items():
+        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');assert H(raw)==row['current_canonical_lf_sha256']
+        for fragment in row['inverse_fragments']:
+            now,old=fragment['current'].encode(),fragment['predecessor'].encode()
+            assert raw.count(now)==1;raw=raw.replace(now,old,1)
+        assert H(raw)==row['predecessor_canonical_lf_sha256']
+    name='python/skimagexx/coverage.py';old=adapter.integration_fix_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes())
+    for entry in (adapter.rolling_predecessor_bytes,adapter.rolling_predecessor_raw_bytes):
+        with pytest.raises(AssertionError):entry(ROOT,name,old)
+        with pytest.raises(AssertionError):entry(ROOT,name,(ROOT/name).read_bytes()+b'changed')
+    q=runpy.run_path(str(ROOT/'tools/public_qualification.py'))
+    assert path.relative_to(ROOT).as_posix()in q['DRAW_SOURCE_PATHS']
