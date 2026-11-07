@@ -385,7 +385,16 @@ def test_current280_projection_preserves_exact_affected_subset_and_predecessors(
         assert H(row['predecessor'].encode())==row['predecessor_raw_sha256']
 
 
+def boundary_predecessor_bytes(name,raw):
+    row=DATA['boundary_successor']['controller_source_inverse'].get(name)
+    if row is None:return raw
+    assert H(raw)==row['current_raw_sha256']and raw.decode()==row['current']
+    previous=row['predecessor'].encode();assert H(previous)==row['predecessor_raw_sha256']
+    return previous
+
+
 def binding_predecessor_bytes(name,raw):
+    raw=boundary_predecessor_bytes(name,raw)
     row=DATA['binding_successor']['controller_source_inverse'].get(name)
     if row is None:return raw
     assert H(raw)==row['current_raw_sha256']and raw.decode()==row['current']
@@ -395,7 +404,7 @@ def binding_predecessor_bytes(name,raw):
 
 def test_current_controller_inverse_keeps_critical_guards_byte_source_bound():
     assert H((ROOT/HISTORICAL_PATH).read_bytes())==DATA['binding_successor']['predecessor_raw_sha256']
-    name=DATA['first_cohort']['probe_path'];current=(ROOT/name).read_bytes();old=binding_predecessor_bytes(name,current)
+    name=DATA['first_cohort']['probe_path'];raw=(ROOT/name).read_bytes();current=boundary_predecessor_bytes(name,raw);old=binding_predecessor_bytes(name,raw)
     a={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(current).body if isinstance(n,ast.FunctionDef)}
     b={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(old).body if isinstance(n,ast.FunctionDef)}
     for function in('main','validate_native_entry','finish_probe','verify_helper_state','verify_source_state','driver_adapter','driver_argv','validate_reports','sampler_order_scope','prepare_host_helper'):
@@ -422,3 +431,58 @@ def test_no_join_timing_authority_without_guarded_postbatch_summary(monkeypatch,
     with pytest.raises((AssertionError,FileNotFoundError)):
         PROBE.run_measurements(snapshot,results,DATA,'python',{},'2999-01-01T00:00:00+00:00')
     assert not calls
+
+
+@pytest.mark.parametrize('fault',('none','changed-binding','missing-terminal-pin'))
+def test_actual_terminal_writer_is_consumable_by_timing_authority(tmp_path,monkeypatch,fault):
+    # Actual writer+consumer, synthetic files only. No child or verifier runs.
+    controller=tmp_path/'controller';parent=controller/'coverage/contracts/join-util-current275-measurement-v4.json'
+    parent.parent.mkdir(parents=True);parent.write_text(json.dumps(DATA))
+    snapshot=tmp_path/'snapshot';snapshot.mkdir();results=tmp_path/'results';results.mkdir()
+    active=snapshot/'active.json';active.write_text('{}')
+    monkeypatch.setattr(PROBE,'verify_source_state',lambda binding:None)
+    monkeypatch.setattr(PROBE,'verify_helper_state',lambda binding,go:None)
+    authorities={};terminals=[]
+    for name,route in ROUTES.items():
+        folder=results/'first-cohort'/name;folder.mkdir(parents=True)
+        authority=results/('authority-'+name);authority.mkdir()
+        binding=authority/'binding.json';binding.write_text(json.dumps({'synthetic':name}))
+        go_path=authority/'root-go.json';go_path.write_text('{}')
+        bp,gp=PROBE.sha(binding),PROBE.sha(go_path)
+        stopped=dict(route=name,api=route['api'],counts=dict(original=1,native=1),timed_batches=0,sampler_body_calls=0)
+        b=dict(source_root=str(snapshot),routes={name:{'contract':'active.json'}},base_contract_sha256=PROBE.sha(active))
+        go=dict(probe_sha256=PROBE.sha(PROBE.__file__),deadline_utc='2999-01-01T00:00:00+00:00')
+        PROBE.finish_probe(folder,stopped,b,binding,go_path,go,bp,gp,True)
+        terminal=json.loads((folder/'terminal.json').read_bytes())
+        assert terminal['root_binding_sha256']==bp
+        if name=='join'and fault=='changed-binding':binding.write_text('{"changed":true}')
+        if name=='join'and fault=='missing-terminal-pin':
+            del terminal['root_binding_sha256'];(folder/'terminal.json').write_text(json.dumps(terminal))
+        terminals.append(terminal)
+        authorities[name]=dict(binding=str(binding),go=str(go_path),measurement=str(authority/'measurement.json'))
+    (results/'first-cohort-summary.json').write_text(json.dumps(dict(status='PASS',postbatch_offline_identity_verified=True,routes=terminals)))
+    # Exercise the entire envelope creation loop, stop before every subprocess.
+    monkeypatch.setattr(PROBE,'measurement_commands',lambda *a:{})
+    monkeypatch.setattr(PROBE.subprocess,'run',lambda *a,**kw:pytest.fail('Child/verifier body reached'))
+    call=lambda:PROBE.run_measurements(snapshot,results,DATA,'INERT_PYTHON',authorities,'2999-01-01T00:00:00+00:00')
+    if fault=='none':
+        call()
+        assert all(Path(a['measurement']).is_file()for a in authorities.values())
+    else:
+        with pytest.raises((AssertionError,KeyError)):call()
+        assert not any(Path(a['measurement']).exists()for a in authorities.values())
+
+
+@pytest.mark.parametrize('owned',('probe','test'))
+def test_boundary_successor_exact_once_inverse_and_unchanged_manifest_scope(owned):
+    import base64,zlib
+    successor=DATA['boundary_successor'];old_raw=zlib.decompress(base64.b64decode(successor['predecessor_contract_zlib_base64']))
+    assert H(old_raw)==successor['predecessor_contract_raw_sha256']
+    old=json.loads(old_raw);current=copy.deepcopy(DATA);current.pop('boundary_successor')
+    current['first_cohort']['probe_sha256']=old['first_cohort']['probe_sha256']
+    assert current==old
+    name=DATA['first_cohort']['probe_path']if owned=='probe'else Path(__file__).relative_to(ROOT).as_posix()
+    raw=(ROOT/name).read_bytes();previous=boundary_predecessor_bytes(name,raw)
+    with pytest.raises(AssertionError):boundary_predecessor_bytes(name,previous)
+    with pytest.raises(AssertionError):boundary_predecessor_bytes(name,raw+b'changed')
+    assert successor['predecessor_source']=='373af1af261e5c6bc522f533f19036fc65603c81'

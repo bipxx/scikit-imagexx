@@ -52,7 +52,7 @@ def finish_probe(folder,stopped,binding,binding_path,go_path,go,binding_pin,go_p
     except BaseException as error:
         write_json(folder/'failure.json',dict(phase='poststop-source-authority',type=type(error).__name__,error=str(error),counts=stopped.get('counts'),retry=False,outer_state_restored=restored))
         raise
-    write_json(folder/'terminal.json',dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY',**stopped,outer_state_restored=True,poststop_source_authority_unchanged=True,core_runtime_SDK_scope='Pending once-after-batch offline verifier before summaryPASS'))
+    write_json(folder/'terminal.json',dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY',**stopped,root_binding_sha256=binding_pin,outer_state_restored=True,poststop_source_authority_unchanged=True,core_runtime_SDK_scope='Pending once-after-batch offline verifier before summaryPASS'))
 
 
 def driver_argv(root,route,binding,output,deadline):

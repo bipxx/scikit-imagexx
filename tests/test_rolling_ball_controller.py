@@ -236,7 +236,7 @@ def test_actual_workflow_and_restore_order_are_source_closed():
 
 
 def synthetic_reports(tmp_path):
-    results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA);manifest.update(benchmark_fingerprint={'synthetic':'not-genuine'},core_sha256='core',runtime_sha256='runtime',producer={'revision':'a'*40})
+    results=tmp_path/'results';results.mkdir();(results/'first-cohort').mkdir();manifest=copy.deepcopy(DATA);manifest.update(benchmark_fingerprint={'synthetic':'not-genuine'},core_sha256='core',runtime_sha256='runtime',producer={'revision':'a'*40})
     authorities={};adapter=PROBE.driver_adapter(ROOT)
     for cohort,route in ROUTES.items():
         binding=tmp_path/(cohort+'-binding.json');binding.write_text(json.dumps({'SDK_members':{'synthetic':'metadata'}}));measurement=tmp_path/(cohort+'-measurement.json');measurement.write_text('{}');authorities[cohort]=dict(binding=str(binding),measurement=str(measurement))
@@ -257,14 +257,14 @@ def synthetic_reports(tmp_path):
             row=dict(case_id=spec['id'],api=route['api'],accepted=[True],actual_C_returns=[k for k,v in requirements.items()for _ in range(v)],FP=dict(control=895,status=32,mxcsr=8096),providers=context['providers'],**timing);rows.append(row)
             journal.append(dict(event='measure_returned',case_index=i,case_id=spec['id'],timing=timing))
         meta=dict(synthetic='not-genuine',source_before=manifest['benchmark_fingerprint'],core_sha256='core',runtime_sha256='runtime',SDK_members={'synthetic':'metadata'},threads=1,repeat=7,target_ms=100,warmup_min_ms=250,contract_sha256=PROBE.sha(ROOT/PROBE.DRIVER_CONTRACT),root_binding_sha256=PROBE.sha(binding),measurement_sha256=PROBE.sha(measurement),producer=manifest['producer'],source_revision='a'*40,method_sha256=context['method']['method_sha256'],retain_all_losses=True)
-        (results/(cohort+'.json')).write_text(json.dumps(dict(metadata=meta,results=rows)))
-        (results/(cohort+'.batches.jsonl')).write_text(''.join(json.dumps(row)+'\n'for row in journal))
+        (results/'first-cohort'/(cohort+'.json')).write_text(json.dumps(dict(metadata=meta,results=rows)))
+        (results/'first-cohort'/(cohort+'.batches.jsonl')).write_text(''.join(json.dumps(row)+'\n'for row in journal))
     return results,manifest,authorities
 
 
 @pytest.mark.parametrize('fault',('none','old-pass1-order','drop-loss','marker','FP','warmup','median','binding','method'))
 def test_actual_report_validator_uses_admitted_pass0_and_retains_losses(tmp_path,fault):
-    results,manifest,authorities=synthetic_reports(tmp_path);path=results/'rolling-ball.json';report=json.loads(path.read_bytes());row=report['results'][0]
+    results,manifest,authorities=synthetic_reports(tmp_path);path=results/'first-cohort/rolling-ball.json';report=json.loads(path.read_bytes());row=report['results'][0]
     if fault=='old-pass1-order':row['sample_order']=[[1,0]if i%2==0 else[0,1]for i in range(7)]
     elif fault=='drop-loss':report['results'].pop()
     elif fault=='marker':row['actual_C_returns'].append('foreign')
@@ -383,7 +383,16 @@ def test_normalized_route_runs_actual_driver_parser_until_request_refusal(tmp_pa
     assert (Path(binding['output_root'])/'rolling-ball-first-cohort.claim.json').exists()
 
 
+def boundary_predecessor_bytes(name,raw):
+    row=DATA['boundary_successor']['controller_source_inverse'].get(name)
+    if row is None:return raw
+    assert H(raw)==row['current_raw_sha256']and raw.decode()==row['current']
+    previous=row['predecessor'].encode();assert H(previous)==row['predecessor_raw_sha256']
+    return previous
+
+
 def binding_predecessor_bytes(name,raw):
+    raw=boundary_predecessor_bytes(name,raw)
     row=DATA['binding_successor']['controller_source_inverse'].get(name)
     if row is None:return raw
     assert H(raw)==row['current_raw_sha256']and raw.decode()==row['current']
@@ -393,11 +402,31 @@ def binding_predecessor_bytes(name,raw):
 
 def test_current_controller_inverse_keeps_critical_guards_byte_source_bound():
     assert H((ROOT/HISTORICAL_PATH).read_bytes())==DATA['binding_successor']['predecessor_raw_sha256']
-    name=DATA['first_cohort']['probe_path'];current=(ROOT/name).read_bytes();old=binding_predecessor_bytes(name,current)
+    name=DATA['first_cohort']['probe_path'];raw=(ROOT/name).read_bytes();current=boundary_predecessor_bytes(name,raw);old=binding_predecessor_bytes(name,raw)
     a={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(current).body if isinstance(n,ast.FunctionDef)}
     b={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(old).body if isinstance(n,ast.FunctionDef)}
     for function in('main','validate_native_entry','finish_probe','verify_helper_state','verify_source_state','driver_adapter','driver_argv','validate_reports','sampler_order_scope','prepare_host_helper'):
         if function in a:assert a[function]==b[function],function
+
+
+def test_generated_measurement_output_satisfies_actual_qualified_boundary(tmp_path):
+    results=tmp_path/'results';allowed=results/'first-cohort'
+    # This is exactly prepare_cohorts' unchanged binding output_root layout.
+    binding={'output_root':str(allowed.resolve())}
+    authorities={'rolling-ball':dict(binding='binding',measurement='measurement')}
+    command=PROBE.measurement_commands(ROOT,results,DATA,'python',authorities,'UTC')['rolling-ball']
+    output=Path(command[command.index('--output')+1]).resolve();output_root=Path(binding['output_root']).resolve()
+    assert output.is_relative_to(output_root)and output==allowed.resolve()/'rolling-ball.json'
+    assert not (results/'rolling-ball.json').resolve().is_relative_to(output_root)
+    # Pin the exact real driver predicate; neither qualified body nor provider runs.
+    source=(ROOT/'benchmarks/rolling_ball_execution.py').read_text()
+    assert "assert Path(b['output_root']).is_absolute()and cli.output.resolve().is_relative_to(output_root)"in source
+    current=ast.parse((ROOT/'tools/rolling_ball_first_cohort_probe.py').read_bytes())
+    fn=next(n for n in current.body if isinstance(n,ast.FunctionDef)and n.name=='validate_reports')
+    report_source=ast.get_source_segment((ROOT/'tools/rolling_ball_first_cohort_probe.py').read_text(),fn)
+    assert "report_root=results/'first-cohort'"in report_source
+    assert "(report_root/(cohort+'.json')).read_bytes()"in report_source
+    assert "write_json(results/'summary.json'"in report_source
 
 
 def test_dispatch_clock_expiry_refuses_before_process_or_source_import(monkeypatch,tmp_path):
@@ -408,3 +437,18 @@ def test_dispatch_clock_expiry_refuses_before_process_or_source_import(monkeypat
     with pytest.raises(AssertionError):
         PROBE.run_measurements(ROOT,tmp_path,DATA,'python',{},'2000-01-01T00:00:00+00:00')
     assert not calls
+
+
+@pytest.mark.parametrize('owned',('probe','test'))
+def test_boundary_successor_exact_once_inverse_and_unchanged_manifest_scope(owned):
+    import base64,zlib
+    successor=DATA['boundary_successor'];old_raw=zlib.decompress(base64.b64decode(successor['predecessor_contract_zlib_base64']))
+    assert H(old_raw)==successor['predecessor_contract_raw_sha256']
+    old=json.loads(old_raw);current=copy.deepcopy(DATA);current.pop('boundary_successor')
+    current['first_cohort']['probe_sha256']=old['first_cohort']['probe_sha256']
+    assert current==old
+    name=DATA['first_cohort']['probe_path']if owned=='probe'else Path(__file__).relative_to(ROOT).as_posix()
+    raw=(ROOT/name).read_bytes();previous=boundary_predecessor_bytes(name,raw)
+    with pytest.raises(AssertionError):boundary_predecessor_bytes(name,previous)
+    with pytest.raises(AssertionError):boundary_predecessor_bytes(name,raw+b'changed')
+    assert successor['predecessor_source']=='373af1af261e5c6bc522f533f19036fc65603c81'

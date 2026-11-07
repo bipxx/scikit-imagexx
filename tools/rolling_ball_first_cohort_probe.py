@@ -301,7 +301,7 @@ def scoped_measurement(manifest,route,parent_sha256,authority,terminal_path,summ
 
 
 def measurement_commands(snapshot,results,manifest,python,authorities,deadline):
-    return {name:[str(python),str(Path(snapshot)/route['driver']),'--threads','1','--repeat','7','--api',route['api'],'--output',str(Path(results)/(name+'.json')),'--root-binding',authorities[name]['binding'],'--measurement-go',authorities[name]['measurement']]for name,route in manifest['first_cohort']['routes'].items()}
+    return {name:[str(python),str(Path(snapshot)/route['driver']),'--threads','1','--repeat','7','--api',route['api'],'--output',str(Path(results)/'first-cohort'/(name+'.json')),'--root-binding',authorities[name]['binding'],'--measurement-go',authorities[name]['measurement']]for name,route in manifest['first_cohort']['routes'].items()}
 
 
 def run_measurements(snapshot,results,manifest,python,authorities,deadline):
@@ -346,11 +346,11 @@ def sampler_order_scope(snapshot):
 def validate_reports(snapshot,results,manifest,authorities):
     # Existing Montage journal/median/order reconstruction; no timing engine.
     import math,statistics
-    snapshot=Path(snapshot);results=Path(results);summaries={};adapter=driver_adapter(snapshot);pass_index=sampler_order_scope(snapshot)
+    snapshot=Path(snapshot);results=Path(results);report_root=results/'first-cohort';summaries={};adapter=driver_adapter(snapshot);pass_index=sampler_order_scope(snapshot)
     for cohort,route in manifest['first_cohort']['routes'].items():
         context=json.loads((snapshot/DRIVER_CONTRACT).read_bytes());specs=manifest['cases'];count=len(specs)
         assert specs==context['cases']and context['method']['repeat']==7
-        report=json.loads((results/(cohort+'.json')).read_bytes());meta=report['metadata']
+        report=json.loads((report_root/(cohort+'.json')).read_bytes());meta=report['metadata']
         assert {k:meta[k]for k in manifest['benchmark_fingerprint']}==manifest['benchmark_fingerprint']
         assert meta['core_sha256']==manifest['core_sha256']and meta['runtime_sha256']==manifest['runtime_sha256']
         assert meta['SDK_members']==json.loads(Path(authorities[cohort]['binding']).read_bytes())['SDK_members']
@@ -360,10 +360,10 @@ def validate_reports(snapshot,results,manifest,authorities):
         assert meta['producer']==manifest['producer']and meta['source_revision']==manifest['producer']['revision']
         assert meta['method_sha256']==context['method']['method_sha256']and meta['retain_all_losses']is True
         assert meta['source_before']==manifest['benchmark_fingerprint']
-        journal=[json.loads(line)for line in(results/(cohort+'.batches.jsonl')).read_text().splitlines()]
+        journal=[json.loads(line)for line in(report_root/(cohort+'.batches.jsonl')).read_text().splitlines()]
         assert {event['case_id']for event in journal}=={spec['id']for spec in specs}
         assert [row['case_id']for row in report['results']]==[spec['id']for spec in specs]
-        journal=[json.loads(line)for line in (results/(cohort+'.batches.jsonl')).read_text().splitlines()]
+        journal=[json.loads(line)for line in (report_root/(cohort+'.batches.jsonl')).read_text().splitlines()]
         assert {event['case_id']for event in journal}=={spec['id']for spec in specs}
         for case_index,(row,spec) in enumerate(zip(report['results'],specs)):
             assert row['accepted']==[True]and row['api']==route['api']
