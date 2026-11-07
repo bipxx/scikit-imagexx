@@ -13,7 +13,7 @@ from pathlib import Path
 import sys
 import traceback
 
-CONTEXT = 'coverage/contracts/lbp-cohort-fp-diagnostic-v1.json'
+CONTEXT = 'coverage/contracts/lbp-cohort-fp-diagnostic-v2.json'
 
 
 def digest(path):
@@ -95,7 +95,7 @@ def run_diagnostic(probe, argv, save, restore, output, execute_path, terminal_pa
         success_values.append(dict(c))  # References only; codecs after old finally.
         return c
     saved = save()
-    record = dict(schema='lbp-cohort-fp-diagnostic-v1', own_before_raw32=bytes(saved).hex(),
+    record = dict(schema='lbp-cohort-fp-diagnostic-v2', own_before_raw32=bytes(saved).hex(),
                   target_calls_added_by_wrapper=0, sampler_body_calls_authorized=0,
                   secondary_errors=[])
     primary = primary_tb = None
@@ -112,6 +112,12 @@ def run_diagnostic(probe, argv, save, restore, output, execute_path, terminal_pa
                 after_old_probe_raw32=after_old_probe)
             try:
                 traceback_values(error, execute_path, probe.__file__, record)
+                if record.get('value_frame_found') is False and success_values:
+                    # Old poststop/C1 tail can fail after execute has unwound.
+                    # Retain only the already validated entry refs; no new call.
+                    assert len(success_values) == 1
+                    record['capture_origin'] = 'validated-entry-before-old-tail-failure'
+                    capture_values(success_values[0], record)
             except BaseException as secondary:
                 record['secondary_errors'].append(dict(phase='value-codec', type=type(secondary).__name__, error=str(secondary)))
         else:

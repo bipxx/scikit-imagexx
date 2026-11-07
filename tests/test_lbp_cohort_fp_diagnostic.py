@@ -33,7 +33,7 @@ class FP:
     def save(self):return self.raw
     def restore(self,saved):self.raw=bytes(saved)
 
-def fake_probe(tmp_path,fp,mismatch='post',codec=False):
+def fake_probe(tmp_path,fp,mismatch='post',codec=False,tail=None):
     path=ROOT/'benchmarks/mark_boundaries_execution.py'
     source=path.read_text();tree=ast.parse(source)
     assertion=next(n for n in ast.walk(tree)if isinstance(n,ast.Assert)and ast.get_source_segment(source,n)=='assert reference_before==native_before and reference_FP==native_FP')
@@ -72,10 +72,11 @@ def fake_probe(tmp_path,fp,mismatch='post',codec=False):
         except STOP:pass
     except BaseException as error:ERRORS.append(error);raise
     finally:FP.restore(outer);restored=True
+    if TAIL is not None:TAIL()
     TERMINAL.write_text(JSON.dumps(dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY',counts=counts,
         sampler_body_calls=0,timed_batches=0,outer_state_restored=True,poststop_source_authority_unchanged=True)))
 '''
-    pns=dict(COUNTS=counts,FP=fp,EXECUTE=ns['execute'],STOP=Stop,ERRORS=errors,TERMINAL=terminal,JSON=json)
+    pns=dict(COUNTS=counts,FP=fp,EXECUTE=ns['execute'],STOP=Stop,ERRORS=errors,TERMINAL=terminal,JSON=json,TAIL=tail)
     exec(compile(main,probe.__file__,'exec'),pns);probe.main=pns['main']
     return probe,path,terminal,counts,errors,expected,actual
 
@@ -263,7 +264,7 @@ def test_actual_workflow_terminal_path_keeps_primary_exit_and_offline_verifier_o
     controller=tmp_path/'controller';snapshot=tmp_path/'snapshot';results=tmp_path/'results'
     for folder in (controller/'tools',controller/'coverage/contracts',snapshot,results):folder.mkdir(parents=True,exist_ok=True)
     for name in ('lbp_only_comparison.py','lbp_cohort_fp_diagnostic.py'):(controller/'tools'/name).write_text('inert')
-    (controller/'coverage/contracts/lbp-cohort-fp-diagnostic-v1.json').write_text('{}')
+    (controller/'coverage/contracts/lbp-cohort-fp-diagnostic-v2.json').write_text('{}')
     (controller/'coverage/contracts/mark-lbp-measurement-v5.json').write_text(json.dumps(dict(producer=dict(revision='a'*40),runtime_sha256=hashlib.sha256(b'inert-runtime').hexdigest())))
     (results/'execution-clock.json').write_text(json.dumps(dict(created_utc='INERT_CREATED',deadline_utc='INERT_DEADLINE')))
     (results/'lbp-only-root-GO.json').write_text('{}');(results/'lbp-only-root-GO.sha256').write_text('0'*64)
@@ -283,3 +284,61 @@ def test_actual_workflow_terminal_path_keeps_primary_exit_and_offline_verifier_o
     go=json.loads((results/'diagnostic-root-GO.json').read_bytes())
     assert go['maximum_original_topcalls']==go['maximum_native_topcalls']==1 and go['sampler_body_calls']==go['timed_batches']==0
     assert '--measurement-go'not in calls[0]
+
+@pytest.mark.parametrize('fault',('C1','terminal'))
+@pytest.mark.parametrize('codec',(False,True))
+def test_actual_old_poststop_finish_failure_uses_validated_refs_and_keeps_primary(tmp_path,monkeypatch,fault,codec):
+    # Exercise frozen old finish_probe itself after execute has unwound.
+    oldspec=importlib.util.spec_from_file_location('inert_old_probe_C1',ROOT/'tools/mark_lbp_first_cohort_probe.py')
+    old=importlib.util.module_from_spec(oldspec);oldspec.loader.exec_module(old)
+    folder=tmp_path/'old-finish';folder.mkdir()
+    binding_path=tmp_path/'binding.json';go_path=tmp_path/'cohort-go.json'
+    source=tmp_path/'source';source.mkdir();(source/'contract.json').write_text('{}')
+    binding=dict(source_root=str(source),routes={'lbp':{'contract':'contract.json'}},base_contract_sha256=D.digest(source/'contract.json'))
+    binding_path.write_text(json.dumps(binding))
+    go=dict(probe_sha256=D.digest(old.__file__),deadline_utc='2999-01-01T00:00:00+00:00')
+    go_path.write_text(json.dumps(go))
+    primary=AssertionError('INERT_ACTUAL_C1_SOURCE_CHANGED')if fault=='C1'else OSError('INERT_ACTUAL_TERMINAL_WRITER')
+    def source_check(b,m):
+        if fault=='C1':raise primary
+    monkeypatch.setattr(old,'verify_source_state',source_check)
+    monkeypatch.setattr(old,'verify_helper_state',lambda b,g:None)
+    writer=old.write_json
+    def write(path,value):
+        if fault=='terminal'and Path(path).name=='terminal.json':raise primary
+        writer(path,value)
+    monkeypatch.setattr(old,'write_json',write)
+    def tail():
+        old.finish_probe(folder,dict(route='lbp',counts=dict(original=1,native=1)),binding,binding_path,go_path,go,D.digest(binding_path),D.digest(go_path),True,dict(first_cohort=dict(routes=binding['routes'])))
+    fp=FP();probe,path,terminal,counts,_,expected,actual=fake_probe(tmp_path,fp,'none',codec=codec,tail=tail)
+    original_validate=probe.validate_native_entry;output=tmp_path/'diagnostic.json'
+    with pytest.raises(type(primary))as caught:D.run_diagnostic(probe,['inert'],fp.save,fp.restore,output,path,terminal)
+    assert caught.value is primary and counts==dict(original=1,native=1)
+    record=json.loads(output.read_bytes())
+    assert record['capture_origin']=='validated-entry-before-old-tail-failure'
+    assert record['value_frame_found']is True and record['probe_restored']is True and record['probe_counts']==counts
+    assert record['strict_trace']['reference_before']==record['strict_trace']['native_before']
+    assert record['strict_trace']['reference_FP']==record['strict_trace']['native_FP']
+    assert record['driver_caller_raw32']==(b'C'*32).hex()
+    assert record['expected']['payload_sha256']==hashlib.sha256(expected.raw).hexdigest()
+    if codec:
+        assert record['secondary_errors'][0]['phase']=='value-codec'
+        assert record['secondary_errors'][0]['type']=='AssertionError'
+    else:
+        assert record['actual']['payload_sha256']==hashlib.sha256(actual.raw).hexdigest()
+        assert record['input_after']['nbytes']==65792 and record['secondary_errors']==[]
+    assert record['primary_type']==type(primary).__name__ and record['primary_error']==str(primary)
+    assert record['own_before_raw32']==record['after_old_probe_raw32']==record['own_restored_raw32']==(b'C'*32).hex()
+    assert fp.raw==b'C'*32 and probe.validate_native_entry is original_validate
+    assert record['target_calls_added_by_wrapper']==record['sampler_body_calls_authorized']==0
+    if fault=='C1':assert json.loads((folder/'failure.json').read_bytes())['phase']=='poststop-source-authority'
+
+
+def test_versioned_context_preserves_all_old_authority_and_dependency_fields():
+    current=json.loads((ROOT/D.CONTEXT).read_bytes());previous=current['predecessor_context']
+    raw=(ROOT/previous['path']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==previous['sha256']=='47432de249ee20eca1ad315ca64d1f1dbdc020c2e7854dcd38426f8400238b5e'
+    old=json.loads(raw)
+    assert {k:v for k,v in current.items()if k not in('schema','predecessor_context')}=={k:v for k,v in old.items()if k!='schema'}
+
+    assert repr(previous['path']) in (ROOT/'.github/workflows/lbp-cohort-fp-diagnostic.yml').read_text(), 'Collector retains frozen predecessor context'

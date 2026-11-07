@@ -77,8 +77,8 @@ jobs:
           assert os.environ['GITHUB_RUN_ATTEMPT'] == '1', 'No automatic diagnostic retry'
           assert subprocess.check_output(['git','-C','controller','rev-parse','HEAD'],text=True).strip()==os.environ['GITHUB_SHA']
           for name,pin in {
-              'tools/lbp_cohort_fp_diagnostic.py':'b42d5d04855069605e6cb176894563c00c171cb5cafadc2591ccbe4d0e3e6ade',
-              'coverage/contracts/lbp-cohort-fp-diagnostic-v1.json':'47432de249ee20eca1ad315ca64d1f1dbdc020c2e7854dcd38426f8400238b5e',
+              'tools/lbp_cohort_fp_diagnostic.py':'347d3770e4e9071ab9a52e96098d838ed35a930bd68bf245f60077eea3331139',
+              'coverage/contracts/lbp-cohort-fp-diagnostic-v2.json':'a48d86ae210a4c35af38dd6a19902ac56e464979a7f2da2044104a597f61c828',
           }.items():assert hashlib.sha256(Path('controller',name).read_bytes()).hexdigest()==pin
           assert os.environ['LBP_ONLY_AUTHORITY'] == 'ROOT_AUTHORIZED_LBP_ONLY_COMPARISON', 'UNBOUND LBP-only comparison'
           assert hashlib.sha256(Path('controller/tools/lbp_only_comparison.py').read_bytes()).hexdigest() == '9d37d46d91619a7faa8d646f6d961aaa6304acbd9a1f6e52f94fe8ecfa13fd1d'
@@ -232,7 +232,7 @@ jobs:
           outer,selected,_=adapter['authorize'](controller,go,digest(go))
           evidence=results/'controller-source';evidence.mkdir(exist_ok=False)
           pins={}
-          for name in ('tools/lbp_only_comparison.py','coverage/contracts/lbp-only-comparison-v1.json','coverage/evidence/lbp-only-comparison-root-source-admission-v1.json','coverage/contracts/mark-lbp-measurement-v5.json','tools/mark_lbp_first_cohort_probe.py','tools/lbp_cohort_fp_diagnostic.py','coverage/contracts/lbp-cohort-fp-diagnostic-v1.json','.github/workflows/lbp-cohort-fp-diagnostic.yml','tests/test_lbp_cohort_fp_diagnostic.py'):
+          for name in ('tools/lbp_only_comparison.py','coverage/contracts/lbp-only-comparison-v1.json','coverage/evidence/lbp-only-comparison-root-source-admission-v1.json','coverage/contracts/mark-lbp-measurement-v5.json','tools/mark_lbp_first_cohort_probe.py','tools/lbp_cohort_fp_diagnostic.py','coverage/contracts/lbp-cohort-fp-diagnostic-v2.json','coverage/contracts/lbp-cohort-fp-diagnostic-v1.json','.github/workflows/lbp-cohort-fp-diagnostic.yml','tests/test_lbp_cohort_fp_diagnostic.py'):
               payload=(controller/name).read_bytes();member=evidence/name;member.parent.mkdir(parents=True,exist_ok=True);member.write_bytes(payload)
               pins[name]=hashlib.sha256(payload).hexdigest()
           (results/'controller-source-pins.json').write_text(json.dumps(dict(workflow_source=os.environ['GITHUB_SHA'],files_raw_sha256=pins),indent=2)+'\n')
@@ -257,7 +257,7 @@ jobs:
           go=results/'lbp-only-root-GO.json';pin=(results/'lbp-only-root-GO.sha256').read_text().strip()
           authority=adapter['prepare_cohort'](controller,snapshot,results,sys.executable,Path(sysconfig.get_paths()['purelib']).resolve(),go,pin)
           sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
-          context=controller/'coverage/contracts/lbp-cohort-fp-diagnostic-v1.json'
+          context=controller/'coverage/contracts/lbp-cohort-fp-diagnostic-v2.json'
           tool=controller/'tools/lbp_cohort_fp_diagnostic.py'
           manifest=json.loads((controller/'coverage/contracts/mark-lbp-measurement-v5.json').read_bytes())
           clock=json.loads((results/'execution-clock.json').read_bytes())
