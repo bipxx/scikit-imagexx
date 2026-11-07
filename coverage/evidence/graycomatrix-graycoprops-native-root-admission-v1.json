@@ -1,0 +1,82 @@
+{
+  "schema": "graycomatrix-graycoprops-native-root-admission-v1",
+  "status": "PASS_SCOPED_PRIVATE_TWO_API_COMPONENT_NOT_FULL_API_OR_RELEASE",
+  "source": "de6c329a43b4b5c90f54960a6ef10556d6c75940",
+  "handoff": {
+    "path": "build\\graycomatrix-graycoprops-native-v1\\handoff-v1.json",
+    "sha256": "a23cfbfd703d80ddcbc0b4da015c3aaa62d1ccdc3306ad8f57b3e0b7853e5f10"
+  },
+  "independent_review": {
+    "path": "build\\graycomatrix-graycoprops-native-independent-review-v1\\review-v1.json",
+    "sha256": "62196b22be25c57d909477db3d6aa9aee182d96a0ed6ec9b4261e4cbf54e4530"
+  },
+  "root_reconciliation": {
+    "family_files": 12,
+    "small_proofs": 293,
+    "proof_bytes": 14188023,
+    "original_rows_preserved": 188,
+    "public_XML": 1520,
+    "strict_saved_comparisons": 1504,
+    "boundary_controls": 16,
+    "SDK_POD_saved_returns_each_run": 189,
+    "SDK_controls_each_run": 6,
+    "SDK_actual_runs": 5,
+    "workers": [
+      0,
+      1,
+      4
+    ],
+    "default": 1,
+    "source_checks_each_Windows": 32,
+    "Windows": "MSVC three TUs and changed unit compile-only; no numerical/link/original/FP32/genuine SDK acceptance"
+  },
+  "source_review": "Owned uint32 count/wrap/symmetry/normalization and ten properties; signed-stride typed POD SDK, explicit NumPy boundary scans/conversions and scalar policy operations. KEEPORDER temporary layouts/pairwise reduction/ordered multiply preserve captured association. GNU x86-64 scalar log binds NumPy-selected log@GLIBC_2.2.5 generically for all values, no NaN/result rewrite; other-platform std::log frontier open. Source-clear occurs before actual operations; outgoing target FP not normalized. Only independent symmetry span parallel; ordered property/reduction/callback core serial, no explicit AVX-wide speed claim.",
+  "selective_intake": {
+    "family_files": 12,
+    "missing_historical_dependencies": [
+      "tests/graycomatrix_graycoprops_contract.py",
+      "tests/graycomatrix_graycoprops_observer.py",
+      "tests/graycomatrix_graycoprops_exception_codec.py",
+      "benchmarks/graycomatrix.py",
+      "benchmarks/graycoprops.py",
+      "tests/fixtures/graycomatrix_graycoprops_sources_v1.json",
+      "coverage/contracts/graycomatrix-graycoprops-v1.json"
+    ],
+    "total_family_closure": 19,
+    "historical_target_snapshot": "af0cac742b3411e520eee3abfc96f74921131bd0",
+    "recheck_actual_future_target": true,
+    "never_merge_private_ancestry": true
+  },
+  "preserved_failures": [
+    "minimum-public-normal-v1/terminal.json",
+    "minimum-public-normal-v2/terminal.json",
+    "modern-public-normal-v2/terminal.json",
+    "minimum-public-normal-v5/terminal.json",
+    "modern-public-normal-v5/terminal.json",
+    "minimum-public-scalar-policy-diagnostic-v1/terminal.json"
+  ],
+  "benchmark": "Native handoff freezes8 specs/method only. New f0c source adds explicitly new deterministic larger factories; independent review1f5d passes scoped source only. Outer C1/postbatch verifier/genuine bindings/cohorts/accuracy/measurements remain pending.",
+  "waste_review": "Reused source, independent semantic/SDK review and admitted188 references; authenticated actual12/293 once and read final8XML/five SDK run outputs. No numerical/reference/helper/build/timing/download/archive replay. Failed guessed terminal metadata filename corrected using actual process.json/process32.json; no gates weakened. Next sole integrator imports declared closure only after root assignment and rechecks target dependencies.",
+  "author_pending_at_frozen_source": [
+    "Root independent semantic/source/evidence admission of this component",
+    "Selective import of twelve new files AND seven absent historical family dependencies listed in selective-intake-dependencies-v1.json; never private ancestry merge",
+    "Shared two public feature namespace/default-case/registry/binder initializer/CMake/SDK source inventory wiring by assigned integrator",
+    "Complete workflow source command both retained Pythons after shared integration, normal conftest/plugins",
+    "Genuine installed public namespace/hotswap/one-core ownership and complete aggregate exported SDK four-profile release qualification",
+    "Windows numerical/original/profile-ISA/libm parity: MSVC evidence is compile-only; non-GLIBC fallback unassessed",
+    "Broader FP trap/rounding/FTZ/DAZ/signaling NaN and NumPy seterr call/log/joint status/error protocol domains beyond saved records and invalid-divide raise control",
+    "Unsafe/nonfinite/wide offset and unbounded levels/storage/resource domains remain quarantined; addressable raw POD span is SDK caller precondition",
+    "Python subclasses/custom property comparison/index/boolean/object callback protocols beyond fixed recipes are unassessed; declared NumPy coercion providers retained",
+    "SDK excludes Python object arrays, metadata/class/error/warning identity; typed POD operation takes explicit levels and reports logical values/layout metadata",
+    "Executable genuine benchmark adapter/controller+first-cohort binding and one-thread original public allocated-call measurements for frozen8cases; all losses retained; no timing authority now",
+    "Larger ordinary domain genuine preflight/performance and full API closure remain pending; this is not release readiness"
+  ],
+  "pending": [
+    "Root-controlled selective shared integration after actual dependency closure check",
+    "Genuine installed namespace/hot swap and complete SDK four-profile qualification",
+    "Windows numerical/link/original/FP32 and non-GLIBC libm domains",
+    "Wider dtype/protocol/callback/unsafe offset/storage frontiers",
+    "Outer C1/postbatch source admission, larger accuracy, real benchmark bindings/cohorts and one-thread original-public comparison",
+    "Main delivery/full API closure"
+  ]
+}

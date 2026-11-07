@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "status": "PASS_INDEPENDENT_AND_ROOT_SCOPED_IGG_INTEGRATION_SOURCE_FULL166_PENDING",
+  "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+  "base": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "root_review": {
+    "path": "build/inverse-gaussian-gradient-enabled-root-review-v2/review-v2.json",
+    "sha256": "f563aad04c842124a9e5a8da82b7da3a49dbedb5981110889851bcb5420d7d03"
+  },
+  "independent_review": {
+    "path": "build/inverse-gaussian-gradient-enabled-independent-review-v2/review-v1.json",
+    "sha256": "ea7e5b70336b7ac1c6b96e204e5581747ab77f70bcaa3cc04627fd55193ee3b5"
+  },
+  "source_files": 82,
+  "small_proofs": 71,
+  "proof_bytes": 1979338,
+  "exact_Git_predecessor_rows": 37,
+  "unchanged_family_dependencies": 26,
+  "counts": {
+    "images": 282,
+    "functions": 285,
+    "product": 230,
+    "SDK": 109,
+    "families": 39,
+    "checks": 78
+  },
+  "full_workflow_selectors": 166,
+  "affected_source_evidence": "Final227passed each supportedPython, with earlier2196(4fail34error)/449(1fail) preserved; unchanged-pass reuse is bounded, not full166/union readiness.",
+  "private_native_evidence": "Exact065owned source, root2a94native/policy/privateSDK and e2b724fresh664frontend modes reused within scope. Whole installed namespace/SDK109 is stillunqualified.",
+  "findings": [
+    {
+      "severity": "nonblocking_metadata_underclaim",
+      "detail": "Inherited coverage/inventory strings say corrected frontend normalonly/freshmodespending, while root e2b724 closes private workers4/disabled/scalar/sanitizer on unchanged065frontend. Genuine shared namespace/platform/fullAPI gaps still open; no stronger coverage claim is accepted from those strings."
+    }
+  ],
+  "next_gates": [
+    "Root complete actual166source command both retained Pythons normalconftest/plugins/no failfast",
+    "Eight existing larger benchmark-domain accuracy cases require newboundedreadiness/exactmin8thenmodern8GO and savednative comparison before costly genuine; originalauthority remains0 now",
+    "Exactsource four-profile genuine singlecore/SDK109/nativeownership/hotswap/globalworkers",
+    "Actual benchmarkbinding/F1/APIcohorts/one-thread originalpublic/allloss disposition/main delivery"
+  ],
+  "genuine_accepted": false,
+  "performance_accepted": false,
+  "source_scientific_build_timing_reruns": 0,
+  "waste_review": {
+    "result": "Closed peer+root82file source review without retesting unchanged science or hash-replaying large binaries.",
+    "reuse": "Rootf563 source/proof reconstruction and independent ea7 exact bindings/ABI/selector checks, original/private modes/SDK proofs retained.",
+    "next_owner_trigger": "Root starts complete166 source barriers on changed852inputs; C prepares larger8accuracy readiness independently. Current281 qualification/delivery continues without waiting."
+  }
+}

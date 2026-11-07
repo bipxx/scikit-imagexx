@@ -1,0 +1,21 @@
+{
+  "status": "AUTOMATIC_APPROVAL_REJECTED_NO_DELETION",
+  "source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "targets": ["D:/Scratch/c281-dda9/a", "D:/Scratch/c281-dda9/b"],
+  "prerequisites": {
+    "readiness": "coverage/evidence/current281-complete-source-readiness-v4.json",
+    "live_source_processes": 0,
+    "resolved_within_explicit_temporary_root": true,
+    "reparse_points": 0
+  },
+  "automatic_review_result": "Removal command rejected before execution: blocked by policy. A subsequent shell command to write the rejection receipt was also rejected; it performed no deletion.",
+  "removal_executed": false,
+  "deleted_paths": 0,
+  "alternate_removal_methods": 0,
+  "disposition": "Preserve both targets. Do not retry deletion through another method. Current jobs, source, retained observations, environments and benchmark archives remain untouched.",
+  "waste_review": {
+    "result": "Read-only prerequisites passed; automatic review denied removal. No storage savings claimed.",
+    "reuse": "Existing completed source evidence retained; no tests, science or benchmarks repeated for cleanup.",
+    "next_owner_trigger": "Root continues independent work; removal remains disallowed unless explicit user or external policy changes permit it."
+  }
+}

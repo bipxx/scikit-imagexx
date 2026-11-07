@@ -37417,8 +37417,8 @@
     {
       "id": "join-util-views-measurement-controller-v1",
       "kind": "implementation",
-      "owner": "integrator",
-      "state": "preparing",
+      "owner": "boundary_worker",
+      "state": "implementing",
       "apis": [],
       "target_apis": [
         "metrics.adapted_rand_error",
@@ -37432,21 +37432,28 @@
         "util.view_as_windows"
       ],
       "owns": [
-        ".github/workflows/next-metrics-initial.yml",
-        "tools/next_metrics_first_cohort_probe.py",
-        "coverage/contracts/next-metrics-measurement-v2.json",
-        "tests/test_next_metrics_controller_v2.py"
+        "build/worktrees/current281-measurement-v1 (six family controller manifests/probes/workflows/tests only)"
       ],
       "depends_on": [
         "join-segmentations-current-batch-v1"
       ],
-      "base_sha": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
-      "scope": "Separate source-only measurement controller child of frozen271 source. Reuse reviewed20b9 workflow/probe/manifest patterns and admitted9e8 executor; actual runtime/producer/core/root/helper/GO fields UNBOUND. This child does not mutate or delay9c92 qualification.",
+      "base_sha": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "scope": "Current source-only successor binds six existing family comparison controllers to actually qualifieddda9/minimum13565257857:80cases/1120samples/160warmgroups. Earlier271 controller/reference scopes stay historical; no cases/method/qualified drivers/native sources changed and no actual measurement authority.",
       "acceptance": "One existing-controller refresh for distinct per-API cohorts, source-built FP preparation on actual consumer host, existing stager/core/package/SDK/source auth, zero-body real sampler observer and separate measurement GO. Preserve cases/Montage/losses/provider frontiers; pure source/negative guards both retained Pythons, no original/native/helper/sampler bodies/timing/build/env/download/hosted authority.",
       "current_checkpoint": "Minimal C1 controller b36754dc9d5183edeabb867274a75d901d59b7e7/e3cb1469aa457c53c752311c3d67f3ed445e04b8b07a69c748da042670ff467a frozen:2files/60pure/version, poststop source/helper/binding/GO checks beforeterminalPASS and existingverifier onceafterbatch before summary. Parent2c7c/failureede4 retained; actualinputsUNBOUND. B independent delta review pending.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "integrator",
-        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
+        "owner": "boundary_worker",
+        "action": "One coherent frozen actual-bound source bundle with complete required consumer schema, versioned clocks, both retained Python source/inert controls; root independent admission before six eligible conditional-cohort hosted comparisons. No install/helper/cohort/timing during preparation."
+      },
+      "branch": "bind/current281-measurement-v1",
+      "current_binding_readiness": {
+        "path": "coverage/evidence/current281-whole-product-root-admission-v3.json",
+        "sha256": "3724197bc0ce1f7ececdf39b7ad3e80f29c80477bb8067793fa54a5210c2ec8b",
+        "source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+        "public_XML": 963512,
+        "SDK_checks": 304,
+        "corpora": 48,
+        "minimum_artifact": 13565257857
       }
     },
     {
@@ -37813,15 +37820,15 @@
     {
       "id": "inverse-gaussian-gradient-source-first-v1",
       "kind": "source_tests_safety",
-      "owner": "integrator",
-      "state": "preparing",
+      "owner": "readiness_reviewer",
+      "state": "validating",
       "apis": [
         "segmentation.inverse_gaussian_gradient"
       ],
       "scope": "Pinnedactualsignature/source, existingGaussian derivative/SIMD primitives, boundedrecipes/storage/numericalpolicy and purebothPython tests. Searchretainedexactfamily first; no original/native/factory/helper/build/timing authority.",
       "next_gate": {
-        "owner": "integrator",
-        "action": "Root scoped852 reviewf563 authenticates82sources/71smallproofs,37Git inverses/26family dependencies; peer source review/full166 remainpending. Future282 requires complete166 actualsourcecommand bothPythons and separatelyauthorized8larger accuracy preflights BEFORE costly genuine singlecore/SDK109/fourprofiles, then publicperformance/full-domain gates. No original authority is granted. Fresh664 private frontend modes are root-admitted and reused; no repeat or current281 delay."
+        "owner": "readiness_reviewer",
+        "action": "Prepare minimal exact852 result-reader successors only, templates UNBOUND; source metadata/inert checks both Windows. Root observes actualrun42356138491/watcher24460 then retains terminal artifacts once and independently admits actual four-profile product/SDK; no source/genuine/native/math/timing rerun."
       },
       "shipping_classification": "upstream-only",
       "waste_review": "Reused158originals/432nativeproofs/35policyproofs/24Windowsproofs; source/math/SDK/raw slices independently scoped. Root corrected read-only path/link assumptions and one defaultencoding read, with no scientific replay. Next owner root selective integration trigger, no extra audit task.",
@@ -37865,14 +37872,75 @@
         "independent_review": "build/inverse-gaussian-gradient-frontend-modes-independent-review-v1/review-v1.json",
         "review_sha256": "d1837cc9183e9ed5b2eaea15eef4bdbd4555bab981276bfe37074f3fc6b06c15"
       },
-      "current_checkpoint": "Schema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
+      "current_checkpoint": "Schema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority. Current bounded additive phase: prepare exact existing8benchmark-case accuracy/controller readiness before futuregenuine, using admitted root2a94/e2b724 private dependencies and852frozen factory. Legacy unknown task-edge history is retained in docsrepair; no former unverified dependency is treated as passed, and peer/full166/genuine/performance remainpending.",
       "depends_on": [],
-      "owns": []
+      "owns": [
+        "build/igg282-qualification-v1/readers-v1"
+      ],
+      "branch": "integrate/inverse-gaussian-gradient-enabled-v2",
+      "large_accuracy_preparation": {
+        "owner": "metrics_integrator",
+        "source_base": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+        "factory": "benchmarks/inverse_gaussian_gradient_native.py::fixture",
+        "cases": "coverage/contracts/inverse-gaussian-gradient-v1.json::benchmark_cases",
+        "count_per_profile": 8,
+        "max_input_elements": 65536,
+        "max_named_numerical_bytes": 26382336,
+        "max_correlate_multiply_add_terms": 10747904,
+        "authorization": "Source/controller preparation and at most4samecode cold/cached zero-body readiness processes across2retainedprofiles; all8bounded NumPyfactories/process and existing fixedfull32helper controls permitted. NO originalcomputation/capture/native/build/timing authority.",
+        "original_reference_authority": 0,
+        "native_comparisons_authority": 0,
+        "readiness_next_gate": "Root exact source/safety/current runtime/helper/prefix+capture path review, then separate minimum-only8originalonceGO; actualminrawadmission before modern8. Savednative compare onlyafter originalrawadmission, no79replay."
+      },
+      "complete_source_readiness": {
+        "path": "coverage/evidence/inverse-gaussian-gradient-complete-source-readiness-v1.json",
+        "sha256": "ea338918c84fbf4da8fec47731cb342497b5b38daa60f890b05559136a21a89c",
+        "selectors": 166,
+        "checks_each": 4006
+      },
+      "large_accuracy_failed_readiness": {
+        "path": "build/igg-large-accuracy-independent-review-v1/review-v1.json",
+        "sha256": "3f627e06a77802fb558b032cfad3e119bb5fc933440910e5de0878ae9d9735ee",
+        "finding": "F1 partial terminal existence suppresses fallback and omitted primary/secondary diagnostics; versioned source/inert correction before minimum8 GO"
+      },
+      "large_accuracy_root_readiness": {
+        "path": "coverage/evidence/inverse-gaussian-gradient-large-accuracy-root-readiness-v2.json",
+        "sha256": "1b8461e3f82f9fb40d3191be914e3ddc66b8c0ccf4f176ed977dc8149440b3ca",
+        "source": "13d8a6b2c013921620d747f1706d5651653be40f"
+      },
+      "large_accuracy_minimum_GO": {
+        "path": "build/igg-large-accuracy-capture-v2/minimum-GO-v1.json",
+        "sha256": "06112e9bcdb4e5e9b9d9192bfedfebcb28891479bca80708e997e3e428d77b9c",
+        "cap": 8,
+        "state": "terminal_pass_8_consumed_raw_admitted",
+        "modern_authority": 0
+      },
+      "large_accuracy_raw_admission": {
+        "path": "coverage/evidence/inverse-gaussian-gradient-large-accuracy-root-raw-v1.json",
+        "sha256": "30b6eea0b90840dc22979948aeaa5890c6fc39bae445c0fe9ed4c3867be7ac80",
+        "original_calls": 16,
+        "original_authority_remaining": 0
+      },
+      "large_accuracy_native_admission": {
+        "path": "coverage/evidence/inverse-gaussian-gradient-large-accuracy-native-root-admission-v1.json",
+        "sha256": "2af06925a53a66a6924e4a166086ef04a5e3d81c3176312d2b8dd1d57a5ebc89",
+        "native_calls": 16,
+        "workers": 1,
+        "scope": "Normal private saved8perprofile; genuine/platform/wider domains remain open."
+      },
+      "genuine_qualification": {
+        "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+        "run": 42356138491,
+        "watcher_session": 24460,
+        "status": "in_progress",
+        "root_dispatch_readiness": "build/igg282-qualification-v1/root-dispatch-readiness-v1.json",
+        "readiness_sha256": "3c0f29704a0c78d7a8892e3f37118f3e04f8c994e04ff1bdfbfbf64de33dd8ff"
+      }
     },
     {
       "id": "order-angles-golden-ratio-source-first-v1",
       "kind": "source-contract",
-      "owner": "readiness_reviewer",
+      "owner": "metrics_integrator",
       "state": "implementing",
       "apis": [
         "transform.order_angles_golden_ratio"
@@ -37881,11 +37949,11 @@
         "transform.order_angles_golden_ratio"
       ],
       "owns": [
-        "Family-specific order_angles_golden_ratio contract/recipe/source-test/docs files in isolated worktree; no shared hooks or native implementation in this task"
+        "build/worktrees/golden-angle-enabled-v1 (shared golden candidate author only)"
       ],
       "scope": "Existing full477 unassigned API; pinned0.26 source/storage/contract first. Generator/lazy/state/protocol/dtype/FP/layout/error frontiers explicit. Reuse retainedsource and observer/typedcodec/FENV infrastructure; zero reference/native/helper/sampler/build/timing authority.",
       "acceptance": "One bounded source/contract/storage handoff, exactsignature/defaults/sourcebytes, finite small recipes and work/storage bounds, easiest ownedC++/completeSDK/hotswap/SIMD/globalworker/performance route; bothWindows pure/stub normalplugins0science; report unmatchedrequirements/failures/reuse/waste/nextowner. No genericgenerator framework or duplicateknownblocker campaign.",
-      "next_gate": "R coherent family native C++/truegenerator frontend/completeSDK/perrecipe savedparity/scalarSIMDworkers/default1/benchmark-source handoff, using90frozen references; no new original/timing/sharedintegration authority. Root independent admission before release wiring.",
+      "next_gate": "C corrects demonstrated current-count/history/source-pin readers and missing -fno-builtin-pow leaf flag in isolated candidate; freeze one coherent handoff after affected both-Python source/inert and invalidated compile gates. Earlier37metadata failures+34SDK setup errors/profile remain failed. Root independent admission before futurequalification; no old math/reference/SDK body replay and no delaycurrent281/eligible282.",
       "shipping_classification": "upstream-only",
       "source": "33559e475b2ac82d0d59f423513bab60f16b132a",
       "root_admission": {
@@ -37949,13 +38017,17 @@
         "original_authority_remaining": 0
       },
       "depends_on": [],
-      "branch": "feature/order-angles-golden-ratio-native-v1"
+      "branch": "integrate/golden-angle-enabled-v1",
+      "root_native_admission": {
+        "path": "coverage/evidence/order-angles-golden-ratio-native-root-admission-v1.json",
+        "sha256": "8ae3259965ece5b8a9c684d6904ae376f63d2f777a823cc1b5bf3b1adabebb97"
+      }
     },
     {
       "id": "grayco-texture-source-first-v1",
       "kind": "source-contract",
-      "owner": "boundary_worker",
-      "state": "implementing",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [
         "feature.graycomatrix",
         "feature.graycoprops"
@@ -37969,7 +38041,7 @@
       ],
       "scope": "Existingfull477 unassigned2API cooccurrence texture batch; pinned0.26 Python/Cython source/storage/contract first, reuse priorassessment and existingobserver/codec/FENV infrastructure. All original/native/helper/sampler/build/env/download/timing budgets0.",
       "acceptance": "One bounded familyhand-off exactsignatures/defaults/propertyenum/cooccurrence order/normalization/FP/layout/dtype/state/errors/providers; finite pairedrecipes with explicit work/storage caps; simplest ownedC++ completeSDK/optionalglobalworkersdefault1/applicableSIMD/public1Tbenchmark route; bothWindows pure/stub normalplugins0science. No genericframework/duplicateknownblocker campaign.",
-      "next_gate": "B coherent2API ownedC++/frontend/completeSDK/per94saved parity/scalarSIMD/default1globalworkers/source-only benchmark handoff. Both188reference grants exhausted. Root independent admission before shared integration; no public timing/genuine authority in private task.",
+      "next_gate": "Private de6 root admission and source f0c peer review pass; frozen05bdd outerC1 successor needs independent/root affected review, then later selective shared intake. No live GLCM implementation author or timing authority.",
       "shipping_classification": "upstream-only",
       "primary_source_read_exception": "One exactofficialscikit-image v0.26.0 _texture.pyx source retrieval (only indispensable small directlyreferencedsourceheader ifneeded), pinURL/tag/bytes/SHA/license. No package/artifact/env installs/downloadcampaign; allalgorithm/helper/capture/build/timing0.",
       "source": "22873ac59edca67eb5af1b80b0f8959e5dd67111",
@@ -38039,13 +38111,23 @@
         "original_authority_remaining": 0,
         "paired_semantic_FP_differences": 376
       },
-      "branch": "feature/graycomatrix-graycoprops-native-v1"
+      "branch": "bench/glcm-execution-v1",
+      "root_native_admission": {
+        "path": "coverage/evidence/graycomatrix-graycoprops-native-root-admission-v1.json",
+        "sha256": "7d9792d479fceef23e6c06e4b5cecf153554f1f869b4e9faa266fd0e5d2ade45"
+      },
+      "outer_controller": {
+        "source": "05bddff4fa7ea0cc05551c1e8fc4d49ae87d2661",
+        "handoff": "build/glcm-benchmark-outer-v1/handoff-v1.json",
+        "sha256": "b4289fdb2fe57f8187ffe59ebc94a440eb703ea57c0a091a6a5dc0250cbfee1b",
+        "status": "frozen_author_scoped_source_inert_pass_pending_independent_admission"
+      }
     },
     {
       "id": "work-queue-schema-repair-v1",
       "kind": "documentation",
-      "owner": "metrics_integrator",
-      "state": "validating",
+      "owner": "integrator",
+      "state": "accepted",
       "branch": "docs/work-queue-schema-v1",
       "base_sha": "174b12a8583b0ca485ab646587de56718a863599",
       "apis": [],
@@ -38321,7 +38403,11 @@
       },
       "next_gate": {
         "owner": "integrator",
-        "action": "Independently review this two-file documentation diff and actual CLI/doc checks; main delivery only after review. No source/native/scientific/hosted action follows from the documentation packet."
+        "action": "Root source9ae/handoffe96 independently admitted f927; document-only CLI/schema/partition repair complete. Preserve all old scopes/proofs/history and3unknown legacydependency gates. No API/native/science/performance acceptance. Merge/push and remove only clean ancestor-backed docWT."
+      },
+      "root_admission": {
+        "path": "coverage/evidence/work-queue-schema-root-admission-v1.json",
+        "sha256": "f927fb27391ada4aed7bb1d8a496ca4d4122dd5f75f0bbf58b5a22601ec2a9bf"
       }
     }
   ],
@@ -39006,24 +39092,26 @@
     "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
       "grayco_texture_native",
-      "golden_angle_native",
-      "queue_schema_documentation"
+      "golden_native_and_independent_IGG_review",
+      "IGG_large_accuracy_preparation"
     ],
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
     "worker_queues": {
-      "metrics_integrator": [],
       "boundary_worker": [
-        "grayco-texture-source-first-v1"
+        "join-util-views-measurement-controller-v1"
+      ],
+      "metrics_integrator": [
+        "order-angles-golden-ratio-source-first-v1"
       ],
       "readiness_reviewer": [
-        "order-angles-golden-ratio-source-first-v1"
+        "inverse-gaussian-gradient-source-first-v1"
       ]
     },
     "current_three_agent_packets": {
-      "metrics_integrator": "work-queue-schema-repair-v1",
-      "boundary_worker": "grayco-texture-source-first-v1",
-      "readiness_reviewer": "order-angles-golden-ratio-source-first-v1"
+      "boundary_worker": "join-util-views-measurement-controller-v1",
+      "metrics_integrator": "order-angles-golden-ratio-source-first-v1",
+      "readiness_reviewer": "inverse-gaussian-gradient-source-first-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -39364,40 +39452,40 @@
     },
     "resume_checkpoint": "2026-10-25: explicit updated-plan implementation resume; old network-revoked turns ended. Same three workers restarted through followup_task; no hosted campaign redispatched.",
     "latest_hosted_status": {
-      "run": 42347579925,
-      "source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "run": 42356138491,
+      "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
       "status": "in_progress",
-      "conclusion": "",
-      "watcher_session": 64812,
+      "conclusion": null,
+      "watcher_session": 24460,
       "jobs": [
         {
-          "id": 128328553836,
+          "id": 128354529308,
           "name": "qualify (ubuntu-24.04, modern, 3.13.16)",
           "status": "in_progress",
-          "conclusion": ""
+          "conclusion": null
         },
         {
-          "id": 128328553970,
-          "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
-          "status": "in_progress",
-          "conclusion": ""
-        },
-        {
-          "id": 128328554000,
-          "name": "qualify (windows-latest, windows, 3.13.16)",
-          "status": "in_progress",
-          "conclusion": ""
-        },
-        {
-          "id": 128328554010,
+          "id": 128354529378,
           "name": "qualify (ubuntu-24.04, minimum, 3.11.17)",
           "status": "in_progress",
-          "conclusion": ""
+          "conclusion": null
+        },
+        {
+          "id": 128354529418,
+          "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 128354529476,
+          "name": "qualify (windows-latest, windows, 3.13.16)",
+          "status": "in_progress",
+          "conclusion": null
         }
       ],
-      "next": "Observe SAME64812/42347579925. Exactdda9 complete162PASS and rootadmission; no genuine/performance acceptance yet. On actualterminal retain eachartifactonce then independentprofile/SDK/stager admission; no unchangedretry or timing."
+      "next": "Follow same24460/42356138491, no redispatch. R prepares minimal exact852 readers; actual terminal artifacts retained once then independent profile/SDK/stager admission. Current281 qualified; B bound-controller source gates before public timing."
     },
-    "assignment_note": "Current planning assignments are closed; reconcile live roster before starting next work with followup_task. Root owns source admission/delivery; one named owner owns shared integration. Historical assignments elsewhere are provenance, not dispatch instructions.",
+    "assignment_note": "Live collaboration.list_agents confirmed all three resumed handles; followup_task dispatches authorize the explicitly scoped tasks above. CLI assignments are responsibility metadata, not process evidence.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -39410,12 +39498,12 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Bounded2file ledger/CLI documentation repair in isolated docs/work-queue-schema-v1; author validation/freeze then root independent review, no scientific work.",
-      "boundary_worker": "Coherent2API GLCM native batch from56303; current actor boundary_worker, no original grants.",
-      "readiness_reviewer": "Coherent golden-angle native/generator/SDK batch fromff9b; current actor readiness_reviewer, no original grants.",
-      "root": "Observe existing64812/42347579925 exactdda9 genuine campaign; terminal retention/admission/main remain root-owned. Future852cc188 is frozen unready, not a second ready release or dispatch."
+      "boundary_worker": "Live six actually-bound current281 comparison-controller source batch, rootadmission372419/metadata already retained; no actual measurement yet. F1 fix13d frozen/root-admitted and16larger reference+native cases passed.",
+      "metrics_integrator": "Live futuregolden shared integration; initial37metadata failures/34SDK fixture errors each retained and being corrected, no waiting for current281/eligible282.",
+      "readiness_reviewer": "Live exact852 future282 result-reader preparation from reviewed/actually successful current281 readers; templatesUNBOUND, no downloads/science. GLCM05bdd outer frozen awaiting separate admission.",
+      "root": "Main/checklist/ledger/evidence delivery; qualified281 performance binding admission next. Actual852 genuine42356138491 watcher24460 live; no duplicate qualification dispatch."
     },
-    "next_action": "Observe SAME exactdda9 genuine64812. Rgolden/BGLCM nativebatch usingfrozen references, no original or timing grants; CfutureIGG handoff pendingindependentadmission. Publish validated scoped receipts/checklist promptly whilehostedruns.",
+    "next_action": "Root publishes verified admission/checklist increment, follows same282 watcher24460 and independently admits B frozen281 benchmark binding before hosted comparison dispatch. Do not wait unfinishedgolden; no duplicate archive/core/corpus/source/performance replay.",
     "current_checkpoint": {
       "main_image_names": 271,
       "qualified_image_names": 271,
@@ -39443,7 +39531,7 @@
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "Exactdda9 four-profile42347579925 livewatcher64812; complete162 commands PASS3958ordinary+8subtests each. Failed3e fullyreviewed963512XML16signaturefailures/304SDK/48corpora; no releaseacceptance.",
+      "next_release_status": "Qualified exactdda9/42347579925 rootv2 admission passes963512XML/304SDK/48corpora and3stagers. Main remains271. Bound benchmark source/cohorts/80case one-thread comparison and delivery pending.",
       "next_release_qualification_run": 42347579925,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct.",
@@ -39482,16 +39570,41 @@
         "path": "coverage/evidence/current281-sentinel-failed-campaign-closeout-v1.json",
         "sha256": "8623c0d6f93374d4ac80ab50f220a74b7a0d467fa2aab3f8bec11bc74c60d8ce"
       },
-      "legacy_queue_schema_note": "Canonical phase/dependency and retired-dispatch metadata reconciled in isolated documentation successor from174b12a8. Existing CLI validation/ready/agents checks required; no science or acceptance gate waived. Historical labels and prior checkpoint pointers are retained in work-queue-schema-repair-v1.current_checkpoint."
+      "legacy_queue_schema_note": "Canonical phase/dependency and retired-dispatch metadata reconciled in isolated documentation successor from174b12a8. Existing CLI validation/ready/agents checks required; no science or acceptance gate waived. Historical labels and prior checkpoint pointers are retained in work-queue-schema-repair-v1.current_checkpoint.",
+      "queue_schema_repair": {
+        "source": "9ae89699f9fe377562b651b669c5dac2064c3d01",
+        "root_admission": "coverage/evidence/work-queue-schema-root-admission-v1.json",
+        "CLI_check": "PASS368; no cycles/activefileconflicts;477partition120assigned357unassigned",
+        "scope": "Documentation only; no feature/private/genuine/performance gate promoted"
+      },
+      "future_IGG_root_scoped_review": {
+        "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+        "path": "build/inverse-gaussian-gradient-enabled-root-review-v2/review-v2.json",
+        "sha256": "f563aad04c842124a9e5a8da82b7da3a49dbedb5981110889851bcb5420d7d03",
+        "peer": "PASS_ea7e5b_root5868",
+        "large8accuracy_order": "Before expensivegenuine; newprep nooriginalauthority yet",
+        "root_source_admission": "coverage/evidence/inverse-gaussian-gradient-enabled-root-admission-v2.json",
+        "root_source_admission_sha256": "5868afc0e0b199b0b39baf4e583fe00d722c280c7ff670271db67affc653972b",
+        "full166": "Authorized bothWindows actual complete command; not launchedyet",
+        "authority": "build/igg282-sourcebarrier-v1/execution-authority-root-v1.json"
+      },
+      "cleanup_rejected": {
+        "path": "coverage/evidence/current281-temporary-fixture-cleanup-rejected-v1.json",
+        "result": "Automatic policy blocked removal beforeexecution;0deleted,no alternate removal attempts; bothnewDtargets protected"
+      },
+      "next_release_qualification_admission": {
+        "path": "coverage/evidence/current281-whole-product-root-admission-v3.json",
+        "sha256": "3724197bc0ce1f7ececdf39b7ad3e80f29c80477bb8067793fa54a5210c2ec8b"
+      }
     },
     "shared_integration_author": {
       "owner": "metrics_integrator",
-      "state": "critical_current281_sentinel_identity_authoring_future07b_preserved",
-      "base": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
-      "scope": "C selectively integrates root-admitted065 IGG family into new inverse-gaussian-gradient-enabled-v1. Root retains frozen213 complete161/release; no neworiginals/timing/fullproduct build.",
+      "state": "live_golden_angle_enabled_v1_isolated_future_candidate",
+      "base": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+      "scope": "Only C authors shared future golden wiring; root owns disjoint current281 measurement-controller worktree/receipts/main. Frozen852 and currentdda9 untouched.",
       "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
       "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
-      "next_gate": "C freezes canonicalmetadata singleton/importsafe identity/strict signature+explicit-sentinel controls andallliteralclosure; B/root thencompleteactualworkflowchecks on bothPythons. No math/SDK/kernel replay.",
+      "next_gate": "One coherent shared golden handoff using exact21 family files and actual target helper/context; root independent admission. Must not delay eligible282 or current281.",
       "actual_staging_counts": {
         "image_paths": 280,
         "registered_functions": 283,

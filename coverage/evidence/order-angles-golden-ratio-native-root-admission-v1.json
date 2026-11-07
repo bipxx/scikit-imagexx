@@ -1,0 +1,68 @@
+{
+  "schema": "order-angles-golden-ratio-native-root-admission-v1",
+  "status": "PASS_SCOPED_PRIVATE_COMPONENT_NOT_FULL_API_OR_RELEASE",
+  "source": "fb2a7c0ccf99f1ea27e6c31e212a608463831baf",
+  "handoff": {
+    "path": "build\\order-angles-golden-ratio-native-v1\\handoff-v1.json",
+    "sha256": "5d16a4bfaf562610dc943aa9e4ec14798656b988ea3558d7fa8a4af69b862f60"
+  },
+  "independent_review": {
+    "path": "build\\order-angles-golden-ratio-native-independent-review-v1\\review-v1.json",
+    "sha256": "23cf013ecd321d1ceaa1e2e5a3bcd498cc77c8334c211e36a299a0200b585d69"
+  },
+  "root_reconciliation": {
+    "source_files": 19,
+    "dependencies": 16,
+    "small_proofs": 172,
+    "proof_bytes": 263441,
+    "raw_references_exact": 90,
+    "public_XML": 548,
+    "source_checks_each_Windows": 29,
+    "SDK_stateful_cases_each_mode_profile": 108,
+    "SDK_index_words_each_mode_profile": 429,
+    "SDK_complete_attempts_each_mode_profile": 99,
+    "SDK_complete_returns": 96,
+    "SDK_empty_errors": 3,
+    "modes": [
+      "normal",
+      "compiler_scalar",
+      "ASan_UBSan"
+    ],
+    "workers": [
+      0,
+      1,
+      4
+    ],
+    "default_workers": 1,
+    "Windows_scope": "Private MSVC installed105 donor + new leaf/client linked values against GNU reference words; not Windows original/full32 or genuine complete SDK"
+  },
+  "source_review": "Reused root source inspection: lazy true generator, live ndarray values, checked POD integers before conversion, source-compatible division/tie/weakdtype semantics, FE clearing before actual source operations without post-return masking. Ordered dependent core serial with explicit one-budget snapshot. Saved comparator retains semantic FP/value/type/error/mutation while excluding declared address/handler identities.",
+  "selective_intake": {
+    "family_files": 19,
+    "additional_exact_dependencies": [
+      "tests/order_angles_golden_ratio_contract.py",
+      "tests/order_angles_golden_ratio_observer_v2.py"
+    ],
+    "total_exact_family_files": 21,
+    "target": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+    "different_shared_dependency": {
+      "path": "benchmarks/next_util_execution.py",
+      "delta": "Target uses v4 CONTEXT and optional section argument in historical_bytes; preserve target shared file and adapt family metadata/test guards to actual current source. Private benchmark-source evidence does not automatically close shared integration guards."
+    },
+    "never_merge_private_ancestry": true
+  },
+  "preserved_failures": [
+    "Normal SDK native-control fixture exit-6; corrected only test backing in v2, exit0; kernel/client/golds unchanged.",
+    "Root first metadata-reader SyntaxError before execution. Later root failed exact-target-dependency assertion at next_util_execution.py; inspected actual2-location metadata/helper-interface difference instead of overwriting current shared source. No scientific reruns."
+  ],
+  "pending": [
+    "root-controlled shared integration and changed benchmark dependency guards",
+    "genuine installed hot swap and whole SDK",
+    "exact-source four-profile qualification",
+    "wider/nonfinite/object/subclass/large-N/FP-callback/platform domains",
+    "actual one-thread original-public benchmarks",
+    "main delivery"
+  ],
+  "scientific_reruns": 0,
+  "waste_review": "Reused existing original/private mode/SDK/source evidence and independent review. Narrowly corrected metadata-reader assumptions. Next integration author imports21 authenticated family files, preserves target shared helper and updates actual dependency metadata/source guards. Current281 does not wait."
+}

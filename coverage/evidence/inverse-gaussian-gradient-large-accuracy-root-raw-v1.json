@@ -1,0 +1,113 @@
+{
+  "schema": "inverse-gaussian-gradient-large-accuracy-root-raw-v1",
+  "passed": true,
+  "status": "PASS_SIXTEEN_REFERENCE_ROWS_NOT_NATIVE_PARITY",
+  "source": "13d8a6b2c013921620d747f1706d5651653be40f",
+  "frozen_case_source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+  "profiles": [
+    {
+      "profile": "minimum",
+      "review": "build/igg-large-accuracy-capture-v2/minimum-root-terminal-review-v1.json",
+      "sha256": "69c8fe8c56a91ffab5d0cbc1454f54f9916a92286f0bb67e5752ee8da3e8f8a1",
+      "public_topcalls": 8,
+      "completed_rows": 8,
+      "journal_events": 16,
+      "unique_POD_payloads": 14,
+      "decoded_bytes": 1336832,
+      "counts": {
+        "target_attempted": 8,
+        "target_refused": 0,
+        "provider_attempted": 144,
+        "provider_refused": 0,
+        "target_body_lines": 16,
+        "provider_body_lines": 1963,
+        "compiled_provider_attempted": 37,
+        "compiled_provider_refused": 0
+      },
+      "raw_directory": "build/igg-large-accuracy-capture-v2/minimum-capture-v1",
+      "proofs": {
+        "journal.jsonl": {
+          "bytes": 197579,
+          "sha256": "eff68eb3a1a0996546b83b4e085840c24c1e70b1953349489b088e66feb4bf9b"
+        },
+        "observations.json": {
+          "bytes": 214776,
+          "sha256": "c1fc091df7aae6553b9e21f45b562ddf084325bf187c2a8cd3f5dd483a4fea9b"
+        },
+        "precall-freeze.json": {
+          "bytes": 11735,
+          "sha256": "6d99eef69eefa8b20dce86cb0c33a764e6fe1dae7bc37a02ede1afe20b96bdf2"
+        },
+        "terminal.json": {
+          "bytes": 16040,
+          "sha256": "a78eb013082bcc18ee81e9bafbebc02dedbbcd1ba5ebf483075d7716964bd829"
+        }
+      }
+    },
+    {
+      "profile": "modern",
+      "review": "build/igg-large-accuracy-capture-v2/modern-root-terminal-review-v1.json",
+      "sha256": "02cc0cd557e7b8746a856a92139e3d6a23568712c02d5f762348c042f11b1955",
+      "public_topcalls": 8,
+      "completed_rows": 8,
+      "journal_events": 16,
+      "unique_POD_payloads": 14,
+      "decoded_bytes": 1336832,
+      "counts": {
+        "target_attempted": 8,
+        "target_refused": 0,
+        "provider_attempted": 144,
+        "provider_refused": 0,
+        "target_body_lines": 16,
+        "provider_body_lines": 2054,
+        "compiled_provider_attempted": 37,
+        "compiled_provider_refused": 0
+      },
+      "raw_directory": "build/igg-large-accuracy-capture-v2/modern-capture-v1",
+      "proofs": {
+        "journal.jsonl": {
+          "bytes": 197427,
+          "sha256": "a9dc917c9825c4318999ee3e766a32f4ccf207ca3d8f2f6ec0d84f4bf1eec2bc"
+        },
+        "observations.json": {
+          "bytes": 214624,
+          "sha256": "41f2b07f60c481b460cbfb729a367a9babb319dd77737d7f3e06fe9e5f3d6984"
+        },
+        "precall-freeze.json": {
+          "bytes": 11666,
+          "sha256": "2ee73ce02c3e5c56ea9e0594d337ae3c57570655cc83728edc8ce32505098ca5"
+        },
+        "terminal.json": {
+          "bytes": 15950,
+          "sha256": "c3dfdbef06182d3862efda1afd69805c8ede9726b6e262952b3c9f36674a0afc"
+        }
+      }
+    }
+  ],
+  "public_topcalls": 16,
+  "completed_rows": 16,
+  "journal_events": 32,
+  "result_payloads_cross_profile_equal": [
+    "u8-small",
+    "f32-medium",
+    "f64-medium",
+    "f32-fortran",
+    "f32-reverse",
+    "f32-large",
+    "u16-medium",
+    "f32-volume"
+  ],
+  "caller_and_process32_exact": true,
+  "semantic_target_FP_preserved": true,
+  "remaining_original_authority": 0,
+  "native_calls": 0,
+  "timing_calls": 0,
+  "readiness": "coverage/evidence/inverse-gaussian-gradient-large-accuracy-root-readiness-v2.json",
+  "pending": [
+    "Separately authorized native8 saved comparisons per profile against exact admitted065/852 frontend/kernel",
+    "Genuine exact-source future282/283 qualification",
+    "One-thread original-public benchmarks",
+    "Main delivery and full API/domain closure"
+  ],
+  "waste_review": "Minimum8 captured once then independently admitted before separate modern8GO. Both terminal0,16returns/no retries; raw typed payloads/journal/caller state admitted using stdlib. Reused historical4prefixes/runtime/helper/bounds. Old79original budget remains0; no original/native timing or build rerun. Root next authorizes only saved native comparison, preserves any failures and addresses their demonstrated root cause."
+}

@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "status": "PASS_ROOT_DOCUMENT_QUEUE_SCHEMA_REVIEW_NO_SCIENCE_AUTHORITY",
+  "source": "9ae89699f9fe377562b651b669c5dac2064c3d01",
+  "base": "174b12a8583b0ca485ab646587de56718a863599",
+  "handoff": {
+    "path": "build/work-queue-schema-v1/handoff-v1.json",
+    "sha256": "e96faa5e5d912f5f28ea761d9d3c3d310f0be870e82fb8ee26bb608bb8cc1018"
+  },
+  "changed_paths": [
+    "coverage/EXECUTION_PLAN.md",
+    "coverage/work_items.json"
+  ],
+  "small_proofs": 22,
+  "proof_bytes": 195976,
+  "original_packets_preserved": 367,
+  "semantic_scope_acceptance_proof_fields_preserved": true,
+  "old_hash_strings_preserved": 1136,
+  "accepted_state_promotions": 0,
+  "current_API_partition": {
+    "assigned": 120,
+    "unassigned": 357,
+    "total": 477
+  },
+  "root_existing_CLI_check": {
+    "exit": 0,
+    "stdout": "Validated 368 packets: no dependency cycles or active file conflicts.\n"
+  },
+  "ready_dispatches": 0,
+  "live_agents_CLI_is_not_process_query": true,
+  "remaining_gates": {
+    "root_independent_doc_review_main_delivery": "PENDING",
+    "legacy_dependency_preuse": {
+      "records": [
+        "join-util-views-qualified-artifact-review-v2",
+        "rolling-ball-source-first-v1",
+        "inverse-gaussian-gradient-source-first-v1"
+      ],
+      "scope": "Only future reuse/dispatch of these retired records; current B/Rnative/dda9 release unaffected. No invented edge or acceptance."
+    },
+    "actualsource_genuine_performance_API_fullcontract": "UNCHANGED; document checks confer no new acceptance or authority",
+    "current_root_release": "Last root07:05UTC report same64812/42347579925 live; no new job/API query or terminal claim"
+  },
+  "scope": "Docs/state/schema repair only. Historical phases retired without accepting incomplete native/API/domain requirements; three missing historical dependency relationships remain blocked before reuse. Current genuine/source/numerical/native/performance receipts and sourcecode unchanged.",
+  "waste_review": {
+    "result": "Existing CLI becomes executable on actual ledger, correcting13phase labels/3missingdependencyfields/9staleactive assignments/missingowns/four unassigned targetAPI gaps. No validator weakening/newqueue/framework.",
+    "reuse": "Authenticated22smallproofs and actual semantic diff; one root pureCLI metadata validation, no source/scientific/build/prefix/timing reruns.",
+    "next_owner_trigger": "Root merge/push docs increment, close its existingtask, then remove only clean ancestor-backed obsolete docWT. Future dispatch still requires actuallivehandle and source/evidence gates."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "inverse-gaussian-gradient-large-accuracy-native-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SIXTEEN_PRIVATE_NORMAL_ONE_WORKER_LARGER_ACCURACY_COMPARISONS",
+  "target_source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+  "frontend_source": "065cc3a79391e4c5343511b53bbbaac992a4c185",
+  "reference_admission": "coverage/evidence/inverse-gaussian-gradient-large-accuracy-root-raw-v1.json",
+  "profiles": [
+    {
+      "profile": "minimum",
+      "path": "build/igg-large-accuracy-capture-v2/minimum-native-comparison-v1.json",
+      "sha256": "b0cd31efe00110d3658148c0954cab992cf7a48158b01902222baf3eafbac4f9",
+      "native_public_calls": 8,
+      "passed_cases": [
+        "u8-small",
+        "f32-medium",
+        "f64-medium",
+        "f32-fortran",
+        "f32-reverse",
+        "f32-large",
+        "u16-medium",
+        "f32-volume"
+      ],
+      "core_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/inverse-gaussian-gradient-native-v1/minimum-normal-v8/_core.cpython-311-x86_64-linux-gnu.so"
+    },
+    {
+      "profile": "modern",
+      "path": "build/igg-large-accuracy-capture-v2/modern-native-comparison-v1.json",
+      "sha256": "248f5700407053ca03ca4710224adcec3270de3f289bf5317a365b9b03d9f71e",
+      "native_public_calls": 8,
+      "passed_cases": [
+        "u8-small",
+        "f32-medium",
+        "f64-medium",
+        "f32-fortran",
+        "f32-reverse",
+        "f32-large",
+        "u16-medium",
+        "f32-volume"
+      ],
+      "core_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/inverse-gaussian-gradient-native-v1/modern-normal-v8/_core.cpython-313-x86_64-linux-gnu.so"
+    }
+  ],
+  "original_calls_in_comparison": 0,
+  "native_calls": 16,
+  "workers": 1,
+  "mode": "normal private retained components",
+  "strict_fields": "Every saved observer field including full encoded values/types/layout/alias/input mutation/warnings/errors/NumPy state; incoming/outgoing semantic control/status/MXCSR and exact per-case/whole-process32. Original import refused.",
+  "source_identity": "Exact admitted065 frontend/kernel/binder in852 and13d source; existing normal-v8 private cores/runtime/helper provenance reused. No archive/core/SDK rehash or rebuild.",
+  "readiness_effect": "Closes frozen8larger workload accuracy prerequisite for exact852 genuine qualification. Does not establish genuine installed namespace/wholeSDK or broad-domain/scalar/Windows larger-case coverage; existing private83-case/mode evidence retains its prior scope.",
+  "pending": [
+    "Root exactremote/workflow/no-prior-run/capacity checks and dispatch exact852 genuine282",
+    "Exact-source four-profile installed product/SDK admission",
+    "One-thread original-public measurements",
+    "Main delivery and wider API/domain closure"
+  ],
+  "waste_review": "New larger ordinary workloads required16actual native calls,8/profile; allpass without replaying79originals or664oldmode checks. Reused original observations from once-only16capture and trusted existing observer/factory/restoration routes; no new engine, timing or build. Root promptly dispatches eligible852 independently of unfinishedgolden."
+}

@@ -1,0 +1,757 @@
+{
+  "schema": "current281-whole-product-root-admission-v2",
+  "status": "PASS_SCOPED_EXACT_SOURCE_FOUR_PROFILE_PRODUCT_SDK_AND_THREE_STAGERS",
+  "source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "run": 42347579925,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42347579925",
+  "expected_scope": {
+    "partial_image_paths": 281,
+    "registered_functions": 284,
+    "product_files": 228,
+    "SDK_files": 108,
+    "SDK_families": 38,
+    "SDK_checks_per_profile": 76
+  },
+  "aggregate": {
+    "public_XML": 963512,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "SDK_checks": 304,
+    "corpora": 48,
+    "archives": 7,
+    "archive_bytes": 6632664594,
+    "sealed_records_once": 156602,
+    "stager_files_once": 9085
+  },
+  "complete_source_readiness": "coverage/evidence/current281-complete-source-readiness-v4.json",
+  "root_reader_admission": "Frozen readers-v4 bodies match independently reviewed predecessors; metadata reviewed by complete readiness6bae6296. Root inspected actual retention/profile/stager terminal0 and proof before aggregate admission.",
+  "stagers": [
+    {
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "profile": "minimum",
+      "artifact": 13565257857,
+      "artifact_sha256": "5868729f1d010e56d66a23e50880a5f32d3a5c11b3d0b1ae4620d5b7394116c1",
+      "product_json_sha256": "b641905d051f2d4034f02642dd5a33c1b7ffa6199007eda56591eee13ff8126f",
+      "qualification_raw_review_sha256": "978cf5cbf19570f3f1e29061d254fad141dc9bb48a72dc4effae9418b652337c",
+      "qualification_manifest_sha256": "e59cba50224a01ed4b889d78a71ca939b02e91682f5845d999bdc3147f819061",
+      "verified_stage_files": 3039,
+      "verified_stage_bytes": 903682971,
+      "stage_files_rehashed_this_invocation": 3039,
+      "source_derived_closure": {
+        "product_members": 228,
+        "SDK_members": 108
+      },
+      "SDK_checks": 76,
+      "whole_qualification_sealed_records_rehashed_again": 0,
+      "closeout": {
+        "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+        "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+        "next_plan_change": "Authenticates only this actual source/profile stager. Overallfour-profile release and measurement binding require root independent aggregate admission; no future-source reuse inferred."
+      }
+    },
+    {
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "profile": "modern",
+      "artifact": 13565133874,
+      "artifact_sha256": "3c53bf5ed0549a86f84614bc44949f602c0c797d8b9f5e619977ec1e80377ec7",
+      "product_json_sha256": "edc8916c2c2208fc03f2660da770a262a1e2c06951688f56c2be08f267415ce4",
+      "qualification_raw_review_sha256": "5c6a05dc673479ea0ad6b53fde889415b666adfe4c5a802affac767d611adfe6",
+      "qualification_manifest_sha256": "e426f345d171586e2c3ec335469ae596673b97d85d0646bec89cecf0e4c73656",
+      "verified_stage_files": 3039,
+      "verified_stage_bytes": 900729737,
+      "stage_files_rehashed_this_invocation": 3039,
+      "source_derived_closure": {
+        "product_members": 228,
+        "SDK_members": 108
+      },
+      "SDK_checks": 76,
+      "whole_qualification_sealed_records_rehashed_again": 0,
+      "closeout": {
+        "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+        "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+        "next_plan_change": "Authenticates only this actual source/profile stager. Overallfour-profile release and measurement binding require root independent aggregate admission; no future-source reuse inferred."
+      }
+    },
+    {
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "profile": "windows",
+      "artifact": 13566011627,
+      "artifact_sha256": "c96843ee906ceda209146916697f7a2d2ee5844aa0f44c2fb5417cc86eda5a0d",
+      "product_json_sha256": "eced68a32f788d5b683204bb2068cbc4038744a670826d15ea7bde1ea30cd5d0",
+      "qualification_raw_review_sha256": "2beed55603d28e43dd23649234d7061e62498c8878b309d3c30fe5825ca8e60b",
+      "qualification_manifest_sha256": "be0dafc3a82c111b9abdab01e4dfb120199172de8266ba21a9120b3afdd4e14e",
+      "verified_stage_files": 3007,
+      "verified_stage_bytes": 904125220,
+      "stage_files_rehashed_this_invocation": 3007,
+      "source_derived_closure": {
+        "product_members": 228,
+        "SDK_members": 108
+      },
+      "SDK_checks": 76,
+      "whole_qualification_sealed_records_rehashed_again": 0,
+      "closeout": {
+        "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+        "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+        "next_plan_change": "Authenticates only this actual source/profile stager. Overallfour-profile release and measurement binding require root independent aggregate admission; no future-source reuse inferred."
+      }
+    }
+  ],
+  "retained_archives": [
+    {
+      "id": 13566011627,
+      "name": "rank-statistics-product-windows",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "path": "D:\\Scratch\\skimage281-42347579925-artifacts\\13566011627.zip",
+      "bytes": 222075990,
+      "sha256": "c96843ee906ceda209146916697f7a2d2ee5844aa0f44c2fb5417cc86eda5a0d",
+      "seconds": 20.045120399910957,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13565961791,
+      "name": "public-qualification-minimum",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "path": "D:\\Scratch\\skimage281-42347579925-artifacts\\13565961791.zip",
+      "bytes": 1416846270,
+      "sha256": "b7a7e23fb4b323dcd854aa2910f583503ac02e065ae03a16a69fa7c7808b3cd2",
+      "seconds": 106.0601622001268,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13565773730,
+      "name": "public-qualification-windows",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "path": "D:\\Scratch\\skimage281-42347579925-artifacts\\13565773730.zip",
+      "bytes": 1330555546,
+      "sha256": "8a2c440d19f8d5d76375f8a2964254dc7f67d68b56e9901ed1102223e8c28373",
+      "seconds": 106.56767940009013,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13565773254,
+      "name": "public-qualification-debug",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "path": "D:\\Scratch\\skimage281-42347579925-artifacts\\13565773254.zip",
+      "bytes": 1835798200,
+      "sha256": "4c8d2584c076ae5393775521b7105471b7d081915e42881b670bbda9e76cdb30",
+      "seconds": 174.13645370001905,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13565257857,
+      "name": "rank-statistics-product-minimum",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "path": "D:\\Scratch\\skimage281-42347579925-artifacts\\13565257857.zip",
+      "bytes": 225858989,
+      "sha256": "5868729f1d010e56d66a23e50880a5f32d3a5c11b3d0b1ae4620d5b7394116c1",
+      "seconds": 17.249256700044498,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13565133874,
+      "name": "rank-statistics-product-modern",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "path": "D:\\Scratch\\skimage281-42347579925-artifacts\\13565133874.zip",
+      "bytes": 223059951,
+      "sha256": "3c53bf5ed0549a86f84614bc44949f602c0c797d8b9f5e619977ec1e80377ec7",
+      "seconds": 16.741133000003174,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13565114313,
+      "name": "public-qualification-modern",
+      "run": 42347579925,
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "path": "D:\\Scratch\\skimage281-42347579925-artifacts\\13565114313.zip",
+      "bytes": 1378469648,
+      "sha256": "745fef2adee07a365ef04c03c39b84e98f3798640c63832e8578200bf5cd5936",
+      "seconds": 76.30878100008704,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "small_proofs": [
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\minimum-raw-review.json",
+      "sha256": "978cf5cbf19570f3f1e29061d254fad141dc9bb48a72dc4effae9418b652337c",
+      "bytes": 28611
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\minimum-seal-once.json",
+      "sha256": "34967fb5f9fcb1f18e1dc6622d6f44e6370667b3669d4e6e8e2e9261b5e48d76",
+      "bytes": 337
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\minimum-manifest-intake.json",
+      "sha256": "626d1d135905f298187627e94376ca6813634295437c3fbc1f33cebe8106dcc9",
+      "bytes": 2658
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\modern-raw-review.json",
+      "sha256": "5c6a05dc673479ea0ad6b53fde889415b666adfe4c5a802affac767d611adfe6",
+      "bytes": 28467
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\modern-seal-once.json",
+      "sha256": "461666ff5595a919ebea975fe2c5dcae1fe00ac85bce8c08334a7af5e0f2afc7",
+      "bytes": 337
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\modern-manifest-intake.json",
+      "sha256": "221458fc02489cb37554660e9f5a33eb2ab31630090e425c882c1c03715c812a",
+      "bytes": 2657
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\windows-raw-review.json",
+      "sha256": "2beed55603d28e43dd23649234d7061e62498c8878b309d3c30fe5825ca8e60b",
+      "bytes": 19613
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\windows-seal-once.json",
+      "sha256": "b978d3086717fb878b7b50670607d901b8784e8399e62d6075169c501d5f3581",
+      "bytes": 337
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\windows-manifest-intake.json",
+      "sha256": "195cd150f67a0e129511d2dd7cdf6b239c12363ed13664e0389bfbdf392a67e2",
+      "bytes": 1594
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\debug-raw-review.json",
+      "sha256": "7acf71d44501dcee51606c5c620ecc1f487a85f2339afb063783a0581f6e088f",
+      "bytes": 28390
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\debug-seal-once.json",
+      "sha256": "49ddadd8650a61a0d3aa86c5e63d94a4a080dda0e1542e996be739c17458ee1e",
+      "bytes": 337
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\debug-manifest-intake.json",
+      "sha256": "c8ef763e2f0559c35982aff5947692a08b48cb175de96f2c22f6a5dead6edf3f",
+      "bytes": 2656
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\minimum-stager-review.json",
+      "sha256": "9dd465cdf6888407dd18157cc5ea79457ceb4cc5b1885f24226127dbbcf7c860",
+      "bytes": 1449
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\minimum-stage-seal-once.json",
+      "sha256": "224fb98cf37d4c43519e28a0cb41e55f2fa5438f829710c652e824630b6a3923",
+      "bytes": 300
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\modern-stager-review.json",
+      "sha256": "918b15ca203d628148213eea84f66a1dabbb4bb12166018d8f882b87b677c4a9",
+      "bytes": 1448
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\modern-stage-seal-once.json",
+      "sha256": "157f1b6561047e67b3a3d0870f68b3f525457fd97e1a776fc4a6e53e9e37d06e",
+      "bytes": 300
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\windows-stager-review.json",
+      "sha256": "bd893023c497adfa7fe1bdbbcc386ca4dc7eaba0b9c13c942887bd35776ca702",
+      "bytes": 1449
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\windows-stage-seal-once.json",
+      "sha256": "e33e0c82059e7f48a166c0fa87ea2af0e5bdc99f7a39d98ba6353bf7d1dfd837",
+      "bytes": 300
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\freeze-contract.json",
+      "sha256": "8e3a0d48e35a878866f32256f9a673b8f8700a1562289aa6af3a7d0c19b4b9c4",
+      "bytes": 9301
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\terminal-run.json",
+      "sha256": "53f773df34d45939309e87d941ce129be945f8132c27414a224846e847045f7d",
+      "bytes": 13524
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\artifacts-v1.json",
+      "sha256": "f6add17320bdc2be9a44bb61a3010d94d0204324bcdb90ff21d2bf00ebb7b4d3",
+      "bytes": 6304
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\retention-complete-v1.json",
+      "sha256": "f7e2d8a8f9f0bf1d76875b5232237c4ad47716f7d605e9ab68bfa8798c96f94c",
+      "bytes": 3509
+    },
+    {
+      "path": "build\\current281-qualification-v2\\retained-v1\\root-binding-v1.json",
+      "sha256": "c73977da4a364d472177197b0d5dad8b80d65046d385af39d72d8384de552060",
+      "bytes": 468
+    }
+  ],
+  "authority": "May bind benchmark controllers to this exact minimum product/runtime/core/SDK/helper and prepare source/inert checks. No timing authority; actual real cohorts, separately authorized measurement, raw/all-loss review, shipping projection and main delivery still required.",
+  "shipping": {
+    "partial_image_paths": 271,
+    "unchanged": true
+  },
+  "pending": [
+    "actual bound benchmark source/controls and real cohorts",
+    "one-thread original-public measurements/all-case disposition",
+    "final exact-source shipping projection",
+    "main281 merge/push and eligible cleanup",
+    "full477 API/domain/class/provider/platform closure"
+  ],
+  "failure_history": "All predecessors remain failed, including42342525409 sixteen strict rolling default-identity failures. Dda9 canonical-marker correction now passes; no relabeling.",
+  "waste_review": "Seven archives streamed/downloaded+SHA once (6632664594B), four seals and three stagers authenticated once. Reused helper, source readiness and reviewed readers. No build/original/numerical/timing rerun or previous seal/archive replay. Metadata diagnostic print assumed Windows Linux-only helper key; failed read had no effect on stored evidence; aggregate uses explicit platform scope. Next root binds exact minimum product and uses existing measurement/controller machinery.",
+  "predecessor": {
+    "path": "coverage\\evidence\\current281-whole-product-root-admission-v1.json",
+    "sha256": "0ed83020e27199c59e8be53abdfa2d343f433d8ff91960f3d1038babb2bed1a9",
+    "scope": "Unchanged numerical/product admission; successor supplies existing measurement-workflow admission schema without altering its authority."
+  },
+  "profile_results": [
+    {
+      "profile": "minimum",
+      "artifact": 13565961791,
+      "artifact_sha256": "b7a7e23fb4b323dcd854aa2910f583503ac02e065ae03a16a69fa7c7808b3cd2",
+      "manifest_sha256": "e59cba50224a01ed4b889d78a71ca939b02e91682f5845d999bdc3147f819061",
+      "public_XML": {
+        "tests": 241654,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "sealed_records": 40954,
+      "sealed_bytes": 2359785735,
+      "source_identity": {
+        "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+        "source_files": 2954,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "6a4a4a2630b6bf2947ccefd594ae3ac1958980f5087a61362cbdbbbebb25f1ae"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "networkx": "3.6.1",
+            "tifffile": "2026.3.3"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        },
+        "scalar": {
+          "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "1.24.4",
+            "scipy": "1.15.3",
+            "networkx": "3.6.1",
+            "tifffile": "2026.3.3"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        }
+      },
+      "FENV": {
+        "receipt_sha256": "5df0878cd438a4147cde40cf12415b2011bcbb96e40f54e226abc60b49eb8beb",
+        "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+        "source_pins": {
+          "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+          "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+          "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+          "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b"
+        },
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "glibc": "2.39",
+        "compiler": {
+          "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+          "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+          "backend": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+          "backend_sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4",
+          "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+          "target": "x86_64-linux-gnu"
+        },
+        "controls": [
+          {
+            "path": "controls-0.json",
+            "positive": 32,
+            "negative": 6,
+            "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+            "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333"
+          }
+        ],
+        "files_seal_verified": 17,
+        "new_helper_executions": 0,
+        "scope": "Actual hosted source-built bundle/controls and553savednodes per mode; no local helper rerun"
+      },
+      "review": {
+        "path": "build\\current281-qualification-v2\\retained-v1\\minimum-raw-review.json",
+        "sha256": "978cf5cbf19570f3f1e29061d254fad141dc9bb48a72dc4effae9418b652337c"
+      }
+    },
+    {
+      "profile": "modern",
+      "artifact": 13565114313,
+      "artifact_sha256": "745fef2adee07a365ef04c03c39b84e98f3798640c63832e8578200bf5cd5936",
+      "manifest_sha256": "e426f345d171586e2c3ec335469ae596673b97d85d0646bec89cecf0e4c73656",
+      "public_XML": {
+        "tests": 241654,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "sealed_records": 38879,
+      "sealed_bytes": 2308881683,
+      "source_identity": {
+        "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+        "source_files": 2954,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "ae5e5bb6ad8c95e721b2539c902dfd1520eae9de0a19392a82f0f3ec0e40e734"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        },
+        "scalar": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        }
+      },
+      "FENV": {
+        "receipt_sha256": "ae0db9fba2db8e781bc052b410471254f4ba232db0a0d79d9c59fe0559588a72",
+        "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+        "source_pins": {
+          "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+          "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+          "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+          "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b"
+        },
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "glibc": "2.39",
+        "compiler": {
+          "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+          "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+          "backend": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+          "backend_sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4",
+          "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+          "target": "x86_64-linux-gnu"
+        },
+        "controls": [
+          {
+            "path": "controls-0.json",
+            "positive": 32,
+            "negative": 6,
+            "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333"
+          }
+        ],
+        "files_seal_verified": 17,
+        "new_helper_executions": 0,
+        "scope": "Actual hosted source-built bundle/controls and553savednodes per mode; no local helper rerun"
+      },
+      "review": {
+        "path": "build\\current281-qualification-v2\\retained-v1\\modern-raw-review.json",
+        "sha256": "5c6a05dc673479ea0ad6b53fde889415b666adfe4c5a802affac767d611adfe6"
+      }
+    },
+    {
+      "profile": "windows",
+      "artifact": 13565773730,
+      "artifact_sha256": "8a2c440d19f8d5d76375f8a2964254dc7f67d68b56e9901ed1102223e8c28373",
+      "manifest_sha256": "be0dafc3a82c111b9abdab01e4dfb120199172de8266ba21a9120b3afdd4e14e",
+      "public_XML": {
+        "tests": 238550,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "sealed_records": 37981,
+      "sealed_bytes": 3063754842,
+      "source_identity": {
+        "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+        "source_files": 2954,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "a2b370bb6c461918e7a35ce0bd69ded56b2724132c7964df21fd9890872245a1"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15",
+            "colorama": "0.4.6"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        },
+        "scalar": {
+          "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15",
+            "colorama": "0.4.6"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        }
+      },
+      "FENV": {
+        "scope": "No Linux FENV helper inferred for Windows"
+      },
+      "review": {
+        "path": "build\\current281-qualification-v2\\retained-v1\\windows-raw-review.json",
+        "sha256": "2beed55603d28e43dd23649234d7061e62498c8878b309d3c30fe5825ca8e60b"
+      }
+    },
+    {
+      "profile": "debug",
+      "artifact": 13565773254,
+      "artifact_sha256": "4c8d2584c076ae5393775521b7105471b7d081915e42881b670bbda9e76cdb30",
+      "manifest_sha256": "d837fd5526332a0fb6433e28b600e8546c85978ee6bd05790094dbed4acb1f88",
+      "public_XML": {
+        "tests": 241654,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "sealed_records": 38788,
+      "sealed_bytes": 3541670034,
+      "source_identity": {
+        "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+        "source_files": 2954,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "d8cf7c4094b347c5593e8ffd614a2f620dbcd9cffc6ed1255d9b0e248e56854f"
+      },
+      "runtime": {
+        "normal": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        },
+        "scalar": {
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "versions": {
+            "imageio": "2.38.1",
+            "iniconfig": "2.3.1",
+            "lazy-loader": "0.6",
+            "packaging": "26.3",
+            "pillow": "13.0.0",
+            "pluggy": "1.7.0",
+            "pygments": "2.21.0",
+            "pytest": "9.1.1",
+            "scikit-image": "0.26.0",
+            "numpy": "2.5.4",
+            "scipy": "1.18.1",
+            "networkx": "3.7",
+            "tifffile": "2026.10.15"
+          },
+          "default_workers": 1,
+          "shared_workers": [
+            1,
+            4
+          ]
+        }
+      },
+      "FENV": {
+        "receipt_sha256": "3c4cd42123d7b4e8f7a2f1503aa155071291f4106ff18f61223fd617f82cb6a8",
+        "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+        "source_pins": {
+          "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+          "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+          "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+          "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b"
+        },
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "glibc": "2.39",
+        "compiler": {
+          "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+          "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+          "backend": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+          "backend_sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4",
+          "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+          "target": "x86_64-linux-gnu"
+        },
+        "controls": [
+          {
+            "path": "controls-0.json",
+            "positive": 32,
+            "negative": 6,
+            "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+            "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333"
+          }
+        ],
+        "files_seal_verified": 17,
+        "new_helper_executions": 0,
+        "scope": "Actual hosted source-built bundle/controls and553savednodes per mode; no local helper rerun"
+      },
+      "review": {
+        "path": "build\\current281-qualification-v2\\retained-v1\\debug-raw-review.json",
+        "sha256": "7acf71d44501dcee51606c5c620ecc1f487a85f2339afb063783a0581f6e088f"
+      }
+    }
+  ],
+  "passed": true,
+  "root_accepted": true,
+  "profiles": 4
+}

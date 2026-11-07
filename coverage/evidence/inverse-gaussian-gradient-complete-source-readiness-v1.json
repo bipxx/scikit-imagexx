@@ -1,0 +1,52 @@
+{
+  "schema": "inverse-gaussian-gradient-complete-source-readiness-v1",
+  "status": "PASS_COMPLETE_ACTUAL_WORKFLOW166_BOTH_RETAINED_WINDOWS_PYTHONS",
+  "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+  "independent_review": {
+    "path": "build\\igg282-complete-source-independent-review-v1\\review-v1.json",
+    "sha256": "8f34b1db7a4a405cbff6de7adfcbc4ae3bd7824bee968014869d9f7c1a12c5bb",
+    "reused_scope": "Exact command/identities/XML/conftest/plugins/terminal proof only; inaccurate169 selector label explicitly superseded below"
+  },
+  "workflow": {
+    "path": "build/worktrees/inverse-gaussian-gradient-enabled-v2/.github/workflows/public-qualification.yml",
+    "sha256": "0b8688070ec79991e2385e8fbdcf3b3fd42dfabe043be5feb2e6bd9b1dbe256e",
+    "bytes": 15943
+  },
+  "selectors": 166,
+  "pytest_argument_tokens": 171,
+  "argument_breakdown": "166 test selectors + -q/--capture=sys +3 existing workflow output options; runner appends3 output overrides without removing any selectors.",
+  "profiles": [
+    {
+      "profile": "windows311",
+      "terminal": "build\\igg282-sourcebarrier-v1\\sourcebarrier-windows311-v1\\terminal.json",
+      "terminal_sha256": "b4bef7784a2010c051ec5c6afc4c53b397d2776f8ec90f7bf09df9fd74a7410e",
+      "ordinary_nodes": 3998,
+      "passed_subtests": 8,
+      "reported_checks": 4006,
+      "seconds": 398.31300000008196,
+      "runtime": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]"
+    },
+    {
+      "profile": "windows313",
+      "terminal": "build\\igg282-sourcebarrier-v1\\sourcebarrier-windows313-v1\\terminal.json",
+      "terminal_sha256": "7a7d6205d2682c8508c158fcbbeb091c4aea1b0f7392fd69760b39f8fa35538b",
+      "ordinary_nodes": 3998,
+      "passed_subtests": 8,
+      "reported_checks": 4006,
+      "seconds": 365.0021228999831,
+      "runtime": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]"
+    }
+  ],
+  "normal_conftest_plugins": true,
+  "science_calls": 0,
+  "preserved_failure": "Reviewer counted169 post-leading tokens as selectors, including -o/cache_dir/--junitxml. Root assertion rejected that claim before readiness write; actual166 selector count verified from frozen workflow/argv and reviewer acknowledged. Original review immutable. No source/test change or rerun.",
+  "pending": [
+    "larger8 F1 corrected source/readiness admission",
+    "minimum8 raw then modern8 raw under separate root authority",
+    "native saved larger8 accuracy comparison",
+    "genuine exact-source four-profile installed product/SDK qualification",
+    "one-thread original-public comparisons",
+    "main delivery"
+  ],
+  "waste_review": "Reused successful complete actual commands and independent scope. Corrected only token-vs-selector accounting before dependent dispatch; no unions/changed acceptance/scientific replay/barrier restart or new framework."
+}

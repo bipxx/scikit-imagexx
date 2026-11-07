@@ -1,0 +1,40 @@
+{
+  "schema": "igg-large-accuracy-root-readiness-v2",
+  "passed": true,
+  "status": "PASS_NARROW_F1_CORRECTION_STRICT_PREFIX_REUSE_CAPTURE_GO_STILL_SEPARATE",
+  "source": "13d8a6b2c013921620d747f1706d5651653be40f",
+  "controller_sha256": "4ce81f5fd34a11e6809fba61b0754beb1c0b6b3443a32059cadcfdb61e415485",
+  "binding_sha256": "c1d297634201710a1bf3bbab44e980bb763e3a047e956c5d62ca3595705e65a3",
+  "handoff": {
+    "path": "build\\igg-large-accuracy-terminal-v2\\handoff-v2.json",
+    "sha256": "11551b7fae8db58462c4e02607d8539ea17ea4bec0471defb09559ff16ace046"
+  },
+  "predecessor_failed_independent_review": {
+    "path": "build/igg-large-accuracy-independent-review-v1/review-v1.json",
+    "sha256": "3f627e06a77802fb558b032cfad3e119bb5fc933440910e5de0878ae9d9735ee"
+  },
+  "root_review": "Inspected actual three-file delta and actual-tail inert controls. Completion ACK set only after exclusive dump write/flush/fsync/close returns; path existence no longer suppresses fallback. Distinct exclusive fallback retains partial original terminal, raw immediate/caller/process32 evidence, primary/final validation/secondary journal failures; no target retry. Mutable diagnostic snapshot preserves subsequent secondary error. Actual capture-tail fault controls exercise all six primary-final/writer combinations; no scientific calls.",
+  "reconciliation": {
+    "source_files": 3,
+    "small_proofs": 365,
+    "proof_bytes": 777783,
+    "source_checks_each_Windows": 47,
+    "historical_prefix_processes_reused": 4,
+    "new_prefix_or_factory_processes": 0,
+    "controller_inverse_fragments": 10,
+    "frozen_cases": 8,
+    "max_elements": 65536,
+    "max_named_numerical_bytes": 26382336,
+    "max_correlation_terms": 10747904
+  },
+  "accepted_scope": "Source/readiness only, exact runtime/helper/cases and unchanged dependency closure. Historical ca6 prefixes retain old source/controller/binding identities, pinned exact profile paths/digests and strict10fragment inverse to predecessor; not relabelled as13d executions.",
+  "authority": "Root may separately issue minimum8 fixed original-reference GO; modern requires minimum raw admission. This receipt grants no actual calls by itself, no native/helper/build/timing or old79 recapture.",
+  "pending": [
+    "root minimum-only8 GO and actual capture",
+    "independent minimum raw admission before distinct modern8 GO",
+    "modern raw admission",
+    "separately authorized saved native larger8 accuracy comparison",
+    "genuine282/283 installed product/SDK qualification and one-thread performance"
+  ],
+  "waste_review": "Reused previous991proof source/storage/runtime/helper/reference scope and four actual prefixes; authenticated only new365small proofs and narrow source delta. No unchanged original/prefix/helper/native/build/download/large-hash replay. Root owns sequential minimum then modern capture; retain all failures/partial artifacts, no automatic retry."
+}
