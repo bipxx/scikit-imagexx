@@ -1,0 +1,34 @@
+{
+  "schema": "mark-wide-outer-capture-root-review-v1",
+  "status": "CHANGES_REQUIRED_NO_PREFIX_OR_REFERENCE_AUTHORITY",
+  "source": "d2bbbf46b3753d2621f3f0315f8bf64ba85dffd3",
+  "independent_review": {
+    "path": "build\\mark-wide-outer-capture-independent-review-v1\\review-v1.json",
+    "sha256": "59d659c94098c0c822b6aa5ff53763d864f6ad8c5f90cb69a82709593ad48029"
+  },
+  "root_reconciliation": "Rootreadactualentry path-existence earlyrethrow, last/finaldiagnostic propagation andprefixsetupbranch. Existing38source/inertpasses do not establish missingactualpartial-write/alias-entry/counter requirements. No prefix/originalbody ran; no scientificscope invalidated.",
+  "findings": [
+    {
+      "id": "R1",
+      "title": "Terminal fallback loses diagnostics on partial writes and late/secondary failures",
+      "required": "Use the already-corrected admitted IGG13d diagnostic propagation/terminal-ACK pattern: preserve current primary and last_case diagnostics before writer boundaries; never let mere partial path existence suppress a distinct fallback; retain original partial file. Add only bounded actual entry/late-final-check/secondary-case-writer refusal controls. No replay of original or prefix work."
+    },
+    {
+      "id": "R2",
+      "title": "Actual prefix fixture/setup budget is twice the declared metadata count",
+      "required": "Correct versioned command/handoff/prefix authorization metadata to8fixture invocations/process64total, explicitly include small inert returned allocation, or change/setup-reuse code without weakening real same-observer/error/success checks. Keep four futureoriginal calls/profile and eight total unchanged. Reconcile exact controller/binding/prefix pins before any actual prefix GO."
+    },
+    {
+      "id": "R3",
+      "title": "Normalized origin check does not establish the exact filename predicate used for target refusal",
+      "required": "Before any real target request, require raw code filename to match the actual trace predicate exactly, or classify known target code objects directly. A narrow metadata assertion plus bounded alias refusal control suffices; do not add a framework or execute originals to discover the mismatch."
+    }
+  ],
+  "supported": "Correctmaxreturn288B/fourreturns456B,4fixed3x4recipes,oldquarantine preserved/nativeWindowsGit WinD locator.33privateABI/stages remainvalidlimitedproofs.",
+  "next_owner": "readiness_reviewer authorsone minimalversionedsuccessor withdurableterminalACK/distinctpartialfallback+primarysecondary retention,8actualfixturecalls/prefix64total+counter, actualcallable-code identity entryrefusal beforebody; wholeaffectedsource/inertbothPython. RootprefixGOonlyaftercorrectedreadiness; min4thenrawreviewthenmodern4 separately.",
+  "prefixes_executed": 0,
+  "original_calls": 0,
+  "native_calls": 0,
+  "tests_replayed_by_peer": 0,
+  "waste_review": "Independentreview stoppedthree realsetup/retention defects before8prefixes/neworacles. Reusecorrected13d pattern; avoidoldexistsheuristic/countingonlyexplicitcontrols. Groupfindingsonce, preserveV2/failedmetadata/source/proofs, no speculativeframework/scientificrerun. Rootreceiptassembler quoteerror stoppedbeforewrite; correctedmetadataonly."
+}

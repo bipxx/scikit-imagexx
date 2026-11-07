@@ -1,0 +1,24 @@
+{
+  "schema": "lbp-only-comparison-root-source-admission-v1",
+  "status": "PASS_SOURCE_EXPLICIT_FOUR_CASE_SUBSET_NO_REAL_COMPARISON_AUTHORITY",
+  "source": "05875ff666853bac2119a12231b105a578c5995e",
+  "parent": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "api": "feature.draw_multiblock_lbp",
+  "admitted_controller_sha256": "9d37d46d91619a7faa8d646f6d961aaa6304acbd9a1f6e52f94fe8ecfa13fd1d",
+  "handoff": "build\\lbp-only-comparison-v1\\handoff-v1.json",
+  "handoff_sha256": "11f9fe2344ae4149ba535b89bfddbf1247865a7d2b005cf753d6efcafc5d42a4",
+  "changed_files": 3,
+  "proofs": 29,
+  "complete_source_tests_each_python": 23,
+  "scope": {
+    "cases": 4,
+    "samples": 56,
+    "warmup_groups": 8,
+    "API_cohorts": 1,
+    "workers": 1
+  },
+  "root_review": "Readparenthash/externalonewayGO+sourceadmission boundary, derivesexplicitLBP-onlyroutes/families/4casecounts withoutrewritingparent373; onlyoneauthority minted, unchangedstandaloneLBPprobe/F1/C1/oncepostbatch beforetiming. SamequalifiedDDA driver/cases/method, strictlegacyvalidate_measurement inertpositive andcontainednestedreportlocator. MARK8remainsfailed/pending, notskippedaspassed.",
+  "failures": "First22pass/1missing syntheticbinding.source_revision failure retained; fixedfixture, affectednodePASS thenactualcompletecurrent23modulePASSbothPython, no unionreadiness.",
+  "pending": "Rootassignsingleintegrationauthor forminimalmanualLBPworkflow andsourceguards, rootadmissionreceiptintake exactnewfilehash; actualproducer/stager/runtime/helper/clock/onecohortGO thenonly4firstcomparisons. No neworiginalcapture/helper/native/timing/build/download/hosted ran.",
+  "waste_review": "Splits genuinelyreadydraw_multiblock_lbp4 fromfailedMARK8, preservesfull80scope. ReusesqualifiedDDA/oldparent/driver/fixtures/helper/verifier ratherthanchangesnative orrerunsreferences. Full23affectedbarrier afterfixturefixavoidsambiguouspartialunion."
+}

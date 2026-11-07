@@ -1,0 +1,19 @@
+{
+  "schema": "vi-value-diagnostic-workflow-root-source-admission-v1",
+  "status": "PASS_SOURCE_MANUAL_WORKFLOW_REGISTRATION_ONLY_NO_ACTUAL_AUTHORITY",
+  "source": "78deb6169d2b87f4d3a6325a9e65f495bae4ed47",
+  "parent": "518386ddedde0e5b3f3ebf2117d54b695645e7d9",
+  "handoff": "build\\vi-value-diagnostic-enabled-v1\\handoff-v1.json",
+  "handoff_sha256": "3f8c60daae40368ad0452c9cbae9076a5b8ecac7a892d240f8ba0ae9f85d5920",
+  "workflow": ".github/workflows/vi-value-diagnostic.yml",
+  "workflow_sha256": "354b01a6cbe2302d0f207d5cbbd04e83dde45b7381e4704da123dac119a6c589",
+  "new_source_files": 2,
+  "proofs": 10,
+  "source_checks_each_python": 7,
+  "reused_wrapper_source_admission": "coverage/evidence/vi-cohort-value-diagnostic-root-source-admission-v1.json",
+  "inline_Python_blocks": 4,
+  "root_review": "Read fullworkflow: defaultUNBOUND beforeAPI/helper/target; exactfrozenDDA producer/stager/14wheel/offlineidentity/F1 reused. RootconditionalUTC hostwriter createsonewayexternalSHAGO aftersource/runtime/helper binding; oldprobe.mainonlythroughwrapperonce, no timing/report stages. Nonzeroprimary preserved, always distinctsmallartifact inclhidden. Normalpass remainszero-timing samplerstop, not fabricatedwords.",
+  "registration_only": "Copyonlyexactmanualworkflowbytes todefaultmain toregister path; no private518/373/DDAcodeancestry imported. Newworkflowrequires frozen78deb ref andmissingmainwrapper failsbeforehelper/target evenifselectedwrong. Main271 unchanged.",
+  "pending": "Pushfrozenbranch/validatedregistration, inspectactualworkflowAPIstate/remote/no-priorrun/producer-minartifact/capacity, actualUTC conditionalGO thenonefreshhostdiagnostic original1/native1/sampler0/timing0. No authority grantedbythissource receipt.",
+  "waste_review": "Reuse7actualsourceXML eachPython+13wrapper proofscope, fourinlineblockcompilechecks; no source-scope union masqueradingrelease/no scientificreplay. EarliestVIready notwaitingIGG/MARK/LBP."
+}

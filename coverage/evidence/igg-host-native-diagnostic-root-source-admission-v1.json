@@ -1,0 +1,15 @@
+{
+  "schema": "igg-host-native-diagnostic-root-source-admission-v1",
+  "status": "PASS_SOURCE_INERT_HOSTED_EXECUTION_UNBOUND",
+  "source": "e392efbd9850954ff6a2f173c2c013dd684df3ba",
+  "parent": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+  "handoff": "build\\igg282-host-native-diagnostic-v1\\handoff-v1.json",
+  "handoff_sha256": "93af0af70018c700f8cbcaa527e3909d9b144a2000c368d62b5bf47208349958",
+  "changed_files": 3,
+  "proofs": 70,
+  "source_inert_tests_each_python": 32,
+  "root_review": "Inspected twofixedartifact API/streamedidentity intake and13offline-nonproduct-wheel selection; actual852core isolatedfromDDAproduct. Threeownedhistorical3x4calls<=15imageentries, originals/timing0. Reference-only naturallyproducedstage buffers lifetime fromfresh-output/const-input binder; full32drift refused withoutmasking, encodingdeferredafterimmediateFP/callerrestore; source/core/runtime/GO/helper/checkout identities explicit.",
+  "limitations": "FreshUbuntu24.04/Python3.11.17VM cannotbe calledthe retiredVM. Native-only result/stages do not establish current-host originalparity or a numericalfix; savedhostfailure retained. Post-helper/import processsnapshot only. Actualartifactdownload1648314664bytes/newhosthelperbuild/install/nativecalls not yet authorized.",
+  "pending": "Root-finalized thinmanualworkflow/sourceguards bothPython; correctbasee392orcompatible852descendant preservingROOTsourcepins, dispatch=checkout=GOsource. Only afteractualreadiness/UTC conditionalrootGO canfetch/install/sourcehelper/native3run. VIearliestworkflow independent; no new fullqualification or localrerun.",
+  "waste_review": "Reused32actualpureXML/70smallproofs, rawheldinputs andcachedqualification/runtime identity. No newarchive/core/SDK hashes oralgorithms. Twoimmutableinputs transportedonceperfuturehost, no outputartifact duplication ofwheels/core."
+}

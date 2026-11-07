@@ -1,0 +1,20 @@
+{
+  "schema": "igg-native-three-workflow-root-source-admission-v1",
+  "status": "PASS_SOURCE_MANUAL_REGISTRATION_ONLY_ACTUAL_HOST_UNBOUND",
+  "source": "eab131331f854647a1a3c19a86f8ab3ca59c8eac",
+  "parent": "e392efbd9850954ff6a2f173c2c013dd684df3ba",
+  "handoff": "build\\igg-host-diagnostic-enabled-v1\\handoff-v1.json",
+  "handoff_sha256": "3d3e282b3e252387e166dccdd6d2b4de292235632bff45b6f28dac11acc16628",
+  "workflow": ".github/workflows/igg-native-three-diagnostic.yml",
+  "workflow_sha256": "7252f84201ded281020d7ee0c458cf99fee020e70a22193655224b6bfd76ed7d",
+  "source_checks_each_python": 64,
+  "source_modules": 2,
+  "proofs": 22,
+  "inline_Python_blocks": 5,
+  "bash_syntax_blocks": 7,
+  "root_review": "Readfullworkflow: explicitUNBOUND/UTC/attempt1/exactsource+3/15/0budgets beforecheckout/fetch. ExactUbuntu24.04/Python3.11.17/sourceidentity+sourcepins/capacity, 2immutableinputfetches/13nonproductofflinewheels/source64/F1freshhelper thenboundleafGO, native3only, mismatchnonzero, alwayssmallcollector excludespayloads. No mixedDDA281productacceptance andno actualoldVM claim.",
+  "registration": "Copyonlyexactmanualworkflow todefaultmain toregisterAPI; no e392/852private/native ancestry. Main271 unchanged; rootdispatchmustselectfrozeneabref afterremote/actualAPI/noprior/artifacts/capacity/actualUTC checks.",
+  "reused_source_admission": "coverage/evidence/igg-host-native-diagnostic-root-source-admission-v1.json",
+  "pending": "Publishvalidatedmanualregistration andfrozenbranch; explicitonefreshhostauthorization JSON allow2fixedartifactdownloads/F1helperbuild/native3(original0/timing0), exactcontext/script/core/deadline. Actualresults/stage/CPU mustbereviewed beforeanymathfix/qualification.",
+  "waste_review": "Reusedexactcurrent64XML eachPython and22smallproofs plus5inlinePython/7shellsyntax checks; no extra package/actionlintinstall/scientific/largeauth. Newhosttransportnecessaryforactualruntime context, eachinputonce; outputskeepmetadata/results only."
+}

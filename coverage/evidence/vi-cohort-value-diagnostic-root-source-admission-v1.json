@@ -1,0 +1,19 @@
+{
+  "schema": "vi-cohort-value-diagnostic-root-source-admission-v1",
+  "status": "PASS_SOURCE_INERT_NO_ACTUAL_COHORT_OR_HOST_AUTHORITY",
+  "source": "518386ddedde0e5b3f3ebf2117d54b695645e7d9",
+  "parent": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "handoff": "build\\vi-cohort-value-diagnostic-v1\\handoff-v1.json",
+  "handoff_sha256": "e368763a8551bcd71ec75fa0a3d59188e8b0d4bc80f9a29618940b8a9becd475",
+  "source_files": 3,
+  "proofs": 12,
+  "source_checks_each_python": 13,
+  "dependency_pins": {
+    "controller": 2,
+    "prepared": 14
+  },
+  "root_review": "Inspected unchangedoldprobe.main singleinvocation, captureofactualexecute tracebackexpected/actual typed2wordoutputs andexistingFP/count/input evidence afteroldfinally; primaryfailure/partialcodec/writer evidence retained, ownfull32restoration andexternalonewayGO. Oldstrictassertions/native/driver/sampler unchanged. Normalpass retainsoldmandatorysamplerstop withoutinventingwords.",
+  "limits": "Newtrustboundary reusesauthenticatedF1 thenoldprobe validatesownbinding; snapshotposthelperimports, no processentrybeforeimportsclaim. Original1/native1 wouldbe permitted onlyafteractualhostsource/runtime/helper/clockGO; wrapperitself adds0targetcalls.",
+  "pending": "Rootintegrates thinmanualhostedcohort-only workflow usingfrozenDDAstager,sourceguards bothPython,actualconditionalUTC diagnosticGO,onecohortthenartifactretention; no measurementstage. Actualdiagnostic original/native/helper/factory execution budgets remain0.",
+  "waste_review": "Reused13actualinertXML eachPython andoldcontroller/source pins, no reference/target/helper/build/timing/download replay. Capturemissingactualfailurevalues before any mathfix; codeguards observedlost-evidence/diskpressure failure paths, no genericframework."
+}

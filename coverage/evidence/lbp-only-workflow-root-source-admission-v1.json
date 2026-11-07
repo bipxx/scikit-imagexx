@@ -1,0 +1,29 @@
+{
+  "schema": "lbp-only-workflow-root-source-admission-v1",
+  "status": "PASS_SOURCE_MANUAL_REGISTRATION_ONLY_NO_COMPARISON_AUTHORITY",
+  "source": "49312f444078f3f7f3325d06880da32fbf061df5",
+  "parent": "05875ff666853bac2119a12231b105a578c5995e",
+  "handoff": "build\\lbp-only-enabled-v1\\handoff-v1.json",
+  "handoff_sha256": "e1ba605ce6cf65f1d191c4f32daac3eb026ab170a32e44a08f70291bfdb2a9d9",
+  "workflow": ".github/workflows/lbp-only-initial.yml",
+  "workflow_sha256": "668e5dd1ac3036a91bf5756937f492b1c72cc840f31a5f4a65806c3c99d1d8df",
+  "actual_complete_tests_each_python": 33,
+  "source_modules": 2,
+  "new_source_files": 3,
+  "proofs": 21,
+  "inline_Python_blocks": 5,
+  "bash_syntax_blocks": 5,
+  "api": "feature.draw_multiblock_lbp",
+  "scope": {
+    "cases": 4,
+    "samples": 56,
+    "warmup_groups": 8,
+    "API_cohorts": 1,
+    "workers": 1
+  },
+  "root_review": "Readwholeworkflow andunchangedparentwriter tostrictsubsetconsumer: defaultUNBOUND, fixedDDAproducer/offline14wheel/identity, exact806378 rootadmission+onewayexternalGO authorizeBEFOREhelper; onlyLBPbinding/oldCLIcohort/oncepostbatchPASS before4cases. Containednestedactualreport/journal/summary alwayscollected incl5smallcontrollersources. MARK8notauthorizedorclaimedpassed.",
+  "root_source_admission": "coverage/evidence/lbp-only-comparison-root-source-admission-v1.json",
+  "registration": "ExactnewmanualYAMLonly publishedonmain toregister; no private373/0587/native ancestryimported. Rootreceiptcopyinprivatecandidateexact806378 alreadyrootauthored. Main271 unchanged.",
+  "pending": "Pushfrozen493ref/validatedregistration; rootactualworkflowAPI/remote/no-priorrun/producer/artifact/capacity checks +freshUTCconditionalGO thenonefixed4casecomparison. No unenteredLBPtiming repeated; preserveMARKfailure.",
+  "waste_review": "Reusecompletecurrent33module-pair XML eachPython/21proofs/5inline+5shellsyntax, no scientific/helper/measurement/build/env/download. Independentlyready4casefamily nolongerwaitsMARK; full80scope preserved."
+}
