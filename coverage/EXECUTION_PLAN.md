@@ -66,6 +66,12 @@ IGGminimum native diagnostic: root independently verifies frozen3bb925 handoff/s
 
 Waste closeout: existingraw/primitives/retainedreceipts reused, no newqueue/framework or repeatedscience/largeauth. Localnativecostexact3calls, elapsedunknown; do notrerun tomeasureit. Checklist updater initially assumed everyAPI had a followinganchor; lastAPI uses sectionend. Corrected the metadata insertion boundary beforeanywrite, no evidence/implementation effect. Nextowners/triggers: three frozenreadiness packets, rootindependentadmission then boundedexecution; progress remains scopedAPI/domain closure and deliveredincrements.
 
+## Storage transition — cold source locators (2026-11-07)
+
+[Fourcold source worktrees relocated](evidence/cold-worktree-storage-relocation-v1.json) fromCworkspace/build/worktrees toD:/Scratch/scikit-imagexx-cold-worktrees: GLCM2688/05bd, goldenb537/e0E. Eachresolvedpath/clean/noactiveprocess/noenvcompiledproducts wasverified; originalHEADs/branches/cleanstatus remainexact after nativeMove-Item+gitworktreerepair. Initialgitcrossvolumemove failedImproperlink withoutmutation, preserved; no rejectedcleanup retry orrecursive deletion. Historicalhandoffs/receipts remainimmutable andtheir oldCpaths historical; usecurrentDlocators before futureintake. ActiveR3106/BVI/CIGG/DDA/852/1fb sources/handles/raw/envs unchanged. Cfree observed~0.775GB before,~4.55GBafter; concurrentactivity meansno exactreclamationattribution. Dfree~36.6GB. Futuredisposabletestfixtures/nativeobjects goD, no furtherCsourcecopies whiletight. No scientificrerun/acceptancechange fromrelocation. Ledgerupdate initiallyassumed current_checkpoint onthese2olderrecords; theyuse next_gate. Stoppedbeforeledgerwrite, correctedonlyexistingnext_gate fields; no source/evidenceeffect.
+
+GLCMfuturelarger8readiness2688 remainsUNBOUND/no prefix/originalauthority; rootmustreadthecurrentDsource withretained8619handoff beforeGO. Golden1fb complete168 alreadyPASS4041ordinary+8subtests perPython; b537outer source/PERF intake future andinherited852numericalfailure remainpending. Oldlive69747/66891 gates retired. Rootupdatesonlytheseoperationalnextgates; no newqueue/framework or benchmarkreplay.
+
 ## Current coverage checkpoint — supersedes older live-status text
 
 Shipping remains **271 partial native image APIs**. The inventory/checklist covers477 public keys,29classes and284static members; published68one-thread cases remain34wins/34losses. No full-contract completion or library-wide speed superiority is claimed.

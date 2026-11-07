@@ -1,0 +1,53 @@
+{
+  "schema": "cold-worktree-storage-relocation-v1",
+  "status": "PASS_FOUR_COLD_SOURCE_WORKTREES_MOVED_GIT_REPAIRED_NO_SOURCE_REMOVAL",
+  "worktrees": [
+    {
+      "previous_worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\glcm-large-accuracy-v1",
+      "current_worktree": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\glcm-large-accuracy-v1",
+      "source": "2688ff893635cf8e68e1037d5e72474f9886a115",
+      "branch": "prepare/glcm-large-accuracy-v1",
+      "clean": true,
+      "old_path_absent": true,
+      "source_commits_retained": true
+    },
+    {
+      "previous_worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\glcm-benchmark-outer-v1",
+      "current_worktree": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\glcm-benchmark-outer-v1",
+      "source": "05bddff4fa7ea0cc05551c1e8fc4d49ae87d2661",
+      "branch": "bench/glcm-outer-v1",
+      "clean": true,
+      "old_path_absent": true,
+      "source_commits_retained": true
+    },
+    {
+      "previous_worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\golden-angle-benchmark-controller-v1",
+      "current_worktree": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\golden-angle-benchmark-controller-v1",
+      "source": "b537384abe0a6878a25474c75678206061c568dd",
+      "branch": "feature/golden-angle-benchmark-controller-v1",
+      "clean": true,
+      "old_path_absent": true,
+      "source_commits_retained": true
+    },
+    {
+      "previous_worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\golden-angle-enabled-v1",
+      "current_worktree": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\golden-angle-enabled-v1",
+      "source": "e0e80b8383f343fe11fb0d1cb6c152075141596d",
+      "branch": "integrate/golden-angle-enabled-v1",
+      "clean": true,
+      "old_path_absent": true,
+      "source_commits_retained": true
+    }
+  ],
+  "preconditions": "Verified resolvedsource underworkspace/build/worktrees anddestunderexplicitDroot; eachclean/no untrackedsource/no env or archive/core/library ignoredproducts; no Windows/WSL process referencedtargets. Activeagents/source/runtime/benchmarks untouched.",
+  "method": "Native Windows Move-Item exactLiteralPaths followed by nativeGit worktree repair; each HEAD/clean status checked before next move. No recursive deletion, no entirebuild operation.",
+  "failure_preserved": "Initial git worktree move firsttarget failed exit1 Improper link across volumes, with sourceunchanged/targetabsent. Native same-shell move+Gitrepair thenpassed; no deniedcleanup bypass. Prior blockedcleanup paths untouched.",
+  "capacity": {
+    "C_before_observed": 774979584,
+    "C_after_observed": 4516712448,
+    "D_after_observed": 36616089600,
+    "attribution": "Observedfree-space values; concurrent systemactivity mayaffect delta, no inventedexactreclaimedbyteclaim."
+  },
+  "evidence_policy": "Frozen historicalhandoff/receiptbytes andallsourcecommits retained. Futureentry mustusecurrent_worktree locators here and verifyactualsourceidentity; source/runtime/profile gates otherwiseunchanged. Metadata relocation doesnotrerun numerical evidence or waivependingchecks.",
+  "waste_review": "Capacityissue causedby~700MB checkoutcopies; fourcoldsourceonlycheckouts relocated ratherthan deletingunique worktrees/evidence or touchingactivejobs. No environments/newsourcecopies/scientific reruns. UseDscratch fordisposablefixtures/objects andavoidfurtherCworktreecopies whiletight."
+}
