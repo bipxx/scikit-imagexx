@@ -1,0 +1,44 @@
+{
+  "schema": "lbp-only-comparison-v1",
+  "status": "UNBOUND_NO_EXECUTION_AUTHORITY",
+  "parent_source": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "parent_path": "coverage/contracts/mark-lbp-measurement-v5.json",
+  "parent_sha256": "f39b1282641b58960da024ffdd9163e3a329417b38cb44bcc52175452529b30d",
+  "api": "feature.draw_multiblock_lbp",
+  "case_ids": [
+    "gray-u8-C",
+    "RGB-f32-F",
+    "RGB-f64-reverse-wrap",
+    "RGB-f64-C-large"
+  ],
+  "scope": {
+    "canonical_cases": 4,
+    "canonical_raw_samples": 56,
+    "warmup_groups": 8,
+    "workers": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "untimed_topcalls": {
+      "original": 1,
+      "native": 1
+    },
+    "no_automatic_retry": true,
+    "retain_all_losses": true
+  },
+  "dependencies_sha256": {
+    "tools/mark_lbp_first_cohort_probe.py": "7913cb2611b1b8d2b33ce4f6ea85243fb660e287fe9081d6baedb74c536a821f",
+    "coverage/contracts/mark-lbp-measurement-v5.json": "f39b1282641b58960da024ffdd9163e3a329417b38cb44bcc52175452529b30d",
+    "benchmarks/draw_multiblock_lbp_execution.py": "31d68471a17ab1ca9e82bcf88e303412144d5cec84fc946594633603a562a540",
+    "benchmarks/draw_multiblock_lbp_native.py": "08c41d53538bbdabf4c33fd818eb67f8dfb141d0f1779762e1b29a61707a0a78",
+    "benchmarks/mark_boundaries_execution.py": "ff467aff85429349b925126d82b40a33f7b5dfb42af37ff3c6044c37c63d9365",
+    "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v5.json": "0a119d4e429516debeaa8a6b9f9699ead8009d5a9b1ca9bc7edc2d70d8854ed9"
+  },
+  "root_GO": null,
+  "controller_admission": null,
+  "created_utc": null,
+  "deadline_utc": null,
+  "MARK_scope": "Excluded: eight MARK cases remain FAILED/pending; no authority minted for MARK.",
+  "providers": "Unchanged qualified LBP route; conversion/assignment scalar provider and native owning kernels remain disclosed by its pinned context.",
+  "clock": "Actual UTC root inputs after independent controller admission; no local authority or deadline."
+}
