@@ -1,0 +1,31 @@
+{
+  "schema": "finite-radon-export-reader-root-admission-v2",
+  "passed": true,
+  "status": "PASS_TWO_FILE_HISTORICAL_CURRENT_EXPORT_READER_FIX_COMPLETE168_STILL_REQUIRED",
+  "source": "1fbff2af3f5f2f63674aef9ae5f0ae1298759300",
+  "base": "e0e80b8383f343fe11fb0d1cb6c152075141596d",
+  "handoff": {
+    "path": "build\\finite-radon-export-reader-v2\\handoff-v1.json",
+    "sha256": "dd9c9f342caf769b602bc1ea1dd163e242d3ad1ee43b53f5a561b2e872415f7d"
+  },
+  "authentication": {
+    "source_files": 2,
+    "small_proofs": 11,
+    "proof_bytes": 17420,
+    "source_checks_each_Windows": 20
+  },
+  "root_source_review": "Existing strict golden transform projection reconstructs actual852 raw155c; old Radon export inverse reconstructs actual0e17 raw16ef. New guard self inverse reconstructs actual e0E guard and old pin unchanged; LF/CRLF/tamper/second projection controls preserve strictness. Actual current as well as historical public/star Radon declarations execute with inert objects, not numerical/provider bodies. No shared helper/native/frontend/SDK/algorithm change.",
+  "failed_complete_source": "coverage/evidence/golden283-complete-source-failure-v1.json",
+  "collector_correction": {
+    "path": "build\\finite-radon-export-reader-v2\\collector-boundary-review-v1\\review-v1.json",
+    "sha256": "5567fdcd8521fcd29b403bde760a24f95b9fe3b8c98b62f088dfcd673813ccae",
+    "resolution": "Source guard runs only full workflow checkout, source.zip unfiltered git archive, source state/stager map all tracked files. New trackedv2 already supplied/authenticated; no partial DRAW consumer executes guard. Original pending DRAW addition inferred rather than actual; explicitly withdrawn from frozen handoff, no requirement waived or collector code added."
+  },
+  "pending": [
+    "Root actual complete168 command both supported Windows runtimes normal conftest/plugins/no failfast",
+    "Exact-source genuine SDK110/default namespace/hot swap qualification",
+    "Generator controller/binding/real cohort/original-public one-thread performance",
+    "Main delivery/full API/domain closure"
+  ],
+  "waste_review": "Both failed e0E fullbarriers retained. Reused all other70file/compile/private90/548/reference/SDK scopes; only2changed source/11small proofs authenticated. Avoided speculative collector mutation and broad source-context invalidation by tracing actual boundary. Tiny duplicate self-inverse call noted without separate version/task. Root now reruns complete affected168, no numerical/helper/build/archive replay."
+}

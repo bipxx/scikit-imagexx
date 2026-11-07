@@ -1,0 +1,53 @@
+{
+  "schema": "golden-angle-enabled-root-source-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_SHARED_SOURCE_AND_RETAINED_AFFECTED_EVIDENCE_FULL168_REQUIRED",
+  "source": "e0e80b8383f343fe11fb0d1cb6c152075141596d",
+  "parent": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+  "handoff": {
+    "path": "build\\golden-angle-enabled-integration-v1\\handoff-v1.json",
+    "sha256": "5c0b840f1262d9d6ce5f1852ae4a61edf1843039009c8a7aeb7467197580b449"
+  },
+  "independent_review": {
+    "path": "build\\golden-angle-enabled-independent-review-v1\\review-v1.json",
+    "sha256": "2ab69ecdae079b1370ac573d6d3d13d71ec097213d914b028dc31e6af03929f5"
+  },
+  "root_reconciliation": {
+    "source_files": 70,
+    "small_proofs": 80,
+    "proof_bytes": 1875202,
+    "actual_parent_inverse_rows": 36,
+    "private_intake_files": 21,
+    "unchanged_intake_files": 19,
+    "source_checks_each_Windows": 128,
+    "source_selectors": 168,
+    "images": 283,
+    "functions": 286,
+    "product_members": 232,
+    "SDK_members": 110,
+    "SDK_families": 40,
+    "SDK_checks": 80
+  },
+  "source_review": "Inspected ordinary leaf/builtin/registry and transform star/direct export wiring; lazy two-angle default fully consumed with np.int64/value/permutation checks; installed route tests exact builtin Creturn/getter/lazy ownership. Complete SDK consumer retains admitted assertions and adds both profile streams plus authenticated helper/copy closure. Actual configured GNU leaf includes required -fno-builtin-pow/strict FP; MSVC strict-FP syntax only. next_util helper852-exact,36 shared inverses match actual Git852 once. No mathematics changed from admittedfb2a.",
+  "reused": {
+    "golden_private": "coverage/evidence/order-angles-golden-ratio-native-root-admission-v1.json",
+    "IGG_larger_accuracy": "coverage/evidence/inverse-gaussian-gradient-large-accuracy-native-root-admission-v1.json",
+    "IGG_parent_complete_source": "coverage/evidence/inverse-gaussian-gradient-complete-source-readiness-v1.json"
+  },
+  "metadata_correction": "Author stale inheritedIGG pending label is superseded by actual16reference/16native and166-source admissions, no recapture. Root first review assertion wrongly rejected any finding instead of handling this explicitly nonblocking one; stopped before source admission/write, then corrected metadata reader only. Immutable peer/source/failures retained.",
+  "failed_history": {
+    "v1": "Both2231XML:37fail34errors,0science: stale current282 census/SDKfixture109, familytail and old-active context/rolling canonicalpins",
+    "v2": "Both874XML:9fail,0science: current contractv7 assertion, Linux group +12 assertion, nested raw firstcohort map left stale",
+    "v3": "Both128PASS after exact affected reader/context corrections",
+    "preparation": "Initial source-plan current required-selector set omitted new saved group; corrected actual strict contract before dependent source run. First SDK macro-renamed-main composition was replaced before compilation with exact body+explicit return to avoid implicit-main-return UB.",
+    "compile": "First configure lacked baseline GNU -fno-builtin-pow policy. Corrected after retained actual compile command inspection; configure-only rerun verified flags; passing client/shared/MSVC syntax not replayed."
+  },
+  "pending": [
+    "Root actual complete168 workflow command both supported Pythons normal conftest/plugins/no failfast",
+    "Exact-source genuine four-profile installed SDK110/default namespace/hot-swap qualification",
+    "Actual bound fully-drained generator4case one-thread public comparison",
+    "Main delivery and wider protocol/nonfinite/largeN/FP/platform/domain closure"
+  ],
+  "scientific_replays": 0,
+  "waste_review": "Reused90references/548privateXML/scalar-sanitizer/SDK scopes, verified80small source/compile receipts and36Git projections. No original/helper/math/SDK execution/fullbuild/download/archive/core/corpus replay. Earlier37fail+34errors then9fail retained. Root reuses prepared faithful runner for required full168; eligible282/current281 do not wait."
+}

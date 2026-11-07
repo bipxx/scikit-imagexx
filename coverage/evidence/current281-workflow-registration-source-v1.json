@@ -1,0 +1,50 @@
+{
+  "schema": "current281-workflow-registration-source-admission-v1",
+  "status": "PASS_EXACT_REVIEWED_REGISTRATION_BYTES_READY_TO_PUBLISH_NOT_ACTUAL_RUN",
+  "controller_source": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "producer_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "root_bound_admission": "coverage/evidence/current281-bound-controller-root-admission-v1.json",
+  "workflows": [
+    {
+      "workflow": "vi-initial.yml",
+      "sha256": "c7f572050ed2dbe5174a78d5a7b8efccc86d75145dc34de905588e4afcfad0bc",
+      "bytes": 13449,
+      "source_commit": "373af1af261e5c6bc522f533f19036fc65603c81"
+    },
+    {
+      "workflow": "flood-fill-initial.yml",
+      "sha256": "fbf5e69d049c58ae6719b2b619bc8734f80d4c7085128cded005d7d29a37cb31",
+      "bytes": 13517,
+      "source_commit": "373af1af261e5c6bc522f533f19036fc65603c81"
+    },
+    {
+      "workflow": "rolling-ball-initial.yml",
+      "sha256": "1d190fc2b196742f5f693e22ab4bb26d0876430cd13801d05fbcd7187e2d2c67",
+      "bytes": 13533,
+      "source_commit": "373af1af261e5c6bc522f533f19036fc65603c81"
+    }
+  ],
+  "source_materialization_checks": [
+    {
+      "path": "build/current281-measurement-registration-v1/windows311-source-v1.json",
+      "sha256": "36b8891f6a53692f3beb3bd31a21d7b663a1452237f2abd21114d4be35cf04e1",
+      "runtime": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]"
+    },
+    {
+      "path": "build/current281-measurement-registration-v1/windows313-source-v1.json",
+      "sha256": "5e53dc1feaa679ef9724de481f6f50854b1cc1e61ea00ff43ad7183987b96151",
+      "runtime": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]"
+    }
+  ],
+  "reused_source_guard_scope": "Byte-exact workflows from frozen373,514source/inert cases eachPython with normalconftest/plugins; no duplicate514 run for placement alone.",
+  "inline_python_blocks": 15,
+  "actual_dispatches": 0,
+  "shipping_images": 271,
+  "scope": "Default-branch manual-workflow registration only. No private branch ancestry or native/frontend/SDK/registry implementation imported. workflow_dispatch only; push executes no helper/algorithm/timing. Root future dispatch selects --ref bind/current281-measurement-v1, so controller checkout uses frozen373 and snapshot checkout uses boundDDA. Defaultmain lacks bound controller data and fails before dependent actions; it is not an alternate authorized execution ref.",
+  "pending": [
+    "Main commit/push and actualGitHub registryactive checks",
+    "Exactremote373/no-prior-source-run and rootactual UTCclock/conditional GO",
+    "Actual freshhost identity/helper/realcohorts/postbatch/timing/raw evidence"
+  ],
+  "waste_review": "Actual three404 registry reads exposed prerequisite before dispatch. Reuse exact independently reviewed bytes and514proof; compile15inline blocks both supportedPython versions without executing bodies. No new pipeline/engine, source qualification/native/math/build/largehash/download replay; no full373 ancestry merge."
+}

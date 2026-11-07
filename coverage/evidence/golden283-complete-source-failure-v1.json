@@ -1,0 +1,36 @@
+{
+  "schema": "golden283-complete-source-failure-v1",
+  "status": "FAILED_COMPLETE168_BOTH_RETAINED_PYTHONS_NO_DISPATCH",
+  "source": "e0e80b8383f343fe11fb0d1cb6c152075141596d",
+  "profiles": [
+    {
+      "profile": "windows311",
+      "terminal": "build\\golden283-sourcebarrier-v1\\sourcebarrier-windows311-v1\\terminal.json",
+      "terminal_sha256": "cc508a4f272bc1086f1d5bc989ebf58ef861bfe8bfbe73ba0b1ed2ab94a66bc5",
+      "seconds": 331.5,
+      "reported_tests": 4047,
+      "ordinary_nodes": 4039,
+      "ordinary_passes": 4038,
+      "passed_subtests": 8,
+      "failures": 1,
+      "failed_node": "tests.test_finite_radon_source::test_real_public_star_exports_include_both_owned_Radon_entries"
+    },
+    {
+      "profile": "windows313",
+      "terminal": "build\\golden283-sourcebarrier-v1\\sourcebarrier-windows313-v1\\terminal.json",
+      "terminal_sha256": "5847e4750aece5ac8742155faf765ee1b801b1c43bb85297e91ce08ae1106125",
+      "seconds": 314.09177549998276,
+      "reported_tests": 4047,
+      "ordinary_nodes": 4039,
+      "ordinary_passes": 4038,
+      "passed_subtests": 8,
+      "failures": 1,
+      "failed_node": "tests.test_finite_radon_source::test_real_public_star_exports_include_both_owned_Radon_entries"
+    }
+  ],
+  "science_calls": 0,
+  "root_cause": "Finite Radon public-star export guard directly hashes changed transform.py and its own guard bytes against frozen historical export record. It bypasses golden predecessor projection; the complete dependency closure was omitted from targeted49/21/6 selector and independent source review. A raw hash mismatch is the first observed failure, not numerical regression.",
+  "effect": "Complete168 gate failed on bothPythons. No283 genuine dispatch or readiness acceptance; current281 qualified/performance preparation and live852/282 unaffected.",
+  "next_gate": "Versioned narrow actual export-reader/self-pin correction preserving original contract/pins/projections and native/frontend/case/method/SDK bytes, affected both-Python source/inert checks and independent/root admission, then rerun complete affected168 barrier.",
+  "waste_review": "Both full commands correctly exposed omitted reader closure:331.5/314.0918 processseconds, cost not separate wall-time sum. Preserve e0E/failed commands/receipts; reuse all unchanged numerical/compile/SDK/reference scopes. Scan actual changed transform consumers before fix; no local success union or acceptance weakening. Root B next owner, other lanes continue."
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "igg282-prepared-result-readers-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SOURCE_METADATA_PREPARATION_UNBOUND_NOT_CAMPAIGN_ACCEPTANCE",
+  "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+  "handoff": {
+    "path": "build\\igg282-qualification-v1\\readers-v1\\handoff-v1.json",
+    "sha256": "de67b2de7e4cfc483e21ac7e204b0da445e222b89ed22c31ed515b0fccc7437b"
+  },
+  "authentication": {
+    "small_proofs": 24,
+    "bytes": 272817,
+    "readers": 3,
+    "inverse_exact_to_prepared_and_successful281": true
+  },
+  "reader_delta": {
+    "retain_failed_campaign_v1.py": {
+      "predecessor_sha256": "03de3a1e662857a9395980f5a9e347ca22a6402ef3ae7afd85843325bf02df09",
+      "current_sha256": "9b45c2bf93d047d2fbf6be281cd6d28e058b3db070fc187a5c0a39fb0530b007",
+      "inverse_equals_proven_v4": true,
+      "fragments": [
+        {
+          "predecessor": "(281, 284, 228, 108, 38, 76, 12), 'Declared current281 scope differs'",
+          "current": "(282, 285, 230, 109, 39, 78, 12), 'Declared current282 scope differs'"
+        }
+      ]
+    },
+    "review_profile_v1.py": {
+      "predecessor_sha256": "1c8b02162c414c697f19bd0a575a0740f4a0902cc5f798f286db4de8832773ca",
+      "current_sha256": "1964b8218b02494305d9ed639025c9c9ba52e5f1248b55577fe5c27310381fc0",
+      "inverse_equals_proven_v4": true,
+      "fragments": [
+        {
+          "predecessor": "(281, 284, 228, 108, 38, 76, 12), 'Declared current281 scope differs'",
+          "current": "(282, 285, 230, 109, 39, 78, 12), 'Declared current282 scope differs'"
+        },
+        {
+          "predecessor": "'public-rolling-ball-saved-linux':81}",
+          "current": "'public-rolling-ball-saved-linux':81,'public-inverse-gaussian-gradient-saved-linux':297}"
+        },
+        {
+          "predecessor": "    if group in ('public-VI-saved-linux','public-flood-saved-linux'):",
+          "current": "    if group=='public-inverse-gaussian-gradient-saved-linux':\n     report.setdefault('IGG_saved_scope',{})[mode]=dict(tests=row['tests'],actual_testcase_nodes=actual_nodes[name],serialized_caller_pool=False,basis='Archived297node public/policy group asserts target semanticFP and caller32; hosted source-built F1 bundle independently checked below')\n    if group in ('public-VI-saved-linux','public-flood-saved-linux'):"
+        },
+        {
+          "predecessor": "     assert all(drawing[mode].values()),drawing[mode]  # Actual nodes, no cumulative-count assumption.",
+          "current": "     assert all(drawing[mode].values()),drawing[mode]  # Actual nodes, no cumulative-count assumption.\n     igg_nodes=[t.get('classname','')+'::'+t.get('name','')for t in tree.iter('testcase')if t.get('classname','').endswith('test_inverse_gaussian_gradient_integration')and t.get('name')=='test_IGG_installed_default_single_core_and_hot_swap']\n     assert len(igg_nodes)==1,(name,igg_nodes)\n     report.setdefault('IGG_installed_ownership_nodes',{})[mode]=igg_nodes"
+        },
+        {
+          "predecessor": "Exact281campaign profile-only",
+          "current": "Exact282campaign profile-only"
+        }
+      ]
+    },
+    "review_stager_only_v1.py": {
+      "predecessor_sha256": "543593643a36f7c3093b39895466d69f7152d23f83645b6264ab47f2fcc5b4b1",
+      "current_sha256": "1375d4379d6ad3b3dab1ede8595da86a0ee7f417f0b3b0bc702d0ce1fd565f51",
+      "inverse_equals_proven_v4": true,
+      "fragments": [
+        {
+          "predecessor": "(281, 284, 228, 108, 38, 76, 12), 'Declared current281 scope differs'",
+          "current": "(282, 285, 230, 109, 39, 78, 12), 'Declared current282 scope differs'"
+        },
+        {
+          "predecessor": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+          "current": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE282_ADMISSION"
+        }
+      ]
+    }
+  },
+  "review": "Inspected minimal literal census updates and new explicit IGG297 Linux count/no inventedcallerpool plus exactly one installed IGG ownership testcase in each post203 mode/allprofiles. Existing terminal/source/API/digest/partial-file/archive/seal-once/corpus/runtime/SDK/F1/stager rules reconstruct byte-exact successfully executed281 readers after declared inverse; no acceptance logic removed. Correct166 testpath selector vs3options distinction retained.",
+  "actual_authority": 0,
+  "retention_authorized": false,
+  "pending": [
+    "Actual completed parent and job outcomes",
+    "Root bind exact source/run and actual artifact names/IDs/digests/expiry/capacity in versioned successor",
+    "Retain each selected artifact once and inspect terminal exits",
+    "Independent four-profile/SDK/IGG/F1/corpus/three-stager aggregate admission",
+    "Actual benchmark producer binding/cohorts/conditional timing/performance/main"
+  ],
+  "waste_review": "Authenticated only24changed small metadata/source proofs and exact line inverses, reusing proven readers and existing852 source readiness/four plans. No archive/core/SDK/corpus read/download/hash, sourcebarrier/scientific/helper/build/timing replay. Next root polls same24460/42356138491 then binds terminal actual artifacts; templates stay immutableUNBOUND."
+}

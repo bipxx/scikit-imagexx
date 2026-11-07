@@ -1,0 +1,51 @@
+{
+  "schema": "gray-texture-outer-controller-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_UNBOUND_OUTER_C1_POSTBATCH_SOURCE_ONLY",
+  "source": "05bddff4fa7ea0cc05551c1e8fc4d49ae87d2661",
+  "parent": "f0c91a7d0f04c2117cfd5553d4f63950176420ff",
+  "handoff": {
+    "path": "build\\glcm-benchmark-outer-v1\\handoff-v1.json",
+    "sha256": "b4289fdb2fe57f8187ffe59ebc94a440eb703ea57c0a091a6a5dc0250cbfee1b"
+  },
+  "root_source_review": "Snapshot Python path/argv/trace/profile before authority/driver imports; native NumPy policy/handler/buffer/default worker/fallback/full32 before actual CLI. Exact measure/sample_entry/execute frame and function identity, one original/native call, inner-owned Creturns and input/FP state checked at real entry. finally restoration and poststop source/Git/binding/helper/runtime authority verified; terminal accepted only with actual process0. After both real cohort terminals, exclusive postbatch claim and once-offline-verifier0 required before batch PASS. No actual helper/body/cohort/verifier execution credited.",
+  "authentication": {
+    "additive_files": 3,
+    "small_proofs": 31,
+    "proof_bytes": 128552,
+    "source_inert_distinct_controls_each": 29,
+    "latest_fresh_command_nodes_each": 17,
+    "unchanged_reused_controls_each": 12,
+    "complete_workflow_barrier": false
+  },
+  "reuse_scope": {
+    "path": "build\\glcm-benchmark-outer-v1\\reuse-scope-v1.json",
+    "sha256": "ebdc8994101227f5fb391e5d4bc01b8503f76c571a500858dae451cdbc529354"
+  },
+  "preserved_failures": [
+    {
+      "path": "windows311-pure-v1/terminal.json",
+      "exit": 1,
+      "XML": {
+        "tests": 28,
+        "failures": 3,
+        "errors": 0
+      },
+      "cause": "Inert sentinel Path.write_text used CRLF while reader expects canonicalLF; guard correctly refused source hash before body/verifier. Fixed fixture to explicitUTF8/LF, no implementation weakening.",
+      "inputs": "failure-source-v1 snapshots",
+      "correction": "windows311-pure-v2 affected16PASS; windows313 first full28PASS afterfix. Later prepared-collector boundary adds1negative control and invalidates17 controls, bothfreshv3PASS; other12source segments unchanged."
+    }
+  ],
+  "scope": "Prepared source must explicitly collect outerprobe/test/context and inner dependencies; actual qualified wholeproduct/installed namespace/SDK/core/runtime/helper/source identity remains unbound. Prior f0c/de6 native/controller/spec/factory/method bytes unchanged; no private ancestry merge.",
+  "pending": [
+    "Selective shared collector and source-selector integration",
+    "Actual qualified source/producer/runtime/core/SDK/helper/root-authority binding",
+    "Larger ordinary-case accuracy",
+    "Two genuine installed real CLI first cohorts and exact C1/caller32 acceptance",
+    "Actual once-after-batch offline verifier0 and root admission",
+    "Separate one-thread original-public timing GO/all-loss review",
+    "Wider API/platform/provider/full-contract closure and main delivery"
+  ],
+  "scientific_replays": 0,
+  "waste_review": "Reused independently admitted inner/native/ref/mode/SDK scopes, source-identity proof for12 unchanged controls and final17 affected runs perPython. Retained initialCRLF inertfixture failure; no acceptance weakening or additional science/build/download/large hashes. Next sole shared integration author imports exact frozen family closure when assigned; current281/282 do not wait."
+}

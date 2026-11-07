@@ -1,0 +1,77 @@
+{
+  "schema": "current281-bound-six-family-controller-root-admission-v1",
+  "passed": true,
+  "status": "PASS_ACTUAL_BOUND_SOURCE_GUARDS_PENDING_REGISTRATION_AND_EXPLICIT_CONDITIONAL_DISPATCH",
+  "source": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "producer_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "handoff": {
+    "path": "build\\current281-measurement-binding-v1\\handoff-v1.json",
+    "sha256": "8a7478ea5b2ef71db07689e2b1abf4f0b8f512997b6f42925ad8a74fbf5c65fb"
+  },
+  "independent_review": {
+    "path": "build\\current281-measurement-binding-independent-review-v1\\review-v1.json",
+    "sha256": "1bb699a24c72dfdeb1562f72e045ab040afd65dbb1c64e84eedffdefd2e549c5"
+  },
+  "root_metadata_intake": {
+    "path": "build\\current281-measurement-binding-v1\\root-metadata-reconciliation-v1.json",
+    "sha256": "64c2271b4f13d61b46833a7e66e10747ae618444f121da56b6b56b90e8a2ce54"
+  },
+  "authentication": {
+    "source_files": 29,
+    "small_proofs": 40,
+    "proof_bytes": 316928,
+    "source_checks_each_Windows": 514,
+    "normal_conftest_plugins": true,
+    "scientific_calls": 0
+  },
+  "scope": {
+    "cases": 80,
+    "raw_samples": 1120,
+    "warmup_groups": 160,
+    "canonical_API_cohorts": 13,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "retain_all_losses": true,
+    "no_automatic_retry": true
+  },
+  "root_source_review": "Inspected six immutable actual-producer/runtime/core/SDK/source/rootreceipt bindings and exact protected predecessor inverses. All six read_manifest actually pass stdlib-only. Dispatch clock must be explicit UTC, within7200seconds and current; frozen deadlineNULL is input-bound into runtime cohort/timing authority only after validated clock. MARK/LBP actualDDA contexts v6/v5; JOIN counts derive actualfive terminals, timing emission moved after all five C1 PASS plus oncepostbatch verifier0. Other realentry/F1/restoration/source/report/order/case/method guards remain admitted-source exact. QualifiedDDA drivers/native/SDK bodies unchanged.",
+  "workflow_registration": {
+    "active": [
+      "mark-lbp-initial.yml",
+      "finite-radon-initial.yml",
+      "join-util-current275-initial.yml"
+    ],
+    "not_found": [
+      "vi-initial.yml",
+      "flood-fill-initial.yml",
+      "rolling-ball-initial.yml"
+    ],
+    "required": "Root may register only three exact reviewed workflow files on default main, no privateDDA/native ancestry merge. Actual executions must select frozen373 controller ref and bound qualifiedDDA producer; inspect actual registry states before dispatch."
+  },
+  "conditional_execution": "Source admission alone is not actual GO. Root still supplies no-prior-run checks/registered workflows/exactremote plus actual UTC creation/deadline and explicit conditional run authorization. Each fresh host authenticates actual producer/minimum stager/offline package, prepares one small F1helper, passes real canonicalAPI cohorts/C1 and once postbatch verifier before first timing; any failure stops without retry. No local helper/cohort/timing was executed.",
+  "pending": [
+    "Default-branch registration of three exact workflow files",
+    "Root explicit clock/conditional hosted dispatch and live run receipts",
+    "Actual13 real cohorts/host identity/F1/restoration/postbatch acceptance",
+    "Actual80case one-thread public original-native comparisons",
+    "Independent raw/journal/all-loss/report admission",
+    "Final source projection/main281 delivery and broader domain/provider/platform closure"
+  ],
+  "failed_history": [
+    {
+      "path": "build/current281-measurement-binding-v1/windows311-pure-v1",
+      "result": "CollectionERROR: mixed existing flood indentation after generic clock assertion insertion. No tests/science; corrected only flood run_measurements indentation."
+    },
+    {
+      "path": "build/current281-measurement-binding-v1/windows311-pure-v2",
+      "result": "511PASS/3FAIL stale VI/flood/rolling NULL-producer assertions. Corrected to authenticate immutable historicalNULL scope separately and assert current DDA bound source; complete affected6modules then514PASS both."
+    },
+    {
+      "path": "build/current281-measurement-binding-v1/author_controllers_v1.py",
+      "result": "JOIN existing workflow already lacked frozen deadline assertion; exact-count author guard stopped partial source preparation, no dependent test. Corrected using preserved predecessor bytes; no repeated source mutation or scientific calls."
+    }
+  ],
+  "waste_review": "Reused proven controller/method/SDK/helper/source and once-retained DDA metadata;29source/40small proofs authenticated and514actual pure nodes each checked without replay. Root compatibility envelopev3 supplies real existing schemas rather than changing qualified drivers. Actual three404workflow registry failures identify concrete registration prerequisite; no attempted runtime retry or synthetic success. Next root registers exact three source-only entries, verifies and dispatches eligible fixed six workflows promptly."
+}
