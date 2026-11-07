@@ -6,8 +6,8 @@ import hashlib,importlib,importlib.util,inspect,json,os
 from pathlib import Path
 import runpy,subprocess,sys,traceback
 
-CONTRACT='coverage/contracts/rolling-ball-measurement-v3.json'
-DRIVER_CONTRACT='coverage/contracts/rolling-ball-benchmark-execution-v3.json'
+CONTRACT='coverage/contracts/rolling-ball-measurement-v4.json'
+DRIVER_CONTRACT='coverage/contracts/rolling-ball-benchmark-execution-v4.json'
 ROUTE='rolling-ball'
 
 def sha(path):

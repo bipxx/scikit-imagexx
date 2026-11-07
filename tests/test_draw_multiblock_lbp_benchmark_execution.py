@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from test_mark_boundaries_benchmark_execution import synthetic,FAULTS
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v5.json'
+CONTEXT=ROOT/'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v7.json'
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 

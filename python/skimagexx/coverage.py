@@ -8,7 +8,7 @@ DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill','inverse_gaussian_gradient'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
@@ -344,6 +344,7 @@ def class_contract(api):
 FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill')
 
 def native_dtypes(api):
+    if api=='segmentation.inverse_gaussian_gradient':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     if api=='restoration.rolling_ball':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api=='transform.frt2':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
@@ -408,6 +409,7 @@ def flood_fill_contract():
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='segmentation.inverse_gaussian_gradient':return (image,),{'alpha':100.0,'sigma':1.0}
     if api=='restoration.rolling_ball':return (image,),{'radius':1}
     if api=='segmentation.find_boundaries':
         import numpy as np
@@ -1179,7 +1181,7 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
         util_views_default_error(actual,expected);return
     if api in ('util.crop','util.regular_grid'):
         util_metadata_default_error(api,actual,expected);return
-    if api in ('restoration.rolling_ball','segmentation.mark_boundaries','feature.draw_multiblock_lbp','transform.frt2','transform.ifrt2'):
+    if api in ('segmentation.inverse_gaussian_gradient','restoration.rolling_ball','segmentation.mark_boundaries','feature.draw_multiblock_lbp','transform.frt2','transform.ifrt2'):
         import numpy as np
         assert type(actual)is type(expected)is np.ndarray
         assert actual.shape==expected.shape and actual.dtype==expected.dtype
@@ -1418,3 +1420,11 @@ def rolling_ball_contract():
         default_scope='Actual requested image/dtype with explicit radius1 in shared adapter; literal default radius100 separately saved in bounded1D row',
         SDK_scope='Complete owning float32/64 and typed raw bool/integer/half/swapped storage operation; finite representable integer cast and half-nearest domains only; Python metadata/protocol policy remains provider scope',
         gaps='Broader protocols/FP callbacks/rounding, Windows original-domain parity, genuine single-core/fullSDK and one-thread public original performance pending')
+
+
+def inverse_gaussian_gradient_contract():
+    return dict(api='segmentation.inverse_gaussian_gradient',fully_native=False,
+        kernel='Owned separable nearest correlations, ordered typed magnitude and staged alpha expression; one default1 worker snapshot',
+        providers='NumPy coercion/promotion/allocation, small Gaussian coefficient metadata and scalar warning policy delivery',
+        scope='Authentic79 saved rows/profile; corrected frontend normal only. SDK complete float32/64 signed-strided image and broadcast alpha',
+        gaps='Fresh disabled/scalar/workers frontend modes, whole-function exceptional FP/callbacks/protocols, bool/integer/half/complex SDK, Windows originals and genuine/performance remain pending')

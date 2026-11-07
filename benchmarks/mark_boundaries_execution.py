@@ -17,7 +17,7 @@ import sys
 import warnings
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v6.json'
+CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v8.json'
 API='segmentation.mark_boundaries'
 LIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 digest=lambda raw:hashlib.sha256(raw).hexdigest()

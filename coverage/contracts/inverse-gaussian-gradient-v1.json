@@ -1,0 +1,3207 @@
+{
+  "schema": "inverse-gaussian-gradient-source-contract-v1",
+  "api": "segmentation.inverse_gaussian_gradient",
+  "signature": "(image, alpha=100.0, sigma=5.0)",
+  "status": "SOURCE_TEST_SAFETY_ONLY_UNREVIEWED",
+  "original_budget": 0,
+  "native_budget": 0,
+  "helper_budget": 0,
+  "prior_full_algorithm_refs": 0,
+  "source_raw_sha256": {
+    "tests/inverse_gaussian_gradient_contract.py": "d1f6e2a623ad86b9904e78514388e0a4b49a3dfd3efe7404456647c75f9fd5cb",
+    "tests/inverse_gaussian_gradient_observer.py": "2fe42f1ec3f073521675133b35e5b873e3d1061646391a928cfd96fd82367c03",
+    "tests/inverse_gaussian_gradient_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/fixtures/inverse_gaussian_gradient_sources_v1.json": "86e90f21394e3cf6e8c56f4366369c4cc4f882816918045b845a201a2df8904c",
+    "benchmarks/inverse_gaussian_gradient.py": "d2fb308d50360ff150885a1e9346bcb342a8f65543f56da3840e2309920c4cc4"
+  },
+  "codec_exact_raw_sha256": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+  "observer_inverse": [
+    {
+      "current": "\ndef encode(value,np):\n if isinstance(value,complex):return dict(python_complex=[legacy_encode(value.real,np),legacy_encode(value.imag,np)])\n if isinstance(value,(tuple,list)):return dict(container=type(value).__name__,items=[encode(v,np)for v in value])\n if isinstance(value,dict):return {k:encode(v,np)for k,v in value.items()}\n return legacy_encode(value,np)\n\n",
+      "predecessor": ""
+    },
+    {
+      "current": "from crop_observer import encode as legacy_encode",
+      "predecessor": "from crop_observer import encode"
+    },
+    {
+      "current": "from inverse_gaussian_gradient_contract import fixture",
+      "predecessor": "from rolling_ball_contract import fixture"
+    },
+    {
+      "current": "from inverse_gaussian_gradient_exception_codec import encode_exception_args as error_value",
+      "predecessor": "from rolling_ball_exception_codec import encode_exception_args as error_value"
+    }
+  ],
+  "observer_predecessor_canonical_sha256": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+  "recipes": [
+    {
+      "id": "dtype-bool",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint64",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int8",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int64",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-float16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-float32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-float64",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-complex64",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-complex128",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-F",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "F",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-reverse",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "reverse",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-stride2",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "stride2",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-transpose",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "transpose",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-zeros",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "zeros",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-constant",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "constant",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-step",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "step",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-bright",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "bright",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-signedzero",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "signedzero",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-nan",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "nan",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-inf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "inf",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-neginf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "neginf",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "rank0",
+      "shape": [],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "1d",
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "3d",
+      "shape": [
+        3,
+        4,
+        5
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "4d",
+      "shape": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "8d",
+      "shape": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "singleton",
+      "shape": [
+        1,
+        1
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "default-sigma",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": "OMITTED",
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "empty-sigma0",
+      "shape": [
+        0,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "rank0-ignores-bad-sigma",
+      "shape": [],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": "bad",
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-0",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma--1",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": -1,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-1e-16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1e-16,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-1e-15",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1e-15,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-1.0000000001e-15",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0000000001e-15,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-0.5",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 0.5,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-5",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 5,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-nan",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": "nan",
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-inf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": "inf",
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-bad",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": "bad",
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-[0, 1]",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [
+        0,
+        1
+      ],
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-[0.5, 1.5]",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [
+        0.5,
+        1.5
+      ],
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-[1]",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [
+        1
+      ],
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-[1, 2, 3]",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [
+        1,
+        2,
+        3
+      ],
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-[]",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [],
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-['nan', 1]",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [
+        "nan",
+        1
+      ],
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-np-f32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 0.75,
+      "sigma_kind": "np-f32",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-array0d",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 0.75,
+      "sigma_kind": "array",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-array",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [
+        0.5,
+        1.5
+      ],
+      "sigma_kind": "array",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "sigma-array-rank2",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": [
+        [
+          1,
+          2
+        ]
+      ],
+      "sigma_kind": "array",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-0",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-1",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 1,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha--1",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": -1,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha--100",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": -100,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-0.5",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 0.5,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-nan",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": "nan",
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-inf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": "inf",
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-neginf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": "neginf",
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-bad",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": "bad",
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-complex",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": "complex",
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-np-f32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "np-f32",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-np-i16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "np-i16",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-row",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "row",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-column",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "column",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-leading",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "leading",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-bad-shape",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "bad-shape",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-list",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "list",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "alpha-provider",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 2,
+      "alpha_kind": "provider",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "readonly",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": true,
+      "provider": null
+    },
+    {
+      "id": "metadata",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": true,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "swapped",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": ">f4",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "image-array-protocol",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": "array"
+    },
+    {
+      "id": "image-provider-refuses",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": "raise"
+    },
+    {
+      "id": "image-list",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "alpha": 100.0,
+      "alpha_kind": "python",
+      "sigma": 1.0,
+      "sigma_kind": "python",
+      "metadata": false,
+      "readonly": false,
+      "provider": "list"
+    }
+  ],
+  "recipe_bounds": {
+    "dtype-bool": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-uint8": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-uint16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-uint32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-uint64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-int8": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-int16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-int32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-int64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-float16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-float32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-float64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-complex64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 864,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1676,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "dtype-complex128": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 864,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1676,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "layout-F": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "layout-reverse": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "layout-stride2": {
+      "input_elements": 12,
+      "physical_elements": 48,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 12240,
+      "early_sigma_error": false
+    },
+    "layout-transpose": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-zeros": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-constant": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-step": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-bright": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-signedzero": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-nan": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-inf": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "values-neginf": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "rank0": {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "output_shape_upper": [],
+      "output_elements_upper": 1,
+      "alpha_broadcast_error": false,
+      "radii": [],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 0,
+      "work_upper": 5,
+      "named_numerical_bytes_upper": 4448,
+      "early_sigma_error": false
+    },
+    "1d": {
+      "input_elements": 7,
+      "physical_elements": 7,
+      "output_shape_upper": [
+        7
+      ],
+      "output_elements_upper": 7,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4
+      ],
+      "line_elements_upper": 15,
+      "filter_ops_upper": 63,
+      "coefficient_ops_upper": 176,
+      "work_upper": 288,
+      "named_numerical_bytes_upper": 7536,
+      "early_sigma_error": false
+    },
+    "3d": {
+      "input_elements": 60,
+      "physical_elements": 60,
+      "output_shape_upper": [
+        3,
+        4,
+        5
+      ],
+      "output_elements_upper": 60,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4,
+        4
+      ],
+      "line_elements_upper": 220,
+      "filter_ops_upper": 4860,
+      "coefficient_ops_upper": 1584,
+      "work_upper": 7104,
+      "named_numerical_bytes_upper": 33744,
+      "early_sigma_error": false
+    },
+    "4d": {
+      "input_elements": 16,
+      "physical_elements": 16,
+      "output_shape_upper": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "output_elements_upper": 16,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "line_elements_upper": 80,
+      "filter_ops_upper": 2304,
+      "coefficient_ops_upper": 2816,
+      "work_upper": 5328,
+      "named_numerical_bytes_upper": 21008,
+      "early_sigma_error": false
+    },
+    "8d": {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "output_shape_upper": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "output_elements_upper": 1,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "line_elements_upper": 9,
+      "filter_ops_upper": 576,
+      "coefficient_ops_upper": 11264,
+      "work_upper": 11861,
+      "named_numerical_bytes_upper": 43504,
+      "early_sigma_error": false
+    },
+    "singleton": {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "output_shape_upper": [
+        1,
+        1
+      ],
+      "output_elements_upper": 1,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 9,
+      "filter_ops_upper": 36,
+      "coefficient_ops_upper": 704,
+      "work_upper": 749,
+      "named_numerical_bytes_upper": 7408,
+      "early_sigma_error": false
+    },
+    "default-sigma": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        20,
+        20
+      ],
+      "line_elements_upper": 172,
+      "filter_ops_upper": 1968,
+      "coefficient_ops_upper": 2752,
+      "work_upper": 4828,
+      "named_numerical_bytes_upper": 21904,
+      "early_sigma_error": false
+    },
+    "empty-sigma0": {
+      "input_elements": 0,
+      "physical_elements": 0,
+      "output_shape_upper": [
+        0,
+        3
+      ],
+      "output_elements_upper": 0,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 128,
+      "named_numerical_bytes_upper": 4624,
+      "early_sigma_error": false
+    },
+    "rank0-ignores-bad-sigma": {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "output_shape_upper": [],
+      "output_elements_upper": 1,
+      "alpha_broadcast_error": false,
+      "radii": [],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 0,
+      "work_upper": 5,
+      "named_numerical_bytes_upper": 4448,
+      "early_sigma_error": false
+    },
+    "sigma-0": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": false
+    },
+    "sigma--1": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": false
+    },
+    "sigma-1e-16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": false
+    },
+    "sigma-1e-15": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": false
+    },
+    "sigma-1.0000000001e-15": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 12,
+      "filter_ops_upper": 48,
+      "coefficient_ops_upper": 192,
+      "work_upper": 348,
+      "named_numerical_bytes_upper": 9104,
+      "early_sigma_error": false
+    },
+    "sigma-0.5": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        2,
+        2
+      ],
+      "line_elements_upper": 28,
+      "filter_ops_upper": 240,
+      "coefficient_ops_upper": 448,
+      "work_upper": 796,
+      "named_numerical_bytes_upper": 10384,
+      "early_sigma_error": false
+    },
+    "sigma-5": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        20,
+        20
+      ],
+      "line_elements_upper": 172,
+      "filter_ops_upper": 1968,
+      "coefficient_ops_upper": 2752,
+      "work_upper": 4828,
+      "named_numerical_bytes_upper": 21904,
+      "early_sigma_error": false
+    },
+    "sigma-nan": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": false
+    },
+    "sigma-inf": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": true
+    },
+    "sigma-bad": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": true
+    },
+    "sigma-[0, 1]": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        4
+      ],
+      "line_elements_upper": 36,
+      "filter_ops_upper": 216,
+      "coefficient_ops_upper": 416,
+      "work_upper": 740,
+      "named_numerical_bytes_upper": 10384,
+      "early_sigma_error": false
+    },
+    "sigma-[0.5, 1.5]": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        2,
+        6
+      ],
+      "line_elements_upper": 48,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11728,
+      "early_sigma_error": false
+    },
+    "sigma-[1]": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": true
+    },
+    "sigma-[1, 2, 3]": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": true
+    },
+    "sigma-[]": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": true
+    },
+    "sigma-['nan', 1]": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        4
+      ],
+      "line_elements_upper": 36,
+      "filter_ops_upper": 216,
+      "coefficient_ops_upper": 416,
+      "work_upper": 740,
+      "named_numerical_bytes_upper": 10384,
+      "early_sigma_error": false
+    },
+    "sigma-np-f32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        3,
+        3
+      ],
+      "line_elements_upper": 36,
+      "filter_ops_upper": 336,
+      "coefficient_ops_upper": 576,
+      "work_upper": 1020,
+      "named_numerical_bytes_upper": 11024,
+      "early_sigma_error": false
+    },
+    "sigma-array0d": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        3,
+        3
+      ],
+      "line_elements_upper": 36,
+      "filter_ops_upper": 336,
+      "coefficient_ops_upper": 576,
+      "work_upper": 1020,
+      "named_numerical_bytes_upper": 11024,
+      "early_sigma_error": false
+    },
+    "sigma-array": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        2,
+        6
+      ],
+      "line_elements_upper": 48,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11728,
+      "early_sigma_error": false
+    },
+    "sigma-array-rank2": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        0,
+        0
+      ],
+      "line_elements_upper": 0,
+      "filter_ops_upper": 0,
+      "coefficient_ops_upper": 128,
+      "work_upper": 236,
+      "named_numerical_bytes_upper": 8656,
+      "early_sigma_error": true
+    },
+    "alpha-0": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-1": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha--1": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha--100": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-0.5": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-nan": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-inf": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-neginf": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-bad": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-complex": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-np-f32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-np-i16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "alpha-row": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11712,
+      "early_sigma_error": false
+    },
+    "alpha-column": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11696,
+      "early_sigma_error": false
+    },
+    "alpha-leading": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        2,
+        3,
+        4
+      ],
+      "output_elements_upper": 24,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1292,
+      "named_numerical_bytes_upper": 13216,
+      "early_sigma_error": false
+    },
+    "alpha-bad-shape": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": null,
+      "output_elements_upper": 0,
+      "alpha_broadcast_error": true,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1196,
+      "named_numerical_bytes_upper": 10208,
+      "early_sigma_error": false
+    },
+    "alpha-list": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11712,
+      "early_sigma_error": false
+    },
+    "alpha-provider": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11712,
+      "early_sigma_error": false
+    },
+    "readonly": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "metadata": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "swapped": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "image-array-protocol": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "image-provider-refuses": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    },
+    "image-list": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_shape_upper": [
+        3,
+        4
+      ],
+      "output_elements_upper": 12,
+      "alpha_broadcast_error": false,
+      "radii": [
+        4,
+        4
+      ],
+      "line_elements_upper": 44,
+      "filter_ops_upper": 432,
+      "coefficient_ops_upper": 704,
+      "work_upper": 1244,
+      "named_numerical_bytes_upper": 11664,
+      "early_sigma_error": false
+    }
+  },
+  "maxima": {
+    "input_elements": 60,
+    "physical_elements": 60,
+    "output_elements_upper": 60,
+    "line_elements_upper": 220,
+    "work_upper": 11861,
+    "named_numerical_bytes_upper": 43504
+  },
+  "allowance": {
+    "max_input": 64,
+    "max_output": 128,
+    "max_radius": 20,
+    "max_work": 65536,
+    "named_numerical_bytes": 131072,
+    "exclusions": "Python/import/allocator/process peak; named numerical arrays and conservative double line/weight buffers only"
+  },
+  "prospective_reference_calls": {
+    "minimum": 79,
+    "modern": 79,
+    "total": 158,
+    "authority": "NONE: explicit independent safety/readiness/controller and separate root GO required"
+  },
+  "source_policy": {
+    "source": "Pinned skimage0.26 identical public expression; actual retained SciPy1.15.3/minimum and1.18.1/modern source snapshots",
+    "signature": "No mask/channel_axis/out/workers kwargs; all input axes spatial",
+    "order": "gaussian_gradient_magnitude image,sigma,nearest THEN alpha*gradnorm THEN1.0+ THENsqrt THEN1.0/division; do not reassociate",
+    "dtype": "Generic output defaults input dtype; each derivative axis correlates into that dtype; square same dtype, source-axis ordered +=, unsafe sqrt to same output; Python scalar/array alpha NumPy promotion differs by retained profile; no blanket input upcast/scaling",
+    "complex": "Square complex derivatives, not abs-square. SciPy real/imag correlate decomposition and final complex sqrt/division need strict observed FP/word evidence",
+    "sigma": "Per-axis sequence normalized to rank; axes sigma>1e-15 active; zero/negative/NaN skipped. Active radius0 still filter. Default truncate4 radius int(4*sigma+.5); rank0 ignores sigma in generic empty-axis branch",
+    "weights": "NumPy exp/normalization/D+P dot polynomial derivative1 construction; compiled correlate symmetry-first/antisymmetric DBL_EPSILON; double buffers center then pair source ordering",
+    "borders": "Fixed nearest on every axis; no invented clipping or mirror policy",
+    "alpha": "Scalar/array/list/protocol alpha evaluated only after complete gradient; standard broadcast can expand shape, e.g(2,1,1)*(3,4)->(2,3,4); errors preserve phase/order",
+    "layout_ownership": "C/F/reversed/strided/transposed/readonly/swap/meta/provider source coercion must be observed; expected fresh result is not yet claimed. Record alias/base/input after callbacks/errors",
+    "fp": "No masks, reassociation/FMA or status normalization. Target-immediate full32/control/status/MXCSR+NumPy policy/callback state and exact caller/process restore are future strict gates; warnings/errors unobserved",
+    "array_api": "Actual SciPy public alternative-backend wrappers differ; initial NumPy-only provenance needs runtime identity. Other Array API backends/protocol domains remain open"
+  },
+  "reuse": {
+    "prior": "No saved full-algorithm packet found; old level-set morphsnakes snapshots source-only. Gaussian/Hessian numerical evidence is not IGG parity",
+    "gaussian": "gaussian_nd_into nearest/signed-layout/POD and SIMD patterns; symmetric weights only, cannot accept derivative weights unchanged",
+    "hessian": "Private convolve has symmetry-first/antisymmetric/nearest independent-output SIMD patterns. Whole Hessian rescales integers/finite-only restrictions and computes different operation; not callable as IGG replacement",
+    "codec": "Frozen rolling2e99 typed ufunc/dtype exception codec copied exact; crop ArrayProvider/logical payload codec. Complex Python scalar observer extension inverse authenticates predecessor",
+    "provider": "Future coefficient/cast/protocol providers must be named; whole SciPy gradient computation is not native ownership"
+  },
+  "native_sdk_proposal": {
+    "operation": "One owning inverse_gaussian_gradient operation over typed signed-strided image view, explicit scalar/per-axis sigma, scalar/typed alpha view + dtype plan; allocate broadcast output, compose ordered derivatives/squares/sum/sqrt/final inverse, no stage-only SDK claim",
+    "route": "Family-local derivative1 correlation using exact compatible Gaussian/Hessian patterns after source scope review, preserve typed intermediate casts and complex policy; no library-wide backend rewrite",
+    "workers": "No public workers keyword. Future optional existing global budget default1; capture once per owned composition while retaining source callback phases; ordered per-output reductions serial, SIMD/parallel across independent output spans where FP/order exact",
+    "platform": "Linux default-int/intp and compiler/libm/vector math does not close Windows/ISA, half/extended types or all promotion domains"
+  },
+  "quarantine": [
+    "Positive-sigma empty axis C malloc0/filter path not safety-closed; only sigma0 empty recipe admitted prospectively",
+    "Huge/default3D allocations, forged views, arbitrary rank/shape/radius/alpha expansion outside exact bounded pool",
+    "Object/structured/longdouble/subclass/masked/backend domains unassessed; do not claim half success from metadata recipe",
+    "No target errors/warnings/output expectations invented. Inf/bad/shape sigma recipes stop before coefficients according to source; actual runtime checks pending",
+    "Unmasked FP traps and arbitrary malicious callbacks not authorized; ordinary source protocol behavior remains full-goal gate"
+  ],
+  "benchmark_cases": [
+    {
+      "id": "u8-small",
+      "shape": [
+        32,
+        48
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "sigma": 1,
+      "alpha": 100.0,
+      "input_elements": 1536,
+      "output_elements": 1536,
+      "correlate_multiply_add_terms_upper": 55296,
+      "named_numerical_bytes_upper": 624640,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-medium",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f64-medium",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-fortran",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "F",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-reverse",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "reverse",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-large",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "sigma": 5,
+      "alpha": 100.0,
+      "input_elements": 65536,
+      "output_elements": 65536,
+      "correlate_multiply_add_terms_upper": 10747904,
+      "named_numerical_bytes_upper": 26382336,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "u16-medium",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "sigma": 1,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 589824,
+      "named_numerical_bytes_upper": 6574080,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-volume",
+      "shape": [
+        24,
+        24,
+        24
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "sigma": 1,
+      "alpha": 100.0,
+      "input_elements": 13824,
+      "output_elements": 13824,
+      "correlate_multiply_add_terms_upper": 1119744,
+      "named_numerical_bytes_upper": 5607424,
+      "status": "prospective_no_factory_or_body_executed"
+    }
+  ],
+  "benchmark_method": {
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "allocated_public_call": true,
+    "loss_policy": "retain_all_losses",
+    "sampler": "existing Montage only; future root-admitted executable consumer, no timing now"
+  },
+  "unbound": {
+    "prepared_source": null,
+    "producer_run": null,
+    "artifact": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "first_cohort_GO": null,
+    "measurement_GO": null
+  },
+  "pending": [
+    "Independent source/storage safety admission",
+    "Actual package/METADATA/RECORD/public+compiled identity and NumPy-only factories/codec/FP tests",
+    "Versioned source-bound controller/full32 same-code cached+cold target/provider REQUEST refusal, no helper algorithms",
+    "Separate root GO before any prospective158originals",
+    "Saved raw independent admission then complete owned native/public/SDK/hotswap/SIMD/scalar/worker proofs",
+    "Genuine exact-source four profiles/full exported SDK and one-thread public-original performance before release"
+  ]
+}

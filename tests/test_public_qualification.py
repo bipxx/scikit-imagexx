@@ -2312,10 +2312,10 @@ def current_metadata_artifact(tmp_path):
     source = {name: (ROOT/name).read_bytes() for name in
               ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
-                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries','join_segmentations','crop','regular_grid','array_views','slice_along_axes','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball'):
+                 'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries','join_segmentations','crop','regular_grid','array_views','slice_along_axes','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','inverse_gaussian_gradient'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
-                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color','_find_boundaries','_join_segmentations','_crop','_regular_grid','_array_views','_slice_along_axes','_mark_boundaries','_draw_multiblock_lbp','_finite_radon','_variation_of_information','_flood_fill','_rolling_ball'):
+                 '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color','_find_boundaries','_join_segmentations','_crop','_regular_grid','_array_views','_slice_along_axes','_mark_boundaries','_draw_multiblock_lbp','_finite_radon','_variation_of_information','_flood_fill','_rolling_ball','_inverse_gaussian_gradient'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     licenses = tomllib.loads(source['pyproject.toml'].decode())['project']['license-files']
     for name in licenses: source[name] = b'inert license '+name.encode()
@@ -2356,14 +2356,14 @@ def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,281)
+    result=q.plan(ROOT,profile,282)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current281' and result['registry']['image_count']==281
-    assert result['product_members']==228 and result['SDK_members']==108
-    assert result['SDK_checks']==76 and 'current38 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==145
+    assert result['product_scope']=='current282' and result['registry']['image_count']==282
+    assert result['product_members']==230 and result['SDK_members']==109
+    assert result['SDK_checks']==78 and 'current39 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==146
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==159
+    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==162
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2422,7 +2422,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current281' and result['record_verified']
+        assert result['product_scope']=='current282' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2436,17 +2436,18 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',281)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',282)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball') and len(q.FAMILIES)==23
-    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==38
-    plan=q.plan(ROOT,'modern',281)
-    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(108,38,76)
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','inverse_gaussian_gradient') and len(q.FAMILIES)==23
+    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==39
+    plan=q.plan(ROOT,'modern',282)
+    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(109,39,78)
     assert set(plan['SDK_families'])==set(q.CURRENT_FAMILIES)
-    without_rolling={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!='rolling_ball']}
-    with pytest.raises(q.QualificationError):q.validate_sdk_listing(without_rolling,scope=q.CURRENT_PRODUCT_SCOPE)
+    for missing in ('rolling_ball','inverse_gaussian_gradient'):
+        without={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!=missing]}
+        with pytest.raises(q.QualificationError):q.validate_sdk_listing(without,scope=q.CURRENT_PRODUCT_SCOPE)
     current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
     old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
     q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
@@ -2902,7 +2903,7 @@ def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',281)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',282)['blockers']
 
 
 @pytest.mark.parametrize('selector',(

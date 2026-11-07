@@ -222,3 +222,13 @@ else()
     target_compile_options(rolling_ball_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
 endif()
 add_test(NAME installed_rolling_ball_consumer COMMAND rolling_ball_consumer "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/rolling_ball_sdk_v1.bin" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/rolling_ball_sdk_dtypes_v1.bin")
+
+# Complete admitted owning IGG operation and retained50 saved output words.
+add_executable(inverse_gaussian_gradient_consumer inverse_gaussian_gradient_consumer.cpp)
+target_link_libraries(inverse_gaussian_gradient_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(inverse_gaussian_gradient_consumer PRIVATE /UNDEBUG /fp:strict)
+else()
+    target_compile_options(inverse_gaussian_gradient_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
+endif()
+add_test(NAME installed_inverse_gaussian_gradient_consumer COMMAND inverse_gaussian_gradient_consumer "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/inverse_gaussian_gradient_sdk_v1.bin")

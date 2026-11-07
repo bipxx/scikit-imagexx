@@ -17,7 +17,7 @@ import sys
 import warnings
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/rolling-ball-benchmark-execution-v3.json'
+CONTEXT='coverage/contracts/rolling-ball-benchmark-execution-v4.json'
 API='restoration.rolling_ball'
 LIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 digest=lambda raw:hashlib.sha256(raw).hexdigest()

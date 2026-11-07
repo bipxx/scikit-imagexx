@@ -15,6 +15,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('segmentation.inverse_gaussian_gradient',),'tests/test_inverse_gaussian_gradient_public.py::test_saved_original','benchmarks/inverse_gaussian_gradient_native.py'),
     (('restoration.rolling_ball',),'tests/test_rolling_ball_public.py::test_saved_original','benchmarks/rolling_ball_native.py'),
     (('util.slice_along_axes',),'tests/test_util_views_integration.py','benchmarks/slice_along_axes.py'),
     (('util.view_as_blocks','util.view_as_windows'),'tests/test_util_views_integration.py','benchmarks/array_views.py'),
@@ -190,6 +191,8 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
+            elif path=='segmentation.inverse_gaussian_gradient':
+                entries[-1]['default_input_kind']='Actual requested dtype/image with bounded sigma1 alpha100 shared adapter; owned separable gradient and staged expression, NumPy coefficient/coercion/storage/policy providers. Corrected frontend normal only; complete SDK float32/64; fresh modes/exceptional FP/Windows/genuine/performance gaps explicit.'
             elif path=='restoration.rolling_ball':
                 entries[-1]['default_input_kind']='Actual requested image/dtype, explicit radius1 shared adapter; owned padding/min-plus/source NaN-row order and defaultball primitive. NumPy dtype/allocation/custom-kernel arithmetic/protocol providers; literal default100 separately saved1D. SDK float32/64, Windows/broaderFP/genuine/performance gaps explicit.'
             elif path in ('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'):

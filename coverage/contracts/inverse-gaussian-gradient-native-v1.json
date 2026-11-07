@@ -1,0 +1,43 @@
+{
+  "schema": "inverse-gaussian-gradient-native-v1",
+  "base_source": "769811615ffb168f5c42bc15267026eba631fc4b",
+  "raw_root_admission_sha256": "be2e13844974951d6a760602ff83db452eb93413a95f2215ccfbce30a11d7f5b",
+  "source_raw_sha256": {
+    "include/skimagexx/inverse_gaussian_gradient.hpp": "9acbe6cf788372142f576cc1998b30162c2c430ea9c6c1f2be8ebe42918a0bfe",
+    "src/inverse_gaussian_gradient.cpp": "288199d75616e093a965d80dc34fa9552219812f7b6926ac2bce1df65754e88a",
+    "src/bind_inverse_gaussian_gradient.cpp": "df7aa436d5774f38fab13326b3a7c1b89d98c2d71e0aa85072e0ef27cb8375a9",
+    "python/skimagexx/_inverse_gaussian_gradient.py": "6f939541010dd8777cd6f4e551e38a04289652513d47297123c855205f6bc4ba",
+    "tests/fixtures/inverse_gaussian_gradient_original_v1.json": "badb51e327938a1d80a5823b8bfff243b0a576f6ee31b8edd10350de6ec3b5b5",
+    "tests/fixtures/inverse_gaussian_gradient_sdk_v1.bin": "2a2dfcbfc331d37dcf51633734500681a8389734a1922c24f99cc72109b89b8e",
+    "tests/test_inverse_gaussian_gradient_public.py": "77ede490f822c836d9a0b42d1f09b081327721f4b276f1a33c5f225d1ac99cc1",
+    "tests/test_inverse_gaussian_gradient_sdk.cpp": "7260708ed45895f0f60b5a6b19999162e47aea90deedd3b009bd4f0e8f16e583",
+    "tests/test_inverse_gaussian_gradient_native.cpp": "7e14b58a40e99df779bf338625bd39da4410e8825f16dc472f3db1a04b5c1f89",
+    "tests/sdk/inverse_gaussian_gradient/CMakeLists.txt": "39e0f83c07db700b6621ac5b084389eeea378cebd6b58e8c5eaadaef3ac83d98"
+  },
+  "historical_raw_sha256": {
+    "tests/inverse_gaussian_gradient_contract.py": "d1f6e2a623ad86b9904e78514388e0a4b49a3dfd3efe7404456647c75f9fd5cb",
+    "tests/inverse_gaussian_gradient_observer.py": "2fe42f1ec3f073521675133b35e5b873e3d1061646391a928cfd96fd82367c03",
+    "tests/inverse_gaussian_gradient_capture_controller.py": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93",
+    "coverage/contracts/inverse-gaussian-gradient-v1.json": "6d72d22a9b60baf489c6a4ed9434642d9b6e5709979d9aca097ac544daef9628",
+    "benchmarks/inverse_gaussian_gradient.py": "d2fb308d50360ff150885a1e9346bcb342a8f65543f56da3840e2309920c4cc4"
+  },
+  "accuracy": "Exact raw values/types/layout/errors/warnings/target semantic FP and caller32 at authentic incoming states; no tolerance/masking",
+  "original_remaining": 0,
+  "unbound_genuine": true,
+  "providers": [
+    "NumPy image/alpha coercion, dtype/value promotion, small coefficient exp/normalization/polynomial metadata, allocation and scalar FP policy delivery",
+    "Owned native separable derivative/typed intermediate square/sum/sqrt/alpha multiply/add/sqrt/reciprocal, nearest borders, ordered primitive SIMD/optional workers"
+  ],
+  "pending": [
+    "Independent component admission and shared integration/hot-swap/single genuine core",
+    "Exact-source four-profile release and current complete installed SDK qualification",
+    "Actual genuine benchmark zero-body cohort and strict eight larger numerical preflights, separate timing GO/all losses",
+    "Windows public/original/full FP domains: compile-only native/client scope here",
+    "Stateful sigma generator/protocol callback interleaving and arbitrary nonnumeric/backend domains",
+    "Skipped-axis half input and broad extended dtype/promotion cases",
+    "Gradient overflow intermediate warning/callback dispatch outside saved cases; no broad FP policy closure",
+    "Unmasked exceptions, FTZ/DAZ, nondefault rounding and parallel exception propagation outside saved incoming envelope"
+  ],
+  "SDK_scope": "Complete owning float32/float64 operation including signed-strided POD copy and broadcast alpha; Python Boolean/integer/complex/half and arbitrary providers not claimed typed SDK closure",
+  "workers": "Default1; one captured positive budget across source plans/native stages/SDK copy; independent outputs only, no correlation reduction reassociation"
+}

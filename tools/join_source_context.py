@@ -5,8 +5,26 @@ import json
 CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'
 
 
+def igg_predecessor_bytes(root,name,raw):
+    """Exact additive IGG source layer before admitteddda9; no algorithm projection."""
+    path=Path(root)/'coverage/contracts/inverse-gaussian-gradient-enabled-context-v3.json'
+    if not path.is_file():return raw
+    context=json.loads(path.read_bytes())
+    assert context['predecessor_source']=='dda9cc83d9434a10616f84cf1e1125d93f5f36fd'
+    if name not in context['sources']:return raw
+    row=context['sources'][name];raw=raw.replace(b'\r\n',b'\n')
+    assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+    for fragment in row['inverse_fragments']:
+        current,old=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1,name
+        raw=raw.replace(current,old,1)
+    assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
+    return raw
+
+
 def sdk_family_assertion_predecessor_bytes(root,name,raw):
     """Strict assertion-only source successor, before every shared historical entry."""
+    raw=igg_predecessor_bytes(root,name,raw)
     from tools.rolling_ball_sentinel_context import predecessor_bytes as sentinel_predecessor
     raw=sentinel_predecessor(root,name,raw)
     path=Path(root)/'coverage/contracts/current281-sdk-family-source-v2.json'

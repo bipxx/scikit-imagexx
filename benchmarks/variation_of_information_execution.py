@@ -16,7 +16,7 @@ from pathlib import Path
 import sys
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v5.json'
+CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v7.json'
 digest=lambda raw:hashlib.sha256(raw).hexdigest()
 source_bytes=lambda p:Path(p).read_bytes().replace(b'\r\n',b'\n')
 

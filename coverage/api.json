@@ -7052,11 +7052,25 @@
       "api": "segmentation.inverse_gaussian_gradient",
       "kind": "callable",
       "signature": "(image, alpha=100.0, sigma=5.0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_inverse_gaussian_gradient_public.py::test_saved_original",
+      "benchmark": "benchmarks/inverse_gaussian_gradient_native.py",
+      "default_input_kind": "Actual requested dtype/image with bounded sigma1 alpha100 shared adapter; owned separable gradient and staged expression, NumPy coefficient/coercion/storage/policy providers. Corrected frontend normal only; complete SDK float32/64; fresh modes/exceptional FP/Windows/genuine/performance gaps explicit."
     },
     {
       "api": "segmentation.join_segmentations",

@@ -10,7 +10,7 @@ CONTEXT=ROOT/'coverage/contracts/rolling-ball-enabled-context-v1.json'
 EXPECTED_CONTEXT='a9f317747114b1766467f9c3624c3c7bce9b7ebbbb209bd0b1539d5b13c0b373'
 H=lambda b:hashlib.sha256(b).hexdigest()
 from tools.rolling_ball_sentinel_context import predecessor_bytes as sentinel_predecessor
-def historical(name):return sentinel_predecessor(ROOT,name,(ROOT/name).read_bytes())
+def historical(name):return sentinel_predecessor(ROOT,name,__import__('tools.join_source_context',fromlist=['igg_predecessor_bytes']).igg_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))
 
 
 def qualifier():
@@ -23,8 +23,7 @@ def test_exact_shared_and_controller_predecessors_and_unchanged_family():
     c=json.loads(CONTEXT.read_bytes())
     from tools.join_source_context import rolling_predecessor_bytes
     for name,row in c['sources'].items():
-        raw=(ROOT/name).read_bytes()
-        assert H(rolling_predecessor_bytes(ROOT,name,raw))==row['predecessor_canonical_lf_sha256'],name
+        assert H(rolling_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==row['predecessor_canonical_lf_sha256'],name
     for name,row in {**c['controller_sources'],**c['family_sources']}.items():
         raw=historical(name).replace(b'\r\n',b'\n')
         assert H(raw)==row['current_canonical_lf_sha256'],name
@@ -50,9 +49,9 @@ def test_shared_projection_refuses_changed_current_or_inverse(tmp_path,fault):
 
 @pytest.mark.parametrize('profile',('minimum','modern','debug','windows'))
 def test_actual_current_census_and_explicit_saved_platform(profile):
-    q=qualifier();p=q.plan(ROOT,profile,281)
+    q=qualifier();p=q.plan(ROOT,profile,282)
     assert not p['blockers'],p['blockers']
-    assert (p['registry']['image_count'],p['registry']['registered_count'],p['product_members'],p['SDK_members'],len(p['SDK_families']),p['SDK_checks'])==(281,284,228,108,38,76)
+    assert (p['registry']['image_count'],p['registry']['registered_count'],p['product_members'],p['SDK_members'],len(p['SDK_families']),p['SDK_checks'])==(282,285,230,109,39,78)
     assert 'test_rolling_ball_integration.py'in p['public_groups']['public-post203']
     group='public-rolling-ball-saved-linux'
     if profile=='windows':assert group not in p['public_groups']
@@ -102,16 +101,16 @@ def test_benchmark_context_successor_only_changes_source_projection():
 
 def test_actual_active_shared_benchmark_literal_dependencies():
     # These are the exact current driver contexts; older contexts remain history.
-    for name in ('rolling-ball-benchmark-execution-v2.json','mark-boundaries-benchmark-execution-v6.json','draw-multiblock-lbp-benchmark-execution-v5.json','variation-of-information-benchmark-execution-v5.json'):
+    for name in ('rolling-ball-benchmark-execution-v4.json','mark-boundaries-benchmark-execution-v8.json','draw-multiblock-lbp-benchmark-execution-v7.json','variation-of-information-benchmark-execution-v7.json'):
         c=json.loads((ROOT/'coverage/contracts'/name).read_bytes())
-        for source,pin in c['source_files_canonical_sha256'].items():assert H(historical(source).replace(b'\r\n',b'\n'))==pin,(name,source)
+        for source,pin in c['source_files_canonical_sha256'].items():assert H((ROOT/source).read_bytes().replace(b'\r\n',b'\n'))==pin,(name,source)
         for field,source in (('common_boundary_canonical_sha256','benchmarks/mark_boundaries_execution.py'),('reused_executor_canonical_sha256','benchmarks/next_util_execution.py'),('metadata_fixture_canonical_sha256','tests/test_mark_boundaries_benchmark_execution.py')):
             if field in c:assert H((ROOT/source).read_bytes().replace(b'\r\n',b'\n'))==c[field],(name,field)
         assert all(value is None for value in c['unbound'].values())
 
     import runpy
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
-    path='coverage/contracts/variation-of-information-benchmark-execution-v5.json'
+    path='coverage/contracts/variation-of-information-benchmark-execution-v7.json'
     current=json.loads((ROOT/path).read_bytes())
     for name,row in current['historical_sources'].items():
         assert H(adapter['historical_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']
@@ -119,7 +118,7 @@ def test_actual_active_shared_benchmark_literal_dependencies():
 
 @pytest.mark.parametrize('fault',('unreviewed-current','already-predecessor'))
 def test_sdk_family_assertion_projection_is_strict_and_once(fault):
-    from tools.join_source_context import sdk_family_assertion_predecessor_bytes
+    from tools.join_source_context import sdk_family_assertion_predecessor_bytes,igg_predecessor_bytes
     project=lambda raw:sdk_family_assertion_predecessor_bytes(ROOT,'tests/test_public_qualification.py',raw)
     raw=(ROOT/'tests/test_public_qualification.py').read_bytes()
     if fault=='unreviewed-current':raw+=b'changed'

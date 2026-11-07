@@ -20,9 +20,9 @@ def test_exact_fix_projection_and_unchanged_checker_engines():
     c=json.loads(CONTEXT.read_bytes())
     from tools.join_source_context import integration_fix_predecessor_bytes
     for name,row in c['sources'].items():assert H(integration_fix_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==row['predecessor_canonical_lf_sha256'],name
-    for name,pin in c['unchanged_computation'].items():assert H((ROOT/name).read_bytes())==pin,name
+    for name,pin in c['unchanged_computation'].items():assert H(__import__('tools.join_source_context',fromlist=['igg_predecessor_bytes']).igg_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin,name
     for key,pin in c['immutable_checker_functions'].items():
-        path,name=key.split(':');text=(ROOT/path).read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name==name)
+        path,name=key.split(':');text=__import__('tools.join_source_context',fromlist=['igg_predecessor_bytes']).igg_predecessor_bytes(ROOT,path,(ROOT/path).read_bytes()).decode();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name==name)
         assert H(ast.get_source_segment(text,node).encode())==pin
     assert c['actual_genuine_authority']is c['actual_benchmark_authority']is None
     assert c['reference_capture_calls_remaining']==0
@@ -162,7 +162,7 @@ def test_sdk_shared_successor_exact_source_hashes_and_collector():
     assert set(c['sources'])=={'tests/test_public_qualification.py','tools/join_source_context.py','tools/public_qualification.py'}
     for name,row in c['sources'].items():
         from tools.rolling_ball_sentinel_context import predecessor_bytes as sentinel_predecessor
-        raw=(ROOT/name).read_bytes();assert H(sentinel_predecessor(ROOT,name,raw).replace(b'\r\n',b'\n'))==row['current_canonical_lf_sha256']
+        raw=(ROOT/name).read_bytes();assert H(sentinel_predecessor(ROOT,name,__import__('tools.join_source_context',fromlist=['igg_predecessor_bytes']).igg_predecessor_bytes(ROOT,name,raw)).replace(b'\r\n',b'\n'))==row['current_canonical_lf_sha256']
         old=sdk_family_assertion_predecessor_bytes(ROOT,name,raw)
         assert H(old)==row['predecessor_canonical_lf_sha256']
     q=runpy.run_path(str(ROOT/'tools/public_qualification.py'))
@@ -212,7 +212,7 @@ def test_sdk_all_shared_readers_refuse_changed_or_second_projection(entry,fault)
 @pytest.mark.parametrize('fault',('current','inverse'))
 def test_sdk_shared_source_context_refuses_tamper(tmp_path,fault):
     from tools.join_source_context import sdk_family_assertion_predecessor_bytes
-    c=json.loads(SDK_CONTEXT.read_bytes());name='tests/test_public_qualification.py';raw=(ROOT/name).read_bytes()
+    c=json.loads(SDK_CONTEXT.read_bytes());name='tests/test_public_qualification.py';raw=__import__('tools.join_source_context',fromlist=['igg_predecessor_bytes']).igg_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes())
     if fault=='current':raw+=b'changed'
     else:c['sources'][name]['inverse_fragments'][0]['predecessor']+='changed'
     target=tmp_path/'coverage/contracts';target.mkdir(parents=True);(target/SDK_CONTEXT.name).write_text(json.dumps(c))

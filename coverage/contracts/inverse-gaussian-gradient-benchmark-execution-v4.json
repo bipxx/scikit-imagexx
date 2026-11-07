@@ -1,0 +1,331 @@
+{
+  "schema": "inverse-gaussian-gradient-benchmark-execution-v4",
+  "state": "PROSPECTIVE_UNBOUND_EXECUTABLE_NO_MEASUREMENT",
+  "base_source": "9b8e870ecdeadf614b9e0a632598d39f518f8dcb",
+  "unbound": {
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "root_GO": null,
+    "measurement_GO": null,
+    "genuine_first_cohort": null
+  },
+  "unbound_message": "IGG_UNBOUND",
+  "cases": [
+    {
+      "id": "u8-small",
+      "shape": [
+        32,
+        48
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "sigma": 1,
+      "alpha": 100.0,
+      "input_elements": 1536,
+      "output_elements": 1536,
+      "correlate_multiply_add_terms_upper": 55296,
+      "named_numerical_bytes_upper": 624640,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-medium",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f64-medium",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-fortran",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "F",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-reverse",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "float32",
+      "layout": "reverse",
+      "sigma": 2,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 1114112,
+      "named_numerical_bytes_upper": 6590464,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-large",
+      "shape": [
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "sigma": 5,
+      "alpha": 100.0,
+      "input_elements": 65536,
+      "output_elements": 65536,
+      "correlate_multiply_add_terms_upper": 10747904,
+      "named_numerical_bytes_upper": 26382336,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "u16-medium",
+      "shape": [
+        128,
+        128
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "sigma": 1,
+      "alpha": 100.0,
+      "input_elements": 16384,
+      "output_elements": 16384,
+      "correlate_multiply_add_terms_upper": 589824,
+      "named_numerical_bytes_upper": 6574080,
+      "status": "prospective_no_factory_or_body_executed"
+    },
+    {
+      "id": "f32-volume",
+      "shape": [
+        24,
+        24,
+        24
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "sigma": 1,
+      "alpha": 100.0,
+      "input_elements": 13824,
+      "output_elements": 13824,
+      "correlate_multiply_add_terms_upper": 1119744,
+      "named_numerical_bytes_upper": 5607424,
+      "status": "prospective_no_factory_or_body_executed"
+    }
+  ],
+  "case_count": 8,
+  "method": {
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "threads": 1,
+    "retain_all_losses": true,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "allocation_inclusive": true,
+    "pass_index": 0
+  },
+  "source_method": {
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "allocated_public_call": true,
+    "loss_policy": "retain_all_losses",
+    "sampler": "existing Montage only; future root-admitted executable consumer, no timing now"
+  },
+  "raw_samples": 112,
+  "warm_groups": 16,
+  "route_id": "igg",
+  "route": {
+    "api": "segmentation.inverse_gaussian_gradient",
+    "driver": "benchmarks/inverse_gaussian_gradient_native.py",
+    "owned_module": "skimagexx._inverse_gaussian_gradient"
+  },
+  "signature": "(image, alpha=100.0, sigma=5.0)",
+  "original_module": "skimage.segmentation.morphsnakes",
+  "original_source_canonical_sha256": "71ced09bbab3918523c38abeda1235a79ca34eb7467d76875e0ef5b13d2092d6",
+  "owned_source": "python/skimagexx/_inverse_gaussian_gradient.py",
+  "SDK_header": "include/skimagexx/inverse_gaussian_gradient.hpp",
+  "report_family": "inverse_gaussian_gradient_native",
+  "default_output": "build/inverse-gaussian-gradient-performance.json",
+  "supported_numpy": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "source_files_canonical_sha256": {
+    "include/skimagexx/inverse_gaussian_gradient.hpp": "9acbe6cf788372142f576cc1998b30162c2c430ea9c6c1f2be8ebe42918a0bfe",
+    "src/inverse_gaussian_gradient.cpp": "288199d75616e093a965d80dc34fa9552219812f7b6926ac2bce1df65754e88a",
+    "src/bind_inverse_gaussian_gradient.cpp": "df7aa436d5774f38fab13326b3a7c1b89d98c2d71e0aa85072e0ef27cb8375a9",
+    "python/skimagexx/_inverse_gaussian_gradient.py": "982a1d9a9fb0fb8928276620182cc23ac47fa16c1a7b42c54c99c77269e38964",
+    "benchmarks/inverse_gaussian_gradient_native.py": "80d0638b3a57a75127be75ad02ab1b735c9deb321922a6cf8836f51a2926536b",
+    "benchmarks/inverse_gaussian_gradient_execution.py": "4aef53fc45ddbe7b5933b26911812fe0912a6609ef92591916e7f5a29dfe2c7d",
+    "benchmarks/inverse_gaussian_gradient.py": "d2fb308d50360ff150885a1e9346bcb342a8f65543f56da3840e2309920c4cc4",
+    "coverage/contracts/inverse-gaussian-gradient-v1.json": "6d72d22a9b60baf489c6a4ed9434642d9b6e5709979d9aca097ac544daef9628",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988"
+  },
+  "common_boundary_canonical_sha256": "8f3fa446228922a036c993647c6d9997155025a632344a4a3912d75943149ea2",
+  "reused_executor_canonical_sha256": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+  "FENV_dependency": {
+    "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+    "source_files_raw_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "module": "tests/util_views_fenv.py",
+    "backend": "backend",
+    "mode": "source-built-v1",
+    "receipt_environment": "UTIL_VIEWS_FENV_RECEIPT",
+    "external_digest_environment": "UTIL_VIEWS_FENV_RECEIPT_SHA256",
+    "legacy": "F1 private-fixed-v1 scope retained; forbidden by this benchmark genuine consumer",
+    "collector": "C prepares current-source helper and exports MODE/RECEIPT/RECEIPT_SHA256, no HELPER. Retain entire emitted helper bundle recursively and7F1sourcefiles/context. Receipt/toolchain/source/current-library/control validation precedes target calls.",
+    "scope": "Reviewed empty-x87/masked exceptions/Linux x86_64 glibc32/MXCSR28; no Windows/general machine-state claim."
+  },
+  "historical_sources": {
+    "python/skimagexx/_inverse_gaussian_gradient.py": {
+      "current_canonical_sha256": "982a1d9a9fb0fb8928276620182cc23ac47fa16c1a7b42c54c99c77269e38964",
+      "predecessor_canonical_sha256": "6f939541010dd8777cd6f4e551e38a04289652513d47297123c855205f6bc4ba",
+      "inverse_fragments": [
+        {
+          "current": "def _policy(flags,operation,dtype):\n    # One small ufunc delivers the complete native status together. NumPy then\n    # applies its own divide/overflow/underflow/invalid order and callback mask.\n    # These operands are policy metadata, never image computation.\n    if not flags:return\n    if operation=='sqrt':\n        if flags!=1:raise NotImplementedError('IGG sqrt policy status unassessed')\n        np.sqrt(np.array([-1.],dtype=np.finfo(dtype).dtype))\n        return\n    limits=np.finfo(dtype);left=[];right=[]\n    if operation=='divide':\n        if flags&2:left.append(1+1j if np.dtype(dtype).kind=='c'else 1.);right.append(0.)\n        if flags&4:left.append(limits.max);right.append(.5)\n        if flags&8:left.append(limits.tiny);right.append(limits.max)\n        if flags&1:left.append(0.);right.append(0.)\n    elif operation=='multiply':\n        if flags&~13:raise NotImplementedError('IGG multiply policy status unassessed')\n        if flags&4:left.append(limits.max);right.append(2.)\n        if flags&8:left.append(limits.tiny);right.append(limits.tiny)\n        if flags&1:left.append(np.inf);right.append(0.)\n    elif operation=='add':\n        if flags&~5:raise NotImplementedError('IGG add policy status unassessed')\n        if flags&4:left.append(limits.max);right.append(limits.max)\n        if flags&1:left.append(np.inf);right.append(-np.inf)\n    else:raise ValueError('Unknown IGG expression operation')\n    getattr(np,operation)(np.array(left,dtype=dtype),np.array(right,dtype=dtype))\n",
+          "predecessor": "def _policy(flags,operation,dtype):\n    # Existing metric policy pattern: one scalar metadata probe delivers the\n    # source NumPy exception/warning/callback wording. No image computation.\n    if not flags:return\n    if flags&1:\n        if operation=='sqrt':np.sqrt(np.array([-1.],dtype=dtype))\n        else:np.multiply(np.array([np.inf],dtype=dtype),np.array([0.],dtype=dtype))\n    if flags&2:np.divide(np.array([1.],dtype=dtype),np.array([0.],dtype=dtype))\n    if flags&4:np.multiply(np.array([np.finfo(dtype).max],dtype=dtype),np.array([2.],dtype=dtype))\n    if flags&8:np.multiply(np.array([np.finfo(dtype).tiny],dtype=dtype),np.array([np.finfo(dtype).tiny],dtype=dtype))\n"
+        },
+        {
+          "current": "_policy(flags,('multiply','add','sqrt','divide')[stage],dtype)",
+          "predecessor": "_policy(flags,'sqrt'if stage==2 else'multiply',dtype)"
+        }
+      ]
+    },
+    "benchmarks/inverse_gaussian_gradient_execution.py": {
+      "current_canonical_sha256": "4aef53fc45ddbe7b5933b26911812fe0912a6609ef92591916e7f5a29dfe2c7d",
+      "predecessor_canonical_sha256": "ad973237a6642e48bcc2b807c2822eae501fb8357fc751f8c0a307b9d985053b",
+      "inverse_fragments": [
+        {
+          "current": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v4.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n",
+          "predecessor": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n"
+        },
+        {
+          "current": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n",
+          "predecessor": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v2.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n"
+        },
+        {
+          "current": "CONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v2.json'",
+          "predecessor": "CONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v1.json'"
+        }
+      ]
+    },
+    "benchmarks/inverse_gaussian_gradient_native.py": {
+      "current_canonical_sha256": "80d0638b3a57a75127be75ad02ab1b735c9deb321922a6cf8836f51a2926536b",
+      "predecessor_canonical_sha256": "5323ad443f5aa5225e0eb74f0c69286ff58011044864a3c505821c8af5900218",
+      "inverse_fragments": [
+        {
+          "current": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v4.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n",
+          "predecessor": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n"
+        },
+        {
+          "current": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n",
+          "predecessor": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v2.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n"
+        },
+        {
+          "current": "CONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v2.json'",
+          "predecessor": "CONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v1.json'"
+        }
+      ]
+    }
+  },
+  "providers": [
+    "Small NumPy Gaussian/Hessian coefficient exp/normalization/2x2polynomial arrays; allimage correlation/square/sum/sqrt/multiply/add/divide ownedCPP",
+    "NumPy dtype/coercion/commonpromotion/alpha protocol+cast/broadcast/metadata/allocation andbounded one-ufunc FP policy probes; no whole upstream/helperimagealgorithm"
+  ],
+  "strict_preflight": "Future genuine currentreference/native eachcase strictword/layout/input/ownership/warning/semanticFP parity and source/runtime/core/SDK/F1 authority beforetiming. Larger workloads unobserved original, no numericalparity inferred from sourcebounds.",
+  "timed_ownership": "Only exact publiccallbacks timed; instrumentation in nontimedpreflight/postbatch, onegetter+onegradient+fourfinish Creturns.",
+  "integration_dependencies": {
+    "benchmarks/mark_boundaries_execution.py": {
+      "canonical_sha256": "8f3fa446228922a036c993647c6d9997155025a632344a4a3912d75943149ea2",
+      "scope": "Exactadmittedread-only common binding/measurement validators+sample_entry; absent inprivate769base, selectiveintegration prerequisite, notauthority"
+    }
+  },
+  "pending": [
+    "Root independentfamily/component source admission",
+    "Selective admittedMARKcommon/currentnextutil/F1 projection with exactcontext successor; nofrozenpin overwrite",
+    "Actualgenuineproduct/source/runtime/core/completeSDK andreal zero-timing cohort outerstate/C1/poststop/postbatch verifier",
+    "SeparatemeasurementGO andall8strictuntimednumericalpreflights,thenoneoriginalpublic1thread fixedmethod retainingalllosses; no currentbodyauthority"
+  ],
+  "policy_scope": "Statusdelivery successor only; C++/headers/SDK/raw158/cases/method unchanged. Primitive controls do not establish wholeIGG new-domain parity.",
+  "successor_source_predecessors": {
+    "benchmarks/inverse_gaussian_gradient_native.py": {
+      "current_canonical_sha256": "80d0638b3a57a75127be75ad02ab1b735c9deb321922a6cf8836f51a2926536b",
+      "predecessor_canonical_sha256": "6fdf27434cd9c0948eb9464dc883f655994891ef2fb31801c5b626d67941b6ab",
+      "inverse_fragments": [
+        {
+          "current": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v4.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n",
+          "predecessor": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n"
+        },
+        {
+          "current": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n",
+          "predecessor": "from math import prod\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v2.json'\n\n\ndef case_specs():return json.loads((ROOT/'coverage/contracts/inverse-gaussian-gradient-v1.json').read_bytes())['benchmark_cases']\n"
+        }
+      ]
+    },
+    "benchmarks/inverse_gaussian_gradient_execution.py": {
+      "current_canonical_sha256": "4aef53fc45ddbe7b5933b26911812fe0912a6609ef92591916e7f5a29dfe2c7d",
+      "predecessor_canonical_sha256": "df436887a127bd4b90db004f02d78d00d08c294898ec70e79466ef4acfd884a1",
+      "inverse_fragments": [
+        {
+          "current": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v4.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n",
+          "predecessor": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n"
+        },
+        {
+          "current": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n",
+          "predecessor": "import sys\nimport warnings\nROOT=Path(__file__).resolve().parents[1]\nCONTEXT='coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v2.json'\ndigest=lambda raw:hashlib.sha256(raw).hexdigest()\nsource_bytes=lambda p:Path(p).read_bytes().replace(b'\\r\\n',b'\\n')\n\n"
+        }
+      ]
+    }
+  },
+  "integration_predecessor_context": {
+    "path": "coverage/contracts/inverse-gaussian-gradient-benchmark-execution-v3.json",
+    "raw_sha256": "9bee31be826d19b9b1f5d1e000d4a7eb3ce0c09ffe14b65220951c1bfa51ef3c"
+  },
+  "integration_projection": "Source-only enabled IGG282: exact current source + historical inverses; cases/method/math unchanged, all actual authorities remain NULL.",
+  "current_integration": "Admitted canonical sentinel + IGG282 source only. Cases/method unchanged; actual authorityNULL."
+}
