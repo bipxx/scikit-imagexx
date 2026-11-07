@@ -37443,7 +37443,7 @@
       "current_checkpoint": "Six actual373 archives retained once; root intake current281-initial-comparisons-root-intake-v1.json reconstructs24cases336samples48warmgroups20wins4losses. Bothfrozenvalidatorspass scoped metadata. Fourfailedfamilies0samples: JOINwriterfield,rollingoutputboundary,MARKint64outerfrontier,VIstrictresultunlocalized. Main271unchanged. Independentroot sourceadmission8ed boundarycorrection passes6files16proofs159checks/version; actualremote/no priorruns/activeworkflows/qualifiedproducer/minimum/capacity verified. RootconditionalGO inbuild/current281-boundary-comparisons-v1 permits onlycorrectedJOIN32+rolling8, no successfulfamilyreplay. Actualcorrected8ed handles JOIN42362296756/rolling42362296718 arelive aftersuccessfuldispatch; no performanceacceptanceyet. Corrected8ed bothSUCCESS; rootretained40cases560samples80warmgroups18wins22losses. Aggregatefourfamilies64cases896samples128warmgroups38wins26losses provisional, authorityadmissionpending. No retries/retiming. RootscopedRadon/floodperformanceadmissionPASS24cases20wins4losses, sixrawfiles published; qualifiedDDA/source373minhost only, candidateBpartial creditnotshipping. Bextendsreviewonlynew8edJOIN/rolling40caseauthorityclosure. Rootnew40authority/performanceadmissionPASS; cumulative64/896samples128warm38wins26losses published18exactrawfiles. RemainingMARK/LBP/VI16blocked; main271 unchanged.",
       "next_gate": {
         "owner": "root",
-        "action": "VI42370505430 strict1+1didnotreproducepriorfailure; LBP42370508973 failedFPassert/timing0. F59diagnosticreviewLFP1 failedmissingcollectedrefsonC1tail; rootindependent4e942cff correction37completeinert/version nowPASS, exactmanualregistration+pushedbranch/liveAPI/ref/noprior/producer/artifact/capacity/UTC thenactual1original1native/no timingGO pending. Priorfailures+64published38wins26losses/remaining16 preserved."
+        "action": "Actual4e94 diagnostic42374889140 FAILED hostedsource36PASS1fixtureSHAfailure beforehelper/targets; allbudgets0, artifactonce-retained. Root82ec TESTONLYfixturefix admitted38complete/module bothWindows underGHenv, productionwrapper/workflow/v1v2contexts untouched, oldreadiness explicitlysupersededfailed. Existingmanualworkflowd9b08010unchanged; rootpush82ec/liveAPI-ref-noprior-producer-artifact-capacity-clock thenfreshUTC1original1native diagnosticGO. No unchanged4eretry/mathFPassertionwaiver. Candidate64cases38wins26losses remains, remaining16open."
       },
       "branch": "bind/current281-measurement-v1",
       "current_binding_readiness": {
@@ -39108,7 +39108,7 @@
     "handoff": "python tools/work_queue.py --packet <id>",
     "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay. Once mandatory readiness closes, update only the dependent gate and dispatch eligible hosted work promptly; do broad publication while it runs. Assign one isolated shared integration owner; root retains independent admission/main delivery. Before hosted releasequalification, execute the complete actual workflow source-check command on both retained supportedPythonversions with normalconftest/plugins, real selectors and nofailfast; afterfixes reruncompleteaffectedbarrier. Partialunions/collection/alteredconfiguration cannot satisfy thisgate.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
-    "implementation_goal_status": "Active full477 goal. Root exactdda9 qualification42347579925/watcher64812 live as recorded, no terminal result inferred. B GLCM and R golden native batches active; C bounded ledger-schema documentation checks/freeze. Future852cc188 frozen unready pending independent/full166/genuine/performance; no fullAPI/speed completion.",
+    "implementation_goal_status": "Active full477 goal; main271 partial. QualifiedDDA281 candidate has64 original-public cases38wins26losses;16cases pending. MARK eb46private8 strict wholeAPI passes plus8workers1/4units; LBPd4private8binaryFPunits pass, fullpublic/genuine/performance stillpending. Three actual lanes reconciled below; no fullAPI/libraryspeed claim.",
     "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
       "grayco_texture_native",
@@ -39119,19 +39119,19 @@
     "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
     "worker_queues": {
       "boundary_worker": [
-        "join-util-views-measurement-controller-v1"
+        "flood-fill-source-first-v1"
       ],
       "metrics_integrator": [
-        "grayco-texture-source-first-v1"
+        "mark-lbp-enabled-integration-v1"
       ],
       "readiness_reviewer": [
-        "order-angles-golden-ratio-source-first-v1"
+        "util-crop-current-batch-v1"
       ]
     },
     "current_three_agent_packets": {
-      "boundary_worker": "join-util-views-measurement-controller-v1",
-      "metrics_integrator": "grayco-texture-source-first-v1",
-      "readiness_reviewer": "order-angles-golden-ratio-source-first-v1"
+      "boundary_worker": "flood-fill-source-first-v1",
+      "metrics_integrator": "mark-lbp-enabled-integration-v1",
+      "readiness_reviewer": "util-crop-current-batch-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -39518,12 +39518,12 @@
       }
     },
     "current_review_assignments": {
-      "boundary_worker": "Live minimum UNBOUND six-family performance result-reader prep, no actualruns/artifacts bound. Frozen373source passed independent/root and1fb guardfix/collector correction frozen.",
-      "metrics_integrator": "Live GLCM8newfactory source/storage/readiness only in05bd child; old188authority0, newactualprefix/capture/native/timing notauthorized.",
-      "readiness_reviewer": "Frozenb537golden outer/934fpeerPASS and373 independent1bbPASS; idle awaiting next dependency-ready packet, not a live implementation author.",
-      "root": "Root3manualworkflow registration/actualregistrychecks/conditional373 six dispatches; live28224460; correctedgoldenfull16869747/66891. Main/native271 unchanged."
+      "boundary_worker": "Active DDA sparseWT flood-assignment-lines-v1, exclusive bind_flood_fill/familytests-contract; source/inert only, actualprofiledemonstrated repeatedindex cost; no native/build/timingGO yet.",
+      "metrics_integrator": "Active sole shared author DDA-based mark-wide-enabled-v1, compose MARKeb46+compat2e97+SDK8537 and ROOTsource/native-unit-admitted LBPd4. Sourcepreparation only; rootauthorizes completechecks/private/genuine/perf independently.",
+      "readiness_reviewer": "Actual9e crop2binder+2links passed/rootmapreview; separate GO permits4fullsaved/protocol suites min/modern normal/disabled expected256each, first actualhandle87965 live. No FPcontrol/timing permission.",
+      "root": "Actualflood8profile attribution admitted/16Centries; actualMARK8strict comparisons+8units andLBP8binaryunits pass. Own independentadmission/currentreceipts/main, next actualcropterminals/sharedcandidate source review; no scientificreplay."
     },
-    "next_action": "Root registers exact reviewed three missing manual workflows, verifies actualAPI states and frozenremote/no priorrun then dispatches six conditional original-vs-native comparisons. Observe same282 and goldenfull168 handles; immutable failures retained. No helper/cohort/timing ran locally.",
+    "next_action": "Root reviews actualcrop suite terminals and earliest MARK/LBP shared source candidate. B finishes demonstrated flood indexing source with bothsourceguards, independent admission before changedbinder/native/perf. Preserve MARK/LPB oldFP failures/actualIGG-VI unresolved hostfailure. No original/reference replay or unchanged favorable retiming.",
     "current_checkpoint": {
       "main_image_names": 271,
       "qualified_image_names": 271,
@@ -39615,16 +39615,32 @@
       "next_release_qualification_admission": {
         "path": "coverage/evidence/current281-whole-product-root-admission-v3.json",
         "sha256": "3724197bc0ce1f7ececdf39b7ad3e80f29c80477bb8067793fa54a5210c2ec8b"
+      },
+      "flood_stage_profile_terminal": {
+        "receipt": "coverage/evidence/flood-stage-profile-root-closeout-v1.json",
+        "source": "ac8b1e1681ea0e9f9833086dff30908391c5e866",
+        "actual_exit": 0,
+        "calls": 8,
+        "C_entries": 16,
+        "result": "Attributiononly; assignment0.384714–0.449367ms. No parity/speed credit. Root owns next bounded indexing fix dispatch after MARK review, independent source/native/performance gates remain.",
+        "waste_review": "Used once-restored ownwheel and existing cProfile, helper/runtime; eight calls only, no warmup/fullbuild/duplicate archive/core authentication. Cold copy outlier remains visible; no retiming for favorable result."
+      },
+      "mark_wide_corrected_native": {
+        "receipt": "coverage/evidence/mark-wide-comparison-fp-native-root-closeout-v1.json",
+        "source": "eb46aafa6b09f8425ad38246efb1564249a884bd",
+        "actual_native_calls": 8,
+        "result": "PASS strict private wholefind/MARK min4+modern4; no shipping/release/performance credit",
+        "next_owner_trigger": "Root authorizes one sharedintegration author; require strict2e97 and SDK8537/sourcecontexts/modes/fullsource/genuine/performance. LBP sibling correction pending independent/rootnative."
       }
     },
     "shared_integration_author": {
-      "owner": null,
-      "state": "no_live_shared_implementation_author",
-      "base": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
-      "scope": "Only C authors shared future golden wiring; root owns disjoint current281 measurement-controller worktree/receipts/main. Frozen852 and currentdda9 untouched.",
+      "owner": "metrics_integrator",
+      "state": "LIVE_SOURCE_PREPARATION_ONLY",
+      "base": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "scope": "Single compatible MARK/LBP correction candidate; sharedCMake/sourcecontexts/readers/SDK/selectors exclusivelyC. Root independentadmission/main. Other families stayisolated.",
       "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
       "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
-      "next_gate": "Root owns registration/main/performance dispatch and corrected1fb full168; C/R family-only preparatory source. No unfinishedfamily delays eligible281/282.",
+      "next_gate": "Freeze earliest coherent source after required affectedsourcechecks; root fullpublic/mode/SDK/actualsourcebarriers/genuine/performance gates pending. Prior source/handoff/count records in this object are historical until replaced by exact newcandidate receipt; no oldpending gate is waived.",
       "actual_staging_counts": {
         "image_paths": 280,
         "registered_functions": 283,
@@ -39635,7 +39651,7 @@
         "scope": "Frozen a5 staging only; complete source, genuine and delivery pending."
       },
       "ready_flood_cost_admission": "coverage/evidence/flood-fill-cost-root-admission-v1.json",
-      "source": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+      "source": "UNFROZEN_CURRENT_DDA_CHILD",
       "handoff": "build/vi-reduction-controller-integration-v2/handoff-v1.json",
       "handoff_sha256": "8abb884a12c6393d06977df8f672e008641a7870d0b431584d3292af552cbb14",
       "root_admission": "coverage/evidence/vi-reduction-controller-successor-source-admission-v1.json",
@@ -39650,7 +39666,7 @@
         "next_gate": "Actual42329688164 terminal/API artifact list then boundsuccessor contract; no download before actualterminal."
       },
       "previous_frozen_source": "352dc55681b3774ae3f304ac4783757a9d911b52",
-      "worktree": "build/worktrees/vi-reduction-controller-v2",
+      "worktree": "D:/Scratch/scikit-imagexx-active-worktrees/mark-wide-enabled-v1",
       "branch": "integrate/vi-reduction-controller-v2",
       "controller_source": "e6ffa386205309ac84526f14b3403082380e280a",
       "controller_admission": "build/current280-controller-root-admission-v1/admission-v1.json",

@@ -1,0 +1,13 @@
+{
+  "schema": "mark-wide-outer-private-bridge-root-source-admission-v1",
+  "status": "PASS_COMPILE_PREPARATION_ONLY_NATIVE_FP_VERDICT_PENDING",
+  "source": "0df4c60cd0db45cbd4fdb88807a176d12a8a0eff",
+  "handoff": "build\\mark-wide-outer-private-bridge-v1\\handoff-v1.json",
+  "handoff_sha256": "6faf16be0d6722c262766e52a3f8e5f6d6115ed59dd8a0e977cd4e15bbca7b2a",
+  "new_source_files": 4,
+  "pure_checks_each_python": 21,
+  "root_review": "Read whole strict privatecomparison/helperseed/assess/actualpipeline and7compilecommands. Rawtransport bytes exactlymatchrootadmitted8original JSON; no expected synthesis. Before/after semanticCW/SW/MXCSR andNumPy policy strict, no aftermask; exactfullcaller/process32 inlocalhelper scope, originalrequests denied. Nativewholefind/MARKfrontends andunmodified binders/realworker/SDKdonor reused. Oldstageobject includesmain so compileonestandalonefindTU; no binarytricks.",
+  "metadata_delta": "Finalcontract explanatorynumeric-overhead label changed after21controls. Inspected alltests: label unused, no owncontract wholehash assertion; sourcepin/shape/call/security/seed/assessment logic unchanged. Reuse21withinactualasserted scope; finalGOsourcepins/JSON/sourceguard checks validatednow, no science rerun.",
+  "remaining": "Actual7compile exits/linkmaps/ABI/import then separate4nativecalls/profile. No nativeFPparity, wholeowninginstalledSDK/genuine/mode/platform/publicperformance/release claim.",
+  "waste_review": "Reused verified8rawobservations/old33castcontrols/codegen/source/runtime/helper/donor proof scope; no originals/archives/wholecore orSDK builds. Newobject/sourceprojection mustpassbefore actualnativeGO."
+}

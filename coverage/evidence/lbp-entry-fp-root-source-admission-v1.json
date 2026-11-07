@@ -1,0 +1,9 @@
+{
+  "schema": "lbp-entry-fp-root-source-admission-v1",
+  "status": "PASS_SCOPED_SOURCE_ONLY_NATIVE_PENDING",
+  "source": "d4bddfcb32397184b47a2cfeb0a976de93015e0a",
+  "handoff_sha256": "139f28e82d63b96da3e849dca0a50c65f636be7d9ff2f18b289d08b61da2645b",
+  "root_review": "Read actual entry-only production delta/native8test/sourceguards/contextv6. Conditional four-error test before any math preserves no-standard-error C2/denormal state and mirrors pinned NumPy semantics. Actual provider8 preserveSW1058, libc2 unconditionalclear reproduceSW32; all35smallproof hashes and50completeXML eachPython match. No expected/tolerance/result or aftercall normalization; oldv1-v5 immutable.",
+  "pending": "Changed leaf/native8 regression, full94saved relevantmodes and real65792input firstcase targetFP/wholeSDK/currentintegration/fullsource/genuine/performance/main remainopen.",
+  "waste_review": "Admit retained actual evidence, no provider/original/science replay; reuse donor archive/core/helper for privatechanged-leaf checks only."
+}

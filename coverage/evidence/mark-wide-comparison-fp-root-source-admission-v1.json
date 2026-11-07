@@ -1,0 +1,12 @@
+{
+  "schema": "mark-wide-comparison-fp-root-source-admission-v1",
+  "status": "PASS_SCOPED_SOURCE_ONLY_CHANGED_LEAF_COMPILE_AUTHORIZED",
+  "source": "eb46aafa6b09f8425ad38246efb1564249a884bd",
+  "root_review": "Authenticated exact4source/28proof hashes and actual14completeXML eachWindows; actual8primitive controls terminal0/full32 exact. Read actual production diff: conditionalfourerrorclear after final morphology and before integerBoolean comparison, no aftercall mask, no subsequent FP arithmetic. Nonauthor review authenticated; no original/gold/expected change.",
+  "independent_review": {
+    "path": "build/mark-wide-comparison-fp-independent-review-v1/review-v1.json",
+    "sha256": "96a62a5b872e1f78cb0620cc3c4666ff9faae59c715a7f28dfa2e5e38c82628b"
+  },
+  "pending": "Corrected native8/mode/SDK/shared strictFP-context/fullsource/genuine/performance/main remain unproved. Old0df failed cases stay failed.",
+  "waste_review": "Only changedfindTU+2relinks authorized; unchanged binders/module/MARK/SDK reused, no original/provider/science replay."
+}

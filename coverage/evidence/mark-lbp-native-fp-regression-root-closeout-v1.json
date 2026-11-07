@@ -1,0 +1,107 @@
+{
+  "schema": "mark-lbp-native-fp-regression-root-closeout-v1",
+  "status": "PASS_BOUNDED_NATIVE_FP_REGRESSIONS_NOT_GENUINE_PUBLIC_OR_RELEASE",
+  "MARK": {
+    "source": "eb46aafa6b09f8425ad38246efb1564249a884bd",
+    "whole_find_calls": 8,
+    "budgets": [
+      1,
+      4
+    ],
+    "scope": "Authentic2masks eachincomingmin/modern profile, exactvalues/input/outputcanaries/semanticFP/full32caller/process; changedPICfindreuse, oneunitcompilelink andrun.",
+    "raw_rows": [
+      {
+        "budget": 1,
+        "after32": "7f03ffff2000ffffffffffff0000000000000000000000000000ffffa21f0000",
+        "caller32_exact": true
+      },
+      {
+        "budget": 1,
+        "after32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "caller32_exact": true
+      },
+      {
+        "budget": 1,
+        "after32": "7f03ffff2000ffffffffffff0000000000000000000000000000ffffa21f0000",
+        "caller32_exact": true
+      },
+      {
+        "budget": 1,
+        "after32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "caller32_exact": true
+      },
+      {
+        "budget": 4,
+        "after32": "7f03ffff2000ffffffffffff0000000000000000000000000000ffffa21f0000",
+        "caller32_exact": true
+      },
+      {
+        "budget": 4,
+        "after32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "caller32_exact": true
+      },
+      {
+        "budget": 4,
+        "after32": "7f03ffff2000ffffffffffff0000000000000000000000000000ffffa21f0000",
+        "caller32_exact": true
+      },
+      {
+        "budget": 4,
+        "after32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "caller32_exact": true
+      }
+    ]
+  },
+  "LBP": {
+    "source": "d4bddfcb32397184b47a2cfeb0a976de93015e0a",
+    "binary_calls": 8,
+    "scope": "No-standard-error C2/denormalsticky plus active-error seed, multiply/add \u00d7profile; exactoutput/input/semanticFP/full32caller/process, changedleaf+unitcompileonly2 thenseparaterun."
+  },
+  "proofs": [
+    {
+      "path": "D:/Scratch/mark-wide-comparison-fp-private-v1/native-unit-build.json",
+      "bytes": 914,
+      "sha256": "7190c261c3ccaa66f53510a250bb348ee33b735627e86defa07b99476f94e59b"
+    },
+    {
+      "path": "D:/Scratch/mark-wide-comparison-fp-private-v1/native-unit-run.json",
+      "bytes": 505,
+      "sha256": "331060aca5a89b70217fa8a83181509b4be299c979c7f10ab90e1a6cf7540f16"
+    },
+    {
+      "path": "D:/Scratch/mark-wide-comparison-fp-private-v1/native-unit-run.stdout",
+      "bytes": 896,
+      "sha256": "33361f30155997ed9b4ef23494526d81f6b03a3de1562074938ee9a91026fa4b"
+    },
+    {
+      "path": "D:/Scratch/mark-wide-comparison-fp-private-v1/native-unit.map",
+      "bytes": 86366,
+      "sha256": "c55ac85b8aa28153b32856c4081662e8bb951397613add16848f4094f0fd13a4"
+    },
+    {
+      "path": "D:/Scratch/lbp-entry-fp-native-v1/commands.json",
+      "bytes": 1701,
+      "sha256": "36e4b746297f5d0b67e1a8a36959dc6927510f4faadf917bffd25c2441f97991"
+    },
+    {
+      "path": "D:/Scratch/lbp-entry-fp-native-v1/native-eight-terminal.json",
+      "bytes": 385,
+      "sha256": "306bfed62a0f083af0d67eea37fe6b89ea44c4f3c762e3fd8e974edf217067d9"
+    },
+    {
+      "path": "D:/Scratch/lbp-entry-fp-native-v1/native-eight.stdout",
+      "bytes": 78,
+      "sha256": "670c265d16c900e2c3ed7991301fbd04eb8dc390380aef676b6f5d7181cc1f55"
+    },
+    {
+      "path": "D:/Scratch/lbp-entry-fp-native-v1/native.map",
+      "bytes": 95898,
+      "sha256": "37312eb83e06d5033a0df9b36c487a463fed2681567e1ccfa68e50d1ef25ca64"
+    }
+  ],
+  "original_calls": 0,
+  "provider_calls": 0,
+  "timing": 0,
+  "pending": "Full realLBPfirstcase+94saved/modes, MARK/LPB owninginstalledSDK/wholeFP, currentsharedsourcecontexts/fullbarriers/exactfourprofilegenuine/originaloneThread/main remainopen. Failedpredecessors unchanged.",
+  "waste_review": "Onlychangedleaf/unittargets, unchangedarchive/helper/donors reused; no core/SDK/env rebuild. One PowerShell comma parsefailedbeforecompiler, corrected subprocess argv; no actualcompile/science repeated. Both rootmetadata schema/path assumptions correctedbeforecropGO; no scientificimpact."
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "flood-stage-selective-intake-root-admission-v1",
+  "status": "PASS_SELECTIVE_INTAKE_ONLY_BOUNDED_8CALL_GO_ISSUED",
+  "source": "ac8b1e1681ea0e9f9833086dff30908391c5e866",
+  "handoff_sha256": "1e81110a3a2f53f4004d2291256308b460d4b63aa7bca84b84f63624c30f54fc",
+  "actual_proofs": 15,
+  "root_review": "All fifteen small indexed proof hashes match; actual three restoration/metadata/locator commands exit0. Exact six-field intake matches DDA/producer, restored7958864B core size and cached sealed wheel provenance. No repeated archive/core hashes or provider install. Actual three worker holds ACK and Windows/WSL scan show no competing science/build/test processes.",
+  "scope": "Local3.11.14 diagnostic only vs qualified3.11.17. Not parity or speed evidence.",
+  "next_owner_trigger": "Root runs actual once8 cProfiles/max16namedCentries/original0/sampler0/warmup0/build0; inspect actual terminal before choosing optimization.",
+  "waste_review": "Existing package/runtime/helper reused; no fullcore/SDK/env reconstruction."
+}

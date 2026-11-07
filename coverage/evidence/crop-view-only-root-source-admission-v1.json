@@ -1,0 +1,18 @@
+{
+  "schema": "crop-view-only-root-source-admission-v1",
+  "status": "PASS_SOURCE_ONLY_TWO_ABI_BINDER_BUILD_AUTHORIZED",
+  "source": "9e689ac283f15fec40eedb8cfefa8edf1144bc48",
+  "source_handoff": {
+    "path": "build/crop-view-only-variant-v1/handoff-v1.json",
+    "sha256": "365bf892ead58d61c6cccde8b5617d4d5feb40165cb258202c8b4651b91a9540",
+    "summary_hash_verified_actual": true
+  },
+  "independent_review": {
+    "path": "build/crop-view-only-variant-independent-review-v1/review-v1.json",
+    "sha256": "50e95251345a982c9a4b8f711500eb74b5770faf4700ecfdfe7f2e108c612de3",
+    "scope": "Author-independent5file source/inertonly; not rootnative/genuine acceptance"
+  },
+  "root_review": "Exact5source/21sourceproof/11preparationproof hashes inspected; actual9 source XML perPython. Production delta only gates old immutable-slice optimization on privatebool defaultFalse; publiccopyTrue remainsold2arg call, publicelsepassesTrue after one truth evaluation. Actual33protocol nodes prepared, not yet native proof. Fourcommand changedbinder builds only; no leaf/fullSDK/core/env rebuild.",
+  "pending": "Actualbuild/maps then separate fullsaved/protocol nativeGO; controlledFP, originalpublicFP/performance/genuine remainopen. F020copyregression retained.",
+  "waste_review": "Reuse donor objects/sourceproofs/old924scope without relabeling newvariant parity or unchanged rerun."
+}

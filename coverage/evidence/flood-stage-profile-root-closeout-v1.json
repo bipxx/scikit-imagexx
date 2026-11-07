@@ -1,0 +1,214 @@
+{
+  "schema": "flood-stage-profile-root-closeout-v1",
+  "status": "PASS_BOUNDED_ATTRIBUTION_NOT_PARITY_OR_SPEED",
+  "source": "ac8b1e1681ea0e9f9833086dff30908391c5e866",
+  "baseline": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "profile_calls": 8,
+  "numerical_C_calls": 16,
+  "original_calls": 0,
+  "sampler_calls": 0,
+  "rows": [
+    {
+      "id": "flood-float32-C",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.0007210140000000001,
+            "inline_seconds": 0.0007210140000000001
+          }
+        ],
+        "crop_copy_into": [],
+        "flood_assign": []
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood-float32-C.json",
+      "sha256": "1ee7f41d4eb69b6b43c4ed635f371fa3f479d1c84c5612177e33c7579683ff83"
+    },
+    {
+      "id": "flood-float32-F",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.000536716,
+            "inline_seconds": 0.000536716
+          }
+        ],
+        "crop_copy_into": [],
+        "flood_assign": []
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood-float32-F.json",
+      "sha256": "002445b0dc0992f0c97e88bb7b345271ea61fe739d8aa792a75bffbeb5c278e8"
+    },
+    {
+      "id": "flood-uint8-C",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.0019944520000000003,
+            "inline_seconds": 0.0019944520000000003
+          }
+        ],
+        "crop_copy_into": [],
+        "flood_assign": []
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood-uint8-C.json",
+      "sha256": "7954324f99bf3a453ece14006a3a82ba9e9a0cf5d6784493abaf4515707cb22f"
+    },
+    {
+      "id": "flood-uint8-F",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.000555921,
+            "inline_seconds": 0.000555921
+          }
+        ],
+        "crop_copy_into": [],
+        "flood_assign": []
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood-uint8-F.json",
+      "sha256": "2e61bb87e35f1c573b0746b33ffe3f9cc662d5d4030afd5f18bed796dc199a06"
+    },
+    {
+      "id": "flood_fill-float32-C",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.000534617,
+            "inline_seconds": 0.000534617
+          }
+        ],
+        "crop_copy_into": [
+          {
+            "function": "<built-in method skimagexx._core.crop_copy_into>",
+            "calls": 1,
+            "total_seconds": 1.2524e-05,
+            "inline_seconds": 1.2524e-05
+          }
+        ],
+        "flood_assign": [
+          {
+            "function": "<built-in method skimagexx._core.flood_assign>",
+            "calls": 1,
+            "total_seconds": 0.00040193300000000004,
+            "inline_seconds": 0.00040193300000000004
+          }
+        ]
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood_fill-float32-C.json",
+      "sha256": "67a3089446fc3bc71915ace8292275e189257b5625afd9d893b0924aedf88dbe"
+    },
+    {
+      "id": "flood_fill-float32-F",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.0005338350000000001,
+            "inline_seconds": 0.0005338350000000001
+          }
+        ],
+        "crop_copy_into": [
+          {
+            "function": "<built-in method skimagexx._core.crop_copy_into>",
+            "calls": 1,
+            "total_seconds": 2.1995000000000002e-05,
+            "inline_seconds": 2.1995000000000002e-05
+          }
+        ],
+        "flood_assign": [
+          {
+            "function": "<built-in method skimagexx._core.flood_assign>",
+            "calls": 1,
+            "total_seconds": 0.00038471400000000003,
+            "inline_seconds": 0.00038471400000000003
+          }
+        ]
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood_fill-float32-F.json",
+      "sha256": "5a0e632df8def6871b3ecd45e07ca368b184aecce2c0d450275b824801239d90"
+    },
+    {
+      "id": "flood_fill-uint8-C",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.00045348100000000004,
+            "inline_seconds": 0.00045348100000000004
+          }
+        ],
+        "crop_copy_into": [
+          {
+            "function": "<built-in method skimagexx._core.crop_copy_into>",
+            "calls": 1,
+            "total_seconds": 0.000358208,
+            "inline_seconds": 0.000358208
+          }
+        ],
+        "flood_assign": [
+          {
+            "function": "<built-in method skimagexx._core.flood_assign>",
+            "calls": 1,
+            "total_seconds": 0.00044936700000000005,
+            "inline_seconds": 0.00044936700000000005
+          }
+        ]
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood_fill-uint8-C.json",
+      "sha256": "e2f1108a7c8934c0bb175cf98bb5909ef72152c32dfb5888b643b964db14c3e1"
+    },
+    {
+      "id": "flood_fill-uint8-F",
+      "stages": {
+        "flood_mask": [
+          {
+            "function": "<built-in method skimagexx._core.flood_mask>",
+            "calls": 1,
+            "total_seconds": 0.0005365540000000001,
+            "inline_seconds": 0.0005365540000000001
+          }
+        ],
+        "crop_copy_into": [
+          {
+            "function": "<built-in method skimagexx._core.crop_copy_into>",
+            "calls": 1,
+            "total_seconds": 2.6542e-05,
+            "inline_seconds": 2.6542e-05
+          }
+        ],
+        "flood_assign": [
+          {
+            "function": "<built-in method skimagexx._core.flood_assign>",
+            "calls": 1,
+            "total_seconds": 0.00041358300000000003,
+            "inline_seconds": 0.00041358300000000003
+          }
+        ]
+      },
+      "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/flood_fill-uint8-F.json",
+      "sha256": "8581b8557b55ecbf708979e26870eee1c60cda610b8d7382380fa7d059c2f6e9"
+    }
+  ],
+  "terminal": {
+    "path": "D:/Scratch/flood-fill-stage-diagnostic-v1/profile-v1/terminal.json",
+    "sha256": "787c25e46a09a53871e17e7ddc42b71b7c60655555f30dd5c6a950408c1c54dd"
+  },
+  "actual_exit": 0,
+  "elapsed_seconds": 2.8836754001677036,
+  "root_review": "Actual eight case files all returned; input hashes/caller32 exact, default1; terminal no primary/secondary/original attempts and exact process32. Profiler perturbs time and target FP; no new parity or benchmark credit.",
+  "finding": "All four flood_assign stages cost 0.384714 to 0.449367ms under profiler, consistently material. Copy stages 0.012524 to 0.026542ms except retained cold uint8-C0.358208ms. Source binder unravels each flat pixel using rank-wide div/mod. Remove repeated indexing arithmetic while preserving logical C order, dtype/strides/errors/alias semantics; do not infer final speed without controlled benchmark.",
+  "next_owner_trigger": "Root assigns one family source successor after current independent MARK review; compile/runtime/performance require separate actual gates. No original replay.",
+  "waste_review": "Used once-restored ownwheel and existing cProfile, helper/runtime; eight calls only, no warmup/fullbuild/duplicate archive/core authentication. Cold copy outlier remains visible; no retiming for favorable result."
+}

@@ -1,0 +1,80 @@
+{
+  "schema": "lbp-actual-fp-diagnostic-root-closeout-v1",
+  "status": "FAILED_STRICT_FP_GATE_VALUES_MATCH_NO_TIMING_NO_FIX_ACCEPTED",
+  "retention": {
+    "run": 42377824064,
+    "source": "82ec3ece0eedb48f796ab61911659791953d88dd",
+    "conclusion": "failure",
+    "artifact_id": 13575743975,
+    "name": "lbp-cohort-fp-diagnostic-minimum",
+    "bytes": 2702636,
+    "sha256": "6daa5a6eb857b6a8179b1e5761c63af0352358ab7d0dc4decdbc30ccb64d4dca",
+    "archive": "build\\lbp-diagnostic-gh-sha-actual-v1\\retained-v1\\artifact.zip",
+    "files": "build\\lbp-diagnostic-gh-sha-actual-v1\\retained-v1\\files",
+    "download_passes": 1,
+    "API_digest_exact": true,
+    "CRC_verified": true
+  },
+  "source_tests": 38,
+  "probe_counts": {
+    "original": 1,
+    "native": 1
+  },
+  "strict_FP": {
+    "reference_before": {
+      "control": 895,
+      "status": 1058,
+      "mxcsr": 8098
+    },
+    "native_before": {
+      "control": 895,
+      "status": 1058,
+      "mxcsr": 8098
+    },
+    "reference_FP": {
+      "control": 895,
+      "status": 1058,
+      "mxcsr": 8098
+    },
+    "native_FP": {
+      "control": 895,
+      "status": 32,
+      "mxcsr": 8098
+    }
+  },
+  "result_record": {
+    "type": [
+      "numpy",
+      "ndarray"
+    ],
+    "dtype": "<f8",
+    "dtype_descr": [
+      [
+        "",
+        "<f8"
+      ]
+    ],
+    "dtype_metadata": null,
+    "shape": [
+      256,
+      257,
+      3
+    ],
+    "strides": [
+      6168,
+      24,
+      8
+    ],
+    "nbytes": 1579008,
+    "payload_sha256": "1a9438cbccd809fe7c2419d1aa106f813a4925fd97d7a48f60169b81b124daa5"
+  },
+  "input_payload_unchanged": true,
+  "restoration": {
+    "probe": true,
+    "wrapper_full32": true,
+    "postbatch_identity_exit": 0
+  },
+  "limits": "Strict assertion failed before full array-state/alias comparison. Input payload/dtype/shape/strides and output diagnostic record match; this does not close full first-cohort parity. Original/native1+1, sampler/timing0. All failed campaigns remain failed.",
+  "next_owner_trigger": "C owns minimal conditional-clear source fix supported by separate bounded primitive/libc evidence; root independently admits source before changed native build and complete affected parity. No arbitrary status mask or loosened expected result.",
+  "waste_review": "Once-retained artifact/small diagnostic reused; no unchanged source retry, original recapture, benchmark or archive/core rehash."
+}

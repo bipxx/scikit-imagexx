@@ -1,0 +1,121 @@
+{
+  "schema": "crop-view-only-private-parity-root-closeout-v1",
+  "status": "PASS_1024_PRIVATE_SAVED_PROTOCOL_NODES_NOT_RELEASE_OR_SPEED",
+  "source": "9e689ac283f15fec40eedb8cfefa8edf1144bc48",
+  "root_source_admission": "coverage/evidence/crop-view-only-root-source-admission-v1.json",
+  "actual_build_commands": 4,
+  "profiles": [
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "nodes": 256,
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 6.491466401,
+        "nodes": 256,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "XML": {
+        "path": "D:/Scratch/crop-view-only-native-v1/runtime-v1/minimum/normal/results.xml",
+        "sha256": "2bacb6d3ca3f42ea32a25ea84e20b5b852f3e6d52657a4b0af16d33c7d0efcbe"
+      }
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "nodes": 256,
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 7.424196483999999,
+        "nodes": 256,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "XML": {
+        "path": "D:/Scratch/crop-view-only-native-v1/runtime-v1/minimum/disabled/results.xml",
+        "sha256": "92912e1c6f98f5f95ace3da9fd7c238058f75423985d5e5c815f39b70abb1771"
+      }
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "nodes": 256,
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 9.811522706000005,
+        "nodes": 256,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "XML": {
+        "path": "D:/Scratch/crop-view-only-native-v1/runtime-v1/modern/normal/results.xml",
+        "sha256": "bccb301b7aa5c01e9af56b996707f01e1ce802397a18cfe7bb21d34b01e401ee"
+      }
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "nodes": 256,
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 6.432522609999992,
+        "nodes": 256,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "XML": {
+        "path": "D:/Scratch/crop-view-only-native-v1/runtime-v1/modern/disabled/results.xml",
+        "sha256": "43633a5639ef2a0df1dbd5bec09250ab9dcc797252ea12ece2be5bad8c35eed4"
+      }
+    }
+  ],
+  "total_nodes": 1024,
+  "root_review": "Actual four complete256-node XML suites/no failure-error-skip and unique selectedIDs, normalconftest/plugins, no deniedupstream/defaultworkers1/caller32. Actualmaps selectnewABIbinders and unchanged12dleaf/SDK; copiedfrontends exactcurrent source. No executableproductioninputs onmain changed.",
+  "pending": "ControlledpriorCPP targetFP/storage32; genuineinstalledSDK/onecore/sharedcontexts, scalar-sanitizer-MSVC whereaffected, originalpublic targetFP and oneThreadperformance remainopen. Oldf020 private7/1 includingFcopyregression remains unaccepted and preserved.",
+  "waste_review": "Only2binders+2links; no leaf/SDK/fullcore/env/original/corpus replay. New33protocol replacesold8, unchanged223publicsuite correctlyrerunforchangedbinder/frontend. Two rootmetadata read assumptions correctedbeforeGO; zero scientificretries."
+}
