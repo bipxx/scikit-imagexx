@@ -1,0 +1,78 @@
+{
+  "status": "PASS_ROOT_COMBINED_READINESS_AND_CAPTURE_SOURCE_NOT_OBSERVATIONS",
+  "passed": true,
+  "source": "ff9b0949ff91bbf50fb1eef0aef9b7686a7a568b",
+  "binding_sha256": "08a64b718c26cbfee817cd6f28acecb7612872fc3a6ee65840570346c228da9b",
+  "controller_sha256": "1d7b4c9d1c0ecbf7a72f70d54d35749af3141d6f653031eb0a9cd8d634d2b81b",
+  "capture_path_source_admitted": true,
+  "handoff": {
+    "path": "build/order-angles-golden-ratio-capture-v3/handoff-v3.json",
+    "sha256": "474313918407bc5a1bc409a5095af3c6c21fc8a7a4fb1b01b2fa39b470f5561b"
+  },
+  "independent_review": {
+    "path": "build/order-angles-golden-ratio-capture-independent-review-v3/review-v3.json",
+    "sha256": "5d82de6f971c186920cfe335425c2298d762b2aaad9f72f591df8b6359097223"
+  },
+  "prefix_predecessor": {
+    "path": "build/order-angles-golden-ratio-readiness-v1/handoff-v1.json",
+    "sha256": "e3025b26f63622165c3f1ef55d2042e649a33f99bed70f70e590d9a361e4de29",
+    "source": "fb17c0cd9679a5c2b7b5f7e26082bbbc264d90b7"
+  },
+  "authenticated_small_files": 151,
+  "authenticated_bytes": 1242475,
+  "prefix_rows": [
+    {
+      "profile": "minimum",
+      "cache": "cold",
+      "factories": 45,
+      "first_resume_refusals": 2,
+      "disturbance_controls": 4,
+      "target_body_lines": 0,
+      "process32": true
+    },
+    {
+      "profile": "minimum",
+      "cache": "cached",
+      "factories": 45,
+      "first_resume_refusals": 2,
+      "disturbance_controls": 4,
+      "target_body_lines": 0,
+      "process32": true
+    },
+    {
+      "profile": "modern",
+      "cache": "cold",
+      "factories": 45,
+      "first_resume_refusals": 2,
+      "disturbance_controls": 4,
+      "target_body_lines": 0,
+      "process32": true
+    },
+    {
+      "profile": "modern",
+      "cache": "cached",
+      "factories": 45,
+      "first_resume_refusals": 2,
+      "disturbance_controls": 4,
+      "target_body_lines": 0,
+      "process32": true
+    }
+  ],
+  "capture_source_controls_per_Windows_Python": 35,
+  "failed_v2_review_preserved": "build/order-angles-golden-ratio-capture-independent-review-v2/review-v2.json",
+  "scope": "Source/safety, exact unchanged actual cold/cached factories and first-resume zero-body/runtime/helper prefix, corrected source-only rootGO/per-action capture and failure evidence. No original body, numeric resume or capture observations yet. No native/SDK/performance claim.",
+  "authority": {
+    "actual_reference_GO": null,
+    "original_calls": 0,
+    "numeric_resumes": 0,
+    "native": 0,
+    "build": 0,
+    "timing": 0
+  },
+  "next_gate": "Root may issue separate exact minimum-only45-case once authority bounded17resumes/1close; inspect actual terminal/raw before any modern authority. Capture output must be absent/exclusive; no retry.",
+  "waste_review": {
+    "result": "Admitted the corrected G1/G2 capture source with existing prefix scope; v2 remains failed.",
+    "reuse": "Authenticated small receipts/source/actual XML, reused four old actual zero-body processes. No prefix/science/helper/build/performance reruns or big hashes.",
+    "next_owner_trigger": "Root issues exact minimum reference GO only after existing plan/ledger next gate is reconciled."
+  }
+}

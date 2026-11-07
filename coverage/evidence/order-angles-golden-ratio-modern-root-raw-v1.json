@@ -1,0 +1,50 @@
+{
+  "status": "PASS_ROOT_SCOPED_MODERN_AND_PAIRED_ORIGINAL_REFERENCE_RAW",
+  "passed": true,
+  "source": "ff9b0949ff91bbf50fb1eef0aef9b7686a7a568b",
+  "profile": "modern",
+  "independent_review": {
+    "path": "build/order-angles-golden-ratio-modern-raw-independent-review-v1/review-v1.json",
+    "sha256": "39dac33323e52ad6580c1cb254a6b823ddd389e9d3b9444fdac17fa05162d8f2"
+  },
+  "paired_differences": {
+    "path": "build/order-angles-golden-ratio-modern-raw-independent-review-v1/paired-differences-v1.json",
+    "sha256": "f0f1626e62a50abf38dfc57d78f99551560f7e573292120b24e1929964062767"
+  },
+  "minimum_root_admission": "coverage/evidence/order-angles-golden-ratio-minimum-root-raw-v1.json",
+  "counts": {
+    "api_attempts": 45,
+    "construction_requests": 45,
+    "successful_constructions": 42,
+    "next_requests": 177,
+    "send_none_requests": 5,
+    "send_token_requests": 4,
+    "send_non_none_created_requests": 1,
+    "close_requests": 3,
+    "resume_requests": 187,
+    "yielded_values": 147,
+    "mutations": 2,
+    "action_errors": 43
+  },
+  "actions": 237,
+  "errors": {
+    "StopIteration": 36,
+    "IndexError": 1,
+    "TypeError": 6
+  },
+  "warnings": 0,
+  "journal_rows": 90,
+  "raw_files_authenticated": 50,
+  "paired_scope": "Values, index scalar types, input/layout metadata, errors/warnings/protocol/mutations agree in independent reconstruction. Actual raw hardware records preserved:474before/after semantic x87status differences (minimum32, modern0), controls/MXCSR equal. Runtime handler addresses and raw instruction/reserved bytes remain unmodified. No tolerance or gold normalization.",
+  "caller_process_exact32": true,
+  "total_reference_attempts_both_profiles": 90,
+  "original_authority_remaining": 0,
+  "numerical_or_capture_reruns": 0,
+  "scope": "Two retained Linux profiles,45small finite declared generator/protocol/mutation cases each. Reference evidence only; not native parity, SDK, fullAPI, Windows or performance.",
+  "next_gate": "Assign one coherent native golden-angle family implementation using retained exact references and existing primitives/parity/SDK/benchmark infrastructure; preserve lazy/live-state/protocol/typed-index and profile FP semantics. No more original captures authorized.",
+  "waste_review": {
+    "result": "Modern45original attempts consumed once after admittedminimum; values/types/errors agree,474FPdifferences retained as constraints.",
+    "reuse": "Existing samecode observer/controller/runtime/helper/fourprefixes, all90references now frozen; no duplicatecapture or newframework.",
+    "next_owner_trigger": "Family implementation owner may start complete owned C++/hotswap/SDK/parity/optionalworkers/SIMD applicability/source-benchmark batch; root retains admission/integration/delivery."
+  }
+}

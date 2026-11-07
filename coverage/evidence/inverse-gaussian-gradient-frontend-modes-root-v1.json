@@ -1,0 +1,92 @@
+{
+  "status": "PASS_ROOT_SCOPED_PRIVATE_FRONTEND_MODE_SUPPLEMENT",
+  "source": "07b4200f1ca7cf564800e3189d1e3358981cc879",
+  "frontend_source": "065cc3a79391e4c5343511b53bbbaac992a4c185",
+  "supplement": {
+    "path": "build/inverse-gaussian-gradient-frontend-modes-v1/supplement-v1.json",
+    "sha256": "574a77e4042b0cb0897e173389bc968389189a10d8e97856e1cfd7c415832156"
+  },
+  "independent_review": {
+    "path": "build/inverse-gaussian-gradient-frontend-modes-independent-review-v1/review-v1.json",
+    "sha256": "d1837cc9183e9ed5b2eaea15eef4bdbd4555bab981276bfe37074f3fc6b06c15"
+  },
+  "authenticated_small_proofs": 59,
+  "proof_bytes": 155202,
+  "rows": [
+    {
+      "profile": "minimum",
+      "mode": "workers4",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    },
+    {
+      "profile": "minimum",
+      "mode": "scalar",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    },
+    {
+      "profile": "minimum",
+      "mode": "sanitize",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    },
+    {
+      "profile": "modern",
+      "mode": "workers4",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    },
+    {
+      "profile": "modern",
+      "mode": "scalar",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    },
+    {
+      "profile": "modern",
+      "mode": "sanitize",
+      "XML": 83,
+      "exact_process32": true,
+      "exit": 0
+    }
+  ],
+  "tests": 664,
+  "saved": 632,
+  "boundary": 32,
+  "original_calls": 0,
+  "scientific_reruns": 0,
+  "root_checks": "Authenticated small proofs, six actual source pins/clean source and eight actual XML/process/FP/command records. Reused admitted native/SDK and scalar/sanitizer provenance; no core/archive/corpus hashes or science execution.",
+  "scope": "Only final065 private frontend on retained minimum/modern in workers4, runtime-disabled SIMD, compiler-scalar and ASan/UBSan; not installed whole product or full API.",
+  "pending": [
+    "75-file future integration independent admission and complete actual source checks",
+    "actual installed hot swap, current SDK and exact-source four-profile qualification",
+    "Windows public/full-FP and unobserved contracts",
+    "larger benchmark preflights, binding/cohorts and one-thread public performance",
+    "main delivery"
+  ],
+  "waste_review": {
+    "result": "Closed missing private frontend mode evidence using eight once-only retained commands.",
+    "reuse": "59 small proofs and existing native/helper/toolchain/source/runtime; no new execution, build or download.",
+    "next_owner_trigger": "Root integrates this scoped result into existing IGG gate; future shared integration remains unready pending canonical sentinel successor and independent source admission."
+  }
+}

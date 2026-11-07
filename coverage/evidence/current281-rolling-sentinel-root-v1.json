@@ -1,0 +1,56 @@
+{
+  "status": "PASS_ROOT_SCOPED_SENTINEL_SOURCE_ADMISSION_COMPLETE_BARRIER_PENDING",
+  "passed": true,
+  "source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "base": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+  "source_handoff": {
+    "path": "build/current281-rolling-sentinel-v1/handoff-v1.json",
+    "sha256": "83fb430e3a090d9b538cb2f06654fd37cee35c4cc42c50c0ea5371c5a90a06d9"
+  },
+  "independent_review": {
+    "path": "build/current281-rolling-sentinel-independent-review-v1/review-v1.json",
+    "sha256": "ad276918f03b88042b22df8b1eabbb92db79824c3840d567370d09bde64406c1"
+  },
+  "source_files": 18,
+  "authenticated_small_proofs": 37,
+  "proof_bytes": 1995423,
+  "exact_Git_predecessor_rows": 12,
+  "rolling_operation_decorator_function_ASTs_unchanged": true,
+  "source_checks": [
+    {
+      "profile": "windows311",
+      "tests": 1689,
+      "exit": 0,
+      "science": 0
+    },
+    {
+      "profile": "windows313",
+      "tests": 1689,
+      "exit": 0,
+      "science": 0
+    }
+  ],
+  "actual_complete_workflow_selectors": 162,
+  "workflow_sha256": "7c9f56f83d85e8b51287227deecd6540a8f02f662a22428b528ca3a2dda58a94",
+  "source_census": {
+    "images": 281,
+    "functions": 284,
+    "product": 228,
+    "SDK": 108,
+    "families": 38,
+    "checks": 76
+  },
+  "actual_complete_barrier_passed": false,
+  "scope": "Canonical shared default marker identity/signature and affected source/literal dependency correction only. Existing native/math/SDK/raw numerical evidence unchanged within earlier scope; no new genuine qualification, benchmark or shipping acceptance.",
+  "preserved_failures": {
+    "actual_modern3e": "build/current281-qualification-v1/modern-retained-v1/handoff-v1.json SHA1aefdec0dcef6f890107ba0c35f47f250ea6431d59e64c9ba9458b596f99bf9c; four signature nodes remainfailed, archive retained once",
+    "local_v1": "windows311-source-v1:951pass/1literal failure/737missing-scratch-parent setup errors,49.203s,0science. Exact terminal/XML preserved.",
+    "parent": "Root context modern+minimum failed; Windows/debug stilllive at latest root update. Root owns remaining retention/diagnosis; no campaign success inferred."
+  },
+  "next_gate": "Root complete exact actual162selector source command both retained Windows Pythons normalconftest/plugins withoutfailfast; only terminal PASS can authorize changed-source four-profile qualification.",
+  "waste_review": {
+    "result": "Root reconstructed12rows against exact3e Git bytes and authenticated actual1689XML/profile plus peer review.",
+    "reuse": "No science, original/helper/native/build/timing rerun or archive/core/seal/corpus hash replay.",
+    "next_owner_trigger": "Root starts complete barriers on this admitted changed input; independent lanes do not delay eligible release."
+  }
+}

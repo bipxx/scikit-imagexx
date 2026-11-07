@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "status": "PASS_ROOT_SCOPED_MINIMUM_GLCM_ORIGINAL_REFERENCE_RAW",
+  "source": "56303cd06ab15b01ef914fdcd8e6cb58717086d7",
+  "profile": "minimum",
+  "independent_review": {
+    "path": "build/graycomatrix-graycoprops-minimum-raw-independent-review-v1/review-v1.json",
+    "sha256": "e7db7966ac2e7360feac26ab27abf1efba976cec8c973dc4d5af41146a8ad48d"
+  },
+  "raw_files_authenticated": 4,
+  "terminal_sha256": "5b31022c6f924993e86aa7dec3cb8c40840a97a3f602fa69cf63f7285ac84642",
+  "topcalls": 94,
+  "APIs": {
+    "graycomatrix": 50,
+    "graycoprops": 44
+  },
+  "outcomes": {
+    "return": 64,
+    "error": 30
+  },
+  "errors": {
+    "ValueError": 24,
+    "TypeError": 4,
+    "UFuncTypeError": 1,
+    "AttributeError": 1
+  },
+  "warnings": 5,
+  "journal_rows": 188,
+  "full32_caller_process_exact": true,
+  "original_authority_remaining": 0,
+  "numerical_or_capture_reruns": 0,
+  "provider_scope": "186Python source-internal provider entries belong to94topcalls. Compiledattribute trace0 does not mean no Cython computation; these are original reference observations.",
+  "scope": "94finite bounded small recipes on retained minimum CPython3.11.14/NumPy1.24.4/scikit-image0.26.0 only. Exact dtype/layout/typederror/warning/mutation/alias/immediateFP/caller evidence retained without normalization. No native parity/fullAPI/SDK/platform/performance credit.",
+  "next_gate": "Root separate modern-only94onceGO with same frozen56303/currentbinding; independent modern/paired raw review before native family implementation.",
+  "waste_review": {
+    "result": "94attempts consumed once,64returns30errors5warnings admitted; no original retry.",
+    "reuse": "Existing admitted runtime/helper/strict8prefix reuse and corrected source; stdlib rawreview only, no builds/scientific replay.",
+    "next_owner_trigger": "Root issues modern-onlyGO; B independently reviews actual modern/paired raw; subsequent coherent2API native batch."
+  }
+}

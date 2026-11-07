@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "status": "ACTUAL_COMPLETE162_BOTH_RETAINED_PYTHONS_PASS_GENUINE_PENDING",
+  "source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "source_admission": "coverage/evidence/current281-rolling-sentinel-root-v1.json",
+  "workflow_sha256": "7c9f56f83d85e8b51287227deecd6540a8f02f662a22428b528ca3a2dda58a94",
+  "profiles": {
+    "windows311": {
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 441.93800000008196,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3966,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_tests": 3958,
+      "passing_subtests": 8,
+      "XML_testcase_nodes": 3958,
+      "reported_suite_tests": 3966,
+      "selectors": 162,
+      "normal_conftest_plugins": true,
+      "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]",
+      "pins": {
+        "terminal.json": "16142e360ed2bd76aeac94ffe53e1a46f823613dd7a9184e7cfb43268aeb6778",
+        "command.json": "91a46daa164899b322cacdccd5a57e95ab39c97dba0023f33f3389b71a65bf3a",
+        "testIDs.json": "f95a0cef8527e1a40480899bde2482137091bb0727a6b9d32a64686159ca99a5",
+        "plugins.json": "41374ca054e744c8f1474f7294684e5737913c94d75b3a00590cb7ce33beb9ed",
+        "results.xml": "21710eeaeef6172aa188eb0913ed6ac015d72c986e1d5476ecc494672273ea6a"
+      }
+    },
+    "windows313": {
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 399.2210747001227,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3966,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_tests": 3958,
+      "passing_subtests": 8,
+      "XML_testcase_nodes": 3958,
+      "reported_suite_tests": 3966,
+      "selectors": 162,
+      "normal_conftest_plugins": true,
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "pins": {
+        "terminal.json": "cfa1029ba8449462ce6bb1b4ea3fd6af7a7c08a4f956cf1193dd3871681574eb",
+        "command.json": "03a11fba149413ba5fb2ac1cdfa3e669efcc14a794e5d5bd2721e78999eec06f",
+        "testIDs.json": "f95a0cef8527e1a40480899bde2482137091bb0727a6b9d32a64686159ca99a5",
+        "plugins.json": "0e6d81928a0cdd8f71a20553604a4c1e22980fc51810a571802240e903bd4a2a",
+        "results.xml": "faf6de8bb7e35f2921c5149ffb456e96beea215971dfae8bd80c7d7dd9a119c9"
+      }
+    }
+  },
+  "same_collected_nodeIDs": true,
+  "reader_metadata_root_review": {
+    "handoff": "build/current281-qualification-v1/readers-v4/handoff-v4.json",
+    "sha256": "3cc537538168182a1c301206a25728f43172efc690e1707fc9eabed677142750",
+    "small_proofs": 26,
+    "three_script_bodies_unchanged": true,
+    "actual_campaign_authority": 0
+  },
+  "scope": "Complete actualworkflow source command on both retainedsupportedPythons, normalconftest/plugins/no failfast,0science/original/native/timing/sourcechanges. Not collectionaudit or unionofpartialruns.",
+  "historical_failures": [
+    "coverage/evidence/current281-complete-source-failure-v1.json",
+    "coverage/evidence/current281-complete-source-failure-v2.json",
+    "coverage/evidence/current281-modern-signature-failure-root-v1.json"
+  ],
+  "pending": "Exactremote/workflow/no-prior-run/currentplans/capacity then ONE changed-sourcegenuine4profile; independentwholeproduct/SDK/stageradmission, actualperformancebinding/cohorts/1Tcomparison/raw/alllossreview andmain delivery.",
+  "waste_review": {
+    "result": "Changed metadata/source/workflow inputs justified complete162 reruns; 3958ordinary+8subtests per runtime passed.",
+    "observed_process_seconds": {
+      "windows311": 441.93800000008196,
+      "windows313": 399.2210747001227
+    },
+    "preventable_root_reader_error": "Initial root admission incorrectly expected3966 XML testcase nodes rather than3958 ordinary nodes plus8 suite-count subtests. Actual receipts remained passing; corrected only metadata reading, no tests rerun. Failure retained in tool transcript and this receipt.",
+    "reuse": "All unchanged numerical/privateSDK/original evidence reused; failed3e campaign and49s setupfailure retained. No unchanged science/performance retry or new framework.",
+    "next_owner_trigger": "Root exactsource remote/workflow/capacity/nopriorrun checks then dispatch once promptly."
+  }
+}

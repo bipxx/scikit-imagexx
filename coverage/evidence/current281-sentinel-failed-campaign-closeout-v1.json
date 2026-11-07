@@ -1,0 +1,248 @@
+{
+  "status": "FAILED_CAMPAIGN_RETAINED_AND_ROOT_REVIEWED_NO_RELEASE_ACCEPTANCE",
+  "source": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+  "run": 42342525409,
+  "terminal": "failure",
+  "four_profiles_failed": true,
+  "whole_product_accepted": false,
+  "profiles": {
+    "minimum": {
+      "review": {
+        "path": "build/current281-qualification-v1/retained-v1/minimum-raw-review.json",
+        "sha256": "721d7d64e9d335ee324471c605400972bbd4e989ea1b58c03960e2c4636209dc"
+      },
+      "seal_once": {
+        "path": "build/current281-qualification-v1/retained-v1/minimum-seal-once.json",
+        "sha256": "27def764ac2098ca57b11d51da02b23d2e54e96d6832553fa671661beceff719"
+      },
+      "XML": {
+        "tests": 241654,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "failed_nodes": [
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        }
+      ],
+      "source_identity": {
+        "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+        "source_files": 2948,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "6a4a4a2630b6bf2947ccefd594ae3ac1958980f5087a61362cbdbbbebb25f1ae"
+      }
+    },
+    "modern": {
+      "review": {
+        "path": "build/current281-qualification-v1/retained-v1/modern-raw-review.json",
+        "sha256": "e260bbf3bb854b9512ef1cb0517e114d445cf6b170747d962d3f4c3e814ed795"
+      },
+      "seal_once": {
+        "path": "build/current281-qualification-v1/retained-v1/modern-seal-once.json",
+        "sha256": "5c8ec8419b4dc63f1bb378822b9290acae59bedd7549ec6aa8a6f198c4899aa2"
+      },
+      "XML": {
+        "tests": 241654,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "failed_nodes": [
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        }
+      ],
+      "source_identity": {
+        "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+        "source_files": 2948,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "ae5e5bb6ad8c95e721b2539c902dfd1520eae9de0a19392a82f0f3ec0e40e734"
+      }
+    },
+    "windows": {
+      "review": {
+        "path": "build/current281-qualification-v1/retained-v1/windows-raw-review.json",
+        "sha256": "c15c94af55cf6b8bc931de1a811ac6ef49beb9382b6c85681b931b5f549e03a3"
+      },
+      "seal_once": {
+        "path": "build/current281-qualification-v1/retained-v1/windows-seal-once.json",
+        "sha256": "3351c9f588116a4a70a4d393b3489355ec2e216e24eef71458fcf18caaa086e9"
+      },
+      "XML": {
+        "tests": 238550,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "failed_nodes": [
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        }
+      ],
+      "source_identity": {
+        "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+        "source_files": 2948,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "752176632bf705ed44790d1d61c24fdeda6948e1d456b4c701750835df9c7bd5"
+      }
+    },
+    "debug": {
+      "review": {
+        "path": "build/current281-qualification-v1/retained-v1/debug-raw-review.json",
+        "sha256": "bf5d198d1fbb925847870e246d2e92cd985850bd6721c3d2f545230cd7f77d02"
+      },
+      "seal_once": {
+        "path": "build/current281-qualification-v1/retained-v1/debug-seal-once.json",
+        "sha256": "7200052b0e3970600aa7856ecf843532cd6520c560a2f3bc5d9d137991d3b161"
+      },
+      "XML": {
+        "tests": 241654,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "failed_nodes": [
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "normal-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[1-rolling_ball]"
+        },
+        {
+          "group": "scalar-shared",
+          "node": "tests.test_api::test_signatures[4-rolling_ball]"
+        }
+      ],
+      "source_identity": {
+        "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+        "source_files": 2948,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "d8cf7c4094b347c5593e8ffd614a2f620dbcd9cffc6ed1255d9b0e248e56854f"
+      }
+    }
+  },
+  "totals": {
+    "XML": {
+      "tests": 963512,
+      "failures": 16,
+      "errors": 0,
+      "skipped": 0
+    },
+    "SDK_checks_in_failed_campaign": 304,
+    "corpora": 48,
+    "archives": 4,
+    "archive_bytes": 5961147137
+  },
+  "artifacts": [
+    {
+      "id": 13564340063,
+      "name": "public-qualification-windows",
+      "run": 42342525409,
+      "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+      "path": "D:\\Scratch\\skimage281-42342525409-artifacts\\13564340063.zip",
+      "bytes": 1330418194,
+      "sha256": "9b139ea4dbfb04c1f107a1a94f91f462cd6a8c9e7597171b1be2534b7efc7d28",
+      "seconds": 88.72972030006349,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13563688328,
+      "name": "public-qualification-debug",
+      "run": 42342525409,
+      "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+      "path": "D:\\Scratch\\skimage281-42342525409-artifacts\\13563688328.zip",
+      "bytes": 1835669870,
+      "sha256": "bd20cf6ad22d141f44929280dd4b73eb12d8b4155953d52642dd789dc632afdc",
+      "seconds": 139.79911489994265,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13563460230,
+      "name": "public-qualification-modern",
+      "run": 42342525409,
+      "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+      "path": "D:\\Scratch\\skimage281-42342525409-artifacts\\13563460230.zip",
+      "bytes": 1378336780,
+      "sha256": "8399892f5fa541e0dbb27d6578c23e5cf989da1e48c0de00be73fdf713f7b7f2",
+      "seconds": 65.68477690010332,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13563357806,
+      "name": "public-qualification-minimum",
+      "run": 42342525409,
+      "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+      "path": "D:\\Scratch\\skimage281-42342525409-artifacts\\13563357806.zip",
+      "bytes": 1416722293,
+      "sha256": "5401bf250436688cc84738ecf9db06cf7c7555fd9e1fe168afa4df07fd11c2df",
+      "seconds": 67.57978409994394,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "root_cause": "All16badnodes are strict rolling-ball signature equality (workers1/4, normal/scalar, all4profiles). Canonical upstream DEPRECATED class differs from own same-repr marker instance; root modern diagnosis99c296 and minimum989d retained. No other XML failure/error/skip found within complete retained scope.",
+  "correction": "Independent/root-admitted dda9 canonical marker reuse preserves operation/decorator AST/native/math/SDK/raw; complete162 source checks pass bothPythons. Changed-source successor42347579925 dispatched once; no unchanged3e retry.",
+  "scope": "Genuine failed-source product/SDK/corpora evidence preserved and authenticated; passing groups/304SDK do not make failed campaign a qualified release or shipping increment. No stage artifacts were produced; no stager acceptance inferred.",
+  "waste_review": {
+    "result": "Four archives retained once, existing modern/minimum receipts reused; each seal independently authenticated once. Prior failure preserved, root aggregate uses small reviewer/seal receipts without archive/core/corpus hash replay.",
+    "avoidable": "Canonical metadata default identity should have been compared directly before hosted release; same repr was insufficient. Existing shared marker reused instead of adding a sentinel framework.",
+    "next_owner_trigger": "Root follows SAME successor42347579925 watcher64812; retain actualterminal artifacts once, then independent product/SDK/stager admission before measurement. Update existing plan/checklist, no new queue or scientific rerun for bookkeeping."
+  }
+}
