@@ -1,0 +1,52 @@
+{
+  "schema": "flood-fill-native-v1",
+  "scope": "private family component; no shared public registration or genuine credit",
+  "source_predecessor": "7c14ee863934a2a6c5370d0ca699d3d299fba166",
+  "raw_admission_sha256": "ad6aa1c996346bee7978e8a77919005ba4611c2a1eb258204ea039cf04c4d47d",
+  "source_raw_sha256": {
+    "include/skimagexx/flood_fill.hpp": "b023de21d811a49e9c094ac97b43b4970eeab393bc424db91ba859fc11651462",
+    "src/flood_fill.cpp": "c23fead473f279db0c755e2f0ae56bfec465dfadfb066b2b05dbd21ebe966125",
+    "src/bind_flood_fill.cpp": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+    "python/skimagexx/_flood_fill.py": "1121ffe8feedea387f790c9fad4daf6f912aa51b29a34481c2dbbf3e17c872e1",
+    "tests/test_flood_fill_public.py": "8929ad2eb38d177e8cd03c3eacc59328c1a6356f446308c97593b4312a43b81d",
+    "tests/flood_fill_sdk_fixture.py": "27440573e06965c285f83e680671348ce4d45ce65454de113c84c253e8f1c9e0",
+    "tests/test_flood_fill_sdk.cpp": "2b24930b91bffeab4f06582bb5d4b0417c319c15b81a9b649d11b31f6642ef92",
+    "tests/sdk/flood_fill/CMakeLists.txt": "95adcada654834cdbe2f3750f6984a02361006fbf369c058c9c3b4bcd682d5cc",
+    "tests/fixtures/flood_fill_original_v1.json": "8898d8339f5d5b3a8485c3705e36eb1e4de5e9021c75345c11546f49bb3a0453",
+    "tests/fixtures/flood_fill_sdk_original_v1.inc": "3afb1a0e90a3e1b6eb74760a5296ff0ed74ee9e6f791ed90567357f10d6e3973",
+    "benchmarks/flood_fill_execution.py": "caa9447d42aaea34ed1f20c8ff78f50604d4879e0aa73d4b3e8ea16e690d4cdb",
+    "benchmarks/flood_fill_native.py": "279c6eb79267ddf44206d977c6641223378a6756ef8b5f50f0e81652172d2f65"
+  },
+  "executor_predecessor_raw_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+  "executor_inverse": [
+    {
+      "current": "\"\"\"Flood/fill adapter reusing the admitted sustained Montage entry guards.",
+      "predecessor": "\"\"\"Six family public-call adapters over the existing sustained Montage sampler."
+    },
+    {
+      "current": "CONTEXT='coverage/contracts/flood-fill-benchmark-v1.json'",
+      "predecessor": "CONTEXT='coverage/contracts/next-util-benchmark-execution-v2.json'"
+    },
+    {
+      "current": "def expected_returns(api,spec):\n    return {'flood_mask':1} if api=='morphology.flood' else {'flood_mask':1,'crop_copy_into':1,'flood_assign':1}\n",
+      "predecessor": "def expected_returns(api,spec):\n    if api=='segmentation.join_segmentations':return {'join_encode':1,'join_divmod':int(spec['mapping'])}\n    if api=='util.crop':return {'crop_view':1,'crop_copy_into':int(spec['copy']and not spec['payload_provider'])}\n    if api=='util.regular_grid':\n        import math\n        return {'regular_grid_prepare':1,'regular_grid_finish':int(math.prod(spec['shape'])>spec['points'])}\n    if api=='util.slice_along_axes':return {'util_slice_view':1,'util_slice_copy_into':int(spec['copy'])}\n    return {'util_'+api.split('.')[1]:1}\n"
+    }
+  ],
+  "source_snapshot_sha256": "46bee1c00d172276e3d35bd819f41793da09e959d59266d13a45767abf55a481",
+  "reference_contract_sha256": "9c7c5ca081652d7068f5c08a6f0fd00dbd685811aeef7cc7165054a6777214fd",
+  "serial_disposition": "FIFO dependency and mark-before-push; no worker lookup, no SIMD BFS. Numeric copy reuses existing crop primitives. Global worker setting unchanged.",
+  "providers": [
+    "NumPy ndarray coercion and allocation/descriptor metadata",
+    "footprint coordinate/reduction metadata and scalar tolerance arithmetic",
+    "NumPy version-specific cast/broadcast/error/warning conversion into temporary values; C++ owns actual image copy/fill"
+  ],
+  "open_domains": [
+    "full protocol/custom array subclasses and scalar/zero-dimensional input outside captured96",
+    "additional tolerance scalar and structured/object/extended-float error domains",
+    "Windows saved target parity and UCRT envelope; Linux glibc full32 test only",
+    "genuine installed onecore namespace/hotswap/global worker ownership",
+    "whole exported installed SDK and exact-source fourprofile release qualification",
+    "one-thread original-public performance, all losses retained"
+  ],
+  "original_budget": 0
+}

@@ -1,0 +1,186 @@
+{
+  "schema": "flood-fill-benchmark-v1",
+  "state": "UNBOUND",
+  "routes": {
+    "flood-fill": {
+      "driver": "benchmarks/flood_fill_native.py",
+      "apis": [
+        "morphology.flood",
+        "morphology.flood_fill"
+      ],
+      "cases": [
+        {
+          "id": "flood-uint8-C",
+          "api": "morphology.flood",
+          "dtype": "uint8",
+          "layout": "C",
+          "tolerance": null,
+          "shape": [
+            257,
+            257
+          ]
+        },
+        {
+          "id": "flood-uint8-F",
+          "api": "morphology.flood",
+          "dtype": "uint8",
+          "layout": "F",
+          "tolerance": 1,
+          "shape": [
+            257,
+            257
+          ]
+        },
+        {
+          "id": "flood-float32-C",
+          "api": "morphology.flood",
+          "dtype": "float32",
+          "layout": "C",
+          "tolerance": null,
+          "shape": [
+            257,
+            257
+          ]
+        },
+        {
+          "id": "flood-float32-F",
+          "api": "morphology.flood",
+          "dtype": "float32",
+          "layout": "F",
+          "tolerance": 1,
+          "shape": [
+            257,
+            257
+          ]
+        },
+        {
+          "id": "flood_fill-uint8-C",
+          "api": "morphology.flood_fill",
+          "dtype": "uint8",
+          "layout": "C",
+          "tolerance": null,
+          "shape": [
+            257,
+            257
+          ]
+        },
+        {
+          "id": "flood_fill-uint8-F",
+          "api": "morphology.flood_fill",
+          "dtype": "uint8",
+          "layout": "F",
+          "tolerance": 1,
+          "shape": [
+            257,
+            257
+          ]
+        },
+        {
+          "id": "flood_fill-float32-C",
+          "api": "morphology.flood_fill",
+          "dtype": "float32",
+          "layout": "C",
+          "tolerance": null,
+          "shape": [
+            257,
+            257
+          ]
+        },
+        {
+          "id": "flood_fill-float32-F",
+          "api": "morphology.flood_fill",
+          "dtype": "float32",
+          "layout": "F",
+          "tolerance": 1,
+          "shape": [
+            257,
+            257
+          ]
+        }
+      ]
+    }
+  },
+  "apis": {
+    "morphology.flood": {
+      "original_module": "skimage.morphology._flood_fill",
+      "owned_module": "skimagexx._flood_fill",
+      "signature": "(image, seed_point, *, footprint=None, connectivity=None, tolerance=None)",
+      "original_source_canonical_sha256": "df8f636957af1639ac40733a651451dd9f8e8b4fa07a55a3e963f93082d7ab09",
+      "providers": [
+        "NumPy coercion/layout metadata/reduction/scalar casting and warnings",
+        "ordered serial C++ queue/mask/copy/fill; no worker lookup or vectorized BFS"
+      ]
+    },
+    "morphology.flood_fill": {
+      "original_module": "skimage.morphology._flood_fill",
+      "owned_module": "skimagexx._flood_fill",
+      "signature": "(image, seed_point, new_value, *, footprint=None, connectivity=None, tolerance=None, in_place=False)",
+      "original_source_canonical_sha256": "df8f636957af1639ac40733a651451dd9f8e8b4fa07a55a3e963f93082d7ab09",
+      "providers": [
+        "NumPy coercion/layout metadata/reduction/scalar casting and warnings",
+        "ordered serial C++ queue/mask/copy/fill; no worker lookup or vectorized BFS"
+      ]
+    }
+  },
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "retain_all_losses": true,
+    "allocation_inclusive": true
+  },
+  "supported_numpy": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "FENV_dependency": {
+    "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+    "source_files_raw_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "module": "tests/util_views_fenv.py",
+    "backend": "backend",
+    "mode": "source-built-v1",
+    "receipt_environment": "UTIL_VIEWS_FENV_RECEIPT",
+    "external_digest_environment": "UTIL_VIEWS_FENV_RECEIPT_SHA256",
+    "legacy": "F1 private-fixed-v1 scope retained; forbidden by this benchmark genuine consumer",
+    "collector": "C prepares current-source helper and exports MODE/RECEIPT/RECEIPT_SHA256, no HELPER. Retain entire emitted helper bundle recursively and7F1sourcefiles/context. Receipt/toolchain/source/current-library/control validation precedes target calls.",
+    "scope": "Reviewed empty-x87/masked exceptions/Linux x86_64 glibc32/MXCSR28; no Windows/general machine-state claim."
+  },
+  "sources": {
+    "benchmarks/flood_fill_execution.py": {
+      "current_canonical_sha256": "caa9447d42aaea34ed1f20c8ff78f50604d4879e0aa73d4b3e8ea16e690d4cdb"
+    },
+    "benchmarks/flood_fill_native.py": {
+      "current_canonical_sha256": "279c6eb79267ddf44206d977c6641223378a6756ef8b5f50f0e81652172d2f65"
+    }
+  },
+  "production_source_canonical_sha256": {
+    "include/skimagexx/flood_fill.hpp": "b023de21d811a49e9c094ac97b43b4970eeab393bc424db91ba859fc11651462",
+    "src/flood_fill.cpp": "c23fead473f279db0c755e2f0ae56bfec465dfadfb066b2b05dbd21ebe966125",
+    "src/bind_flood_fill.cpp": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+    "python/skimagexx/_flood_fill.py": "1121ffe8feedea387f790c9fad4daf6f912aa51b29a34481c2dbbf3e17c872e1",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988"
+  },
+  "unbound": {
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "root_GO": null,
+    "helper": null,
+    "deadline": null
+  }
+}

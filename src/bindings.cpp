@@ -85,6 +85,8 @@ void bind_util_views(pybind11::module_&);
 void bind_mark_boundaries(pybind11::module_&);
 void bind_draw_multiblock_lbp(pybind11::module_&);
 void bind_finite_radon(pybind11::module_&);
+void bind_variation_of_information(pybind11::module_&);
+void bind_flood_fill(pybind11::module_&);
 void bind_mesh_surface_area(pybind11::module_&);
 void bind_euler_number(pybind11::module_&);
 void bind_perimeter(pybind11::module_&);
@@ -907,6 +909,8 @@ PYBIND11_MODULE(_core, m) {
     bind_mark_boundaries(m);
     bind_draw_multiblock_lbp(m);
     bind_finite_radon(m);
+    bind_variation_of_information(m);
+    bind_flood_fill(m);
     bind_mesh_surface_area(m);
     bind_euler_number(m);
     bind_perimeter(m);

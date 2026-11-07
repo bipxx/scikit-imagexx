@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.18)
+project(flood_fill_complete_client LANGUAGES CXX)
+find_package(skimagexx CONFIG REQUIRED)
+add_executable(flood_fill_complete_client ../../test_flood_fill_sdk.cpp)
+target_compile_features(flood_fill_complete_client PRIVATE cxx_std_17)
+target_link_libraries(flood_fill_complete_client PRIVATE skimagexx::skimagexx)

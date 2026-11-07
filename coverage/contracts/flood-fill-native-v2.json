@@ -1,0 +1,89 @@
+{
+  "schema": "flood-fill-native-v2",
+  "predecessor_source": "dd1aebd5d8619e4f6d2ea3925bb3e3e62b728f4f",
+  "scope": "CPP-only rolling traversal and padded typed neighbor working copy; Python/providers/header/binder/SDKtypealias/cases/methods/golds unchanged",
+  "changed_sources": {
+    "src/flood_fill.cpp": {
+      "current_raw_sha256": "0f2bfa18369f12ce9724510fde1b63d8265a5f58fd1efe4069eedfcfef4884ac",
+      "predecessor_raw_sha256": "c23fead473f279db0c755e2f0ae56bfec465dfadfb066b2b05dbd21ebe966125",
+      "inverse": [
+        {
+          "current": "template<class T>T load(const T* p,I bytes){T v;std::memcpy(&v,reinterpret_cast<const char*>(p)+bytes,sizeof(T));return v;}\n// The existing crop traversal uses the same C-order odometer. Keep one index\n// per traversal and update the two offsets only on axis advance/carry.\nvoid advance(std::vector<I>& index,const std::vector<I>& shape,\n             const std::vector<I>& input_strides,const std::vector<I>& mask_strides,\n             I& input_offset,I& mask_offset){\n    for(std::size_t a=shape.size();a-->0;){\n        if(++index[a]<shape[a]){input_offset+=input_strides[a];mask_offset+=mask_strides[a];return;}\n        index[a]=0;input_offset-=(shape[a]-1)*input_strides[a];mask_offset-=(shape[a]-1)*mask_strides[a];\n    }\n}\n",
+          "predecessor": "template<class T>T load(const T* p,I bytes){T v;std::memcpy(&v,reinterpret_cast<const char*>(p)+bytes,sizeof(T));return v;}\n"
+        },
+        {
+          "current": "    // One padded typed copy permits constant-address neighbor reads. Border\n    // payload is never read: flags2 is checked before any working-image load.\n    std::vector<T> working(static_cast<std::size_t>(count));\n    std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n    for(I k=0;k<logical;++k){\n        out.storage[mask_offset]=0;\n        std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));\n        advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);\n    }\n",
+          "predecessor": "    for(I k=0;k<logical;++k)out.storage[out.origin+offset(coordinates(k,g.shape),out.strides)]=0;\n"
+        },
+        {
+          "current": "        T v=working[next];\n",
+          "predecessor": "        I remaining=next,bytes=0;\n        for(std::size_t j=0;j<padded.size();++j){auto a=g.fortran?j:padded.size()-1-j;\n            auto c=remaining%padded[a];remaining/=padded[a];bytes+=(c-out.padding[a])*g.strides[a];}\n        T v=load(image,bytes);\n"
+        },
+        {
+          "current": "    std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=mask.origin;\n    for(I k=0;k<n;++k){\n        out[k]=mask.storage[mask_offset]==1?value:load(image,input_offset);\n        advance(index,g.shape,g.strides,mask.strides,input_offset,mask_offset);\n    }\n    return out;\n",
+          "predecessor": "    for(I k=0;k<n;++k){auto c=coordinates(k,g.shape);out[k]=mask.storage[mask.origin+offset(c,mask.strides)]==1?value:load(image,offset(c,g.strides));}return out;\n"
+        },
+        {
+          "current": "    std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=mask.origin;\n    for(I k=0;k<n;++k){\n        if(mask.storage[mask_offset]==1)std::memcpy(reinterpret_cast<char*>(image)+input_offset,&value,sizeof(T));\n        advance(index,g.shape,g.strides,mask.strides,input_offset,mask_offset);\n    }\n",
+          "predecessor": "    for(I k=0;k<n;++k){auto c=coordinates(k,g.shape);if(mask.storage[mask.origin+offset(c,mask.strides)]==1)\n        std::memcpy(reinterpret_cast<char*>(image)+offset(c,g.strides),&value,sizeof(T));}\n"
+        }
+      ]
+    },
+    "benchmarks/flood_fill_execution.py": {
+      "current_raw_sha256": "dd0e560e0413143cbc58ab15eab60f4f39fc76e07b717b53f268e2eddd0f4b5f",
+      "predecessor_raw_sha256": "caa9447d42aaea34ed1f20c8ff78f50604d4879e0aa73d4b3e8ea16e690d4cdb",
+      "inverse": [
+        {
+          "current": "CONTEXT='coverage/contracts/flood-fill-benchmark-v2.json'\n",
+          "predecessor": "CONTEXT='coverage/contracts/flood-fill-benchmark-v1.json'\n"
+        }
+      ]
+    },
+    "tests/test_flood_fill_native_source.py": {
+      "current_raw_sha256": "7b78be79311b2e9af10e05b0b0cb37fb5d02d56e84073ae608ac447e416f889c",
+      "predecessor_raw_sha256": "d7329f86a3e1cd5791fbdf113b886c07bf3f5aebe601d1dd91d6e1aae7942f0f",
+      "inverse": [
+        {
+          "current": "import pytest\nfrom flood_fill_cost_context import historical_bytes\n",
+          "predecessor": "import pytest\n"
+        },
+        {
+          "current": "    for name,pin in c['source_raw_sha256'].items():\n        raw=historical_bytes(ROOT,name)if name in ('src/flood_fill.cpp','benchmarks/flood_fill_execution.py')else(ROOT/name).read_bytes()\n        assert hashlib.sha256(raw).hexdigest()==pin,name\n",
+          "predecessor": "    for name,pin in c['source_raw_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name\n"
+        },
+        {
+          "current": "    c=json.loads(CONTEXT.read_bytes());raw=historical_bytes(ROOT,'benchmarks/flood_fill_execution.py')\n",
+          "predecessor": "    c=json.loads(CONTEXT.read_bytes());raw=(ROOT/'benchmarks/flood_fill_execution.py').read_bytes()\n"
+        },
+        {
+          "current": "    context=json.loads((ROOT/'coverage/contracts/flood-fill-benchmark-v2.json').read_bytes())\n",
+          "predecessor": "    context=json.loads((ROOT/'coverage/contracts/flood-fill-benchmark-v1.json').read_bytes())\n"
+        },
+        {
+          "current": "    assert 'get_num_threads'not in source and 'omp'not in source and 'PyObject'not in source\n\n\ndef test_cpp_cost_context_and_unchanged_methods_cases_providers():\n    context=json.loads((ROOT/'coverage/contracts/flood-fill-native-v2.json').read_bytes())\n    for name in context['changed_sources']:historical_bytes(ROOT,name)\n    for name,pin in context['new_source_pins'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name\n    for name,pin in context['unchanged_source_pins'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name\n    old=json.loads((ROOT/'coverage/contracts/flood-fill-benchmark-v1.json').read_bytes())\n    new=json.loads((ROOT/'coverage/contracts/flood-fill-benchmark-v2.json').read_bytes())\n    assert old['routes']==new['routes']and old['method']==new['method']and old['apis']==new['apis']\n    assert old['unbound']==new['unbound']and all(v is None for v in new['unbound'].values())\n    raw=(ROOT/'src/flood_fill.cpp').read_text()\n    assert 'coordinates(k,g.shape)'not in raw and 'remaining%padded'not in raw\n    assert 'T v=working[next];'in raw and 'std::vector<T> working'in raw\n",
+          "predecessor": "    assert 'get_num_threads'not in source and 'omp'not in source and 'PyObject'not in source\n"
+        }
+      ]
+    }
+  },
+  "new_source_pins": {
+    "tests/flood_fill_cost_context.py": "8d6b2c358e1df504204298df1f374a308639c962e59768aaa32c80977664e00d",
+    "coverage/contracts/flood-fill-benchmark-v2.json": "3e12a3b217be94a2e67f82282d2dcc389a27200342b507b99cba8a923ea3a69a"
+  },
+  "unchanged_source_pins": {
+    "include/skimagexx/flood_fill.hpp": "b023de21d811a49e9c094ac97b43b4970eeab393bc424db91ba859fc11651462",
+    "src/bind_flood_fill.cpp": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+    "python/skimagexx/_flood_fill.py": "1121ffe8feedea387f790c9fad4daf6f912aa51b29a34481c2dbbf3e17c872e1",
+    "tests/test_flood_fill_public.py": "8929ad2eb38d177e8cd03c3eacc59328c1a6356f446308c97593b4312a43b81d",
+    "tests/test_flood_fill_sdk.cpp": "2b24930b91bffeab4f06582bb5d4b0417c319c15b81a9b649d11b31f6642ef92",
+    "tests/flood_fill_sdk_fixture.py": "27440573e06965c285f83e680671348ce4d45ce65454de113c84c253e8f1c9e0",
+    "tests/fixtures/flood_fill_original_v1.json": "8898d8339f5d5b3a8485c3705e36eb1e4de5e9021c75345c11546f49bb3a0453",
+    "tests/fixtures/flood_fill_sdk_original_v1.inc": "3afb1a0e90a3e1b6eb74760a5296ff0ed74ee9e6f791ed90567357f10d6e3973",
+    "coverage/contracts/flood-fill-native-v1.json": "e3ca77754cd38f9e3f51370dce89a5ed3ce6cd03d29cca04074394b2ddfce4a7",
+    "coverage/contracts/flood-fill-benchmark-v1.json": "0e0e6f09e9275e99f9cc101ac2ac9245ee945971fc1ef53ce5bbf55d96f8cd84",
+    "benchmarks/flood_fill_native.py": "279c6eb79267ddf44206d977c6641223378a6756ef8b5f50f0e81652172d2f65"
+  },
+  "native_performance": "Source context grants no timing authority. External handoff retains the authorized untimed counts and one conditional priorCPP-only comparison; no original-public speedup or measurement authority.",
+  "extra_working_memory": "One padded typed image count*sizeof(T), released before SDKfill payload traversal; mask/queue and output ownership unchanged.",
+  "providers": "All existing NumPy min/maskcount/RHS casting and FP policy providers unchanged; no flag masking/posttarget normalization."
+}

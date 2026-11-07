@@ -166,3 +166,7 @@ def binary_opening(image,footprint=None,out=None,*,mode='ignore'):
 
 def binary_closing(image,footprint=None,out=None,*,mode='ignore'):
     return _call('binary_closing',image,footprint,out,mode)
+
+# Canonical identity aliases; owned traversal/writes with declared NumPy providers.
+from ._flood_fill import flood, flood_fill
+__all__ += ['flood','flood_fill']

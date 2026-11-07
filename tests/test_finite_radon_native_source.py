@@ -5,7 +5,7 @@ import finite_radon_contract as c
 from finite_radon_saved_parity import run_saved,portable_record
 
 def test_native_source_pins_and_historical_packet():
-    d=json.loads((c.ROOT/'coverage/contracts/finite-radon-native-v3.json').read_bytes())
+    d=json.loads((c.ROOT/'coverage/contracts/finite-radon-native-v4.json').read_bytes())
     assert not d['API_completion']and not d['ready_for_integration']and d['original_calls']==0
     assert hashlib.sha256(c.CONTRACT.read_bytes()).hexdigest()==d['source_contract_sha256']
     for n,p in d['source_files'].items():assert hashlib.sha256((c.ROOT/n).read_bytes()).hexdigest()==p,n

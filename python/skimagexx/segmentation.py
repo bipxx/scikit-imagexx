@@ -37,3 +37,7 @@ def relabel_sequential(*args,**kwargs):
 
 def __getattr__(name):
     return module_attribute('segmentation', name)
+
+# Canonical identity aliases; owned traversal/writes with declared NumPy providers.
+from ._flood_fill import flood, flood_fill
+__all__ += ['flood','flood_fill']

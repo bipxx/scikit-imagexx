@@ -6036,11 +6036,21 @@
       "api": "metrics.variation_of_information",
       "kind": "callable",
       "signature": "(image0=None, image1=None, *, table=None, ignore_labels=())",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_variation_of_information_public.py::test_all_saved_original_fields",
+      "benchmark": "benchmarks/variation_of_information_consumer.py",
+      "default_input_kind": "Bounded actual integer dtype labels; owned VI entropy/current counts plus named NumPy/SciPy providers. Floating-label numeric suffix is provider computation. Seven numeric saved words and partial domain scope, genuine/fullFP/platform/performance gates remain explicit."
     },
     {
       "api": "morphology.area_closing",
@@ -6290,21 +6300,47 @@
       "api": "morphology.flood",
       "kind": "callable",
       "signature": "(image, seed_point, *, footprint=None, connectivity=None, tolerance=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_flood_fill_public.py",
+      "benchmark": "benchmarks/flood_fill_native.py",
+      "default_input_kind": "NumPy full-image image.min and full-mask count_nonzero reductions plus selected RHS cast/broadcast temporary; native serial BFS/current POD copy/final writes. Providers and broad domains/performance remain explicit."
     },
     {
       "api": "morphology.flood_fill",
       "kind": "callable",
       "signature": "(image, seed_point, new_value, *, footprint=None, connectivity=None, tolerance=None, in_place=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_flood_fill_public.py",
+      "benchmark": "benchmarks/flood_fill_native.py",
+      "default_input_kind": "NumPy full-image image.min and full-mask count_nonzero reductions plus selected RHS cast/broadcast temporary; native serial BFS/current POD copy/final writes. Providers and broad domains/performance remain explicit."
     },
     {
       "api": "morphology.footprint_from_sequence",
@@ -6956,21 +6992,47 @@
       "api": "segmentation.flood",
       "kind": "callable",
       "signature": "(image, seed_point, *, footprint=None, connectivity=None, tolerance=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_flood_fill_public.py",
+      "benchmark": "benchmarks/flood_fill_native.py",
+      "default_input_kind": "NumPy full-image image.min and full-mask count_nonzero reductions plus selected RHS cast/broadcast temporary; native serial BFS/current POD copy/final writes. Providers and broad domains/performance remain explicit."
     },
     {
       "api": "segmentation.flood_fill",
       "kind": "callable",
       "signature": "(image, seed_point, new_value, *, footprint=None, connectivity=None, tolerance=None, in_place=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_flood_fill_public.py",
+      "benchmark": "benchmarks/flood_fill_native.py",
+      "default_input_kind": "NumPy full-image image.min and full-mask count_nonzero reductions plus selected RHS cast/broadcast temporary; native serial BFS/current POD copy/final writes. Providers and broad domains/performance remain explicit."
     },
     {
       "api": "segmentation.inverse_gaussian_gradient",

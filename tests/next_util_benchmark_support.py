@@ -8,7 +8,7 @@ import subprocess
 import sys
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/next-util-benchmark-execution-v3.json'
+CONTEXT=ROOT/'coverage/contracts/next-util-benchmark-execution-v4.json'
 
 
 def load_driver(route):

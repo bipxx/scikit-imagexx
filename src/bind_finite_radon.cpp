@@ -1,8 +1,5 @@
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
-#include <numpy/_numpyconfig.h>
-#if NPY_ABI_VERSION >= 0x02000000
-#define NPY_TARGET_VERSION 0x00000012
-#endif
+#define NPY_TARGET_VERSION NPY_1_23_API_VERSION
 #include <numpy/arrayobject.h>
 #include <numpy/ufuncobject.h>
 #include <skimagexx/finite_radon.hpp>
@@ -40,18 +37,33 @@ Input input(const py::array& a){
     return out;
 }
 struct NoticeContext {py::object complex_warning;};
+void invalid_cast_notice(){
+    // Public generated NumPy ufunc C-API signatures/slots, pinned in the
+    // family ABI contract. Headers2.x can build for the lowest1.23 feature
+    // API; dispatch MUST use the loaded runtime, not the header ABI version.
+    // PyUFunc_GiveFloatingpointErrors is slot46, introduced in NumPy2.0.
+    if(PyArray_GetNDArrayCFeatureVersion()>=0x00000012u){
+        using GiveErrors=int(*)(const char*,int);
+        const auto give=reinterpret_cast<GiveErrors>(PyUFunc_API[46]);
+        if(give("cast",NPY_FPE_INVALID)<0)throw py::error_already_set();
+    }else{
+        // NumPy1.x PyUFunc_GetPyValues(slot25) returns the owned policy object;
+        // PyUFunc_handlefperr(slot29) applies warn/raise/call/log/ignore/print.
+        using GetValues=int(*)(char*,int*,int*,PyObject**);
+        using HandleErrors=int(*)(int,PyObject*,int,int*);
+        const auto get=reinterpret_cast<GetValues>(PyUFunc_API[25]);
+        const auto handle=reinterpret_cast<HandleErrors>(PyUFunc_API[29]);
+        int buffer=0,mask=0,first=1;PyObject* object=nullptr;
+        if(get(const_cast<char*>("cast"),&buffer,&mask,&object)<0)throw py::error_already_set();
+        const int error=handle(mask,object,NPY_FPE_INVALID,&first);
+        Py_XDECREF(object);if(error<0)throw py::error_already_set();
+    }
+}
 void notice(void* opaque,unsigned event){
     py::gil_scoped_acquire acquire;
     if(event==1){auto& ctx=*static_cast<NoticeContext*>(opaque);if(PyErr_WarnEx(ctx.complex_warning.ptr(),"Casting complex values to real discards the imaginary part",1)<0)throw py::error_already_set();}
     else if(event==2){
-#if NPY_ABI_VERSION >= 0x02000000
-        if(PyUFunc_GiveFloatingpointErrors("cast",NPY_FPE_INVALID)<0)throw py::error_already_set();
-#else
-        // NumPy1.24's exported policy API, same sequence as its extobj.c.
-        int buffer=0,mask=0,first=1;PyObject* object=nullptr;
-        if(PyUFunc_GetPyValues(const_cast<char*>("cast"),&buffer,&mask,&object)<0)throw py::error_already_set();
-        const int error=PyUFunc_handlefperr(mask,object,NPY_FPE_INVALID,&first);Py_XDECREF(object);if(error<0)throw py::error_already_set();
-#endif
+        invalid_cast_notice();
     }
 }
 NoticeContext context(bool complex){

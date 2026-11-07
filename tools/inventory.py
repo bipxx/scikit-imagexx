@@ -26,7 +26,9 @@ for _names, _test, _benchmark in (
     (('segmentation.join_segmentations',),'tests/test_join_segmentations_integration.py','benchmarks/join_segmentations.py'),
     (('segmentation.find_boundaries',),'tests/test_find_boundaries_public.py','benchmarks/find_boundaries.py'),
     (('metrics.adapted_rand_error',),'tests/test_label_pair_rand_public.py','benchmarks/label_pair_metrics.py'),
+    (('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'),'tests/test_flood_fill_public.py','benchmarks/flood_fill_native.py'),
     (('metrics.contingency_table',),'tests/test_contingency_table_public.py','benchmarks/label_pair_metrics.py'),
+    (('metrics.variation_of_information',),'tests/test_variation_of_information_public.py::test_all_saved_original_fields','benchmarks/variation_of_information_consumer.py'),
     (('draw.circle_perimeter',),'tests/test_circle_perimeter_public.py::test_circle_perimeter_saved_public_contract','benchmarks/circle_perimeter.py'),
     (('draw.polygon','draw.polygon2mask'),'tests/test_draw_polygon_public.py::test_draw_polygon_saved_public_pipeline','benchmarks/draw_polygon.py'),
     (('draw.bezier_curve',),'tests/test_bezier_curve_public.py::test_bezier_saved_public','benchmarks/bezier_curve.py'),
@@ -187,6 +189,10 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
+            elif path in ('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'):
+                entries[-1]['default_input_kind']='NumPy full-image image.min and full-mask count_nonzero reductions plus selected RHS cast/broadcast temporary; native serial BFS/current POD copy/final writes. Providers and broad domains/performance remain explicit.'
+            elif path=='metrics.variation_of_information':
+                entries[-1]['default_input_kind']='Bounded actual integer dtype labels; owned VI entropy/current counts plus named NumPy/SciPy providers. Floating-label numeric suffix is provider computation. Seven numeric saved words and partial domain scope, genuine/fullFP/platform/performance gates remain explicit.'
             elif path in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
                 entries[-1]['default_input_kind']='Frozen live4x5/4x6 ndarray requests in actual requested dtype; exact source/input/options saved references. Native integral geometry/POD slice copy; NumPy validation/base-chain/readonly/dtype/object/protocol providers and partial platform/performance scope remain explicit.'
             elif path in ('util.crop','util.regular_grid'):

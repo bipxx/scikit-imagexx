@@ -10,7 +10,7 @@ import sys
 import types
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/finite-radon-benchmark-execution-v2.json'
+CONTEXT=ROOT/'coverage/contracts/finite-radon-benchmark-execution-v4.json'
 DATA=json.loads(CONTEXT.read_bytes())
 sys.path.insert(0,str(ROOT/'benchmarks'))
 import finite_radon_execution_v1 as driver

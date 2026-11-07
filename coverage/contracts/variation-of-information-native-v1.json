@@ -1,0 +1,89 @@
+{
+  "schema": "variation-of-information-native-viability-v1",
+  "status": "PRIVATE_SAVED8_COMPONENT_PARITY_PENDING_INDEPENDENT_GENUINE_AND_BROAD_DOMAINS",
+  "base": "3f5c6b1d",
+  "API": "metrics.variation_of_information",
+  "signature": "(image0=None, image1=None, *, table=None, ignore_labels=())",
+  "source_raw_sha256": {
+    "include/skimagexx/variation_of_information.hpp": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102",
+    "src/variation_of_information.cpp": "966f48ec3ce563548aaa23d4f3ede7ac69354d91bab3b2fd4ffef7d2c2e35955",
+    "src/bind_variation_of_information.cpp": "0fa7a58375b6ec6c544dc403bfd6fd9d8f8c503fd806075c1699f5e0c492d248",
+    "python/skimagexx/_variation_of_information.py": "f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa",
+    "tests/fixtures/variation_of_information_saved_v1.hpp": "dfd40555fa87a96e7b6d224553dabc5c2b7522ff295072b9c4975730bfd98ec0",
+    "tests/test_variation_of_information_native.cpp": "0e4f47f445c243ade683a39919cf3bcf02ddc861a9e7f4fe1929556d35774f0e",
+    "tests/test_variation_of_information_public.py": "464d955a5fdd31ea6a73f8bdba44de021947f12abad3b32c23da935ff8213fd5",
+    "tests/cmake_consumer/variation_of_information_consumer.cpp": "9d013147c1327f69cb6234faa059896b243d2077df714ec8333e99a1bc08f3dd",
+    "benchmarks/variation_of_information.py": "70cb54b7e9d6b975a591874a56cd08a2b0d7bb26a4696ab66fe31885719894ce",
+    "coverage/contracts/variation-of-information-benchmark-v1.json": "e0a101f4259c308f9a86466143b457daa7678a093c6bc1464f295d128a56d0a4"
+  },
+  "upstream_canonical_sha256": "29fd36256b803934fa37963dbe4b22507152b927b3ac7bfb2b05a973c6552da8",
+  "original_contract": "coverage/contracts/label-pair-metrics-v1.json",
+  "original_contract_raw_sha256": "f93108b85592744d4bff03122795e5c45039de39f85cfc7c7ec348b5a3e2ec96",
+  "accuracy": "Exact0ULP raw f64 words, including signed zero and NaN. No tolerance or post-result NaN/sign normalization.",
+  "retained_profiles": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "saved_recipes": 8,
+  "saved_returns": 7,
+  "saved_error": "8throw is actual testedpublic AttributeError with exact type/module/message; C++doesnotmanufacturePython shape/protocolerrors.",
+  "implementation": "Owned typed CSR marginal/diagonal-scale/xlogx/log2/reductions plus complete image overload reusing owned per-pixel-normalized label_pair_counts. Serial ordered entropy; existing global budget default1 captured once and passedpositive tocountprimitive. No artificial SIMD/thread entropy.",
+  "source_order": [
+    "Unconditional image.shape check implemented for ordinaryarrays andcapturedNoneerror; broaderprotocol/errorprecedence remainsunassessed",
+    "Source CSR row/column marginal order",
+    "Inverse nonzero marginals",
+    "Specific sparse diagonal multiplication/reverse first-column encounter/coalescing",
+    "Nonzero scalar std::log2 and multiplication",
+    "Row/column reductions and negative marginal dots",
+    "Result false splits then false merges"
+  ],
+  "actual_native_viability": {
+    "run": "native-viability-v3",
+    "total": 7,
+    "strict_pass": 7,
+    "strict_fail": 0,
+    "superseded_v2_failure_retained": true,
+    "source_fix": "Generic allcoefficient GNUx86_64 scalar dot multiply retains rightoperand destination like actualretainedOpenBLAS smallN; no case/NaN/result branch or postresultmask. Exactbackendscope/platformfrontiers explicit."
+  },
+  "attribution": "Actual native diagnostic px/py/row/columnentropy words remainednegativeNaN, onlyfinaldotwaspositive. Readonly retainedNumPyDOUBLE_dot/OpenBLAS HASWELL smallN loadsrightthenmultipliesleft, opposite naivecompiledC++. Sourceinstructionorder now genericallvalues; all7rawgoldreturns pass. Sixfiniteoutputsunchanged; broadlog/reduction/backendparity not inferred.",
+  "frontiers": [
+    "Independent source/component admission andsharedregistry/CMake/metrics namespace/selector/SDKexport/genuine ownership stillpending",
+    "General0ULP log/reduction/BLASassociation across larger tables andall supportedplatforms not established by8smallrows; GNUx86 retainedsmall-dot operand path proved; nonGNUWindows NaNbackend runtimepending",
+    "Arbitrary externalprotocols/tableformats/dtypes,negative/infinite values,sNaNs andmalformedspans are unsupported/refused wheretyped, broaderoriginalerrororder remainsunassessed",
+    "Callerfull32/x87C2/MXCSR incomingstate parity not retained inold8references; nearest/gradual/maskedintake checked, standardflagpreserving refusal tested; no afterFPmask ororiginalhardwareparitycredit",
+    "Sourceweights/membership/SciPystructure providers explicit; broadcallback/FENVchanging/concurrentmutation domains unassessed",
+    "ActualgenuineSDK/hotswap/globalownership4profile qualification andone-thread publicperformance+alllosses pending",
+    "Prospective4largebenchmarkcase setup sourceonly; executable bound adapter andalllargecase exactparity requirefuture rootauthority"
+  ],
+  "original_calls": 0,
+  "timed_batches": 0,
+  "next_owner_trigger": "Root independent component source/evidence admission thenassignsole sharedintegrator. No originals/timing/newenv/wholeproduct build authority here; preservedfailedprototypes neverrelabelpassed.",
+  "failure_history": {
+    "native-v1": "Missingnamespacebracecompilefailure preserved,0units/run",
+    "native-v2": "7returns,6rawPASS1FAIL signedNaN positivevsnegative, preserved",
+    "old_contract_raw_sha256": "760ae6d1e89a4d666d1e98ed21adc8e6aa664a0ae17cbb7bda2343810da75134"
+  },
+  "private_public_matrix": {
+    "profiles": [
+      "1.24.4",
+      "2.5.4"
+    ],
+    "modes": [
+      "normal",
+      "runtime-SIMD-disabled"
+    ],
+    "nodes_each": 28,
+    "saved_rows_each": 16,
+    "workers": [
+      1,
+      4
+    ],
+    "total_nodes": 112,
+    "scope": "Oneassembled privateVI+counts extension withsharedworker runtime, notgenuineproduct/hotswap. Fullsavedbefore/after/results/errors/warnings/FPcallbacks/NPpolicy/aliases/cachemetadata equal."
+  },
+  "frontend_ownership": "Unconditional image.shape check andexistingownedcontingency public prefix; NumPy membership/normalization computation plusSciPy CSRrepresentation explicitproviders. NewCPP owns marginals/diagonalproducts/coalescing/xlogx/log2/reductions/dots; suppliedCSR inputs readwithoutcache mutation. No whole original/provider entropy forwarding. For unassessed contingency suffixes the inherited SciPy coordinate-construction/coalescing computation remains a provider, notnativecountcredit; capturedintegerimagecases use theownedpreweighted path.",
+  "native_modes": "Normal, truecompiler-scalar flags,ASan+UBSan:newleaf+newunit plusretainedmode-specificcountobject;21rawsavedresults(workers0/1/4)+9controls each. Runtime/oldSDK uninstrumented; no wholeproduct sanitizercredit.",
+  "SDK_scope": "Relocatedassembledcomponent exportedskimagexx::skimagexx target linksownleaf fromnewarchive member, SDKheader+labelpairdependency extractedfromactualcompilerdeps,6completeimage/CSR controls eachnormal/runtime-disabled. DonorSDK95 onlyreused; noclaimreleaseSDK ornewwholeSDKbuild.",
+  "API_completion": false,
+  "advertised_in_registry": false
+}

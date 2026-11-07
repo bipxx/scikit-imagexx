@@ -16,7 +16,7 @@ import warnings
 from finite_radon_cases_v1 import case_specs,case_bounds,fixture
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/finite-radon-benchmark-execution-v2.json'
+CONTEXT='coverage/contracts/finite-radon-benchmark-execution-v4.json'
 
 
 def digest(raw):return hashlib.sha256(raw).hexdigest()

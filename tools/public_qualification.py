@@ -291,10 +291,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current275'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon')
-CURRENT_SDK_CLIENT_SCOPE = 'current35 required installed clients; previous34 plus complete finite Radon pair; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v2.json'
+CURRENT_PRODUCT_SCOPE = 'current280'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill')
+CURRENT_SDK_CLIENT_SCOPE = 'current37 required installed clients; owning VI current counts plus complete flood/fill current-copy operation; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v4.json'
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
 DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
     'src/simd_draw_coordinates_avx2.cpp', 'src/bind_draw_coordinates.cpp',
@@ -600,7 +600,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_finite_radon_public.py','test_find_boundaries_reference.py','test_find_boundaries_frontend_contract.py','test_find_boundaries_sdk_scope.py','test_find_boundaries_benchmark.py','test_find_boundaries_public.py','test_find_boundaries_intake.py','test_find_boundaries_benchmark_intake.py','test_find_boundaries_default.py','test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_regionprops_coords_scaled_reference.py', 'test_regionprops_coords_scaled_public.py', 'test_regionprops_coords_scaled_sdk_scope.py', 'test_regionprops_coords_scaled_benchmark.py',
+POST203_TESTS = ('test_variation_of_information_integration.py','test_flood_fill_integration.py','test_finite_radon_public.py','test_find_boundaries_reference.py','test_find_boundaries_frontend_contract.py','test_find_boundaries_sdk_scope.py','test_find_boundaries_benchmark.py','test_find_boundaries_public.py','test_find_boundaries_intake.py','test_find_boundaries_benchmark_intake.py','test_find_boundaries_default.py','test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_regionprops_coords_scaled_reference.py', 'test_regionprops_coords_scaled_public.py', 'test_regionprops_coords_scaled_sdk_scope.py', 'test_regionprops_coords_scaled_benchmark.py',
     'test_draw_polygon_reference.py',
     'test_draw_polygon_public.py',
     'test_draw_polygon_default.py',
@@ -674,6 +674,14 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/join-windows-fenv-fixture-v2.json',)
 
 DRAW_SOURCE_PATHS = tuple(dict.fromkeys(DRAW_SOURCE_PATHS))
 
+DRAW_SOURCE_PATHS += ('.github/workflows/public-qualification.yml', 'CMakeLists.txt', 'benchmarks/finite_radon_cases_v1.py', 'benchmarks/finite_radon_execution_v1.py', 'benchmarks/variation_of_information.py', 'benchmarks/variation_of_information_cases_v1.py', 'benchmarks/variation_of_information_consumer.py', 'benchmarks/variation_of_information_execution.py', 'coverage/api.json', 'coverage/contracts/abi-vi-cumulative-integration-v1.json', 'coverage/contracts/current-public-qualification-v3.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v4.json', 'coverage/contracts/finite-radon-benchmark-execution-v3.json', 'coverage/contracts/finite-radon-benchmark-execution-v4.json', 'coverage/contracts/finite-radon-native-v4.json', 'coverage/contracts/finite-radon-numpy-abi-v1.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v5.json', 'coverage/contracts/next-util-benchmark-execution-v4.json', 'coverage/contracts/variation-of-information-benchmark-execution-v1.json', 'coverage/contracts/variation-of-information-benchmark-execution-v2.json', 'coverage/contracts/variation-of-information-benchmark-v1.json', 'coverage/contracts/variation-of-information-current-counts-v2.json', 'coverage/contracts/variation-of-information-native-v1.json', 'include/skimagexx/variation_of_information.hpp', 'python/skimagexx/_variation_of_information.py', 'python/skimagexx/coverage.py', 'python/skimagexx/metrics.py', 'src/bind_finite_radon.cpp', 'src/bind_variation_of_information.cpp', 'src/bindings.cpp', 'src/variation_of_information.cpp', 'tests/cmake_consumer/CMakeLists.txt', 'tests/cmake_consumer/variation_of_information_consumer.cpp', 'tests/cmake_consumer/variation_of_information_current_counts_consumer.cpp', 'tests/cmake_consumer/variation_of_information_enabled_consumer.cpp', 'tests/fixtures/variation_of_information_saved_v1.hpp', 'tests/next_util_benchmark_support.py', 'tests/test_abi_vi_integration_source.py', 'tests/test_api.py', 'tests/test_finite_radon_benchmark_execution.py', 'tests/test_finite_radon_native_source.py', 'tests/test_finite_radon_numpy_abi_public.py', 'tests/test_finite_radon_numpy_abi_source.py', 'tests/test_variation_of_information_benchmark_execution.py', 'tests/test_variation_of_information_current_counts.cpp', 'tests/test_variation_of_information_current_counts_public.py', 'tests/test_variation_of_information_current_counts_source.py', 'tests/test_variation_of_information_integration.py', 'tests/test_variation_of_information_native.cpp', 'tests/test_variation_of_information_public.py', 'tests/test_variation_of_information_source.py', 'tests/variation_of_information_current_counts_controls.hpp', 'tests/variation_of_information_source_context.py', 'tools/inventory.py', 'tools/join_source_context.py')
+
+DRAW_SOURCE_PATHS += ('benchmarks/flood_fill.py', 'benchmarks/flood_fill_execution.py', 'benchmarks/flood_fill_native.py', 'coverage/contracts/current-public-qualification-v4.json', 'coverage/contracts/flood-fill-benchmark-v1.json', 'coverage/contracts/flood-fill-benchmark-v2.json', 'coverage/contracts/flood-fill-native-v1.json', 'coverage/contracts/flood-fill-readiness-v1.json', 'coverage/contracts/flood-fill-v1.json', 'include/skimagexx/flood_fill.hpp', 'python/skimagexx/_flood_fill.py', 'src/bind_flood_fill.cpp', 'src/flood_fill.cpp', 'tests/fixtures/flood_fill_original_v1.json', 'tests/fixtures/flood_fill_sdk_original_v1.inc', 'tests/fixtures/flood_fill_sources_v1.json', 'tests/flood_fill_capture_controller.py', 'tests/flood_fill_contract.py', 'tests/flood_fill_exception_codec.py', 'tests/flood_fill_observer.py', 'tests/flood_fill_readiness.py', 'tests/flood_fill_sdk_fixture.py', 'tests/flood_fill_source_context.py', 'tests/sdk/flood_fill/CMakeLists.txt', 'tests/test_flood_fill_capture_failure.py', 'tests/test_flood_fill_capture_source.py', 'tests/test_flood_fill_intake.py', 'tests/test_flood_fill_integration.py', 'tests/test_flood_fill_native_source.py', 'tests/test_flood_fill_public.py', 'tests/test_flood_fill_reference.py', 'tests/test_flood_fill_sdk.cpp', 'tests/test_flood_fill_source.py')
+
+DRAW_SOURCE_PATHS += ('tests/cmake_consumer/flood_fill_consumer.cpp',)
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/flood-fill-native-v2.json','coverage/contracts/flood-fill-benchmark-v3.json','tests/flood_fill_cost_context.py')
+
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
     groups = dict(_BASE_GROUPS)
@@ -698,6 +706,9 @@ def applicable_public_groups(groups,profile):
         selected['public-lbp-saved-linux']=('test_draw_multiblock_lbp_public.py',)
         selected['public-lbp-metadata-linux']=('test_draw_multiblock_lbp_dtype_metadata.py',)
         selected['public-radon-saved-linux']=('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py')
+        selected['public-radon-ABI-policy-linux']=('test_finite_radon_numpy_abi_public.py',)
+        selected['public-VI-saved-linux']=('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py')
+        selected['public-flood-saved-linux'] = ('test_flood_fill_public.py',)
     return selected
 
 
@@ -980,7 +991,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp','include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','include/skimagexx/finite_radon.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp','include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','include/skimagexx/finite_radon.hpp','include/skimagexx/variation_of_information.hpp','include/skimagexx/flood_fill.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -994,7 +1005,7 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py'},
             'current qualification selector contract differs')
     require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
     require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
@@ -1056,6 +1067,7 @@ def current_install_layout(read_bytes, names, profile):
     require('include/skimagexx/draw_set_color.hpp' in headers and 'skimagexx/_draw_set_color.py' in sources,
             'current set-color install closure absent')
     require('include/skimagexx/find_boundaries.hpp' in headers and 'skimagexx/_find_boundaries.py' in sources, 'current find_boundaries install closure absent')
+    require(all('include/skimagexx/'+n+'.hpp'in headers and 'skimagexx/_'+n+'.py'in sources for n in ('variation_of_information','flood_fill')),'current VI/flood install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
@@ -1868,7 +1880,7 @@ def label_pair_admission(core, metrics, registered):
         require(callable(function)and function is vars(wrapper).get(name)and function.__module__=='skimagexx.'+module,'label-pair public forwarding/alias')
         require(str(inspect.signature(function))==signature,'label-pair public signature differs')
         require(metrics.__all__.count(name)==1 and tuple(registered).count('metrics.'+name)==1,'label-pair duplicate/missing registry/export')
-    for name in ('label_pair_counts','label_pair_counts_preweighted','label_pair_rand_terms','label_pair_rand_divide','label_pair_rand_fscore','label_pair_rand_error','label_pair_check_storage'):
+    for name in ('variation_of_information_csr','label_pair_counts','label_pair_counts_preweighted','label_pair_rand_terms','label_pair_rand_divide','label_pair_rand_fscore','label_pair_rand_error','label_pair_check_storage'):
         entry=getattr(core,name,None)
         require(inspect.isbuiltin(entry)and entry.__module__==core.__name__ and entry.__name__==name,'label-pair compiled entry missing/forwarded: '+name)
 
@@ -1892,13 +1904,17 @@ def admission(out, state):
         ('_mark_boundaries','segmentation','mark_boundaries',('mark_boundaries_prepare','mark_boundaries_mask','mark_boundaries_outline','mark_boundaries_paint')),
         ('_draw_multiblock_lbp','feature','draw_multiblock_lbp',('_lbp_prepare','_lbp_binary','_lbp_assign')),
         ('_finite_radon','transform','frt2',('frt2','ifrt2','_finite_radon_inverse_prefix')),
-        ('_finite_radon','transform','ifrt2',('frt2','ifrt2'))):
+        ('_finite_radon','transform','ifrt2',('frt2','ifrt2')),
+        ('_variation_of_information','metrics','variation_of_information',('variation_of_information_csr','label_pair_counts_preweighted'))):
         module=importlib.import_module('skimagexx.'+module_name)
         require(module._core is xx._core,'new frontend has alternate core')
         require(getattr(getattr(xx,namespace),name)is getattr(module,name),'new public namespace route differs')
         require(all(inspect.isbuiltin(getattr(xx._core,entry))and getattr(xx._core,entry).__module__=='skimagexx._core'for entry in entries),'new operation native entries are not installed builtin owners')
     coverage = importlib.import_module('skimagexx.coverage')
     label_pair_admission(xx._core,importlib.import_module('skimagexx.metrics'),coverage.native_functions())
+    flood=importlib.import_module('skimagexx._flood_fill')
+    require(flood._core is xx._core and xx.morphology.flood is xx.segmentation.flood is flood.flood and xx.morphology.flood_fill is xx.segmentation.flood_fill is flood.flood_fill,'Flood canonical/alias/singlecore mismatch')
+    require(all(inspect.isbuiltin(getattr(xx._core,n))and getattr(xx._core,n).__module__=='skimagexx._core'for n in ('flood_mask','flood_assign','crop_copy_into')),'Flood/currentcopy entry not installed native')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
     require(sum(coverage.execution_kind(n) == 'native' for n in coverage.native_functions()) == state['expected']['image_count'], 'image/helper count mismatch')
     require(len(coverage.native_functions()) == state['expected']['registered_count']
@@ -2049,6 +2065,20 @@ def child(out, group):
         os.environ.update(util_views_fenv_environment(out,state))
         os.environ['FINITE_RADON_RECORDS']=str(out/(mode+'-radon-saved-rows.json'))
         os.environ['FINITE_RADON_EXCEPTIONAL_RECORDS']=str(out/(mode+'-radon-exceptional-rows.json'))
+    if group=='public-radon-ABI-policy-linux':
+        require(state['profile']!='windows'and not os.environ.get('FINITE_RADON_COMPONENT_DIR'),'GenuineRadonpolicyforbidsprivatebridgeorWindowsenvelope')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['FINITE_RADON_ABI_POLICY_RECORDS']=str(out/(mode+'-radon-ABI-policy-rows.jsonl'))
+    if group=='public-flood-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('FLOOD_FILL_CORE_EXTENSION'),'GenuineFloodforbidsprivatebridgeorWindowsenvelope')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['FLOOD_FILL_CALLER_RECORD_DIR']=str(out/(mode+'-flood-caller-rows'))
+
+    if group=='public-VI-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIforbidsprivatecomponentorWindowsFPclaim')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['VI_RESULT_DIR']=str(out/(mode+'-VI-saved-rows'))
+        os.environ['VI_CALLER_RECORD_DIR']=str(out/(mode+'-VI-caller-rows'))
     if group=='public-regular-grid-saved-linux':
         require(not os.environ.get('REGULAR_GRID_COMPONENT_DIR'),'Genuine grid group forbids private component override')
         os.environ['REGULAR_GRID_RESULT_DIR']=str(out/(mode+'-regular-grid-saved-rows'))
@@ -2265,7 +2295,7 @@ def sdk(out, state, journal):
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
-                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp')):
+                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/fixtures/flood_fill_sdk_original_v1.inc')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
@@ -2358,6 +2388,24 @@ def seal(out):
             row = {k: sum(int(s.get(k,0)) for s in suites) for k in ('tests','failures','errors','skipped')}
             require(row['tests'] > 0, 'empty public selector: ' + group)
             if group=='public-radon-saved-linux':require(row['tests']==224,'Full224 Radon saved-domain nodes required; no partial selector')
+            if group=='public-radon-ABI-policy-linux':require(row['tests']==18,'Full18 Radon runtime-ABI policy nodes required; saved224 remains separate')
+            if group=='public-flood-saved-linux':require(row['tests']==100,'Full100 flood saved-domain nodes required; no partial selector')
+            if group=='public-flood-saved-linux':
+                rows=[json.loads(p.read_text())for p in(out/(mode+'-flood-caller-rows')).glob('*.json')]
+                require(len(rows)==100 and all(r['exact32']and r['saved']==r['actual']and r['workers']in(1,4)for r in rows),'Floodcaller32/global-worker records incomplete')
+            if group=='public-VI-saved-linux':
+                require(row['tests']==40,'Full40 VI saved/current-count nodes required; no partial selector')
+                callers=list((out/(mode+'-VI-caller-rows')).glob('*.json'))
+                require(len(callers)==40,'VI caller record pool incomplete')
+                for item in callers:
+                    value=json.loads(item.read_text())
+                    require(value['exact32']is True and value['saved']==value['actual']and value['workers']in(1,4),'VI caller restoration failed')
+                require(len(list((out/(mode+'-VI-saved-rows')).glob('*.json')))==16,'VI complete saved observation pool missing')
+            if group=='public-radon-ABI-policy-linux':
+                path=out/(mode+'-radon-ABI-policy-rows.jsonl')
+                require(path.is_file(),'Radon ABI/policy caller records absent')
+                policy_rows=[json.loads(line)for line in path.read_text().splitlines()]
+                require(len(policy_rows)==18 and all(v['exact32']is True and v['caller_saved']==v['caller_actual']for v in policy_rows),'Radon ABI/policy18 caller restoration incomplete')
             if group=='public-regular-grid-saved-linux':require(row['tests']==49,'Full49 grid saved-domain nodes required; no partial selector')
             if group=='public-util-views-saved-linux':require(row['tests']==553,'Full553 util views saved-domain nodes required; no partial selector')
             if group=='public-mark-saved-linux':require(row['tests']==267,'Full267 MARK saved-domain nodes required; no partial selector')
@@ -2397,7 +2445,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-flood-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()

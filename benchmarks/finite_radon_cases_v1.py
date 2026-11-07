@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT='coverage/contracts/finite-radon-benchmark-execution-v2.json'
+CONTRACT='coverage/contracts/finite-radon-benchmark-execution-v4.json'
 
 
 def case_specs(api=None):

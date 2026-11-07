@@ -387,6 +387,17 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
                 assert observation(expected, np) == expected_before
             assert observation(args, np) == before
             return
+        if api=='metrics.variation_of_information':
+            # Float labels use the named SciPy coordinate suffix; native VI
+            # entropy remains required, without integer-count ownership credit.
+            from label_pair_metrics_observer import observation
+            args,options=default_call(api,a);before=observation(args,np)
+            expected=getattr(original,name)(*args,**options)
+            monkeypatch.setattr(xx._core,'label_pair_counts_preweighted',lambda*a,**k:pytest.fail('float VI labels reached integer native counts'))
+            actual=getattr(native,name)(*args,**options)
+            assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
+            assert observation(args,np)==before
+            return
         if api=='draw.set_color':
             args,options=default_call(api,a)
             with pytest.raises(NotImplementedError):getattr(native,name)(*args,**options)
