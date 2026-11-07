@@ -15,7 +15,7 @@ def correction_predecessor_bytes(root,name,raw):
         module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
         raw=module.historical_vi_source(raw)
     raw=raw.replace(b'\r\n',b'\n')
-    path=root/'coverage/contracts/vi-reduction-integration-v1.json'
+    path=root/'coverage/contracts/vi-reduction-integration-v2.json'
     if not path.is_file():return raw
     context=json.loads(path.read_bytes())
     assert context['predecessor_source']=='ab7872a5483a5d5e3660ba20fdd873d78463a1b5'

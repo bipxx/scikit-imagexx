@@ -112,7 +112,7 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
     original=q.groups_for_source(ROOT);groups=q.applicable_public_groups(original,profile)
     assert all(groups[name]==value for name,value in original.items())
     if profile=='windows':assert groups==original
-    else:assert groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)and len(groups)==len(original)+9
+    else:assert groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)and len(groups)==len(original)+10
     plan=q.plan(ROOT,profile,280);assert not plan['blockers']
     assert plan['public_groups']==groups
     assert 'noWindows' in (ROOT/'tools/public_qualification.py').read_text()

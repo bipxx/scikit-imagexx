@@ -5,8 +5,8 @@ import json
 from pathlib import Path
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/vi-reduction-integration-v1.json'
-EXPECTED_CONTEXT_SHA256="9945f36005711fe99c7041a76aad1036886064b889fba53659b8192373191f88"
+CONTEXT=ROOT/'coverage/contracts/vi-reduction-integration-v2.json'
+EXPECTED_CONTEXT_SHA256="4554220569f6be2f49e0b2e169f168d6ab9ed1d5c899e3d3dee5f0cd979eec6c"
 
 
 def test_exact_correction_and_historical_source_projection():
