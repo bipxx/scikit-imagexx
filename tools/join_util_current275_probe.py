@@ -281,7 +281,7 @@ def main():
 
 
 def read_manifest(controller):
-    path=Path(controller)/'coverage/contracts/join-util-current275-measurement-v3.json'
+    path=Path(controller)/'coverage/contracts/join-util-current275-measurement-v4.json'
     manifest=json.loads(path.read_bytes())
     assert manifest['schema']=='next-metrics-measurement-v1'
     assert manifest['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON','UNBOUND: no helper/target/sampler execution'
@@ -368,6 +368,8 @@ def scoped_measurement(manifest,route,parent_sha256):
 
 
 def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
+    assert manifest['deadline_utc']is None and manifest['execution_clock']=='ROOT_DISPATCH_INPUT_BOUND'
+    assert datetime.now(timezone.utc)<datetime.fromisoformat(deadline)
     controller=Path(controller);snapshot=Path(snapshot);results=Path(results)
     first=manifest['first_cohort'];routes=first['routes']
     assert len(routes)==5 and manifest['execution_scope']['untimed_topcalls']==dict(original=5,native=5)
@@ -379,14 +381,14 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
     core=Path(site)/first['core_member'];assert core.resolve().is_relative_to(Path(site).resolve())and sha(core)==manifest['core_sha256']
     common=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',prepared_source=manifest['prepared_source'],producer=manifest['producer'],runtime_path=str(runtime.resolve()),runtime_sha256=manifest['runtime_sha256'],shared_CMake_sha256=manifest['prepared_source']['files_sha256']['CMakeLists.txt'],genuine_root_stager_path=str(stager.resolve()),genuine_root_stager_sha256=first['root_stager_sha256'],source_root=str(snapshot.resolve()),source_revision=first['source_revision'],git_argv=['git','-C',str(snapshot.resolve())],genuine_root_admission_path=str(admission.resolve()),genuine_root_admission_sha256=first['root_admission_sha256'],product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',interpreter=str(python),source_files_sha256=first['source_files_raw_sha256'],installed_site=str(site),numpy=json.loads(runtime.read_bytes())['runtime']['versions']['numpy'],core_path=str(core.resolve()),core_sha256=manifest['core_sha256'],output_root=str((results/'first-cohort').resolve()))
     for name,pin in common['source_files_sha256'].items():assert sha(snapshot/name)==pin
-    manifest_path=controller/'coverage/contracts/join-util-current275-measurement-v3.json'
+    manifest_path=controller/'coverage/contracts/join-util-current275-measurement-v4.json'
     index={}
     for cohort,route in routes.items():
         folder=results/('authority-'+cohort);folder.mkdir(exist_ok=False)
         go_path=folder/'root-go.json';binding_path=folder/'binding.json'
         write_json(binding_path,scoped_binding(common,cohort,route,go_path.resolve(),sha(snapshot/route['contract'])))
         write_json(go_path,dict(binding_sha256=sha(binding_path),probe_sha256=first['probe_sha256'],routes=[route.get('execution_route',cohort)],timed_batches=0,maximum_original_topcalls=1,maximum_native_topcalls=1,deadline_utc=deadline,helper_binding_sha256=sha(results/'helper-binding.json')))
-        measurement=folder/'measurement.json';write_json(measurement,scoped_measurement(manifest,route,sha(manifest_path)))
+        measurement=folder/'measurement.json'  # timing authority is emitted only after all guarded cohorts
         index[cohort]=dict(binding=str(binding_path.resolve()),go=str(go_path.resolve()),measurement=str(measurement.resolve()))
     write_json(results/'cohort-authorities.json',index)
     return index
@@ -394,7 +396,7 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
 
 def run_cohorts(controller,results,manifest,python,authorities):
     results=Path(results);terminals=[]
-    manifest_path=Path(controller)/'coverage/contracts/join-util-current275-measurement-v3.json';manifest_pin=sha(manifest_path)
+    manifest_path=Path(controller)/'coverage/contracts/join-util-current275-measurement-v4.json';manifest_pin=sha(manifest_path)
     for cohort in manifest['first_cohort']['routes']:
         authority=authorities[cohort]
         command=[str(python),str(Path(controller)/manifest['first_cohort']['probe_path']),'--binding',authority['binding'],'--root-go',authority['go'],'--route',cohort]
@@ -425,7 +427,7 @@ def run_cohorts(controller,results,manifest,python,authorities):
     except BaseException as error:
         write_json(results/'first-cohort-failure.json',dict(phase='postbatch-identity',type=type(error).__name__,error=str(error),retry=False,completed_routes=len(terminals)))
         raise
-    write_json(results/'first-cohort-summary.json',dict(status='PASS',original_public_topcalls=10,native_public_topcalls=10,timed_batches=0,sampler_body_calls=0,poststop_source_authority_unchanged=True,postbatch_offline_identity_verified=True,routes=terminals))
+    write_json(results/'first-cohort-summary.json',dict(status='PASS',original_public_topcalls=sum(t['counts']['original']for t in terminals),native_public_topcalls=sum(t['counts']['native']for t in terminals),timed_batches=0,sampler_body_calls=0,poststop_source_authority_unchanged=True,postbatch_offline_identity_verified=True,routes=terminals))
 
 
 def measurement_commands(snapshot,results,manifest,python,authorities,deadline):
@@ -444,8 +446,21 @@ def measurement_commands(snapshot,results,manifest,python,authorities,deadline):
 
 
 def run_measurements(snapshot,results,manifest,python,authorities,deadline):
+    assert manifest['deadline_utc']is None and manifest['execution_clock']=='ROOT_DISPATCH_INPUT_BOUND'
+    assert datetime.now(timezone.utc)<datetime.fromisoformat(deadline)
     results=Path(results)
     summary=json.loads((results/'first-cohort-summary.json').read_bytes());assert summary['status']=='PASS'and len(summary['routes'])==5
+    results=Path(results);controller=Path(snapshot).parent/'controller';parent=controller/'coverage/contracts/join-util-current275-measurement-v4.json'
+    assert json.loads(parent.read_bytes())==manifest
+    summary=json.loads((results/'first-cohort-summary.json').read_bytes())
+    assert summary['status']=='PASS'and summary['postbatch_offline_identity_verified']is True and len(summary['routes'])==5
+    for name,route in manifest['first_cohort']['routes'].items():
+        authority=authorities[name];done=json.loads((results/'first-cohort'/name/'terminal.json').read_bytes())
+        assert done in summary['routes']and done['status']=='PASS_REAL_CLI_STOP_BEFORE_BODY'and done['api']==route['api']
+        assert done['root_binding_sha256']==sha(authority['binding'])and done['counts']==dict(original=1,native=1)
+        assert done['timed_batches']==done['sampler_body_calls']==0 and done['outer_state_restored']is done['poststop_source_authority_unchanged']is True
+        target=Path(authority['measurement']);assert not target.exists()
+        scoped=scoped_measurement(manifest,route,sha(parent));scoped['deadline_utc']=deadline;write_json(target,scoped)
     verifier=[str(python),str(Path(snapshot)/'tools/ci_measurement_artifacts.py'),'verify','--wheel-dir',str(Path(snapshot).parent/'stage/wheels'),'--artifact',str(Path(snapshot).parent/'stage/runtime.json')]
     for cohort,command in measurement_commands(snapshot,results,manifest,python,authorities,deadline).items():
         with (results/(cohort+'-identity-before.log')).open('w')as log:subprocess.run(verifier,stdout=log,stderr=subprocess.STDOUT,check=True)

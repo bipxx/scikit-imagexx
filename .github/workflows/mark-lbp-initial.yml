@@ -67,7 +67,7 @@ jobs:
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
           assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
-          frozen = json.loads(Path('controller/coverage/contracts/mark-lbp-measurement-v4.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/mark-lbp-measurement-v5.json').read_bytes())
           assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'
           assert (run, revision, artifact, digest) == tuple(str(frozen['producer'][key]) for key in ('run','revision','artifact','sha256'))
           created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
@@ -76,7 +76,7 @@ jobs:
           assert deadline.utcoffset() is not None and deadline.utcoffset().total_seconds() == 0
           assert 0 < (deadline-created).total_seconds() <= 7200
           assert created <= datetime.now(timezone.utc) < deadline
-          assert datetime.fromisoformat(frozen['deadline_utc'])==deadline
+          assert frozen['deadline_utc']is None and frozen['execution_clock']=='ROOT_DISPATCH_INPUT_BOUND'
           Path('results/execution-clock.json').write_text(json.dumps(dict(created_utc=created.isoformat(),deadline_utc=deadline.isoformat()))+'\n')
           base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
           def api(endpoint, name):
@@ -131,7 +131,7 @@ jobs:
           Path('results/measurement.json').write_bytes((prepared / 'runtime.json').read_bytes())
           Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
           assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
-          frozen = json.loads(Path('controller/coverage/contracts/mark-lbp-measurement-v4.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/mark-lbp-measurement-v5.json').read_bytes())
           sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
           assert sha(prepared/'runtime.json')==frozen['runtime_sha256']
           first=frozen['first_cohort']

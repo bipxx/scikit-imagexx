@@ -1,0 +1,433 @@
+{
+  "schema": "next-metrics-measurement-v1",
+  "status": "UNBOUND_SOURCE_ONLY_NO_EXECUTION_AUTHORITY",
+  "producer": {
+    "run": null,
+    "revision": null,
+    "artifact": null,
+    "sha256": null
+  },
+  "prepared_source": null,
+  "SDK_members": null,
+  "core_sha256": null,
+  "benchmark_fingerprint": null,
+  "benchmark_source_sha256": {
+    "CMakeLists.txt": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+    "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+    "benchmarks/mark_boundaries_execution.py": "ff467aff85429349b925126d82b40a33f7b5dfb42af37ff3c6044c37c63d9365",
+    "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "benchmarks/variation_of_information.py": "70cb54b7e9d6b975a591874a56cd08a2b0d7bb26a4696ab66fe31885719894ce",
+    "benchmarks/variation_of_information_cases_v1.py": "dc773437ab4c79a21f590e746553df848208939ab2fd694e8bb4b244b18c6046",
+    "benchmarks/variation_of_information_consumer.py": "1ca6c0cc3bc6c26cf8baae128d0dab96f33edb99e10290969706956f9bd34144",
+    "benchmarks/variation_of_information_execution.py": "d29f4656bfbe3767655967119e8a2f4bbef5d0ca6f080aeeab0e50ecded57a67",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "coverage/contracts/variation-of-information-benchmark-execution-v4.json": "33d6dc5136c3435743adc7cadf3116fd05be9ae3b874fc16900af8ee48d78770",
+    "coverage/contracts/variation-of-information-benchmark-execution-v5.json": "cede735cce8d6480e1e1e1185430be1e071f0bd4816da437196b1388d106d2e3",
+    "coverage/contracts/variation-of-information-benchmark-v1.json": "e0a101f4259c308f9a86466143b457daa7678a093c6bc1464f295d128a56d0a4",
+    "include/skimagexx/label_pair_metrics.hpp": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+    "include/skimagexx/variation_of_information.hpp": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102",
+    "python/skimagexx/_contingency_table.py": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+    "python/skimagexx/_variation_of_information.py": "f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa",
+    "python/skimagexx/coverage.py": "51df07df3bf873df101df5c8a9a0584b01d0688f31c4bb5a25f012c507a5d386",
+    "python/skimagexx/metrics.py": "ebf1e5114baf4d7acab43a0aa956faed0f7af3b53eb39db845373607a6274455",
+    "src/bind_label_pair_metrics.cpp": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+    "src/bind_variation_of_information.cpp": "0fa7a58375b6ec6c544dc403bfd6fd9d8f8c503fd806075c1699f5e0c492d248",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "src/label_pair_metrics.cpp": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+    "src/variation_of_information.cpp": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "tests/test_variation_of_information_benchmark_execution.py": "48ab285ea18e3be9a155b72294ec6f3cddd0b3d58e3885f10460bc8f6a4bf039",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "families": {
+    "variation_of_information_consumer": {
+      "contract": "coverage/contracts/variation-of-information-benchmark-execution-v5.json",
+      "cases": 4,
+      "case_ids": [
+        "metrics.variation_of_information/128x128/8/C",
+        "metrics.variation_of_information/128x128/64/F",
+        "metrics.variation_of_information/256x256/8/F",
+        "metrics.variation_of_information/256x256/64/C"
+      ],
+      "untimed_calls_per_case": 1
+    }
+  },
+  "first_cohort": {
+    "status": "PROSPECTIVE_UNBOUND_NO_FIRST_COHORT",
+    "source_revision": null,
+    "probe_path": "tools/vi_first_cohort_probe.py",
+    "probe_sha256": null,
+    "root_admission_path": null,
+    "root_admission_sha256": null,
+    "root_stager_path": null,
+    "root_stager_sha256": null,
+    "core_member": null,
+    "source_files_raw_sha256": {
+      "CMakeLists.txt": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+      "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+      "benchmarks/mark_boundaries_execution.py": "ff467aff85429349b925126d82b40a33f7b5dfb42af37ff3c6044c37c63d9365",
+      "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+      "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+      "benchmarks/variation_of_information.py": "70cb54b7e9d6b975a591874a56cd08a2b0d7bb26a4696ab66fe31885719894ce",
+      "benchmarks/variation_of_information_cases_v1.py": "dc773437ab4c79a21f590e746553df848208939ab2fd694e8bb4b244b18c6046",
+      "benchmarks/variation_of_information_consumer.py": "1ca6c0cc3bc6c26cf8baae128d0dab96f33edb99e10290969706956f9bd34144",
+      "benchmarks/variation_of_information_execution.py": "d29f4656bfbe3767655967119e8a2f4bbef5d0ca6f080aeeab0e50ecded57a67",
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "coverage/contracts/variation-of-information-benchmark-execution-v4.json": "33d6dc5136c3435743adc7cadf3116fd05be9ae3b874fc16900af8ee48d78770",
+      "coverage/contracts/variation-of-information-benchmark-execution-v5.json": "cede735cce8d6480e1e1e1185430be1e071f0bd4816da437196b1388d106d2e3",
+      "coverage/contracts/variation-of-information-benchmark-v1.json": "e0a101f4259c308f9a86466143b457daa7678a093c6bc1464f295d128a56d0a4",
+      "include/skimagexx/label_pair_metrics.hpp": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+      "include/skimagexx/variation_of_information.hpp": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102",
+      "python/skimagexx/_contingency_table.py": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+      "python/skimagexx/_variation_of_information.py": "f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa",
+      "python/skimagexx/coverage.py": "51df07df3bf873df101df5c8a9a0584b01d0688f31c4bb5a25f012c507a5d386",
+      "python/skimagexx/metrics.py": "ebf1e5114baf4d7acab43a0aa956faed0f7af3b53eb39db845373607a6274455",
+      "src/bind_label_pair_metrics.cpp": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+      "src/bind_variation_of_information.cpp": "0fa7a58375b6ec6c544dc403bfd6fd9d8f8c503fd806075c1699f5e0c492d248",
+      "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "src/label_pair_metrics.cpp": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+      "src/variation_of_information.cpp": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/test_variation_of_information_benchmark_execution.py": "48ab285ea18e3be9a155b72294ec6f3cddd0b3d58e3885f10460bc8f6a4bf039",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+      "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+    },
+    "routes": {
+      "vi": {
+        "api": "metrics.variation_of_information",
+        "driver": "benchmarks/variation_of_information_consumer.py",
+        "owned_module": "skimagexx._variation_of_information",
+        "contract": "coverage/contracts/variation-of-information-benchmark-execution-v5.json",
+        "kind": "vi-executor",
+        "sampler": "tools/montage_sustained.py",
+        "first_case": {
+          "id": "metrics.variation_of_information/128x128/8/C",
+          "api": "metrics.variation_of_information",
+          "shape": [
+            128,
+            128
+          ],
+          "labels": 8,
+          "dtype": "int64",
+          "layout": "C",
+          "ignore": [
+            0
+          ]
+        },
+        "cases": [
+          {
+            "id": "metrics.variation_of_information/128x128/8/C",
+            "api": "metrics.variation_of_information",
+            "shape": [
+              128,
+              128
+            ],
+            "labels": 8,
+            "dtype": "int64",
+            "layout": "C",
+            "ignore": [
+              0
+            ]
+          },
+          {
+            "id": "metrics.variation_of_information/128x128/64/F",
+            "api": "metrics.variation_of_information",
+            "shape": [
+              128,
+              128
+            ],
+            "labels": 64,
+            "dtype": "int64",
+            "layout": "F",
+            "ignore": [
+              0
+            ]
+          },
+          {
+            "id": "metrics.variation_of_information/256x256/8/F",
+            "api": "metrics.variation_of_information",
+            "shape": [
+              256,
+              256
+            ],
+            "labels": 8,
+            "dtype": "int64",
+            "layout": "F",
+            "ignore": [
+              0
+            ]
+          },
+          {
+            "id": "metrics.variation_of_information/256x256/64/C",
+            "api": "metrics.variation_of_information",
+            "shape": [
+              256,
+              256
+            ],
+            "labels": 64,
+            "dtype": "int64",
+            "layout": "C",
+            "ignore": [
+              0
+            ]
+          }
+        ],
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "metrics.variation_of_information",
+          "--case",
+          "metrics.variation_of_information/128x128/8/C"
+        ],
+        "driver_route": {
+          "api": "metrics.variation_of_information",
+          "driver": "benchmarks/variation_of_information_consumer.py",
+          "owned_module": "skimagexx._variation_of_information",
+          "contract": "coverage/contracts/variation-of-information-benchmark-execution-v5.json"
+        }
+      }
+    }
+  },
+  "execution_scope": {
+    "untimed_topcalls": {
+      "original": 1,
+      "native": 1
+    },
+    "canonical_cases": 4,
+    "canonical_raw_samples": 56,
+    "warmup_groups": 8,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "reference_threadpools": 1,
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true
+  },
+  "qualification": "Actual current213 source projection only:281images/284registered/228product/108SDK/38families/76checks source census. Fullbarriers/genuine/independentproduct admission remain separate. Failed a5 producer forbidden.",
+  "binding_gate": "UNBOUND: actual admitted exact current281 producer/runtime/core/SDK108/root/stager/helper/cohort authorities and separate measurement GO required; no failed or old producer transplantation.",
+  "runtime_sha256": null,
+  "prospective_source": {
+    "revision": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+    "native_images": 281,
+    "registered": 284,
+    "product_members": 228,
+    "SDK_members": 108,
+    "SDK_families": 38,
+    "SDK_checks": 76,
+    "source_plan_verified": true,
+    "note": "Source-only root-admitted213 census. All actual producer/preparedsource/runtime/core/SDK/helper/root/GO authority stays NULL until exact successful genuine preparation and independent root admission."
+  },
+  "helper": {
+    "mode": "source-built-v1",
+    "source_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "receipt_sha256": null,
+    "library_sha256": null,
+    "root_GO": null,
+    "prepare_once_on_actual_host": true,
+    "collect_recursive": true
+  },
+  "completed_first_cohort": {
+    "path": null,
+    "sha256": null,
+    "binding_sha256": null
+  },
+  "controller_reuse": {
+    "predecessor": "RootunfrozenMARK/Radon adaptation preserved inignoredroot-prototype-v1",
+    "admitted_envelope": "Existing C1/source-builtF1/oncepostbatch/offline/report infrastructure; no new engine",
+    "scope": "OneVIcohort andfourfixedcases. Strongpostbatchsummary+terminalgate before separateconditionalrootmeasurement."
+  },
+  "native_marker_scope": {
+    "vi": "Actual innerobserver native requirements from variation_of_information_cases_v1.py; accepted==counts_suffix_accepted==[True], actualpublicgettercounts andexactnativeCSR/countsuffixentries. No original/provider entropy escape.",
+    "scope": "Outerprofilerpausedduringnative; two existing phase budget getters and suffix markers from source-faithful innerobserver. No whole-public-call immutable worker snapshot claim; ordered reductions stayordered."
+  },
+  "pending": [
+    "Independent source admission and actual successful genuine source/core/runtime/SDK/helper binding",
+    "One real API CLI cohort with mandatory entry stop and restored authority checks, then once postbatch offline verification",
+    "Separate conditional timing authority for all four frozen cases; retain every loss"
+  ],
+  "deadline_utc": null,
+  "current_interface": {
+    "source_projection": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+    "scope": "UNBOUND source-only projection, no actual genuine runtime authority",
+    "sampler_bridge": "sample_entry",
+    "parity_caller": "execute",
+    "sampler": "measure",
+    "report_source": "metadata.source_before object (not flattened VI fields)",
+    "pass_index": "explicit literal0",
+    "binding": "Strict existing family envelope, separate per-cohort binding/GO and conditional parent measurement GO; no extra driverbinding keys",
+    "validate_binding_keywords": [
+      "path",
+      "root",
+      "context_path"
+    ],
+    "SDK_mapping": "metadata.SDK_members equals exact binding runtime SDK map"
+  },
+  "controller_route_scope": "Rich outer route and exact four-field driver_route both bind actual current VIv5; MARK common literalv6 and execute/sample_entry/pass0 unchanged. No legacyv3 route or activev4 context permitted.",
+  "controller_predecessor": {
+    "source": "fecd5d684ce8b9a326afc7a8181463574e78b401",
+    "manifest_path": "coverage/contracts/vi-measurement-v1.json",
+    "manifest_raw_sha256": "269d8c17ac06674ecd3a7894fdff114b54d05065521dc8b9e314bdd31bc9a249",
+    "independent_review_sha256": "30891b6d2e2f4776f454e71000b521f15fc790213d1665879375ae87276e5357",
+    "scope": "Admitted fecd a5/v4 source controller retained in Git/receipts; no predecessor manifest file imported into current production ancestry. Exact frozen scope projection and hash authenticated at intake. Source/route/context metadata only; numerical/cases/method/entry/C1/timing gates unchanged.",
+    "frozen_scope": {
+      "execution_scope": {
+        "untimed_topcalls": {
+          "original": 1,
+          "native": 1
+        },
+        "canonical_cases": 4,
+        "canonical_raw_samples": 56,
+        "warmup_groups": 8,
+        "repeat": 7,
+        "target_ms": 100,
+        "warmup_min_ms": 250,
+        "workers": 1,
+        "reference_threadpools": 1,
+        "single_host_same_installed_runtime": true,
+        "no_automatic_retry": true,
+        "retain_all_losses": true
+      },
+      "first_cohort": {
+        "routes": {
+          "vi": {
+            "cases": [
+              {
+                "id": "metrics.variation_of_information/128x128/8/C",
+                "api": "metrics.variation_of_information",
+                "shape": [
+                  128,
+                  128
+                ],
+                "labels": 8,
+                "dtype": "int64",
+                "layout": "C",
+                "ignore": [
+                  0
+                ]
+              },
+              {
+                "id": "metrics.variation_of_information/128x128/64/F",
+                "api": "metrics.variation_of_information",
+                "shape": [
+                  128,
+                  128
+                ],
+                "labels": 64,
+                "dtype": "int64",
+                "layout": "F",
+                "ignore": [
+                  0
+                ]
+              },
+              {
+                "id": "metrics.variation_of_information/256x256/8/F",
+                "api": "metrics.variation_of_information",
+                "shape": [
+                  256,
+                  256
+                ],
+                "labels": 8,
+                "dtype": "int64",
+                "layout": "F",
+                "ignore": [
+                  0
+                ]
+              },
+              {
+                "id": "metrics.variation_of_information/256x256/64/C",
+                "api": "metrics.variation_of_information",
+                "shape": [
+                  256,
+                  256
+                ],
+                "labels": 64,
+                "dtype": "int64",
+                "layout": "C",
+                "ignore": [
+                  0
+                ]
+              }
+            ],
+            "argv": [
+              "--first-cohort",
+              "--api",
+              "metrics.variation_of_information",
+              "--case",
+              "metrics.variation_of_information/128x128/8/C"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "controller_source_inverse": {
+    ".github/workflows/vi-initial.yml": {
+      "current_canonical_sha256": "8facaf0c8804ef9a1eb12fd66f93b12d3b3ff93100acc88fb5c2543b07df3cdb",
+      "predecessor_canonical_sha256": "79fdcfb5d5594fec9c398bf5899f442021fcf0362e364be4cbb691f946cbc051",
+      "inverse_fragments": [
+        {
+          "current": "          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v2.json').read_bytes())\n          assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'\n",
+          "predecessor": "          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v1.json').read_bytes())\n          assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'\n"
+        },
+        {
+          "current": "          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v2.json').read_bytes())\n          sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()\n",
+          "predecessor": "          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v1.json').read_bytes())\n          sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()\n"
+        }
+      ]
+    },
+    "tools/vi_first_cohort_probe.py": {
+      "current_canonical_sha256": "f5693f6974beb655be0b68e4185e58319fbd0899439508b71ab61a1c223fd7eb",
+      "predecessor_canonical_sha256": "b850616ec9b14d7890dc257c0578c59daad290cb0c3357e58b658078863538d7",
+      "inverse_fragments": [
+        {
+          "current": "CONTRACT='coverage/contracts/vi-measurement-v2.json'\nDRIVER_CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v5.json'\n",
+          "predecessor": "CONTRACT='coverage/contracts/vi-measurement-v1.json'\nDRIVER_CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v4.json'\n"
+        },
+        {
+          "current": "    assert route['contract']==DRIVER_CONTEXT and route['driver_route']==context['route']\n",
+          "predecessor": "    assert route['contract']==DRIVER_CONTEXT and route['legacy_driver_route']==context['route']\n"
+        },
+        {
+          "current": "        assert route==manifest['first_cohort']['routes'][stopped['route']]['driver_route']\n",
+          "predecessor": "        assert route==manifest['first_cohort']['routes'][stopped['route']]['legacy_driver_route']\n"
+        },
+        {
+          "current": "    assert c['context']['route']==route['driver_route'] and c['context']['cases']==route['cases']\n",
+          "predecessor": "    assert c['context']['route']==route['legacy_driver_route'] and c['context']['cases']==route['cases']\n"
+        },
+        {
+          "current": "    assert binding['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS'and binding['routes']=={args.route:route['driver_route']}\n",
+          "predecessor": "    assert binding['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS'and binding['routes']=={args.route:route['legacy_driver_route']}\n"
+        },
+        {
+          "current": "        context=json.loads((snapshot/route['contract']).read_bytes());assert context['route']==route['driver_route'] and context['route_id']==cohort\n",
+          "predecessor": "        context=json.loads((snapshot/route['contract']).read_bytes());assert context['route']==route['legacy_driver_route'] and context['route_id']==cohort\n"
+        },
+        {
+          "current": "        value=dict(common,routes={cohort:route['driver_route']},base_contract_sha256=sha(snapshot/route['contract']),root_go_path=str(go_path.resolve()))\n",
+          "predecessor": "        value=dict(common,routes={cohort:route['legacy_driver_route']},base_contract_sha256=sha(snapshot/route['contract']),root_go_path=str(go_path.resolve()))\n"
+        }
+      ]
+    }
+  }
+}

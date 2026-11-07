@@ -4,30 +4,40 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/rolling-ball-measurement-v3.json'
+CONTRACT=ROOT/'coverage/contracts/rolling-ball-measurement-v4.json'
 DATA=json.loads(CONTRACT.read_bytes());ROUTES=DATA['first_cohort']['routes']
+HISTORICAL_PATH='coverage/contracts/rolling-ball-measurement-v3.json'
+HISTORICAL=json.loads((ROOT/HISTORICAL_PATH).read_bytes())
 spec=importlib.util.spec_from_file_location('rolling_ball_outer',ROOT/'tools/rolling_ball_first_cohort_probe.py');PROBE=importlib.util.module_from_spec(spec);spec.loader.exec_module(PROBE)
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 
-def test_unbound_source_scope_and_exact_family_recipes():
-    assert DATA['schema']=='next-metrics-measurement-v1'and DATA['status']=='PROSPECTIVE_UNBOUND_NO_MEASUREMENT'
-    assert set(DATA['producer'].values())=={None}
-    assert all(DATA[k]is None for k in('prepared_source','SDK_members','core_sha256','runtime_sha256','benchmark_fingerprint','deadline_utc'))
-    assert all(DATA['first_cohort'][k]is None for k in('source_revision','probe_sha256','root_admission_path','root_admission_sha256','root_stager_path','root_stager_sha256','core_member'))
+def test_current281_bound_source_and_historical_scope():
+    assert DATA['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON'
+    assert DATA['producer']==dict(run='42347579925',revision='dda9cc83d9434a10616f84cf1e1125d93f5f36fd',artifact='13565257857',sha256='5868729f1d010e56d66a23e50880a5f32d3a5c11b3d0b1ae4620d5b7394116c1')
+    assert DATA['prepared_source']['revision']==DATA['producer']['revision']and len(DATA['prepared_source']['files_sha256'])==2954
+    assert DATA['SDK_members']==108 and len(DATA['bound_SDK_sha256'])==108
+    assert DATA['core_sha256']=='6a4a4a2630b6bf2947ccefd594ae3ac1958980f5087a61362cbdbbbebb25f1ae'
+    assert DATA['runtime_sha256']=='d8a5ed760956f08613e56643df8a55fc874fe2f2c436d8f60e1e16fc2803d1f4'
+    assert DATA['deadline_utc']is DATA['execution_created_utc']is None
+    assert DATA['execution_clock']=='ROOT_DISPATCH_INPUT_BOUND'
     assert all(DATA['helper'][k]is None for k in('receipt_sha256','library_sha256','root_GO'))
-    assert set(ROUTES)=={'rolling-ball'}and DATA['prospective_source']['source_plan_verified']is False
-    assert(DATA['execution_scope']['canonical_cases'],DATA['execution_scope']['canonical_raw_samples'],DATA['execution_scope']['warmup_groups'])==(8,112,16)
-    assert DATA['execution_scope']['untimed_topcalls']==dict(original=1,native=1)
-    with pytest.raises(AssertionError,match='UNBOUND'):PROBE.read_manifest(ROOT)
-    c=json.loads((ROOT/PROBE.DRIVER_CONTRACT).read_bytes());route=ROUTES['rolling-ball']
-    assert DATA['cases']==c['cases']and len(c['cases'])==8 and route==c['route']
-    assert DATA['families']['rolling_ball_native']==dict(contract=PROBE.DRIVER_CONTRACT,cases=8,case_ids=[s['id']for s in c['cases']],untimed_calls_per_case=1)
-    argv=PROBE.driver_argv(ROOT,route,'binding.json','never.json')
-    assert argv[0]==str(ROOT/route['driver'])and route['driver']not in argv[1:]and '--deadline-utc'not in argv
-    assert argv[-2:]==['--root-binding','binding.json']and argv[argv.index('--case')+1]==c['cases'][0]['id']
-    for name,pin in DATA['benchmark_source_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin
-    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin
+    assert all(DATA['execution_authority'][k]is None for k in('controller_root_admission','created_utc','deadline_utc','cohort_GO','measurement_GO'))
+    assert DATA['execution_scope']==HISTORICAL['execution_scope']
+    for name,route in ROUTES.items():
+        old=HISTORICAL['first_cohort']['routes'][name]
+        for key in('cases','argv','measurement_argv','api'):
+            if key in route:assert route[key]==old[key]
+    assert PROBE.read_manifest(ROOT)[1]==DATA
+    first=DATA['first_cohort']
+    assert first['source_revision']==DATA['producer']['revision']and first['probe_sha256']==H((ROOT/first['probe_path']).read_bytes())
+    assert first['root_admission_sha256']=='3724197bc0ce1f7ececdf39b7ad3e80f29c80477bb8067793fa54a5210c2ec8b'
+    assert first['root_stager_sha256']=='9dd465cdf6888407dd18157cc5ea79457ceb4cc5b1885f24226127dbbcf7c860'
+    assert H((ROOT/first['root_admission_path']).read_bytes())==first['root_admission_sha256']
+    assert H((ROOT/first['root_stager_path']).read_bytes())==first['root_stager_sha256']
+    for name,pin in DATA['benchmark_source_sha256'].items():
+        assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin==DATA['prepared_source']['files_sha256'][name]
+    for name,pin in first['source_files_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin
     for name,pin in DATA['helper']['source_sha256'].items():assert H((ROOT/name).read_bytes())==pin
 
 
@@ -148,7 +158,7 @@ def test_actual_poststop_terminal_write_path_refuses_mutation(tmp_path,monkeypat
 @pytest.mark.parametrize('fault',('none','verifier','runtime','runtime-during-verifier','manifest'))
 def test_actual_batch_summary_requires_one_postbatch_verifier(tmp_path,monkeypatch,fault):
     # Synthetic completed child receipts; neither child probe nor verifier runs.
-    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/rolling-ball-measurement-v3.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
+    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/rolling-ball-measurement-v4.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
     stage=tmp_path/'stage';stage.mkdir();runtime=stage/'runtime.json';runtime.write_text('{"synthetic_only":true}')
     results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA)
     manifest['runtime_sha256']=hashlib.sha256(runtime.read_bytes()).hexdigest()
@@ -283,11 +293,12 @@ def test_actual_current_driver_metadata_and_Montage_pass0_interfaces():
     assert PROBE.sampler_order_scope(ROOT)==0
     assert DATA['current_interface']['validate_binding_keywords']==['path','root']
     assert DATA['current_interface']['native_requirements']==dict(get_num_threads=1,ball_kernel_apply=1,rolling_ball_apply=1)
-    assert all(v is None for v in DATA['producer'].values())and DATA['prepared_source']is None
+    assert all(v is None for v in HISTORICAL['producer'].values())and HISTORICAL['prepared_source']is None;assert DATA['prepared_source']['revision']==DATA['producer']['revision']=='dda9cc83d9434a10616f84cf1e1125d93f5f36fd'
 
 
 @pytest.mark.parametrize('cached',(False,True))
 def test_actual_UNBOUND_probe_cli_before_cold_cached_requests(monkeypatch,cached):
+    monkeypatch.setattr(PROBE,'CONTRACT',HISTORICAL_PATH)  # actual oldUNBOUND refusal, not current bound authority
     import builtins
     prior=builtins.__import__;requests=[]
     class Refused(BaseException):pass
@@ -370,3 +381,30 @@ def test_normalized_route_runs_actual_driver_parser_until_request_refusal(tmp_pa
     assert requests==['numpy']and builtins.__import__ is prior
     assert not output.exists()and not output.with_suffix('.batches.jsonl').exists()
     assert (Path(binding['output_root'])/'rolling-ball-first-cohort.claim.json').exists()
+
+
+def binding_predecessor_bytes(name,raw):
+    row=DATA['binding_successor']['controller_source_inverse'].get(name)
+    if row is None:return raw
+    assert H(raw)==row['current_raw_sha256']and raw.decode()==row['current']
+    previous=row['predecessor'].encode();assert H(previous)==row['predecessor_raw_sha256']
+    return previous
+
+
+def test_current_controller_inverse_keeps_critical_guards_byte_source_bound():
+    assert H((ROOT/HISTORICAL_PATH).read_bytes())==DATA['binding_successor']['predecessor_raw_sha256']
+    name=DATA['first_cohort']['probe_path'];current=(ROOT/name).read_bytes();old=binding_predecessor_bytes(name,current)
+    a={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(current).body if isinstance(n,ast.FunctionDef)}
+    b={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(old).body if isinstance(n,ast.FunctionDef)}
+    for function in('main','validate_native_entry','finish_probe','verify_helper_state','verify_source_state','driver_adapter','driver_argv','validate_reports','sampler_order_scope','prepare_host_helper'):
+        if function in a:assert a[function]==b[function],function
+
+
+def test_dispatch_clock_expiry_refuses_before_process_or_source_import(monkeypatch,tmp_path):
+    calls=[]
+    monkeypatch.setattr(PROBE.subprocess,'run',lambda *a,**k:calls.append(a))
+    with pytest.raises(AssertionError):
+        PROBE.prepare_cohorts(ROOT,ROOT,tmp_path,DATA,'python',tmp_path,'2000-01-01T00:00:00+00:00')
+    with pytest.raises(AssertionError):
+        PROBE.run_measurements(ROOT,tmp_path,DATA,'python',{},'2000-01-01T00:00:00+00:00')
+    assert not calls

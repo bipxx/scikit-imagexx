@@ -1,0 +1,489 @@
+{
+  "schema": "next-metrics-measurement-v1",
+  "status": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "producer": {
+    "run": null,
+    "revision": null,
+    "artifact": null,
+    "sha256": null
+  },
+  "prepared_source": null,
+  "SDK_members": null,
+  "core_sha256": null,
+  "benchmark_fingerprint": null,
+  "execution_scope": {
+    "canonical_cases": 8,
+    "canonical_raw_samples": 112,
+    "warmup_groups": 16,
+    "workers": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "untimed_topcalls": {
+      "original": 2,
+      "native": 2
+    },
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true
+  },
+  "qualification": "Prospective213 source projection only; exact281 fourprofile/runtime/SDK/rootstageradmission still pending. No actual productbinding.",
+  "binding_gate": "UNBOUND: no helper/target/native/sampler/timing calls permitted bythisprospectivemanifest.",
+  "runtime_sha256": null,
+  "helper": {
+    "mode": "source-built-v1",
+    "source_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "receipt_sha256": null,
+    "library_sha256": null,
+    "root_GO": null,
+    "prepare_once_on_actual_host": true,
+    "collect_recursive": true
+  },
+  "pending": [
+    "Rootindependentoutercontroller/sourceadmission then integration/currentactualsourceclosure",
+    "Actualgenuinefourprofile/rootstager/runtime/core/SDK/F1receipt/probe/rootGO/deadline binding",
+    "Two API-specific firstcohorts thenonepostbatchofflineverifier",
+    "SeparateconditionalmeasurementGO forunchanged8cases/112samples/16warmgroups, allslowercases retained",
+    "12separateplan-only recipes remainprospective/unexecuted: tiny/reverse/volume/additionaldtype/layout domains requireseparate executable source/safety/genuine authority"
+  ],
+  "deadline_utc": null,
+  "controller_reuse": {
+    "predecessor": "b838f3d4ed316e2599c8083ccd0358e4811e2a30",
+    "independent": "build/rolling-ball-controller-independent-review-v1/review-v1.json",
+    "scope": "ExistingC1/helper/postbatch/report envelope, sourceonly2API/directframe adaptations; no algorithm/method reimplementation"
+  },
+  "domain_gaps": [
+    "NumPy minimum/count and converted scalar RHS/casting/warnings plus array metadata are explicit providers; owning C++ BFS/mask/copy/fill has no whole-original/helper escape.",
+    "Ordered serial queue traversal has no per-function worker lookup or BFS SIMD claim; process-global default1 is checked at public-call boundaries.",
+    "Existing192saved/reference/native+79SDKreturn scopes are reused; broader footprint/tolerance/unsafe/half/extended dtype/protocol/rounding/exception-policy and source-quarantined partitions remain open.",
+    "Benchmark parity checks captured default flags/rounding and exact caller32 at sampler entry; target-semantic three-word publicFP/NumPy/caller32 saved/genuine qualification is a separate gate, no status/MXCSR normalization.",
+    "Windows-runtime/original parity, genuine one installed core/aliases/hotswap/current complete exported SDK and exact four-profile release remain pending.",
+    "Twelve plan-only recipes in flood_fill.py (tiny/reverse/volume/additional types/layouts) remain unchanged and unexecuted. Eight active executable initial cases are not full benchmark-domain closure."
+  ],
+  "families": {
+    "flood_fill_native": {
+      "contract": "coverage/contracts/flood-fill-benchmark-v3.json",
+      "cases": 8,
+      "case_ids": [
+        "flood-uint8-C",
+        "flood-uint8-F",
+        "flood-float32-C",
+        "flood-float32-F",
+        "flood_fill-uint8-C",
+        "flood_fill-uint8-F",
+        "flood_fill-float32-C",
+        "flood_fill-float32-F"
+      ],
+      "untimed_calls_per_case": 1
+    }
+  },
+  "cases": [
+    {
+      "id": "flood-uint8-C",
+      "api": "morphology.flood",
+      "dtype": "uint8",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-uint8-F",
+      "api": "morphology.flood",
+      "dtype": "uint8",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-float32-C",
+      "api": "morphology.flood",
+      "dtype": "float32",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-float32-F",
+      "api": "morphology.flood",
+      "dtype": "float32",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-uint8-C",
+      "api": "morphology.flood_fill",
+      "dtype": "uint8",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-uint8-F",
+      "api": "morphology.flood_fill",
+      "dtype": "uint8",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-float32-C",
+      "api": "morphology.flood_fill",
+      "dtype": "float32",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-float32-F",
+      "api": "morphology.flood_fill",
+      "dtype": "float32",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    }
+  ],
+  "benchmark_source_sha256": {
+    "CMakeLists.txt": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+    "benchmarks/flood_fill.py": "3ffbd5562563ad68874f9f173d0b83bc21cf47bbfc2f07b0eeeb50a135688b9a",
+    "benchmarks/flood_fill_execution.py": "cab14c3845fb9b52f3c204a5cc6594e7b750fad7ebcf0a5b23d83a7bfddcaa32",
+    "benchmarks/flood_fill_native.py": "279c6eb79267ddf44206d977c6641223378a6756ef8b5f50f0e81652172d2f65",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "coverage/contracts/flood-fill-benchmark-v1.json": "0e0e6f09e9275e99f9cc101ac2ac9245ee945971fc1ef53ce5bbf55d96f8cd84",
+    "coverage/contracts/flood-fill-benchmark-v2.json": "3e12a3b217be94a2e67f82282d2dcc389a27200342b507b99cba8a923ea3a69a",
+    "coverage/contracts/flood-fill-benchmark-v3.json": "cf3fc4e8a84e60f6c59fa64510fa973f3e29d90cf2e8ab5d3393e2595469b0b7",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "include/skimagexx/flood_fill.hpp": "b023de21d811a49e9c094ac97b43b4970eeab393bc424db91ba859fc11651462",
+    "python/skimagexx/_flood_fill.py": "1121ffe8feedea387f790c9fad4daf6f912aa51b29a34481c2dbbf3e17c872e1",
+    "python/skimagexx/morphology.py": "456a9f77ca1d03b064736f694f41c8050deb190dd0739f2f6fba4cd8b350118e",
+    "python/skimagexx/segmentation.py": "322fd2322ddf79aa90c1691a063bf710940e740a05adc525a90904045644824d",
+    "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+    "src/bind_flood_fill.cpp": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+    "src/crop.cpp": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+    "src/flood_fill.cpp": "0f2bfa18369f12ce9724510fde1b63d8265a5f58fd1efe4069eedfcfef4884ac",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "first_cohort": {
+    "status": "PROSPECTIVE_UNBOUND_NO_FIRST_COHORT",
+    "source_revision": null,
+    "probe_path": "tools/flood_fill_first_cohort_probe.py",
+    "probe_sha256": null,
+    "root_admission_path": null,
+    "root_admission_sha256": null,
+    "root_stager_path": null,
+    "root_stager_sha256": null,
+    "core_member": null,
+    "source_files_raw_sha256": {
+      "CMakeLists.txt": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+      "benchmarks/flood_fill.py": "3ffbd5562563ad68874f9f173d0b83bc21cf47bbfc2f07b0eeeb50a135688b9a",
+      "benchmarks/flood_fill_execution.py": "cab14c3845fb9b52f3c204a5cc6594e7b750fad7ebcf0a5b23d83a7bfddcaa32",
+      "benchmarks/flood_fill_native.py": "279c6eb79267ddf44206d977c6641223378a6756ef8b5f50f0e81652172d2f65",
+      "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+      "coverage/contracts/flood-fill-benchmark-v1.json": "0e0e6f09e9275e99f9cc101ac2ac9245ee945971fc1ef53ce5bbf55d96f8cd84",
+      "coverage/contracts/flood-fill-benchmark-v2.json": "3e12a3b217be94a2e67f82282d2dcc389a27200342b507b99cba8a923ea3a69a",
+      "coverage/contracts/flood-fill-benchmark-v3.json": "cf3fc4e8a84e60f6c59fa64510fa973f3e29d90cf2e8ab5d3393e2595469b0b7",
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+      "include/skimagexx/flood_fill.hpp": "b023de21d811a49e9c094ac97b43b4970eeab393bc424db91ba859fc11651462",
+      "python/skimagexx/_flood_fill.py": "1121ffe8feedea387f790c9fad4daf6f912aa51b29a34481c2dbbf3e17c872e1",
+      "python/skimagexx/morphology.py": "456a9f77ca1d03b064736f694f41c8050deb190dd0739f2f6fba4cd8b350118e",
+      "python/skimagexx/segmentation.py": "322fd2322ddf79aa90c1691a063bf710940e740a05adc525a90904045644824d",
+      "src/bind_crop.cpp": "d7e7193ecdaa0fae87fbf7a46b067275ba83769a1a277e4e651b547db2dd5e8e",
+      "src/bind_flood_fill.cpp": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+      "src/crop.cpp": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+      "src/flood_fill.cpp": "0f2bfa18369f12ce9724510fde1b63d8265a5f58fd1efe4069eedfcfef4884ac",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+      "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+    },
+    "routes": {
+      "flood": {
+        "driver": "benchmarks/flood_fill_native.py",
+        "executor_route": "flood-fill",
+        "api": "morphology.flood",
+        "argv": [
+          "benchmarks/flood_fill_native.py",
+          "--first-cohort",
+          "--api",
+          "morphology.flood",
+          "--case",
+          "flood-uint8-C"
+        ],
+        "native_entries": {
+          "flood_mask": 1
+        },
+        "frames": [
+          "execute",
+          "measure"
+        ],
+        "pass_index": 0
+      },
+      "flood-fill": {
+        "driver": "benchmarks/flood_fill_native.py",
+        "executor_route": "flood-fill",
+        "api": "morphology.flood_fill",
+        "argv": [
+          "benchmarks/flood_fill_native.py",
+          "--first-cohort",
+          "--api",
+          "morphology.flood_fill",
+          "--case",
+          "flood_fill-uint8-C"
+        ],
+        "native_entries": {
+          "flood_mask": 1,
+          "crop_copy_into": 1,
+          "flood_assign": 1
+        },
+        "frames": [
+          "execute",
+          "measure"
+        ],
+        "pass_index": 0
+      }
+    }
+  },
+  "prospective_source": {
+    "revision": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+    "image_count": 281,
+    "functions": 284,
+    "product_members": 228,
+    "SDK_members": 108,
+    "SDK_families": 38,
+    "SDK_checks": 76,
+    "scope": "Source-derived layout only; all actual authority fields NULL"
+  },
+  "current_interface": {
+    "driver_contract": "coverage/contracts/flood-fill-benchmark-v3.json",
+    "driver": "benchmarks/flood_fill_native.py",
+    "executor": "benchmarks/flood_fill_execution.py",
+    "apis": [
+      "morphology.flood",
+      "morphology.flood_fill"
+    ],
+    "stack": [
+      "execute",
+      "measure"
+    ],
+    "pass_index": 0,
+    "argv0_in_route_is_driver": true,
+    "validate_binding_keywords": [
+      "path",
+      "controller_root",
+      "route"
+    ],
+    "report_source": "metadata flattened fingerprint fields plus metadata.source_before",
+    "FP": [
+      "flags",
+      "rounding"
+    ],
+    "native_requirements": {
+      "flood": {
+        "flood_mask": 1
+      },
+      "flood-fill": {
+        "flood_mask": 1,
+        "crop_copy_into": 1,
+        "flood_assign": 1
+      }
+    },
+    "timing_runs": 1,
+    "cohorts": 2
+  },
+  "native_marker_scope": {
+    "meaning": "ActualCreturn-owned floodmask; fill additionallyownedcopy/converted-RHSassignment. Orderedserial BFS no globalworkerlookup; rootglobalone checked aroundwholecall.",
+    "limitation": "Outerprofiler pausesinsidecandidate; existinginnerexecutor recordsnativeCreturns, notcallback-proof internalthread orCbodyinstrumentation"
+  },
+  "aliases": {
+    "canonical": [
+      "morphology.flood",
+      "morphology.flood_fill"
+    ],
+    "identity_aliases": [
+      "segmentation.flood",
+      "segmentation.flood_fill"
+    ],
+    "credit": "Two canonical APIs, four publicbindings; aliases checkedidentity but no duplicatecapture/performancecredit"
+  },
+  "completed_first_cohorts": null,
+  "predecessor_controller": {
+    "source": "30ce23ca1ada982ea508f22416142bfbf0883811",
+    "contract": "coverage/contracts/flood-fill-measurement-v1.json",
+    "raw_sha256": "e54c45882c6f691d89c0db1048f172b5a1c999d91b18cf28c30059e772ed9608",
+    "root_admission": "build/flood-fill-controller-root-admission-v1/admission-v1.json",
+    "root_admission_sha256": "dc1e76d5cbedf8ce4df676ea7987f1d2a84810215325350c6ecf12c310221a5f"
+  },
+  "source_retarget": {
+    "base": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+    "active_driver_contract": "coverage/contracts/flood-fill-benchmark-v3.json",
+    "unchanged_driver_native_context": true,
+    "changed_literal_dependencies": {
+      "CMakeLists.txt": {
+        "old": "01ed8647092a339f8c174ad84d06426000aba8c53535185ff13f8fde6eeba024",
+        "current": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1"
+      }
+    },
+    "actual_authority": "NULL until independently admitted successful281producer; no reuse of faileda5product"
+  },
+  "prospective_SDK_layout": {
+    "profile": "minimum",
+    "source_revision": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+    "members": [
+      "include/skimagexx/adaptive.hpp",
+      "include/skimagexx/alpha.hpp",
+      "include/skimagexx/approximate_polygon.hpp",
+      "include/skimagexx/array_views.hpp",
+      "include/skimagexx/bezier_curve.hpp",
+      "include/skimagexx/circle_perimeter.hpp",
+      "include/skimagexx/circle_perimeter_aa.hpp",
+      "include/skimagexx/clahe.hpp",
+      "include/skimagexx/colocalization.hpp",
+      "include/skimagexx/color.hpp",
+      "include/skimagexx/compare_images.hpp",
+      "include/skimagexx/component_consumers.hpp",
+      "include/skimagexx/components.hpp",
+      "include/skimagexx/contrast.hpp",
+      "include/skimagexx/convert.hpp",
+      "include/skimagexx/corner_response.hpp",
+      "include/skimagexx/crop.hpp",
+      "include/skimagexx/derivatives.hpp",
+      "include/skimagexx/distance.hpp",
+      "include/skimagexx/downscale.hpp",
+      "include/skimagexx/draw_coordinates.hpp",
+      "include/skimagexx/draw_ellipse_perimeter.hpp",
+      "include/skimagexx/draw_ellipsoid.hpp",
+      "include/skimagexx/draw_multiblock_lbp.hpp",
+      "include/skimagexx/draw_polygon.hpp",
+      "include/skimagexx/draw_set_color.hpp",
+      "include/skimagexx/farid.hpp",
+      "include/skimagexx/find_boundaries.hpp",
+      "include/skimagexx/finite_radon.hpp",
+      "include/skimagexx/flood_fill.hpp",
+      "include/skimagexx/footprint_decomposition.hpp",
+      "include/skimagexx/footprint_dense.hpp",
+      "include/skimagexx/footprint_shapes.hpp",
+      "include/skimagexx/footprint_util.hpp",
+      "include/skimagexx/frangi.hpp",
+      "include/skimagexx/gabor.hpp",
+      "include/skimagexx/gabor_filter.hpp",
+      "include/skimagexx/gaussian_nd.hpp",
+      "include/skimagexx/h_extrema.hpp",
+      "include/skimagexx/hessian.hpp",
+      "include/skimagexx/hessian_det.hpp",
+      "include/skimagexx/histogram_matching.hpp",
+      "include/skimagexx/hysteresis.hpp",
+      "include/skimagexx/image.hpp",
+      "include/skimagexx/integral.hpp",
+      "include/skimagexx/integrate.hpp",
+      "include/skimagexx/join_segmentations.hpp",
+      "include/skimagexx/kitchen.hpp",
+      "include/skimagexx/label_color.hpp",
+      "include/skimagexx/label_pair_metrics.hpp",
+      "include/skimagexx/label_points.hpp",
+      "include/skimagexx/level_set.hpp",
+      "include/skimagexx/li.hpp",
+      "include/skimagexx/line_aa.hpp",
+      "include/skimagexx/line_nd.hpp",
+      "include/skimagexx/local_threshold.hpp",
+      "include/skimagexx/map_array.hpp",
+      "include/skimagexx/mark_boundaries.hpp",
+      "include/skimagexx/matrix_transform.hpp",
+      "include/skimagexx/max_tree.hpp",
+      "include/skimagexx/median.hpp",
+      "include/skimagexx/meijering.hpp",
+      "include/skimagexx/metrics.hpp",
+      "include/skimagexx/montage.hpp",
+      "include/skimagexx/morphology.hpp",
+      "include/skimagexx/normalized_mutual_information.hpp",
+      "include/skimagexx/perceptual.hpp",
+      "include/skimagexx/profile_line.hpp",
+      "include/skimagexx/projective.hpp",
+      "include/skimagexx/rank.hpp",
+      "include/skimagexx/rank_order.hpp",
+      "include/skimagexx/reconstruction.hpp",
+      "include/skimagexx/regionprops_state.hpp",
+      "include/skimagexx/regular_grid.hpp",
+      "include/skimagexx/regular_seeds.hpp",
+      "include/skimagexx/rolling_ball.hpp",
+      "include/skimagexx/rolling_ball_kernels.hpp",
+      "include/skimagexx/sato.hpp",
+      "include/skimagexx/shape_index.hpp",
+      "include/skimagexx/slice_along_axes.hpp",
+      "include/skimagexx/small_edge.hpp",
+      "include/skimagexx/sparse.hpp",
+      "include/skimagexx/stain.hpp",
+      "include/skimagexx/structure_tensor.hpp",
+      "include/skimagexx/subdivide_polygon.hpp",
+      "include/skimagexx/symmetric_eigen.hpp",
+      "include/skimagexx/threshold.hpp",
+      "include/skimagexx/tv_bregman.hpp",
+      "include/skimagexx/tv_chambolle.hpp",
+      "include/skimagexx/tv_denoise.hpp",
+      "include/skimagexx/tv_reductions.hpp",
+      "include/skimagexx/uniform_filter.hpp",
+      "include/skimagexx/unique_rows.hpp",
+      "include/skimagexx/variation_of_information.hpp",
+      "lib/cmake/skimagexx/skimagexxConfig.cmake",
+      "lib/cmake/skimagexx/skimagexxConfigVersion.cmake",
+      "lib/cmake/skimagexx/skimagexxTargets-release.cmake",
+      "lib/cmake/skimagexx/skimagexxTargets.cmake",
+      "lib/libskimagexx.a",
+      "share/licenses/scikit-imagexx/LICENSE",
+      "share/licenses/scikit-imagexx/lapack-LICENSE.txt",
+      "share/licenses/scikit-imagexx/numpy-LICENSE.txt",
+      "share/licenses/scikit-imagexx/pocketfft-LICENSE.md",
+      "share/licenses/scikit-imagexx/scikit-image-LICENSE.txt",
+      "share/licenses/scikit-imagexx/scipy-ndimage-LICENSE.txt",
+      "share/licenses/scikit-imagexx/scipy-rank1d-LICENSE.txt",
+      "share/licenses/scikit-imagexx/scipy-sparse-LICENSE.txt",
+      "share/licenses/scikit-imagexx/svml-LICENSE.txt"
+    ],
+    "member_count": 108,
+    "source_only": true,
+    "actual_member_sha256": null,
+    "policy": "Expected installed map keys from actual current_install_layout source; root later binds genuine runtime SDK hashes. Existing offline verifier authenticates all bytes; this list grants no product authority."
+  }
+}
