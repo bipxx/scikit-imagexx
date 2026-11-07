@@ -2,7 +2,7 @@
 
 This is the detailed completion view for the existing [execution plan](EXECUTION_PLAN.md) and [operational ledger](work_items.json). Those records still govern assignments, execution and evidence. This file adds no dispatch queue or permission to run work.
 
-Updated: 2026-11-06. Shipping classifications come from [api.json](api.json); per-key contract focus comes from [the implementation paths](API_IMPLEMENTATION_PATHS.json). The paths are proposals, not proof of completed coverage.
+Updated: 2026-11-07. Shipping classifications come from [api.json](api.json); per-key contract focus comes from [the implementation paths](API_IMPLEMENTATION_PATHS.json). The paths are proposals, not proof of completed coverage.
 
 ## How to read and update this checklist
 
