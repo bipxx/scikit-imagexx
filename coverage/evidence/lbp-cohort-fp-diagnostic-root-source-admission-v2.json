@@ -1,0 +1,17 @@
+{
+  "schema": "lbp-cohort-fp-diagnostic-root-source-admission-v2",
+  "status": "PASS_SCOPED_LFP1_CORRECTION_MANUAL_REGISTRATION_ONLY_NO_ACTUAL_AUTHORITY",
+  "source": "4e942cff94c72ed0c375164aac9b745318efce29",
+  "parent": "f59b0e09dccd6f7a99730d4068b1534ded99a414",
+  "handoff": "build\\lbp-cohort-fp-diagnostic-v2\\handoff-v2.json",
+  "handoff_sha256": "1a48b68abd70f8cd6d1b07377e02a430c743d31c5b8105ed2ef3843512d38593",
+  "proofs": 57,
+  "actual_complete_source_inert_checks_each_python": 37,
+  "workflow": ".github/workflows/lbp-cohort-fp-diagnostic.yml",
+  "workflow_sha256": "ab0dcc076a54ab02717978f9ffb3d1eae5e016626859746b0e95d410bb76336c",
+  "reused_independent_predecessor_review": "coverage/evidence/lbp-cohort-fp-diagnostic-root-review-v1.json",
+  "root_independent_delta_review": "Read actualtool/test/workflow/contextdelta; actualoldfinish C1/terminal+codec tests exercise noexecute-frame fallback to capturedvalidatedrefs, preservingactualprimary/counts/FP/input/results/caller32. Allother493/DDA/oldprobe/assertions/cases/86preparedpins/clock/runtime/helper gates unchanged; oldcontextv1 retained and collected. Authenticated exact4source/57proofs andcomplete37XML+terminal0 eachPython normalplugins. Readfullwrapper andmanualworkflow keygates/collector; no measurementstage, oncepostbatchverifier evenfailure preservesexit.",
+  "scope": "ManualYAML registration only onmain; no private493/f59/native ancestry import. Actualroot1original1native/sampler0/timing0 mustfollow liveAPI/ref/noprior/producer/artifact/capacity/UTC checks. PriorrealFPfailure remainsunresolved.",
+  "waste_review": "Root independentlyreviewedaffectedLFP1delta and actual37module receipts, reused B prior32/pins/offline/sourcebuilt helper/intake scopes without rerunning tests/science. Initialauthorpure fixture/syntax failures retained, no numerical calls.",
+  "next_owner_trigger": "Root publish exactmanualentry+frozenbranch promptly; inspect actual livegates and issuefreshUTC conditionalGO before exactlyone diagnostic. Retain failure/successvalues and independentlyreview before anyproduct FPfix."
+}

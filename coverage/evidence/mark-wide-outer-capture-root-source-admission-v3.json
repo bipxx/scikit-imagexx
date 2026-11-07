@@ -1,0 +1,12 @@
+{
+  "schema": "mark-wide-outer-capture-root-source-admission-v3",
+  "status": "PASS_SCOPED_THREE_FINDING_SOURCE_INERT_ONLY",
+  "source": "3fd05ef7d56fcf731b349943e503249014062618",
+  "handoff": "build\\mark-wide-outer-bridge-v3\\handoff-v3.json",
+  "handoff_sha256": "029b97c99cb6d183ea9e4d9e7824e9c280923171528d74c5124b7b4bcb2d886c",
+  "independent_review": "build\\mark-wide-outer-capture-independent-review-v2\\review-v2.json",
+  "independent_review_sha256": "5b0ad395508037129dd261b1aa8f8783f248a75bd119144dfecb013291eb1f92",
+  "root_review": "Reviewed actual3file delta R1 ACK/distinct fallback+late diagnostics/R2 actual8fixture counter/R3 FunctionType-resolvedorigin/code identity; actual52XML+terminal0 each runtime and exactclean source verified. Existing288B max/456B total return bounds/fourcases/runtime/helper unchanged.",
+  "unmet": "Actual eight current prefixes and original4minimum/raw/4modern/native/SDK/FP/genuine/performance remain separate gates.",
+  "waste_review": "Reuse36authenticated smallproofs and existing helper/runtime; no test/scientific replay. Failedv2/38sourceproofs retained; no readiness relabel."
+}

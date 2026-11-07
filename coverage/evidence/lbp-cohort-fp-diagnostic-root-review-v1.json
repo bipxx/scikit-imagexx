@@ -1,0 +1,11 @@
+{
+  "schema": "lbp-cohort-fp-diagnostic-root-review-v1",
+  "status": "CHANGES_REQUIRED_BEFORE_DEPENDENT_INTAKE_OR_EXECUTION",
+  "source": "f59b0e09dccd6f7a99730d4068b1534ded99a414",
+  "independent_review": "build/lbp-cohort-fp-diagnostic-independent-review-v1/review-v1.json",
+  "independent_review_sha256": "458a6e5204b5f7bcd8f2f12b8843651973c5d05c22fe8c6e454852a68a7479d4",
+  "root_review": "LFP1: collected validated-entry refs are ignored on an oldprobe poststop/C1 failure without execute traceback. Reuse those refs only when no actualexecute frame; keep primary/codecsecondary and no extra calls. Root read actualexcept/else branches and existingoldprobe tail, agrees with independentfinding.",
+  "operations": "Read-only affectedsource/retainedreview. No test/numerical/helper/prefix/compile/hosted/profile calls; no archive/core authentication replay.",
+  "pending": "One immutable minimal source successor and complete affected source/inert checks on bothretained Pythons, independentaffected-delta review thenroot sourceadmission/actualGO. Predecessors stayfailedsource reviews; passingunaffected scopes reusable.",
+  "waste_review": "Review found concrete missingdiagnostics before target budget consumption. Reuse existing fixedprimary/currentpartial retention rather than copy oldercontroller or build newframework."
+}

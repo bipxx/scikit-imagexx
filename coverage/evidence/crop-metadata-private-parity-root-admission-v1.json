@@ -1,0 +1,256 @@
+{
+  "schema": "crop-metadata-private-parity-root-admission-v1",
+  "status": "PASS_SCOPED_PRIVATE_SAVED_VALUES_PROTOCOLS_AND_NEW_REGRESSIONS_FP_GENUINE_SPEED_PENDING",
+  "source": "f02056536f879df477cf4c2aded5979379fcb339",
+  "source_admission": "coverage/evidence/crop-metadata-optimization-root-source-admission-v1.json",
+  "build": {
+    "path": "D:\\Scratch\\crop-copy-native-v1\\terminal-v1.json",
+    "sha256": "08c279d933362cbcff9cc408c37f88202020fb1532f959abf3ff0dcabdc58b79",
+    "changed_binder_compiles": 2,
+    "private_links": 2,
+    "all_exit0": true,
+    "source_changed_binder_owned": true,
+    "leaf_SDK_unchanged_reused": true,
+    "full_product_builds": 0,
+    "SDK_rebuilds": 0,
+    "modules": {
+      "/mnt/d/Scratch/crop-copy-native-v1/minimum/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so": "d65ec20a550032d25ce6acf5983e7be3144ce5f2a2f386a5a5ec2ed7234fed29",
+      "/mnt/d/Scratch/crop-copy-native-v1/modern/site/skimagexx/_core.cpython-313-x86_64-linux-gnu.so": "3e5f6e85dafa2c773d3d13c4b3c9e39fabf88f422253c05b4934df0540e5591e"
+    }
+  },
+  "runs": [
+    {
+      "profile": "minimum",
+      "mode": "normal",
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 3.0043727120000003,
+        "nodes": 231,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "events": {
+        "c_call:crop_copy_into": 32,
+        "c_call:crop_view": 208,
+        "c_exception:crop_copy_into": 4,
+        "c_exception:crop_view": 7,
+        "c_return:crop_copy_into": 28,
+        "c_return:crop_view": 201
+      },
+      "evidence": [
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\normal\\command.json",
+          "sha256": "808e6b52b4c57d6f1a58d3b4d6187230851858fb262b6e474d2ccad02e777569",
+          "bytes": 1120
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\normal\\results.xml",
+          "sha256": "417caa4ce6c13d7b8d873add84d16ed27cbf58d489739e64bc52390510fd6577",
+          "bytes": 27044
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\normal\\selected.json",
+          "sha256": "b01eacd4e7a663d92c351d14a7bcbba20a16fc72c3a0e061b97777d5973e26c1",
+          "bytes": 18719
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\normal\\ownership.json",
+          "sha256": "436c4c96d4b289cc4c70a061ce4e353e469ccdac57bc61213f4a50649ac2caf6",
+          "bytes": 102236
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\normal\\terminal.json",
+          "sha256": "030ce7107ae64076f2cbcae04fa9d5327fc21b6100c3d62e7e3ba9b81bdf3cd1",
+          "bytes": 325
+        }
+      ]
+    },
+    {
+      "profile": "minimum",
+      "mode": "disabled",
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 3.00045449,
+        "nodes": 231,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "events": {
+        "c_call:crop_copy_into": 32,
+        "c_call:crop_view": 208,
+        "c_exception:crop_copy_into": 4,
+        "c_exception:crop_view": 7,
+        "c_return:crop_copy_into": 28,
+        "c_return:crop_view": 201
+      },
+      "evidence": [
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\disabled\\command.json",
+          "sha256": "31d1aa2313e9fc4572ad590ce3af0b3c641258ea24bf17f6a88ca3d9a6b9a927",
+          "bytes": 1126
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\disabled\\results.xml",
+          "sha256": "fd4decf6846399541a691b8557cde27094cf6d96f67d8debefdb49bd24cdd870",
+          "bytes": 27044
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\disabled\\selected.json",
+          "sha256": "b01eacd4e7a663d92c351d14a7bcbba20a16fc72c3a0e061b97777d5973e26c1",
+          "bytes": 18719
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\disabled\\ownership.json",
+          "sha256": "1a50cd28084357f006f88e09dc9f8ce772d0da10512cf0c01bb9fdde6d572539",
+          "bytes": 102236
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\minimum\\disabled\\terminal.json",
+          "sha256": "2422addc8a82c660d5d7be7e5aa2d2c5a6d034e1c6cd480b5609dfb885e6439e",
+          "bytes": 317
+        }
+      ]
+    },
+    {
+      "profile": "modern",
+      "mode": "normal",
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 2.8590165269999996,
+        "nodes": 231,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "events": {
+        "c_call:crop_copy_into": 32,
+        "c_call:crop_view": 200,
+        "c_exception:crop_copy_into": 4,
+        "c_exception:crop_view": 5,
+        "c_return:crop_copy_into": 28,
+        "c_return:crop_view": 195
+      },
+      "evidence": [
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\normal\\command.json",
+          "sha256": "23dbc4afd99cb93fccc41d5ff2cef30ffe7b64f07c4007d2aeb43e5edc3f5f95",
+          "bytes": 1113
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\normal\\results.xml",
+          "sha256": "e7055a89d795413f3046a3eae57a8ee9ea568d7f4cbe9ec4f7ed6a86ade603df",
+          "bytes": 27044
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\normal\\selected.json",
+          "sha256": "b01eacd4e7a663d92c351d14a7bcbba20a16fc72c3a0e061b97777d5973e26c1",
+          "bytes": 18719
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\normal\\ownership.json",
+          "sha256": "7c5ccc36d49292bb21174027fb4e6fb22467385d08a3cfa4d41e738848613ec2",
+          "bytes": 101302
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\normal\\terminal.json",
+          "sha256": "34ca34390146df72d2089b5489734685ae13f7598a0ca3f09bda3329357892c2",
+          "bytes": 325
+        }
+      ]
+    },
+    {
+      "profile": "modern",
+      "mode": "disabled",
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 2.8569364010000005,
+        "nodes": 231,
+        "bad": {
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "denied": [],
+        "workers": 1,
+        "caller32": true,
+        "original_calls": 0,
+        "timed_batches": 0,
+        "hardware_target_FP_pending": true,
+        "normal_plugins": true,
+        "normal_conftest": true
+      },
+      "events": {
+        "c_call:crop_copy_into": 32,
+        "c_call:crop_view": 200,
+        "c_exception:crop_copy_into": 4,
+        "c_exception:crop_view": 5,
+        "c_return:crop_copy_into": 28,
+        "c_return:crop_view": 195
+      },
+      "evidence": [
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\disabled\\command.json",
+          "sha256": "df353a50e0479a18e83df45dca16770a7b0728c5a3a8f5a69f5a2a1e3f60732d",
+          "bytes": 1119
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\disabled\\results.xml",
+          "sha256": "16d239c60c2494c50c7a1701207ddfe69d316196e9e7d26719a15e98d00ddc99",
+          "bytes": 27044
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\disabled\\selected.json",
+          "sha256": "b01eacd4e7a663d92c351d14a7bcbba20a16fc72c3a0e061b97777d5973e26c1",
+          "bytes": 18719
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\disabled\\ownership.json",
+          "sha256": "4a3189e9106715a7fd18dd4b8249efb4fb405cfec580a5a6141addec72da8c1e",
+          "bytes": 101302
+        },
+        {
+          "path": "D:\\Scratch\\crop-copy-native-v1\\runtime-v1\\modern\\disabled\\terminal.json",
+          "sha256": "782e4500f2034cf307dfbb7f88d1d414fcd84ccd48916f972462b25c08dbf294",
+          "bytes": 325
+        }
+      ]
+    }
+  ],
+  "total_nodes": 924,
+  "coverage": "Full108savedrecipes xworkers1/4=216nodes plus7existing copy/defensive nodes and8newalias/readonly/metadata/indexcallback nodes per profile/mode, 231each/924total. Normal conftest/plugins, no deselection, no imports/bodies from original/SciPy, workersrestore1 and test/process32 restored.",
+  "limits": "Private component only; no fullinstallednamespace/SDK/product release or speed acceptance. Existing cropgold controller_fenv is outside observer and not a target-immediate hardwareFP oracle. Exact values/protocol/error/warning/softwareFP compare passed; immediate original-public FP, affected scalar/sanitizer/MSVC and genuinefourprofiles/currentbenchmarkcontext remain open. Never manufacture targetFP expectedwords from controller bookkeeping.",
+  "waste_review": "Actualchangedbinder2TU+2links only, read-only admittedleaf/SDK/donorobjects reused; no wholecore/SDK/environment rebuild. Fouraffected modes run once after actualbuild0/maps. Root source receipt exit_code/exit mismatch corrected with metadataread only; no scientific replay. Currentreversecopy residual remains unlocalized; native-only diagnostic can precede any leafchange.",
+  "next_owner_trigger": "Root may prepare bounded controlled prior-C++ hardware-FP/performance experiment after explicit provenance/quiet-window checks; do not claim original-library win or deliver f020 before requiredgenuine/source/context/performance gates."
+}

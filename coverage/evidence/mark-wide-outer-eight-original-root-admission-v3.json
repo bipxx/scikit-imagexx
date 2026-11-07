@@ -1,0 +1,204 @@
+{
+  "schema": "mark-wide-outer-eight-original-root-admission-v3",
+  "passed": true,
+  "status": "PASS_EIGHT_NEW_WIDE_OUTER_REFERENCE_OBSERVATIONS_ONLY",
+  "source": "3fd05ef7d56fcf731b349943e503249014062618",
+  "binding_sha256": "4c0bc99153386753e99bd69dac62cb0064c1dca08630fa78fedbd94127b70a8e",
+  "profiles": [
+    {
+      "profile": "minimum",
+      "public_calls": 4,
+      "completed_rows": 4,
+      "seconds": 3.304400200024247,
+      "source": "3fd05ef7d56fcf731b349943e503249014062618",
+      "files": [
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\terminal.json",
+          "sha256": "957ccbee3873422c5075959cf2b5f09b4573366144d8d027a8dfbe1142ae2498",
+          "bytes": 14981
+        },
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\observations.json",
+          "sha256": "d40af0687c591e978f2da628e8998f948b51b335e38cb6a89139af90c6cf47bc",
+          "bytes": 42045
+        },
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\journal.jsonl",
+          "sha256": "faa4f86170cb7a0eba63b62cd7cb792b4e12316decb286f733dbbc2833254210",
+          "bytes": 23206
+        },
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\precall-freeze.json",
+          "sha256": "24a5c0ca0604ba1b44a48ada4b9805b99970dc536aa5d84c0d9473353228fa58",
+          "bytes": 10602
+        }
+      ],
+      "result_sha256": [
+        "3b74ae32a7c989a92ca2de853ce292c779e23c6c32404db8ef4e55c17a59e840",
+        "7a0230ea2b3f68103a71383c3a83cf7e24fb7427ee960f1e7090ffad1a002db9",
+        "72b58fd7a23ef8e7671bd6ba5f759bb0b3b399ac0c5b48d41da253cd0505bfc0",
+        "bc4ec74094b63f1d5fd61af0a0517b1020deac7fea5d85cef09fdbd798bd439a"
+      ],
+      "target_semantic_FP": [
+        {
+          "before": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8099
+          },
+          "after": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        {
+          "before": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8099
+          },
+          "after": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        {
+          "before": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8099
+          },
+          "after": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        {
+          "before": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8099
+          },
+          "after": {
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        }
+      ]
+    },
+    {
+      "profile": "modern",
+      "public_calls": 4,
+      "completed_rows": 4,
+      "seconds": 8.076436900068074,
+      "source": "3fd05ef7d56fcf731b349943e503249014062618",
+      "files": [
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\modern-v3\\terminal.json",
+          "sha256": "6c1ebf6327fd7c2db0a6890da78ab26278e65ad4941683b35692b7c4bb8c6c97",
+          "bytes": 14925
+        },
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\modern-v3\\observations.json",
+          "sha256": "469c9a3ce94b7d10745f37b9ab08b4fd8382f3bcabf2a145ea77117213af1e54",
+          "bytes": 42025
+        },
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\modern-v3\\journal.jsonl",
+          "sha256": "81ff780982adfdb35437cdde31f6713010a348937c21022a0c9b2997062f3c01",
+          "bytes": 23186
+        },
+        {
+          "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\modern-v3\\precall-freeze.json",
+          "sha256": "46f8e29854e6680c5f6fd547c13518653559ca320f775c7952a4eb5fecf776eb",
+          "bytes": 10553
+        }
+      ],
+      "result_sha256": [
+        "3b74ae32a7c989a92ca2de853ce292c779e23c6c32404db8ef4e55c17a59e840",
+        "7a0230ea2b3f68103a71383c3a83cf7e24fb7427ee960f1e7090ffad1a002db9",
+        "72b58fd7a23ef8e7671bd6ba5f759bb0b3b399ac0c5b48d41da253cd0505bfc0",
+        "bc4ec74094b63f1d5fd61af0a0517b1020deac7fea5d85cef09fdbd798bd439a"
+      ],
+      "target_semantic_FP": [
+        {
+          "before": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8097
+          },
+          "after": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        },
+        {
+          "before": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8097
+          },
+          "after": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        },
+        {
+          "before": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8097
+          },
+          "after": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        },
+        {
+          "before": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8097
+          },
+          "after": {
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        }
+      ]
+    }
+  ],
+  "public_calls": 8,
+  "completed_rows": 8,
+  "new_modern_decoded_payloads": 28,
+  "new_modern_logical_bytes": 2616,
+  "cross_profile_result_records_equal": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "returned_bytes_per_profile": [
+    12,
+    12,
+    288,
+    144
+  ],
+  "maximum_return_bytes": 288,
+  "all_caller_process32": true,
+  "old_quarantined_rows_unchanged": true,
+  "original_remaining": 0,
+  "native_calls": 0,
+  "timing": 0,
+  "limits": "Only four literal3x4outer cases per retained profile, not full64outer parity. Actual source warnings/errors/input/metadata/softwareNP/semantic immediateFP/rawcaller preserved; raw full32/handler identities remain perprocess, not portable values. No native/SDK/performance/release credit.",
+  "waste_review": "Minimum4 once then independently admitted before separatemodern4 once. Eight currentprefixes reused across reference stages because source/runtime/helper unchanged. Earlier rootGO clockfield failure beforeimports/0calls retained; successor only metadata. Modern duration8.0764369s observed, minimum3.3044002s; no costs invented.",
+  "next_owner_trigger": "Family worker prepares bounded native wholefind/MARK bridge against these rawrows using actual3106changedleaf and retainedruntime/SDK primitives. Root independent source/build/actualoriginal-word+FP comparison then sharedCMake/refusaltest correction/genuine/performance; no originalrecapture."
+}

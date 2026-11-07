@@ -1,0 +1,53 @@
+{
+  "schema": "mark-wide-outer-minimum-raw-root-admission-v3",
+  "passed": true,
+  "status": "PASS_FOUR_NEW_MINIMUM_ORIGINAL_OBSERVATIONS_ONLY",
+  "source": "3fd05ef7d56fcf731b349943e503249014062618",
+  "profile": "minimum",
+  "public_topcalls": 4,
+  "completed_rows": 4,
+  "binding_sha256": "4c0bc99153386753e99bd69dac62cb0064c1dca08630fa78fedbd94127b70a8e",
+  "controller_sha256": "7034f5690448f4bbf3cd9e014d2e3280084c53c4c5a878cf49c24a8d98b0869d",
+  "files": [
+    {
+      "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\terminal.json",
+      "sha256": "957ccbee3873422c5075959cf2b5f09b4573366144d8d027a8dfbe1142ae2498",
+      "bytes": 14981
+    },
+    {
+      "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\observations.json",
+      "sha256": "d40af0687c591e978f2da628e8998f948b51b335e38cb6a89139af90c6cf47bc",
+      "bytes": 42045
+    },
+    {
+      "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\journal.jsonl",
+      "sha256": "faa4f86170cb7a0eba63b62cd7cb792b4e12316decb286f733dbbc2833254210",
+      "bytes": 23206
+    },
+    {
+      "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\precall-freeze.json",
+      "sha256": "24a5c0ca0604ba1b44a48ada4b9805b99970dc536aa5d84c0d9473353228fa58",
+      "bytes": 10602
+    }
+  ],
+  "decoded_payloads": 28,
+  "decoded_logical_bytes": 2616,
+  "returned_bytes": [
+    12,
+    12,
+    288,
+    144
+  ],
+  "caller_process32": true,
+  "inputs_unchanged": true,
+  "errors": 0,
+  "warnings": 0,
+  "root_review": "Actual4starts/4completions, fixedcaseIDs/dtypes/layouts/payloadSHA/456returnedbytes, percase target-immediate and caller32, fullprocess restore/source/runtime/helper bind verified. These four originalouter witnesses fill a real missingdomain; no oldthick control relabeled outer.",
+  "retained_pre_execution_failure": {
+    "path": "D:/Scratch/mark-wide-outer-reference-v3/minimum/terminal-fallback.json",
+    "public_attempts": 0,
+    "reason": "Rootclockfield key corrected in versionedGO only; unchangedprefixes reused."
+  },
+  "scope": "Original reference observations only, no native/SDK/FPparity/performance/release claim. Modern4 remains a separate futureGO.",
+  "waste_review": "Minimum4 consumed once/3.3044002s observed; earliermetadata refusal consumed0. Stdlib decoded retainedpayloads only, no original replay or scientific arithmetic."
+}

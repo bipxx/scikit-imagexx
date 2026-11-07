@@ -1,0 +1,13 @@
+{
+  "schema": "crop-metadata-optimization-root-source-admission-v1",
+  "status": "PASS_SOURCE_ONLY_NATIVE_BUILD_PENDING",
+  "source": "f02056536f879df477cf4c2aded5979379fcb339",
+  "handoff": "build\\crop-copy-optimization-v1\\handoff-v1.json",
+  "handoff_sha256": "f6def1443ca7eb36ef82e7db5403aba697f3d4677d60f37178cd23a788f2a3c3",
+  "files": 4,
+  "proofs": 25,
+  "source_checks_each_python": 4,
+  "root_review": "Read wholebinder/slices/frontend/new8tests and source inverse; native validation precedes reuse, PySlice_Check+rank established before direct fields; exactPyLong/None and canonical bounds leave callbacks/clipping on oldpath. Public frontend NumPyarray removes array subclasses. No leaf/header/frontend/SDK/cases/method change. Full saved108xworkers1/4+new8 private alias/readonly/metadata/callback tests required after changedbinder build.",
+  "unmet": "Private native build/full saved parity+FP+new8/ownership, affected scalar/disabled/sanitizer/MSVC, exactsource genuine and public performance; no speed claim.",
+  "waste_review": "Reused25smallproofs/current4XML eachPython and oldleaf/SDK scope, no scientific replay. Root initially assumed terminal exit_code; actualexit field read and metadata-only reader corrected, no validation replay. Reversecopy residual remains unlocalized; no speculativecopy/SIMD change."
+}

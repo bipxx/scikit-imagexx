@@ -1,0 +1,1785 @@
+{
+  "schema": "mark-wide-outer-prefix-root-admission-v3",
+  "passed": true,
+  "source": "3fd05ef7d56fcf731b349943e503249014062618",
+  "controller_sha256": "7034f5690448f4bbf3cd9e014d2e3280084c53c4c5a878cf49c24a8d98b0869d",
+  "binding_sha256": "4c0bc99153386753e99bd69dac62cb0064c1dca08630fa78fedbd94127b70a8e",
+  "status": "PASS_ACTUAL_EIGHT_CURRENT_ZERO_BODY_PREFIXES_ONLY",
+  "source_admission": "coverage/evidence/mark-wide-outer-capture-root-source-admission-v3.json",
+  "prefixes": [
+    {
+      "id": "minimum-find_boundaries-cold-v3",
+      "profile": "minimum",
+      "api": "find_boundaries",
+      "cache": "cold",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/minimum-find_boundaries-cold-v3/terminal.json",
+      "sha256": "e437ef930ce7c9261b37329b08f1a425096daeaaec5fd50b9ef2a6be9d72d3ad",
+      "seconds": 6.886980100069195,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+                "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686064,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "R6s7aClbCjzomQpEjef6sRq928Fg-IlZcsqapxLPhtA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+                "bytes": 32955056,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VUveHYoMcdjcIa503gXETaT_9dvGeRqBn2rPWt_pC9k"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247608,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "l82oXdtRY-Labh7bTh1rVXgzqZpA7aB5rjflA5Rltl0"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.15.3",
+            "root": "\\home\\heq\\.cache\\skimagexx-label-numpy124-venv\\lib\\python3.11\\site-packages",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 4560912,
+                "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 147184,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686065,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "k0wi3tDn0WnE1GeIdslgUa3z2UVF2pYvYLQWWbB12js"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so",
+                "bytes": 22211841,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+            "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 4560912,
+            "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 147184,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    },
+    {
+      "id": "minimum-find_boundaries-cached-v3",
+      "profile": "minimum",
+      "api": "find_boundaries",
+      "cache": "cached",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/minimum-find_boundaries-cached-v3/terminal.json",
+      "sha256": "d42873bfe88d8b85e9ddaec81a65bc9dd51cd807fe71aede47ebb422a091ff8e",
+      "seconds": 6.638869900023565,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+                "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686064,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "R6s7aClbCjzomQpEjef6sRq928Fg-IlZcsqapxLPhtA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+                "bytes": 32955056,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VUveHYoMcdjcIa503gXETaT_9dvGeRqBn2rPWt_pC9k"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247608,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "l82oXdtRY-Labh7bTh1rVXgzqZpA7aB5rjflA5Rltl0"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.15.3",
+            "root": "\\home\\heq\\.cache\\skimagexx-label-numpy124-venv\\lib\\python3.11\\site-packages",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 4560912,
+                "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 147184,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686065,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "k0wi3tDn0WnE1GeIdslgUa3z2UVF2pYvYLQWWbB12js"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so",
+                "bytes": 22211841,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+            "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 4560912,
+            "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 147184,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    },
+    {
+      "id": "minimum-mark_boundaries-cold-v3",
+      "profile": "minimum",
+      "api": "mark_boundaries",
+      "cache": "cold",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/minimum-mark_boundaries-cold-v3/terminal.json",
+      "sha256": "aa7bdbc20fa59f7734558195f25b7a43e3816e4fa10c7a3e522f50b6992e1f31",
+      "seconds": 1.948783699888736,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+                "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686064,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "R6s7aClbCjzomQpEjef6sRq928Fg-IlZcsqapxLPhtA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+                "bytes": 32955056,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VUveHYoMcdjcIa503gXETaT_9dvGeRqBn2rPWt_pC9k"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247608,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "l82oXdtRY-Labh7bTh1rVXgzqZpA7aB5rjflA5Rltl0"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.15.3",
+            "root": "\\home\\heq\\.cache\\skimagexx-label-numpy124-venv\\lib\\python3.11\\site-packages",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 4560912,
+                "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 147184,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686065,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "k0wi3tDn0WnE1GeIdslgUa3z2UVF2pYvYLQWWbB12js"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so",
+                "bytes": 22211841,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+            "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 4560912,
+            "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 147184,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    },
+    {
+      "id": "minimum-mark_boundaries-cached-v3",
+      "profile": "minimum",
+      "api": "mark_boundaries",
+      "cache": "cached",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/minimum-mark_boundaries-cached-v3/terminal.json",
+      "sha256": "f851957ab6cfb074d5d1db1e25ed717d0b724e8d55adb2e6163d06940a8751e9",
+      "seconds": 1.8460589000023901,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+                "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686064,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "R6s7aClbCjzomQpEjef6sRq928Fg-IlZcsqapxLPhtA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+                "bytes": 32955056,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VUveHYoMcdjcIa503gXETaT_9dvGeRqBn2rPWt_pC9k"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247608,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "l82oXdtRY-Labh7bTh1rVXgzqZpA7aB5rjflA5Rltl0"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.15.3",
+            "root": "\\home\\heq\\.cache\\skimagexx-label-numpy124-venv\\lib\\python3.11\\site-packages",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 4560912,
+                "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 147184,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686065,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "k0wi3tDn0WnE1GeIdslgUa3z2UVF2pYvYLQWWbB12js"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so",
+                "bytes": 22211841,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+            "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 4560912,
+            "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 147184,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    },
+    {
+      "id": "modern-find_boundaries-cold-v3",
+      "profile": "modern",
+      "api": "find_boundaries",
+      "cache": "cold",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/modern-find_boundaries-cold-v3/terminal.json",
+      "sha256": "c1934450516ec465be037dc14b811f723798d20b74000083a268f2c46d01c058",
+      "seconds": 4.770938700065017,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+                "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libgfortran-83c28eba-468e71e5.so.5.0.0",
+                "bytes": 2862249,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "pqNoMo0CpdihSXRvE_Ymj4zJGS31wYd3slw8m171IWA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+                "bytes": 275553,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "a8MGkAPK7B8HW-PFGug1UzLwgfqUZZEMS1ck5_59itQ"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+                "bytes": 24325657,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Qy4cFzlzFGi6MFdxr5Z3OTnkMBZkPi1jD1jLRbZnDpY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.18.1",
+            "root": "\\home\\heq\\.cache\\skimagexx-frangi-py313-venv\\lib\\python3.13\\site-packages",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 4554512,
+                "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 175576,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-83c28eba.so.5.0.0",
+                "bytes": 2751569,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Ro5x5Z4deEghp2cC5ezR4NvPwCRJn3SlUtG-pLJvJ60"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-2284e583.so.0.0.0",
+                "bytes": 272193,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "qTB7uqNTYj-gFOi2gtUMRin15cfWHaqahlL30WXNQho"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+                "bytes": 25094609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "KltMGmMRhzxZEyss6q88JiWKFzULfNJ-qHgqR-MyKYE"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 4554512,
+            "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 175576,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    },
+    {
+      "id": "modern-find_boundaries-cached-v3",
+      "profile": "modern",
+      "api": "find_boundaries",
+      "cache": "cached",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/modern-find_boundaries-cached-v3/terminal.json",
+      "sha256": "b96024d25d670fb0c43aa7458f75cc64fb0736dd15041d3fc7b88870d4ca658b",
+      "seconds": 4.626610700041056,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+                "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libgfortran-83c28eba-468e71e5.so.5.0.0",
+                "bytes": 2862249,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "pqNoMo0CpdihSXRvE_Ymj4zJGS31wYd3slw8m171IWA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+                "bytes": 275553,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "a8MGkAPK7B8HW-PFGug1UzLwgfqUZZEMS1ck5_59itQ"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+                "bytes": 24325657,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Qy4cFzlzFGi6MFdxr5Z3OTnkMBZkPi1jD1jLRbZnDpY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.18.1",
+            "root": "\\home\\heq\\.cache\\skimagexx-frangi-py313-venv\\lib\\python3.13\\site-packages",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 4554512,
+                "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 175576,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-83c28eba.so.5.0.0",
+                "bytes": 2751569,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Ro5x5Z4deEghp2cC5ezR4NvPwCRJn3SlUtG-pLJvJ60"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-2284e583.so.0.0.0",
+                "bytes": 272193,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "qTB7uqNTYj-gFOi2gtUMRin15cfWHaqahlL30WXNQho"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+                "bytes": 25094609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "KltMGmMRhzxZEyss6q88JiWKFzULfNJ-qHgqR-MyKYE"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 4554512,
+            "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 175576,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    },
+    {
+      "id": "modern-mark_boundaries-cold-v3",
+      "profile": "modern",
+      "api": "mark_boundaries",
+      "cache": "cold",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/modern-mark_boundaries-cold-v3/terminal.json",
+      "sha256": "4c17e78dbf2f7c1f0f4a7917e120eba4d7ec04cda3d54196784525b7dfc06e95",
+      "seconds": 4.234261200064793,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+                "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libgfortran-83c28eba-468e71e5.so.5.0.0",
+                "bytes": 2862249,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "pqNoMo0CpdihSXRvE_Ymj4zJGS31wYd3slw8m171IWA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+                "bytes": 275553,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "a8MGkAPK7B8HW-PFGug1UzLwgfqUZZEMS1ck5_59itQ"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+                "bytes": 24325657,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Qy4cFzlzFGi6MFdxr5Z3OTnkMBZkPi1jD1jLRbZnDpY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.18.1",
+            "root": "\\home\\heq\\.cache\\skimagexx-frangi-py313-venv\\lib\\python3.13\\site-packages",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 4554512,
+                "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 175576,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-83c28eba.so.5.0.0",
+                "bytes": 2751569,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Ro5x5Z4deEghp2cC5ezR4NvPwCRJn3SlUtG-pLJvJ60"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-2284e583.so.0.0.0",
+                "bytes": 272193,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "qTB7uqNTYj-gFOi2gtUMRin15cfWHaqahlL30WXNQho"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+                "bytes": 25094609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "KltMGmMRhzxZEyss6q88JiWKFzULfNJ-qHgqR-MyKYE"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 4554512,
+            "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 175576,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    },
+    {
+      "id": "modern-mark_boundaries-cached-v3",
+      "profile": "modern",
+      "api": "mark_boundaries",
+      "cache": "cached",
+      "path": "/mnt/d/Scratch/mark-wide-outer-prefix-v3/modern-mark_boundaries-cached-v3/terminal.json",
+      "sha256": "a568113e0fd16a98fa2a7e45d3c6b486d32ff7cdb20c5b6e809c58720495a5c6",
+      "seconds": 4.1904592998325825,
+      "factory_invocations": 8,
+      "target_entries_refused": 2,
+      "algorithm_bodies": 0,
+      "inert_return_bytes": 16,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+        "signatures": {
+          "find_boundaries": "(label_img, connectivity=1, mode='thick', background=0)",
+          "mark_boundaries": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)"
+        },
+        "canonical_public_API": [
+          "segmentation.find_boundaries",
+          "segmentation.mark_boundaries"
+        ],
+        "sources": {
+          "skimage/segmentation/boundaries.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/boundaries.py",
+          "skimage/util/dtype.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/util/dtype.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/utils.py",
+          "skimage/color/colorconv.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/color/colorconv.py",
+          "scipy/ndimage/_interpolation.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_interpolation.py",
+          "scipy/ndimage/_morphology.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_morphology.py",
+          "skimage/morphology/gray.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/gray.py",
+          "skimage/morphology/footprints.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/footprints.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+          "skimage/segmentation/__init__.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+                "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libgfortran-83c28eba-468e71e5.so.5.0.0",
+                "bytes": 2862249,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "pqNoMo0CpdihSXRvE_Ymj4zJGS31wYd3slw8m171IWA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+                "bytes": 275553,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "a8MGkAPK7B8HW-PFGug1UzLwgfqUZZEMS1ck5_59itQ"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+                "bytes": 24325657,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Qy4cFzlzFGi6MFdxr5Z3OTnkMBZkPi1jD1jLRbZnDpY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.18.1",
+            "root": "\\home\\heq\\.cache\\skimagexx-frangi-py313-venv\\lib\\python3.13\\site-packages",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 4554512,
+                "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 175576,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-83c28eba.so.5.0.0",
+                "bytes": 2751569,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Ro5x5Z4deEghp2cC5ezR4NvPwCRJn3SlUtG-pLJvJ60"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-2284e583.so.0.0.0",
+                "bytes": 272193,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "qTB7uqNTYj-gFOi2gtUMRin15cfWHaqahlL30WXNQho"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+                "bytes": 25094609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "KltMGmMRhzxZEyss6q88JiWKFzULfNJ-qHgqR-MyKYE"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 4554512,
+            "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 175576,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "min_or_max_filter": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          "_find_boundaries_subpixel",
+          "_supported_float_type",
+          "dilation",
+          "erosion",
+          "find_boundaries",
+          "gray2rgb",
+          "grey_dilation",
+          "grey_erosion",
+          "img_as_float",
+          "maximum_filter",
+          "minimum_filter"
+        ]
+      }
+    }
+  ],
+  "totals": {
+    "processes": 8,
+    "fixture_invocations": 64,
+    "first_frame_refused": 16,
+    "inert_return_arrays": 8,
+    "inert_return_bytes": 128,
+    "original_algorithm_bodies": 0,
+    "native_image_bodies": 0,
+    "reference_observations": 0,
+    "timing": 0
+  },
+  "root_review": "Actual nativeWindowsGit from each WSL explicit environment, runtime/package/source/compiledpath/helper/full32/coldcached/codec/factory witnesses checked by actualcontroller and root terminal reconstruction. No old prefix reused as current.",
+  "next_owner_trigger": "Root may issue separate minimum4 original GO; actual minimum terminal/raw admission before separate modern4 GO. Native/SDK/phaseFP/genuine/performance remain open.",
+  "waste_review": "All8currentprefixes execute once after changedcontroller admission; no originalbody/retiming/rebuild or expensivearchive reread. Observed perprocess costs retained; parallel walltime not sum."
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "crop-metadata-private-prior-cpp-performance-v1",
+  "status": "MEASURED_SOURCE_NOT_ACCEPTED_ONE_PRIOR_CPP_REGRESSION",
+  "source": "f02056536f879df477cf4c2aded5979379fcb339",
+  "comparison": {
+    "status": "ROOT_RECONSTRUCTED_PRIVATE_CPP_ONLY_NO_ORIGINAL_CREDIT",
+    "source": "f02056536f879df477cf4c2aded5979379fcb339",
+    "samples": 112,
+    "warmup_groups": 16,
+    "prior_cpp_comparison_wins": 7,
+    "prior_cpp_comparison_losses": 1,
+    "rows": [
+      {
+        "case_id": "view-C",
+        "prior_cpp_ms": 0.0014574498880039822,
+        "candidate_cpp_ms": 0.0013458897700053488,
+        "ratio": 1.0828894910154419,
+        "candidate_faster": true
+      },
+      {
+        "case_id": "view-F",
+        "prior_cpp_ms": 0.00143499265863912,
+        "candidate_cpp_ms": 0.0013650244540491356,
+        "ratio": 1.0512578396543992,
+        "candidate_faster": true
+      },
+      {
+        "case_id": "view-reverse",
+        "prior_cpp_ms": 0.0014283352075515198,
+        "candidate_cpp_ms": 0.001323442980415872,
+        "ratio": 1.07925708072643,
+        "candidate_faster": true
+      },
+      {
+        "case_id": "view-3D",
+        "prior_cpp_ms": 0.0016033105546417107,
+        "candidate_cpp_ms": 0.0014614480213139254,
+        "ratio": 1.0970698452896346,
+        "candidate_faster": true
+      },
+      {
+        "case_id": "copy-C",
+        "prior_cpp_ms": 0.039993516323633786,
+        "candidate_cpp_ms": 0.039622640151515155,
+        "ratio": 1.0093602084742566,
+        "candidate_faster": true
+      },
+      {
+        "case_id": "copy-F",
+        "prior_cpp_ms": 0.015512312456115715,
+        "candidate_cpp_ms": 0.016099640713476783,
+        "ratio": 0.9635191699110761,
+        "candidate_faster": false
+      },
+      {
+        "case_id": "copy-reverse-K",
+        "prior_cpp_ms": 0.021189313729093915,
+        "candidate_cpp_ms": 0.02111748995250274,
+        "ratio": 1.0034011512141225,
+        "candidate_faster": true
+      },
+      {
+        "case_id": "copy-object-provider",
+        "prior_cpp_ms": 0.0024287017680324594,
+        "candidate_cpp_ms": 0.002349162106392638,
+        "ratio": 1.0338587368761716,
+        "candidate_faster": true
+      }
+    ],
+    "slot_meaning": {
+      "0": "prior C++ d7 binder/same12dleaf",
+      "1": "candidate C++ f020 binder/same12dleaf"
+    },
+    "sampler_label_disclosure": "Unmodified genericmeasure function returns literal labels scikit-image/current. Here bothcallables are privateC++; slot0 isNOT originalscikit-image. Preserve raw bytes; this rootmetadata is authoritativeactualcallableidentity.",
+    "original_calls": 0
+  },
+  "publication": "benchmarks\\crop-metadata-private-v1\\README.md",
+  "exact_raw_files": [
+    {
+      "path": "benchmarks\\crop-metadata-private-v1\\report.json",
+      "bytes": 88273,
+      "sha256": "f650ab0bcdbdf43fcb1456beffbfaff560dc1e9e0b909bf92ca8502e78839ff3"
+    },
+    {
+      "path": "benchmarks\\crop-metadata-private-v1\\batches.jsonl",
+      "bytes": 119842,
+      "sha256": "295d29d0d10ebf99287d51595882ba0a83482ec1033722badda4e9a66793dd9f"
+    }
+  ],
+  "elapsed_seconds": 26.065629899967462,
+  "root_reconstruction": "build/crop-copy-optimization-v1/prior-cpp-reconstruction-v1.json",
+  "root_review": "Independently reconstructed112accepted>=100ms samples and16>=250mswarmupgroups, pairedbatchbefore/after/complete/loop/sampleorder andpercase medians exactlymatch; all8ratiosretained. Bothslots privateCPP; no original-libraryspeedcredit.",
+  "limits": "Private minimumscope, no controlledCPUclock/CPUmetadata recorded; no original/genuine/release acceptance. OnecopyFmedianratio0.9635191699/increasedlatency3.8%causeunproven.",
+  "next_owner_trigger": "C owns oneview-onlysourcevariant; rootaffectedparity/FP/provenance andonefixedchanged-sourcecomparison afterquietwindow. No favorableunchangedrerun.",
+  "waste_review": "One actual26.066s privatepass after924savedchecks+32FPcontrols. Allworkers acknowledgedholds/currenthandles terminal; actualproject Python/WSL/compiler process scan empty. Reused unchanged8fixtures/sampler/helper/components, no originalbaseline rerun/fullbuild. Literal genericlabels explicitlymapped, rawneverrewritten."
+}

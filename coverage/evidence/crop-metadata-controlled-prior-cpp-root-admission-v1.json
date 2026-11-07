@@ -1,0 +1,41 @@
+{
+  "schema": "crop-metadata-controlled-prior-cpp-root-admission-v1",
+  "status": "PASS_SCOPED_PRIOR_CPP_TARGET_FP_AND_STORAGE_WORDS_ONLY",
+  "source": "f02056536f879df477cf4c2aded5979379fcb339",
+  "saved_parity": "coverage/evidence/crop-metadata-private-parity-root-admission-v1.json",
+  "runs": [
+    {
+      "profile": "minimum",
+      "result_path": "D:\\Scratch\\crop-copy-native-v1\\FP-control-v1\\minimum\\result-v1.json",
+      "sha256": "f3d3e8c383ca691b0941c109a17279c331e599c969420de595db9881bc5b2ed5",
+      "native_calls": 16,
+      "case_pairs": 8,
+      "all_values_alias_metadata_semantic_FP_equal": true,
+      "process32": true,
+      "cores": {
+        "baseline": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/util-view-boundary-v1/build-v2/minimum/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "candidate": "/mnt/d/Scratch/crop-copy-native-v1/minimum/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so"
+      }
+    },
+    {
+      "profile": "modern",
+      "result_path": "D:\\Scratch\\crop-copy-native-v1\\FP-control-v1\\modern\\result-v1.json",
+      "sha256": "bb8d6d0b382af87f146bf5c9fb2847aeb934cc4e6c17e7e58f4f9a12c2d3edd6",
+      "native_calls": 16,
+      "case_pairs": 8,
+      "all_values_alias_metadata_semantic_FP_equal": true,
+      "process32": true,
+      "cores": {
+        "baseline": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/util-view-boundary-v1/build-v2/modern/site/skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "candidate": "/mnt/d/Scratch/crop-copy-native-v1/modern/site/skimagexx/_core.cpython-313-x86_64-linux-gnu.so"
+      }
+    }
+  ],
+  "total_native_calls": 32,
+  "original_calls": 0,
+  "timing": 0,
+  "independent_root_review": "Actualtwo command exits0; all16casepair snapshots match incoming/outgoing semanticCW/SW/MXCSR and values/type/layout/alias/base/metadata at sameincoming raw32template; unchangedinput and exactcaller/process32 checked. Oldprivate component binderd7 and newf020 share same12dleaf/frontend/SDK. Objectpayloads serialized as strings, never pointerwords.",
+  "limits": "ControlledpriorC++ compatibility only on8fixedfixtures, not original-public FP, numeric/domain completion, genuineinstalledSDK or speed. SIMDdisabled/parity924 separate scope, scalar/sanitizer/MSVC/genuine/currentcontexts stillpending.",
+  "waste_review": "32native calls once, no new originals/sampler/timing; reused existing8fixtures/privateABIs/helper and didnotderive targetoraclefromoldcontroller_fenv. RootFPscript source reviewedbeforeexecution; no experimentrepetition.",
+  "next_owner_trigger": "Root may use frozen native-only performance/attribution experiment after actualquietwindow+source/runtime/protocol checks; fullrelease/originalbench remain mandatory."
+}
