@@ -39,6 +39,10 @@ Current retained-evidence closeout: [six-family root intake](evidence/current281
 
 [282 failed-campaign root closeout](evidence/igg282-failed-campaign-root-closeout-v1.json) authenticates four archives totaling 5,995,652,873 bytes and 965,854 XML checks with **38 failures**, 312 SDK checks and no release acceptance. All profiles have eight float16 error-domain test failures; minimum has six additional saved-result byte mismatches (three cases in normal/scalar modes). Metrics integrator owns the independent generic-test correction; numerical root-cause diagnosis remains a separate mandatory gate. [Corrected golden complete-source readiness](evidence/golden283-complete-source-readiness-v1.json) passes 168 selectors / 4,041 ordinary nodes plus eight subtests on each retained Python; inherited genuine-release failures remain open. No original observations, native numerical runs or timing campaigns were repeated for this closeout.
 
+Corrections now source-admitted: [JOIN/rolling boundary successor8ed](evidence/current281-measurement-boundaries-root-admission-v1.json) passes159checks on each Python. Its new exact-source comparisons [JOIN42362296756](https://github.com/bipxx/scikit-imagexx/actions/runs/42362296756) and [rolling42362296718](https://github.com/bipxx/scikit-imagexx/actions/runs/42362296718) are terminal SUCCESS. [Saved corrected-output intake](evidence/current281-corrected-comparisons-root-intake-v1.json) reconstructs40cases/560samples/80warmupgroups:18wins22losses; exact8edreport validators pass, independent authority admission remains pending. [IGG half exception-parity correctiona706](evidence/igg-half-error-parity-root-source-admission-v1.json) passes27source/inert checks per Python, retaining all dtype cases and production/gold bytes. This does not resolve the minimum numerical failures. C prepares a native-only three-case diagnostic with zero original/timing calls; execution still requires its actual source/runtime readiness and root GO. R's MARK64bit support remains a source-only work in progress. No new shipping or full-contract checkbox closes here.
+
+Root now [admits the bounded Radon/flood performance scope](evidence/current281-radon-flood-performance-root-admission-v1.json):24cases/336samples/48warmupgroups,20wins/four losses, actual authority/cohorts/host helpers verified. [Per-case results and six exact raw report/journal files](../benchmarks/current281-minimum-initial-v1/README.md) are published. Candidate B~ credit applies only to these four APIs and declared domains; main stays271, full-contract gates stay open. Corrected JOIN/rolling40case authority review remains pending, with all22losses retained.
+
 Update discipline: each bounded task must identify affected API/member keys, changed domains, exact source/profile/receipt, passed or failed gates, remaining gates and the next owner/trigger in its existing handoff. Root updates the affected rows and this checkpoint in the same validated increment. Reuse still-valid evidence; never turn a test locator, registration or workflow success into full closure. Waste review: reused the existing inventory, checklist and ledger; this update required only document/state checks and read-only run-status queries, with zero scientific reruns.
 
 | Inventory category | Public keys | Meaning |
@@ -2952,6 +2956,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-metrics-variation-of-information"></a>
 - [ ] **`metrics.variation_of_information`** — full contract closed.
   - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Current failed gate: hosted373 cohort returned before the sampler but failed strict float64 dtype/result-word comparison. Actual words were not retained, so dtype versus numerical cause is unresolved; no timing or B credit. [Retained intake](evidence/current281-initial-comparisons-root-intake-v1.json).
   - Signature: `(image0=None, image1=None, *, table=None, ignore_labels=())`.
   - Required focus: image versus table input, ignore_labels, zeros and result order. Cases to close: merge/split partitions with known conditional entropies.
   - Easiest remaining route: Reuse normalized contingency counts and conditional entropy reductions.
@@ -3112,6 +3117,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-morphology-flood"></a>
 - [ ] **`morphology.flood`** — full contract closed.
   - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Candidate B~ admitted: four flood cases/four wins with real-cohort/helper/authority closure on the qualified minimum-host domain. [Root performance receipt](evidence/current281-radon-flood-performance-root-admission-v1.json) and [published raw cases](../benchmarks/current281-minimum-initial-v1/README.md). Main/full-contract B/R gates remain open.
   - Signature: `(image, seed_point, *, footprint=None, connectivity=None, tolerance=None)`.
   - Required focus: seed bounds, tolerance promotion, connectivity versus footprint and NaN. Cases to close: exact/tolerant 2D/3D connected regions.
   - Easiest remaining route: Queue-based connected tolerance predicate from seed using shared offsets.
@@ -3121,6 +3127,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-morphology-flood-fill"></a>
 - [ ] **`morphology.flood_fill`** — full contract closed.
   - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Candidate B~ admitted: four flood_fill cases/four losses, shared executor and authority/cohort/helper closure verified. [Root performance receipt](evidence/current281-radon-flood-performance-root-admission-v1.json) and [all published losses/raw](../benchmarks/current281-minimum-initial-v1/README.md). Optimization, broader domains and main delivery remain open.
   - Signature: `(image, seed_point, new_value, *, footprint=None, connectivity=None, tolerance=None, in_place=False)`.
   - Required focus: in_place, new_value casting, overlap and return identity. Cases to close: typed replacements and in-place aliases.
   - Easiest remaining route: Reuse flood mask then dtype-correct replacement into copy or original.
@@ -3613,6 +3620,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-segmentation-inverse-gaussian-gradient"></a>
 - [ ] **`segmentation.inverse_gaussian_gradient`** — full contract closed.
   - Main: `upstream-only`; gate status `C~ N~ H~ P~ S~ V~ W~ B? R?` (private scoped component admission; no shipping promotion); default dtype slice: `none registered`.
+  - Current failed release gate: exact852 has generic half error-domain test failures across all profiles, plus three minimum-profile saved-result byte mismatches in normal/scalar modes. Private accuracy does not waive these failures. [Four-profile closeout](evidence/igg282-failed-campaign-root-closeout-v1.json).
   - Signature: `(image, alpha=100.0, sigma=5.0)`.
   - Required focus: alpha, sigma, dtype and boundaries. Cases to close: smooth/step edges and constant images.
   - Easiest remaining route: Reuse the reviewed Hessian first-derivative correlation pattern; preserve input-dtype derivative/square/sum/sqrt, nearest borders, sigma thresholds and alpha broadcasting. The symmetric Gaussian kernel is insufficient.
@@ -3634,6 +3642,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-segmentation-mark-boundaries"></a>
 - [ ] **`segmentation.mark_boundaries`** — full contract closed.
   - Main: `upstream-only`; gate status `C~ N~ H? P~ S~ V~ W~ B? R?`; default dtype slice: `none registered`.
+  - Current demonstrated domain gap: frozen int64 outer-label benchmark hits the native exact-promotion frontier even for labels0..6. No timings were produced. Extend faithful label support without changing benchmark dtype/cases. [Retained intake](evidence/current281-initial-comparisons-root-intake-v1.json).
   - Signature: `(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)`.
   - Required focus: mode, background_label, subpixel upsampling, image dtype and color. Cases to close: inner/outer/subpixel boundaries and grayscale/RGB images.
   - Easiest remaining route: Reuse find_boundaries and color overlay with optional outline.
@@ -3796,6 +3805,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-transform-frt2"></a>
 - [ ] **`transform.frt2`** — full contract closed.
   - Main: `upstream-only`; gate status `C~ N~ H? P~ S~ V~ W~ B? R?`; default dtype slice: `none registered`.
+  - Candidate B~ admitted: eight finite-Radon cases/eight wins with actual authority/cohort/helper closure in the declared integer minimum-host domain. [Root performance receipt](evidence/current281-radon-flood-performance-root-admission-v1.json) and [published raw cases](../benchmarks/current281-minimum-initial-v1/README.md). Broader domains and main/full-contract B/R gates remain open.
   - Signature: `(a)`.
   - Required focus: supported size, modular line indexing and unsigned overflow. Cases to close: tiny exact prime grids and integer limits.
   - Easiest remaining route: Implement finite Radon integer line sums on prime-sized square grid.
@@ -3847,6 +3857,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-transform-ifrt2"></a>
 - [ ] **`transform.ifrt2`** — full contract closed.
   - Main: `upstream-only`; gate status `C~ N~ H? P~ S~ V~ W~ B? R?`; default dtype slice: `none registered`.
+  - Candidate B~ admitted: eight finite-Radon cases/eight wins with actual authority/cohort/helper closure in the declared integer minimum-host domain. [Root performance receipt](evidence/current281-radon-flood-performance-root-admission-v1.json) and [published raw cases](../benchmarks/current281-minimum-initial-v1/README.md). Broader domains and main/full-contract B/R gates remain open.
   - Signature: `(a)`.
   - Required focus: prime-size assumptions, division and signed/unsigned dtype. Cases to close: exact forward/inverse integer fixtures.
   - Easiest remaining route: Invert finite Radon modular line sums with exact normalization.

@@ -1,0 +1,414 @@
+{
+  "schema": "current281-radon-flood-performance-root-admission-v1",
+  "status": "PASS_SCOPED_CANDIDATE_ONE_THREAD_PUBLIC_PERFORMANCE",
+  "production_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "controller_source": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "independent_review": {
+    "path": "build/current281-successful-results-admission-v1/review-v1.json",
+    "sha256": "adce7407f16e601009f89fe9cf47248b3ac43e84e5cf2ce647cea5699d35651e"
+  },
+  "root_review": "Root reviewed exactactualauthority/helper/cohort assertions and55smallpath inspection; authenticated fivefrozenproofs, reused rootindependentrawgraph+frozenreportvalidation and qualifiedDDArootv3. No science/seal/measurement replay.",
+  "cases": 24,
+  "samples": 336,
+  "warmup_groups": 48,
+  "wins": 20,
+  "losses": 4,
+  "workers": 1,
+  "results": {
+    "finite-radon": {
+      "run": 42360529492,
+      "rows": [
+        {
+          "case_id": "transform.frt2/n7/uint8/C",
+          "reference_ms": 0.16395693029871977,
+          "cpp_ms": 0.00165999264684721,
+          "speedup": 98.76967263085159,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 23,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            6912,
+            697356
+          ]
+        },
+        {
+          "case_id": "transform.frt2/n31/uint16/C",
+          "reference_ms": 3.8719377666666666,
+          "cpp_ms": 0.014357861833952911,
+          "speedup": 269.6737029123974,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            302,
+            74223
+          ]
+        },
+        {
+          "case_id": "transform.frt2/n127/uint32/C",
+          "reference_ms": 67.193289,
+          "cpp_ms": 0.4687818739837398,
+          "speedup": 143.33593666706204,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 21,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            19,
+            2392
+          ]
+        },
+        {
+          "case_id": "transform.frt2/n127/uint32/F",
+          "reference_ms": 67.1728745,
+          "cpp_ms": 0.4729006033057851,
+          "speedup": 142.04438317572826,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 21,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            19,
+            2380
+          ]
+        },
+        {
+          "case_id": "transform.frt2/n127/uint32/reverse",
+          "reference_ms": 66.922449,
+          "cpp_ms": 0.47904639344262295,
+          "speedup": 139.69930661426747,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 21,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            19,
+            2384
+          ]
+        },
+        {
+          "case_id": "transform.frt2/n257/uint16/C",
+          "reference_ms": 278.312135,
+          "cpp_ms": 2.739612214285714,
+          "speedup": 101.58814942813466,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 19,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            8,
+            422
+          ]
+        },
+        {
+          "case_id": "transform.frt2/n257/uint16/F",
+          "reference_ms": 277.331529,
+          "cpp_ms": 2.7837193095238097,
+          "speedup": 99.62625472014312,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 19,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            8,
+            415
+          ]
+        },
+        {
+          "case_id": "transform.frt2/n257/uint16/step",
+          "reference_ms": 278.665591,
+          "cpp_ms": 2.7610538095238097,
+          "speedup": 100.92725829492638,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 19,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            8,
+            418
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n7/uint8/C",
+          "reference_ms": 0.16853459620991254,
+          "cpp_ms": 0.002265104504646401,
+          "speedup": 74.404777291378,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 23,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            6684,
+            509950
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n31/uint16/C",
+          "reference_ms": 3.9420933448275863,
+          "cpp_ms": 0.015916433011049724,
+          "speedup": 247.6744219066453,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            300,
+            66624
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n127/uint32/C",
+          "reference_ms": 67.3292365,
+          "cpp_ms": 0.4905485965665236,
+          "speedup": 137.2529387939436,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 21,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            19,
+            2307
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n127/uint32/F",
+          "reference_ms": 67.5514025,
+          "cpp_ms": 0.4933619313304721,
+          "speedup": 136.92058144379112,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 21,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            19,
+            2309
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n127/uint32/reverse",
+          "reference_ms": 67.2955095,
+          "cpp_ms": 0.5007716026200874,
+          "speedup": 134.383637466468,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 21,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            19,
+            2295
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n257/uint16/C",
+          "reference_ms": 278.143644,
+          "cpp_ms": 2.873628097560976,
+          "speedup": 96.79180275139902,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 19,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            8,
+            404
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n257/uint16/F",
+          "reference_ms": 279.962562,
+          "cpp_ms": 2.889869275,
+          "speedup": 96.87724092640833,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 19,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            8,
+            400
+          ]
+        },
+        {
+          "case_id": "transform.ifrt2/n257/uint16/step",
+          "reference_ms": 279.653326,
+          "cpp_ms": 2.88858585,
+          "speedup": 96.81322990625326,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 19,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            8,
+            401
+          ]
+        }
+      ],
+      "cases": 16,
+      "samples": 224,
+      "warmup_groups": 32
+    },
+    "flood-fill": {
+      "run": 42360529644,
+      "rows": [
+        {
+          "case_id": "flood-uint8-C",
+          "reference_ms": 0.7865502837837838,
+          "cpp_ms": 0.6865127321428571,
+          "speedup": 1.1457184214612786,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1450,
+            1667
+          ]
+        },
+        {
+          "case_id": "flood-uint8-F",
+          "reference_ms": 0.7768971073825504,
+          "cpp_ms": 0.7413798387096775,
+          "speedup": 1.0479069794165004,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1471,
+            1544
+          ]
+        },
+        {
+          "case_id": "flood-float32-C",
+          "reference_ms": 0.7787252953020134,
+          "cpp_ms": 0.7251719622641509,
+          "speedup": 1.0738491500287144,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1470,
+            1573
+          ]
+        },
+        {
+          "case_id": "flood-float32-F",
+          "reference_ms": 0.7996919583333334,
+          "cpp_ms": 0.7722669798657719,
+          "speedup": 1.0355123023288246,
+          "classification": "win",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1428,
+            1472
+          ]
+        },
+        {
+          "case_id": "flood_fill-uint8-C",
+          "reference_ms": 0.8404054160583941,
+          "cpp_ms": 1.4971532727272727,
+          "speedup": 0.5613355902615628,
+          "classification": "loss",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1363,
+            774
+          ]
+        },
+        {
+          "case_id": "flood_fill-uint8-F",
+          "reference_ms": 0.8341633405797102,
+          "cpp_ms": 1.5764216527777777,
+          "speedup": 0.5291498877282289,
+          "classification": "loss",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1371,
+            727
+          ]
+        },
+        {
+          "case_id": "flood_fill-float32-C",
+          "reference_ms": 0.8451460729927007,
+          "cpp_ms": 1.5565773066666666,
+          "speedup": 0.5429515574800068,
+          "classification": "loss",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1357,
+            735
+          ]
+        },
+        {
+          "case_id": "flood_fill-float32-F",
+          "reference_ms": 0.8607359552238806,
+          "cpp_ms": 1.6277756338028169,
+          "speedup": 0.5287804641804505,
+          "classification": "loss",
+          "samples": 14,
+          "warmup_groups": 2,
+          "batches": 22,
+          "underlength_batches": 0,
+          "timed_loop_invocations": [
+            1322,
+            706
+          ]
+        }
+      ],
+      "cases": 8,
+      "samples": 112,
+      "warmup_groups": 16
+    }
+  },
+  "raw_files": [
+    "benchmarks\\current281-minimum-initial-v1\\finite-radon\\frt2.json",
+    "benchmarks\\current281-minimum-initial-v1\\finite-radon\\frt2.batches.jsonl",
+    "benchmarks\\current281-minimum-initial-v1\\finite-radon\\ifrt2.json",
+    "benchmarks\\current281-minimum-initial-v1\\finite-radon\\ifrt2.batches.jsonl",
+    "benchmarks\\current281-minimum-initial-v1\\flood-fill\\flood-fill.json",
+    "benchmarks\\current281-minimum-initial-v1\\flood-fill\\flood-fill.batches.jsonl"
+  ],
+  "limits": [
+    "Thisreview closesactualauthority/helper/cohortchain onlyforthese2successfulworkflows, notall80six-familyresults orotherfailedcampaigns. Rootrawreconstructionandvalidator proofs are explicitlyreused, not independentlyrerunhere.",
+    "Cohortterminal retainsbooleans for actualsourcecheckedcaller32/semanticFP/inputparity; helpercontrols retainraw32words. Do not claim an additional rawtargetFENVdump or processentry-before-scientific-import restoration beyondfrozenprobe envelope. C1restore snapshot is after installedimports; broadFP/traps/platformfrontiers remainopen.",
+    "InnernativeCreturn observer supports frt2/ifrt2acceptance andfloodmask/copy/assign;outerprofile pausedduringnative anddoesnot independentlyobserveworkergetter. OrderedserialfloodBFS hasnoworkerlookup. Existingqualifiedkernel/worker/sourceproofs reused, no speculativeSIMD/parallel coverage claimed.",
+    "Scopedperformance isonehost/oneactualminimumruntime/workers1/fixedsuccessfulintegerRadonN<=257and8flooduint8/float32C/Fcases. Broaderfloat/complex/nonfinite/half/strided/protocol/Windowsoriginal/platform/performance/fullAPI scopes remainseparate. Floodsegmentationnames areidentityaliases, notadditionalcapturedcanonicalcalls.",
+    "No mainpublication/newwholeproductqualifiedsource or blanketlibraryspeedclaim authorized by thisreceipt; root retains finaladmission andhonestpercaseresults."
+  ],
+  "full_API_closed": false,
+  "main_delivered": false,
+  "pending": "Otherfamily/domain/SDK/platform/optimization/release/main gates remainopen. Fourfillcases are slower and remainrequiredoptimizationfrontier.",
+  "waste_review": "Reused all existing retained evidence and exactpublicraw bytes; no retiming/new originals/corehash or extra reviewcampaign. Publish thisboundedproof withoutwaitingfutureMARK/VI/IGG fixes."
+}

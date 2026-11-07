@@ -1,0 +1,16 @@
+{
+  "schema": "current281-measurement-boundaries-root-admission-v1",
+  "status": "PASS_EXACT_SOURCE_CONTROLLER_BOUNDARY_CORRECTION_NO_TIMING_AUTHORITY",
+  "source": "8ed0e2d223719adb5512c3f1e037e90c9265695f",
+  "parent": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "handoff": "build\\current281-measurement-boundaries-v1\\handoff-v1.json",
+  "handoff_sha256": "a737b10dbace7b1e0fff7c908cfb36959883ce9548d29f0fccbfa3aba147c622",
+  "source_files": 6,
+  "proofs": 16,
+  "affected_checks_each_python": 159,
+  "actual_stdlib_manifest_intakes": 2,
+  "review": "Independent root inspected exactJOIN finish_probe field addition and unchanged strictconsumer; rolling generatedoutput/reportjournal path insideunchangedqualifiedbindingroot. Exactmanifestinverse/probeSHA refresh; actualwriterconsumer positive/negative regressions andnestedreportvalidator mutations pass normalplugins.",
+  "unchanged": "QualifiedDDA/native/SDK/driver/cases/method/workflows/root runtime all unchanged; only3controllerfunction sources changed.",
+  "pending": "Publish exactcandidate source; verify actualremote/noprior sourcecampaign/capacity/workflow selectors and issue new actualUTC conditionalGO for JOIN32+rolling8 only. Oldfailedruns0timing remainfailed. No replay ofsuccessfulRadon/flood.",
+  "waste_review": "Reused159affected sourceXML/hashes and originalqualifiedDDA scope, no numerical/release/original requalification or genericpreflight. New boundary regressions cover actual demonstrated failure."
+}
