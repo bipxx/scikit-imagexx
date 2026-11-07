@@ -1,0 +1,177 @@
+name: IGG native three-case diagnostic
+on:
+  workflow_dispatch:
+    inputs:
+      root_authorization:
+        description: Source-bound UTC root authorization JSON; default has no authority
+        type: string
+        required: false
+        default: UNBOUND
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      ROOT_AUTHORIZATION_JSON: ${{ inputs.root_authorization }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONUNBUFFERED: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+    steps:
+      - name: Reject UNBOUND before checkout or artifact fetch
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import datetime,json,os
+          from pathlib import Path
+          raw=os.environ['ROOT_AUTHORIZATION_JSON']
+          assert raw.strip() and raw.strip()!='UNBOUND','UNBOUND: root authorization required'
+          a=json.loads(raw)
+          fields={'status','diagnostic_source','source','case_ids','owned_topcalls','max_image_core_calls','original_calls','timing','script_sha256','contract_sha256','core_sha256','deadline_utc','allow_fresh_host_helper'}
+          assert type(a)is dict and set(a)==fields,'Unexpected authority fields'
+          assert a['status']=='ROOT_AUTHORIZED_HOSTED_IGG_THREE_ONCE'
+          assert os.environ['GITHUB_ACTIONS']=='true'and os.environ['GITHUB_RUN_ATTEMPT']=='1','No retry authority'
+          assert a['diagnostic_source']==os.environ['GITHUB_SHA']and len(a['diagnostic_source'])==40
+          assert a['source']=='852cc1882fbd757f55bc9f92eb783282e2f5addb'
+          assert a['case_ids']==['dtype-float64','dtype-complex128','image-list']
+          for key,value in (('owned_topcalls',3),('max_image_core_calls',15),('original_calls',0),('timing',0)):
+              assert type(a[key])is int and a[key]==value,key
+          assert a['allow_fresh_host_helper']is True
+          assert a['script_sha256']=='0a5124304f9a2c3cd7f8ec68f048b5d019189c3e90eeae6a36f5bfa4bbe33a55'
+          assert a['contract_sha256']=='331383cdf5f1c84a0dc67c21d9495c5574d88e49ea49a9d16c2643e7a53f0d21'
+          assert a['core_sha256']=='ddcc9e141d3b6b9a2a5c4979ce6bc1877c7391b261cece3673bee4c7eae4732a'
+          deadline=datetime.datetime.fromisoformat(a['deadline_utc'].replace('Z','+00:00'))
+          assert deadline.utcoffset()==datetime.timedelta(0)and datetime.datetime.now(datetime.timezone.utc)<deadline,'Expired/non-UTC authority'
+          p=Path(os.environ['RUNNER_TEMP'])/'igg-three-authorization.json'
+          with p.open('x',encoding='utf-8',newline='\n')as stream:json.dump(a,stream,indent=2);stream.write('\n')
+          PY
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate checkout and bounded input capacity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import datetime,hashlib,json,os,shutil,subprocess,sys
+          from pathlib import Path
+          a=json.loads((Path(os.environ['RUNNER_TEMP'])/'igg-three-authorization.json').read_bytes())
+          assert sys.version_info[:3]==(3,11,17)
+          assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==a['diagnostic_source']==os.environ['GITHUB_SHA']
+          assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
+          assert datetime.datetime.now(datetime.timezone.utc)<datetime.datetime.fromisoformat(a['deadline_utc'].replace('Z','+00:00'))
+          for name,key in (('tools/igg_host_native_diagnostic.py','script_sha256'),('coverage/contracts/igg-host-native-diagnostic-v1.json','contract_sha256')):
+              assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==a[key],name
+          c=json.loads(Path('coverage/contracts/igg-host-native-diagnostic-v1.json').read_bytes())
+          assert shutil.disk_usage('.').free>sum(c[k]['bytes']for k in('stager','qualified'))+2*1024**3
+          out=Path('build/igg-host-diag');out.mkdir(parents=True,exist_ok=False)
+          (out/'authorization.json').write_text(json.dumps(a,indent=2)+'\n',encoding='utf-8',newline='\n')
+          PY
+          python tools/igg_host_native_diagnostic.py plan > build/igg-host-diag/source-plan.json
+      - name: Once-only DDA runtime and failed852 core intake
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python tools/igg_host_native_diagnostic.py fetch --output build/igg-host-diag/downloads
+          python tools/igg_host_native_diagnostic.py intake \
+            --stager build/igg-host-diag/downloads/13565257857.zip \
+            --stager-receipt build/igg-host-diag/downloads/13565257857-retention.json \
+            --qualified build/igg-host-diag/downloads/13569191569.zip \
+            --qualified-receipt build/igg-host-diag/downloads/13569191569-retention.json \
+            --output build/igg-host-diag/inputs
+      - name: Install13 nonproduct offline wheels and run source controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import datetime,json,subprocess,sys
+          from pathlib import Path
+          a=json.loads(Path('build/igg-host-diag/authorization.json').read_bytes())
+          assert datetime.datetime.now(datetime.timezone.utc)<datetime.datetime.fromisoformat(a['deadline_utc'].replace('Z','+00:00'))
+          c=json.loads(Path('coverage/contracts/igg-host-native-diagnostic-v1.json').read_bytes())
+          wheels=Path('build/igg-host-diag/inputs/wheels');target=Path('build/igg-host-diag/runtime-prefix')
+          assert not target.exists()
+          selected=[str(wheels/name)for name,row in c['wheels'].items()if row['name']!='scikit-imagexx']
+          assert len(c['wheels'])==14 and len(selected)==13
+          argv=[sys.executable,'-m','pip','install','--no-index','--no-deps','--no-compile','--target',str(target),*selected]
+          Path('build/igg-host-diag/offline-install-command.json').write_text(json.dumps(argv,indent=2)+'\n',encoding='utf-8',newline='\n')
+          subprocess.check_call(argv)
+          PY
+          export PYTHONPATH="$PWD/build/igg-host-diag/runtime-prefix"
+          python -m pytest -q --capture=sys tests/test_igg_host_native_diagnostic.py tests/test_igg_native_three_workflow.py \
+            -o cache_dir=build/igg-host-diag/source-cache --basetemp=build/igg-host-diag/source-tmp \
+            --junitxml=build/igg-host-diag/source.xml
+      - name: Build and probe only the source-built F1 test helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import datetime,json
+          from pathlib import Path
+          a=json.loads(Path('build/igg-host-diag/authorization.json').read_bytes())
+          assert a['allow_fresh_host_helper']is True
+          assert datetime.datetime.now(datetime.timezone.utc)<datetime.datetime.fromisoformat(a['deadline_utc'].replace('Z','+00:00'))
+          PY
+          python tests/util_views_fenv_build.py --output "$PWD/build/igg-host-diag/fenv" --control-python "$(command -v python)"
+      - name: Bind leafGO to root authority and actual fresh-host receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import datetime,hashlib,json,os
+          from pathlib import Path
+          a=json.loads(Path('build/igg-host-diag/authorization.json').read_bytes())
+          assert a['allow_fresh_host_helper']is True and a['diagnostic_source']==os.environ['GITHUB_SHA']
+          assert os.environ['GITHUB_RUN_ATTEMPT']=='1'
+          assert datetime.datetime.now(datetime.timezone.utc)<datetime.datetime.fromisoformat(a['deadline_utc'].replace('Z','+00:00'))
+          receipt=Path('build/igg-host-diag/fenv/receipt.json').resolve();raw=receipt.read_bytes();record=json.loads(raw)
+          assert record['schema']=='util-views-fenv-build-v1'and record['status']=='PASS_SOURCE_BUILT_FENV32'
+          assert record['source_context_sha256']==hashlib.sha256(Path('coverage/contracts/util-views-fenv-v1.json').read_bytes()).hexdigest()
+          go={k:v for k,v in a.items()if k!='allow_fresh_host_helper'}
+          go.update(helper_receipt=str(receipt),helper_receipt_sha256=hashlib.sha256(raw).hexdigest())
+          Path('build/igg-host-diag/root-GO.json').write_text(json.dumps(go,indent=2)+'\n',encoding='utf-8',newline='\n')
+          with Path(os.environ['GITHUB_ENV']).open('a',encoding='utf-8',newline='\n')as stream:
+              for k,v in dict(UTIL_VIEWS_FENV_MODE='source-built-v1',UTIL_VIEWS_FENV_RECEIPT=go['helper_receipt'],UTIL_VIEWS_FENV_RECEIPT_SHA256=go['helper_receipt_sha256']).items():stream.write(k+'='+v+'\n')
+          PY
+      - name: Three owned calls only, deferred stages and strict observations
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset UTIL_VIEWS_FENV_HELPER LD_PRELOAD LD_AUDIT NPY_DISABLE_CPU_FEATURES OPENBLAS_CORETYPE SKIMAGEXX_DISABLE_SIMD
+          python tools/igg_host_native_diagnostic.py run --go build/igg-host-diag/root-GO.json \
+            --inputs build/igg-host-diag/inputs --runtime build/igg-host-diag/runtime-prefix \
+            --output build/igg-host-diag/result
+      - name: Preserve small diagnostics only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: igg-three-native-diagnostic-${{ github.run_id }}
+          retention-days: 90
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/igg-three-authorization.json
+            build/igg-host-diag/authorization.json
+            build/igg-host-diag/source-plan.json
+            build/igg-host-diag/offline-install-command.json
+            build/igg-host-diag/source.xml
+            build/igg-host-diag/root-GO.json
+            build/igg-host-diag/downloads/*.json
+            build/igg-host-diag/inputs/intake.json
+            build/igg-host-diag/inputs/runtime.json
+            build/igg-host-diag/fenv/
+            build/igg-host-diag/result/
