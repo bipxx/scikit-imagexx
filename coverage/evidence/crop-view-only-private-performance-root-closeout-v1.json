@@ -1,0 +1,91 @@
+{
+  "schema": "crop-view-only-private-performance-root-closeout-v1",
+  "status": "INDEPENDENT_ROOT_RAW_PASS_UNACCEPTED_6_FASTER_2_SLOWER",
+  "source": "9e689ac283f15fec40eedb8cfefa8edf1144bc48",
+  "comparison": "PrivatepriorCPPd7 versusnewCPP9e, unchanged12dleaf/SDK; NOToriginalscikit-image.",
+  "samples": 112,
+  "warmup_groups": 16,
+  "workers": 1,
+  "original_calls": 0,
+  "elapsed_seconds": 24.77149110008031,
+  "cases": [
+    {
+      "case_id": "view-C",
+      "prior_CPP_us": 1.5908026259399228,
+      "new_CPP_us": 1.5165351203055881,
+      "ratio": 1.0489718336489098,
+      "faster": true
+    },
+    {
+      "case_id": "view-F",
+      "prior_CPP_us": 1.4002841818572762,
+      "new_CPP_us": 1.3868940687865021,
+      "ratio": 1.0096547482407867,
+      "faster": true
+    },
+    {
+      "case_id": "view-reverse",
+      "prior_CPP_us": 1.32750286502144,
+      "new_CPP_us": 1.261825149211743,
+      "ratio": 1.0520497755578304,
+      "faster": true
+    },
+    {
+      "case_id": "view-3D",
+      "prior_CPP_us": 1.4259351915520628,
+      "new_CPP_us": 1.4704845627633565,
+      "ratio": 0.9697042918100576,
+      "faster": false
+    },
+    {
+      "case_id": "copy-C",
+      "prior_CPP_us": 41.84951554404145,
+      "new_CPP_us": 41.39464418686336,
+      "ratio": 1.010988652423843,
+      "faster": true
+    },
+    {
+      "case_id": "copy-F",
+      "prior_CPP_us": 15.353573529411763,
+      "new_CPP_us": 15.204458491803278,
+      "ratio": 1.0098073231407008,
+      "faster": true
+    },
+    {
+      "case_id": "copy-reverse-K",
+      "prior_CPP_us": 21.37673639356963,
+      "new_CPP_us": 21.210100975975976,
+      "ratio": 1.007856417929476,
+      "faster": true
+    },
+    {
+      "case_id": "copy-object-provider",
+      "prior_CPP_us": 2.42423676966791,
+      "new_CPP_us": 2.5077660176913454,
+      "ratio": 0.9666917697128965,
+      "faster": false
+    }
+  ],
+  "exact_raw_files": [
+    {
+      "path": "benchmarks/crop-view-only-private-v1/report.json",
+      "sha256": "c3db0e016389c6ee35e5811321aa5db3c82ce48b9e9249d90628b3e57407a1d6",
+      "bytes": 88280
+    },
+    {
+      "path": "benchmarks/crop-view-only-private-v1/batches.jsonl",
+      "sha256": "8ebe28f424b88b034852e177855b6dd938b24aaf646b4d8827f9feebe9037f97",
+      "bytes": 119809
+    }
+  ],
+  "root_review": "Reconstructedall190before/afterpairs,8measure_returned records,112accepted>=100ms samples,16>=250ms warmgroups,loops/medians/ratios exact. AllthreeworkerACK holds and actualemptyWindows/WSL scientificprocessscan beforeactualhandle66789, holdsreleasedonlyafterexit0. Genericrawsampler labels preserved withexplicitCPPslotidentity.",
+  "disposition": "UNACCEPTED. F-copy predecessor regression notobservedinchanged9e, butview3D0.969704x andobjectcopy0.966692x remainlosses. Do not retime unchangedsource or infer cause from small timingdeltas.",
+  "pending": "OriginalpublichardwareFP/performance/genuine/fullAPI remainopen. No thirdcropvariant withoutreview-backed usefuljustification; no unchangedretime.",
+  "next_owner_trigger": "Root prioritizes readyMARK/LBPfullpublic/mode/SDK/sharedsource/genuine and demonstratedfloodassignment optimization. Crop remainsboundedexperiment, no thirdvariation until currentresultreview identifies useful justified action; neverwaitunfinishedcrop before earliestcompatiblebundle.",
+  "waste_review": "Onechangedsource comparison24.77s; oldf0207/1preserved. Initialrootjournal reader assumedonlybefore/afterpairs, correctedtoinspect8measure_returned events; zero timingreplay. Unchangedmeasure/fixtures/reusablebaseline/helper used; no newengine/fullbuild/env/archiveauth.",
+  "independent_review": {
+    "path": "build/crop-view-only-variant-independent-review-v1/review-v2.json",
+    "sha256": "f356647dd4ddd50ec1be985cd08184a5673daec8e67c3edad7b899773e44be63",
+    "scope": "B nonauthor independently reconstructs112/16/8caseallraw; scopedrawintegrityPASS, mixedresultsnotoptimizationacceptance, no originalspeedcredit. Samplesranges overlapexceptview-reverse; no significance/causalclaim."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "crop-view-only-controlled-fp-root-closeout-v1",
+  "status": "PASS_32_CONTROLLED_PRIOR_CPP_NEW_CPP_CALLS_NOT_ORIGINAL_PARITY",
+  "source": "9e689ac283f15fec40eedb8cfefa8edf1144bc48",
+  "proofs": [
+    {
+      "path": "D:/Scratch/crop-view-only-native-v1/FP-control-v1/minimum/result-v1.json",
+      "sha256": "9d2d6ab6163a64f59d294c13671d1562d9a0b10fbf93c2961f3d3b12ae4ac9a2",
+      "calls": 16
+    },
+    {
+      "path": "D:/Scratch/crop-view-only-native-v1/FP-control-v1/modern/result-v1.json",
+      "sha256": "4399ba1f1eb68803ee12cdc73ebe05570ba2e78080939a5cd26700b35833803a",
+      "calls": 16
+    }
+  ],
+  "root_review": "Actual8casepairs perprofile match targetincoming/outgoing semanticCW/SW/MXCSR/resultwords/alias/metadata; callerprocess32 exact, node denial0/default1. Onlythree locator changes tooldadmittedcontrolharness; unchanged12dleaf/SDK, original0/sampler0/timing0.",
+  "pending": "Onechangedsource8privatecomparison after actualquietwindow; originalpublichardwareFP/genuine/currentcontexts/modes/release remainopen. Oldf0207/1 retainsrejection.",
+  "waste_review": "Actualnew9esource justified32controls; nooldf020/original/provider/archive/core replay."
+}

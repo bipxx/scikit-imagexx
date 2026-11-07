@@ -1,0 +1,13 @@
+{
+  "schema": "flood-assignment-lines-root-source-admission-v1",
+  "status": "PASS_SCOPED_SOURCE_ONLY_RUNTIME_BUILD_PREPARATION_NEXT",
+  "source": "e96c28bc31dbe382ba26dadf8e26fb62f0cbbace",
+  "handoff_sha256": "1057669223aa752343586ab7cecc7042b2ecc68121a46357439d213b09abaea9",
+  "independent_review": {
+    "path": "build/flood-assignment-lines-independent-review-v1/review-v1.json",
+    "sha256": "d513dad62815c69b56fb3bf08e6c45232e8324dbd2e40dd11468e8e1bc1c9edd"
+  },
+  "root_review": "Read actualbinder onefragmentdelta: validated stabledata cached, nonempty widthpositive, scalarone/emptyskip, logicalC lastaxislines+outercarry, livedata/mask/RHS perselectedcopy/errorcountpartialwrites preserved. No floatmath/SIMDreorder/worker/core/frontend/copy/provider changes. Auth4sources/13proofs/21actualXML eachWin; strictDDAinverse. Native59tests notexecuted.",
+  "pending": "Actual donor/source/ABI/retainedfixture closure then separate2ABI changedbinder/privateinitializer compile/map gate; actualfullsaved+59protocol/targetFP/modes/onechangedsourcebenchmark/genuine/platform/SDK/currentcontexts/fullrelease remainopen.",
+  "waste_review": "Concrete0.385-0.449ms profiler bottleneck justifiedsmallloopchange; sparseDsource avoidedfull700MBcheckout. No scientific/wholebuild/original replay or newframework."
+}

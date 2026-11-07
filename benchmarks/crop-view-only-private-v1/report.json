@@ -1,0 +1,3384 @@
+{
+  "status": "COMPLETE_PRIVATE_CPP_COMPARISON_PENDING_ROOT_RECONSTRUCTION",
+  "profile": "minimum",
+  "source": "9e689ac283f15fec40eedb8cfefa8edf1144bc48",
+  "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+  "numpy": "1.24.4",
+  "slot_meaning": {
+    "0": "prior C++ d7 binder/same12dleaf",
+    "1": "candidate C++9e view-only binder/frontend/same12dleaf"
+  },
+  "sampler_label_disclosure": "Unmodified genericmeasure function returns literal labels scikit-image/current. Here bothcallables are privateC++; slot0 isNOT originalscikit-image. Preserve raw bytes; this rootmetadata is authoritativeactualcallableidentity.",
+  "baseline_core": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/util-view-boundary-v1/build-v2/minimum/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+  "candidate_core": "/mnt/d/Scratch/crop-view-only-native-v1/minimum/site/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+  "original_calls": 0,
+  "threads": 1,
+  "pass_index": 0,
+  "rows": [
+    {
+      "case_id": "view-C",
+      "timing": {
+        "reference_ms": 0.0015908026259399228,
+        "cpp_ms": 0.001516535120305588,
+        "speedup": 1.0489718336489098,
+        "samples_ms": [
+          [
+            0.0016004051549256635,
+            0.0015235533768456796,
+            0.0014934967806894358,
+            0.0015908026259399228,
+            0.0015534355313939496,
+            0.0016093663784952047,
+            0.0016392034230376309
+          ],
+          [
+            0.001516535120305588,
+            0.0015993767456581082,
+            0.0014239290860035604,
+            0.0015871015935515025,
+            0.0015005096743030638,
+            0.0014900489555198914,
+            0.00165667518366395
+          ]
+        ],
+        "loops": [
+          [
+            71970,
+            71857,
+            75482,
+            77001,
+            72291,
+            74030,
+            71457
+          ],
+          [
+            76181,
+            75831,
+            71904,
+            80763,
+            72460,
+            76641,
+            77179
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          339933710,
+          331564407
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 222513,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 517,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 872023,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 68181,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 113277660,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 69218,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 112435825,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 70797,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 113125689,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 208410,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 552,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 953235,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 66595,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 101516487,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 75441,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 115130680,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 75356,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 113755595,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 71970,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115181159,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 76181,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115531162,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 75831,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 121282338,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 71857,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 109477975,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 75482,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112732124,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 71904,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 102386197,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 80763,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 128179086,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 77001,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 122493393,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 72291,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112299408,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 72460,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 108726931,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 76641,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114198842,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 74030,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 119141393,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 0,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 71457,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117132559,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 0,
+            "case_id": "view-C",
+            "function": 1,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 77179,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 127860534,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "view-F",
+      "timing": {
+        "reference_ms": 0.001400284181857276,
+        "cpp_ms": 0.0013868940687865022,
+        "speedup": 1.0096547482407867,
+        "samples_ms": [
+          [
+            0.0014003683499429816,
+            0.00137372778305448,
+            0.001400284181857276,
+            0.0015532754392587093,
+            0.0013968316675220833,
+            0.0013971527997084902,
+            0.0014068560216738955
+          ],
+          [
+            0.0013775529087261785,
+            0.0014685611389281521,
+            0.0013725478750574655,
+            0.0013913221421239825,
+            0.0014925404326364693,
+            0.0013868940687865022,
+            0.0013846126386878918
+          ]
+        ],
+        "loops": [
+          [
+            80676,
+            82122,
+            83714,
+            82127,
+            74038,
+            82330,
+            82311
+          ],
+          [
+            83748,
+            83482,
+            78308,
+            83786,
+            82656,
+            77050,
+            82920
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          339103246,
+          291986262
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 128505,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 895,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 1361769,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 75582,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 113859491,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 76340,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 113259510,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 77514,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 110493971,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 61492,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1871,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 4786104,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 44957,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 68864098,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 75077,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 101720141,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 84879,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116554427,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 83748,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115367301,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 80676,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112976117,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 82122,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112813273,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 83482,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 122598421,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 78308,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 107481479,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 83714,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117223390,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 82127,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 127565852,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 83786,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116573317,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 82656,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 123367422,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 74038,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 103418623,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 82330,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115027590,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 77050,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 106860188,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 1,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 82920,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114812080,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 1,
+            "case_id": "view-F",
+            "function": 0,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 82311,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115799726,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "view-reverse",
+      "timing": {
+        "reference_ms": 0.00132750286502144,
+        "cpp_ms": 0.0012618251492117428,
+        "speedup": 1.0520497755578304,
+        "samples_ms": [
+          [
+            0.00132750286502144,
+            0.0013920449156748895,
+            0.0012935670172975198,
+            0.0013190688510944636,
+            0.0013340637739008754,
+            0.001331787431991926,
+            0.001308034938796308
+          ],
+          [
+            0.0012823047063163149,
+            0.001268723749205535,
+            0.0012618251492117428,
+            0.0012681300226030855,
+            0.0012402318906103544,
+            0.0012568244917767592,
+            0.0012541972983901814
+          ]
+        ],
+        "loops": [
+          [
+            79057,
+            86629,
+            82613,
+            88902,
+            87183,
+            86203,
+            86351
+          ],
+          [
+            92174,
+            89683,
+            90643,
+            91138,
+            90685,
+            92725,
+            91501
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          349856674,
+          343735129
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 61665,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1865,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 2666587,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 80431,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 112537194,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 82192,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 120229163,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 78618,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 114362065,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 55963,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 2055,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 2655693,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 88989,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 111201271,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 92029,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 115260496,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 91822,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 114561706,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 79057,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 104948394,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 92174,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 118195154,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 89683,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113782952,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 86629,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 120591459,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 82613,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 106865452,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 90643,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114375617,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 91138,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115574834,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 88902,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117267859,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 87183,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116307682,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 90685,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112470429,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 92725,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116539051,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 86203,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114804072,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 0,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 86351,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112950125,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 2,
+            "case_id": "view-reverse",
+            "function": 1,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 91501,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114760307,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "view-3D",
+      "timing": {
+        "reference_ms": 0.0014259351915520628,
+        "cpp_ms": 0.0014704845627633565,
+        "speedup": 0.9697042918100576,
+        "samples_ms": [
+          [
+            0.0014120981536207724,
+            0.0014259351915520628,
+            0.0014067132760480603,
+            0.0014192740027644923,
+            0.0015701833070049858,
+            0.0015876185281267067,
+            0.0015355352725164282
+          ],
+          [
+            0.0013780136435735666,
+            0.0013591619095549646,
+            0.0013803231494722908,
+            0.0014960899968792759,
+            0.0014956104100535984,
+            0.0014704845627633565,
+            0.001496649579316165
+          ]
+        ],
+        "loops": [
+          [
+            79182,
+            81440,
+            80649,
+            81751,
+            81028,
+            73240,
+            72436
+          ],
+          [
+            83849,
+            83454,
+            84611,
+            83314,
+            76868,
+            76892,
+            78206
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          347987226,
+          350864133
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 56159,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 2048,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 2978651,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 79070,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 112217416,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 81031,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 119071720,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 78261,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 113663280,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 49597,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 2319,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 3107470,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 85821,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116943597,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 84395,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 114072156,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 85082,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116691313,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 83849,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115545066,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 79182,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 111812756,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 81440,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116128162,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 83454,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113427498,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 84611,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116790522,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 80649,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113450019,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 81751,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116027069,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 83314,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 124645242,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 76868,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114964581,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 81028,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 127228813,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 73240,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116277181,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 76892,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113068499,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 1,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 78206,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117046977,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 3,
+            "case_id": "view-3D",
+            "function": 0,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 72436,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 111228033,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "copy-C",
+      "timing": {
+        "reference_ms": 0.041849515544041455,
+        "cpp_ms": 0.04139464418686336,
+        "speedup": 1.010988652423843,
+        "samples_ms": [
+          [
+            0.041849515544041455,
+            0.04434404585152838,
+            0.04342097417116423,
+            0.041156177802944505,
+            0.041313106261180677,
+            0.04311072270114943,
+            0.04081609182908546
+          ],
+          [
+            0.042497691924582005,
+            0.0412358747691171,
+            0.043024732520616706,
+            0.043845114478114476,
+            0.04119199809378574,
+            0.04040455300859599,
+            0.04139464418686336
+          ]
+        ],
+        "loops": [
+          [
+            2702,
+            2748,
+            2594,
+            2649,
+            2795,
+            2784,
+            2668
+          ],
+          [
+            2811,
+            2707,
+            2789,
+            2673,
+            2623,
+            2792,
+            2847
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          358571351,
+          348760341
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 291911,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 394,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 17440242,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 2599,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 107813487,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 2773,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116181079,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 2745,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116844632,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 309286,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 372,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 17265462,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 2478,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 104287099,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 2733,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116160675,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 2706,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 110737819,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 2702,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113077391,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 2811,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 119461012,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 2707,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 111625513,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 2748,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 121857438,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 2594,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112634007,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 2789,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 119995979,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 2673,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117197991,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 2649,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 109022715,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 2795,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115470132,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 2623,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 108046611,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 2792,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 112809512,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 2784,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 120020252,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 0,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 2668,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 108897333,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 4,
+            "case_id": "copy-C",
+            "function": 1,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 2847,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117850552,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "copy-F",
+      "timing": {
+        "reference_ms": 0.015353573529411763,
+        "cpp_ms": 0.015204458491803277,
+        "speedup": 1.0098073231407008,
+        "samples_ms": [
+          [
+            0.0160093306066803,
+            0.015374527839643654,
+            0.015353573529411763,
+            0.015329297824055533,
+            0.015223771660890428,
+            0.01500674159385756,
+            0.015363755610647182
+          ],
+          [
+            0.014988354851485149,
+            0.015483655806073244,
+            0.015508480210016155,
+            0.015082862189859762,
+            0.015204458491803277,
+            0.015338543892120571,
+            0.015155588823686316
+          ]
+        ],
+        "loops": [
+          [
+            7335,
+            7184,
+            7480,
+            7491,
+            7502,
+            7554,
+            7664
+          ],
+          [
+            7575,
+            7673,
+            7428,
+            7416,
+            7625,
+            7564,
+            7498
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          345059591,
+          352637644
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 301580,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 382,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 6386760,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 6879,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 108476606,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 7293,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 122771821,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 6832,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 107122824,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 140952,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 816,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 13014478,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 7211,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 111490050,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 7439,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 111582886,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 7667,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116409278,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 7575,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113536788,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 7335,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117428440,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 7184,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 110450608,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 7673,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 118806091,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 7428,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115196991,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 7480,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114844730,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 7491,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114831770,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 7416,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 111854506,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 7625,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 115933996,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 7502,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114208735,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 7554,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113360926,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 7564,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116020746,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 1,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 7498,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113636605,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 5,
+            "case_id": "copy-F",
+            "function": 0,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 7664,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117747823,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "copy-reverse-K",
+      "timing": {
+        "reference_ms": 0.02137673639356963,
+        "cpp_ms": 0.021210100975975976,
+        "speedup": 1.007856417929476,
+        "samples_ms": [
+          [
+            0.02137673639356963,
+            0.021020822118959108,
+            0.02168598738804606,
+            0.021445269281538754,
+            0.02259512250606004,
+            0.021073673673870332,
+            0.021004400879443018
+          ],
+          [
+            0.020775394376483475,
+            0.020642505419075145,
+            0.021851135139985642,
+            0.022238835455063652,
+            0.021585540216550656,
+            0.021210100975975976,
+            0.020843922537808927
+          ]
+        ],
+        "loops": [
+          [
+            5163,
+            5380,
+            5471,
+            5303,
+            5363,
+            5090,
+            5458
+          ],
+          [
+            5477,
+            5536,
+            5572,
+            5263,
+            5172,
+            5328,
+            5422
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          263730534,
+          257232408
+        ],
+        "sample_order": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 89320,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1288,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 27205123,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 5445,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 113174453,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 5533,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 123261638,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 90571,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1270,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 26531687,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 5505,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 114501074,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 5529,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 116109076,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 5163,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 110368090,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 5477,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113786835,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 5536,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114276910,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 5380,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113092023,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 5471,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 118644037,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 5572,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 121754525,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 5263,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117042991,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 5303,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113724263,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 5363,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 121177642,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 5172,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 111640414,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 5328,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113007418,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 5090,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 107264999,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 0,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 5458,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114642020,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 6,
+            "case_id": "copy-reverse-K",
+            "function": 1,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 5422,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113015748,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "copy-object-provider",
+      "timing": {
+        "reference_ms": 0.00242423676966791,
+        "cpp_ms": 0.0025077660176913456,
+        "speedup": 0.9666917697128965,
+        "samples_ms": [
+          [
+            0.0023970076567404767,
+            0.00238551897784355,
+            0.0025299800655492863,
+            0.002552870201297987,
+            0.00242423676966791,
+            0.0023936598929128546,
+            0.002440098888518858
+          ],
+          [
+            0.002439631681076303,
+            0.002523746812618002,
+            0.0024994238939606743,
+            0.0026206676881615266,
+            0.0024743160065630555,
+            0.0025242292052153705,
+            0.0025077660176913456
+          ]
+        ],
+        "loops": [
+          [
+            47148,
+            47977,
+            48208,
+            45455,
+            45048,
+            47438,
+            48044
+          ],
+          [
+            46381,
+            47139,
+            45568,
+            46011,
+            43882,
+            46478,
+            45559
+          ]
+        ],
+        "sample_labels": [
+          "scikit-image",
+          "current"
+        ],
+        "warmup_elapsed_ns": [
+          350190075,
+          348260446
+        ],
+        "sample_order": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "batch_records": [
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 61728,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 1864,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 4524948,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 47373,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 112481293,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 48434,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 117309013,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": -1,
+            "ordinal": 0,
+            "loops": 47481,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 115813093,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 66245,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 1736,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 4349224,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 45903,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 115652841,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 45644,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 112411680,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": -1,
+            "ordinal": 1,
+            "loops": 46695,
+            "event": "batch_after",
+            "phase": "warmup",
+            "elapsed_ns": 115780456,
+            "complete": true,
+            "accepted": false,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": 0,
+            "ordinal": 0,
+            "loops": 46381,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113152557,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": 0,
+            "ordinal": 1,
+            "loops": 47148,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113014117,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": 1,
+            "ordinal": 0,
+            "loops": 47977,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114450044,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": 1,
+            "ordinal": 1,
+            "loops": 47139,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 118966901,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": 2,
+            "ordinal": 0,
+            "loops": 45568,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113893748,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": 2,
+            "ordinal": 1,
+            "loops": 48208,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 121965279,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": 3,
+            "ordinal": 0,
+            "loops": 45455,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 116040715,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": 3,
+            "ordinal": 1,
+            "loops": 46011,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 120579541,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": 4,
+            "ordinal": 0,
+            "loops": 43882,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 108577935,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": 4,
+            "ordinal": 1,
+            "loops": 45048,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 109207018,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": 5,
+            "ordinal": 0,
+            "loops": 47438,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 113550438,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": 5,
+            "ordinal": 1,
+            "loops": 46478,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117321125,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 1,
+            "round": 6,
+            "ordinal": 0,
+            "loops": 45559,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 114251312,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          },
+          {
+            "case_index": 7,
+            "case_id": "copy-object-provider",
+            "function": 0,
+            "round": 6,
+            "ordinal": 1,
+            "loops": 48044,
+            "event": "batch_after",
+            "phase": "sample",
+            "elapsed_ns": 117232111,
+            "complete": true,
+            "accepted": true,
+            "failure": null
+          }
+        ]
+      }
+    }
+  ],
+  "process32": true
+}

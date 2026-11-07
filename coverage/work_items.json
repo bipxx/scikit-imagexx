@@ -39119,19 +39119,19 @@
     "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
     "worker_queues": {
       "boundary_worker": [
-        "flood-fill-source-first-v1"
+        "draw-multiblock-lbp-source-first-v1"
       ],
       "metrics_integrator": [
         "mark-lbp-enabled-integration-v1"
       ],
       "readiness_reviewer": [
-        "util-crop-current-batch-v1"
+        "flood-fill-source-first-v1"
       ]
     },
     "current_three_agent_packets": {
-      "boundary_worker": "flood-fill-source-first-v1",
+      "boundary_worker": "draw-multiblock-lbp-source-first-v1",
       "metrics_integrator": "mark-lbp-enabled-integration-v1",
-      "readiness_reviewer": "util-crop-current-batch-v1"
+      "readiness_reviewer": "flood-fill-source-first-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -39518,12 +39518,12 @@
       }
     },
     "current_review_assignments": {
-      "boundary_worker": "Active DDA sparseWT flood-assignment-lines-v1, exclusive bind_flood_fill/familytests-contract; source/inert only, actualprofiledemonstrated repeatedindex cost; no native/build/timingGO yet.",
+      "boundary_worker": "Current LBPd4 strictwhole-public/privatecomponent readiness only; rootcompileGO after actualdonor/ABI/94golds/benchmarkfirstcase/selector mapping. Independentcrop9e rawreviewf356closed6/2 UNACCEPTED.",
       "metrics_integrator": "Active sole shared author DDA-based mark-wide-enabled-v1, compose MARKeb46+compat2e97+SDK8537 and ROOTsource/native-unit-admitted LBPd4. Sourcepreparation only; rootauthorizes completechecks/private/genuine/perf independently.",
-      "readiness_reviewer": "Actual9e crop2binder+2links passed/rootmapreview; separate GO permits4fullsaved/protocol suites min/modern normal/disabled expected256each, first actualhandle87965 live. No FPcontrol/timing permission.",
+      "readiness_reviewer": "Current flood e96 source/rootreviewpassed; donor/source/ABI/sparsefixture readiness before rootcompileGO. Future changedbinder full100old+59preparedprotocol/FP/modes/performance remainunexecuted.",
       "root": "Actualflood8profile attribution admitted/16Centries; actualMARK8strict comparisons+8units andLBP8binaryunits pass. Own independentadmission/currentreceipts/main, next actualcropterminals/sharedcandidate source review; no scientificreplay."
     },
-    "next_action": "Root reviews actualcrop suite terminals and earliest MARK/LBP shared source candidate. B finishes demonstrated flood indexing source with bothsourceguards, independent admission before changedbinder/native/perf. Preserve MARK/LPB oldFP failures/actualIGG-VI unresolved hostfailure. No original/reference replay or unchanged favorable retiming.",
+    "next_action": "Root admits exact B LBPwholepublic and R floodchangedbinder preparation, authorizesboundedcompiles onlyafter actualprereqs; C earliestcompatibleMARK/LBP sharedsourcefreeze/affectedguards. Completeactualsourcebarriers/genuine/installedSDK/original1-thread qualification beforemainnativechanges. Crop9e6/2 remainsUNACCEPTED independentrawPASS; no unchangedretime/thirdlowyieldvariant untiljustified.",
     "current_checkpoint": {
       "main_image_names": 271,
       "qualified_image_names": 271,
@@ -39631,6 +39631,15 @@
         "actual_native_calls": 8,
         "result": "PASS strict private wholefind/MARK min4+modern4; no shipping/release/performance credit",
         "next_owner_trigger": "Root authorizes one sharedintegration author; require strict2e97 and SDK8537/sourcecontexts/modes/fullsource/genuine/performance. LBP sibling correction pending independent/rootnative."
+      },
+      "crop_view_only_terminal": {
+        "source": "9e689ac283f15fec40eedb8cfefa8edf1144bc48",
+        "parity_receipt": "coverage/evidence/crop-view-only-private-parity-root-closeout-v1.json",
+        "FP_receipt": "coverage/evidence/crop-view-only-controlled-fp-root-closeout-v1.json",
+        "performance_receipt": "coverage/evidence/crop-view-only-private-performance-root-closeout-v1.json",
+        "result": "1024privatechecks+32controlledcallsPASS; changed8privatecomparisons6faster2slower UNACCEPTED. Originalpublic/genuine open.",
+        "next_owner_trigger": "Root prioritizes readyMARK/LBPfullpublic/mode/SDK/sharedsource/genuine and demonstratedfloodassignment optimization. Crop remainsboundedexperiment, no thirdvariation until currentresultreview identifies useful justified action; neverwaitunfinishedcrop before earliestcompatiblebundle.",
+        "waste_review": "Onechangedsource comparison24.77s; oldf0207/1preserved. Initialrootjournal reader assumedonlybefore/afterpairs, correctedtoinspect8measure_returned events; zero timingreplay. Unchangedmeasure/fixtures/reusablebaseline/helper used; no newengine/fullbuild/env/archiveauth."
       }
     },
     "shared_integration_author": {
