@@ -18151,7 +18151,7 @@
         "rank-floating-policies",
         "rank-gil-fix"
       ],
-      "state": "validating",
+      "state": "preparing",
       "dependency_requirements": {
         "rank-distribution-native": {
           "evidence_scope": "native_private"
@@ -18220,6 +18220,11 @@
           "native_contract_checks": 2070,
           "native_pending": 0
         }
+      },
+      "current_checkpoint": "Schema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Historical rank/wave dispatch retired. Unchanged uncovered contracts, proof scopes and pending performance remain open; no new acceptance is inferred. Root assigns any further scoped work explicitly and follows the actual current release checkpoint, not old hosted-run snapshots."
       }
     },
     {
@@ -27158,7 +27163,7 @@
         "rank-statistics-product-stager"
       ],
       "dependency_requirements": {},
-      "state": "validating",
+      "state": "preparing",
       "contract": {
         "case_manifest": null,
         "uncovered_cases": [
@@ -27202,6 +27207,11 @@
         "public_native": {
           "status": "pending"
         }
+      },
+      "current_checkpoint": "Schema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Historical rank/wave dispatch retired. Unchanged uncovered contracts, proof scopes and pending performance remain open; no new acceptance is inferred. Root assigns any further scoped work explicitly and follows the actual current release checkpoint, not old hosted-run snapshots."
       }
     },
     {
@@ -36997,9 +37007,9 @@
     {
       "id": "label-pair-metrics-current-batch-v1",
       "kind": "implementation",
-      "owner": "root",
+      "owner": "integrator",
       "branch": "opt/label-pair-density-v1",
-      "state": "validating",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "metrics.contingency_table",
@@ -37027,10 +37037,10 @@
       "base_sha": "db4f59b8aa69840591266e607e253a8611676ced",
       "scope": "Independent next vertical family while frozen drawing candidate validates. No shared wiring or delay to current release. Reuse existing primitives; implement a minimal owned label-pair count primitive only if absent. Preserve full three-API scope, explicit unassessed partitions and SciPy sparse object-factory ownership.",
       "acceptance": "Declared per-function Python signature/type/shape/mutation/error/warning/FP parity, native typed SDK and ownership, applicable scalar/SIMD/process-global optional workers default1, one-thread original benchmarks with losses, independent admission and supported release. Bounded partitions are not full API completion.",
-      "current_checkpoint": "All4f13 run42169444853 profiles terminalfailed only the same cached-import guard normal/scalar:938520XML/8failures,0errors/skips,256SDK; all command/XML outcomes inspected and4archives retained once5637969515bytes (summary9827794f). Prior SDK/arity/ellipse/FENV fixes passed within scoped genuine evidence. Test-only683f0043/a67161 independentlyPASS cda3fb7, both retained versions beforecachedfail and80aftercold/cached guards passed. Productionfp906b unchanged. New main/native/performance credit remains0; old failures retained. Root readiness b03b43e2: both complete actual683 source barriers pass2782identical cases+8subtests/profile,0bad/skip/science,cleanHEAD/normalplugins/conftest/no-x. Existing source-plan/schema and remote683 identity verified, scratch227GB; these gates close before successor dispatch. Exact683 successor42177447898 dispatched once after b03 complete readiness; source/setup/remote verified. Stage3 actual binding f85a7c36 awaits independentR review before watcher; genuine/performance pending. Actual stage3 binding independently73198495 passes; root observer44360 is live for42177447898 only, all4hostsourceguards passed. No genuine/stager/performance admission yet. Actual683/run42177447898 all4profiles SUCCESS,7archives retained once; rootprofile/stager audits and aggregatec8c867bd pass938528XML/256SDK/48corpora,0fail/error/skip,119301sealedrecords checked once. Observer44360 ended onTLS timeout only; freshsame-runAPI confirmedterminalsuccess, no retry. Aggregate independentR review pending. Independentaggregate7a8671a9/root6992d2d4 admits exact683 whole265 product; minimumstager13485549510/aa1f57, runtime002eb67c and owncorea8d973ae authenticated. Actual consumer binding/4real CLI cohort gates/1thread public performance notyet executed. Actual20b9 binding independent rootd2f1ca9a PASS:5files/17small proofs/18source pins, runtime/core/97SDK exact and14guards each retained version reused. Workflow/probe/adapter/method/budgets unchanged. Dispatch discovery404 exposes workflow absent defaultbranch; no experiment ran. Publish unchanged reviewed workflow before one actual dispatch. Unchanged workflow registered mainb048, exact20b9 remote verified, one dispatch42191638073 live; actual run/source API retained in run-v1.json. No benchmark result yet. Run42191638073 terminalSUCCESS once; rootretained artifact13489478349/b5aafd70 once2115950bytes. Independent7c4387bb reconstructs28cases/392samples/56warmgroups/625batches:18wins10losses; root scoped performance admission published. Qualified683 actual merged production502blobs/fp906b matches; commit/push delivery follows checks. All losses remain; no unchanged rerun. Delivered e89c56da43081307a8374e6fcab3b30c4fb63d57; final502blob projection/remote/mainclean verified, delivery-v1 retained. No active hosted jobs. Root assigned next coherent measured-loss task after B froze boundaryc8c8. Large512x512/64label cases lose in both ARE/contingency; comparison sorting/preweighted row packing are source hypotheses, not measured root cause yet. Existing8publiccases/method/golds immutable. Frozenb87a24e4/a264labeldensity8files243proofs; native-onlylarge9.26-16.34x versusshippingCPP,tinynormalized0.991701 retained. Publictest16failurewrongSciPyNslotassumptioncorrectedto binderphysicalN/publiclogicalCSR; source/golds unchanged. Independentcomponentadmission pending. IndependentC984400a5 scopedcomponentPASS, no blockers;243proofs/30deps/authenticatedsource8 andfullbacking/fallback/orderedFP reviewed. Rootacceptance/integrationcontext stillpending, no newmain/perfclaim. Rootaccepted9844/b87 scopedcomponent, publicreceiptretained; exactintegration/inverse/newsourcecontextnext, no original-publicgainclaim.",
+      "current_checkpoint": "All4f13 run42169444853 profiles terminalfailed only the same cached-import guard normal/scalar:938520XML/8failures,0errors/skips,256SDK; all command/XML outcomes inspected and4archives retained once5637969515bytes (summary9827794f). Prior SDK/arity/ellipse/FENV fixes passed within scoped genuine evidence. Test-only683f0043/a67161 independentlyPASS cda3fb7, both retained versions beforecachedfail and80aftercold/cached guards passed. Productionfp906b unchanged. New main/native/performance credit remains0; old failures retained. Root readiness b03b43e2: both complete actual683 source barriers pass2782identical cases+8subtests/profile,0bad/skip/science,cleanHEAD/normalplugins/conftest/no-x. Existing source-plan/schema and remote683 identity verified, scratch227GB; these gates close before successor dispatch. Exact683 successor42177447898 dispatched once after b03 complete readiness; source/setup/remote verified. Stage3 actual binding f85a7c36 awaits independentR review before watcher; genuine/performance pending. Actual stage3 binding independently73198495 passes; root observer44360 is live for42177447898 only, all4hostsourceguards passed. No genuine/stager/performance admission yet. Actual683/run42177447898 all4profiles SUCCESS,7archives retained once; rootprofile/stager audits and aggregatec8c867bd pass938528XML/256SDK/48corpora,0fail/error/skip,119301sealedrecords checked once. Observer44360 ended onTLS timeout only; freshsame-runAPI confirmedterminalsuccess, no retry. Aggregate independentR review pending. Independentaggregate7a8671a9/root6992d2d4 admits exact683 whole265 product; minimumstager13485549510/aa1f57, runtime002eb67c and owncorea8d973ae authenticated. Actual consumer binding/4real CLI cohort gates/1thread public performance notyet executed. Actual20b9 binding independent rootd2f1ca9a PASS:5files/17small proofs/18source pins, runtime/core/97SDK exact and14guards each retained version reused. Workflow/probe/adapter/method/budgets unchanged. Dispatch discovery404 exposes workflow absent defaultbranch; no experiment ran. Publish unchanged reviewed workflow before one actual dispatch. Unchanged workflow registered mainb048, exact20b9 remote verified, one dispatch42191638073 live; actual run/source API retained in run-v1.json. No benchmark result yet. Run42191638073 terminalSUCCESS once; rootretained artifact13489478349/b5aafd70 once2115950bytes. Independent7c4387bb reconstructs28cases/392samples/56warmgroups/625batches:18wins10losses; root scoped performance admission published. Qualified683 actual merged production502blobs/fp906b matches; commit/push delivery follows checks. All losses remain; no unchanged rerun. Delivered e89c56da43081307a8374e6fcab3b30c4fb63d57; final502blob projection/remote/mainclean verified, delivery-v1 retained. No active hosted jobs. Root assigned next coherent measured-loss task after B froze boundaryc8c8. Large512x512/64label cases lose in both ARE/contingency; comparison sorting/preweighted row packing are source hypotheses, not measured root cause yet. Existing8publiccases/method/golds immutable. Frozenb87a24e4/a264labeldensity8files243proofs; native-onlylarge9.26-16.34x versusshippingCPP,tinynormalized0.991701 retained. Publictest16failurewrongSciPyNslotassumptioncorrectedto binderphysicalN/publiclogicalCSR; source/golds unchanged. Independentcomponentadmission pending. IndependentC984400a5 scopedcomponentPASS, no blockers;243proofs/30deps/authenticatedsource8 andfullbacking/fallback/orderedFP reviewed. Rootacceptance/integrationcontext stillpending, no newmain/perfclaim. Rootaccepted9844/b87 scopedcomponent, publicreceiptretained; exactintegration/inverse/newsourcecontextnext, no original-publicgainclaim.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator then root",
-        "action": "Integrateadmittedb87 exactsource withversionedsource/SDK/benchmarkguard successor, preservefallback/fullbacking/orderedFP/all8cases andtinyregression. No separatebarriers beforefinalreadybundle; genuine4profile/SDK/original1thread neededbeforemain."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "source_sha": "9ca37384657fae0089bbc8982025053833e6e2f3",
       "variation_of_information_successor": {
@@ -37114,9 +37124,9 @@
     {
       "id": "find-boundaries-current-batch-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
+      "owner": "integrator",
       "branch": "feature/find-boundaries-v1",
-      "state": "validating",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "segmentation.find_boundaries"
@@ -37132,19 +37142,19 @@
       "base_sha": "f0c91244f29f7ea8294577ed7ba33d277ef7e24a",
       "scope": "Independent vertical family; full public signature/modes/connectivity/background/subpixel remain intended scope. First source audit/header/safe reference cases, no original calls until root source-safety admission. No shared wiring, no current334 release changes.",
       "acceptance": "Per-function parity and hot-swap, native SDK ownership, applicable scalar/SIMD/default1 optional global workers, one-thread original comparison and independent release admission. No forwarding whole original algorithm or credit for untested domains.",
-      "current_checkpoint": "All4f13 run42169444853 profiles terminalfailed only the same cached-import guard normal/scalar:938520XML/8failures,0errors/skips,256SDK; all command/XML outcomes inspected and4archives retained once5637969515bytes (summary9827794f). Prior SDK/arity/ellipse/FENV fixes passed within scoped genuine evidence. Test-only683f0043/a67161 independentlyPASS cda3fb7, both retained versions beforecachedfail and80aftercold/cached guards passed. Productionfp906b unchanged. New main/native/performance credit remains0; old failures retained. Root readiness b03b43e2: both complete actual683 source barriers pass2782identical cases+8subtests/profile,0bad/skip/science,cleanHEAD/normalplugins/conftest/no-x. Existing source-plan/schema and remote683 identity verified, scratch227GB; these gates close before successor dispatch. Exact683 successor42177447898 dispatched once after b03 complete readiness; source/setup/remote verified. Stage3 actual binding f85a7c36 awaits independentR review before watcher; genuine/performance pending. Actual stage3 binding independently73198495 passes; root observer44360 is live for42177447898 only, all4hostsourceguards passed. No genuine/stager/performance admission yet. Actual683/run42177447898 all4profiles SUCCESS,7archives retained once; rootprofile/stager audits and aggregatec8c867bd pass938528XML/256SDK/48corpora,0fail/error/skip,119301sealedrecords checked once. Observer44360 ended onTLS timeout only; freshsame-runAPI confirmedterminalsuccess, no retry. Aggregate independentR review pending. Independentaggregate7a8671a9/root6992d2d4 admits exact683 whole265 product; minimumstager13485549510/aa1f57, runtime002eb67c and owncorea8d973ae authenticated. Actual consumer binding/4real CLI cohort gates/1thread public performance notyet executed. Actual20b9 binding independent rootd2f1ca9a PASS:5files/17small proofs/18source pins, runtime/core/97SDK exact and14guards each retained version reused. Workflow/probe/adapter/method/budgets unchanged. Dispatch discovery404 exposes workflow absent defaultbranch; no experiment ran. Publish unchanged reviewed workflow before one actual dispatch. Unchanged workflow registered mainb048, exact20b9 remote verified, one dispatch42191638073 live; actual run/source API retained in run-v1.json. No benchmark result yet. Run42191638073 terminalSUCCESS once; rootretained artifact13489478349/b5aafd70 once2115950bytes. Independent7c4387bb reconstructs28cases/392samples/56warmgroups/625batches:18wins10losses; root scoped performance admission published. Qualified683 actual merged production502blobs/fp906b matches; commit/push delivery follows checks. All losses remain; no unchanged rerun. Delivered e89c56da43081307a8374e6fcab3b30c4fb63d57; final502blob projection/remote/mainclean verified, delivery-v1 retained. No active hosted jobs. Optimizationcomponentc8c8bb78 frozen handoff642701d7:6familyfiles,67additiveleaflines, private native2.23-3.91x fourlosslayouts/Ccontrolunchanged; all8publiccases/method/oldlosses frozen. No genuine changedcore or original-public speed claim; independent component review pending. IndependentRba61 scopedcomponentPASS no blockingfindings, root accepted exactsource/proofs; no publicoriginalspeedclaim. Shared277/e049sourceguard successor frozenforrootreview. Separate boundedF2D metadata-dispatch successor proposed fromc8: existingC-row SIMD/ordinarykernel can serve symmetricaxis-permuted F layouts; newsource mustfreeze/admit independently, oldc8/ba61 untouched. Frowsuccessor98df/2013 frozen17linemetadata-axisdispatch; native/scalar/sanitizer/public100/profile/exportedSDK4302860/mode/pure4/version pass, nativeCPPc8ratios4.04-10.47x. Oldc8/ba61 retained; no originalpublicgainclaim. IndependentFrow93a8/rootPASS,17linemetadatafdispatch eligible; samec8baselineinterpretationpreserved. ExactFsuccessoreligibleforonefinalsharedcandidate.",
+      "current_checkpoint": "All4f13 run42169444853 profiles terminalfailed only the same cached-import guard normal/scalar:938520XML/8failures,0errors/skips,256SDK; all command/XML outcomes inspected and4archives retained once5637969515bytes (summary9827794f). Prior SDK/arity/ellipse/FENV fixes passed within scoped genuine evidence. Test-only683f0043/a67161 independentlyPASS cda3fb7, both retained versions beforecachedfail and80aftercold/cached guards passed. Productionfp906b unchanged. New main/native/performance credit remains0; old failures retained. Root readiness b03b43e2: both complete actual683 source barriers pass2782identical cases+8subtests/profile,0bad/skip/science,cleanHEAD/normalplugins/conftest/no-x. Existing source-plan/schema and remote683 identity verified, scratch227GB; these gates close before successor dispatch. Exact683 successor42177447898 dispatched once after b03 complete readiness; source/setup/remote verified. Stage3 actual binding f85a7c36 awaits independentR review before watcher; genuine/performance pending. Actual stage3 binding independently73198495 passes; root observer44360 is live for42177447898 only, all4hostsourceguards passed. No genuine/stager/performance admission yet. Actual683/run42177447898 all4profiles SUCCESS,7archives retained once; rootprofile/stager audits and aggregatec8c867bd pass938528XML/256SDK/48corpora,0fail/error/skip,119301sealedrecords checked once. Observer44360 ended onTLS timeout only; freshsame-runAPI confirmedterminalsuccess, no retry. Aggregate independentR review pending. Independentaggregate7a8671a9/root6992d2d4 admits exact683 whole265 product; minimumstager13485549510/aa1f57, runtime002eb67c and owncorea8d973ae authenticated. Actual consumer binding/4real CLI cohort gates/1thread public performance notyet executed. Actual20b9 binding independent rootd2f1ca9a PASS:5files/17small proofs/18source pins, runtime/core/97SDK exact and14guards each retained version reused. Workflow/probe/adapter/method/budgets unchanged. Dispatch discovery404 exposes workflow absent defaultbranch; no experiment ran. Publish unchanged reviewed workflow before one actual dispatch. Unchanged workflow registered mainb048, exact20b9 remote verified, one dispatch42191638073 live; actual run/source API retained in run-v1.json. No benchmark result yet. Run42191638073 terminalSUCCESS once; rootretained artifact13489478349/b5aafd70 once2115950bytes. Independent7c4387bb reconstructs28cases/392samples/56warmgroups/625batches:18wins10losses; root scoped performance admission published. Qualified683 actual merged production502blobs/fp906b matches; commit/push delivery follows checks. All losses remain; no unchanged rerun. Delivered e89c56da43081307a8374e6fcab3b30c4fb63d57; final502blob projection/remote/mainclean verified, delivery-v1 retained. No active hosted jobs. Optimizationcomponentc8c8bb78 frozen handoff642701d7:6familyfiles,67additiveleaflines, private native2.23-3.91x fourlosslayouts/Ccontrolunchanged; all8publiccases/method/oldlosses frozen. No genuine changedcore or original-public speed claim; independent component review pending. IndependentRba61 scopedcomponentPASS no blockingfindings, root accepted exactsource/proofs; no publicoriginalspeedclaim. Shared277/e049sourceguard successor frozenforrootreview. Separate boundedF2D metadata-dispatch successor proposed fromc8: existingC-row SIMD/ordinarykernel can serve symmetricaxis-permuted F layouts; newsource mustfreeze/admit independently, oldc8/ba61 untouched. Frowsuccessor98df/2013 frozen17linemetadata-axisdispatch; native/scalar/sanitizer/public100/profile/exportedSDK4302860/mode/pure4/version pass, nativeCPPc8ratios4.04-10.47x. Oldc8/ba61 retained; no originalpublicgainclaim. IndependentFrow93a8/rootPASS,17linemetadatafdispatch eligible; samec8baselineinterpretationpreserved. ExactFsuccessoreligibleforonefinalsharedcandidate.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator then root",
-        "action": "Integrateexact98df family delta/versionedcontext onadmitted277, retainingc8/e89 cumulativeinverse androw/SSE/subpixel/frontiers/oneglobal snapshot. No original speedclaim untilgenuinefinalcore/public1thread comparison andfullrelease."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "source_sha": "08a06b22bb4eceb580f3bf7f15a0a1664f9cc9f9"
     },
     {
       "id": "join-segmentations-current-batch-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
+      "owner": "integrator",
       "branch": "feature/join-segmentations-v1",
-      "state": "validating",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "segmentation.join_segmentations"
@@ -37160,10 +37170,10 @@
       "base_sha": "057b1e28ae2060fe58b05aca2c7a566c424a368d",
       "scope": "IndependentnextAPI source/test-first:fullintendedsignatureinclreturn_mapping/type/maps/shape/errors. Reuseexistingrelabel/ArrayMap/pairkeyprimitives; no originalcalls until source-safepeer/rootGO. Notincurrentready265.",
       "acceptance": "Declared public/hotswap/nativeSDK ownership,perfunctionparity,applicableSIMD/true-scalar andoptionalglobalworkersdefault1,isolated1threadoriginalcomparison,independentfullrelease. PartialpacketnotAPIcompletion.",
-      "current_checkpoint": "c821 scoped kernel/SDK admitted f4bab18c. Shared isolated integration b4325f3c frozen clean handoff a0a8b26d:28shared files, affected source guards48/3/1/15 distinct scopes per retained Python, actual NumPy-only cached fixture intake/lint/docs pass. Kernel/golds unchanged c821; newsource266/269,208product/98SDK,32families64checks. Private/unready; f13 boundary guard intentionally untouched and root683 repair still to merge; genuine/completebarrier/performance/release pending. Independent shared review e8cdc532 CHANGES_REQUIRED: three JOIN selectors appended after tee would overwrite source; cached-original adapter authenticates dtype/output but not actual args/options/current source or exceptional equivalence.40source/89small proofs and unchanged c821 kernel reused; no executed destructive workflow or numerical defect. Frozen b432 retained. Versioned8c22dd6a successor/c53c06bf frozen clean fixes4files incl reviewed683 repair, actual shell argv guard and actual source/args/options cache with explicit early-error equivalence; before2fail/profile and narrow corrected source/intake results retained. Independent affected-delta review pending; b432/e8cdc failure remains. Independent successor50e62088/root51bbd54f PASS closes both e8cdc blockers; boundary repair exact683, source8c22 clean. Root assigns C as sole next shared integration author (R retired/now separate views sourcebatch). Current683 live source remains immutable. Frozen47df shared-source review2b6 independentlyPASS only, PRIVATE_UNREADY. Concrete missing genuine installed-grid full49saved-node adapter/selector closure identified; no recapture required. Prior683 delivered265main, so current ready slot free; future268 stillunready. Successor762a4934/fa43f4e5 frozen9file metadata/fixture/selector delta; all49existingnodes/assertions retained, full49Linuxrequired group normal/scalar andexact49sealer, Windowsoldgroupsunchanged.31pure+4sealcontrols/profile andLinux49collection/refusalpassed; no49numerical/native/originalrun. Root independent scoped delta admission pending. Root source7cd04155 independentlyPASS762a9-file adapterdelta. Boundarycomponentc8c8 independentlyba61PASS, eligibleminimalsharedsuccessor before finalbarriers; labeloptimization unfinished not prerequisite. Frozen277/e049 source19/root2717353b scopedbindingPASS; descriptorregcounts unchanged268; densityfinishedcomponentreview9844 and F/util reviewsnext. Existingplan-only newAPIbenchmarkexecution gap assignedB withnoactualauthority. Allfinishedeligiblecomponents nowrootadmitted: density9844,boundaryF93a8,utilviews7a22(F1testhelperpending); shared277root2717sourcebindingPASS. Sole Csharedintegrationassigned, no prematurefullbarrier/genuine; Bbenchmarkexecutionseparate.",
+      "current_checkpoint": "c821 scoped kernel/SDK admitted f4bab18c. Shared isolated integration b4325f3c frozen clean handoff a0a8b26d:28shared files, affected source guards48/3/1/15 distinct scopes per retained Python, actual NumPy-only cached fixture intake/lint/docs pass. Kernel/golds unchanged c821; newsource266/269,208product/98SDK,32families64checks. Private/unready; f13 boundary guard intentionally untouched and root683 repair still to merge; genuine/completebarrier/performance/release pending. Independent shared review e8cdc532 CHANGES_REQUIRED: three JOIN selectors appended after tee would overwrite source; cached-original adapter authenticates dtype/output but not actual args/options/current source or exceptional equivalence.40source/89small proofs and unchanged c821 kernel reused; no executed destructive workflow or numerical defect. Frozen b432 retained. Versioned8c22dd6a successor/c53c06bf frozen clean fixes4files incl reviewed683 repair, actual shell argv guard and actual source/args/options cache with explicit early-error equivalence; before2fail/profile and narrow corrected source/intake results retained. Independent affected-delta review pending; b432/e8cdc failure remains. Independent successor50e62088/root51bbd54f PASS closes both e8cdc blockers; boundary repair exact683, source8c22 clean. Root assigns C as sole next shared integration author (R retired/now separate views sourcebatch). Current683 live source remains immutable. Frozen47df shared-source review2b6 independentlyPASS only, PRIVATE_UNREADY. Concrete missing genuine installed-grid full49saved-node adapter/selector closure identified; no recapture required. Prior683 delivered265main, so current ready slot free; future268 stillunready. Successor762a4934/fa43f4e5 frozen9file metadata/fixture/selector delta; all49existingnodes/assertions retained, full49Linuxrequired group normal/scalar andexact49sealer, Windowsoldgroupsunchanged.31pure+4sealcontrols/profile andLinux49collection/refusalpassed; no49numerical/native/originalrun. Root independent scoped delta admission pending. Root source7cd04155 independentlyPASS762a9-file adapterdelta. Boundarycomponentc8c8 independentlyba61PASS, eligibleminimalsharedsuccessor before finalbarriers; labeloptimization unfinished not prerequisite. Frozen277/e049 source19/root2717353b scopedbindingPASS; descriptorregcounts unchanged268; densityfinishedcomponentreview9844 and F/util reviewsnext. Existingplan-only newAPIbenchmarkexecution gap assignedB withnoactualauthority. Allfinishedeligiblecomponents nowrootadmitted: density9844,boundaryF93a8,utilviews7a22(F1testhelperpending); shared277root2717sourcebindingPASS. Sole Csharedintegrationassigned, no prematurefullbarrier/genuine; Bbenchmarkexecutionseparate.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator sole shared author",
-        "action": "Combine exact independentlyadmitted familyfiles fromb87/98df/56ec into277 withselectiveancestry handling, registry/build/SDK/default/hotswap/sourcepins/real selectors/collector scopes. Coordinate R F1test-envelope files; do notgenuineuntilsource-built helperprepared/collected andgenuinefixturesuseactualinstalledcore. Preservecases/methods/oldsourceproofs, affectedguardbothversions only; freezecandidate forrootindependentbinding and COMPLETE2sourcebarriers. No originals/fullcore/hosted/perfselfdispatch."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "optimization_successor": {
         "owner": "readiness_reviewer",
@@ -37183,9 +37193,9 @@
     {
       "id": "util-crop-current-batch-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
+      "owner": "integrator",
       "branch": "feature/util-crop-v1",
-      "state": "validating",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "util.crop"
@@ -37199,10 +37209,10 @@
       "base_sha": "04f54f6c7c671770d8b91b3712f567964a783e10",
       "scope": "Existing477-key missing metadata/view API; exact full signature and alias/error/state interface first. Reuse array/view/copy machinery; no speculative framework or artificial SIMD for view construction. No shared integration changes.",
       "acceptance": "Independent prospective source-safe parity plan and refused-intake checks before original capture/native implementation. Later full hot-swap/state/installed SDK contracts and relevant one-thread original public-call performance, exact release and independent admission; no premature advertised credit.",
-      "current_checkpoint": "CROP b2712750 frozen clean with handoff abb43080:12family files, standalone view+PODcopy SDK, explicit providers/gaps,129small proofs. Root-requested shared-axis coalescing reduces F diagnostic20to5payload blocks/40bytes; C4/reverse20 unchanged, no latency claim. Changed copy27nodes+4layout controls each4cells and6pureguards/profile pass; earlier219case evidence reused only unchanged scopes. No originals/timing/genuine/release claim. Root independent review6b6b8524 authenticates12source/129small receipts (1145860bytes), finds no new scoped numeric defect but CHANGES_REQUIRED: same cached-import MetaPath guard reproduced failing on both retained Pythons. Frozen b271 remains unchanged; test-only successor required before admission. Test-only abaf successor independently rootPASS3297d6c: exactonefile delta/oldasserts preserved,28cold/cached guards pass; kernel/frontend/binder/SDK unchanged, baseline129proofs not rehashed. Scoped component now integration-eligible; serial/no project worker/SIMD specialization, direct installed-prefix SDK vs genuine exported target and all fullAPI/provider/platform/performance/release gaps explicit. Frozen47df shared-source review2b6 independentlyPASS only, PRIVATE_UNREADY. Concrete missing genuine installed-grid full49saved-node adapter/selector closure identified; no recapture required. Prior683 delivered265main, so current ready slot free; future268 stillunready. Successor762a4934/fa43f4e5 frozen9file metadata/fixture/selector delta; all49existingnodes/assertions retained, full49Linuxrequired group normal/scalar andexact49sealer, Windowsoldgroupsunchanged.31pure+4sealcontrols/profile andLinux49collection/refusalpassed; no49numerical/native/originalrun. Root independent scoped delta admission pending. Root source7cd04155 independentlyPASS762a9-file adapterdelta. Boundarycomponentc8c8 independentlyba61PASS, eligibleminimalsharedsuccessor before finalbarriers; labeloptimization unfinished not prerequisite. Frozen277/e049 source19/root2717353b scopedbindingPASS; descriptorregcounts unchanged268; densityfinishedcomponentreview9844 and F/util reviewsnext. Existingplan-only newAPIbenchmarkexecution gap assignedB withnoactualauthority. Allfinishedeligiblecomponents nowrootadmitted: density9844,boundaryF93a8,utilviews7a22(F1testhelperpending); shared277root2717sourcebindingPASS. Sole Csharedintegrationassigned, no prematurefullbarrier/genuine; Bbenchmarkexecutionseparate.",
+      "current_checkpoint": "CROP b2712750 frozen clean with handoff abb43080:12family files, standalone view+PODcopy SDK, explicit providers/gaps,129small proofs. Root-requested shared-axis coalescing reduces F diagnostic20to5payload blocks/40bytes; C4/reverse20 unchanged, no latency claim. Changed copy27nodes+4layout controls each4cells and6pureguards/profile pass; earlier219case evidence reused only unchanged scopes. No originals/timing/genuine/release claim. Root independent review6b6b8524 authenticates12source/129small receipts (1145860bytes), finds no new scoped numeric defect but CHANGES_REQUIRED: same cached-import MetaPath guard reproduced failing on both retained Pythons. Frozen b271 remains unchanged; test-only successor required before admission. Test-only abaf successor independently rootPASS3297d6c: exactonefile delta/oldasserts preserved,28cold/cached guards pass; kernel/frontend/binder/SDK unchanged, baseline129proofs not rehashed. Scoped component now integration-eligible; serial/no project worker/SIMD specialization, direct installed-prefix SDK vs genuine exported target and all fullAPI/provider/platform/performance/release gaps explicit. Frozen47df shared-source review2b6 independentlyPASS only, PRIVATE_UNREADY. Concrete missing genuine installed-grid full49saved-node adapter/selector closure identified; no recapture required. Prior683 delivered265main, so current ready slot free; future268 stillunready. Successor762a4934/fa43f4e5 frozen9file metadata/fixture/selector delta; all49existingnodes/assertions retained, full49Linuxrequired group normal/scalar andexact49sealer, Windowsoldgroupsunchanged.31pure+4sealcontrols/profile andLinux49collection/refusalpassed; no49numerical/native/originalrun. Root independent scoped delta admission pending. Root source7cd04155 independentlyPASS762a9-file adapterdelta. Boundarycomponentc8c8 independentlyba61PASS, eligibleminimalsharedsuccessor before finalbarriers; labeloptimization unfinished not prerequisite. Frozen277/e049 source19/root2717353b scopedbindingPASS; descriptorregcounts unchanged268; densityfinishedcomponentreview9844 and F/util reviewsnext. Existingplan-only newAPIbenchmarkexecution gap assignedB withnoactualauthority. Allfinishedeligiblecomponents nowrootadmitted: density9844,boundaryF93a8,utilviews7a22(F1testhelperpending); shared277root2717sourcebindingPASS. Sole Csharedintegrationassigned, no prematurefullbarrier/genuine; Bbenchmarkexecutionseparate.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator sole shared author",
-        "action": "Combine exact independentlyadmitted familyfiles fromb87/98df/56ec into277 withselectiveancestry handling, registry/build/SDK/default/hotswap/sourcepins/real selectors/collector scopes. Coordinate R F1test-envelope files; do notgenuineuntilsource-built helperprepared/collected andgenuinefixturesuseactualinstalledcore. Preservecases/methods/oldsourceproofs, affectedguardbothversions only; freezecandidate forrootindependentbinding and COMPLETE2sourcebarriers. No originals/fullcore/hosted/perfselfdispatch."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "optimization_successor": {
         "owner": "metrics_integrator",
@@ -37225,9 +37235,9 @@
     {
       "id": "regular-grid-current-batch-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
+      "owner": "integrator",
       "branch": "feature/regular-grid-v1",
-      "state": "validating",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "util.regular_grid"
@@ -37241,18 +37251,18 @@
       "base_sha": "ffaaa12f7a30428fd4160c45b9ecce7b1fe2b6e5",
       "scope": "Existing477-key missing metadata API; concrete future consumer regular_seeds currently imports original regular_grid. Own exact shape/grid/slice/error interface first; no shared consumer changes until integration. Reuse existing regular-seeds structures.",
       "acceptance": "Independent source-safe fullsignature/rounding/state/error reference plan and refused-intake checks before originals/implementation. Later hot-swap/installed standalone SDK parity, relevant one-thread original public-call overhead comparison, applicable CPU paths and exact supported-profile release. No SIMD/parallel benefit claimed for tiny view metadata.",
-      "current_checkpoint": "Regular-grid7dfa15d1 frozen clean handoff7c541d2e/118proofs. Both retained public49nodes/source10guards, complete exported SDK normal/compiler-scalar/sanitizer/default1/workers4 and MSVC compile-only pass scoped. Large-int early-comparison duplicate after double conversion fixed; old expected fail retained. Full minimum FENV fixture barrier rerun closes affected state scope. No new originals/timing/shared changes; full platform/provider/native/genuine/performance/release gaps remain. Independentd413 scopedPASS; root6e59 admission accepts component only, all explicit platform/provider/fullSDK/genuine/performance/release gaps pending. Frozen47df shared-source review2b6 independentlyPASS only, PRIVATE_UNREADY. Concrete missing genuine installed-grid full49saved-node adapter/selector closure identified; no recapture required. Prior683 delivered265main, so current ready slot free; future268 stillunready. Successor762a4934/fa43f4e5 frozen9file metadata/fixture/selector delta; all49existingnodes/assertions retained, full49Linuxrequired group normal/scalar andexact49sealer, Windowsoldgroupsunchanged.31pure+4sealcontrols/profile andLinux49collection/refusalpassed; no49numerical/native/originalrun. Root independent scoped delta admission pending. Root source7cd04155 independentlyPASS762a9-file adapterdelta. Boundarycomponentc8c8 independentlyba61PASS, eligibleminimalsharedsuccessor before finalbarriers; labeloptimization unfinished not prerequisite. Frozen277/e049 source19/root2717353b scopedbindingPASS; descriptorregcounts unchanged268; densityfinishedcomponentreview9844 and F/util reviewsnext. Existingplan-only newAPIbenchmarkexecution gap assignedB withnoactualauthority. Allfinishedeligiblecomponents nowrootadmitted: density9844,boundaryF93a8,utilviews7a22(F1testhelperpending); shared277root2717sourcebindingPASS. Sole Csharedintegrationassigned, no prematurefullbarrier/genuine; Bbenchmarkexecutionseparate.",
+      "current_checkpoint": "Regular-grid7dfa15d1 frozen clean handoff7c541d2e/118proofs. Both retained public49nodes/source10guards, complete exported SDK normal/compiler-scalar/sanitizer/default1/workers4 and MSVC compile-only pass scoped. Large-int early-comparison duplicate after double conversion fixed; old expected fail retained. Full minimum FENV fixture barrier rerun closes affected state scope. No new originals/timing/shared changes; full platform/provider/native/genuine/performance/release gaps remain. Independentd413 scopedPASS; root6e59 admission accepts component only, all explicit platform/provider/fullSDK/genuine/performance/release gaps pending. Frozen47df shared-source review2b6 independentlyPASS only, PRIVATE_UNREADY. Concrete missing genuine installed-grid full49saved-node adapter/selector closure identified; no recapture required. Prior683 delivered265main, so current ready slot free; future268 stillunready. Successor762a4934/fa43f4e5 frozen9file metadata/fixture/selector delta; all49existingnodes/assertions retained, full49Linuxrequired group normal/scalar andexact49sealer, Windowsoldgroupsunchanged.31pure+4sealcontrols/profile andLinux49collection/refusalpassed; no49numerical/native/originalrun. Root independent scoped delta admission pending. Root source7cd04155 independentlyPASS762a9-file adapterdelta. Boundarycomponentc8c8 independentlyba61PASS, eligibleminimalsharedsuccessor before finalbarriers; labeloptimization unfinished not prerequisite. Frozen277/e049 source19/root2717353b scopedbindingPASS; descriptorregcounts unchanged268; densityfinishedcomponentreview9844 and F/util reviewsnext. Existingplan-only newAPIbenchmarkexecution gap assignedB withnoactualauthority. Allfinishedeligiblecomponents nowrootadmitted: density9844,boundaryF93a8,utilviews7a22(F1testhelperpending); shared277root2717sourcebindingPASS. Sole Csharedintegrationassigned, no prematurefullbarrier/genuine; Bbenchmarkexecutionseparate.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator sole shared author",
-        "action": "Combine exact independentlyadmitted familyfiles fromb87/98df/56ec into277 withselectiveancestry handling, registry/build/SDK/default/hotswap/sourcepins/real selectors/collector scopes. Coordinate R F1test-envelope files; do notgenuineuntilsource-built helperprepared/collected andgenuinefixturesuseactualinstalledcore. Preservecases/methods/oldsourceproofs, affectedguardbothversions only; freezecandidate forrootindependentbinding and COMPLETE2sourcebarriers. No originals/fullcore/hosted/perfselfdispatch."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       }
     },
     {
       "id": "util-array-views-current-batch-v1",
       "kind": "implementation",
-      "owner": "readiness_reviewer",
+      "owner": "integrator",
       "branch": "feature/util-array-views-v1",
-      "state": "validating",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "util.view_as_blocks",
@@ -37278,19 +37288,19 @@
       "base_sha": "a5d22d3f5c761dbcd8cecdb495274666c9df3c35",
       "scope": "Existing unassigned477-key coherent shape.py view batch: exact0.26 source/test-first, then native/public/complete installed SDK view operations. Reuse accepted crop geometry/copy/viewtypes if actual source needs them; no general array/type engine or shared source edits.",
       "acceptance": "Each API requires source-safe per-key contract, alias/base/writability/overlap/mutation/type/layout/error/provider/state parity, complete standalone SDK operation and relevant1thread public-original benchmark; justify tiny ordered metadata serial/no artificial SIMD. Root source-safety GO precedes originals/native work; allfull-domain/platform/genuine/release gates remain.",
-      "current_checkpoint": "Source-first ab88c7e1 frozen (handoffb4a58d86),6new source/testfiles, actual0.26shape.py identicalretained profiles.113prospectivecases (blocks50/windows63),129purechecks perWin311/313 and243actualNP-onlyfactory/refused/codec/alias/FP/cachedCLI controls permin/modern pass. Quarantines/provider/sourceSDKproposal explicit;0original/native/build/timing. Independentsource/storage safety/root runtime-boundGO pending. Independentf8ba78ee scopedsource-safePASS:80bounded-view+33pre-viewreject recipes,max144logicalelements and33smallsource/proof receipts.0original authorization; full captureprefix/runtime/FENV/MXCSR instrumentgate pending. Actual minimum capture prefix stops before any originals/fixture/journal on demonstrated libc.fesetenv x87C2 loss. Modern prefix safe request refusals pass. Originalbudget0; full-state equality retained. R owns isolated minimal restoration remedy; no masked acceptance or unchanged favorable retry. Standalone helperf273 source/library ABI and14smallproofs rootf29ffd78 independentlyPASS:32exact full32byte/MXCSR controls+6refusals each retainedruntime,0science/original/core. Failed oldprefixes retained, not relabeled. Helper admission is not captureGO. Combined actualv3prefix4cellsPASS, independent rootreadiness c5c6d1c1:57smallproofs authenticated, existingrecipes/source/storage/helper scopes reused,0original/fixture/journal. Exact actual rootGO written 363fea78 conditional on root-boundprefix and independentbindingreview. All4actual root-bound prefixesPASS with exactGOsha/full32byte and0bodies; retained root-bound-prefix-admission-v1.json. All548authorized once-only captures completed via4exactcommands,548started/completed,0observerfailed/retries,369results179APIexceptions3warnings2FPcallbacks retained. Rawhandoff4ba824/savedvalidation6aa535 await independent root raw admission. Remainingauthorization0; no source/native/performance credit. Independent raw63bb915f/rootadmissionPASS548pairs,160viewaddresssets,3721payloadhashoccurrences/231260decodedbytes; rawsource/golds immutable andauthorization0. ScopeLinuxmin/modern only, nonsharing pointer deltas/hardwareinstructionaddressesdiagnostic. Rnative/public/SDK implementation next. Privatecomplete3APIcomponent56ec/5757 frozen30additions/228proofs,548savedrowsunchanged; final553privateeachprofile/mode,319pureeachWinversion/nativeandassembledSDK3139253eachmode. No shared/genuine/publicperf/neworiginal credit. Explicit test-only admitted FENVhelper mustbesupplied/collected or portableversionadmitted beforegenuine. IndependentC7a22/rootcomponentPASS, no numericalblocker; F1mandatory test-onlyhelperdependency remains. Rversionedsource-built envelope remedy and Ccommonwiringnext; originalauthorization0.",
+      "current_checkpoint": "Source-first ab88c7e1 frozen (handoffb4a58d86),6new source/testfiles, actual0.26shape.py identicalretained profiles.113prospectivecases (blocks50/windows63),129purechecks perWin311/313 and243actualNP-onlyfactory/refused/codec/alias/FP/cachedCLI controls permin/modern pass. Quarantines/provider/sourceSDKproposal explicit;0original/native/build/timing. Independentsource/storage safety/root runtime-boundGO pending. Independentf8ba78ee scopedsource-safePASS:80bounded-view+33pre-viewreject recipes,max144logicalelements and33smallsource/proof receipts.0original authorization; full captureprefix/runtime/FENV/MXCSR instrumentgate pending. Actual minimum capture prefix stops before any originals/fixture/journal on demonstrated libc.fesetenv x87C2 loss. Modern prefix safe request refusals pass. Originalbudget0; full-state equality retained. R owns isolated minimal restoration remedy; no masked acceptance or unchanged favorable retry. Standalone helperf273 source/library ABI and14smallproofs rootf29ffd78 independentlyPASS:32exact full32byte/MXCSR controls+6refusals each retainedruntime,0science/original/core. Failed oldprefixes retained, not relabeled. Helper admission is not captureGO. Combined actualv3prefix4cellsPASS, independent rootreadiness c5c6d1c1:57smallproofs authenticated, existingrecipes/source/storage/helper scopes reused,0original/fixture/journal. Exact actual rootGO written 363fea78 conditional on root-boundprefix and independentbindingreview. All4actual root-bound prefixesPASS with exactGOsha/full32byte and0bodies; retained root-bound-prefix-admission-v1.json. All548authorized once-only captures completed via4exactcommands,548started/completed,0observerfailed/retries,369results179APIexceptions3warnings2FPcallbacks retained. Rawhandoff4ba824/savedvalidation6aa535 await independent root raw admission. Remainingauthorization0; no source/native/performance credit. Independent raw63bb915f/rootadmissionPASS548pairs,160viewaddresssets,3721payloadhashoccurrences/231260decodedbytes; rawsource/golds immutable andauthorization0. ScopeLinuxmin/modern only, nonsharing pointer deltas/hardwareinstructionaddressesdiagnostic. Rnative/public/SDK implementation next. Privatecomplete3APIcomponent56ec/5757 frozen30additions/228proofs,548savedrowsunchanged; final553privateeachprofile/mode,319pureeachWinversion/nativeandassembledSDK3139253eachmode. No shared/genuine/publicperf/neworiginal credit. Explicit test-only admitted FENVhelper mustbesupplied/collected or portableversionadmitted beforegenuine. IndependentC7a22/rootcomponentPASS, no numericalblocker; F1mandatory test-onlyhelperdependency remains. Rversionedsource-built envelope remedy and Ccommonwiringnext; originalauthorization0.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator shared integration / boundary_worker benchmark consumer / root admission",
-        "action": "F1 test-only source659d is independently admitted2c314a70:7source/51proofs, full32 controls,322saved slice nodes/profile and19pure guards each retained Windows Python. C selectively imports7files with exact historical inverse and Linux prepare/env/source-copy/collector closure; B replaces benchmark legacy0c40 dependency through reviewed source-built interface. Include helper receipt/bundle in measurement transport. Root then admits final source and complete2source barriers before genuine qualification; no new originals or unchanged numerical replay."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "source_sha": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48"
     },
     {
       "id": "util-slice-along-axes-current-batch-v1",
       "kind": "implementation",
-      "owner": "readiness_reviewer",
+      "owner": "integrator",
       "branch": "feature/slice-along-axes-v1",
-      "state": "validating",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "util.slice_along_axes"
@@ -37315,18 +37325,18 @@
       "base_sha": "a5d22d3f5c761dbcd8cecdb495274666c9df3c35",
       "scope": "Existing missing util key in its own source module, independent of shape.py block/window batch. Source/test-first exact signature, axes/pair/order/bounds/sharing/state/errors. Reuse accepted crop geometry only after actual source assessment; no new general array/type engine.",
       "acceptance": "Per-function source-safe contract then coherent native/public/complete installed SDK, hot-swap/alias/dtype/provider/state parity, justified scalar/SIMD/optional globalworker disposition, relevant1thread original public performance and independent exact release. No source-only/fullAPI or speed claim.",
-      "current_checkpoint": "Source-only b4e1d4e frozen clean handoff3f676174,8newfiles/22proofs; exact0.26source1a75717a,161prospectivecases/profile.185pure+347NP-only setupchecks/profile pass;0original/native/timing. Export-locator/receipt collision corrections retained; cropSDKdependency absent main base explicitpending. Actual minimum capture prefix stops before any originals/fixture/journal on demonstrated libc.fesetenv x87C2 loss. Modern prefix safe request refusals pass. Originalbudget0; full-state equality retained. R owns isolated minimal restoration remedy; no masked acceptance or unchanged favorable retry. Standalone helperf273 source/library ABI and14smallproofs rootf29ffd78 independentlyPASS:32exact full32byte/MXCSR controls+6refusals each retainedruntime,0science/original/core. Failed oldprefixes retained, not relabeled. Helper admission is not captureGO. Combined actualv3prefix4cellsPASS, independent rootreadiness 726638e6:57smallproofs authenticated, existingrecipes/source/storage/helper scopes reused,0original/fixture/journal. Exact actual rootGO written 77efb8cf conditional on root-boundprefix and independentbindingreview. All4actual root-bound prefixesPASS with exactGOsha/full32byte and0bodies; retained root-bound-prefix-admission-v1.json. All548authorized once-only captures completed via4exactcommands,548started/completed,0observerfailed/retries,369results179APIexceptions3warnings2FPcallbacks retained. Rawhandoff4ba824/savedvalidation6aa535 await independent root raw admission. Remainingauthorization0; no source/native/performance credit. Independent raw63bb915f/rootadmissionPASS548pairs,160viewaddresssets,3721payloadhashoccurrences/231260decodedbytes; rawsource/golds immutable andauthorization0. ScopeLinuxmin/modern only, nonsharing pointer deltas/hardwareinstructionaddressesdiagnostic. Rnative/public/SDK implementation next. Privatecomplete3APIcomponent56ec/5757 frozen30additions/228proofs,548savedrowsunchanged; final553privateeachprofile/mode,319pureeachWinversion/nativeandassembledSDK3139253eachmode. No shared/genuine/publicperf/neworiginal credit. Explicit test-only admitted FENVhelper mustbesupplied/collected or portableversionadmitted beforegenuine. IndependentC7a22/rootcomponentPASS, no numericalblocker; F1mandatory test-onlyhelperdependency remains. Rversionedsource-built envelope remedy and Ccommonwiringnext; originalauthorization0.",
+      "current_checkpoint": "Source-only b4e1d4e frozen clean handoff3f676174,8newfiles/22proofs; exact0.26source1a75717a,161prospectivecases/profile.185pure+347NP-only setupchecks/profile pass;0original/native/timing. Export-locator/receipt collision corrections retained; cropSDKdependency absent main base explicitpending. Actual minimum capture prefix stops before any originals/fixture/journal on demonstrated libc.fesetenv x87C2 loss. Modern prefix safe request refusals pass. Originalbudget0; full-state equality retained. R owns isolated minimal restoration remedy; no masked acceptance or unchanged favorable retry. Standalone helperf273 source/library ABI and14smallproofs rootf29ffd78 independentlyPASS:32exact full32byte/MXCSR controls+6refusals each retainedruntime,0science/original/core. Failed oldprefixes retained, not relabeled. Helper admission is not captureGO. Combined actualv3prefix4cellsPASS, independent rootreadiness 726638e6:57smallproofs authenticated, existingrecipes/source/storage/helper scopes reused,0original/fixture/journal. Exact actual rootGO written 77efb8cf conditional on root-boundprefix and independentbindingreview. All4actual root-bound prefixesPASS with exactGOsha/full32byte and0bodies; retained root-bound-prefix-admission-v1.json. All548authorized once-only captures completed via4exactcommands,548started/completed,0observerfailed/retries,369results179APIexceptions3warnings2FPcallbacks retained. Rawhandoff4ba824/savedvalidation6aa535 await independent root raw admission. Remainingauthorization0; no source/native/performance credit. Independent raw63bb915f/rootadmissionPASS548pairs,160viewaddresssets,3721payloadhashoccurrences/231260decodedbytes; rawsource/golds immutable andauthorization0. ScopeLinuxmin/modern only, nonsharing pointer deltas/hardwareinstructionaddressesdiagnostic. Rnative/public/SDK implementation next. Privatecomplete3APIcomponent56ec/5757 frozen30additions/228proofs,548savedrowsunchanged; final553privateeachprofile/mode,319pureeachWinversion/nativeandassembledSDK3139253eachmode. No shared/genuine/publicperf/neworiginal credit. Explicit test-only admitted FENVhelper mustbesupplied/collected or portableversionadmitted beforegenuine. IndependentC7a22/rootcomponentPASS, no numericalblocker; F1mandatory test-onlyhelperdependency remains. Rversionedsource-built envelope remedy and Ccommonwiringnext; originalauthorization0.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator shared integration / boundary_worker benchmark consumer / root admission",
-        "action": "F1 test-only source659d is independently admitted2c314a70:7source/51proofs, full32 controls,322saved slice nodes/profile and19pure guards each retained Windows Python. C selectively imports7files with exact historical inverse and Linux prepare/env/source-copy/collector closure; B replaces benchmark legacy0c40 dependency through reviewed source-built interface. Include helper receipt/bundle in measurement transport. Root then admits final source and complete2source barriers before genuine qualification; no new originals or unchanged numerical replay."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "source_sha": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48"
     },
     {
       "id": "mark-boundaries-source-first-v1",
       "kind": "reference",
-      "owner": "readiness_reviewer",
-      "state": "assigned",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "segmentation.mark_boundaries"
@@ -37342,10 +37352,10 @@
       "base_sha": "d653b61a",
       "scope": "Source/test-first next W1 API from existing per-key roadmap. Reuse qualified find_boundaries and existing conversion/overlay primitives; inspect actual pinned upstream source before selecting contracts. No original/native API bodies or capture authorization; this packet must not delay finished271 candidate.",
       "acceptance": "Freeze bounded grayscale/RGB dtype/layout/color/outline/mode/background/error/provider/FP contracts including subpixel resampling frontier, exact pinned source, safe recipes and prospective one-thread benchmark. Both retained supported Python source guards and actual safe NumPy factory/REQUEST-refusal checks; no native/parity/performance credit without later independent safety/admission and original references.",
-      "current_checkpoint": "All145remaining calls completed under exactGO after readiness7f9e; rawf6e independently admits249saved observations (124min/125modern),4185decodedarraypayloads184128logicalbytes.250totalconsumed with min105structuredargs gap explicit/no retry. B now nativeMARK family fromb557; no extra original/timing budget. Plan correction: permanent exclusion is superseded only by one separately reviewed codec-repair witness for failedmin105 after changed observer/serializer source288; oldgrants/no-automatic-retry and failedraw remainimmutable. Root newonecall authority pending; B originalbudget remains0.",
+      "current_checkpoint": "All145remaining calls completed under exactGO after readiness7f9e; rawf6e independently admits249saved observations (124min/125modern),4185decodedarraypayloads184128logicalbytes.250totalconsumed with min105structuredargs gap explicit/no retry. B now nativeMARK family fromb557; no extra original/timing budget. Plan correction: permanent exclusion is superseded only by one separately reviewed codec-repair witness for failedmin105 after changed observer/serializer source288; oldgrants/no-automatic-retry and failedraw remainimmutable. Root newonecall authority pending; B originalbudget remains0.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "boundary_worker isolated MARK native family then root independent native admission",
-        "action": "Implement whole named native/public/SDK MARK family against frozen125recipes and actualsaved249rows, preserving explicitfailed105gap. Reuse conversion/findboundaries/dilation/globalbudget/SIMD primitives; close exactcubic mirror prefilter/zoom rather than whole-original fallback or guessed interpolation. Isolatedfamilyfiles only; no currentb557 integration/extra originalcalls/timings. Root owns raw/native/performance/genuine finalacceptance."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       }
     },
     {
@@ -37379,8 +37389,8 @@
     {
       "id": "draw-multiblock-lbp-source-first-v1",
       "kind": "reference",
-      "owner": "boundary_worker",
-      "state": "gray_dtype_metadata_repair_root_admitted_shared_intake_authorized",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "feature.draw_multiblock_lbp"
@@ -37396,10 +37406,10 @@
       "base_sha": "9a303e65",
       "scope": "Existing dependency-ready W1 fixed LBP display overlay; source/test-first only. Reuse existing rectangle/scatter/alpha and conversion primitives after actual source inspection. No original/native/helper/sampler bodies, new environment or current release dependency.",
       "acceptance": "Pin actual upstream helper/source, freeze bit-to-neighbor order, center treatment, coordinates/clipping/slicing, colors/alpha, dtype/range/errors/mutation/provider/FP contracts and bounded factories; prospective original1thread benchmark plus complete SDK/native reuse route. Both retained Windows source guards and actual safe NumPy factory/cached-cold REQUEST refusal both profiles,0original/native calls.",
-      "current_checkpoint": "Root098caefe admits99d6c428 binder-onlygray canonicaldtype repair;1128strict targetcomparisons(1067fullportable/61historicalpostJSONdiagnostics),144metadata tests,12pure/version/MSVCbindercompile. Original48failed299 assertions/golds immutable; RGBmetadata/math/frontend/kernel/SDKABI unchanged. No genuine/performance claim.",
+      "current_checkpoint": "Root098caefe admits99d6c428 binder-onlygray canonicaldtype repair;1128strict targetcomparisons(1067fullportable/61historicalpostJSONdiagnostics),144metadata tests,12pure/version/MSVCbindercompile. Original48failed299 assertions/golds immutable; RGBmetadata/math/frontend/kernel/SDKABI unchanged. No genuine/performance claim.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator sole shared author",
-        "action": "Import exact6familyfiles from99d6 after pinnedhandoffb6a/root098 verification; close benchmark/current-source contexts and sourceguards, Linux metadata helper/selector, LBPchangedcrop dependency. CompleteactualbothPython workflowbarrier before hostednewsourcequalification. No originalrecapture or unchangedretry."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "root_metadata_fix_admission": "build/draw-multiblock-lbp-metadata-root-admission-v1/admission-v1.json",
       "root_metadata_fix_admission_sha256": "098caefed1e2dee6baf6e0d1525c3a6c6656b3b7955226922e78aa0fdc3c1b45"
@@ -37407,8 +37417,8 @@
     {
       "id": "join-util-views-measurement-controller-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
-      "state": "assigned",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "metrics.adapted_rand_error",
@@ -37433,17 +37443,17 @@
       "base_sha": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
       "scope": "Separate source-only measurement controller child of frozen271 source. Reuse reviewed20b9 workflow/probe/manifest patterns and admitted9e8 executor; actual runtime/producer/core/root/helper/GO fields UNBOUND. This child does not mutate or delay9c92 qualification.",
       "acceptance": "One existing-controller refresh for distinct per-API cohorts, source-built FP preparation on actual consumer host, existing stager/core/package/SDK/source auth, zero-body real sampler observer and separate measurement GO. Preserve cases/Montage/losses/provider frontiers; pure source/negative guards both retained Pythons, no original/native/helper/sampler bodies/timing/build/env/download/hosted authority.",
-      "current_checkpoint": "Minimal C1 controller b36754dc9d5183edeabb867274a75d901d59b7e7/e3cb1469aa457c53c752311c3d67f3ed445e04b8b07a69c748da042670ff467a frozen:2files/60pure/version, poststop source/helper/binding/GO checks beforeterminalPASS and existingverifier onceafterbatch before summary. Parent2c7c/failureede4 retained; actualinputsUNBOUND. B independent delta review pending.",
+      "current_checkpoint": "Minimal C1 controller b36754dc9d5183edeabb867274a75d901d59b7e7/e3cb1469aa457c53c752311c3d67f3ed445e04b8b07a69c748da042670ff467a frozen:2files/60pure/version, poststop source/helper/binding/GO checks beforeterminalPASS and existingverifier onceafterbatch before summary. Parent2c7c/failureede4 retained; actualinputsUNBOUND. B independent delta review pending.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "readiness_reviewer independent reviewer then root admission",
-        "action": "Review exact frozen4file child/retained pure authority controls, nine distinct API cohorts and helper prep/collector, source/runtime/GO interfaces and disclosure of profile observer coverage. Derive actual intersection of67pins with5test-only458e changes; preserve frozenparent/cases/methods/legacy. No tests/science/body/timing replay or actual bindings; root genuine/firstcohort/measurementGO gates remain."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       }
     },
     {
       "id": "join-util-views-sourcebarrier-fix-v1",
       "kind": "implementation",
-      "owner": "readiness_reviewer",
-      "state": "assigned",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [],
       "target_apis": [],
       "owns": [
@@ -37459,10 +37469,10 @@
       "base_sha": "9c92c9d596d4dc0e4f5be0a6e4becf5879efa695",
       "scope": "Source-only correction of actual complete3043-node barrier failure. Immutable9c92 and failed results retained; no production/runtime/native/gold/cases/method/workflow edits.",
       "acceptance": "Fix actual smoke fixture profile, source-derived current SDK102/scope271 assertions and strict admitted benchmark predecessor projections in JOIN/grid source readers. Preserve all historical pins and actual input semantics; never skip/weaken checks. Affected pure guards both retained Pythons normalconftest/plugins; root independent admission and COMPLETE2barrier rerun before hosted work.",
-      "current_checkpoint": "Five-test-only frozen458e/f4ea9965 independently admitted304ea78a:all38old failures explicitly pass in43affected checks/version,23small proofs. Exact production fingerprint unchanged. Root COMPLETEv2 source commands nowlive32736/46166 on both retained versions, no partialunion/readiness/dispatch claim.",
+      "current_checkpoint": "Five-test-only frozen458e/f4ea9965 independently admitted304ea78a:all38old failures explicitly pass in43affected checks/version,23small proofs. Exact production fingerprint unchanged. Root COMPLETEv2 source commands nowlive32736/46166 on both retained versions, no partialunion/readiness/dispatch claim.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "readiness_reviewer narrow test author then root independent admission",
-        "action": "Freeze minimal five-test-file source-only successor in separate worktree from9c92, preserve failed campaign and numerical source fingerprint. Root reviews actual full failure closure, then reruns complete actual workflow command on both supported Pythons; partial unions cannot satisfy readiness."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       }
     },
     {
@@ -37490,8 +37500,8 @@
     {
       "id": "join-windows-fenv-fixture-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
-      "state": "frozen_pending_root_review",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [],
       "target_apis": [],
       "owns": [
@@ -37506,17 +37516,17 @@
       "base_sha": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
       "scope": "Fix actualWindows testdependency before parity, not nativealgorithm. Preserve failed422382manifest/100nodes; sourceguards hadalreadyPASS.",
       "acceptance": "Use exportedCRT opaqueexception-flag capture/restore and rounding APIs, verifiedheaderABI/liveexports. Missingferaiseexcept mustnotbind/call. PreserveLinux complete32 path and existingflag/rounding equality. Pure liveWindows restore/probe bothretainedPythons, zero scientific imports; actual compatible retainedWindowscore saved50parity if feasiblewithoutnewenv/build, otherwiseexplicitpending. Add actualsourcebarrier guard selector; root completebothcommands and exactsource4profile successor.",
-      "current_checkpoint": "Root independent PASS; complete readinessb8614afa both3056+8/versionPASS0science normalconftest/plugins/sourceclean. Exacta6bae9 pushed; successor42262940227 dispatchedonce, fourjobs live. Watcher session82134; previous422382FAILED retained. Genuine/performance/main271 pending.",
+      "current_checkpoint": "Root independent PASS; complete readinessb8614afa both3056+8/versionPASS0science normalconftest/plugins/sourceclean. Exacta6bae9 pushed; successor42262940227 dispatchedonce, fourjobs live. Watcher session82134; previous422382FAILED retained. Genuine/performance/main271 pending.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "metrics_integrator narrow author then root independent readiness",
-        "action": "Root polls live watcher82134 for exacta6bae9 run42262940227, retains terminal artifacts once and independently admits fourprofiles/SDK/product. Failed priorcampaign remainsfailed. No unchangedsource retry, no timing before successfulproducer/rootbinding/firstcohort/separateGO."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       }
     },
     {
       "id": "finite-radon-pair-v1",
       "kind": "implementation",
-      "owner": "boundary_worker",
-      "state": "exceptional224_observed_native_root_admitted_shared_integration_pending",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "transform.frt2",
@@ -37540,10 +37550,10 @@
       "base_sha": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
       "scope": "Dependency-ready finite Radon pair, no FFTbackend needed. Exact-name scan of fullplan/ledger/evidence/tests/include/src found only unassignedinventory, no prior work/blocker. This resumes full477scope while currentrelease/futureMARKandLBP remain independent.",
       "acceptance": "Own native/public/SDK source-contract/parity/benchmark family. Pin actual upstreamsource and runtime, freeze bounded complete input/error/layout/dtype/overflow/scalarpromotion contract and safe fixtures first; sourceguards bothretainedPythons/zerooriginalbudget. Implement source-faithful complete namedowning operations with reusedPOD/conversion/runtime primitives, scalar/SIMD andoptionalglobalworkers default1 capturedonce; integer wrap/reduction/inverse division matchprofile. Fullcontract/provider/platform frontiers stayexplicit. No public count/genuine/hotswap/one-threadoriginal speedclaim until requiredlatergates.",
-      "current_checkpoint": "Root94290698 admits1855377b genericreal-f64 cast/status successor:1344strict saved worker/modecomparisons plus210generic, scopedassembledSDK252successes/8typederrors eachmode,10pure eachPython/MSVC2compileonly. New8originals consumedonce, budget0; wholeAPI/genuine/performance pending.",
+      "current_checkpoint": "Root94290698 admits1855377b genericreal-f64 cast/status successor:1344strict saved worker/modecomparisons plus210generic, scopedassembledSDK252successes/8typederrors eachmode,10pure eachPython/MSVC2compileonly. New8originals consumedonce, budget0; wholeAPI/genuine/performance pending.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "sole shared integration author after root compatible selection",
-        "action": "Selectively import reviewed cumulative Radonfamily+SDK/dependencies, not privateancestry wholesale; version active source/benchmark contexts for185 leaf and shared changes. Complete bothPython source barriers then genuine275candidate ascompatible. Frozen7fcee16case benchmark independentreview in progress; actual binding/larger-case parity/performance remain pending."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "benchmark_controller": {
         "owner": "readiness_reviewer",
@@ -37567,8 +37577,8 @@
     {
       "id": "mark-lbp-enabled-integration-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
-      "state": "8c_campaign_terminal_failure_three_success_minimum_importfailed_corrected_integration_live",
+      "owner": "integrator",
+      "state": "preparing",
       "target_apis": [
         "segmentation.mark_boundaries",
         "feature.draw_multiblock_lbp"
@@ -37593,10 +37603,10 @@
         "mark-boundaries-source-first-v1"
       ],
       "acceptance": "NEW isolated successor froma6, selectively import exactadmittedLBP0e51/22 and MARK6d4373/21 with existingreference/observerdeps. Remove temporary PRIVATE_LBP branches/config/headerexclusions and wire ordinary enabled complete operations, samecore/CMake/exportedSDK/publicroutes/registry. Strict existing current_install_layout/sourcecollector must accept actualsource without private-model emulation; derive actualcounts. Preserveoldcontracts via exactnarrow sourcecontexts only where literals trulychanged. Source-only affected checks BOTHretainedPythons normalconftest/plugins/0science; existingCMakeconfigure/affectedABI/clientcompile only asinvalidated. No newenv/download/fullproductbuild/original/nativepublic/timing/hosted untilrootnextgate. FullLinuxFPsaved suites require real source-built helper and cannotrunasWindowsfull32; freeze explicitselectors/platformfrontiers without skips or falseWindowsparity. Genuineonecore/completeinstalledSDK/hotswap/scalar/globalworkers/default1/fulloriginalbenchmark/fourprofilerelease pending. Rootalsoadmits MARKbenchmark446bde47/46ffhandoff: selectively import exactfivefiles after52v4/source reviewcb9a and26proof reconciliation. Add actualprebuild sourceguard selection; no actualouter MARKcohort/timing authority. Latestadmittedbenchmark6cc0/cacf ninefiledelta supersedes sharedMARK446 envelope only through preservedcontext-v2/exacthistory; reconcile currentSDKclient/gold sourcepins once and rerun onlyaffected97/combinedsource guards, no numericalreplay.",
-      "current_checkpoint": "Exact8c run42306808073 terminalFAILED, minimuminitialimportABI mismatch;3otherprofiles passedscopedaudits718560XML/210SDK/36corpora. Sixarchivesretainedonce,114504sealedrecords/5706stagefiles, no wholeacceptance. Root1c0d auditedfailure. RsoleunfrozencorrectedABI+VI+flood+cost sourceplan280/283/226/107/37/74; sourceguards/currentcropclosure inprogress, notqualified.",
+      "current_checkpoint": "Exact8c run42306808073 terminalFAILED, minimuminitialimportABI mismatch;3otherprofiles passedscopedaudits718560XML/210SDK/36corpora. Sixarchivesretainedonce,114504sealedrecords/5706stagefiles, no wholeacceptance. Root1c0d auditedfailure. RsoleunfrozencorrectedABI+VI+flood+cost sourceplan280/283/226/107/37/74; sourceguards/currentcropclosure inprogress, notqualified.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "readiness_reviewer soleintegration then root",
-        "action": "R confirmsliveisolated integration handle and freezesearliest compatible correctedbundle, no original/genuine/fullSDK/hosted/timing. Root independentlyadmits; no nextfullbuild foralready-readyVI whenonecompatiblebundle canqualify."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "source_sha": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
       "sourcebarrier_terminals": [
@@ -37617,8 +37627,8 @@
     {
       "id": "lbp-benchmark-execution-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
-      "state": "current275_controller95e64_root_scoped_admitted_UNBOUND",
+      "owner": "integrator",
+      "state": "preparing",
       "target_apis": [
         "feature.draw_multiblock_lbp"
       ],
@@ -37634,10 +37644,10 @@
         "draw-multiblock-lbp-source-first-v1"
       ],
       "acceptance": "NEW isolatedsource successor; reuse admittedLBP0e51 family+frozenbenchmark cases/method and admittedMARK446 executor/commonF1/realMontageentry guard. Produce executableactualpublic-call consumer with completegenuine source/runtime/core/SDK/helper/root binding, strictpublic/native ownership/input/FP/warnings, realentry0bodycontrols underabsent/nonstopping/replacedprofilers, separatefirstcohort/timingGO, workers1/allloss/rawbatch retention. Reuse actualboundary logic, minimal concrete extraction only if trulyshared; preservefrozen446/MARK8cases/method/historicalreceipts and currentCsource. Pure/negativecontrols BOTHretainedPythons normalconftest/plugins0science. No native/math/referencecodechanges, original/providerimage/native/helper/samplerbody/timing/newenv/download/build/hosted; genuinebindings/cohort/report admission remainpending.",
-      "current_checkpoint": "Frozen clean95e64f135c7d3d8cbef7c8acb543ed31ea86c079 on8c; author handoff11993e0686731f18db77a69d5ee8b59c692d993440789cd0c15c0ace427ec1db.183 prototype controls/version reused,8affected controls/version and bothActionlint pass per handoff. Actual producer/runtime/core/SDK/helper/GO remainNULL. Manual workflow registration39b is not dispatch or timing. Root4d0a95e64sourceadmissionPASS; unboundpendingcorrectedgenuine. SeparateaffectedJOIN/util7b010 root2f850 sourceadmitted5APIs32cases; manualregistrationcurrenttask, noactualGO.",
+      "current_checkpoint": "Frozen clean95e64f135c7d3d8cbef7c8acb543ed31ea86c079 on8c; author handoff11993e0686731f18db77a69d5ee8b59c692d993440789cd0c15c0ace427ec1db.183 prototype controls/version reused,8affected controls/version and bothActionlint pass per handoff. Actual producer/runtime/core/SDK/helper/GO remainNULL. Manual workflow registration39b is not dispatch or timing. Root4d0a95e64sourceadmissionPASS; unboundpendingcorrectedgenuine. SeparateaffectedJOIN/util7b010 root2f850 sourceadmitted5APIs32cases; manualregistrationcurrenttask, noactualGO.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "root then authorized binding author",
-        "action": "After actual8c42306808073 genuine/stager rootadmission, bind admitted95e64controller actualproducer/runtime/core/SDK/source/helper/root metadata in versioned successor, affectedbothPython sourceguards, rootbindingadmission and realcohorts before timing. No newprototype tests or timing now."
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
       },
       "handoff": "coverage/evidence/current275-family-measurement-handoff-v1.json",
       "root_admission": "coverage/evidence/current275-family-measurement-root-admission-v1.json",
@@ -37646,8 +37656,8 @@
     {
       "id": "join-util-views-qualified-artifact-review-v2",
       "kind": "review",
-      "owner": "readiness_reviewer",
-      "state": "assigned",
+      "owner": "integrator",
+      "state": "preparing",
       "target_apis": [],
       "apis": [],
       "base_sha": "a6bae9ac86dbba362537758784edf06c973e9c53",
@@ -37655,17 +37665,18 @@
         "build/join-util-views-qualification-v1/42262940227 retained artifacts/audit/receipts only"
       ],
       "acceptance": "Reuse rootprepared existing3readers/freezecontract and inspect actualsource/API/profilemetadata. Parent42262940227 MUSTterminalsuccess with4successfuljobs before7artifact retention; iffailure retaincondition/metadata and stopdependent intake, no source/qualification/acceptance waiver. APIstreamhash/download eachactualarchive once; sourcebound4profile seal records and3stage files once, allXML/SDK64/family32/corpora12/source216product102SDK/actualselectors/helper/solecore/sourcearchive/provenance checked from actualdata. No source/science/native/install/build/env/timing or artifact/corpus duplicatehash. Do not proofindex large copied corpora/binaries; smallreceipts only. Freezeone coherent independentlyscoped handoff; root aggregateadmission/delivery stillrequired.",
-      "current_checkpoint": "Modern/minimum/Windows jobsSUCCESS; debug128047332924 live, overallrun notterminal. Existingroot watcher82134 remainslive. Preparedreaders build/join-util-views-qualification-v1/42262940227; no artifactdownload yet. RLBP6cc0 sourcehandoff frozen awaitingrootindependentreview.",
+      "current_checkpoint": "Modern/minimum/Windows jobsSUCCESS; debug128047332924 live, overallrun notterminal. Existingroot watcher82134 remainslive. Preparedreaders build/join-util-views-qualification-v1/42262940227; no artifactdownload yet. RLBP6cc0 sourcehandoff frozen awaitingrootindependentreview.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "R actualterminal/artifactaudit then root aggregateadmission",
-        "action": "Read/setup existingreaders and actualprereqs now; execute onlyafter parentterminalsuccess. Retain allfailures/protectedarchives, no retrypartialdownloads or scientificreplay. Rootmonitors livejob and retains independent source/product/performance/main authority."
-      }
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
+      },
+      "depends_on": []
     },
     {
       "id": "join-util-views-bound-measurement-v3",
       "kind": "implementation",
-      "owner": "readiness_reviewer",
-      "state": "delivered271_with_scoped68_performance_all_losses_retained",
+      "owner": "integrator",
+      "state": "measured",
       "target_apis": [],
       "apis": [],
       "base_sha": "b36754dc9d5183edeabb867274a75d901d59b7e7",
@@ -37681,17 +37692,17 @@
         "join-util-views-qualified-artifact-review-v2"
       ],
       "acceptance": "Root independently admits actuala6/42262940227 whole271 source/profile/product (15030efe receipt); create NEWisolated controller successor fromb367, preserve frozenprototype v2. Bind actual minimumstager13528655843 digest73276b66ee5c5537628c26ce1d19def8d8e41410d388667808a5e22a198c383e using retainedonce-seal; smallruntime/package/product/qualifier metadata only, no archive/core/corpus rehash or whole extraction/env/install. Actualpreparedsource/runtime/core/102SDK/fingerprint/rootreceipts and currentprobeSHA/source/helper7pins/9routes bound, methods/cases unchanged56/784samples/112warmgroups threads1 all-loss. Preserveoldunboundmanifest/tests via newv3path or exactversionedprojection, not weakenUNBOUND assertions; affectedsource/metadata tests BOTHretainedPython normalconftest/plugins/0science. FrozenC1poststop/postbatchcontrols preserved. Hosthelper mayonlybuild/probe once laterunderactualrootdispatch; newhostreceipt/library hashes remain unbound rather than fabricated. Compare actualprior18pin/10report ellipse dependency scope if readilyretained, reuseonlymatchingliteral/runtime scope; otherwiseexplicitpending and no retiming. No originals/native/helper/sampler/timing/newenv/build/download/hosted before root nextGO. One immutableboundsourcehandoff for root independentadmission/dispatch.",
-      "current_checkpoint": "Main ef465027 pushed; exacta6production/SDK/frontend/qualifier/tests/contracts match qualifiedsource. Root15030fourprofiles+48fc68performance/34wins34losses admitted; failed42278375082 preserved, c7report-onlyreplayPASS/no retiming. Threecleanmergedobsolete metadataWTs removed, activebaseline/packages/raw/env/protectedpaths retained. FullAPI/speedgatesremainopen.",
+      "current_checkpoint": "Main ef465027 pushed; exacta6production/SDK/frontend/qualifier/tests/contracts match qualifiedsource. Root15030fourprofiles+48fc68performance/34wins34losses admitted; failed42278375082 preserved, c7report-onlyreplayPASS/no retiming. Threecleanmergedobsolete metadataWTs removed, activebaseline/packages/raw/env/protectedpaths retained. FullAPI/speedgatesremainopen.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "next_gate": {
-        "owner": "root/C/R within existing scopes",
-        "action": "Reviewed currentdelivery, no further271qualification or timingrerun. Cfourutility/RJOIN losses futurecandidates need independent source/parity/genuine/performance; root follows live273 run42280271105/watcher94708. Updatechecklistaffectedrowsatnextboundedcloseout."
+        "owner": "integrator",
+        "action": "Reviewed, no change to delivered271/scoped68case baseline or34losses. Historical qualified-a6 measurement is terminal; no recapture/retiming. Future changed-source/domain work needs a new explicit assignment and its genuine/public-performance gates."
       }
     },
     {
       "id": "flood-fill-source-first-v1",
       "kind": "implementation",
-      "owner": "boundary_worker",
-      "state": "outer_controller_root_source_admitted_actual_bindings_blocked_by_genuine_failure",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [],
       "target_apis": [
         "morphology.flood",
@@ -37706,7 +37717,10 @@
       "depends_on": [],
       "scope": "One canonical flood/fill family plus morphology/segmentation identity aliases; exact existingplan/source/test/native/contract scan foundonly unassignedinventory, no existingfamily packet. Current275integration remainsindependent.",
       "acceptance": "Source/test first: inspect pinned0.26Python+compiledsource semantics and aliasidentity usingretainedpackages/sources; freeze perAPI dtype/layout/shape/seed/footprint/connectivity/tolerance/newvalue/inplace/metadata/error/FP/protocol contract, bounded recipes and source/storage safety before anyoriginal authority. Reuse queue/reconstruction/view/conversion primitives where exactordering matches, no new genericframework. Nativeowned matching flood mask and fill, typedSDK/hotswap/parity/applicable SIMD/globaloptionalworkers default1 and prospectivepublicone-thread cases required. Orderedqueue/no-worker serialscope disclosed when semantics require. Full domain/platform gaps explicit.",
-      "next_gate": "213retargetb038 independently admitted source-only:96pureeachPython,8cases/twoAPIcohorts,allactualbindingsNULL. Root accepted281genuine producer/runtime/core/SDK/helper then versionedbinding/realcohorts; separateconditional8case comparison and everylossreview. No new original/timing authority.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
+      },
       "source_sha": "5eb515a92cf37b905e2d469c8d24f1c0028959fc",
       "root_source_admission": "build/flood-fill-source-root-admission-v1/admission-v1.json",
       "root_source_admission_sha256": "9e35b5401f5983ed7fdb10ecaa4d6a04a3264543241dc9089bae7992dda7460a",
@@ -37721,7 +37735,7 @@
       "minimum_transition": "build/flood-fill-reference-v1/minimum-transition-review-v1.json",
       "modern_GO": "build/flood-fill-reference-v1/modern-GO-v1.json",
       "modern_GO_sha256": "7e2b53bebb3b75ef9162b5fdf8b61693c01c27eb7a191764148e27e4683b9801",
-      "current_checkpoint": "Actualminimum96/79returns17errors andmodern96/78returns18errors,384started/completed events total,192full32callerrestores/processfull32/sourceclean. No automaticretry; modernuint8newvalue300 profiledifference retained. B independent typedraw/GO/journalreview live; no native/genuine/performance credit.",
+      "current_checkpoint": "Actualminimum96/79returns17errors andmodern96/78returns18errors,384started/completed events total,192full32callerrestores/processfull32/sourceclean. No automaticretry; modernuint8newvalue300 profiledifference retained. B independent typedraw/GO/journalreview live; no native/genuine/performance credit.\nSchema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
       "root_raw_admission": "build/flood-fill-raw-root-admission-v1/admission-v1.json",
       "root_raw_admission_sha256": "ad6aa1c996346bee7978e8a77919005ba4611c2a1eb258204ea039cf04c4d47d",
       "native_source": "dd1aebd5d8619e4f6d2ea3925bb3e3e62b728f4f",
@@ -37746,9 +37760,11 @@
     {
       "id": "rolling-ball-source-first-v1",
       "kind": "implementation",
-      "owner": "metrics_integrator",
-      "state": "root_native_c821_admitted_next_integration_live",
-      "apis": [],
+      "owner": "integrator",
+      "state": "preparing",
+      "apis": [
+        "restoration.rolling_ball"
+      ],
       "target_apis": [
         "restoration.rolling_ball"
       ],
@@ -37757,10 +37773,13 @@
       ],
       "scope": "Next dependency-ready corebackground-removal API; existing ball/ellipsoidkernel source/reference/native components are reusable only in their own scopes, notrollingball output evidence.",
       "acceptance": "Readpinned0.26fullrollingball Python/Cython/FIFO/helpers andcurrentworkers/num_threadsDEPRECATED behavior. Freezeexactsignature,dtype/layout/mutation/kernel/radius/nansafe/padding/nonfinite/error/FP/deprecation/globalworker contract and bounded source/storage workload recipes before originals. Reuse existingtypedobserver/codec/FEnv one-shot controls; no new framework. Source/pure guards bothretainedPythons normalplugins0science. Original/native/helper/build/env/download/timing/hosted authority0 untilrootappropriategates; ifmatchingoldrollingball refs existreuse ratherthanrecapture.",
-      "next_gate": "Rolling281 component alreadyintegrated. Sourcecdfix root5edPASS, full161 live74915/45650. Root actualcompletePASS then exactsourcequalification/installedSDK/benchmarkbinding. References and timingbudgetunchanged; broadercast/half/Windows/FPdomainsopen.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Historical dispatch retired; do not rerun its old watcher/build/reference/timing instruction. Root follows execution_policy.current_checkpoint for currentdda9 qualification and actual terminal admission/binding gates; preserve this packet's unchanged domain/acceptance/proof requirements for any explicitly assigned future work. No incomplete contract is accepted."
+      },
       "source": "2e99dd5c7b2d1b6a65906587f7352e3e54194255",
       "root_admission": "build/rolling-ball-source-root-admission-v1/admission-v1.json",
-      "next_owner": "metrics_integrator",
+      "next_owner": "integrator",
       "readiness_source": "dfebccfc171290280643c3b17a4809148a0bb49f",
       "readiness_admission": "build/rolling-ball-root-readiness-v1/admission-v1.json",
       "minimum_GO": "build/rolling-ball-reference-v1/minimum-GO-v1.json",
@@ -37787,18 +37806,23 @@
         "path": "build/rolling-ball-enabled-integration-v1/handoff-v1.json",
         "sha256": "9349378fdbb87f470320f8a700c026009f0a999b3c909dbbb2dee339d554f277",
         "state": "Frozen_unadmitted_160_complete_source_commands_pending_parent_debug_failure_blocks_genuine_dispatch"
-      }
+      },
+      "current_checkpoint": "Schema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
+      "depends_on": []
     },
     {
       "id": "inverse-gaussian-gradient-source-first-v1",
       "kind": "source_tests_safety",
-      "owner": "readiness_reviewer",
-      "state": "private-component-scoped-root-admitted",
+      "owner": "integrator",
+      "state": "preparing",
       "apis": [
         "segmentation.inverse_gaussian_gradient"
       ],
       "scope": "Pinnedactualsignature/source, existingGaussian derivative/SIMD primitives, boundedrecipes/storage/numericalpolicy and purebothPython tests. Searchretainedexactfamily first; no original/native/factory/helper/build/timing authority.",
-      "next_gate": "Root independent75file/120proofintegration admission; C closes only missing4private frontendmodes/profile (8commandsmax664targettests, original0/no normalreplay/build/timing), reusing exact065 and9bnative. Complete165/genuine282/installednamespace/alllargerpreflights/perf stillpending; current281 cannotwait.",
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Root scoped852 reviewf563 authenticates82sources/71smallproofs,37Git inverses/26family dependencies; peer source review/full166 remainpending. Future282 requires complete166 actualsourcecommand bothPythons and separatelyauthorized8larger accuracy preflights BEFORE costly genuine singlecore/SDK109/fourprofiles, then publicperformance/full-domain gates. No original authority is granted. Fresh664 private frontend modes are root-admitted and reused; no repeat or current281 delay."
+      },
       "shipping_classification": "upstream-only",
       "waste_review": "Reused158originals/432nativeproofs/35policyproofs/24Windowsproofs; source/math/SDK/raw slices independently scoped. Root corrected read-only path/link assumptions and one defaultencoding read, with no scientific replay. Next owner root selective integration trigger, no extra audit task.",
       "source": "34d0855a317e97f776001f87bf52e48a5755d3dd",
@@ -37830,24 +37854,29 @@
         "sha256": "2a94c865589de5993228139f03527ba14d2ff8b78353255605046eb4a248fde5"
       },
       "integration_handoff": {
-        "source": "07b4200f1ca7cf564800e3189d1e3358981cc879",
-        "path": "build/inverse-gaussian-gradient-enabled-integration-v1/handoff-v1.json",
-        "sha256": "316f2888bcfa3ba0f2cbda0c33df59a62c9a1c54922c411f805ad23f67b595a2",
-        "status": "FROZEN_UNREADY_ROOT_ADMISSION_PENDING"
+        "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+        "path": "build/inverse-gaussian-gradient-enabled-integration-v2/handoff-v2.json",
+        "sha256": "8e5daab95d9090dc2091b69b7a3d9ac7e005767319d9e5e6055eca1a69f278ca",
+        "status": "FROZEN_UNREADY_PENDING_INDEPENDENT_INTEGRATION_REVIEW"
       },
       "frontend_mode_supplement": {
         "path": "build/inverse-gaussian-gradient-frontend-modes-v1/supplement-v1.json",
         "sha256": "574a77e4042b0cb0897e173389bc968389189a10d8e97856e1cfd7c415832156",
         "independent_review": "build/inverse-gaussian-gradient-frontend-modes-independent-review-v1/review-v1.json",
         "review_sha256": "d1837cc9183e9ed5b2eaea15eef4bdbd4555bab981276bfe37074f3fc6b06c15"
-      }
+      },
+      "current_checkpoint": "Schema reconciliation: prior dispatch is retired, not a live worker assignment. Prior state/owner/next gate are preserved in work-queue-schema-repair-v1.current_checkpoint. Existing scope, acceptance, proofs, failures, and domain/performance requirements are unchanged; this phase grants no acceptance or execution authority.",
+      "depends_on": [],
+      "owns": []
     },
     {
       "id": "order-angles-golden-ratio-source-first-v1",
       "kind": "source-contract",
       "owner": "readiness_reviewer",
       "state": "implementing",
-      "apis": [],
+      "apis": [
+        "transform.order_angles_golden_ratio"
+      ],
       "target_apis": [
         "transform.order_angles_golden_ratio"
       ],
@@ -37919,14 +37948,18 @@
         "paired_semantic_FP_differences": 474,
         "original_authority_remaining": 0
       },
-      "depends_on": []
+      "depends_on": [],
+      "branch": "feature/order-angles-golden-ratio-native-v1"
     },
     {
       "id": "grayco-texture-source-first-v1",
       "kind": "source-contract",
       "owner": "boundary_worker",
       "state": "implementing",
-      "apis": [],
+      "apis": [
+        "feature.graycomatrix",
+        "feature.graycoprops"
+      ],
       "target_apis": [
         "feature.graycomatrix",
         "feature.graycoprops"
@@ -38005,6 +38038,290 @@
         },
         "original_authority_remaining": 0,
         "paired_semantic_FP_differences": 376
+      },
+      "branch": "feature/graycomatrix-graycoprops-native-v1"
+    },
+    {
+      "id": "work-queue-schema-repair-v1",
+      "kind": "documentation",
+      "owner": "metrics_integrator",
+      "state": "validating",
+      "branch": "docs/work-queue-schema-v1",
+      "base_sha": "174b12a8583b0ca485ab646587de56718a863599",
+      "apis": [],
+      "target_apis": [],
+      "owns": [
+        "coverage/work_items.json",
+        "coverage/EXECUTION_PLAN.md"
+      ],
+      "depends_on": [],
+      "scope": "Only existing ledger/CLI schema drift and minimal execution checkpoint; no source/API/proof/validator changes.",
+      "acceptance": [
+        "Existing work_queue --check, --ready, --agents succeed without dispatch",
+        "All old proof/hash/domain/failure/acceptance data preserved and no partial contract markedaccepted",
+        "Only current B/R native handles plus C documentation assignment active; currentrootgenuine64812 unchanged",
+        "JSON/inventory partition, links/localdiff checks; independentrootreview before main"
+      ],
+      "current_checkpoint": {
+        "status": "AUTHOR_DOCUMENT_CHECKS_PASS_ROOT_REVIEW_PENDING",
+        "historical_packet_dispatch": {
+          "combined-public-wave13": {
+            "state": "validating",
+            "owner": "integrator"
+          },
+          "draw-multiblock-lbp-source-first-v1": {
+            "state": "gray_dtype_metadata_repair_root_admitted_shared_intake_authorized",
+            "owner": "boundary_worker",
+            "next_gate": {
+              "owner": "metrics_integrator sole shared author",
+              "action": "Import exact6familyfiles from99d6 after pinnedhandoffb6a/root098 verification; close benchmark/current-source contexts and sourceguards, Linux metadata helper/selector, LBPchangedcrop dependency. CompleteactualbothPython workflowbarrier before hostednewsourcequalification. No originalrecapture or unchangedretry."
+            }
+          },
+          "find-boundaries-current-batch-v1": {
+            "state": "validating",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "metrics_integrator then root",
+              "action": "Integrateexact98df family delta/versionedcontext onadmitted277, retainingc8/e89 cumulativeinverse androw/SSE/subpixel/frontiers/oneglobal snapshot. No original speedclaim untilgenuinefinalcore/public1thread comparison andfullrelease."
+            }
+          },
+          "finite-radon-pair-v1": {
+            "state": "exceptional224_observed_native_root_admitted_shared_integration_pending",
+            "owner": "boundary_worker",
+            "next_gate": {
+              "owner": "sole shared integration author after root compatible selection",
+              "action": "Selectively import reviewed cumulative Radonfamily+SDK/dependencies, not privateancestry wholesale; version active source/benchmark contexts for185 leaf and shared changes. Complete bothPython source barriers then genuine275candidate ascompatible. Frozen7fcee16case benchmark independentreview in progress; actual binding/larger-case parity/performance remain pending."
+            }
+          },
+          "flood-fill-source-first-v1": {
+            "state": "outer_controller_root_source_admitted_actual_bindings_blocked_by_genuine_failure",
+            "owner": "boundary_worker",
+            "next_gate": "213retargetb038 independently admitted source-only:96pureeachPython,8cases/twoAPIcohorts,allactualbindingsNULL. Root accepted281genuine producer/runtime/core/SDK/helper then versionedbinding/realcohorts; separateconditional8case comparison and everylossreview. No new original/timing authority."
+          },
+          "inverse-gaussian-gradient-source-first-v1": {
+            "state": "private-component-scoped-root-admitted",
+            "owner": "readiness_reviewer",
+            "next_gate": "Root independent75file/120proofintegration admission; C closes only missing4private frontendmodes/profile (8commandsmax664targettests, original0/no normalreplay/build/timing), reusing exact065 and9bnative. Complete165/genuine282/installednamespace/alllargerpreflights/perf stillpending; current281 cannotwait.",
+            "integration_handoff": {
+              "source": "07b4200f1ca7cf564800e3189d1e3358981cc879",
+              "path": "build/inverse-gaussian-gradient-enabled-integration-v1/handoff-v1.json",
+              "sha256": "316f2888bcfa3ba0f2cbda0c33df59a62c9a1c54922c411f805ad23f67b595a2",
+              "status": "FROZEN_UNREADY_ROOT_ADMISSION_PENDING"
+            }
+          },
+          "join-segmentations-current-batch-v1": {
+            "state": "validating",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "metrics_integrator sole shared author",
+              "action": "Combine exact independentlyadmitted familyfiles fromb87/98df/56ec into277 withselectiveancestry handling, registry/build/SDK/default/hotswap/sourcepins/real selectors/collector scopes. Coordinate R F1test-envelope files; do notgenuineuntilsource-built helperprepared/collected andgenuinefixturesuseactualinstalledcore. Preservecases/methods/oldsourceproofs, affectedguardbothversions only; freezecandidate forrootindependentbinding and COMPLETE2sourcebarriers. No originals/fullcore/hosted/perfselfdispatch."
+            }
+          },
+          "join-util-views-bound-measurement-v3": {
+            "state": "delivered271_with_scoped68_performance_all_losses_retained",
+            "owner": "readiness_reviewer",
+            "next_gate": {
+              "owner": "root/C/R within existing scopes",
+              "action": "Reviewed currentdelivery, no further271qualification or timingrerun. Cfourutility/RJOIN losses futurecandidates need independent source/parity/genuine/performance; root follows live273 run42280271105/watcher94708. Updatechecklistaffectedrowsatnextboundedcloseout."
+            }
+          },
+          "join-util-views-measurement-controller-v1": {
+            "state": "assigned",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "readiness_reviewer independent reviewer then root admission",
+              "action": "Review exact frozen4file child/retained pure authority controls, nine distinct API cohorts and helper prep/collector, source/runtime/GO interfaces and disclosure of profile observer coverage. Derive actual intersection of67pins with5test-only458e changes; preserve frozenparent/cases/methods/legacy. No tests/science/body/timing replay or actual bindings; root genuine/firstcohort/measurementGO gates remain."
+            }
+          },
+          "join-util-views-qualified-artifact-review-v2": {
+            "state": "assigned",
+            "owner": "readiness_reviewer",
+            "next_gate": {
+              "owner": "R actualterminal/artifactaudit then root aggregateadmission",
+              "action": "Read/setup existingreaders and actualprereqs now; execute onlyafter parentterminalsuccess. Retain allfailures/protectedarchives, no retrypartialdownloads or scientificreplay. Rootmonitors livejob and retains independent source/product/performance/main authority."
+            }
+          },
+          "join-util-views-sourcebarrier-fix-v1": {
+            "state": "assigned",
+            "owner": "readiness_reviewer",
+            "next_gate": {
+              "owner": "readiness_reviewer narrow test author then root independent admission",
+              "action": "Freeze minimal five-test-file source-only successor in separate worktree from9c92, preserve failed campaign and numerical source fingerprint. Root reviews actual full failure closure, then reruns complete actual workflow command on both supported Pythons; partial unions cannot satisfy readiness."
+            }
+          },
+          "join-windows-fenv-fixture-v1": {
+            "state": "frozen_pending_root_review",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "metrics_integrator narrow author then root independent readiness",
+              "action": "Root polls live watcher82134 for exacta6bae9 run42262940227, retains terminal artifacts once and independently admits fourprofiles/SDK/product. Failed priorcampaign remainsfailed. No unchangedsource retry, no timing before successfulproducer/rootbinding/firstcohort/separateGO."
+            }
+          },
+          "label-pair-metrics-current-batch-v1": {
+            "state": "validating",
+            "owner": "root",
+            "next_gate": {
+              "owner": "metrics_integrator then root",
+              "action": "Integrateadmittedb87 exactsource withversionedsource/SDK/benchmarkguard successor, preservefallback/fullbacking/orderedFP/all8cases andtinyregression. No separatebarriers beforefinalreadybundle; genuine4profile/SDK/original1thread neededbeforemain."
+            }
+          },
+          "lbp-benchmark-execution-v1": {
+            "state": "current275_controller95e64_root_scoped_admitted_UNBOUND",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "root then authorized binding author",
+              "action": "After actual8c42306808073 genuine/stager rootadmission, bind admitted95e64controller actualproducer/runtime/core/SDK/source/helper/root metadata in versioned successor, affectedbothPython sourceguards, rootbindingadmission and realcohorts before timing. No newprototype tests or timing now."
+            }
+          },
+          "mark-boundaries-source-first-v1": {
+            "state": "assigned",
+            "owner": "readiness_reviewer",
+            "next_gate": {
+              "owner": "boundary_worker isolated MARK native family then root independent native admission",
+              "action": "Implement whole named native/public/SDK MARK family against frozen125recipes and actualsaved249rows, preserving explicitfailed105gap. Reuse conversion/findboundaries/dilation/globalbudget/SIMD primitives; close exactcubic mirror prefilter/zoom rather than whole-original fallback or guessed interpolation. Isolatedfamilyfiles only; no currentb557 integration/extra originalcalls/timings. Root owns raw/native/performance/genuine finalacceptance."
+            }
+          },
+          "mark-lbp-enabled-integration-v1": {
+            "state": "8c_campaign_terminal_failure_three_success_minimum_importfailed_corrected_integration_live",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "readiness_reviewer soleintegration then root",
+              "action": "R confirmsliveisolated integration handle and freezesearliest compatible correctedbundle, no original/genuine/fullSDK/hosted/timing. Root independentlyadmits; no nextfullbuild foralready-readyVI whenonecompatiblebundle canqualify."
+            }
+          },
+          "rank-public-integration": {
+            "state": "validating",
+            "owner": "integrator"
+          },
+          "regular-grid-current-batch-v1": {
+            "state": "validating",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "metrics_integrator sole shared author",
+              "action": "Combine exact independentlyadmitted familyfiles fromb87/98df/56ec into277 withselectiveancestry handling, registry/build/SDK/default/hotswap/sourcepins/real selectors/collector scopes. Coordinate R F1test-envelope files; do notgenuineuntilsource-built helperprepared/collected andgenuinefixturesuseactualinstalledcore. Preservecases/methods/oldsourceproofs, affectedguardbothversions only; freezecandidate forrootindependentbinding and COMPLETE2sourcebarriers. No originals/fullcore/hosted/perfselfdispatch."
+            }
+          },
+          "rolling-ball-source-first-v1": {
+            "state": "root_native_c821_admitted_next_integration_live",
+            "owner": "metrics_integrator",
+            "next_gate": "Rolling281 component alreadyintegrated. Sourcecdfix root5edPASS, full161 live74915/45650. Root actualcompletePASS then exactsourcequalification/installedSDK/benchmarkbinding. References and timingbudgetunchanged; broadercast/half/Windows/FPdomainsopen.",
+            "next_owner": "metrics_integrator"
+          },
+          "util-array-views-current-batch-v1": {
+            "state": "validating",
+            "owner": "readiness_reviewer",
+            "next_gate": {
+              "owner": "metrics_integrator shared integration / boundary_worker benchmark consumer / root admission",
+              "action": "F1 test-only source659d is independently admitted2c314a70:7source/51proofs, full32 controls,322saved slice nodes/profile and19pure guards each retained Windows Python. C selectively imports7files with exact historical inverse and Linux prepare/env/source-copy/collector closure; B replaces benchmark legacy0c40 dependency through reviewed source-built interface. Include helper receipt/bundle in measurement transport. Root then admits final source and complete2source barriers before genuine qualification; no new originals or unchanged numerical replay."
+            }
+          },
+          "util-crop-current-batch-v1": {
+            "state": "validating",
+            "owner": "metrics_integrator",
+            "next_gate": {
+              "owner": "metrics_integrator sole shared author",
+              "action": "Combine exact independentlyadmitted familyfiles fromb87/98df/56ec into277 withselectiveancestry handling, registry/build/SDK/default/hotswap/sourcepins/real selectors/collector scopes. Coordinate R F1test-envelope files; do notgenuineuntilsource-built helperprepared/collected andgenuinefixturesuseactualinstalledcore. Preservecases/methods/oldsourceproofs, affectedguardbothversions only; freezecandidate forrootindependentbinding and COMPLETE2sourcebarriers. No originals/fullcore/hosted/perfselfdispatch."
+            }
+          },
+          "util-slice-along-axes-current-batch-v1": {
+            "state": "validating",
+            "owner": "readiness_reviewer",
+            "next_gate": {
+              "owner": "metrics_integrator shared integration / boundary_worker benchmark consumer / root admission",
+              "action": "F1 test-only source659d is independently admitted2c314a70:7source/51proofs, full32 controls,322saved slice nodes/profile and19pure guards each retained Windows Python. C selectively imports7files with exact historical inverse and Linux prepare/env/source-copy/collector closure; B replaces benchmark legacy0c40 dependency through reviewed source-built interface. Include helper receipt/bundle in measurement transport. Root then admits final source and complete2source barriers before genuine qualification; no new originals or unchanged numerical replay."
+            }
+          }
+        },
+        "historical_policy": {
+          "current_three_agent_packets": {
+            "metrics_integrator": "FutureIGG enabled-v2 final invalidated227checks/version PASS; earlier source failures preserved, complete166/genuine not executed; unreadyhandoff packaging.",
+            "boundary_worker": "Coherent two-API GLCM native/SDK/parity/benchmark-source batch from56303 using188root-admitted saved references; no originals/timing/sharedfiles.",
+            "readiness_reviewer": "Native golden-angle coherent C++/frontend/SDK/parity/benchmark-source batch fromff9b using90admitted references; no originals/timing/sharedintegration."
+          },
+          "current_review_assignments": {
+            "metrics_integrator": "Soleisolatedcurrent281 sentinelidentity correction based3e; frozenmodern1aefdiagnosis/failedsource preserved. Future07b+fresh664 supplement574a/d183 peerPASS immutable.",
+            "boundary_worker": "Goldenangle0d independent400730CHANGES_REQUIRED preserved. FreshIGGmode reviewd183 scopedPASS frozen; nextcriticalsentinel-delta review waits frozenC.",
+            "readiness_reviewer": "NEWgoldenanglev3 fixes consumedaction FP/partialdata/journalcompletion ordering perG1G2; pureinertfaultinjection only, original/capture0.",
+            "root": "Root observe SAME64812/42347579925 genuine; failed3e rootcloseout8623complete. Golden90raw min028aed+modern09807 admitted/Rnative live. GLCM188raw min3e86+modern408222 admitted/Bnative live. CfutureIGGsource handoffpending; main/checklist ownerroot."
+          },
+          "reserved_worker_lanes": [
+            "grayco_texture_native",
+            "golden_angle_native",
+            "igg_shared_integration"
+          ],
+          "integrator_queue": [
+            "regionprops-state-shared-v1",
+            "regionprops-state-measurement-v1"
+          ],
+          "ledger_freshness_boundary": "2026-11-04 remaining-plan refresh: current queues/next gates reconciled to terminal handoffs; historical source-pair maps and paused_checkpoints retain their original provenance and are not dispatch instructions. Check live roster separately.",
+          "implementation_goal_status": "Active full477 goal. Current exactdda9 genuine qualification live64812; golden90 andGLCM188references admitted andtwo coherentnativebatches active. C futureIGG sourceintegration unready pending independent/full166/genuine/performance. No fullAPI or speed completion claim.",
+          "checkpoint_fields": {
+            "next_release_source": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+            "next_release_review": {
+              "path": "coverage/evidence/current281-shared-assertion-projection-root-admission-v2.json",
+              "sha256": "ac77279a083b240fd25000689119aefea6620ea9ab232e3f430da96a499b9d11",
+              "passed": true
+            },
+            "complete_source_readiness": {
+              "path": "coverage/evidence/current281-complete-source-readiness-v3.json",
+              "sha256": "41f9d2f91569f266b54e8199d9c5ebe5e18144d0897480df17d6adc42c722bb2"
+            },
+            "legacy_queue_schema_note": "Read-only comparison found13pre-existing verbose legacy states outside tools/work_queue.py enum and3legacy records missing depends_on, after current2packets were given existing implement/preparing enum+dependencies. Old ACTIVE records also remain historical. Current execution uses reconciled existing currentcheckpoint/next_gate/livehandles; no --ready CLI dispatch relies on these historical labels. Root must reconcile legacy schema before relying on that CLI; no acceptance/scientific gate is waived."
+          }
+        },
+        "historical_plan_paragraphs": {
+          "7": "[VI controllerb235](evidence/vi-measurement-controller-root-admission-v2.json) and [flood controllere342](evidence/flood-fill-controller-root-admission-v2.json) retargets are source-only admitted with all actualbindingsNULL. C owns preserved futureIGG282 integration, currentlyunready with12sourcefailures/profile and an independently retained missingNumPyinclude compile-setup failure; B refreshes existing281 resultreader metadata to cd; R independently reviewed prior readertemplate7d8e and awaits only affectedsuccessor delta. These lanes cannot delay eligible current281 release. Waste correction: include actual family-discovery assertion in affected closure when adding families; do not wait for unrelated future jobs to correct isolatedcurrent tests. Reuse unchanged scientific/SDK/originals, keep fullbarrier and all losses; no new tracker or auditcampaign.",
+          "19": "Future IGG: [private native/policy/SDK admission](evidence/inverse-gaussian-gradient-native-root-admission-v1.json) and [fresh private frontend-mode admission](evidence/inverse-gaussian-gradient-frontend-modes-root-v1.json) retain664mode checks/eight exactprocess32 restorations without replay. C owns a new isolated enabled-v2 integration based on admitteddda9; actual futurecounts are282images/285functions/230product/109SDK/39families78checks and166source selectors. Its first affected run failed4checks/34setup cases per Python; retry had448passes/one metadata failure. Only invalidated source closure was corrected and227checks passed per Python; all earlier failures stay retained, and no union of partial runs establishes complete readiness. Independent integration admission, complete166checks, genuine qualification, larger benchmark preflights and public performance remain pending. This future batch cannot delay eligible current281 delivery.",
+          "21": "Bounded closeout and waste review: reused existing readers/helpers/runtime/source scopes,90golden references,188GLCM references and prior SDK/native evidence. All3hosted reader scripts remain byte-exact; root reviewed only26changed metadata proofs. No unchanged original capture, prefix campaign, numerical experiment or favorable retiming was repeated. Corrected root XML accounting distinguishes3,958testcase nodes from3,966suite-reported checks including8subtests; the failed receipt read is retained and no tests were rerun. Root updates affected per-API/member gates, receipts and existing operational fields at each bounded closeout/delivery; checklist-only validation stays document/state-only. Next owners/triggers are the live job/worker handles above, with missing or failed prerequisites left pending. Dormant legacy work_queue CLI schema mismatches remain an explicit existing-checkpoint issue (13verbose states/3missing dependency fields); root must reconcile them before CLI-derived dispatch, while current actions use the reconciled live gates. The project lesson was appended to compilexx commit36fffed; no additional scientific checks were run for that note."
+        },
+        "missing_dependency_records": [
+          "join-util-views-qualified-artifact-review-v2",
+          "rolling-ball-source-first-v1",
+          "inverse-gaussian-gradient-source-first-v1"
+        ],
+        "dependency_disposition": "The three legacy records had no explicit packet-edge field. Empty required arrays repair syntax only, not execution prerequisites. Their source/receipt/GO/acceptance conditions are preserved and phasepreparing blocks readiness. Root must explicitly reconcile any still-needed packet edges before a future dispatch; no dependency or proof gate is inferred closed.",
+        "actual_roster": "collaboration.list_agents observed root/boundary_worker/metrics_integrator/readiness_reviewer running; branch locators verified with native Git. No root job/session polled.",
+        "waste_review": "ExistingCLI enum/readiness/supersession rules reused. No proof authentication/science rerun. Root updates current gate after independent docs review; stale dispatch labels are not API completion.",
+        "missing_ownership_record": {
+          "id": "inverse-gaussian-gradient-source-first-v1",
+          "prior_field": "absent",
+          "current": [],
+          "reason": "Frozen future852 waits source review/preflights/genuine; no writable family assignment or accepted scope inferred."
+        },
+        "current_release_context": "Root07:05UTC confirms same64812/42347579925 live; allfourjobs Build/qualify after hostedguard success. This is root-reported context, not a new CLI/API query.",
+        "missing_inventory_assignments": {
+          "previous_apis": {
+            "grayco-texture-source-first-v1": [],
+            "order-angles-golden-ratio-source-first-v1": [],
+            "rolling-ball-source-first-v1": []
+          },
+          "current": {
+            "grayco-texture-source-first-v1": [
+              "feature.graycomatrix",
+              "feature.graycoprops"
+            ],
+            "order-angles-golden-ratio-source-first-v1": [
+              "transform.order_angles_golden_ratio"
+            ],
+            "rolling-ball-source-first-v1": [
+              "restoration.rolling_ball"
+            ]
+          },
+          "reason": "The four existing target_apis were absent from both assignment/unassigned partition. Assignment now matches existing family ownership; no shipping/classification/proof/acceptance field changed. Keep477ratherthan waive denominator."
+        },
+        "document_check": "build/work-queue-schema-v1/doc-check-v1.json",
+        "remaining_dependency_blocker": {
+          "records": [
+            "join-util-views-qualified-artifact-review-v2",
+            "rolling-ball-source-first-v1",
+            "inverse-gaussian-gradient-source-first-v1"
+          ],
+          "scope": "Only future reuse/dispatch of these retired records; current B/Rnative/dda9 release unaffected. No invented edge or acceptance."
+        }
+      },
+      "next_gate": {
+        "owner": "integrator",
+        "action": "Independently review this two-file documentation diff and actual CLI/doc checks; main delivery only after review. No source/native/scientific/hosted action follows from the documentation packet."
       }
     }
   ],
@@ -38685,28 +39002,28 @@
     "handoff": "python tools/work_queue.py --packet <id>",
     "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay. Once mandatory readiness closes, update only the dependent gate and dispatch eligible hosted work promptly; do broad publication while it runs. Assign one isolated shared integration owner; root retains independent admission/main delivery. Before hosted releasequalification, execute the complete actual workflow source-check command on both retained supportedPythonversions with normalconftest/plugins, real selectors and nofailfast; afterfixes reruncompleteaffectedbarrier. Partialunions/collection/alteredconfiguration cannot satisfy thisgate.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
-    "implementation_goal_status": "Active full477 goal. Current exactdda9 genuine qualification live64812; golden90 andGLCM188references admitted andtwo coherentnativebatches active. C futureIGG sourceintegration unready pending independent/full166/genuine/performance. No fullAPI or speed completion claim.",
+    "implementation_goal_status": "Active full477 goal. Root exactdda9 qualification42347579925/watcher64812 live as recorded, no terminal result inferred. B GLCM and R golden native batches active; C bounded ledger-schema documentation checks/freeze. Future852cc188 frozen unready pending independent/full166/genuine/performance; no fullAPI/speed completion.",
     "mode": "executing-updated-plan",
     "reserved_worker_lanes": [
       "grayco_texture_native",
       "golden_angle_native",
-      "igg_shared_integration"
+      "queue_schema_documentation"
     ],
     "agent_roster": "python tools/work_queue.py --agents",
     "resume_rule": "User resumed implementation. Reconcile actual handles and follow EXECUTION_PLAN.md immediate sequence, not historical assignments.",
     "worker_queues": {
+      "metrics_integrator": [],
       "boundary_worker": [
         "grayco-texture-source-first-v1"
       ],
       "readiness_reviewer": [
         "order-angles-golden-ratio-source-first-v1"
-      ],
-      "metrics_integrator": []
+      ]
     },
     "current_three_agent_packets": {
-      "metrics_integrator": "FutureIGG enabled-v2 final invalidated227checks/version PASS; earlier source failures preserved, complete166/genuine not executed; unreadyhandoff packaging.",
-      "boundary_worker": "Coherent two-API GLCM native/SDK/parity/benchmark-source batch from56303 using188root-admitted saved references; no originals/timing/sharedfiles.",
-      "readiness_reviewer": "Native golden-angle coherent C++/frontend/SDK/parity/benchmark-source batch fromff9b using90admitted references; no originals/timing/sharedintegration."
+      "metrics_integrator": "work-queue-schema-repair-v1",
+      "boundary_worker": "grayco-texture-source-first-v1",
+      "readiness_reviewer": "order-angles-golden-ratio-source-first-v1"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -38823,10 +39140,7 @@
         "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
       }
     },
-    "integrator_queue": [
-      "regionprops-state-shared-v1",
-      "regionprops-state-measurement-v1"
-    ],
+    "integrator_queue": [],
     "current_public_Bregman": {
       "source": "3cdd3637ca78343edb2cb554b77269de5f5eaf20",
       "run_id": 40098671228,
@@ -38897,7 +39211,7 @@
         "unfinished_source_must_be_preserved": true
       }
     },
-    "ledger_freshness_boundary": "2026-11-04 remaining-plan refresh: current queues/next gates reconciled to terminal handoffs; historical source-pair maps and paused_checkpoints retain their original provenance and are not dispatch instructions. Check live roster separately.",
+    "ledger_freshness_boundary": "2026-11-07 schema reconciliation: only current_three_agent_packets/worker_queues/current_review_assignments and current_checkpoint next-release pointers describe current ownership. Preserved old packet checkpoints, hosted-run snapshots and retired next gates are historical evidence, not live handles or dispatch authority. CLI ready output is structural eligibility only; root verifies actual prerequisites before followup_task/dispatch.",
     "resumed_goal": "implment the updated plan using 3 agents",
     "resumed_date": "2026-10-25",
     "background_review": {
@@ -39096,10 +39410,10 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Soleisolatedcurrent281 sentinelidentity correction based3e; frozenmodern1aefdiagnosis/failedsource preserved. Future07b+fresh664 supplement574a/d183 peerPASS immutable.",
-      "boundary_worker": "Goldenangle0d independent400730CHANGES_REQUIRED preserved. FreshIGGmode reviewd183 scopedPASS frozen; nextcriticalsentinel-delta review waits frozenC.",
-      "readiness_reviewer": "NEWgoldenanglev3 fixes consumedaction FP/partialdata/journalcompletion ordering perG1G2; pureinertfaultinjection only, original/capture0.",
-      "root": "Root observe SAME64812/42347579925 genuine; failed3e rootcloseout8623complete. Golden90raw min028aed+modern09807 admitted/Rnative live. GLCM188raw min3e86+modern408222 admitted/Bnative live. CfutureIGGsource handoffpending; main/checklist ownerroot."
+      "metrics_integrator": "Bounded2file ledger/CLI documentation repair in isolated docs/work-queue-schema-v1; author validation/freeze then root independent review, no scientific work.",
+      "boundary_worker": "Coherent2API GLCM native batch from56303; current actor boundary_worker, no original grants.",
+      "readiness_reviewer": "Coherent golden-angle native/generator/SDK batch fromff9b; current actor readiness_reviewer, no original grants.",
+      "root": "Observe existing64812/42347579925 exactdda9 genuine campaign; terminal retention/admission/main remain root-owned. Future852cc188 is frozen unready, not a second ready release or dispatch."
     },
     "next_action": "Observe SAME exactdda9 genuine64812. Rgolden/BGLCM nativebatch usingfrozen references, no original or timing grants; CfutureIGG handoff pendingindependentadmission. Publish validated scoped receipts/checklist promptly whilehostedruns.",
     "current_checkpoint": {
@@ -39122,7 +39436,7 @@
       "candidate_qualification_run": 42329688164,
       "candidate_evidence": "build/vi-reduction-controller-integration-v2/handoff-v1.json",
       "candidate_qualification_status": "COMPLETED_FAILURE_ALL_FOUR_PROFILES",
-      "next_release_source": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+      "next_release_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
       "next_release_expected_images": 281,
       "next_release_expected_product": 228,
       "next_release_expected_SDK": 108,
@@ -39134,8 +39448,8 @@
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct.",
       "next_release_review": {
-        "path": "coverage/evidence/current281-shared-assertion-projection-root-admission-v2.json",
-        "sha256": "ac77279a083b240fd25000689119aefea6620ea9ab232e3f430da96a499b9d11",
+        "path": "coverage/evidence/current281-rolling-sentinel-root-v1.json",
+        "sha256": "a86224649ab2a5833becb88a7e70eeeda6be5206d175750cf6baceeb2d12df90",
         "passed": true
       },
       "failed_campaign_closeout": "coverage/evidence/vi-reduction-controller-failed-campaign-closeout-v1.json",
@@ -39148,8 +39462,8 @@
         "sha256": "e0043b97cbc0279e75ee365bf8a32b7118ca0a7cb635ec9caacdbf85fc89bf68"
       },
       "complete_source_readiness": {
-        "path": "coverage/evidence/current281-complete-source-readiness-v3.json",
-        "sha256": "41f9d2f91569f266b54e8199d9c5ebe5e18144d0897480df17d6adc42c722bb2"
+        "path": "coverage/evidence/current281-complete-source-readiness-v4.json",
+        "sha256": "6bae629651502f0012d5a4c18523599b581294278b3a20be389792078114f691"
       },
       "modern_failure_admission": {
         "path": "coverage/evidence/current281-modern-signature-failure-root-v1.json",
@@ -39168,7 +39482,7 @@
         "path": "coverage/evidence/current281-sentinel-failed-campaign-closeout-v1.json",
         "sha256": "8623c0d6f93374d4ac80ab50f220a74b7a0d467fa2aab3f8bec11bc74c60d8ce"
       },
-      "legacy_queue_schema_note": "Read-only comparison found13pre-existing verbose legacy states outside tools/work_queue.py enum and3legacy records missing depends_on, after current2packets were given existing implement/preparing enum+dependencies. Old ACTIVE records also remain historical. Current execution uses reconciled existing currentcheckpoint/next_gate/livehandles; no --ready CLI dispatch relies on these historical labels. Root must reconcile legacy schema before relying on that CLI; no acceptance/scientific gate is waived."
+      "legacy_queue_schema_note": "Canonical phase/dependency and retired-dispatch metadata reconciled in isolated documentation successor from174b12a8. Existing CLI validation/ready/agents checks required; no science or acceptance gate waived. Historical labels and prior checkpoint pointers are retained in work-queue-schema-repair-v1.current_checkpoint."
     },
     "shared_integration_author": {
       "owner": "metrics_integrator",
