@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "status": "TWO_TEST_SOURCE_CORRECTION_ADMITTED_COMPLETE161_BOTH_PENDING",
+  "source": "cd703fbda0442944b150c9529e09e0a40ab37c59",
+  "base": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+  "handoff": {
+    "path": "build/current281-sdk-family-assertion-v1/handoff-v1.json",
+    "sha256": "b4356e184162be99d63da90765fc91dbf49ad395b31e76a1f82678f913fc4908"
+  },
+  "independent_review": {
+    "path": "build/current281-sdk-family-assertion-independent-review-v1/review-v1.json",
+    "sha256": "deb9c71870233055affdb19453f4e73cbee1218b91da6ab1fd83c041e53b6b53"
+  },
+  "root_review": "Root inspected actual2testfile diff, exact committedsource/cleanHEAD. Strict current38/legacy23/selected108SDK76checks and missingrollingclient rejection. Exact single-use fullfile historical test inverse; no production/hash waiver.",
+  "affected_source_checks_each_python": 29,
+  "normal_conftest_plugins": true,
+  "selectors": 161,
+  "unchanged": "Production, qualifier, workflow, existingcontracts/raw/native/SDK/scientific data; root8c95496d prior213 scope reused only matching dependencies.",
+  "preserved_failure": "coverage/evidence/current281-complete-source-failure-v1.json plus initial29-check diagnostic28pass1fail perPython. No oldgate relabeled.",
+  "pending": [
+    "Actual COMPLETE161 command bothPythons on this exactsource; no partialunion.",
+    "Exact remote/workflow/no-prior-run/capacity/sourceplans then genuine4profile once; independent artifact/public/SDK admission.",
+    "Actual measurement binding/cohorts/separateconditionaltiming/raw/allloss admission and maindelivery."
+  ],
+  "waste_review": {
+    "reuse": "Unchanged native/reference/SDK/science preserved; only failed assertion and actual historical literal dependency changed and independently reviewed.",
+    "next_correction": "Whenaddingfamilies, include actual family-discovery assertion in affected closure; completebarrier remainsmandatory.",
+    "owner_trigger": "Root execute full161 now; independentfutureIGG doesnotblock."
+  }
+}

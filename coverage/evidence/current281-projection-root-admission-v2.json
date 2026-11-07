@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "status": "INDEPENDENT_CORRECTIVE281_SOURCE_ADMITTED_COMPLETE_BARRIERS_PENDING",
+  "source": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+  "base": "cbb3d2cd993f71fff08bb4a548d9c456c7d2de60",
+  "scope": "Four-file once-only source-projection correction; root inspected actual source/test/collector diff and authenticated committed4file projection. Independent parent/corrective review357de00d plus narrow b9ccdc16 delta reused. No production numerical source changed from cbb.",
+  "handoff": {
+    "path": "build/current281-projection-v2/handoff-v2.json",
+    "sha256": "f22c8e749709510b0b4c03cb821c9dcd73a55ec6f0ff9e317fdd0afa61426cce"
+  },
+  "independent_review": {
+    "path": "build/current281-corrective-independent-review-v2/review-v2.json",
+    "sha256": "b9ccdc167331d858793d9f6cf36a73db21c3f520354a6acf15b075022c05a205"
+  },
+  "affected_source_checks_each_python": 397,
+  "normal_conftest_plugins": true,
+  "selectors": 161,
+  "counts": {
+    "images": 281,
+    "functions": 284,
+    "product_members": 228,
+    "SDK_members": 108,
+    "SDK_families": 38,
+    "SDK_checks": 76
+  },
+  "failure_preserved": "cbb357de00d R1 remains CHANGES_REQUIRED; versioned213 corrects the composition, with strict current/predecessor hashes and LF/CRLF raw/canonical cases.",
+  "gates": {
+    "source_delta": "PASS",
+    "complete_source_both_pythons": "PENDING",
+    "four_profile_release": "PENDING",
+    "one_thread_public_performance": "PENDING",
+    "main_delivery": "PENDING"
+  },
+  "authority": "Root may run complete actual workflow source commands on both retained Pythons using prepared existing launcher after real capacity/config checks. No genuine dispatch until complete successful receipts.",
+  "waste_review": {
+    "reuse": "No repeats of native/parity/SDK/originals/measurements or archive/core hashes; parent reviews reused.",
+    "avoidable": "Root looked for guessed new test filename instead of four-file handoff name; read failure corrected to actual test file, no mutation or test impact.",
+    "next_correction": "Use handoff changed_files for exact reads. Raw/canonical boundary regression now covers the demonstrated omitted composition.",
+    "owner_trigger": "Root actual complete161 barrier now, then exact-source release when prerequisites pass."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "status": "SCOPED_UNBOUND_CONTROLLER_RETARGET_ADMITTED_NOT_EXECUTION_AUTHORITY",
+  "source": "b0385768d5ff4f99d7a3694f066537057bdc2dd7",
+  "product_source": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+  "handoff": {
+    "path": "build/flood-fill-controller-v2/handoff-v2.json",
+    "sha256": "bc701ac9f0490f113a4d6ce23737418f9d3e03013ceb42167bbc0cdee99021a6"
+  },
+  "source_files": 5,
+  "proofs": 13,
+  "pure_controls_each_python": 96,
+  "previous_root_admission": "dc1e76d5cbedf8ce4df676ea7987f1d2a84810215325350c6ecf12c310221a5f",
+  "review": "Probe and workflow byte-exact30ce after manifestpath inverse. Cases/method/execution unchanged;25actualdependency pins checked, onlyCMake differs. Newprospective108SDK layout is not a runtime binding.",
+  "cases": 8,
+  "canonical_APIs": 2,
+  "samples": 112,
+  "warmup_groups": 16,
+  "actual_bindings": "NULL",
+  "pending": [
+    "Accepted exact281 genuine producer/core/runtime/SDK/helper/source admission",
+    "Versioned actual binding, two real API cohorts and conditional timing authorization",
+    "Eightcase allocation-inclusive original-public one-thread comparison/raw/all-loss admission;12prospective nonexecutablerecipes remainopen"
+  ],
+  "execution_replays": 0,
+  "waste_review": {
+    "reuse": "Prior rootreviewdc1e and exact30ce executable bodies plus retained96controls; no science replay.",
+    "avoidable": "Root guessed nonexistent proof-index filename before reading actual inlineproofmap; read-onlyfailure corrected.",
+    "next_correction": "Use actualhandoffproofmap, no extraaudit framework.",
+    "owner_trigger": "Root actualqualified281 evidence then bindcontroller once."
+  }
+}

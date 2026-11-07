@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "status": "SCOPED_UNBOUND_VI_CONTROLLER_RETARGET_ADMITTED_NOT_EXECUTION_AUTHORITY",
+  "source": "2c6e7057d809aa01e34ab94577cd5fc57c6aea70",
+  "product_source": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+  "handoff": {
+    "path": "build/vi-measurement-current213-v2/handoff-v2.json",
+    "sha256": "5d56c7c7577e6ba4d7cd39e49ec118de9fac5a2ddb8a2db610ba57ad3d964c79"
+  },
+  "parent_independent_review": "30891b6d2e2f4776f454e71000b521f15fc790213d1665879375ae87276e5357",
+  "source_files": 4,
+  "small_proofs": 12,
+  "small_proof_bytes": 47743,
+  "pure_controls_each_python": 76,
+  "raw_pins": 32,
+  "canonical_pins": 32,
+  "review": "Entire workflow/probe reconstruct fecd by strict unique fragment inverses. Only versioned context/route-name changes. Four-field driver route equals actual activeVIv5; MARKv6 source pinned. Source-only controllers/refusal/report controls preserve method,typedCSR/counter/entropy acceptance/C1/restoration/oncepostbatch behavior.",
+  "cases": 4,
+  "samples": 56,
+  "warmup_groups": 8,
+  "actual_bindings": "NULL",
+  "pending": [
+    "213 complete161 failed1staleSDKassertion/profile; actual successful281 successor must be independently qualified before any binding.",
+    "Versioned actualsource/producer/runtime/core/SDK/helper binding and independent root admission; confirm dependency/literal scope after next assertion-only source successor.",
+    "Actual F1/helper and real CLI cohort, strict savedlarge-case preflight, separately authorized one-thread comparison/raw/all-loss admission; broader domains remainopen."
+  ],
+  "execution_replays": 0,
+  "waste_review": {
+    "reuse": "Parent independentreview3089 reused; final4sources/12proofs32raw32canonical pins authenticated without body or scientific reruns.",
+    "avoidable": "Reviewed, no change for this controllerdelta.",
+    "owner_trigger": "Root actualqualified281 evidence then versionedbinding; do not treat source-only prospective213 as acceptedproducer."
+  }
+}

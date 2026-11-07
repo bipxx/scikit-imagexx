@@ -1,0 +1,89 @@
+{
+  "passed": false,
+  "status": "COMPLETE161_BOTH_PYTHONS_FAILED_ONE_STALE_FAMILY_ASSERTION",
+  "source": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+  "profiles": {
+    "windows311": {
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 354.1569999998901,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3881,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_nodes": 3873,
+      "passed_ordinary": 3872,
+      "passing_subtests": 8,
+      "failed": [
+        {
+          "class": "tests.test_public_qualification",
+          "name": "test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23",
+          "message": "AssertionError: assert (('components'...ibution', ...) == ('components'...ibution', ...)\n  \n  Left contains one more item: 'rolling_ball'\n  Use -v to get more diff)"
+        }
+      ],
+      "pins": {
+        "terminal.json": "62fb652d8b3103189c092442eed9cea60fe9e9fa2d8ead5a9380db25a0f4e630",
+        "command.json": "c3f7c35909b9d82c4a92022e2176ccb2f5ac3654f52d97a2f47c3fc758c2f0e7",
+        "testIDs.json": "4f5262806a311aa94d5b735f2df8a925f406a34887222e6971c026afbff5ac2e",
+        "plugins.json": "e395c09ffbc677bf42ccaf9dfa804f4f4e6d569c9f999232e1270dc629997b18",
+        "results.xml": "16137de6996458ad89989e0c99d693394d00283c1ac34899312a30c36486f0c5"
+      }
+    },
+    "windows313": {
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 326.9229131999891,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3881,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_nodes": 3873,
+      "passed_ordinary": 3872,
+      "passing_subtests": 8,
+      "failed": [
+        {
+          "class": "tests.test_public_qualification",
+          "name": "test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23",
+          "message": "AssertionError: assert (('components'...ibution', ...) == ('components'...ibution', ...)\n  \n  Left contains one more item: 'rolling_ball'\n  Use -v to get more diff)"
+        }
+      ],
+      "pins": {
+        "terminal.json": "eb1727c4cf385a270f8adac6c9dbdcc5725e9f201938de5f03c99415241ca284",
+        "command.json": "982ea6b46f1c3e3f249ecf065dc1a1dc4cad665508ca417b12b404247e369079",
+        "testIDs.json": "4f5262806a311aa94d5b735f2df8a925f406a34887222e6971c026afbff5ac2e",
+        "plugins.json": "2fa706c82250676f8e56592988ad0113bd1dbfb4fb99993d2a0e19748cbd2421",
+        "results.xml": "0f977e4b2a553f2920360c2b1b10bb1b64c2408cdaa499648615b2a9a57c6d8d"
+      }
+    }
+  },
+  "normal_conftest_plugins": true,
+  "selectors": 161,
+  "science_original_native_timing": 0,
+  "failure": "Explicit CURRENT_FAMILIES assertion in tests/test_public_qualification.py omitted newlyintegratedrolling_ball. Legacy23 unchanged; actualcurrent38family list must remain strict. No numerical failure observed because this source-only barrier executes no numerical body.",
+  "dependent_actions": "Hosteddispatch stopped. Newversioned assertion-only successor + affectedchecks/independentreview then COMPLETE actual161 on BOTHPythons again; no partialunion.",
+  "reusable_scope": "Current213 production/native/private numericals unchanged by expected assertion successor; complete-source readiness remains FAILED. Sourceplans/readers/controllers only reusable when literal/dependency scope matches.",
+  "waste_review": {
+    "avoidable": "Earlier397affected source closure omitted this existing family-discovery assertion; fullbarrier caught it before expensivehosteddispatch.",
+    "useful": "Complete normalplugins/no-failfast barrier exposed exactsame1failure/profile and retained3881reportedXML each.",
+    "next_correction": "Include actual current-family assertion with future family additions in affected closure, while retaining completebarrier. Do not broaden into a new censusframework.",
+    "owner_trigger": "C assertion-only frozen successor; B independentdelta; root completebarrier. FutureIGG task inputs preserved and unrelated running jobs do not block isolatedcriticalfix."
+  }
+}

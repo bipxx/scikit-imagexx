@@ -37105,6 +37105,10 @@
         "state": "root_three_file_prototype_handed_to_B_for_completion",
         "acceptance": "Four new family-only workflow/probe/measurement/source-test files. Preserve actual four executable cases, MARK shared sample_entry and current class-preserving CSR guard. Real CLI/frame and sampler-entry refusal, C1 restoration, one postbatch verifier and report reconstruction via existing engine. Both retained Python pure guards with normal conftest/plugins and zero science/algorithms/timing. One frozen handoff then independent worker review before root admission; actual bindings remain null.",
         "next_gate": "B finishes four family files and both-version pure/inert controls, freezes one handoff; C/R independently reviews because root authored initial prototype. No algorithms/timing; actual bindings null."
+      },
+      "VI_controller_root_admission_v2": {
+        "path": "coverage/evidence/vi-measurement-controller-root-admission-v2.json",
+        "sha256": "b2352879fd5eaa3094ac8b0e27bda97c9733c49ab594588794c3f6ed53efa504"
       }
     },
     {
@@ -37702,10 +37706,7 @@
       "depends_on": [],
       "scope": "One canonical flood/fill family plus morphology/segmentation identity aliases; exact existingplan/source/test/native/contract scan foundonly unassignedinventory, no existingfamily packet. Current275integration remainsindependent.",
       "acceptance": "Source/test first: inspect pinned0.26Python+compiledsource semantics and aliasidentity usingretainedpackages/sources; freeze perAPI dtype/layout/shape/seed/footprint/connectivity/tolerance/newvalue/inplace/metadata/error/FP/protocol contract, bounded recipes and source/storage safety before anyoriginal authority. Reuse queue/reconstruction/view/conversion primitives where exactordering matches, no new genericframework. Nativeowned matching flood mask and fill, typedSDK/hotswap/parity/applicable SIMD/globaloptionalworkers default1 and prospectivepublicone-thread cases required. Orderedqueue/no-worker serialscope disclosed when semantics require. Full domain/platform gaps explicit.",
-      "next_gate": {
-        "owner": "root",
-        "action": "Resolve current genuine debug failure and independently admit successful exact-source whole product before actual runtime/core/SDK/helper binding. Source-only controller four files/91 pure checks per Python passed; actual two cohorts, postbatch verifier and conditional eight-case comparison remain unexecuted."
-      },
+      "next_gate": "213retargetb038 independently admitted source-only:96pureeachPython,8cases/twoAPIcohorts,allactualbindingsNULL. Root accepted281genuine producer/runtime/core/SDK/helper then versionedbinding/realcohorts; separateconditional8case comparison and everylossreview. No new original/timing authority.",
       "source_sha": "5eb515a92cf37b905e2d469c8d24f1c0028959fc",
       "root_source_admission": "build/flood-fill-source-root-admission-v1/admission-v1.json",
       "root_source_admission_sha256": "9e35b5401f5983ed7fdb10ecaa4d6a04a3264543241dc9089bae7992dda7460a",
@@ -37736,6 +37737,10 @@
         "path": "coverage/evidence/flood-fill-controller-root-admission-v1.json",
         "sha256": "dc1e76d5cbedf8ce4df676ea7987f1d2a84810215325350c6ecf12c310221a5f",
         "source": "30ce23ca1ada982ea508f22416142bfbf0883811"
+      },
+      "controller_root_admission_v2": {
+        "path": "coverage/evidence/flood-fill-controller-root-admission-v2.json",
+        "sha256": "e342d0af03c9cc37b7d554096437209dcf7da676d863ce1812dcbb0911d299b3"
       }
     },
     {
@@ -37752,7 +37757,7 @@
       ],
       "scope": "Next dependency-ready corebackground-removal API; existing ball/ellipsoidkernel source/reference/native components are reusable only in their own scopes, notrollingball output evidence.",
       "acceptance": "Readpinned0.26fullrollingball Python/Cython/FIFO/helpers andcurrentworkers/num_threadsDEPRECATED behavior. Freezeexactsignature,dtype/layout/mutation/kernel/radius/nansafe/padding/nonfinite/error/FP/deprecation/globalworker contract and bounded source/storage workload recipes before originals. Reuse existingtypedobserver/codec/FEnv one-shot controls; no new framework. Source/pure guards bothretainedPythons normalplugins0science. Original/native/helper/build/env/download/timing/hosted authority0 untilrootappropriategates; ifmatchingoldrollingball refs existreuse ratherthanrecapture.",
-      "next_gate": "Rolling281 frozen188 and correctivecbb reviewed; cbb CHANGES_REQUIRED due double source inverse. C live versioned once-only correction current281-projection-v2. Independent delta admission then root complete actual workflow commands bothPythons before qualification. All unchanged reference/native/SDK scopes reused; no new originals/timing.",
+      "next_gate": "Rolling281 component alreadyintegrated. Sourcecdfix root5edPASS, full161 live74915/45650. Root actualcompletePASS then exactsourcequalification/installedSDK/benchmarkbinding. References and timingbudgetunchanged; broadercast/half/Windows/FPdomainsopen.",
       "source": "2e99dd5c7b2d1b6a65906587f7352e3e54194255",
       "root_admission": "build/rolling-ball-source-root-admission-v1/admission-v1.json",
       "next_owner": "metrics_integrator",
@@ -38527,9 +38532,9 @@
       ]
     },
     "current_three_agent_packets": {
-      "metrics_integrator": "Live newWT current281-projection-v2; narrow once-only correction and affected pure guards. No full barrier/hosted authority.",
-      "boundary_worker": "IGG policy843e848b scopedPASS frozen; next independent projection-delta review waits frozen C handoff.",
-      "readiness_reviewer": "Live bounded preparation of existing full-source launcher/capacity/config, source explicitly UNBOUND; no test/build/science execution."
+      "metrics_integrator": "FutureIGG282 integration resumed independently after criticalcdfreeze; preserve12sourcefailures and compile missinginclude; only invalidatedpure/compile corrections.",
+      "boundary_worker": "Live versioned281 reader refresh to cd plus legacy stagerlabel281; same verificationlogic, actualrun/artifactbindingsNULL.",
+      "readiness_reviewer": "Reader213 review7d8e scopedPASS frozen; affectedcdmetadata/label refresh review awaits B freeze; actualgenuine remainspending."
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -38919,12 +38924,12 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "Live newWT current281-projection-v2; narrow once-only correction and affected pure guards. No full barrier/hosted authority.",
-      "boundary_worker": "IGG policy843e848b scopedPASS frozen; next independent projection-delta review waits frozen C handoff.",
-      "readiness_reviewer": "Live bounded preparation of existing full-source launcher/capacity/config, source explicitly UNBOUND; no test/build/science execution.",
-      "root": "IGG combined private admission2a94c865 complete; failed280 campaign closeout recorded. Own independent281 admission, full barriers, genuine/main delivery and checklist."
+      "metrics_integrator": "FutureIGG282 integration resumed independently after criticalcdfreeze; preserve12sourcefailures and compile missinginclude; only invalidatedpure/compile corrections.",
+      "boundary_worker": "Live versioned281 reader refresh to cd plus legacy stagerlabel281; same verificationlogic, actualrun/artifactbindingsNULL.",
+      "readiness_reviewer": "Reader213 review7d8e scopedPASS frozen; affectedcdmetadata/label refresh review awaits B freeze; actualgenuine remainspending.",
+      "root": "Currentcd COMPLETE161 reruns live74915/45650; source5edPASS/fullreadyPENDING. Root owns exactsource release/admission/delivery."
     },
-    "next_action": "CHANGES_REQUIRED: independent review357de00d found duplicate predecessor inverse. Versioned correction and independent affected-delta admission required before complete actual source barriers on both retained Pythons, then exact-source qualification. Documentation request grants no execution authority.",
+    "next_action": "Root5ed source admission PASS; COMPLETE161 sameworkflow reruns live windows31174915/windows31345650, no science. Both terminal passes required before one exactsourcequalification. Failed213/a5 retained.",
     "current_checkpoint": {
       "main_image_names": 271,
       "qualified_image_names": 271,
@@ -38945,32 +38950,36 @@
       "candidate_qualification_run": 42329688164,
       "candidate_evidence": "build/vi-reduction-controller-integration-v2/handoff-v1.json",
       "candidate_qualification_status": "COMPLETED_FAILURE_ALL_FOUR_PROFILES",
-      "next_release_source": "cbb3d2cd993f71fff08bb4a548d9c456c7d2de60",
+      "next_release_source": "cd703fbda0442944b150c9529e09e0a40ab37c59",
       "next_release_expected_images": 281,
       "next_release_expected_product": 228,
       "next_release_expected_SDK": 108,
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "CHANGES_REQUIRED: independent review357de00d found duplicate predecessor inverse. Versioned correction and independent affected-delta admission required before complete actual source barriers on both retained Pythons, then exact-source qualification. Documentation request grants no execution authority.",
+      "next_release_status": "Root5ed source admission PASS; COMPLETE161 sameworkflow reruns live windows31174915/windows31345650, no science. Both terminal passes required before one exactsourcequalification. Failed213/a5 retained.",
       "next_release_qualification_run": null,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct.",
       "next_release_review": {
-        "path": "coverage/evidence/current281-corrective-independent-review-v1.json",
-        "sha256": "357de00d316778883217ecf6cabd42367d260f30dc73ef9f39c0e8af28060f87",
-        "passed": false
+        "path": "coverage/evidence/current281-sdk-family-assertion-root-admission-v1.json",
+        "sha256": "5ed52720a3d1d286ae1e634e6d140a2a441e1d480268b7d76e7b263b41c7e2dd",
+        "passed": true
       },
-      "failed_campaign_closeout": "coverage/evidence/vi-reduction-controller-failed-campaign-closeout-v1.json"
+      "failed_campaign_closeout": "coverage/evidence/vi-reduction-controller-failed-campaign-closeout-v1.json",
+      "complete_source_failure": {
+        "path": "coverage/evidence/current281-complete-source-failure-v1.json",
+        "sha256": "c2acf33b454b73253558eeebc79c2aa045c38f5ea1723b20ec80017c29a7e183"
+      }
     },
     "shared_integration_author": {
       "owner": "metrics_integrator",
-      "state": "current281_cbb_independent_changes_required_no_dependent_execution",
-      "base": "cbb3d2cd993f71fff08bb4a548d9c456c7d2de60",
-      "scope": "One versioned corrective281 successor for duplicate predecessor projection; preserve frozen cbb and private VI WIP. Existing numerical/native/SDK evidence retains only matching dependency scope.",
+      "state": "future_IGG282_unready_isolated_from_frozen_cd",
+      "base": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+      "scope": "C selectively integrates root-admitted065 IGG family into new inverse-gaussian-gradient-enabled-v1. Root retains frozen213 complete161/release; no neworiginals/timing/fullproduct build.",
       "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
       "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
-      "next_gate": "CHANGES_REQUIRED: independent review357de00d found duplicate predecessor inverse. Versioned correction and independent affected-delta admission required before complete actual source barriers on both retained Pythons, then exact-source qualification. Documentation request grants no execution authority.",
+      "next_gate": "C corrects demonstratedfuture source/compile setup failures preservingcd; freeze coherentfuturehandoff, no current281delay.",
       "actual_staging_counts": {
         "image_paths": 280,
         "registered_functions": 283,
