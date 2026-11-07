@@ -1,0 +1,429 @@
+{
+  "schema": "next-metrics-measurement-v1",
+  "status": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "producer": {
+    "run": null,
+    "revision": null,
+    "artifact": null,
+    "sha256": null
+  },
+  "prepared_source": null,
+  "SDK_members": null,
+  "core_sha256": null,
+  "benchmark_fingerprint": null,
+  "families": {
+    "rolling_ball_native": {
+      "contract": "coverage/contracts/rolling-ball-benchmark-execution-v3.json",
+      "cases": 8,
+      "case_ids": [
+        "small-u8",
+        "dense-f32",
+        "dense-f64",
+        "wide-f32",
+        "stride-f32",
+        "3d-u16",
+        "nan-f32",
+        "border-tiny"
+      ],
+      "untimed_calls_per_case": 1
+    }
+  },
+  "first_cohort": {
+    "status": "PROSPECTIVE_UNBOUND_NO_FIRST_COHORT",
+    "source_revision": null,
+    "probe_path": "tools/rolling_ball_first_cohort_probe.py",
+    "probe_sha256": null,
+    "root_admission_path": null,
+    "root_admission_sha256": null,
+    "root_stager_path": null,
+    "root_stager_sha256": null,
+    "core_member": null,
+    "source_files_raw_sha256": {
+      "CMakeLists.txt": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+      "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+      "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+      "benchmarks/rolling_ball.py": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+      "benchmarks/rolling_ball_execution.py": "d89e1594ed3eb916b1733629151c4aaabed6ca8ac2f9f43108a43cdb186fbb93",
+      "benchmarks/rolling_ball_native.py": "f6c38b42480c2959072ebd2877af4d5963dccd5c09a62616ed731bdb251c50ca",
+      "coverage/contracts/rolling-ball-benchmark-execution-v1.json": "4dcf415a26bf55d6ab366872137e158ed0428c9cf397cb08627c7a7fe1e954f7",
+      "coverage/contracts/rolling-ball-native-v1.json": "842da71d894e9f7944fca92fe4f72115ee1e9e90e1af2a4a5796f7d46c89e76d",
+      "coverage/contracts/rolling-ball-v1.json": "6f4d505df80e095e604cedc4de6024bf73237ec68b6df14f086db0998c183bc0",
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+      "include/skimagexx/rolling_ball.hpp": "d10396d0e50bd27eff5be8e364213b5bbc4492c4ffee09ddf4fa6e32ed9f68fa",
+      "include/skimagexx/rolling_ball_kernels.hpp": "92e1372775ac57d5f47a0450808d1de072b89653619ced14311ed4cb0ca40aab",
+      "python/skimagexx/_rolling_ball.py": "c9dbc9c858ade97c2c0de57470a8771aadb0d94f6fc5f83b904b68ec60cc57c6",
+      "python/skimagexx/_rolling_ball_kernels.py": "894f237bebf7657fac351bc50897fa45274acc1906713e0c65c48792887a51fa",
+      "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+      "src/bind_fft.cpp": "2324b9f46762ea17c7e19087f1935fd9fef22475ae4b90be5764b5b27c3513de",
+      "src/bind_rolling_ball.cpp": "2a41e141375762c3cf3b426aff5752b3aa3c8e6d03c5f9165c54d9b048e8f098",
+      "src/bind_rolling_ball_kernels.cpp": "16d2c4b4ad2178cdf09e56a943ade918a89c5b72fb82eed557418df85c0210a3",
+      "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "src/rolling_ball.cpp": "ca34bceb7d5f81e9a7a9175353383ce27c6d1e5877f4f8ce602a43e3ad91f954",
+      "src/rolling_ball_kernels.cpp": "d00bf3afd60cd76ed380903448977916d8f683a53990d7c724431a5e7d11660f",
+      "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+      "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+      "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+      "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+      "tests/fixtures/rolling_ball_original_v1.json": "57263ebee170bfcb4a32fd40d609f0970551ff67bbe6230127cd00496d04e3fc",
+      "tests/fixtures/rolling_ball_sdk_v1.bin": "131e186c64e9a0f26701bddbe5bb35cf09161957526f6fd18ca670a63bb7780a",
+      "tests/rolling_ball_contract.py": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+      "tests/rolling_ball_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+      "tests/rolling_ball_observer.py": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+      "tests/sdk/rolling_ball/CMakeLists.txt": "41d298f638a3f34c4f934205636f55f5baf41032b194e772e11adbc761c33c57",
+      "tests/test_rolling_ball_benchmark.py": "144e226de1cd7fa9bfae2e5fbc5c82b25f1c67a88de26899f95a82effb7d4ae7",
+      "tests/test_rolling_ball_native_source.py": "c5dc1e2042934f35aab8137d135083c911d15b1ab8b6e87edd365e1e1f3353f6",
+      "tests/test_rolling_ball_public.py": "603d5d067c40f01eb8f6d9f65854524ba8969b9ba159f281ef9bb0383074442f",
+      "tests/test_rolling_ball_sdk.cpp": "ca9e34ae8a84f2949928a5df685ead4015493fa6e134f1b1a8f7b98ce4220827",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+      "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7",
+      "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+      "coverage/contracts/rolling-ball-benchmark-execution-v3.json": "7a494bea2e14ae38a3522fc226835c2fd2be66e5c1c45e3a50927abdc2b4bc6b",
+      "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+      "tests/fixtures/rolling_ball_sdk_dtypes_v1.bin": "ea28ab9468dbfe71d23ab239455ca5c5c0de4fe90939d9281dd5b2977a204f19",
+      "tests/test_rolling_ball_sdk_dtypes.cpp": "4cc66d0c0d27f27e1331ec261576044ce7e78854c483c4d371bd0ea59e0a5f0c",
+      "tests/sdk/rolling_ball_dtypes/CMakeLists.txt": "9f9bd2ace1fd99535174a51f672761ae21e8b896fb8f7dd3a2fab6722fe54ad8",
+      "tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc": "3aa97fcebf76169799578f41b90cf5a98f46e7cad3b7c87f7a2d3f2338ec74e6",
+      "coverage/contracts/rolling-ball-sdk-dtypes-v1.json": "4df253cee3a2e769a391cdb9a008fe5392abcbc0dfc89a36f912740de1b9a2ca",
+      "coverage/contracts/rolling-ball-native-v3.json": "78f4f843e53356842fc15438915b30614330bec8f4b5549a881e617f065e5dde",
+      "tests/test_rolling_ball_sdk_dtype_fp.cpp": "948484026221b54259a40fa3fe2cc7f81f92ef65cb2900760eba589c03283d5f",
+      "tests/rolling_ball_sdk_dtype_context.py": "71906111ce5939a483cb82a3b8331e911a9f49ba819e00512259cd76ffdf7b5b",
+      "tests/test_rolling_ball_sdk_dtype_source.py": "f02cd3a14e4f65129c2e27a4076df9c32f93acb92b7fab58c7b4cb036868d591",
+      "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f"
+    },
+    "routes": {
+      "rolling-ball": {
+        "driver": "benchmarks/rolling_ball_native.py",
+        "api": "restoration.rolling_ball",
+        "argv": [
+          "benchmarks/rolling_ball_native.py",
+          "--first-cohort",
+          "--api",
+          "restoration.rolling_ball",
+          "--case",
+          "small-u8"
+        ],
+        "native_entries": {
+          "get_num_threads": 1,
+          "ball_kernel_apply": 1,
+          "rolling_ball_apply": 1
+        },
+        "pass_index": 0,
+        "frames": [
+          "execute",
+          "sample_entry",
+          "measure"
+        ]
+      }
+    }
+  },
+  "execution_scope": {
+    "canonical_cases": 8,
+    "canonical_raw_samples": 112,
+    "warmup_groups": 16,
+    "workers": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "untimed_topcalls": {
+      "original": 1,
+      "native": 1
+    },
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true
+  },
+  "qualification": "Prospective enabled rolling-ball source integration; exact-source genuine four-profile core/SDK/root admission remains pending.",
+  "binding_gate": "UNBOUND: actual admitted future integrated producer/source/runtime/core/SDK/root/stager/host-helper/cohort authorities and separate measurement GO required; no historical product transplantation.",
+  "runtime_sha256": null,
+  "helper": {
+    "mode": "source-built-v1",
+    "source_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "receipt_sha256": null,
+    "library_sha256": null,
+    "root_GO": null,
+    "prepare_once_on_actual_host": true,
+    "collect_recursive": true
+  },
+  "completed_first_cohort": {
+    "path": null,
+    "sha256": null,
+    "binding_sha256": null
+  },
+  "native_marker_scope": {
+    "rolling-ball": "Actual Python getter1 + owned ball_kernel_apply1 + rolling_ball_apply1. Single process-global limit snapshot spans kernel/traversal; no fabricated internal getter/compiled-provider credit."
+  },
+  "pending": [
+    "Root independent current enabled-source/controller successor admission",
+    "Future integrated source/context/namespace/SDK census reconciliation, complete actual source barriers and genuine four-profile qualification",
+    "Actual producer/runtime/core/SDK/helper/root binding and one real first cohort (one original plus one native), zero sampler bodies",
+    "Broader typed SDK cast/half, Windows/broader FP/provider domains and genuine aggregate execution remain open",
+    "Separate root eight-case one-thread measurement GO, all112samples/16warmgroups and all losses retained; no actual authority"
+  ],
+  "deadline_utc": null,
+  "cases": [
+    {
+      "id": "small-u8",
+      "shape": [
+        17,
+        19
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "radius": 2,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 323,
+      "kernel_elements": 25,
+      "addition_upper": 8075
+    },
+    {
+      "id": "dense-f32",
+      "shape": [
+        129,
+        129
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 16641,
+      "kernel_elements": 81,
+      "addition_upper": 1347921
+    },
+    {
+      "id": "dense-f64",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "wide-f32",
+      "shape": [
+        65,
+        65
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 12,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4225,
+      "kernel_elements": 625,
+      "addition_upper": 2640625
+    },
+    {
+      "id": "stride-f32",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float32",
+      "layout": "stride2",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "3d-u16",
+      "shape": [
+        9,
+        11,
+        13
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "radius": 2,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 1287,
+      "kernel_elements": 125,
+      "addition_upper": 160875
+    },
+    {
+      "id": "nan-f32",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 4,
+      "nansafe": true,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "border-tiny",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 8,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 12,
+      "kernel_elements": 289,
+      "addition_upper": 3468
+    }
+  ],
+  "benchmark_source_sha256": {
+    "CMakeLists.txt": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+    "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "benchmarks/rolling_ball.py": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+    "benchmarks/rolling_ball_execution.py": "d89e1594ed3eb916b1733629151c4aaabed6ca8ac2f9f43108a43cdb186fbb93",
+    "benchmarks/rolling_ball_native.py": "f6c38b42480c2959072ebd2877af4d5963dccd5c09a62616ed731bdb251c50ca",
+    "coverage/contracts/rolling-ball-benchmark-execution-v1.json": "4dcf415a26bf55d6ab366872137e158ed0428c9cf397cb08627c7a7fe1e954f7",
+    "coverage/contracts/rolling-ball-native-v1.json": "842da71d894e9f7944fca92fe4f72115ee1e9e90e1af2a4a5796f7d46c89e76d",
+    "coverage/contracts/rolling-ball-v1.json": "6f4d505df80e095e604cedc4de6024bf73237ec68b6df14f086db0998c183bc0",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "include/skimagexx/rolling_ball.hpp": "d10396d0e50bd27eff5be8e364213b5bbc4492c4ffee09ddf4fa6e32ed9f68fa",
+    "include/skimagexx/rolling_ball_kernels.hpp": "92e1372775ac57d5f47a0450808d1de072b89653619ced14311ed4cb0ca40aab",
+    "python/skimagexx/_rolling_ball.py": "c9dbc9c858ade97c2c0de57470a8771aadb0d94f6fc5f83b904b68ec60cc57c6",
+    "python/skimagexx/_rolling_ball_kernels.py": "894f237bebf7657fac351bc50897fa45274acc1906713e0c65c48792887a51fa",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2be056b23cf8838aba0295c5b3688d4b2c4ee30a14d3ef6665b6dac0d03218fd",
+    "src/bind_rolling_ball.cpp": "2a41e141375762c3cf3b426aff5752b3aa3c8e6d03c5f9165c54d9b048e8f098",
+    "src/bind_rolling_ball_kernels.cpp": "16d2c4b4ad2178cdf09e56a943ade918a89c5b72fb82eed557418df85c0210a3",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "src/rolling_ball.cpp": "ca34bceb7d5f81e9a7a9175353383ce27c6d1e5877f4f8ce602a43e3ad91f954",
+    "src/rolling_ball_kernels.cpp": "d00bf3afd60cd76ed380903448977916d8f683a53990d7c724431a5e7d11660f",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/fixtures/rolling_ball_original_v1.json": "57263ebee170bfcb4a32fd40d609f0970551ff67bbe6230127cd00496d04e3fc",
+    "tests/fixtures/rolling_ball_sdk_v1.bin": "131e186c64e9a0f26701bddbe5bb35cf09161957526f6fd18ca670a63bb7780a",
+    "tests/rolling_ball_contract.py": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+    "tests/rolling_ball_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/rolling_ball_observer.py": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+    "tests/sdk/rolling_ball/CMakeLists.txt": "41d298f638a3f34c4f934205636f55f5baf41032b194e772e11adbc761c33c57",
+    "tests/test_rolling_ball_benchmark.py": "144e226de1cd7fa9bfae2e5fbc5c82b25f1c67a88de26899f95a82effb7d4ae7",
+    "tests/test_rolling_ball_native_source.py": "c5dc1e2042934f35aab8137d135083c911d15b1ab8b6e87edd365e1e1f3353f6",
+    "tests/test_rolling_ball_public.py": "603d5d067c40f01eb8f6d9f65854524ba8969b9ba159f281ef9bb0383074442f",
+    "tests/test_rolling_ball_sdk.cpp": "ca9e34ae8a84f2949928a5df685ead4015493fa6e134f1b1a8f7b98ce4220827",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "coverage/contracts/rolling-ball-benchmark-execution-v3.json": "7a494bea2e14ae38a3522fc226835c2fd2be66e5c1c45e3a50927abdc2b4bc6b",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "tests/fixtures/rolling_ball_sdk_dtypes_v1.bin": "ea28ab9468dbfe71d23ab239455ca5c5c0de4fe90939d9281dd5b2977a204f19",
+    "tests/test_rolling_ball_sdk_dtypes.cpp": "4cc66d0c0d27f27e1331ec261576044ce7e78854c483c4d371bd0ea59e0a5f0c",
+    "tests/sdk/rolling_ball_dtypes/CMakeLists.txt": "9f9bd2ace1fd99535174a51f672761ae21e8b896fb8f7dd3a2fab6722fe54ad8",
+    "tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc": "3aa97fcebf76169799578f41b90cf5a98f46e7cad3b7c87f7a2d3f2338ec74e6",
+    "coverage/contracts/rolling-ball-sdk-dtypes-v1.json": "4df253cee3a2e769a391cdb9a008fe5392abcbc0dfc89a36f912740de1b9a2ca",
+    "coverage/contracts/rolling-ball-native-v3.json": "78f4f843e53356842fc15438915b30614330bec8f4b5549a881e617f065e5dde",
+    "tests/test_rolling_ball_sdk_dtype_fp.cpp": "948484026221b54259a40fa3fe2cc7f81f92ef65cb2900760eba589c03283d5f",
+    "tests/rolling_ball_sdk_dtype_context.py": "71906111ce5939a483cb82a3b8331e911a9f49ba819e00512259cd76ffdf7b5b",
+    "tests/test_rolling_ball_sdk_dtype_source.py": "f02cd3a14e4f65129c2e27a4076df9c32f93acb92b7fab58c7b4cb036868d591",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "tools/rolling_ball_sentinel_context.py": "cf21a193af8a7eac8c101a4f5ba4e401bf770757b520edeea7377db1a03be873",
+    "coverage/contracts/rolling-ball-sentinel-v1.json": "ccf9b006e2c20c108caf7e63a21348f3e5cb1511f543a30e13d8001763afc333",
+    "python/skimagexx/_component_consumers.py": "f2643c25de70277fcbd30ba1a2e9774b20ae637137e1e8610eb3cd500f90fadd",
+    "python/skimagexx/_components.py": "ac0599f337cd72ff7c398b9a4ef4b6152c2b6e546ec7b4e2697aedf0f1095ad1",
+    "python/skimagexx/_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357"
+  },
+  "prospective_source": {
+    "reference_revision": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+    "actual_prepared_revision": null,
+    "possible_image_count": 281,
+    "source_plan_verified": false,
+    "scope": "281 is only current280+one canonicalAPI proposal; no actual registry/product/SDK census or genuine binding."
+  },
+  "current_interface": {
+    "driver_contract": "coverage/contracts/rolling-ball-benchmark-execution-v3.json",
+    "driver": "benchmarks/rolling_ball_native.py",
+    "executor": "benchmarks/rolling_ball_execution.py",
+    "api": "restoration.rolling_ball",
+    "stack": [
+      "execute",
+      "sample_entry",
+      "measure"
+    ],
+    "pass_index": 0,
+    "argv0_in_route_is_driver": true,
+    "validate_binding_keywords": [
+      "path",
+      "root"
+    ],
+    "report_source": "metadata flattened fingerprint fields plus metadata.source_before",
+    "native_requirements": {
+      "get_num_threads": 1,
+      "ball_kernel_apply": 1,
+      "rolling_ball_apply": 1
+    }
+  },
+  "controller_reuse": {
+    "source": "e6ffa386205309ac84526f14b3403082380e280a",
+    "admission": {
+      "path": "build/current280-controller-root-admission-v1/admission-v1.json",
+      "sha256": "b6cbc202655e288ca7d5b1df2c7f6060b3fb82f720fa8e9d2387f86ca3cd0e08"
+    },
+    "scope": "Specialized reviewed MARK outerprobe/workflow/report/C1/helpers to frozen c821rolling route; no measurement engine or sampler changes.",
+    "predecessor_files": {
+      "tools/mark_lbp_first_cohort_probe.py": "becd76fcabb1b951c836895946210eeb281980100ba8fb95f3f46852f748347a",
+      ".github/workflows/mark-lbp-initial.yml": "69e7ad835e9f753832f24e8f26bee6556e915b820b502b4a624bf1c8ea55f69d",
+      "tests/test_mark_lbp_controller.py": "5124d81ddd6dd104a89c3ecb8d4f8c83224ce48df76a43cc3dfe4d17ca44710a"
+    }
+  },
+  "domain_gaps": [
+    "Private complete SDK bool/integer/half/swapped saved domains admitted; unsafe/nonfinite/out-of-range integer casts, nonnearest/exceptional half and genuine Windows SDK runtime remain open",
+    "Foreign deprecated sentinel identity, pathological user protocol/type domains and unsafe source quarantines unassessed",
+    "Non-default rounding/FTZ/DAZ/exception masks may be refused by owned ball primitive, never NumPy whole-helper fallback",
+    "Default NumPy policy/handler state covered; non-default user callback behaviors need domain evidence",
+    "Windows runtime/parity, genuine single installed core/namespace/hot-swap/global-worker ABI/full exported SDK release and original one-thread performance pending"
+  ],
+  "integration_predecessor": {
+    "path": "coverage/contracts/rolling-ball-measurement-v1.json",
+    "sha256": "f4cc9fba1e5b271edcdef7685a61409ac3032dc64ee057e4f944c4f398aecf2c",
+    "source": "b838f3d4ed316e2599c8083ccd0358e4811e2a30",
+    "changed_scope": "Strict current shared CMake wiring, admitted next-util declaration projection, SDK storage extension and authenticated native/source-reader successors; cases/method/sampler/native public body unchanged"
+  },
+  "integration_source_projection": {
+    "scope": "Prospective source-only plan, not actual prepared/genuine authority",
+    "image_paths": 281,
+    "functions": 284,
+    "product_members": 228,
+    "SDK_members": 108,
+    "SDK_families": 38,
+    "SDK_checks": 76
+  },
+  "sentinel_successor": "coverage/contracts/rolling-ball-sentinel-v1.json"
+}

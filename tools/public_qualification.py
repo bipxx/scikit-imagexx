@@ -702,6 +702,8 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/current281-sdk-family-source-v2.json',
 
 
 
+DRAW_SOURCE_PATHS += ('coverage/contracts/rolling-ball-sentinel-v1.json','coverage/contracts/rolling-ball-native-v3.json','coverage/contracts/rolling-ball-benchmark-execution-v3.json','coverage/contracts/rolling-ball-measurement-v3.json','tools/rolling_ball_sentinel_context.py','tests/test_rolling_ball_sentinel.py')
+
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
     groups = dict(_BASE_GROUPS)

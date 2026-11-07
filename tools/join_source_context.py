@@ -7,6 +7,8 @@ CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672
 
 def sdk_family_assertion_predecessor_bytes(root,name,raw):
     """Strict assertion-only source successor, before every shared historical entry."""
+    from tools.rolling_ball_sentinel_context import predecessor_bytes as sentinel_predecessor
+    raw=sentinel_predecessor(root,name,raw)
     path=Path(root)/'coverage/contracts/current281-sdk-family-source-v2.json'
     if not path.is_file():return raw
     context=json.loads(path.read_bytes())

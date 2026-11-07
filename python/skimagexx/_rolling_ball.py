@@ -9,14 +9,8 @@ import warnings
 import numpy as np
 from . import _core
 from ._rolling_ball_kernels import _ordinary_scalar, _MAX_RANK
-
-
-class _Deprecated:
-    def __repr__(self):
-        return '<DEPRECATED>'
-
-
-DEPRECATED = _Deprecated()
+# Shared upstream marker identity is signature metadata, not an image provider.
+from ._component_consumers import _DEPRECATED as DEPRECATED
 
 
 def _ball_kernel(radius, ndim, worker_snapshot):

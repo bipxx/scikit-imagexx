@@ -4,7 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/rolling-ball-measurement-v2.json'
+CONTRACT=ROOT/'coverage/contracts/rolling-ball-measurement-v3.json'
 DATA=json.loads(CONTRACT.read_bytes());ROUTES=DATA['first_cohort']['routes']
 spec=importlib.util.spec_from_file_location('rolling_ball_outer',ROOT/'tools/rolling_ball_first_cohort_probe.py');PROBE=importlib.util.module_from_spec(spec);spec.loader.exec_module(PROBE)
 H=lambda b:hashlib.sha256(b).hexdigest()
@@ -148,7 +148,7 @@ def test_actual_poststop_terminal_write_path_refuses_mutation(tmp_path,monkeypat
 @pytest.mark.parametrize('fault',('none','verifier','runtime','runtime-during-verifier','manifest'))
 def test_actual_batch_summary_requires_one_postbatch_verifier(tmp_path,monkeypatch,fault):
     # Synthetic completed child receipts; neither child probe nor verifier runs.
-    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/rolling-ball-measurement-v2.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
+    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/rolling-ball-measurement-v3.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
     stage=tmp_path/'stage';stage.mkdir();runtime=stage/'runtime.json';runtime.write_text('{"synthetic_only":true}')
     results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA)
     manifest['runtime_sha256']=hashlib.sha256(runtime.read_bytes()).hexdigest()

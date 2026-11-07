@@ -8,7 +8,7 @@ from pathlib import Path
 import struct
 import zlib
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/rolling-ball-native-v2.json'
+CONTEXT=ROOT/'coverage/contracts/rolling-ball-native-v3.json'
 H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 
 

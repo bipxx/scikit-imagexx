@@ -9,6 +9,8 @@ ROOT=Path(__file__).resolve().parents[1]
 CONTEXT=ROOT/'coverage/contracts/rolling-ball-enabled-context-v1.json'
 EXPECTED_CONTEXT='a9f317747114b1766467f9c3624c3c7bce9b7ebbbb209bd0b1539d5b13c0b373'
 H=lambda b:hashlib.sha256(b).hexdigest()
+from tools.rolling_ball_sentinel_context import predecessor_bytes as sentinel_predecessor
+def historical(name):return sentinel_predecessor(ROOT,name,(ROOT/name).read_bytes())
 
 
 def qualifier():
@@ -24,13 +26,13 @@ def test_exact_shared_and_controller_predecessors_and_unchanged_family():
         raw=(ROOT/name).read_bytes()
         assert H(rolling_predecessor_bytes(ROOT,name,raw))==row['predecessor_canonical_lf_sha256'],name
     for name,row in {**c['controller_sources'],**c['family_sources']}.items():
-        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        raw=historical(name).replace(b'\r\n',b'\n')
         assert H(raw)==row['current_canonical_lf_sha256'],name
         for f in row['inverse_fragments']:
             assert raw.count(f['current'].encode())==1
             raw=raw.replace(f['current'].encode(),f['predecessor'].encode(),1)
         assert H(raw)==row['predecessor_canonical_lf_sha256'],name
-    for name,pin in c['unchanged_imports'].items():assert H((ROOT/name).read_bytes())==pin,name
+    for name,pin in c['unchanged_imports'].items():assert H(historical(name))==pin,name
     for name,row in c['SDK_source_imports'].items():assert H((ROOT/name).read_bytes())==row['sha256'],name
     assert c['actual_genuine_authority']is c['actual_measurement_authority']is None
 
@@ -90,7 +92,7 @@ def test_benchmark_context_successor_only_changes_source_projection():
     context=json.loads((ROOT/'coverage/contracts/rolling-ball-benchmark-execution-v2.json').read_bytes())
     predecessor=json.loads((ROOT/'coverage/contracts/rolling-ball-benchmark-execution-v1.json').read_bytes())
     assert context['cases']==predecessor['cases']and context['method']==predecessor['method']and context['route']==predecessor['route']
-    row=context['current_executor_projection'];raw=(ROOT/row['path']).read_bytes().replace(b'\r\n',b'\n')
+    row=context['current_executor_projection'];raw=historical(row['path']).replace(b'\r\n',b'\n')
     assert H(raw)==row['current_canonical_sha256']
     for f in row['inverse_fragments']:
         assert raw.count(f['current'].encode())==1;raw=raw.replace(f['current'].encode(),f['predecessor'].encode(),1)
@@ -102,7 +104,7 @@ def test_actual_active_shared_benchmark_literal_dependencies():
     # These are the exact current driver contexts; older contexts remain history.
     for name in ('rolling-ball-benchmark-execution-v2.json','mark-boundaries-benchmark-execution-v6.json','draw-multiblock-lbp-benchmark-execution-v5.json','variation-of-information-benchmark-execution-v5.json'):
         c=json.loads((ROOT/'coverage/contracts'/name).read_bytes())
-        for source,pin in c['source_files_canonical_sha256'].items():assert H((ROOT/source).read_bytes().replace(b'\r\n',b'\n'))==pin,(name,source)
+        for source,pin in c['source_files_canonical_sha256'].items():assert H(historical(source).replace(b'\r\n',b'\n'))==pin,(name,source)
         for field,source in (('common_boundary_canonical_sha256','benchmarks/mark_boundaries_execution.py'),('reused_executor_canonical_sha256','benchmarks/next_util_execution.py'),('metadata_fixture_canonical_sha256','tests/test_mark_boundaries_benchmark_execution.py')):
             if field in c:assert H((ROOT/source).read_bytes().replace(b'\r\n',b'\n'))==c[field],(name,field)
         assert all(value is None for value in c['unbound'].values())
