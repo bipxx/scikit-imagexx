@@ -144,8 +144,8 @@ def test_bounded_codec_refuses_unsupported_objects(fault):
     if fault=='type':v=object()
     with pytest.raises(AssertionError):D.array_words(v,output=True)
 
-@pytest.mark.parametrize('fault',('none','unbound','wrapper','binding','cohort','context','source','case','budget','deadline','existing'))
-def test_external_GO_before_import_or_target_and_no_reciprocal_cycle(tmp_path,fault):
+@pytest.mark.parametrize('fault',('none','unbound','wrapper','binding','cohort','context','source','workflow-source','case','budget','deadline','existing'))
+def test_external_GO_before_import_or_target_and_no_reciprocal_cycle(tmp_path,monkeypatch,fault):
     root=tmp_path/'snapshot';root.mkdir();controller=tmp_path/'controller';(controller/'coverage/contracts').mkdir(parents=True)
     source=root/'source.txt';source.write_text('inert-source')
     context=dict(controller_dependencies={},prepared_dependencies={'source.txt':D.digest(source)},qualified_source='a'*40)
@@ -154,6 +154,9 @@ def test_external_GO_before_import_or_target_and_no_reciprocal_cycle(tmp_path,fa
     oldgo=tmp_path/'oldgo.json';oldgo.write_text('{}');newgo=tmp_path/'newgo.json';output=tmp_path/'out.json'
     now=datetime.now(timezone.utc)
     go=dict(status='ROOT_AUTHORIZED_ONE_LBP_FP_DIAGNOSTIC',wrapper_sha256=D.digest(D.__file__),api='feature.draw_multiblock_lbp',case_id='gray-u8-C',binding_sha256=D.digest(binding),cohort_GO_sha256=D.digest(oldgo),context_sha256=D.digest(cp),maximum_original_topcalls=1,maximum_native_topcalls=1,sampler_body_calls=0,timed_batches=0,created_utc=(now-timedelta(minutes=1)).isoformat(),deadline_utc=(now+timedelta(minutes=30)).isoformat(),output_path=str(output),source_revision='a'*40,diagnostic_source='b'*40)
+    # Synthetic authority must not inherit the real hosted checkout's SHA.
+    monkeypatch.setenv('GITHUB_SHA',go['diagnostic_source'])
+    if fault=='workflow-source':monkeypatch.setenv('GITHUB_SHA','c'*40)
     if fault=='unbound':go['status']='UNBOUND'
     if fault in('wrapper','binding','context'):go[fault+'_sha256']='0'*64
     if fault=='cohort':go['cohort_GO_sha256']='0'*64
