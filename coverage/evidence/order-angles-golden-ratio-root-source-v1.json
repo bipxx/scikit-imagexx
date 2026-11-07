@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "status": "SCOPED_SOURCE_STORAGE_ADMITTED_ACTUAL_READINESS_PENDING",
+  "api": "transform.order_angles_golden_ratio",
+  "source": "33559e475b2ac82d0d59f423513bab60f16b132a",
+  "handoff": {
+    "path": "build/order-angles-golden-ratio-source-first-v1/handoff-v1.json",
+    "sha256": "1a038762efbbbf0bbde797bad6841f9e2cd57a6ca1b393b9e83a30827513609d"
+  },
+  "source_files": 4,
+  "small_proofs": 24,
+  "prospective_recipes": 45,
+  "pure_checks_each_python": 98,
+  "bounds": {
+    "max_n": 16,
+    "maximum_actual_factory_backing_payload_bytes": 128,
+    "conservative_backing_cap_bytes": 256,
+    "index_payload_upper_bytes": 128,
+    "total_gather_elements_upper": 120,
+    "full_drain_resume_attempts_upper": 17,
+    "excludes": "Python headers/allocator/RSS/sort internals/arbitrary providers"
+  },
+  "root_review": "Pinnedfunction+45recipe membership/factorybranches/work-storage arithmetic reviewed; all source/proof bytes authenticated. Construction doesnotenterbody; firstresume sorts/yields beforeincrement. Latergathers readlive theta; preserve negative-divisor distance/strictcomparison and actualindex scalartypes. No conventionalgeometry substitution.",
+  "scope_limit": "Source/stub only. ActualNumPyfactories/first-resume cold-cached prefix/helper/full32/source-origin controls pending. No original/numerical/native/SDK/performance/fullAPI credit.",
+  "pending": [
+    "Actualboundedfactories/storage and reusedruntime/module/constant/origin/compiledhelper checks",
+    "Actualfirst-resume target-frame zero-body refusal cold/cached, state/helper/full32 controls before any referenceGO",
+    "Small family-specific boundedgenerator protocolobserver using existingtypedcodec/journal/FENV; root independentreadiness before any original construction/resume capturegrant",
+    "OwnedC++ completeSDK/hotswap/scalar/applicableSIMD/globalworkersdefault1/one-thread FULLconsumptioncomparison; nonfinite/protocol/mutation/platform frontiers explicit"
+  ],
+  "authority": {
+    "original_algorithm_calls": 0,
+    "native": 0,
+    "helper_body": 0,
+    "capture": 0,
+    "build": 0,
+    "timing": 0
+  },
+  "waste_review": {
+    "reuse": "ExistingLinux/WindowsRECORD sources/observer/FENV/codec/sampler. No targetbody or NumPy requests.",
+    "avoided": "Cataloggeometry/parallel proposal corrected to actualtinyserial recurrence; no genericgenerator engine.",
+    "failures": "Worker scanner/staticyield/newline source failures retained. Root reader wrongly assumed exit_code instead of actual exit field after allauth/bounds passed; inspected schema and continued only remainingXML checks, no scientific/check replay.",
+    "next_owner_trigger": "R prepares actualzero-body runtime/factory/controllerreadiness; capture/original GO remains0. Current281mustnotwait."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "status": "COMMON_ENTRY_SOURCE_CORRECTION_ADMITTED_COMPLETE161_PENDING",
+  "source": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+  "base": "cd703fbda0442944b150c9529e09e0a40ab37c59",
+  "handoff": {
+    "path": "build/current281-shared-assertion-projection-v2/handoff-v2.json",
+    "sha256": "f09178c375418cf0eac8aac5b7cfa3203928b8dfacca20112d6243b5be2b4619"
+  },
+  "independent_review": {
+    "path": "build/current281-shared-assertion-projection-independent-review-v2/review-v2.json",
+    "sha256": "d79bb2096c528daad09b78dbbe7c9bd987b0d83c32f8829352a407524e906dea"
+  },
+  "root_review": "Actual5file source/cleanHEAD/Gitprojection authenticated;3strict current/predecessor rows reconstructexact declared213(publictest)/cd(helper+collector) Gitbytes. Projection once at shared boundary covers correction/raw/canonical readers; localrolling projection removed. No assertion/hash waiver.",
+  "affected_source_checks_each_python": 1465,
+  "normal_conftest_plugins": true,
+  "workflow_selectors": 161,
+  "consumer_closure": {
+    "literal_adapter_modules": 18,
+    "context_maps": 7,
+    "actual_selectors": 32,
+    "new_entry_refusal_tamper_cells": 63
+  },
+  "source_counts": {
+    "images": 281,
+    "functions": 284,
+    "product": 228,
+    "SDK": 108,
+    "families": 38,
+    "SDK_checks": 76
+  },
+  "unchanged": "Production/native/CMake/registry/SDK/raw/scientific/benchmark method/workflow and all historicalcontexts.",
+  "failed_gates_retained": [
+    "coverage/evidence/current281-complete-source-failure-v1.json",
+    "coverage/evidence/current281-complete-source-failure-v2.json"
+  ],
+  "pending": [
+    "Complete actual161 source commands on BOTHsupportedPythons normalconftest/plugins/no failfast;1465partial is not full.",
+    "Actualexactremote/workflow/no-prior-run/sourceplans/capacity then one genuinefourprofilequalification; independent product/SDK/stageradmission.",
+    "Versioned currentcontroller/SDK/helper/runtime binding, realcohorts, separateone-thread comparison/raw/alllossadmission andmain delivery."
+  ],
+  "waste_review": {
+    "root_cause_correction": "Previous local inverse coveredonlyonecaller; sharedboundary andactual18consumerclosure fixes dependencygraph ratherthan anotherlocalexception.",
+    "reuse": "No numerical/original/SDK/measurement/build/archive/core/corpus reruns; historicalfailures remainfailed.",
+    "avoidable": "Root read-only guessed contextfilename corrected to actualhandoffpath beforeadmission; no source/test effect.",
+    "next_owner_trigger": "Root COMPLETE161 now; futureIGG staysisolated and cannotdelayeligiblecurrent release."
+  }
+}

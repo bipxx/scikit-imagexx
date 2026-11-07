@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "status": "ACTUAL_COMPLETE161_BOTH_RETAINED_PYTHONS_PASS_GENUINE_PENDING",
+  "source": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+  "source_admission": "coverage/evidence/current281-shared-assertion-projection-root-admission-v2.json",
+  "workflow_sha256": "877fd48ac9e2c863c2626dc4f27b9f219dc7a963d6b8598cfbf821b79d49aeb4",
+  "profiles": {
+    "windows311": {
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 403.7650000001304,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3946,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_tests": 3938,
+      "passing_subtests": 8,
+      "selectors": 161,
+      "normal_conftest_plugins": true,
+      "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]",
+      "pins": {
+        "terminal.json": "a78212401982470b51958f06249ddad4a6ab417b3b91b03f483a575178710614",
+        "command.json": "db31d08f5482d8ab42314aab5a20f65b5dd74111fd7b6d079075bc4e5dddea49",
+        "testIDs.json": "c8928707b249de0b9b6b667c0e044c2cf46ab4f8a64dafff7e6f7ff60c5b719d",
+        "plugins.json": "052a700488eafdada65124bfa1ca97b8c2a1a130bfecb9ac20d8aea1b6961626",
+        "results.xml": "01f07fcbbbd9594b34a49d667fe15064c4459dac706e71f03274badc18b63954"
+      }
+    },
+    "windows313": {
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 367.9700986999087,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3946,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_tests": 3938,
+      "passing_subtests": 8,
+      "selectors": 161,
+      "normal_conftest_plugins": true,
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "pins": {
+        "terminal.json": "73d89fa654fb95f4b458be1bdec4ce3d4dadf6e1b2ace88b09f73057c832000c",
+        "command.json": "a92168b387a05e417eea709d689b4b2f6f32685a3a55013def04a2a25c88c96d",
+        "testIDs.json": "c8928707b249de0b9b6b667c0e044c2cf46ab4f8a64dafff7e6f7ff60c5b719d",
+        "plugins.json": "d4e67d733197b8443ad9343900092b8c0312e6da21a5bcadee9ddbf04e1700d1",
+        "results.xml": "b884bec4f5b8e3f2a44d3680faf2df5aec4e1cdb696c729ba0d6521211e7314c"
+      }
+    }
+  },
+  "same_collected_nodeIDs": true,
+  "scope": "Complete exact actualworkflow source command on both retainedsupportedPythons, normalconftest/plugins/no failfast,0science/original/native/timing/sourcechanges. Not collectionaudit or unionofpartialruns.",
+  "historical_failures": [
+    "coverage/evidence/current281-complete-source-failure-v1.json",
+    "coverage/evidence/current281-complete-source-failure-v2.json"
+  ],
+  "pending": "Exactremote/workflow/no-prior-run/newsourceplans/capacity then ONEgenuine4profile; independentwholeproduct/SDK/stageradmission, actualperformancebinding/cohorts/1Tcomparison/raw/alllossreview andmaindelivery.",
+  "waste_review": "Commonentryfix aftertwo localdependency omissions;18consumer/7mapclosure checkedbeforefull. Reuse allunchangedscience/privateSDK/raw; no original or performance replay. Actualprocessseconds retained; no extra audit."
+}
