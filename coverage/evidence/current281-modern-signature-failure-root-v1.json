@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "status": "FAILED_MODERN_PROFILE_CAUSE_ADMITTED_NOT_WHOLE_CAMPAIGN_ACCEPTANCE",
+  "run": 42342525409,
+  "job": 128313130372,
+  "source": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+  "handoff": {
+    "path": "build/current281-qualification-v1/modern-retained-v1/handoff-v1.json",
+    "sha256": "1aefdec0dcef6f890107ba0c35f47f250ea6431d59e64c9ba9458b596f99bf9c"
+  },
+  "artifact": {
+    "id": 13563460230,
+    "name": "public-qualification-modern",
+    "run": 42342525409,
+    "revision": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+    "path": "D:\\Scratch\\skimage281-42342525409-artifacts\\13563460230.zip",
+    "bytes": 1378336780,
+    "sha256": "8399892f5fa541e0dbb27d6578c23e5cf989da1e48c0de00be73fdf713f7b7f2",
+    "seconds": 65.68477690010332,
+    "actual_API_digest_exact": true,
+    "download_passes": 1
+  },
+  "root_cause": {
+    "field": "num_threads default",
+    "owned": "Distinct _Deprecated() instance with matching repr",
+    "upstream": "Canonical skimage._shared.utils.DEPRECATED class object using PatchClassRepr",
+    "evidence": "diagnostic-v1/sentinel-source-proof-v1.json",
+    "explanation": "Signature equality compares default objects, not rendered repr. Static source identities explain all four actual failures. No algorithm replay was used."
+  },
+  "failed_nodes": [
+    {
+      "mode": "normal",
+      "node": "tests.test_api::test_signatures[1-rolling_ball]",
+      "kind": "failure"
+    },
+    {
+      "mode": "normal",
+      "node": "tests.test_api::test_signatures[4-rolling_ball]",
+      "kind": "failure"
+    },
+    {
+      "mode": "scalar",
+      "node": "tests.test_api::test_signatures[1-rolling_ball]",
+      "kind": "failure"
+    },
+    {
+      "mode": "scalar",
+      "node": "tests.test_api::test_signatures[4-rolling_ball]",
+      "kind": "failure"
+    }
+  ],
+  "small_proofs": 25,
+  "small_proof_bytes": 12290397,
+  "passing_scope": {
+    "actual_rolling_XML": [
+      {
+        "name": "normal-public-rolling-ball-saved-linux.xml",
+        "tests": 81,
+        "failed": 0,
+        "sha256": "fb72a20c7f51f930e8982bdf911004bd46378612a2cd066cc44e0344b6484315"
+      },
+      {
+        "name": "scalar-public-rolling-ball-saved-linux.xml",
+        "tests": 81,
+        "failed": 0,
+        "sha256": "a18a7518a9fab3517ee50fdb5a30831d454c1310e81c3e6c04e8d4d8a4fbaf1c"
+      }
+    ],
+    "SDK_producer_declaration": {
+      "checks": 76,
+      "scope": "Relocated complete SDK,38 independently linked installed clients normal/scalar; no source includes or Python dependency"
+    },
+    "other_groups": "Producer manifest counts only, recorded in relevant-passing-scope-v1; not independent complete XML/corpus/SDK authentication."
+  },
+  "root_review": "Retainedsmallproofs/actualfourfailedsignature nodes/sourcecause authenticated. Root inspected ownedlocal_Deprecatedinstance andexistingcomponentconsumer canonical_DEPRECATED import/fallback. Producerutils record matches pinnedclasssentinel source. Signature representation equality doesnotprove defaultidentity.",
+  "not_claimed": "No wholeproduct/SDK/corpus/seal acceptance, otherprofile outcomes or numerical replay. Modern remainsFAILED.",
+  "next_gate": {
+    "owner": "C soleisolatedmetadata-fix author thenBindependentreviewer/root",
+    "action": "Reuse canonicalmetadata sentinel/sharedfallback after importgraph check; strict actualsignature/defaultidentity+explicitdeprecatedsentinel controls, exactbody-preserving contexts andallreaderclosure. BothPythons sourceguards then rootfullworkflow barrier before changed-sourcequalification."
+  },
+  "waste_review": {
+    "reuse": "One1,378,336,780B modernartifact stream65.685s/hash once onD; producer records/25smallproofs/readers reused. No archive/core/fullseal/corpus rehash, no imagealgorithmcall.",
+    "avoidable": "Prior signature controls compared renderedtext ratherthan actualSignature/defaultobjectidentity. Add strictmetadata/source/standalone controls beforehostedcampaign.",
+    "next_correction": "Reuse reviewedmetadata identity primitive, not a new sentinel-framework/signature waiver. Preservefailedrun and everyotherprofile."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "status": "SCOPED_SOURCE_STORAGE_ADMITTED_ACTUAL_READINESS_PENDING",
+  "APIs": [
+    "feature.graycomatrix",
+    "feature.graycoprops"
+  ],
+  "source": "22873ac59edca67eb5af1b80b0f8959e5dd67111",
+  "handoff": {
+    "path": "build/graycomatrix-graycoprops-source-v1/handoff-v1.json",
+    "sha256": "4a6bdf61538060028164b525562b5d15648471af8018ec9deebe446ae91ac5c2"
+  },
+  "source_files": 8,
+  "small_proofs": 25,
+  "prospective_recipes": {
+    "graycomatrix": 50,
+    "graycoprops": 44,
+    "per_profile": 94,
+    "actual_originals_consumed": 0
+  },
+  "pure_checks_each_python": 202,
+  "safety": {
+    "max_input_elements": 36,
+    "max_physical_elements": 36,
+    "max_output_cells": 65536,
+    "max_pair_visits": 48,
+    "max_named_array_allowance_bytes": 2101312,
+    "max_work_units": 393219,
+    "model": "Conservative namednumericarray/storage/loop model, not processRSS/importallocatorpeak. Default256levels cases are1x1 withoneD/A; allotherlevels<=4,GMimage<=12pixels,propsP<=36elements; caller/source buffers includedconservatively. No original output iscomputed bybounds.",
+    "quarantine": [
+      "Nonfiniteorhuge offsets: customround casts toPy_ssize_t without checkedbounds; unsafe/unassessed, NEVERcapturewithoutnewsource safety",
+      "Unbounded levels/defaultmulti-plane256/highbitdepthmax, integeroverflow/hugehistcounts not smallcapture scope",
+      "Arbitraryobjectgraphs/protocolcallbacks/maskedarrays/structured/extendeddtypes and hostiletruth/shape/customiterators needboundedchangedcase proposal",
+      "UnmaskedFP/FTZ/DAZ/nondefaulttrap states needapprovedfull32controller/source witness, not normalization"
+    ]
+  },
+  "root_review": "Exactsource/25proof bytes and officialprimaryCython+round/fusedheader texts authenticated. Recipe branches/membership/work/storage arithmetic reviewed/executed stdlib-only. Default256levels only1pixel+oneoffset; invalidlevels/ranks/types small; finiteoffsets bounded beforeuncheckedcast. Propsnonfinite/negativeP smallshape36; no unboundedcallbacks or unsafeoffsets admitted.",
+  "semantic_frontiers": "Angle-distance-row-column uint32count/wrap/customties-away offset order, symmetrize before normalize; propscast+normalize beforepropertycheck,10properties/correlationthreshold. Actualerror/warning/dtype/alias/FP behaviors remainUNOBSERVED. Natural log isnot covered by oldVIlog2evidence.",
+  "pending": [
+    "ActualNumPyfactory/shape/backing/state verification on retainedminimum/modern runtimes",
+    "OriginalPythonentry cold/cached zero-body refusal forBOTHAPIs, compiledCython-origin+runtime/module/header/helper/FEnv32 controls",
+    "Independent capture-capable controller/journal/typedcodec/GO andactualreadiness before any referencecapture budget",
+    "CompleteownedC++2operation SDK/publichotSwap/applicableSIMD/scalar/optionalglobalworkersdefault1 andactualone-thread publiccomparison; no nativeorfullAPI credit yet"
+  ],
+  "authority": {
+    "original_algorithm_calls": 0,
+    "capture": 0,
+    "native": 0,
+    "sampler": 0,
+    "build": 0,
+    "timing": 0
+  },
+  "waste_review": {
+    "reuse": "RetainedPythontexture sources/oldLBP scaffolding; onlynecessaryofficial0.26 Cythonsource+2directheaders fetched andlicensed/pinned, notpackage/env/artifactinstall. Existingobservers/codec/FEnv/workers/SDK patterns proposed.",
+    "failures": "Authorencoding/parser setup failures retained, no originalsconsumed.",
+    "next_owner_trigger": "B mayexecute onlyactual boundedfactory/runtime/helper/zero-bodyprefix readiness afterthissourceadmission; originalcapture stillrequiresindependentcontroller/readiness/rootGO. Current281doesnotwait."
+  }
+}
