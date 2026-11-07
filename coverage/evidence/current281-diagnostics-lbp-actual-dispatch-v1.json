@@ -1,0 +1,89 @@
+{
+  "schema": "current281-diagnostics-lbp-actual-dispatch-v1",
+  "status": "DISPATCHED_PREREQUISITES_PASSED_RESULTS_PENDING",
+  "registration_main": "103b3ba2",
+  "root_GO_path": "build\\current281-diagnostics-lbp-dispatch-v1\\root-conditional-GO-v1.json",
+  "root_GO_sha256": "e093beb3c2e017a4926025b39198308eade3a89a4c0481083d7e739c596db29f",
+  "authorization": {
+    "status": "ROOT_AUTHORIZED_ONCE_THREE_INDEPENDENT_GATED_RUNS",
+    "execution_created_utc": "2026-11-07T11:59:40.429472+00:00",
+    "deadline_utc": "2026-11-07T13:59:40.429472+00:00",
+    "registration_main": "103b3ba2",
+    "preconditions": "Live API registrations active, remote candidate hashes match, no prior exact-source runs, qualified producer success, both exact artifact digests unexpired, actual scratch capacity retained. Each fresh host must pass its source/runtime/helper/identity/cohort gates before targets.",
+    "vi": {
+      "original_calls": 1,
+      "native_calls": 1,
+      "sampler_calls": 0,
+      "timing": 0
+    },
+    "igg": {
+      "status": "ROOT_AUTHORIZED_HOSTED_IGG_THREE_ONCE",
+      "diagnostic_source": "eab131331f854647a1a3c19a86f8ab3ca59c8eac",
+      "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+      "case_ids": [
+        "dtype-float64",
+        "dtype-complex128",
+        "image-list"
+      ],
+      "owned_topcalls": 3,
+      "max_image_core_calls": 15,
+      "original_calls": 0,
+      "timing": 0,
+      "script_sha256": "0a5124304f9a2c3cd7f8ec68f048b5d019189c3e90eeae6a36f5bfa4bbe33a55",
+      "contract_sha256": "331383cdf5f1c84a0dc67c21d9495c5574d88e49ea49a9d16c2643e7a53f0d21",
+      "core_sha256": "ddcc9e141d3b6b9a2a5c4979ce6bc1877c7391b261cece3673bee4c7eae4732a",
+      "deadline_utc": "2026-11-07T13:59:40.429472+00:00",
+      "allow_fresh_host_helper": true
+    },
+    "lbp": {
+      "api": "feature.draw_multiblock_lbp",
+      "cases": 4,
+      "samples": 56,
+      "warmup_groups": 8,
+      "cohorts": 1,
+      "workers": 1,
+      "repeat": 7,
+      "min_sample_ms": 100,
+      "warmup_ms": 250,
+      "retain_all_losses": true
+    },
+    "retries": 0,
+    "source_admissions": {
+      "vi-value-diagnostic-workflow": "e37c62316796adb3bb834e559e448184bc622c7c09b46447189d5613701db8a2",
+      "igg-native-three-workflow": "4c8e34556e73310e94a54a14894606eae0866109788ea2c9c31f6f7f28e66e9f",
+      "lbp-only-workflow": "f2af18d1f230ef5d64fbb1d398defe1cab29a6ba82f5c46bc1e909b614e14318"
+    },
+    "changed_inputs": "VI adds actual-failing-value serialization, IGG actual-host natural-stage/CPU capture after local reproduction did not fail, LBP independent subset removes unrelated MARK precondition; previous failed runs retained.",
+    "waste_review": "Reuse exact source/inert proofs and retained admissions. No favorable retiming or repeated successful experiment; no main native change. Root independently admits actual results before any math patch or published performance."
+  },
+  "actual_handles": [
+    {
+      "key": "vi",
+      "id": 42370505430,
+      "status": "in_progress",
+      "conclusion": null,
+      "source": "78deb6169d2b87f4d3a6325a9e65f495bae4ed47",
+      "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42370505430"
+    },
+    {
+      "key": "igg",
+      "id": 42370507136,
+      "status": "in_progress",
+      "conclusion": null,
+      "source": "eab131331f854647a1a3c19a86f8ab3ca59c8eac",
+      "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42370507136"
+    },
+    {
+      "key": "lbp",
+      "id": 42370508973,
+      "status": "in_progress",
+      "conclusion": null,
+      "source": "49312f444078f3f7f3325d06880da32fbf061df5",
+      "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42370508973"
+    }
+  ],
+  "source_claim": "Source-only readiness and dispatch are not numerical acceptance or speed evidence. Actual terminal results and retained outputs require root review.",
+  "waste_review": "Exact manual YAML only; all three source proof scopes reused. Live registration/ref/no-prior/artifact checks performed once; successful POSTs never repeated. Independent crop/flood optimization lanes and MARK corrected capture review proceed without blocking these runs.",
+  "next_owner": "root",
+  "next_trigger": "Poll same actual handles; once terminal retain output archives once and independently inspect actual command/helper/cohort/result journals. Preserve failures, do not retry unchanged source."
+}

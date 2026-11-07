@@ -1,0 +1,219 @@
+{
+  "schema": "current281-diagnostics-lbp-terminal-root-closeout-v1",
+  "status": "DIAGNOSTICS_COMPLETE_PRIOR_FAILURES_UNRESOLVED_LBP_FAILED_BEFORE_TIMING",
+  "dispatch_receipt": "coverage/evidence/current281-diagnostics-lbp-actual-dispatch-v1.json",
+  "retention": [
+    {
+      "key": "vi",
+      "run": 42370505430,
+      "source": "78deb6169d2b87f4d3a6325a9e65f495bae4ed47",
+      "conclusion": "success",
+      "artifact_id": 13573458242,
+      "artifact_name": "vi-value-diagnostic-minimum",
+      "bytes": 2449490,
+      "sha256": "58bafdba253f9938a6ef4189e3233bd29c1e3a8fe30cf4f0c1f6bd47067ce70c",
+      "archive": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370505430\\artifact.zip",
+      "files": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370505430\\files",
+      "download_passes": 1,
+      "API_digest_exact": true,
+      "CRC_verified": true,
+      "retained_utc": "2026-11-07T12:01:30.832033+00:00"
+    },
+    {
+      "key": "igg",
+      "run": 42370507136,
+      "source": "eab131331f854647a1a3c19a86f8ab3ca59c8eac",
+      "conclusion": "success",
+      "artifact_id": 13572923325,
+      "artifact_name": "igg-three-native-diagnostic-42370507136",
+      "bytes": 305906,
+      "sha256": "312e8dbdc3301387fe658861b73738e7458b3333afd1c8f7642c860602123108",
+      "archive": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370507136\\artifact.zip",
+      "files": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370507136\\files",
+      "download_passes": 1,
+      "API_digest_exact": true,
+      "CRC_verified": true,
+      "retained_utc": "2026-11-07T12:01:32.454623+00:00"
+    },
+    {
+      "key": "lbp",
+      "run": 42370508973,
+      "source": "49312f444078f3f7f3325d06880da32fbf061df5",
+      "conclusion": "failure",
+      "artifact_id": 13573069275,
+      "artifact_name": "lbp-only-initial-minimum",
+      "bytes": 2670961,
+      "sha256": "f0c0a04a286e877661b02f718ab30d85fbfe9d419924b33d1fab7b2ce54c7a4c",
+      "archive": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370508973\\artifact.zip",
+      "files": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370508973\\files",
+      "download_passes": 1,
+      "API_digest_exact": true,
+      "CRC_verified": true,
+      "retained_utc": "2026-11-07T12:01:35.024378+00:00"
+    }
+  ],
+  "retained_small_outputs": [
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370505430\\files\\vi-value-diagnostic.json",
+      "bytes": 2118,
+      "sha256": "cdd99d88232f53dc82a9a4f05056d316d6d1e4ca7ba9e38fb275a594f834dbb9"
+    },
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370505430\\files\\vi-value-diagnostic-exit.json",
+      "bytes": 12,
+      "sha256": "5bc232b82de377a5655a39a2af9d7ae0fc868de5b9df957e18905cb914606c88"
+    },
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370507136\\files\\scikit-imagexx\\scikit-imagexx\\build\\igg-host-diag\\result\\terminal.json",
+      "bytes": 298,
+      "sha256": "4c98ee44b5979955fe5be2236da0c6c95b90d4ecdb2ea5f5c1f940ece13e2e8f"
+    },
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370507136\\files\\scikit-imagexx\\scikit-imagexx\\build\\igg-host-diag\\result\\rows.json",
+      "bytes": 99078,
+      "sha256": "0a5c841c032fe9f7e80f0ccb7bad6956b52bfcda0d8546501609791ab9d9f826"
+    },
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370507136\\files\\scikit-imagexx\\scikit-imagexx\\build\\igg-host-diag\\result\\host.json",
+      "bytes": 14040,
+      "sha256": "d7090566a1b33ceb32ec971af1d43846efc613a681e5f4de9601f9c2f9e91e06"
+    },
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370508973\\files\\first-cohort\\lbp\\failure.json",
+      "bytes": 1818,
+      "sha256": "85c7f6feacfd7ad6eefa8986e8dc931b18368204e652b023bfe73dd0cbf00bb1"
+    },
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370508973\\files\\first-cohort\\lbp\\calls.jsonl",
+      "bytes": 314,
+      "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+    },
+    {
+      "path": "build\\current281-diagnostics-lbp-dispatch-v1\\retained-v1\\42370508973\\files\\first-cohort-lbp-exit.json",
+      "bytes": 16,
+      "sha256": "331dd85020eaf7c911e3417ee78f7ff17a0d1257e2a5c310696fc702d1c3f16f"
+    }
+  ],
+  "VI": {
+    "run": 42370505430,
+    "actual": {
+      "schema": "vi-cohort-value-diagnostic-v1",
+      "own_before_raw32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+      "target_calls_added_by_wrapper": 0,
+      "sampler_body_calls_authorized": 0,
+      "secondary_errors": [],
+      "status": "PASS_OLD_PROBE_SAMPLER_STOP_NO_TIMING",
+      "terminal": {
+        "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+        "source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+        "route": "vi",
+        "api": "metrics.variation_of_information",
+        "counts": {
+          "original": 1,
+          "native": 1
+        },
+        "native_result_accepted": [
+          true
+        ],
+        "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+        "sampler_body_calls": 0,
+        "timed_batches": 0,
+        "public_driver_checks_completed": true,
+        "caller_full32_restored": true,
+        "native_returns": [
+          "label_pair_check_storage",
+          "label_pair_check_storage",
+          "label_pair_check_storage",
+          "label_pair_check_storage",
+          "get_num_threads",
+          "label_pair_counts_preweighted",
+          "label_pair_check_storage",
+          "label_pair_check_storage",
+          "label_pair_check_storage",
+          "get_num_threads",
+          "variation_of_information_csr"
+        ],
+        "native_requirements": {
+          "get_num_threads": 2,
+          "label_pair_check_storage": 7,
+          "label_pair_counts_preweighted": 1,
+          "variation_of_information_csr": 1
+        },
+        "marker_evidence": "Actual VI inner observer; both count and entropy native phases required. Two existing worker snapshots are explicit, not a single whole-call snapshot claim.",
+        "root_binding_sha256": "f48526e2868607262feda8493763cf1bb50ad9ade98c5e10c6396d4190b985e9",
+        "outer_state_restored": true,
+        "poststop_source_authority_unchanged": true,
+        "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+      },
+      "after_old_probe_raw32": "7f03ffff2000ffffffffffff0000000000000000000000000000ffffa21f0000",
+      "value_frame_found": false,
+      "own_restored_raw32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+      "own_full32_restored": true
+    },
+    "disposition": "Fresh host first cohort strictly passed with one original and one native call, sampler0/timing0. Prior result mismatch did not reproduce; no failing values were available to capture. Not a fix, no broad parity/release or speed credit."
+  },
+  "IGG": {
+    "run": 42370507136,
+    "terminal": {
+      "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+      "calls": 3,
+      "rows": 3,
+      "failures": [],
+      "primary": null,
+      "original_calls": 0,
+      "timing": 0,
+      "process32": true,
+      "scope": "Actual852 core, private diagnostic namespace on new hosted minimumVM; not oldVM/productqualification."
+    },
+    "independent_comparisons": [
+      {
+        "id": "dtype-float64",
+        "exact_observation_equal": true,
+        "semantic_target_FP_equal": true,
+        "caller32": true,
+        "natural_stage_references": 5
+      },
+      {
+        "id": "dtype-complex128",
+        "exact_observation_equal": true,
+        "semantic_target_FP_equal": true,
+        "caller32": true,
+        "natural_stage_references": 5
+      },
+      {
+        "id": "image-list",
+        "exact_observation_equal": true,
+        "semantic_target_FP_equal": true,
+        "caller32": true,
+        "natural_stage_references": 5
+      }
+    ],
+    "host_cpu": "AMD EPYC 7763",
+    "host_python": "3.11.17",
+    "host_numpy": "1.24.4",
+    "disposition": "Actual852 core on another new host again matches saved three-case observations/semantic target FP and caller/process32. Natural magnitude/four-finish references retained. Old852 minimum six failures remain failed; no current-host original calls, no causal diagnosis, no math/gold/tolerance change."
+  },
+  "LBP": {
+    "run": 42370508973,
+    "failure": {
+      "type": "AssertionError",
+      "error": "",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/scikit-imagexx/scikit-imagexx/controller/tools/mark_lbp_first_cohort_probe.py\", line 244, in main\n    try:sys.settrace(trace);sys.setprofile(profile);sys.argv=argv;runpy.run_path(str(root/route['driver']),run_name='__main__')\n                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen runpy>\", line 291, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/benchmarks/draw_multiblock_lbp_native.py\", line 33, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/benchmarks/draw_multiblock_lbp_native.py\", line 30, in main\n    return execute(dict(globals(),fixture=fixture,native_requirements=native_requirements))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/benchmarks/draw_multiblock_lbp_execution.py\", line 33, in execute\n    def execute(module):return boundary().execute(module,context_path=CONTEXT)\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/benchmarks/mark_boundaries_execution.py\", line 213, in execute\n    assert reference_before==native_before and reference_FP==native_FP\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "retry": false
+    },
+    "original_calls": 1,
+    "native_calls": 1,
+    "timing_samples": 0,
+    "disposition": "Real first gray-u8-C cohort stopped at combined incoming/outgoing hardware-FP equality before result checks/sampler. Actual FP dictionaries were not retained by old recorder. Need minimal diagnostic serialization of existing execute locals before deciding product vs recorder cause; do not loosen assertion or rerun unchanged source."
+  },
+  "shipping": "271 partial image APIs; candidate public performance stays64cases38wins26losses with remaining16cases open.",
+  "waste_review": "Once-only retention three small archives total5426357 bytes; no baseline core/archive rehash or retiming. Root first compared differently shaped expected immediate record with actual list, then corrected metadata reader to established semantic CW/SW/MXCSR scope; no scientific rerun. LBP failure exposes inadequate failing-FP recording; reuse VI exception-frame capture pattern for affected source-only successor.",
+  "next_owner_trigger": {
+    "root": "Independently review new actual numerical/FP evidence before native fix or candidate performance/release. Preserve all failed campaigns.",
+    "next_LBP": "Frozen minimal failing-FP recorder source/inert admission then separately bounded1original1native diagnostic; timing0. Do not dispatch unchanged493."
+  }
+}

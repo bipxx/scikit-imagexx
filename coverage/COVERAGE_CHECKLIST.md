@@ -32,6 +32,8 @@ Shipping remains **271 partial native image APIs**. The checklist covers **477 p
 
 Failed predecessor campaigns and their zero-timing outcomes remain in the [execution plan](EXECUTION_PLAN.md) and retained receipts. [Storage relocation](evidence/cold-worktree-storage-relocation-v1.json) changed source locators, not coverage. Source-only admissions above grant no execution authority.
 
+Latest terminal diagnostics: [root closeout](evidence/current281-diagnostics-lbp-terminal-root-closeout-v1.json) retains VI42370505430 and IGG42370507136 successes and LBP42370508973 failure before timing. VI/IGG prior failures did not reproduce and remain unresolved. LBP failed the hardware-FP equality gate after one original/native pair; actual dictionaries need diagnostic capture before a fix. No new parity/release gate or speed credit; candidate results remain64cases38wins26losses.
+
 **Update at every bounded closeout:** identify affected API/member keys, changed domains, exact source/profile/receipt, passed/pending/failed gates and next owner/trigger in the existing task handoff; update affected rows and this snapshot in the same validated increment. Root verifies evidence before marking a gate. Reuse valid retained evidence and preserve failures; do not rerun science to refresh this document.
 
 Navigation: [gate definitions](#completion-gates-for-every-api-and-applicable-member), [domain checklist](#domain-checklist-within-each-api-gate), [module index](#module-index), [per-API rows](#per-api-checklist), [whole-library gaps](#runtime-and-whole-library-closure), [closeout rule](#closeout-update-rule).
