@@ -10,7 +10,7 @@ import sys
 import types
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v5.json'
+CONTEXT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v6.json'
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 
@@ -21,7 +21,13 @@ def synthetic(tmp_path,monkeypatch,fault='none',context_path=CONTEXT):
     """Metadata stand-in accepted only until a refused import, never a product."""
     c=json.loads(context_path.read_bytes());source=tmp_path/'source';source.mkdir();pins={}
     for name in set(c['source_files_canonical_sha256'])|set(c['FENV_dependency']['source_files_raw_sha256'])|{'CMakeLists.txt',context_path.relative_to(ROOT).as_posix()}:
-        target=source/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/name).read_bytes());pins[name]=H(target.read_bytes().replace(b'\r\n',b'\n'))
+        target=source/name;target.parent.mkdir(parents=True,exist_ok=True);raw=(ROOT/name).read_bytes()
+        # A historical controller must exercise its exact admitted source fixture,
+        # not current driver bytes under an older contract. Current v6/v5 uses current bytes.
+        if context_path.name in ('mark-boundaries-benchmark-execution-v5.json','draw-multiblock-lbp-benchmark-execution-v4.json'):
+            from tools.join_source_context import rolling_predecessor_raw_bytes
+            raw=rolling_predecessor_raw_bytes(ROOT,name,raw)
+        target.write_bytes(raw);pins[name]=H(target.read_bytes().replace(b'\r\n',b'\n'))
     def receipt(name,value):
         p=tmp_path/(name+'.json');p.write_text(json.dumps(value));return str(p),H(p.read_bytes())
     prepared=dict(revision='a'*40,files_sha256=pins);producer=dict(run=123,revision='a'*40,artifact=456,sha256='b'*64)

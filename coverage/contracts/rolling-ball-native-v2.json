@@ -1,0 +1,107 @@
+{
+  "schema": "rolling-ball-native-v1",
+  "state": "PRIVATE_UNREADY_NO_PUBLIC_REGISTRATION",
+  "base_source": "dfebccfc171290280643c3b17a4809148a0bb49f",
+  "api": "restoration.rolling_ball",
+  "signature": "(image, *, radius=100, kernel=None, nansafe=False, num_threads=<DEPRECATED>, workers=None)",
+  "raw_admission": {
+    "path": "build/rolling-ball-root-raw-admission-v1/admission-v1.json",
+    "sha256": "ed9c8e6ccb198c0eb3fd06f913c72377bc8dca680c58af55cd1212d18261dbd9"
+  },
+  "frozen_source_files_raw_sha256": {
+    "benchmarks/rolling_ball.py": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+    "coverage/contracts/rolling-ball-v1.json": "6f4d505df80e095e604cedc4de6024bf73237ec68b6df14f086db0998c183bc0",
+    "tests/fixtures/rolling_ball_sources_v1.json": "9b58244123f42ebbece77e5c978469e39f7072517a99ee1a1f05afd0393d1340",
+    "tests/rolling_ball_contract.py": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+    "tests/rolling_ball_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/rolling_ball_observer.py": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+    "tests/test_rolling_ball_source.py": "c1ab14e6f1e0c7a84580b846c1592f9388b0223f48389929a7c74addc7a430f6"
+  },
+  "source_files_raw_sha256": {
+    "include/skimagexx/rolling_ball.hpp": "d10396d0e50bd27eff5be8e364213b5bbc4492c4ffee09ddf4fa6e32ed9f68fa",
+    "python/skimagexx/_rolling_ball.py": "f5906766f4e89b7dcf9bc2660ba08ee52771bf67b6d9a4d3d9607bbb5a3c150e",
+    "src/bind_rolling_ball.cpp": "2a41e141375762c3cf3b426aff5752b3aa3c8e6d03c5f9165c54d9b048e8f098",
+    "src/rolling_ball.cpp": "ca34bceb7d5f81e9a7a9175353383ce27c6d1e5877f4f8ce602a43e3ad91f954",
+    "tests/fixtures/rolling_ball_original_v1.json": "57263ebee170bfcb4a32fd40d609f0970551ff67bbe6230127cd00496d04e3fc",
+    "tests/fixtures/rolling_ball_sdk_v1.bin": "131e186c64e9a0f26701bddbe5bb35cf09161957526f6fd18ca670a63bb7780a",
+    "tests/sdk/rolling_ball/CMakeLists.txt": "41d298f638a3f34c4f934205636f55f5baf41032b194e772e11adbc761c33c57",
+    "tests/test_rolling_ball_native_source.py": "bc097cc020f6a21d7d2401b45c5ef78d9e66d27b6ff69f2c6c32136f8fe8935c",
+    "tests/test_rolling_ball_public.py": "603d5d067c40f01eb8f6d9f65854524ba8969b9ba159f281ef9bb0383074442f",
+    "tests/test_rolling_ball_sdk.cpp": "ca9e34ae8a84f2949928a5df685ead4015493fa6e134f1b1a8f7b98ce4220827",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "include/skimagexx/rolling_ball_kernels.hpp": "92e1372775ac57d5f47a0450808d1de072b89653619ced14311ed4cb0ca40aab",
+    "src/rolling_ball_kernels.cpp": "d00bf3afd60cd76ed380903448977916d8f683a53990d7c724431a5e7d11660f",
+    "src/bind_rolling_ball_kernels.cpp": "16d2c4b4ad2178cdf09e56a943ade918a89c5b72fb82eed557418df85c0210a3",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2324b9f46762ea17c7e19087f1935fd9fef22475ae4b90be5764b5b27c3513de",
+    "python/skimagexx/_rolling_ball_kernels.py": "894f237bebf7657fac351bc50897fa45274acc1906713e0c65c48792887a51fa",
+    "tests/rolling_ball_observer.py": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+    "tests/rolling_ball_contract.py": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+    "tests/rolling_ball_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/test_rolling_ball_sdk_dtypes.cpp": "4cc66d0c0d27f27e1331ec261576044ce7e78854c483c4d371bd0ea59e0a5f0c",
+    "tests/test_rolling_ball_sdk_dtype_fp.cpp": "948484026221b54259a40fa3fe2cc7f81f92ef65cb2900760eba589c03283d5f",
+    "tests/fixtures/rolling_ball_sdk_dtypes_v1.bin": "ea28ab9468dbfe71d23ab239455ca5c5c0de4fe90939d9281dd5b2977a204f19",
+    "tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc": "3aa97fcebf76169799578f41b90cf5a98f46e7cad3b7c87f7a2d3f2338ec74e6",
+    "tests/sdk/rolling_ball_dtypes/CMakeLists.txt": "9f9bd2ace1fd99535174a51f672761ae21e8b896fb8f7dd3a2fab6722fe54ad8",
+    "tests/rolling_ball_sdk_dtype_context.py": "71906111ce5939a483cb82a3b8331e911a9f49ba819e00512259cd76ffdf7b5b",
+    "tests/test_rolling_ball_sdk_dtype_source.py": "f02cd3a14e4f65129c2e27a4076df9c32f93acb92b7fab58c7b4cb036868d591",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "coverage/contracts/rolling-ball-sdk-dtypes-v1.json": "4df253cee3a2e769a391cdb9a008fe5392abcbc0dfc89a36f912740de1b9a2ca"
+  },
+  "saved_fixture": "tests/fixtures/rolling_ball_original_v1.json",
+  "saved_cases_per_profile": 75,
+  "saved_profiles": [
+    "minimum",
+    "modern"
+  ],
+  "reference_returns_per_profile": 63,
+  "reference_API_errors_per_profile": 12,
+  "ownership": {
+    "padding": "C++",
+    "min_plus": "C++ stable row/inner order",
+    "output_words": "C++",
+    "SDK": "Complete owning float32/64 and typed bool/integer/half/swapped raw-storage image->background operation; finite representable integer casts and nearest-half domain; built-in/custom kernel and signed byte strides",
+    "providers": [
+      "NumPy input coercion/astype including complex refusal and output dtype conversion",
+      "NumPy user custom-kernel astype, center subtraction, +inf mask, scalar promotion/warning/error policy",
+      "NumPy allocation/base/reshape/stride/metadata; axis generation and scalar power for owned kernel",
+      "Explicit user array/truth/index protocols; independent local thread-deprecation metadata"
+    ],
+    "workers": "One existing process-global default1, optional user snapshot; independent outputs partition only above256*1024, each output reduction ordered. No parallel tree reduction.",
+    "SIMD": "Admitted ball primitive dispatch reused; min-plus ordered compare/NaN row selection retained scalar per output, compiler may vectorize independent storage work. True scalar build disables compiler vectorizers and uses scalar donor. No min-plus SIMD speed claim."
+  },
+  "domains": {
+    "private_saved": "All150 captured rows with per-profile exact bytes/descriptors/errors/warnings/protocol/FP/caller envelope",
+    "SDK_saved": "52 existing float32/64 plus11 admitted bool/integer/half/swapped saved rows, privately relocated exported target; genuine aggregate execution pending",
+    "open": [
+      "Unsafe/out-of-range/nonfinite integer casts; half payload/overflow/subnormal/nonnearest; Python dtype objects/protocols and genuine Windows SDK runtime remain outside the admitted typed raw-storage domain",
+      "Foreign deprecated sentinel identity, pathological user protocol/type domains and unsafe source quarantines unassessed",
+      "Non-default rounding/FTZ/DAZ/exception masks may be refused by owned ball primitive, never NumPy whole-helper fallback",
+      "Default NumPy policy/handler state covered; non-default user callback behaviors need domain evidence",
+      "Windows runtime/parity, genuine single installed core/namespace/hot-swap/global-worker ABI/full exported SDK release and original one-thread performance pending"
+    ]
+  },
+  "reference_calls_remaining": 0,
+  "actual_original_authority": null,
+  "actual_performance_authority": null,
+  "SDK_successor": {
+    "source": "42f08d83009621bcd958d2653920d228935f064e",
+    "context": "coverage/contracts/rolling-ball-sdk-dtypes-v1.json",
+    "historical_projection": "tests/rolling_ball_sdk_dtype_context.py:historical_sdk_source",
+    "predecessor_pins": {
+      "include/skimagexx/rolling_ball.hpp": "af84099647d5b89ad5c03bc9d000a86f58a52846b048d3b8dbfb1e19ca73b78f",
+      "src/rolling_ball.cpp": "54d1ace679ef0bcdfbad5b117aa3f21f3e4d8855a76ef2b6346bf6522c5a8401"
+    },
+    "new_saved_domains": "11 bool/int/half/swapped SDK saved rows;132 strict FP controls private; genuine Windows and full-domain gaps remain"
+  },
+  "predecessor_contract": {
+    "path": "coverage/contracts/rolling-ball-native-v1.json",
+    "raw_sha256": "842da71d894e9f7944fca92fe4f72115ee1e9e90e1af2a4a5796f7d46c89e76d"
+  }
+}

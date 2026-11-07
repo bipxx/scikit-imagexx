@@ -24,9 +24,9 @@ def test_unbound_source_scope_and_exact_family_recipes():
         c=json.loads((ROOT/route['contract']).read_bytes());assert route==c['route']and len(route['cases'])==(8 if name=='mark'else 4)
         assert DATA['families'][c['report_family']]==dict(contract=route['contract'],cases=len(c['cases']),case_ids=[s['id']for s in c['cases']],untimed_calls_per_case=1)
         a=PROBE.driver_argv(ROOT,route,'binding.json','never.json');assert '--deadline-utc'not in a and a[-2:]==['--root-binding','binding.json']
-    for name,pin in DATA['benchmark_source_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin
-    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin
-    for name,pin in DATA['helper']['source_sha256'].items():assert H((ROOT/name).read_bytes())==pin
+    for name,pin in DATA['benchmark_source_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_bytes']).rolling_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
+    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
+    for name,pin in DATA['helper']['source_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
 
 
 def frame_fixture(name):
@@ -277,7 +277,7 @@ def test_current280_source_projection_preserves_prior_controller_and_cases():
         assert route['cases']==old['first_cohort']['routes'][name]['cases']
         assert route['argv']==old['first_cohort']['routes'][name]['argv']
     for name,row in DATA['controller_inverse'].items():
-        current=(ROOT/name).read_bytes()
+        current=__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes())
         assert H(current)==row['current_raw_sha256']and current.decode()==row['current']
         assert H(row['predecessor'].encode())==row['predecessor_raw_sha256']
     assert all(DATA[k]is None for k in('prepared_source','SDK_members','core_sha256','runtime_sha256','deadline_utc','benchmark_fingerprint'))

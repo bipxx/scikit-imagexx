@@ -6852,11 +6852,25 @@
       "api": "restoration.rolling_ball",
       "kind": "callable",
       "signature": "(image, *, radius=100, kernel=None, nansafe=False, num_threads=<DEPRECATED>, workers=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_rolling_ball_public.py::test_saved_original",
+      "benchmark": "benchmarks/rolling_ball_native.py",
+      "default_input_kind": "Actual requested image/dtype, explicit radius1 shared adapter; owned padding/min-plus/source NaN-row order and defaultball primitive. NumPy dtype/allocation/custom-kernel arithmetic/protocol providers; literal default100 separately saved1D. SDK float32/64, Windows/broaderFP/genuine/performance gaps explicit."
     },
     {
       "api": "restoration.unsupervised_wiener",

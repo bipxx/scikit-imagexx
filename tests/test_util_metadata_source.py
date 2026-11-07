@@ -55,11 +55,11 @@ def test_util_metadata_real_pytest_pipeline_and_SDK_closure():
 
 @pytest.mark.parametrize('profile',('minimum','modern','windows','debug'))
 def test_util_metadata_current_source_plan(profile):
-    q=load('util_metadata_qualifier_'+profile,'tools/public_qualification.py');result=q.plan(ROOT,profile,280)
+    q=load('util_metadata_qualifier_'+profile,'tools/public_qualification.py');result=q.plan(ROOT,profile,281)
     assert not result['blockers'],result['blockers']
-    assert result['registry']['registered_count']==283 and result['registry']['image_count']==280
-    assert result['product_members']==226 and result['SDK_members']==107
-    assert len(q.CURRENT_FAMILIES)==37
+    assert result['registry']['registered_count']==284 and result['registry']['image_count']==281
+    assert result['product_members']==228 and result['SDK_members']==108
+    assert len(q.CURRENT_FAMILIES)==38
 
 
 def test_util_metadata_descriptor_consumers_keep_source_bound_whole_results():
@@ -112,8 +112,8 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
     original=q.groups_for_source(ROOT);groups=q.applicable_public_groups(original,profile)
     assert all(groups[name]==value for name,value in original.items())
     if profile=='windows':assert groups==original
-    else:assert groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)and len(groups)==len(original)+10
-    plan=q.plan(ROOT,profile,280);assert not plan['blockers']
+    else:assert groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)and len(groups)==len(original)+11
+    plan=q.plan(ROOT,profile,281);assert not plan['blockers']
     assert plan['public_groups']==groups
     assert 'noWindows' in (ROOT/'tools/public_qualification.py').read_text()
     import argparse

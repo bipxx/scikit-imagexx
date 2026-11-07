@@ -1,0 +1,2601 @@
+{
+  "schema": "rolling-ball-source-first-v1",
+  "state": "SOURCE_ONLY_ORIGINAL_NATIVE_HELPER_BUDGET0",
+  "api": "restoration.rolling_ball",
+  "signature": "(image, *, radius=100, kernel=None, nansafe=False, num_threads=<DEPRECATED>, workers=None)",
+  "original_budget": 0,
+  "native_body_budget": 0,
+  "helper_body_budget": 0,
+  "base_source": "26855566e651d4f73659980e050a6c09e842c08b",
+  "source_files": {
+    "tests/rolling_ball_contract.py": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+    "tests/rolling_ball_observer.py": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+    "tests/rolling_ball_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/fixtures/rolling_ball_sources_v1.json": "9b58244123f42ebbece77e5c978469e39f7072517a99ee1a1f05afd0393d1340",
+    "benchmarks/rolling_ball.py": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549"
+  },
+  "codec_exact_raw_sha256": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+  "codec_predecessor": "ROOT-admittedfiniteRadon/marktypedcodec unchanged; no ufunc application, plain dtype exception descriptors only; structured/subarray/metadata dtype-args explicitly refuse",
+  "observer_inverse": [
+    {
+      "current": "from rolling_ball_contract import fixture",
+      "predecessor": "from finite_radon_contract import fixture"
+    },
+    {
+      "current": "from rolling_ball_exception_codec import encode_exception_args as error_value",
+      "predecessor": "from finite_radon_exception_codec import encode_exception_args as error_value"
+    }
+  ],
+  "observer_predecessor_canonical_sha256": "85bce1c750df23dcbde9c0205953c7f0544d95b3841f828a4660e75db39ea8c7",
+  "recipe_count": 75,
+  "recipes": [
+    {
+      "id": "dtype-bool",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-uint64",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int8",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-int64",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-float16",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-float32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "dtype-float64",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-F",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "F",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-reverse",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "reverse",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-stride2",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "stride2",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "layout-transpose",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "transpose",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "readonly",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": true,
+      "provider": null
+    },
+    {
+      "id": "metadata",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": true,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "swapped-f32",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": ">f4",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "shape-1d",
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "shape-3d",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "shape-4d",
+      "shape": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "shape-8d-radius0",
+      "shape": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 0,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "empty-1d",
+      "shape": [
+        0
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "empty-axis",
+      "shape": [
+        0,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "singleton",
+      "shape": [
+        1,
+        1
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "default-radius-1d-only",
+      "shape": [
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": "OMITTED",
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius-0",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 0,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius-0.5",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 0.5,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius-1.5",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1.5,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius--0.25",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": -0.25,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius--1",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": -1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius-nan",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": "nan",
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius-inf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": "inf",
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "radius-bad",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": "bad",
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-zeros",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "zeros",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-bright",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "bright",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-step",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "step",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-signedzero",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "signedzero",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-nan",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "nan",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-allnan",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "allnan",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-inf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "inf",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "values-neginf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "neginf",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "nan-safe",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "nan",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": true,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "allnan-safe",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "allnan",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": true,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-flat",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "flat",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-even",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "even",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-asymmetric",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "asymmetric",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-wide",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "wide",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-inf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "inf",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-nan",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "nan",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-allinf",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "allinf",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-readonly",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "readonly",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-metadata",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "metadata",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-list",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "list",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-provider",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": "provider",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "kernel-ignores-radius",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": "bad",
+      "kernel": "flat",
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "workers-None",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "workers": null
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "workers-0",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "workers": 0
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "workers-1",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "workers": 1
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "workers-2",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "workers": 2
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "workers-4",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "workers": 4
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "workers-bad",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "workers": "bad"
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "deprecated-None",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "num_threads": null
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "deprecated-0",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "num_threads": 0
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "deprecated-1",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "num_threads": 1
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "deprecated-2",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "num_threads": 2
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "both-threads-conflict",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "num_threads": 1,
+        "workers": 2
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "both-threads-image-protocol",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {
+        "num_threads": 1,
+        "workers": null
+      },
+      "metadata": false,
+      "readonly": false,
+      "provider": "raise"
+    },
+    {
+      "id": "image-array-protocol",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": "array"
+    },
+    {
+      "id": "image-refuses",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": "raise"
+    },
+    {
+      "id": "image-list",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": "list"
+    },
+    {
+      "id": "nansafe-truth",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": "probe",
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "complex64-error",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    },
+    {
+      "id": "complex128-error",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "pattern": "ramp",
+      "radius": 1,
+      "kernel": null,
+      "nansafe": false,
+      "options": {},
+      "metadata": false,
+      "readonly": false,
+      "provider": null
+    }
+  ],
+  "bounds": [
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 48,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 4928,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 7,
+      "physical_elements": 7,
+      "kernel_shape": [
+        3
+      ],
+      "kernel_elements": 3,
+      "padded_elements": 9,
+      "addition_upper": 21,
+      "named_numerical_bytes_upper": 1376,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 24,
+      "physical_elements": 24,
+      "kernel_shape": [
+        3,
+        3,
+        3
+      ],
+      "kernel_elements": 27,
+      "padded_elements": 120,
+      "addition_upper": 648,
+      "named_numerical_bytes_upper": 11568,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 16,
+      "physical_elements": 16,
+      "kernel_shape": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "kernel_elements": 81,
+      "padded_elements": 256,
+      "addition_upper": 1296,
+      "named_numerical_bytes_upper": 32064,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "kernel_shape": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "kernel_elements": 1,
+      "padded_elements": 1,
+      "addition_upper": 1,
+      "named_numerical_bytes_upper": 2640,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 0,
+      "physical_elements": 1,
+      "kernel_shape": [
+        3
+      ],
+      "kernel_elements": 3,
+      "padded_elements": 2,
+      "addition_upper": 0,
+      "named_numerical_bytes_upper": 848,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 0,
+      "physical_elements": 1,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 10,
+      "addition_upper": 0,
+      "named_numerical_bytes_upper": 2720,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 9,
+      "addition_upper": 9,
+      "named_numerical_bytes_upper": 2736,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 3,
+      "physical_elements": 3,
+      "kernel_shape": [
+        201
+      ],
+      "kernel_elements": 201,
+      "padded_elements": 203,
+      "addition_upper": 603,
+      "named_numerical_bytes_upper": 39072,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "kernel_elements": 1,
+      "padded_elements": 12,
+      "addition_upper": 12,
+      "named_numerical_bytes_upper": 1696,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        5,
+        5
+      ],
+      "kernel_elements": 25,
+      "padded_elements": 56,
+      "addition_upper": 300,
+      "named_numerical_bytes_upper": 7776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "kernel_elements": 1,
+      "padded_elements": 12,
+      "addition_upper": 12,
+      "named_numerical_bytes_upper": 1696,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "kernel_elements": 1,
+      "padded_elements": 12,
+      "addition_upper": 12,
+      "named_numerical_bytes_upper": 1696,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "kernel_elements": 1,
+      "padded_elements": 12,
+      "addition_upper": 12,
+      "named_numerical_bytes_upper": 1696,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "kernel_elements": 1,
+      "padded_elements": 12,
+      "addition_upper": 12,
+      "named_numerical_bytes_upper": 1696,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        1,
+        1
+      ],
+      "kernel_elements": 1,
+      "padded_elements": 12,
+      "addition_upper": 12,
+      "named_numerical_bytes_upper": 1696,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        2,
+        4
+      ],
+      "kernel_elements": 8,
+      "padded_elements": 40,
+      "addition_upper": 96,
+      "named_numerical_bytes_upper": 3712,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        5,
+        7
+      ],
+      "kernel_elements": 35,
+      "padded_elements": 70,
+      "addition_upper": 420,
+      "named_numerical_bytes_upper": 10240,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    },
+    {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "kernel_shape": [
+        3,
+        3
+      ],
+      "kernel_elements": 9,
+      "padded_elements": 30,
+      "addition_upper": 108,
+      "named_numerical_bytes_upper": 3776,
+      "workers_max": 4,
+      "default_OpenMP_env_required": 1
+    }
+  ],
+  "maxima": {
+    "input_elements": 24,
+    "physical_elements": 48,
+    "kernel_elements": 201,
+    "padded_elements": 256,
+    "addition_upper": 1296,
+    "named_numerical_bytes_upper": 39072
+  },
+  "named_array_model": "Conservative131072byte allowance per recipe for typedarrays/shape/index/coordinate buffers; Python/import/allocator/processpeak excluded. All arithmetic checked fromsources; compiledsource generation/layout/origin intake andrealNPfactory controls stillfuturegates.",
+  "prior_full_algorithm_references_found": 0,
+  "existing_constructor_scope_only": true,
+  "retained_reuse": {
+    "constructors": "Existingball/ellipsoid raw/native/SDK/public1threadbenchmark references proveonlykernelconstruction. Retainedwhole_rolling_ball.py source reused andmatchesactualbothprofiles; no savedfullimagealgorithm rowsfound.",
+    "helpers": "Existingcrop POD/typedcodecs, full32F1backend/source-boundone-shotMARK/LBP/Radon/flood controllerenvelopes/zero-body prefixes afterseparaterootgate; no newengine.",
+    "primary_source": "One necessary8693bytepinnedv0.26Cythonread; fused_numerics typeclosure reused fromflood sourcepacket."
+  },
+  "contract": {
+    "control_order": [
+      "deprecatewrapper FutureWarning thenconflictingold/newValueError beforeimagecoercion; explicitworkersNone conflicts too",
+      "np.asarray(image),supportedfloatdtype,astype(copyFalse)",
+      "workersNone->0(OpenMPdefault); explicitpositiveworkersoverride; noexistingoriginalprocessglobalAPI",
+      "kernelNone usesball_kernel(radius,image.ndim); customkernel ignoresradius; kernel.astype then floorcenter index",
+      "difference=center-kernel thenoverwritekernel+inf locations with+inf; difference.astype andCreshape",
+      "np.pad symmetricfloorcenter constant+inf; selectnan-safe bytruthprotocol",
+      "compiledcontiguousfloat32/64 serialorderedkernelrows, independentparalleloutputs; outputbase reshapeimage.shape",
+      "astypeoriginalimagedtype(copyFalse); collectwarnings/errors/aliases/statewithoutnormalization"
+    ],
+    "dtypes": "Source helper preservesf32/f64,promotesf16tof32,othernoncomplex tofloat64; complexrejects. Return originaldtype includingcast/layout/metadata effects; no normalize-tofloatoutput. longdouble/object/structured/unicode/protocol expansions deferred.",
+    "nan_FP": "Fastkernel assumesnoNaN andstrictless comparison keepsfirstequalvalue; NaN-fast observations backend-specific prospective. nansafeinnerloop assignsNaNthenbreaksouterkernelrowafterinnerrow, notfirstNaNglobal earlyexit. inf+-inf,centerinf subtraction,negativezero,returncast policies remainstrictfutureobservations; no aftertargetFPmask/FMA/reassociation.",
+    "shape": "Allaxes spatial; radius onlydefaultkernel. Customsame-ranknonemptypositivekernel mayeven/odd/oversize; floorcenter determinesasymmetricanchor; imageemptywithrank>=1 isbounded. Outputactualown/base/strides mustbecaptured,notguessed.",
+    "metadata_mutation": "Image/kernelreadonly andmetadata/layout/protocol cases; no intentionalinputmutation; actualpointer/base/alias flags capturedfuture. Do not infer alloutputowning becauseCythonreturnsout.base.reshape andfinalastype mayreturnview.",
+    "errors": "Earlycomplex/radius-invalid/customkernel-list/provider/noastype/deprecatedconflict/workerbad conversions prospective exactmodule/qualname/typedargs/warnings/events/FP, profile-differencespreserved.",
+    "unsupported_proposed_kwargs": [
+      "out",
+      "mask",
+      "channel_axis",
+      "in_place"
+    ],
+    "workers": "Futurecapture explicitOMP_NUM_THREADS=1; defaultNone->0,0 usesOMPdefault,1/2/4bounded. Deprecatednum_threads valueswarnandforwardwhenworkersomitted; anyexplicitworkersincludingNone withdeprecatedargwarns+raises. Nativefuturedefault1processglobal budget optional; explicitworkersoverride; captureonceperoperation withoutinventingconcurrent-settingmachinery."
+  },
+  "quarantine": [
+    "Default3D+radius100 andhighrankpositivebigkernels:201**ndimcoordinate/paddedwork explosion; never materialized byfactory",
+    "Rank0customkernel/image andrank-mismatch:bounds-disabledkernel_shape[-1]/to_shape indexing, memorysafetynotestablished",
+    "Zeroextentcustomkernel:centerindex raisesbutfullvariantgeometry unassessed; large/negative/extreme strides/forgedstorage/concurrentmutation",
+    "Negativeworkers orlargepositiveworkers:OpenMP runtimevalidity/resource risk; no invalidnum_threadsprangeexecution. workersbadstring onlysourceconvert errorcase, frozenpositive0/1/2/4limits.",
+    "Longdouble/padded/object/structured/extended/unicodepayload/protocoloutcomes notinitialcapture; typedexceptionmetadata/subarray domains unassessed",
+    "UnmaskedFP/nondefaultNPcallbacks/rounding/ISA-dependentNaN-fast behavior needseparateboundedsourceproof beforefutureGO"
+  ],
+  "complete_SDK_proposal": {
+    "entry": "Complete rolling_ball<T>(typedborrowedstridedimage, radius-or-same-ranktypedkernel choice, nansafe, optionalworkerbudget) -> owningtypedshape result; composesallstages, notstage-onlySDKcredit",
+    "reuse": "ExistingImageView/PixelType/cropPODcopy/halfdecode/ball+ellipsoidkernel/runtimebudget primitives; ownedC++min-pluskerneloutputs andsourceorderedcasts. Pythonscalar/protocol/warning policyexplicit; no wholeoriginal/providerimagealgorithm escape.",
+    "stages": "Boundarynormalization+promotion -> kerneldefaultorcustom ->center-minus-kernel/+infmask ->paddedsource ->orderedmin-plusindependentoutputspans ->typedowningreturn. SIMD acrossindependentoutputs; preserveeachkernelreductionorder andNaNbranch. Workersglobaldefault1capturedonce/exposedexistingglobalruntime; no newthreadpool.",
+    "frontiers": "No implementation orSDKcompile now. NumPycasting/promotion/error/FP/sourcecompiled behaviorinclhalf/uint64/metadata andWindowsbinary/sourcebinding requirefutureobservations+native/SDK/genuinequalification."
+  },
+  "benchmark_method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "allocation_inclusive": true,
+    "retain_all_losses": true,
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "root_GO": null
+  },
+  "benchmark_cases": [
+    {
+      "id": "small-u8",
+      "shape": [
+        17,
+        19
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "radius": 2,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 323,
+      "kernel_elements": 25,
+      "addition_upper": 8075
+    },
+    {
+      "id": "dense-f32",
+      "shape": [
+        129,
+        129
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 16641,
+      "kernel_elements": 81,
+      "addition_upper": 1347921
+    },
+    {
+      "id": "dense-f64",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "wide-f32",
+      "shape": [
+        65,
+        65
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 12,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4225,
+      "kernel_elements": 625,
+      "addition_upper": 2640625
+    },
+    {
+      "id": "stride-f32",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float32",
+      "layout": "stride2",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "3d-u16",
+      "shape": [
+        9,
+        11,
+        13
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "radius": 2,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 1287,
+      "kernel_elements": 125,
+      "addition_upper": 160875
+    },
+    {
+      "id": "nan-f32",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 4,
+      "nansafe": true,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "border-tiny",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 8,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 12,
+      "kernel_elements": 289,
+      "addition_upper": 3468
+    }
+  ],
+  "pending": [
+    "Independent source/storage review androotGO; originalbudget0",
+    "ActualNP-onlyfactory/codec/payload/statecontrols minimum+modern; this taskpureonly,notexecuted",
+    "Exactruntime/source/compiledorigin/METADATA+RECORD andfull32helperABI reuseintake, realcached/cold target/providerREQUEST-refusal same-codecontrollerprefix; no captureauthority",
+    "Future capture requires a separate exact 75-case per-profile whitelist, budget and deadline; 150 prospective calls across two profiles are not authorization",
+    "Fullnative/publichotswap/SDK/scalar/SIMD/workers/profileparityandone-threadoriginalperformance/exactfourprofile release remainopen; sourcepacket notAPIcompletion"
+  ]
+}

@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from variation_of_information_cases_v1 import case_specs,case_bounds,fixture,native_requirements
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v4.json'
+CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v5.json'
 
 
 def plan():

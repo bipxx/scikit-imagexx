@@ -212,3 +212,13 @@ else()
     target_compile_options(flood_fill_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
 endif()
 add_test(NAME installed_flood_fill_consumer COMMAND flood_fill_consumer)
+
+# Complete owning rolling-ball operation; unchanged admitted float32/64 words.
+add_executable(rolling_ball_consumer rolling_ball_consumer.cpp rolling_ball_storage_consumer.cpp)
+target_link_libraries(rolling_ball_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(rolling_ball_consumer PRIVATE /UNDEBUG /fp:strict)
+else()
+    target_compile_options(rolling_ball_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
+endif()
+add_test(NAME installed_rolling_ball_consumer COMMAND rolling_ball_consumer "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/rolling_ball_sdk_v1.bin" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/rolling_ball_sdk_dtypes_v1.bin")

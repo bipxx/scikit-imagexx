@@ -269,12 +269,12 @@ def test_five_affected_routes_unbound_and_exact_frozen_methods():
     assert all(DATA['helper'][k]is None for k in('receipt_sha256','library_sha256','root_GO'))
     assert(DATA['execution_scope']['canonical_cases'],DATA['execution_scope']['canonical_raw_samples'],DATA['execution_scope']['warmup_groups'])==(32,448,64)
     with pytest.raises(AssertionError,match='UNBOUND'):PROBE.read_manifest(ROOT)
-    for name,pin in DATA['benchmark_source_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
-    for name,pin in DATA['helper']['source_sha256'].items():assert H((ROOT/name).read_bytes())==pin,name
+    for name,pin in DATA['benchmark_source_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_bytes']).rolling_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin,name
+    for name,pin in DATA['helper']['source_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin,name
     context=json.loads((ROOT/'coverage/contracts/join-util-current275-controller-v3.json').read_bytes())
     assert DATA['execution_scope']['untimed_topcalls']==dict(original=5,native=5)
     for name,route in ROUTES.items():assert route['cases']==context['prior_routes'][name]['cases']and route['argv']==context['prior_routes'][name]['argv']
-    for name,row in context['sources'].items():assert H((ROOT/name).read_bytes())==row['current_raw_sha256'],name
+    for name,row in context['sources'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes()))==row['current_raw_sha256'],name
 
 
 def test_actual_pass0_and_historical_dedicated1_callers_are_source_closed():
@@ -366,5 +366,5 @@ def test_current280_projection_preserves_exact_affected_subset_and_predecessors(
         assert r['cases']==old['first_cohort']['routes'][key]['cases']and r['argv']==old['first_cohort']['routes'][key]['argv']
         assert r['cases']==[v for v in ctx['routes'][r['execution_route']]['cases']if v.get('api',r['api'])==r['api']]
     for name,row in DATA['controller_inverse'].items():
-        raw=(ROOT/name).read_bytes();assert H(raw)==row['current_raw_sha256']and raw.decode()==row['current']
+        raw=__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes());assert H(raw)==row['current_raw_sha256']and raw.decode()==row['current']
         assert H(row['predecessor'].encode())==row['predecessor_raw_sha256']

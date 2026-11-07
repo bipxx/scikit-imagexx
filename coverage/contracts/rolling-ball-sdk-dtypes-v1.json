@@ -1,0 +1,95 @@
+{
+  "schema": "rolling-ball-sdk-dtypes-v1",
+  "state": "PRIVATE_INSTALLED_SDK_COMPONENT_ONLY",
+  "predecessor": "c821f6532b3c429bf83357baf161adf711e2d0a1",
+  "API": "restoration.rolling_ball standaloneSDK only; Python unchanged",
+  "source_projection": {
+    "include/skimagexx/rolling_ball.hpp": {
+      "raw_sha256": "d10396d0e50bd27eff5be8e364213b5bbc4492c4ffee09ddf4fa6e32ed9f68fa",
+      "predecessor_raw_sha256": "af84099647d5b89ad5c03bc9d000a86f58a52846b048d3b8dbfb1e19ca73b78f",
+      "inverse": [
+        {
+          "start": 48,
+          "end": 81,
+          "current": ">\n#include <skimagexx/convert.hpp",
+          "predecessor": ""
+        },
+        {
+          "start": 903,
+          "end": 2181,
+          "current": "// Storage descriptor for the complete dtype-preserving operation below.\n// half uses uint16 storage. swap reverses each stored item relative to host\n// byte order; it does not change scalar type or numeric scaling.\nstruct RollingBallStorage {\n    const void* data=nullptr;\n    PixelType type=PixelType::float64;\n    bool half=false, swap=false;\n};\nstruct RollingBallResult {\n    std::vector<unsigned char> bytes;\n    std::vector<std::ptrdiff_t> shape;\n    PixelType type=PixelType::float64;\n    bool half=false, swap=false;\n    int captured_workers=1;\n};\n// Complete image -> owning background with literal astype precision policy:\n// half/f32 work in f32; bool/integers/f64 in f64; result returns input storage\n// dtype and byte order. The optional custom kernel is contiguous C-order with\n// g.kernel_shape; its own dtype/order is converted internally. Source pointer\n// lifetime/valid span belongs to the caller; no returned bytes borrow it.\n// Integer results require finite representable truncated values (other unsafe\n// NumPy cast/FP/ISA domains remain unsupported). Half assumes nearest rounding.\nRollingBallResult rolling_ball(RollingBallStorage,const RollingBallGeometry&,\n    RollingBallStorage custom_kernel={},double radius=100.,bool nansafe=false,int workers=0);\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "src/rolling_ball.cpp": {
+      "raw_sha256": "ca34bceb7d5f81e9a7a9175353383ce27c6d1e5877f4f8ce602a43e3ad91f954",
+      "predecessor_raw_sha256": "54d1ace679ef0bcdfbad5b117aa3f21f3e4d8855a76ef2b6346bf6522c5a8401",
+      "inverse": [
+        {
+          "start": 139,
+          "end": 176,
+          "current": "\n#include \"half.hpp\"\n#include <cfenv>",
+          "predecessor": ""
+        },
+        {
+          "start": 7293,
+          "end": 7813,
+          "current": "namespace {\nstd::size_t storage_width(RollingBallStorage view) {\n    if(view.half&&view.type!=PixelType::uint16)throw std::invalid_argument(\"rolling_ball half requires uint16 storage\");\n    switch(view.type) {\n    case PixelType::boolean:case PixelType::uint8:case PixelType::int8:return 1;\n    case PixelType::uint16:case PixelType::int16:return 2;\n    case PixelType::uint32:case PixelType::int32:case PixelType::float32:return 4;\n    case PixelType::uint64:case PixelType::int64:case PixelType::float64:return 8;\n    ",
+          "predecessor": ""
+        },
+        {
+          "start": 7815,
+          "end": 15418,
+          "current": "    throw std::invalid_argument(\"rolling_ball invalid storage dtype\");\n}\ntemplate<class T>T storage_read(const unsigned char* p,bool swap) {\n    T value;\n    if(swap&&sizeof(T)>1) {\n        std::array<unsigned char,sizeof(T)> bytes;\n        for(std::size_t i=0;i<sizeof(T);++i)bytes[i]=p[sizeof(T)-1-i];\n        std::memcpy(&value,bytes.data(),sizeof(T));\n    }else std::memcpy(&value,p,sizeof(T));\n    return value;\n}\ntemplate<class T>void storage_write(unsigned char* p,T value,bool swap) {\n    std::array<unsigned char,sizeof(T)> bytes;std::memcpy(bytes.data(),&value,sizeof(T));\n    for(std::size_t i=0;i<sizeof(T);++i)p[i]=bytes[swap?sizeof(T)-1-i:i];\n}\ntemplate<class Work>Work read_number(const unsigned char* p,RollingBallStorage v) {\n    if(v.half)return Work(detail::decode_half(storage_read<std::uint16_t>(p,v.swap)));\n    switch(v.type) {\n    case PixelType::boolean:return Work(storage_read<std::uint8_t>(p,false)!=0);\n    case PixelType::uint8:return Work(storage_read<std::uint8_t>(p,false));\n    case PixelType::int8:return Work(storage_read<std::int8_t>(p,false));\n    case PixelType::uint16:return Work(storage_read<std::uint16_t>(p,v.swap));\n    case PixelType::int16:return Work(storage_read<std::int16_t>(p,v.swap));\n    case PixelType::uint32:return Work(storage_read<std::uint32_t>(p,v.swap));\n    case PixelType::int32:return Work(storage_read<std::int32_t>(p,v.swap));\n    case PixelType::uint64:return Work(storage_read<std::uint64_t>(p,v.swap));\n    case PixelType::int64:return Work(storage_read<std::int64_t>(p,v.swap));\n    case PixelType::float32:return Work(storage_read<float>(p,v.swap));\n    case PixelType::float64:return Work(storage_read<double>(p,v.swap));\n    }\n    throw std::invalid_argument(\"rolling_ball invalid storage dtype\");\n}\nvoid storage_span(const RollingBallGeometry& g,std::size_t width) {\n    const auto limit=std::size_t(std::numeric_limits<std::ptrdiff_t>::max());\n    std::size_t negative=0,positive=width-1;\n    for(std::size_t a=0;a<g.shape.size();++a) {\n        if(g.shape[a]<=1)continue;\n        const auto stride=g.strides[a];\n        if(stride==std::numeric_limits<std::ptrdiff_t>::min())throw std::overflow_error(\"rolling_ball stride span overflow\");\n        const auto magnitude=std::size_t(stride<0?-stride:stride),steps=std::size_t(g.shape[a]-1);\n        auto& span=stride<0?negative:positive;\n        if(magnitude>(limit-span)/steps)throw std::overflow_error(\"rolling_ball stride span overflow\");\n        span+=magnitude*steps;\n    }\n}\ntemplate<class Work>std::vector<Work> storage_image(RollingBallStorage v,const RollingBallGeometry& g,std::size_t n) {\n    const auto width=storage_width(v);storage_span(g,width);\n    if(n&&!v.data)throw std::invalid_argument(\"rolling_ball null image storage\");\n    std::vector<Work> values(n);std::array<std::ptrdiff_t,rank_limit> coordinate{};std::ptrdiff_t source=0;\n    for(std::size_t i=0;i<n;++i) {\n        values[i]=read_number<Work>(static_cast<const unsigned char*>(v.data)+source,v);\n        if(i+1==n)break;\n        for(auto a=g.shape.size();a-->0;) {\n            if(++coordinate[a]<g.shape[a]){source+=g.strides[a];break;}\n            source-=(coordinate[a]-1)*g.strides[a];coordinate[a]=0;\n        }\n    }\n    return values;\n}\ntemplate<class Integer,class Work>void integer_result(unsigned char* p,Work value,bool swap) {\n    // Avoid undefined C++ float->integer casts. Do not invent NumPy's separate\n    // architecture-dependent invalid/overflow word or warning policy.\n    const double number=double(value),truncated=std::trunc(number);\n    constexpr int digits=std::numeric_limits<Integer>::digits;\n    const double upper=std::ldexp(1.,digits),lower=std::is_signed_v<Integer>?-upper:0.;\n    if(!std::isfinite(number)||truncated<lower||truncated>=upper)\n        throw std::domain_error(\"rolling_ball integer result outside finite representable cast domain\");\n    storage_write(p,static_cast<Integer>(truncated),swap);\n}\ntemplate<class Work>RollingBallResult storage_operation(RollingBallStorage v,const RollingBallGeometry& supplied,\n    RollingBallStorage custom,double radius,bool safe,int workers) {\n    RollingBallGeometry g=supplied;const auto n=product(g.shape),width=storage_width(v);\n    auto values=storage_image<Work>(v,g,n);std::vector<Work> kernel;\n    if(custom.data) {\n        if(g.kernel_shape.size()!=g.shape.size())throw std::invalid_argument(\"rolling_ball kernel rank mismatch\");\n        const auto k=product(g.kernel_shape,true),size=storage_width(custom);\n        if(k>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/size)throw std::overflow_error(\"rolling_ball kernel bytes overflow\");\n        kernel.resize(k);for(std::size_t i=0;i<k;++i)kernel[i]=read_number<Work>(static_cast<const unsigned char*>(custom.data)+i*size,custom);\n    }\n    std::size_t step=sizeof(Work);\n    for(auto a=g.shape.size();a-->0;) {\n        if(step>std::size_t(std::numeric_limits<std::ptrdiff_t>::max()))throw std::overflow_error(\"rolling_ball converted stride overflow\");\n        g.strides[a]=std::ptrdiff_t(step);\n        if(g.shape[a]&&step>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/std::size_t(g.shape[a]))throw std::overflow_error(\"rolling_ball converted bytes overflow\");\n        step*=std::size_t(g.shape[a]);\n    }\n    auto background=rolling_ball(values.data(),g,kernel.empty()?nullptr:kernel.data(),radius,safe,workers);\n    if(n>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/width)throw std::overflow_error(\"rolling_ball result bytes overflow\");\n    RollingBallResult result;result.shape=g.shape;result.type=v.type;result.half=v.half;result.swap=v.swap;result.captured_workers=workers;result.bytes.resize(n*width);\n    if(v.half&&std::fegetround()!=FE_TONEAREST)throw std::domain_error(\"rolling_ball half result requires nearest rounding\");\n    for(std::size_t i=0;i<n;++i) {\n        auto* p=result.bytes.data()+i*width;const auto value=background[i];\n        if(v.half){storage_write(p,detail::encode_half(float(value)),v.swap);continue;}\n        switch(v.type) {\n        case PixelType::boolean:storage_write(p,std::uint8_t(value!=Work(0)),false);break;\n        case PixelType::uint8:integer_result<std::uint8_t>(p,value,false);break;\n        case PixelType::int8:integer_result<std::int8_t>(p,value,false);break;\n        case PixelType::uint16:integer_result<std::uint16_t>(p,value,v.swap);break;\n        case PixelType::int16:integer_result<std::int16_t>(p,value,v.swap);break;\n        case PixelType::uint32:integer_result<std::uint32_t>(p,value,v.swap);break;\n        case PixelType::int32:integer_result<std::int32_t>(p,value,v.swap);break;\n        case PixelType::uint64:integer_result<std::uint64_t>(p,value,v.swap);break;\n        case PixelType::int64:integer_result<std::int64_t>(p,value,v.swap);break;\n        case PixelType::float32:storage_write(p,float(value),v.swap);break;\n        case PixelType::float64:storage_write(p,double(value),v.swap);break;\n        }\n    }\n    return result;\n}\n} // namespace\nRollingBallResult rolling_ball(RollingBallStorage input,const RollingBallGeometry& g,\n    RollingBallStorage custom,double radius,bool safe,int requested) {\n    if(g.shape.empty()||g.shape.size()>rank_limit||g.strides.size()!=g.shape.size())throw std::invalid_argument(\"rolling_ball rank/stride mismatch\");\n    storage_width(input);storage_width(custom);product(g.shape);\n    const int workers=workers_snapshot(requested);\n    if(input.half||input.type==PixelType::float32)return storage_operation<float>(input,g,custom,radius,safe,workers);\n    return storage_operation<double>(input,g,custom,radius,safe,workers);\n}\n\n}\n",
+          "predecessor": ""
+        }
+      ]
+    }
+  },
+  "pins": {
+    "include/skimagexx/rolling_ball.hpp": "d10396d0e50bd27eff5be8e364213b5bbc4492c4ffee09ddf4fa6e32ed9f68fa",
+    "src/rolling_ball.cpp": "ca34bceb7d5f81e9a7a9175353383ce27c6d1e5877f4f8ce602a43e3ad91f954",
+    "tests/test_rolling_ball_sdk_dtypes.cpp": "4cc66d0c0d27f27e1331ec261576044ce7e78854c483c4d371bd0ea59e0a5f0c",
+    "tests/test_rolling_ball_sdk_dtype_fp.cpp": "948484026221b54259a40fa3fe2cc7f81f92ef65cb2900760eba589c03283d5f",
+    "tests/fixtures/rolling_ball_sdk_dtypes_v1.bin": "ea28ab9468dbfe71d23ab239455ca5c5c0de4fe90939d9281dd5b2977a204f19",
+    "tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc": "3aa97fcebf76169799578f41b90cf5a98f46e7cad3b7c87f7a2d3f2338ec74e6",
+    "tests/sdk/rolling_ball_dtypes/CMakeLists.txt": "9f9bd2ace1fd99535174a51f672761ae21e8b896fb8f7dd3a2fab6722fe54ad8",
+    "tests/rolling_ball_sdk_dtype_context.py": "71906111ce5939a483cb82a3b8331e911a9f49ba819e00512259cd76ffdf7b5b",
+    "tests/test_rolling_ball_sdk_dtype_source.py": "f02cd3a14e4f65129c2e27a4076df9c32f93acb92b7fab58c7b4cb036868d591",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016"
+  },
+  "new_saved_records": 11,
+  "prior_saved_records": 52,
+  "saved_ids": [
+    "dtype-bool",
+    "dtype-uint8",
+    "dtype-uint16",
+    "dtype-uint32",
+    "dtype-uint64",
+    "dtype-int8",
+    "dtype-int16",
+    "dtype-int32",
+    "dtype-int64",
+    "dtype-float16",
+    "swapped-f32"
+  ],
+  "working_precision": "half/f32->f32;bool/int/f64->f64; literal nonrescaling casts, customkernel convertedinternally, owning resultinputdtype/order",
+  "half": "uint16+half flag; existing portable half.hpp nearest encode/decode, noF16C requirement; nonnearestfinalhalfrefused",
+  "byteorder": "swap peritem relativehost, memcpy safeunaligned/signedstrides; owningCorderbytes",
+  "casts": "Finite representable truncated integer results only; invalid/nonfinite/outofrange NumPy unsafe words/warnings/ISA remainexplicitSDKrefusal. Complex/protocol/metadataPythonobject representation outside rawstorage SDK; no fabricatedprovider parity.",
+  "workers": "One globalread(default1) atentry forrequested0; pass positive snapshot through unchangedownedcore. No callback/concurrentworker model added. Ordered minplus peroutput unchanged.",
+  "FP": "Exact targetsemantic 11saved cases x2profiletemplates xworkers1/4=44 checked/mode plusfullcaller32; broaderFP/castwarnings/nonfinitehalf/ISA/platform remainopen, noaftermask/tolerance",
+  "original_calls": 0,
+  "new_original_budget": 0,
+  "timing": 0,
+  "genuine_admitted": false,
+  "pending": [
+    "Independent componentadmission then futureselectiveintake header+leaf+familyfixtures/consumer/context",
+    "Oldnative/benchmarksourcepins mustprojectchangedheader/leaf through exactnewfamilycontext whilecheckingdirectcurrentpins; sourcehashesdifferent, cases/method/refsgolds unchanged",
+    "FullgenuinecurrentSDK/exporttarget/singlecore/hotswap/fourprofile/Windowsruntime andpublicone-threadoriginalperformance remainpending",
+    "No broadunsafeintegercast/NaNhalf/protocol/extendeddtype/nondefaultFENV/fullAPIclosure from11savedcases"
+  ]
+}

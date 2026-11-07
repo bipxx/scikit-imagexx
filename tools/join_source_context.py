@@ -5,9 +5,38 @@ import json
 CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'
 
 
+def rolling_predecessor_bytes(root,name,raw):
+    """Exact enabled rolling-ball additions before the admitted a5 source."""
+    raw=raw.replace(b'\r\n',b'\n')
+    path=Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json'
+    if not path.is_file():return raw
+    context=json.loads(path.read_bytes())
+    assert context['predecessor_source']=='a5e019c6a4b0fff3a18635ab0e2f552986abba3e'
+    if name not in context['sources']:return raw
+    row=context['sources'][name]
+    assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+    for fragment in row['inverse_fragments']:
+        current,old=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1,name
+        raw=raw.replace(current,old,1)
+    assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
+    return raw
+
+
+def rolling_predecessor_raw_bytes(root,name,raw):
+    """Raw domain for unchanged historical controller files; edited shared files are LF."""
+    context=json.loads((Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json').read_bytes())
+    if name not in context['sources']:return raw
+    row=context['sources'][name]
+    assert row['predecessor_raw_sha256']==row['predecessor_canonical_lf_sha256']
+    assert hashlib.sha256(raw).hexdigest()==row['current_raw_sha256'],name
+    return rolling_predecessor_bytes(root,name,raw)
+
+
 def correction_predecessor_bytes(root,name,raw):
     """Authenticate the correction, then reconstruct the frozen ab78 input."""
     root=Path(root)
+    raw=rolling_predecessor_bytes(root,name,raw)
     if name=='src/variation_of_information.cpp':
         import importlib.util
         path=root/'tests/variation_of_information_reduction_contract.py'

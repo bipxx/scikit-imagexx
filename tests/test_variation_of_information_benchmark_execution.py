@@ -11,7 +11,7 @@ import sys
 import types
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v4.json'
+CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v5.json'
 DATA=json.loads((ROOT/CONTEXT).read_bytes())
 H=lambda raw:hashlib.sha256(raw.replace(b'\r\n',b'\n')).hexdigest()
 
