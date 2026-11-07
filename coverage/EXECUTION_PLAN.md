@@ -145,14 +145,16 @@ Complete-readiness closeout (2026-11-06): rootfd01c529 admits BOTH actualab7872a
 
 Scratch closeout (2026-11-06): attempted safe removal of completed D:/Scratch/abi-vi-cumulative-complete-v1/windows311 andwindows313 afterfd01 receipts/no liveowners/path checks. Automaticapprovalreview rejected recursiveRemove-Item as blockedbypolicy beforeexecutor; nothingdeleted/reclaimed. Userinformed. Retain exacttargets and neverretryviaalternatemethod; observedDfree203347009536B permitscontinuedwork. Usefulsourceevidence retainedoutsideD; no scientificreplay.
 
+VI raw and guard closeout (2026-11-06): R8c44288 rawreview/root4d566ca1 admit8once-only originals/16events, all4finitewordpairs equalacrossprofiles; semanticFPdiffers andallcaller/process32exact. Originalremaining0. R nowcomparescurrent1a/currente8 native againstsavedrows; strictparity/genuinepending. By sourceinspection Rfound executablecandidate_providers replacescsr_arrayclasswithfunction whileactualfrontendcomparestype(table)againstthatclass, causingpre-entropyguardrejection. No numericalfailure/call observed; Bowns narrowclassidentityfix+positiveinertfrontendcontrol in SAME unboundcontroller successor, frozenab78/bef85unchanged. PriorpuresourcePASS doesnotclosethis newlydemonstrated executableguardgate. Wastecorrection: sourceguard mustexercise actualidentitydependency, reuseallcase/gold/native/timing scopes. Crolling2e99 source2112 nowadmitted andruntime/readinesszero-originalauthoringlive independently.
+
 ### Immediate execution sequence
 
 The previous drawing delivery `8d19f322b4025ec57e149a0cb0dd1f6b070cee1b` delivered the independently admitted262-path drawing/coords_scaled/Prescott release. Qualified source334/run42140207750 passes933088XML,248SDK checks and48corpora. All493shipping production blobs match. Drawing28/32wins and4losses remain scoped observations; old failures and raw evidence remain unchanged.
 
 | Owner | Current action | Required next gate / reuse |
 |---|---|---|
-| metrics_integrator | Independent rolling_ball source2e99/f87c review. | Source/storage evidence only; no original/native/factory/build authority. |
-| readiness_reviewer | Independent raw review of eight actual larger-VI references; all eight consumed once. | Root raw admission, then current native exact-word comparison; no original retakes or timing. |
+| metrics_integrator | Rolling_ball source2112 admitted; actual zero-body runtime/controller readiness. | Reuse existing one-shot helper/codec and source75 cases; originals/native/timing0, root independent readiness before separate GO. |
+| readiness_reviewer | Current native comparison against eight root4d56-admitted larger-VI references; all originals consumed once. | Exact words/metadata/semantic targetFP/caller32; preserve failures and stop dependent genuine/timing if parity fails. |
 | boundary_worker | New isolated current280 unbound benchmark-controller successor, reviewed95e/7b files only. | Changed pure bothPython guards, fixed existing cases/methods unchanged; no science or actual producer binding. |
 | root | Source47e4 and complete-readiness fd01 pass for ab7872a5; source commands terminal0, 3344XML each. Main271. | Root independent largeVI raw admission/native comparison, then exactsource genuine4profile promptly; failed8c never a producer. |
 

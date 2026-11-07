@@ -1,0 +1,1941 @@
+{
+  "schema": "vi-large-reference-raw-independent-review-v1",
+  "passed": true,
+  "status": "PASS_EIGHT_ONCE_ONLY_ORIGINAL_RAW_OBSERVATIONS_NOT_NATIVE_PARITY",
+  "source": "5255b3eb3dd5b75b7c75986b8caead6c1624bc34",
+  "controller_sha256": "16292939f268f0ade9b0f107a958e859f58ba95150bfe66c84f89cd26e865641",
+  "binding_sha256": "52c3a157cceb8ed9ce69d469e7e538fcc9f65d732fa070c01ae3ad25459e540e",
+  "case_ids": [
+    "metrics.variation_of_information/128x128/8/C",
+    "metrics.variation_of_information/128x128/64/F",
+    "metrics.variation_of_information/256x256/8/F",
+    "metrics.variation_of_information/256x256/64/C"
+  ],
+  "profiles": {
+    "minimum": {
+      "rows": [
+        {
+          "id": "metrics.variation_of_information/128x128/8/C",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                1024,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                16384
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "b16f992e14ae2f4e5f430648daa581130fb04610dedcac8dba4cdd90996328d5"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                1024,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                16384
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "73df2e1081c0a023603c7c843f96e75522eecb99567e9f638eed6dc62efee04c"
+            }
+          ],
+          "result_words_hex": [
+            "4007cbe4873c419a",
+            "40064266ad26a8cd"
+          ],
+          "result_raw_hex": "9a413c87e4cb0740cda826ad66420640",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "a170e50e512c81b086eacc71be5f7a6d33ac1b08830c4448804c9a4d59f8164f"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953707680,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953707680,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff2000ffffffffffff52a02be500000000000000000000ffffa21f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        {
+          "id": "metrics.variation_of_information/128x128/64/F",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                8,
+                1024
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "7273db67d63276856e7daa5331f56fc174b77dc942352927d5dc9c98d7a98715"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                8,
+                1024
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "41bf3a302470549311f51de6576c5cd2b12f55f0af34aa077268f7c214c8597b"
+            }
+          ],
+          "result_words_hex": [
+            "401190faa8ca5c4c",
+            "40117a1cdc29005c"
+          ],
+          "result_raw_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "b59a4dbebcac16ca369a2a5830f48a5c5a82d38bc2b6eba3f60a619942e71cb2"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953715040,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953715040,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff2000ffffffffffff52a02be500000000000000000000ffffa21f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        {
+          "id": "metrics.variation_of_information/256x256/8/F",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                8,
+                2048
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "d840196f83380d04dd2227184c90dbbc5b5b2409e4c57ec9b26c021f4af210c9"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                8,
+                2048
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "442bacc93d2d6752a530f7ce001d51cfc23e314261b94e9a4eaed99679888d17"
+            }
+          ],
+          "result_words_hex": [
+            "4007cbbfce8962e6",
+            "4006423b60ce96dd"
+          ],
+          "result_raw_hex": "e66289cebfcb0740dd96ce603b420640",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "07136beb87cf58674b4a5717dfafb1efd6d689e124d10cfc3d0a084066821b01"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953703520,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953703520,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff2000ffffffffffff52a02be500000000000000000000ffffa21f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        {
+          "id": "metrics.variation_of_information/256x256/64/C",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                2048,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                65536
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "1779c45cf9115c764859c244839a6af2ddad8fe8340a621e66e71f13c8471dd1"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                2048,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                65536
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "2ca7ef7be42a839e1860fa6c3a0f76755849add8b2521c32d5354d3043ef1a69"
+            }
+          ],
+          "result_words_hex": [
+            "401191ad2ded50af",
+            "40117acb63349d16"
+          ],
+          "result_raw_hex": "af50ed2dad911140169d3463cb7a1140",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "87f7e143a5dcc9c514f67598f3f987a54d30692adf77077ffaf0e41cf5d57425"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 32,
+              "mxcsr": 8098
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953532416,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 130879953532416,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff2000ffffffffffff52a02be500000000000000000000ffffa21f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        }
+      ],
+      "target_counts": {
+        "target_attempted": 4,
+        "target_refused": 0,
+        "provider_attempted": 28,
+        "provider_refused": 0,
+        "target_body_lines": 8,
+        "provider_body_lines": 180,
+        "compiled_provider_attempted": 24,
+        "compiled_provider_refused": 0
+      },
+      "process32_exact": true,
+      "public_attempts": 4,
+      "completed": 4,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/metrics/_variation_of_information.py",
+        "signatures": {
+          "variation_of_information": "(image0=None, image1=None, *, table=None, ignore_labels=())"
+        },
+        "canonical_public_API": "metrics.variation_of_information",
+        "sources": {
+          "skimage/metrics/_variation_of_information.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/metrics/_variation_of_information.py",
+          "skimage/metrics/_contingency_table.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/metrics/_contingency_table.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/utils.py",
+          "scipy/sparse/_coo.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_coo.py",
+          "scipy/sparse/_csr.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_csr.py",
+          "scipy/sparse/_compressed.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_compressed.py",
+          "scipy/sparse/_construct.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_construct.py",
+          "scipy/sparse/_base.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_base.py",
+          "scipy/sparse/_sputils.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sputils.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+                "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686064,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "R6s7aClbCjzomQpEjef6sRq928Fg-IlZcsqapxLPhtA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+                "bytes": 32955056,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VUveHYoMcdjcIa503gXETaT_9dvGeRqBn2rPWt_pC9k"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247608,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "l82oXdtRY-Labh7bTh1rVXgzqZpA7aB5rjflA5Rltl0"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.15.3",
+            "root": "\\home\\heq\\.cache\\skimagexx-label-numpy124-venv\\lib\\python3.11\\site-packages",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 4560912,
+                "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686065,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "k0wi3tDn0WnE1GeIdslgUa3z2UVF2pYvYLQWWbB12js"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so",
+                "bytes": 22211841,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+            "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 4560912,
+            "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ]
+      },
+      "source_unchanged": true
+    },
+    "modern": {
+      "rows": [
+        {
+          "id": "metrics.variation_of_information/128x128/8/C",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                1024,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                16384
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "b16f992e14ae2f4e5f430648daa581130fb04610dedcac8dba4cdd90996328d5"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                1024,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                16384
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "73df2e1081c0a023603c7c843f96e75522eecb99567e9f638eed6dc62efee04c"
+            }
+          ],
+          "result_words_hex": [
+            "4007cbe4873c419a",
+            "40064266ad26a8cd"
+          ],
+          "result_raw_hex": "9a413c87e4cb0740cda826ad66420640",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "a170e50e512c81b086eacc71be5f7a6d33ac1b08830c4448804c9a4d59f8164f"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229007149344,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229007149344,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff0000ffffffffffff3cd8438200000000000000000000ffffa01f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        },
+        {
+          "id": "metrics.variation_of_information/128x128/64/F",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                8,
+                1024
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "7273db67d63276856e7daa5331f56fc174b77dc942352927d5dc9c98d7a98715"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                128,
+                128
+              ],
+              "strides": [
+                8,
+                1024
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "41bf3a302470549311f51de6576c5cd2b12f55f0af34aa077268f7c214c8597b"
+            }
+          ],
+          "result_words_hex": [
+            "401190faa8ca5c4c",
+            "40117a1cdc29005c"
+          ],
+          "result_raw_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "b59a4dbebcac16ca369a2a5830f48a5c5a82d38bc2b6eba3f60a619942e71cb2"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229006957120,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229006957120,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff0000ffffffffffff3cd8438200000000000000000000ffffa01f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        },
+        {
+          "id": "metrics.variation_of_information/256x256/8/F",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                8,
+                2048
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "d840196f83380d04dd2227184c90dbbc5b5b2409e4c57ec9b26c021f4af210c9"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                8,
+                2048
+              ],
+              "own": true,
+              "writeable": true,
+              "aligned": true,
+              "c": false,
+              "f": true,
+              "base_type": "NoneType",
+              "base_shape": null,
+              "base_strides": null,
+              "raw_sha256": "442bacc93d2d6752a530f7ce001d51cfc23e314261b94e9a4eaed99679888d17"
+            }
+          ],
+          "result_words_hex": [
+            "4007cbbfce8962e6",
+            "4006423b60ce96dd"
+          ],
+          "result_raw_hex": "e66289cebfcb0740dd96ce603b420640",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "07136beb87cf58674b4a5717dfafb1efd6d689e124d10cfc3d0a084066821b01"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229006965760,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229006965760,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff0000ffffffffffff3cd8438200000000000000000000ffffa01f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        },
+        {
+          "id": "metrics.variation_of_information/256x256/64/C",
+          "input_metadata": [
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                2048,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                65536
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "1779c45cf9115c764859c244839a6af2ddad8fe8340a621e66e71f13c8471dd1"
+            },
+            {
+              "type": "ndarray",
+              "dtype": "<i8",
+              "dtype_descr": {
+                "container": "list",
+                "items": [
+                  {
+                    "container": "tuple",
+                    "items": [
+                      "",
+                      "<i8"
+                    ]
+                  }
+                ]
+              },
+              "dtype_metadata": null,
+              "shape": [
+                256,
+                256
+              ],
+              "strides": [
+                2048,
+                8
+              ],
+              "own": false,
+              "writeable": true,
+              "aligned": true,
+              "c": true,
+              "f": false,
+              "base_type": "ndarray",
+              "base_shape": [
+                65536
+              ],
+              "base_strides": [
+                8
+              ],
+              "raw_sha256": "2ca7ef7be42a839e1860fa6c3a0f76755849add8b2521c32d5354d3043ef1a69"
+            }
+          ],
+          "result_words_hex": [
+            "401191ad2ded50af",
+            "40117acb63349d16"
+          ],
+          "result_raw_hex": "af50ed2dad911140169d3463cb7a1140",
+          "result_metadata": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "dtype_descr": {
+              "container": "list",
+              "items": [
+                {
+                  "container": "tuple",
+                  "items": [
+                    "",
+                    "<f8"
+                  ]
+                }
+              ]
+            },
+            "dtype_metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "own": true,
+            "writeable": true,
+            "aligned": true,
+            "c": true,
+            "f": true,
+            "base_type": "NoneType",
+            "base_shape": null,
+            "base_strides": null,
+            "raw_sha256": "87f7e143a5dcc9c514f67598f3f987a54d30692adf77077ffaf0e41cf5d57425"
+          },
+          "target_semantic_FP": {
+            "incoming": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            },
+            "outgoing": {
+              "control": 895,
+              "status": 0,
+              "mxcsr": 8096
+            }
+          },
+          "numpy_before": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229007352096,
+            "buffer": 8192
+          },
+          "numpy_after": {
+            "policy": {
+              "divide": "warn",
+              "over": "warn",
+              "under": "ignore",
+              "invalid": "warn"
+            },
+            "handler_type": [
+              "builtins",
+              "function"
+            ],
+            "handler_id": 123229007352096,
+            "buffer": 8192
+          },
+          "target_raw_environment_equal": true,
+          "caller32_exact": true,
+          "after_observer_fenv": {
+            "raw": "7f03ffff0000ffffffffffff3cd8438200000000000000000000ffffa01f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        }
+      ],
+      "target_counts": {
+        "target_attempted": 4,
+        "target_refused": 0,
+        "provider_attempted": 28,
+        "provider_refused": 0,
+        "target_body_lines": 8,
+        "provider_body_lines": 180,
+        "compiled_provider_attempted": 24,
+        "compiled_provider_refused": 0
+      },
+      "process32_exact": true,
+      "public_attempts": 4,
+      "completed": 4,
+      "runtime_identity": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/metrics/_variation_of_information.py",
+        "signatures": {
+          "variation_of_information": "(image0=None, image1=None, *, table=None, ignore_labels=())"
+        },
+        "canonical_public_API": "metrics.variation_of_information",
+        "sources": {
+          "skimage/metrics/_variation_of_information.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/metrics/_variation_of_information.py",
+          "skimage/metrics/_contingency_table.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/metrics/_contingency_table.py",
+          "skimage/_shared/utils.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/utils.py",
+          "scipy/sparse/_coo.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_coo.py",
+          "scipy/sparse/_csr.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_csr.py",
+          "scipy/sparse/_compressed.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_compressed.py",
+          "scipy/sparse/_construct.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_construct.py",
+          "scipy/sparse/_base.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_base.py",
+          "scipy/sparse/_sputils.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sputils.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+                "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libgfortran-83c28eba-468e71e5.so.5.0.0",
+                "bytes": 2862249,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "pqNoMo0CpdihSXRvE_Ymj4zJGS31wYd3slw8m171IWA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+                "bytes": 275553,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "a8MGkAPK7B8HW-PFGug1UzLwgfqUZZEMS1ck5_59itQ"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+                "bytes": 24325657,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Qy4cFzlzFGi6MFdxr5Z3OTnkMBZkPi1jD1jLRbZnDpY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.18.1",
+            "root": "\\home\\heq\\.cache\\skimagexx-frangi-py313-venv\\lib\\python3.13\\site-packages",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 4554512,
+                "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-83c28eba.so.5.0.0",
+                "bytes": 2751569,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Ro5x5Z4deEghp2cC5ezR4NvPwCRJn3SlUtG-pLJvJ60"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-2284e583.so.0.0.0",
+                "bytes": 272193,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "qTB7uqNTYj-gFOi2gtUMRin15cfWHaqahlL30WXNQho"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+                "bytes": 25094609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "KltMGmMRhzxZEyss6q88JiWKFzULfNJ-qHgqR-MyKYE"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 4554512,
+            "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ]
+      },
+      "source_unchanged": true
+    }
+  },
+  "profile_differences": [
+    {
+      "id": "metrics.variation_of_information/128x128/8/C",
+      "return_words_equal": true,
+      "minimum_words": [
+        "4007cbe4873c419a",
+        "40064266ad26a8cd"
+      ],
+      "modern_words": [
+        "4007cbe4873c419a",
+        "40064266ad26a8cd"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    },
+    {
+      "id": "metrics.variation_of_information/128x128/64/F",
+      "return_words_equal": true,
+      "minimum_words": [
+        "401190faa8ca5c4c",
+        "40117a1cdc29005c"
+      ],
+      "modern_words": [
+        "401190faa8ca5c4c",
+        "40117a1cdc29005c"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/8/F",
+      "return_words_equal": true,
+      "minimum_words": [
+        "4007cbbfce8962e6",
+        "4006423b60ce96dd"
+      ],
+      "modern_words": [
+        "4007cbbfce8962e6",
+        "4006423b60ce96dd"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/64/C",
+      "return_words_equal": true,
+      "minimum_words": [
+        "401191ad2ded50af",
+        "40117acb63349d16"
+      ],
+      "modern_words": [
+        "401191ad2ded50af",
+        "40117acb63349d16"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    }
+  ],
+  "counts": {
+    "unique_profile_case_pairs": 8,
+    "public_topcalls": 8,
+    "completed_rows": 8,
+    "journal_events": 16,
+    "returns": 8,
+    "errors": 0,
+    "warnings": 0,
+    "FP_callback_events": 0,
+    "native_calls": 0,
+    "sampler_bodies": 0,
+    "timed_batches": 0,
+    "reviewer_original_calls": 0
+  },
+  "decoded_arrays": {
+    "unique_raw_payloads": 12,
+    "unique_decoded_bytes": 2621504,
+    "observed_array_encodings": 24,
+    "method": "Existing raw_sha256/zlib/base64 ndarray codec; decompressed once per unique digest, compressed duplicate equality required; direct struct words/formula, no NumPy/target/provider arithmetic"
+  },
+  "sequence": "Minimum4 actual terminal review pins authenticated before distinct modern4GO; all8started timestamps within their own deadlines and minimum precedes modern. No retries/extraIDs/failed events.",
+  "identity": "Exact source19pins/cleanHEAD, actualsource/controller/binding/GO/precall/runtime/source/package/BLAS paths+RECORD metadata and helper equal authorized prefix; large binaries/helper not loaded or rehashed by reviewer.",
+  "raw_FP_scope": "Incoming and outgoing control/status/MXCSR remain exactly equal for all8actual targets. Minimumstatus32/mxcsr8098 versus modernstatus0/mxcsr8096 preserved as semantic profile inputs/results. Full32caller and process restoration exact; raw instruction/data pointers and after-observer state retained as diagnostics, not normalized portable expectations.",
+  "pins": {
+    "build/vi-large-reference-results-v1/minimum-terminal-root-review-v1.json": {
+      "sha256": "ec5eb8b3d5694643b945e867b64bc498271c2cead319e2ed7e3421b7c65cfa72",
+      "bytes": 1209
+    },
+    "build/vi-large-reference-results-v1/minimum-capture-v1/observations.json": {
+      "sha256": "16eb33f2c5d0df39dd3db8301ed41a23e28f53f95a460bb9cf840be1117f835c",
+      "bytes": 172561
+    },
+    "build/vi-large-reference-results-v1/minimum-capture-v1/terminal.json": {
+      "sha256": "cac32d984aea29b0bd44eb7ec89fa6718b2b3fe20da9509bdb0e974d08c3da5d",
+      "bytes": 13087
+    },
+    "build/vi-large-reference-results-v1/minimum-capture-v1/precall-freeze.json": {
+      "sha256": "427724d49667213bbefc80498dcf80a1b1c32fbc78d57495d20b4de0984fa5c5",
+      "bytes": 8737
+    },
+    "build/vi-large-reference-results-v1/minimum-GO-v1.json": {
+      "sha256": "b8350fd8afbacede2a98fe2390705e7f5489f3080c6d399c5dc33e6b859f0059",
+      "bytes": 12917
+    },
+    "build/vi-large-reference-results-v1/minimum-process-v1.json": {
+      "sha256": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+      "bytes": 13
+    },
+    "build/vi-large-reference-results-v1/minimum-command-v1.json": {
+      "sha256": "76a82b2b820a23357a351885efce186219a69d5da70168ec40e6b6e31b903265",
+      "bytes": 1080
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cold-v1/terminal.json": {
+      "sha256": "5ab7d46ec40426710296c3023048862f1c47f6599756843d2154faa9115ad335",
+      "bytes": 57441
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cached-v1/terminal.json": {
+      "sha256": "3e68fcb35daf48fb23d56d7c66a64f7c18d68e080133ffbcc6dd26d34cedeb89",
+      "bytes": 57442
+    },
+    "build/variation-of-information-large-readiness-independent-review-v1/review-v1.json": {
+      "sha256": "347a0c960edaefde8cd3e21e0a9cd602dc4c1cf75d79c5f1d7ee897652df87ac",
+      "bytes": 21324
+    },
+    "build/vi-large-reference-results-v1/minimum-capture-v1/journal.jsonl": {
+      "sha256": "924f89f5ae4ef4ddb8267aaf850e49aea54db9ec713140115c4c01aa87f4a5cd",
+      "bytes": 151134
+    },
+    "build/vi-large-reference-results-v1/modern-capture-v1/observations.json": {
+      "sha256": "c7c959c584b9291f53d92b29bba92ad13e018922bbf1cf6eedaabee065e761d7",
+      "bytes": 172525
+    },
+    "build/vi-large-reference-results-v1/modern-capture-v1/terminal.json": {
+      "sha256": "726e1de41b53a8e1a955ef71e3bfac9e5e0d5a0d2a67279298a1af7326cf7c52",
+      "bytes": 12911
+    },
+    "build/vi-large-reference-results-v1/modern-capture-v1/precall-freeze.json": {
+      "sha256": "c2073e8be27929a57f97b8f21c047173487d9b0c3e57241781f8be7243d9035b",
+      "bytes": 8572
+    },
+    "build/vi-large-reference-results-v1/modern-GO-v1.json": {
+      "sha256": "c18d45e53f2000fc09e26f6cd06a6dfc8859ba4288f947744bae5b2cfba6c291",
+      "bytes": 12920
+    },
+    "build/vi-large-reference-results-v1/modern-process-v1.json": {
+      "sha256": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+      "bytes": 13
+    },
+    "build/vi-large-reference-results-v1/modern-command-v1.json": {
+      "sha256": "40e196ca8515c972771d01657ad90403cdc5ae2ea64a4fe11c0c798edaa06faa",
+      "bytes": 1075
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cold-v1/terminal.json": {
+      "sha256": "3c5d3c2413b0ba56cc3bc04c6b93d8b4b3c0451ce0fdcf450e8b0a2f92fe66a8",
+      "bytes": 57158
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cached-v1/terminal.json": {
+      "sha256": "baaf13df085a6fc488674c87fa5fbb574644f4a165d74758c12284cec1018a4f",
+      "bytes": 57159
+    },
+    "build/vi-large-reference-results-v1/modern-capture-v1/journal.jsonl": {
+      "sha256": "d38860a97e9580ec4dbbb5ae493dac3284490068abfdf03ed995d0e776e0a703",
+      "bytes": 151098
+    }
+  },
+  "pending": [
+    "Root independent raw admission/publication before any native comparison",
+    "Actual currentcounts/VI native comparison of these4largecases/profile under recorded incoming numericalFP, strict rawwords/type/layout/alias/errors/warnings/NPstate; no numerical parity inferred from original-only receipts",
+    "Any actual native/BLAS/log mismatch stops dependent genuine/timing and requires rootcause without tolerance/mask/gold edits",
+    "Genuine exactsource wholeproduct/SDK/globalownership/platform/fullAPI/cohort/separate timingGO/performance/main delivery remain separate"
+  ],
+  "waste_review": {
+    "result": "8exactonce originals retained and independently decoded; all accepted rawsource/runtime/FP/journal scopes passed. No reviewer target/native/helper/test/build/download/timing execution.",
+    "reused": "Readiness347a source/codec/runtime/helper/binary metadata, rootactualGO chain and immutable raw observations; repeated input payloads decoded once, journal rows compared structurally without another decode.",
+    "avoidable": "No new failure or repeated capture; no normalization or favorable rerun. Root sequentialminimum-first gate respected.",
+    "cost": "Metadata decode/review cost not measured; no work rerun for bookkeeping.",
+    "next_owner_trigger": "Root admits this frozen raw receipt and alone authorizes the actual current native comparison. Remaining originalbudget0/no recapture; cumulative ab7872a5 remains untouched. Root updates existing plan/ledger/checklist."
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "schema": "rolling-ball-source-independent-review-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_SOURCE_STORAGE_TEST_PACKET_NOT_ACTUAL_CAPTURE_READINESS",
+  "source": "2e99dd5c7b2d1b6a65906587f7352e3e54194255",
+  "base": "26855566e651d4f73659980e050a6c09e842c08b",
+  "worktree": "build/worktrees/rolling-ball-v1",
+  "handoff": {
+    "path": "build/rolling-ball-source-first-v1/handoff-v1.json",
+    "sha256": "f87ce8e19d9d6a1850133a2cc66452306b5de316ad9767658e64d427752728a8"
+  },
+  "ownership": "Independent output only; no source/shared/main edits. No family module/factory/scientific code/test/original/native/helper/build/timing/download execution.",
+  "authenticated": {
+    "source_files": 7,
+    "dependencies": 18,
+    "small_proofs": 32,
+    "small_proof_bytes": 207020,
+    "own_audit": "build/rolling-ball-source-independent-review-v1/audit-v1.json",
+    "audit_sha256": "fddce3fb852136518ebd9e76b374c0c0f98f4d5fe318bb6d3b86404800cc7e65",
+    "source_clean": true,
+    "only_seven_new_family_files": true
+  },
+  "passed_gates": {
+    "recipe_source": "Independent ASTliteral reconstruction ofactual75fixedrecipe definitions exactly equals JSON; no recipe/factory/sourcefunction execution.",
+    "storage": {
+      "input_elements": 24,
+      "physical_elements": 48,
+      "kernel_elements": 201,
+      "padded_elements": 256,
+      "addition_upper": 1296,
+      "named_numerical_bytes_upper": 39072
+    },
+    "index_geometry": "Perrecipe independent C-order padded-span upperbound reconstructed. Every potential nonempty-output read stays inside paddedstorage; zero-output loops bypass ind2ind despite zeroimageaxes. Even/wide kernels floorcenter supports asymmetric anchor safely. 8D restricted toradius0/kernel1.",
+    "source_signature": "(image, *, radius=100, kernel=None, nansafe=False, num_threads=<DEPRECATED>, workers=None)",
+    "source_policy": "Actualretained0.26 Python/helperbytes plus pinnedreleaseCython/np_floats source authenticated. Deprecatewrapper warnsFutureWarning thenconflictValueError beforeimagecoercion; workersNone->0,customkernelignoresradius,sourcefloatpromotion,paddedinf,center-minus-kernel/+infmask,nansafe selection,Cythonout.base.reshape andcast back toasarrayinputdtype remain exactsource policy.",
+    "NaN_FP": "Fast strictless preservesfirstequalvalue anddoesnot promiseNaN behavior; nansafe updatesonNaN throughwholeinnerrow thenbreaksouterrow. No firstNaNglobalshortcut,mask/FMA/reassociation orNaNpayload normalization admitted.",
+    "retained_pure": [
+      {
+        "profile": "windows311",
+        "counts": {
+          "tests": 85,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "command_sha256": "e827c7c1dce4306c3fdab1540d661aa2ef1ff06c692fc3d6233786c67512660d",
+        "XML_sha256": "496321560145379478fb716d72816c54c8f42ab14d876b66640e3871f52de21c",
+        "terminal_sha256": "57dcd2233178af1f57002175dc263b64fbf46e5dda0e09a0ea5b54e0ae8bafa5"
+      },
+      {
+        "profile": "windows313",
+        "counts": {
+          "tests": 85,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "command_sha256": "c27b41f6723844709ba8d6d8cf09470b8ca8f260f1924f28b6286759e7656127",
+        "XML_sha256": "cc8f48c90e5b9dafac373c3f0b210e07d73c2910059d34a0d41128aa10108c96",
+        "terminal_sha256": "1c32b1ae15e285b827f40cc656b48167bced695751878a93b79cb52b0b6dc76d"
+      }
+    ],
+    "proof_reuse": "Bothactual85-node v2 XMLs read independently, zero failures/errors/skips, normalconftest/plugins and0science metadata verified. v1 passingdraft receipts retained butsuperseded on24\u219248stridebackingbound; never promoted as current safety proof.",
+    "observer": "Exact2-fragment inverse reconstructs admittedfiniteRadon observer; typedcodecbyte-exact finiteRadon reuse. No resolver/reference authority; future controller ownsfull32/NumPy state andfailure diagnostics.",
+    "prior_evidence": "Existing rolling-ball-kernels contract APIs areonly ball_kernel/ellipsoid_kernel; samewholePython source5572 reused onlyassource. No constructor original/native/SDK/performance evidence promoted tofullrolling_ball imagealgorithm.",
+    "SDK_proposal": "Clearly future completeoperation,promotion/defaultorcustomkernel/difference/padding/orderedminplus/casts+ownedresult. Existingview/crop/half/kernel/runtimebudget primitives areproposedreuse, not currentSDK closure.",
+    "worker_SIMD": "Futureprocessglobaldefault1 capturedonce; explicitworkersoverride andindependentoutputSIMD/parallelism may be consideredonlywhile preservingeachorderedkernelreduction andNaNpolicy. No newpool or concurrencyframework present.",
+    "benchmark": "8prospective workload descriptors, exactexisting Montage methodSHA andworkers1/repeat7/100ms/250ms/alllosses. Driverplanonly, allexecutionprovenanceNULL; not an executableauthorizedsampler orpartof75referencepool."
+  },
+  "findings": [
+    {
+      "severity": "informational",
+      "topic": "Stridebackingcorrection",
+      "detail": "Initial2Dstride2physicalbound24 understatedactual48 becauseeveryaxisdoubles. Currentformula independently reconstructed to48, finalexactbackingassertion andboth85/v2 receipts pass. Failure/draft supersession preserved; no unsafe allocation or algorithmbody ran."
+    },
+    {
+      "severity": "scope",
+      "topic": "Sourceproofnotruntimeproof",
+      "detail": "StaticPython signature/sourcepolicy does notauthenticate actualdecoratedcallable/compiledwheel/Cythonbuildflags or OpenMP behavior. Actual cold/cached request/entryrefusal, NumPyfactory/typedcodec/FP/readiness andnewindependentrootGO remain unclosed."
+    },
+    {
+      "severity": "scope",
+      "topic": "Bounded75notfullAPI",
+      "detail": "Wideinteger/halfextremes, customNaNpayloads/nondefaultFPpolicy, defaultlarge2D/3D radius, broadprotocol/errors/platforms are not covered by75boundedramps orsourceflags. Namedarraymodel excludesPython/import/allocator/processpeak; no fullAPIparity orperformance credit."
+    }
+  ],
+  "quarantines": [
+    "Default3D+radius100 andhighrankpositivebigkernels:201**ndimcoordinate/paddedwork explosion; never materialized byfactory",
+    "Rank0customkernel/image andrank-mismatch:bounds-disabledkernel_shape[-1]/to_shape indexing, memorysafetynotestablished",
+    "Zeroextentcustomkernel:centerindex raisesbutfullvariantgeometry unassessed; large/negative/extreme strides/forgedstorage/concurrentmutation",
+    "Negativeworkers orlargepositiveworkers:OpenMP runtimevalidity/resource risk; no invalidnum_threadsprangeexecution. workersbadstring onlysourceconvert errorcase, frozenpositive0/1/2/4limits.",
+    "Longdouble/padded/object/structured/extended/unicodepayload/protocoloutcomes notinitialcapture; typedexceptionmetadata/subarray domains unassessed",
+    "UnmaskedFP/nondefaultNPcallbacks/rounding/ISA-dependentNaN-fast behavior needseparateboundedsourceproof beforefutureGO"
+  ],
+  "unmet_gates": [
+    "Root independent source/storage admission; source-onlyPASS is not captureGO",
+    "Actual NumPy1.24.4/2.5.4 factory/codec/payload/storage/state controls, realpackage/source/compiledorigin/METADATA+RECORD andadmittedfull32 helper/ABI setup",
+    "One-shot source-boundcontroller/current75pool with realcached/cold decoratedtarget + ball helper + apply_kernel/apply_kernel_nan REQUESTrefusals beforebodies; completecaller/NumPy/FENV restoration andobserver/serializerfailure diagnostics",
+    "Separate rootwhitelist/budget/deadline/no-retry GO beforeeachprofile originals;150prospectivecalls areNOTauthorized",
+    "Rawreferencecapture/authentication thencompleteCPP/public/hotswap/SDK/scalar/SIMD/default1/explicitworker/backend/platform parity, fullgenuineonecore/fullsource/fourprofile release",
+    "Relevant allocationinclusive1thread original-public benchmark/preflight/firstcohort/rootmeasurementGO/alllosses; current8descriptors areplanonly"
+  ],
+  "budgets": {
+    "original_topcalls": 0,
+    "provider_image_algorithm_calls": 0,
+    "factory_scientific_execution": 0,
+    "native_calls": 0,
+    "helper_calls": 0,
+    "tests_rerun": 0,
+    "builds": 0,
+    "timed_calls": 0,
+    "downloads": 0,
+    "largearchive_or_core_hash_replays": 0
+  },
+  "waste_review": {
+    "result": "Reviewed, no source change. Authenticated7source/18deps/32smallproofs207020B once andindependently reconstructed75source rows/geometry insteadofreplaying170purechecks orscientific setup.",
+    "author_corrections": "Preservedinitial85/v1passes withwrongstridebound, current48backingformula/regression +85/v2 perversion, earlierprimaryURL404/source locator fixes. These werepreventable setupwork, not numerical failures; no hiddenconstructor campaign or favorableperformance retry.",
+    "cost": "Authorfinalpure times0.422s/0.519s reused; independent stdlibaudit0.753s observed. Interactiveinspection cost unknown, not remeasured.",
+    "next_correction": {
+      "owner": "root",
+      "trigger": "Admit this boundedsource/storage scope then explicitly assign actual75pool runtime/factory/controller readiness. Future multi-axis stridedfactories derive fullbackingproduct; do not relabel source-only85checks as capture readiness. Preserve allquarantines andcurrentsharedfreeze independence."
+    }
+  },
+  "next_owner_trigger": "Root owns sourceadmission/nextreadiness/originalGOs/plan/checklist/main. Currentcumulative ab7872a5 andVI actualreference gates independent; do not wait onunfinished rolling_ball implementation.",
+  "evidence": {
+    "audit_sha256": "fddce3fb852136518ebd9e76b374c0c0f98f4d5fe318bb6d3b86404800cc7e65",
+    "audit_script_sha256": "eed67d524afba158095c0b0b4115b557c31d1d90ad5ccdbb6c47addc7c96bec3",
+    "handoff_source_hashes": {
+      "benchmarks/rolling_ball.py": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+      "coverage/contracts/rolling-ball-v1.json": "6f4d505df80e095e604cedc4de6024bf73237ec68b6df14f086db0998c183bc0",
+      "tests/fixtures/rolling_ball_sources_v1.json": "9b58244123f42ebbece77e5c978469e39f7072517a99ee1a1f05afd0393d1340",
+      "tests/rolling_ball_contract.py": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+      "tests/rolling_ball_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+      "tests/rolling_ball_observer.py": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+      "tests/test_rolling_ball_source.py": "c1ab14e6f1e0c7a84580b846c1592f9388b0223f48389929a7c74addc7a430f6"
+    },
+    "proof_pins_verified": {
+      "draft-contract-before-stride-bound-v1.py": {
+        "bytes": 6606,
+        "sha256": "8c69bc2d9160aac1e0737c19e8c20309bb49ec778a65fbf9c221ba0b9856e1d9"
+      },
+      "freeze_contract_v1.py": {
+        "bytes": 9577,
+        "sha256": "fc9df377a6471529390bc05851a057ed4f79565c63351d2364030ced3ef91443"
+      },
+      "freeze_handoff_v1.py": {
+        "bytes": 10305,
+        "sha256": "9b970a0e009318cab85db725957eb233fdc2e6c06f68af91f7e655faff7243d3"
+      },
+      "local-source-intake-v1.json": {
+        "bytes": 2998,
+        "sha256": "af7b9331a8cf63e2ad2bfa5fa3b278a075de7dcaf5757955b1725dda3558e7e6"
+      },
+      "primary\\src\\skimage\\restoration\\_rolling_ball_cy.pyx": {
+        "bytes": 8693,
+        "sha256": "3eee36172fe991ab50ad3d293d5aa9c4771fdfa7559e34c6957a2ba8f67a36ad"
+      },
+      "primary-source-intake-v1.json": {
+        "bytes": 943,
+        "sha256": "edd054a1d53db74c2ae6a7766d53c01b14b42ec183f194d1ce8f3be335d31061"
+      },
+      "read_local_source_v1.py": {
+        "bytes": 1226,
+        "sha256": "a99bcd651d92c6a9941ed3a21a47e948e7ed3de17e0468511f2a4b6d49ad184e"
+      },
+      "read_primary_source_v1.py": {
+        "bytes": 1217,
+        "sha256": "dc3041a3f236ebfb7c3b2ba5e1c08a1c679434bf5f70ce34073b7490187dae2a"
+      },
+      "retained\\minimum\\_shared\\_warnings.py": {
+        "bytes": 5222,
+        "sha256": "10b361ada81033eb1efad9b252f71d295726face1ca5188790d4d331b6422673"
+      },
+      "retained\\minimum\\_shared\\utils.py": {
+        "bytes": 36621,
+        "sha256": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1"
+      },
+      "retained\\minimum\\restoration\\_rolling_ball.py": {
+        "bytes": 7086,
+        "sha256": "5572c656ad2a6e48518ee7188c4cea96e7817405a941fbf76932268ddd8540f6"
+      },
+      "retained\\modern\\_shared\\_warnings.py": {
+        "bytes": 5222,
+        "sha256": "10b361ada81033eb1efad9b252f71d295726face1ca5188790d4d331b6422673"
+      },
+      "retained\\modern\\_shared\\utils.py": {
+        "bytes": 36621,
+        "sha256": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1"
+      },
+      "retained\\modern\\restoration\\_rolling_ball.py": {
+        "bytes": 7086,
+        "sha256": "5572c656ad2a6e48518ee7188c4cea96e7817405a941fbf76932268ddd8540f6"
+      },
+      "run_pure_v1.py": {
+        "bytes": 1568,
+        "sha256": "00069db71380520fa16ae2a08a188e5d04a3c228d30bc6da72b2d4e187c1644b"
+      },
+      "run_pure_v2.py": {
+        "bytes": 1567,
+        "sha256": "6e110370bd47215d80c609e692c487a5fd012170572cd4c4678f519317481e05"
+      },
+      "storage-bound-correction-v1.json": {
+        "bytes": 1008,
+        "sha256": "fe31cb822e4ac821b247b596037ff91539444acb7c23aba728fde170d5febfc0"
+      },
+      "windows311-pure-v1\\command.json": {
+        "bytes": 848,
+        "sha256": "ec0bca906066433bebc9847248b68d3db5ca6dd01e49ecaf38ac42097e67ee34"
+      },
+      "windows311-pure-v1\\results.xml": {
+        "bytes": 11103,
+        "sha256": "f40c35ddb765450ea4df01904421572f025a4ef6056f6828abed28f03dd1d722"
+      },
+      "windows311-pure-v1\\terminal.json": {
+        "bytes": 168,
+        "sha256": "fdccf83d251b3bd2c49d2f75dea3f833c537490d0ad0ee4c5a167106774fe007"
+      },
+      "windows311-pure-v2\\command.json": {
+        "bytes": 848,
+        "sha256": "e827c7c1dce4306c3fdab1540d661aa2ef1ff06c692fc3d6233786c67512660d"
+      },
+      "windows311-pure-v2\\results.xml": {
+        "bytes": 11103,
+        "sha256": "496321560145379478fb716d72816c54c8f42ab14d876b66640e3871f52de21c"
+      },
+      "windows311-pure-v2\\terminal.json": {
+        "bytes": 169,
+        "sha256": "57dcd2233178af1f57002175dc263b64fbf46e5dda0e09a0ea5b54e0ae8bafa5"
+      },
+      "windows313-pure-v1\\command.json": {
+        "bytes": 840,
+        "sha256": "296f8d01bd849541ce4f6879a65265d046772018ce2be560f23e8fefbd0de535"
+      },
+      "windows313-pure-v1\\results.xml": {
+        "bytes": 11103,
+        "sha256": "6feb3b42d145049052071f92839514dd1fb0503a3182e382a83e85078b38316e"
+      },
+      "windows313-pure-v1\\terminal.json": {
+        "bytes": 168,
+        "sha256": "12ed9d47f12456bccf7991a7bf4aa039b207e6619f22f50e88b5a0266eb6c443"
+      },
+      "windows313-pure-v2\\command.json": {
+        "bytes": 840,
+        "sha256": "c27b41f6723844709ba8d6d8cf09470b8ca8f260f1924f28b6286759e7656127"
+      },
+      "windows313-pure-v2\\results.xml": {
+        "bytes": 11103,
+        "sha256": "cc8f48c90e5b9dafac373c3f0b210e07d73c2910059d34a0d41128aa10108c96"
+      },
+      "windows313-pure-v2\\terminal.json": {
+        "bytes": 168,
+        "sha256": "1c32b1ae15e285b827f40cc656b48167bced695751878a93b79cb52b0b6dc76d"
+      },
+      "write_contract_v1.py": {
+        "bytes": 6802,
+        "sha256": "72a819b560534d239712c95b2258bb9a590a52a9bfdc952a49c03756dd77fb9c"
+      },
+      "write_packet_v1.py": {
+        "bytes": 2030,
+        "sha256": "2ce310aba07beee337a59e1821f7c3ded1066e6216d041f960c993f68abb4f4d"
+      },
+      "write_tests_v1.py": {
+        "bytes": 6161,
+        "sha256": "4501747689b7cfc57204e7a2195f2285aa5eef2b5afb54bc3be33c66314b487c"
+      }
+    }
+  },
+  "closeout": "Frozenreview output only. Source2e99 remainsclean; no source/numerical/test/native/original/build/benchmark executions. Actualscopepassed andunmetgates explicit; no fullalgorithm orshipping credit."
+}

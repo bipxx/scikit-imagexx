@@ -1,0 +1,178 @@
+{
+  "passed": true,
+  "status": "ROOT_ADMITTED_EIGHT_ORIGINAL_REFERENCES_NATIVE_PARITY_PENDING",
+  "source": "5255b3eb3dd5b75b7c75986b8caead6c1624bc34",
+  "controller_sha256": "16292939f268f0ade9b0f107a958e859f58ba95150bfe66c84f89cd26e865641",
+  "binding_sha256": "52c3a157cceb8ed9ce69d469e7e538fcc9f65d732fa070c01ae3ad25459e540e",
+  "independent_review": {
+    "path": "build/vi-large-reference-raw-independent-review-v1/review-v1.json",
+    "sha256": "8c44288cac7a0c5f84d08f307852d573faf6da737cd51dc0a299c9aecae60c9c"
+  },
+  "counts": {
+    "unique_profile_case_pairs": 8,
+    "public_topcalls": 8,
+    "completed_rows": 8,
+    "journal_events": 16,
+    "returns": 8,
+    "errors": 0,
+    "warnings": 0,
+    "FP_callback_events": 0,
+    "native_calls": 0,
+    "sampler_bodies": 0,
+    "timed_batches": 0,
+    "reviewer_original_calls": 0
+  },
+  "semantic_FP": [
+    {
+      "id": "metrics.variation_of_information/128x128/8/C",
+      "return_words_equal": true,
+      "minimum_words": [
+        "4007cbe4873c419a",
+        "40064266ad26a8cd"
+      ],
+      "modern_words": [
+        "4007cbe4873c419a",
+        "40064266ad26a8cd"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    },
+    {
+      "id": "metrics.variation_of_information/128x128/64/F",
+      "return_words_equal": true,
+      "minimum_words": [
+        "401190faa8ca5c4c",
+        "40117a1cdc29005c"
+      ],
+      "modern_words": [
+        "401190faa8ca5c4c",
+        "40117a1cdc29005c"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/8/F",
+      "return_words_equal": true,
+      "minimum_words": [
+        "4007cbbfce8962e6",
+        "4006423b60ce96dd"
+      ],
+      "modern_words": [
+        "4007cbbfce8962e6",
+        "4006423b60ce96dd"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/64/C",
+      "return_words_equal": true,
+      "minimum_words": [
+        "401191ad2ded50af",
+        "40117acb63349d16"
+      ],
+      "modern_words": [
+        "401191ad2ded50af",
+        "40117acb63349d16"
+      ],
+      "minimum_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        }
+      },
+      "modern_semantic_FP": {
+        "incoming": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        },
+        "outgoing": {
+          "control": 895,
+          "status": 0,
+          "mxcsr": 8096
+        }
+      },
+      "semantic_FP_equal": false
+    }
+  ],
+  "remaining_original_budget": 0,
+  "pending": "Current1a/currente8 private public native strict comparison, genuine4profile, timing and delivery. No masks/tolerance/normalization.",
+  "waste_review": "Eight existing planned largebenchmark recipes capturedonce,12unique payloads independently decodedonce. Reused allsmallgold/helper/runtime/codec; no retakes/build/timing. NextR compares exactcurrent private native eightrows with captured incoming states, root owns admission."
+}
