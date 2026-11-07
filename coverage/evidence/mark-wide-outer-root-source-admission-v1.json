@@ -1,0 +1,20 @@
+{
+  "schema": "mark-wide-outer-root-source-admission-v1",
+  "status": "PASS_SOURCE_ONLY_UNVERIFIED_NATIVE_CAST_ABI_FP_PARITY",
+  "source": "3106c063a0d34af0af48a2f2f3928fade46c322d",
+  "base": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "handoff": "build\\mark-wide-outer-source-v1\\handoff-v1.json",
+  "handoff_sha256": "a067b5f4eea017a337e5a39822a7bd930fbc4fdcee8f52d9ef875486214c0d1c",
+  "source_files": 6,
+  "proofs": 24,
+  "source_checks_each_python": 12,
+  "root_review": "Inspected full64bit typed input preservation, sourcebinary64 extrema/separabletypedstores, dtype-maxbackground and exactbooleancomposition; no benchmarkcase/dtype substitution. Existingothernativefunction bodies sourceinverse preserved. GNUx64nearest/maskedSSE route and scalarbackgroundfrontier explicit; serialnewroute retainsglobalbudget capture.",
+  "not_proven": [
+    "Compilation/cast ABI/sourceFP and numericalparity",
+    "SharedCMake find-boundaries strictFP flags absent andmustbeintegrated beforegenuine",
+    "Oldnative refusal assertionsmustreceive exactchanged-domain successor beforefullchecks",
+    "OwningSDK/hotswap/scalar/SIMD/platform/performance/genuine/main gates"
+  ],
+  "next_owner": "readiness_reviewer prepares minimal leafcompile/stageclient exactdonor/toolchain/savedcastproof/safety commands; rootreviewthenboundedGO, noexecutionauthorityhere",
+  "waste_review": "Reused12source-inertXML eachPython and24smallproofs; no wholecore/env/native/SDK/reference/timing replay. Newalgorithm addressesdemonstrated64outerfrontier; unassesseddomainsremainexplicit."
+}

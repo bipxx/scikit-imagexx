@@ -1,0 +1,724 @@
+{
+  "schema": "current281-join-rolling-performance-root-admission-v1",
+  "status": "PASS_SCOPED_CANDIDATE_ONE_THREAD_PUBLIC_PERFORMANCE",
+  "production_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "controller_source": "8ed0e2d223719adb5512c3f1e037e90c9265695f",
+  "independent_review": {
+    "path": "build/current281-successful-results-admission-v1/review-v2.json",
+    "sha256": "aff21da9d865a7154703a6cff2baa31f9b6245a48b118eaff07f981548d09e5b"
+  },
+  "root_review": "Root inspected exact6cohort/envelope/C1/newhelper/source-runtime-SDK-chain assertions andactual159check sourcecorrection, authenticated7frozenproofs; reused rootindependent40rawgraph+unchanged8edfrozenreportvalidation. No science/helperseal/raw/validator/measurement replay.",
+  "cases": 40,
+  "samples": 560,
+  "warmup_groups": 80,
+  "wins": 18,
+  "losses": 22,
+  "workers": 1,
+  "rows": [
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "u8-labels-C",
+      "reference_ms": 0.8634778421052631,
+      "cpp_ms": 1.5320211184210526,
+      "speedup": 0.5636200648429635,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        1320,
+        752
+      ]
+    },
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "u8-maps-reverse",
+      "reference_ms": 1.2771231222222221,
+      "cpp_ms": 1.6314948169014083,
+      "speedup": 0.782793245183444,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        900,
+        707
+      ]
+    },
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "i16-labels-F",
+      "reference_ms": 3.8140639354838712,
+      "cpp_ms": 5.89431325,
+      "speedup": 0.6470752017605904,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        304,
+        200
+      ]
+    },
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "i16-maps-C",
+      "reference_ms": 5.488191952380952,
+      "cpp_ms": 5.54600480952381,
+      "speedup": 0.9895757650545887,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        216,
+        210
+      ]
+    },
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "u16-labels-C",
+      "reference_ms": 3.7699861666666665,
+      "cpp_ms": 5.488899666666667,
+      "speedup": 0.6868382363702645,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        309,
+        211
+      ]
+    },
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "u16-maps-F",
+      "reference_ms": 5.534136476190476,
+      "cpp_ms": 5.8560785,
+      "speedup": 0.9450242984602197,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        213,
+        201
+      ]
+    },
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "i32-labels-reverse",
+      "reference_ms": 53.93154966666666,
+      "cpp_ms": 27.3147556,
+      "speedup": 1.9744474545716477,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 20,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        28,
+        46
+      ]
+    },
+    {
+      "stream": "join",
+      "api": "segmentation.join_segmentations",
+      "case_id": "i32-maps-C",
+      "reference_ms": 59.8794555,
+      "cpp_ms": 25.910208,
+      "speedup": 2.311037236752403,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 20,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        19,
+        46
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "view-C",
+      "reference_ms": 0.0016966409878797697,
+      "cpp_ms": 0.0021216531032563317,
+      "speedup": 0.7996787906919139,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 24,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        680641,
+        546593
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "view-F",
+      "reference_ms": 0.001712616842954464,
+      "cpp_ms": 0.002132859894077997,
+      "speedup": 0.8029673433823005,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        619115,
+        545931
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "view-reverse",
+      "reference_ms": 0.0016963811838887415,
+      "cpp_ms": 0.0021128747777309307,
+      "speedup": 0.8028782404750593,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        620050,
+        546517
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "view-3D",
+      "reference_ms": 0.0018619178218777137,
+      "cpp_ms": 0.0023360139610130223,
+      "speedup": 0.7970490985722899,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        567928,
+        502727
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "copy-C",
+      "reference_ms": 0.0313101970027248,
+      "cpp_ms": 0.03214522113502936,
+      "speedup": 0.9740233819267582,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        35822,
+        33894
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "copy-F",
+      "reference_ms": 0.016412496364932288,
+      "cpp_ms": 0.017828819112627986,
+      "speedup": 0.920559923865483,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        67555,
+        60339
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "copy-reverse-K",
+      "reference_ms": 0.0222945668024045,
+      "cpp_ms": 0.04227959470393527,
+      "speedup": 0.5273126896916394,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        50223,
+        25917
+      ]
+    },
+    {
+      "stream": "crop",
+      "api": "util.crop",
+      "case_id": "copy-object-provider",
+      "reference_ms": 0.0028367538699310647,
+      "cpp_ms": 0.0033546751775940372,
+      "speedup": 0.8456120845552552,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        378427,
+        349380
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "view-C",
+      "reference_ms": 0.0015827952403327898,
+      "cpp_ms": 0.0024053930287704865,
+      "speedup": 0.6580193845252115,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 24,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        736187,
+        483191
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "copy-C",
+      "reference_ms": 0.011664854837072379,
+      "cpp_ms": 0.01646197921444954,
+      "speedup": 0.7085937046277841,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        93885,
+        64770
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "view-F",
+      "reference_ms": 0.0015607822728642253,
+      "cpp_ms": 0.0023972684546935707,
+      "speedup": 0.6510669548954338,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        678815,
+        484005
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "copy-F-C-order",
+      "reference_ms": 0.6286885081967213,
+      "cpp_ms": 0.638182497237569,
+      "speedup": 0.9851233948252368,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        1828,
+        1799
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "reverse-view",
+      "reference_ms": 0.001599462264542075,
+      "cpp_ms": 0.0024181347837843458,
+      "speedup": 0.6614446288386538,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        664000,
+        481046
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "reverse-copy",
+      "reference_ms": 0.07235895846444304,
+      "cpp_ms": 0.07890252227553118,
+      "speedup": 0.9170677486299142,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        15732,
+        14100
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "permuted-axes",
+      "reference_ms": 0.001552712236719604,
+      "cpp_ms": 0.002467785119175435,
+      "speedup": 0.6291926410669071,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        677637,
+        468203
+      ]
+    },
+    {
+      "stream": "slice",
+      "api": "util.slice_along_axes",
+      "case_id": "negative-bound-copy",
+      "reference_ms": 0.017136360660615982,
+      "cpp_ms": 0.019309714309679583,
+      "speedup": 0.8874476538488122,
+      "classification": "loss",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        64947,
+        55656
+      ]
+    },
+    {
+      "stream": "blocks",
+      "api": "util.view_as_blocks",
+      "case_id": "view_as_blocks/C",
+      "reference_ms": 0.01028067034728406,
+      "cpp_ms": 0.009384042999347258,
+      "speedup": 1.0955480860434217,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        103236,
+        124096
+      ]
+    },
+    {
+      "stream": "blocks",
+      "api": "util.view_as_blocks",
+      "case_id": "view_as_blocks/F",
+      "reference_ms": 0.010234603448275863,
+      "cpp_ms": 0.00932672614812419,
+      "speedup": 1.097341477141394,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        103634,
+        113253
+      ]
+    },
+    {
+      "stream": "blocks",
+      "api": "util.view_as_blocks",
+      "case_id": "view_as_blocks/reverse",
+      "reference_ms": 0.010333993086109366,
+      "cpp_ms": 0.00945386975458581,
+      "speedup": 1.093096621211291,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        103658,
+        112231
+      ]
+    },
+    {
+      "stream": "blocks",
+      "api": "util.view_as_blocks",
+      "case_id": "view_as_blocks/readonly",
+      "reference_ms": 0.010069328126371216,
+      "cpp_ms": 0.009169033863109974,
+      "speedup": 1.0981885634519708,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        105841,
+        115492
+      ]
+    },
+    {
+      "stream": "windows",
+      "api": "util.view_as_windows",
+      "case_id": "view_as_windows/C",
+      "reference_ms": 0.014241460852329038,
+      "cpp_ms": 0.012152227903038002,
+      "speedup": 1.1719218044593072,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        74370,
+        86901
+      ]
+    },
+    {
+      "stream": "windows",
+      "api": "util.view_as_windows",
+      "case_id": "view_as_windows/F",
+      "reference_ms": 0.014298743426791277,
+      "cpp_ms": 0.012235380051314946,
+      "speedup": 1.1686390914563034,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        81624,
+        87190
+      ]
+    },
+    {
+      "stream": "windows",
+      "api": "util.view_as_windows",
+      "case_id": "view_as_windows/reverse",
+      "reference_ms": 0.0142813515625,
+      "cpp_ms": 0.012216204925898285,
+      "speedup": 1.1690497702951608,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        74454,
+        87051
+      ]
+    },
+    {
+      "stream": "windows",
+      "api": "util.view_as_windows",
+      "case_id": "view_as_windows/readonly",
+      "reference_ms": 0.014052816069463127,
+      "cpp_ms": 0.011872938712340074,
+      "speedup": 1.1836004893091387,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        75754,
+        89568
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "small-u8",
+      "reference_ms": 0.06037709366823653,
+      "cpp_ms": 0.018772429292929292,
+      "speedup": 3.2162642738506833,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        17571,
+        56389
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "dense-f32",
+      "reference_ms": 1.097782323809524,
+      "cpp_ms": 0.7831400272108844,
+      "speedup": 1.4017701632736395,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        1041,
+        1436
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "dense-f64",
+      "reference_ms": 0.33654461494252874,
+      "cpp_ms": 0.22132962082514734,
+      "speedup": 1.5205584037411892,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        3404,
+        5032
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "wide-f32",
+      "reference_ms": 1.4306413333333332,
+      "cpp_ms": 1.1483249306930692,
+      "speedup": 1.2458506256324788,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        803,
+        979
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "stride-f32",
+      "reference_ms": 0.3255963690140845,
+      "cpp_ms": 0.21616855597722962,
+      "speedup": 1.506215219610301,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 22,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        3489,
+        5095
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "3d-u16",
+      "reference_ms": 0.3743464768211921,
+      "cpp_ms": 0.1100323123209169,
+      "speedup": 3.402150413138502,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 0,
+      "timed_loop_invocations": [
+        3002,
+        10481
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "nan-f32",
+      "reference_ms": 0.42077919852941176,
+      "cpp_ms": 0.21787167415730338,
+      "speedup": 1.931316680596162,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 24,
+      "underlength_batches": 2,
+      "timed_loop_invocations": [
+        2660,
+        5407
+      ]
+    },
+    {
+      "stream": "rolling-ball",
+      "api": "restoration.rolling_ball",
+      "case_id": "border-tiny",
+      "reference_ms": 0.056251726053639844,
+      "cpp_ms": 0.0148668475257473,
+      "speedup": 3.783702358971512,
+      "classification": "win",
+      "samples": 14,
+      "warmup_groups": 2,
+      "batches": 23,
+      "underlength_batches": 1,
+      "timed_loop_invocations": [
+        19223,
+        77104
+      ]
+    }
+  ],
+  "raw_files": [
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\join.json",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\join.batches.jsonl",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\crop.json",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\crop.batches.jsonl",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\slice.json",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\slice.batches.jsonl",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\blocks.json",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\blocks.batches.jsonl",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\windows.json",
+    "benchmarks\\current281-minimum-initial-v1\\join-util-current275\\windows.batches.jsonl",
+    "benchmarks\\current281-minimum-initial-v1\\rolling-ball\\rolling-ball.json",
+    "benchmarks\\current281-minimum-initial-v1\\rolling-ball\\rolling-ball.batches.jsonl"
+  ],
+  "limits": [
+    "JOINexactupstreamArrayMapclassidentity remainsOPEN; retained cohortfield saysso. Values/alias/state/nativepreflightchecks are scopedaccepteddriverfacts, notfullclassparity.",
+    "JOINcohortterminal storesmarker/acceptance/fullcaller32 booleans fromfrozenframechecks ratherthannewrawnativeC-returnlist;outerprofilerpausesduringnative. RollingrecordsonePythonget_num_threads plusownedkernel/rollingCreturns. No newclaimoffullgetterobservability/platformSIMD coverage.",
+    "Rawfull32helpercontrols andsourcecheckedcallerrestorationarenot anadditionalrawtarget/process-entryFENV dump; broadFP/traps/platformscope remainspriorfrontier.",
+    "Oneactualminimumruntime/workers1/fixedallocatedpubliccases only; no wholeAPI/domain/Windows-original/genuineSDK/performanceclosure beyondexistingrootqualifiedsourceandfixedbenchcases.",
+    "Rootretainsfinalindependentadmission/main/publication. RemainingMARK/LBP12+VI4casesandtheirfailuresareindependent; cumulative64isnot80acceptance."
+  ],
+  "full_API_closed": false,
+  "main_delivered": false,
+  "pending": "MARK/LBP andVI16comparisoncases, full-domain/platform/provider/SDK/optimization/release/main gates remainopen. Preserve22slower JOIN/util cases.",
+  "waste_review": "Controllerfixes addressedactualfirsttiming blockers; source373failed0timing remainfailed. Twofixedsourcecampaigns once, no favorable retiming or repeatedsuccessfulRadon/flood scope. DuplicatecaseIDs disambiguated with actualsourceorderedstream/API labels; no rawpayload rewrite."
+}

@@ -1,0 +1,3237 @@
+{
+  "metadata": {
+    "source_sha256": "4f65e70562f2af9befbf28e6b38ce8eae716e7cef8244ef4142131ea25bc84ed",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "4f65e70562f2af9befbf28e6b38ce8eae716e7cef8244ef4142131ea25bc84ed",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "source_revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+    "root_binding_sha256": "6468855b61ac99df0b084b50d73b457723d59165586928e66a74ac4a3704dd64",
+    "measurement_sha256": "cf8666d7ec21116dc9b5747b961699835f6851ef849293443b8e380bf5d1dd8c",
+    "contract_sha256": "705ff831506743ad3a2759e5053310616d47d6a093117716118ff7618cfd0fab",
+    "numpy": "1.24.4",
+    "reference": "0.26.0",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "core_path": "/home/runner/work/_temp/runtime/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "prepared_run": "42347579925",
+    "prepared_artifact": "13565257857",
+    "producer": {
+      "run": "42347579925",
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "artifact": "13565257857",
+      "sha256": "5868729f1d010e56d66a23e50880a5f32d3a5c11b3d0b1ae4620d5b7394116c1"
+    },
+    "runtime_sha256": "d8a5ed760956f08613e56643df8a55fc874fe2f2c436d8f60e1e16fc2803d1f4",
+    "core_sha256": "6a4a4a2630b6bf2947ccefd594ae3ac1958980f5087a61362cbdbbbebb25f1ae",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "retain_all_losses": true
+  },
+  "results": [
+    {
+      "case_id": "u8-labels-C",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": null,
+      "reference_ms": 0.8634778421052631,
+      "cpp_ms": 1.5320211184210526,
+      "speedup": 0.5636200648429635,
+      "samples_ms": [
+        [
+          0.866178,
+          0.8634778421052631,
+          0.8614984701492537,
+          0.8654968880597015,
+          0.8617547894736841,
+          0.8655296268656716,
+          0.8618885263157894
+        ],
+        [
+          1.53315148,
+          1.5320211184210526,
+          1.5424043815789474,
+          1.5299689333333333,
+          1.5348802763157894,
+          1.5316540133333334,
+          1.5316136315789475
+        ]
+      ],
+      "loops": [
+        [
+          132,
+          133,
+          134,
+          134,
+          133,
+          134,
+          133
+        ],
+        [
+          75,
+          76,
+          76,
+          75,
+          76,
+          75,
+          76
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        337786913,
+        343328637
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 948783,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 122,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 107934513,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 130,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 111986624,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 134,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116916993,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 1632678,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 108756806,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 76,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117499212,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 75,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115439941,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 132,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114335496,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 75,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114986361,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 76,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116433605,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 133,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114842553,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 134,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115440795,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 76,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117222733,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 75,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114747670,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 134,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115976583,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 133,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114613387,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 76,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116650901,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 75,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114874051,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 134,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115980970,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 133,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114631174,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "u8-labels-C",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 76,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116402636,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "u8-maps-reverse",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode",
+        "join_divmod"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": [
+        "skimage.util._map_array",
+        "skimagexx._component_consumers"
+      ],
+      "reference_ms": 1.2771231222222221,
+      "cpp_ms": 1.6314948169014083,
+      "speedup": 0.782793245183444,
+      "samples_ms": [
+        [
+          1.2749022417582418,
+          1.2834907912087914,
+          1.2810497222222224,
+          1.2771231222222221,
+          1.2748519450549451,
+          1.2771043406593405,
+          1.2788772417582417
+        ],
+        [
+          1.6314948169014083,
+          1.637388633802817,
+          1.6315903098591549,
+          1.630661014084507,
+          1.630239957746479,
+          1.631318633802817,
+          1.63302938028169
+        ]
+      ],
+      "loops": [
+        [
+          91,
+          91,
+          90,
+          90,
+          91,
+          91,
+          91
+        ],
+        [
+          71,
+          71,
+          71,
+          71,
+          71,
+          71,
+          71
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        339549929,
+        344029205
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 1376196,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 84,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 108411542,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 90,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115049184,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 90,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114713007,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 1702087,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 68,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 112755985,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 70,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113899660,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115671473,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115836132,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 91,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116016104,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 91,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116797662,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116254593,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115842912,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 90,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115294475,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 90,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114941081,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115776932,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115747037,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 91,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116011527,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 91,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116216495,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115823623,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 71,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115945086,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "u8-maps-reverse",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 91,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116377829,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "i16-labels-F",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": null,
+      "reference_ms": 3.8140639354838712,
+      "cpp_ms": 5.89431325,
+      "speedup": 0.6470752017605904,
+      "samples_ms": [
+        [
+          3.8037233666666665,
+          3.8022315483870965,
+          3.8140639354838712,
+          3.878965064516129,
+          3.860797466666667,
+          3.859878066666667,
+          3.811841266666667
+        ],
+        [
+          5.87080275,
+          5.85954875,
+          5.91992635,
+          5.8536779,
+          5.915613349999999,
+          5.89431325,
+          5.9195592999999995
+        ]
+      ],
+      "loops": [
+        [
+          30,
+          31,
+          31,
+          31,
+          30,
+          30,
+          30
+        ],
+        [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        350622564,
+        352682730
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 4006965,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 29,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 112636205,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 30,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114398143,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 119581251,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 6185811,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 19,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 112005002,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117158386,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117333531,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 30,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114111701,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117416055,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117190975,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117869178,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118235982,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118398527,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117073558,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 120247917,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 30,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115823924,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118312267,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117886265,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 30,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115796342,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 30,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114355238,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "i16-labels-F",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118391186,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "i16-maps-C",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode",
+        "join_divmod"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": [
+        "skimage.util._map_array",
+        "skimagexx._component_consumers"
+      ],
+      "reference_ms": 5.488191952380952,
+      "cpp_ms": 5.54600480952381,
+      "speedup": 0.9895757650545887,
+      "samples_ms": [
+        [
+          5.5042915,
+          5.364576809523809,
+          5.432293772727273,
+          5.478463409090909,
+          5.5834084285714285,
+          5.575843666666667,
+          5.488191952380952
+        ],
+        [
+          5.543782476190476,
+          5.581529857142857,
+          5.53108519047619,
+          5.576635285714286,
+          5.54600480952381,
+          5.585965571428572,
+          5.529578142857143
+        ]
+      ],
+      "loops": [
+        [
+          22,
+          21,
+          22,
+          22,
+          21,
+          21,
+          21
+        ],
+        [
+          21,
+          21,
+          21,
+          21,
+          21,
+          21,
+          21
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        355586851,
+        352669261
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 5599707,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113274687,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117913566,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 118798891,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 5805668,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 111795436,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 118595575,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116472582,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116419432,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121094413,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112656113,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117212127,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116152789,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119510463,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 120526195,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117109341,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116466101,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117251577,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117092717,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117305277,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116121141,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "i16-maps-C",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115252031,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "u16-labels-C",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": null,
+      "reference_ms": 3.7699861666666665,
+      "cpp_ms": 5.488899666666667,
+      "speedup": 0.6868382363702645,
+      "samples_ms": [
+        [
+          3.9014476451612903,
+          3.7699861666666665,
+          3.829270064516129,
+          3.7461837741935486,
+          3.7112827741935486,
+          3.8035923225806454,
+          3.712063935483871
+        ],
+        [
+          5.4883307142857145,
+          5.488899666666667,
+          5.52982619047619,
+          5.477874904761904,
+          5.529086,
+          5.482014047619048,
+          5.498481714285715
+        ]
+      ],
+      "loops": [
+        [
+          31,
+          30,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        [
+          21,
+          21,
+          21,
+          21,
+          21,
+          21,
+          21
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        348541372,
+        352109223
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 3952260,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 30,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 112897360,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116569938,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115121814,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 5695239,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116170246,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115182606,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115061132,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 120944877,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115254945,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115266893,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 30,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113099585,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118707372,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116126350,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115035373,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116131697,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115049766,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116110806,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115122295,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117911362,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 31,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115073982,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 4,
+          "case_id": "u16-labels-C",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115468116,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "u16-maps-F",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode",
+        "join_divmod"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": [
+        "skimage.util._map_array",
+        "skimagexx._component_consumers"
+      ],
+      "reference_ms": 5.534136476190476,
+      "cpp_ms": 5.8560785,
+      "speedup": 0.9450242984602197,
+      "samples_ms": [
+        [
+          5.539197727272728,
+          5.449658095238095,
+          5.765279181818181,
+          5.59746595,
+          5.534136476190476,
+          5.496831190476191,
+          5.47391419047619
+        ],
+        [
+          5.84425565,
+          5.8546879,
+          5.8223215999999995,
+          5.8560785,
+          5.8621897,
+          5.85689875,
+          5.85703145
+        ]
+      ],
+      "loops": [
+        [
+          22,
+          21,
+          22,
+          20,
+          21,
+          21,
+          21
+        ],
+        [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        356430710,
+        356323969
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 5724673,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114884837,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 121284418,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114536782,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 6012748,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 117125576,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116438209,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116747436,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116885113,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121862350,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114442820,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117093758,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116446432,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 22,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 126836142,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 111949319,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117121570,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117243794,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116216866,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115433455,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117137975,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 20,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117140629,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 5,
+          "case_id": "u16-maps-F",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 21,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114952198,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "i32-labels-reverse",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": null,
+      "reference_ms": 53.93154966666666,
+      "cpp_ms": 27.3147556,
+      "speedup": 1.9744474545716477,
+      "samples_ms": [
+        [
+          54.044619,
+          53.891534666666665,
+          54.008477666666664,
+          53.91465933333333,
+          53.930689666666666,
+          53.96434933333334,
+          53.93154966666666
+        ],
+        [
+          27.3225834,
+          27.3147556,
+          27.351070399999998,
+          27.3078932,
+          27.2272122,
+          27.2871048,
+          27.325847399999997
+        ]
+      ],
+      "loops": [
+        [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        378158962,
+        300920511
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 54023357,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 161873204,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 162262401,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 27868490,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 136538775,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 136513246,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 162133857,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 136612917,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 136573778,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 161674604,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 162025433,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 136755352,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 136539466,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 161743978,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 161792069,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 136136061,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 136435524,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 161893048,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 3,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 161794649,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 6,
+          "case_id": "i32-labels-reverse",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 136629237,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "i32-maps-C",
+      "api": "segmentation.join_segmentations",
+      "actual_C_returns": [
+        "join_encode",
+        "join_divmod"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy scalar promotion; owned ArrayMap exact upstream class identity remains open",
+      "return_class_frontier": [
+        "skimage.util._map_array",
+        "skimagexx._component_consumers"
+      ],
+      "reference_ms": 59.8794555,
+      "cpp_ms": 25.910208,
+      "speedup": 2.311037236752403,
+      "samples_ms": [
+        [
+          60.1490625,
+          59.8794555,
+          59.8560905,
+          59.932921,
+          59.8444025,
+          59.862074,
+          60.557941
+        ],
+        [
+          25.8806774,
+          25.94075,
+          25.8702574,
+          25.910208,
+          25.967378399999998,
+          25.860521,
+          26.2380754
+        ]
+      ],
+      "loops": [
+        [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        299828619,
+        284701368
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 59985937,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 120170613,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 119672069,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 25913523,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 129548666,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 129239179,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 129403387,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 120298125,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119758911,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 129703750,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 129351287,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119712181,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119865842,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 129551040,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 129836892,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119688805,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 119724148,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 129302605,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 5,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 131190377,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 7,
+          "case_id": "i32-maps-C",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 2,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 121115882,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    }
+  ]
+}

@@ -41,7 +41,11 @@ Current retained-evidence closeout: [six-family root intake](evidence/current281
 
 Corrections now source-admitted: [JOIN/rolling boundary successor8ed](evidence/current281-measurement-boundaries-root-admission-v1.json) passes159checks on each Python. Its new exact-source comparisons [JOIN42362296756](https://github.com/bipxx/scikit-imagexx/actions/runs/42362296756) and [rolling42362296718](https://github.com/bipxx/scikit-imagexx/actions/runs/42362296718) are terminal SUCCESS. [Saved corrected-output intake](evidence/current281-corrected-comparisons-root-intake-v1.json) reconstructs40cases/560samples/80warmupgroups:18wins22losses; exact8edreport validators pass, independent authority admission remains pending. [IGG half exception-parity correctiona706](evidence/igg-half-error-parity-root-source-admission-v1.json) passes27source/inert checks per Python, retaining all dtype cases and production/gold bytes. This does not resolve the minimum numerical failures. C prepares a native-only three-case diagnostic with zero original/timing calls; execution still requires its actual source/runtime readiness and root GO. R's MARK64bit support remains a source-only work in progress. No new shipping or full-contract checkbox closes here.
 
-Root now [admits the bounded Radon/flood performance scope](evidence/current281-radon-flood-performance-root-admission-v1.json):24cases/336samples/48warmupgroups,20wins/four losses, actual authority/cohorts/host helpers verified. [Per-case results and six exact raw report/journal files](../benchmarks/current281-minimum-initial-v1/README.md) are published. Candidate B~ credit applies only to these four APIs and declared domains; main stays271, full-contract gates stay open. Corrected JOIN/rolling40case authority review remains pending, with all22losses retained.
+Root now [admits the bounded Radon/flood performance scope](evidence/current281-radon-flood-performance-root-admission-v1.json):24cases/336samples/48warmupgroups,20wins/four losses, actual authority/cohorts/host helpers verified. [Per-case results and six exact raw report/journal files](../benchmarks/current281-minimum-initial-v1/README.md) are published. Candidate B~ credit applies only to these four APIs and declared domains; main stays271, full-contract gates stay open. Corrected JOIN/rolling40case authority review is now independently/root admitted below, with all22losses retained.
+
+[JOIN/rolling root performance admission](evidence/current281-join-rolling-performance-root-admission-v1.json) accepts40cases/560samples/80warmupgroups,18wins22losses, with actual cohort/C1/helper/authority closure. [Published64-case table and18exact raw files](../benchmarks/current281-minimum-initial-v1/README.md) now cover64cases/896samples/128warmupgroups:38wins26losses. Remaining16MARK/LBP/VIcases are blocked; main stays271. This is scoped candidate evidence, not full80-case or library-wide superiority.
+
+[MARK3106 source-only review](evidence/mark-wide-outer-root-source-admission-v1.json) passes6familyfiles/24proofs/12inert checks per Python; cast ABI, FP, leaf compilation/native parity, required CMake FP flags and SDK/performance remain open. R prepares the bounded changed-leaf stage client before execution GO. [IGG actual-core local diagnostic](evidence/igg282-minimum-native-diagnostic-root-closeout-v1.json) ran exactly three saved3x4 requests, zero original/timing calls: all saved observations/targetFP/caller32 match. Hosted minimum failures remain unlocalized; C prepares an exact-host-runtime diagnostic with CPU/provider/stage provenance. B prepares VI failing-value capture using the frozen probe traceback after restoration, with no extra target calls. Neither hosted diagnostic has execution authority yet.
 
 Update discipline: each bounded task must identify affected API/member keys, changed domains, exact source/profile/receipt, passed or failed gates, remaining gates and the next owner/trigger in its existing handoff. Root updates the affected rows and this checkpoint in the same validated increment. Reuse still-valid evidence; never turn a test locator, registration or workflow success into full closure. Waste review: reused the existing inventory, checklist and ledger; this update required only document/state checks and read-only run-status queries, with zero scientific reruns.
 
@@ -3496,6 +3500,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-restoration-rolling-ball"></a>
 - [ ] **`restoration.rolling_ball`** — full contract closed.
   - Main: `upstream-only`; gate status `C~ N~ H~ P~ S~ V~ W~ B? R?` (private scoped evidence; no shipped promotion); default dtype slice: `none registered`.
+  - Candidate B~ admitted: rolling-ball stream one-thread public comparison, actual cohort/C1/helper and qualifiedDDA runtime/SDK chain accepted. [Exact cases/all losses](../benchmarks/current281-minimum-initial-v1/README.md), [root receipt](evidence/current281-join-rolling-performance-root-admission-v1.json). Full domains, provider/class ownership, optimization and main delivery remain open.
   - Signature: `(image, *, radius=100, kernel=None, nansafe=False, num_threads=<DEPRECATED>, workers=None)`.
   - Required focus: nansafe, kernel origin, radius, workers/num_threads warning and dtype. Cases to close: NaNs, bright background and wide kernels.
   - Easiest remaining route: Min-plus neighborhood erosion using nonflat ball/ellipsoid height kernel.
@@ -3630,6 +3635,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-segmentation-join-segmentations"></a>
 - [ ] **`segmentation.join_segmentations`** — full contract closed.
   - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `int8, uint8, int16, uint16, int32, uint32, int64, uint64`.
+  - Candidate B~ admitted: JOIN stream one-thread public comparison, actual cohort/C1/helper and qualifiedDDA runtime/SDK chain accepted. [Exact cases/all losses](../benchmarks/current281-minimum-initial-v1/README.md), [root receipt](evidence/current281-join-rolling-performance-root-admission-v1.json). Full domains, provider/class ownership, optimization and main delivery remain open.
   - Signature: `(s1, s2, return_mapping: bool = False)`.
   - Required focus: dtype overflow, mapping objects, return_mapping and zero labels. Cases to close: sparse huge label pairs and mapping round trips.
   - Easiest remaining route: Pair-label encode then stable sequential relabel with inverse mappings.
@@ -4069,6 +4075,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-util-crop"></a>
 - [ ] **`util.crop`** — full contract closed.
   - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
+  - Candidate B~ admitted: crop stream one-thread public comparison, actual cohort/C1/helper and qualifiedDDA runtime/SDK chain accepted. [Exact cases/all losses](../benchmarks/current281-minimum-initial-v1/README.md), [root receipt](evidence/current281-join-rolling-performance-root-admission-v1.json). Full domains, provider/class ownership, optimization and main delivery remain open.
   - Signature: `(ar, crop_width, copy=False, order='K')`.
   - Required focus: scalar/tuple widths, negative/large crops, order and memory sharing. Cases to close: asymmetric N-D crops and C/F/negative strides.
   - Easiest remaining route: Return slice view or requested-order copy after crop-width normalization.
@@ -4211,6 +4218,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-util-slice-along-axes"></a>
 - [ ] **`util.slice_along_axes`** — full contract closed.
   - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
+  - Candidate B~ admitted: slice stream one-thread public comparison, actual cohort/C1/helper and qualifiedDDA runtime/SDK chain accepted. [Exact cases/all losses](../benchmarks/current281-minimum-initial-v1/README.md), [root receipt](evidence/current281-join-rolling-performance-root-admission-v1.json). Full domains, provider/class ownership, optimization and main delivery remain open.
   - Signature: `(image, slices, axes=None, copy=False)`.
   - Required focus: duplicate/negative axes, bounds and sharing. Cases to close: reordered/negative axes and copy flags.
   - Easiest remaining route: Normalize axes/slice pairs then return view or copy.
@@ -4231,6 +4239,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-util-view-as-blocks"></a>
 - [ ] **`util.view_as_blocks`** — full contract closed.
   - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
+  - Candidate B~ admitted: blocks stream one-thread public comparison, actual cohort/C1/helper and qualifiedDDA runtime/SDK chain accepted. [Exact cases/all losses](../benchmarks/current281-minimum-initial-v1/README.md), [root receipt](evidence/current281-join-rolling-performance-root-admission-v1.json). Full domains, provider/class ownership, optimization and main delivery remain open.
   - Signature: `(arr_in, block_shape)`.
   - Required focus: divisibility, dimensionality, contiguous assumptions and write sharing. Cases to close: C/F/noncontiguous arrays and block mutation.
   - Easiest remaining route: Construct validated reshape/strided block view.
@@ -4243,6 +4252,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-util-view-as-windows"></a>
 - [ ] **`util.view_as_windows`** — full contract closed.
   - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W~ B~ R~`; default dtype slice: `bool, int8, uint8, int16, uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64, complex128`.
+  - Candidate B~ admitted: windows stream one-thread public comparison, actual cohort/C1/helper and qualifiedDDA runtime/SDK chain accepted. [Exact cases/all losses](../benchmarks/current281-minimum-initial-v1/README.md), [root receipt](evidence/current281-join-rolling-performance-root-admission-v1.json). Full domains, provider/class ownership, optimization and main delivery remain open.
   - Signature: `(arr_in, window_shape, step=1)`.
   - Required focus: scalar/vector step, shape, strides and dangerous overlap semantics. Cases to close: overlapping windows and negative/zero invalid steps.
   - Easiest remaining route: Construct rolling strided view with validated window/step.

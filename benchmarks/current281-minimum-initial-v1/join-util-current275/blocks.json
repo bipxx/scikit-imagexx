@@ -1,0 +1,1671 @@
+{
+  "metadata": {
+    "source_sha256": "4f65e70562f2af9befbf28e6b38ce8eae716e7cef8244ef4142131ea25bc84ed",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py",
+    "source_before": {
+      "source_sha256": "4f65e70562f2af9befbf28e6b38ce8eae716e7cef8244ef4142131ea25bc84ed",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    },
+    "source_revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+    "root_binding_sha256": "ae7ae975570f679d0c65d518dcb2a1a20a1ebc84559dd52c8259ee313ebbd583",
+    "measurement_sha256": "7bffe39cc7a83c8f35dc2e3aa977f100c465a434b13289418922f039c9f2c21d",
+    "contract_sha256": "705ff831506743ad3a2759e5053310616d47d6a093117716118ff7618cfd0fab",
+    "numpy": "1.24.4",
+    "reference": "0.26.0",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "core_path": "/home/runner/work/_temp/runtime/lib/python3.11/site-packages/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "prepared_run": "42347579925",
+    "prepared_artifact": "13565257857",
+    "producer": {
+      "run": "42347579925",
+      "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "artifact": "13565257857",
+      "sha256": "5868729f1d010e56d66a23e50880a5f32d3a5c11b3d0b1ae4620d5b7394116c1"
+    },
+    "runtime_sha256": "d8a5ed760956f08613e56643df8a55fc874fe2f2c436d8f60e1e16fc2803d1f4",
+    "core_sha256": "6a4a4a2630b6bf2947ccefd594ae3ac1958980f5087a61362cbdbbbebb25f1ae",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "retain_all_losses": true
+  },
+  "results": [
+    {
+      "case_id": "view_as_blocks/C",
+      "api": "util.view_as_blocks",
+      "actual_C_returns": [
+        "util_view_as_blocks"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy as_strided metadata representation, no payload computation",
+      "return_class_frontier": null,
+      "reference_ms": 0.01028067034728406,
+      "cpp_ms": 0.009384042999347258,
+      "speedup": 1.0955480860434217,
+      "samples_ms": [
+        [
+          0.01033261262721787,
+          0.010287486972147349,
+          0.010281184810805975,
+          0.010240739406400858,
+          0.01028067034728406,
+          0.01024097792080093,
+          0.010198236064113981
+        ],
+        [
+          0.00939908322400787,
+          0.009383599297155933,
+          0.009384042999347258,
+          0.009429354222766218,
+          0.009734383404394883,
+          0.00916462933807347,
+          0.009258018487528887
+        ]
+      ],
+      "loops": [
+        [
+          11103,
+          11130,
+          11179,
+          11186,
+          11230,
+          11187,
+          11230
+        ],
+        [
+          12196,
+          12236,
+          12256,
+          12255,
+          12196,
+          11814,
+          12549
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        258539537,
+        363412481
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 41693,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2759,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 28609732,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11091,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114499941,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11140,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115388171,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 60751,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1893,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 17762143,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12257,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115009199,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12257,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115673242,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12186,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114907146,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 11103,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114722998,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 12196,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114631219,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 12236,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114817721,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 11130,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114499730,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 11179,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114933365,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 12256,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115010831,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 12255,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115556736,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 11186,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114552911,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 11230,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115451928,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 12196,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 118720540,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 11814,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 108270931,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 11187,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114565820,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 11230,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114526191,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 0,
+          "case_id": "view_as_blocks/C",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 12549,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 116178874,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "view_as_blocks/F",
+      "api": "util.view_as_blocks",
+      "actual_C_returns": [
+        "util_view_as_blocks"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy as_strided metadata representation, no payload computation",
+      "return_class_frontier": null,
+      "reference_ms": 0.010234603448275863,
+      "cpp_ms": 0.00932672614812419,
+      "speedup": 1.097341477141394,
+      "samples_ms": [
+        [
+          0.010274255625,
+          0.010234603448275863,
+          0.01021694099848714,
+          0.010213271677327648,
+          0.010231968472468916,
+          0.01025578202846975,
+          0.01024832281077225
+        ],
+        [
+          0.00932672614812419,
+          0.009253308004217014,
+          0.009333446169938848,
+          0.009398118730725531,
+          0.009283682193348042,
+          0.009330159347755893,
+          0.009320762291092
+        ]
+      ],
+      "loops": [
+        [
+          11200,
+          11194,
+          11237,
+          11256,
+          11260,
+          11240,
+          11214
+        ],
+        [
+          12368,
+          12331,
+          12428,
+          12322,
+          12237,
+          12388,
+          12326
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        257027475,
+        255635586
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 43185,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 2663,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 27463372,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11152,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114340631,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11217,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115180287,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 41423,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2777,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 25963579,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12301,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 120149967,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 11774,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 109480617,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 12368,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115352949,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 11200,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115071663,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 11194,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114566151,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 12331,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114102541,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 12428,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115996069,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 11237,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114807766,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 11256,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114960586,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 12322,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115803619,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 12237,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 113604419,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 11260,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115211965,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 11240,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115274990,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 12388,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115582014,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 12326,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114887716,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 1,
+          "case_id": "view_as_blocks/F",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 11214,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114924692,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "view_as_blocks/reverse",
+      "api": "util.view_as_blocks",
+      "actual_C_returns": [
+        "util_view_as_blocks"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy as_strided metadata representation, no payload computation",
+      "return_class_frontier": null,
+      "reference_ms": 0.010333993086109366,
+      "cpp_ms": 0.00945386975458581,
+      "speedup": 1.093096621211291,
+      "samples_ms": [
+        [
+          0.010355118885504389,
+          0.010342143345939131,
+          0.010351008183453237,
+          0.010326544865448654,
+          0.010333993086109366,
+          0.010312130380088057,
+          0.010326019637733141
+        ],
+        [
+          0.009453330891431393,
+          0.009479946408022357,
+          0.009444459483966697,
+          0.009632777695655745,
+          0.00945386975458581,
+          0.00943703214138923,
+          0.00948852022647083
+        ]
+      ],
+      "loops": [
+        [
+          11162,
+          11106,
+          11120,
+          11111,
+          11137,
+          11129,
+          11152
+        ],
+        [
+          12149,
+          12166,
+          12131,
+          12177,
+          11939,
+          12165,
+          12187
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        266539029,
+        257976448
+      ],
+      "sample_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 32319,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3559,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 36757758,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11135,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115934826,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11046,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 113814126,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 39880,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2884,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 27106564,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12236,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115378808,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12196,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 115451196,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 11162,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115583837,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 12149,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114848517,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 12166,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115333028,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 11106,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114859844,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 11120,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115103211,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 12131,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114570738,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 12177,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117298334,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 11111,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114738240,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 11137,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115089681,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 11939,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112869751,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 12165,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114801496,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 11129,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114763699,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 0,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 11152,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115155771,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 2,
+          "case_id": "view_as_blocks/reverse",
+          "function": 1,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 12187,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115636596,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    },
+    {
+      "case_id": "view_as_blocks/readonly",
+      "api": "util.view_as_blocks",
+      "actual_C_returns": [
+        "util_view_as_blocks"
+      ],
+      "native_accepted": true,
+      "FP": {
+        "flags": 32,
+        "rounding": 0
+      },
+      "providers": "NumPy as_strided metadata representation, no payload computation",
+      "return_class_frontier": null,
+      "reference_ms": 0.010069328126371216,
+      "cpp_ms": 0.009169033863109974,
+      "speedup": 1.0981885634519708,
+      "samples_ms": [
+        [
+          0.010092954950189543,
+          0.010069328126371216,
+          0.010252635496016111,
+          0.01004606873495587,
+          0.010065400244584207,
+          0.010059715473481534,
+          0.01024842354793562
+        ],
+        [
+          0.009185075234611102,
+          0.009169033863109974,
+          0.009215524834569081,
+          0.00917113230226781,
+          0.009164345853269537,
+          0.009146768587138419,
+          0.009167263103475702
+        ]
+      ],
+      "loops": [
+        [
+          11343,
+          11395,
+          11421,
+          11217,
+          11448,
+          11426,
+          11432
+        ],
+        [
+          12574,
+          12521,
+          12543,
+          12479,
+          12540,
+          12549,
+          12573
+        ]
+      ],
+      "sample_labels": [
+        "scikit-image",
+        "current"
+      ],
+      "warmup_elapsed_ns": [
+        267492879,
+        254335914
+      ],
+      "sample_order": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "batch_records": [
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 30977,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 3713,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 37754662,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11310,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 116811590,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": -1,
+          "ordinal": 0,
+          "loops": 11135,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 112895650,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 1,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 41973,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 2740,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 25279817,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12465,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114618881,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": -1,
+          "ordinal": 1,
+          "loops": 12507,
+          "event": "batch_after",
+          "phase": "warmup",
+          "elapsed_ns": 114395243,
+          "complete": true,
+          "accepted": false,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": 0,
+          "ordinal": 0,
+          "loops": 12574,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115493136,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": 0,
+          "ordinal": 1,
+          "loops": 11343,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114484388,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": 1,
+          "ordinal": 0,
+          "loops": 11395,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114739994,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": 1,
+          "ordinal": 1,
+          "loops": 12521,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114805473,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": 2,
+          "ordinal": 0,
+          "loops": 12543,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115590328,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": 2,
+          "ordinal": 1,
+          "loops": 11421,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117095350,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": 3,
+          "ordinal": 0,
+          "loops": 11217,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 112686753,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": 3,
+          "ordinal": 1,
+          "loops": 12479,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114446560,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": 4,
+          "ordinal": 0,
+          "loops": 12540,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114920897,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": 4,
+          "ordinal": 1,
+          "loops": 11448,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115228702,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": 5,
+          "ordinal": 0,
+          "loops": 11426,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114942309,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": 5,
+          "ordinal": 1,
+          "loops": 12549,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 114782799,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 1,
+          "round": 6,
+          "ordinal": 0,
+          "loops": 12573,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 115259999,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        },
+        {
+          "case_index": 3,
+          "case_id": "view_as_blocks/readonly",
+          "function": 0,
+          "round": 6,
+          "ordinal": 1,
+          "loops": 11432,
+          "event": "batch_after",
+          "phase": "sample",
+          "elapsed_ns": 117159978,
+          "complete": true,
+          "accepted": true,
+          "failure": null
+        }
+      ]
+    }
+  ]
+}
