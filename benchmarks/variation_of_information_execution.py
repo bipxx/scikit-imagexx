@@ -16,7 +16,7 @@ from pathlib import Path
 import sys
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v2.json'
+CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v4.json'
 digest=lambda raw:hashlib.sha256(raw).hexdigest()
 source_bytes=lambda p:Path(p).read_bytes().replace(b'\r\n',b'\n')
 
@@ -37,15 +37,21 @@ def require_sdk_dependencies(binding):
 @contextmanager
 def candidate_providers(np,sparse):
     # Only preflight is instrumented. Timed callbacks are exact public calls.
-    csr=sparse.csr_array;log,log2=np.log,np.log2
-    def structural(arg,*a,**k):
+    # Preserve CSR class identity: the owned frontend checks exact table types.
+    csr=sparse.csr_array;initialize=csr.__init__;own_init='__init__'in csr.__dict__
+    log,log2=np.log,np.log2
+    def structural(self,arg,*a,**k):
         assert type(arg)is tuple and len(arg)==3,'Candidate numerical coordinate/coalescing provider forbidden'
-        return csr(arg,*a,**k)
+        return initialize(self,arg,*a,**k)
     def denied(*a,**k):raise AssertionError('VI entropy provider forbidden')
+    csr.__init__=structural
     try:
-        sparse.csr_array=structural;np.log=np.log2=denied
+        np.log=np.log2=denied
         yield
-    finally:sparse.csr_array=csr;np.log,np.log2=log,log2
+    finally:
+        if own_init:csr.__init__=initialize
+        else:del csr.__init__
+        np.log,np.log2=log,log2
 
 
 def execute(module):

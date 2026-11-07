@@ -1,4 +1,5 @@
 #include "../variation_of_information_current_counts_controls.hpp"
+#include "../variation_of_information_large_controls.hpp"
 #include <skimagexx/variation_of_information.hpp>
 #include <skimagexx/image.hpp>
 #include "fixtures/variation_of_information_saved_v1.hpp"
@@ -32,6 +33,7 @@ int main() {
         }
     }
     skimagexx::set_num_threads(1);
+    if(int status=vi_large_saved_controls())return status;
     std::cout<<"SDK VI complete controls="<<checked<<" workers=1,4 restored="<<skimagexx::get_num_threads()
         <<" available="<<skimagexx::has_avx2()<<" originals=0 timing=0\n";
 }

@@ -294,7 +294,7 @@ SDK_MEMBERS = 68
 CURRENT_PRODUCT_SCOPE = 'current280'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill')
 CURRENT_SDK_CLIENT_SCOPE = 'current37 required installed clients; owning VI current counts plus complete flood/fill current-copy operation; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v4.json'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v5.json'
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
 DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
     'src/simd_draw_coordinates_avx2.cpp', 'src/bind_draw_coordinates.cpp',
@@ -649,6 +649,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/regular-grid-native-v2.json','coverage
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/label-pair-density-optimization-v1.json', 'tests/test_label_pair_density_contract.py', 'tests/test_label_pair_density_native.cpp', 'tests/test_label_pair_density_public.py', 'benchmarks/next-metrics-minimum-initial-v1/label_pair_metrics.json', 'coverage/contracts/find-boundaries-f-row-optimization-v1.json', 'tests/test_find_boundaries_f_rows.cpp', 'tests/test_find_boundaries_f_rows_public.py', 'benchmarks/next-metrics-minimum-initial-v1/find_boundaries.json', 'benchmarks/array_views.py', 'benchmarks/slice_along_axes.py', 'coverage/contracts/slice-along-axes-v1.json', 'coverage/contracts/slice-along-axes-v2.json', 'coverage/contracts/util-array-views-v1.json', 'coverage/contracts/util-view-operations-v1.json', 'include/skimagexx/array_views.hpp', 'include/skimagexx/slice_along_axes.hpp', 'python/skimagexx/_array_views.py', 'python/skimagexx/_slice_along_axes.py', 'src/bind_util_views.cpp', 'src/util_views.cpp', 'tests/array_views_contract.py', 'tests/array_views_observer.py', 'tests/cmake_consumer/util_views_consumer.cpp', 'tests/cmake_consumer/util_views_consumer.hpp', 'tests/fixtures/array_views_observer_captured_v1.py.txt', 'tests/fixtures/array_views_upstream_v026.py.txt', 'tests/fixtures/slice_along_axes_observer_captured_v1.py.txt', 'tests/fixtures/slice_along_axes_upstream_v026.py.txt', 'tests/fixtures/util_views_originals_v1.json', 'tests/slice_along_axes_contract.py', 'tests/slice_along_axes_observer.py', 'tests/test_array_views_intake.py', 'tests/test_array_views_reference.py', 'tests/test_slice_along_axes_intake.py', 'tests/test_slice_along_axes_reference.py', 'tests/test_util_views_native.cpp', 'tests/test_util_views_public.py', 'tests/test_util_views_source.py', 'tests/util_views_reference.py', 'tests/test_util_views_integration.py', 'tests/test_join_util_views_density_source.py')
 POST203_TESTS += ('test_label_pair_density_public.py','test_find_boundaries_f_rows_public.py','test_util_views_integration.py','test_join_util_views_density_source.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/variation-of-information-reduction-v2.json','tests/data/variation_of_information_large_saved_v1.json','tests/test_variation_of_information_large_saved.py','tests/variation_of_information_large_controls.hpp','tests/test_variation_of_information_large_native.cpp','tests/test_variation_of_information_reduction_native.cpp','tests/cmake_consumer/variation_of_information_reduction_consumer.cpp','tests/variation_of_information_reduction_contract.py','tests/test_variation_of_information_reduction_source.py')
 
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-density-additive-context-v1.json', 'coverage/contracts/find-boundaries-f-row-source-context-v1.json', 'coverage/contracts/find-boundaries-benchmark-binding-v5.json', 'coverage/contracts/find-boundaries-frontend-v4.json', 'coverage/contracts/find-boundaries-sdk-v3.json')
@@ -708,6 +709,7 @@ def applicable_public_groups(groups,profile):
         selected['public-radon-saved-linux']=('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py')
         selected['public-radon-ABI-policy-linux']=('test_finite_radon_numpy_abi_public.py',)
         selected['public-VI-saved-linux']=('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py')
+        selected['public-VI-large-saved-linux']=('test_variation_of_information_large_saved.py',)
         selected['public-flood-saved-linux'] = ('test_flood_fill_public.py',)
     return selected
 
@@ -1005,7 +1007,7 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py'},
             'current qualification selector contract differs')
     require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
     require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
@@ -2074,6 +2076,9 @@ def child(out, group):
         os.environ.update(util_views_fenv_environment(out,state))
         os.environ['FLOOD_FILL_CALLER_RECORD_DIR']=str(out/(mode+'-flood-caller-rows'))
 
+    if group=='public-VI-large-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIlargeforbidsprivatecomponentorWindowsFPclaim')
+        os.environ.update(util_views_fenv_environment(out,state))
     if group=='public-VI-saved-linux':
         require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIforbidsprivatecomponentorWindowsFPclaim')
         os.environ.update(util_views_fenv_environment(out,state))
@@ -2292,6 +2297,7 @@ def sdk(out, state, journal):
     with zipfile.ZipFile(out / 'source.zip') as archive:
         for name in archive.namelist():
             if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')
+                    or name == 'tests/variation_of_information_large_controls.hpp'
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
@@ -2393,6 +2399,7 @@ def seal(out):
             if group=='public-flood-saved-linux':
                 rows=[json.loads(p.read_text())for p in(out/(mode+'-flood-caller-rows')).glob('*.json')]
                 require(len(rows)==100 and all(r['exact32']and r['saved']==r['actual']and r['workers']in(1,4)for r in rows),'Floodcaller32/global-worker records incomplete')
+            if group=='public-VI-large-saved-linux':require(row['tests']==8,'Full8 large VI saved-domain nodes required; strict word/FP/caller assertions are in each pinned test')
             if group=='public-VI-saved-linux':
                 require(row['tests']==40,'Full40 VI saved/current-count nodes required; no partial selector')
                 callers=list((out/(mode+'-VI-caller-rows')).glob('*.json'))
@@ -2445,7 +2452,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-flood-saved-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-flood-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()

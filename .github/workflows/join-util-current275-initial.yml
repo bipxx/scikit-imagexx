@@ -1,0 +1,232 @@
+name: join-util-current275-initial
+on:
+  workflow_dispatch:
+    inputs:
+      producer_run:
+        type: string
+        required: true
+      producer_revision:
+        type: string
+        required: true
+      artifact_id:
+        type: string
+        required: true
+      artifact_sha256:
+        type: string
+        required: true
+      execution_created_utc:
+        type: string
+        required: true
+      deadline_utc:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+  PYTHONOPTIMIZE: '0'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PRODUCER_RUN: ${{ inputs.producer_run }}
+      PRODUCER_REVISION: ${{ inputs.producer_revision }}
+      ARTIFACT_ID: ${{ inputs.artifact_id }}
+      ARTIFACT_SHA256: ${{ inputs.artifact_sha256 }}
+      EXECUTION_CREATED_UTC: ${{ inputs.execution_created_utc }}
+      DEADLINE_UTC: ${{ inputs.deadline_utc }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: controller
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate the exact successful producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir results
+          lscpu > results/cpu.txt
+          uname -a > results/platform.txt
+          python - <<'PY'
+          import json, os, re, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
+          assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
+          assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
+          frozen = json.loads(Path('controller/coverage/contracts/join-util-current275-measurement-v3.json').read_bytes())
+          assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'
+          assert (run, revision, artifact, digest) == tuple(frozen['producer'][key] for key in ('run','revision','artifact','sha256'))
+          created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
+          deadline = datetime.fromisoformat(os.environ['DEADLINE_UTC'])
+          assert created.utcoffset() is not None and created.utcoffset().total_seconds() == 0
+          assert deadline.utcoffset() is not None and deadline.utcoffset().total_seconds() == 0
+          assert 0 < (deadline-created).total_seconds() <= 7200
+          assert created <= datetime.now(timezone.utc) < deadline
+          Path('results/execution-clock.json').write_text(json.dumps(dict(created_utc=created.isoformat(),deadline_utc=deadline.isoformat()))+'\n')
+          base = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/'
+          def api(endpoint, name):
+              raw = subprocess.check_output(['gh', 'api', base + endpoint])
+              Path('results', name + '.json').write_bytes(raw)
+              return json.loads(raw)
+          record = api('runs/' + run, 'producer-run')
+          assert str(record['id']) == run and record['head_sha'] == revision
+          assert record['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          assert record['path'] == '.github/workflows/public-qualification.yml'
+          assert record['status'] == 'completed' and record['conclusion'] == 'success'
+          listing = api('runs/' + run + '/artifacts?per_page=100', 'producer-artifacts')
+          assert listing['total_count'] == len(listing['artifacts'])
+          matches = [a for a in listing['artifacts'] if a['name'] == 'rank-statistics-product-minimum']
+          assert len(matches) == 1
+          selected = matches[0]
+          assert str(selected['id']) == artifact and selected['digest'] == 'sha256:' + digest
+          assert not selected['expired'] and 0 < selected['size_in_bytes'] < 512 * 1024**2
+          assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
+          Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.producer_revision }}
+          path: snapshot
+          fetch-depth: 1
+      - name: Install the authenticated product offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > "$RUNNER_TEMP/prepared.zip"
+          python - <<'PY'
+          import hashlib, json, os, runpy, stat, zipfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path, PurePosixPath
+          selected = json.loads(Path('results/selection.json').read_bytes())
+          archive = Path(os.environ['RUNNER_TEMP'], 'prepared.zip')
+          actual = dict(bytes=archive.stat().st_size, sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+          Path('results/archive.json').write_text(json.dumps(actual, indent=2) + '\n')
+          assert actual['bytes'] == selected['size_in_bytes'] and actual['sha256'] == os.environ['ARTIFACT_SHA256']
+          with zipfile.ZipFile(archive) as z:
+              names = z.namelist(); assert len(names) == len(set(names))
+              assert sum(i.file_size for i in z.infolist()) < 2 * 1024**3
+              for i in z.infolist():
+                  p = PurePosixPath(i.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16)
+              z.extractall('stage')
+          prepared = Path('stage')
+          manifest = json.loads((prepared / 'runtime.json').read_bytes())
+          assert manifest['schema'] == 'ci-offline-measurement-v1'
+          Path('results/measurement.json').write_bytes((prepared / 'runtime.json').read_bytes())
+          Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
+          assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
+          frozen = json.loads(Path('controller/coverage/contracts/join-util-current275-measurement-v3.json').read_bytes())
+          sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
+          assert sha(prepared/'runtime.json')==frozen['runtime_sha256']
+          first=frozen['first_cohort']
+          admission_path=Path('controller',first['root_admission_path'])
+          stager_path=Path('controller',first['root_stager_path'])
+          assert sha(admission_path)==first['root_admission_sha256']
+          assert sha(stager_path)==first['root_stager_sha256']
+          admission=json.loads(admission_path.read_bytes());stager=json.loads(stager_path.read_bytes())
+          assert admission['source']==os.environ['PRODUCER_REVISION'] and str(admission['run'])==os.environ['PRODUCER_RUN']
+          assert admission['passed'] is True and admission['root_accepted'] is True and admission['profiles']==4
+          assert stager['revision']==os.environ['PRODUCER_REVISION'] and str(stager['run'])==os.environ['PRODUCER_RUN']
+          assert str(stager['artifact'])==os.environ['ARTIFACT_ID'] and stager['artifact_sha256']==os.environ['ARTIFACT_SHA256']
+          assert stager['profile']=='minimum' and stager['status'].startswith('AUTHENTICATED_STAGED_UNACCEPTED')
+          product=json.loads((prepared/'product.json').read_bytes());qualification=json.loads((prepared/'qualification.json').read_bytes())
+          assert sha(prepared/'product.json')==stager['product_json_sha256']
+          assert sha(prepared/'qualification.json')==stager['qualification_manifest_sha256']
+          assert product['schema']=='rank-statistics-comparison-product-v1'
+          assert product['status']==product['provenance']['status']=='staged-unaccepted'
+          assert product['revision']==os.environ['PRODUCER_REVISION'] and product['profile']=='minimum'
+          assert product['provenance']['original_run']==os.environ['PRODUCER_RUN']
+          assert product['provenance']['original_artifact']=='public-qualification-minimum'
+          assert product['provenance']['original_manifest_sha256']==sha(prepared/'qualification.json')
+          assert qualification['passed'] is True and qualification['no_timing'] is True and qualification['profile']=='minimum'
+          assert qualification['source']==manifest['source']
+          Path('results/product.json').write_bytes((prepared/'product.json').read_bytes())
+          Path('results/qualification.json').write_bytes((prepared/'qualification.json').read_bytes())
+          assert len(manifest['wheels']) == 14
+          assert manifest['source'] == frozen['prepared_source']
+          assert len(manifest['runtime']['sdk_sha256']) == frozen['SDK_members'] > 0 and type(frozen['SDK_members'])is int
+          for name,pin in frozen['benchmark_source_sha256'].items():
+              assert manifest['source']['files_sha256'][name] == pin
+              assert hashlib.sha256(Path('snapshot',name).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == pin
+          # Independent whole-release and stager receipts bind source/artifact; staging stays unaccepted.
+          # Existing verifier below authenticates the installed package/runtime bytes.
+          PY
+          python -m venv "$RUNNER_TEMP/runtime"
+          "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links stage/wheels -r stage/runtime-lock.txt 2>&1 | tee results/offline-install.log
+          "$RUNNER_TEMP/runtime/bin/python" snapshot/tools/ci_measurement_artifacts.py verify --wheel-dir stage/wheels --artifact stage/runtime.json 2>&1 | tee results/original-identity.log
+      - name: Prepare the authenticated small F1 helper once on this measurement host
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD UTIL_VIEWS_FENV_HELPER
+          export PYTHONDONTWRITEBYTECODE=1
+          "$RUNNER_TEMP/runtime/bin/python" - <<'PY'
+          import json,os,runpy,sys
+          from pathlib import Path
+          workspace=Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
+          probe=runpy.run_path(str(controller/'tools/join_util_current275_probe.py'))
+          path,frozen=probe['read_manifest'](controller)
+          assert probe['sha'](controller/frozen['first_cohort']['probe_path'])==frozen['first_cohort']['probe_sha256']
+          env=probe['prepare_host_helper'](snapshot,results,sys.executable,frozen)
+          with Path(os.environ['GITHUB_ENV']).open('a')as stream:
+              for key,value in env.items():
+                  assert '\n'not in value
+                  stream.write(key+'='+value+'\n')
+          PY
+      - name: Validate five affected distinct real API CLI cohorts before timing
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          export PYTHONDONTWRITEBYTECODE=1
+          "$RUNNER_TEMP/runtime/bin/python" - <<'PY'
+          import json,os,runpy,sys,sysconfig
+          from pathlib import Path
+          workspace=Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
+          probe=runpy.run_path(str(controller/'tools/join_util_current275_probe.py'))
+          path,frozen=probe['read_manifest'](controller)
+          authorities=probe['prepare_cohorts'](controller,snapshot,results,frozen,sys.executable,Path(sysconfig.get_paths()['purelib']).resolve(),os.environ['DEADLINE_UTC'])
+          probe['run_cohorts'](controller,results,frozen,sys.executable,authorities)
+          PY
+      - name: Measure only the root-bound fixed cases with one worker and retain every loss
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME SKIMAGEXX_DISABLE_SIMD
+          export PYTHONDONTWRITEBYTECODE=1
+          "$RUNNER_TEMP/runtime/bin/python" - <<'PY'
+          import json,os,runpy,sys
+          from pathlib import Path
+          workspace=Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
+          probe=runpy.run_path(str(controller/'tools/join_util_current275_probe.py'))
+          path,frozen=probe['read_manifest'](controller)
+          authorities=json.loads((results/'cohort-authorities.json').read_bytes())
+          probe['run_measurements'](snapshot,results,frozen,sys.executable,authorities,os.environ['DEADLINE_UTC'])
+          probe['validate_reports'](snapshot,results,frozen,authorities)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: join-util-current275-initial-minimum
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: error

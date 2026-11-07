@@ -11,7 +11,7 @@ import sys
 import types
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v2.json'
+CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v4.json'
 DATA=json.loads((ROOT/CONTEXT).read_bytes())
 H=lambda raw:hashlib.sha256(raw.replace(b'\r\n',b'\n')).hexdigest()
 
@@ -166,15 +166,25 @@ def test_actual_reused_sampler_entry_zero_body(modules,tmp_path,kind):
     assert sys.getprofile()is oldprofile and sys.gettrace()is oldtrace
 
 
-def test_candidate_provider_scope_is_local_and_restored(modules):
+@pytest.mark.parametrize('own_init',(False,True))
+def test_candidate_provider_scope_is_local_and_restored(modules,own_init):
     execution=modules[1];events=[]
-    def csr(*a,**k):events.append(a);return 'INERT_STRUCTURE'
-    log=lambda*a:None;np=types.SimpleNamespace(log=log,log2=log);sparse=types.SimpleNamespace(csr_array=csr)
+    class Base:
+        def __init__(self,arg,*a,**kw):events.append(arg);self.arg=arg
+    class CSR(Base):pass
+    if own_init:CSR.__init__=Base.__init__
+    before=dict(CSR.__dict__);initialize=CSR.__init__
+    log=lambda*a:None;np=types.SimpleNamespace(log=log,log2=log);sparse=types.SimpleNamespace(csr_array=CSR)
     with execution.candidate_providers(np,sparse):
-        assert sparse.csr_array((1,2,3))=='INERT_STRUCTURE'
-        with pytest.raises(AssertionError):sparse.csr_array((1,(2,3)))
+        assert sparse.csr_array is CSR and isinstance(CSR((1,2,3)),sparse.csr_array)
+        with pytest.raises(AssertionError,match='coordinate/coalescing'):sparse.csr_array((1,(2,3)))
+        with pytest.raises(AssertionError):np.log(2)
         with pytest.raises(AssertionError):np.log2(2)
-    assert sparse.csr_array is csr and np.log is np.log2 is log and len(events)==1
+    assert sparse.csr_array is CSR and CSR.__init__ is initialize and dict(CSR.__dict__)==before
+    assert np.log is np.log2 is log and events==[(1,2,3)]
+    with pytest.raises(RuntimeError,match='INERT_FAILURE'):
+        with execution.candidate_providers(np,sparse):raise RuntimeError('INERT_FAILURE')
+    assert dict(CSR.__dict__)==before and np.log is np.log2 is log
 
 
 def test_both_installed_SDK_header_dependencies_required(modules):
@@ -196,3 +206,64 @@ def test_exact_native_preflight_and_uninstrumented_public_sampler_source(modules
     assert 'finally:sys.setprofile(prior);restore(caller)'in source and 'finally:restore(sample_state)'in source
     assert 'old_fallback' in source and 'sys.path[:]=oldpath'in source
     assert not any(isinstance(n,ast.FunctionDef)and n.name=='measure'for n in ast.walk(tree))
+
+
+@pytest.mark.parametrize('matrix',(False,True))
+def test_actual_frontend_CSR_identity_reaches_inert_native_suffix(modules,matrix):
+    # Execute only unchanged Python adapter definitions against inert metadata.
+    # No NumPy/SciPy import, provider arithmetic or native body is available.
+    events=[];execution=modules[1]
+    class Buffer:
+        def __init__(self,label):
+            self.label=label;self.size=4;self.flags=types.SimpleNamespace(aligned=True)
+        def astype(self,dtype,copy=False):events.append(('index_cast',self.label,copy));return self
+    data,indices,indptr=(Buffer(n)for n in('data','indices','indptr'))
+    class CSR:
+        def __init__(self,arg,*,shape,copy=False):
+            events.append(('structural',len(arg)));self.data,self.indices,self.indptr=arg;self.shape=shape
+            self.dtype=types.SimpleNamespace(kind='f',itemsize=8,isnative=True)
+    class Matrix:
+        def __init__(self,array):self.__dict__.update(array.__dict__)
+    sparse=types.SimpleNamespace(csr_array=CSR,csr_matrix=Matrix)
+    class Image:
+        shape=(2,2)
+    first,second=Image(),Image();result=object()
+    class Core:
+        def label_pair_check_storage(self,buffer):events.append(('storage',buffer.label))
+        def get_num_threads(self):return 1
+        def variation_of_information_csr(self,*args):
+            assert args==(data,indices,indptr,2,2,1);events.append('native_entropy_suffix');return result
+    np=types.SimpleNamespace(ndarray=Image,float64='f8',int64='i8',ascontiguousarray=lambda a,dtype:a,
+                             log=lambda*a:None,log2=lambda*a:None)
+    scope=dict(np=np,sparse=sparse,_core=Core(),get_index_dtype=lambda *a,**kw:'index-dtype')
+    def definitions(path,names):
+        tree=ast.parse((ROOT/path).read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]
+        assert {n.name for n in nodes}==set(names)
+        exec(compile(ast.Module(body=nodes,type_ignores=[]),path,'exec'),scope)
+    definitions('python/skimagexx/_contingency_table.py',('_structural_csr',))
+    def accepted_counts(a,b,**kw):
+        assert (a,b)==(first,second)and kw==dict(ignore_labels=(),normalize=True)
+        native_result=((2,2),indptr,indices,data);events.append('inert_counts_native_result_non_none')
+        table=scope['_structural_csr'](native_result,a,b)
+        return Matrix(table)if matrix else table
+    scope['contingency_table']=accepted_counts
+    definitions('python/skimagexx/_variation_of_information.py',('_aligned','variation_of_information'))
+    before=dict(CSR.__dict__)
+    with execution.candidate_providers(np,sparse):
+        assert sparse.csr_array is CSR and sparse.csr_matrix is Matrix
+        assert scope['variation_of_information'](first,second)is result
+    assert dict(CSR.__dict__)==before
+    assert events.count('native_entropy_suffix')==events.count('inert_counts_native_result_non_none')==1
+    assert events.count(('structural',3))==1
+
+
+def test_provider_guard_successor_preserves_methods_and_authentication_history():
+    previous=DATA['predecessor_context'];oldraw=(ROOT/previous['path']).read_bytes()
+    assert hashlib.sha256(oldraw).hexdigest()==previous['raw_sha256'];old=json.loads(oldraw)
+    assert DATA['cases']==old['cases']and DATA['method']==old['method']and DATA['strict_preflight']==old['strict_preflight']
+    for name,row in DATA['provider_guard_predecessors'].items():
+        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');assert hashlib.sha256(raw).hexdigest()==row['current_canonical_sha256']
+        for fragment in row['inverse_fragments']:
+            current=fragment['current'].encode();assert raw.count(current)==1;raw=raw.replace(current,fragment['predecessor'].encode(),1)
+        assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_sha256']
+    assert all(v is None for v in DATA['unbound'].values())

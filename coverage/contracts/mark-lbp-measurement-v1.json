@@ -1,0 +1,500 @@
+{
+  "schema": "next-metrics-measurement-v1",
+  "status": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "producer": {
+    "run": null,
+    "revision": null,
+    "artifact": null,
+    "sha256": null
+  },
+  "prepared_source": null,
+  "SDK_members": null,
+  "core_sha256": null,
+  "benchmark_fingerprint": null,
+  "benchmark_source_sha256": {
+    "CMakeLists.txt": "5dd25952af7c1393ab18050930f3149381a42f8e6ab342876649cf6c7ef100bd",
+    "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+    "benchmarks/draw_multiblock_lbp_execution.py": "5c29cd9af0814a555a3fb919205b9f266360003c0c9550dfd476d4aec527a63c",
+    "benchmarks/draw_multiblock_lbp_native.py": "08c41d53538bbdabf4c33fd818eb67f8dfb141d0f1779762e1b29a61707a0a78",
+    "benchmarks/mark_boundaries.py": "27f3b49387232008312b1976d0bdc16fd972f062c10f5f24ebf63c528bc3d4df",
+    "benchmarks/mark_boundaries_consumer.py": "5d13bbfe196d3f29888702056961f3ac3ed6660b7e3e1dbaae511d582cd62b01",
+    "benchmarks/mark_boundaries_execution.py": "661fa099bedacdc7f16a9fa859ab59d99bc5212b5a0972163fce35afa06ba69d",
+    "benchmarks/next_util_execution.py": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json": "c15f179737124cfddca89d777d819f333e2038e0326027c62a7e27eecaa9a539",
+    "coverage/contracts/draw-multiblock-lbp-native-v1.json": "c9bd93e83419ec66896f8c305fd6f68d148ab931a5cbd5eed46f33494b4aae18",
+    "coverage/contracts/draw-multiblock-lbp-native-v2.json": "fa17ae603e150106771b9729835904394ba051a966115ad06d4a1e0d7bc8da80",
+    "coverage/contracts/draw-multiblock-lbp-v1.json": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+    "coverage/contracts/draw-multiblock-lbp-v2.json": "fe338701f23583cfa7f772f29ecc5b7f8e5b9df5d660193d7a539089e4bf4f78",
+    "coverage/contracts/mark-boundaries-benchmark-execution-v3.json": "54aba32e6ffbeab91aeb65bd6b2b0e14a2c8b8a1e54ef55cf4e46fa9a6c10bc6",
+    "coverage/contracts/mark-boundaries-native-v1.json": "b0254460836780d41328fd34f2159ec289a08ba029e9fe8722ad71832d2e8e7d",
+    "coverage/contracts/mark-boundaries-native-v2.json": "d63a23f5c88217b73ec0a48657cb8bc8a717264d7708d4550a170936a189c39a",
+    "coverage/contracts/mark-lbp-enabled-transports-v1.json": "e347671a8500c7f380b19de83987b61b5b65dfabe6dd6cc229e20b3f0480f55c",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "include/skimagexx/draw_multiblock_lbp.hpp": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e",
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "include/skimagexx/mark_boundaries.hpp": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71",
+    "python/skimagexx/_draw_multiblock_lbp.py": "296beb2c1c96aa3fd0112b205466eab945ebd6750db8fe99c74c2ef330acb0a1",
+    "python/skimagexx/_mark_boundaries.py": "6306f5fbb76ce0dbe1e91c01631ab9b39a4f3954dd0ab0315b5e4af02d4e594b",
+    "python/skimagexx/coverage.py": "216d43d5a93aa591dd1453ad3edfb4deb028bcb364c5281afd3881d9113ec317",
+    "python/skimagexx/feature.py": "997b2ec3d7ffb4abf340746ce3314817091d77db98c0d638e2ae4a0e895d7d89",
+    "python/skimagexx/segmentation.py": "cd250a2aaffb73a749661ac300a1d05ea1888e62e9351d6d28038fb2faed4aee",
+    "src/bind_draw_multiblock_lbp.cpp": "de80b58c5fa66e9715f884e1534d9fadd54294f1514ef85b2e1135b1a7cb2db5",
+    "src/bind_mark_boundaries.cpp": "131be453d708637e5902c2650654b893b67070f2f66c7b8be70178ba2669cf23",
+    "src/bindings.cpp": "80e60af701a911c650944ef243141fae91e860e46b44bc03d29de0454864275c",
+    "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+    "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+    "src/draw_multiblock_lbp.cpp": "870eb16d16cfa8cfc6ff6ad9106873a1f6299c64dc80d6c0a0958a4891326c3a",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "src/find_boundaries.cpp": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "src/mark_boundaries.cpp": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb",
+    "src/spline_detail.hpp": "314d0c12e5b3b3fc3e45da4a5ea043293ef961a06a254af44f8e05c6feed67ce",
+    "tests/cmake_consumer/CMakeLists.txt": "6d3fa2d3b23bba2ebd4261dd410253ed4c86ebbde6c493a256553ab6a3de1250",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp": "30239a99de6020cbb2ad3931505041e0ad31793b4370a1b8d5da3d16268dd24d",
+    "tests/cmake_consumer/draw_multiblock_lbp_consumer.hpp": "a6444f25b908320e3d37f64e769e5ebceda1da24fd0d73ef6ee43a2f9e20714b",
+    "tests/cmake_consumer/draw_multiblock_lbp_enabled_consumer.cpp": "3265df86731cd96c820d783cf14acf68d44a9506cec039c791ff783f7311080e",
+    "tests/cmake_consumer/mark_boundaries_consumer.cpp": "9b8ef77ddce8af327f3bb2d581216fe9aab533b214d2a59c57f138071ccc0bf2",
+    "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+    "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+    "tests/draw_multiblock_lbp_saved_parity.py": "6d2d6867048eddc3f6ab29e7d536f08e7d3fce5e6da2e32b09db0ee725377f40",
+    "tests/draw_multiblock_lbp_sdk_saved.py": "1d8906c64d6ce21e28adc5dcf72172668763aea76dd20c06adac53f8c7bc30f3",
+    "tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp": "d472a7c0fc462df9a697ab344012c78cb0f4f0ca457bbd55c953e88b37687374",
+    "tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp": "b629cdfbc53c86bd4031ae2d831ab6b7de080a04c1f5d9a7f62bbe6a362ea8a3",
+    "tests/fixtures/mark_boundaries_native_saved_v1.hpp": "cfb4c0c2a6bfed6835ea8c2d12bc2cb13e969728ffa1a778e71bc70b31b34c50",
+    "tests/test_draw_multiblock_lbp_benchmark_execution.py": "7571c1f73de0f0b1cafbe801b669d087cf2afe9defa84ac4a2d7b0775000865f",
+    "tests/test_draw_multiblock_lbp_intake.py": "5b075562ee89e59e261a20c59eab34fab757dc48277f6088c851b63b5547f56e",
+    "tests/test_draw_multiblock_lbp_native.cpp": "64e158c851b4062df185cabff2a56c72c3b4975258ca71f9704798e1f6651a6d",
+    "tests/test_draw_multiblock_lbp_native_source.py": "027fce4ab3892be5599f480dac917165f8585920d4117e2be1fb54443755a123",
+    "tests/test_draw_multiblock_lbp_overlap_intake.py": "0468bb6b4fbf0bb71d5c31b3fe4c6471ce9d936071c471fcf043b5950f67e91d",
+    "tests/test_draw_multiblock_lbp_overlap_reference.py": "664beda7d7981c6effa08c4f78ca6214c4a351a3ad7e5906558ed242386dffc6",
+    "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+    "tests/test_mark_boundaries_benchmark_execution.py": "6a55316951d752aa0e2a7b3cd3abe01679651dd6ac6f5f129cd3bdd4ec5266c1",
+    "tests/test_mark_boundaries_native_contract.py": "5c979f793c2ef31454efd69f45c833eca414c18c07b1d1b0071f4b70eeaa74f8",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "families": {
+    "mark_boundaries_consumer": {
+      "contract": "coverage/contracts/mark-boundaries-benchmark-execution-v3.json",
+      "cases": 8,
+      "case_ids": [
+        "gray-u8-outer",
+        "RGB-f32-thick",
+        "gray-u16-F-inner",
+        "RGB-f64-reverse-outline",
+        "gray-f64-subpixel",
+        "RGB-f32-subpixel-outline",
+        "singleton-subpixel-version",
+        "half-promotion-provider"
+      ],
+      "untimed_calls_per_case": 1
+    },
+    "draw_multiblock_lbp_native": {
+      "contract": "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json",
+      "cases": 4,
+      "case_ids": [
+        "gray-u8-C",
+        "RGB-f32-F",
+        "RGB-f64-reverse-wrap",
+        "RGB-f64-C-large"
+      ],
+      "untimed_calls_per_case": 1
+    }
+  },
+  "first_cohort": {
+    "status": "PROSPECTIVE_UNBOUND_NO_FIRST_COHORT",
+    "source_revision": null,
+    "probe_path": "tools/mark_lbp_first_cohort_probe.py",
+    "probe_sha256": null,
+    "root_admission_path": null,
+    "root_admission_sha256": null,
+    "root_stager_path": null,
+    "root_stager_sha256": null,
+    "core_member": null,
+    "source_files_raw_sha256": {
+      "CMakeLists.txt": "5dd25952af7c1393ab18050930f3149381a42f8e6ab342876649cf6c7ef100bd",
+      "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+      "benchmarks/draw_multiblock_lbp_execution.py": "5c29cd9af0814a555a3fb919205b9f266360003c0c9550dfd476d4aec527a63c",
+      "benchmarks/draw_multiblock_lbp_native.py": "08c41d53538bbdabf4c33fd818eb67f8dfb141d0f1779762e1b29a61707a0a78",
+      "benchmarks/mark_boundaries.py": "27f3b49387232008312b1976d0bdc16fd972f062c10f5f24ebf63c528bc3d4df",
+      "benchmarks/mark_boundaries_consumer.py": "5d13bbfe196d3f29888702056961f3ac3ed6660b7e3e1dbaae511d582cd62b01",
+      "benchmarks/mark_boundaries_execution.py": "661fa099bedacdc7f16a9fa859ab59d99bc5212b5a0972163fce35afa06ba69d",
+      "benchmarks/next_util_execution.py": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+      "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+      "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json": "c15f179737124cfddca89d777d819f333e2038e0326027c62a7e27eecaa9a539",
+      "coverage/contracts/draw-multiblock-lbp-native-v1.json": "c9bd93e83419ec66896f8c305fd6f68d148ab931a5cbd5eed46f33494b4aae18",
+      "coverage/contracts/draw-multiblock-lbp-native-v2.json": "fa17ae603e150106771b9729835904394ba051a966115ad06d4a1e0d7bc8da80",
+      "coverage/contracts/draw-multiblock-lbp-v1.json": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+      "coverage/contracts/draw-multiblock-lbp-v2.json": "fe338701f23583cfa7f772f29ecc5b7f8e5b9df5d660193d7a539089e4bf4f78",
+      "coverage/contracts/mark-boundaries-benchmark-execution-v3.json": "54aba32e6ffbeab91aeb65bd6b2b0e14a2c8b8a1e54ef55cf4e46fa9a6c10bc6",
+      "coverage/contracts/mark-boundaries-native-v1.json": "b0254460836780d41328fd34f2159ec289a08ba029e9fe8722ad71832d2e8e7d",
+      "coverage/contracts/mark-boundaries-native-v2.json": "d63a23f5c88217b73ec0a48657cb8bc8a717264d7708d4550a170936a189c39a",
+      "coverage/contracts/mark-lbp-enabled-transports-v1.json": "e347671a8500c7f380b19de83987b61b5b65dfabe6dd6cc229e20b3f0480f55c",
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+      "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+      "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+      "include/skimagexx/draw_multiblock_lbp.hpp": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e",
+      "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+      "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+      "include/skimagexx/mark_boundaries.hpp": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71",
+      "python/skimagexx/_draw_multiblock_lbp.py": "296beb2c1c96aa3fd0112b205466eab945ebd6750db8fe99c74c2ef330acb0a1",
+      "python/skimagexx/_mark_boundaries.py": "6306f5fbb76ce0dbe1e91c01631ab9b39a4f3954dd0ab0315b5e4af02d4e594b",
+      "python/skimagexx/coverage.py": "216d43d5a93aa591dd1453ad3edfb4deb028bcb364c5281afd3881d9113ec317",
+      "python/skimagexx/feature.py": "997b2ec3d7ffb4abf340746ce3314817091d77db98c0d638e2ae4a0e895d7d89",
+      "python/skimagexx/segmentation.py": "cd250a2aaffb73a749661ac300a1d05ea1888e62e9351d6d28038fb2faed4aee",
+      "src/bind_draw_multiblock_lbp.cpp": "de80b58c5fa66e9715f884e1534d9fadd54294f1514ef85b2e1135b1a7cb2db5",
+      "src/bind_mark_boundaries.cpp": "131be453d708637e5902c2650654b893b67070f2f66c7b8be70178ba2669cf23",
+      "src/bindings.cpp": "80e60af701a911c650944ef243141fae91e860e46b44bc03d29de0454864275c",
+      "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+      "src/crop.cpp": "a2766e3bab4f2bdfb8d369478ded655f74c3596f0d1e737ea89e5b64809a219e",
+      "src/draw_multiblock_lbp.cpp": "870eb16d16cfa8cfc6ff6ad9106873a1f6299c64dc80d6c0a0958a4891326c3a",
+      "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "src/find_boundaries.cpp": "624e616a43dedbdf0a5865c0f4dfe64de194771015333ffaf504b20281809547",
+      "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+      "src/mark_boundaries.cpp": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb",
+      "src/spline_detail.hpp": "314d0c12e5b3b3fc3e45da4a5ea043293ef961a06a254af44f8e05c6feed67ce",
+      "tests/cmake_consumer/CMakeLists.txt": "6d3fa2d3b23bba2ebd4261dd410253ed4c86ebbde6c493a256553ab6a3de1250",
+      "tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp": "30239a99de6020cbb2ad3931505041e0ad31793b4370a1b8d5da3d16268dd24d",
+      "tests/cmake_consumer/draw_multiblock_lbp_consumer.hpp": "a6444f25b908320e3d37f64e769e5ebceda1da24fd0d73ef6ee43a2f9e20714b",
+      "tests/cmake_consumer/draw_multiblock_lbp_enabled_consumer.cpp": "3265df86731cd96c820d783cf14acf68d44a9506cec039c791ff783f7311080e",
+      "tests/cmake_consumer/mark_boundaries_consumer.cpp": "9b8ef77ddce8af327f3bb2d581216fe9aab533b214d2a59c57f138071ccc0bf2",
+      "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+      "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+      "tests/draw_multiblock_lbp_saved_parity.py": "6d2d6867048eddc3f6ab29e7d536f08e7d3fce5e6da2e32b09db0ee725377f40",
+      "tests/draw_multiblock_lbp_sdk_saved.py": "1d8906c64d6ce21e28adc5dcf72172668763aea76dd20c06adac53f8c7bc30f3",
+      "tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp": "d472a7c0fc462df9a697ab344012c78cb0f4f0ca457bbd55c953e88b37687374",
+      "tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp": "b629cdfbc53c86bd4031ae2d831ab6b7de080a04c1f5d9a7f62bbe6a362ea8a3",
+      "tests/fixtures/mark_boundaries_native_saved_v1.hpp": "cfb4c0c2a6bfed6835ea8c2d12bc2cb13e969728ffa1a778e71bc70b31b34c50",
+      "tests/test_draw_multiblock_lbp_benchmark_execution.py": "7571c1f73de0f0b1cafbe801b669d087cf2afe9defa84ac4a2d7b0775000865f",
+      "tests/test_draw_multiblock_lbp_intake.py": "23d8e425eeadd7a0c75bc50bdc5391012caeab467572689d8386c2e0e94fa97a",
+      "tests/test_draw_multiblock_lbp_native.cpp": "64e158c851b4062df185cabff2a56c72c3b4975258ca71f9704798e1f6651a6d",
+      "tests/test_draw_multiblock_lbp_native_source.py": "027fce4ab3892be5599f480dac917165f8585920d4117e2be1fb54443755a123",
+      "tests/test_draw_multiblock_lbp_overlap_intake.py": "0468bb6b4fbf0bb71d5c31b3fe4c6471ce9d936071c471fcf043b5950f67e91d",
+      "tests/test_draw_multiblock_lbp_overlap_reference.py": "664beda7d7981c6effa08c4f78ca6214c4a351a3ad7e5906558ed242386dffc6",
+      "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+      "tests/test_mark_boundaries_benchmark_execution.py": "6a55316951d752aa0e2a7b3cd3abe01679651dd6ac6f5f129cd3bdd4ec5266c1",
+      "tests/test_mark_boundaries_native_contract.py": "5c979f793c2ef31454efd69f45c833eca414c18c07b1d1b0071f4b70eeaa74f8",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+      "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7",
+      "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+    },
+    "routes": {
+      "mark": {
+        "kind": "mark-executor",
+        "driver": "benchmarks/mark_boundaries_consumer.py",
+        "api": "segmentation.mark_boundaries",
+        "owned_module": "skimagexx._mark_boundaries",
+        "sampler": "tools/montage_sustained.py",
+        "first_case": {
+          "id": "gray-u8-outer",
+          "shape": [
+            512,
+            513
+          ],
+          "rgb": false,
+          "dtype": "uint8",
+          "layout": "C",
+          "mode": "outer",
+          "outline": false
+        },
+        "cases": [
+          {
+            "id": "gray-u8-outer",
+            "shape": [
+              512,
+              513
+            ],
+            "rgb": false,
+            "dtype": "uint8",
+            "layout": "C",
+            "mode": "outer",
+            "outline": false
+          },
+          {
+            "id": "RGB-f32-thick",
+            "shape": [
+              512,
+              513
+            ],
+            "rgb": true,
+            "dtype": "float32",
+            "layout": "C",
+            "mode": "thick",
+            "outline": false
+          },
+          {
+            "id": "gray-u16-F-inner",
+            "shape": [
+              512,
+              513
+            ],
+            "rgb": false,
+            "dtype": "uint16",
+            "layout": "F",
+            "mode": "inner",
+            "outline": false
+          },
+          {
+            "id": "RGB-f64-reverse-outline",
+            "shape": [
+              512,
+              513
+            ],
+            "rgb": true,
+            "dtype": "float64",
+            "layout": "reverse",
+            "mode": "outer",
+            "outline": true
+          },
+          {
+            "id": "gray-f64-subpixel",
+            "shape": [
+              64,
+              65
+            ],
+            "rgb": false,
+            "dtype": "float64",
+            "layout": "C",
+            "mode": "subpixel",
+            "outline": false
+          },
+          {
+            "id": "RGB-f32-subpixel-outline",
+            "shape": [
+              64,
+              65
+            ],
+            "rgb": true,
+            "dtype": "float32",
+            "layout": "C",
+            "mode": "subpixel",
+            "outline": true
+          },
+          {
+            "id": "singleton-subpixel-version",
+            "shape": [
+              1,
+              1
+            ],
+            "rgb": false,
+            "dtype": "float64",
+            "layout": "C",
+            "mode": "subpixel",
+            "outline": false
+          },
+          {
+            "id": "half-promotion-provider",
+            "shape": [
+              512,
+              513
+            ],
+            "rgb": false,
+            "dtype": "float16",
+            "layout": "C",
+            "mode": "outer",
+            "outline": false
+          }
+        ],
+        "contract": "coverage/contracts/mark-boundaries-benchmark-execution-v3.json",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "segmentation.mark_boundaries",
+          "--case",
+          "gray-u8-outer"
+        ],
+        "sampler_caller": "sample_entry",
+        "parity_caller": "execute"
+      },
+      "lbp": {
+        "kind": "lbp-executor",
+        "driver": "benchmarks/draw_multiblock_lbp_native.py",
+        "api": "feature.draw_multiblock_lbp",
+        "owned_module": "skimagexx._draw_multiblock_lbp",
+        "sampler": "tools/montage_sustained.py",
+        "first_case": {
+          "id": "gray-u8-C",
+          "shape": [
+            256,
+            257
+          ],
+          "dtype": "uint8",
+          "layout": "C",
+          "r": 32,
+          "c": 33,
+          "width": 16,
+          "height": 17,
+          "code": 0,
+          "alpha": 0.5
+        },
+        "cases": [
+          {
+            "id": "gray-u8-C",
+            "shape": [
+              256,
+              257
+            ],
+            "dtype": "uint8",
+            "layout": "C",
+            "r": 32,
+            "c": 33,
+            "width": 16,
+            "height": 17,
+            "code": 0,
+            "alpha": 0.5
+          },
+          {
+            "id": "RGB-f32-F",
+            "shape": [
+              128,
+              129,
+              3
+            ],
+            "dtype": "float32",
+            "layout": "F",
+            "r": 3,
+            "c": 5,
+            "width": 16,
+            "height": 8,
+            "code": 170,
+            "alpha": 0.5
+          },
+          {
+            "id": "RGB-f64-reverse-wrap",
+            "shape": [
+              128,
+              129,
+              3
+            ],
+            "dtype": "float64",
+            "layout": "reverse",
+            "r": -7,
+            "c": -8,
+            "width": 32,
+            "height": 16,
+            "code": 85,
+            "alpha": 0.5
+          },
+          {
+            "id": "RGB-f64-C-large",
+            "shape": [
+              512,
+              513,
+              3
+            ],
+            "dtype": "float64",
+            "layout": "C",
+            "r": 128,
+            "c": 129,
+            "width": 64,
+            "height": 65,
+            "code": 255,
+            "alpha": 0.5
+          }
+        ],
+        "contract": "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json",
+        "argv": [
+          "--first-cohort",
+          "--api",
+          "feature.draw_multiblock_lbp",
+          "--case",
+          "gray-u8-C"
+        ],
+        "sampler_caller": "sample_entry",
+        "parity_caller": "execute"
+      }
+    }
+  },
+  "execution_scope": {
+    "untimed_topcalls": {
+      "original": 2,
+      "native": 2
+    },
+    "canonical_cases": 12,
+    "canonical_raw_samples": 168,
+    "warmup_groups": 24,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "reference_threadpools": 1,
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true
+  },
+  "qualification": "Exact-source complete source barriers + four-profile whole-product/SDK/stager admission required; no source readiness inferred.",
+  "binding_gate": "All actual fields remain UNBOUND.12cases/168samples/24warmgroups/2cohorts are fixed prospective scope, not execution authority; root genuine admission, per-cohort GO and separate measurement GO required. No automatic dispatch.",
+  "runtime_sha256": null,
+  "prospective_source": {
+    "revision": "2991881411972e6266f7e132c9dca8b7226a8567",
+    "image_count": 273,
+    "functions": 276,
+    "product_members": 220,
+    "SDK_members": 104,
+    "SDK_families": 34,
+    "SDK_checks": 68,
+    "actual_qualification": "UNBOUND_NOT_CURRENT271"
+  },
+  "helper": {
+    "mode": "source-built-v1",
+    "source_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "receipt_sha256": null,
+    "library_sha256": null,
+    "root_GO": null,
+    "prepare_once_on_actual_host": true,
+    "collect_recursive": true
+  },
+  "completed_first_cohort": {
+    "path": null,
+    "sha256": null,
+    "binding_sha256": null
+  },
+  "controller_reuse": {
+    "source": "b36754dc",
+    "files": {
+      "tools/next_metrics_first_cohort_probe.py": "11c4cdf378d5868dc9fafb12e3f5f0073a7c64c70510fabb26c37049ba960670",
+      ".github/workflows/next-metrics-initial.yml": "4188dd6a2b2a36681059a06fea606830b8b00dbc7d78cece5b60e57e842f3a8e",
+      "coverage/contracts/next-metrics-measurement-v2.json": "e8aad315f9e2dba5c992c905c2dcb0b9b726f600f58aecbd94d149a127c37d51",
+      "tests/test_next_metrics_controller_v2.py": "e5b2facf22b19bcf5b3b3d54a230e0ecddf40bb8625590e55c005b0c0cadcbdd"
+    },
+    "scope": "C1 poststop source/authority and once postbatch offline verifier, host helper builder/collector and Montage journal validator reused; no controller/private ancestry merge"
+  },
+  "native_marker_scope": {
+    "mark": "Public Python getter1 plus exact native_returns from admitted native_requirements(spec); ordered stage consumers",
+    "lbp": "Python getter0; _lbp_prepare1/_lbp_binary24/_lbp_assign8gray or9RGB; internal CPP worker snapshot source-scope only, no fabricated getter credit"
+  },
+  "pending": [
+    "independent controller admission",
+    "final273 source/full barriers and exact-source four-profile genuine qualification",
+    "root actual producer/runtime/core/SDK/helper bindings and2call first-cohort GO",
+    "complete Windows/domain/provider gates",
+    "root separate12case one-thread measurement GO; all losses retained",
+    "actual execution/firstcohort/performance/release; current271 cannot be transplanted"
+  ],
+  "deadline_utc": null
+}

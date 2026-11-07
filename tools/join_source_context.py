@@ -5,8 +5,34 @@ import json
 CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'
 
 
+def correction_predecessor_bytes(root,name,raw):
+    """Authenticate the correction, then reconstruct the frozen ab78 input."""
+    root=Path(root)
+    if name=='src/variation_of_information.cpp':
+        import importlib.util
+        path=root/'tests/variation_of_information_reduction_contract.py'
+        spec=importlib.util.spec_from_file_location('_vi_reduction_projection',path)
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        raw=module.historical_vi_source(raw)
+    raw=raw.replace(b'\r\n',b'\n')
+    path=root/'coverage/contracts/vi-reduction-integration-v1.json'
+    if not path.is_file():return raw
+    context=json.loads(path.read_bytes())
+    assert context['predecessor_source']=='ab7872a5483a5d5e3660ba20fdd873d78463a1b5'
+    if name not in context['sources']:return raw
+    row=context['sources'][name]
+    assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+    for fragment in row['inverse_fragments']:
+        current,old=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1,name
+        raw=raw.replace(current,old,1)
+    assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
+    return raw
+
+
 def enabled_predecessor_bytes(root,name,raw):
     """One exact admitted enabled-family layer before historical shared guards."""
+    raw=correction_predecessor_bytes(root,name,raw)
     raw=raw.replace(b'\r\n',b'\n')
     current=(Path(root)/'coverage/contracts/abi-vi-cumulative-integration-v1.json').read_bytes()
     assert hashlib.sha256(current).hexdigest()=='beeb170a40af8b8710ad0d6c7d8fd5d6d571933b20beac65b4515a018fdfe16d'

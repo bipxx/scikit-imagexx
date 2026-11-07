@@ -33,11 +33,13 @@ def test_actual_source_census_and_profile_groups(profile):
 
 def test_admitted_kernel_and_shared_global_source_projection():
     ctx=json.loads((ROOT/'coverage/contracts/abi-vi-cumulative-integration-v1.json').read_bytes())
+    from tools.join_source_context import correction_predecessor_bytes,enabled_predecessor_bytes
+    # This historical slice stays exact; the new reduction guard checks current math.
     for name,pin in ctx['unchanged_kernel_source_raw_sha256'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
-    from tools.join_source_context import enabled_predecessor_bytes
+        raw=correction_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes())
+        assert hashlib.sha256(raw).hexdigest()==pin,name
     for name,row in ctx['sources'].items():
-        value=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        value=correction_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes())
         for fragment in row['inverse_fragments']:
             assert value.count(fragment['current'].encode())==1
             value=value.replace(fragment['current'].encode(),fragment['predecessor'].encode(),1)
@@ -51,7 +53,7 @@ def test_admitted_kernel_and_shared_global_source_projection():
 def test_actual_sdk_fixture_copy_stops_before_any_tools(tmp_path,monkeypatch):
     q=qualifier();out=tmp_path/'qualification';out.mkdir()
     (out/'package.json').write_text(json.dumps(dict(product_scope=q.CURRENT_PRODUCT_SCOPE,SDK_sha256={})))
-    names=('tests/fixtures/find_boundaries_originals_v1.hpp','tests/label_pair_metrics_native_controls.hpp','tests/fixtures/label_pair_metrics_originals_v1.hpp','tests/fixtures/label_pair_rand_originals_v1.hpp','tests/contingency_preweighted_controls.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/cmake_consumer/variation_of_information_enabled_consumer.cpp','tests/fixtures/flood_fill_sdk_original_v1.inc')
+    names=('tests/fixtures/find_boundaries_originals_v1.hpp','tests/label_pair_metrics_native_controls.hpp','tests/fixtures/label_pair_metrics_originals_v1.hpp','tests/fixtures/label_pair_rand_originals_v1.hpp','tests/contingency_preweighted_controls.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/variation_of_information_large_controls.hpp','tests/cmake_consumer/variation_of_information_enabled_consumer.cpp','tests/fixtures/flood_fill_sdk_original_v1.inc')
     with zipfile.ZipFile(out/'source.zip','w')as archive:
         for name in names:archive.writestr(name,(ROOT/name).read_bytes())
         archive.writestr('tests/unrelated.hpp','MUST_NOT_COPY')
@@ -100,7 +102,7 @@ def test_genuine_collector_transport_and_scope_are_fail_closed():
 
 
 
-@pytest.mark.parametrize('group,count', [('public-radon-ABI-policy-linux',18),('public-VI-saved-linux',40),('public-flood-saved-linux',100)])
+@pytest.mark.parametrize('group,count', [('public-radon-ABI-policy-linux',18),('public-VI-saved-linux',40),('public-VI-large-saved-linux',8),('public-flood-saved-linux',100)])
 def test_actual_new_group_parser_and_seal_count(group,count,monkeypatch):
     q=qualifier();calls=[]
     monkeypatch.setattr(q,'child',lambda out,name:calls.append(name)or 0)
