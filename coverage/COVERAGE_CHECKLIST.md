@@ -15,6 +15,28 @@ Updated: 2026-11-07. Shipping classifications come from [api.json](api.json); pe
 
 ## Shipping snapshot
 
+### Latest verified checkpoint — 2026-11-07
+
+This checkpoint supersedes older live-job descriptions below. Shipping remains **271 partial native image APIs**; no new API or full-contract gate is closed by this update. All 477 API and 284 static-member rows retain their individual completion gates and domain gaps.
+
+| Scope / exact source | Actual outcome | Still required / next owner |
+|---|---|---|
+| Qualified 281-path candidate, `dda9cc83d9434a10616f84cf1e1125d93f5f36fd` | [Four-profile root admission](evidence/current281-whole-product-root-admission-v3.json) passed within its recorded domains. | Root: independently admit public-performance results, reconcile shipping projection and deliver; full API domains remain open. |
+| Six-family comparison controller, `373af1af261e5c6bc522f533f19036fc65603c81` | [Source admission](evidence/current281-bound-controller-root-admission-v1.json) passed; all six workflows are terminal, as listed below. | Root: retain and review actual outputs once. A successful workflow alone does not close B or R. No unchanged retries or favorable retiming. |
+| IGG-enabled 282-path candidate, `852cc1882fbd757f55bc9f92eb783282e2f5addb` | [Qualification 42356138491](https://github.com/bipxx/scikit-imagexx/actions/runs/42356138491) failed on all four profiles. | Metrics integrator: diagnose retained command/XML evidence; root: independently review the actual failure. Larger-input private accuracy remains scoped evidence, not release acceptance. |
+| Golden-angle 283-path source | [Earlier complete-source failure](evidence/golden283-complete-source-failure-v1.json) is retained; [reader correction](evidence/finite-radon-export-reader-root-admission-v2.json) is source-admitted. | Root: inspect complete corrected-source terminal receipts; no release credit is inferred from a partial run or an in-progress check. |
+
+| 281 comparison family | Exact run | Terminal workflow result | Coverage disposition |
+|---|---|---|---|
+| MARK / LBP | [42360529454](https://github.com/bipxx/scikit-imagexx/actions/runs/42360529454) | Failed: real-cohort step. | B pending; readiness reviewer diagnoses actual child evidence. |
+| Finite Radon | [42360529492](https://github.com/bipxx/scikit-imagexx/actions/runs/42360529492) | Success. | Raw/result admission pending root; no speed claim yet. |
+| JOIN / utilities | [42360529530](https://github.com/bipxx/scikit-imagexx/actions/runs/42360529530) | Failed: measurement step. | B pending; boundary worker diagnoses actual failure and preserves any outputs. |
+| Variation of information | [42360529475](https://github.com/bipxx/scikit-imagexx/actions/runs/42360529475) | Failed: real-cohort step. | B pending; readiness reviewer diagnoses actual child evidence. |
+| Flood / flood fill | [42360529644](https://github.com/bipxx/scikit-imagexx/actions/runs/42360529644) | Success. | Raw/result admission pending root; no speed claim yet. |
+| Rolling ball | [42360529676](https://github.com/bipxx/scikit-imagexx/actions/runs/42360529676) | Failed: measurement step. | B pending; boundary worker diagnoses actual child evidence. |
+
+Update discipline: each bounded task must identify affected API/member keys, changed domains, exact source/profile/receipt, passed or failed gates, remaining gates and the next owner/trigger in its existing handoff. Root updates the affected rows and this checkpoint in the same validated increment. Reuse still-valid evidence; never turn a test locator, registration or workflow success into full closure. Waste review: reused the existing inventory, checklist and ledger; this update required only document/state checks and read-only run-status queries, with zero scientific reruns.
+
 | Inventory category | Public keys | Meaning |
 |---|---:|---|
 | `native-partial` | 271 | Native image paths with incomplete or unassessed full-contract partitions. |
