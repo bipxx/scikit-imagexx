@@ -136,7 +136,7 @@ def test_R1_successor_exact_inverse_collector_and_predecessor_refusal():
     assert H(path.read_bytes())=='873b2f4f72476705c5854ca84f0b12c6aeb9d67301a047316ded521244c05b66'
     c=json.loads(path.read_bytes());assert c['predecessor_source']=='cbb3d2cd993f71fff08bb4a548d9c456c7d2de60'
     for name,row in c['sources'].items():
-        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');assert H(raw)==row['current_canonical_lf_sha256']
+        raw=adapter.sdk_family_assertion_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()).replace(b'\r\n',b'\n');assert H(raw)==row['current_canonical_lf_sha256']
         for fragment in row['inverse_fragments']:
             now,old=fragment['current'].encode(),fragment['predecessor'].encode()
             assert raw.count(now)==1;raw=raw.replace(now,old,1)
@@ -147,3 +147,72 @@ def test_R1_successor_exact_inverse_collector_and_predecessor_refusal():
         with pytest.raises(AssertionError):entry(ROOT,name,(ROOT/name).read_bytes()+b'changed')
     q=runpy.run_path(str(ROOT/'tools/public_qualification.py'))
     assert path.relative_to(ROOT).as_posix()in q['DRAW_SOURCE_PATHS']
+
+
+SDK_CONTEXT=ROOT/'coverage/contracts/current281-sdk-family-source-v2.json'
+SDK_CONTEXT_SHA256='697a592916267e463fb786a8b5251acbd3f3b02164a1081c3479ab94f1246610'
+SDK_ENTRIES=('integration_fix_predecessor_bytes','rolling_predecessor_bytes','rolling_predecessor_raw_bytes','correction_predecessor_bytes','enabled_predecessor_bytes','predecessor_bytes')
+
+
+def test_sdk_shared_successor_exact_source_hashes_and_collector():
+    from tools.join_source_context import sdk_family_assertion_predecessor_bytes
+    assert H(SDK_CONTEXT.read_bytes())==SDK_CONTEXT_SHA256
+    c=json.loads(SDK_CONTEXT.read_bytes())
+    assert c['predecessor_source']=='cd703fbda0442944b150c9529e09e0a40ab37c59'
+    assert set(c['sources'])=={'tests/test_public_qualification.py','tools/join_source_context.py','tools/public_qualification.py'}
+    for name,row in c['sources'].items():
+        raw=(ROOT/name).read_bytes();assert H(raw.replace(b'\r\n',b'\n'))==row['current_canonical_lf_sha256']
+        old=sdk_family_assertion_predecessor_bytes(ROOT,name,raw)
+        assert H(old)==row['predecessor_canonical_lf_sha256']
+    q=runpy.run_path(str(ROOT/'tools/public_qualification.py'))
+    assert SDK_CONTEXT.relative_to(ROOT).as_posix()in q['DRAW_SOURCE_PATHS']
+    assert c['actual_genuine_authority']is c['actual_benchmark_authority']is None
+
+
+@pytest.mark.parametrize('entry',SDK_ENTRIES)
+@pytest.mark.parametrize('name',('tests/test_public_qualification.py','python/skimagexx/coverage.py','tests/test_api.py','tests/util_views_fenv_restore.c'))
+@pytest.mark.parametrize('crlf',(False,True))
+def test_sdk_all_shared_readers_use_one_projection_and_exact_predecessor(entry,name,crlf,monkeypatch):
+    import tools.join_source_context as adapter
+    project=adapter.sdk_family_assertion_predecessor_bytes
+    # Reconstruct the byte-authenticated admitted213/cd adapter on this same
+    # interpreter; its functions have no SDK layer or scientific imports.
+    old_source=project(ROOT,'tools/join_source_context.py',(ROOT/'tools/join_source_context.py').read_bytes())
+    c=json.loads(SDK_CONTEXT.read_bytes())
+    assert H(old_source)==c['sources']['tools/join_source_context.py']['predecessor_canonical_lf_sha256']
+    assert b'def sdk_family_assertion_predecessor_bytes'not in old_source
+    baseline={'__name__':'_admitted_source_projection_predecessor','__file__':str(ROOT/'tools/join_source_context.py')}
+    exec(compile(old_source,'<authenticated-cd-source-adapter>','exec'),baseline)
+    raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    if crlf:raw=raw.replace(b'\n',b'\r\n')
+    before=project(ROOT,name,raw)
+    expected=baseline[entry](ROOT,name,before)
+    calls=[]
+    def counted(root,path,value):
+        calls.append(path)
+        return project(root,path,value)
+    monkeypatch.setattr(adapter,'sdk_family_assertion_predecessor_bytes',counted)
+    actual=getattr(adapter,entry)(ROOT,name,raw)
+    assert calls==[name]and actual==expected
+    if name=='tests/util_views_fenv_restore.c':
+        assert actual==(raw if entry in ('integration_fix_predecessor_bytes','rolling_predecessor_raw_bytes')else raw.replace(b'\r\n',b'\n'))
+
+
+@pytest.mark.parametrize('entry',SDK_ENTRIES)
+@pytest.mark.parametrize('fault',('changed-current','already-projected'))
+def test_sdk_all_shared_readers_refuse_changed_or_second_projection(entry,fault):
+    import tools.join_source_context as adapter
+    name='tests/test_public_qualification.py';raw=(ROOT/name).read_bytes()
+    if fault=='changed-current':raw+=b'changed'
+    else:raw=adapter.sdk_family_assertion_predecessor_bytes(ROOT,name,raw)
+    with pytest.raises(AssertionError):getattr(adapter,entry)(ROOT,name,raw)
+
+
+@pytest.mark.parametrize('fault',('current','inverse'))
+def test_sdk_shared_source_context_refuses_tamper(tmp_path,fault):
+    from tools.join_source_context import sdk_family_assertion_predecessor_bytes
+    c=json.loads(SDK_CONTEXT.read_bytes());name='tests/test_public_qualification.py';raw=(ROOT/name).read_bytes()
+    if fault=='current':raw+=b'changed'
+    else:c['sources'][name]['inverse_fragments'][0]['predecessor']+='changed'
+    target=tmp_path/'coverage/contracts';target.mkdir(parents=True);(target/SDK_CONTEXT.name).write_text(json.dumps(c))
+    with pytest.raises(AssertionError):sdk_family_assertion_predecessor_bytes(tmp_path,name,raw)

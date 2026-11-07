@@ -1,0 +1,42 @@
+{
+  "schema": "current281-sdk-family-source-v2",
+  "predecessor_source": "cd703fbda0442944b150c9529e09e0a40ab37c59",
+  "sources": {
+    "tools/join_source_context.py": {
+      "current_canonical_lf_sha256": "79c21788751f3c520a5b63ad1216006e8dcd962254c8f3ea5fe48f2b3c907c6c",
+      "predecessor_canonical_lf_sha256": "cde051036e726eece3db1504e4d81e2b319378fa2c9e853d47ab304b83f88e62",
+      "predecessor_source": "cd703fbda0442944b150c9529e09e0a40ab37c59",
+      "inverse_fragments": [
+        {
+          "current": "CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'\n\n\ndef sdk_family_assertion_predecessor_bytes(root,name,raw):\n    \"\"\"Strict assertion-only source successor, before every shared historical entry.\"\"\"\n    path=Path(root)/'coverage/contracts/current281-sdk-family-source-v2.json'\n    if not path.is_file():return raw\n    context=json.loads(path.read_bytes())\n    assert context['predecessor_source']=='cd703fbda0442944b150c9529e09e0a40ab37c59'\n    if name not in context['sources']:return raw\n    row=context['sources'][name];raw=raw.replace(b'\\r\\n',b'\\n')\n    assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name\n    for fragment in row['inverse_fragments']:\n        current,old=fragment['current'].encode(),fragment['predecessor'].encode()\n        assert current and raw.count(current)==1,name\n        raw=raw.replace(current,old,1)\n    assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name\n    return raw\n\n\ndef integration_fix_predecessor_bytes(root,name,raw):\n    \"\"\"Exact three integration fixes before frozen188; no numerical projection.\"\"\"\n    raw=sdk_family_assertion_predecessor_bytes(root,name,raw)\n    successor=Path(root)/'coverage/contracts/current281-projection-v2.json'\n    if successor.is_file():\n        layer=json.loads(successor.read_bytes())\n",
+          "predecessor": "CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'\n\n\ndef integration_fix_predecessor_bytes(root,name,raw):\n    \"\"\"Exact three integration fixes before frozen188; no numerical projection.\"\"\"\n    successor=Path(root)/'coverage/contracts/current281-projection-v2.json'\n    if successor.is_file():\n        layer=json.loads(successor.read_bytes())\n"
+        }
+      ]
+    },
+    "tools/public_qualification.py": {
+      "current_canonical_lf_sha256": "4756d4bf884140d14f9119384520f1b908ab25065137f76e8d0edd9a21bc8bde",
+      "predecessor_canonical_lf_sha256": "164d96a23bb9dabc6c52eaed32cd8ef2a07e52b33d8bb3ce3d53826770480265",
+      "predecessor_source": "cd703fbda0442944b150c9529e09e0a40ab37c59",
+      "inverse_fragments": [
+        {
+          "current": "DRAW_SOURCE_PATHS += ('coverage/contracts/current281-integration-fixes-v1.json','tests/test_current281_integration_fixes_source.py')\n# Exact R1 source-reader successor; no production or selector change.\nDRAW_SOURCE_PATHS += ('coverage/contracts/current281-projection-v2.json',)\nDRAW_SOURCE_PATHS += ('coverage/contracts/current281-sdk-family-source-v2.json',)\n\n\n\n",
+          "predecessor": "DRAW_SOURCE_PATHS += ('coverage/contracts/current281-integration-fixes-v1.json','tests/test_current281_integration_fixes_source.py')\n# Exact R1 source-reader successor; no production or selector change.\nDRAW_SOURCE_PATHS += ('coverage/contracts/current281-projection-v2.json',)\n\n\n\n"
+        }
+      ]
+    },
+    "tests/test_public_qualification.py": {
+      "current_canonical_lf_sha256": "c27d194e70dc685613009d8b9557b8912dd9f43967257a90754ae1da1c644a80",
+      "predecessor_canonical_lf_sha256": "e0d4c7c2f52e30cf0026abba0e8f2fda80a37a6d53142cac5c1450cc0cfc01f8",
+      "predecessor_source": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+      "inverse_fragments": [
+        {
+          "current": "\n\ndef test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():\n    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball') and len(q.FAMILIES)==23\n    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==38\n    plan=q.plan(ROOT,'modern',281)\n    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(108,38,76)\n    assert set(plan['SDK_families'])==set(q.CURRENT_FAMILIES)\n    without_rolling={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!='rolling_ball']}\n    with pytest.raises(q.QualificationError):q.validate_sdk_listing(without_rolling,scope=q.CURRENT_PRODUCT_SCOPE)\n    current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}\n    old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}\n    q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)\n",
+          "predecessor": "\n\ndef test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():\n    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill') and len(q.FAMILIES)==23\n    current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}\n    old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}\n    q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)\n"
+        }
+      ]
+    }
+  },
+  "scope": "Move exact admitted test-assertion-only projection to shared integration entry. Public test expectations staycd; no production, cases, methods or scientific checker change.",
+  "actual_genuine_authority": null,
+  "actual_benchmark_authority": null
+}

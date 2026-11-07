@@ -5,8 +5,26 @@ import json
 CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'
 
 
+def sdk_family_assertion_predecessor_bytes(root,name,raw):
+    """Strict assertion-only source successor, before every shared historical entry."""
+    path=Path(root)/'coverage/contracts/current281-sdk-family-source-v2.json'
+    if not path.is_file():return raw
+    context=json.loads(path.read_bytes())
+    assert context['predecessor_source']=='cd703fbda0442944b150c9529e09e0a40ab37c59'
+    if name not in context['sources']:return raw
+    row=context['sources'][name];raw=raw.replace(b'\r\n',b'\n')
+    assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+    for fragment in row['inverse_fragments']:
+        current,old=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1,name
+        raw=raw.replace(current,old,1)
+    assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
+    return raw
+
+
 def integration_fix_predecessor_bytes(root,name,raw):
     """Exact three integration fixes before frozen188; no numerical projection."""
+    raw=sdk_family_assertion_predecessor_bytes(root,name,raw)
     successor=Path(root)/'coverage/contracts/current281-projection-v2.json'
     if successor.is_file():
         layer=json.loads(successor.read_bytes())
