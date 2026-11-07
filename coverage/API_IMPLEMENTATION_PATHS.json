@@ -16253,15 +16253,15 @@
       "family": "stencil",
       "wave": "W2",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse Gaussian gradient magnitude and inverse square-root edge-stop formula",
+      "easiest_credible_path": "Reuse the reviewed private Hessian first-derivative correlation pattern, preserving input-dtype separable passes, square/sum/sqrt and inverse edge-stop arithmetic; ordinary symmetric Gaussian filtering is insufficient.",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze smooth/step edges and constant images against pinned upstream, including alpha, sigma, dtype and boundaries; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
-      "compatibility_hazards": "alpha, sigma, dtype and boundaries",
+      "next_concrete_action": "Source/test/safety packet34d0855a freezes79 prospective recipes and88pure guards perPython. Independently admit actual SciPy derivative/dtype/border/sigma policy and bounds, then source-bound runtime/factory/compiled/full32/controller readiness before separate original GOs. Reuse existing primitives only within their scope; no numerical execution authorized by this route.",
+      "compatibility_hazards": "Input-dtype intermediate derivatives/square/axis sum/sqrt; nearest boundary; sigma>1e-15 and radius0; alpha broadcasting/output expansion; nonfinite/overflow/warnings/FP and source errors. Public signature has no mask, channel_axis or out keyword.",
       "parity_cases_to_freeze": "smooth/step edges and constant images",
       "numerical_policy": "Exact boundaries, footprint origins, dtype/out rules; freeze floating tolerance before comparison and retain strict scopes.",
       "simd_strategy": "Reuse SIMD across independent output pixels and existing separable passes; handle borders/tails explicitly.",
@@ -16270,7 +16270,7 @@
         "status": "proposal-not-measured-results",
         "kind": "compute",
         "specific_workload": "smooth/step edges and constant images",
-        "one_worker_recipe": "2D/3D images with narrow/wide kernels, border-heavy tiny inputs, masks, channel axes and strided/output-buffer cases.",
+        "one_worker_recipe": "2D/3D smooth/step/constant images, narrow/wide active sigma, alpha scalar/array broadcasting, dtype-specific intermediates and strided inputs. Do not invent mask, channel_axis or out kwargs.",
         "existing_inventory_reference": null
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",

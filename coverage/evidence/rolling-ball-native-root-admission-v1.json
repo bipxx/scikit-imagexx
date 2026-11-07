@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "status": "SCOPED_PRIVATE_OWNED_ROLLING_OPERATION_ADMITTED_NOT_GENUINE_RELEASE",
+  "source": "c821f6532b3c429bf83357baf161adf711e2d0a1",
+  "handoff_sha256": "893d49ff6d7a33c6b48de201bfbcdaa2663fa1db26e531dbe493c7183f87cfdf",
+  "independent_review": {
+    "path": "build/rolling-ball-native-independent-review-v1/review-v1.json",
+    "sha256": "fdc65bd5cbef0ba8b650be79a67fdb9eb79e571fe4e1a672d83df5fa51a20749"
+  },
+  "source_files": 15,
+  "numerical_checks": 810,
+  "saved_record_FP_scope": 750,
+  "boundary_controls_without_FP_credit": 60,
+  "source_controls": 100,
+  "SDK_scope": "Completeowningdefault/custom float32/64 operations,52sourcewordcasesworkers1/4+largeparallel, relocatednormal/scalar/san; NOTgenuinewhole108SDK orinteger/half/bool/swapped closure.",
+  "owned": "C++padding/minplus/source-rowNaN/borders/output; oneglobaldefault1snapshot acrosskernel/traversal.",
+  "providers": {
+    "padding": "C++",
+    "min_plus": "C++ stable row/inner order",
+    "output_words": "C++",
+    "SDK": "Complete owning float32/64 image->background operation, built-in default kernel and optional custom kernel, signed input byte strides",
+    "providers": [
+      "NumPy input coercion/astype including complex refusal and output dtype conversion",
+      "NumPy user custom-kernel astype, center subtraction, +inf mask, scalar promotion/warning/error policy",
+      "NumPy allocation/base/reshape/stride/metadata; axis generation and scalar power for owned kernel",
+      "Explicit user array/truth/index protocols; independent local thread-deprecation metadata"
+    ],
+    "workers": "One existing process-global default1, optional user snapshot; independent outputs partition only above256*1024, each output reduction ordered. No parallel tree reduction.",
+    "SIMD": "Admitted ball primitive dispatch reused; min-plus ordered compare/NaN row selection retained scalar per output, compiler may vectorize independent storage work. True scalar build disables compiler vectorizers and uses scalar donor. No min-plus SIMD speed claim."
+  },
+  "pending": [
+    "Root independentfullfamilyadmission before integration",
+    "Ordinary shared namespace/registry/build/collector/SDK/fullsource closure; not advertisedorcounted",
+    "Genuine single installed core/globalworker/hotswap/actualcurrentcompleteSDK identity and exactfourprofile qualification",
+    "Windows runtime/parity and portableFPconsumer; MSVCproofcompile-only, no Linuxhelper on Windows",
+    "Broader public protocol/unsafe/extended dtype and nondefault FP-policy domain closure; SDKinteger/bool/half/swapped dtype policy remains provider/notcovered byfloat32/64SDK",
+    "Root actualgenuine first-cohort/bindings/F1hostreceipt+outerC1poststop/verifier then separateoriginal-public1thread performance; preserveallslowercases, no speedup claim"
+  ],
+  "limits": "Privateonefamily/donorruntime; noWindows-original/runtime/fullAPI/SIMDminplus/speed claim. Alloriginal150grants exhausted.",
+  "waste_review": "Reused independent245smallproof/source/SDK/native review without repeating750saved computations orlargehashes. Preserved empty-stride73/75failure and correctedall150. Next existingconsumerneedsactualoutergenuine route/frame/C1/postbatch verification beforefuture281timing; current352notheld."
+}

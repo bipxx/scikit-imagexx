@@ -1,0 +1,355 @@
+{
+  "schema": "inverse-gaussian-gradient-source-handoff-v1",
+  "result": "SOURCE_TEST_SAFETY_FROZEN_PENDING_INDEPENDENT_REVIEW",
+  "source": "34d0855a317e97f776001f87bf52e48a5755d3dd",
+  "base": "3b912aa92158308d76de87741130d1ce0e19dfa6",
+  "worktree": "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/inverse-gaussian-gradient-v1",
+  "branch": "feature/inverse-gaussian-gradient-v1",
+  "clean": true,
+  "files": {
+    "benchmarks/inverse_gaussian_gradient.py": {
+      "sha256": "d2fb308d50360ff150885a1e9346bcb342a8f65543f56da3840e2309920c4cc4",
+      "bytes": 653
+    },
+    "coverage/contracts/inverse-gaussian-gradient-v1.json": {
+      "sha256": "6d72d22a9b60baf489c6a4ed9434642d9b6e5709979d9aca097ac544daef9628",
+      "bytes": 75633
+    },
+    "tests/fixtures/inverse_gaussian_gradient_sources_v1.json": {
+      "sha256": "86e90f21394e3cf6e8c56f4366369c4cc4f882816918045b845a201a2df8904c",
+      "bytes": 490079
+    },
+    "tests/inverse_gaussian_gradient_contract.py": {
+      "sha256": "d1f6e2a623ad86b9904e78514388e0a4b49a3dfd3efe7404456647c75f9fd5cb",
+      "bytes": 7234
+    },
+    "tests/inverse_gaussian_gradient_exception_codec.py": {
+      "sha256": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+      "bytes": 2102
+    },
+    "tests/inverse_gaussian_gradient_observer.py": {
+      "sha256": "2fe42f1ec3f073521675133b35e5b873e3d1061646391a928cfd96fd82367c03",
+      "bytes": 1819
+    },
+    "tests/test_inverse_gaussian_gradient_source.py": {
+      "sha256": "9c97d38d11664801cbc7a92bd2c862750ab9ea8d015a6018b1e4d88e134735d4",
+      "bytes": 5409
+    }
+  },
+  "dependencies": {
+    "AGENTS.md": {
+      "sha256": "bd8eb939a9478ca7f633982d15e3ac2b0033a66ef8019013891ca6f6cc01587e",
+      "bytes": 15461
+    },
+    "tests/conftest.py": {
+      "sha256": "5d7d7d49b38db54804857c2251e55c68edb33e44ee27e06d2566332a63d14ab5",
+      "bytes": 358
+    },
+    "tests/crop_contract.py": {
+      "sha256": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+      "bytes": 11979
+    },
+    "tests/crop_observer.py": {
+      "sha256": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+      "bytes": 6731
+    },
+    "tests/draw_coordinates_observer.py": {
+      "sha256": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+      "bytes": 6267
+    },
+    "include/skimagexx/gaussian_nd.hpp": {
+      "sha256": "2340621b5fe5e4de0b534a5ec394fd6856b734ffe99bca217c0e1f8c1eb59396",
+      "bytes": 1114
+    },
+    "src/gaussian_nd.cpp": {
+      "sha256": "febe02e9883f3a90b1d6b36517b1f8f7e20cdf6f4926b275c55bdc7b14bb93ed",
+      "bytes": 17191
+    },
+    "include/skimagexx/hessian.hpp": {
+      "sha256": "97ce79d1668a338e1fbafccf2021e22481242aa5864dd442787bdf07aa5f8646",
+      "bytes": 466
+    },
+    "src/hessian.cpp": {
+      "sha256": "645059844b24940e55766d8a9396a8b4e0958b03ccecfd70cf3203bcc3df01b6",
+      "bytes": 13470
+    },
+    "include/skimagexx/derivatives.hpp": {
+      "sha256": "26a815a1124350288f2c90e9888199398273585a327405c587a79044ec01858f",
+      "bytes": 596
+    },
+    "coverage/API_IMPLEMENTATION_PATHS.md": {
+      "sha256": "9dd56bc18beee45a5a24e229f880c861d54034d2f29a44ba8d28fdd1fbc04d1b",
+      "bytes": 415849
+    }
+  },
+  "proofs": {
+    "build/inverse-gaussian-gradient-source-first-v1/extra-source-intake-v1.json": {
+      "sha256": "76ffa9d64185b3666c30d2f95a4eda2d3ecb2efa6b0b4f0bd980d865c0760cf8",
+      "bytes": 2208
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/finalize_contract_v1.py": {
+      "sha256": "e740b54c40e8e92c05e87ea60855f65fa417f92b049765a87d71ff93d990ef31",
+      "bytes": 9623
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/freeze_handoff_v1.py": {
+      "sha256": "e6715584345087ccbaaea0af543e346f954f1d74c51ee55da77560f986a9cc21",
+      "bytes": 5592
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/local-source-intake-v1.json": {
+      "sha256": "9acfccd6d6a7f3152d9db6e9f906de0d14b70c2cc0ccd2a2434dc3ee69284e4d",
+      "bytes": 3600
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/read_extra_source_v1.py": {
+      "sha256": "e680978c8e6e9e91b84bd67ea978ffa06247ed752f983bc4bf23f13e6aeb6c92",
+      "bytes": 899
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/read_local_source_v1.py": {
+      "sha256": "bce47e4a74c68b230b76d77216bf81bca3b5f40c948f0d7f5b27926dabac9271",
+      "bytes": 1170
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/scipy/_lib/_array_api.py": {
+      "sha256": "c9da1fc9e99f56e81eaf688b7d5954036a6c7a8943a27a31ca9740010493b417",
+      "bytes": 22353
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/scipy/ndimage/_delegators.py": {
+      "sha256": "3417fa86467ba72ac42e5854a4ff82beebc13c480eefb16001f843dfc28493e4",
+      "bytes": 9256
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/scipy/ndimage/_filters.py": {
+      "sha256": "e821fbd5ae150dc9fdb616ae5a213504904e5416febcde421739f3fe52769c0c",
+      "bytes": 70982
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/scipy/ndimage/_ndimage_api.py": {
+      "sha256": "4bc0c1456c9d4917c0cfe6651d231e0926e36068022e2a1af7f43655719e0bf8",
+      "bytes": 586
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/scipy/ndimage/_ni_docstrings.py": {
+      "sha256": "4f10049280b9cac03926e2bc20cdb1a2aeb4c9d7555aa397b26c585c8afee3f1",
+      "bytes": 8542
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/scipy/ndimage/_ni_support.py": {
+      "sha256": "c1e60b92002969fd161b9e1d92cc499c5118d93a024fd3b75cd3f8778a69a453",
+      "bytes": 5308
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/scipy/ndimage/_support_alternative_backends.py": {
+      "sha256": "1bd27a70146667454590043bdae19db2243dfb8665a936782ac5fc72cfd06578",
+      "bytes": 2603
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/minimum/skimage/segmentation/morphsnakes.py": {
+      "sha256": "71ced09bbab3918523c38abeda1235a79ca34eb7467d76875e0ef5b13d2092d6",
+      "bytes": 14882
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/scipy/_lib/_array_api.py": {
+      "sha256": "b34bce82c4fe526779956d8d7f6b0a2c073018de826af7079790c12c9a87d8a5",
+      "bytes": 44728
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/scipy/ndimage/_delegators.py": {
+      "sha256": "108d97b26c3a1832fc3272de41867ab8af5d56432fd3558e7757d94cb4bf06b5",
+      "bytes": 9410
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/scipy/ndimage/_filters.py": {
+      "sha256": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223",
+      "bytes": 93373
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/scipy/ndimage/_ndimage_api.py": {
+      "sha256": "4bc0c1456c9d4917c0cfe6651d231e0926e36068022e2a1af7f43655719e0bf8",
+      "bytes": 586
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/scipy/ndimage/_ni_docstrings.py": {
+      "sha256": "4a0805d567680d70c60293c5ef983bf1fd907379c7ad6aa9ea4f52b784b4627d",
+      "bytes": 9046
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/scipy/ndimage/_ni_support.py": {
+      "sha256": "d49a55e974b2bcc3fafaba8a1c7101adcf3745a5640f3ca704794eebbdac7336",
+      "bytes": 5216
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/scipy/ndimage/_support_alternative_backends.py": {
+      "sha256": "7f84f644e4e6ab200625dd0bdaa2f2360ac9b7be2f6110573f0fb3caf507b749",
+      "bytes": 4241
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/retained/modern/skimage/segmentation/morphsnakes.py": {
+      "sha256": "71ced09bbab3918523c38abeda1235a79ca34eb7467d76875e0ef5b13d2092d6",
+      "bytes": 14882
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/run_pure_v1.py": {
+      "sha256": "2cf83da1c6a8c60f67e0a5a11ffb983e98fa6e498e85faf1fb9f26ebf4a9419e",
+      "bytes": 1593
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/windows311-pure-v1/command.json": {
+      "sha256": "ecced6c74be57570c80b3b281a5864f428366c1254b290e2fa0ca3556ca4aeb6",
+      "bytes": 900
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/windows311-pure-v1/results.xml": {
+      "sha256": "1fd72d9af8f9a9d20a0ec51b03f24086c6412d474b2f28df418764072e0ba79b",
+      "bytes": 13922
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/windows311-pure-v1/terminal.json": {
+      "sha256": "12f6f9b491c4fb8fdd250ddf7ccaa20db414a33d003ba4546c9e61739c653f7d",
+      "bytes": 167
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/windows313-pure-v1/command.json": {
+      "sha256": "6c7dbd68c3804d7a2add930d9fa9eb9e884c01970d574e698d43066eb16f1019",
+      "bytes": 892
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/windows313-pure-v1/results.xml": {
+      "sha256": "1f6ebd2124d5c27b9f11da934f836ccd96998a3a62ab2c02a21a0433ea2a701a",
+      "bytes": 13922
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/windows313-pure-v1/terminal.json": {
+      "sha256": "576f4014887c9a4e1d51df33c30576854d0b12566585a45824679672c2547098",
+      "bytes": 168
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/write_contract_v1.py": {
+      "sha256": "bcf1ab95abe4f6f04da8c06893376be412a71456ca447e653ac562fef0b85a7b",
+      "bytes": 7350
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/write_snapshot_v1.py": {
+      "sha256": "1c91aafebc86f3e761049260d673967a45b93dcd40dca1a1e9209293945b8590",
+      "bytes": 2345
+    },
+    "build/inverse-gaussian-gradient-source-first-v1/write_tests_v1.py": {
+      "sha256": "0e83f7f187418e94a735b639a1cdedf70592243f1010a23cbb9350cde612b37f",
+      "bytes": 6394
+    }
+  },
+  "source_snapshot": {
+    "files": 22,
+    "scope": "Read-only retained files via stdlib, not source module import or compiled/runtime authenticity; exact full text/hash in tracked snapshot",
+    "compiled_origins": "Paths only from retained source intake. No binary/archive rehash"
+  },
+  "acceptance": {
+    "applicable_rules": "Root+worktree AGENTS; exclusive family files, no shared/source-owner edits, native Windows Git, preserve frozen refs, explicit gated closeout, UTF8/LF new files, CRLF-aware diff check PASS",
+    "pure": {
+      "windows311": "88PASS normalconftest/plugins 0scientific origins",
+      "windows313": "88PASS normalconftest/plugins 0scientific origins"
+    },
+    "source_interface": "PASS pinned actual signature and final expression/helper source order",
+    "geometry": "AUTHOR_SOURCE_BOUNDED_PENDING_INDEPENDENT_SAFETY",
+    "actual_readiness": "PENDING no NumPy factory/observer/helper execution",
+    "native_sdk_parity": "PENDING no implementation",
+    "genuine_performance_release": "PENDING",
+    "independent_admission": "PENDING root"
+  },
+  "recipes": {
+    "count": 79,
+    "profiles": [
+      "minimum",
+      "modern"
+    ],
+    "prospective_calls": 158,
+    "authority": "NONE",
+    "maxima": {
+      "input_elements": 60,
+      "physical_elements": 60,
+      "output_elements_upper": 60,
+      "line_elements_upper": 220,
+      "work_upper": 11861,
+      "named_numerical_bytes_upper": 43504
+    },
+    "allowance": {
+      "max_input": 64,
+      "max_output": 128,
+      "max_radius": 20,
+      "max_work": 65536,
+      "named_numerical_bytes": 131072,
+      "exclusions": "Python/import/allocator/process peak; named numerical arrays and conservative double line/weight buffers only"
+    }
+  },
+  "budgets": {
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "scientific_factory": 0,
+    "sampler": 0,
+    "timing": 0
+  },
+  "prior_study": {
+    "full_algorithm_refs_found": 0,
+    "reused": "Retained level-set morphsnakes source only, Gaussian/Hessian and blur compiled-source primitives/source; no prior refs imply no prior API parity",
+    "scope": "Gaussian symmetric pass cannot run derivative weights; Hessian private correlate pattern reusable after exact review, whole Hessian changes dtype/scaling/domain and is not substitute"
+  },
+  "native_sdk_route": {
+    "operation": "One owning inverse_gaussian_gradient operation over typed signed-strided image view, explicit scalar/per-axis sigma, scalar/typed alpha view + dtype plan; allocate broadcast output, compose ordered derivatives/squares/sum/sqrt/final inverse, no stage-only SDK claim",
+    "route": "Family-local derivative1 correlation using exact compatible Gaussian/Hessian patterns after source scope review, preserve typed intermediate casts and complex policy; no library-wide backend rewrite",
+    "workers": "No public workers keyword. Future optional existing global budget default1; capture once per owned composition while retaining source callback phases; ordered per-output reductions serial, SIMD/parallel across independent output spans where FP/order exact",
+    "platform": "Linux default-int/intp and compiler/libm/vector math does not close Windows/ISA, half/extended types or all promotion domains"
+  },
+  "numerical_frontiers": {
+    "source": "Pinned skimage0.26 identical public expression; actual retained SciPy1.15.3/minimum and1.18.1/modern source snapshots",
+    "signature": "No mask/channel_axis/out/workers kwargs; all input axes spatial",
+    "order": "gaussian_gradient_magnitude image,sigma,nearest THEN alpha*gradnorm THEN1.0+ THENsqrt THEN1.0/division; do not reassociate",
+    "dtype": "Generic output defaults input dtype; each derivative axis correlates into that dtype; square same dtype, source-axis ordered +=, unsafe sqrt to same output; Python scalar/array alpha NumPy promotion differs by retained profile; no blanket input upcast/scaling",
+    "complex": "Square complex derivatives, not abs-square. SciPy real/imag correlate decomposition and final complex sqrt/division need strict observed FP/word evidence",
+    "sigma": "Per-axis sequence normalized to rank; axes sigma>1e-15 active; zero/negative/NaN skipped. Active radius0 still filter. Default truncate4 radius int(4*sigma+.5); rank0 ignores sigma in generic empty-axis branch",
+    "weights": "NumPy exp/normalization/D+P dot polynomial derivative1 construction; compiled correlate symmetry-first/antisymmetric DBL_EPSILON; double buffers center then pair source ordering",
+    "borders": "Fixed nearest on every axis; no invented clipping or mirror policy",
+    "alpha": "Scalar/array/list/protocol alpha evaluated only after complete gradient; standard broadcast can expand shape, e.g(2,1,1)*(3,4)->(2,3,4); errors preserve phase/order",
+    "layout_ownership": "C/F/reversed/strided/transposed/readonly/swap/meta/provider source coercion must be observed; expected fresh result is not yet claimed. Record alias/base/input after callbacks/errors",
+    "fp": "No masks, reassociation/FMA or status normalization. Target-immediate full32/control/status/MXCSR+NumPy policy/callback state and exact caller/process restore are future strict gates; warnings/errors unobserved",
+    "array_api": "Actual SciPy public alternative-backend wrappers differ; initial NumPy-only provenance needs runtime identity. Other Array API backends/protocol domains remain open"
+  },
+  "quarantines": [
+    "Positive-sigma empty axis C malloc0/filter path not safety-closed; only sigma0 empty recipe admitted prospectively",
+    "Huge/default3D allocations, forged views, arbitrary rank/shape/radius/alpha expansion outside exact bounded pool",
+    "Object/structured/longdouble/subclass/masked/backend domains unassessed; do not claim half success from metadata recipe",
+    "No target errors/warnings/output expectations invented. Inf/bad/shape sigma recipes stop before coefficients according to source; actual runtime checks pending",
+    "Unmasked FP traps and arbitrary malicious callbacks not authorized; ordinary source protocol behavior remains full-goal gate"
+  ],
+  "benchmark": {
+    "cases": 8,
+    "status": "PLAN_ONLY_UNBOUND_NO_SCIENTIFIC_FACTORY_OR_TIMING",
+    "method": {
+      "threads": 1,
+      "repeat": 7,
+      "target_ms": 100,
+      "warmup_min_ms": 250,
+      "allocated_public_call": true,
+      "loss_policy": "retain_all_losses",
+      "sampler": "existing Montage only; future root-admitted executable consumer, no timing now"
+    },
+    "cases_frozen": true
+  },
+  "unbound": {
+    "prepared_source": null,
+    "producer_run": null,
+    "artifact": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "first_cohort_GO": null,
+    "measurement_GO": null
+  },
+  "pending": [
+    "Independent source/storage safety admission",
+    "Actual package/METADATA/RECORD/public+compiled identity and NumPy-only factories/codec/FP tests",
+    "Versioned source-bound controller/full32 same-code cached+cold target/provider REQUEST refusal, no helper algorithms",
+    "Separate root GO before any prospective158originals",
+    "Saved raw independent admission then complete owned native/public/SDK/hotswap/SIMD/scalar/worker proofs",
+    "Genuine exact-source four profiles/full exported SDK and one-thread public-original performance before release"
+  ],
+  "failures_and_waste": [
+    {
+      "kind": "Preventable sourcewriter setup",
+      "detail": "Observer inverse initial script asserted one excess replacement newline; corrected exact inverse before first pytest. Snapshot Windows separators normalized in metadata before first pytest; source payload text unchanged. No numerical proof invalidated.",
+      "cost": "unknown"
+    },
+    {
+      "kind": "Preventable inspection command",
+      "detail": "PowerShell rejected a Bash brace-list rg command before any execution; corrected explicit4paths. No dependent mutation on failed command.",
+      "cost": "unknown"
+    },
+    {
+      "kind": "Useful source safety refinement",
+      "detail": "Source audit distinguished active sigma justover1e-15 with radius0 from skippedaxes and bounded stride2 backing across allaxes before first tests.",
+      "cost": "unknown"
+    }
+  ],
+  "reuse_and_next": {
+    "reuse": "Existing runtimes read-only source files, retained SciPy C source, exact rolling typedcodec/observer inverse, crop ArrayProvider/payload codec, normal pure runner; no environments/downloads/builds/comparisons or old campaign reruns",
+    "next_owner": "root",
+    "trigger": "Independent source/storage review of this frozen packet, then separately assign actual NumPy-only factory/codec/full32/runtime+compiled identity/controller cached+cold REQUEST-refusal readiness. Separate explicit root GO precedes any158prospective originals.",
+    "main_delivery": "Root sole integrator/admission; selective7file import only after admission, no shared registry/workflow/CMake edited. Current ready lanes proceed independently."
+  }
+}

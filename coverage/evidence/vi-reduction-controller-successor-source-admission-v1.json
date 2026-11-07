@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "status": "INDEPENDENT_METADATA_DELTA_SOURCE_ADMITTED_FULL153_BOTH_PENDING",
+  "source": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+  "parent": "352dc55681b3774ae3f304ac4783757a9d911b52",
+  "handoff_sha256": "8abb884a12c6393d06977df8f672e008641a7870d0b431584d3292af552cbb14",
+  "independent_review": {
+    "path": "build/vi-reduction-controller-v2-independent-review-v1/review-v1.json",
+    "sha256": "54d1fd0962164dca7981142cfd348632c27ee16d427a0c9f39a120da6568f0c0"
+  },
+  "files": 5,
+  "production_qualifier_workflow_unchanged": true,
+  "numerical_replay": 0,
+  "pending": "ActualFULL153bothPythonsnormalplugins/conftest/no-x/0science withshortworkspace temp path. Onlythenrootgenuinedispatch; prior352failed remainsfailed.",
+  "waste_review": "Independent5filedelta review reuses Rmath/B352/context evidence;26smallreceipt scopeonly. Targeted15passingnodesdoNOTreplacefullgate. Rootdispatchescompleteaffectedbarrierimmediately, no extrareview/scientificrerun."
+}

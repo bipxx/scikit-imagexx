@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "status": "SCOPED_UNBOUND_CONTROLLER_AND_VI_CLASS_IDENTITY_GUARD_SOURCE_PASS",
+  "source": "e6ffa386205309ac84526f14b3403082380e280a",
+  "base": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+  "handoff_sha256": "9c82c7d6cb4b6baf057b6a03aaf44be8c179ea0e477090f57d6339eb95491503",
+  "exclusive_source_files": 23,
+  "small_proof_pins": 43,
+  "retained_historical_contracts": 6,
+  "pure_XML": 422,
+  "originals": 0,
+  "native_calls": 0,
+  "timing": 0,
+  "review": "Reviewed class-preserving constructor instrumentation and exact restoration; coordinate/log refusal retained. Actual frontend AST positive inert controls are source-only. Probes differ only versioned context literals; timed execute and fixed case/method source preserved. Actualbinding fields UNBOUND.",
+  "pending": "Actual corrected production snapshot reconciliation, source collector/controller checkout closure, genuine core/SDK/helper/runtime/root bindings, real firstcohorts and separate timing GO. Currentab78 largeVI numerical failure remains blocked; controller fix does not fix numerical results.",
+  "waste_review": "Reused reviewed15file intake and six immutable histories, existing C1/entry/report engine, source211controls perPython; no scientific replay. Root PowerShell brace-expansion query failed before reads/mutations; corrected to actualPython path inventory. Nextroot integrates only exactreviewed files with eventual admittednativefix then affected source checks."
+}

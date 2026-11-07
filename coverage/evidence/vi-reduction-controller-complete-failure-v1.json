@@ -1,0 +1,45 @@
+{
+  "status": "FAILED_COMPLETE153_BOTH_PYTHONS_GENUINE_STOPPED",
+  "source": "352dc55681b3774ae3f304ac4783757a9d911b52",
+  "profiles": {
+    "windows311": {
+      "exit_code": 1,
+      "seconds": 291.344000000041,
+      "attempts": [],
+      "scientific_origins": {},
+      "source_clean_after": true,
+      "original_calls": 0,
+      "native_calls": 0,
+      "timed_batches": 0,
+      "xml": {
+        "tests": 3624,
+        "failures": 8,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "windows313": {
+      "exit_code": 1,
+      "seconds": 273.70311010000296,
+      "attempts": [],
+      "scientific_origins": {},
+      "source_clean_after": true,
+      "original_calls": 0,
+      "native_calls": 0,
+      "timed_batches": 0,
+      "xml": {
+        "tests": 3624,
+        "failures": 8,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "root_causes": [
+    "4perversion requiredselectors156vsactual157 afternewlargecasefile",
+    "3perversion Linuxsavedgroups+9vsactual+10",
+    "1perversion workspace scratchWindowsMAX_PATH SDKfilename; chooseNEWshortworkspace scratch, no altertest/skip or globalOSsettings"
+  ],
+  "numerical_evidence": "UnaffectedprivateR9ec exact8large/oldsource scopes retained;0scienceexecuted infailedcompletebarrier.",
+  "next": "NEWmetadata-only source successor preservingfrozen352, requiredfullboth153commands; no unchangedretry. RetainfailureXML/commands/nodeIDs/plugins outside scratch. DeniedDtargets untouched."
+}

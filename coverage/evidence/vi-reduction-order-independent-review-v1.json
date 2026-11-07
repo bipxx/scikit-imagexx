@@ -1,0 +1,112 @@
+{
+  "schema": "vi-reduction-order-independent-review-v1",
+  "result": "PASS_SCOPED_PRIVATE_COMPONENT_SOURCE_AND_RETAINED_EVIDENCE",
+  "source": "9ecdda4edb82fd114370f0706bda54e5e1c17603",
+  "base": "1a060891f33ea058d671491957ebfaec0044bb5e",
+  "handoff": {
+    "path": "build/vi-reduction-order-v1/handoff-v1.json",
+    "sha256": "20b4a733a0513ed924c0264d5b98bb9e8282fe4125333b0f7285cf66950fa9bd"
+  },
+  "review_scope": "Read-only static source and small retained JSON/XML/log/command receipts; no reviewed imports, tests/science/helper/native/build/original/timing/download/dispatch or large archive/core hashes",
+  "authentication": {
+    "source_files": 10,
+    "prerequisites": 3,
+    "proofs": 241,
+    "proof_bytes": 969677,
+    "source_clean": true,
+    "actual_production_delta": "src/variation_of_information.cpp only; other9files family evidence/contracts/consumers"
+  },
+  "passed": [
+    {
+      "gate": "Reduction source fidelity",
+      "evidence": "Exact pairwise helper matches existing metrics.cpp, 128leaf boundary and half aligned8 recursion; minor_sum seeds get(0) then reduces n-1 tail. Applies to CSR px and source-ordered nonzero row-entropy terms. py scatter/column-entropy source ordering unchanged; no result IDs/constant fitting/provider entropy computation/tolerance/FPmask/domain removal."
+    },
+    {
+      "gate": "DDOT source graph",
+      "evidence": "Read root203d admitted diagnosis and retained HASWELL disassembly:4x4lane FMA accumulation, high+low halves, (group3+group2)+(group1+group0) then horizontal, scalar remainder retains established right-destination multiply NaN semantics. std::fma explicit graph retained under compiler scalar/disabled; source graph is not a claim of every BLAS/CPU dispatch."
+    },
+    {
+      "gate": "Byte closure",
+      "evidence": "All10source hashes authenticated; source inverse reconstructed exact1a CPP bytes. Existing metrics/counts/publicheader/binder/frontend/CMake/runtime unchanged from1a. No shared registry/build edits. Historical contracts/raw and failed comparison immutable."
+    },
+    {
+      "gate": "Raw provenance and first strict records",
+      "evidence": "Tracked fixture equals both actual admitted4row raw JSONs verbatim and matches recorded SHA. Independently compared all8candidate records to exact raw fields:values/dtypes/shape/layout/ownership/input beforeafter/error/warnings/events/aliases/checks, targetincoming/outgoing control/status/MXCSR and exactcaller32. No target flags normalized or declared postobserver."
+    },
+    {
+      "gate": "Public saved closure",
+      "evidence": "Actual XML192successful/0failures/errors/skips:minimum+modern each40normal oldsaved/control,48disabled old+large worker1/4,8normal largeworker1/4. First8strict records additionally retained. Normal plugins/conftest and original/image-provider REQUEST/body refusal controls visible in actual runners. Not genuine hotswap/fullproduct."
+    },
+    {
+      "gate": "Native arithmetic boundaries",
+      "evidence": "Retained old21savedpairs/9controls include signed-qNaN allignored and zeros; final28generic sum/dot boundary/FMA controls exercise0,1,7/8/9,15/16/17,31/32/33,127/128/129,255/256/257/1023 and fused packet/scalartail transition. Normal/compiler-scalar(auto-vectorizationdisabled)/ASan+UBSan recorded success. Candidate-equivalence18controls and12large SDK-shaped records workers0/1/4. Ordered arithmetic remains serial; no speculation about parallel queue/pool."
+    },
+    {
+      "gate": "Installed SDK applicability",
+      "evidence": "Actual existing exported find_package skimagexx::skimagexx assembled96/current-e8 archive member replacement, header dependencies and linkmap reviewed; membercount178unchanged, installed public/dependency headers selected, no source-include leak. Runs18current controls+12large records/24words normal+disabled. It is private assembled SDK evidence, not genuine whole107."
+    },
+    {
+      "gate": "Windows and source controls",
+      "evidence": "MSVC strictFP changedleaf executable passed old21pairs/9controls and12large records versus GNU retained words; final28inertboundaries pass. This is not Windows-original/publicFP parity. Actual final6pure guards per WindowsPython=12, normalconftest/plugins,0science; earlier versions retained, not added to final count."
+    }
+  ],
+  "findings": [],
+  "scope_notes": [
+    "No reviewed imports/body execution. stdlib file equality/JSON/XML only. No archive/core authentication repeated.",
+    "Nested identity block in component receipts describes donor predecessor; outer source/core identity and exact relink commands describe changed candidate. Scope is assembled private core.",
+    "Some inherited terminal prose says VI leaf unchanged; actual native command compiles changed absolute WT leaf, hash/source pins and map establish successor. Do not promote inherited wholeSDK labels."
+  ],
+  "failure_history": [
+    {
+      "path": "build/vi-large-native-comparison-v1/handoff-v1.json",
+      "scope": "Old strict large4/8 failed retained unchanged; no relabel"
+    },
+    {
+      "path": "normal-v1",
+      "failure": "Compile-only recursive functor type expansion; exact compiler child stopped before product emitted. Corrected stable functor+offset recursion; no target calls",
+      "waste": "Preventable compiler setup; elapsed unknown, ps observed42seconds"
+    },
+    {
+      "path": "public-minimum-normal-v1/failure-context.json",
+      "failure": "Receipt writer missing identity.json before pytest/targets; existing intake serialized, freshv2 used; no rebuild",
+      "waste": "Preventable launcher adapter prerequisite; no science replay"
+    }
+  ],
+  "unmet_requirements": [
+    "Root independent admission/selective integration; do not merge private1a ancestry wholesale.",
+    "Shared literal readers test_variation_of_information_source.py/current_counts_source.py must authenticate changed leaf through exact historical_vi_source; retain oldcontracts. Addnew fixture/header/sourcefiles to actual collector closure and source/public selector requirements.",
+    "Active benchmark context must reconcile newVIleaf with separately corrected class-identity consumer/context; all real product/runtime/core/SDK/helper/root/GO bindings remain genuine-input gated. No current performance authority.",
+    "Complete actual affected source barriers both retained WindowsPythons after shared integration; final12familycontrols do not replace fullworkflow command.",
+    "Exact-source genuine fourprofile public/native ownership/hotswap/F1transport and whole exported SDK qualification remain pending.",
+    "Windows-original/publicFP, broaderCSR/protocol/inputFP/libm/otherBLAS/CPU/ISA/nonfinite packet domains remain open. FMA graph alone is not universal original parity.",
+    "One-thread allocated public-call original comparison with all losses retained is pending; extra rowtemporary allocation has no measured speed claim."
+  ],
+  "waste_reuse": {
+    "author": "Useful prior failed4/8large strict comparison localized reduction order; retained compile recursion42s observed/unknown total and pre-pytest missingidentity setup failures preserved. No original recapture, fullbuild or favorable performance rerun.",
+    "review": "Reused source/runtime/compiled/donor and admitted203d/raw authority; authenticated969677smallproofbytes once, read only JSON/XML/source/logs. Optional inspection of nonexistent local copyofalreadyretaineddisassembly yielded no content; read actual olddiagnosis locator instead. No science invalidated; unknown trivial inspection cost.",
+    "next_owner": "root",
+    "next_trigger": "Scoped admission then sole selective cumulative integration and full source/genuine gates. Reviewed, no component change required within assessedscope; no additional review framework or test replay requested."
+  },
+  "review_evidence": {
+    "authenticate_v1.py": {
+      "sha256": "cd1726748d3680bc58d8324078f3bee29909adf7687f84e22749b007de475387",
+      "bytes": 1584
+    },
+    "authentication-v1.json": {
+      "sha256": "50156d2989d800dbeffd0636cfa2657a4f8eb0a65af76a82e947c75ed3db5c66",
+      "bytes": 1782
+    },
+    "freeze_v1.py": {
+      "sha256": "08a505434ce4619a45a5a78a612c02a59a23ead38f8fad7692413c5d27376580",
+      "bytes": 7054
+    },
+    "inspection-v1.json": {
+      "sha256": "9740d8d0d8d7752cf0a5e5c6966ceb485e7a6415798bfba5793083dfea66b34c",
+      "bytes": 9326
+    },
+    "inspect_v1.py": {
+      "sha256": "eb65631e325e5a652d13ac3ec8955d5252812b1fd744ae1ab17391db157f1314",
+      "bytes": 3810
+    }
+  }
+}

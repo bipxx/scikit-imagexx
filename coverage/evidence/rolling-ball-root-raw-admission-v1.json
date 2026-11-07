@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "status": "ROOT_INDEPENDENT_150_ORIGINAL_REFERENCE_ADMISSION_NATIVE_PENDING",
+  "source": "dfebccfc171290280643c3b17a4809148a0bb49f",
+  "binding": {
+    "path": "build/rolling-ball-readiness-v1/binding-v2.json",
+    "sha256": "041549e60cd50a24b11f4939c86077c1b4bbe7c575127ba8a8e9d77a569122f8"
+  },
+  "handoff_sha256": "2cb21f961b1bd902c808c27cc5c583a7bd4f30e006fc08b9ada1663f2dc85cbb",
+  "proof_pins": 25,
+  "profiles": {
+    "minimum": {
+      "rows": 75,
+      "returns": 63,
+      "API_errors": 12,
+      "warnings": 8,
+      "caller_process32": true,
+      "target_FP_changes": 6
+    },
+    "modern": {
+      "rows": 75,
+      "returns": 63,
+      "API_errors": 12,
+      "warnings": 8,
+      "caller_process32": true,
+      "target_FP_changes": 6
+    }
+  },
+  "public_calls": 150,
+  "journal_events": 300,
+  "original_remaining": 0,
+  "payload_occurrences": 466,
+  "unique_payloads": 57,
+  "independently_decoded_bytes": 3324,
+  "reference_profile_result_error_warning_equal": true,
+  "FP_policy": "Retain perprofile incoming/outgoing semanticfields and rawIPwords; caller/process32 exact. No normalization.",
+  "compiled_scope": "Cython REQUEST prefixes prove refusal beforedispatch only; capture compiledcounter0 is not body0. Authorized75public calls/profile include sourcecompiled computations.",
+  "native_implementation_authorized": "NEW rolling_ball family source/SDK/public component vs150savedrows, rootsharedintegration/main; no neworiginals/timing/fullproduct/env/download.",
+  "pending": [
+    "Saved-fixture publication and source-safe tests after raw admission; no source publication performed here",
+    "Complete owned algorithm/native+SDK+public parity/provider/full-domain/hotswap/defaultworkers/scalarSIMD ownership",
+    "Meaningful one-thread original public-call performance and exact-source four-profile genuine release gates pending; no timing authority"
+  ],
+  "waste_review": "150fixed originals capturedonce, expected24APIerrors16warnings retained,0retries. Root reused immutable25proof/source/runtime/helper pins and independently parsed journal+FP+payloads once per uniquehash at trustboundary, no scientific replay. NextC coherentnative/SDK/public batch with allgaps/providers explicit."
+}

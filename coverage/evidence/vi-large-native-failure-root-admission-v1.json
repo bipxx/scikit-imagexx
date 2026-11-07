@@ -1,0 +1,23 @@
+{
+  "status": "FAILED_PARITY_ROOT_AUDIT_AND_DIAGNOSIS_ADMITTED_NARROW_FIX_AUTHORIZED",
+  "parity_passed": false,
+  "diagnosis_admitted": true,
+  "source": "1a060891f33ea058d671491957ebfaec0044bb5e",
+  "handoff_sha256": "44f2e1dcb791520c75e370106ce9f74e66a5398303cec6f10cee0e164bac470f",
+  "proof_pins": 73,
+  "actual_native_calls": 8,
+  "failed_cases": 4,
+  "root_cause": "Missing NumPy reduceat first-seed/pairwise-tail association in px/row-entropy and missing contiguous BLAS finaldot accumulation/fusedrounding order. Log2,py,columnentropy match witnessed inputs.",
+  "evidence": [
+    "All8strictpublic comparisons completeonce; only2x64label resultpairs/profile fail. Everythingelseincludingcapturedtargetinput/outputFP/caller32/ownership passes",
+    "DirectNumPy/SciPy diagnosticstages over4savedCSR/profile reproduceALL8saved originalresultpairs. They are diagnostic primitives, NOT new reference gold or publicoriginal calls",
+    "Source-identical one-TU nativephaseprobe reproducesALL8actualcomponent pairs; exactinverse/sourcehash retained, not a production edit",
+    "Nativepx minor reduction differs3rows for128\u00b28 and63rows for128\u00b264; 8-label final-pass hides intermediate differences. Nativepy andallrightscaled/log/product/columnentropy words agree",
+    "When nativearguments are equal, scalar log/product words agree; explicitnp.log2 on nativearguments confirmsZERO sameargumentlogdifferences forALL8",
+    "Existing metrics.cpp pairwisegraph plus reduceat firstseed/tail matchesALL8provider px andALL8provider rowentropy stagevectors. Thus sourcefaithfulminor reduction canreuse existing arithmetic graph, no new logbackend needed for witnessed inputs",
+    "Terminaldot association independently changes256\u00b264 +4/+2ULP from providerstage vectors: scalarleftfold equalsactualcandidate, providerBLASdot equalsactualsavedoriginal. RetainedlargeHASWELLpacket uses fourYMM FMAaccumulators andfixedhorizontalorder; n8 follows scalarpath. Dispatch acrossallotherCPU/backends isnotproven by symbol/path"
+  ],
+  "allowed_fix": "New VI-only successor: exact existing metrics.cpp graph privatelyreused without modifying metrics.cpp/sharedSDK/CMake, genericreduceat wrapper and source-backed DDOTpacket/tail. No IDs/expectedword fitting, masks/tolerance/providerfallback or domainremoval.",
+  "pending": "Strictall8large+oldsmall/FP/source/scalar/disabled/worker4/SDK/MSVC checks; root independent admission/newcumulative completebarriers beforegenuine/timing. Otherbackend/hardware frontiers stay explicit.",
+  "waste_review": "Usefulfailed experiment isolatedbeforeexpensivecampaign; reused components, arrays/helper/runtime; only one diagnosticTU, no originalrecapture/fullbuild. NextR narrowimplementation innewisolatedfamilyworktree, root sharedintegration/main."
+}

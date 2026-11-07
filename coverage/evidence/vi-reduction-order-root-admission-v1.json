@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "status": "SCOPED_VI_REDUCTION_FIX_ADMITTED_SHARED_INTEGRATION_PENDING",
+  "source": "9ecdda4edb82fd114370f0706bda54e5e1c17603",
+  "base": "1a060891f33ea058d671491957ebfaec0044bb5e",
+  "handoff_sha256": "20b4a733a0513ed924c0264d5b98bb9e8282fe4125333b0f7285cf66950fa9bd",
+  "peer_review": {
+    "path": "build/vi-reduction-order-independent-review-v1/review-v1.json",
+    "sha256": "d6ce994447e4d8fcb7edef8d12f7e3353fda7fb62f50d90bfa293261ff56d2bd"
+  },
+  "source_files": {
+    "coverage/contracts/variation-of-information-reduction-v2.json": "1d2e315aea023b1a91dd66c00c27d3dbb9e750b0ba6c594ada6bddc483c026cf",
+    "src/variation_of_information.cpp": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+    "tests/cmake_consumer/variation_of_information_reduction_consumer.cpp": "0d61d5d6682ee361155b126648a38e531ac31faaa62a79954491963bb9188b44",
+    "tests/data/variation_of_information_large_saved_v1.json": "0c59120f511ef5b2368c01b3b6d010e45bc233deacd52f5c630d568141ec2f55",
+    "tests/test_variation_of_information_large_native.cpp": "4e7b46d5fce93a84890a093ee8969f0f27953b0d35a8419e2b10f82f9eeb4560",
+    "tests/test_variation_of_information_large_saved.py": "b3043bacd0d7830ae4c2bbffa41f6f12145bd9ab5fefd47745858a39932a9d2b",
+    "tests/test_variation_of_information_reduction_native.cpp": "2da565bd5d9d42e8e77ec7bceb69c74b55e62267a085ed11e662ff50a67f7b13",
+    "tests/test_variation_of_information_reduction_source.py": "5212fb7457b7b1be9f24c246056a1230cb47e4f7a5452fa03ce662f71f1ed31e",
+    "tests/variation_of_information_large_controls.hpp": "12e8b75e8d01e7c1d04b826e94ea67533ae5966ae3796f319d114f432ced6407",
+    "tests/variation_of_information_reduction_contract.py": "059fdbe2dc03a545ab61f70ac8ffa54b60a2c68293cff818affe4976216572fe"
+  },
+  "review": "Root reviewed49added/5removed sourcegraph: exactmetrics eightlane helper, 128/8-alignedtree andseededtail reduceat; generic16packet fusedaccum/horizontalgraph andoldsmall/tailNaNoperand order retained. No metrics/header/binder/frontend/CMake/runtime edits; no fitting/providerfallback/tolerance/mask.",
+  "observed_scope": "8large strictpass,192affected publicXML,12finalpureXML; scalar/san/privateassembledexportSDK/MSVC evidence withinhandoff+peer scope. No genuine280/whole107SDK/Windowsoriginal/speed claim.",
+  "metadata_caution": "Nested donor component identity/leaf-unchanged prose is historical; outer source/core/relink receipts authenticate changed9ec leaf. Do not present historical donor as current whole product.",
+  "pending": "Rootexactselectiveimport, oldreader inverse andactivebenchmark-context+collector+SDKfixtureclosure, completebothPython sourcecommands then exactsource4profilequalification andseparate actualcohort/timing/main.",
+  "waste_review": "Reuse oldgold/runtime/objects/helper/metrics graph andindependentlyauthenticated241smallproofs; no repeatednumerics/corearchive/sanitizer/SDK builds. Earlyfailed64cases retained; narrow owning fix. Rootnow integrates reviewed10files into soleunfrozen correctivebundle andfreezeswithoutwaitingfuturefamilies."
+}

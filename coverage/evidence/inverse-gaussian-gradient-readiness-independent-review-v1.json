@@ -1,0 +1,1252 @@
+{
+  "schema": "inverse-gaussian-gradient-independent-actual-readiness-v1",
+  "passed": true,
+  "status": "PASS_ACTUAL_ZERO_BODY_READINESS_NOT_ORIGINAL_AUTHORIZATION",
+  "source": "769811615ffb168f5c42bc15267026eba631fc4b",
+  "controller_sha256": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93",
+  "binding_sha256": "6194c22dfbfa34f9e4b2e2141507b5fffa7660e82558575ad2a2e29ccf2e469a",
+  "handoff": {
+    "path": "build/inverse-gaussian-gradient-readiness-v1/handoff-v1.json",
+    "sha256": "98f96c93bd77af34d16cc7fca452e7cad1914dfa54785ae935ced1d1b07417e3"
+  },
+  "worktree": "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/inverse-gaussian-gradient-readiness-v1",
+  "source_clean": true,
+  "authenticated": {
+    "current_source_files": 4,
+    "frozen_source_files": 7,
+    "entry_source_pins": 15,
+    "smallproofs": 105,
+    "source_geometry_root_admission": {
+      "path": "build/inverse-gaussian-gradient-source-root-admission-v1/admission-v1.json",
+      "sha256": "b5e424b9b672bfe6f311f217e604bd487a3dcf4278ba0e23a1f97f319172ec9d"
+    },
+    "earlier_independent_geometry": "build/inverse-gaussian-gradient-source-independent-review-v1/review-v1.json SHA fab4b3603e61da29d870612a8eaaa6096bda31e164fc13ca0f39e566495daecf",
+    "AGENTS": "Applicable root/worktree identical; no area overrides. Evidence only; all source/oldprefixes/bindings untouched."
+  },
+  "scope": {
+    "interface": "Frozen image/alpha/sigma signature only,79recipes unchanged; dtype/axis/complex-square/nearest/skipthreshold/radius0/order/promotion/broadcast/error/FP source policy and source safety admission reused, no numerical parity inferred.",
+    "entry": "Actual nativeWindowsGit locator through explicitLinuxenv at entry/final, exactcleanHEAD/source/controller/binding/frozenpool/79uniqueIDs/helper authority; retained min/modern executable/version/package METADATA+RECORD and9upstream sourcefiles/profile authenticated before target lookup.",
+    "compiled": "Actual installed NumPy core/ndimage module origins and retained size/RECORD records reused; loaded BLAS paths+sizes restricted to expected records and dispatch overrides refused. No new largebinary hash. correlate1d ATTRIBUTE REQUEST denied before dispatch; not a claim of observing C-internal bodylines.",
+    "prefix": "All4 currentv2 same-code cold/cached actualprofile prefixes bind source76981161/controller25920/binding6194. Each has2targetentryrefusals+6Pythonproviderentryrefusals+1compiledATTRIBUTE request refusal,0target/providerlines,10full32controls,79factorycontrols,2typedmetadatacontrols,1inertsuccess,0recipeobservations/journal/publiccomputations.",
+    "factory": "Finalvalidator independently checks each small input logicalword/layout/backingbounds/readonly/metadata and provideridentity without coercing providers; finalalpha/sigma descriptors, values/type for declared NPscalars, arraycontents/shapes and options JSON-safe transport checked. Ordinary Python literals additionally fixed by unchanged pinnedfactory source. No outputs/expectederrors inferred.",
+    "FP": "Approved0c40 helper/97ffsource/compiler/ABI32/libc2.39 setup reused. Immediate full32 and NumPy policy/handler identity/buffer captured around target refusal; all10control/all79factory/two typedmetadata caller restores and processinitial/final exact32. Hardware-disturbance control exercises sticky+rounding and finallyrestoration; no masks/status normalization. This proves setup, not future computed target FP parity.",
+    "controller": "Defaultmodeprefix zero budgets; capture requires separate rootGO digest/status/exactsource/controller/binding/runtime/79IDs/profile/source-readiness+twoactualprefixreceipts/deadline/uniquedirectory/no-retry. Source/runtime/controller full scans once entry/final; per-case only binding/GO/deadline trust checks. No algorithm authority from template or prospective158 count.",
+    "writer": "dump/append JSON serialize with allow_nan=False before opening/truncating/appending;4pure inert writer tests/version preserve newpathabsence and existingpartialbytes on serialization errors. Retained captureloop inverse to rolling predecessor preserves started/completed/failure counts, immediate/callerstate, traceback and failurewriter errors, terminal-last-case diagnostics, no fabricated row/retry. No capture executed."
+  },
+  "current_prefixes": {
+    "minimum/cold": {
+      "path": "build/inverse-gaussian-gradient-readiness-v1/minimum-inverse_gaussian_gradient-cold-v2/terminal.json",
+      "source": "769811615ffb168f5c42bc15267026eba631fc4b",
+      "binding": "6194c22dfbfa34f9e4b2e2141507b5fffa7660e82558575ad2a2e29ccf2e469a",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 6,
+        "provider_refused": 6,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 1,
+        "compiled_provider_refused": 1
+      },
+      "factories": 79,
+      "controls": 10,
+      "initial": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "final": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "runtime": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/morphsnakes.py",
+        "signatures": {
+          "inverse_gaussian_gradient": "(image, alpha=100.0, sigma=5.0)"
+        },
+        "canonical_public_API": "segmentation.inverse_gaussian_gradient",
+        "sources": {
+          "scipy/_lib/_array_api.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/_lib/_array_api.py",
+          "scipy/ndimage/_delegators.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_delegators.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+          "scipy/ndimage/_ndimage_api.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ndimage_api.py",
+          "scipy/ndimage/_ni_docstrings.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_docstrings.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_support_alternative_backends.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_support_alternative_backends.py",
+          "skimage/segmentation/__init__.pyi": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.pyi",
+          "skimage/segmentation/morphsnakes.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/morphsnakes.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+                "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686064,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "R6s7aClbCjzomQpEjef6sRq928Fg-IlZcsqapxLPhtA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+                "bytes": 32955056,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VUveHYoMcdjcIa503gXETaT_9dvGeRqBn2rPWt_pC9k"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247608,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "l82oXdtRY-Labh7bTh1rVXgzqZpA7aB5rjflA5Rltl0"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.15.3",
+            "root": "\\home\\heq\\.cache\\skimagexx-label-numpy124-venv\\lib\\python3.11\\site-packages",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 4560912,
+                "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 147184,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686065,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "k0wi3tDn0WnE1GeIdslgUa3z2UVF2pYvYLQWWbB12js"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so",
+                "bytes": 22211841,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+            "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 4560912,
+            "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 147184,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "correlate1d": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          {
+            "name": "gaussian_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "generic_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter1d",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "correlate1d",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "_gaussian_kernel1d",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          }
+        ]
+      },
+      "git": [
+        "/mnt/c/Program Files/Git/cmd/git.exe",
+        "-C",
+        "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/inverse-gaussian-gradient-readiness-v1"
+      ],
+      "environment": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    "minimum/cached": {
+      "path": "build/inverse-gaussian-gradient-readiness-v1/minimum-inverse_gaussian_gradient-cached-v2/terminal.json",
+      "source": "769811615ffb168f5c42bc15267026eba631fc4b",
+      "binding": "6194c22dfbfa34f9e4b2e2141507b5fffa7660e82558575ad2a2e29ccf2e469a",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 6,
+        "provider_refused": 6,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 1,
+        "compiled_provider_refused": 1
+      },
+      "factories": 79,
+      "controls": 10,
+      "initial": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "final": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "runtime": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+          "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+        "numpy": "1.24.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/morphsnakes.py",
+        "signatures": {
+          "inverse_gaussian_gradient": "(image, alpha=100.0, sigma=5.0)"
+        },
+        "canonical_public_API": "segmentation.inverse_gaussian_gradient",
+        "sources": {
+          "scipy/_lib/_array_api.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/_lib/_array_api.py",
+          "scipy/ndimage/_delegators.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_delegators.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+          "scipy/ndimage/_ndimage_api.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ndimage_api.py",
+          "scipy/ndimage/_ni_docstrings.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_docstrings.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_support_alternative_backends.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_support_alternative_backends.py",
+          "skimage/segmentation/__init__.pyi": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.pyi",
+          "skimage/segmentation/morphsnakes.py": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/morphsnakes.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "1.24.4",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 6311456,
+                "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+                "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686064,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "R6s7aClbCjzomQpEjef6sRq928Fg-IlZcsqapxLPhtA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libopenblas64_p-r0-15028c96.3.21.so",
+                "bytes": 32955056,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VUveHYoMcdjcIa503gXETaT_9dvGeRqBn2rPWt_pC9k"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247608,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "l82oXdtRY-Labh7bTh1rVXgzqZpA7aB5rjflA5Rltl0"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.15.3",
+            "root": "\\home\\heq\\.cache\\skimagexx-label-numpy124-venv\\lib\\python3.11\\site-packages",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 4560912,
+                "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+                "bytes": 147184,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libgfortran-040039e1.so.5.0.0",
+                "bytes": 2686065,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libquadmath-96973f99.so.0.0.0",
+                "bytes": 247609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "k0wi3tDn0WnE1GeIdslgUa3z2UVF2pYvYLQWWbB12js"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy.libs/libscipy_openblas-68440149.so",
+                "bytes": 22211841,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 6311456,
+            "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86",
+            "wheel_record": "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 4560912,
+            "sha256": "dde4efc97631ffb3b348260a62b5601e48c56257cc3b6a43841c5ca5d78f8bd7",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 147184,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "correlate1d": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          {
+            "name": "gaussian_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "generic_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter1d",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "correlate1d",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "_gaussian_kernel1d",
+            "file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_filters.py"
+          }
+        ]
+      },
+      "git": [
+        "/mnt/c/Program Files/Git/cmd/git.exe",
+        "-C",
+        "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/inverse-gaussian-gradient-readiness-v1"
+      ],
+      "environment": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    "modern/cold": {
+      "path": "build/inverse-gaussian-gradient-readiness-v1/modern-inverse_gaussian_gradient-cold-v2/terminal.json",
+      "source": "769811615ffb168f5c42bc15267026eba631fc4b",
+      "binding": "6194c22dfbfa34f9e4b2e2141507b5fffa7660e82558575ad2a2e29ccf2e469a",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 6,
+        "provider_refused": 6,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 1,
+        "compiled_provider_refused": 1
+      },
+      "factories": 79,
+      "controls": 10,
+      "initial": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "final": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "runtime": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/morphsnakes.py",
+        "signatures": {
+          "inverse_gaussian_gradient": "(image, alpha=100.0, sigma=5.0)"
+        },
+        "canonical_public_API": "segmentation.inverse_gaussian_gradient",
+        "sources": {
+          "scipy/_lib/_array_api.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/_lib/_array_api.py",
+          "scipy/ndimage/_delegators.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_delegators.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+          "scipy/ndimage/_ndimage_api.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ndimage_api.py",
+          "scipy/ndimage/_ni_docstrings.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_docstrings.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_support_alternative_backends.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_support_alternative_backends.py",
+          "skimage/segmentation/__init__.pyi": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.pyi",
+          "skimage/segmentation/morphsnakes.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/morphsnakes.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+                "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libgfortran-83c28eba-468e71e5.so.5.0.0",
+                "bytes": 2862249,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "pqNoMo0CpdihSXRvE_Ymj4zJGS31wYd3slw8m171IWA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+                "bytes": 275553,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "a8MGkAPK7B8HW-PFGug1UzLwgfqUZZEMS1ck5_59itQ"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+                "bytes": 24325657,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Qy4cFzlzFGi6MFdxr5Z3OTnkMBZkPi1jD1jLRbZnDpY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.18.1",
+            "root": "\\home\\heq\\.cache\\skimagexx-frangi-py313-venv\\lib\\python3.13\\site-packages",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 4554512,
+                "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 175576,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-83c28eba.so.5.0.0",
+                "bytes": 2751569,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Ro5x5Z4deEghp2cC5ezR4NvPwCRJn3SlUtG-pLJvJ60"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-2284e583.so.0.0.0",
+                "bytes": 272193,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "qTB7uqNTYj-gFOi2gtUMRin15cfWHaqahlL30WXNQho"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+                "bytes": 25094609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "KltMGmMRhzxZEyss6q88JiWKFzULfNJ-qHgqR-MyKYE"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 4554512,
+            "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 175576,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "correlate1d": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          {
+            "name": "gaussian_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "generic_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter1d",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "correlate1d",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "_gaussian_kernel1d",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          }
+        ]
+      },
+      "git": [
+        "/mnt/c/Program Files/Git/cmd/git.exe",
+        "-C",
+        "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/inverse-gaussian-gradient-readiness-v1"
+      ],
+      "environment": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    "modern/cached": {
+      "path": "build/inverse-gaussian-gradient-readiness-v1/modern-inverse_gaussian_gradient-cached-v2/terminal.json",
+      "source": "769811615ffb168f5c42bc15267026eba631fc4b",
+      "binding": "6194c22dfbfa34f9e4b2e2141507b5fffa7660e82558575ad2a2e29ccf2e469a",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 6,
+        "provider_refused": 6,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 1,
+        "compiled_provider_refused": 1
+      },
+      "factories": 79,
+      "controls": 10,
+      "initial": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "final": {
+        "raw": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+        "control": 895,
+        "status": 0,
+        "mxcsr": 8096
+      },
+      "runtime": {
+        "loaded_BLAS_libraries": [
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+          "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so"
+        ],
+        "dispatch_environment": {
+          "OPENBLAS_CORETYPE": null,
+          "NPY_DISABLE_CPU_FEATURES": null
+        },
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "python": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+        "numpy": "2.5.4",
+        "scikit_image": "0.26.0",
+        "module": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/morphsnakes.py",
+        "signatures": {
+          "inverse_gaussian_gradient": "(image, alpha=100.0, sigma=5.0)"
+        },
+        "canonical_public_API": "segmentation.inverse_gaussian_gradient",
+        "sources": {
+          "scipy/_lib/_array_api.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/_lib/_array_api.py",
+          "scipy/ndimage/_delegators.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_delegators.py",
+          "scipy/ndimage/_filters.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+          "scipy/ndimage/_ndimage_api.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ndimage_api.py",
+          "scipy/ndimage/_ni_docstrings.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_docstrings.py",
+          "scipy/ndimage/_ni_support.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_ni_support.py",
+          "scipy/ndimage/_support_alternative_backends.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_support_alternative_backends.py",
+          "skimage/segmentation/__init__.pyi": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.pyi",
+          "skimage/segmentation/morphsnakes.py": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/morphsnakes.py"
+        },
+        "packages": {
+          "numpy": {
+            "version": "2.5.4",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 10633113,
+                "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+                "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libgfortran-83c28eba-468e71e5.so.5.0.0",
+                "bytes": 2862249,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "pqNoMo0CpdihSXRvE_Ymj4zJGS31wYd3slw8m171IWA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+                "bytes": 275553,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "a8MGkAPK7B8HW-PFGug1UzLwgfqUZZEMS1ck5_59itQ"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+                "bytes": 24325657,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Qy4cFzlzFGi6MFdxr5Z3OTnkMBZkPi1jD1jLRbZnDpY"
+                }
+              }
+            ]
+          },
+          "scikit-image": {
+            "version": "0.26.0",
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "compiled": [],
+            "shared_libraries_RECORD_metadata": []
+          },
+          "scipy": {
+            "version": "1.18.1",
+            "root": "\\home\\heq\\.cache\\skimagexx-frangi-py313-venv\\lib\\python3.13\\site-packages",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+            "compiled": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 4554512,
+                "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+                "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so"
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+                "bytes": 175576,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+                },
+                "scope": "RECORD-bound compiled ndimage provider path/size, no algorithm execution or repeated binary hash"
+              }
+            ],
+            "shared_libraries_RECORD_metadata": [
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+                "bytes": 2833617,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "xgkASOzMdjUiwS7wFvgdprYnyzoET1XPBHmoOcQcCYA"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libgfortran-83c28eba.so.5.0.0",
+                "bytes": 2751569,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "Ro5x5Z4deEghp2cC5ezR4NvPwCRJn3SlUtG-pLJvJ60"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-2284e583.so.0.0.0",
+                "bytes": 272193,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "qTB7uqNTYj-gFOi2gtUMRin15cfWHaqahlL30WXNQho"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+                "bytes": 250985,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "btUTf0Enga14Y0OftUNhP2ILQ8MrYykqACkkYWL1u8Y"
+                }
+              },
+              {
+                "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+                "bytes": 25094609,
+                "RECORD_hash": {
+                  "mode": "sha256",
+                  "value": "KltMGmMRhzxZEyss6q88JiWKFzULfNJ-qHgqR-MyKYE"
+                }
+              }
+            ]
+          }
+        },
+        "compiled_dependencies": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "wheel_record": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 4554512,
+            "sha256": "3a979b2b959c6ba295e28bd82952c48726793a10b6c2771ce1fbeb80d1168cf8",
+            "wheel_record": "scipy/sparse/_sparsetools.cpython-313-x86_64-linux-gnu.so",
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          },
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 175576,
+            "RECORD_hash": {
+              "mode": "sha256",
+              "value": "XuSv_Qp44kjltraCFU7loVtFAC0dy-EX5Y-DYxtmIJI"
+            },
+            "scope": "Retained admitted large compiled record/path/size, no repeated large binary hash"
+          }
+        ],
+        "glibc": "2.39",
+        "ABI": [
+          32,
+          0,
+          4,
+          8,
+          12,
+          20,
+          28,
+          8
+        ],
+        "compiled_entries": {
+          "correlate1d": {
+            "type": "builtin_function_or_method",
+            "module": "scipy.ndimage._nd_image",
+            "body_observation": "REQUEST refusal only: no claim of seeing compiled internal algorithm lines"
+          }
+        },
+        "providers": [
+          {
+            "name": "gaussian_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "generic_gradient_magnitude",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "gaussian_filter1d",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "correlate1d",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          },
+          {
+            "name": "_gaussian_kernel1d",
+            "file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py",
+            "unwrapped_file": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_filters.py"
+          }
+        ]
+      },
+      "git": [
+        "/mnt/c/Program Files/Git/cmd/git.exe",
+        "-C",
+        "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/inverse-gaussian-gradient-readiness-v1"
+      ],
+      "environment": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "BLIS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    }
+  },
+  "counts": {
+    "current_prefixes": 4,
+    "factories": 316,
+    "full32_controls": 40,
+    "typedmetadata": 8,
+    "inertsuccess": 4,
+    "target_attempted_refused": 8,
+    "Pythonprovider_attempted_refused": 24,
+    "compiled_ATTRIBUTE_requests_refused": 4,
+    "actualtarget_or_provider_algorithm_bodies": 0,
+    "observations": 0,
+    "journals": 0
+  },
+  "retained_pure": {
+    "build/inverse-gaussian-gradient-readiness-v1/windows311-source-v2/terminal.json": {
+      "exit_code": 0,
+      "seconds": 0.39000000013038516,
+      "xml": {
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "attempts": [],
+      "scientific_origins": [],
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timed_batches": 0
+    },
+    "build/inverse-gaussian-gradient-readiness-v1/windows313-source-v2/terminal.json": {
+      "exit_code": 0,
+      "seconds": 0.3969584000296891,
+      "xml": {
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "attempts": [],
+      "scientific_origins": [],
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timed_batches": 0
+    }
+  },
+  "pureXML": 24,
+  "negative_reuse": {
+    "records": [
+      {
+        "profile": "minimum",
+        "fault": "budget",
+        "error": {
+          "type": "AssertionError",
+          "message": ""
+        },
+        "controller": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93"
+      },
+      {
+        "profile": "minimum",
+        "fault": "whitelist",
+        "error": {
+          "type": "AssertionError",
+          "message": "FIXED_PROFILE_WHITELIST_CHANGED"
+        },
+        "controller": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93"
+      },
+      {
+        "profile": "minimum",
+        "fault": "capture-no-GO",
+        "error": {
+          "type": "AssertionError",
+          "message": "NO_ROOT_GO"
+        },
+        "controller": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93"
+      },
+      {
+        "profile": "modern",
+        "fault": "budget",
+        "error": {
+          "type": "AssertionError",
+          "message": ""
+        },
+        "controller": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93"
+      },
+      {
+        "profile": "modern",
+        "fault": "whitelist",
+        "error": {
+          "type": "AssertionError",
+          "message": "FIXED_PROFILE_WHITELIST_CHANGED"
+        },
+        "controller": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93"
+      },
+      {
+        "profile": "modern",
+        "fault": "capture-no-GO",
+        "error": {
+          "type": "AssertionError",
+          "message": "NO_ROOT_GO"
+        },
+        "controller": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93"
+      }
+    ],
+    "scope": "Controller rawbytes unchanged v1->v2, so budget/whitelist and missingGO rejection branches unchanged; finalcurrent4v2prefixes prove currententry/source/binding/helper closure, currentpuremissingGO also passes. Historicalnegative6 are NOT relabeled currentfull-entry executions.",
+    "binding_delta": [
+      "source",
+      "source_files_raw_sha256"
+    ],
+    "changed_source_pins": [
+      "tests/inverse_gaussian_gradient_readiness.py",
+      "tests/test_inverse_gaussian_gradient_readiness.py"
+    ],
+    "historical_v1_prefix": "c628 v1 retained as historical descriptor-only readiness; finaloption-value assertions required4freshv2prefixes. Currentclaimonly769/v2."
+  },
+  "findings": [],
+  "passed_gates": [
+    "Frozen4current/frozen7/15entrypins/105proof authentication and clean source",
+    "Current4actual cold/cached same-code zero-bodyprefixes and cold/cached runtime identity exact perprofile",
+    "316actualbounded NumPy-onlyfactory checks including corrected alpha/sigma options, JSON descriptor/word provenance",
+    "40full32/inert+8typedmetadata+4inertsuccess setup controls and exactprocess32, no hiddenalgorithm permission",
+    "24pure XML normalconftest/plugins0science including serialize-before-open/append tests",
+    "6negativeauthoritycontrols reused at unchanged rejection scope only; actualGOtemplate remains unusable"
+  ],
+  "pending": [
+    "Root independent finalizedsource/readiness admission",
+    "Root separately creates actualGO for oneprofile79exactIDs with precise source/controller/binding/runtime/readiness/prefixpins/notbefore/deadline/absentexclusivejournal directory and budget; separateprofileGO after actualprevious terminalreview as root directs",
+    "Actualcaptureonce with failureconsumption preserved/no retry; independentraw admission before native work",
+    "Unknown error codec/algorithm FP/output/alias/protocol numerical behavior remains unobserved until capture; no158observations authority fromthisreceipt",
+    "Ownednative/public/completeSDK/hotswap/defaultworkers/scalar/SIMD/Windows/platform/fullAPI domains and exactgenuinefourprofiles later",
+    "PerAPI one-thread public-call original performance/alllosses before release; no source/shared/main promotion now"
+  ],
+  "GO_template": {
+    "path": "build/inverse-gaussian-gradient-readiness-v1/root-GO-template-v1.json",
+    "sha256": "20e2954983a56471896a2a554b9e5008ee28afe9cbd4d6a445a64a76181437c3",
+    "status": "UNBOUND_TEMPLATE_NO_AUTHORITY",
+    "actual_profile": null,
+    "readiness": null,
+    "deadline": null,
+    "remaining_authority": 0
+  },
+  "failure_waste": {
+    "failures": "No actualprefix/pure/metadata failure inthispacket; oldsourcewriter inverse/PowerShell failures remain in34d handoff.",
+    "useful": "Tightened independentalpha/sigma value/type validation beforehandoff. v1c628 prefixes already safe/pass with descriptors, preserved; changedhelpertrustscope invalidatedfinalfactorybarrier, so only4affectedprefixes+2purechecks rerun asv2. No favorable scientific repetition.",
+    "avoidable": "Could have included completealpha/sigma assertions ininitialreadinessvalidator, avoiding4prefixes+2pure reruns. Elapsedunknown; no extra measurement added.",
+    "reuse": "Same rolling/flood full32/control/typedcodec/failure envelope, exact7source/79recipes. Existingruntimes/helper/packageidentity, no newenv/helperbuild/download/fullproduct/SDK/original/native/timing/hosted. Existing root352complete/genuine lanes untouched."
+  },
+  "reuse_and_next": {
+    "result": "Reviewed, no controller/readiness source correction requested.",
+    "reused": "Prior fab4/b5 source geometry, all frozen79recipes/7source files, admitted runtime/package/compiled/helper metadata and rolling/flood durable/typedcodec envelope. No tests/factory/science/helper/original/build/timing reruns; metadata reads only.",
+    "avoidable": "Authorv1 options descriptor checks were safe but incomplete;4freshprefix+2pure reruns corrected declaredvalue trust closure, oldpasses preserved as historical. Reviewer finalreceipt writer initially duplicated a Pythonkeyword and failed syntax beforewriting anyreceipt; fixed onlywriter. Failedv1 retained, no proof replay; costunknown.",
+    "next_owner": "Root actualreadiness admission then separatelybound firstprofile originalGO; currenta5release independent, not delayed."
+  },
+  "own_authority": {
+    "source_edits": 0,
+    "tests": 0,
+    "science": 0,
+    "factory": 0,
+    "helper": 0,
+    "originals": 0,
+    "native": 0,
+    "builds": 0,
+    "timing": 0,
+    "capture_GO": null
+  },
+  "audit": {
+    "path": "build/inverse-gaussian-gradient-readiness-independent-review-v1/audit-v1.json",
+    "sha256": "e71bdb5a54f77057e9c0d9ae33ca0a93f75d9701ee0938ef2d4355d25281f77a",
+    "reader_sha256": "edbdf109253d78bdedae2afd8450154d047cac3ec88768580a0391e1abfd44d9"
+  },
+  "next_gate": "Root readiness admission and separately issued profile-specific actualGO. Passed readiness only; original budget remains0."
+}

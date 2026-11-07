@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "status": "SOURCE_STORAGE_PURE_TEST_SCOPE_ADMITTED_ACTUAL_READINESS_PENDING",
+  "source": "34d0855a317e97f776001f87bf52e48a5755d3dd",
+  "handoff_sha256": "6c169b0338ea0750cd99924cf78a97fe5dea56378d37eab3e8c20f72c50eb10e",
+  "independent_review": {
+    "path": "build/inverse-gaussian-gradient-source-independent-review-v1/review-v1.json",
+    "sha256": "fab4b3603e61da29d870612a8eaaa6096bda31e164fc13ca0f39e566495daecf"
+  },
+  "source_files": 7,
+  "prospective_recipes": 79,
+  "maxima": {
+    "input_elements": 60,
+    "physical_elements": 60,
+    "output_elements_upper": 60,
+    "line_elements_upper": 220,
+    "work_upper": 11861,
+    "named_numerical_bytes_upper": 43504
+  },
+  "scope": "Exactsignature(image,alpha,sigma); input-dtype derivatives/square/axis sum/sqrt/edge-stop, nearestborder, sigma threshold/radius0 andalpha expansion. Gaussian symmetric kernel isnotderivative; reuseHessian onlyproperfirstderivative primitive.",
+  "original_budget": 0,
+  "native_budget": 0,
+  "actual_factory_budget": 0,
+  "timing_budget": 0,
+  "pending": "Actual retainedruntime/compiledorigin/helper/full32/boundedNPfactory andcoldcachedzero-bodycontroller readiness, then rootindependentreadiness+separateoriginalGOs; no algorithm authority fromsource.",
+  "waste_review": "Reused Rindependentsource/geometry review and32smallproofs/176pureXML, nopuretest/science rerun. No inventedmask/out/channelkwargs; exact79recipes frozenbeforecalls. NextB coherentreadiness usesexistingcorrectedrolling/VI one-shot controllers, noframework or earliercaptures replay."
+}

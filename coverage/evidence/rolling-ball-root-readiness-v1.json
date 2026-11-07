@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "status": "INDEPENDENT_ROOT_SOURCE_RUNTIME_ZERO_BODY_READINESS_PASS_NO_ORIGINAL_GO",
+  "source": "dfebccfc171290280643c3b17a4809148a0bb49f",
+  "controller_sha256": "6a13347f087423fe067ba14e11812c0b5d9ba6eecea38eb1755de42e410f0aec",
+  "binding_sha256": "041549e60cd50a24b11f4939c86077c1b4bbe7c575127ba8a8e9d77a569122f8",
+  "handoff_sha256": "df26c7cb5f5be489ee369d6f9ee7f188c49391d225a581abc554f4ecbba6a7ae",
+  "source_files": 4,
+  "unchanged_source_family_files": 7,
+  "proofs": 90,
+  "prefixes": {
+    "minimum": [
+      {
+        "path": "build/rolling-ball-readiness-v1/minimum-rolling_ball-cold-v2/terminal.json",
+        "sha256": "0a14ec01e4cc5eb318049ba608e312c465b7806067059abe08b21d950e903bd7"
+      },
+      {
+        "path": "build/rolling-ball-readiness-v1/minimum-rolling_ball-cached-v2/terminal.json",
+        "sha256": "c5fab2ce0d9a827598e59cd857df8291c2cf7e7b68f443fd7409214436177e08"
+      }
+    ],
+    "modern": [
+      {
+        "path": "build/rolling-ball-readiness-v1/modern-rolling_ball-cold-v2/terminal.json",
+        "sha256": "e4307822a8f26e00a9611a64c29acfc6fda724d682238a1726e484298b3abe39"
+      },
+      {
+        "path": "build/rolling-ball-readiness-v1/modern-rolling_ball-cached-v2/terminal.json",
+        "sha256": "a856c521b2ed39513ebcdad1e72d64ae437ff915063a8313308663053ee988bd"
+      }
+    ]
+  },
+  "case_count": 75,
+  "source_geometry_admission": {
+    "path": "build/rolling-ball-source-root-admission-v1/admission-v1.json",
+    "sha256": "2112a0e24c942bbfe4e88ea73fa19d99329fff091504563a8c82b369f8be35c5"
+  },
+  "review": "Root independently reviewed capture validation/once-only exclusivejournal/observer/cleanup and actual4coldcachedprefixes,75word/descriptor controls+9refusals/hardware+2typederrors+1inertreturn each. Exactcaller/process32, runtime/helper/compiled origins checked. Captures remain unbound. Cython attribute REQUEST refusal is not internal-body telemetry.",
+  "original_budget": 0,
+  "native_budget": 0,
+  "timing_budget": 0,
+  "minimum_modern_sequence": "Root will authorize minimum75 only, inspect actualterminal/raw, then distinctmodern75GO. This dependent gate is enforced by root; controller validates perprofileGO, not minimumterminal provenance.",
+  "preserved_failure": "Initial mappingproxy diagnostic serialization process exit1/partial JSON retained, superseded only by new source/binding/outputs. Never credited as PASS.",
+  "pending": "Separateminimum75GO, actualterminal review beforemodern75GO, independentrawadmission, native/SDK/public benchmarks/qualification/main. No fullalgorithmparity from kernel-only records.",
+  "waste_review": "Reused existing one-shot/helper/runtime/codec and exact75sourcecases, no framework/build/env/download/oldoriginal replay. Initialdiagnosticmappingproxy defect fixedatappendboundary before anyoriginal call. Root corrected a list-vs-dict schema assumption before admission, no science. Nextroot minimum75once then actualterminal review."
+}
