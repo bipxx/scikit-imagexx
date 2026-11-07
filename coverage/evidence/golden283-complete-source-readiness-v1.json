@@ -1,0 +1,41 @@
+{
+  "schema": "golden283-complete-source-readiness-v1",
+  "status": "PASS_COMPLETE_ACTUAL_WORKFLOW168_BOTH_RETAINED_WINDOWS_PYTHONS",
+  "source": "1fbff2af3f5f2f63674aef9ae5f0ae1298759300",
+  "workflow_sha256": "dd2fc5ab1bc8816b0913e56b4153bb1dc4aad569d43b80c4c73069ba1dc6606d",
+  "selectors": 168,
+  "profiles": [
+    {
+      "profile": "windows311",
+      "terminal": "build\\golden283-sourcebarrier-v2\\sourcebarrier-windows311-v1\\terminal.json",
+      "terminal_sha256": "5a4051b63f0eb86c80a507d867cd69d6230180c66eff3fcdc8ad7dd1535f983f",
+      "command": "build\\golden283-sourcebarrier-v2\\sourcebarrier-windows311-v1\\command.json",
+      "ordinary_nodes": 4041,
+      "reported_checks": 4049,
+      "additional_reported_subtests": 8,
+      "seconds": 352.7960000000894,
+      "normal_conftest": true,
+      "plugin_autoload": true,
+      "source_clean": true
+    },
+    {
+      "profile": "windows313",
+      "terminal": "build\\golden283-sourcebarrier-v2\\sourcebarrier-windows313-v1\\terminal.json",
+      "terminal_sha256": "63b79d3540951d919f437060e82d2fa2f5c484004c6570d5e8bbe599fad71b2c",
+      "command": "build\\golden283-sourcebarrier-v2\\sourcebarrier-windows313-v1\\command.json",
+      "ordinary_nodes": 4041,
+      "reported_checks": 4049,
+      "additional_reported_subtests": 8,
+      "seconds": 329.45883990009315,
+      "normal_conftest": true,
+      "plugin_autoload": true,
+      "source_clean": true
+    }
+  ],
+  "predecessor_failure": "coverage/evidence/golden283-complete-source-failure-v1.json",
+  "correction": "coverage/evidence/finite-radon-export-reader-root-admission-v2.json",
+  "science_calls": 0,
+  "release_authority": false,
+  "pending": "Inherited852 failed genuine campaign must receive exact corrective closure before any dependent genuine release. No283 product/SDK/performance admission.",
+  "waste_review": "Reused scoped20source correction; complete affected168 required after actualhistoricalpin failure, no numerical/SDK/original replay. No added collector gate after actual boundary tracing."
+}
