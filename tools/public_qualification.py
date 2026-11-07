@@ -695,6 +695,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/mark-boundaries-benchmark-execution-v6
 DRAW_SOURCE_PATHS += ('coverage/contracts/variation-of-information-benchmark-execution-v5.json',)
 
 
+DRAW_SOURCE_PATHS += ('coverage/contracts/current281-integration-fixes-v1.json','tests/test_current281_integration_fixes_source.py')
+
+
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
     groups = dict(_BASE_GROUPS)

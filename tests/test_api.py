@@ -388,13 +388,20 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             assert observation(args, np) == before
             return
         if api=='metrics.variation_of_information':
-            # Float labels use the named SciPy coordinate suffix; native VI
-            # entropy remains required, without integer-count ownership credit.
+            # Nominal float image descriptors select a valid captured integer
+            # label partition. Invalid floating-label errors are tested separately.
             from label_pair_metrics_observer import observation
             args,options=default_call(api,a);before=observation(args,np)
+            assert all(value.dtype.kind in 'iu' for value in args)
+            assert all(value.dtype==np.dtype('int16') for value in args)
             expected=getattr(original,name)(*args,**options)
-            monkeypatch.setattr(xx._core,'label_pair_counts_preweighted',lambda*a,**k:pytest.fail('float VI labels reached integer native counts'))
+            counts=xx._core.label_pair_counts_preweighted;calls=[]
+            assert inspect.isbuiltin(counts)
+            def owned_counts(*values,**kwargs):
+                calls.append(1);return counts(*values,**kwargs)
+            monkeypatch.setattr(xx._core,'label_pair_counts_preweighted',owned_counts)
             actual=getattr(native,name)(*args,**options)
+            assert calls==[1]
             assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
             assert observation(args,np)==before
             return

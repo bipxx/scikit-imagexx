@@ -195,7 +195,7 @@ def inventory():
             elif path in ('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'):
                 entries[-1]['default_input_kind']='NumPy full-image image.min and full-mask count_nonzero reductions plus selected RHS cast/broadcast temporary; native serial BFS/current POD copy/final writes. Providers and broad domains/performance remain explicit.'
             elif path=='metrics.variation_of_information':
-                entries[-1]['default_input_kind']='Bounded actual integer dtype labels; owned VI entropy/current counts plus named NumPy/SciPy providers. Floating-label numeric suffix is provider computation. Seven numeric saved words and partial domain scope, genuine/fullFP/platform/performance gates remain explicit.'
+                entries[-1]['default_input_kind']='Bounded valid six-label integer partition: actual integer carrier dtype/metadata preserved; nominal noninteger image carriers select captured int16, not floating-label support. Owned VI entropy/current counts with named NumPy/SciPy providers; invalid floating-label TypeError/native-count refusal is a separate domain. Genuine/fullFP/platform/performance gates remain explicit.'
             elif path in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
                 entries[-1]['default_input_kind']='Frozen live4x5/4x6 ndarray requests in actual requested dtype; exact source/input/options saved references. Native integral geometry/POD slice copy; NumPy validation/base-chain/readonly/dtype/object/protocol providers and partial platform/performance scope remain explicit.'
             elif path in ('util.crop','util.regular_grid'):

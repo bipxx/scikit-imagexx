@@ -86,7 +86,13 @@ def test_vi_default_factory_and_checker_are_strict_without_runtime():
     assert 'actual.tobytes()==expected.tobytes()'in text and 'np.allclose'not in text
     assert 'actual.shape==expected.shape==(2,)'in text and 'actual.base is expected.base is None'in text
     api=(ROOT/'tests/test_api.py').read_text();assert "if api=='metrics.variation_of_information':"in api
-    assert 'float VI labels reached integer native counts'in api and 'args,options=default_call(api,a);before=observation(args,np)'in api
+    assert "all(value.dtype.kind in 'iu' for value in args)"in api and 'assert calls==[1]'in api
+    assert 'args,options=default_call(api,a);before=observation(args,np)'in api
+    invalid=(ROOT/'tests/test_variation_of_information_integration.py').read_text()
+    assert 'test_vi_invalid_float_labels_are_provider_errors_not_native_counts'in invalid
+    assert "monkeypatch.setattr(xx._core,'label_pair_counts_preweighted',refused)"in invalid
+    assert "monkeypatch.setattr(xx._core,'variation_of_information_csr',refused)"in invalid
+    assert 'pytest.raises(TypeError)'in invalid
 
 
 def test_genuine_collector_transport_and_scope_are_fail_closed():

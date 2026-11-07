@@ -42,7 +42,14 @@ def test_flood_single_core_alias_star_default_and_pipeline():
             image=np.array([[1,1],[1,2]],dtype=np.uint8);before=image.copy();args,options=default_call(api,image)
             def pipeline(backend):return getattr(getattr(backend,api.split('.')[0]),api.split('.')[1])(*args,**options)
             actual=pipeline(xx)
-            expected=np.array([[1,1],[1,0]],dtype=bool)if api.endswith('.flood')else np.array([[1,1],[1,2]],dtype=np.uint8)
+            if api.endswith('.flood'):
+                # Source returns a bool view cropped from padded uint8 flags.
+                flags=np.zeros((4,4),dtype=np.uint8)
+                flags[1:3,1:3]=[[1,1],[1,0]]
+                expected=flags[1:3,1:3].view(bool)
+                assert expected.strides==(4,1)and not expected.flags.owndata
+                assert np.shares_memory(expected,flags)and not np.shares_memory(expected,image)
+            else:expected=np.array([[1,1],[1,2]],dtype=np.uint8)
             assert_default_parity(api,image.dtype,actual,expected,image=image)
             assert image.tobytes()==before.tobytes()and xx.get_num_threads()==1
     finally:xx.set_fallback_enabled(before_fallback)

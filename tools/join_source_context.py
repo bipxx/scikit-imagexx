@@ -5,8 +5,27 @@ import json
 CONTEXT_SHA256='15b413d6a5b3260497654349d79c20f52f0e5fdd16468cdb1011eb6e0ea55672'
 
 
+def integration_fix_predecessor_bytes(root,name,raw):
+    """Exact three integration fixes before frozen188; no numerical projection."""
+    path=Path(root)/'coverage/contracts/current281-integration-fixes-v1.json'
+    if not path.is_file():return raw
+    context=json.loads(path.read_bytes())
+    assert context['schema']=='current281-integration-fixes-v1'
+    assert context['predecessor_source']=='188a91ef31609c796d4d83e8957c772544f31428'
+    if name not in context['sources']:return raw
+    raw=raw.replace(b'\r\n',b'\n');row=context['sources'][name]
+    assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name
+    for fragment in row['inverse_fragments']:
+        current,old=fragment['current'].encode(),fragment['predecessor'].encode()
+        assert current and raw.count(current)==1,name
+        raw=raw.replace(current,old,1)
+    assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_lf_sha256'],name
+    return raw
+
+
 def rolling_predecessor_bytes(root,name,raw):
     """Exact enabled rolling-ball additions before the admitted a5 source."""
+    raw=integration_fix_predecessor_bytes(root,name,raw)
     raw=raw.replace(b'\r\n',b'\n')
     path=Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json'
     if not path.is_file():return raw
@@ -25,6 +44,7 @@ def rolling_predecessor_bytes(root,name,raw):
 
 def rolling_predecessor_raw_bytes(root,name,raw):
     """Raw domain for unchanged historical controller files; edited shared files are LF."""
+    raw=integration_fix_predecessor_bytes(root,name,raw)
     context=json.loads((Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json').read_bytes())
     if name not in context['sources']:return raw
     row=context['sources'][name]

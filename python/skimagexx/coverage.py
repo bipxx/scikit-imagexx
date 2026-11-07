@@ -58,6 +58,7 @@ def variation_of_information_contract():
     return dict(api='metrics.variation_of_information',implementation='native-partial',fully_native=False,
         kernel='Owned typed CSR marginals/diagonal products/log2/reductions/ordered dots; image operation reuses current owned dense/sort counts',
         providers='NumPy reshape/membership/weight normalization and callbacks; SciPy CSR class/index/structural representation; unassessed floating-label coordinates use named SciPy numeric suffix',
+        default_case='Six-label integer partition; integer carriers preserve dtype/metadata, noninteger nominal carriers select captured int16. No floating-label support credit; invalid floating labels remain separate provider/error domain',
         accuracy='Seven retained numeric raw-word cases plus one exacterror/profile; larger candidate equivalence is not new original0ULP or backend proof',
         workers='Shared default1. C++ imageSDK captures once; public count/entropy phases capture separately around provider boundaries. Ordered entropy remains serial.',
         gaps='Broad log/reduction/BLAS/platform/error/protocol/hardwareFP and genuinewholeSDK/public-performance gates remain open',
@@ -613,11 +614,19 @@ def default_call(api, image):
         # separately tests default and wide channel depths.
         options={'n_bins':16} if api.rsplit('.',1)[1]=='windowed_histogram' else {}
         return (image,np.ones((3,)*image.ndim,np.uint8)),options
-    if api in ('metrics.adapted_rand_error','metrics.contingency_table','metrics.variation_of_information'):
+    if api=='metrics.variation_of_information':
+        import numpy as np
+        # The nominal image is a dtype carrier, not a floating-label promise.
+        # Integer descriptors retain their width/metadata. Other carriers use
+        # the int16 partition already captured by the label-pair contract.
+        label_dtype=image.dtype if image.dtype.kind in 'iu' else np.dtype('int16')
+        labels=np.array([[0,1,1],[2,2,2]],dtype=label_dtype)
+        return (labels,labels.copy()),{}
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         import numpy as np
         # Frozen six-label value partition; image is the actual integer-dtype carrier.
         labels=np.array([[0,1,1],[2,2,2]],dtype=image.dtype)
-        test=labels.copy() if api in ('metrics.adapted_rand_error','metrics.variation_of_information') else np.array([[0,2,2],[1,1,2]],dtype=image.dtype)
+        test=labels.copy() if api=='metrics.adapted_rand_error' else np.array([[0,2,2],[1,1,2]],dtype=image.dtype)
         return (labels,test),{}
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}

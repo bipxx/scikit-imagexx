@@ -6050,7 +6050,7 @@
       "execution_kind": "native",
       "parity_test": "tests/test_variation_of_information_public.py::test_all_saved_original_fields",
       "benchmark": "benchmarks/variation_of_information_consumer.py",
-      "default_input_kind": "Bounded actual integer dtype labels; owned VI entropy/current counts plus named NumPy/SciPy providers. Floating-label numeric suffix is provider computation. Seven numeric saved words and partial domain scope, genuine/fullFP/platform/performance gates remain explicit."
+      "default_input_kind": "Bounded valid six-label integer partition: actual integer carrier dtype/metadata preserved; nominal noninteger image carriers select captured int16, not floating-label support. Owned VI entropy/current counts with named NumPy/SciPy providers; invalid floating-label TypeError/native-count refusal is a separate domain. Genuine/fullFP/platform/performance gates remain explicit."
     },
     {
       "api": "morphology.area_closing",
