@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "status": "COMPLETE_BOTH_PYTHON_SOURCE_BARRIERS_PASS_NOT_GENUINE_QUALIFIED",
+  "source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+  "workflow_sha256": "20cb592920aaf3ab16b113ad9d6da9589b9bea9fc765cbdc16131bed04bcd55f",
+  "actual_selectors": 148,
+  "profiles": {
+    "windows311": {
+      "xml": {
+        "tests": 3344,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "nodes": 3336,
+      "seconds": 340.1720000000205,
+      "pins": {
+        "command.json": "60f2a3a52cccc0ea41f42b5e792bf3051420a6341f2533b270647dc6420926a1",
+        "plugins.json": "4aa456db960f38e392a0332357afb9e969d3eb1375c64e84032950838ca8b8c3",
+        "terminal.json": "b35c8ef3d466a3d49713d8207c93913795801803c4f3ab50c475a42dc2cf9ad1",
+        "testIDs.json": "f0c141a637c789d2f71003e1c93f3f50e6dcfe25e25756b6612bfdeeca3c8401"
+      },
+      "receipt_dir": "build/abi-vi-cumulative-complete-readiness-v1/sourcebarrier-windows311-v1"
+    },
+    "windows313": {
+      "xml": {
+        "tests": 3344,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "nodes": 3336,
+      "seconds": 319.7311167998705,
+      "pins": {
+        "command.json": "e00231b28ecc4775929dc8a2b7cc211ec78c0954552391a686fa5bc71bc6922a",
+        "plugins.json": "f1f332606e22cf66d57fa47a612d15bb444211618f5f2d0c3f821b7159bdac7a",
+        "terminal.json": "17d40715f36c625ef6ae7b00e20d527838f8b26aa6ee33d745826eb256ed7a92",
+        "testIDs.json": "f0c141a637c789d2f71003e1c93f3f50e6dcfe25e25756b6612bfdeeca3c8401"
+      },
+      "receipt_dir": "build/abi-vi-cumulative-complete-readiness-v1/sourcebarrier-windows313-v1"
+    }
+  },
+  "normal_conftest_plugins": true,
+  "no_fail_fast": true,
+  "zero_science": true,
+  "source_clean": true,
+  "pending": "Independent largeVI raw/native0ULP check before exactsource fourprofile genuine qualification; source checks do not qualify product/SDK or authorize timing.",
+  "waste_review": "Required complete barrier once on changed109file candidate; reused existing runner with output/worktree/scratch substitutions, no unchanged numerical/build/timing replay. Actual340.172s and319.731s parallel process costs; not summed elapsed. Owner root: raw/nativeVI then genuine4profile without unrelated wait."
+}

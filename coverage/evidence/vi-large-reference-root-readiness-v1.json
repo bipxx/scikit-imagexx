@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "status": "ROOT_SCOPED_READINESS_ADMITTED_MINIMUM4_ONLY_NEXT",
+  "source": "5255b3eb3dd5b75b7c75986b8caead6c1624bc34",
+  "controller_sha256": "16292939f268f0ade9b0f107a958e859f58ba95150bfe66c84f89cd26e865641",
+  "binding_sha256": "52c3a157cceb8ed9ce69d469e7e538fcc9f65d732fa070c01ae3ad25459e540e",
+  "independent_review": {
+    "path": "build/variation-of-information-large-readiness-independent-review-v1/review-v1.json",
+    "sha256": "347a0c960edaefde8cd3e21e0a9cd602dc4c1cf75d79c5f1d7ee897652df87ac"
+  },
+  "review": "Reviewed frozen source/case bounds, actual4 zero-body runtime prefixes, one-shot journal/public-call accounting and separate minimum/modern guards. Reused65smallproofs. No numerical/native/timing claim.",
+  "original_authority": "Separate minimum4 GO only; modern0 until actualminimumterminal review.",
+  "waste_review": "Reused frozen input recipes/helper/runtime/codec/old observations without replay. Existing larger-case preflight moved before fullqualification. Next root consumes4minimum originals once and inspects terminal/raw."
+}

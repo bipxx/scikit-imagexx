@@ -1,0 +1,54 @@
+{
+  "status": "PASS_SCOPED_INDEPENDENT_SOURCE_ADMISSION_COMPLETE_BARRIERS_PENDING",
+  "source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+  "handoff_sha256": "cab3eca3817ddd694ce364888d80897493f45d7eccc8a0592bfd45ecee6dc4ae",
+  "source_files": 109,
+  "proof_pins": 143,
+  "admitted_inputs": [
+    {
+      "path": "build/finite-radon-numpy-abi-root-admission-v1/admission-v1.json",
+      "sha256": "a17c544196741a2fabae0d19aa8c6c51107319d7723f6ea774f60d65d2a74c32"
+    },
+    {
+      "path": "build/variation-of-information-root-admission-v1/admission-v1.json",
+      "sha256": "11af632e9c1acbea64e614cc205838ce1e1a4131231e85b8435326dc8ea1bd27"
+    },
+    {
+      "path": "build/variation-of-information-current-counts-root-admission-v1/admission-v1.json",
+      "sha256": "596774a6951a0dffdda6b7d9e24aaceb53b235eb4117cf5e98b6d8af3e7bc5b7"
+    },
+    {
+      "path": "build/variation-of-information-benchmark-root-admission-v1/admission-v1.json",
+      "sha256": "bdd3b54bdbb62a3e9b75ff98d99ab48bd497bd98815f42897f7044b3a15d4688"
+    },
+    {
+      "path": "build/variation-of-information-windows-native-root-admission-v1/admission-v1.json",
+      "sha256": "cc380133a30b91cd85a0f7859dfd18eacf386e43b70894ef75dfab127c8aa4c4"
+    },
+    {
+      "path": "build/flood-fill-native-root-admission-v1/admission-v1.json",
+      "sha256": "b0c7215661aed3200219b7c4a66c96e0f320ddf242c188a43983ce7219bd57f1"
+    },
+    {
+      "path": "build/flood-fill-cost-root-admission-v1/admission-v1.json",
+      "sha256": "ae673678aa7dbe47703bbbd050cf7a3e40ef157d310b60d796e204860be8273c"
+    }
+  ],
+  "review": "Exact admitted leaves; reviewed CMake/core namespace/alias/registry/default factory and installed SDK wiring, strict flags and fixture-copy closure. Actual group parser, cardinality and FP transport verified in source. No new scientific claim from shared projection.",
+  "affected_source_XML": 2074,
+  "complete_selectors": 148,
+  "whole_qualified": false,
+  "measurement_authorized": false,
+  "pending": [
+    "COMPLETE actual workflow source-check both Windows runtimes",
+    "Exact-source four-profile genuine qualification/whole107SDK",
+    "Actual installed global default1/optionalworkers/hotswap/fullFP/Windows-original domains",
+    "Actual genuine benchmark binding/first cohorts/strict larger-case numerical checks/separate timingGO/all-loss one-thread original performance",
+    "Root main/checklist/ledger delivery",
+    "VI broad log/reduction/backend/platform/protocol/table/error/FP and larger original-word parity; candidate equivalence is not new0ULP evidence",
+    "Flood bool-tolerance/source-limit, nonPOD/protocol/largegeometry/platform/error/FP domains and provider ownership",
+    "No original/performance capture authority; all actual benchmark product/runtime/core/SDK/root/helper/GO fields remain UNBOUND",
+    "Whole new-leaf/currentf48 genuine onecore/globaldefault1/optionalworkers/public ownership and exact-source whole107SDK qualification"
+  ],
+  "waste_review": "Reused admitted algorithm/reference scopes. Initial metadata audit assumed canonical-LF field for three raw-only frozen fixtures; corrected to declared raw domain, zero science. Next root executes complete actual workflow source checks on both retained Pythons."
+}

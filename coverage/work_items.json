@@ -37060,6 +37060,20 @@
           "scope": "Move alreadyplanned4frozenVIbenchmarklargecases exactvalue/FP parity earlier thanexpensivegenuine qualification; old8smallgoldcases do notestablish64-label BLAS/logassociation. Reuseexistingone-shot sourcebound capture/full32/helper/codec/runtime machinery, no newsampler/framework. Fixed4/profile prospective8total, source/storage/zero-body readiness androotseparateGO requiredbeforeany originalcall. Actualsourcecasebounds alreadybddadmitted; no recaptureofold8/profile.",
           "next_gate": "Freeze smallest source-safety/readiness delta thenrootadmit/separateminimum4GO; modernonlyafteractualminimumreview. Stoponfail/no retry. Nativecomparisonafterrawadmission usingcurrent1a objects; no publictiming or fakegenuinebinding."
         }
+      },
+      "VI_large_reference_gate": {
+        "source": "5255b3eb3dd5b75b7c75986b8caead6c1624bc34",
+        "root_readiness": "build/vi-large-reference-root-readiness-v1/admission-v1.json",
+        "minimum_GO": "build/vi-large-reference-results-v1/minimum-GO-v1.json",
+        "minimum_budget": 4,
+        "modern_budget": 4,
+        "status": "minimum4_and_modern4_actual_terminal_exit0_independent_raw_review_live",
+        "next_owner_trigger": "R independentrawreview then rootadmission; onlyafterthat assign native exactcomparison. No retakes/timing.",
+        "minimum_review": "build/vi-large-reference-results-v1/minimum-terminal-root-review-v1.json",
+        "modern_GO": "build/vi-large-reference-results-v1/modern-GO-v1.json",
+        "minimum_consumed": 4,
+        "modern_consumed": 4,
+        "remaining_original_budget": 0
       }
     },
     {
@@ -38806,9 +38820,10 @@
       }
     },
     "current_review_assignments": {
-      "boundary_worker": "Old8c failedcampaign audit d878 terminal; rootaggregate1c0d auditedfailure/no release. Next isolated rolling_ball source/tests/safety/readiness, zero original/native budget, reuse ownedkernel assessments only scoped.",
-      "readiness_reviewer": "Next sole correctedsharedABI+readyVI integration; failedminimum independentreviewterminal71f5rootadmitted. No waitunfinishedflood.",
-      "metrics_integrator": "CPPcost e3b899/h81d867 frozen, pendingrootreview; next source-ready4caseVIlargeparity capture preparation,0originalauthority. Knownlarger0ULP frontier isexistingplannedbenchmarkgate, reorderedbeforegenuine toavoidlatefailure."
+      "readiness_reviewer": "Independent frozen VI four-large-case readiness source5255/20b8; zero originals/native/timing.",
+      "metrics_integrator": "Independent frozen rolling_ball source2e99/f87c; zero science.",
+      "boundary_worker": "Sole new isolated current280 UNBOUND benchmark-controller successor selecting reviewed95e10+7b5 files; unchanged fixed methods/cases, pure bothPython controls only.",
+      "root": "Source47e4 admits ab7872a5 scope; actual complete148selectors windows311session12525/windows313session15015 live. Root retains genuine/actual reference GO/main delivery."
     },
     "next_action": "Fix actual minimum-compatible Radon NumPy CAPI initialization/policy dispatch with one2.x-header-built binder tested on1.24 and2.5 runtimes usingretainedobjects. Preserve numeric/FP/warnings/callbacks and failed8ccampaign. No fullproduct/env/download/neworiginal/timing/hosted retry. Rootcomplete source successors/genuine gates afterindependentfix; other3jobs continue.",
     "current_checkpoint": {
@@ -38818,7 +38833,7 @@
       "prepared_run": 42262940227,
       "candidate_source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
       "candidate_image_names": 280,
-      "candidate_status": "FROZEN_AUTHOR_HANDOFF_PENDING_INDEPENDENT_ADMISSION_COMPLETE_SOURCE_BARRIERS_AND_GENUINE_QUALIFICATION",
+      "candidate_status": "ROOT_SOURCE_ADMITTED_COMPLETE_BOTH_PYTHON_BARRIERS_PASS_PENDING_LARGE_VI_NATIVE_AND_GENUINE",
       "performance_evidence": "benchmarks/join-util-views-minimum-initial-v1/README.md",
       "readiness_reviews": [
         {
@@ -38829,7 +38844,7 @@
       "candidate_run": null,
       "candidate_url": null,
       "candidate_qualification_run": null,
-      "candidate_evidence": "coverage/evidence/abi-vi-cumulative-handoff-v1.json",
+      "candidate_evidence": "coverage/evidence/abi-vi-cumulative-complete-readiness-admission-v1.json",
       "candidate_qualification_status": "NOT_DISPATCHED",
       "next_release_source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
       "next_release_expected_images": 280,
@@ -38838,19 +38853,19 @@
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "Root independent admission; complete actual 148-selector source commands on both retained Pythons remain pending before genuine qualification. Author affected checks1037 each are scoped, not substitutes.",
+      "next_release_status": "Complete148selectors/3336tests+8subtests eachPASS. Exactly8largeVIoriginals capturedonce, independentraw/nativeparity pending before exactab78 fourprofile genuine. No measurement authority.",
       "next_release_qualification_run": null,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
     },
     "shared_integration_author": {
       "owner": "readiness_reviewer",
-      "state": "frozen_pending_root_independent_admission",
+      "state": "root_scoped_source_and_complete_barriers_admitted_pending_VI_large_native_then_genuine",
       "base": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
       "scope": "Sole NEWisolated sharedcandidate: selectroot-admitted2bbRadonABI/nativev4/benchmarkv3 plusroot-admittedVIb331/1a/bef85 currentcount/native/SDK/executableconsumer. Preservefrozenhistories/oldsharedcounts ancestry; no blindmerge. No waitforunfinishedflood; onlyincludeifrootindependentlyadmitsbeforefreeze withoutdelay.",
       "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
       "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
-      "next_gate": "Root independent admission; complete actual 148-selector source commands on both retained Pythons remain pending before genuine qualification. Author affected checks1037 each are scoped, not substitutes.",
+      "next_gate": "Root independent8largeVIraw admission and current1a strictcomparison; then exactab78 fourprofile genuine qualification promptly. Complete3336+8 perPython sourcebarrier passed; no timingauthority.",
       "actual_staging_counts": {
         "image_paths": 280,
         "registered_functions": 283,
@@ -38863,7 +38878,13 @@
       "ready_flood_cost_admission": "coverage/evidence/flood-fill-cost-root-admission-v1.json",
       "source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
       "handoff": "coverage/evidence/abi-vi-cumulative-handoff-v1.json",
-      "handoff_sha256": "cab3eca3817ddd694ce364888d80897493f45d7eccc8a0592bfd45ecee6dc4ae"
+      "handoff_sha256": "cab3eca3817ddd694ce364888d80897493f45d7eccc8a0592bfd45ecee6dc4ae",
+      "root_admission": "coverage/evidence/abi-vi-cumulative-root-source-admission-v1.json",
+      "complete_barrier_handles": {
+        "windows311": "terminal exit0",
+        "windows313": "terminal exit0"
+      },
+      "complete_readiness": "coverage/evidence/abi-vi-cumulative-complete-readiness-admission-v1.json"
     }
   },
   "parallel_review": {
@@ -39634,6 +39655,18 @@
       "logical_removed_bytes": 25632820478,
       "observed_free_increase_bytes": 25620643840,
       "scope": "OnlyD:/Scratch/mark-lbp-radon-util-barrier-v1 and-v2; bothgone/noerror. Allraw/source/env/worktrees/deniedboundaryscope preserved; interruptedunneededsharingprobe recordedno safetycredit."
+    },
+    "abi_vi_complete_source_scratch": {
+      "status": "automatic_approval_review_rejected_no_executor_no_deletion",
+      "targets": [
+        "D:/Scratch/abi-vi-cumulative-complete-v1/windows311",
+        "D:/Scratch/abi-vi-cumulative-complete-v1/windows313"
+      ],
+      "reason": "blocked by policy",
+      "terminal_checks": "Both3344XML completebarriers admittedfd01; no live matchingPython owners; pathsresolved inside exactscratchroot.",
+      "free_D_before": 203347009536,
+      "reclaimed_bytes": 0,
+      "next_action": "Retain exact deniedtargets; no alternate deletion retry. Continue with existing sufficient capacity."
     }
   },
   "post_cursor_cleanup": {

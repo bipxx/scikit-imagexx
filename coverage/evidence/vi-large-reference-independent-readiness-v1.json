@@ -1,0 +1,419 @@
+{
+  "schema": "vi-large-reference-independent-readiness-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_SOURCE_STORAGE_ACTUAL_ZERO_BODY_READINESS_NO_ORIGINAL_GO",
+  "source": "5255b3eb3dd5b75b7c75986b8caead6c1624bc34",
+  "controller_sha256": "16292939f268f0ade9b0f107a958e859f58ba95150bfe66c84f89cd26e865641",
+  "binding_sha256": "52c3a157cceb8ed9ce69d469e7e538fcc9f65d732fa070c01ae3ad25459e540e",
+  "handoff": {
+    "path": "build/vi-large-reference-readiness-v1/handoff-v1.json",
+    "sha256": "20b8fba42641262e1d21fe1161bf1c7d155b6c582288fdd906bf7dbe771a1753"
+  },
+  "source_files": {
+    "coverage/contracts/vi-large-reference-v1.json": "28acd34b66f9e895f9918e2e43f994d9a5601485326e10a8fc388aa6c7f73619",
+    "tests/fixtures/vi_large_reference_sources_v1.json": "c9be893a0f2ad0afbeef6fe7724ad01ff07de547b5f847094454a72d6b9d0abe",
+    "tests/test_vi_large_reference_source.py": "26ba75595a68ca08e16e2bd95951ed90b37888e95b6d2f5d56cef31cb31f7e2d",
+    "tests/vi_large_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/vi_large_reference_contract.py": "fdf6acb9c984bdaa3b19255387b4de8659ee1392b32af61d6c2d5747c28468e3",
+    "tests/vi_large_reference_controller.py": "16292939f268f0ade9b0f107a958e859f58ba95150bfe66c84f89cd26e865641",
+    "tests/vi_large_reference_observer.py": "fa6b8ba6681623a1984415d10a964027da5cb6b157a6ba23b3a27ac1eec017fb"
+  },
+  "binding_source_count": 19,
+  "authenticated_small_proof_count": 65,
+  "authenticated_small_proof_bytes": 485922,
+  "proofs": {
+    "build/vi-large-reference-readiness-v1/author_controller_v1.py": {
+      "sha256": "28c2f0319ac4e44e2542665b03bc053c70fd6e240ff833d5fd3a8ea828547b2e",
+      "bytes": 8707
+    },
+    "build/vi-large-reference-readiness-v1/bind_v1.py": {
+      "sha256": "b9a54d8780483f37ba49427c11168e67e7eee7b7bd02a5452f8bbd28b98adf93",
+      "bytes": 3167
+    },
+    "build/vi-large-reference-readiness-v1/binding-v1.json": {
+      "sha256": "52c3a157cceb8ed9ce69d469e7e538fcc9f65d732fa070c01ae3ad25459e540e",
+      "bytes": 21799
+    },
+    "build/vi-large-reference-readiness-v1/controller-predecessor-v1.py.txt": {
+      "sha256": "ff583101f34d397ef31e9a38429275bb2080b8e955f5121cde6054565d1a99b6",
+      "bytes": 28357
+    },
+    "build/vi-large-reference-readiness-v1/final-author-gate-v1.json": {
+      "sha256": "82492d72838e40220256f813274838cde72c394cabd238f3e9274974972b522e",
+      "bytes": 6397
+    },
+    "build/vi-large-reference-readiness-v1/launch_prefix_v1.py": {
+      "sha256": "82743c95df588e6408db0c5d5700bab8a12e65a1e66eef12b52cfb1401e8d83b",
+      "bytes": 1399
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-budget-v1/terminal.json": {
+      "sha256": "def1015b7270b0a1b7415cbb3a9cb211ff7826506c844e06c4d8c06c2b6d3e4e",
+      "bytes": 347
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-budget-v1-binding.json": {
+      "sha256": "b97a2f98ebeeabf0461da6d6cbc66a048e78a143d938195f132b60173f16d5cf",
+      "bytes": 21799
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-budget-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-budget-v1.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-capture-no-GO-v1/terminal.json": {
+      "sha256": "a8b725cc1bd8c6dd8907258ddbbd41f7dd30404baa2dc70fbc8cc65953539087",
+      "bytes": 357
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-capture-no-GO-v1-binding.json": {
+      "sha256": "52c3a157cceb8ed9ce69d469e7e538fcc9f65d732fa070c01ae3ad25459e540e",
+      "bytes": 21799
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-capture-no-GO-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-capture-no-GO-v1.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-controls-v1.json": {
+      "sha256": "6b173982499cd39b83d7cc1d94b2afdf5cc35d268a3763e4608438296ba39457",
+      "bytes": 2953
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-whitelist-v1/terminal.json": {
+      "sha256": "ebd3197310c7ef5f6d314285643c5d94ba08be3f1ad8240ede450c182095046f",
+      "bytes": 378
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-whitelist-v1-binding.json": {
+      "sha256": "f4bc6bcff714722305e09a0f22f48494d99503e9080732a69f63b49354f40f2e",
+      "bytes": 21744
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-whitelist-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-negative-whitelist-v1.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-source-runtime-intake-v1.json": {
+      "sha256": "29456ebf1a25bedbf385920b356b15e1c6abf22c6a7f227c1a0aa848fb094018",
+      "bytes": 13916
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cached-v1/terminal.json": {
+      "sha256": "3e68fcb35daf48fb23d56d7c66a64f7c18d68e080133ffbcc6dd26d34cedeb89",
+      "bytes": 57442
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cached-v1-command.json": {
+      "sha256": "5c0a601b5169b5e3ce0f3571df5306210c67bfe06b4f7f736df1fa24acd6ee02",
+      "bytes": 984
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cached-v1-process.json": {
+      "sha256": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+      "bytes": 13
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cached-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cached-v1.stdout": {
+      "sha256": "dff3b0690267bdd22e8784b2fe2a8c05ba3defa24a7fd268d29b0f8bd7b863c2",
+      "bytes": 40
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cold-v1/terminal.json": {
+      "sha256": "5ab7d46ec40426710296c3023048862f1c47f6599756843d2154faa9115ad335",
+      "bytes": 57441
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cold-v1-command.json": {
+      "sha256": "e60dc5b28e4637e7ef19c87d9cb8eeae53add7ccc39ee13eca5d57d0b56ced79",
+      "bytes": 980
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cold-v1-process.json": {
+      "sha256": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+      "bytes": 13
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cold-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cold-v1.stdout": {
+      "sha256": "dff3b0690267bdd22e8784b2fe2a8c05ba3defa24a7fd268d29b0f8bd7b863c2",
+      "bytes": 40
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-budget-v1/terminal.json": {
+      "sha256": "def1015b7270b0a1b7415cbb3a9cb211ff7826506c844e06c4d8c06c2b6d3e4e",
+      "bytes": 347
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-budget-v1-binding.json": {
+      "sha256": "b97a2f98ebeeabf0461da6d6cbc66a048e78a143d938195f132b60173f16d5cf",
+      "bytes": 21799
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-budget-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-budget-v1.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-capture-no-GO-v1/terminal.json": {
+      "sha256": "a8b725cc1bd8c6dd8907258ddbbd41f7dd30404baa2dc70fbc8cc65953539087",
+      "bytes": 357
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-capture-no-GO-v1-binding.json": {
+      "sha256": "52c3a157cceb8ed9ce69d469e7e538fcc9f65d732fa070c01ae3ad25459e540e",
+      "bytes": 21799
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-capture-no-GO-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-capture-no-GO-v1.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-controls-v1.json": {
+      "sha256": "6994255422744039c42b9e23ed61c91ac03c83917a3304d634aa88bcdf20750c",
+      "bytes": 2938
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-whitelist-v1/terminal.json": {
+      "sha256": "ebd3197310c7ef5f6d314285643c5d94ba08be3f1ad8240ede450c182095046f",
+      "bytes": 378
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-whitelist-v1-binding.json": {
+      "sha256": "f4bc6bcff714722305e09a0f22f48494d99503e9080732a69f63b49354f40f2e",
+      "bytes": 21744
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-whitelist-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-negative-whitelist-v1.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-source-runtime-intake-v1.json": {
+      "sha256": "da20aba8ac3f56ee7e6072b65a061f731d056f71ab68228afec5c811c1c3c079",
+      "bytes": 13884
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cached-v1/terminal.json": {
+      "sha256": "baaf13df085a6fc488674c87fa5fbb574644f4a165d74758c12284cec1018a4f",
+      "bytes": 57159
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cached-v1-command.json": {
+      "sha256": "7c6cb297f9bc1ad6aced4f56519b3e0dacdc5c9b70695208328461d66772aab6",
+      "bytes": 980
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cached-v1-process.json": {
+      "sha256": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+      "bytes": 13
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cached-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cached-v1.stdout": {
+      "sha256": "bbe11d4b0f8077bbb22528e227e405621cf60c097adad30133994657011e78da",
+      "bytes": 39
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cold-v1/terminal.json": {
+      "sha256": "3c5d3c2413b0ba56cc3bc04c6b93d8b4b3c0451ce0fdcf450e8b0a2f92fe66a8",
+      "bytes": 57158
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cold-v1-command.json": {
+      "sha256": "4b35e66f4d314766a1fa052407ead435c18c0d6a3629951c9893b87d03bf0ac2",
+      "bytes": 976
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cold-v1-process.json": {
+      "sha256": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+      "bytes": 13
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cold-v1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/vi-large-reference-readiness-v1/modern-variation_of_information-cold-v1.stdout": {
+      "sha256": "bbe11d4b0f8077bbb22528e227e405621cf60c097adad30133994657011e78da",
+      "bytes": 39
+    },
+    "build/vi-large-reference-readiness-v1/negative_prefix_v1.py": {
+      "sha256": "23e9edeb9cdbc446c38931598a21be09eb5df4b5db96be0b748a4e1eccd9b0dd",
+      "bytes": 2026
+    },
+    "build/vi-large-reference-readiness-v1/retained-controller-reuse-v1.json": {
+      "sha256": "1cbee4dc744521a26028568f93a35641f9b514b9c4752fa819f7181dcab2b1fd",
+      "bytes": 675
+    },
+    "build/vi-large-reference-readiness-v1/root-GO-template-v1.json": {
+      "sha256": "5757631fa25008fac5c05b00e863fb76a619cc8ce4699ff7fb3667023b1e11cb",
+      "bytes": 3830
+    },
+    "build/vi-large-reference-readiness-v1/run_source_v1.py": {
+      "sha256": "75a8a8b65710ff388261177fb6a4de0f28ef9a6c1acc7ac512e1071125827b20",
+      "bytes": 1742
+    },
+    "build/vi-large-reference-readiness-v1/source_runtime_intake_v1.py": {
+      "sha256": "88609c812335cfcba644e466be6bb0acf4f6bc0f4f0696cb4b54958f8af7d9ce",
+      "bytes": 2959
+    },
+    "build/vi-large-reference-readiness-v1/windows311-source-v1/command.json": {
+      "sha256": "1671c6cc11e1cad2c3e30028b7f38994f8517b611bc5b93778ae7e01f9318c9d",
+      "bytes": 856
+    },
+    "build/vi-large-reference-readiness-v1/windows311-source-v1/results.xml": {
+      "sha256": "43335b767dc0bf32026eb9f5541ee37774099290fb28bae2b3fd1dda19ca2e55",
+      "bytes": 1379
+    },
+    "build/vi-large-reference-readiness-v1/windows311-source-v1/terminal.json": {
+      "sha256": "0bc1f9df5207aca5d9c78bb8ddb23c2ee7ee34ad7816b597030b6dadee6f89cd",
+      "bytes": 266
+    },
+    "build/vi-large-reference-readiness-v1/windows313-source-v1/command.json": {
+      "sha256": "7a2e8955aa71169005442cae7958c9001bf18aa809e7a62af88cc38ec0f374b0",
+      "bytes": 848
+    },
+    "build/vi-large-reference-readiness-v1/windows313-source-v1/results.xml": {
+      "sha256": "fd2e597f787d3ae6d19248fb7302826dee724b37365af729550bb5bc1e9f9edb",
+      "bytes": 1379
+    },
+    "build/vi-large-reference-readiness-v1/windows313-source-v1/terminal.json": {
+      "sha256": "56f0bd29e8e8c35978e494834c511db5da224ea32dd7a97c67474e75fe57917f",
+      "bytes": 267
+    }
+  },
+  "case_ids": [
+    "metrics.variation_of_information/128x128/8/C",
+    "metrics.variation_of_information/128x128/64/F",
+    "metrics.variation_of_information/256x256/8/F",
+    "metrics.variation_of_information/256x256/64/C"
+  ],
+  "bounds": {
+    "cases": 4,
+    "input_dtype": "plain int64",
+    "pixels_max": 65536,
+    "labels_max": 64,
+    "CSR_shape_max": [
+      64,
+      64
+    ],
+    "logical_NNZ_max": 4096,
+    "physical_slots_max": 65536,
+    "two_input_bytes_max": 1048576,
+    "conservative_live_storage_bytes_max": 12582912,
+    "normalization_denominator_positive": true,
+    "numerical_parity": "UNOBSERVED_NOT_IMPLIED_BY_BOUNDS"
+  },
+  "actual_prefixes": [
+    {
+      "profile": "minimum",
+      "cache": "cold",
+      "path": "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cold-v1/terminal.json",
+      "sha256": "5ab7d46ec40426710296c3023048862f1c47f6599756843d2154faa9115ad335",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 2,
+        "provider_refused": 2,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 2,
+        "compiled_provider_refused": 2
+      },
+      "body_lines": 0,
+      "observations": 0,
+      "journals": false
+    },
+    {
+      "profile": "minimum",
+      "cache": "cached",
+      "path": "build/vi-large-reference-readiness-v1/minimum-variation_of_information-cached-v1/terminal.json",
+      "sha256": "3e68fcb35daf48fb23d56d7c66a64f7c18d68e080133ffbcc6dd26d34cedeb89",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 2,
+        "provider_refused": 2,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 2,
+        "compiled_provider_refused": 2
+      },
+      "body_lines": 0,
+      "observations": 0,
+      "journals": false
+    },
+    {
+      "profile": "modern",
+      "cache": "cold",
+      "path": "build/vi-large-reference-readiness-v1/modern-variation_of_information-cold-v1/terminal.json",
+      "sha256": "3c5d3c2413b0ba56cc3bc04c6b93d8b4b3c0451ce0fdcf450e8b0a2f92fe66a8",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 2,
+        "provider_refused": 2,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 2,
+        "compiled_provider_refused": 2
+      },
+      "body_lines": 0,
+      "observations": 0,
+      "journals": false
+    },
+    {
+      "profile": "modern",
+      "cache": "cached",
+      "path": "build/vi-large-reference-readiness-v1/modern-variation_of_information-cached-v1/terminal.json",
+      "sha256": "baaf13df085a6fc488674c87fa5fbb574644f4a165d74758c12284cec1018a4f",
+      "counts": {
+        "target_attempted": 2,
+        "target_refused": 2,
+        "provider_attempted": 2,
+        "provider_refused": 2,
+        "target_body_lines": 0,
+        "provider_body_lines": 0,
+        "compiled_provider_attempted": 2,
+        "compiled_provider_refused": 2
+      },
+      "body_lines": 0,
+      "observations": 0,
+      "journals": false
+    }
+  ],
+  "review": {
+    "source": "Read complete controller/observer/contract/typedcodec/pure guards and pinned upstream VI stages; fixed factory byteformula/control semantics source-backed",
+    "authority": "Binding all0/null; capture requires independently hashed source/controller/case/runtime/prefix/root review/deadline/fixed exclusive output. Exactly4unique cases/profile, no filtering/retry; durable started/completed+failed diagnostics and preserved writer errors.",
+    "sequence": "Minimum4requires separate rootGO; modern4also requires independent actual minimum terminal review tied to same source/controller/binding/cases/public_topcalls4/completed_rows4/no_retry. No original permission issued by this review.",
+    "observer": "Raw2f64 words/type/layout/alias/mutation/warnings/exceptions with qualname+typedargs/NPstate/entryhardware/caller32 preserved. Inert controls are not original observations. Pointer/handler IDs and after-observer hardware remain raw diagnostics, not portable expected values.",
+    "refusal_scope": "Actual Python target/direct+same-observer entries, selected VI helpers and two compiled request boundaries. Imports/package initialization and NumPy-only safe factories are explicit setup, not broad scientific namespace refusal.",
+    "helper": "Existing small0c40 library/source/ABI/root admission reused and current small library digest authenticated; four actualprefixes prove caller/process32 restore and sticky/rounding disturbance recovery. No helperbody invoked by reviewer.",
+    "runtime": "Actual paths/RECORD/METADATA/source+compiled origin and loadedBLAS paths/size retained; large binary hashes reused, not replayed. No forced BLAS/CPU dispatch. This is exact retained min/modern Linux scope, not hosted/Windows/native/genuine proof.",
+    "tests": "Retained8pure checks per Windows version,4actual prefixes,6Linux metadata refusals and all actual processes0 reused; reviewer executes no test/science/target/helper/native/build/timing."
+  },
+  "findings": [],
+  "pending": [
+    "Root independent admission and fresh exact minimum4 GO; capture directories absent and deadline/binding/helper/runtime still match immediately before action",
+    "Minimum4 raw terminal/typed result/FP/journal/consumed-budget independent review before any separate modern4 GO",
+    "Modern4 exact once capture and independent raw admission; no old8smallgold recapture",
+    "Only after raw admission: owning native/currentcounts comparison of these four large cases with STRICT0ULP/publictype/layout/alias/error/warning/FP controls; any mismatch stops dependent genuine/timing, no tolerance or normalization escape",
+    "Exact source integration/genuinefourprofiles/wholeSDK/current-host numericalpreflight/realcohorts/separate timingGO/performance/main remain separate"
+  ],
+  "current_authority": {
+    "originals": 0,
+    "observations": 0,
+    "journals": 0,
+    "native": 0,
+    "sampler": 0,
+    "timing": 0,
+    "build": 0
+  },
+  "waste_review": {
+    "result": "Scoped readiness PASS; no source changes or reruns. Reused65small receipts/19sourcepins, actualprefixes/nativeWindowsGit+explicitLinuxenv, existing typedcodec/full32/one-shot loops.",
+    "avoidable": "Author source-only quoting/staleCLI issues occurred before execution and are retained. No new reviewer failure or scientific churn; no extra capture/framework.",
+    "cost": "Review wall cost not measured; retained author costs reused, no rerun to quantify waste.",
+    "next_owner_trigger": "Root independently admits this frozen review, performs exact actual-binding/GO check and alone issues minimum4. Modern stays blocked until actualminimum terminal review; source ab7872a5 remains immutable/unmodified by this review. Root updates existing plan/ledger/checklist."
+  }
+}
