@@ -1,0 +1,40 @@
+{
+  "schema": "lbp-diagnostic-gh-sha-fixture-root-admission-v1",
+  "status": "PASS_TEST_ONLY_FIX_SOURCE_GUARDS_NO_ACTUAL_CALL_AUTHORITY",
+  "source": "82ec3ece0eedb48f796ab61911659791953d88dd",
+  "parent": "4e942cff94c72ed0c375164aac9b745318efce29",
+  "handoff": "build\\lbp-diagnostic-gh-sha-fixture-v1\\handoff-v1.json",
+  "handoff_sha256": "a23bbfbf59903c9bbff8fb41be5061eb36385d278ef876ee558bd304359f6423",
+  "source_files_changed": 1,
+  "actual_complete_module_each_python": 38,
+  "representative_host_environment": true,
+  "production_wrapper_workflow_contexts_unchanged": true,
+  "root_review": "Read actualonefiledelta: monkeypatchSHA matches syntheticauthority onlywithinfixture, explicitworkflow-source mismatch stillrefused; realproductionequalityguard untouched. Exactactual38XML/exit0/envrestoration/normalplugins underoutsideGITHUB_ACTIONStrue/SHA4e authenticated. No smallersubset/union substitutes.",
+  "superseded_host_readiness": {
+    "source": "4e942cff94c72ed0c375164aac9b745318efce29",
+    "run": 42374889140,
+    "result": "FAILED_HOSTED_SOURCE_GATE_36PASS_1FAIL",
+    "retention": {
+      "run": 42374889140,
+      "source": "4e942cff94c72ed0c375164aac9b745318efce29",
+      "conclusion": "failure",
+      "artifact_id": 13575611309,
+      "artifact_name": "lbp-cohort-fp-diagnostic-minimum",
+      "bytes": 2281661,
+      "sha256": "a24cc3034ca3380852d75efde1a1ea897b6ea5e4218aa0a5c037c524d1be317b",
+      "archive": "build\\lbp-cohort-fp-diagnostic-actual-v2\\retained-v2\\artifact.zip",
+      "files": "build\\lbp-cohort-fp-diagnostic-actual-v2\\retained-v2\\files",
+      "download_passes": 1,
+      "API_digest_exact": true,
+      "CRC_verified": true
+    },
+    "rootcause": "Syntheticb*40fixture inheritedactualGITHUB_SHA; comparisonfailedbeforeF1helper/diagnosticsteps, whichactualjobsAPIshows skipped.",
+    "actual_original_calls": 0,
+    "actual_native_calls": 0,
+    "actual_helper_calls": 0,
+    "timing": 0
+  },
+  "reuse": "4e wrapper/contexts/offlineintake/collector/37previouscontrols numericalcallpolicy unchanged; exactmanualworkflowalreadyregistered d9b08010, no duplicatepublication/compilation/qualification needed.",
+  "pending": "Pushfrozen82ecref, actualliveAPI/ref/no-prior/producer/artifact/capacity/clock thenfreshUTCconditionalonepairGO; do not retry4e unchanged. No FPproductfix/speed/release acceptance.",
+  "waste_review": "Preventable hosted-env fixture omission cost one failedremote preparation/225MBinputintake butzero scientificcalls. Twochanged-input38sourceprocesses3.859s/1.300s validatefix; newfixturetext compiledbeforefirstcheck, no newframework or numericalreplay."
+}
