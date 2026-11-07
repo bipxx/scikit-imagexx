@@ -112,7 +112,23 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
     original=q.groups_for_source(ROOT);groups=q.applicable_public_groups(original,profile)
     assert all(groups[name]==value for name,value in original.items())
     if profile=='windows':assert groups==original
-    else:assert groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)and len(groups)==len(original)+11
+    else:
+        expected={
+            'public-regular-grid-saved-linux':('test_regular_grid_public.py',),
+            'public-util-views-saved-linux':('test_util_views_public.py',),
+            'public-mark-saved-linux':('test_mark_boundaries_public.py',),
+            'public-mark-wide-saved-linux':('test_mark_wide_outer_public.py',),
+            'public-lbp-saved-linux':('test_draw_multiblock_lbp_public.py',),
+            'public-lbp-metadata-linux':('test_draw_multiblock_lbp_dtype_metadata.py',),
+            'public-radon-saved-linux':('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py'),
+            'public-radon-ABI-policy-linux':('test_finite_radon_numpy_abi_public.py',),
+            'public-VI-saved-linux':('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py'),
+            'public-VI-large-saved-linux':('test_variation_of_information_large_saved.py',),
+            'public-flood-saved-linux':('test_flood_fill_public.py',),
+            'public-rolling-ball-saved-linux':('test_rolling_ball_public.py',),
+        }
+        assert set(expected).isdisjoint(original)
+        assert groups==dict(original,**expected)
     plan=q.plan(ROOT,profile,281);assert not plan['blockers']
     assert plan['public_groups']==groups
     assert 'noWindows' in (ROOT/'tools/public_qualification.py').read_text()
@@ -122,7 +138,8 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
     argument=next(n for n in ast.walk(main)if isinstance(n,ast.Call)and isinstance(n.func,ast.Attribute)and n.func.attr=='add_argument'and n.args and isinstance(n.args[0],ast.Constant)and n.args[0].value=='--group')
     parser=argparse.ArgumentParser();scope=dict(parser=parser,GROUPS=q.GROUPS)
     exec(compile(ast.fix_missing_locations(ast.Module(body=[ast.Expr(value=argument)],type_ignores=[])),'<actual-group-argument>','exec'),scope)
-    assert parser.parse_args(['--group','public-regular-grid-saved-linux']).group=='public-regular-grid-saved-linux'
+    for group in groups:
+        assert parser.parse_args(['--group',group]).group==group
 
 
 @pytest.mark.parametrize('profile',('minimum','windows'))

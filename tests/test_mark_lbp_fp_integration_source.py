@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from tools.mark_lbp_fp_context import predecessor_bytes
 ROOT=Path(__file__).resolve().parents[1]
-C=json.loads((ROOT/'coverage/contracts/mark-lbp-fp-integration-v1.json').read_bytes())
+C=json.loads((ROOT/'coverage/contracts/mark-lbp-fp-integration-v2.json').read_bytes())
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 @pytest.mark.parametrize('name',tuple(C['predecessors']))
@@ -87,3 +87,14 @@ def test_actual_common_entries_equal_authenticated_DDA_readers_and_refuse_double
   assert getattr(current,entry)(ROOT,name,raw)==expected
   with pytest.raises(AssertionError):getattr(current,entry)(ROOT,name,row['predecessor'].encode())
   with pytest.raises(AssertionError):getattr(current,entry)(ROOT,name,raw+b'tamper')
+
+def test_linux_group_metadata_successor_retains_exact_frozen_parent_and_only_named_changes():
+ parent=C['predecessor_context'];raw=(ROOT/parent['path']).read_bytes();assert H(raw)==parent['sha256']
+ old=json.loads(raw)
+ assert set(C['predecessors'])==set(old['predecessors'])|{'tests/test_util_metadata_source.py'}
+ for name,row in old['predecessors'].items():
+  if name!='tools/public_qualification.py':assert C['predecessors'][name]==row
+  else:
+   current=C['predecessors'][name]
+   assert current['predecessor']==row['predecessor']and current['predecessor_raw_sha256']==row['predecessor_raw_sha256']
+ assert C['predecessor_context']['path']=='coverage/contracts/mark-lbp-fp-integration-v1.json'

@@ -719,6 +719,7 @@ def groups_for_source(root):
 
 DRAW_SOURCE_PATHS += (
     'tools/mark_lbp_fp_context.py','coverage/contracts/mark-lbp-fp-integration-v1.json',
+    'coverage/contracts/mark-lbp-fp-integration-v2.json',
     'coverage/contracts/mark-wide-outer-source-v1.json','coverage/contracts/mark-wide-comparison-fp-v1.json',
     'coverage/contracts/mark-wide-compatibility-v1.json','coverage/contracts/mark-wide-outer-sdk-v1.json',
     'coverage/contracts/mark-wide-outer-private-bridge-v1.json','coverage/contracts/mark-wide-outer-capture-v2.json',
@@ -2499,7 +2500,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-flood-saved-linux','public-rolling-ball-saved-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-flood-saved-linux','public-rolling-ball-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()
