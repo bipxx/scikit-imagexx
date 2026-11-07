@@ -37829,6 +37829,23 @@
         "path": "coverage/evidence/inverse-gaussian-gradient-native-root-admission-v1.json",
         "sha256": "2a94c865589de5993228139f03527ba14d2ff8b78353255605046eb4a248fde5"
       }
+    },
+    {
+      "id": "order-angles-golden-ratio-source-first-v1",
+      "kind": "source-contract",
+      "owner": "readiness_reviewer",
+      "state": "source-assessment-in-progress",
+      "apis": [],
+      "target_apis": [
+        "transform.order_angles_golden_ratio"
+      ],
+      "owns": [
+        "Family-specific order_angles_golden_ratio contract/recipe/source-test/docs files in isolated worktree; no shared hooks or native implementation in this task"
+      ],
+      "scope": "Existing full477 unassigned API; pinned0.26 source/storage/contract first. Generator/lazy/state/protocol/dtype/FP/layout/error frontiers explicit. Reuse retainedsource and observer/typedcodec/FENV infrastructure; zero reference/native/helper/sampler/build/timing authority.",
+      "acceptance": "One bounded source/contract/storage handoff, exactsignature/defaults/sourcebytes, finite small recipes and work/storage bounds, easiest ownedC++/completeSDK/hotswap/SIMD/globalworker/performance route; bothWindows pure/stub normalplugins0science; report unmatchedrequirements/failures/reuse/waste/nextowner. No genericgenerator framework or duplicateknownblocker campaign.",
+      "next_gate": "Root independent source/storage review before actualruntime/controller readiness and any separatebounded original capture GO. Mustnotdelay current281.",
+      "shipping_classification": "upstream-only"
     }
   ],
   "unassigned_inventoried_apis": [
@@ -38160,7 +38177,6 @@
     "transform.integrate",
     "transform.iradon",
     "transform.iradon_sart",
-    "transform.order_angles_golden_ratio",
     "transform.probabilistic_hough_line",
     "transform.pyramid_expand",
     "transform.pyramid_gaussian",
@@ -38532,9 +38548,9 @@
       ]
     },
     "current_three_agent_packets": {
-      "metrics_integrator": "FutureIGG282 integration resumed independently after criticalcdfreeze; preserve12sourcefailures and compile missinginclude; only invalidatedpure/compile corrections.",
-      "boundary_worker": "Live versioned281 reader refresh to cd plus legacy stagerlabel281; same verificationlogic, actualrun/artifactbindingsNULL.",
-      "readiness_reviewer": "Reader213 review7d8e scopedPASS frozen; affectedcdmetadata/label refresh review awaits B freeze; actualgenuine remainspending."
+      "metrics_integrator": "Sole author newcd-based common-entry sourceprojection correction. FutureIGG checkpoint52bfe406 preserved/unhanded,362pure/version+compile scopes retained; no currentdependency wait.",
+      "boundary_worker": "Preparedreadersv2 cf1425 frozenUNBOUND; Rreview3fe8PASS. Await C common-entry successor then narrowindependent review; no tests/science.",
+      "readiness_reviewer": "Live independent existing-backlog order_angles_golden_ratio source/contract assessment; no original/native/helper/sampler/build/timing; readerreviews7d8e/3fe8 frozen."
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -38924,12 +38940,12 @@
       }
     },
     "current_review_assignments": {
-      "metrics_integrator": "FutureIGG282 integration resumed independently after criticalcdfreeze; preserve12sourcefailures and compile missinginclude; only invalidatedpure/compile corrections.",
-      "boundary_worker": "Live versioned281 reader refresh to cd plus legacy stagerlabel281; same verificationlogic, actualrun/artifactbindingsNULL.",
-      "readiness_reviewer": "Reader213 review7d8e scopedPASS frozen; affectedcdmetadata/label refresh review awaits B freeze; actualgenuine remainspending.",
-      "root": "Currentcd COMPLETE161 reruns live74915/45650; source5edPASS/fullreadyPENDING. Root owns exactsource release/admission/delivery."
+      "metrics_integrator": "Sole author newcd-based common-entry sourceprojection correction. FutureIGG checkpoint52bfe406 preserved/unhanded,362pure/version+compile scopes retained; no currentdependency wait.",
+      "boundary_worker": "Preparedreadersv2 cf1425 frozenUNBOUND; Rreview3fe8PASS. Await C common-entry successor then narrowindependent review; no tests/science.",
+      "readiness_reviewer": "Live independent existing-backlog order_angles_golden_ratio source/contract assessment; no original/native/helper/sampler/build/timing; readerreviews7d8e/3fe8 frozen.",
+      "root": "cd full161 handles74915/45650 terminal1; receipt e0043b97. Root owns newcommon-entry successor admission/fullbarrier/genuine; no numerical/benchmark reruns."
     },
-    "next_action": "Root5ed source admission PASS; COMPLETE161 sameworkflow reruns live windows31174915/windows31345650, no science. Both terminal passes required before one exactsourcequalification. Failed213/a5 retained.",
+    "next_action": "CD COMPLETE161 BOTHFAILED1shared-history-reader dependency/profile;3883reportedXML/3874ordinarypass+1fail+8subtests,0science. C authors versionedCOMMON-entry projection removinglocal-only inverse. Root/B admit frozenallconsumerclosure then complete161bothPython; no hosteddispatch.",
     "current_checkpoint": {
       "main_image_names": 271,
       "qualified_image_names": 271,
@@ -38957,7 +38973,7 @@
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "Root5ed source admission PASS; COMPLETE161 sameworkflow reruns live windows31174915/windows31345650, no science. Both terminal passes required before one exactsourcequalification. Failed213/a5 retained.",
+      "next_release_status": "CD COMPLETE161 BOTHFAILED1shared-history-reader dependency/profile;3883reportedXML/3874ordinarypass+1fail+8subtests,0science. C authors versionedCOMMON-entry projection removinglocal-only inverse. Root/B admit frozenallconsumerclosure then complete161bothPython; no hosteddispatch.",
       "next_release_qualification_run": null,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct.",
@@ -38970,16 +38986,20 @@
       "complete_source_failure": {
         "path": "coverage/evidence/current281-complete-source-failure-v1.json",
         "sha256": "c2acf33b454b73253558eeebc79c2aa045c38f5ea1723b20ec80017c29a7e183"
+      },
+      "complete_source_failure_v2": {
+        "path": "coverage/evidence/current281-complete-source-failure-v2.json",
+        "sha256": "e0043b97cbc0279e75ee365bf8a32b7118ca0a7cb635ec9caacdbf85fc89bf68"
       }
     },
     "shared_integration_author": {
       "owner": "metrics_integrator",
-      "state": "future_IGG282_unready_isolated_from_frozen_cd",
-      "base": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+      "state": "critical_common_projection_successor_authoring_futureIGG_preserved",
+      "base": "cd703fbda0442944b150c9529e09e0a40ab37c59",
       "scope": "C selectively integrates root-admitted065 IGG family into new inverse-gaussian-gradient-enabled-v1. Root retains frozen213 complete161/release; no neworiginals/timing/fullproduct build.",
       "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
       "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
-      "next_gate": "C corrects demonstratedfuture source/compile setup failures preservingcd; freeze coherentfuturehandoff, no current281delay.",
+      "next_gate": "Freeze common-entry once-only inverse and allconsumer affectedclosure; B independentdelta/root then COMPLETE161bothPython. Preserve all failures/native/science and futureIGG.",
       "actual_staging_counts": {
         "image_paths": 280,
         "registered_functions": 283,

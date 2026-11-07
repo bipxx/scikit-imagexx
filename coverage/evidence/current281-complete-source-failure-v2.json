@@ -1,0 +1,89 @@
+{
+  "passed": false,
+  "status": "COMPLETE161_CD_BOTH_FAILED_SHARED_HISTORY_READER_DEPENDENCY",
+  "source": "cd703fbda0442944b150c9529e09e0a40ab37c59",
+  "profiles": {
+    "windows311": {
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 379.4529999999795,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3883,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_nodes": 3875,
+      "passed_ordinary": 3874,
+      "passing_subtests": 8,
+      "failed": [
+        {
+          "class": "tests.test_vi_reduction_integration_source",
+          "name": "test_exact_correction_and_historical_source_projection",
+          "message": "AssertionError: tests/test_public_qualification.py"
+        }
+      ],
+      "pins": {
+        "terminal.json": "efcb1f92f32a9439a90784a60540cfb4a608db15ffa743dc5ee5615b201a6ec0",
+        "command.json": "2084b9b31b199e0e4047d4a19d62d7647022ae281cce63276ea879c88f9013f7",
+        "testIDs.json": "c1f0f31b86b24ec59e824d846d7153c9cadb1e06ed49ad2890701d35974d2245",
+        "plugins.json": "40390e25f7ff0a1b23f245a595262d2e64782fab241ce9f7460c042ef1b92dc5",
+        "results.xml": "629c583024493a2b11a25b2ea923dabcbad95b7a4d7ca9dc431afbd127e23a59"
+      }
+    },
+    "windows313": {
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 355.7759721998591,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3883,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "ordinary_nodes": 3875,
+      "passed_ordinary": 3874,
+      "passing_subtests": 8,
+      "failed": [
+        {
+          "class": "tests.test_vi_reduction_integration_source",
+          "name": "test_exact_correction_and_historical_source_projection",
+          "message": "AssertionError: tests/test_public_qualification.py"
+        }
+      ],
+      "pins": {
+        "terminal.json": "dcfad81216e2322c767783ff814f50b899e0ed2b8e9e785891267683f2261949",
+        "command.json": "65a675461bd9f6456443a411b3cbbd76015ee152045781ab19e4293a292f6ad8",
+        "testIDs.json": "c1f0f31b86b24ec59e824d846d7153c9cadb1e06ed49ad2890701d35974d2245",
+        "plugins.json": "ed1768b042eaadda2eeae18f5feab53cb8b9a6120bc4055a943a2d2dc431366f",
+        "results.xml": "9a21e49594d55a3869b6f4abc09212641111496678898007e93f9856253e85ef"
+      }
+    }
+  },
+  "normal_conftest_plugins": true,
+  "selectors": 161,
+  "science_original_native_timing": 0,
+  "failure": "Local rolling-test assertion inverse did not cover VI correction_predecessor_bytes reader of the same changed test_public_qualification.py. Shared rolling entry still requires original213 bytes.",
+  "supersedes_readiness": "No completeCD readiness passed; source-delta admission5ed remains narrow29check scope, not a complete dependency proof. Preserve bothcd and213 failedcomplete commands.",
+  "dependent_actions": "Hosteddispatch remains stopped. SoleauthorC creates versionedcommon-entry once-only assertion projection; remove local doubleprojection; enumerate all consumers/context literal dependencies before affectedchecks and newcompletebothPython.",
+  "waste_review": {
+    "avoidable": "Local-reader fix/29node closure missed another shared-entry consumer. Root and independentdelta review did not enumerate entire caller/dependency closure; another6minute fullbarrier exposed the omission.",
+    "reuse": "Production/native/SDK/raw scientific inputs unchanged; no numerical/original/performance reruns.",
+    "next_correction": "Project once at sharedboundary, preserve strictcurrent/predecessor hashes and all oldcontexts; exercise actual VI/correction/raw/canonical readers and all affected modules before complete barrier. No acceptboth/idempotence waiver or new auditframework.",
+    "owner_trigger": "C frozen shared-entry successor; B narrowindependentreview; root actualcomplete161 bothPython then eligiblehosteddispatch."
+  }
+}
