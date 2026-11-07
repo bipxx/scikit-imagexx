@@ -1,0 +1,21 @@
+{
+  "status": "AUTOMATIC_APPROVAL_REJECTED_BEFORE_EXECUTION",
+  "action": "Remove obsolete four workspace-owned complete-source-test fixture roots with PowerShell Remove-Item -LiteralPath -Recurse after resolvedworkspace/liveowner checks",
+  "paths": [
+    "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\source-guard-scratch\\vi-reduction-controller-complete-v1\\windows311",
+    "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\source-guard-scratch\\vi-reduction-controller-complete-v1\\windows313",
+    "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\s2\\a",
+    "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\s2\\b"
+  ],
+  "reason": "blocked by policy",
+  "deleted_bytes": 0,
+  "targets_retained": true,
+  "free_bytes_after": 58731368448,
+  "retry_policy": "No alternate command/path/shell attempt. Prior deniedD roots untouched. Continue authorized source/genuine/native work with sufficientspace.",
+  "evidence_retained_outside_targets": [
+    "build/vi-reduction-controller-complete-readiness-v1",
+    "build/vi-reduction-controller-complete-readiness-v2",
+    "build/vi-reduction-controller-complete-readiness-root-v2"
+  ],
+  "waste_review": "Attempted boundedpostverification obsoletefixture retirement; approvalrejected beforeexecution. Do not build newcleanup framework or spendduplicate attempts. Costunknown."
+}

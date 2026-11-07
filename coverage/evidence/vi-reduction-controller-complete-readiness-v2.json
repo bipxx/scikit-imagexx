@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "status": "ACTUAL_COMPLETE153_BOTH_RETAINED_PYTHONS_PASS_GENUINE_PENDING",
+  "source": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+  "source_admission": "coverage/evidence/vi-reduction-controller-successor-source-admission-v1.json",
+  "workflow_sha256": "c99a232898805bd006f7f9dda4306f8d4bc03d8d0c7bc9f6a083f8723c9b8d10",
+  "profiles": {
+    "windows311": {
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 327.3279999999795,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3624,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]",
+      "normal_plugins": true,
+      "normal_conftest": true,
+      "selectors": 153,
+      "collected_tests": 3616,
+      "junit_testcases": 3616,
+      "junit_reported_tests_including_subtests": 3624,
+      "pins": {
+        "terminal.json": "552203e2c373fb0df09203bde01016eb83c54649c3841354550671fc34bc5713",
+        "command.json": "c753aeea0f23aebb3a3de650de0e2066c61994ad3bf1be80fcef64340a0378b0",
+        "testIDs.json": "154afd1e72adecf6beaf7ebf0cba8819fbb5013384eb5a00275624f2f9b62af5",
+        "plugins.json": "bdf482243f8330a624756e9629b22033c4b4181178089029f59ccec505ec1e45",
+        "results.xml": "da1d092d2947f4183110c5f0b9fd4ef44864689a4a186907735ec2e63993fa54"
+      }
+    },
+    "windows313": {
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 302.4695754998829,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 3624,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "normal_plugins": true,
+      "normal_conftest": true,
+      "selectors": 153,
+      "collected_tests": 3616,
+      "junit_testcases": 3616,
+      "junit_reported_tests_including_subtests": 3624,
+      "pins": {
+        "terminal.json": "f69ca6c511800c32b12f2b68cf966d98241c9d53c8eab49cbf723d1b7964f25a",
+        "command.json": "dbee7f50a93c431efeeb498807faa587d5bef4d52b3ea10286074f915365432b",
+        "testIDs.json": "154afd1e72adecf6beaf7ebf0cba8819fbb5013384eb5a00275624f2f9b62af5",
+        "plugins.json": "15aef8f7ce78a5f1056199758d4b1d3e8576c4dbec7d7eeee90ec211fabeb507",
+        "results.xml": "44123c4207c3c49b50710cd19291a859bf1ee3a8dd70ca74793b4c11727f7ac1"
+      }
+    }
+  },
+  "same_collected_nodeIDs": true,
+  "scope": "Complete actual workflow source command normal conftest/plugins/no fail-fast;3616ordinary testcase nodes plus8subtest outcomes=3624reportedJUnit tests/profile. No partial-union substitute;sourceclean0science/original/native/timing.",
+  "historical_failure": "352eightfailures/profile preserved; a5metadata/count/path corrections only, math evidence reusedscope.",
+  "pending": "Exactremote/workflow/no-prior-run/sourceplans/capacity then one genuinefourprofile, independentartifact/public/SDKadmission, actualperformancebinding/cohorts/timing/delivery.",
+  "waste_review": "Affectedcomplete barrier required after5file sourceassertion/contextdelta;actual327.328/302.470sec. Rootreceiptwriter initially wrongly expected eachsubtest as ordinary XMLtestcase; assertion stopped before receipt/dispatch. Corrected readingmatchesJUnit schema/terminal/log, no tests replayed. Ownerrootdispatchpromptly."
+}

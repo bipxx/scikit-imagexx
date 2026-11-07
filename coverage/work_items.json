@@ -37727,8 +37727,8 @@
     {
       "id": "rolling-ball-source-first-v1",
       "kind": "implementation",
-      "owner": "boundary_worker",
-      "state": "root_independent150_raw_admitted_native_family_implementation_live",
+      "owner": "metrics_integrator",
+      "state": "root_native_c821_admitted_next_integration_live",
       "apis": [],
       "target_apis": [
         "restoration.rolling_ball"
@@ -37738,7 +37738,7 @@
       ],
       "scope": "Next dependency-ready corebackground-removal API; existing ball/ellipsoidkernel source/reference/native components are reusable only in their own scopes, notrollingball output evidence.",
       "acceptance": "Readpinned0.26fullrollingball Python/Cython/FIFO/helpers andcurrentworkers/num_threadsDEPRECATED behavior. Freezeexactsignature,dtype/layout/mutation/kernel/radius/nansafe/padding/nonfinite/error/FP/deprecation/globalworker contract and bounded source/storage workload recipes before originals. Reuse existingtypedobserver/codec/FEnv one-shot controls; no new framework. Source/pure guards bothretainedPythons normalplugins0science. Original/native/helper/build/env/download/timing/hosted authority0 untilrootappropriategates; ifmatchingoldrollingball refs existreuse ratherthanrecapture.",
-      "next_gate": "C newcoherentnative/SDK/public/benchmarkfamily strict150savedrows, owningminplus/padding/sourceNaNorder, providersdisclosed, no original/timing/fullproduct. Do notholdcorrectiveRrootfreeze ifunfinished.",
+      "next_gate": "Integrate exactnative/deps in isolateda5-based successor; controllerb838 intake requiresrootadmission. Private750FP+60boundary/float32float64SDK only; genuine/Windows/broaderSDK/FP/performance open. No original/timing authority.",
       "source": "2e99dd5c7b2d1b6a65906587f7352e3e54194255",
       "root_admission": "build/rolling-ball-source-root-admission-v1/admission-v1.json",
       "next_owner": "metrics_integrator",
@@ -37753,25 +37753,46 @@
       "raw_source": "dfebccfc171290280643c3b17a4809148a0bb49f",
       "raw_admission": "build/rolling-ball-root-raw-admission-v1/admission-v1.json",
       "modern_consumed": 75,
-      "remaining_original_budget": 0
+      "remaining_original_budget": 0,
+      "controller_root_admission": {
+        "path": "coverage/evidence/rolling-ball-controller-root-admission-v1.json",
+        "sha256": "8927a3b39d54c2315d2a226ee06daf55aab0b31aa9fee206da65d41aff62e506"
+      }
     },
     {
       "id": "inverse-gaussian-gradient-source-first-v1",
       "kind": "source_tests_safety",
-      "owner": "boundary_worker",
-      "state": "source_tests_safety_frozen_pending_root_independent_admission",
+      "owner": "readiness_reviewer",
+      "state": "root158_raw_admitted_native_family_implementation_live",
       "apis": [
         "segmentation.inverse_gaussian_gradient"
       ],
       "scope": "Pinnedactualsignature/source, existingGaussian derivative/SIMD primitives, boundedrecipes/storage/numericalpolicy and purebothPython tests. Searchretainedexactfamily first; no original/native/factory/helper/build/timing authority.",
-      "next_gate": "Root independently reviews source/storage/88pure perversion; actualruntime/factory/compiled/FEnv/controller readiness and separateoriginalGO remainpending. Allcurrentoriginal/native/factory/helper/build/timing0.",
+      "next_gate": "R one coherentownednative/public/completeSDK/executablebenchmark family against158immutable savedrecords, preservedprofiledifferences; rootindependentadmission beforelaterintegration. No moreoriginal/timing authority.",
       "shipping_classification": "upstream-only",
       "waste_review": "Initial rootcandidate clear_border wasalreadyregistered; sourcequerycaughtbefore dispatch, no duplicatework. Selectedactualunassigned corealgorithm, reuses mandatoryexistingprimitives only; roadmapgenericmask/out/channelkw mustnotbeinvented.",
       "source": "34d0855a317e97f776001f87bf52e48a5755d3dd",
       "handoff": "build/inverse-gaussian-gradient-source-first-v1/handoff-v1.json",
       "handoff_sha256": "6c169b0338ea0750cd99924cf78a97fe5dea56378d37eab3e8c20f72c50eb10e",
       "prospective_recipes": 79,
-      "pure_source_nodes_each_Python": 88
+      "pure_source_nodes_each_Python": 88,
+      "root_readiness": {
+        "path": "build/inverse-gaussian-gradient-root-readiness-v1/admission-v1.json",
+        "sha256": "7deb4f21f77b4df1d9d8876dd0dc76e9442483bfe6f46e809a23482159634890"
+      },
+      "minimum_GO": {
+        "path": "build/inverse-gaussian-gradient-reference-v1/minimum-GO-v1.json",
+        "sha256": "82c5594fce693a70b3a3f3c37ae679eda7c31056dfd5fa032aa60f53e3e57764"
+      },
+      "modern_GO": {
+        "path": "build/inverse-gaussian-gradient-reference-v1/modern-GO-v1.json",
+        "sha256": "b006634f7da978810dc2da331ac0152f547eee481e3dabd7a6f41b6e56207d2f"
+      },
+      "minimum_root_terminal_review": "build/inverse-gaussian-gradient-reference-v1/minimum-root-terminal-review-v1.json",
+      "root_raw_admission": {
+        "path": "coverage/evidence/inverse-gaussian-gradient-root-raw-admission-v1.json",
+        "sha256": "be2e13844974951d6a760602ff83db452eb93413a95f2215ccfbce30a11d7f5b"
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -38475,9 +38496,9 @@
       ]
     },
     "current_three_agent_packets": {
-      "metrics_integrator": "join-segmentations-current-batch-v1",
-      "boundary_worker": "label-pair-metrics-current-batch-v1",
-      "readiness_reviewer": "util-slice-along-axes-current-batch-v1"
+      "boundary_worker": "rolling-ball-source-first-v1: private SDK dtype/byteorder extension",
+      "metrics_integrator": "rolling-ball-source-first-v1: next281 isolated shared integration",
+      "readiness_reviewer": "inverse-gaussian-gradient-source-first-v1: native/public/SDK family implementation"
     },
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
@@ -38821,42 +38842,37 @@
     },
     "resume_checkpoint": "2026-10-25: explicit updated-plan implementation resume; old network-revoked turns ended. Same three workers restarted through followup_task; no hosted campaign redispatched.",
     "latest_hosted_status": {
-      "candidate255": {
-        "run": 41927959780,
-        "source": "8d630b4910ed0caef2eb5f4de0d4a3a2aa6cda50",
-        "status": "terminal-failed-Python-AST-schema-metadata",
-        "accepted": false,
-        "root_ready": "build/candidate255-shipping-v1/root-ready-v3.json",
-        "observation": "build/candidate255-genuine-minimum-v1",
-        "scope": "One genuine minimum preparation/three new worker1 timing groups;31 historical groups skipped without new credit; four-profile qualification remains separate.",
-        "publication": "coverage/evidence/current255-minimum-preparation-failed-v1.json"
-      },
-      "qualification": {
-        "run": 41882408142,
-        "source": "6fae25533efd28bf48c4d4ad33b5e3e8ce396c84",
-        "status": "terminal-success-root-admitted",
-        "accepted": true,
-        "image_paths": 252,
-        "admission": "coverage/evidence/public252-whole-product-admission.json"
-      },
-      "line_aa": {
-        "run": 41889026308,
-        "source": "28a6790b2a393ab4a4ffcc062e4962693fb4e12b",
-        "status": "terminal-success-scoped-shipping-admitted",
-        "product_members": 182,
-        "SDK_members": 86,
-        "performance_report": "benchmarks/line-aa-minimum-initial.json",
-        "whole_product_qualified": false
-      },
-      "regionprops_state": {
-        "run": 41910010504,
-        "source": "484e6dd44367316444f757576eea36246e054a48",
-        "status": "terminal-failed-dtype-alias-fixture",
-        "accepted": false,
-        "scope": "Genuine minimum preparation then12-case initial one-worker comparison; main253/qualified252 unchanged.",
-        "readiness": "build/regionprops-state-shipping-v1/root-ready-v2.json",
-        "publication": "coverage/evidence/regionprops-state-minimum-preparation-failed-v1.json"
-      }
+      "run": 42329688164,
+      "source": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+      "status": "in_progress",
+      "watcher_session": 15437,
+      "jobs": [
+        {
+          "id": 128273116638,
+          "name": "qualify (ubuntu-24.04, modern, 3.13.16)",
+          "status": "in_progress",
+          "conclusion": ""
+        },
+        {
+          "id": 128273117009,
+          "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
+          "status": "in_progress",
+          "conclusion": ""
+        },
+        {
+          "id": 128273117030,
+          "name": "qualify (windows-latest, windows, 3.13.16)",
+          "status": "in_progress",
+          "conclusion": ""
+        },
+        {
+          "id": 128273117138,
+          "name": "qualify (ubuntu-24.04, minimum, 3.11.17)",
+          "status": "in_progress",
+          "conclusion": ""
+        }
+      ],
+      "next": "Poll same actualhandle; successrequires independentexactsource artifacts admission, no job-green shortcut."
     },
     "assignment_note": "Current planning assignments are closed; reconcile live roster before starting next work with followup_task. Root owns source admission/delivery; one named owner owns shared integration. Historical assignments elsewhere are provenance, not dispatch instructions.",
     "latest_completed_references": {
@@ -38871,12 +38887,12 @@
       }
     },
     "current_review_assignments": {
-      "readiness_reviewer": "Narrow VI-only source successor after root203d diagnosis: exactexisting pairwisegraph/reduceat and DDOT schedule; oldsrc/metrics/sharedsource unchanged.",
-      "metrics_integrator": "Rolling raw150 rooted9c admitted; NEWnative fulloperation family live feature/rolling-ball-native-v1, originalremaining0/timing0.",
-      "boundary_worker": "IGG34d frozen pendingrootadmission; independent read-only review of RcorrectedVI handoff whenfrozen, no reruns.",
-      "root": "Sole corrective cumulativeintegration owner; exact23controller files staged in newisolatedworktree; admitRmathfix+peerproof, requiredgates then genuine/main."
+      "boundary_worker": "New isolatedrolling SDK dtype/byteorder extension, uses150saved originals/no new original or timing; currentCintegrationdoesnotwait.",
+      "metrics_integrator": "Sole next-family shared integration author in rolling-ball-enabled-integration-v1 baseda5; nativec821 admitted; controller intake waitsroot admission. Doesnotblocka5.",
+      "readiness_reviewer": "IGG158 rootrawbe2e admitted; NEWisolated769basednative/public/SDK/executablebenchmark implementation. Originalbudgetexhausted/timing0.",
+      "root": "Own a5 complete153 live27034/19303, independent receipts and exactsource genuine/main; IGG separate perprofileGO/raw review."
     },
-    "next_action": "Fix actual minimum-compatible Radon NumPy CAPI initialization/policy dispatch with one2.x-header-built binder tested on1.24 and2.5 runtimes usingretainedobjects. Preserve numeric/FP/warnings/callbacks and failed8ccampaign. No fullproduct/env/download/neworiginal/timing/hosted retry. Rootcomplete source successors/genuine gates afterindependentfix; other3jobs continue.",
+    "next_action": "Root polls livewatch15437/run42329688164; retain actual terminal artifacts once and independently admit product/public/SDK before binding anytiming. No retry or jobgreen shortcut.",
     "current_checkpoint": {
       "main_image_names": 271,
       "qualified_image_names": 271,
@@ -38884,7 +38900,7 @@
       "prepared_run": 42262940227,
       "candidate_source": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
       "candidate_image_names": 280,
-      "candidate_status": "SUCCESSOR_SOURCE_ADMITTED_COMPLETE153_BOTH_PENDING",
+      "candidate_status": "GENUINE_FOUR_PROFILE_LIVE_NOT_ADMITTED",
       "performance_evidence": "benchmarks/join-util-views-minimum-initial-v1/README.md",
       "readiness_reviews": [
         {
@@ -38892,11 +38908,11 @@
           "sha256": "2c314a7095dc5088107df993e4f6e56f5eddd698de697963924a8bebc6b4c3db"
         }
       ],
-      "candidate_run": null,
-      "candidate_url": null,
-      "candidate_qualification_run": null,
+      "candidate_run": 42329688164,
+      "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42329688164",
+      "candidate_qualification_run": 42329688164,
       "candidate_evidence": "build/vi-reduction-controller-integration-v2/handoff-v1.json",
-      "candidate_qualification_status": "NOT_DISPATCHED",
+      "candidate_qualification_status": "LIVE_IN_PROGRESS",
       "next_release_source": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
       "next_release_expected_images": 280,
       "next_release_expected_product": 226,
@@ -38904,19 +38920,19 @@
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "352 complete153 failed both Pythons (8 failures each); metadata-only a5 successor independently source-admitted. Root owns complete153 both retained Pythons using short scratch, then genuine four-profile, benchmark binding/performance and delivery. Documentation update launches no jobs.",
-      "next_release_qualification_run": null,
+      "next_release_status": "Root polls livewatch15437/run42329688164; retain actual terminal artifacts once and independently admit product/public/SDK before binding anytiming. No retry or jobgreen shortcut.",
+      "next_release_qualification_run": 42329688164,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
     },
     "shared_integration_author": {
       "owner": "root",
-      "state": "a5_metadata_successor_source_admitted_complete153_pending",
+      "state": "a5_complete153_pass_genuine42329688164_live",
       "base": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
       "scope": "Sole NEWisolated sharedcandidate: selectroot-admitted2bbRadonABI/nativev4/benchmarkv3 plusroot-admittedVIb331/1a/bef85 currentcount/native/SDK/executableconsumer. Preservefrozenhistories/oldsharedcounts ancestry; no blindmerge. No waitforunfinishedflood; onlyincludeifrootindependentlyadmitsbeforefreeze withoutdelay.",
       "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
       "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
-      "next_gate": "Root executes complete153 both retained Windows Pythons, normal conftest/plugins/no fail-fast/zero science, short workspace scratch. Actual passing terminals required before genuine exact-source a5 dispatch; no jobs launched by this document task.",
+      "next_gate": "Root polls livewatch15437/run42329688164; retain actual terminal artifacts once and independently admit product/public/SDK before binding anytiming. No retry or jobgreen shortcut.",
       "actual_staging_counts": {
         "image_paths": 280,
         "registered_functions": 283,
@@ -38932,12 +38948,14 @@
       "handoff_sha256": "8abb884a12c6393d06977df8f672e008641a7870d0b431584d3292af552cbb14",
       "root_admission": "coverage/evidence/vi-reduction-controller-successor-source-admission-v1.json",
       "complete_barrier_handles": {},
-      "complete_readiness": null,
+      "complete_readiness": {
+        "path": "coverage/evidence/vi-reduction-controller-complete-readiness-v2.json",
+        "sha256": "d848da177b3fd9c912d1f16ac923ed20f6dd1bb098f3e3d18057fa67b02cdb66"
+      },
       "qualification_reader_preparation": {
-        "receipt": "build/abi-vi-cumulative-qualification-v1/readers-v1/preparation-v1.json",
-        "state": "source_only_unbound_syntax_pass_no_download_or_execution",
-        "changed_scope": "source-derived280/283/226/107/37/74 plus ABI18/VI40/flood100 caller transport; unchangedexistingonepassseal/stager readers reused",
-        "next_gate": "Actualnative largeVI parity thenrootgenuine dispatch, terminalcampaignbinding then artifactretention."
+        "receipt": "build/vi-reduction-controller-qualification-v1/readers-v1/handoff-v1.json",
+        "state": "UNBOUND_source352_preparation_reused_exact12pins_and3readers_a5",
+        "next_gate": "Actual42329688164 terminal/API artifact list then boundsuccessor contract; no download before actualterminal."
       },
       "previous_frozen_source": "352dc55681b3774ae3f304ac4783757a9d911b52",
       "worktree": "build/worktrees/vi-reduction-controller-v2",
@@ -39739,6 +39757,19 @@
       "free_D_before": 203347009536,
       "reclaimed_bytes": 0,
       "next_action": "Retain exact deniedtargets; no alternate deletion retry. Continue with existing sufficient capacity."
+    },
+    "vi_reduction_workspace_complete_scratch": {
+      "status": "AUTOMATIC_APPROVAL_REJECTED_BEFORE_EXECUTION",
+      "receipt": "coverage/evidence/vi-reduction-controller-workspace-cleanup-rejected-v1.json",
+      "paths": [
+        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\source-guard-scratch\\vi-reduction-controller-complete-v1\\windows311",
+        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\source-guard-scratch\\vi-reduction-controller-complete-v1\\windows313",
+        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\s2\\a",
+        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\s2\\b"
+      ],
+      "deleted_bytes": 0,
+      "reason": "Automaticapproval blocked by policy; no alternateattempt.",
+      "free_bytes_after": 58731368448
     }
   },
   "post_cursor_cleanup": {

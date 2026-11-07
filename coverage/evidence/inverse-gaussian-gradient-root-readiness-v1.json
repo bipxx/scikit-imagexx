@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "status": "ROOT_INDEPENDENT_ACTUAL_READINESS_ADMITTED_NOT_CAPTURE_AUTHORITY",
+  "source": "769811615ffb168f5c42bc15267026eba631fc4b",
+  "controller_sha256": "25920e1b4342fc1703855bfc67e502abead3a0e204b47c4b3f3b61712b12dc93",
+  "binding_sha256": "6194c22dfbfa34f9e4b2e2141507b5fffa7660e82558575ad2a2e29ccf2e469a",
+  "independent_review": {
+    "path": "build/inverse-gaussian-gradient-readiness-independent-review-v1/review-v1.json",
+    "sha256": "8c739366a0c1d8b7098b373aaf6c5b3ab4605216097ddd7813457d2589325242"
+  },
+  "handoff": {
+    "path": "build/inverse-gaussian-gradient-readiness-v1/handoff-v1.json",
+    "sha256": "98f96c93bd77af34d16cc7fca452e7cad1914dfa54785ae935ced1d1b07417e3"
+  },
+  "scope": "Exact frozen source and four current cold/cached profile prefixes; corrected image/alpha/sigma factories, typed metadata, caller/process32 restoration and source/runtime/helper gates. Independent review authenticates105smallproofs and15entrypins. No algorithms or prefix/tests replayed by root.",
+  "negative_reuse": "Six historical controls credited only unchanged rejection branches; current entry/factory closure from four finalv2 prefixes, not relabeled old runs.",
+  "original_authority": 0,
+  "pending": "Separate actual minimum-only79 GO, actual terminal/root raw review then separate modern79 GO; native/SDK/fullAPI/genuine/one-thread performance remain open.",
+  "waste_review": "Reused independent authenticated small proofs and actual prefixes; root inspected current source and terminal facts once, no new review layer or science. Owner root grants next exact profile only."
+}

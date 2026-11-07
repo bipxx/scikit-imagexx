@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "status": "ROOT_INDEPENDENT158_TYPED_RAW_ADMITTED_NOT_NATIVE_PARITY",
+  "source": "769811615ffb168f5c42bc15267026eba631fc4b",
+  "handoff": {
+    "path": "build/inverse-gaussian-gradient-reference-v1/handoff-v1.json",
+    "sha256": "3b4b93da4cc7b8b28305f1bc5be80b6b733b9465b4c3c5c395f515f6c54689dc"
+  },
+  "root_readiness": "build/inverse-gaussian-gradient-root-readiness-v1/admission-v1.json",
+  "profiles": {
+    "minimum": {
+      "observations": 79,
+      "returns": 69,
+      "errors": 10,
+      "warnings": 3,
+      "caller32_exact": 79,
+      "process32_exact": true,
+      "journal_events": 158,
+      "profile_GO_sha256": "82c5594fce693a70b3a3f3c37ae679eda7c31056dfd5fa032aa60f53e3e57764"
+    },
+    "modern": {
+      "observations": 79,
+      "returns": 69,
+      "errors": 10,
+      "warnings": 3,
+      "caller32_exact": 79,
+      "process32_exact": true,
+      "journal_events": 158,
+      "profile_GO_sha256": "b006634f7da978810dc2da331ac0152f547eee481e3dabd7a6f41b6e56207d2f"
+    }
+  },
+  "total_observations": 158,
+  "returns": 138,
+  "errors": 20,
+  "warnings": 6,
+  "payload_references": 478,
+  "unique_typed_payloads_decoded": 63,
+  "decoded_unique_logical_bytes": 3628,
+  "profile_differences": {
+    "result": [
+      "rank0",
+      "rank0-ignores-bad-sigma",
+      "sigma-np-f32"
+    ],
+    "error": [
+      "alpha-bad"
+    ],
+    "warnings": [],
+    "events": [],
+    "aliases": []
+  },
+  "scope": "All316orderedjournal events/158rows match; singleattempts, targetsemanticFP/callerprocess32/input/NPstate strict unchanged perprofile. RawFP differences betweenruntimes retained; typedarraypayload lengths/shapes/dtypes/hash authenticated once atrootboundary, no scientificcalls. Rootsource/runtime/go provenance authenticated.",
+  "original_grants_exhausted": true,
+  "pending": "Ownednative image->IGG/public/completeSDK/hotswap/scalar-SIMD/optionalglobaldefault1workers/Windows/protocol/domain/genuinefourprofile and one-threadoriginalperformance. No furtheroriginalcalls or timing authorized.",
+  "waste_review": "Reused actualreadiness/helper/runtime and frozen79recipes; no originals/native/FPhelpers/tests/build/download or repeatedreviewcampaign. Root rawboundary validates savedbytes once. NextownerR may implement one coherent family against these158records, explicitproviderfrontiers and profile differences."
+}

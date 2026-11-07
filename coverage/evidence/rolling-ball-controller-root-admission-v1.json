@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "status": "ROOT_SCOPED_UNBOUND_CONTROLLER_SOURCE_ADMISSION",
+  "source": "b838f3d4ed316e2599c8083ccd0358e4811e2a30",
+  "base": "c821f6532b3c429bf83357baf161adf711e2d0a1",
+  "handoff": {
+    "path": "build/rolling-ball-controller-v1/handoff-v1.json",
+    "sha256": "b66997d19a9b433e0c782949cdf7b384a52f56de74f2a9e53378ccaed6eac24c"
+  },
+  "independent_review": {
+    "path": "build/rolling-ball-controller-independent-review-v1/review-v1.json",
+    "sha256": "32ea2fb477eabf4479dd27932594eb212483f73e2d2efb651542a64f11e1aa18"
+  },
+  "scope": "Exact four-file source/controller delta; actual driver argv/frame, C1/entry refusal/postbatch/report controls. Retained64pure controls eachPython reused, no test/science replay. Eight fixed cases/method and admitted15native/7frozen files unchanged.",
+  "actual_bindings": "NULL; no actual producer/core/runtime/SDK/helper/GO/deadline.281 is proposal not sourcecensus.",
+  "pending": "Currentnext-family integration source-derivedcensus/exactpins/fullsource/genuine/public/SDK/platform and benchmark actualbinding/cohort/separateGO. bool/int/half/swappedSDK,Windowsruntime/broaderFP/provider/orderedcore gaps remain.",
+  "waste_review": "Reuse independentlyauthenticated34smallproofs; root current four-file/ancestry check only. C authorized selectiveintake in existingnext-familyWT, no delaycurrenta5 release."
+}
