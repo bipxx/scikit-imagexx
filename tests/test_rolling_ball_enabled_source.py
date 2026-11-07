@@ -16,12 +16,26 @@ def qualifier():
     q=importlib.util.module_from_spec(spec);spec.loader.exec_module(q);return q
 
 
+def sdk_family_assertion_predecessor(raw):
+    """Only the admitted213 stale test expectation changes; frozen source stays strict."""
+    raw=raw.replace(b'\r\n',b'\n')
+    assert H(raw)=='c27d194e70dc685613009d8b9557b8912dd9f43967257a90754ae1da1c644a80'
+    current=b"    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball') and len(q.FAMILIES)==23\n    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==38\n    plan=q.plan(ROOT,'modern',281)\n    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(108,38,76)\n    assert set(plan['SDK_families'])==set(q.CURRENT_FAMILIES)\n    without_rolling={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!='rolling_ball']}\n    with pytest.raises(q.QualificationError):q.validate_sdk_listing(without_rolling,scope=q.CURRENT_PRODUCT_SCOPE)\n"
+    previous=b"    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill') and len(q.FAMILIES)==23\n"
+    assert raw.count(current)==1
+    raw=raw.replace(current,previous,1)
+    assert H(raw)=='e0d4c7c2f52e30cf0026abba0e8f2fda80a37a6d53142cac5c1450cc0cfc01f8'
+    return raw
+
+
 def test_exact_shared_and_controller_predecessors_and_unchanged_family():
     assert H(CONTEXT.read_bytes())==EXPECTED_CONTEXT
     c=json.loads(CONTEXT.read_bytes())
     from tools.join_source_context import rolling_predecessor_bytes
     for name,row in c['sources'].items():
-        assert H(rolling_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==row['predecessor_canonical_lf_sha256'],name
+        raw=(ROOT/name).read_bytes()
+        if name=='tests/test_public_qualification.py':raw=sdk_family_assertion_predecessor(raw)
+        assert H(rolling_predecessor_bytes(ROOT,name,raw))==row['predecessor_canonical_lf_sha256'],name
     for name,row in {**c['controller_sources'],**c['family_sources']}.items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         assert H(raw)==row['current_canonical_lf_sha256'],name
@@ -112,3 +126,11 @@ def test_actual_active_shared_benchmark_literal_dependencies():
     current=json.loads((ROOT/path).read_bytes())
     for name,row in current['historical_sources'].items():
         assert H(adapter['historical_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']
+
+
+@pytest.mark.parametrize('fault',('unreviewed-current','already-predecessor'))
+def test_sdk_family_assertion_projection_is_strict_and_once(fault):
+    raw=(ROOT/'tests/test_public_qualification.py').read_bytes()
+    if fault=='unreviewed-current':raw+=b'changed'
+    else:raw=sdk_family_assertion_predecessor(raw)
+    with pytest.raises(AssertionError):sdk_family_assertion_predecessor(raw)

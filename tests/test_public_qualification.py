@@ -2440,7 +2440,13 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill') and len(q.FAMILIES)==23
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball') and len(q.FAMILIES)==23
+    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==38
+    plan=q.plan(ROOT,'modern',281)
+    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(108,38,76)
+    assert set(plan['SDK_families'])==set(q.CURRENT_FAMILIES)
+    without_rolling={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!='rolling_ball']}
+    with pytest.raises(q.QualificationError):q.validate_sdk_listing(without_rolling,scope=q.CURRENT_PRODUCT_SCOPE)
     current={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.CURRENT_FAMILIES]}
     old={'tests':[{'name':'installed_'+n+'_consumer'} for n in q.FAMILIES]}
     q.validate_sdk_listing(current,scope=q.CURRENT_PRODUCT_SCOPE);q.validate_sdk_listing(old)
