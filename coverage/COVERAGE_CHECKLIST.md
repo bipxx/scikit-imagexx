@@ -106,21 +106,32 @@ Reconciled 2026-11-06 against retained receipts. These are scoped checkpoints, s
 | Earlier cumulative candidate | [Failed complete source barriers](evidence/mark-lbp-radon-util-sourcebarrier-failure-v1.json) each retained one historical JOIN literal-reader failure. Earlier `0e17d061` also omitted Radon star exports; the export and subsequent reader corrections are versioned successors. | Preserve failures; reuse unchanged numerical evidence only within its valid dependency scope. No relabeling or unchanged retry. |
 | MARK / LBP / Radon benchmarks | [Author handoff](evidence/current275-family-measurement-handoff-v1.json), source `95e64f135c7d3d8cbef7c8acb543ed31ea86c079`, aligns controllers with candidate `8c4fb430`. Retained 183 prototype checks and 8 affected checks per Python; timing and genuine authority fields are unbound. | [Independent review](evidence/current275-family-measurement-independent-review-v1.json) and [root source admission](evidence/current275-family-measurement-root-admission-v1.json) pass. Actual qualified producer/runtime/core/SDK/helper binding, real entry cohorts and separate measurement authority remain pending. Workflow registration is not a performance result. Owner: root. |
 | `metrics.variation_of_information` | [Independent scoped review](evidence/variation-of-information-independent-review-v1.json), source `b331a559af038ef2231f5327b864627513bdc2d8`: 8 original saved cases per profile, 64 exact public observations, 112 private XML checks; scoped native scalar/sanitizer and assembled SDK evidence. Prior compile and NaN-sign failures retained; ordered multiply corrects demonstrated operand precedence. | [Root old-component admission](evidence/variation-of-information-root-admission-v1.json) passes. Successor `1a060891` [closes scoped current-count dependency](evidence/variation-of-information-current-counts-root-admission-v1.json): 160 private XML checks, 64 unchanged saved observations and candidate-only dense/fallback/logical-NNZ controls. Assembled SDK96 plus current counts and VI is not the genuine 107-file candidate SDK. [Executable consumer source](evidence/variation-of-information-benchmark-root-admission-v1.json) and [Windows native smoke against retained GNU words](evidence/variation-of-information-windows-native-root-admission-v1.json) pass. [Independent larger-case readiness](evidence/vi-large-reference-independent-readiness-v1.json) and [root readiness](evidence/vi-large-reference-root-readiness-v1.json) pass. Exactly four additional frozen benchmark references per runtime completed once after separate minimum/modern authority; [independent raw review](evidence/vi-large-reference-independent-raw-v1.json) and [root raw admission](evidence/vi-large-reference-root-raw-v1.json) pass. All four return-word pairs match across profiles; incoming/outgoing FP differences remain semantic. Actual current-native comparison now reports four passing and four result-word mismatches across eight profile/case runs: both 64-label workloads fail on each runtime (2–5 ULP in affected components). Target FP, caller/process restoration and metadata scopes pass; numerical qualification, optional-mode expansion and timing stop for root-cause correction. The frozen references and tolerances are unchanged. [Root-cause admission](evidence/vi-large-native-failure-root-admission-v1.json) isolates seeded pairwise CSR reductions and final DDOT association; identical-argument logs match. A [reviewed narrow correction](evidence/vi-reduction-order-independent-review-v1.json) has [root scoped admission](evidence/vi-reduction-order-root-admission-v1.json): all eight large cases now match exactly, with 192 affected public and 12 pure checks plus scoped scalar/sanitizer/SDK/MSVC evidence. Genuine and broader backend/platform gates remain open. Source inspection found that the executable consumer replaces the SciPy CSR class and would break the frontend type check; [the versioned class-identity correction](evidence/current280-controller-root-admission-v1.json) is source-admitted, with 422 pure controls. Actual genuine benchmark bindings/cohorts remain pending. Existing numerical evidence is unchanged. Selective shared integration, Windows-original/full-FP evidence, genuine binding and one-thread public performance remain pending. No shipped API promotion. |
-| `morphology.flood`, `morphology.flood_fill`; `segmentation` aliases | [Independent zero-body readiness review](evidence/flood-fill-readiness-independent-review-v1.json), source `7c14ee863934a2a6c5370d0ca699d3d299fba166`: bounded source/geometry, 96 recipes per profile, exact caller restoration and entry refusal controls. | [Root readiness admission](evidence/flood-fill-root-readiness-admission-v1.json) passes. Separate minimum96 then modern96 captures completed once with exact caller/process restoration; 79 returns/17 API errors and 78 returns/18 API errors respectively. [Independent192raw review](evidence/flood-fill-raw-independent-review-v1.json) and [root raw admission](evidence/flood-fill-raw-root-admission-v1.json) pass; captured FP/error differences remain semantic and unnormalized. [Private native component](evidence/flood-fill-native-root-admission-v1.json) and [independent review](evidence/flood-fill-native-independent-review-v1.json) pass: 800 nodes across two profiles/four modes with all 192 saved observations preserved, plus scoped complete SDK checks. [C++ traversal successor](evidence/flood-fill-cost-root-admission-v1.json) removes measured per-pixel allocations and passes the same private scopes; its local prior-C++ comparison is 2.39–3.41× faster across eight diagnostic cases, with extra padded-buffer memory. This is not original-public speed evidence. NumPy full-image minimum, mask count and converted-RHS broadcast remain provider computation. Genuine global-worker/alias/hot-swap/SDK/four-profile/Windows/public-performance gates remain pending. Four public names share two canonical operations; no duplicate algorithm credit. The source-only outer benchmark controller is now assigned for the actual eight executable `flood_fill_native.py` cases. The separate 12-case `flood_fill.py` proposal has no executable fixture and remains pending; no performance evidence is inferred from it. |
+| `morphology.flood`, `morphology.flood_fill`; `segmentation` aliases | [Independent zero-body readiness review](evidence/flood-fill-readiness-independent-review-v1.json), source `7c14ee863934a2a6c5370d0ca699d3d299fba166`: bounded source/geometry, 96 recipes per profile, exact caller restoration and entry refusal controls. | [Root readiness admission](evidence/flood-fill-root-readiness-admission-v1.json) passes. Separate minimum96 then modern96 captures completed once with exact caller/process restoration; 79 returns/17 API errors and 78 returns/18 API errors respectively. [Independent192raw review](evidence/flood-fill-raw-independent-review-v1.json) and [root raw admission](evidence/flood-fill-raw-root-admission-v1.json) pass; captured FP/error differences remain semantic and unnormalized. [Private native component](evidence/flood-fill-native-root-admission-v1.json) and [independent review](evidence/flood-fill-native-independent-review-v1.json) pass: 800 nodes across two profiles/four modes with all 192 saved observations preserved, plus scoped complete SDK checks. [C++ traversal successor](evidence/flood-fill-cost-root-admission-v1.json) removes measured per-pixel allocations and passes the same private scopes; its local prior-C++ comparison is 2.39–3.41× faster across eight diagnostic cases, with extra padded-buffer memory. This is not original-public speed evidence. NumPy full-image minimum, mask count and converted-RHS broadcast remain provider computation. Genuine global-worker/alias/hot-swap/SDK/four-profile/Windows/public-performance gates remain pending. Four public names share two canonical operations; no duplicate algorithm credit. The [source-only outer benchmark controller](evidence/flood-fill-controller-root-admission-v1.json), source30ce23ca, is independently root-admitted: 91 pure controls per Python, two API-specific real-entry cohorts and one unchanged eight-case comparison. All actual bindings remain null; cohorts and timings have not run. Its cases are the actual eight executable `flood_fill_native.py` cases. The separate 12-case `flood_fill.py` proposal has no executable fixture and remains pending; no performance evidence is inferred from it. |
 
-Corrective bundle `352dc55681b3774ae3f304ac4783757a9d911b52` passed independent shared-source review but [failed its complete 153-selector commands](evidence/vi-reduction-controller-complete-failure-v1.json) on both retained Windows Pythons: 3,624 XML checks each, eight failures each (seven stale count assertions and one Windows scratch-path limit). No scientific work ran. The [independently admitted five-file metadata successor](evidence/vi-reduction-controller-successor-source-admission-v1.json), `a5e019c6a4b0fff3a18635ab0e2f552986abba3e`, preserves production, qualifier and workflow bytes. Its [complete 153-selector commands pass on both retained Windows Pythons](evidence/vi-reduction-controller-complete-readiness-v2.json): 3,616 ordinary tests plus eight subtests each, no failures/errors/skips/science, normal conftest/plugins and identical collected IDs. The corrected short scratch path resolves the Windows setup failure. [Exact-source four-profile qualification42329688164](https://github.com/bipxx/scikit-imagexx/actions/runs/42329688164) is live; watcher15437 tracks the same run. This is execution in progress, not product admission. Counts remain **280 staged partial paths / 226 product files / 107 SDK files / 37 families**, not shipping. Earlier ab78 source checks and its four large numerical failures remain historical; neither predecessor qualifies the successor. Root owns the complete-check, genuine four-profile, performance and delivery gates. The checklist records those actual jobs; it grants no additional execution authority.
+Corrective bundle `352dc55681b3774ae3f304ac4783757a9d911b52` passed independent shared-source review but [failed its complete 153-selector commands](evidence/vi-reduction-controller-complete-failure-v1.json) on both retained Windows Pythons: 3,624 XML checks each, eight failures each (seven stale count assertions and one Windows scratch-path limit). No scientific work ran. The [independently admitted five-file metadata successor](evidence/vi-reduction-controller-successor-source-admission-v1.json), `a5e019c6a4b0fff3a18635ab0e2f552986abba3e`, preserves production, qualifier and workflow bytes. Its [complete 153-selector commands pass on both retained Windows Pythons](evidence/vi-reduction-controller-complete-readiness-v2.json): 3,616 ordinary tests plus eight subtests each, no failures/errors/skips/science, normal conftest/plugins and identical collected IDs. The corrected short scratch path resolves the Windows setup failure. [Exact-source four-profile qualification42329688164](https://github.com/bipxx/scikit-imagexx/actions/runs/42329688164) completed **failure on all four profiles**. Watcher15437 is terminal. Retained diagnostics identify three harness defects: generic VI fixtures used floating labels, a VI fixture was unpacked as two rather than three values, and the flood expected mask strides omitted its padded base. Each profile has 28 failures; these are failed release gates, even where dedicated native tests passed. All four archives are retained; product admission, benchmark binding and delivery remain pending. No unchanged retry. Counts remain **280 staged partial paths / 226 product files / 107 SDK files / 37 families**, not shipping. Earlier ab78 source checks and its four large numerical failures remain historical; neither predecessor qualifies the successor. Root owns the complete-check, genuine four-profile, performance and delivery gates. The checklist records those actual jobs; it grants no additional execution authority.
 
 Affected JOIN/util benchmark preparation: [source admission](evidence/current275-join-util-root-admission-v1.json) passes for unbound `7b01014e`: five affected APIs, 32 fixed cases, 448 samples and 64 warmup groups. Unchanged grid/metrics/boundary/ellipse workloads are excluded; prior results retain their historical source/runtime scope. Corrected genuine product, actual bindings/cohorts and separate timing authority remain pending. Manual workflow registration is setup only.
 
-`restoration.rolling_ball` remains upstream-only. Source `2e99dd5c` has [independent source/storage review](evidence/rolling-ball-independent-source-v1.json) and [root source admission](evidence/rolling-ball-root-source-v1.json): 75 prospective recipes, 85 pure checks per Python and source-derived bounded geometry. [Actual runtime/controller readiness](evidence/rolling-ball-root-readiness-v1.json) passes root independent admission. Separate minimum75 then modern75 captures completed once; [root 150-row raw admission](evidence/rolling-ball-root-raw-admission-v1.json) covers 126 returns, 24 API errors, 16 warnings, exact caller/process restoration and unchanged inputs/state. The [root-admitted private native component](evidence/rolling-ball-native-root-admission-v1.json), `c821f6532b3c429bf83357baf161adf711e2d0a1`, passes 750 saved observations plus 60 boundary checks; only the 750 observations establish the stated FP/caller scope. Its complete float32/float64 private SDK now has an [independently admitted dtype/byte-order successor](evidence/rolling-ball-sdk-dtypes-root-admission-v1.json), `42f08d83009621bcd958d2653920d228935f064e`: 11 saved bool/integer/half/swapped cases, 396 new SDK executions, 312 prior float-case executions and 132 strict FP comparisons across the admitted modes. The new operation owns conversion, kernel/traversal and output bytes. Unsafe integer casts, wider half/nonfinite/rounding domains, Windows runtime and broader protocols/FP remain open. The [separate frozen outer controller](evidence/rolling-ball-controller-root-admission-v1.json) is independently root-admitted for its four-file source/64 pure checks per Python only; actual bindings remain null. C is integrating the next-family source separately; B completed that SDK extension; C is taking it into the still-unfrozen bundle with only the affected source/client checks. Neither holds up the 280-path release. Shared integration, genuine installation and original-public one-thread speed remain pending. Existing ball/ellipsoid-kernel evidence does not prove the full background-removal algorithm. All original grants are exhausted; new original/timing authority is zero.
+`restoration.rolling_ball` remains upstream-only. Source `2e99dd5c` has [independent source/storage review](evidence/rolling-ball-independent-source-v1.json) and [root source admission](evidence/rolling-ball-root-source-v1.json): 75 prospective recipes, 85 pure checks per Python and source-derived bounded geometry. [Actual runtime/controller readiness](evidence/rolling-ball-root-readiness-v1.json) passes root independent admission. Separate minimum75 then modern75 captures completed once; [root 150-row raw admission](evidence/rolling-ball-root-raw-admission-v1.json) covers 126 returns, 24 API errors, 16 warnings, exact caller/process restoration and unchanged inputs/state. The [root-admitted private native component](evidence/rolling-ball-native-root-admission-v1.json), `c821f6532b3c429bf83357baf161adf711e2d0a1`, passes 750 saved observations plus 60 boundary checks; only the 750 observations establish the stated FP/caller scope. Its complete float32/float64 private SDK now has an [independently admitted dtype/byte-order successor](evidence/rolling-ball-sdk-dtypes-root-admission-v1.json), `42f08d83009621bcd958d2653920d228935f064e`: 11 saved bool/integer/half/swapped cases, 396 new SDK executions, 312 prior float-case executions and 132 strict FP comparisons across the admitted modes. The new operation owns conversion, kernel/traversal and output bytes. Unsafe integer casts, wider half/nonfinite/rounding domains, Windows runtime and broader protocols/FP remain open. The [separate frozen outer controller](evidence/rolling-ball-controller-root-admission-v1.json) is independently root-admitted for its four-file source/64 pure checks per Python only; actual bindings remain null. The cumulative rolling281 source is frozen at `188a91ef31609c796d4d83e8957c772544f31428`; its corrective successor `cbb3d2cd993f71fff08bb4a548d9c456c7d2de60` is not ready for qualification because of the source-projection blocker below. Shared integration, genuine installation and original-public one-thread speed remain pending. Existing ball/ellipsoid-kernel evidence does not prove the full background-removal algorithm. All original grants are exhausted; new original/timing authority is zero.
 
-`segmentation.inverse_gaussian_gradient` remains upstream-only. [Frozen source/test/safety handoff](evidence/inverse-gaussian-gradient-source-handoff-v1.json) reports 79 prospective recipes and 88 pure checks per Python; [root source admission](evidence/inverse-gaussian-gradient-source-root-admission-v1.json) passes. [Independent actual readiness review](evidence/inverse-gaussian-gradient-readiness-independent-review-v1.json) passes for successor `769811615ffb168f5c42bc15267026eba631fc4b`, including corrected alpha/sigma factories and four zero-body prefixes. [Root actual readiness](evidence/inverse-gaussian-gradient-root-readiness-v1.json) and [independent root admission of all 158 raw observations](evidence/inverse-gaussian-gradient-root-raw-admission-v1.json) pass after separate minimum/modern captures. Totals: 138 returns, 20 API errors, six warnings, all 158 caller restorations and both process restorations exact. Three result differences and one error-module difference between runtimes remain semantic. All original grants are exhausted; one native family implementation is now live, with no timing authority. Its route now explicitly preserves input-dtype derivative/square/sum/sqrt stages and alpha broadcasting; the API has no mask, channel-axis or output-buffer keyword.
+`segmentation.inverse_gaussian_gradient` remains upstream-only. [Frozen source/test/safety handoff](evidence/inverse-gaussian-gradient-source-handoff-v1.json) reports 79 prospective recipes and 88 pure checks per Python; [root source admission](evidence/inverse-gaussian-gradient-source-root-admission-v1.json) passes. [Independent actual readiness review](evidence/inverse-gaussian-gradient-readiness-independent-review-v1.json) passes for successor `769811615ffb168f5c42bc15267026eba631fc4b`, including corrected alpha/sigma factories and four zero-body prefixes. [Root actual readiness](evidence/inverse-gaussian-gradient-root-readiness-v1.json) and [independent root admission of all 158 raw observations](evidence/inverse-gaussian-gradient-root-raw-admission-v1.json) pass after separate minimum/modern captures. Totals: 138 returns, 20 API errors, six warnings, all 158 caller restorations and both process restorations exact. Three result differences and one error-module difference between runtimes remain semantic. All original grants are exhausted. Native component `9b8e870ecdeadf614b9e0a632598d39f518f8dcb`, its warning-policy successor `065cc3a79391e4c5343511b53bbbaac992a4c185`, and the supplemental private Windows SDK results are frozen but await combined independent root admission. They do not establish shipped parity or timing authority. Its route now explicitly preserves input-dtype derivative/square/sum/sqrt stages and alpha broadcasting; the API has no mask, channel-axis or output-buffer keyword.
 
 [Scratch cleanup](evidence/obsolete-sourcebarrier-cleanup-v1.json) removed 25.63 GB of obsolete source-guard fixtures from two exact scratch roots; observed free space rose by 25.62 GB. Source, environments, raw evidence and active worktrees were retained.
 
 The utility-to-LBP copy dependency is privately checked in the cumulative candidate (1,128 saved comparisons and 144 metadata controls), superseding the earlier pending private-dependency wording above. It does not establish genuine installed-product closure. Checklist updates reuse implementation receipts; no scientific execution is performed solely to refresh this document.
 
-Checklist closeout (2026-11-06): reconciled all 477 public keys, 29 classes and 284 static member paths against the existing inventory. Updated VI candidate failures/successor, private rolling-ball and inverse-gradient readiness scopes; no full-contract box closed. Waste review: reused retained receipts and source metadata; document/state checks only, no scientific replay or new tracking system. Next owner/trigger: root updates affected rows at each bounded task closeout or main delivery. Subsequent implementation closeout: a5 complete source checks passed and actual four-profile run is live; IGG158 raw admission enables native implementation, rolling outer-controller admission enables its existing integration. Useful captured profile differences retained. Avoidable root receipt-reader mistake counted subtests as ordinary XML nodes; corrected schema reading without rerunning checks.
+Checklist closeout (2026-11-06): reconciled all 477 public keys, 29 classes and 284 static member paths against the existing inventory. Updated VI candidate failures/successor, private rolling-ball and inverse-gradient readiness scopes; no full-contract box closed. Waste review: reused retained receipts and source metadata; document/state checks only, no scientific replay or new tracking system. Next owner/trigger: root updates affected rows at each bounded task closeout or main delivery. Subsequent reconciliation: a5 complete source checks passed but its four-profile release failed; rolling281 correction has a blocking independent source finding and IGG native/policy handoffs await root admission. Useful captured profile differences retained. Avoidable root receipt-reader mistake counted subtests as ordinary XML nodes; corrected schema reading without rerunning checks.
+
+## Latest gate reconciliation
+
+| Scope | Retained evidence | What remains open |
+|---|---|---|
+| Failed 280-path release | [Terminal run](../build/vi-reduction-controller-qualification-v2/terminal-run-API-v1.json); [remaining three-profile diagnostics](../build/vi-reduction-controller-qualification-v2/42329688164/retained-v1/remaining-three-profile-diagnostics-v1.json); [debug diagnosis](../build/vi-reduction-controller-qualification-v2/debug-retained-v1/handoff-v1.json). | All four release profiles failed; successful individual tests do not close R. Retain the campaign and correct only demonstrated causes. |
+| Corrective 281-path candidate | [Independent review: CHANGES_REQUIRED](evidence/current281-corrective-independent-review-v1.json), source `cbb3d2cd993f71fff08bb4a548d9c456c7d2de60`. The raw metadata adapter applies the same predecessor inverse twice. | Versioned once-only projection correction and raw/canonical overlap regression; independent affected-delta admission; complete actual source barriers on both Pythons; exact-source four-profile release. No complete 161-selector barrier or successor qualification has passed. |
+| Inverse Gaussian gradient | [Native handoff](../build/inverse-gaussian-gradient-native-v1/handoff-v1.json); [policy successor](../build/inverse-gaussian-gradient-policy-v1/handoff-v1.json); [private Windows SDK supplement](../build/inverse-gaussian-gradient-Windows-sdk-readiness-v1/validation-v1.json). | Root admission of combined evidence, frontend mode/platform gaps, shared integration, genuine installed release and one-thread public comparison. Shipping remains upstream-only. |
+| Public performance | Published 68-case cohort: 34 wins, 34 losses. Flood controller has eight executable cases; VI controller has four. | Bind future controllers to an accepted actual product; pass real API cohorts before authorized timing. Retain all losses; controller/source tests are not measurements. |
+
+This reconciliation changes no coverage classification. C/N/H/P/S/V/W/B/R markers describe evidence scope, not a percentage inferred from test counts. Root updates this view after each bounded closeout; implementation owners report exact source, domains, profiles, evidence, failures and next owner/trigger in the existing handoff.
 
 ## Module index
 
@@ -3551,7 +3562,7 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
   - Required focus: alpha, sigma, dtype and boundaries. Cases to close: smooth/step edges and constant images.
   - Easiest remaining route: Reuse the reviewed Hessian first-derivative correlation pattern; preserve input-dtype derivative/square/sum/sqrt, nearest borders, sigma thresholds and alpha broadcasting. The symmetric Gaussian kernel is insufficient.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
-  - Current scoped progress: Source34d has 79 prospective recipes and 88 pure checks per Python; root source/storage admission passes. Independent/root readiness of 76981161 passes corrected image/alpha/sigma factories and zero-body controls. Root raw admission covers all 158 actual observations, 138 returns/20 errors/six warnings, 316 ordered journal events and 63 decoded typed payloads. All caller/process restoration and within-profile input/state/target-semantic FP checks pass; three result and one error-module profile differences remain intact. Native/public/SDK work is live against these fixed records. No further original or timing authority; hot swap, acceleration, speed and release remain open.
+  - Current scoped progress: Source34d has 79 prospective recipes and 88 pure checks per Python; root source/storage admission passes. Independent/root readiness of 76981161 passes corrected image/alpha/sigma factories and zero-body controls. Root raw admission covers all 158 actual observations, 138 returns/20 errors/six warnings, 316 ordered journal events and 63 decoded typed payloads. All caller/process restoration and within-profile input/state/target-semantic FP checks pass; three result and one error-module profile differences remain intact. Native/public/SDK work is frozen at 9b8e with policy successor065cc3a; combined independent root admission is pending. Fresh successor frontend evidence is normal-mode only on two retained Linux profiles; unchanged native-mode and private Windows SDK evidence has narrower reusable scope. No further original or timing authority; hot swap, acceleration, speed and release remain open.
 
 <a id="api-segmentation-join-segmentations"></a>
 - [ ] **`segmentation.join_segmentations`** — full contract closed.
@@ -4185,10 +4196,12 @@ Top-level class completion also requires every applicable member and runtime-dis
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`feature.BRIEF.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, descriptor_size=256, patch_size=49, mode='normal', sigma=1, rng=1)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.BRIEF.extract`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image, keypoints)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4197,10 +4210,12 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`feature.CENSURE.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.CENSURE.detect`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4209,46 +4224,57 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`feature.Cascade.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.__new__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.__reduce__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.__setstate__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.detect_multi_scale`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, img, scale_factor, step_ratio, min_size, max_size, min_neighbor_number=4, intersection_score_threshold=0.5)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.eps`** — attribute, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.features_number`** — attribute, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.stages_number`** — attribute, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.stumps_number`** — attribute, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.window_height`** — attribute, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.Cascade.window_width`** — attribute, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4257,18 +4283,22 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`feature.ORB.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, downscale=1.2, n_scales=8, n_keypoints=500, fast_n=9, fast_threshold=0.08, harris_k=0.04)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.ORB.detect`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.ORB.detect_and_extract`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.ORB.extract`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image, keypoints, scales, orientations)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4277,22 +4307,27 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`feature.SIFT.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, upsampling=2, n_octaves=8, n_scales=3, sigma_min=1.6, sigma_in=0.5, c_dog=0.013333333333333334, c_edge=10, n_bins=36, lambda_ori=1.5, c_max=0.8, lambda_descr=6, n_hist=4, n_ori=8)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.SIFT.deltas`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.SIFT.detect`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.SIFT.detect_and_extract`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`feature.SIFT.extract`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4301,10 +4336,12 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `native-class-partial`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`filters.LPIFilter2D.__call__`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, data)`.
   - Evidence locators: parity [tests/test_lpi_filter_public.py](../tests/test_lpi_filter_public.py); benchmark not registered.
 
 - [ ] **`filters.LPIFilter2D.__init__`** — constructor, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, impulse_response, **filter_params)`.
   - Evidence locators: parity [tests/test_lpi_filter_public.py](../tests/test_lpi_filter_public.py); benchmark not registered.
 
@@ -4313,18 +4350,22 @@ Main: `native-class-partial`. Close construction, fitted/unfitted state, propert
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`future.TrainableSegmenter.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, clf=None, features_func=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`future.TrainableSegmenter.compute_features`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`future.TrainableSegmenter.fit`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image, labels)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`future.TrainableSegmenter.predict`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, image)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4333,42 +4374,52 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`graph.MCP.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.__new__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.__reduce__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.__reduce_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.__setstate__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.__setstate_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, __pyx_state)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.find_costs`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.goal_reached`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, index, cumcost)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.offsets`** — attribute, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP.traceback`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, end)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4377,46 +4428,57 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`graph.MCP_Connect.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /, *args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.__new__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.__reduce__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.__reduce_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.__setstate__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.__setstate_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, __pyx_state)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.create_connection`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, id1, id2, tb1, tb2, cost1, cost2)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.find_costs`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.goal_reached`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, index, cumcost)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.offsets`** — attribute, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Connect.traceback`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, end)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4425,54 +4487,67 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`graph.MCP_Flexible.__init__`** — constructor, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.__new__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.__reduce__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.__reduce_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.__setstate__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.__setstate_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, __pyx_state)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.examine_neighbor`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, index, new_index, offset_length)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.find_costs`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.goal_reached`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, index, cumcost)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.offsets`** — attribute, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.traceback`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, end)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.travel_cost`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, old_cost, new_cost, offset_length)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Flexible.update_node`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, index, new_index, offset_length)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4481,42 +4556,52 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`graph.MCP_Geometric.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.__new__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.__reduce__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.__reduce_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.__setstate__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.__setstate_cython__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, __pyx_state)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.find_costs`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, starts, ends=None, find_all_ends=True, max_coverage=1.0, max_cumulative_cost=<DEPRECATED>, max_cost=<DEPRECATED>, *, max_step_cost=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.goal_reached`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, index, cumcost)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.offsets`** — attribute, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.MCP_Geometric.traceback`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, end)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4525,186 +4610,232 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`graph.RAG.__contains__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.__getitem__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, label_image=None, connectivity=1, data=None, **attr)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.__iter__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.__len__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.__new__`** — staticmethod, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(cls, *args, backend=None, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.__str__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.add_edge`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, u, v, attr_dict=None, **attr)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.add_edges_from`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, ebunch_to_add, **attr)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.add_node`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n, attr_dict=None, **attr)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.add_nodes_from`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, nodes_for_adding, **attr)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.add_weighted_edges_from`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, ebunch_to_add, weight='weight', **attr)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.adj`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.adjacency`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.clear`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.clear_edges`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.copy`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.degree`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.edge_subgraph`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, edges)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.edges`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.fresh_copy`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.get_edge_data`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, u, v, default=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.has_edge`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, u, v)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.has_node`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.is_directed`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.is_multigraph`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.merge_nodes`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst, weight_func=<function min_weight>, in_place=True, extra_arguments=None, extra_keywords=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.name`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.nbunch_iter`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, nbunch=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.neighbors`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.next_id`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.nodes`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.number_of_edges`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, u=None, v=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.number_of_nodes`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.order`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.remove_edge`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, u, v)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.remove_edges_from`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, ebunch)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.remove_node`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.remove_nodes_from`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, nodes)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.size`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, weight=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.subgraph`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, nodes)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.to_directed`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, as_view=False)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.to_directed_class`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.to_undirected`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, as_view=False)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.to_undirected_class`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`graph.RAG.update`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, edges=None, nodes=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4713,38 +4844,47 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`io.ImageCollection.__getitem__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, load_pattern, conserve_memory=True, load_func=None, **load_func_kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.__iter__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.__len__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.__str__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.concatenate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.conserve_memory`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.files`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.ImageCollection.reload`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4753,42 +4893,52 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`io.MultiImage.__getitem__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, filename, conserve_memory=True, dtype=None, **imread_kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.__iter__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.__len__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.__str__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.concatenate`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.conserve_memory`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.filename`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.files`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`io.MultiImage.reload`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, n=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4797,26 +4947,32 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`measure.CircleModel.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, center, radius)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.CircleModel.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.CircleModel.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.CircleModel.params`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.CircleModel.predict_xy`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, t, params=<DEPRECATED>)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.CircleModel.residuals`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4825,26 +4981,32 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`measure.EllipseModel.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, center, axis_lengths, theta)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.EllipseModel.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.EllipseModel.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.EllipseModel.params`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.EllipseModel.predict_xy`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, t, params=<DEPRECATED>)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.EllipseModel.residuals`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4853,34 +5015,42 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`measure.LineModelND.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, origin, direction)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.LineModelND.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.LineModelND.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.LineModelND.params`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.LineModelND.predict`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, x, axis=0, params=<DEPRECATED>)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.LineModelND.predict_x`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, y, params=<DEPRECATED>)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.LineModelND.predict_y`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, x, params=<DEPRECATED>)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.LineModelND.residuals`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, data, params=<DEPRECATED>)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4889,26 +5059,32 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`measure.RansacModelProtocol.__class_getitem__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.RansacModelProtocol.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, *args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.RansacModelProtocol.__init_subclass__`** — classmethod, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.RansacModelProtocol.__subclasshook__`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(other)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.RansacModelProtocol.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`measure.RansacModelProtocol.residuals`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, *data)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -4917,70 +5093,87 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `native-class-partial`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.AffineTransform.__add__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, other)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.__array__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, dtype=None, copy=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.__call__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.__init__`** — constructor, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, matrix=None, *, scale=None, shear=None, rotation=None, translation=None, dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.__nice__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.__repr__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.__str__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.dimensionality`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.estimate`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst, weights=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.from_estimate`** — classmethod, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dst, weights=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.identity`** — classmethod, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.inverse`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.residuals`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.rotation`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.scale`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.shear`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.AffineTransform.translation`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
@@ -4989,34 +5182,42 @@ Main: `native-class-partial`. Close construction, fitted/unfitted state, propert
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.EssentialMatrixTransform.__call__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.EssentialMatrixTransform.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, *, rotation=None, translation=None, matrix=None, dimensionality=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.EssentialMatrixTransform.dimensionality`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.EssentialMatrixTransform.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.EssentialMatrixTransform.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.EssentialMatrixTransform.identity`** — classmethod, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.EssentialMatrixTransform.inverse`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.EssentialMatrixTransform.residuals`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -5025,62 +5226,77 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `native-class-partial`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.EuclideanTransform.__add__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, other)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.__array__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, dtype=None, copy=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.__call__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.__init__`** — constructor, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, matrix=None, *, rotation=None, translation=None, dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.__nice__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.__repr__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.__str__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.dimensionality`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.estimate`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.from_estimate`** — classmethod, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(src, dst) -> Union[Self, skimage._shared.utils.FailedEstimation]`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.identity`** — classmethod, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.inverse`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.residuals`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.rotation`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.EuclideanTransform.translation`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
@@ -5089,34 +5305,42 @@ Main: `native-class-partial`. Close construction, fitted/unfitted state, propert
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.FundamentalMatrixTransform.__call__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.FundamentalMatrixTransform.__init__`** — constructor, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, matrix=None, *, dimensionality=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.FundamentalMatrixTransform.dimensionality`** — property, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.FundamentalMatrixTransform.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.FundamentalMatrixTransform.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.FundamentalMatrixTransform.identity`** — classmethod, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.FundamentalMatrixTransform.inverse`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.FundamentalMatrixTransform.residuals`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -5125,30 +5349,37 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.PiecewiseAffineTransform.__call__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PiecewiseAffineTransform.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PiecewiseAffineTransform.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PiecewiseAffineTransform.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PiecewiseAffineTransform.identity`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PiecewiseAffineTransform.inverse`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PiecewiseAffineTransform.residuals`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -5157,30 +5388,37 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.PolynomialTransform.__call__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PolynomialTransform.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, params=None, *, dimensionality=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PolynomialTransform.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst, order=2, weights=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PolynomialTransform.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(src, dst, order=2, weights=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PolynomialTransform.identity`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PolynomialTransform.inverse`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.PolynomialTransform.residuals`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -5189,54 +5427,67 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `native-class-partial`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.ProjectiveTransform.__add__`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, other)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.__array__`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, dtype=None, copy=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.__call__`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.__init__`** — constructor, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, matrix=None, *, dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.__nice__`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.__repr__`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.__str__`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.dimensionality`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.estimate`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst, weights=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.from_estimate`** — classmethod, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(src, dst, weights=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.identity`** — classmethod, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.inverse`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.ProjectiveTransform.residuals`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
@@ -5245,66 +5496,82 @@ Main: `native-class-partial`. Close construction, fitted/unfitted state, propert
 Main: `native-class-partial`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.SimilarityTransform.__add__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, other)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.__array__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, dtype=None, copy=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.__call__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.__init__`** — constructor, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, matrix=None, *, scale=None, rotation=None, translation=None, dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.__nice__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.__repr__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.__str__`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.dimensionality`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.estimate`** — method, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.from_estimate`** — classmethod, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dst) -> Union[Self, skimage._shared.utils.FailedEstimation]`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.identity`** — classmethod, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(dimensionality=None)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.inverse`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.residuals`** — method, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.rotation`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.scale`** — property, defined; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
 - [ ] **`transform.SimilarityTransform.translation`** — property, inherited; current `native-class-member-partial`.
+  - Gate status: `C? N~ H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_classes_public.py](../tests/test_transform_classes_public.py); benchmark not registered.
 
@@ -5313,22 +5580,27 @@ Main: `native-class-partial`. Close construction, fitted/unfitted state, propert
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`transform.ThinPlateSplineTransform.__call__`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, coords)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.ThinPlateSplineTransform.__init__`** — constructor, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.ThinPlateSplineTransform.estimate`** — method, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, src, dst)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.ThinPlateSplineTransform.from_estimate`** — classmethod, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(src, dst) -> Union[Self, skimage._shared.utils.FailedEstimation]`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`transform.ThinPlateSplineTransform.inverse`** — property, defined; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
@@ -5337,54 +5609,67 @@ Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mu
 Main: `exception-metadata-provider`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`util.FailedEstimationAccessError.__getattribute__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, name, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.__getstate__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.__init__`** — constructor, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /, *args, **kwargs)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.__new__`** — method, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.__reduce__`** — method, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.__repr__`** — method, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.__setstate__`** — method, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, object, /)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.__str__`** — method, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.add_note`** — method, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, object, /)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.args`** — attribute, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.name`** — attribute, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.obj`** — attribute, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
 - [ ] **`util.FailedEstimationAccessError.with_traceback`** — method, inherited; current `exception-metadata-member`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, object, /)`.
   - Evidence locators: parity [tests/test_transform_exception_public.py](../tests/test_transform_exception_public.py); benchmark not registered.
 
@@ -5393,42 +5678,52 @@ Main: `exception-metadata-provider`. Close construction, fitted/unfitted state, 
 Main: `upstream-only`. Close construction, fitted/unfitted state, properties, mutation/copy/serialization, inheritance, callbacks/RNG, inverse/composition and returned objects as applicable.
 
 - [ ] **`util.PendingSkimage2Change.__getattribute__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, name, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.__init__`** — constructor, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /, *args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.__new__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(*args, **kwargs)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.__reduce__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.__repr__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.__setstate__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, object, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.__str__`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.add_note`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, object, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.args`** — attribute, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `None`.
   - Evidence locators: parity not registered; benchmark not registered.
 
 - [ ] **`util.PendingSkimage2Change.with_traceback`** — method, inherited; current `upstream-only`.
+  - Gate status: `C? N? H? P? S? V? W? B? R?`; full member evidence remains unreconciled.
   - Signature: `(self, object, /)`.
   - Evidence locators: parity not registered; benchmark not registered.
 

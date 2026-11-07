@@ -1,0 +1,151 @@
+{
+  "schema": "current281-corrective-independent-review-v1",
+  "status": "CHANGES_REQUIRED",
+  "passed": false,
+  "source": "cbb3d2cd993f71fff08bb4a548d9c456c7d2de60",
+  "base": "188a91ef31609c796d4d83e8957c772544f31428",
+  "cumulative_base": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+  "worktree": "C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/current281-integration-fixes-v1",
+  "source_clean": true,
+  "handoff": {
+    "path": "build/current281-integration-fixes-v1/handoff-v1.json",
+    "sha256": "edf48ce455129288c040c2b405c9d40d99c639fa8ed62cb39cd1018acec01c3c",
+    "bytes": 4562
+  },
+  "scope": "One independent shared188 integration plus affected12-file corrective source/metadata/test closure. No own family semantic self-admission; c821/b838/42f root-admitted component scope reused. Only ignored review files written.",
+  "authenticated": {
+    "parent_source_files": 75,
+    "parent_proofs": 113,
+    "parent_proof_bytes": 1223168,
+    "corrective_source_files": 12,
+    "corrective_proofs": 63,
+    "corrective_proof_bytes": 583932,
+    "cumulative_files": 80
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "BLOCKING_SOURCE_BARRIER",
+      "status": "CHANGES_REQUIRED",
+      "source": "cbb3d2cd993f71fff08bb4a548d9c456c7d2de60",
+      "path": "tools/join_source_context.py",
+      "raw_entry_line": 45,
+      "canonical_entry_line": 26,
+      "case": "python/skimagexx/coverage.py",
+      "current_digest": "51df07df3bf873df101df5c8a9a0584b01d0688f31c4bb5a25f012c507a5d386",
+      "after_first_inverse_digest": "6b049ca6bea7f3d84f3968746ac338fafbccf3b0346fb2baac82a33556b34ae1",
+      "second_inverse_requires": "51df07df3bf873df101df5c8a9a0584b01d0688f31c4bb5a25f012c507a5d386",
+      "actual_second_input_matches188": true,
+      "reachability": "tests/test_mark_lbp_controller.py:test_unbound_source_scope_and_exact_family_recipes loops first_cohort.source_files_raw_sha256 containing coverage.py and calls raw adapter; actual workflow selects module",
+      "cause": "Raw adapter first applies cbb->188, then delegates canonical adapter which repeats cbb->188. Second current predicate fails on already188 source.",
+      "requested": "One versioned narrow correction so cbb->188 happens exactly once before rolling188->a5; preserve strict current/inverse predicates, add raw-overlap regression, run invalidated source closure and then complete exact161 barriers. Author/root decides implementation; reviewer makes no source edit.",
+      "limits": "Static AST/canonical-source reconstruction only, no reviewed function import/execution or tests/science",
+      "no_release_or_dispatch": true
+    }
+  ],
+  "passed_requirements": [
+    "Exact nativeWindowsGit HEAD/clean/source-index/diff closure; all small source/proof bytes authenticate",
+    "Root-admitted native c821/controller b838/SDK42f intake and immutable saved rows/methods/engine/header/binder math retained; own SDK source credited only via independent9dc root admission",
+    "Restoration explicit namespace import/__all__, sole core binding/library/strictFP wiring, actualimage radius1 default, integer/half dtype declarations and strict saved checker scope visible",
+    "SDK two complete operation client bodies/source-relative fixture extraction/headers retained; GNU syntax/assembled configure and MSVCcompile scopes honest, not fullgenuineSDK",
+    "Corrected VI six-label factory retains integer dtype/metadata and maps nominalnoninteger descriptors to captured int16; nominal variants stay, one count return asserted. Direct invalidfloat TypeError separate with count+entropy refusal; no floatinglabel support credit",
+    "Three-return fixture(args,options,buffers), buffer/value observation and NumPy state preserved. Flood expected bool is actual uint8padded4x4 cropped view strides4,1/basealias; engine and strict checker immutable",
+    "15 computation bytes and3 checker function sources immutable;10 corrective exact inverse rows authenticate current->188, parent strict current/inverse rows authenticated. R1 blocks composed raw call path, not these literal rows",
+    "Workflow exact161unique source selectors adds only newsourceguard; public numerical159 andPOST203145 unchanged. Collector includes corrective context/sourceguard; sourcecounts281/284/228/108/38/76 retained and registry281+3 statically reconstructed",
+    "Final57pure+22reader XML perWindowsPython normalconftest/plugins zero science authenticated; initial57/1failure perPython retained",
+    "Actual32 selected checks:16normal+16disabled pass on olda5Debug binary/3.13.8runtime; journal independently24started24completed/48events, exactcaller32, all12dirtysnapshot sourcebytes matchfinal, unused8retired; no whole281 acceptance"
+  ],
+  "failed_requirements": [
+    "R1: Historical raw adapter applies cbb->188 twice for overlap coverage.py and other shared files; mandatory raw-pin guards in workflow reach failing current hash. Affected partial runs do not close full161 source barrier."
+  ],
+  "pending_requirements": [
+    "Author/root narrow versioned R1 correction, preserve predecessor bytes/failures, add actual raw-overlap source regression and affected closure; reviewer does not author fix",
+    "Independent corrected delta admission then COMPLETE exact161 workflow source command both retainedPythons normalconftest/plugins/no-x/no science; partial57+22 and earlier188509 scopes do not substitute",
+    "Exact corrected281 four-profile genuine wholeproduct/default dtype/hotswap/onecore/globalbudget/public groups and aggregate76SDKchecks",
+    "Actual successful producer/source/run/artifact/runtime/core/SDK/F1helper/rootadmission/stager binding, API-specific cohortstop/postrestore verification, separate roottimingGO and all-loss one-thread benchmarks",
+    "Broad rolling dtype/unsafe integer cast/half nonnearest/NaNpayload/FP/protocol/Windows-original/backend/API/fullperformance/release gates remain open"
+  ],
+  "failure_history": "Failed a5genuine/harness and188source campaigns, diagnosticartifact, oldgold/references immutable; no failure relabelled PASS. Author correctedpure57v1failed1 eachPython, v2passed57, reader22passed; retained local validation not new capture or benchmark.",
+  "authority": {
+    "reviewer_tests": 0,
+    "reviewed_imports": 0,
+    "science": 0,
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "build": 0,
+    "download": 0,
+    "timing": 0,
+    "archive_core_hash_replays": 0,
+    "dispatch": 0
+  },
+  "waste_reuse": {
+    "reused": "Parent75/113 and root admissions once; affected12/63only plus small literal/static closure. No unchanged campaigns or numerical tests repeated.",
+    "useful_rejection": "R1 static double-inverse finding stops dependent fullbarrier before predictablefailure; no scientificcost.",
+    "avoidable": "Reviewer v1 used guessed metadata key unchanged_computation_sources; actualkey unchanged_computation corrected in versioned reader, no reviewed execution. A few read-only Windowsglob/locator mistakes had no source effect. Original receipts retained.",
+    "unknown_cost": "Elapsed inspection/drafting costs not measured; no rerun to estimate savings."
+  },
+  "next_gate": {
+    "owner": "Root assigns author narrow R1 successor; root retains independentadmission/main/plan/ledger/checklist",
+    "trigger": "Frozen R1 source finding; stop dependent completebarriers/hosted until correction admitted",
+    "after": "Run actualCOMPLETE161 bothPythons then one corrected281genuine4profile campaign, no separate280retry; no new originals/timing authority"
+  },
+  "proofs": {
+    "build/current281-corrective-independent-review-v1/actual-retained-validation-review-v1.json": {
+      "sha256": "34660edbef84f13abe2a3f3280b111c123f833f6ed7d59af907a894658b97d70",
+      "bytes": 439
+    },
+    "build/current281-corrective-independent-review-v1/actual_records_v1.py": {
+      "sha256": "9a8518449fe12c1783f34003cbaf4557ec8db0729c38b4b55d041ccbc40ed91a",
+      "bytes": 1774
+    },
+    "build/current281-corrective-independent-review-v1/authenticate_corrective_v1.py": {
+      "sha256": "59c8712cbb4bb4f24f9fb6f1276cc7476cd984e9cc268336abbf63e3f0e3443f",
+      "bytes": 4333
+    },
+    "build/current281-corrective-independent-review-v1/authenticate_corrective_v2.py": {
+      "sha256": "ce7265228c8ca0c8a67e3f752008fcc774a02b3244e92d0246a26cd09e382fd0",
+      "bytes": 4319
+    },
+    "build/current281-corrective-independent-review-v1/authenticate_parent_v1.py": {
+      "sha256": "8bcf4302ffb6727b539b6ef8899b0e6ffe00c39cd46c4c268385a5010caefe5d",
+      "bytes": 1806
+    },
+    "build/current281-corrective-independent-review-v1/census_parent_v1.py": {
+      "sha256": "51d1869b7c5af73af13e86d81cf2595c1d257d5f21178d0d368bd98c535f8d29",
+      "bytes": 2465
+    },
+    "build/current281-corrective-independent-review-v1/corrective-authentication-v1.json": {
+      "sha256": "f724edf5ab526caf20d33aceebf54bcd91e5ca183edf1e15ee8b1b1c611a12f3",
+      "bytes": 1927
+    },
+    "build/current281-corrective-independent-review-v1/finding-R1-v1.json": {
+      "sha256": "1e965689b3d9c5d3a798ae70a8727a33b446954855eed28eb94d5b1f063ad9a5",
+      "bytes": 1482
+    },
+    "build/current281-corrective-independent-review-v1/finding_R1_v1.py": {
+      "sha256": "3ad91d54e39428d4839e07adb76b8bca448c56d2cba2c666e20fc1e9c3f7f28a",
+      "bytes": 2837
+    },
+    "build/current281-corrective-independent-review-v1/freeze_review_v1.py": {
+      "sha256": "f3ffdd6879a4068036be6dd98f4509bd4acd9e9aaa1b6fcc5e9190c752d1037a",
+      "bytes": 6537
+    },
+    "build/current281-corrective-independent-review-v1/parent-authentication-v1.json": {
+      "sha256": "680cea8afbf32ad3385f76800110ccfcda39787b62a3142303bc2813914b2a5f",
+      "bytes": 1191
+    },
+    "build/current281-corrective-independent-review-v1/parent-census-static-v1.json": {
+      "sha256": "e0eafa9c530f4594ed7ec3212dc5041fc4ce9a2f1da917dae22fff76511a05b7",
+      "bytes": 829
+    },
+    "build/current281-corrective-independent-review-v1/parent-static-observations-v1.json": {
+      "sha256": "a1bab4f34a1a732b3bea137665575038eb5885276a3313cf5760adee7e84ffe4",
+      "bytes": 1367
+    },
+    "build/current281-corrective-independent-review-v1/static_parent_v1.py": {
+      "sha256": "a03d5a41c32f05d02c7c442f557d8b7fbfb3ab4007b4ebd0224fde31db65cf83",
+      "bytes": 4877
+    }
+  }
+}
