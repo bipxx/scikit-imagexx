@@ -1,0 +1,124 @@
+{
+  "schema": "inverse-gaussian-gradient-native-root-admission-v1",
+  "passed": true,
+  "status": "SCOPED_PRIVATE_COMPONENT_ADMITTED_NOT_FULL_API_OR_RELEASE",
+  "api": "segmentation.inverse_gaussian_gradient",
+  "native_source": "9b8e870ecdeadf614b9e0a632598d39f518f8dcb",
+  "corrected_source": "065cc3a79391e4c5343511b53bbbaac992a4c185",
+  "shipping": "upstream-only",
+  "evidence": {
+    "build/inverse-gaussian-gradient-native-v1/handoff-v1.json": {
+      "sha256": "dd1a135a8627fd23f91f44841fc9bc8d8313ead34d283dd7ad6cbdd43bd51ad7",
+      "bytes": 21695
+    },
+    "build/inverse-gaussian-gradient-policy-v1/handoff-v1.json": {
+      "sha256": "2c1fb137363a839a6e663655a51f2219084e3ff479f9889ebd007aff2a3059c2",
+      "bytes": 12804
+    },
+    "build/inverse-gaussian-gradient-policy-independent-review-v1/review-v1.json": {
+      "sha256": "843e848b89260eb3cb5026e01607d35836055340bf8a3d7bc4cd90995a0c5293",
+      "bytes": 6991
+    },
+    "build/inverse-gaussian-gradient-Windows-sdk-readiness-v1/validation-v1.json": {
+      "sha256": "14e312b0bb816e554fb74df3ee93a337b3456794adc17392399498b5f0cc08d3",
+      "bytes": 15958
+    },
+    "build/inverse-gaussian-gradient-root-component-admission-v1/authentication-v1.json": {
+      "sha256": "5e81bac3987075b1a5655282b637a3f2eea500cf10101e450cbc3fc40aaa0bd1",
+      "bytes": 2934
+    },
+    "build/inverse-gaussian-gradient-root-component-admission-v1/SDK-authentication-v1.json": {
+      "sha256": "69a92c1ecbdd25fbe101edcbeffe52fc354fc94b854001b445d80202a7076e13",
+      "bytes": 1070
+    },
+    "build/inverse-gaussian-gradient-root-component-admission-v1/SDK-reader-correction-v1.json": {
+      "sha256": "3982cd7ba0248117a662ed613a02a198062a94832cf26c07290a4f02f5424056",
+      "bytes": 459
+    }
+  },
+  "source_review": {
+    "native_files": 16,
+    "small_proofs": 432,
+    "small_proof_bytes": 4346773,
+    "policy_delta_files": 8,
+    "policy_small_proofs": 35,
+    "policy_independent_review": "843e848b89260eb3cb5026e01607d35836055340bf8a3d7bc4cd90995a0c5293",
+    "native_math": "Typed separable nearest center/pair/generic correlation; ordered per-axis source-dtype square/sum/sqrt; owned alpha multiply/add/sqrt/source-associated complex reciprocal. No per-output reduction reassociation.",
+    "SIMD": "Existing Hessian independent four-pixel AVX2 only for supported contiguous last-axis floating cases; scalar/generic/disabled branches retained.",
+    "workers": "Default1; public one-budget capture before coefficients; correlation independent outputs optional parallel; serial finish expression disclosed.",
+    "providers": "NumPy coercion/promotion/allocation, small coefficient metadata and scalar warning-policy delivery remain providers. No original whole-operation forwarding in assessed domains."
+  },
+  "evidence_scopes": {
+    "historical_native_matrix": {
+      "XML": 830,
+      "saved": 790,
+      "boundary": 40,
+      "profiles": [
+        "minimum",
+        "modern"
+      ],
+      "modes": [
+        "normal",
+        "workers4",
+        "runtime-disabled",
+        "compiler-scalar",
+        "ASan-UBSan"
+      ],
+      "limit": "Old9b frontend; after065 policy change reuse only unchanged native dependencies, not fresh current frontend modes."
+    },
+    "corrected_frontend": {
+      "saved_normal": 158,
+      "boundary_normal": 8,
+      "primitive_policy_controls": 428,
+      "pure_source_checks": 60,
+      "profiles": [
+        "minimum",
+        "modern"
+      ],
+      "limit": "Fresh frontend normal worker1 only; primitive controls are not original whole-function exceptional-domain witnesses."
+    },
+    "SDK": {
+      "Linux_saved_operations": 450,
+      "Linux_modes": [
+        "normal",
+        "scalar",
+        "sanitize"
+      ],
+      "Windows_saved_operations": 150,
+      "Windows_modes": [
+        "normal"
+      ],
+      "Windows_small_proofs": 24,
+      "Windows_small_proof_bytes": 487133,
+      "limit": "Complete private owning float32/float64 operation through projected imported target. Linux currentf48/Windows sealed105 donor plus new leaf/header; not genuine current installed IGG SDK. Signed-strided input/broadcast output/global budgets0/1/4 tested."
+    },
+    "originals": "All158 retained original observations preserved; no recapture; zero remaining capture/timing authority."
+  },
+  "pending": [
+    "Wholefunction new complexzero-reciprocal/overflow/callback warning/error/FP parity remains unobserved; originalbudget0",
+    "Changedfrontend scalar/disabled/worker matrix, broaderFP/gradientwarning/callback/statefulsigma/alpha/extendeddtypes andsqrtstatus domains remain pending as applicable",
+    "Genuine sharednamespace/hotswap/singlecore/globalbudget/completeSDK/fourprofile qualification",
+    "Windowsoriginal/public/full32/backend/fullAPI and strictlarger8case preflight/currentcontext integration/realcohort/timing/performance/release",
+    "Selective shared integration, source-derived inventory/SDK/client/workflow/context selectors and complete actual workflow barriers on both retained Pythons before any genuine release dispatch.",
+    "Eight benchmark cases unbound; strict larger-case preflight, actual runtime/helper/cohorts, separately authorized one-thread public timing/raw/all-loss admission remain pending.",
+    "Boolean/integer/complex/half complete SDK closure; wider casts/gradient warning interleaving/stateful protocols/extended FP and unsupported platform domains remain open."
+  ],
+  "execution": {
+    "science": 0,
+    "original": 0,
+    "tests": 0,
+    "build": 0,
+    "download": 0,
+    "large_archive_core_corpus_rehash": 0
+  },
+  "waste_review": {
+    "reuse": "Authenticated retained small proofs and actual commands/XML/linkmaps rather than replay native/SDK/originals. B independently reviewed policy only; root retained native/SDK admission.",
+    "avoidable": "Two read-only path-root lookups and one overbroad native-link assertion corrected. SDK-reader-correction-v1 preserves failed reader; no source/science impact.",
+    "cost": "Unknown review walltime; no rerun to measure.",
+    "next_correction": "Use receipt-relative proof roots and require dependencies of the actual entry point, not every dependency of another client."
+  },
+  "next_gate": {
+    "owner": "Root plans one named future integration author after current281 corrective freeze; do not delay281 release.",
+    "trigger": "Selective import065 final family source after current281 root admission. Refresh affected frontend/integration evidence only within invalidated scope; no original recapture or timing granted."
+  }
+}

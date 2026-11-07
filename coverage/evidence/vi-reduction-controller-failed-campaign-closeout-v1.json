@@ -1,0 +1,130 @@
+{
+  "schema": "vi-reduction-controller-failed-campaign-closeout-v1",
+  "status": "FAILED_ALL_FOUR_PROFILES_RETAINED_NOT_RELEASE_ADMISSION",
+  "release_accepted": false,
+  "run": 42329688164,
+  "source": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+  "profiles": {
+    "debug": {
+      "files": 58,
+      "tests": 241348,
+      "failures": 28,
+      "errors": 0,
+      "skipped": 0
+    },
+    "minimum": {
+      "tests": 241348,
+      "failures": 28,
+      "errors": 0,
+      "skipped": 0
+    },
+    "modern": {
+      "tests": 241348,
+      "failures": 28,
+      "errors": 0,
+      "skipped": 0
+    },
+    "windows": {
+      "tests": 238406,
+      "failures": 28,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "totals": {
+    "tests": 962450,
+    "failures": 112,
+    "errors": 0,
+    "skipped": 0
+  },
+  "archives": [
+    {
+      "id": 13558435721,
+      "name": "public-qualification-debug",
+      "run": 42329688164,
+      "revision": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-reduction-controller-qualification-v2\\debug-retained-v1\\13558435721.zip",
+      "bytes": 1825986490,
+      "sha256": "b1de40b2190d9d222a421196cadfc22ed5d8c3ee62f125d9c21b1f4cda03bd25",
+      "seconds": 109.0498867998831,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13558114521,
+      "name": "public-qualification-minimum",
+      "run": 42329688164,
+      "revision": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-reduction-controller-qualification-v2\\42329688164\\retained-v1\\13558114521.zip",
+      "bytes": 1412905453,
+      "sha256": "88569de3e7d99b2996cd888eb4545758503f04fde0269c49b853897198657d6c",
+      "seconds": 131.03708159993403,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13557993984,
+      "name": "public-qualification-modern",
+      "run": 42329688164,
+      "revision": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-reduction-controller-qualification-v2\\42329688164\\retained-v1\\13557993984.zip",
+      "bytes": 1374536733,
+      "sha256": "d9110100dc19b1ddf73e75608b00545951498045aed31be78b54bcd4af1eaa2a",
+      "seconds": 100.6242841000203,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 13557929742,
+      "name": "public-qualification-windows",
+      "run": 42329688164,
+      "revision": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-reduction-controller-qualification-v2\\42329688164\\retained-v1\\13557929742.zip",
+      "bytes": 1325195275,
+      "sha256": "427964425491372f86577854e633238dc148b58abc2338e7a627ccb91f971f5a",
+      "seconds": 77.42451109993272,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "archive_bytes": 5938623951,
+  "causes": [
+    "VI generic registered fixture passed invalid floating-label arrays to original before native.",
+    "VI integration fixture actual args/options/buffers triple was unpacked as two.",
+    "Flood expected contiguous bool strides disagreed with original padded-base cropped mask view."
+  ],
+  "passing_scope": "Dedicated tests and SDK commands can be reused only after matching source/runtime/dependency admission; failures prevent whole-product acceptance. No timing stager or benchmark binding is admitted.",
+  "small_receipts": {
+    "build/vi-reduction-controller-qualification-v2/terminal-run-API-v1.json": {
+      "sha256": "421499bf69ad0d72510f3e922dfe6e0f68b6ed5b527d3e32ac920dc81b85a4d4",
+      "bytes": 12189
+    },
+    "build/vi-reduction-controller-qualification-v2/debug-retained-v1/handoff-v1.json": {
+      "sha256": "e6936b9c90627c52506904ccf1f5c02d160faabe6e7aba624cd016e0fa058780",
+      "bytes": 1638
+    },
+    "build/vi-reduction-controller-qualification-v2/debug-retained-v1/diagnosis-v1.json": {
+      "sha256": "80c7319323ab89de7f6c713419e47f0959181b93e9a0c82d8bf8b65783d707b9",
+      "bytes": 5646
+    },
+    "build/vi-reduction-controller-qualification-v2/42329688164/retained-v1/retention-complete-v1.json": {
+      "sha256": "4f10bcb41ffb9846347cb93afcca9f435a0a458739267ec3d324f30bda27b361",
+      "bytes": 2391
+    },
+    "build/vi-reduction-controller-qualification-v2/42329688164/retained-v1/remaining-three-profile-diagnostics-v1.json": {
+      "sha256": "a00ab4583f952276634db1f67fdcc3fdbce4f7061efa3c6dc01ed5c2e1e6c471",
+      "bytes": 2129
+    }
+  },
+  "new_downloads_or_archive_hash_or_XML_replays": 0,
+  "waste_review": {
+    "avoidable": "Three real harness interface mistakes reached hosted qualification; bounded actual retained-product validation then confirmed the narrow corrections before a successor.",
+    "reuse": "Debug once-retained artifact reused rather than redownloaded; other three streamed/authenticated once. Existing diagnostic totals reused without re-parsing corpora.",
+    "next_correction": "Batch ready rolling281 with actual harness corrections; resolve the separately discovered once-only metadata projection blocker before complete actual source barriers. No unchanged280 retry or favorable timing repeat.",
+    "cost": "Retained actual archive transfer timings; no new work to estimate waste."
+  },
+  "next_gate": {
+    "owner": "Sole shared integration author then independent reviewer/root",
+    "trigger": "Versioned successor correcting cbb projection R1; no relabeling this failed campaign."
+  }
+}
