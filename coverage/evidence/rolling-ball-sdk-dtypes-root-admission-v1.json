@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "status": "ROOT_INDEPENDENT_PRIVATE_COMPLETE_SDK_DTYPE_COMPONENT_ADMISSION",
+  "source": "42f08d83009621bcd958d2653920d228935f064e",
+  "base": "c821f6532b3c429bf83357baf161adf711e2d0a1",
+  "handoff": {
+    "path": "build/rolling-ball-sdk-dtypes-v1/handoff-v1.json",
+    "sha256": "f13b78491fbbc083ba4b96679abaf18e04bb90fcfbc088006383862f98a41ee6"
+  },
+  "files": 10,
+  "small_proofs": 109,
+  "API": "restoration.rolling_ball",
+  "scope": "OnecompleteowningstorageSDK overload;11savedbool/int/half/swapped cases396executions plusold52float312execution controls. Normal/runtime-disabled/compiler-scalar/sanitizer SDKpaths and132strictcapturedtargetFPcomparisons/caller32;actualrelocatedexporttarget/installedrolling+convertheaders/newowningsymbol verified. BothretainedWindows5pureguards and4TUMSVCcompileonly.",
+  "root_source_review": "Existingfloatcore/header exactinverse toadmittedc821. Fixedtypedrawstorage/unalignedmemcpy/signedspan/workingprecision/plaincast/outputbyteorder and oneglobalworker snapshot inspected; finiteintegercast/halfnearestdomain explicit, no hiddenNumPyrescaling orcasefitting. No requiredsourcecorrection found.",
+  "unchanged_scopes": "All150originals/golds/old52transport/publicbinder/frontend/core remainder/method retained. No numerical proof replayed byroot.",
+  "open": "Unsafe/outofrange/nonfiniteintegercasts;halfNaN/payload/overflow/subnormal/nonnearest;Pythonprotocol/warning/FP/backend/platform/Windowsruntime;genuineaggregateSDK integration/fourprofile qualification andone-threadpublicoriginalspeed remainopen. Serialconversion/cast+orderedminplus have no newSIMDclaim.",
+  "authority": "No neworiginals/timing/hosted/build fromrootreview.",
+  "waste_review": "Reused109smallproofs and existingprivateSDKdonors. One independentlyreviewedreadyfamily extension mayjoin Cstill-unfrozen nextfamilybundle if compatible; reviewonlychangedSDKsource/context/collector/client closure, no unchangedpublic/math replay. If Calreadyfrozen, preservefirsthandoff and deferSDKsuccessor ratherthanreopen. Root retains admission/main; Cintegrationauthor."
+}
