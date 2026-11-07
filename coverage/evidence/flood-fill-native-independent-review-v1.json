@@ -1,0 +1,143 @@
+{
+  "schema": "flood-fill-native-independent-review-v1",
+  "result": "PASS_SCOPED_PRIVATE_COMPONENT_WITH_EXPLICIT_FULL_API_AND_RELEASE_GATES",
+  "source": "dd1aebd5d8619e4f6d2ea3925bb3e3e62b728f4f",
+  "review_scope": "Independentstatic source/interface/retainedsmallproof review only; didnotrerun scientific/native/helper/provider/original/tests/build/timing orimportreviewed modules.",
+  "handoff": {
+    "path": "build/flood-fill-native-v1/handoff-v1.json",
+    "sha256": "1e69b9a490087bcf5214205cbb0953215849ae97c029e7311203692ad95ea8f4"
+  },
+  "prerequisite_reuse": {
+    "source": "ROOT9e35sourcegeometry admission",
+    "readiness": "ROOT37d16 actualzero-body/helper/runtime/controlleradmission",
+    "raw": "ROOTad6aa1c996346bee7978e8a77919005ba4611c2a1eb258204ea039cf04c4d47d andindependent64c9 rawreview. No neworiginal authority."
+  },
+  "authentication": {
+    "exclusive_files": 15,
+    "reference5": 5,
+    "reference14": 14,
+    "dependencies": 15,
+    "proofs": 106
+  },
+  "own_proof_pins": {
+    "authenticate_v1.py": {
+      "bytes": 3299,
+      "sha256": "cebf1505a15f8f0cf9819647c24be7358b18c8a085741ad4a6ddcd761cc52e49"
+    },
+    "authentication-v1.json": {
+      "bytes": 21592,
+      "sha256": "455894e3c5795d0ceb3e57cd763cb10f58c5f685653bf6ebffb76613261dbf55"
+    },
+    "freeze_v1.py": {
+      "bytes": 9498,
+      "sha256": "172c3326b229c47092a7f88278704537104e6f373188e19dd4e3408f05dba9f0"
+    },
+    "interface-review-v1.json": {
+      "bytes": 3167,
+      "sha256": "fa9b99971c3dc840d775093d7636c334ca96736c561cbaae6347020ea8e78786"
+    },
+    "reconstruct_scope_v1.py": {
+      "bytes": 2823,
+      "sha256": "6aa5b42d9531f14a1ab682d48665a7eed258037d506bc34c750e7d41a8280e27"
+    },
+    "review_interface_v1.py": {
+      "bytes": 1976,
+      "sha256": "d3e908bf8a1887339157e8336545ec9eec5e0454f74b972d99b459d3a4310fe7"
+    },
+    "scope-reconstruction-v1.json": {
+      "bytes": 7789,
+      "sha256": "d4d13d6874d2c08992a11752a853867343b4902dd1473349c8c29785a225899d"
+    }
+  },
+  "blocking_findings": [],
+  "required_source_changes": [],
+  "passed": [
+    {
+      "area": "Frozenownership/dependencies",
+      "evidence": "authentication-v1.json",
+      "detail": "ExactcleanHEAD,15newfamilyfilesonlyagainst7c14;5requiredreferencefiles/all14historicalreferences/15existingdependencies equalexplicitpins.106smallproofs bytes+SHA authenticated. No branchancestry/sharedimportadmission inferred."
+    },
+    {
+      "area": "CPPcompleteoperations",
+      "source": "src/flood_fill.cpp:22",
+      "detail": "Boundedshape/footprintvalidation, owningpaddedmask, signedbytestride memcpyloads, sourcefootprintpadding/order/firstoffsetdrop, ordered FIFO markbeforepush, equality/tolerance, owningC-orderfillandborrowedinplace operation. Queuemembership/mask ownedC++; no original/provider BFS. Assessedstorageconditions only; SDKcaller mustprovide validtypedstorage/normalizedseed/castvalues."
+    },
+    {
+      "area": "Pythonadapter/providerboundary",
+      "source": "python/skimagexx/_flood_fill.py:25",
+      "detail": "Sourceorder/coercion/layout/seed/footprint/tolerance/dtype/error preparation retained; allocationdescriptorownedNumPy, payloadcopyviaexistingcrop, actualfillwritesCPP. NumericPODvalidation/refusal andreadonlyassign order explicit. NumPy fullimage.min reduction andfootprintdistance metadata remain computationproviders; cast/broadcast temp values areexplicit. No sourcefloodimagealgorithm forwarding."
+    },
+    {
+      "area": "Strictper-profile savedparity",
+      "evidence": "scope-reconstruction-v1.json",
+      "detail": "NewfixtureJSON equalsall192admittedrawrowsverbatim, minimum79returns17errors vsmodern78/18.8XMLcells each96saved+2nonPODrefusals+2sourcebooltolerancelimits=800nodes. Savedconsumer comparesallobserverresult/inputmutation/dtype/metadata/stride/alias/base/errors+typedargs/qualname/warnings/pointer/NPstate fields; target-immediatecontrol/status/MXCSR before/afterexact usingtrustednumericalinput appliedtolivestorage. Calleractual32bytes restoredinfinally. No fieldnormalization/afterFPmask orpostobserverdiagnosticwaiver."
+    },
+    {
+      "area": "Modes/privateownership",
+      "detail": "Profile1.24.4/cp311 and2.5.4/cp313 eachnormal/runtimedisable/compiler-vectorization-disabled/ASan+UBSan; samefamily bridgebindsflood+cropintooneprivate_corewithretainedmode-matchedcrop/runtimearchive. Archive/source/donoridentity reused; no newarchive/corehash. This is notgenuinecore orpublicworker matrix."
+    },
+    {
+      "area": "Workers/SIMD",
+      "detail": "BFS/sourcequeue isintentionallyorderedserial,no artificialparallelqueue/globalpool/SIMDclaim. Existingcropcopyprovidesapplicablecopyprimitive. SDKchecksdefaultglobal1 then4invariantoutput/restores1. CPPflooddoesnotread/mutateworkerbudget. Publicprivatebridgehasnoget/setworkerbindings; publicglobalbudget/default1/oneinstalledcore remaingenuineintegration gates.800nodesmustnotbecalledworkers1/4matrix."
+    },
+    {
+      "area": "CompleteinstalledSDKoperation",
+      "evidence": "scope-reconstruction-v1.json",
+      "detail": "79minimumsuccessreturnwordsprojectedintoCppfixture, includingprovidedcastedbool/numericvalues, owningflood/fill+borrowedfill_into, plusinvalidseed/footprint/productoverflow/defaultworkercontrols. Normal/scalar/sanitizerruns throughactualfind_package exportedtarget andmode-matchedassembleddonor+newleaf/header prefix, linkedexactprefixlib.237savedSDKcase-executions across3modes; noerror/protocol/fullFP/modernorwhole105SDKclaim."
+    },
+    {
+      "area": "Portability/sourcecontrols",
+      "detail": "ThreeMSVCfamilyTUscompilev1, finalPODbindercompilev2; compileonly, noWindowsruntimecredit.11changedpureguardsperWindows3.11/3.13 normalconftest/pluginactivation, zero-scienceorigins/requests. Previous12referenceguardsscope retainedunchanged, notrerunbyreview."
+    },
+    {
+      "area": "Prospectiveexecutablebenchmark",
+      "evidence": "interface-review-v1.json",
+      "detail": "8cases/2canonicalAPIs;4publicnamesinclude2identityaliases, not4algorithms. Exact3fragmentinverse reconstructsadmittedcommonexecutor; sevenrepeat/100ms/250mswarm/worker1/alllosses/allocationinclusive unchanged; actualpassindex0. Strictbinding/source/core/builtin/nativeacceptance/FP/input/owner checks, F1source-built receipt/externalhash beforetarget initializedonce; mandatoryrealsamplerentry fallback stopsnonstoppingprofiler. Allactualproducer/runtime/source/core/SDK/helper/rootGO/deadline fields null/unbound. No actualcohort/performanceproof."
+    }
+  ],
+  "pending": [
+    "Rootindependentadmission thenselectiveowned-fileimportwith5minimumreference/all14historical/dependencyclosure; nevermergeprivateunfinishedancestry. Rsolecurrentintegration mayincludeonlyafterrootdecision, no delaytoearliestcompatiblebundle.",
+    "Sharedregistry/morphology+segmentationidentityaliases/starimports/defaultdispatch/corebinder/CMake/headerSDKexports/selector/sourcecollector/currentcontextinverses andhot-swap ownership stillunproved.",
+    "Genuineinstalledonecore/globalworkerdefault1+optionalworkerbudget publicentry proof; private800nodesaremode/profilenodes, notpublicworker1/4matrix.",
+    "Completeactualworkflow sourcebarrier bothsupportedWindowsPythons withnormalplugins/conftest followedbyexactsourcefour-profilegenuinequalification/wholeSDK/exportpackageclosure.",
+    "Windowsactualsavedtargetruntime/FENV/parityunproved; MSVCcompileisnotWindowsnumeric/FPproof; Linuxsavedconsumer isglibcx86_6432bytesonly.",
+    "Broaderprotocol/subclass/list/0D/object/structured/extendedfloat/tolerance/callback/warning/FPpolicy/metadata/errororder domains remainunassessed. Validcallerstorage/strides/geometry andnumericcast obligations remainSDKfrontier, notgeneralarrayvalidation.",
+    "NumPyimage.min fullimagereduction, scalarcast/broadcast andfootprintmetadata providers remainexplicitownershiplimits; notprovider-free/fullCPPAPIclosure.",
+    "Actualgenuinefirstcohortouterobserver/poststop+onceofflineverifier/controllerbinding andseparaterootmeasurementGO required; all8public1threadbenchcasesunmeasured, allfuturelossesretained.",
+    "No APIcompletion/release/main/shipping/speedclaim fromthiscomponentreview; original192budgetexhausted."
+  ],
+  "source_views": {
+    "CPP": "include/skimagexx/flood_fill.hpp;src/flood_fill.cpp;src/bind_flood_fill.cpp",
+    "Python": "python/skimagexx/_flood_fill.py",
+    "strictconsumer": "tests/test_flood_fill_public.py:55-82",
+    "SDK": "tests/test_flood_fill_sdk.cpp;tests/flood_fill_sdk_fixture.py;tests/sdk/flood_fill/CMakeLists.txt",
+    "benchmark": "benchmarks/flood_fill_native.py;benchmarks/flood_fill_execution.py;coverage/contracts/flood-fill-benchmark-v1.json"
+  },
+  "failures_retained": {
+    "author_checkpoint": "build/flood-fill-native-v1/checkpoint-v1.json",
+    "scope": "BoolSDKgenerator7vs1setupfailure, generatorSyntaxError/KeyError, draftoldbenchmarkoverwrite restoredbyteexact, earlierbroadbuild/parityiterations andpre-finalcosts retained. No frozenraw/source/goldcase edits disguised asparityfix.",
+    "observed_pre_final_build_seconds": 395.3390693664551,
+    "observed_pre_final_check_seconds": 84.30087733268738,
+    "cost_interpretation": "Authorrecordedcosts; notrecomputedasreview/algorithmperformance. Unknowninteractivecost remainsunknown."
+  },
+  "waste_reuse": {
+    "review": "No numerical/science/helper/native/tests/build/download/timing repeated; smallmanifest/source/XML reconstruction only. One readonlyguessedparity_v5 locator missed; actualrun_parity_v5 inspected, no dependentactiontaken. Costsunknown.",
+    "reuse": "Source9e/readiness37/rawad6/primitives/helper/runtime/donor evidence reused withinexactscope; no duplicatearchive/core/binaryhash; rawpayloadnotdecompressedagain.",
+    "next_correction": "Reviewed,nosourcechange. Preserveprovider/publicworker/SDKplatformscope inrootadmission/sharedselectors; integrateonlyadmittedclosure, finishcompletebarriersbeforegenuine."
+  },
+  "next": {
+    "owner": "Root independentadmission andRsoleintegration",
+    "trigger": "Rootauthenticatesthisfrozenaffectedreview; selectcompatiblefamilyordefertofollowupwithoutdelayingcurrentABI+VIreadyfreeze. Allgenuine/performanceauthorityremainsroot."
+  },
+  "review_execution": {
+    "reviewed_imports": 0,
+    "pytest": 0,
+    "originals": 0,
+    "native": 0,
+    "provider_algorithms": 0,
+    "helper": 0,
+    "build": 0,
+    "download": 0,
+    "timing": 0
+  }
+}

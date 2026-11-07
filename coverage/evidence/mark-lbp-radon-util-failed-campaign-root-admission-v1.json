@@ -1,0 +1,95 @@
+{
+  "schema": "mark-lbp-radon-util-failed-campaign-root-admission-v1",
+  "passed": false,
+  "audit_passed": true,
+  "status": "AUDITED_TERMINAL_FAILURE_THREE_SCOPED_SUCCESSES_NOT_WHOLE_PRODUCT_OR_MEASUREMENT",
+  "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "run": 42306808073,
+  "root_accepted": false,
+  "whole_product_accepted": false,
+  "measurement_producer_eligible": false,
+  "handoff": {
+    "path": "build/mark-lbp-radon-util-qualification-v1/42306808073/failed-campaign-handoff-v1.json",
+    "sha256": "d878f21b83b7a1550281c5e002b73e3bb50a8166e33bcbb6ba32647dc7560bac"
+  },
+  "authenticated_small_proofs": 81,
+  "successful_profiles": {
+    "modern": {
+      "XML": {
+        "tests": 240390,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 70,
+      "corpora": 12,
+      "manifest_sha256": "1b3aa2aa63aedb4e78adfadb99f60e4ae393cd4340f3169bab95536adec5df41",
+      "sealed_records": 38369,
+      "source_identity": {
+        "revision": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+        "source_files": 2784,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "e858b5606b3cd26331b02e3b7922d7f0608f45968780edfde65f563c9a8dc0ed"
+      }
+    },
+    "windows": {
+      "XML": {
+        "tests": 237780,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 70,
+      "corpora": 12,
+      "manifest_sha256": "a99200ac76842acb641ac773d5f0999c88b11b5b182e0b126492d4bd3a79ad12",
+      "sealed_records": 37855,
+      "source_identity": {
+        "revision": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+        "source_files": 2784,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "3d0242bf048aac4045b02e380deff02324cdd55ed0e977d73a4f3185656081c6"
+      }
+    },
+    "debug": {
+      "XML": {
+        "tests": 240390,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 70,
+      "corpora": 12,
+      "manifest_sha256": "d046055c9a3ca45e392dd54297652ccaa47965d1c9815439a653b0f3fc4b14ba",
+      "sealed_records": 38280,
+      "source_identity": {
+        "revision": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+        "source_files": 2784,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "9e4946f0a302d2b37239895b42410bc19ad1f1eb72aabe8df0d2ee1297583aa9"
+      }
+    }
+  },
+  "public_XML": {
+    "tests": 718560,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_checks": 210,
+  "corpora": 36,
+  "qualification_records": 114504,
+  "stage_files": 5706,
+  "minimum": {
+    "accepted": false,
+    "reason": "initialimport NumPyCAPI0x12target vs1.24runtime0x10",
+    "public_XML": 0,
+    "SDK": 0,
+    "corpora": 0,
+    "stager": false
+  },
+  "archive_count": 6,
+  "archive_bytes": 5547337510,
+  "reuse": "Three existing minimum/modern downloads reused, three remaining downloadedonce; modern38369qualification/2869stage records reused; Windows/debug andWindowsstage eachhashedonce. No standalonecore/archive/seal replay.",
+  "next_gate": "Rootadmitted2bb runtimeABI correction andreadyVI/flood/cost family inputs are beingselectivelyintegrated byR inonecorrectedcandidate. Fullsourcebarriers/genuinefourprofiles and actualboundcohorts/one-threadperformance stillrequired. Neverretry unchanged8c orbinditsfailedproducer.",
+  "waste_review": "Root81smallproof authentication andthreeXML/SDK/corpora/seal/stagerfield checks, no scientific/test/build/download/largehash replay. Oldmetadata7successbinding retained; actual6artifacts honest. Aggregate718560 passed scope doesnotcancelminimumfailure or provefull280source. Existingplan/ledger/checklist updated atboundedcloseout."
+}

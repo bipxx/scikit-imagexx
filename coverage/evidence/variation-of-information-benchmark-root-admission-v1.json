@@ -1,0 +1,81 @@
+{
+  "schema": "variation-of-information-benchmark-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_UNBOUND_EXECUTABLE_SOURCE_NOT_GENUINE_OR_NUMERICAL_MEASUREMENT",
+  "source": "bef85f73adff89930f933e27f4a5ed3783c7eae1",
+  "handoff": {
+    "path": "build/variation-of-information-benchmark-execution-v1/handoff-v1.json",
+    "sha256": "19dd21e4ec087ca7ba136572415f61b9ab50991c44c52cf0b4b53a7f9e75b960"
+  },
+  "authenticated_source_files": 5,
+  "authenticated_dependency_pins": 28,
+  "authenticated_small_proofs": 17,
+  "source_tests": [
+    {
+      "profile": "windows311",
+      "XML": {
+        "tests": 42,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "path": "build/variation-of-information-benchmark-execution-v1/windows311-source-v2/results.xml",
+      "sha256": "26b132721540c1be6c393a66bfd87f600cab929e35fb3b8b8b122744b88b83df"
+    },
+    {
+      "profile": "windows313",
+      "XML": {
+        "tests": 42,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "path": "build/variation-of-information-benchmark-execution-v1/windows313-source-v2/results.xml",
+      "sha256": "043d8979700d4caa0f3d15b8582eb933796d445b58007afb2023e6ad8e59ff08"
+    }
+  ],
+  "source_review": "Read actual whole execute/fixture/bounds/consumer; reuses exactMARK validate_binding/measurement/support/sample_entry without sharededits. Source support dynamicload has no sys.path mutation; actual execute restores path/fallback/profile/provider attributes and callerFP viafinally. Ownership preflight requires count native_result nonNone plus exactCentries/returncounts and nativeentropy accepted, forbids sparsecoordinate-coalescing/NumPylog; timed callbacks are uninstrumented wholepublicallocatedcalls.",
+  "benchmark_scope": {
+    "cases": 4,
+    "samples": 56,
+    "warm_groups": 8,
+    "threads": 1,
+    "pass_index": 0,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "retain_all_losses": true
+  },
+  "numerical_gate": "Four larger128/256 and8/64label workloads onlysource-bounded; genuinepreflight mustcompareexact outputraw/dtype/shape/metadata/inputmutation/warnings/NPpolicy/worker/FP before measure. No newgold/large0ULP from candidate equivalence or fakebinding.",
+  "authority": {
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "root_GO": null,
+    "measurement_GO": null,
+    "genuine_first_cohort": null
+  },
+  "integration_dependencies": {
+    "readonly_source": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-lbp-radon-util-integration-v1",
+    "readonly_source_revision": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+    "pending": "Private branch lacks current MARK common/F1/next-util projection and retains ancestor shared counts. Sole root-assigned integrator must selectively project exact current dependencies and VI into final source, then version context for changed bytes. No fake binding or blind merge.",
+    "helper": "Actual host source-built F1 receipt/library/ABI/controls required; no old-host binary binding."
+  },
+  "pending": [
+    "Independent source admission and exact dependency/registry/SDK/consumer integration",
+    "Actual genuine source/runtime/core/completeSDK/root/helper binding",
+    "Actual larger-case strict preflight/native acceptance/providers/input/FP checks",
+    "Real CLI first sampler-entry0body cohort and outer poststop source/authority/caller controls",
+    "Separate root timing GO; four workloads/56samples/8warmgroups, journals/all losses and independent reconstruction",
+    "FullAPI/backend/platform/provider/error/FP and one-thread original performance/release gates",
+    "Current private branch deliberately lacks MARK common/current next-util/F1 projection and has ancestor shared counts. Root sole integrator must selectively import exact dependencies and VI, never blind merge ancestry; changed common/context pins require versioned source successor, not substitution.",
+    "Actual source-bound candidate C-return counts/acceptance and strict large-case raw words/layout/warnings/targetFP/caller32 have NOT run. All actual genuine zero-body cohorts remain pending actual installed product; current275 failure cannot be relabeled VI binding.",
+    "Future actual outer cohort adapter must inspect execute <- shared sample_entry <- real measure locals, and independently verify poststop source/authority/process state. Pure entry controls are not genuine firstcohort proof.",
+    "WholeAPI/platform/protocol/error/nonfinite/FP/log/reduction/BLAS/backend scope and installed SDK/hot-swap/four-profile qualification/one-thread original performance remain open."
+  ],
+  "waste_review": "Root authenticated5source/28smalldependency pins/17proofs once in prior cell, then read2final42XMLs; old34P1F failures preserved. Reuse existingMontage/MARK/F1/nextutil/entryguard; no test/original/native/helper/build/download/measurement rerun. No sharedhook or secondmeasurementengine. Nextroot selectiveVIcurrentcount/support integration afterreadycurrent275 correction/delivery; actualbinding/cohort/parentGO later."
+}

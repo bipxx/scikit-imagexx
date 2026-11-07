@@ -1,0 +1,38 @@
+{
+  "schema": "flood-fill-native-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_PRIVATE_FAMILY_NATIVE_BFS_AND_WRITES_PROVIDER_COMPUTATION_DISCLOSED",
+  "source": "dd1aebd5d8619e4f6d2ea3925bb3e3e62b728f4f",
+  "handoff": {
+    "path": "build/flood-fill-native-v1/handoff-v1.json",
+    "sha256": "1e69b9a490087bcf5214205cbb0953215849ae97c029e7311203692ad95ea8f4"
+  },
+  "independent_review": {
+    "path": "build/flood-fill-native-independent-review-v1/review-v1.json",
+    "sha256": "48f12a7e7b3d50a98463b2deef7b9a21ef13dd5b03761dc5c1a4eb77fefa1405"
+  },
+  "source_files_verified": 15,
+  "independently_authenticated_small_proofs": 106,
+  "original_scope": {
+    "canonical_apis": 2,
+    "public_names": 4,
+    "recipes_per_profile": 96,
+    "total_originals": 192,
+    "future_original_budget": 0
+  },
+  "private_XML": 800,
+  "private_matrix": "96saved+4explicitrefusal/limit controls per100cell,2profilesxnormal/disabled/scalar/sanitizer. Strictactualprofiletargetbefore/afterFP/caller32/NPstate/error/warning/base/alias/mutation; not800workersmatrix/privatebridgehasnoglobalgetset.",
+  "CPP_ownership": "ReadtypedCPPorderedqueue/paddedmask/memorytransport and owning/inplace completeSDKfill. Realmask/neighbor traversal/imagecopy/writes areCPP; relevantserial/SIMD/globalworkerapplicability onlyscoped, genuinepublicglobal runtime integration stillrequired.",
+  "providers": "Readactualfrontend: image.min() is full-image NumPy reduction even though returnunused, np.count_nonzero is full-mask reduction, scalar conversion/broadcast materializes selected RHS NumPyarray. Neighbor metadata/scalar limits/casts also providers. DoNOTcallfullyprovider-free or scalar-only. Allremainnativeownership/performancefrontiers underfullobjective.",
+  "SDK_scope": "79minimumreturnword cases viarealrelocatedexportedtarget normal/scalar/sanitizer owning+inplaceoperation,default1/optional4 invariance; compilerMSVC3TUscompileonly. PrivateSDKdonor projectionnotwholecurrentproduct.",
+  "dependency_scope": "Currentf48crop_copy differsfromprivateoldcropleaf; geometry/storage andPODcopy wereindependentlyadmitted but affectedactualcurrentprojection must beclosed byintegration. Requiredreference5/history14/existingdeps15 explicitintake, preservehistoriesandoldSDKfixtures.",
+  "pending": [
+    "Selectiveonecore/namespace/__all__/morphology-segmentationalias/hotswap/currentcropdependency projection",
+    "Actualinstalledglobaldefault1/optionalworkers publicproof; no phantomprivategetter matrix",
+    "Sourcecontextcollector/SDKfamily/fullsourcebarriers",
+    "Exactsource genuinefourprofiles and Windows original/saved domains",
+    "Executable8caseconsumer actualgenuinebinding/cohorts/one-threadoriginalresults",
+    "Fullprovider ownership and broadtype/tolerance/protocol/FP/platformdomainclosure"
+  ],
+  "waste_review": "RootreadactualCPP/frontend and15sourcepins, reusesB106smallproof/800XML/192verbatim/SDK review; no tests/science/native/helper/build/download orarchivehashreplay. Sourceperpixelcoordinates-vector allocation/unravel isconcreteavoidablecost; anyoptimization mustmeasureorcountactualwork andretainoldsource, notclaimunmeasuredoriginalspeed. ReadycomponentmayjoinRbundleonlybeforefreezecompatiblewithoutdelay."
+}

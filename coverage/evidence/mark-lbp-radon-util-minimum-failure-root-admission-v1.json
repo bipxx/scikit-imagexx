@@ -1,0 +1,32 @@
+{
+  "schema": "mark-lbp-radon-util-minimum-failure-root-admission-v1",
+  "status": "PASS_FAILURE_DIAGNOSIS_MINIMUM_REMAINS_FAILED_OTHER_PROFILES_NOT_ADMITTED",
+  "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "run": 42306808073,
+  "job": 128198109389,
+  "artifact": 13547021475,
+  "whole_product_accepted": false,
+  "independent_review": {
+    "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/review-v1.json",
+    "sha256": "6f0e1d265fd2b0c0fe6576f195420d0ae1fc8c9c1d47c9ec57434559c5e5978f"
+  },
+  "actual_failure": "CPython3.11.17 buildNP2.4.6 headers -> finiteRadonfeaturetarget0x12 -> runtimeNP1.24.4feature0x10. Actual_import_array error atinitialadmission beforepytest/contracts/fixtures. Separate privateperversion builds missedbuild/runtimeABIcrossproduct.",
+  "executed": {
+    "preparation_commands_exit0": 12,
+    "initial_public_admission_exit": 1,
+    "public_XML": 0,
+    "SDK_consumers": 0,
+    "corpus_execution": 0
+  },
+  "metadata_not_execution": {
+    "images": 275,
+    "registered": 278,
+    "product": 222,
+    "SDK": 105,
+    "planned_families": 35,
+    "planned_SDK_checks": 70
+  },
+  "artifact_reuse": "Root API once-download/hash receipt13547021475 reused; independentread19smallZIPpayloads+5Git slices only, noarchive/core/seal/corpora rehash. No fullcampaignterminal/remainingprofile claim.",
+  "next_gate": "Admitted2bb ABI component runtime-version dispatch +lowestAPI; sole selective sharedintegration with readyVI, complete sourcebarriers bothPython then changed-source genuine4profiles. Remaining8cjobs continue andmust be retained/admitted onactualterminal; no unchangedretry or actualbenchmarkauthority.",
+  "waste_review": "Fixdemonstratedcross-version compatibility beforeexpensivegenuine successor. ReaderXMLclassification confusion retained/correctedusingalreadyextractedbytes; no extra download/science. Setupcostnotseparatelymeasured; currentfailedprofile data isnotnumericalparity."
+}

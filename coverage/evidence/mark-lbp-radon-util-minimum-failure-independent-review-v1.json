@@ -1,0 +1,536 @@
+{
+  "schema": "current275-minimum-failure-independent-review-v1",
+  "status": "PASS_SCOPED_FAILURE_DIAGNOSIS_MINIMUM_QUALIFICATION_REMAINS_FAILED",
+  "review_passed": true,
+  "minimum_accepted": false,
+  "whole_product_accepted": false,
+  "campaign_terminal_review": false,
+  "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "run": 42306808073,
+  "job_id": 128198109389,
+  "job_status": "completed",
+  "job_conclusion": "failure",
+  "artifact": {
+    "id": 13547021475,
+    "name": "public-qualification-minimum",
+    "run": 42306808073,
+    "revision": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp-radon-util-qualification-v1\\42306808073\\retained-v1\\13547021475.zip",
+    "bytes": 628781590,
+    "sha256": "5d591c015052713fb3d99ff53b7bfd8f04dde9b4122e02f46bb24ec141c69ae4",
+    "seconds": 29.454711500089616,
+    "actual_API_digest_exact": true,
+    "download_passes": 1
+  },
+  "retention": {
+    "path": "build/mark-lbp-radon-util-qualification-v1/42306808073/13547021475-retention.json",
+    "bytes": 482,
+    "sha256": "72ce007f28dc68532133cdc034fff119f6fa6845ec06b525eac77ebeec008b76"
+  },
+  "terminal_API_intake": {
+    "path": "build/mark-lbp-radon-util-qualification-v1/42306808073/minimum-terminal-job-intake-v1.json",
+    "bytes": 5189,
+    "sha256": "6c873abc9e4dab82b79d8f144668748d0cf752e577c19418f16c2ecfa6027cf9"
+  },
+  "audit": {
+    "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/audit-v3.json",
+    "bytes": 20688,
+    "sha256": "66de503bd0280e609b689e5d25c52f8317e67155ba06cc300d5e9ccedd51483d"
+  },
+  "prior_audit_retained": {
+    "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/audit-v2.json",
+    "bytes": 20465,
+    "sha256": "3f4cbb441db2291e6927323ec830d96905c9ca7d0941bdfbfd79ac5c237a79d4"
+  },
+  "failed_reader": {
+    "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/review-reader-failure-v1.json",
+    "bytes": 600,
+    "sha256": "00c515132e04ddcebfb9142f118de55efcc352c409d12c054d6de1df5b3228fb"
+  },
+  "reader_sources": [
+    {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/audit_v1.py",
+      "bytes": 8972,
+      "sha256": "5897b948fca5351416bbf2c09fd65359271a374d858362f7ade3fa2b04feac86"
+    },
+    {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/audit_v2.py",
+      "bytes": 8847,
+      "sha256": "6131c0d79763d301c49dfc8928f2f2447677088792352308611bb97d8aacf700"
+    },
+    {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/audit_metadata_v3.py",
+      "bytes": 831,
+      "sha256": "e0df36eeeeb83fdd1e76be4cb2ceacf6556ba2b51084f323236b6a0dfb95bd25"
+    }
+  ],
+  "actual_initial_log": {
+    "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/initial-public-admission.log",
+    "bytes": 1558,
+    "sha256": "d1c947fc809d2d14f03512d3a507d64e02150dc4174c7de266507becc28c3425"
+  },
+  "parent_initial_log": {
+    "path": "build/mark-lbp-radon-util-qualification-v1/42306808073/minimum-initial-public-admission.log",
+    "bytes": 1558,
+    "sha256": "d1c947fc809d2d14f03512d3a507d64e02150dc4174c7de266507becc28c3425"
+  },
+  "actual_host_job_log": {
+    "path": "build/mark-lbp-radon-util-qualification-v1/minimum-job-failure-log-v1.txt",
+    "bytes": 51150,
+    "sha256": "a4afabb5f43b901228906607f99201ee756f97a20bc8bad4759575188fafc208"
+  },
+  "source_proofs": {
+    "src/bind_finite_radon.cpp": {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/frozen-source/src/bind_finite_radon.cpp",
+      "bytes": 5782,
+      "sha256": "d2b727c445754d43e1fc71fe9450523f516f6477b0fe059e9198b68ead65079d"
+    },
+    "src/bindings.cpp": {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/frozen-source/src/bindings.cpp",
+      "bytes": 96226,
+      "sha256": "ebcc0d275a4798bacef48203d8d6223beaa941121a3682afd0816824c146b5f3"
+    },
+    "CMakeLists.txt": {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/frozen-source/CMakeLists.txt",
+      "bytes": 78122,
+      "sha256": "fcce97ef2c0afe1866d4254110a8645b360144d14b87061e6d4fd36768dfa511"
+    },
+    "pyproject.toml": {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/frozen-source/pyproject.toml",
+      "bytes": 1040,
+      "sha256": "8bb611200035980a4df9e212d1d80c12ffa6890174fc851936976a51d6197866"
+    },
+    "tools/public_qualification.py": {
+      "path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/frozen-source/tools/public_qualification.py",
+      "bytes": 200929,
+      "sha256": "2a21cd96ec89c0a75f5d1bda0ecb887be1d3c443bb1a15e1d3c08176e5d4a5bc"
+    }
+  },
+  "applicable_rules": "Current root AGENTS read/applied; only owned ignored review evidence written. Every source/provenance and stage claim checked against actual small retained metadata/logs/commands/frozen8c source. Root reserves source/Bfix/integration/main/admission/dispatch. No source edits/tests/science/reviewed imports/native/helper/build/env/timing/download or archive/core/corpora/record hash replay.",
+  "root_cause": {
+    "build_python": "CPython3.11.17",
+    "build_headers": "NumPy2.4.6",
+    "runtime": "NumPy1.24.4/SciPy1.15.3 on same recorded CPython3.11.17 base",
+    "actual_compile": {
+      "directory": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/native-build",
+      "command": "/usr/bin/g++ -D_core_EXPORTS -I/home/runner/work/scikit-imagexx/scikit-imagexx/include -isystem /opt/hostedtoolcache/Python/3.11.17/x64/include/python3.11 -isystem /home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/build-env/lib/python3.11/site-packages/pybind11/include -isystem /home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/build-env/lib/python3.11/site-packages/numpy/_core/include -O3 -DNDEBUG -fPIC -fvisibility=hidden -flto=auto -fno-fat-lto-objects -fopenmp -ffp-contract=off -fno-fast-math -frounding-math -o CMakeFiles/_core.dir/src/bind_finite_radon.cpp.o -c /home/runner/work/scikit-imagexx/scikit-imagexx/src/bind_finite_radon.cpp",
+      "file": "/home/runner/work/scikit-imagexx/scikit-imagexx/src/bind_finite_radon.cpp",
+      "output": "/home/runner/work/scikit-imagexx/scikit-imagexx/build/public-qualification/minimum/native-build/CMakeFiles/_core.dir/src/bind_finite_radon.cpp.o"
+    },
+    "proven": "bind_finite_radon.cpp includes build numpy/_numpyconfig.h, then ABI>=0x02000000 explicitly defines NPY_TARGET_VERSION0x00000012 before array/ufunc headers. Retained numpyconfig sets FEATURE_VERSION to that target; NumPy2.4.6 headers fullAPI0x15 and ABI0x02000000 do not change this explicit minimum feature target0x12. _import_array compares feature target with runtime feature0x10 (NumPy1.24) and emits exact retained error before the module can import.",
+    "actual_error": "RuntimeError: module was compiled against NumPy C-API version0x12 (NumPy2.0) but running NumPy has C-API version0x10; followed by ImportError: initialization failed.",
+    "policy_dependency": "Same source uses compile-time NPY_ABI_VERSION>=2.0 to select PyUFunc_GiveFloatingpointErrors, a feature>=2.0 ufuncAPI slot. Its old1.24 GetPyValues/handlefperr branch is excluded when compiling against2.4.6. Lowering/bypassing only the import guard is not a complete policy compatibility remedy; the cross-runtime policy path must be source-faithful and actually tested.",
+    "attribution": "Direct source/header/actual compile-command/runtime-METADATA and error agreement, no binary reverse engineering/new arithmetic/original calls needed. This proves the failed minimum import cause; it does not certify a future fix."
+  },
+  "actual_stages": {
+    "successful_preparation_commands": [
+      {
+        "label": "source-archive",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:19.570925+00:00",
+        "finished": "2026-11-06T22:45:24.858480+00:00"
+      },
+      {
+        "label": "venv-build-env",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:24.919845+00:00",
+        "finished": "2026-11-06T22:45:28.091980+00:00"
+      },
+      {
+        "label": "venv-runtime-env",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:28.124622+00:00",
+        "finished": "2026-11-06T22:45:30.527872+00:00"
+      },
+      {
+        "label": "build-download",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:30.570339+00:00",
+        "finished": "2026-11-06T22:45:31.868863+00:00"
+      },
+      {
+        "label": "build-install",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:31.947956+00:00",
+        "finished": "2026-11-06T22:45:33.331725+00:00"
+      },
+      {
+        "label": "runtime-download",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:33.332414+00:00",
+        "finished": "2026-11-06T22:45:35.586298+00:00"
+      },
+      {
+        "label": "runtime-install",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:35.738677+00:00",
+        "finished": "2026-11-06T22:45:37.322271+00:00"
+      },
+      {
+        "label": "build-headers",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:37.324161+00:00",
+        "finished": "2026-11-06T22:45:37.608008+00:00"
+      },
+      {
+        "label": "build-whole-product",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:45:37.608662+00:00",
+        "finished": "2026-11-06T22:48:54.892507+00:00"
+      },
+      {
+        "label": "gather-build-identity-facts",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:48:54.893153+00:00",
+        "finished": "2026-11-06T22:49:02.189079+00:00"
+      },
+      {
+        "label": "capture-build-identity",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:49:02.198571+00:00",
+        "finished": "2026-11-06T22:49:09.045145+00:00"
+      },
+      {
+        "label": "prepare-util-views-fenv",
+        "exit": 0,
+        "state": "terminal",
+        "started": "2026-11-06T22:49:09.366363+00:00",
+        "finished": "2026-11-06T22:49:09.999691+00:00"
+      }
+    ],
+    "first_failed_command": {
+      "label": "initial-public-admission",
+      "exit": 1,
+      "state": "terminal",
+      "started": "2026-11-06T22:49:10.026640+00:00",
+      "finished": "2026-11-06T22:49:11.382631+00:00"
+    },
+    "source_guards": "Host job log before preparation reports3229passed and8subtests in107.01s; API tooling-guard step SUCCESS. This is source/tool evidence, not public numerical parity.",
+    "FENV": "prepare-util-views-fenv command terminal0, log PASS_SOURCE_BUILT_FENV32 and receipt binding recorded. Only its preparation metadata was read here; no new helper/library-control acceptance or product FP parity is inferred.",
+    "initial_admission": "Child calls admission before importing pytest/contracts/fixtures. Package/interpreter/environment checks precede importskimagexx; actual stack stops on import of sole_core in skimagexx/__init__.py. Public namespace/native/defaultworker/hot-swap ownership checks after import were not reached.",
+    "not_run": "No public pytest group, numerical/reference fixture, scalar-disabled qualification mode, SDK client corpus/compile/run, generated-corpus check or controlled stager command occurs after the failed initial import. No root-profile public XML exists. Independent seal step correctly fails with no terminal acceptance seal; bounded staging/upload step is SKIPPED.",
+    "public_XML_executed": 0,
+    "SDK_consumer_checks_executed": 0,
+    "corpora_checks_executed": 0,
+    "qualification_seal_present": false,
+    "independent_verification_present": false
+  },
+  "metadata_not_runtime_acceptance": {
+    "source_files": 2784,
+    "image_count": 275,
+    "registered_count": 278,
+    "metadata_count": 3,
+    "product_members": 222,
+    "package_member_hash_entries": 222,
+    "SDK_members": 105,
+    "SDK_manifest_hash_entries": 105,
+    "SDK_headers": 91,
+    "SDK_checks_planned": 70,
+    "SDK_families_planned": 35,
+    "product_scope": "current275",
+    "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "record_verified_metadata": true,
+    "wheel_sha256_reused": "4a86f82b0309a51537292f4c4da4cca0babbadc7c693381f190efd058fe4d5db",
+    "source_archive_sha256_reused": "a94909437d7e7c6f9ed14776e9fdb2ee49a2cfcfb71e56296d96faa4bbcb5540",
+    "F1_receipt_binding_metadata": {
+      "receipt": "util-views-fenv/receipt.json",
+      "receipt_sha256": "5df0878cd438a4147cde40cf12415b2011bcbb96e40f54e226abc60b49eb8beb"
+    },
+    "planned_corpora_categories": 5
+  },
+  "retained_status_scope": {
+    "observation": {
+      "path": "build/mark-lbp-radon-util-qualification-v1/jobs-observation-v2.json",
+      "bytes": 15856,
+      "sha256": "402b3a8961fd26cbbfaa4d3004124b905c678b6842f50495df7a731fccfe9647"
+    },
+    "jobs_at_that_observation": [
+      {
+        "id": 128198108980,
+        "name": "qualify (ubuntu-24.04, modern, 3.13.16)",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 128198109389,
+        "name": "qualify (ubuntu-24.04, minimum, 3.11.17)",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 128198109485,
+        "name": "qualify (windows-latest, windows, 3.13.16)",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 128198109594,
+        "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
+        "status": "in_progress",
+        "conclusion": null
+      }
+    ],
+    "statement": "Three other same-run jobs were in_progress in retained observation; root tracks them separately. This review did not query or assert the parentrun terminal status and did not wait for other profiles. The failed minimum job and its artifact are terminal; whole-campaign terminal aggregate/admission remains pending."
+  },
+  "small_read_scope": {
+    "archive_members_central_directory_only": 27565,
+    "small_payloads_authenticated": 19,
+    "small_payloads": {
+      "build-headers.json": {
+        "archive_member": "public-qualification/minimum/build-headers.json",
+        "bytes": 9689,
+        "CRC32": "9fdb291a",
+        "sha256": "8d2e2d5880f6cbb4a78cfc8dadb06a3ccc4d0bbbe6f55d3f74120a57f8d51a11",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/build-headers.json"
+      },
+      "interpreter-provenance.json": {
+        "archive_member": "public-qualification/minimum/interpreter-provenance.json",
+        "bytes": 1842,
+        "CRC32": "3491e7e3",
+        "sha256": "1be55f80be937b79a19c7c19d5f55fc53b2027b98bc96e5d4dd11e0910d34ea8",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/interpreter-provenance.json"
+      },
+      "native-build-properties.json": {
+        "archive_member": "public-qualification/minimum/native-build-properties.json",
+        "bytes": 573,
+        "CRC32": "a17bc5cc",
+        "sha256": "2abac9b3034b185c5d26131a01468475fcb038b53131a075b459c0bc51963d2c",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/native-build-properties.json"
+      },
+      "commands.json": {
+        "archive_member": "public-qualification/minimum/commands.json",
+        "bytes": 10472,
+        "CRC32": "be5cde9d",
+        "sha256": "4ec003419542e76df47b117aaf2e85dc8641aae0f753a3f23c17f88cdf708fcd",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/commands.json"
+      },
+      "state.json": {
+        "archive_member": "public-qualification/minimum/state.json",
+        "bytes": 352114,
+        "CRC32": "78963f5b",
+        "sha256": "d764adefe52e1d1f7b782d35dfb8c7e25a2c47bec171f43201b013f2caac7053",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/state.json"
+      },
+      "plan.json": {
+        "archive_member": "public-qualification/minimum/plan.json",
+        "bytes": 21496,
+        "CRC32": "e69d6618",
+        "sha256": "6b1750bd35c78e916450376bb79778ea4dbb0ee2d15d4a09896301ffc0abc73d",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/plan.json"
+      },
+      "package.json": {
+        "archive_member": "public-qualification/minimum/package.json",
+        "bytes": 36320,
+        "CRC32": "668f84a2",
+        "sha256": "a27dd7974ababa01efec6a1d6762abc4b21a84b4dfe96ad6cd54c784f7dbb20c",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/package.json"
+      },
+      "failure-2328.json": {
+        "archive_member": "public-qualification/minimum/failure-2328.json",
+        "bytes": 190,
+        "CRC32": "711a98eb",
+        "sha256": "6520a3a46fbeab36c1f6381635f56a65df6a4fc887ed8c3d95d9b17b187188f2",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/failure-2328.json"
+      },
+      "failure-3909.json": {
+        "archive_member": "public-qualification/minimum/failure-3909.json",
+        "bytes": 149,
+        "CRC32": "a175b333",
+        "sha256": "4e0392131ad0db22e5763064a2ff331292db88aa32f9c4a00b5fa814fb9350e5",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/failure-3909.json"
+      },
+      "initial-public-admission.log": {
+        "archive_member": "public-qualification/minimum/initial-public-admission.log",
+        "bytes": 1558,
+        "CRC32": "ec355a98",
+        "sha256": "d1c947fc809d2d14f03512d3a507d64e02150dc4174c7de266507becc28c3425",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/initial-public-admission.log"
+      },
+      "prepare-util-views-fenv.log": {
+        "archive_member": "public-qualification/minimum/prepare-util-views-fenv.log",
+        "bytes": 462,
+        "CRC32": "4891cdc5",
+        "sha256": "f89258585208dbe1991e0ddd7caad3d958a964d6d3e5c66d2d19f2015e2a1a56",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/prepare-util-views-fenv.log"
+      },
+      "runtime-install.log": {
+        "archive_member": "public-qualification/minimum/runtime-install.log",
+        "bytes": 1899,
+        "CRC32": "9a4b40be",
+        "sha256": "930ffd8292f9fe819ea224f79d9b8092e078a7b0af3a1f48fa4db38890285b74",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/runtime-install.log"
+      },
+      "build-install.log": {
+        "archive_member": "public-qualification/minimum/build-install.log",
+        "bytes": 1117,
+        "CRC32": "818d4291",
+        "sha256": "0a5cf5d5083fce956be28beef48defb8a5d22ad4da23ebb90ee4ea6bac40fd30",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/build-install.log"
+      },
+      "native-build/compile_commands.json": {
+        "archive_member": "public-qualification/minimum/native-build/compile_commands.json",
+        "bytes": 208119,
+        "CRC32": "2012b1da",
+        "sha256": "4d438fe369084c70d713a3e204a7694f5e7951e64b0c1c285073f2994c2a746c",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/native-build/compile_commands.json"
+      },
+      "build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/_numpyconfig.h": {
+        "archive_member": "public-qualification/minimum/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/_numpyconfig.h",
+        "bytes": 926,
+        "CRC32": "47513a3d",
+        "sha256": "7d95e1cf6a7184f507d7ec7d2e3615199757c67c9035724e517dd2dd7d0eba85",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/_numpyconfig.h"
+      },
+      "build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/numpyconfig.h": {
+        "archive_member": "public-qualification/minimum/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/numpyconfig.h",
+        "bytes": 7466,
+        "CRC32": "7ddbe25a",
+        "sha256": "163c41f9cc1c4bcc17da63186368044710e062fb1535a0e6ef582294c6cc6089",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/numpyconfig.h"
+      },
+      "build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/__multiarray_api.h": {
+        "archive_member": "public-qualification/minimum/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/__multiarray_api.h",
+        "bytes": 61743,
+        "CRC32": "7d4983e0",
+        "sha256": "260b8e85e2294969e6f6ebe5adf75964934e7f43f721712a41cd77c26c5a7821",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/__multiarray_api.h"
+      },
+      "build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/__ufunc_api.h": {
+        "archive_member": "public-qualification/minimum/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/__ufunc_api.h",
+        "bytes": 13405,
+        "CRC32": "d1de32e0",
+        "sha256": "5cf47325b50803e6b255024a3b17893919feb5871a99d8fd1a4c3659019164f7",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/build-env/lib/python3.11/site-packages/numpy/_core/include/numpy/__ufunc_api.h"
+      },
+      "runtime-env/lib/python3.11/site-packages/numpy-1.24.4.dist-info/METADATA": {
+        "archive_member": "public-qualification/minimum/runtime-env/lib/python3.11/site-packages/numpy-1.24.4.dist-info/METADATA",
+        "bytes": 5556,
+        "CRC32": "d3ffffd4",
+        "sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+        "local_path": "build/mark-lbp-radon-util-minimum-failure-independent-review-v1/small-artifact-members/runtime-env/lib/python3.11/site-packages/numpy-1.24.4.dist-info/METADATA"
+      }
+    },
+    "binary_and_archive_metadata_only": {
+      "members": 27565,
+      "source_archive_bytes": 68021926,
+      "core_members": [
+        {
+          "path": "public-qualification/minimum/package/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+          "bytes": 7733424,
+          "CRC32": "75bb5902"
+        }
+      ],
+      "public_profile_XML_members": [],
+      "all_XML_metadata": [
+        [
+          "public-qualification/minimum/build-env/lib/python3.11/site-packages/cmake/data/share/cmake-4.4/Templates/MSBuild/nasm.xml",
+          9209
+        ],
+        [
+          "public-qualification/minimum/build-env/lib/python3.11/site-packages/setuptools/command/launcher manifest.xml",
+          628
+        ],
+        [
+          "public-qualification/minimum/build-env/lib64/python3.11/site-packages/cmake/data/share/cmake-4.4/Templates/MSBuild/nasm.xml",
+          9209
+        ],
+        [
+          "public-qualification/minimum/build-env/lib64/python3.11/site-packages/setuptools/command/launcher manifest.xml",
+          628
+        ],
+        [
+          "public-qualification/minimum/runtime-env/lib/python3.11/site-packages/setuptools/command/launcher manifest.xml",
+          628
+        ],
+        [
+          "public-qualification/minimum/runtime-env/lib/python3.11/site-packages/skimage/data/lbpcascade_frontalface_opencv.xml",
+          51858
+        ],
+        [
+          "public-qualification/minimum/runtime-env/lib64/python3.11/site-packages/setuptools/command/launcher manifest.xml",
+          628
+        ],
+        [
+          "public-qualification/minimum/runtime-env/lib64/python3.11/site-packages/skimage/data/lbpcascade_frontalface_opencv.xml",
+          51858
+        ],
+        [
+          "qualification-tool-guards.xml",
+          509854
+        ]
+      ],
+      "terminal_qualification_seal_present": false,
+      "independent_verification_present": false
+    },
+    "source_archive": "68,021,926-byte source.zip not opened/extracted/hashed. Frozen8c Git source slices match state source file hashes instead.",
+    "archive_once_seal": "628,781,590-byte archive SHA5d591c015052713fb3d99ff53b7bfd8f04dde9b4122e02f46bb24ec141c69ae4 reused from actualAPI/root streaming receipt, downloadpasses1. No redownload, zip.testzip, whole ZIP/core/SDK archive/records/corpus reads or hashes."
+  },
+  "gates_passed": [
+    "Exact failed minimum job/source/run/artifact metadata identity and original once-retention receipt",
+    "Actual2.4.6 compile-header vs1.24.4 runtime provenance and explicit target0x12/runtimedata0x10 failure source attribution",
+    "Thirteen command exits identify firstfailure at initial admission, not numerical tests or SDK",
+    "Failure logs and failed-unsealed child/parent receipts preserved; no campaign or product acceptance fabricated"
+  ],
+  "gates_failed": [
+    "Minimum8c genuine initial-public-admission: exit1 NumPy feature-API incompatibility",
+    "Minimum terminal seal verification: no acceptance seal exists, staging correctly skipped"
+  ],
+  "gates_pending": [
+    {
+      "gate": "Narrow source-faithful cross-runtime NumPyCAPI/policy correction",
+      "owner": "boundary_worker",
+      "trigger": "Assigned source successor with compatible feature target/runtime-aware policy, samecp311 emitted binary loaded on actual1.24+2.4 and separatecp3132.5 scope. This review runs no fix or tests."
+    },
+    {
+      "gate": "Other three profiles terminal outcome and ALL failure review",
+      "owner": "root",
+      "trigger": "Observe original same-run handles; retain each artifact once only when actualterminal. No earlywholecampaign acceptance or unchanged retry."
+    },
+    {
+      "gate": "Combined successor shared integration/source admission",
+      "owner": "root then explicitly assigned sole integrator",
+      "trigger": "Root actualfollowup after B frozenfix; already-admitted VI may batch if dependency-ready. No integration begun in this review."
+    },
+    {
+      "gate": "Complete affected source barriers/actualfourprofile genuine SDK/public ownership and independent wholeproduct admission",
+      "owner": "root",
+      "trigger": "Only exact frozen corrected cumulative source after all actual blockers reconciled. Source/math/private checks or failedminimum package metadata cannot replace this gate."
+    },
+    {
+      "gate": "Actual benchmark/genuinebinding/performance and main delivery",
+      "owner": "root",
+      "trigger": "No installed accepted275 minimum/stager exists; all VI/controller contexts remainUNBOUND until real product/admission and separateGO."
+    }
+  ],
+  "prepared_reader_disposition": "Existing retainer binding/API receipt reused. Whole-profile and whole-campaign readers require terminal acceptance seal and full campaign prerequisites, absent here. They were not invoked or weakened for a failure-shaped early payload; this finite one-off source/log/metadata reader does not create a new qualification framework.",
+  "waste_reuse": {
+    "useful": "Failed genuine minimum preparation exposes a real cross-header/runtime dependency private same-header components/sourceguards did not establish. Compiled wheel,source/build provenance and header/runtime metadata retained for correction; no numerical test work falsely credited.",
+    "preventable": "Feature target and compile-time ABI policy choice were incompatible with declared1.24 minimum. Existing future readiness must demonstrate same-binary cross-runtime import/policy compatibility before another hosted campaign. Root already assigned B that bounded correction.",
+    "review_corrections": "First small reader classified dependency XML templates/cascade assets as public results and stopped; versioned v2 narrows actual root result XML, reuses all19already-extracted small payloads/source slices rather than rereading them. V3 only renames plan.corpora dictlength5 as categories, not execution count. All failed reader/older metadata retained.",
+    "observed": "Root download29.4547115s/onepass. Minimum job API22:43:12..22:49:53; preparation command timestamps retained. No extra measured costs; aggregate review CPU/wall unknown.",
+    "next_plan_correction": "Existing current275 failure packet should record terminalFAILED minimum at exact8c and thisCAPIcause, retainother3live/terminal states separately. After actual Bfix handoff/rootfollowup, batch only independently-admitted readycomponents, require source barriers and exact-source genuinequalification. Reviewed evidence reused; no standalone documentation/science campaign."
+  },
+  "review_execution": {
+    "scientific_imports": 0,
+    "reviewed_imports": 0,
+    "tests": 0,
+    "native": 0,
+    "helper": 0,
+    "build": 0,
+    "timing": 0,
+    "download": 0,
+    "archive_core_corpora_seal_hash": 0
+  },
+  "next_owner_trigger": "Root independently admits this scoped failed-profile diagnosis, waits/reconciles remaining actualprofile outcomes and Bsource proof, then issues explicit next integration followup. This reviewer has no active source author role or dispatch authority now."
+}

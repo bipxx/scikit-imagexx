@@ -1,0 +1,39 @@
+{
+  "schema": "finite-radon-numpy-abi-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_ROOT_CAUSE_ABI_AND_POLICY_COMPONENT_NOT_GENUINE_RELEASE",
+  "source": "2bb365be0ee0717013becbaced4660056bd3004a",
+  "handoff": {
+    "path": "build/finite-radon-numpy-abi-v1/handoff-v1.json",
+    "sha256": "e10d13884a8e100a36e5be987e0182e54f582aaf5ea09aff47c47494c8e2dd83"
+  },
+  "changed_files": {
+    "benchmarks/finite_radon_cases_v1.py": "6963f591c65eb4e9f6d2e184de45bfa7ac2e594dbca6862785eb35d2b11a656a",
+    "benchmarks/finite_radon_execution_v1.py": "f9115deb402f74b260a1357a5c44d267425fa0f7bfea3203a3268a17f5ce52b8",
+    "coverage/contracts/finite-radon-benchmark-execution-v3.json": "f61517649943b8760c93164bc72f8460b66b52438823bad8efc1d326cec9924a",
+    "coverage/contracts/finite-radon-native-v4.json": "51f6e56d32b6d576b14740cb4fec1c46ae3a5827b187eef5ee289dc1ee37b7be",
+    "coverage/contracts/finite-radon-numpy-abi-v1.json": "c8942fe67d18d9139c5a07afe3bcb62d83d6e954aac37f94b974f26ad3b04463",
+    "src/bind_finite_radon.cpp": "a00b4af8627906f583df926988470b5e93577846170691028a87d3dc1457cc29",
+    "tests/test_finite_radon_benchmark_execution.py": "763398ee07219deab9c3f57461645ae59347cadbd4519d57b36ecc1c5b93e491",
+    "tests/test_finite_radon_native_source.py": "79e3ecd4a48b5095c31641da8e84d277df018eaa7a5323c9e0f8af6f71ed7ee3",
+    "tests/test_finite_radon_numpy_abi_public.py": "b1c8105fa85c87f92c819f200c39be37dcef7123fdea45d1796bc649c2819158",
+    "tests/test_finite_radon_numpy_abi_source.py": "0a78d6c9df4785526152daa7a276a7707fe0c60f8fb1d1f57c81c983484a906a"
+  },
+  "authenticated_small_proofs": 49,
+  "production_delta": "Onlybinder; nativekernel/header/frontend/allreferencegolds unchanged. LowestNPY1.23featuretarget plus loaded-runtimeCFeatureVersion branch selects officialpinned ufuncAPI25/29 versus46. Read exacthelper signatures/ownedPyObjectcleanup/PyErrorpropagation and existingcomplex-warning phase; no masked afterflags or droppedpolicy.",
+  "exact_saved_comparisons": 448,
+  "exact_profile_XML": 554,
+  "candidate_numpy240_XML": 53,
+  "source_XML": 104,
+  "same_cp311_binary": "55ffe90e89a082ae46adf4987c2a984c8e31fd64220c7a9edc1f713cd98c6f0f",
+  "scope": "Samecp311binary builtwith2.5headers imports1.24.4+2.4.0 and ownpolicycontrols; separatecp313binary exact2.5.4/saved224. NumPy2.5requiresPython>=3.12, no impossiblecrossPythonclaim. MSVCcompileonlynoWindowsruntimecredit. Actualwarn/raise/call/log/print/ignore/complexorder/callbackmutation/erroridentity/metadata/worker/caller32 controls reviewed.",
+  "pending": [
+    "Selective shared activeRadon-nativev4/benchmarkv3/context collector integration",
+    "Separate Linux18policy selector, unchanged224savedseal",
+    "Complete actual workflowsourcebarriers bothretainedPythons normalplugins",
+    "Exactchangedsource fourprofilewholeproduct/SDK/stager admission",
+    "Actualboundbenchmarkcohorts/one-threadresults/main delivery",
+    "FullAPI/platform/providerdomains"
+  ],
+  "waste_review": "Mixedheaders/runtime gap fixed before newgenuine attempt; reuse185native/runtime and allgolds/envs, only2necessaryminor binder compiles/MSVCcompile.49smallproofs/source/5XML/currentbinaryidentity receipts authenticated, no science/tests/build/original/helper/largehash replay. Prior8cminimum failure remainsfailed; no unchangedqualificationretry. Nextsoleintegration readyVIplusABI correction, derivecounts fromactualsource."
+}

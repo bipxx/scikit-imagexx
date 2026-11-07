@@ -37053,7 +37053,13 @@
         "current_counts_root_admission": "coverage/evidence/variation-of-information-current-counts-root-admission-v1.json",
         "benchmark_source": "bef85f73adff89930f933e27f4a5ed3783c7eae1",
         "benchmark_handoff": "build/variation-of-information-benchmark-execution-v1/handoff-v1.json",
-        "benchmark_handoff_sha256": "19dd21e4ec087ca7ba136572415f61b9ab50991c44c52cf0b4b53a7f9e75b960"
+        "benchmark_handoff_sha256": "19dd21e4ec087ca7ba136572415f61b9ab50991c44c52cf0b4b53a7f9e75b960",
+        "large_benchmark_parity": {
+          "owner": "metrics_integrator",
+          "state": "source_readiness_preparation_assigned_zero_original_authority",
+          "scope": "Move alreadyplanned4frozenVIbenchmarklargecases exactvalue/FP parity earlier thanexpensivegenuine qualification; old8smallgoldcases do notestablish64-label BLAS/logassociation. Reuseexistingone-shot sourcebound capture/full32/helper/codec/runtime machinery, no newsampler/framework. Fixed4/profile prospective8total, source/storage/zero-body readiness androotseparateGO requiredbeforeany originalcall. Actualsourcecasebounds alreadybddadmitted; no recaptureofold8/profile.",
+          "next_gate": "Freeze smallest source-safety/readiness delta thenrootadmit/separateminimum4GO; modernonlyafteractualminimumreview. Stoponfail/no retry. Nativecomparisonafterrawadmission usingcurrent1a objects; no publictiming or fakegenuinebinding."
+        }
       }
     },
     {
@@ -37513,7 +37519,7 @@
       "id": "mark-lbp-enabled-integration-v1",
       "kind": "implementation",
       "owner": "metrics_integrator",
-      "state": "exact8c_minimum_failed_initial_import_other3_profiles_live",
+      "state": "8c_campaign_terminal_failure_three_success_minimum_importfailed_corrected_integration_live",
       "target_apis": [
         "segmentation.mark_boundaries",
         "feature.draw_multiblock_lbp"
@@ -37538,10 +37544,10 @@
         "mark-boundaries-source-first-v1"
       ],
       "acceptance": "NEW isolated successor froma6, selectively import exactadmittedLBP0e51/22 and MARK6d4373/21 with existingreference/observerdeps. Remove temporary PRIVATE_LBP branches/config/headerexclusions and wire ordinary enabled complete operations, samecore/CMake/exportedSDK/publicroutes/registry. Strict existing current_install_layout/sourcecollector must accept actualsource without private-model emulation; derive actualcounts. Preserveoldcontracts via exactnarrow sourcecontexts only where literals trulychanged. Source-only affected checks BOTHretainedPythons normalconftest/plugins/0science; existingCMakeconfigure/affectedABI/clientcompile only asinvalidated. No newenv/download/fullproductbuild/original/nativepublic/timing/hosted untilrootnextgate. FullLinuxFPsaved suites require real source-built helper and cannotrunasWindowsfull32; freeze explicitselectors/platformfrontiers without skips or falseWindowsparity. Genuineonecore/completeinstalledSDK/hotswap/scalar/globalworkers/default1/fulloriginalbenchmark/fourprofilerelease pending. Rootalsoadmits MARKbenchmark446bde47/46ffhandoff: selectively import exactfivefiles after52v4/source reviewcb9a and26proof reconciliation. Add actualprebuild sourceguard selection; no actualouter MARKcohort/timing authority. Latestadmittedbenchmark6cc0/cacf ninefiledelta supersedes sharedMARK446 envelope only through preservedcontext-v2/exacthistory; reconcile currentSDKclient/gold sourcepins once and rerun onlyaffected97/combinedsource guards, no numericalreplay.",
-      "current_checkpoint": "Actual minimum128198109389 terminalFAILURE atinitial-public-admission before parity: NumPyCAPI0x12 required vs runtime0x10, originating finiteRadon binder header2 NPY_TARGET_VERSION0x12. Terminalartifact13547021475 retainedonce628781590B/digest5d591c01; rawinitiallog read. Other3jobs stilllive, no wholequalification/measurement/delivery. Native Radon/private perversion builds didnotexercise one2.xbuilt extension on1.24runtime.",
+      "current_checkpoint": "Exact8c run42306808073 terminalFAILED, minimuminitialimportABI mismatch;3otherprofiles passedscopedaudits718560XML/210SDK/36corpora. Sixarchivesretainedonce,114504sealedrecords/5706stagefiles, no wholeacceptance. Root1c0d auditedfailure. RsoleunfrozencorrectedABI+VI+flood+cost sourceplan280/283/226/107/37/74; sourceguards/currentcropclosure inprogress, notqualified.",
       "next_gate": {
-        "owner": "boundary_worker isolated family ABI fix; root other3jobs/independentadmission/integration",
-        "action": "Fix actual minimum-compatible Radon NumPy CAPI initialization/policy dispatch with one2.x-header-built binder tested on1.24 and2.5 runtimes usingretainedobjects. Preserve numeric/FP/warnings/callbacks and failed8ccampaign. No fullproduct/env/download/neworiginal/timing/hosted retry. Rootcomplete source successors/genuine gates afterindependentfix; other3jobs continue."
+        "owner": "readiness_reviewer soleintegration then root",
+        "action": "R confirmsliveisolated integration handle and freezesearliest compatible correctedbundle, no original/genuine/fullSDK/hosted/timing. Root independentlyadmits; no nextfullbuild foralready-readyVI whenonecompatiblebundle canqualify."
       },
       "source_sha": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
       "sourcebarrier_terminals": [
@@ -37549,7 +37555,15 @@
         "coverage/evidence/mark-lbp-radon-util-sourcebarrier-windows313-v2.json"
       ],
       "run": 42306808073,
-      "watcher_session": 2782
+      "watcher_session": 2782,
+      "terminal_failure_binding": "build/mark-lbp-radon-util-qualification-v1/42306808073/freeze-contract-failed-v2.json",
+      "terminal_failure_binding_sha256": "04102a31c64c3778ae315c4bd934142cd2932f015e1b8414933b40017d6205bf",
+      "old_campaign_next_gate": {
+        "owner": "boundary_worker then root",
+        "action": "Once-only actual6artifactfailureaudit withmodern/min receipts reused andWindows/debugremainingseals. Minimumhas0publicXML/SDK/corpus, other3actualscopedresults only, neverwhole275acceptance. Rcorrectedreadybundleindependent; no unchangedretry."
+      },
+      "old_campaign_root_audit": "coverage/evidence/mark-lbp-radon-util-failed-campaign-root-admission-v1.json",
+      "watcher_terminal_exit": 1
     },
     {
       "id": "lbp-benchmark-execution-v1",
@@ -37628,7 +37642,7 @@
       "id": "flood-fill-source-first-v1",
       "kind": "implementation",
       "owner": "metrics_integrator",
-      "state": "root192raw_admitted_native_fullfamily_assigned_C",
+      "state": "dd1a_root_scoped_admitted_shared_intake_live_native_allocation_successor_assigned",
       "apis": [],
       "target_apis": [
         "morphology.flood",
@@ -37644,8 +37658,8 @@
       "scope": "One canonical flood/fill family plus morphology/segmentation identity aliases; exact existingplan/source/test/native/contract scan foundonly unassignedinventory, no existingfamily packet. Current275integration remainsindependent.",
       "acceptance": "Source/test first: inspect pinned0.26Python+compiledsource semantics and aliasidentity usingretainedpackages/sources; freeze perAPI dtype/layout/shape/seed/footprint/connectivity/tolerance/newvalue/inplace/metadata/error/FP/protocol contract, bounded recipes and source/storage safety before anyoriginal authority. Reuse queue/reconstruction/view/conversion primitives where exactordering matches, no new genericframework. Nativeowned matching flood mask and fill, typedSDK/hotswap/parity/applicable SIMD/globaloptionalworkers default1 and prospectivepublicone-thread cases required. Orderedqueue/no-worker serialscope disclosed when semantics require. Full domain/platform gaps explicit.",
       "next_gate": {
-        "owner": "metrics_integrator family implementation then independentroot",
-        "action": "NEWisolated successor fromadmitted7c14 source+192rawad6a: own flood/fill native/header/binder/frontend/contracts/perAPIparity/completeSDKclient/executablebenchmarkfamily; preserve aliases/profileFP/error/metadata/mutation, optionalglobalworkersdefault1 and scalar/SIMD rationale. No originalrecapture/genuine/fullproduct/timing/sharededits. Freezeonecoherentnativebatch then independentadmission; BABI/RVIconsumer independent."
+        "owner": "boundary_worker independentreview then root",
+        "action": "Admit actual15familyfiles/106smallproofs/800privatechecks and strict192savedrows+targetFP/caller32, completeexportedSDK/modes/MSVCcompile/UNBOUND8caseconsumer/provider/alias/scope. No test/science replay. Root includeonlyifreviewadmission beforeRfreezecompatiblewithoutdelay;otherwise nextreadybundle."
       },
       "source_sha": "5eb515a92cf37b905e2d469c8d24f1c0028959fc",
       "root_source_admission": "build/flood-fill-source-root-admission-v1/admission-v1.json",
@@ -37663,7 +37677,35 @@
       "modern_GO_sha256": "7e2b53bebb3b75ef9162b5fdf8b61693c01c27eb7a191764148e27e4683b9801",
       "current_checkpoint": "Actualminimum96/79returns17errors andmodern96/78returns18errors,384started/completed events total,192full32callerrestores/processfull32/sourceclean. No automaticretry; modernuint8newvalue300 profiledifference retained. B independent typedraw/GO/journalreview live; no native/genuine/performance credit.",
       "root_raw_admission": "build/flood-fill-raw-root-admission-v1/admission-v1.json",
-      "root_raw_admission_sha256": "ad6aa1c996346bee7978e8a77919005ba4611c2a1eb258204ea039cf04c4d47d"
+      "root_raw_admission_sha256": "ad6aa1c996346bee7978e8a77919005ba4611c2a1eb258204ea039cf04c4d47d",
+      "native_source": "dd1aebd5d8619e4f6d2ea3925bb3e3e62b728f4f",
+      "native_handoff": "build/flood-fill-native-v1/handoff-v1.json",
+      "native_handoff_sha256": "1e69b9a490087bcf5214205cbb0953215849ae97c029e7311203692ad95ea8f4",
+      "root_native_admission": "build/flood-fill-native-root-admission-v1/admission-v1.json",
+      "root_native_admission_sha256": "b0c7215661aed3200219b7c4a66c96e0f320ddf242c188a43983ce7219bd57f1",
+      "native_cost_successor": {
+        "owner": "metrics_integrator",
+        "scope": "NEWversionedfamily-only successor afteractualuntimed allocationcounts identify per-pixel coordinatesvector/new/unravel cost. PreserveoldCPP/flags/SDK/captured192/NumPyprovidersemantics. Reuseprimitives, eliminate demonstratedrepeatedwork notspeculativeconcurrency. No original-publictiming; nativeonlycomparison ifexplicitlyisolatedfromlocalbuild/tests; stopifnosignal. NeverdelayRreadybundlefreezeforoptimization."
+      }
+    },
+    {
+      "id": "rolling-ball-source-first-v1",
+      "kind": "implementation",
+      "owner": "boundary_worker",
+      "state": "assigned_source_tests_safety_readiness_zero_original_budget",
+      "apis": [],
+      "target_apis": [
+        "restoration.rolling_ball"
+      ],
+      "owns": [
+        "NEW rolling_ball native/header/binder/frontend/contracts/parity/SDK/executablebenchmark family files only in isolatedworktree; sharedfilesreservedroot"
+      ],
+      "scope": "Next dependency-ready corebackground-removal API; existing ball/ellipsoidkernel source/reference/native components are reusable only in their own scopes, notrollingball output evidence.",
+      "acceptance": "Readpinned0.26fullrollingball Python/Cython/FIFO/helpers andcurrentworkers/num_threadsDEPRECATED behavior. Freezeexactsignature,dtype/layout/mutation/kernel/radius/nansafe/padding/nonfinite/error/FP/deprecation/globalworker contract and bounded source/storage workload recipes before originals. Reuse existingtypedobserver/codec/FEnv one-shot controls; no new framework. Source/pure guards bothretainedPythons normalplugins0science. Original/native/helper/build/env/download/timing/hosted authority0 untilrootappropriategates; ifmatchingoldrollingball refs existreuse ratherthanrecapture.",
+      "next_gate": {
+        "owner": "boundary_worker then root",
+        "action": "One coherent source/test/safety/readiness handoff identifying exactupstreamcontract, prerequisiteexistingCPPkernel reuse, bounded recipe/storage/CPU proof and actualzero-body controls; no rollingball computation/capture before rootGO. Mustnotdelaycurrent280integration or VIlarge preflight."
+      }
     }
   ],
   "unassigned_inventoried_apis": [
@@ -37959,7 +38001,6 @@
     "restoration.estimate_sigma",
     "restoration.inpaint_biharmonic",
     "restoration.richardson_lucy",
-    "restoration.rolling_ball",
     "restoration.unsupervised_wiener",
     "restoration.unwrap_phase",
     "restoration.wiener",
@@ -38326,15 +38367,15 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 265,
+    "native_partial_image_names": 271,
     "metadata_names": 3,
-    "upstream_only_names": 203,
+    "upstream_only_names": 197,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Main production projection matches exact qualified683:265native-partial image APIs,203upstream-only,3metadata,5native-class-partial,1exception-metadata-provider. Counts do not establish fullcontracts or broad speed superiority; initial current28case cohort18wins10losses. Historical cf0/source258 evidence retained in unchanged receipts and prior packets.",
+    "note": "Shipping API/source/accepted a6 qualification reconciled:271native-partial/197upstream-only/3metadata/5native-class-partial/1exception-provider,477total/29classes284members. Main deliveryef465; published68case34wins34losses. Failed8c275 andfrozen unqualified280candidate notshipping. Previous265snapshot wasstale despite latestqualificationalready271; correctedmetadata only, no evidencepromotion/science rerun.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
-    "accepted_binary_image_names": 265
+    "accepted_binary_image_names": 271
   },
   "execution_policy": {
     "active_workers": [
@@ -38765,9 +38806,9 @@
       }
     },
     "current_review_assignments": {
-      "boundary_worker": "Next critical family-only Radon NumPy build/runtime CAPI correction; flood rawreview terminal rootadmitted, nativeflood notstarted.",
-      "readiness_reviewer": "VIconsumerbef85 frozen; now live independent actualterminalminimum failed-artifact metadata/source/ABI review, no wholecampaignterminal claim or archive/core rehash.",
-      "metrics_integrator": "Live isolated coherentflood/fill native/public/completeSDK/executablebenchmark batch fromadmitted192raw; no originalcalls or sharededits. JOIN/util7b010 root2f850 admittedUNBOUND."
+      "boundary_worker": "Old8c failedcampaign audit d878 terminal; rootaggregate1c0d auditedfailure/no release. Next isolated rolling_ball source/tests/safety/readiness, zero original/native budget, reuse ownedkernel assessments only scoped.",
+      "readiness_reviewer": "Next sole correctedsharedABI+readyVI integration; failedminimum independentreviewterminal71f5rootadmitted. No waitunfinishedflood.",
+      "metrics_integrator": "CPPcost e3b899/h81d867 frozen, pendingrootreview; next source-ready4caseVIlargeparity capture preparation,0originalauthority. Knownlarger0ULP frontier isexistingplannedbenchmarkgate, reorderedbeforegenuine toavoidlatefailure."
     },
     "next_action": "Fix actual minimum-compatible Radon NumPy CAPI initialization/policy dispatch with one2.x-header-built binder tested on1.24 and2.5 runtimes usingretainedobjects. Preserve numeric/FP/warnings/callbacks and failed8ccampaign. No fullproduct/env/download/neworiginal/timing/hosted retry. Rootcomplete source successors/genuine gates afterindependentfix; other3jobs continue.",
     "current_checkpoint": {
@@ -38775,9 +38816,9 @@
       "qualified_image_names": 271,
       "prepared_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
       "prepared_run": 42262940227,
-      "candidate_source": "2991881411972e6266f7e132c9dca8b7226a8567",
-      "candidate_image_names": 273,
-      "candidate_status": "FAILED_EXACT273_42280271105_ALL4_PROFILES_48_LBP_GRAY_DTYPE_METADATA_FAILURES_ROOT81b34522; main271 delivered and68scopedperformance34wins34losses; sourcecorrection/integration pending.",
+      "candidate_source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+      "candidate_image_names": 280,
+      "candidate_status": "FROZEN_AUTHOR_HANDOFF_PENDING_INDEPENDENT_ADMISSION_COMPLETE_SOURCE_BARRIERS_AND_GENUINE_QUALIFICATION",
       "performance_evidence": "benchmarks/join-util-views-minimum-initial-v1/README.md",
       "readiness_reviews": [
         {
@@ -38785,54 +38826,44 @@
           "sha256": "2c314a7095dc5088107df993e4f6e56f5eddd698de697963924a8bebc6b4c3db"
         }
       ],
-      "candidate_run": 42280271105,
-      "candidate_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/42280271105",
-      "candidate_qualification_run": 42280271105,
-      "candidate_evidence": null,
-      "candidate_qualification_status": "LIVE_FOUR_PROFILES_GENUINE_STAGE_AFTER_HOSTED_SOURCE_BARRIERS",
-      "next_release_source": "2991881411972e6266f7e132c9dca8b7226a8567",
-      "next_release_expected_images": 273,
-      "next_release_expected_product": 220,
-      "next_release_expected_SDK": 104,
+      "candidate_run": null,
+      "candidate_url": null,
+      "candidate_qualification_run": null,
+      "candidate_evidence": "coverage/evidence/abi-vi-cumulative-handoff-v1.json",
+      "candidate_qualification_status": "NOT_DISPATCHED",
+      "next_release_source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+      "next_release_expected_images": 280,
+      "next_release_expected_product": 226,
+      "next_release_expected_SDK": 107,
       "optimization_prepare_source": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
       "optimization_prepare_run": 41967608976,
       "optimization_prepare_status": "Admitted13909135:189/89,15952XML incl2installedboundarynodes;coref200/Python/13deps exact554,35timingsskip.",
-      "next_release_status": "Exact299genuinequalificationLIVE42280271105; rootpreparedreaders awaitactualterminal. MARK/LBPcontroller3548/f476 sourceUNBOUND untilactualgenuine273/rootstager admission, thenactualcohorts/timing/raw/delivery.",
-      "next_release_qualification_run": 42280271105,
+      "next_release_status": "Root independent admission; complete actual 148-selector source commands on both retained Pythons remain pending before genuine qualification. Author affected checks1037 each are scoped, not substitutes.",
+      "next_release_qualification_run": null,
       "optimization_comparison_run": 41969983206,
       "optimization_comparison_status": "Terminaldecisionrejection(notsetup),raw13389417631 needsindividualgateaudit;old554DISCARDdistinct."
     },
     "shared_integration_author": {
-      "owner": "metrics_integrator",
-      "state": "8c_minimum_initial_admission_failed_ABI_correction_B_active_other3profiles_live",
-      "base": "2991881411972e6266f7e132c9dca8b7226a8567",
-      "scope": "Selectively compose root-admitted utilityf48/JOINe03/Radon185 and frozen LBPgraymetadata correction after independent admission. Root reserves final admission/main; no second integrator or cumulative readyRC.",
-      "prerequisites": "Root utility463df5ba/JOINf953b1ae/Radon94290698 and LBPgraymetadatafix098caefe now admitted; Bfix99d6 sixfiles source/handoffb6a ready for Cselectiveintake. Failed273 root81b34522 remainsfailure. Source/currentcontext/dependentparity/fullbothPython/genuine/performance stillmandatory.",
-      "required_evidence": "Exactsourceprojection/dependencies; actual selectors/context/hash inverses preserving frozenhistory; dependent LBPcopy SDK/saved closure and Linuxpost203 F1env/collector transport. Derive source/SDK/product counts from actualsource, no guessed hardcodes. Complete affected guards bothretainedPython normalplugins0science before hostedprep and completeactualworkflow barrier bothPython beforequalification. Genuine/performance/rootbinding remainlatergates.",
-      "next_gate": "Preserve failedminimum8c artifact once, inspectother3same-run outcomes. Bcross-runtimeRadonABI fix independentadmission then rootsole selectiveintegration/currentcontexts/fullbothPythonbarriers before one changedsourcegenuine successor. No unchanged retry or bind failed8c asqualified.",
-      "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
-      "handoff": "build/mark-lbp-radon-util-integration-v1/handoff-v1.json",
-      "handoff_sha256": "7c7a8e2c60a48636cc2b7c10a89333a0c9d79b647ffafaaec3b0bbb36534b5bc",
-      "independent_review_owner": "boundary_worker",
-      "actual_derived_counts": {
-        "images": 275,
-        "registered": 278,
-        "product": 222,
-        "SDK": 105,
-        "families": 35,
-        "SDK_checks_per_profile": 70
+      "owner": "readiness_reviewer",
+      "state": "frozen_pending_root_independent_admission",
+      "base": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+      "scope": "Sole NEWisolated sharedcandidate: selectroot-admitted2bbRadonABI/nativev4/benchmarkv3 plusroot-admittedVIb331/1a/bef85 currentcount/native/SDK/executableconsumer. Preservefrozenhistories/oldsharedcounts ancestry; no blindmerge. No waitforunfinishedflood; onlyincludeifrootindependentlyadmitsbeforefreeze withoutdelay.",
+      "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
+      "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
+      "next_gate": "Root independent admission; complete actual 148-selector source commands on both retained Pythons remain pending before genuine qualification. Author affected checks1037 each are scoped, not substitutes.",
+      "actual_staging_counts": {
+        "image_paths": 280,
+        "registered_functions": 283,
+        "product_members": 226,
+        "SDK_members": 107,
+        "SDK_families": 37,
+        "SDK_checks": 74,
+        "scope": "Unfrozen sourceplan only, no readiness/genuine/shipping promotion."
       },
-      "failure": "IndependentB+root staticsource confirm transform.py importsfrt2/ifrt2 at233 but __all__ lacksboth, so starimports omit advertisednewAPIs. Source0e17/h7c7a retainedunready; no completebarrier or hostedrun executed.",
-      "root_source_admission": "build/mark-lbp-radon-util-root-source-admission-v1/admission-v1.json",
-      "root_source_admission_sha256": "caadd40a7c84f4b3504e6d67f78cc6fb4c2e9faecd7b04d9f223ec623b79d286",
-      "root_complete_barrier_failure": "build/mark-lbp-radon-util-complete-barrier-failure-v1/admission-v1.json",
-      "root_complete_barrier_failure_sha256": "2e49c3a5cf88157682890225139a53a8b172853c176de67f1899bdf0657e67d2",
-      "root_reader_admission": "build/mark-lbp-radon-util-join-reader-root-admission-v1/admission-v1.json",
-      "root_reader_admission_sha256": "39b66e694ec8fb16c5b702841576590a67112add805bb49b8f557407bb2896e1",
-      "reader_fix_handoff": "build/mark-lbp-radon-util-join-reader-fix-v1/handoff-v1.json",
-      "reader_fix_handoff_sha256": "378e285ef678ac6ca744b6acec2969eb1b443c11f9a575fd9b7b9e5de84169ff",
-      "root_complete_readiness": "coverage/evidence/mark-lbp-radon-util-complete-readiness-admission-v1.json",
-      "root_complete_readiness_sha256": "7686f0e4bffb6d3bbbcdb49bc75c32c96ad08ca70140e2205b36898315f3c3f6"
+      "ready_flood_cost_admission": "coverage/evidence/flood-fill-cost-root-admission-v1.json",
+      "source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+      "handoff": "coverage/evidence/abi-vi-cumulative-handoff-v1.json",
+      "handoff_sha256": "cab3eca3817ddd694ce364888d80897493f45d7eccc8a0592bfd45ecee6dc4ae"
     }
   },
   "parallel_review": {
@@ -39596,6 +39627,13 @@
       "path": "build/boundary-bound-import-cache-worktree-retirement-v1.json",
       "sha256": "cdce91d110267aae169be996d605e546ae3f0b093544e334d62d7d5c274a0e46",
       "scope": "Retired newly merged clean683source worktree via nativeGit after Windows/Linux reader release;269known CPython caches10145807logical bytes only. Raw archives/packages/active environments retained; denied D:/Scratch caches untouched. Firststrict temp-cache classifier stop retained and corrected from actual magic/PID evidence; no scientific replay."
+    },
+    "sourcebarrier_scratch_retirement": {
+      "receipt": "coverage/evidence/obsolete-sourcebarrier-cleanup-v1.json",
+      "sha256": "389141de431afc41867e1b5755d5818fb24b1ba163b6b85f92ed80347660f8c3",
+      "logical_removed_bytes": 25632820478,
+      "observed_free_increase_bytes": 25620643840,
+      "scope": "OnlyD:/Scratch/mark-lbp-radon-util-barrier-v1 and-v2; bothgone/noerror. Allraw/source/env/worktrees/deniedboundaryscope preserved; interruptedunneededsharingprobe recordedno safetycredit."
     }
   },
   "post_cursor_cleanup": {

@@ -1,0 +1,303 @@
+{
+  "schema": "obsolete-sourcebarrier-cleanup-handoff-v1",
+  "status": "PASS_EXACT_TWO_TARGETS_REMOVED",
+  "ownership": "Only explicitlyauthorizedD:/Scratch/mark-lbp-radon-util-barrier-v1 and-v2 plusignoredreceipt; no source/main/shared/worktree/environment edits.",
+  "proof_pins": {
+    "deletion-progress-v1.json": {
+      "bytes": 721,
+      "sha256": "2665efcb1cb96e24a58f13cea30ede048446e5c7554b0d18b3e633babaeee52e"
+    },
+    "freeze_v1.py": {
+      "bytes": 3455,
+      "sha256": "63ae9aeb73128fad80b5224e6719d3ec02a8f3d4a898f4965e36b82a96fe2cab"
+    },
+    "inventory-before-v1.json": {
+      "bytes": 72120946,
+      "sha256": "2dd52d604f8cb0e6c39df8ca912ac33cee1625e69cf5d354fe489cc6c0a7eebf"
+    },
+    "inventory_v1.ps1": {
+      "bytes": 1963,
+      "sha256": "2a0b02f13784d853bced365801d85229c5ba5c7a8aa800da6723407301e594da"
+    },
+    "predelete-v1.json": {
+      "bytes": 559,
+      "sha256": "6d3ad2695bdaa9450358a13d44dd159076af0700b6c213c04f46e4bfb5ff561e"
+    },
+    "probe_handles_v1.ps1": {
+      "bytes": 1320,
+      "sha256": "6f2d6bdc34635f1b1108015ecfec463aecea29964836de21bdb5ecd313b6181b"
+    },
+    "remove_v1.ps1": {
+      "bytes": 3756,
+      "sha256": "99857fd18e5e5b70ed0e8efe133a8a4dc3cc489fee89ffa5c14c6b90af285f58"
+    },
+    "retained-evidence-v1.json": {
+      "bytes": 7806,
+      "sha256": "0e7f407a2042322d9045d8f829c222292f08a0733da1b9b95e012ad71e66f34f"
+    },
+    "terminal-v1.json": {
+      "bytes": 1211,
+      "sha256": "88f8e6a8c22b5007fc3e0deca65a4cb1bec78d051c98bdad074f09aabad5510b"
+    },
+    "verify_evidence_v1.py": {
+      "bytes": 2289,
+      "sha256": "24ffe91219b96108ed9a7dfea50390a0fff4d0c35e20194f5cdf1a1323bf31cf"
+    }
+  },
+  "results": {
+    "status": "PASS_EXACT_TWO_TARGETS_REMOVED",
+    "results": [
+      {
+        "target": "D:\\Scratch\\mark-lbp-radon-util-barrier-v1",
+        "command": "Remove-Item -LiteralPath exactResolvedTarget -Recurse -Force -ErrorAction Stop",
+        "exists_after": false,
+        "outcome": "REMOVED",
+        "error": null,
+        "before_logical_bytes": 12816410240,
+        "removed_logical_bytes": 12816410240,
+        "seconds": 61.1778966
+      },
+      {
+        "target": "D:\\Scratch\\mark-lbp-radon-util-barrier-v2",
+        "command": "Remove-Item -LiteralPath exactResolvedTarget -Recurse -Force -ErrorAction Stop",
+        "exists_after": false,
+        "outcome": "REMOVED",
+        "error": null,
+        "before_logical_bytes": 12816410238,
+        "removed_logical_bytes": 12816410238,
+        "seconds": 48.1217624
+      }
+    ],
+    "before_free_bytes": 190676463616,
+    "after_free_bytes": 216297107456,
+    "observed_free_delta": 25620643840,
+    "free_delta_scope": "Concurrent disk activity may affect observed freecapacity; logical removedbytes derive exact priorinventory.",
+    "protected_targets_touched": false,
+    "science": 0,
+    "builds": 0,
+    "downloads": 0,
+    "utc": "2026-11-06T23:33:13.3641910Z"
+  },
+  "root_evidence": {
+    "status": "PASS_TERMINAL_FAILURE_AND_SUCCESS_EVIDENCE_RETAINED_OUTSIDE_TARGETS",
+    "roots": {
+      "build\\mark-lbp-radon-util-complete-barrier-failure-v1\\admission-v1.json": "2e49c3a5cf88157682890225139a53a8b172853c176de67f1899bdf0657e67d2",
+      "build\\mark-lbp-radon-util-complete-readiness-admission-v1\\admission-v1.json": "7686f0e4bffb6d3bbbcdb49bc75c32c96ad08ca70140e2205b36898315f3c3f6"
+    },
+    "profiles": [
+      {
+        "version": "v1",
+        "profile": "windows311",
+        "source": "e4af88887ad74ab17f01b6055840df7ca98b843a",
+        "terminal": {
+          "exit_code": 1,
+          "seconds": 302.7819999998901,
+          "attempts": [],
+          "scientific_origins": {},
+          "source_clean_after": true,
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0,
+          "xml": {
+            "tests": 3253,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "command_keys": [
+          "source",
+          "python",
+          "executable",
+          "workflow_sha256",
+          "actual_workflow_command",
+          "argv",
+          "normal_conftest",
+          "plugin_autoload",
+          "science_guard",
+          "faithful_checkout_autocrlf"
+        ],
+        "ids_type": "list",
+        "ids_count": 3245,
+        "plugins_type": "list",
+        "plugins_count": 44,
+        "proofs": {
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows311-v1\\command.json": "3b423b781e873f2a6483e316f9b8df01c6dabaabe131f1b3e3b3cc8e01a0ae85",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows311-v1\\terminal.json": "2568c7fa3c274a51463d40b0ff55d5a83e51902eda5cfd7303ace99c9651cd0e",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows311-v1\\results.xml": "d640ac9d48f0af81ba4b3f7fc0930173173914fafd328095d288c16a1905888b",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows311-v1\\testIDs.json": "cf8814fb3959146c95a0a0065caa2e3be1420499b1f2dce12309ab14c8fa8bf1",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows311-v1\\plugins.json": "45c061ebfda5c2bb56cc5318b055b5dbec5a4dcd7d2d209756e50de6d5789a19"
+        },
+        "all_retained_outside_D_scratch": true
+      },
+      {
+        "version": "v1",
+        "profile": "windows313",
+        "source": "e4af88887ad74ab17f01b6055840df7ca98b843a",
+        "terminal": {
+          "exit_code": 1,
+          "seconds": 277.1842948999256,
+          "attempts": [],
+          "scientific_origins": {},
+          "source_clean_after": true,
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0,
+          "xml": {
+            "tests": 3253,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "command_keys": [
+          "source",
+          "python",
+          "executable",
+          "workflow_sha256",
+          "actual_workflow_command",
+          "argv",
+          "normal_conftest",
+          "plugin_autoload",
+          "science_guard",
+          "faithful_checkout_autocrlf"
+        ],
+        "ids_type": "list",
+        "ids_count": 3245,
+        "plugins_type": "list",
+        "plugins_count": 44,
+        "proofs": {
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows313-v1\\command.json": "4df2be9f149e2834e0749da06f1d3b0427b1766d680b93b3edac820bbae97920",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows313-v1\\terminal.json": "671b894e994baee978093c6725c0c8306ec552a181d448f18bfb5a2e64e00f20",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows313-v1\\results.xml": "9890b67f9ea1863e4154e3f6be1a53b4ab9618252b7966d320adf0ef091b6da4",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows313-v1\\testIDs.json": "cf8814fb3959146c95a0a0065caa2e3be1420499b1f2dce12309ab14c8fa8bf1",
+          "build\\mark-lbp-radon-util-readiness-v1\\sourcebarrier-windows313-v1\\plugins.json": "302e0fe8216b6093516ac44d2d2124b0e9693b419d0aee7e9690566bbcd44d89"
+        },
+        "all_retained_outside_D_scratch": true
+      },
+      {
+        "version": "v2",
+        "profile": "windows311",
+        "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+        "terminal": {
+          "exit_code": 0,
+          "seconds": 288.125,
+          "attempts": [],
+          "scientific_origins": {},
+          "source_clean_after": true,
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0,
+          "xml": {
+            "tests": 3255,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "command_keys": [
+          "source",
+          "python",
+          "executable",
+          "workflow_sha256",
+          "actual_workflow_command",
+          "argv",
+          "normal_conftest",
+          "plugin_autoload",
+          "science_guard",
+          "faithful_checkout_autocrlf"
+        ],
+        "ids_type": "list",
+        "ids_count": 3247,
+        "plugins_type": "list",
+        "plugins_count": 44,
+        "proofs": {
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\command.json": "51729c535839eb9cb1f05692b01c1af04888fc4571edb44e2beba74ae4234dd8",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\terminal.json": "c45ba490a7ca6f3b6189b85269af49c840db294012efcf7bf76b680307380a97",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\results.xml": "c82aa115c9ab73eb4e5a75c94f9af91e9985e296d358468a78669960e060b55d",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\testIDs.json": "61f2c1b01ecf7a892d1caafebe786db03118e7609fc40d90641fc329a32c3286",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows311-v1\\plugins.json": "fa81a330ce46eaf28dd9cb866dadb0dbe8c365e44412e125b3f1ae8ae591adca"
+        },
+        "all_retained_outside_D_scratch": true
+      },
+      {
+        "version": "v2",
+        "profile": "windows313",
+        "source": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+        "terminal": {
+          "exit_code": 0,
+          "seconds": 267.8895370999817,
+          "attempts": [],
+          "scientific_origins": {},
+          "source_clean_after": true,
+          "original_calls": 0,
+          "native_calls": 0,
+          "timed_batches": 0,
+          "xml": {
+            "tests": 3255,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        "command_keys": [
+          "source",
+          "python",
+          "executable",
+          "workflow_sha256",
+          "actual_workflow_command",
+          "argv",
+          "normal_conftest",
+          "plugin_autoload",
+          "science_guard",
+          "faithful_checkout_autocrlf"
+        ],
+        "ids_type": "list",
+        "ids_count": 3247,
+        "plugins_type": "list",
+        "plugins_count": 44,
+        "proofs": {
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\command.json": "10f071ad4c2b002e1e7f217a7c285444f1e472d4581bfe610f94635cda1c622a",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\terminal.json": "bb819a09347cbf81ade0f4b400e389dbdba975815f75cc023b6e18a85a132761",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\results.xml": "6a330eff5bf43f39c0d0967ad68d41cb7acb6e31c877b323f43c0924a1de6678",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\testIDs.json": "61f2c1b01ecf7a892d1caafebe786db03118e7609fc40d90641fc329a32c3286",
+          "build\\mark-lbp-radon-util-readiness-v2\\sourcebarrier-windows313-v1\\plugins.json": "d5cf0330c96ee6581f90b21c3afc0566fdfb6b39460202d67cb60dd14820ee3c"
+        },
+        "all_retained_outside_D_scratch": true
+      }
+    ],
+    "no_test_execution": true
+  },
+  "process_scope": "ActualWin32_Process commandline match empty immediatelybeforedeletion; R andC confirmactualactivecommands/readers useownC:/buildworktrees/outputonly. Terminalsourcebarriers independentlyprovedfinished. No claim derived solely fromstale.lock.",
+  "path_scope": "Each exactresolvedabsolute target parentD:/Scratch, ordinarydirectory, fullpriorinventory0reparsepoints; allfileswithinexactwhitelist, allsourceguardfixtureoutputs. No crossshell deletion; nativePowerShellLiteralPath only.",
+  "protected": "Never attempted deniedD:/Scratch/boundary-bound-import-cache-barrier-v1/windows311/windows313. Preserved allC:/buildraw/XML/source/helper/runtime/packages/worktrees, activeenvironments/baselines/results. D:/Scratchitself untouched.",
+  "retained_scientific_and_source_evidence": "Actuale4failedbarrierroot2e49 +8cv2passingroot7686 andall4resultsXML/commands/plugins/testIDs retainedoutsideDtargets andauthenticatedonce; syntheticpytestfixtures removed only.",
+  "requirements": {
+    "path_and_inventory": "PASS",
+    "retained_actual_barrier_evidence": "PASS",
+    "R_C_currentcommand_absence": "PASS",
+    "liveprocess_check": "PASS;emptyactualtargetmatches",
+    "standardremoval": "PASS_EXACT_TWO_TARGETS_REMOVED",
+    "protected_scope": "PASS;noattempt",
+    "source_or_science_replay": "NONE"
+  },
+  "waste": {
+    "avoidable": "Startedunnecessaryperfilesharingprobe before rootscopeclarification; interrupted exit1 withno terminal/results/no ownerfinding andno safetycredit. Didnotfinish/retry. InitialwildcardRGlocator failed Windowsglobinterpretation; metadataJSON emptyextensionkey neededAsHashtable; correctedreadonlyqueries only. Unnecessary C:/Tools,D:/Tools readonlyhandlelocator stopped withoutresult. Costsunknown, notremeasured.",
+    "reuse": "Fourterminalbarrierrecords+rootauth independentlyretained; no unchangedtests/science/helper/build/original/native/download/benchmark orarchive/corehash. ExistingR/C actualcommandcontexts reused.",
+    "next_correction": "Use actualterminal+boundedinventory+owner/currentprocess evidence; do not addperfilelockscan/handleframework fordisposablefixtures absent observedrisk."
+  },
+  "next": {
+    "owner": "Root",
+    "trigger": "Foldexactterminalbytes/errors/capacity andthisreceipt intoexistinglatest_cleanup/plan/checklistcloseout; no newqueue/scientificrerun. Ifpartialretainreportedremainderwithoutforcibleclosure/retry.",
+    "state": "boundedcleanupterminal"
+  },
+  "unknown_costs": [
+    "Interruptedextrainspectionelapsed",
+    "Allocation/compression/otherconcurrentdiskcontribution tofreecapacitydelta"
+  ],
+  "scientific_calls": 0,
+  "original_calls": 0,
+  "builds": 0,
+  "downloads": 0,
+  "timed_calls": 0
+}

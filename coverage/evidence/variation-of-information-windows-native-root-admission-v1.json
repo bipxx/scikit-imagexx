@@ -1,0 +1,46 @@
+{
+  "schema": "variation-of-information-windows-native-root-admission-v1",
+  "passed": true,
+  "status": "PASS_SCOPED_REAL_WINDOWS_NATIVE_VS_RETAINED_GNU_WORDS_NOT_WINDOWS_ORIGINAL_PARITY",
+  "handoff": {
+    "path": "build/variation-of-information-windows-native-v1/handoff-v1.json",
+    "sha256": "1af58eb0aef25d0a978fe3cbdbef195e8678e964fc96cac9ce864a70b19fdd07"
+  },
+  "source": {
+    "VI": "b331a559af038ef2231f5327b864627513bdc2d8",
+    "current_counts_controls": "1a060891f33ea058d671491957ebfaec0044bb5e",
+    "count_leaf_raw_sha256": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+    "runtime_main_head_at_closeout": "26855566e651d4f73659980e050a6c09e842c08b"
+  },
+  "authenticated_small_proofs": 35,
+  "authenticated_source_pins": 24,
+  "compiler": {
+    "compiler": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe",
+    "version": "19.44.35225.0",
+    "host": "Microsoft Windows NT 10.0.26200.0",
+    "architecture": "AMD64",
+    "runtime_dll_scope": "PE import names captured; no Python/provider/helper image calls"
+  },
+  "flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/MD",
+    "/O2",
+    "/openmp",
+    "/fp:strict",
+    "/UNDEBUG"
+  ],
+  "saved_pairs": 21,
+  "strict_words": 42,
+  "native_controls": 9,
+  "larger_candidate_controls": 18,
+  "scope": "RealMSVC linked/running completeimage+CSR operation; nonGNUscalar multiply andWindowslibm match7savedGNU pairs acrossworkers0/1/4 includingnegativeNaNs/zeros; currente8densitycontrols pass. ReusedexactoldMSVCVI/count/unitobjects; newrealimage runtime plusoneunchangedcontrolTU only. No sourcechanges.",
+  "pending": [
+    "No actualWindowsoriginal computation/parity/capture",
+    "No broadlog2/NaNpayload/association guarantee beyondexact7smallrecipes; largercontrols arecandidateequivalence only",
+    "No publicPythonfrontend/hotswap/defaultdispatch/wholeSDK/genuinecore qualification",
+    "No targetimmediate/callerfull32 parity or one-threadoriginal performance",
+    "No sourceguard/fullrelease barrier inference; no readyreleaseclaim"
+  ],
+  "waste_review": "Root35smallproof/24sourcepin authentication passed in preceding cell before result-count assertion. Root first misread strict_word_matches21 asindividualwords; actualrows21pairs contain42matchingwords, deriveddirectly with0failures. Correctedmetadata units only, source/proofs frozenunchanged, no repeatedscientific/native/test/build oroldbinary/archivehash. ActualWindowsoriginal/public/FP/genuineSDK/fourprofiles/performance remainsmandatory."
+}

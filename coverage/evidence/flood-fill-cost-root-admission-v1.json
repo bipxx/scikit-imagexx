@@ -1,0 +1,127 @@
+{
+  "schema": "flood-fill-cost-root-admission-v1",
+  "passed": true,
+  "status": "PASS_CPP_ALLOCATION_TRAVERSAL_SUCCESSOR_PRIVATE_PARITY_AND_PRIOR_CPP_DIAGNOSTIC_ONLY",
+  "source": "e3b899844f9ec652f94bab93a48c7dc7c489d326",
+  "predecessor": "dd1aebd5d8619e4f6d2ea3925bb3e3e62b728f4f",
+  "handoff": {
+    "path": "build/flood-fill-cost-v1/handoff-v1.json",
+    "sha256": "81d867c6a5e01cf6ef738b48bc9ce65e8d8531c4ed5f4eca549e176ecf022da9"
+  },
+  "authenticated_source_files": 6,
+  "authenticated_small_proofs": 99,
+  "private_XML": [
+    {
+      "path": "build/flood-fill-cost-v1/minimum-normal-v1/parity-disabled-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "build/flood-fill-cost-v1/minimum-normal-v1/parity-normal-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "build/flood-fill-cost-v1/minimum-sanitize-v1/parity-normal-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "build/flood-fill-cost-v1/minimum-scalar-v1/parity-normal-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "build/flood-fill-cost-v1/modern-normal-v1/parity-disabled-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "build/flood-fill-cost-v1/modern-normal-v1/parity-normal-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "build/flood-fill-cost-v1/modern-sanitize-v1/parity-normal-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "build/flood-fill-cost-v1/modern-scalar-v1/parity-normal-v1.xml",
+      "counts": {
+        "tests": 100,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "private_total": 800,
+  "source_review": "ReadexactCppdiff: rollingindex/paired offsets reusedmaskinit/owning/inplace traversal, onepaddedtypedbytecopy thenconstantneighborread. Borderflags checkedbeforeworkingbufferload; queueorder/seedread/neighborstablefirst-removal/sourceFP comparisons preserved. No Python/provider/header/binder/SDK ABI/gold/case/method edits. Native/benchmarkv2 exactinverses preservev1 andoldsource.",
+  "allocation_work": {
+    "prerequisite_signal": "Compiled retained dd1a SDKactual global-new calls, no latency.8fixed257\u00b2cases:66074 flood/132124 owningSDKfill allocations. Compiler did not elide the perlogicalpixel vectors.",
+    "after": "27 flood/29owningSDKfill allocations each matchedcase; saved79completeSDK aggregate7735\u21925355. Gross allocated bytes decrease; this is NOT peakmemory measurement.",
+    "memory_tradeoff": "Additional padded count*sizeof(T) typedbuffer live during BFS, released before SDKfill payload traversal. At fixed259\u00b2padded grid:67081B uint8 /268324B float32. Peaklive memory can increase even though gross allocated bytes decrease."
+  },
+  "prior_CPP": {
+    "scope": "ONElocal priorCPP comparison, not scikit-image or fullpubliccall. Same G++ strictFP/O2/nativehost/oneworker; complete resultvectors/maskmetadata andunchangedinput/default1 checked.",
+    "method": "Reuse native label-density7mediansof3complete allocationinclusive calls. Baseline then candidate percase; order/drift/platform scope limitation retained. No favorable retry.",
+    "quiet": "Rexplicit no live build/test handles, Bactual completed auditstatus, own processes allterminal, Windowsprocessfilterempty, immediateWSLquiet guard empty. Comparison terminal0 and Rnotified immediately.",
+    "cases": 8,
+    "baseline_over_candidate_ratios": [
+      2.52117091,
+      2.38962996,
+      2.87210934,
+      2.6604838,
+      3.41412148,
+      3.30962619,
+      3.17269431,
+      3.17912043
+    ],
+    "observed_losses": [],
+    "all_rows": "build/flood-fill-cost-v1/prior-cpp-comparison-v1.json",
+    "top_level_CPP_calls_timed": 336,
+    "top_level_CPP_truth_or_warm_calls": 24,
+    "method_counts": "Derived from actual8 completed rows\u00d77rounds\u00d73calls\u00d72versions; nested SDKfloodcalls not counted again.",
+    "public_original_timing_campaigns": 0
+  },
+  "SDK_scope": "79return-word completeclient normal/scalar/sanitizer; default1/optional4/invalidguards. MSVCchangedleafcompile only; oldheader/binder/client compile evidence reused. Actualcurrentf48publiccopyprojection remainsintegration gate, not provenbythisunchangedSDKclient.",
+  "providers": "Unchanged NumPy fullimage.min,footprint/scalar metadata,maskcount/RHS cast/broadcast/warning andFP policy providers. No wholeoriginal or wholeprovider floodalgorithm fallback. NativeCPP result does not establish public speedup.",
+  "pending": [
+    "Root independent delta review/admission; no selfadmission",
+    "Root choice of ready bundle; currentsharedABI+VI source can freeze baselineflood without waiting",
+    "Exact currentf48/sharedliteral/sourcecollector dependency closure under sole shared integration author",
+    "Completeworkflow sourcebarriers both supportedPythons and genuineonecore/default/hotswap/aliases/fullinstalledSDK/fourprofile/Windows gates",
+    "Actual original-public one-thread firstcohort/performance with independent genuine bindings/GO;8publiccases unmeasured",
+    "All original fullAPI/provider/protocol/platform/frontier gaps remain open; this optimization does not expand parity domain"
+  ],
+  "waste_review": "Actualuntimedallocation counts justifiedspecificloopcost removal beforecoding; no unexplainedperformanceclaim. Root99smallproof/6sourcepin authentication completedinprecedingcell, nowparses8actualparityXMLs andrawcomparisonmetadata; no test/science/native/helper/build/download/measurement orarchive/corehash replay. Extra livebuffer disclosed; localA/B baseline-first order limits retained. Rootmayintakeready6files beforeRfreezewithoutwaiting; no scikit-image/publicspeed or wholeSDK/genuine closure."
+}

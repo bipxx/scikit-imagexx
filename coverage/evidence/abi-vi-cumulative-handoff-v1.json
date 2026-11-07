@@ -1,0 +1,809 @@
+{
+  "schema": "abi-vi-flood-cumulative-handoff-v1",
+  "status": "FROZEN_PRIVATE_SHARED_CANDIDATE_SCOPED_CHECKS_PASS_NOT_RELEASE_READY",
+  "source": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+  "base": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+  "worktree": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\abi-vi-cumulative-v1",
+  "branch": "integrate/abi-vi-cumulative-v1",
+  "source_clean": true,
+  "changed_files": 109,
+  "source_index": "build/abi-vi-cumulative-v1/source-index-v1.json",
+  "admitted_inputs": [
+    {
+      "path": "build/finite-radon-numpy-abi-root-admission-v1/admission-v1.json",
+      "sha256": "a17c544196741a2fabae0d19aa8c6c51107319d7723f6ea774f60d65d2a74c32"
+    },
+    {
+      "path": "build/variation-of-information-root-admission-v1/admission-v1.json",
+      "sha256": "11af632e9c1acbea64e614cc205838ce1e1a4131231e85b8435326dc8ea1bd27"
+    },
+    {
+      "path": "build/variation-of-information-current-counts-root-admission-v1/admission-v1.json",
+      "sha256": "596774a6951a0dffdda6b7d9e24aaceb53b235eb4117cf5e98b6d8af3e7bc5b7"
+    },
+    {
+      "path": "build/variation-of-information-benchmark-root-admission-v1/admission-v1.json",
+      "sha256": "bdd3b54bdbb62a3e9b75ff98d99ab48bd497bd98815f42897f7044b3a15d4688"
+    },
+    {
+      "path": "build/variation-of-information-windows-native-root-admission-v1/admission-v1.json",
+      "sha256": "cc380133a30b91cd85a0f7859dfd18eacf386e43b70894ef75dfab127c8aa4c4"
+    },
+    {
+      "path": "build/flood-fill-native-root-admission-v1/admission-v1.json",
+      "sha256": "b0c7215661aed3200219b7c4a66c96e0f320ddf242c188a43983ce7219bd57f1"
+    },
+    {
+      "path": "build/flood-fill-cost-root-admission-v1/admission-v1.json",
+      "sha256": "ae673678aa7dbe47703bbbd050cf7a3e40ef157d310b60d796e204860be8273c"
+    }
+  ],
+  "selective_projection": "10 ABI files +12 VI original +6 current-count +5 executable consumer files; flood15native+14unique historical/reference plus6admitted cost files; exact snapshot import, never branch merges/private ancestor import",
+  "current_counts": {
+    "image_paths": 280,
+    "registered": 283,
+    "metadata": 3,
+    "product_members": 226,
+    "SDK_members": 107,
+    "SDK_families": 37,
+    "SDK_checks": 74,
+    "qualified": false
+  },
+  "active_contexts": {
+    "current_scope": "coverage/contracts/current-public-qualification-v4.json",
+    "util": "coverage/contracts/next-util-benchmark-execution-v4.json",
+    "MARK": "coverage/contracts/mark-boundaries-benchmark-execution-v5.json",
+    "LBP": "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v4.json",
+    "Radon_native": "coverage/contracts/finite-radon-native-v4.json",
+    "Radon_benchmark": "coverage/contracts/finite-radon-benchmark-execution-v4.json",
+    "VI": "coverage/contracts/variation-of-information-benchmark-execution-v2.json",
+    "flood_native": "coverage/contracts/flood-fill-native-v2.json",
+    "flood_benchmark": "coverage/contracts/flood-fill-benchmark-v3.json"
+  },
+  "passed": {
+    "affected_source": {
+      "windows311": {
+        "path": "build\\abi-vi-cumulative-v1\\source-windows311-v6",
+        "sha256": "414749720557f59f4ca83352fa53d5d4fda911fe16a578b303839e98f111e716",
+        "exit": 0,
+        "tests": 1037,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "attempts": [],
+        "scientific_origins": [],
+        "seconds": 99.45299999997951,
+        "original_calls": 0,
+        "helper_calls": 0,
+        "timing": 0
+      },
+      "windows313": {
+        "path": "build\\abi-vi-cumulative-v1\\source-windows313-v6",
+        "sha256": "408318d0a5a56cc078fce8fa8718ee674e3d7a89f5466666ce8949e5f669c5f6",
+        "exit": 0,
+        "tests": 1037,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "attempts": [],
+        "scientific_origins": [],
+        "seconds": 89.4448821998667,
+        "original_calls": 0,
+        "helper_calls": 0,
+        "timing": 0
+      }
+    },
+    "source_scope": "Actual1037pure/metadata/negative controls each on retainedWindows311/313, normalconftest/plugins, zero science/native/helper/original/sampler bodies. These are NOT the complete148-selector barriers.",
+    "registry": "Actual source-derived four-profile plans280/283/226/107/37/74; four flood identity names represent two canonical operations, not four algorithms",
+    "Linux_collectors": "Exact Radon saved224/mode unchanged plus separate ABI-policy18/mode; VI40/mode with16saved observations+40caller records; flood100/mode with100caller/global-setting records. All source-built F1 environments; Windows omits Linuxsaved envelopes and retains ordinary public/SDK scopes.",
+    "ABI": "Exact admitted2bb binder/cross-runtime API dispatch. Old8c minimum initial-import failure remains failed; no new genuine import from this integration.",
+    "VI": "Exact admitted owning leaf/header/binder/frontend, currente8 counts and composed installed SDKclient6saved+18candidate-equivalence controls normal/disabled; source includes/public __all__/registry/defaults/strictchecker and named floating-label suffix. Not whole107SDK.",
+    "Windows_VI": "Reused root-admitted21pairs42words workers0/1/4+9controls+18larger; candidate diagnostic vs retainedGNU words, NOT Windows-original/public/fullFP/genuine.",
+    "current_copy": "Actual private old-dd1leaf/currentf48 bridge51saved flood_fill recipes/profile102total, strict full observations/targetFP/caller32. New cost leaf reuses this composition only through admitted unchanged mask/FP/descriptor and frontend/binder/copy boundaries; see current-crop-cost-composition-v1.json. NOT actual new combined whole-core runtime.",
+    "flood_cost": "Exact admitted e3 CPPleaf;800privateparity/SDK79returnsx3modes/MSVC evidence reused under root admission. Extra padded count*sizeof(T) buffer disclosed; native-only2.39-3.41ratios are against priorCPP, NOT original/public performance.",
+    "build": "OrdinaryCMake configure only, actual combined bindings.cpp syntax against both retained GNU Python-header profiles; only small private flood/current-copy bridge linked; VI new client compiled/linked to existing actual exported-target projection. No full product/wholeSDK build.",
+    "SDK_copy": "Real sdk() source extraction stops before tools; both new VIheaders/control fixtures and flood.inc copied with existing dependencies; unrelatedhpp excluded.",
+    "source_inverses": "Exact authenticated additive/current-metadata inverses preserve historical raw/canonical domains and all old case/method contracts; current metric namespace/helper projections source-guarded.",
+    "diff": "Stagedcheck with cr-at-eol retains trailing-space checks; only admitted NumPyABI binder plus new VI/flood implementation, declared shared wiring/metadata/test changes; current e8 counts/currentf48 copy/normal global runtime unchanged."
+  },
+  "providers": {
+    "VI": "NumPy membership/weight normalization and callbacks, SciPy CSR representation; unsupported floating-label coordinate/coalescing suffix remains named computation. Entropy/count core owned; public phases capture workers separately around providers, SDKimage captures once; ordered reductions serial.",
+    "flood": "NumPy full-image image.min reduction, full-mask count_nonzero reduction and converted/broadcast RHS temporary plus scalar/neighbor metadata/allocation remain providers. C++ owns BFS/mask/PODcopy/final writes, serialBFS has no worker lookup. No false scalar-only/provider-free claim."
+  },
+  "retained_failures": [
+    {
+      "path": "build/abi-vi-cumulative-v1/source-windows311-v1/terminal.json",
+      "exit": 1,
+      "tests": 1644,
+      "failures": 19,
+      "errors": 34,
+      "skipped": 0,
+      "attempts": [],
+      "scientific_origins": [],
+      "seconds": 244.45300000021234,
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timing": 0
+    },
+    {
+      "path": "build/abi-vi-cumulative-v1/source-windows313-v1/terminal.json",
+      "exit": 1,
+      "tests": 1644,
+      "failures": 19,
+      "errors": 34,
+      "skipped": 0,
+      "attempts": [],
+      "scientific_origins": [],
+      "seconds": 229.12253560009412,
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timing": 0
+    },
+    {
+      "path": "build/abi-vi-cumulative-v1/source-windows311-v2/terminal.json",
+      "exit": 1,
+      "tests": 1004,
+      "failures": 19,
+      "errors": 0,
+      "skipped": 0,
+      "attempts": [],
+      "scientific_origins": [],
+      "seconds": 104.18800000008196,
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timing": 0
+    },
+    {
+      "path": "build/abi-vi-cumulative-v1/source-windows313-v2/terminal.json",
+      "exit": 1,
+      "tests": 1004,
+      "failures": 19,
+      "errors": 0,
+      "skipped": 0,
+      "attempts": [],
+      "scientific_origins": [],
+      "seconds": 91.85253010015003,
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timing": 0
+    },
+    {
+      "path": "build/abi-vi-cumulative-v1/source-windows311-v3/terminal.json",
+      "exit": 1,
+      "tests": 1026,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "attempts": [],
+      "scientific_origins": [],
+      "seconds": 100.89000000013039,
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timing": 0
+    },
+    {
+      "path": "build/abi-vi-cumulative-v1/source-windows313-v3/terminal.json",
+      "exit": 1,
+      "tests": 1026,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "attempts": [],
+      "scientific_origins": [],
+      "seconds": 89.11179680004716,
+      "original_calls": 0,
+      "helper_calls": 0,
+      "timing": 0
+    }
+  ],
+  "other_failure_retention": [
+    "All writer/prerequisite failures preserved under this directory; stopped before dependent operations",
+    "compile-v1 nativecommands all0 but writer1 due assumed count/label. compile-closeout-v2 validates retained normal output without replay and executes only missing disabled/dependency checks",
+    "Pre-cost1037precursors1004Win311/1036Win313 preserved with seven source snapshots; not relabelled final readiness",
+    "Prior8c/run42306808073 minimum failedinitialimport retained externally; otherprofile/campaign status remains root-managed, no relabel"
+  ],
+  "pending": [
+    "Root independent source admission",
+    "COMPLETE actual workflow source-check both Windows runtimes",
+    "Exact-source four-profile genuine qualification/whole107SDK",
+    "Actual installed global default1/optionalworkers/hotswap/fullFP/Windows-original domains",
+    "Actual genuine benchmark binding/first cohorts/strict larger-case numerical checks/separate timingGO/all-loss one-thread original performance",
+    "Root main/checklist/ledger delivery",
+    "VI broad log/reduction/backend/platform/protocol/table/error/FP and larger original-word parity; candidate equivalence is not new0ULP evidence",
+    "Flood bool-tolerance/source-limit, nonPOD/protocol/largegeometry/platform/error/FP domains and provider ownership",
+    "No original/performance capture authority; all actual benchmark product/runtime/core/SDK/root/helper/GO fields remain UNBOUND",
+    "Whole new-leaf/currentf48 genuine onecore/globaldefault1/optionalworkers/public ownership and exact-source whole107SDK qualification"
+  ],
+  "prohibited_work": {
+    "original_calls": 0,
+    "new_captures": 0,
+    "performance_measurements": 0,
+    "full_product_builds": 0,
+    "whole_SDK_builds": 0,
+    "new_environments": 0,
+    "downloads": 0,
+    "hosted_dispatches": 0,
+    "main_merges": 0
+  },
+  "waste_review": {
+    "result": "One coherent private109file bundle; finalaffectedsource2074XML PASS,102changed-copy saved checks PASS, affected syntax/client checks PASS. No complete readiness/genuine/performance claim.",
+    "reused": "All admitted original rows/golds, old native/scalar/ASan/MSVC/candidateWindows/SDK scopes, currentcounts/currentf48 objects/prefixes and established F1/observer/qualification/benchmark infrastructure; no archive/core/corpus rehash/download or original replay.",
+    "avoidable": "Initial unstaged Git census, stale literal/source-reader domains and guarded writer anchors caused pure-only failures; corrected and retained. Historical SDK36 accidentally changed by broad literal updater was restored. Nested ignored runner omitted supplementary selectors; explicit final flat command covers all1037 on both versions. SDKwriter assumed12 instead of observed6; native normal command not repeated. Monolithic prior flood bridge lacked reusable PIC scaffolding objects, requiring small unchanged pybind/bootstrap compilation for changed-copy link.",
+    "observed_cost": "Exact process seconds/argv/XML retained. Finalsource31199.453s/31389.445s; earlier pure-failure costs in terminal receipts. No rerun merely to measure waste. Current privatecache/basettmp retained pending root review; freeC snapshot about99.7GB.",
+    "next_owner_trigger": "Root independently admits frozen ab7872a5 and109source/retained proofs, then runs BOTH COMPLETE148-selector workflow barriers with normal plugins/conftest/no-x/0science. Only successful complete barriers permit root genuine four-profile dispatch. Actual genuine SDK/global/FP and benchmark numerical/cohort/separate timingGO precede performance/main delivery; root updates existing plan/ledger/checklist. No additional optimization wait or second RC."
+  },
+  "proofs": {
+    "build/abi-vi-cumulative-v1/additive_v4.py": {
+      "sha256": "fb66c6624446516660b7781d98b520998c4e979436d1a0ee4be883cc9ef14ee5",
+      "bytes": 390
+    },
+    "build/abi-vi-cumulative-v1/closure_v4.py": {
+      "sha256": "00e1e1b664b053de73743d08b4140fb418fcd1e399b2c080aa6bd2c3657f1c9f",
+      "bytes": 3086
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2.log": {
+      "sha256": "127a834d6e70817f557df86fe47cf1d6c3bff1ae7ad061b269f1fbb8e9727af1",
+      "bytes": 55
+    },
+    "build/abi-vi-cumulative-v1/compile-v1.log": {
+      "sha256": "99005fee30dde1d356a3953e27440b44d16dcebad912e5feecc919f436f96368",
+      "bytes": 865
+    },
+    "build/abi-vi-cumulative-v1/compile_resume_v2.py": {
+      "sha256": "9405f2fd11d866e3118fe30959793c7f9372888d2ae0ad60c6b2b15902be180b",
+      "bytes": 2796
+    },
+    "build/abi-vi-cumulative-v1/compile_v1.py": {
+      "sha256": "5196e61be5261e8138ef6a7fff40ae4cb3c7bd3d20968e03df01b216dcc6f42b",
+      "bytes": 4124
+    },
+    "build/abi-vi-cumulative-v1/complete-workflow-source-argv-v1.json": {
+      "sha256": "9998388114afff06c90db794ed061debd8399ec0ca93332108efcccd2f395494",
+      "bytes": 34333
+    },
+    "build/abi-vi-cumulative-v1/context-path-writer-failure-v1.json": {
+      "sha256": "bd3a26871125e88cb56be2adddf18be0db36abcc6dc3449e3c101bb8564fa368",
+      "bytes": 320
+    },
+    "build/abi-vi-cumulative-v1/context-writer-failure-v1.json": {
+      "sha256": "ff2ab519eac2f8d9688aa19ee31fd4bdcefe027a7b2799b087ab4f9edf8ed9d9",
+      "bytes": 267
+    },
+    "build/abi-vi-cumulative-v1/context-writer-failure-v2.json": {
+      "sha256": "a559357eae4da88c71f88a18657bad9ad427a165c154a7ccd46757eb93e2b43f",
+      "bytes": 254
+    },
+    "build/abi-vi-cumulative-v1/contexts_v1.py": {
+      "sha256": "79db22e4fe8e34d51fa427a6838cdd7351d32e9488e82a4a2744e403d46c574f",
+      "bytes": 5104
+    },
+    "build/abi-vi-cumulative-v1/contexts_v3.py": {
+      "sha256": "6b94db4d89ffbc05e2766e5b3873fe867d48ef1e16bd9bdf3c6f853bba716817",
+      "bytes": 1096
+    },
+    "build/abi-vi-cumulative-v1/context_vi_v2.py": {
+      "sha256": "ef6ce7bd991eac5306f540b04243034b5749222660121072de1e1def8a3bf7cd",
+      "bytes": 1757
+    },
+    "build/abi-vi-cumulative-v1/cost_context_recipe_v1.py": {
+      "sha256": "572668fa10a73694cb911eb2db45936dfe1af8a44accfcb37f878351bf4a57fc",
+      "bytes": 460
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1.log": {
+      "sha256": "0cf16866b3eb4b25dd3d4a9b9aaa3272ae7d7ccbc153624e13b2d0a504646b98",
+      "bytes": 82
+    },
+    "build/abi-vi-cumulative-v1/current-crop-cost-composition-v1.json": {
+      "sha256": "cb382a29be942b79cf8cce85e19f806329bd7e8a96281a1e6bda179daf9081f6",
+      "bytes": 1438
+    },
+    "build/abi-vi-cumulative-v1/current_crop_bridge_v1.py": {
+      "sha256": "256f310957ea17682e98cffa06b9a6adcf3940ab1a8fb01fcd4ef2e0261208d4",
+      "bytes": 4513
+    },
+    "build/abi-vi-cumulative-v1/final-plan-debug-v1.json": {
+      "sha256": "392a18ce89f84c4978fd3c425fa22ac219b7e55509a0009f0ee73d063171f57f",
+      "bytes": 22817
+    },
+    "build/abi-vi-cumulative-v1/final-plan-minimum-v1.json": {
+      "sha256": "96a0c4546ef0b1addc623ca21b8b668fbedb9a04ee9d8c500246192b86a658a5",
+      "bytes": 22823
+    },
+    "build/abi-vi-cumulative-v1/final-plan-modern-v1.json": {
+      "sha256": "02b1dd9f09f52a7f4ec6d5c0286bd9131cb7ab44c1cf835d235b6fd55a028d6e",
+      "bytes": 22820
+    },
+    "build/abi-vi-cumulative-v1/final-plan-windows-v1.json": {
+      "sha256": "624a69bcf7f4a7404ac3309477af51ab5f78644156e10318f2b7029068b36015",
+      "bytes": 21945
+    },
+    "build/abi-vi-cumulative-v1/finalize_handoff_v1.py": {
+      "sha256": "c66be48f7906747bad1f512ec932bcb9d923b01421e4d1d70e01ef184d370538",
+      "bytes": 10870
+    },
+    "build/abi-vi-cumulative-v1/final_contexts_v2.py": {
+      "sha256": "45390aad630ac0515d88c8e4c04b0fb4221d25c1b0b176a28bfebbda6a100625",
+      "bytes": 8831
+    },
+    "build/abi-vi-cumulative-v1/final_wiring_v3.py": {
+      "sha256": "38b886edecc6e5d4106a1b49b076d7581777388ac1dee9be696725fbb8926339",
+      "bytes": 3288
+    },
+    "build/abi-vi-cumulative-v1/flood-cost-selective-intake-v1.json": {
+      "sha256": "2b71dcd63dbcaf3bdb480f36e8916b2650beaec9140787d1dd0dfc4299a96b10",
+      "bytes": 1150
+    },
+    "build/abi-vi-cumulative-v1/flood-cost-writer-failure-v1.json": {
+      "sha256": "1e676554d89486a77d84b6a07cf186075476daeb6b46ac396a39def49194843e",
+      "bytes": 225
+    },
+    "build/abi-vi-cumulative-v1/flood-selective-intake-v1.json": {
+      "sha256": "b7165e539d4236da1a2f99d3cef227342f8af010e91521d7a7b0666aab47ddaa",
+      "bytes": 10745
+    },
+    "build/abi-vi-cumulative-v1/flood-writer-failure-v1.json": {
+      "sha256": "f251f97651e1241d1c912e841be2f9ac6824c85d033e1276b25442c90e796b52",
+      "bytes": 251
+    },
+    "build/abi-vi-cumulative-v1/flood-writer-failure-v2.json": {
+      "sha256": "e9c78240f047053647019cb4f8ceeaf58dcc3374becdef13972f731aef73541a",
+      "bytes": 189
+    },
+    "build/abi-vi-cumulative-v1/flood_cost_glue_v1.py": {
+      "sha256": "2af14cef412a86cda982ce9a36c3d7bbf20ad9ebef33002d4b0f80a27ff8a293",
+      "bytes": 4274
+    },
+    "build/abi-vi-cumulative-v1/flood_cost_glue_v2.py": {
+      "sha256": "0a2a804746288b0ea118a2d5ac73a27efafc2631dd46f080858a5ab1cbc33bb2",
+      "bytes": 952
+    },
+    "build/abi-vi-cumulative-v1/flood_cost_intake_v1.py": {
+      "sha256": "c4cf58d0b50925d9b995cf287a63c198309a1f58e32b0899f862127c3a086b88",
+      "bytes": 1369
+    },
+    "build/abi-vi-cumulative-v1/flood_intake_v1.py": {
+      "sha256": "610fc26b30d998ab9984851c81a3915dfc1d343dd394e38cfc8734f2bf14bc5c",
+      "bytes": 1595
+    },
+    "build/abi-vi-cumulative-v1/flood_wire_v1.py": {
+      "sha256": "1b8d5dc9527e4e01d322787f9fccd76ab66b70d8c21e5c1c14216085f079be5f",
+      "bytes": 9947
+    },
+    "build/abi-vi-cumulative-v1/flood_wire_v2.py": {
+      "sha256": "495862258287407a4faffce8b4f97aeebff1082d5040ed0d07b68a2a62f955b7",
+      "bytes": 1629
+    },
+    "build/abi-vi-cumulative-v1/flood_wire_v3.py": {
+      "sha256": "fd9016040e1e54d0b65aa69566745e286a627187fd7624aab65e544f37bf6ca5",
+      "bytes": 1098
+    },
+    "build/abi-vi-cumulative-v1/freeze_inputs_v1.py": {
+      "sha256": "ba056141fbfd2279cc57087ad1062127dc6e28814db7c01b5e14abfb6b14f273",
+      "bytes": 4929
+    },
+    "build/abi-vi-cumulative-v1/intake_v1.py": {
+      "sha256": "29a6ab607404cd22d59ad6f729ce09801501b11d85f72a6269db029e34d9bbf5",
+      "bytes": 2532
+    },
+    "build/abi-vi-cumulative-v1/plan-minimum-v2.json": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/plan-minimum-v3.json": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/plan-minimum-v4.json": {
+      "sha256": "96a0c4546ef0b1addc623ca21b8b668fbedb9a04ee9d8c500246192b86a658a5",
+      "bytes": 22823
+    },
+    "build/abi-vi-cumulative-v1/precommit-gate-v1.json": {
+      "sha256": "1cfab1760fb21bdeb5ddea1d783b6c5ab5fa521d7514cde244a1b0f01aa9591a",
+      "bytes": 47487
+    },
+    "build/abi-vi-cumulative-v1/qualifier-writer-failure-v1.json": {
+      "sha256": "5dd0d897d0cb05bf572d6bb59e0e6561faa1a32f86aaefe921146ec742637309",
+      "bytes": 341
+    },
+    "build/abi-vi-cumulative-v1/qualifier_v1.py": {
+      "sha256": "aa68cd8390e3b6fac15802eac6b27ad4866e96e69c0f7cbcc401790913e407f6",
+      "bytes": 6891
+    },
+    "build/abi-vi-cumulative-v1/qualifier_v2.py": {
+      "sha256": "d6e19b5f29b1dce067a469fb2ba8ff8c0a5fdae4811c20cb9b37dc6e90ad6ec3",
+      "bytes": 4865
+    },
+    "build/abi-vi-cumulative-v1/repair-writer-failure-v2.json": {
+      "sha256": "9bf715eff47f8988e3aa3efd43478c48c9bca8db4beedb6037b44c39ad63b586",
+      "bytes": 157
+    },
+    "build/abi-vi-cumulative-v1/repair_source_v2.py": {
+      "sha256": "c488472163babd743b04f8a6c9b8ed754df1a2dc4d0761e2e7eccb05c60d71b9",
+      "bytes": 6211
+    },
+    "build/abi-vi-cumulative-v1/repair_source_v3.py": {
+      "sha256": "d9c10a51f78bdcb85a416e29b5a8aeaaa574cab8b5259f66a959ddd1bcbf93b0",
+      "bytes": 988
+    },
+    "build/abi-vi-cumulative-v1/run_source_v1.py": {
+      "sha256": "1204e9620c80d77769a804997ef9fae0a14d2a0089dc22321e82c62fc46264e2",
+      "bytes": 2712
+    },
+    "build/abi-vi-cumulative-v1/run_source_v2.py": {
+      "sha256": "9f09fe0f09430267b09bb2dd55556fcdf11dce3dee6016e0d8ec88f4cacfa4fa",
+      "bytes": 780
+    },
+    "build/abi-vi-cumulative-v1/run_source_v3.py": {
+      "sha256": "b13caa7f98d1e0b7b51663073393250f9436d73f68726ddaea287af0312091cc",
+      "bytes": 402
+    },
+    "build/abi-vi-cumulative-v1/run_source_v4.py": {
+      "sha256": "406a9e2a6416da8d557e72ceffb1a1252bebc5e663566bafed7bcbc80f94a9b4",
+      "bytes": 653
+    },
+    "build/abi-vi-cumulative-v1/run_source_v5.py": {
+      "sha256": "29dd6bb2d00fbee86f4ffc01bc4a9c404eb99e3e429a13514a8f28d58f73abfa",
+      "bytes": 1279
+    },
+    "build/abi-vi-cumulative-v1/selective-intake-v1.json": {
+      "sha256": "8857a892dc192853a59c87ca17305145bd8cb5e2d76ec7a6ad2dbca37ca0d02e",
+      "bytes": 5732
+    },
+    "build/abi-vi-cumulative-v1/source-index-v1.json": {
+      "sha256": "f1548ff1075f021a72844a8c9d83a9b4bf2c6e90bc2daafbd498af7fe6d5ac95",
+      "bytes": 27022
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v1.log": {
+      "sha256": "9b0afdccd697cd4ceafc44eb4c71bd60c5e69267f54a9b78e1a89791ffc0e649",
+      "bytes": 64180
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v2.log": {
+      "sha256": "d67796ab6e97b7e5b558b389b66dafc522d63f67f750f07a6d2a253a25c00e50",
+      "bytes": 52846
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v3.log": {
+      "sha256": "652a64d0198324f7897ea7747d88769354003a3b851a250c84a7db1be5904c68",
+      "bytes": 5820
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v4.log": {
+      "sha256": "ac5f34cba0f3e555db54f14e0ee82b6a7294b994796d85770f2f4d35b5801ae3",
+      "bytes": 1167
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v6.log": {
+      "sha256": "4472540c3eb3c590e9dae51ec85205cec2c2834cf40e76e11d174059ef83b2a1",
+      "bytes": 1248
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v1.log": {
+      "sha256": "b13f65e4f17bd2c041e80431437c49bf4d14bea506f243c65d3cec99ea2ee83d",
+      "bytes": 64180
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v2.log": {
+      "sha256": "863f193ee78ef6f7ff2d3de8060bf1eb0ac82092b1d27211b7cbd60dc9ebfd38",
+      "bytes": 52672
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v3.log": {
+      "sha256": "8485e0af811c543ceec1a2ad7eb531c6686fa3d0294ee68765b678b4321a2007",
+      "bytes": 5646
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v5.log": {
+      "sha256": "ed010f62f2002771133cc88e5e628b93d6aa8086e88ccca93deea10cec71c49f",
+      "bytes": 1248
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v6.log": {
+      "sha256": "7c7364ad5db066644cc08be2dac888058e699f5b916beee7b1bda6fb43fd5513",
+      "bytes": 1248
+    },
+    "build/abi-vi-cumulative-v1/source_fix_v3.py": {
+      "sha256": "1b8f15a1485c5ced437a720d8283a62c240bce5f644f5672c04ea76ff414f6b4",
+      "bytes": 1283
+    },
+    "build/abi-vi-cumulative-v1/source_fix_v4.py": {
+      "sha256": "d4ff3ceeb991656806a5b7411f77db2d58cfdb43599d5ba20e3ac148f31e62ec",
+      "bytes": 856
+    },
+    "build/abi-vi-cumulative-v1/source_paths_v1.py": {
+      "sha256": "8b18de2e8b254adc199399575f4d324efa0e840c67470c2f890a082212232606",
+      "bytes": 1589
+    },
+    "build/abi-vi-cumulative-v1/wire_v1.py": {
+      "sha256": "0c0d4a5aa59cea50eea0cf990d2e67b269792db122d3fd7a2a6ed7d1bc21072d",
+      "bytes": 9433
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2/commands.json": {
+      "sha256": "4751ec1201788b4fb100ed215fa8ab88d3019e7108e5ef20317da52b7ee8abb1",
+      "bytes": 946
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2/preserved-writer-failure.json": {
+      "sha256": "41f6fb7c9b06873d697d592a4b69c385a5c3a92767736f27b2ebc34cf5851e30",
+      "bytes": 507
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2/terminal.json": {
+      "sha256": "ac206cf629140a71d33823a94f89e51b214223dcc004acf8dffee3e3089b6bee",
+      "bytes": 630
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2/VI-client-disabled.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2/VI-client-disabled.stdout": {
+      "sha256": "7aa6bab195d19c751782cf4d7b7bae9120acf4c8172bc03db21d73fecc13fac7",
+      "bytes": 213
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2/VI-client-header-dependencies.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-closeout-v2/VI-client-header-dependencies.stdout": {
+      "sha256": "687b43f5058eb2b73f4d2a9932459029584676d4b206e8b3703da8d0528583d0",
+      "bytes": 9739
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/commands.json": {
+      "sha256": "734b5657d88d25f0de3ca2e709d6237c1ae0c27149b9041c7615ef67a3af3940",
+      "bytes": 3385
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/minimum-single-core-registration-syntax.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/minimum-single-core-registration-syntax.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/modern-single-core-registration-syntax.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/modern-single-core-registration-syntax.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/ordinary-source-configure.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/ordinary-source-configure.stdout": {
+      "sha256": "4f0b2de74a1570f9b0344e06e63d81ad77ed18fdc9b5633efcd366dc781bc7f6",
+      "bytes": 654
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/VI-client-configure.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/VI-client-configure.stdout": {
+      "sha256": "e679886b74cf67a1654a5559b102ad326dea4f44de3e151dcfcb1be3a1438916",
+      "bytes": 685
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/VI-client-normal.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/VI-client-normal.stdout": {
+      "sha256": "d5d5b412f6315854acb9b4bccd8bef0bc6c20de8e35d3646344d9cd199b8bf55",
+      "bytes": 213
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/VI-client.map": {
+      "sha256": "f431da6cec08dbd10b787cee94e5edbfc02b2dece117583744d2c0066634db03",
+      "bytes": 106482
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/VI-new-client-only-build.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/compile-v1/VI-new-client-only-build.stdout": {
+      "sha256": "8e638baa763805ea74a605e42a37c5abd33988b5bd99d292c6135e5e66715ce0",
+      "bytes": 259
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/commands.json": {
+      "sha256": "4c63d1f3e26d79666d3170962f5c8970eaf8674d5143508aedb243e37bcccd92",
+      "bytes": 3397
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/minimum-family-link.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/minimum-family-link.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/minimum-saved51.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/minimum-saved51.stdout": {
+      "sha256": "909449598edce35afec601519c1030b5860a5a59c140aeb846f0efb52d862c8e",
+      "bytes": 99
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/modern-family-link.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/modern-family-link.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/modern-saved51.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/modern-saved51.stdout": {
+      "sha256": "93d6adbe5eaf664a4ff1d9718c26c2a1d00f3f6cf1bd9d6d67a261df3b989d21",
+      "bytes": 99
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/terminal.json": {
+      "sha256": "f2c3e64e62087c0821bfa523e740a6927f12b6987c7cfcc703a160f1820ef7e6",
+      "bytes": 1195
+    },
+    "build/abi-vi-cumulative-v1/pre-cost-source-v1/source-receipt.json": {
+      "sha256": "10e6568ed080b199911ed1786659ceec401fd9dd1719c23b969f7e638033a485",
+      "bytes": 976
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v1/command.json": {
+      "sha256": "1c98c64ef66e1fe6ef3387c1c5f4c411937112dc77ae81980f2f8b974be7c2d7",
+      "bytes": 2021
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v1/results.xml": {
+      "sha256": "9b6f7d83d6b87b3ee2b070e54bcfb7f9e2ce67fa562b55ab53f6111e942cc397",
+      "bytes": 320839
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v1/terminal.json": {
+      "sha256": "346c0ba36738efc7caf39d3410511dd8ee10288383079fcbaccc5732395c9eaa",
+      "bytes": 234
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v2/command.json": {
+      "sha256": "ab5b16a001ae51f2a59c1ffac98e52ada64635cb24cae50e59a5c359a682823f",
+      "bytes": 4799
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v2/results.xml": {
+      "sha256": "3c411399ed8b9d9e87b3a35cf6503279024b9fbd8f949b1c340526f2c6f9db50",
+      "bytes": 209268
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v2/terminal.json": {
+      "sha256": "34c82e330b834461b927cabf3dad2a6beabf7ffb291a758cad136c365a3c23a8",
+      "bytes": 233
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v3/command.json": {
+      "sha256": "6d2d66b63a5f1e4a27d8fd7862eae246c2de78755b6426abcf333a8d64d5d832",
+      "bytes": 4850
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v3/results.xml": {
+      "sha256": "656be55027e1f40599f30cde9f5a9f931f1673be758c1e2ff1c9235488b98a15",
+      "bytes": 167247
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v3/terminal.json": {
+      "sha256": "365907e3bcab480da2f0a28a54995c972fe1d744822679b8bd77b03719ab6611",
+      "bytes": 232
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v4/command.json": {
+      "sha256": "9f083b81815cee315978c4725e66abcc19d1ec5a04a2f9bdcfb2c67ed36a4d68",
+      "bytes": 4799
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v4/results.xml": {
+      "sha256": "049aea703d9f29a7bd2a55f489391782af3052334a9ff0b0cffb273f2c729f9e",
+      "bytes": 159377
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v4/terminal.json": {
+      "sha256": "6210988cab29bf0dc4f6bf9c06c119134f7cf20ccec808597da1b3c8d6acbeee",
+      "bytes": 219
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v6/command.json": {
+      "sha256": "f144c56d7a1465a19fb6d5f8755c38626d7583718de29c5bf066199cb0620905",
+      "bytes": 5206
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v6/results.xml": {
+      "sha256": "9aaaa6a089d4eef6f5dcb403a1237e4ec511aa47ee5be9e5104b12dee78c4e57",
+      "bytes": 164277
+    },
+    "build/abi-vi-cumulative-v1/source-windows311-v6/terminal.json": {
+      "sha256": "414749720557f59f4ca83352fa53d5d4fda911fe16a578b303839e98f111e716",
+      "bytes": 231
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v1/command.json": {
+      "sha256": "6dfb53193b841c5c4ce539e2545d29e1540d6e987018b749758115568a70bcc0",
+      "bytes": 2013
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v1/results.xml": {
+      "sha256": "e140c721704b968f8941cc95d2348c8ca98c192a07ea2aa22c8d48c3a7ec0ffa",
+      "bytes": 320839
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v1/terminal.json": {
+      "sha256": "3a2479b0a16169066b47b58833d1ad79c5578cf66744bacda56ee503dd611296",
+      "bytes": 234
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v2/command.json": {
+      "sha256": "47121f9ee404701378c153788491acafd9632090d1f3466b99683bddb21e7bcb",
+      "bytes": 4791
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v2/results.xml": {
+      "sha256": "01a904f3bb8519bff0eb5f8b66c5ff7523b2fc1daa8076a1dcf31dff47be0bdf",
+      "bytes": 209088
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v2/terminal.json": {
+      "sha256": "e40af1a9f865ca80725521b98d7289c82fdb9440bcb62deb231a6c0d2744cf6e",
+      "bytes": 232
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v3/command.json": {
+      "sha256": "58ac9edf369b64e858e826f55d02ea3815c80070a355681c0bfb5cda767a80a1",
+      "bytes": 4842
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v3/results.xml": {
+      "sha256": "51430f266bef2ba1c4b984a6ba053ef342d70a33a852fc77a144caf15544cff8",
+      "bytes": 167067
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v3/terminal.json": {
+      "sha256": "35c7df3fa87d111f26069eaec0dce9e444bea9e5446e00ef6ef9565127ce2e8b",
+      "bytes": 231
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v5/command.json": {
+      "sha256": "972702ab1255a354b401493df3f70235434726fed5d081afe41ea635fc1d9471",
+      "bytes": 5198
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v5/results.xml": {
+      "sha256": "a6a566947defac03fc76ad0c140700fc1dfab586ae95e406eba40222d0fbe6f8",
+      "bytes": 164137
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v5/terminal.json": {
+      "sha256": "0a1d398f39e25c1afead81b2e0f2e7cb709247894bb7ff9904d07f275f4ef91a",
+      "bytes": 231
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v6/command.json": {
+      "sha256": "8c7970122947541276fb9f807262425eb0afd33a84946fcb15afa715a0219f2e",
+      "bytes": 5198
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v6/results.xml": {
+      "sha256": "1b92361c0a15a277e806c19eb79d1f2fafc49fa904a5f6fdc260b1eac79ded56",
+      "bytes": 164277
+    },
+    "build/abi-vi-cumulative-v1/source-windows313-v6/terminal.json": {
+      "sha256": "408318d0a5a56cc078fce8fa8718ee674e3d7a89f5466666ce8949e5f669c5f6",
+      "bytes": 230
+    },
+    "build/abi-vi-cumulative-v1/pre-cost-source-v1/benchmarks/flood_fill_execution.py": {
+      "sha256": "dd0e560e0413143cbc58ab15eab60f4f39fc76e07b717b53f268e2eddd0f4b5f",
+      "bytes": 20632
+    },
+    "build/abi-vi-cumulative-v1/pre-cost-source-v1/benchmarks/flood_fill_native.py": {
+      "sha256": "cb808ac670ba30c625a32abb5336cc09dc59839dd2f03e74f598fb570a2ce88a",
+      "bytes": 1119
+    },
+    "build/abi-vi-cumulative-v1/pre-cost-source-v1/tests/test_flood_fill_native_source.py": {
+      "sha256": "20f1417fc4e4dbdb8d3bd1f0036d2ba82567e5eee1a2e1d0d4842e3a2fc8958a",
+      "bytes": 6132
+    },
+    "build/abi-vi-cumulative-v1/pre-cost-source-v1/tools/join_source_context.py": {
+      "sha256": "ffb5ff9dbedaa7c7bcc8bca066985d06c47b1dd05b6f87a33248b5f789fa5d2c",
+      "bytes": 5887
+    },
+    "build/abi-vi-cumulative-v1/pre-cost-source-v1/coverage/contracts/abi-vi-cumulative-integration-v1.json": {
+      "sha256": "3eab1853e3082c597e2614fea6e815e5ebd610f9d0e0a287b583963381a9910b",
+      "bytes": 640264
+    },
+    "build/abi-vi-cumulative-v1/pre-cost-source-v1/coverage/contracts/flood-fill-benchmark-v2.json": {
+      "sha256": "e9bd4901528a5b44a4b98055e1d05934531c918bacd502b44b4a863b18f2a504",
+      "bytes": 61167
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/minimum/component.map": {
+      "sha256": "805c496c1cb5f7959eaac0a7b2ca85bca6f7d862fce9e058a110cf9167454b62",
+      "bytes": 502300
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/minimum/results.xml": {
+      "sha256": "b82c074c2f068120752aa4373e1f5420c2cb581d389b425f87a69b59407a5ac7",
+      "bytes": 6325
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/minimum/saved_only.py": {
+      "sha256": "53e53d7e7f49ba324ba015819e69937b5111433c7705e09442d028085028f255",
+      "bytes": 866
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/modern/component.map": {
+      "sha256": "fa227d2103d27786b017fa5e4983d0593724ce9569ad7576ad9fd99b6ee7289b",
+      "bytes": 509661
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/modern/results.xml": {
+      "sha256": "98e7398ac5f7c015c449b38077847b53038f1f77b5827d500e7379ff5b164d89",
+      "bytes": 6325
+    },
+    "build/abi-vi-cumulative-v1/current-crop-bridge-v1/modern/saved_only.py": {
+      "sha256": "6b977ddd28871590452a82dfce08fadbe4ffba05578613b16df71e0aff6813d4",
+      "bytes": 862
+    }
+  }
+}
