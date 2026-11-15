@@ -6,7 +6,7 @@ import hashlib,importlib,importlib.util,inspect,json,os
 from pathlib import Path
 import runpy,subprocess,sys,traceback
 
-CONTRACT='coverage/contracts/mark-lbp-measurement-v6.json'
+CONTRACT='coverage/contracts/mark-lbp-measurement-v7.json'
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -193,7 +193,7 @@ def main():
     assert Path(sys.executable).resolve()==Path(binding['interpreter']).resolve()
     assert all(os.environ[k]=='1'for k in('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS'))
     assert os.environ['PYTHONDONTWRITEBYTECODE']=='1'and not os.environ.get('SKIMAGEXX_DISABLE_SIMD')
-    folder=Path(binding['output_root'])/args.route;folder.mkdir(parents=True,exist_ok=False)
+    folder=Path(binding['output_root'])/'first-cohort'/args.route;folder.mkdir(parents=True,exist_ok=False)
     output=folder/'never-written.json';oldpath=list(sys.path);sys.path[:0]=[binding['installed_site'],str(root/'benchmarks'),str(root/'tools'),str(root)]
     import numpy as np
     import skimage
@@ -266,7 +266,7 @@ def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
     actual=json.loads(runtime.read_bytes());SDK=actual['runtime']['sdk_sha256'];assert len(SDK)==manifest['SDK_members']and type(manifest['SDK_members'])is int and manifest['SDK_members']>0
     core=Path(site)/first['core_member'];assert core.resolve().is_relative_to(Path(site).resolve())and sha(core)==manifest['core_sha256']
     helper=results/'helper-binding.json';assert helper.is_file()
-    common=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',source_root=str(snapshot.resolve()),source_revision=first['source_revision'],git_argv=['git','-C',str(snapshot.resolve())],prepared_source=manifest['prepared_source'],producer=manifest['producer'],interpreter=str(python),installed_site=str(site),numpy=actual['runtime']['versions']['numpy'],core_path=str(core.resolve()),core_sha256=manifest['core_sha256'],SDK_members=SDK,runtime_path=str(runtime.resolve()),runtime_sha256=manifest['runtime_sha256'],genuine_root_admission_path=str(admission.resolve()),genuine_root_admission_sha256=first['root_admission_sha256'],genuine_root_stager_path=str(stager.resolve()),genuine_root_stager_sha256=first['root_stager_sha256'],helper_binding_path=str(helper.resolve()),helper_binding_sha256=sha(helper),output_root=str((results/'first-cohort').resolve()))
+    common=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',source_root=str(snapshot.resolve()),source_revision=first['source_revision'],git_argv=['git','-C',str(snapshot.resolve())],prepared_source=manifest['prepared_source'],producer=manifest['producer'],interpreter=str(python),installed_site=str(site),numpy=actual['runtime']['versions']['numpy'],core_path=str(core.resolve()),core_sha256=manifest['core_sha256'],SDK_members=SDK,runtime_path=str(runtime.resolve()),runtime_sha256=manifest['runtime_sha256'],genuine_root_admission_path=str(admission.resolve()),genuine_root_admission_sha256=first['root_admission_sha256'],genuine_root_stager_path=str(stager.resolve()),genuine_root_stager_sha256=first['root_stager_sha256'],helper_binding_path=str(helper.resolve()),helper_binding_sha256=sha(helper),output_root=str(results.resolve()))
     verify_source_state(common,manifest);index={}
     for cohort,route in routes.items():
         context=json.loads((snapshot/route['contract']).read_bytes());assert context['route']==route and context['route_id']==cohort
