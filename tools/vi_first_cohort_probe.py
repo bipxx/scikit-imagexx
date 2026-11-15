@@ -6,7 +6,7 @@ import hashlib,importlib,importlib.util,inspect,json,os
 from pathlib import Path
 import runpy,subprocess,sys,traceback
 
-CONTRACT='coverage/contracts/vi-measurement-v4.json'
+CONTRACT='coverage/contracts/vi-measurement-v5.json'
 DRIVER_CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v6.json'
 
 def sha(path):

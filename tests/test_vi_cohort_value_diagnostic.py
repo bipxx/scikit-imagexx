@@ -304,7 +304,7 @@ def test_frozen_probe_driver_assertion_and_dependencies_exact():
 
 def test_value_capture_body_is_exact_admitted_v2_with_only_context_and_terminal_metadata():
     raw=(ROOT/'tools/vi_cohort_value_diagnostic.py').read_bytes()
-    current=b'coverage/contracts/vi-cohort-value-diagnostic-v3.json'
+    current=b'coverage/contracts/vi-cohort-value-diagnostic-v4.json'
     terminal=b"Path(binding['output_root']) / 'first-cohort/vi/terminal.json'"
     assert raw.count(current)==raw.count(terminal)==1
     raw=raw.replace(current,b'coverage/contracts/vi-cohort-value-diagnostic-v2.json',1)

@@ -13,7 +13,7 @@ from pathlib import Path
 import sys
 import traceback
 
-CONTEXT = 'coverage/contracts/vi-cohort-value-diagnostic-v3.json'
+CONTEXT = 'coverage/contracts/vi-cohort-value-diagnostic-v4.json'
 
 
 def digest(path):

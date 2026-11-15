@@ -4,7 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/vi-measurement-v4.json'
+CONTRACT=ROOT/'coverage/contracts/vi-measurement-v5.json'
 DATA=json.loads(CONTRACT.read_bytes());ROUTES=DATA['first_cohort']['routes']
 HISTORICAL_PATH='coverage/contracts/vi-measurement-v2.json'
 HISTORICAL=json.loads((ROOT/HISTORICAL_PATH).read_bytes())
@@ -159,7 +159,7 @@ def test_actual_poststop_terminal_write_path_refuses_mutation(tmp_path,monkeypat
 @pytest.mark.parametrize('fault',('none','verifier','runtime','runtime-during-verifier','manifest'))
 def test_actual_batch_summary_requires_one_postbatch_verifier(tmp_path,monkeypatch,fault):
     # Synthetic completed child receipts; neither child probe nor verifier runs.
-    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/vi-measurement-v4.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
+    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/vi-measurement-v5.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
     stage=tmp_path/'stage';stage.mkdir();runtime=stage/'runtime.json';runtime.write_text('{"synthetic_only":true}')
     results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA)
     manifest['runtime_sha256']=hashlib.sha256(runtime.read_bytes()).hexdigest()
@@ -233,7 +233,8 @@ def test_actual_workflow_and_restore_order_are_source_closed():
         elif block is not None:
             if line.strip()=='PY':blocks.append('\n'.join(block)+'\n');block=None
             else:block.append(line[10:])
-    assert len(blocks)==5
+    assert len(blocks)==6
+    assert sum('# ROOT_PREPARATION_CAPACITY_BEGIN' in body for body in blocks)==1
     for body in blocks:compile(body,'<actual workflow Python>','exec')
 
 
@@ -422,7 +423,13 @@ def test_dispatch_clock_expiry_refuses_before_process_or_source_import(monkeypat
 @pytest.mark.parametrize('name',('tools/vi_first_cohort_probe.py','.github/workflows/vi-initial.yml'))
 def test_current_controller_changes_only_declared_metadata_expressions(name):
     raw=(ROOT/name).read_bytes()
-    replacements=[(b'coverage/contracts/vi-measurement-v4.json',b'coverage/contracts/vi-measurement-v3.json',1 if name.endswith('.py')else 2)]
+    if name.endswith('.yml'):
+        step=DATA['capacity_successor']['initial_workflow_step'].encode()
+        assert H(step)==DATA['capacity_successor']['initial_workflow_step_sha256'] and raw.count(step)==1
+        raw=raw.replace(step,b'',1)
+        assert raw.count(b'          mkdir -p results\n')==1
+        raw=raw.replace(b'          mkdir -p results\n',b'          mkdir results\n',1)
+    replacements=[(b'coverage/contracts/vi-measurement-v5.json',b'coverage/contracts/vi-measurement-v3.json',1 if name.endswith('.py')else 2)]
     if name.endswith('.py'):
         replacements.extend([(b'coverage/contracts/variation-of-information-benchmark-execution-v6.json',b'coverage/contracts/variation-of-information-benchmark-execution-v5.json',1),
             (b'output_root=str(results.resolve())',b"output_root=str((results/'first-cohort').resolve())",1),
@@ -518,3 +525,13 @@ def test_actual_runtime_equality_refuses_local_private_interpreter_identity(tmp_
         PROBE.driver_adapter(snapshot).boundary(snapshot).validate_binding(path,root=snapshot,context_path=ROUTES['vi']['contract'])
     assert caught.traceback[-1].name=='validate_binding'
     assert "runtime['runtime']['python']==sys.version"in str(caught.traceback[-1].statement)
+
+
+def test_capacity_successor_preserves_the_entire_frozen_v4_product_and_authority():
+    predecessor=ROOT/'coverage/contracts/vi-measurement-v4.json'
+    assert H(predecessor.read_bytes())==DATA['capacity_successor']['predecessor_sha256']
+    old=json.loads(predecessor.read_bytes());projected=copy.deepcopy(DATA)
+    projected.pop('capacity_successor')
+    projected['first_cohort']['probe_sha256']=old['first_cohort']['probe_sha256']
+    projected['binding_successor']['controller_source_pins']=old['binding_successor']['controller_source_pins']
+    assert projected==old

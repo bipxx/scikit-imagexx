@@ -55,6 +55,30 @@ jobs:
       EXECUTION_CREATED_UTC: ${{ inputs.execution_created_utc }}
       DEADLINE_UTC: ${{ inputs.deadline_utc }}
     steps:
+      - name: Require scratch capacity before preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          python3 - <<'PY'
+          # ROOT_PREPARATION_CAPACITY_BEGIN
+          import json, os, shutil
+          from pathlib import Path
+          peak = 4 * 1024**3
+          reserve = 20 * 1024**3
+          floor = 30 * 1024**3
+          required = max(peak + reserve, floor)
+          destinations = {'workspace': Path.cwd(), 'runtime': Path(os.environ['RUNNER_TEMP'])}
+          free = {name: shutil.disk_usage(path).free for name, path in destinations.items()}
+          record = dict(schema='vi-preparation-capacity-v1', estimated_peak_bytes=peak,
+              reserve_bytes=reserve, minimum_free_floor_bytes=floor, required_free_bytes=required,
+              concurrent_job_allocation_bytes=0, observed_free_bytes=free,
+              passed=all(value >= required for value in free.values()), original_calls=0, native_calls=0)
+          Path('results/preparation-capacity.json').write_text(json.dumps(record, indent=2)+'\n', encoding='utf-8')
+          print(json.dumps(record))
+          assert record['passed'], 'Insufficient scratch capacity before checkout or transport'
+          # ROOT_PREPARATION_CAPACITY_END
+          PY
       - uses: actions/checkout@v4
         with:
           path: controller
@@ -66,7 +90,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir results
+          mkdir -p results
           lscpu > results/cpu.txt
           uname -a > results/platform.txt
           python - <<'PY'
@@ -74,12 +98,12 @@ jobs:
           from datetime import datetime, timezone
           from pathlib import Path
           assert os.environ['DIAGNOSTIC_AUTHORITY'] == 'ROOT_AUTHORIZED_ONE_VI_VALUE_DIAGNOSTIC', 'UNBOUND: no diagnostic helper/target authority'
-          assert hashlib.sha256(Path('controller/tools/vi_cohort_value_diagnostic.py').read_bytes()).hexdigest() == 'be825d35304c323c4ee17c41131a336dd572ced4c90eae2780a52e14112551e2'
-          assert hashlib.sha256(Path('controller/coverage/contracts/vi-cohort-value-diagnostic-v3.json').read_bytes()).hexdigest() == 'fff37df1acbc8b683f2ca0e6610942cdafe0166d962f6f0a61d435fbe765abd1'
+          assert hashlib.sha256(Path('controller/tools/vi_cohort_value_diagnostic.py').read_bytes()).hexdigest() == '3f5c025b6d7d91b9b136c535f95e4f386f3fddfa0ae7791f7f5d746bb56d0c07'
+          assert hashlib.sha256(Path('controller/coverage/contracts/vi-cohort-value-diagnostic-v4.json').read_bytes()).hexdigest() == '80b0aad65ac4cd325f006509582fea30b12459eb5bc24b485d309a05736f4317'
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
           assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
-          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v4.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v5.json').read_bytes())
           assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'
           assert (run, revision, artifact, digest) == tuple(str(frozen['producer'][key]) for key in ('run','revision','artifact','sha256'))
           created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
@@ -110,7 +134,7 @@ jobs:
           assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
           Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
           # ROOT_CURRENT_PRODUCT_HOST_GATE_BEGIN
-          host_policy = json.loads(Path('controller/coverage/contracts/vi-cohort-value-diagnostic-v3.json').read_bytes())['host_eligibility_proposal']
+          host_policy = json.loads(Path('controller/coverage/contracts/vi-cohort-value-diagnostic-v4.json').read_bytes())['host_eligibility_proposal']
           assert host_policy['purpose'] == 'CURRENT16_GENUINE_PRODUCT_VALUE_WITNESS'
           cpu_text = Path('/proc/cpuinfo').read_text(encoding='utf-8').split('\n\n', 1)[0]
           cpu = {key.strip(): value.strip() for key, value in (line.split(':', 1) for line in cpu_text.splitlines() if ':' in line)}
@@ -167,7 +191,7 @@ jobs:
           Path('results/measurement.json').write_bytes((prepared / 'runtime.json').read_bytes())
           Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
           assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
-          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v4.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v5.json').read_bytes())
           sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
           assert sha(prepared/'runtime.json')==frozen['runtime_sha256']
           first=frozen['first_cohort']
@@ -253,7 +277,7 @@ jobs:
           authorities=probe['prepare_cohorts'](controller,snapshot,results,frozen,sys.executable,Path(sysconfig.get_paths()['purelib']).resolve(),clock['deadline_utc'])
           assert set(authorities)=={'vi'}
           wrapper=controller/'tools/vi_cohort_value_diagnostic.py'
-          context_path=controller/'coverage/contracts/vi-cohort-value-diagnostic-v3.json'
+          context_path=controller/'coverage/contracts/vi-cohort-value-diagnostic-v4.json'
           context=json.loads(context_path.read_bytes())
           assert context['first_case']==frozen['first_cohort']['routes']['vi']['first_case']
           assert context['qualified_source']==frozen['producer']['revision']
