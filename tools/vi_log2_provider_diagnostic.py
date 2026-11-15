@@ -14,7 +14,7 @@ import traceback
 import warnings
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = ROOT / 'coverage/contracts/vi-log2-provider-v1.json'
+CONTRACT = ROOT / 'coverage/contracts/vi-log2-provider-v2.json'
 FIXTURE = ROOT / 'coverage/contracts/vi-log2-input-words-v1.json'
 AUTHORITY = 'ROOT_AUTHORIZED_ONE_LOG2_PROVIDER_EXPERIMENT'
 SOURCE = '16a5b50193125199ad26cf5a89acec5babf5290c'
@@ -105,18 +105,24 @@ def check_go(go, *, runner_hash, now):
     assert sys.platform == 'linux' and platform.machine() == 'x86_64' and sys.byteorder == 'little'
     assert not sys.flags.optimize and sys.executable == go['interpreter']
     assert all(os.environ.get(k) == '1' for k in ('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS'))
-    assert all(not os.environ.get(k) for k in ('PYTHONPATH','PYTHONHOME','LD_PRELOAD','LD_AUDIT','LD_LIBRARY_PATH','OPENBLAS_CORETYPE','SKIMAGEXX_DISABLE_SIMD'))
+    assert all(not os.environ.get(k) for k in ('PYTHONPATH','PYTHONHOME','LD_PRELOAD','LD_AUDIT','OPENBLAS_CORETYPE','SKIMAGEXX_DISABLE_SIMD'))
     if go['mode'] == 'hosted-feature':
         assert sys.version == contract['genuine_python'] and go['runtime_sha256'] == contract['genuine_runtime_sha256']
         assert sha(go['runtime_path']) == go['runtime_sha256']
         runtime = json.loads(Path(go['runtime_path']).read_bytes())
         assert runtime['source']['revision'] == SOURCE and len(runtime['runtime']['sdk_sha256']) == 108
         assert runtime['runtime']['python'] == sys.version
+        loader = contract['hosted_loader_environment']
+        assert sys.base_prefix == go['interpreter_base_prefix'] == loader['base_prefix']
+        allowed = sys.base_prefix + '/lib'
+        assert allowed == go['allowed_LD_LIBRARY_PATH'] == loader['LD_LIBRARY_PATH']
+        assert os.environ.get('LD_LIBRARY_PATH') == allowed
         assert os.environ.get('UTIL_VIEWS_FENV_MODE') == 'source-built-v1'
         assert sha(go['helper_binding_path']) == go['helper_binding_sha256']
         helper = json.loads(Path(go['helper_binding_path']).read_bytes())
         assert all(os.environ.get(k) == v for k, v in helper['env'].items())
     else:
+        assert not os.environ.get('LD_LIBRARY_PATH')
         prior = go['private_binding_path']
         assert sha(prior) == contract['private_binding_sha256'] == go['private_binding_sha256']
         binding = json.loads(Path(prior).read_bytes())
@@ -226,7 +232,9 @@ def child(go, go_path, go_hash, role):
         assert actual == raw, 'Full caller32 restoration failed'
         return actual
     caller = save()
-    rows, record, primary, np, notices = [], dict(role=role, mode=go['mode'], counts=counts), None, None, []
+    rows, record, primary, np, notices = [], dict(role=role, mode=go['mode'], counts=counts,
+        loader_environment=dict(base_prefix=sys.base_prefix, LD_LIBRARY_PATH=os.environ.get('LD_LIBRARY_PATH',''),
+                                allowed_LD_LIBRARY_PATH=go.get('allowed_LD_LIBRARY_PATH',''))), None, None, []
     try:
         with warnings.catch_warnings(record=True) as notices:
             warnings.simplefilter('always')

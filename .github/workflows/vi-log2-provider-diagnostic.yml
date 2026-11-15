@@ -98,8 +98,8 @@ jobs:
           from datetime import datetime, timezone
           from pathlib import Path
           assert os.environ['DIAGNOSTIC_AUTHORITY'] == 'ROOT_AUTHORIZED_ONE_LOG2_PROVIDER_EXPERIMENT', 'UNBOUND: no diagnostic helper/target authority'
-          assert hashlib.sha256(Path('controller/tools/vi_log2_provider_diagnostic.py').read_bytes()).hexdigest() == '36338689dd64c2d62f49197d76863acdfad117ac53e74ccbfdcf5a445e15800f'
-          assert hashlib.sha256(Path('controller/coverage/contracts/vi-log2-provider-v1.json').read_bytes()).hexdigest() == 'f78e32ffa0b79fcf6560002616a544c066da38ac56297e89636470d5b17b27cc'
+          assert hashlib.sha256(Path('controller/tools/vi_log2_provider_diagnostic.py').read_bytes()).hexdigest() == 'e2f86c5780c4997f749113110a29f2fd6489f767764851c0fa42a104e6d3d87e'
+          assert hashlib.sha256(Path('controller/coverage/contracts/vi-log2-provider-v2.json').read_bytes()).hexdigest() == '470d6d974503b4c17920a3a6c67c15e3fd035b07334bae518f26b65f2e78e25e'
           assert hashlib.sha256(Path('controller/coverage/contracts/vi-log2-input-words-v1.json').read_bytes()).hexdigest() == '144808de2c3dfb7c49eec0abcbed59a9783eeab20dfbfd359c0057a28e151bd6'
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
@@ -135,7 +135,7 @@ jobs:
           assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
           Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
           # ROOT_CURRENT_PRODUCT_HOST_GATE_BEGIN
-          host_policy = json.loads(Path('controller/coverage/contracts/vi-log2-provider-v1.json').read_bytes())['host_eligibility']
+          host_policy = json.loads(Path('controller/coverage/contracts/vi-log2-provider-v2.json').read_bytes())['host_eligibility']
           assert host_policy['purpose'] == 'LOG2_PROVIDER_FEATURE_INTERVENTION'
           cpu_text = Path('/proc/cpuinfo').read_text(encoding='utf-8').split('\n\n', 1)[0]
           cpu = {key.strip(): value.strip() for key, value in (line.split(':', 1) for line in cpu_text.splitlines() if ':' in line)}
@@ -283,7 +283,7 @@ jobs:
           workspace=Path(os.environ['GITHUB_WORKSPACE']).resolve()
           controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
           runner=controller/'tools/vi_log2_provider_diagnostic.py'
-          context=controller/'coverage/contracts/vi-log2-provider-v1.json'
+          context=controller/'coverage/contracts/vi-log2-provider-v2.json'
           sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
           module=runpy.run_path(str(runner))
           frozen=json.loads((controller/'coverage/contracts/vi-measurement-v5.json').read_bytes())
@@ -291,6 +291,9 @@ jobs:
           assert features['eligible'] is True and module['disabled_targets'](features)==features['disabled_targets']
           clock=json.loads((results/'execution-clock.json').read_bytes())
           helper=results/'helper-binding.json'
+          loader=json.loads(context.read_bytes())['hosted_loader_environment']
+          assert sys.base_prefix==loader['base_prefix']
+          assert os.environ.get('LD_LIBRARY_PATH')==loader['LD_LIBRARY_PATH']==sys.base_prefix+'/lib'
           go=results/'provider-root-go.json'
           decision=dict(status=os.environ['DIAGNOSTIC_AUTHORITY'],mode='hosted-feature',limits=module['LIMITS'],
               runner_sha256=sha(runner),contract_sha256=sha(context),
@@ -298,6 +301,7 @@ jobs:
               source_revision=frozen['producer']['revision'],source_root=str(snapshot),interpreter=sys.executable,
               runtime_path=str(workspace/'stage/runtime.json'),runtime_sha256=frozen['runtime_sha256'],core_sha256=frozen['core_sha256'],
               helper_binding_path=str(helper),helper_binding_sha256=sha(helper),
+              interpreter_base_prefix=sys.base_prefix,allowed_LD_LIBRARY_PATH=os.environ['LD_LIBRARY_PATH'],
               controller_revision=os.environ['GITHUB_SHA'],output_root=str(results/'provider'),
               created_utc=clock['created_utc'],deadline_utc=clock['deadline_utc'],
               base_features={k:features[k]for k in('baseline','dispatch','enabled','numpy_version','numpy_binary')},

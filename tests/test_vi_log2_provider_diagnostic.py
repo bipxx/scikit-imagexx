@@ -291,3 +291,106 @@ def test_workflow_capacity_gate_feature_gate_helpers_and_unchanged_installation(
             current.append(line[10:])
     assert len(blocks)>=6 and current is None
     for block in blocks:compile(block,'<inert-workflow>','exec')
+
+
+def bound_go_fixture(tmp_path,monkeypatch,mode='hosted-feature'):
+    """Inert trusted-metadata stand-ins; exercise the real check_go body."""
+    from datetime import datetime,timedelta,timezone
+    context=json.loads(D.CONTRACT.read_bytes())
+    now=datetime(2026,11,15,19,40,tzinfo=timezone.utc)
+    prefix=context['hosted_loader_environment']['base_prefix']
+    interpreter='/home/runner/work/_temp/runtime/bin/python'
+    private_python='3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]'
+    python=context['genuine_python']if mode=='hosted-feature'else private_python
+    runtime=tmp_path/'runtime.json'
+    runtime.write_text(json.dumps(dict(source=dict(revision=D.SOURCE),runtime=dict(python=python,sdk_sha256={str(i):'inert'for i in range(108)}))),encoding='utf-8')
+    binding=tmp_path/'private-binding.json'
+    binding.write_text(json.dumps(dict(kind='PRIVATE_LOCAL_31114_RETAINED_16CORE_NOT_GENUINE',source_revision=D.SOURCE,
+        core=dict(sha256=context['core_sha256']),python_version=private_python,interpreter=interpreter,helper=dict(path='/inert/helper.so'))),encoding='utf-8')
+    helper=tmp_path/'helper-binding.json'
+    env=dict(UTIL_VIEWS_FENV_MODE='source-built-v1',UTIL_VIEWS_FENV_RECEIPT='/inert/receipt.json',UTIL_VIEWS_FENV_RECEIPT_SHA256='1'*64)
+    helper.write_text(json.dumps(dict(env=env)),encoding='utf-8')
+    real_sha=D.sha
+    # These tiny synthetic metadata files stand in for already authenticated
+    # runtime975/private-binding identities, not for any scientific execution.
+    identities={runtime:context['genuine_runtime_sha256'],binding:context['private_binding_sha256']}
+    monkeypatch.setattr(D,'sha',lambda path:identities.get(Path(path),real_sha(path)))
+    for key in('PYTHONPATH','PYTHONHOME','LD_PRELOAD','LD_AUDIT','OPENBLAS_CORETYPE','SKIMAGEXX_DISABLE_SIMD','UTIL_VIEWS_FENV_HELPER','UTIL_VIEWS_FENV_RECEIPT'):
+        monkeypatch.delenv(key,raising=False)
+    for key in('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS'):monkeypatch.setenv(key,'1')
+    monkeypatch.setattr(D.sys,'platform','linux')
+    monkeypatch.setattr(D.platform,'machine',lambda:'x86_64')
+    monkeypatch.setattr(D.sys,'executable',interpreter)
+    monkeypatch.setattr(D.sys,'version',python)
+    monkeypatch.setattr(D.sys,'base_prefix',prefix)
+    if mode=='hosted-feature':
+        for key,value in env.items():monkeypatch.setenv(key,value)
+        monkeypatch.setenv('LD_LIBRARY_PATH',context['hosted_loader_environment']['LD_LIBRARY_PATH'])
+    else:
+        monkeypatch.setenv('UTIL_VIEWS_FENV_MODE','private-fixed-v1')
+        monkeypatch.setenv('UTIL_VIEWS_FENV_HELPER','/inert/helper.so')
+        monkeypatch.delenv('LD_LIBRARY_PATH',raising=False)
+    go=dict(status=D.AUTHORITY,limits=D.LIMITS,mode=mode,runner_sha256=D.sha(D.__file__),contract_sha256=D.sha(D.CONTRACT),input_sha256=D.sha(D.FIXTURE),
+        source_revision=D.SOURCE,source_root=str(ROOT),output_root=str(tmp_path/'outputs'),core_sha256=context['core_sha256'],interpreter=interpreter,
+        created_utc=now.isoformat(),deadline_utc=(now+timedelta(hours=1)).isoformat(),
+        runtime_path=str(runtime),runtime_sha256=context['genuine_runtime_sha256'],helper_binding_path=str(helper),helper_binding_sha256=D.sha(helper),
+        interpreter_base_prefix=prefix,allowed_LD_LIBRARY_PATH=context['hosted_loader_environment']['LD_LIBRARY_PATH'],
+        private_binding_path=str(binding),private_binding_sha256=context['private_binding_sha256'])
+    return go,context,now
+
+
+def test_real_check_go_accepts_observed_authenticated_hosted_loader_path(tmp_path,monkeypatch):
+    go,context,now=bound_go_fixture(tmp_path,monkeypatch)
+    assert D.os.environ['LD_LIBRARY_PATH']=='/opt/hostedtoolcache/Python/3.11.17/x64/lib'
+    assert D.check_go(go,runner_hash=D.sha(D.__file__),now=now)==context
+
+
+@pytest.mark.parametrize('path', ['/tmp/lib','lib','/opt/hostedtoolcache/Python/3.11.17/x64/lib:/tmp/lib',
+    '/opt/hostedtoolcache/Python/3.11.17/x64/lib:','/opt/hostedtoolcache/Python/3.11.16/x64/lib',
+    '/opt/hostedtoolcache/Python/3.11.17/x64/../x64/lib',''])
+def test_real_check_go_rejects_unbound_hosted_loader_paths(tmp_path,monkeypatch,path):
+    go,context,now=bound_go_fixture(tmp_path,monkeypatch)
+    monkeypatch.setenv('LD_LIBRARY_PATH',path)
+    with pytest.raises(AssertionError):D.check_go(go,runner_hash=D.sha(D.__file__),now=now)
+
+
+@pytest.mark.parametrize('changed', ['actual-prefix','GO-prefix','GO-path','consistent-wrong-prefix','runtime-pin','python-version'])
+def test_real_check_go_requires_prefix_GO_and_genuine_runtime_binding(tmp_path,monkeypatch,changed):
+    go,context,now=bound_go_fixture(tmp_path,monkeypatch)
+    wrong='/opt/hostedtoolcache/Python/3.11.16/x64'
+    if changed=='actual-prefix':monkeypatch.setattr(D.sys,'base_prefix',wrong)
+    if changed=='GO-prefix':go['interpreter_base_prefix']=wrong
+    if changed=='GO-path':go['allowed_LD_LIBRARY_PATH']='/tmp/lib'
+    if changed=='consistent-wrong-prefix':
+        monkeypatch.setattr(D.sys,'base_prefix',wrong);go['interpreter_base_prefix']=wrong
+        go['allowed_LD_LIBRARY_PATH']=wrong+'/lib';monkeypatch.setenv('LD_LIBRARY_PATH',wrong+'/lib')
+    if changed=='runtime-pin':go['runtime_sha256']='0'*64
+    if changed=='python-version':monkeypatch.setattr(D.sys,'version','3.11.14 PRIVATE')
+    with pytest.raises(AssertionError):D.check_go(go,runner_hash=D.sha(D.__file__),now=now)
+
+
+@pytest.mark.parametrize('key', ['LD_PRELOAD','LD_AUDIT','OPENBLAS_CORETYPE','PYTHONPATH','PYTHONHOME','SKIMAGEXX_DISABLE_SIMD'])
+def test_real_check_go_keeps_other_injection_barriers(tmp_path,monkeypatch,key):
+    go,context,now=bound_go_fixture(tmp_path,monkeypatch)
+    monkeypatch.setenv(key,'unbound-injection')
+    with pytest.raises(AssertionError):D.check_go(go,runner_hash=D.sha(D.__file__),now=now)
+
+
+def test_real_check_go_private_blank_loader_requirement_unchanged(tmp_path,monkeypatch):
+    go,context,now=bound_go_fixture(tmp_path,monkeypatch,'private-baseline')
+    assert D.check_go(go,runner_hash=D.sha(D.__file__),now=now)==context
+    monkeypatch.setenv('LD_LIBRARY_PATH',context['hosted_loader_environment']['LD_LIBRARY_PATH'])
+    with pytest.raises(AssertionError):D.check_go(go,runner_hash=D.sha(D.__file__),now=now)
+
+
+def test_v2_loader_context_preserves_v1_and_fixed_science_scope():
+    current=json.loads(D.CONTRACT.read_bytes())
+    old_path=ROOT/current['predecessor']['path']
+    assert D.sha(old_path)==current['predecessor']['sha256']=='f78e32ffa0b79fcf6560002616a544c066da38ac56297e89636470d5b17b27cc'
+    old=json.loads(old_path.read_bytes())
+    for key in old:
+        if key not in('schema','runner_sha256'):assert current[key]==old[key],key
+    workflow=(ROOT/'.github/workflows/vi-log2-provider-diagnostic.yml').read_text()
+    assert 'coverage/contracts/vi-log2-provider-v1.json'not in workflow
+    assert D.sha(D.CONTRACT)in workflow and D.sha(ROOT/current['runner'])in workflow
+    assert "interpreter_base_prefix=sys.base_prefix,allowed_LD_LIBRARY_PATH=os.environ['LD_LIBRARY_PATH']"in workflow
