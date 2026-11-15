@@ -16,13 +16,16 @@ import traceback
 import warnings
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = ROOT / 'coverage/contracts/vi-avx512-public-witness-v1.json'
+CONTEXT = ROOT / 'coverage/contracts/vi-avx512-public-witness-v2.json'
 AUTHORITY = 'ROOT_AUTHORIZED_CONTROLLED_VI_PUBLIC_FEATURE_WITNESS'
 LIMITS = dict(original_public_max=2, native_public_max=2, target_children_max=2,
               fixtures_max=2, sampler_bodies=0, timed_batches=0, retries=0,
               FP_save_source_ceiling=42, FP_restore_source_ceiling=14,
               ABI_queries_source_ceiling=8, glibc_queries_source_ceiling=8,
-              postidentity_max=2, F1_preparations_max=1)
+              postidentity_max=2, F1_preparations_max=1,
+              late_alias_queries_source_ceiling=6,
+              late_software_getters_source_ceiling_each=2,
+              late_worker_getters_source_ceiling=2)
 
 
 def sha(path):
@@ -46,7 +49,7 @@ def module(path, name):
 
 def contract():
     value = json.loads(CONTEXT.read_bytes())
-    assert value['schema'] == 'vi-avx512-public-witness-v1'
+    assert value['schema'] == 'vi-avx512-public-witness-v2'
     assert value['purpose'] == 'CURRENT16_GENUINE_PUBLIC_VI_AVX512_INTERVENTION'
     assert value['limits'] == LIMITS and value['execution_authority'] is None
     assert sha(__file__) == value['runner_sha256']
@@ -166,6 +169,9 @@ def capture_complete(value, calls, c):
     assert value['actual']['flags']['owndata'] is True
     assert len(value['input_before']) == len(value['input_after']) == 2
     for before, after, pin in zip(value['input_before'], value['input_after'], c['input_payload_sha256']):
+        assert before['type'] == after['type'] == ['numpy', 'ndarray']
+        base = ['builtins', 'NoneType'] if after['base_type'] is None else after['base_type']
+        assert before['base_type'] == base
         assert before['payload'] == after['payload_sha256'] == pin
         assert before['dtype'] == after['dtype'] == '<i8'
         assert before['shape'] == after['shape'] == [128, 128]
@@ -178,7 +184,14 @@ def capture_complete(value, calls, c):
     assert binding['runtime_sha256'] == c['runtime_sha256'] and binding['core_sha256'] == c['core_sha256']
 
 
-def classify(value, calls, site, c):
+def classify(value, calls, site, c, late=None):
+    if site == c['expected_failure_site'] and late is not None:
+        keys = ('type', 'dtype', 'dtype_descr', 'dtype_metadata', 'shape', 'strides',
+                'nbytes', 'flags', 'base_type')
+        late['structural_metadata_equal'] = all(value['expected'][k] == value['actual'][k] for k in keys)
+        # Original137 includes the unequal payload. It was skipped, never passed.
+        late['full137_array_state_equality'] = False
+        late['original137_executed'] = False
     capture_complete(value, calls, c)
     same = value['expected']['raw_hex'] == value['actual']['raw_hex']
     if site is None:
@@ -189,7 +202,83 @@ def classify(value, calls, site, c):
         return 'PARITY_PASS'
     assert not same and value['status'] == 'FAILED_OLD_PROBE_NO_RETRY'
     assert value['primary_type'] == 'AssertionError' and site == c['expected_failure_site']
+    assert late is not None and late['boundary_seen'] and late['writer_visits'] == 1
+    assert late['complete'] and 'capture_error' not in late
+    assert late['site'] == c['expected_failure_site'] and late['structural_metadata_equal']
+    assert late['aliases'] == dict(expected_input0=False, actual_input0=False, actual_input1=False)
+    assert late['policy']['errors_equal'] and late['policy']['handler_same_object']
+    assert late['policy']['buffer_equal'] and type(late['workers']) is int and late['workers'] == 1
+    late['input_schema_mapped_equal'] = True
+    late['independent_late_predicates_passed'] = True
     return 'EXPECTED_WORD_MISMATCH'
+
+
+def late_snapshot(values):
+    """Observe metadata before old probe cleanup; never call targets or F1."""
+    np, xx = values['np'], values['xx']
+    expected, actual, args = values['expected'], values['actual'], values['args']
+    assert len(args) == 2
+    aliases = dict(expected_input0=bool(np.shares_memory(expected, args[0])),
+                   actual_input0=bool(np.shares_memory(actual, args[0])),
+                   actual_input1=bool(np.shares_memory(actual, args[1])))
+    errors, handler, buffer = np.geterr(), np.geterrcall(), np.getbufsize()
+    workers = xx.get_num_threads()  # Separate metadata getter, outside the public pair.
+    policy = values['policy']
+    return dict(complete=True, aliases=aliases, workers=workers,
+        policy=dict(expected_errors=policy[0], observed_errors=errors,
+                    errors_equal=errors == policy[0], handler_same_object=handler is policy[1],
+                    expected_handler_type=[type(policy[1]).__module__, type(policy[1]).__name__],
+                    observed_handler_type=[type(handler).__module__, type(handler).__name__],
+                    expected_buffer=policy[2], observed_buffer=buffer, buffer_equal=buffer == policy[2]))
+
+
+def run_with_late_gate(wrapper, go, c, late):
+    """Bridge this fresh wrapper/probe only; delegate its failure writer unchanged."""
+    original_run = wrapper.run_diagnostic
+    failure_path = Path(go['output_root']) / late['role'] / 'first-cohort/vi/failure.json'
+
+    def bridge(probe, *args, **kwargs):
+        original_write = probe.write_json
+
+        def observe(path, record):
+            if Path(path).resolve() == failure_path.resolve():
+                late['boundary_seen'] = True
+                late['writer_visits'] += 1
+                try:
+                    caller = sys._getframe(1)
+                    assert late['writer_visits'] == 1
+                    assert Path(probe.__file__).resolve() == ROOT / c['probe']
+                    assert caller.f_code is probe.main.__code__
+                    assert caller.f_lineno == c['late_gate']['probe_failure_writer_line']
+                    error = caller.f_locals['error']
+                    assert type(error) is AssertionError
+                    assert set(record) == {'type', 'error', 'counts', 'traceback', 'retry'}
+                    assert record['type'] == 'AssertionError' and record['error'] == str(error)
+                    assert record['counts'] == dict(original=1, native=1) and record['retry'] is False
+                    leaf = error.__traceback__
+                    while leaf.tb_next is not None:
+                        leaf = leaf.tb_next
+                    site = dict(path=c['expected_failure_site']['path'], line=leaf.tb_lineno,
+                                function=leaf.tb_frame.f_code.co_name, type=type(error).__name__)
+                    assert Path(leaf.tb_frame.f_code.co_filename).resolve() == Path(go['source_root']) / site['path']
+                    assert site == c['expected_failure_site']
+                    late.update(late_snapshot(leaf.tb_frame.f_locals), site=site)
+                except BaseException as error:
+                    # Preserve the original writer and primary. Incomplete metadata forbids control.
+                    late.update(complete=False, capture_error=dict(type=type(error).__name__, error=str(error)))
+            return original_write(path, record)
+
+        probe.write_json = observe
+        try:
+            return original_run(probe, *args, **kwargs)
+        finally:
+            probe.write_json = original_write
+
+    wrapper.run_diagnostic = bridge
+    try:
+        return wrapper.main()
+    finally:
+        wrapper.run_diagnostic = original_run
 
 
 def child(go, c, provider, role, authority_pin):
@@ -207,6 +296,7 @@ def child(go, c, provider, role, authority_pin):
         assert result['exit'] == 1 and usable(result, 'EXPECTED_WORD_MISMATCH')
     write_json(folder / 'child-entry.claim.json', dict(role=role, retry=False))
     record = dict(role=role, status='UNEXPECTED_FAILURE', primary_notes=[], complete=False)
+    late = dict(role=role, boundary_seen=False, writer_visits=0, complete=False)
     primary = primary_tb = None
     try:
         assert not any(n in sys.modules for n in ('numpy', 'scipy', 'skimage', 'skimagexx'))
@@ -238,11 +328,12 @@ def child(go, c, provider, role, authority_pin):
         try:
             sys.argv = argv
             try:
-                wrapper.main()
+                run_with_late_gate(wrapper, go, c, late)
             except BaseException as error:
                 primary, primary_tb = error, error.__traceback__
         finally:
             sys.argv = previous
+        record['late_gate'] = late
         site = None
         if primary is not None:
             record.update(primary_type=type(primary).__name__, primary_error=str(primary),
@@ -260,7 +351,7 @@ def child(go, c, provider, role, authority_pin):
         value = json.loads(output.read_bytes())
         calls_path = folder / 'first-cohort/vi/calls.jsonl'
         calls = [json.loads(line) for line in calls_path.read_text().splitlines()]
-        record.update(status=classify(value, calls, site, c), complete=True,
+        record.update(status=classify(value, calls, site, c, late), complete=True,
                       value_path=str(output), value_sha256=sha(output), calls_path=str(calls_path),
                       calls_sha256=sha(calls_path), failure_site=site)
     except BaseException as error:
@@ -353,7 +444,9 @@ def run_role(go, c, role, go_path, go_pin):
 def usable(result, status):
     return (result.get('source_helper_verified') is True and result.get('postidentity_exit') == 0
             and (result.get('child') or {}).get('complete') is True
-            and result['child']['status'] == status)
+            and result['child']['status'] == status
+            and (status != 'EXPECTED_WORD_MISMATCH' or
+                 result['child'].get('late_gate', {}).get('independent_late_predicates_passed') is True))
 
 
 def compare_control(default, disabled):

@@ -11,7 +11,7 @@ on:
           - UNBOUND
           - ROOT_AUTHORIZED_CONTROLLED_VI_PUBLIC_FEATURE_WITNESS
       allow_disabled_after_word_mismatch:
-        description: Preauthorize control only after fully captured strict baseline word failure
+        description: Preauthorize control only after strict word failure and complete pre-cleanup late predicates
         type: boolean
         required: true
         default: false
@@ -104,8 +104,8 @@ jobs:
           from datetime import datetime, timezone
           from pathlib import Path
           assert os.environ['DIAGNOSTIC_AUTHORITY'] == 'ROOT_AUTHORIZED_CONTROLLED_VI_PUBLIC_FEATURE_WITNESS', 'UNBOUND: no diagnostic helper/target authority'
-          assert hashlib.sha256(Path('controller/tools/vi_avx512_public_witness.py').read_bytes()).hexdigest() == '6f1de619c5228be5011cce02d709a2112e8e006f2bb5c23f818335060a574687'
-          assert hashlib.sha256(Path('controller/coverage/contracts/vi-avx512-public-witness-v1.json').read_bytes()).hexdigest() == '99d598856039aff8b843878c23513210fe8aa89034d19098991719350cb5d996'
+          assert hashlib.sha256(Path('controller/tools/vi_avx512_public_witness.py').read_bytes()).hexdigest() == '9067d4fbfd68f1d491dc07892397cd54fb4c69ae42bc07e13c68d64a8e0f0238'
+          assert hashlib.sha256(Path('controller/coverage/contracts/vi-avx512-public-witness-v2.json').read_bytes()).hexdigest() == 'dd47445d610ac705ae74e65caf59e9558a7bce43fd0ff2c70b5a9fb0c1a66611'
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
           assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
@@ -140,7 +140,7 @@ jobs:
           assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
           Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
           # ROOT_CURRENT_PRODUCT_HOST_GATE_BEGIN
-          host_policy = json.loads(Path('controller/coverage/contracts/vi-avx512-public-witness-v1.json').read_bytes())['host_eligibility']
+          host_policy = json.loads(Path('controller/coverage/contracts/vi-avx512-public-witness-v2.json').read_bytes())['host_eligibility']
           assert host_policy['purpose'] == 'CURRENT16_GENUINE_PUBLIC_VI_AVX512_INTERVENTION'
           cpu_text = Path('/proc/cpuinfo').read_text(encoding='utf-8').split('\n\n', 1)[0]
           cpu = {key.strip(): value.strip() for key, value in (line.split(':', 1) for line in cpu_text.splitlines() if ':' in line)}
@@ -289,7 +289,7 @@ jobs:
           workspace=Path(os.environ['GITHUB_WORKSPACE']).resolve()
           controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
           runner=controller/'tools/vi_avx512_public_witness.py'
-          context=controller/'coverage/contracts/vi-avx512-public-witness-v1.json'
+          context=controller/'coverage/contracts/vi-avx512-public-witness-v2.json'
           frozen=json.loads((controller/'coverage/contracts/vi-measurement-v5.json').read_bytes())
           c=json.loads(context.read_bytes());features=json.loads((results/'public-features.json').read_bytes())
           assert features['eligible'] is True

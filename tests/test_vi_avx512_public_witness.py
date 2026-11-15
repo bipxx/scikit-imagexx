@@ -10,7 +10,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / 'tools/vi_avx512_public_witness.py'
-CONTEXT = ROOT / 'coverage/contracts/vi-avx512-public-witness-v1.json'
+CONTEXT = ROOT / 'coverage/contracts/vi-avx512-public-witness-v2.json'
 WORKFLOW = ROOT / '.github/workflows/vi-avx512-public-witness.yml'
 spec = importlib.util.spec_from_file_location('_inert_vi_public_witness', PATH)
 D = importlib.util.module_from_spec(spec)
@@ -53,9 +53,11 @@ def capture(same=False):
     actual = output(bytes(16) if same else bytes(15) + b'\1')
     before, after = [], []
     for pin in C['input_payload_sha256']:
-        before.append(dict(payload=pin, dtype='<i8', shape=[128, 128], strides=[1024, 8],
+        before.append(dict(type=['numpy', 'ndarray'], base_type=['numpy', 'ndarray'],
+                           payload=pin, dtype='<i8', shape=[128, 128], strides=[1024, 8],
                            own=False, writeable=True, c=True, f=False))
-        after.append(dict(payload_sha256=pin, dtype='<i8', shape=[128, 128], strides=[1024, 8],
+        after.append(dict(type=['numpy', 'ndarray'], base_type=['numpy', 'ndarray'],
+                          payload_sha256=pin, dtype='<i8', shape=[128, 128], strides=[1024, 8],
                           nbytes=131072, flags=dict(owndata=False, writeable=True,
                                                    c_contiguous=True, f_contiguous=False)))
     fp = dict(control=895, status=32, mxcsr=8098)
@@ -76,9 +78,16 @@ def capture(same=False):
         terminal=dict(sampler_body_calls=0, timed_batches=0, poststop_source_authority_unchanged=True))
 
 
+def late_capture():
+    return dict(role='default', boundary_seen=True, writer_visits=1, complete=True,
+        site=C['expected_failure_site'], aliases=dict(expected_input0=False, actual_input0=False, actual_input1=False),
+        policy=dict(errors_equal=True, handler_same_object=True, buffer_equal=True), workers=1,
+        independent_late_predicates_passed=True)
+
+
 def result(status='EXPECTED_WORD_MISMATCH', exit_code=1):
     return dict(exit=exit_code, source_helper_verified=True, postidentity_exit=0,
-                child=dict(status=status, complete=True), value=capture(status == 'PARITY_PASS'))
+                child=dict(status=status, complete=True, late_gate=late_capture()), value=capture(status == 'PARITY_PASS'))
 
 
 def test_exact_reused_sources_cases_and_source_budget():
@@ -98,7 +107,7 @@ def test_exact_reused_sources_cases_and_source_budget():
 
 @pytest.mark.parametrize('same', (False, True))
 def test_complete_existing_capture_classification(same):
-    assert D.classify(capture(same), calls(), None if same else C['expected_failure_site'], C) == (
+    assert D.classify(capture(same), calls(), None if same else C['expected_failure_site'], C, late_capture()) == (
         'PARITY_PASS' if same else 'EXPECTED_WORD_MISMATCH')
 
 
@@ -117,10 +126,10 @@ def test_every_other_failure_refuses_word_failure_classification(fault):
     elif fault == 'ownership': value['actual']['flags']['owndata'] = False
     elif fault == 'native-count': value['strict_trace']['returns'] = []
     else: site['line'] += 1
-    with pytest.raises(AssertionError): D.classify(value, journal, site, C)
+    with pytest.raises(AssertionError): D.classify(value, journal, site, C, late_capture())
 
 
-@pytest.mark.parametrize('fault', ('none', 'no-authority', 'identity', 'source', 'incomplete', 'unexpected', 'missing', 'signal'))
+@pytest.mark.parametrize('fault', ('none', 'no-authority', 'identity', 'source', 'incomplete', 'unexpected', 'missing', 'signal', 'late-missing', 'late-failed'))
 def test_actual_campaign_one_pair_or_conditional_two_and_primary_exit(tmp_path, monkeypatch, fault):
     first = result()
     if fault == 'identity': first['postidentity_exit'] = 1
@@ -129,6 +138,8 @@ def test_actual_campaign_one_pair_or_conditional_two_and_primary_exit(tmp_path, 
     elif fault == 'unexpected': first['child']['status'] = 'UNEXPECTED_FAILURE'
     elif fault == 'missing': first['child'] = None
     elif fault == 'signal': first['exit'] = 137
+    elif fault == 'late-missing': first['child'].pop('late_gate')
+    elif fault == 'late-failed': first['child']['late_gate']['independent_late_predicates_passed'] = False
     observed = []
     def run(go, context, role, *unused):
         observed.append(role)
@@ -256,6 +267,8 @@ def test_actual_child_FP_gate_records_sticky_without_requiring_it(tmp_path, monk
             namespace['execute']()
     fake_common = SimpleNamespace(fp_controller=lambda *a: (lambda: raw, None, None))
     monkeypatch.setattr(D, 'module', lambda p, name: fake_common if p.name == 'next_util_execution.py' else SimpleNamespace(main=wrapper_main))
+    # This control isolates the unchanged pretarget gate; the real bridge is exercised below.
+    monkeypatch.setattr(D, 'run_with_late_gate', lambda wrapper, go, c, late: (late.update(late_capture()), wrapper.main())[1])
     import builtins
     old = builtins.__import__
     monkeypatch.setattr(builtins, '__import__', lambda name, *a, **k: SimpleNamespace() if name == 'numpy' else old(name, *a, **k))
@@ -367,3 +380,144 @@ def test_actual_workflow_capacity_gate(tmp_path, monkeypatch, workspace_gib, run
     else:
         with pytest.raises(AssertionError): exec(compile(blocks(WORKFLOW)[0], '<actual capacity>', 'exec'), {})
     assert json.loads((tmp_path / 'results/preparation-capacity.json').read_bytes())['passed'] == passed
+
+
+def test_v2_exact_predecessor_inverse_and_frozen_dependencies():
+    import ast
+    old = ROOT / 'coverage/contracts/vi-avx512-public-witness-v1.json'
+    assert H(old.read_bytes()) == '99d598856039aff8b843878c23513210fe8aa89034d19098991719350cb5d996'
+    source = PATH.read_text(encoding='utf-8')
+    start, end = source.index('\ndef late_snapshot('), source.index('\ndef child(')
+    source = source[:start] + source[end:]
+    node = next(n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name == 'classify')
+    source = source.replace(ast.get_source_segment(source, node), C['predecessor_classifier_source'], 1)
+    for new, old in C['runner_inverse_replacements']:
+        assert source.count(new) == 1
+        source = source.replace(new, old, 1)
+    assert H(source.encode('utf-8')) == '6f1de619c5228be5011cce02d709a2112e8e006f2bb5c23f818335060a574687'
+    previous = json.loads((ROOT / 'coverage/contracts/vi-avx512-public-witness-v1.json').read_bytes())
+    for key in ('prepared_dependencies', 'controller_dependencies', 'first_case', 'native_requirements',
+                'qualified_source', 'runtime_sha256', 'core_sha256', 'FP_policy', 'host_eligibility'):
+        assert C[key] == previous[key]
+    assert C['source_path_bounds']['word_failure'] == dict(FP_save=18, FP_restore=6, late_worker_getters=1)
+    assert C['source_path_bounds']['default_word_failure_control_pass'] == dict(FP_save=39, FP_restore=13, late_worker_getters=1)
+    workflow = WORKFLOW.read_text(encoding='utf-8')
+    workflow = workflow.replace('vi-avx512-public-witness-v2.json', 'vi-avx512-public-witness-v1.json')
+    workflow = workflow.replace(C['runner_sha256'], '6f1de619c5228be5011cce02d709a2112e8e006f2bb5c23f818335060a574687')
+    workflow = workflow.replace(H(CONTEXT.read_bytes()), '99d598856039aff8b843878c23513210fe8aa89034d19098991719350cb5d996')
+    workflow = workflow.replace('Preauthorize control only after strict word failure and complete pre-cleanup late predicates',
+                                'Preauthorize control only after fully captured strict baseline word failure')
+    assert H(workflow.encode('utf-8')) == '41027e30e0d2c2f2408efa2e8827b293e972fa12c77509f726d2fefb367d7701'
+
+
+@pytest.mark.parametrize('fault', ('type-before', 'type-after', 'base-before', 'base-after', 'descriptor'))
+def test_all_input_schema_fields_and_structural_output_drift_refuse(fault):
+    value, late = capture(), late_capture()
+    if fault == 'type-before': value['input_before'][0]['type'] = ['inert', 'wrong']
+    elif fault == 'type-after': value['input_after'][0]['type'] = ['inert', 'wrong']
+    elif fault == 'base-before': value['input_before'][0]['base_type'] = ['inert', 'wrong']
+    elif fault == 'base-after': value['input_after'][0]['base_type'] = None
+    else: value['actual']['strides'] = [16]
+    with pytest.raises(AssertionError): D.classify(value, calls(), C['expected_failure_site'], C, late)
+    if fault == 'descriptor': assert late['structural_metadata_equal'] is False
+
+
+def test_none_base_mapping_is_explicit_and_payload137_stays_false():
+    value, late = capture(), late_capture()
+    value['input_before'][0]['base_type'] = ['builtins', 'NoneType']
+    value['input_after'][0]['base_type'] = None
+    assert D.classify(value, calls(), C['expected_failure_site'], C, late) == 'EXPECTED_WORD_MISMATCH'
+    assert late['input_schema_mapped_equal'] and late['structural_metadata_equal']
+    assert late['full137_array_state_equality'] is False and late['original137_executed'] is False
+
+
+def test_unexpected139_with_matching_words_refuses_without_inventing137_state():
+    value, late = capture(same=True), late_capture()
+    value['status'] = 'FAILED_OLD_PROBE_NO_RETRY'
+    site = dict(C['expected_failure_site'], line=139)
+    with pytest.raises(AssertionError): D.classify(value, calls(), site, C, late)
+    assert not {'full137_array_state_equality', 'original137_executed', 'structural_metadata_equal'}.intersection(late)
+
+
+@pytest.mark.parametrize('fault', ('none', 'policy', 'handler', 'buffer', 'workers',
+    'expected-alias', 'actual0-alias', 'actual1-alias', 'missing-hook', 'wrong-path',
+    'wrong-hook-line', 'wrong-site', 'getter-failure', 'capture-failure', 'writer-failure'))
+def test_real_bridge_observes_before_cleanup_preserves_primary_writer_and_references(tmp_path, monkeypatch, fault):
+    from types import ModuleType
+    sequence, queries, records = [], [], []
+    primary = AssertionError('INERT_136_PRIMARY')
+    writer_error = OSError('INERT_WRITER_FAILURE')
+    initial = dict(errors={'divide': 'warn'}, handler=None, buffer=8192, workers=1)
+    state = dict(initial)
+    if fault == 'policy': state['errors'] = {'divide': 'ignore'}
+    elif fault == 'handler': state['handler'] = object()
+    elif fault == 'buffer': state['buffer'] = 4096
+    elif fault == 'workers': state['workers'] = 2
+    expected, actual, input0, input1 = (object() for _ in range(4))
+    pairs = {(expected, input0): 'expected-alias', (actual, input0): 'actual0-alias', (actual, input1): 'actual1-alias'}
+    def sharing(left, right):
+        queries.append(pairs[(left, right)]); return fault == pairs[(left, right)]
+    def getter(key):
+        queries.append(key)
+        if fault == 'getter-failure' and key == 'workers': raise RuntimeError('INERT_GETTER_FAILURE')
+        return state[key]
+    np = SimpleNamespace(shares_memory=sharing, geterr=lambda: getter('errors'),
+        geterrcall=lambda: getter('handler'), getbufsize=lambda: getter('buffer'))
+    xx = SimpleNamespace(get_num_threads=lambda: getter('workers'))
+    source = tmp_path / 'prepared'
+    execute_name = str(source / C['expected_failure_site']['path'])
+    execute_globals = dict(primary=primary, sequence=sequence)
+    execute_text = '\n' * (134 if fault == 'wrong-site' else 133)
+    execute_text += 'def execute(np, xx, expected, actual, args, policy):\n    try:\n        raise primary\n    finally:\n        sequence.append("driver-restored")\n'
+    exec(compile(execute_text, execute_name, 'exec'), execute_globals)
+    probe = ModuleType('_inert_signed_probe'); probe.__file__ = str(ROOT / C['probe'])
+    failure_path = tmp_path / 'default/first-cohort/vi/failure.json'
+    actual_path = failure_path.with_name('other.json') if fault == 'wrong-path' else failure_path
+    def writer(path, record):
+        sequence.append('old-writer'); records.append((path, record, dict(record)))
+        if fault == 'writer-failure': raise writer_error
+    probe.__dict__.update(execute=execute_globals['execute'], np=np, xx=xx, expected=expected,
+        actual=actual, args=(input0, input1), policy=(initial['errors'], initial['handler'], initial['buffer']),
+        state=state, initial=initial, sequence=sequence, write_json=writer, failure_path=actual_path)
+    probe_text = '\n' * (234 if fault == 'wrong-hook-line' else 233)
+    probe_text += 'def main():\n    try:\n        execute(np, xx, expected, actual, args, policy)\n    except BaseException as error:\n        record = dict(type=type(error).__name__, error=str(error), counts=dict(original=1,native=1), traceback="inert", retry=False)\n        sequence.append("failure-writer")\n        write_json(failure_path, record); raise\n    finally:\n        state.update(initial)\n        sequence.append("probe-restored")\n'
+    exec(compile(probe_text, probe.__file__, 'exec'), probe.__dict__)
+    wrapper = SimpleNamespace()
+    entered = []
+    def run_diagnostic(p):
+        entered.append('one-old-wrapper-call'); return p.main()
+    wrapper.run_diagnostic = run_diagnostic
+    wrapper.main = (lambda: probe.main()) if fault == 'missing-hook' else (lambda: wrapper.run_diagnostic(probe))
+    if fault == 'capture-failure':
+        def fail_capture(values): raise RuntimeError('INERT_CAPTURE_FAILURE')
+        monkeypatch.setattr(D, 'late_snapshot', fail_capture)
+    late = dict(role='default', boundary_seen=False, writer_visits=0, complete=False)
+    with pytest.raises((AssertionError, OSError)) as error:
+        D.run_with_late_gate(wrapper, dict(output_root=str(tmp_path), source_root=str(source)), C, late)
+    assert error.value is (writer_error if fault == 'writer-failure' else primary)
+    assert wrapper.run_diagnostic is run_diagnostic and probe.write_json is writer
+    assert len(records) == 1 and records[0][1] == records[0][2]
+    assert records[0][1]['counts'] == dict(original=1, native=1)
+    assert sequence == ['driver-restored', 'failure-writer', 'old-writer', 'probe-restored']
+    assert state == initial  # Post-wrapper getters would falsely pass the four mutation cases.
+    assert entered == ([] if fault == 'missing-hook' else ['one-old-wrapper-call'])
+    if fault in ('missing-hook', 'wrong-path', 'wrong-hook-line', 'wrong-site', 'capture-failure'):
+        assert queries == []
+    else:
+        assert queries == ['expected-alias', 'actual0-alias', 'actual1-alias', 'errors', 'handler', 'buffer', 'workers']
+    if fault == 'none':
+        assert D.classify(capture(), calls(), C['expected_failure_site'], C, late) == 'EXPECTED_WORD_MISMATCH'
+        assert late['independent_late_predicates_passed'] and late['full137_array_state_equality'] is False
+    elif fault != 'writer-failure':
+        with pytest.raises(AssertionError): D.classify(capture(), calls(), C['expected_failure_site'], C, late)
+
+
+def test_success_bridge_performs_no_late_science_and_restores_reference(monkeypatch):
+    def forbidden(*unused): pytest.fail('Success performed a failure-only observation')
+    monkeypatch.setattr(D, 'late_snapshot', forbidden)
+    original = lambda *args: 'inert-success'
+    wrapper = SimpleNamespace(run_diagnostic=original)
+    wrapper.main = lambda: 'inert-success'
+    late = dict(role='default', boundary_seen=False, writer_visits=0, complete=False)
+    assert D.run_with_late_gate(wrapper, dict(output_root='/inert'), C, late) == 'inert-success'
+    assert wrapper.run_diagnostic is original and not late['boundary_seen']
