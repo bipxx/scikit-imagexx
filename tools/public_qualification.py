@@ -296,7 +296,8 @@ CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_pri
 CURRENT_SDK_CLIENT_SCOPE = 'current38 required installed clients; complete rolling-ball floating/typed-storage owning operations plus admitted VI/flood families; source readiness is not qualification acceptance'
 CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v6.json'
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
-DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
+DRAW_SOURCE_PATHS = ('coverage/contracts/mark-lbp-controller-source-successor-v1.json','tests/test_mark_lbp_controller.py','tests/test_vi_controller.py',
+    'include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
     'src/simd_draw_coordinates_avx2.cpp', 'src/bind_draw_coordinates.cpp',
     'python/skimagexx/_draw_coordinates.py', 'python/skimagexx/draw.py',
     'tests/test_draw_coordinates_native.cpp', 'tests/test_draw_coordinates_public.py',

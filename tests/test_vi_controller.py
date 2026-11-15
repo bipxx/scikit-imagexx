@@ -3,6 +3,7 @@ import ast,copy,hashlib,importlib.util,json,runpy,sys
 from pathlib import Path
 from types import SimpleNamespace
 import pytest
+from tools.mark_lbp_fp_context import source_successor_predecessor_bytes
 ROOT=Path(__file__).resolve().parents[1]
 CONTRACT=ROOT/'coverage/contracts/vi-measurement-v5.json'
 DATA=json.loads(CONTRACT.read_bytes());ROUTES=DATA['first_cohort']['routes']
@@ -47,9 +48,10 @@ def test_current281_bound_source_and_historical_scope():
     assert H((ROOT/first['root_admission_path']).read_bytes())==first['root_admission_sha256']
     assert H((ROOT/first['root_stager_path']).read_bytes())==first['root_stager_sha256']
     for name,pin in DATA['benchmark_source_sha256'].items():
-        assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin==DATA['prepared_source']['files_sha256'][name]
-    for name,pin in first['source_files_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin
-    for name,pin in DATA['helper']['source_sha256'].items():assert H((ROOT/name).read_bytes())==pin
+        raw=source_successor_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes(),canonical=True).replace(b'\r\n',b'\n')
+        assert H(raw)==pin==DATA['prepared_source']['files_sha256'][name]
+    for name,pin in first['source_files_raw_sha256'].items():assert H(source_successor_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
+    for name,pin in DATA['helper']['source_sha256'].items():assert H(source_successor_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
 
 
 def frame_fixture(name):
@@ -391,6 +393,7 @@ def test_v2_real_manifest_reader_rejects_previous_route_versions(tmp_path,monkey
 def binding_predecessor_bytes(name,raw):
     row=BOUND_PREDECESSOR['binding_successor']['controller_source_inverse'].get(name)
     if row is None:return raw
+    raw=source_successor_predecessor_bytes(ROOT,name,raw)
     assert H(raw)==DATA['binding_successor']['controller_source_pins'][name]
     assert H(row['current'].encode())==row['current_raw_sha256']
     previous=row['predecessor'].encode();assert H(previous)==row['predecessor_raw_sha256']

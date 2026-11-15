@@ -2,21 +2,21 @@
 import ast,hashlib,json,runpy,shlex
 from pathlib import Path
 import pytest
-from tools.mark_lbp_fp_context import predecessor_bytes
+from tools.mark_lbp_fp_context import predecessor_bytes,source_successor_predecessor_bytes
 ROOT=Path(__file__).resolve().parents[1]
 C=json.loads((ROOT/'coverage/contracts/mark-lbp-fp-integration-v2.json').read_bytes())
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 @pytest.mark.parametrize('name',tuple(C['predecessors']))
 def test_exact_once_raw_and_canonical_predecessors(name):
- row=C['predecessors'][name];raw=(ROOT/name).read_bytes()
+ row=C['predecessors'][name];current=(ROOT/name).read_bytes();raw=source_successor_predecessor_bytes(ROOT,name,current)
  assert H(raw)==row['current_raw_sha256']
  for canonical in (False,True):
-  old=predecessor_bytes(ROOT,name,raw,canonical)
+  old=predecessor_bytes(ROOT,name,current,canonical)
   assert H(old)==row['predecessor_canonical_sha256'if canonical else'predecessor_raw_sha256']
   with pytest.raises(AssertionError):predecessor_bytes(ROOT,name,old,canonical)
-  with pytest.raises(AssertionError):predecessor_bytes(ROOT,name,raw+b'\n// tamper',canonical)
- assert predecessor_bytes(ROOT,name,raw.replace(b'\n',b'\r\n'),True)==row['predecessor'].encode().replace(b'\r\n',b'\n')
+  with pytest.raises(AssertionError):predecessor_bytes(ROOT,name,current+b'\n// tamper',canonical)
+ assert predecessor_bytes(ROOT,name,current.replace(b'\n',b'\r\n'),True)==row['predecessor'].encode().replace(b'\r\n',b'\n')
 
 def test_real_installed_sdk_uses_complete_client_and_authenticated_host_helper():
  cm=(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text();client=(ROOT/'tests/cmake_consumer/mark_boundaries_consumer.cpp').read_text()

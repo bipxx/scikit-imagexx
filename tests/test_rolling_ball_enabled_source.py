@@ -127,3 +127,108 @@ def test_sdk_family_assertion_projection_is_strict_and_once(fault):
     if fault=='unreviewed-current':raw+=b'changed'
     else:raw=project(raw)
     with pytest.raises(AssertionError):project(raw)
+
+
+@pytest.mark.parametrize('crlf',(False,True))
+def test_current_MARK_controller_inverse_and_historical_raw_caller(crlf):
+    from tools.join_source_context import rolling_predecessor_bytes,rolling_predecessor_raw_bytes
+    name='tests/test_mark_lbp_controller.py'
+    current=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+    if crlf:current=current.replace(b'\n',b'\r\n')
+    bound=json.loads((ROOT/'coverage/contracts/mark-lbp-measurement-v5.json').read_bytes())
+    retained=bound['binding_successor']['controller_source_inverse'][name]['predecessor'].encode()
+    assert len(retained)==25301 and H(retained)=='167edc6fa02c7b48d2b9d5598d9107828e163d542406d3718ddbe6b7e98b9dbd'
+    row=json.loads(CONTEXT.read_bytes())['sources'][name];expected=retained
+    assert H(expected)==row['current_raw_sha256']
+    for f in row['inverse_fragments']:
+        assert expected.count(f['current'].encode())==1
+        expected=expected.replace(f['current'].encode(),f['predecessor'].encode(),1)
+    assert H(expected)==row['predecessor_canonical_lf_sha256']
+    assert rolling_predecessor_bytes(ROOT,name,current)==expected
+    assert rolling_predecessor_raw_bytes(ROOT,name,retained)==expected
+    with pytest.raises(AssertionError):rolling_predecessor_bytes(ROOT,name,retained)
+    with pytest.raises(AssertionError):rolling_predecessor_raw_bytes(ROOT,name,current)
+
+
+@pytest.mark.parametrize('fault',('changed-current','retained-predecessor','active-context'))
+def test_MARK_controller_inverse_refuses_unreviewed_inputs(tmp_path,fault):
+    from tools.join_source_context import rolling_predecessor_bytes
+    name='tests/test_mark_lbp_controller.py';raw=(ROOT/name).read_bytes()
+    directory=tmp_path/'coverage/contracts';directory.mkdir(parents=True)
+    for filename in ('mark-lbp-controller-source-successor-v1.json','mark-lbp-fp-integration-v1.json','mark-lbp-fp-integration-v2.json'):
+        (directory/filename).write_bytes((ROOT/'coverage/contracts'/filename).read_bytes())
+    for filename in ('mark-lbp-measurement-v5.json','mark-lbp-measurement-v7.json'):
+        data=json.loads((ROOT/'coverage/contracts'/filename).read_bytes())
+        if fault=='retained-predecessor'and filename.endswith('v5.json'):
+            data['binding_successor']['controller_source_inverse'][name]['predecessor']+='changed'
+        elif fault=='active-context'and filename.endswith('v7.json'):
+            data['binding_successor']['controller_source_pins'][name]='0'*64
+        changed=(fault=='retained-predecessor'and filename.endswith('v5.json'))or(fault=='active-context'and filename.endswith('v7.json'))
+        if changed:
+            (directory/filename).write_text(json.dumps(data),encoding='utf-8')
+        else:
+            (directory/filename).write_bytes((ROOT/'coverage/contracts'/filename).read_bytes())
+    if fault=='changed-current':raw+=b'changed'
+    if fault=='retained-predecessor':
+        assert H((directory/'mark-lbp-measurement-v7.json').read_bytes())==H((ROOT/'coverage/contracts/mark-lbp-measurement-v7.json').read_bytes())
+        from tools.mark_lbp_fp_context import source_successor_predecessor_bytes
+        assert H(source_successor_predecessor_bytes(tmp_path,name,raw,canonical=True))=='3286e1f57a8ee1625e2f8130150ed452593f3c99b5236fb00289fe234811f1e0'
+    with pytest.raises(AssertionError):rolling_predecessor_bytes(tmp_path,name,raw)
+
+
+@pytest.mark.parametrize('fault',('changed-current','retained-predecessor','context','already-projected'))
+def test_source_successor_is_authenticated_and_applied_once(tmp_path,fault):
+    from tools.mark_lbp_fp_context import source_successor_predecessor_bytes as project
+    name='tools/join_source_context.py';raw=(ROOT/name).read_bytes()
+    path='coverage/contracts/mark-lbp-controller-source-successor-v1.json'
+    context=json.loads((ROOT/path).read_bytes())
+    if fault=='changed-current':raw+=b'changed'
+    elif fault=='already-projected':raw=project(ROOT,name,raw)
+    elif fault=='retained-predecessor':context['sources'][name]['inverse_fragments'][0]['predecessor']+='changed'
+    else:context['predecessor_source']='0'*40
+    directory=tmp_path/'coverage/contracts';directory.mkdir(parents=True)
+    (tmp_path/path).write_text(json.dumps(context),encoding='utf-8')
+    parent=context['predecessor_context']['path'];(tmp_path/parent).write_bytes((ROOT/parent).read_bytes())
+    with pytest.raises(AssertionError):project(tmp_path,name,raw)
+
+
+def test_source_successor_collected_and_preserves_frozen_views():
+    from tools.mark_lbp_fp_context import source_successor_predecessor_bytes as project
+    path='coverage/contracts/mark-lbp-controller-source-successor-v1.json'
+    context=json.loads((ROOT/path).read_bytes())
+    assert path in qualifier().DRAW_SOURCE_PATHS
+    for name,pin in context['frozen_context_sha256'].items():assert H((ROOT/name).read_bytes())==pin
+    for name,row in context['sources'].items():
+        for canonical in (False,True):
+            raw=(ROOT/name).read_bytes()
+            if canonical:raw=raw.replace(b'\n',b'\r\n')
+            assert H(project(ROOT,name,raw,canonical))==row['predecessor_canonical_sha256'if canonical else'predecessor_raw_sha256']
+    assert set(context['sources'])|{path}<=set(qualifier().DRAW_SOURCE_PATHS)
+
+
+@pytest.mark.parametrize('fault',('old-parent','sentinel','SDK','projection','integration'))
+def test_retained_MARK_raw_input_still_traverses_old_lineage(tmp_path,fault):
+    from tools.join_source_context import rolling_predecessor_raw_bytes
+    name='tests/test_mark_lbp_controller.py'
+    retained=json.loads((ROOT/'coverage/contracts/mark-lbp-measurement-v5.json').read_bytes())['binding_successor']['controller_source_inverse'][name]['predecessor'].encode()
+    assert len(retained)==25301 and H(retained)=='167edc6fa02c7b48d2b9d5598d9107828e163d542406d3718ddbe6b7e98b9dbd'
+    directory=tmp_path/'coverage/contracts';directory.mkdir(parents=True)
+    filenames=('mark-lbp-controller-source-successor-v1.json','mark-lbp-fp-integration-v1.json','mark-lbp-fp-integration-v2.json','rolling-ball-sentinel-v1.json','current281-sdk-family-source-v2.json','current281-projection-v2.json','current281-integration-fixes-v1.json','rolling-ball-enabled-context-v1.json')
+    for filename in filenames:(directory/filename).write_bytes((ROOT/'coverage/contracts'/filename).read_bytes())
+    targets={'old-parent':'mark-lbp-fp-integration-v1.json','sentinel':'rolling-ball-sentinel-v1.json','SDK':'current281-sdk-family-source-v2.json','projection':'current281-projection-v2.json','integration':'current281-integration-fixes-v1.json'}
+    path=directory/targets[fault]
+    if fault=='old-parent':path.write_bytes(path.read_bytes()+b'changed')
+    else:
+        context=json.loads(path.read_bytes());context['predecessor_source']='0'*40
+        path.write_text(json.dumps(context),encoding='utf-8')
+    with pytest.raises(AssertionError):rolling_predecessor_raw_bytes(tmp_path,name,retained)
+
+
+def test_raw_reader_exact_source_and_AST_match_frozen_AAA():
+    from tools.mark_lbp_fp_context import source_successor_predecessor_bytes
+    name='tools/join_source_context.py';current=(ROOT/name).read_bytes()
+    old=source_successor_predecessor_bytes(ROOT,name,current)
+    def function(raw):
+        text=raw.decode();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='rolling_predecessor_raw_bytes')
+        return ast.get_source_segment(text,node),ast.dump(node,include_attributes=False)
+    assert function(current)==function(old)

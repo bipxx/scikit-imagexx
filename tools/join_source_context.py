@@ -57,7 +57,22 @@ def integration_fix_predecessor_bytes(root,name,raw):
 
 def rolling_predecessor_bytes(root,name,raw):
     """Exact enabled rolling-ball additions before the admitted a5 source."""
-    return _rolling188_predecessor_bytes(root,name,integration_fix_predecessor_bytes(root,name,raw))
+    raw=integration_fix_predecessor_bytes(root,name,raw)
+    active=Path(root)/'coverage/contracts/mark-lbp-measurement-v7.json'
+    if name=='tests/test_mark_lbp_controller.py'and active.is_file():
+        current=active.read_bytes()
+        assert hashlib.sha256(current).hexdigest()=='eee7ecd45b339c2176e7a252ac76b5909734cbab1803f4d4ae291b893fbdf25a'
+        pin=json.loads(current)['binding_successor']['controller_source_pins'][name]
+        raw=raw.replace(b'\r\n',b'\n')
+        assert hashlib.sha256(raw).hexdigest()==pin,name
+        retained=(Path(root)/'coverage/contracts/mark-lbp-measurement-v5.json').read_bytes()
+        assert hashlib.sha256(retained).hexdigest()=='f39b1282641b58960da024ffdd9163e3a329417b38cb44bcc52175452529b30d'
+        row=json.loads(retained)['binding_successor']['controller_source_inverse'][name]
+        assert hashlib.sha256(row['current'].encode()).hexdigest()==row['current_raw_sha256']
+        raw=row['predecessor'].encode()
+        assert len(raw)==25301
+        assert hashlib.sha256(raw).hexdigest()==row['predecessor_raw_sha256']=='167edc6fa02c7b48d2b9d5598d9107828e163d542406d3718ddbe6b7e98b9dbd'
+    return _rolling188_predecessor_bytes(root,name,raw)
 
 
 def _rolling188_predecessor_bytes(root,name,raw):
