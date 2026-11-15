@@ -46,6 +46,30 @@ jobs:
       EXECUTION_CREATED_UTC: ${{ inputs.execution_created_utc }}
       DEADLINE_UTC: ${{ inputs.deadline_utc }}
     steps:
+      - name: Require scratch capacity before preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          python3 - <<'PY'
+          # ROOT_PREPARATION_CAPACITY_BEGIN
+          import json, os, shutil
+          from pathlib import Path
+          peak = 4 * 1024**3
+          reserve = 20 * 1024**3
+          floor = 30 * 1024**3
+          required = max(peak + reserve, floor)
+          destinations = {'workspace': Path.cwd(), 'runtime': Path(os.environ['RUNNER_TEMP'])}
+          free = {name: shutil.disk_usage(path).free for name, path in destinations.items()}
+          record = dict(schema='vi-preparation-capacity-v1', estimated_peak_bytes=peak,
+              reserve_bytes=reserve, minimum_free_floor_bytes=floor, required_free_bytes=required,
+              concurrent_job_allocation_bytes=0, observed_free_bytes=free,
+              passed=all(value >= required for value in free.values()), original_calls=0, native_calls=0)
+          Path('results/preparation-capacity.json').write_text(json.dumps(record, indent=2)+'\n', encoding='utf-8')
+          print(json.dumps(record))
+          assert record['passed'], 'Insufficient scratch capacity before checkout or transport'
+          # ROOT_PREPARATION_CAPACITY_END
+          PY
       - uses: actions/checkout@v4
         with:
           path: controller
@@ -57,7 +81,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir results
+          mkdir -p results
           lscpu > results/cpu.txt
           uname -a > results/platform.txt
           python - <<'PY'
@@ -67,7 +91,7 @@ jobs:
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
           assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
-          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v4.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v5.json').read_bytes())
           assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'
           assert (run, revision, artifact, digest) == tuple(str(frozen['producer'][key]) for key in ('run','revision','artifact','sha256'))
           created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
@@ -131,7 +155,7 @@ jobs:
           Path('results/measurement.json').write_bytes((prepared / 'runtime.json').read_bytes())
           Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
           assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
-          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v4.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v5.json').read_bytes())
           sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
           assert sha(prepared/'runtime.json')==frozen['runtime_sha256']
           first=frozen['first_cohort']

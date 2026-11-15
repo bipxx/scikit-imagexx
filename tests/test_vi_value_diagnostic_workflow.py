@@ -16,7 +16,7 @@ ROOT=Path(__file__).resolve().parents[1]
 WORKFLOW=ROOT/'.github/workflows/vi-value-diagnostic.yml'
 
 
-def python_blocks(path):
+def python_blocks(path, *, include_capacity=False):
     blocks=[];current=None
     for line in path.read_text().splitlines():
         if line.startswith('          ')and " - <<'PY'"in line:
@@ -27,7 +27,44 @@ def python_blocks(path):
                 assert line.startswith('          ')
                 current.append(line[10:])
     assert current is None
-    return blocks
+    if include_capacity:
+        return blocks
+    return [block for block in blocks if '# ROOT_PREPARATION_CAPACITY_BEGIN' not in block]
+
+
+@pytest.mark.parametrize('workspace_gib,runtime_gib,passed', [(32,32,True),(29,40,False),(40,29,False)])
+def test_capacity_guard_refuses_before_checkout_and_transport(tmp_path,monkeypatch,workspace_gib,runtime_gib,passed):
+    source=WORKFLOW.read_text(encoding='utf-8')
+    initial_source=(ROOT/'.github/workflows/vi-initial.yml').read_text(encoding='utf-8')
+    assert '          mkdir results\n' not in source and '          mkdir results\n' not in initial_source
+    assert source.count('          mkdir -p results\n')==initial_source.count('          mkdir -p results\n')==2
+    assert source.index('- name: Require scratch capacity before preparation') < source.index('- uses: actions/checkout@v4')
+    assert source.index('- uses: actions/checkout@v4') < source.index('gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip"')
+    blocks=python_blocks(WORKFLOW,include_capacity=True)
+    capacity=[block for block in blocks if '# ROOT_PREPARATION_CAPACITY_BEGIN' in block]
+    assert len(blocks)==5 and len(capacity)==1
+    initial=python_blocks(ROOT/'.github/workflows/vi-initial.yml',include_capacity=True)
+    assert len(initial)==6 and [block for block in initial if '# ROOT_PREPARATION_CAPACITY_BEGIN' in block]==capacity
+    workspace=tmp_path/'workspace';runtime=tmp_path/'runtime'
+    workspace.mkdir();runtime.mkdir();(workspace/'results').mkdir()
+    monkeypatch.chdir(workspace);monkeypatch.setenv('RUNNER_TEMP',str(runtime))
+    observed=[]
+    def disk_usage(path):
+        path=Path(path)
+        assert path in (workspace,runtime)
+        observed.append(path)
+        return SimpleNamespace(free=(runtime_gib if path==runtime else workspace_gib)*1024**3)
+    monkeypatch.setattr(shutil,'disk_usage',disk_usage)
+    if passed:
+        exec(compile(capacity[0],'<actual capacity guard>','exec'),{})
+    else:
+        with pytest.raises(AssertionError,match='Insufficient scratch capacity'):
+            exec(compile(capacity[0],'<actual capacity guard>','exec'),{})
+    record=json.loads((workspace/'results/preparation-capacity.json').read_bytes())
+    assert record['passed'] is passed and observed==[workspace,runtime]
+    assert record['estimated_peak_bytes']==4*1024**3 and record['reserve_bytes']==20*1024**3
+    assert record['required_free_bytes']==record['minimum_free_floor_bytes']==30*1024**3
+    assert record['original_calls']==record['native_calls']==0
 
 
 def test_actual_inline_Python_compiles_and_setup_is_preserved():
@@ -65,7 +102,7 @@ def test_default_UNBOUND_real_first_block_refuses_before_source_API_or_helpers(m
 def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_path,monkeypatch,mode):
     workspace=tmp_path/'workspace';controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
     for directory in (controller,snapshot,results):directory.mkdir(parents=True)
-    context_path='coverage/contracts/vi-cohort-value-diagnostic-v3.json'
+    context_path='coverage/contracts/vi-cohort-value-diagnostic-v4.json'
     context=json.loads((ROOT/context_path).read_bytes())
     for name in [*context['controller_dependencies'],'tools/vi_cohort_value_diagnostic.py',context_path]:
         destination=controller/name;destination.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,destination)
@@ -80,7 +117,7 @@ def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_
     monkeypatch.setenv('GITHUB_WORKSPACE',str(workspace));monkeypatch.setenv('GITHUB_SHA','a'*40)
     monkeypatch.setenv('EXECUTION_CREATED_UTC',clock['created_utc'].replace('+00:00','Z')if mode=='success-Z'else clock['created_utc']);monkeypatch.setenv('DEADLINE_UTC',clock['deadline_utc'].replace('+00:00','Z')if mode=='success-Z'else clock['deadline_utc'])
     monkeypatch.setenv('DIAGNOSTIC_AUTHORITY','UNBOUND'if mode=='UNBOUND'else'ROOT_AUTHORIZED_ONE_VI_VALUE_DIAGNOSTIC')
-    manifest=json.loads((controller/'coverage/contracts/vi-measurement-v4.json').read_bytes());setup=[]
+    manifest=json.loads((controller/'coverage/contracts/vi-measurement-v5.json').read_bytes());setup=[]
     def prepare(c,s,r,m,python,site,until):
         setup.append('metadata-setup-only')
         assert m is manifest and until==clock['deadline_utc']
@@ -90,7 +127,7 @@ def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_
         return {'vi':dict(binding=str(binding),go=str(go),measurement=str(folder/'unused-measurement.json'))}
     def old_namespace(path):
         assert Path(path)==controller/'tools/vi_first_cohort_probe.py'
-        return dict(read_manifest=lambda root:(controller/'coverage/contracts/vi-measurement-v4.json',manifest),prepare_cohorts=prepare)
+        return dict(read_manifest=lambda root:(controller/'coverage/contracts/vi-measurement-v5.json',manifest),prepare_cohorts=prepare)
     monkeypatch.setattr(runpy,'run_path',old_namespace)
     spec=importlib.util.spec_from_file_location('_unchanged_wrapper_interface',ROOT/'tools/vi_cohort_value_diagnostic.py')
     wrapper=importlib.util.module_from_spec(spec);spec.loader.exec_module(wrapper)
@@ -134,7 +171,7 @@ def test_current_genuine_host_gate_is_metadata_only_and_zero_target(tmp_path,mon
     import os
     monkeypatch.chdir(tmp_path)
     (tmp_path/'results').mkdir()
-    relative='coverage/contracts/vi-cohort-value-diagnostic-v3.json'
+    relative='coverage/contracts/vi-cohort-value-diagnostic-v4.json'
     context=tmp_path/'controller'/relative;context.parent.mkdir(parents=True)
     shutil.copyfile(ROOT/relative,context)
     policy=json.loads(context.read_bytes())['host_eligibility_proposal']
@@ -165,7 +202,7 @@ def test_current_genuine_host_gate_is_metadata_only_and_zero_target(tmp_path,mon
 
 def test_old_failed_host_policy_and_local_private_runtime_are_not_relabelled():
     old=json.loads((ROOT/'coverage/contracts/vi-cohort-value-diagnostic-v2.json').read_bytes())
-    current=json.loads((ROOT/'coverage/contracts/vi-cohort-value-diagnostic-v3.json').read_bytes())
+    current=json.loads((ROOT/'coverage/contracts/vi-cohort-value-diagnostic-v4.json').read_bytes())
     assert old['host_eligibility_proposal']['failed_CPU']['model']=='AMD EPYC 9V45 96-Core Processor'
     assert current['host_eligibility_proposal']['historical_failed_CPU']==old['host_eligibility_proposal']['failed_CPU']
     assert current['host_eligibility_proposal']['prior_failed_host_causal_credit']is False
