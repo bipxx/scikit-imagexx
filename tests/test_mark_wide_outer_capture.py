@@ -197,12 +197,36 @@ def test_actual_terminal_writer_fallback_retains_primary_and_raw(tmp_path,monkey
 
 
 def test_reused_failure_and_fp_functions_same_interpreter_source():
-    old=Path('C:/Users/HEQ/Projects/scikit-imagexx/build/worktrees/igg-large-accuracy-v1/tests/inverse_gaussian_gradient_large_accuracy.py')
-    before=ast.parse(old.read_bytes());after=ast.parse(FILE.read_bytes())
-    for name in ('dump','append','np_state','check_deadline','_raw_fenv'):
+    baseline=ROOT/'tests/fixtures/mark_wide_outer_igg_functions_v1.json'
+    raw=baseline.read_bytes().replace(b'\r\n',b'\n')
+    assert hashlib.sha256(raw).hexdigest()=='9498db3a25d2d54ccf79ce211e413b258469675694d9a8ea507a8345fd7dc450','Frozen IGG function source differs'
+    frozen=json.loads(raw)
+    names=('dump','append','np_state','check_deadline','_raw_fenv')
+    before=ast.parse('\n\n'.join(frozen['functions'][name]for name in names));after=ast.parse(FILE.read_bytes())
+    for name in names:
         a=next(n for n in before.body if isinstance(n,ast.FunctionDef)and n.name==name)
         b=next(n for n in after.body if isinstance(n,ast.FunctionDef)and n.name==name)
         assert ast.dump(a,include_attributes=False)==ast.dump(b,include_attributes=False)
+
+
+def test_reused_function_source_is_available_without_external_worktrees(monkeypatch):
+    read_bytes=Path.read_bytes;reads=[]
+    def checkout_only(path):
+        if not path.resolve().is_relative_to(ROOT.resolve()):
+            raise FileNotFoundError('Source input outside fresh checkout: '+str(path))
+        reads.append(path.relative_to(ROOT).as_posix());return read_bytes(path)
+    monkeypatch.setattr(Path,'read_bytes',checkout_only)
+    test_reused_failure_and_fp_functions_same_interpreter_source()
+    assert reads==['tests/fixtures/mark_wide_outer_igg_functions_v1.json','tests/mark_wide_outer_capture.py']
+
+
+def test_reused_function_source_rejects_unpinned_baseline(monkeypatch):
+    baseline=ROOT/'tests/fixtures/mark_wide_outer_igg_functions_v1.json';read_bytes=Path.read_bytes
+    def changed(path):
+        raw=read_bytes(path);return raw+b' 'if path==baseline else raw
+    monkeypatch.setattr(Path,'read_bytes',changed)
+    with pytest.raises(AssertionError,match='Frozen IGG function source differs'):
+        test_reused_failure_and_fp_functions_same_interpreter_source()
 
 
 
