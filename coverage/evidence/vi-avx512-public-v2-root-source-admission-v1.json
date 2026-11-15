@@ -1,0 +1,148 @@
+{
+  "schema": "vi-avx512-public-v2-root-source-admission-v1",
+  "status": "PASS_SOURCE_INERT_CONTROLS_CONDITIONAL_RUNTIME_GO_PENDING",
+  "owner": "/root",
+  "source": "cb863019925919ffc1e47ad2c45a90e6b90beddc",
+  "parent": "bbe9b725eb224d767c7f4d44e62cc98c8781b7e3",
+  "branch": "diagnostic/vi-avx512-public-witness-v2",
+  "source_pins": {
+    "tools/vi_avx512_public_witness.py": "9067d4fbfd68f1d491dc07892397cd54fb4c69ae42bc07e13c68d64a8e0f0238",
+    "coverage/contracts/vi-avx512-public-witness-v2.json": "dd47445d610ac705ae74e65caf59e9558a7bce43fd0ff2c70b5a9fb0c1a66611",
+    "tests/test_vi_avx512_public_witness.py": "1da23ff42d5cc69e232254dd8d668b1b7effb2549385831d04acc55f9f6bf67b",
+    ".github/workflows/vi-avx512-public-witness.yml": "7815746b764d37cb611b495c09ebcba06f05f169201e77b119af37245d0e76ea"
+  },
+  "handoff": {
+    "path": "build/vi-avx512-public-witness-v2/handoff-v1.json",
+    "sha256": "282b7558fc9c052cff2c551b1e26c2951dd2b67948fc309154b4959e3d3e6420"
+  },
+  "proof_index": {
+    "path": "build/vi-avx512-public-witness-v2/proof-index-v1.json",
+    "sha256": "bee888d02b2e29f35899ecec81ebcd4e8d8ec6a69e2d72c408dffc91fe3d6146",
+    "root_verified_proofs": 97
+  },
+  "actual_controls": {
+    "complete_selectors": 5,
+    "tests_eachPython": 281,
+    "exits": [
+      0,
+      0
+    ],
+    "failures_errors_skips": 0,
+    "plugins_each": 44,
+    "normal_conftest": true,
+    "plugin_autoload": true,
+    "failfast": false,
+    "explicit_UTF8": true,
+    "scientific_imports": 0,
+    "commands": [
+      "build/vi-avx512-public-witness-v2/windows311-v2/command.json",
+      "build/vi-avx512-public-witness-v2/windows313-v2/command.json"
+    ],
+    "terminals": [
+      "build/vi-avx512-public-witness-v2/windows311-v2/terminal.json",
+      "build/vi-avx512-public-witness-v2/windows313-v2/terminal.json"
+    ]
+  },
+  "root_source_review": "Full runner/test/workflow/context delta read; exact136precleanup writer hook, fresh temporaryreferences restored, oldwriter/primary preserved; aliases/software/worker checks plus fullinputschema beforecontrol. Exact runner/workflow v1 inverses independently reconstructed;20olddependencies unchanged.",
+  "root_finding": {
+    "predecessor": "Passing280source/receipts retained under build/vi-avx512-public-witness-v2/passing280-source-v1.",
+    "issue": "Anyunexpectedsite was annotated137skipped/false.",
+    "correction": "Exact136only; new matchingwords/unexpected139 control refuses without invented137fields.",
+    "final_check": "Corrected281complete modules eachPython passed on9067source; no actualnewruntime affected."
+  },
+  "prospective_limits": {
+    "original_public_max": 2,
+    "native_public_max": 2,
+    "target_children_max": 2,
+    "fixtures_max": 2,
+    "sampler_bodies": 0,
+    "timed_batches": 0,
+    "retries": 0,
+    "FP_save_source_ceiling": 42,
+    "FP_restore_source_ceiling": 14,
+    "ABI_queries_source_ceiling": 8,
+    "glibc_queries_source_ceiling": 8,
+    "postidentity_max": 2,
+    "F1_preparations_max": 1,
+    "late_alias_queries_source_ceiling": 6,
+    "late_software_getters_source_ceiling_each": 2,
+    "late_worker_getters_source_ceiling": 2
+  },
+  "prospective_source_paths": {
+    "parity_pass": {
+      "FP_save": 21,
+      "FP_restore": 7,
+      "late_worker_getters": 0
+    },
+    "word_failure": {
+      "FP_save": 18,
+      "FP_restore": 6,
+      "late_worker_getters": 1
+    },
+    "default_word_failure_control_pass": {
+      "FP_save": 39,
+      "FP_restore": 13,
+      "late_worker_getters": 1
+    },
+    "default_word_failure_control_word_failure": {
+      "FP_save": 36,
+      "FP_restore": 12,
+      "late_worker_getters": 2
+    }
+  },
+  "limit_scope": "Source ceilings, not traced runtime counters. Additional metadata after failedrole only; nativeworkergetter outside public pair. F1prep32positive6negative and native-internalFP separate.",
+  "source_science_calls": 0,
+  "production_math_changes": 0,
+  "cleanup": {
+    "v2": {
+      "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/vi-avx512-public-witness-v2/cleanup-terminal-v1.json",
+      "bytes": 662,
+      "sha256": "6622e7cfececa020d83a39c7c57558c5ae2c52813867f81c090765682ba8c5fc"
+    },
+    "v3": {
+      "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/vi-avx512-public-witness-v2/cleanup-terminal-v2.json",
+      "bytes": 782,
+      "sha256": "755b9084fd08ba007d8de697fa780cc02348491d82023b5ca43d6457bbcf6b0e"
+    },
+    "new_pending_logical_bytes": 193145410,
+    "physical_allocation_bytes": null,
+    "observed_D_free_bytes": 348265926656,
+    "fixture_root_exception": "v2 blockedmanual; root required freshv3 for corrected source controls. Both remain far below20GiB; retained source/env/logs/XML are outside.",
+    "automatic_retries": 0,
+    "release_owner": "User manual action; root tracks exact targets/trigger in existing records."
+  },
+  "gates": [
+    {
+      "gate": "Exact four paths/clean frozen source/97actualproofs/bothcomplete281controls",
+      "state": "passed"
+    },
+    {
+      "gate": "Root code review, oldinverse/dependencies, rootfinding corrected",
+      "state": "passed"
+    },
+    {
+      "gate": "Small footprint terminalcloseout",
+      "state": "manual_pending_prior_policy_rejection",
+      "reason": "Both new exact96.6MBlogical roots blockedbeforeexecution; no retry.193145410B total,below20GiB; source/raw/evidence outside."
+    },
+    {
+      "gate": "Publish source/workflow and actualremote/producer/UTC freshconditionalGO",
+      "state": "pending",
+      "owner": "/root"
+    },
+    {
+      "gate": "Actualprecleanupmetadata/default+disabledcomparability/providercausality",
+      "state": "pending_no_current_authority"
+    },
+    {
+      "gate": "Nativepolicy/VI4/full169/fourprofileifchanged/delivery281",
+      "state": "pending"
+    }
+  ],
+  "waste_review": {
+    "reused": "Qualified16/runtime/SDK/probe/wrapper/common/math unchanged; old frozen public failure94proofs preserved. No scientific/native build/replay fromsource task.",
+    "necessary_repeat": "Root found concrete diagnostic metadata defect after280passes. Final281both complete reruns justified by changedclassifier/test/hashpins, not favorable scientific results.",
+    "next_owner": "/root",
+    "next_trigger": "Publish exact admitted workflow/branch, inspect live bindings, then one fresh conditional-host GOmax2+2; no retry/search/timing."
+  }
+}

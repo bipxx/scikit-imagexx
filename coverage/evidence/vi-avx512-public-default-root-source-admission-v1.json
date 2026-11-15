@@ -1,0 +1,147 @@
+{
+  "schema": "vi-avx512-public-default-root-source-admission-v1",
+  "status": "PASS_SOURCE_AND_INERT_CONTROLS_DEFAULT_ONLY_LIVE_GO_PENDING",
+  "owner": "/root",
+  "source": "bbe9b725eb224d767c7f4d44e62cc98c8781b7e3",
+  "parent": "1df4fc0c42159b2b2604ed5537da6d65c9040dbe",
+  "branch": "diagnostic/vi-avx512-public-witness-v1",
+  "worktree": "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-gap-controller-v1",
+  "source_files": [
+    {
+      "path": ".github/workflows/vi-avx512-public-witness.yml",
+      "bytes": 20670,
+      "raw_sha256": "41027e30e0d2c2f2408efa2e8827b293e972fa12c77509f726d2fefb367d7701",
+      "canonical_lf_sha256": "41027e30e0d2c2f2408efa2e8827b293e972fa12c77509f726d2fefb367d7701",
+      "staged_bytes_identical": true
+    },
+    {
+      "path": "coverage/contracts/vi-avx512-public-witness-v1.json",
+      "bytes": 6900,
+      "raw_sha256": "99d598856039aff8b843878c23513210fe8aa89034d19098991719350cb5d996",
+      "canonical_lf_sha256": "99d598856039aff8b843878c23513210fe8aa89034d19098991719350cb5d996",
+      "staged_bytes_identical": true
+    },
+    {
+      "path": "tests/test_vi_avx512_public_witness.py",
+      "bytes": 22238,
+      "raw_sha256": "50ca0f75544f8df5ba07835e7da78978a855e2b38419ffe681ffeab87c90a4e4",
+      "canonical_lf_sha256": "50ca0f75544f8df5ba07835e7da78978a855e2b38419ffe681ffeab87c90a4e4",
+      "staged_bytes_identical": true
+    },
+    {
+      "path": "tools/vi_avx512_public_witness.py",
+      "bytes": 22413,
+      "raw_sha256": "6f1de619c5228be5011cce02d709a2112e8e006f2bb5c23f818335060a574687",
+      "canonical_lf_sha256": "6f1de619c5228be5011cce02d709a2112e8e006f2bb5c23f818335060a574687",
+      "staged_bytes_identical": true
+    }
+  ],
+  "source_proofs": {
+    "path": "build/vi-avx512-public-witness-v1/proof-index-v1.json",
+    "count": 31,
+    "sha256": "4dc83b58df571556faa81a09bc392241b64a53460d71627427ec50213dcee784"
+  },
+  "handoff": {
+    "path": "build/vi-avx512-public-witness-v1/handoff-v1.json",
+    "sha256": "6e093f361473db11beed118d6ebe4577592421be21138412dd10836172550783"
+  },
+  "actual_complete_controls": [
+    {
+      "profile": "windows311-v2",
+      "executable": "C:\\Users\\HEQ\\AppData\\Roaming\\uv\\python\\cpython-3.11.11-windows-x86_64-none\\python.exe",
+      "tests": 255,
+      "failures": 0,
+      "plugins": 44,
+      "normal_conftest": true,
+      "scientific_imports": 0,
+      "command": "build/vi-avx512-public-witness-v1/windows311-v2/command.json",
+      "terminal": "build/vi-avx512-public-witness-v1/windows311-v2/terminal.json"
+    },
+    {
+      "profile": "windows313-v2",
+      "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+      "tests": 255,
+      "failures": 0,
+      "plugins": 44,
+      "normal_conftest": true,
+      "scientific_imports": 0,
+      "command": "build/vi-avx512-public-witness-v1/windows313-v2/command.json",
+      "terminal": "build/vi-avx512-public-witness-v1/windows313-v2/terminal.json"
+    }
+  ],
+  "peer": {
+    "path": "build/vi-avx512-public-witness-peer-v1/handoff-v1.json",
+    "sha256": "191279335eebda3744888f6ee39e169d457c6c1de6a233dde43ccf01941ebbde",
+    "findings": []
+  },
+  "retained_actual_pass_schema": "build/vi-avx512-public-witness-peer-v1/root-retained-pass-schema-v1.json",
+  "unchanged_controller_and_prepared_pins": 20,
+  "gates": [
+    {
+      "gate": "Exact four new files on admitted1df4 and source-bound complete5module checks both Pythons",
+      "state": "passed"
+    },
+    {
+      "gate": "Independent static peer review and actual retained PASS schema",
+      "state": "passed"
+    },
+    {
+      "gate": "Publication/remote source/workflow/producer identity then fresh UTC actual GO",
+      "state": "pending",
+      "owner": "/root"
+    },
+    {
+      "gate": "Optional disabled control acceptance after complete postfailure software/worker checks",
+      "state": "pending_not_authorized",
+      "reason": "Prepared execute136 word assertion precedes later output/input/software/worker assertions. Old capture retains raw FP/source/input/identity but does not prove skipped assertions ran. First live GO must set allow_disabled_after_word_mismatch=false; stop after one pair regardless of outcome."
+    },
+    {
+      "gate": "Actual VI causal evidence, production decision, VI4 strict performance and final169/shipping",
+      "state": "pending",
+      "owner": "/root"
+    }
+  ],
+  "prospective_live_scope": {
+    "allow_disabled_after_word_mismatch": false,
+    "original_public_max": 1,
+    "native_public_max": 1,
+    "children_max": 1,
+    "fixtures_max": 1,
+    "sampler": 0,
+    "timing": 0,
+    "retries": 0,
+    "automatic_host_search": 0,
+    "source_FP_save_ceiling": 21,
+    "source_FP_restore_ceiling": 7,
+    "source_ABI_glibc_queries_max_each": 4,
+    "F1preparation_max": 1,
+    "F1preparation_positive_negative": [
+      32,
+      6
+    ],
+    "limits_scope": "Single default child; source ceilings are not traced actual counters, helper preparation and native internal FP separate."
+  },
+  "source_math_changes": 0,
+  "execution": {
+    "scientific_imports": 0,
+    "original": 0,
+    "native": 0,
+    "FP_helper": 0,
+    "builds": 0,
+    "downloads": 0,
+    "workflow_dispatches": 0
+  },
+  "cleanup": {
+    "target": "D:/Scratch/vi-avx512-public-witness-controls-v1",
+    "logical_bytes": 144630085,
+    "status": "manual_only_prior_policy_rejection",
+    "retry": false,
+    "physical_allocation_bytes": null
+  },
+  "waste_review": {
+    "reused": "31sourceproofs/both255terminals/peer/actual437461schema; no scientific or source test rerun",
+    "correction": "Retained optional conditional implementation, narrowed first actual GO to default-only because late postword assertions are skipped on failure.",
+    "next_owner": "/root",
+    "next_trigger": "Publish exact workflow, validate remote/source/producer, issue one fresh default-only GO."
+  }
+}
