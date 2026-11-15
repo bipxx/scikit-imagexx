@@ -1,0 +1,201 @@
+{
+  "schema": "current281-source-lineage-root-admission-v1",
+  "status": "PASS_NARROW_SOURCE_SUCCESSOR_ACTUAL_AFFECTED_CHECKS_NOT_FULL169_OR_SHIPPING",
+  "source": {
+    "commit": "c60b874dbf0eabd70f61de98ca1fac1387cdc2e3",
+    "parent": "aaa13487d273b2a895e102cbe815daf8e008098d",
+    "branch": "integrate/current281-main-v3",
+    "worktree": "D:\\Scratch\\scikit-imagexx-active-worktrees\\current281-main-integration-v1",
+    "clean_source_and_index": true,
+    "message": "Preserve MARK controller historical source lineage [skip ci]",
+    "old_AAA_ref_and_failure_receipts": "retained immutable; both complete169failures remainfailed",
+    "latest_main_context": "root reported62e33607,271production; root merges latestmain into cumulativecandidate before full169; no worker main edits"
+  },
+  "root_actual_checks": {
+    "verified_proofs": 150,
+    "production_and_API_blob_map_equal_qualified16": 544,
+    "all7_source_inverses_exactAAA": true,
+    "all_old_contexts_byte_unchanged": true,
+    "raw_reader_source_equalAAA": true,
+    "two_complete24module_campaigns": [
+      {
+        "profile": "windows311-v3",
+        "actual_exit": 0,
+        "XML": {
+          "tests": 1565,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "seconds": 276.28100000001723,
+        "source_bytes_match_c60": true,
+        "normal_plugins": true,
+        "science": 0
+      },
+      {
+        "profile": "windows313-v3",
+        "actual_exit": 0,
+        "XML": {
+          "tests": 1565,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "seconds": 274.0843055000296,
+        "source_bytes_match_c60": true,
+        "normal_plugins": true,
+        "science": 0
+      }
+    ],
+    "identical_ordinary_IDs": 1565
+  },
+  "peer_review": {
+    "path": "build/current281-main-integration-v3/peer-review-v1.json",
+    "sha256": "07b16e4133ff6fd7f7df56f5b14b1358761591ee518da4c624ef71c5807734ca",
+    "root_delta": "Fivefilepinsstillmatchpeer; finalMARK/VI sourceviewscorrectcanonicalCRLF andrawmode normalizations, correspondingcontextthreefiledelta independentlyread; rawentry andalloldgates unchanged. Actual final24module/51prechecks retained."
+  },
+  "root_review": "Oneexplicitnewearly7filehash-boundsourceinverse, exactimmutableAAA/predecessor/v7v5controllerbytes, oldassertions andraw/canonicaldomains preserved; all8inputs collected. Draftlineagebypass never tested/admitted andwasremoved; no oldpin/algorithm/FP/SDK/169selectorwaiver. Privateactualdirty8filetestinputs authenticatedandcommittedexactsamebytesc60; no cleanHEADretime required.",
+  "handoff": {
+    "path": "build/current281-main-integration-v3/handoff-v1.json",
+    "sha256": "f4728128dcb20676d449073ed0d802789391842bdb4f4deafe0ec5b750779dc5"
+  },
+  "proof_index": {
+    "path": "build/current281-main-integration-v3/proof-index-v1.json",
+    "sha256": "a0deb0d16a6751c873712d28c6195b0ae6cce517a4c0503a2d2163920189ad8a"
+  },
+  "files": {
+    "tools/join_source_context.py": {
+      "bytes": 12861,
+      "sha256": "ff8ad07ebcba58b55cf8ccc254fc83b77f42955b9e5e2f062fbd27797f0964c5"
+    },
+    "tools/mark_lbp_fp_context.py": {
+      "bytes": 3927,
+      "sha256": "529cacce439ab3d185c6c8c5c896677d565161b8b460f0ccd46a50677f188830"
+    },
+    "tools/public_qualification.py": {
+      "bytes": 218871,
+      "sha256": "c0d8455e9a51a033fe5e6eeb35711868a4409da0967e95784b3f6911865a1834"
+    },
+    "tests/test_rolling_ball_enabled_source.py": {
+      "bytes": 17298,
+      "sha256": "51f9fdabd49090de09a316ab72a2738989eabd18025b76951d804849a456bb77"
+    },
+    "tests/test_mark_lbp_fp_integration_source.py": {
+      "bytes": 7382,
+      "sha256": "c03c5c1d0d4aff2296d38925150d820de6d12d40981afd2955303e6bbd65c64b"
+    },
+    "tests/test_mark_lbp_controller.py": {
+      "bytes": 40094,
+      "sha256": "43603966a5f257269ff4bd7e31e594d5719d8e1c78314a95bc8be3e237489f33"
+    },
+    "tests/test_vi_controller.py": {
+      "bytes": 45743,
+      "sha256": "2c773df396be254bcc73517851ab7707cc36c8405aabaf86a53da386a8220181"
+    },
+    "coverage/contracts/mark-lbp-controller-source-successor-v1.json": {
+      "bytes": 21688,
+      "sha256": "dc764ba018df1fb1dc9a7f8cfd6e859787269ee31fd75935e28d834643bc1409"
+    }
+  },
+  "preserved_failures": [
+    {
+      "path": "author-terminal.json",
+      "exit_code": 1,
+      "reason": "ambiguous author text anchor aborted before source writes; exact function anchor corrected"
+    },
+    {
+      "path": "windows311/terminal.json",
+      "exit_code": 1,
+      "XML": {
+        "tests": 1427,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "reason": "complete21module run found directMARK qualifier pin required exact prepared-source view",
+      "source_snapshot": "failed-source-v1"
+    },
+    {
+      "path": "windows311-precheck-v2/terminal.json",
+      "exit_code": 1,
+      "XML": {
+        "tests": 51,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "reason": "unmapped intentionalCRLF source still required original unconditional canonical normalization",
+      "source_snapshot": "failed-precheck-v2-source"
+    },
+    {
+      "reason": "peerreview rejected an intermediate raw earlyreturn before any tests ran on it; corrected by restoring exactAAA rawbody and moving only exacthistory acceptance to newearlyboundary",
+      "actual_checks_on_rejected_source": 0
+    }
+  ],
+  "cleanup": {
+    "roots": [
+      {
+        "target": "D:/Scratch/current281-main-integration-v3-controls-v1",
+        "status": "MANUAL_ONLY_AUTOMATIC_APPROVAL_REJECTED_BEFORE_SHELL_START",
+        "exact_tool_reason": "exec_command CreateProcess rejected: blocked by policy",
+        "attempts": 1,
+        "retained_files": 63270,
+        "retained_logical_bytes": 5300288425,
+        "physical_allocation_bytes": null,
+        "no_retry_or_alternative": true,
+        "owner": "/root",
+        "release_trigger": "manual permitted release; source snapshots/logs/XML outside fixture",
+        "removed_paths": []
+      },
+      {
+        "target": "D:/Scratch/current281-main-integration-v3-controls-v2",
+        "status": "MANUAL_ONLY_AUTOMATIC_APPROVAL_REJECTED_BEFORE_SHELL_START",
+        "exact_tool_reason": "exec_command CreateProcess rejected: blocked by policy",
+        "attempts": 1,
+        "retained_files": 65347,
+        "retained_logical_bytes": 5430252993,
+        "physical_allocation_bytes": null,
+        "removed_paths": [],
+        "no_retry_or_alternate_mechanism": true,
+        "owner": "/root",
+        "release_trigger": "manual permitted removal; source/raw control evidence outside fixture"
+      },
+      {
+        "target": "D:/Scratch/current281-main-integration-v3-controls-v3",
+        "status": "MANUAL_ONLY_AUTOMATIC_APPROVAL_REJECTED_BEFORE_SHELL_START",
+        "exact_tool_reason": "exec_command CreateProcess rejected: blocked by policy",
+        "attempts": 1,
+        "retained_files": 65221,
+        "retained_logical_bytes": 5369951509,
+        "physical_allocation_bytes": null,
+        "removed_paths": [],
+        "no_retry_or_alternative": true,
+        "owner": "/root",
+        "release_trigger": "manual permitted removal; all source/control raw evidence outside fixture",
+        "free_after_bytes": 348669440000
+      }
+    ],
+    "current_task_retained_logical_bytes": 16100492927,
+    "current_task_below20GiB": true,
+    "previous_complete_barrier_manual_bytes": 13409680397,
+    "combined_worker_retained_logical_bytes": 29510173324,
+    "overbudget_owner": "/root",
+    "release_trigger": "manual permitted removal after evidence review; never retry blocked paths/ancestors via another mechanism",
+    "source_raw_commands_XML_plugins_IDs_logs_and_failure_reproducers": "outside disposable roots",
+    "physical_allocation_bytes": null,
+    "removed_paths": [],
+    "observed_free_at_entry": 365141364736,
+    "observed_free_at_closeout": 348669440000,
+    "free_space_limit": "global concurrent volume observations; no physical allocation attribution",
+    "attempts": "one nativePS exact action per genuinely fresh nonoverlapping root; allrejected before executor, no retries/alternatives or oldblockedtarget edits"
+  },
+  "waste_review": {
+    "observed_final_check_seconds": 550.3653055000468,
+    "avoidable": "first ambiguous sourcewriter anchor; source-negative fixture initially reserialized an unrelatedcontext; first directMARK metadata view missed; first precheck exposed CRLF canonical fallback loss",
+    "useful": "peer caught oldlineage bypass before any dependentcheck; complete affectedmodules and early precheck retained all failures and preventedshipping unready source",
+    "reuse": "existingv5 retainedpredecessor, v7 pin, FP/sentinel/SDK/integration/source infrastructure, retained Pythons; exact544 production and scoped genuine/SDK/science retained without replay",
+    "next_plan_correction": "root independently admits only this exactdelta, merges latestmain first, then executes complete169both on that finalsource before delivery; no further unrelated provider work delays eligible sourceadmission",
+    "no_extra_scientific_or_favorable_performance_rerun": true
+  },
+  "next_owner_trigger": "Rootmergesmain62andadmittedproviderdiagnosticsintoONEcumulativecandidate, rechecksproductionprojection. Finalfull169bothhelduntilnewcontrolledVIproductiondecisionstable; actualprovider6ULPdata isnotVIparity ormainshippingcredit."
+}

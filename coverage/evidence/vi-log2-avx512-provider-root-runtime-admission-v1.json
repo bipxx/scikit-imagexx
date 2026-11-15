@@ -1,0 +1,143 @@
+{
+  "schema": "vi-log2-avx512-provider-root-runtime-admission-v1",
+  "status": "PASS_CONTROLLED_FEATURE_SENSITIVE_PROVIDER_DIFFERENTIAL_NOT_VI_PARITY",
+  "run": 43755649168,
+  "source": "324c9fc90cda5e1d497fac74ea6c2789a4c81ff5",
+  "qualified_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+  "host": "Intel(R) Xeon(R) 6975P-C",
+  "actual_counts": {
+    "NumPy_vectors": 4,
+    "scalar_values": 112,
+    "FP_saves": 24,
+    "FP_restores": 16,
+    "VI_original": 0,
+    "VI_native": 0,
+    "timing": 0
+  },
+  "observed_word_differences": [
+    [],
+    [
+      {
+        "index": 20,
+        "default": "c0049d34b5172bd6",
+        "scalar_and_disabled": "c0049d34b5172bd7",
+        "ULP": 1
+      },
+      {
+        "index": 24,
+        "default": "c005539acd95143c",
+        "scalar_and_disabled": "c005539acd95143d",
+        "ULP": 1
+      },
+      {
+        "index": 28,
+        "default": "c0095a5286b3ae9e",
+        "scalar_and_disabled": "c0095a5286b3ae9d",
+        "ULP": 1
+      },
+      {
+        "index": 32,
+        "default": "c005539acd95143c",
+        "scalar_and_disabled": "c005539acd95143d",
+        "ULP": 1
+      },
+      {
+        "index": 41,
+        "default": "c0095a5286b3ae9e",
+        "scalar_and_disabled": "c0095a5286b3ae9d",
+        "ULP": 1
+      },
+      {
+        "index": 49,
+        "default": "c0095a5286b3ae9e",
+        "scalar_and_disabled": "c0095a5286b3ae9d",
+        "ULP": 1
+      }
+    ]
+  ],
+  "disabled_equals_core_scalar_words": 112,
+  "default_equals_core_scalar_words": 106,
+  "actual_child_provider_postidentity_exits": 0,
+  "FP": {
+    "observations": 6,
+    "all_raw_before_after32_equal": true,
+    "all_caller32_restored": true,
+    "semantic": {
+      "control": 895,
+      "status": 32,
+      "mxcsr": 8098
+    },
+    "final_restoration": "Actualchildstdout15/10and9/6 plusactualexits0; rawprewriterpending/counts remainimmutable andarenotrelabeled."
+  },
+  "disabled_targets": [
+    "AVX512CD",
+    "AVX512F",
+    "AVX512_CLX",
+    "AVX512_CNL",
+    "AVX512_ICL",
+    "AVX512_SKX"
+  ],
+  "other_features_unchanged": true,
+  "same_cpu_numpy_and_compiled_targets": true,
+  "loader": {
+    "base_prefix": "/opt/hostedtoolcache/Python/3.11.17/x64",
+    "LD_LIBRARY_PATH": "/opt/hostedtoolcache/Python/3.11.17/x64/lib",
+    "allowed_LD_LIBRARY_PATH": "/opt/hostedtoolcache/Python/3.11.17/x64/lib"
+  },
+  "scalar_identity": {
+    "library": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+    "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0",
+    "bytes": 952616,
+    "symbol": "log2",
+    "version": "GLIBC_2.29",
+    "address": "0x7f6d57ae6f90",
+    "relative_offset": "0x79f90",
+    "dladdr_symbol": null,
+    "resolution": "dlvsym of the version imported by the retained VI core; not Python math.log2"
+  },
+  "supplementary_counts": "F1_ABI/glibc/dlvsym/dladdr quotas source-enforced/bounded, not separately traced counters; helper32positive6negative preparation separate fromproviderobservations.",
+  "input_scope": "Exact144808de fixedPRIVATEreference112coefficientwords; nativeintermediate/currentVIoutputs notobserved inthisexperiment.",
+  "artifact": {
+    "run": 43755649168,
+    "workflow": 419418711,
+    "head": "324c9fc90cda5e1d497fac74ea6c2789a4c81ff5",
+    "attempt": 1,
+    "artifact_id": 14177603565,
+    "name": "vi-log2-provider-diagnostic-minimum",
+    "bytes": 2345111,
+    "expected_digest": "sha256:fc2553d6831399c1be8d3cdf8f2187c13a06ce9d6c491cebbcf2bf0d3b077be1",
+    "actual_sha256": "fc2553d6831399c1be8d3cdf8f2187c13a06ce9d6c491cebbcf2bf0d3b077be1",
+    "digest_matches": true,
+    "download_passes": 1,
+    "archive_disk_paths": [],
+    "archive_bytes_locally_available": false,
+    "memory_buffer_release": "ZIP closed; buffer released at intake process exit; no persistent ZIP created",
+    "entry_count": 57,
+    "retained_text_files": 56,
+    "retained_text_bytes": 10255563
+  },
+  "handoff": {
+    "path": "build/vi-value-diagnostic-workflow-v2/log2-provider-v1/run43755649168-results-v1/terminal-handoff-v1.json",
+    "sha256": "97b36bbad25c737d7643eb7b1738d80d19eb62307774d4b68ebe5351585cdfa1"
+  },
+  "proof_index": {
+    "path": "build/vi-value-diagnostic-workflow-v2/log2-provider-v1/run43755649168-results-v1/terminal-proof-index-v1.json",
+    "sha256": "6a220dcecd6d1c763beb8670b7dded865068880840e709edd05797ca28305c2b",
+    "verified": 80
+  },
+  "inference": "ControlleddisablingofonlyNumPycompiled/enabledAVX512targets removesallsixdifferences againstcore-versionlibm ontheseinputs. This localizesaproviderboundary; selectedper-callkernel andolder9V45failurecause arenotproved.",
+  "unmet": [
+    "DoesdifferencepropagatetoactualcurrentVIpublicresult onanAVX512host?",
+    "Anyneededproductioncorrectionandaffectedparity/SDK/modes/fourprofilequalification",
+    "VI4strictfirstcohorts/performance andfinalsource169/shipping"
+  ],
+  "waste_reuse": {
+    "useful": "One fixed-input experiment isolates an AVX512-target-sensitive provider-word boundary while disabled NumPy/core agree. Reused existing runtime975/F1/source/budget/intake machinery; no new framework or extra target calls.",
+    "avoidable": "One PowerShell parser/quoting error before any setup/API/download; corrected with a literal here-string. Exactly one actual artifact transfer occurred; entry correction receipt retained.",
+    "observed_job_seconds": 64.0,
+    "transport_bytes": 2345111,
+    "no_unnecessary_replay": "No local baseline, guards, ELF, archive digest, provider experiment or VI replay; no host search."
+  },
+  "next_owner_trigger": "Rootsource-onlyplanforcontrolledpublicVIwitness usingexistingadmittedwrapper/runtime; noimplementationuntilactualVIboundary established. Deferfinal169whileproductiondecisionunresolved; no unchangedperformance/localreplay or automatichostsearch."
+}
