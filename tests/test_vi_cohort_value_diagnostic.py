@@ -27,6 +27,8 @@ class ndarray:
     __module__ = 'numpy'  # Inert supplied stand-in, never an actual NumPy object.
     def __init__(self, raw, dtype='<f8'):
         self.raw=raw; self.dtype=Dtype(dtype); self.shape=(2,); self.strides=(len(raw)//2,); self.nbytes=len(raw)
+        self.flags=SimpleNamespace(owndata=True,writeable=True,c_contiguous=True,f_contiguous=False)
+        self.base=None
     def tobytes(self): return self.raw
 
 
@@ -60,22 +62,37 @@ def fake_probe(tmp_path, fp, mismatch, *, codec=False, successful=False):
     try:
         ASSERTION
     finally:FP.restore(caller)
+    VALIDATE(locals())
+    SAMPLER()
 '''.replace('ASSERTION',statement)
-    ns=dict(INPUT=ndarray(struct.pack('<qq',0,1),'<i8'),FP=fp,ORIGINAL=original,NATIVE=native,np=SimpleNamespace(dtype=lambda name:Dtype()))
+    holder=SimpleNamespace()
+    class StopBeforeBody(BaseException):pass
+    sampler_calls=[]
+    def validate_and_stop(values):
+        assert holder.probe.validate_native_entry(values)is values
+        raise StopBeforeBody()
+    def sampler():sampler_calls.append(True);raise AssertionError('INERT_SAMPLER_BODY_FORBIDDEN')
+    ns=dict(INPUT=ndarray(struct.pack('<qq',0,1),'<i8'),FP=fp,ORIGINAL=original,NATIVE=native,np=SimpleNamespace(dtype=lambda name:Dtype()),
+            VALIDATE=validate_and_stop,SAMPLER=sampler)
     exec(compile(body,str(path),'exec'),ns)
     terminal=tmp_path/'terminal.json'
     probe_path=ROOT/'tools/vi_first_cohort_probe.py'
     main='''def main():
     counts=COUNTS;restored=False;outer=FP.save()
-    try:EXECUTE()
+    try:
+        try:EXECUTE()
+        except STOP:pass
     except BaseException as error:ERRORS.append(error);raise
     finally:FP.restore(outer);restored=True
     TERMINAL.write_text(JSON.dumps(dict(status='PASS_REAL_CLI_STOP_BEFORE_BODY',counts=counts,
         sampler_body_calls=0,timed_batches=0,outer_state_restored=True,poststop_source_authority_unchanged=True)))
 '''
-    pns=dict(COUNTS=counts,FP=fp,EXECUTE=ns['execute'],ERRORS=errors,TERMINAL=terminal,JSON=json)
+    pns=dict(COUNTS=counts,FP=fp,EXECUTE=ns['execute'],ERRORS=errors,TERMINAL=terminal,JSON=json,STOP=StopBeforeBody)
     exec(compile(main,str(probe_path),'exec'),pns)
-    return SimpleNamespace(main=pns['main'],__file__=str(probe_path)),path,terminal,counts,errors,expected,actual
+    validations=[]
+    def validate(values):validations.append(values);return values
+    holder.probe=SimpleNamespace(main=pns['main'],__file__=str(probe_path),validate_native_entry=validate,validations=validations,sampler_calls=sampler_calls)
+    return holder.probe,path,terminal,counts,errors,expected,actual
 
 
 @pytest.mark.parametrize('mismatch',('dtype','word'))
@@ -126,12 +143,129 @@ def test_failure_diagnostics_preserve_primary_and_no_extra_calls(tmp_path,monkey
     else:assert record['secondary_errors']
 
 
-def test_successful_sampler_stop_has_no_timing_and_no_invented_failure_words(tmp_path):
-    fp=FP();probe,path,terminal,counts,_,_,_=fake_probe(tmp_path,fp,'none',successful=True)
+def test_successful_sampler_stop_retains_validated_values_without_extra_calls(tmp_path):
+    fp=FP();probe,path,terminal,counts,_,expected,actual=fake_probe(tmp_path,fp,'none',successful=True)
+    validator=probe.validate_native_entry
     record=D.run_diagnostic(probe,['inert'],fp.save,fp.restore,tmp_path/'diagnostic.json',path,terminal)
     assert record['status']=='PASS_OLD_PROBE_SAMPLER_STOP_NO_TIMING'
     assert record['terminal']['counts']==dict(original=1,native=1)and counts==dict(original=1,native=1)
-    assert record['value_frame_found']is False and 'expected'not in record and fp.raw==b'A'*32
+    assert record['value_frame_found']is True and record['value_frame_source']=='validated_sampler_entry'
+    assert record['expected']['raw_hex']==expected.raw.hex()==record['actual']['raw_hex']
+    assert record['actual']['flags']['owndata']and record['actual']['base_type']is None
+    assert len(record['input_before'])==len(record['input_after'])==2
+    assert record['input_after'][0]['dtype']=='<i8'and record['input_after'][0]['payload_sha256']==hashlib.sha256(struct.pack('<qq',0,1)).hexdigest()
+    assert record['strict_trace']['reference_FP']==record['strict_trace']['native_FP']
+    assert record['probe_restored']and len(probe.validations)==1 and probe.validate_native_entry is validator and not probe.sampler_calls
+    assert record['target_calls_added_by_wrapper']==record['sampler_body_calls_authorized']==0 and fp.raw==b'A'*32
+
+
+def test_codecs_follow_old_restoration_and_cannot_rewrite_FP_snapshots(tmp_path,monkeypatch):
+    fp=FP();probe,path,terminal,counts,_,_,_=fake_probe(tmp_path,fp,'none')
+    original=D.array_words;calls=[]
+    def codec(value,*,output):
+        assert fp.restores>=2 and fp.raw==b'A'*32
+        calls.append(output)
+        # The retained strict state must be independent of later codec effects.
+        probe.validations[0]['native_FP']['status']=999
+        return original(value,output=output)
+    monkeypatch.setattr(D,'array_words',codec)
+    record=D.run_diagnostic(probe,['inert'],fp.save,fp.restore,tmp_path/'diagnostic.json',path,terminal)
+    assert calls==[False,False,True,True]and counts==dict(original=1,native=1)
+    assert record['strict_trace']['native_FP']['status']==32 and fp.raw==b'A'*32
+
+
+def test_old_probe_raw32_is_saved_before_terminal_JSON_codec(tmp_path,monkeypatch):
+    fp=FP();probe,path,terminal,counts,_,_,_=fake_probe(tmp_path,fp,'none')
+    loads=D.json.loads
+    def codec(value):fp.raw=b'C'*32;return loads(value)
+    monkeypatch.setattr(D.json,'loads',codec)
+    record=D.run_diagnostic(probe,['inert'],fp.save,fp.restore,tmp_path/'diagnostic.json',path,terminal)
+    assert record['after_old_probe_raw32']==(b'A'*32).hex()
+    assert fp.raw==b'A'*32 and counts==dict(original=1,native=1)and not probe.sampler_calls
+
+
+def test_terminal_codec_failure_preserves_primary_and_already_validated_values(tmp_path,monkeypatch):
+    fp=FP();probe,path,terminal,counts,_,expected,_=fake_probe(tmp_path,fp,'none')
+    loads=D.json.loads;primary=ValueError('INERT_TERMINAL_CODEC')
+    def codec(value):
+        if value==terminal.read_bytes():raise primary
+        return loads(value)
+    monkeypatch.setattr(D.json,'loads',codec)
+    output=tmp_path/'diagnostic.json'
+    with pytest.raises(ValueError)as caught:
+        D.run_diagnostic(probe,['inert'],fp.save,fp.restore,output,path,terminal)
+    record=loads(output.read_bytes())
+    assert caught.value is primary and record['expected']['raw_hex']==expected.raw.hex()
+    assert record['after_old_probe_raw32']==(b'A'*32).hex()and record['own_full32_restored']
+    assert counts==dict(original=1,native=1)and not probe.sampler_calls
+
+
+@pytest.mark.parametrize('fault',('codec','writer','final-authority','restore','fallback','CPU-metadata'))
+def test_success_tail_failure_is_nonzero_without_repeating_pair(tmp_path,monkeypatch,fault):
+    fp=FP();probe,path,terminal,counts,_,_,_=fake_probe(tmp_path,fp,'none',codec=fault=='codec')
+    output=tmp_path/'diagnostic.json';writer=D.write_record;restore=fp.restore
+    if fault in('writer','fallback'):
+        def failing_writer(path,value):
+            if Path(path)==output or fault=='fallback':raise OSError('INERT_WRITER')
+            writer(path,value)
+        monkeypatch.setattr(D,'write_record',failing_writer)
+    if fault=='CPU-metadata':
+        def unavailable():raise OSError('INERT_CPU_METADATA')
+        monkeypatch.setattr(D,'runtime_cpu_evidence',unavailable)
+    if fault=='restore':
+        def once(saved):
+            if fp.restores==2:fp.restores+=1;raise ValueError('INERT_RESTORE')
+            restore(saved)
+        restoring=once
+    else:restoring=restore
+    def final_check():
+        if fault=='final-authority':raise ValueError('INERT_AUTHORITY')
+    with pytest.raises((AssertionError,OSError,ValueError)):
+        D.run_diagnostic(probe,['inert'],fp.save,restoring,output,path,terminal,final_check)
+    assert counts==dict(original=1,native=1)and len(probe.validations)==1 and fp.raw==b'A'*32
+
+
+def test_late_probe_identity_failure_keeps_success_values_and_primary(tmp_path):
+    fp=FP();probe,path,terminal,counts,_,expected,_=fake_probe(tmp_path,fp,'none')
+    old=probe.main;primary=ValueError('INERT_C1_FAILURE')
+    def main():old();raise primary
+    probe.main=main
+    with pytest.raises(ValueError)as caught:
+        D.run_diagnostic(probe,['inert'],fp.save,fp.restore,tmp_path/'diagnostic.json',path,terminal)
+    record=json.loads((tmp_path/'diagnostic.json').read_bytes())
+    assert caught.value is primary and record['status']=='FAILED_OLD_PROBE_NO_RETRY'
+    assert record['value_frame_source']=='validated_sampler_entry'and record['expected']['raw_hex']==expected.raw.hex()
+    assert counts==dict(original=1,native=1)and fp.raw==b'A'*32
+
+
+def test_missing_execute_fields_are_not_invented(tmp_path):
+    fp=FP();failure=ValueError('INERT_EARLY_FAILURE')
+    def main():raise failure
+    probe=SimpleNamespace(main=main,__file__=str(tmp_path/'probe.py'),validate_native_entry=lambda value:value)
+    with pytest.raises(ValueError)as caught:
+        D.run_diagnostic(probe,['inert'],fp.save,fp.restore,tmp_path/'diagnostic.json',tmp_path/'execute.py',tmp_path/'terminal.json')
+    record=json.loads((tmp_path/'diagnostic.json').read_bytes())
+    assert caught.value is failure and not record['value_frame_found']
+    assert not{'expected','actual','input_before','input_after','driver_caller_raw32'}.intersection(record)
+
+
+def test_dispatch_evidence_reads_loaded_metadata_without_import_or_kernel_calls(monkeypatch):
+    features={'AVX2':True,'AVX512F':False}
+    module=SimpleNamespace(__cpu_features__=features,__cpu_baseline__=('SSE2',),__cpu_dispatch__=['AVX2'])
+    monkeypatch.setitem(sys.modules,'numpy.core._multiarray_umath',module)
+    record=D.runtime_cpu_evidence()
+    assert record['numpy_dispatch']['numpy.core._multiarray_umath']==dict(__cpu_features__=features,__cpu_baseline__=['SSE2'],__cpu_dispatch__=['AVX2'])
+    assert 'not selected per-call kernel'in record['dispatch_scope']
+
+
+def test_primary_survives_both_writers_failing(tmp_path,monkeypatch):
+    fp=FP();probe,path,terminal,counts,errors,_,_=fake_probe(tmp_path,fp,'word')
+    def fail(*args):raise OSError('INERT_BOTH_WRITERS')
+    monkeypatch.setattr(D,'write_record',fail)
+    with pytest.raises(AssertionError)as caught:
+        D.run_diagnostic(probe,['inert'],fp.save,fp.restore,tmp_path/'diagnostic.json',path,terminal)
+    assert caught.value is errors[0]and counts==dict(original=1,native=1)and fp.raw==b'A'*32
+    assert any('writer and fallback failed'in note for note in caught.value.__notes__)
 
 
 @pytest.mark.parametrize('fault',('none','UNBOUND','wrapper','binding','expired'))
