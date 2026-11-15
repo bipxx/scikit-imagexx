@@ -1,0 +1,117 @@
+{
+  "schema": "vi-avx512-default-public-word-root-failure-admission-v1",
+  "status": "ACTUAL_CURRENT16_DEFAULT_PUBLIC_PARITY_FAILED_ROOT_RAW_ADMITTED",
+  "owner": "/root",
+  "run": 43765280748,
+  "workflow": 419507564,
+  "controller": "bbe9b725eb224d767c7f4d44e62cc98c8781b7e3",
+  "product_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+  "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd",
+  "CPU": "Intel(R) Xeon(R) 6975P-C",
+  "NumPy": "1.24.4",
+  "AVX512_SKX": true,
+  "NPY_DISABLE_CPU_FEATURES": "",
+  "handoff": {
+    "path": "build/vi-avx512-public-witness-v1/run43765280748-results-v1/terminal-handoff-v1.json",
+    "sha256": "e288d83282b77eb369217e541df688ac1c2979ed027eea25dfcf3bea5495aaa7"
+  },
+  "proof_index": {
+    "path": "build/vi-avx512-public-witness-v1/run43765280748-results-v1/terminal-proof-index-v1.json",
+    "sha256": "ba465b4c41bdade64912361fc1595b694d2d12d7394eba1b651c28630cdc400c",
+    "root_verified_proofs": 94
+  },
+  "artifact": {
+    "id": 14182281773,
+    "bytes": 2501420,
+    "sha256": "fa19e2f3e84a1cbd5d98232fb81a3c485f9d8d0faeb2d8a04917ef58c96741a2",
+    "downloads": 1,
+    "ZIP_persisted": false,
+    "ZIP_bytes_locally_available": false,
+    "retained_text_files": 64,
+    "retained_text_bytes": 10663745,
+    "binary_SO_listed_not_materialized": true
+  },
+  "actual_result": {
+    "original": 1,
+    "native": 1,
+    "exit": 1,
+    "site": {
+      "path": "benchmarks/variation_of_information_execution.py",
+      "line": 136,
+      "function": "execute",
+      "type": "AssertionError"
+    },
+    "dtype": "<f8",
+    "shape": [
+      2
+    ],
+    "reference_raw16": "9b413c87e4cb0740cda826ad66420640",
+    "native_raw16": "9a413c87e4cb0740cda826ad66420640",
+    "positive_f64_ULP_distance": [
+      1,
+      0
+    ],
+    "target_semantic_FP": {
+      "control": 895,
+      "status": 32,
+      "mxcsr": 8098
+    },
+    "target_FP_observations": 4,
+    "input_fingerprints_unchanged": true,
+    "native_phase_counts": {
+      "get_num_threads": 2,
+      "label_pair_check_storage": 7,
+      "label_pair_counts_preweighted": 1,
+      "variation_of_information_csr": 1
+    },
+    "old_probe_restored": true,
+    "wrapper_full32_restored": true,
+    "final_source_helper_verified": true,
+    "postidentity_exit": 0,
+    "disabled_control": 0,
+    "sampler_timing": "0 by source-order/no measurement records; not a dynamic counter",
+    "FP_helper_counts": "Not traced; source ceilings21save/7restore and4ABI/glibc queries each separate from oneF1preparation"
+  },
+  "gates": [
+    {
+      "gate": "Exact source/default-only GO/one authenticated intake and raw identity",
+      "state": "passed"
+    },
+    {
+      "gate": "Public dtype and strict word parity",
+      "state": "failed",
+      "reason": "Actual float64 dtype matches; first output1ULP difference, second equal."
+    },
+    {
+      "gate": "Reached native-phase/type/shape/target FP checks132-135",
+      "state": "passed"
+    },
+    {
+      "gate": "Caller restoration/source/helper/postidentity",
+      "state": "passed"
+    },
+    {
+      "gate": "Assertions137-139 plus sampler-entry/epilogue",
+      "state": "not_reached_unverified",
+      "reason": "Exception136; captured output/input descriptor facts do not execute skipped assertions."
+    },
+    {
+      "gate": "Samehost disabled causal control/old9V45 cause",
+      "state": "pending_no_authority"
+    },
+    {
+      "gate": "Production correction/VI4 exact public parity-performance/final169/shipping281",
+      "state": "pending"
+    }
+  ],
+  "interpretation": "Current16 public VI exact-word failure is now concrete on an eligibleAVX512 host. Earlier controlled provider6ULP differences are relevant diagnosis; no disabled-public intervention or percallkerneltrace occurred, so do not claim causal closure or old9V45cause.",
+  "waste_review": {
+    "useful": "One rejected hosted public1+1 witness retains actual values/FP/input/identity that oldfailedcampaign lacked.",
+    "reused": "Existing qualified16 products/runtime/helper/controller/codec; no native build or scientific replay during intake.",
+    "cost": "One hosted job21:43:46-21:44:35UTC, not benchmark timing;2publictargetcalls;2501420transportB.",
+    "avoidance": "No control/timing/search/retry;64text retained, no local ZIP. One root reader assumed PASS-only terminal key on failure, corrected from actualkeys before writes; no scientific effect.",
+    "next_owner": "/root",
+    "next_trigger": "Inspect A late-gate source answer and B native-policy feasibility; authorize only concrete source correction/changed-input checks before any freshGO."
+  }
+}
