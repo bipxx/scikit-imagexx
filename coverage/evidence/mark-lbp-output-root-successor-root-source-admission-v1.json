@@ -1,0 +1,101 @@
+{
+  "status": "PASS_ROOT_FOUR_FILE_OUTPUT_ROOT_SUCCESSOR_SOURCE_ADMISSION",
+  "source": {
+    "commit": "17a35a313877409c6c1e719b70a9c4d977b533db",
+    "parent": "c25ee4592a8166e0fdb72475cab5a6e6aeec52c6",
+    "branch": "fix/mark-lbp-measurement-output-root-v1",
+    "worktree": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-lbp16a5-controller-v1",
+    "clean": true,
+    "subject": "Fix MARK/LBP measurement output root [skip ci]",
+    "files": {
+      ".github/workflows/mark-lbp-initial.yml": {
+        "bytes": 13502,
+        "raw_sha256": "27162eb524e7be616819add7295d4e52617bb3cd51efe9ff95e57b5c128702d9",
+        "canonical_LF_sha256": "27162eb524e7be616819add7295d4e52617bb3cd51efe9ff95e57b5c128702d9"
+      },
+      "tools/mark_lbp_first_cohort_probe.py": {
+        "bytes": 34556,
+        "raw_sha256": "c914ec31bd69f10c44ccd40746e01c3810c45a623e8dfee2ed9e784d73935887",
+        "canonical_LF_sha256": "c914ec31bd69f10c44ccd40746e01c3810c45a623e8dfee2ed9e784d73935887"
+      },
+      "tests/test_mark_lbp_controller.py": {
+        "bytes": 39794,
+        "raw_sha256": "3286e1f57a8ee1625e2f8130150ed452593f3c99b5236fb00289fe234811f1e0",
+        "canonical_LF_sha256": "3286e1f57a8ee1625e2f8130150ed452593f3c99b5236fb00289fe234811f1e0"
+      },
+      "coverage/contracts/mark-lbp-measurement-v7.json": {
+        "bytes": 401362,
+        "raw_sha256": "eee7ecd45b339c2176e7a252ac76b5909734cbab1803f4d4ae291b893fbdf25a",
+        "canonical_LF_sha256": "eee7ecd45b339c2176e7a252ac76b5909734cbab1803f4d4ae291b893fbdf25a"
+      }
+    },
+    "dependency_base": "c25 direct16a5; all immutable v5/v6 and inherited reviewed373 dependencies retained; no unfinished ancestry imported"
+  },
+  "handoff": {
+    "path": "build\\mark-lbp16a5-controller-v1\\output-root-successor-v1\\handoff-v1.json",
+    "sha256": "160db218bc82c43908050994c0e5269338e4469e49ba8bee9762fa0af7c99ebc"
+  },
+  "proof_hashes": 202,
+  "actual_complete_controls": {
+    "Windows3.11.11": 99,
+    "Windows3.13.14": 99,
+    "normal_conftest_plugins": true,
+    "scientific_imports_calls": 0
+  },
+  "root_exact_byte_review": "Direct c25 child. Whole probe equals c25 after exactlytwo approved path-expression and onev7selector replacements; workflow exactlytwo selectors. All other execution/measurement/collector/numerical/FP/C1/clock/method/sampler bytes preserved.",
+  "immutable_context_fields_checked": [
+    "producer",
+    "prepared_source",
+    "SDK108",
+    "core",
+    "source89",
+    "families",
+    "first_cohort_except_exact_new_probe_pin",
+    "method_budget",
+    "runtime",
+    "helper",
+    "clock"
+  ],
+  "production_fingerprint": {
+    "source_sha256": "2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+  },
+  "boundary_controls": "Actual prepare_cohorts bindings and measurement_commands for both routes; task-level report destinations inside the signed absolute root; actual probe import refusal creates existing first-cohort/<route> collector folders; actual driver valid inside destination reaches refused NumPy request while sibling/outside cases prove deepest execute is_relative_to assertion; no target bodies",
+  "failed_campaign": "Preserve43721720516/c25 failure,79rawproofs/two acceptedfirstcases; no timing existed bysourceorder. Newbindingoutputroot changes bindinghash, so newC1executionauthority mustbefresh; no favorable measurementretry.",
+  "cleanup": {
+    "fresh_fixture": {
+      "path": "D:/Scratch/mark-lbp-output-root-controls-v1",
+      "logical_bytes": 339637668,
+      "files": 6634,
+      "status": "ONE_ATTEMPT_AUTOMATIC_APPROVAL_REJECTED_BLOCKED_BY_POLICY_MANUAL_ONLY",
+      "receipt": "fresh-fixture-cleanup-v1.json",
+      "physical_allocation_bytes": null
+    },
+    "result_zip": {
+      "path": "D:/Scratch/mark-lbp43721720516-failure-v1/result-artifact14164792793.zip",
+      "bytes": 2924080,
+      "status": "ONE_ATTEMPT_DISPATCH_OUTCOME_UNAVAILABLE_FILE_STILL_PRESENT_MANUAL_ONLY_NO_RETRY",
+      "receipt": "result-transport-cleanup-v1.json",
+      "archive_digest_replays": 0
+    },
+    "protected_blocked_C_fixture": "Untouched; not used as basetemp, not deleted or retried",
+    "retained_inert_raw": 138,
+    "retained_inert_bytes": 1571663,
+    "D_free_before_fixture": 257716117504,
+    "D_free_after": 257353838592,
+    "free_delta_limit": "Global volume observations include concurrent allocations; not a physical allocation measurement",
+    "checkout": "Reused existing clean compatible worktree; no checkout/environment/build copies or downloads",
+    "qualification_archives": "Previous transport remains unavailable; no redownload/read/digest or seal replay"
+  },
+  "gates": {
+    "exact_source_and_bothPython_completecontrols": "passed",
+    "remote_workflow_actualproducer_freshUTC": "pending",
+    "two_actualnewbinding_cohorts_then12case_reports": "pending",
+    "VI4cause_and_mainshipping": "held_separate"
+  },
+  "waste_review": "First2syntheticfixturefailures eachPython retained; missingLBPheader descriptor corrected and exactassertion proof strengthened; complete99each passed. Root first metadata reader required an unchanged first_cohort probehash; stoppedbeforemutation, then inspected soleexpected newcontroller pin and authenticated it exactly. No source/science replay. Sameworktree/env/deps reused.",
+  "actual_execution_authority": 0,
+  "next_owner": "/root",
+  "next_gate": "Publish exact17a source, verifyactualremote/workflow/no priorrun/current16producer and freshclock, then onechanged-input two-cohort+12caseGO; preserveallfailures/losses."
+}

@@ -1,0 +1,200 @@
+{
+  "status": "PASS_ROOT_TWO_CURRENT_SPLINE_MARK_MAPS_AND_RUNTIME_METADATA",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "closeout": {
+    "path": "build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\relink-closeout-v7.json",
+    "sha256": "159ec17a447e023ac0e11d8055d094515e29d7dccb98df1ca0daf4c14a89b870"
+  },
+  "verified_small_proofs": 51,
+  "actual_results": [
+    {
+      "mode": "scalar",
+      "actual_link_exit": 0,
+      "metadata_exits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "selected_members": [
+        "convert.cpp.o",
+        "find_boundaries.cpp.o",
+        "image.cpp.o",
+        "mark_boundaries.cpp.o",
+        "spline.cpp.o"
+      ],
+      "binary": {
+        "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/scalar/mark_boundaries_consumer",
+        "realpath": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/scalar/mark_boundaries_consumer",
+        "bytes": 576024,
+        "mtime_ns": 1794748721814306500,
+        "sha256": "6902030c66fc2ad7d8973ffd1e9ae644ea8cd165672e31324155f346be3df9df",
+        "build_id": "5d4b383421d3db56c3b2496c98d5b60eeefa8dda"
+      },
+      "NEEDED": [
+        "libreference_fenv_restore.so",
+        "libgomp.so.1",
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6"
+      ],
+      "runtime": [
+        {
+          "name": "libstdc++",
+          "path": "/lib/x86_64-linux-gnu/libstdc++.so.6",
+          "realpath": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+          "bytes": 2592224,
+          "mtime_ns": 1766093810000000000,
+          "recorded_sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11",
+          "rehashed": false
+        },
+        {
+          "name": "libgomp",
+          "path": "/lib/x86_64-linux-gnu/libgomp.so.1",
+          "realpath": "/usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0",
+          "bytes": 352304,
+          "mtime_ns": 1766093810000000000,
+          "recorded_sha256": "135f3c8f006d2fe5e68e51281c7974cb991a03de3bfb3593d68d174dfcf854d1",
+          "rehashed": false
+        },
+        {
+          "name": "helper",
+          "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+          "realpath": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+          "bytes": 15632,
+          "mtime_ns": 1793956716322648300,
+          "recorded_sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+          "rehashed": false
+        }
+      ],
+      "fixture_scope": {
+        "full_rows": 201,
+        "modes": {
+          "outer": 147,
+          "thick": 26,
+          "inner": 6,
+          "subpixel": 22
+        },
+        "workers": [
+          1,
+          4
+        ],
+        "additional_wide_rows": 8,
+        "all_unchanged": true,
+        "runtime_calls": 0
+      }
+    },
+    {
+      "mode": "sanitize",
+      "actual_link_exit": 0,
+      "metadata_exits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "selected_members": [
+        "convert.cpp.o",
+        "find_boundaries.cpp.o",
+        "image.cpp.o",
+        "mark_boundaries.cpp.o",
+        "spline.cpp.o"
+      ],
+      "binary": {
+        "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/sanitize/mark_boundaries_consumer",
+        "realpath": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/sanitize/mark_boundaries_consumer",
+        "bytes": 20719456,
+        "mtime_ns": 1794748926598178700,
+        "sha256": "89669bc930372e0901dde2f9f2146a3ae120f1726aef49875b43da0443debe96",
+        "build_id": "067dee016dd9b1b4a9f21612a12bd306fd97f383"
+      },
+      "NEEDED": [
+        "libasan.so.8",
+        "libreference_fenv_restore.so",
+        "libgomp.so.1",
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libubsan.so.1",
+        "libgcc_s.so.1",
+        "libc.so.6"
+      ],
+      "runtime": [
+        {
+          "name": "libstdc++",
+          "path": "/lib/x86_64-linux-gnu/libstdc++.so.6",
+          "realpath": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+          "bytes": 2592224,
+          "mtime_ns": 1766093810000000000,
+          "recorded_sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11",
+          "rehashed": false
+        },
+        {
+          "name": "libgomp",
+          "path": "/lib/x86_64-linux-gnu/libgomp.so.1",
+          "realpath": "/usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0",
+          "bytes": 352304,
+          "mtime_ns": 1766093810000000000,
+          "recorded_sha256": "135f3c8f006d2fe5e68e51281c7974cb991a03de3bfb3593d68d174dfcf854d1",
+          "rehashed": false
+        },
+        {
+          "name": "helper",
+          "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+          "realpath": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+          "bytes": 15632,
+          "mtime_ns": 1793956716322648300,
+          "recorded_sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+          "rehashed": false
+        },
+        {
+          "name": "asan",
+          "path": "/lib/x86_64-linux-gnu/libasan.so.8",
+          "realpath": "/usr/lib/x86_64-linux-gnu/libasan.so.8.0.0",
+          "bytes": 10924208,
+          "mtime_ns": 1766093810000000000,
+          "recorded_sha256": "8d5845bdf056b5db4cfb9fff40ad5eeea8f6da05a8ca6f5935a7d1c138ed2558",
+          "rehashed": false
+        },
+        {
+          "name": "ubsan",
+          "path": "/lib/x86_64-linux-gnu/libubsan.so.1",
+          "realpath": "/usr/lib/x86_64-linux-gnu/libubsan.so.1.0.0",
+          "bytes": 3423712,
+          "mtime_ns": 1766093810000000000,
+          "recorded_sha256": "f4a999fcf8392a200e9d93fb066ddb9e89daab8cd94a62137f4506472240a2e8",
+          "rehashed": false
+        }
+      ],
+      "fixture_scope": {
+        "full_rows": 201,
+        "modes": {
+          "outer": 147,
+          "thick": 26,
+          "inner": 6,
+          "subpixel": 22
+        },
+        "workers": [
+          1,
+          4
+        ],
+        "additional_wide_rows": 8,
+        "all_unchanged": true,
+        "runtime_calls": 0
+      }
+    }
+  ],
+  "source_scope": "Current five selected MARK numerical SDK members; seven-current-TU union with separately admitted LBP modes. No SIMD spline selected. Existing imported-target/client provenance + current tenheaders/fourconfigs retained; directrelink only, no newCMake/client compile or wholeSDKmodecredit.",
+  "actual_runtime_calls": 0,
+  "gates": {
+    "two_relinks_twelve_metadata_and_source_header_map_closure": "passed",
+    "corrected_full201pluswide8_sdk_runtime": "pending",
+    "originalpublic_performance": "pending"
+  },
+  "retained_metadata_failures": "Wrong nested /mnt/d prefix conversion stopped before anylink; scalar v6 dependency reader counted .d outputtarget/../ spells as sources after scalar0. v7 metadata parser correction only; actual2links once, no source/link/scientific rerun.",
+  "waste_review": "Reused unchanged clientobjects/headers/configs/helper/runtime and allprior6objects; only2freshSpline numerical objects. reviewed, no furtherchange."
+}

@@ -1,0 +1,37 @@
+{
+  "status": "PASS_ROOT_REQUIRED_PRODUCT_RAW_SOURCE_AND_DEPENDENCY_MATERIALIZATION",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "run": 43706703018,
+  "handoff": {
+    "path": "build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-selective-extraction-handoff-v1.json",
+    "sha256": "bd217f731e47003ca9f11cea2f0b3319672c641f2a3b7b5af4a4760d62dd66e3"
+  },
+  "materialization": {
+    "path": "build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-selective-extraction-materialization-v1.json",
+    "sha256": "cc8beb439a2321af10ad29f77d5e1cf5ad3033aa0f9e8a712987d10a2e01c581"
+  },
+  "actual_terminal": {
+    "path": "build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-selective-extraction-terminal-v1.json",
+    "sha256": "84ba01aa9f3f40d7ec4b1f5e15004d2723335b2a9dfb92276922f37c336eb5a9",
+    "exit_code": 0,
+    "pid": 54460,
+    "exec_session": 29681,
+    "stderr_bytes": 0
+  },
+  "proof_hashes": 17,
+  "selected_files": 5407,
+  "selected_bytes": 682576295,
+  "root_checks": "All5407currentoutput sizes/artifact/member/streamhash journal mappings match plan. New bytes authenticated once in-copy; no682MB output/ZIP/seal replay. All4currentcorepins/228products/108SDKstaticlibs present, source2987+onecompanion/raw/helper/XML/logs retained.56raw+4metadata and24existingdeps reused.",
+  "avoided_duplicate_dependency_bytes": 661147257,
+  "transport_consumers_stopped": "All4profile+3stager readers and extractor actualterminal0/no livehandles. Cuses frozen4metadata/noZIPreads, BseparateprivateSDKs; rootZIPcontexts closed.",
+  "gates": {
+    "required_product_raw_dependencies": "passed",
+    "all_transport_consumers_stopped": "passed",
+    "exact7newtransport_discard": "pending",
+    "private_SDK_and_original_performance": "separate_pending"
+  },
+  "scope": "Storage/materialization only; no executable/helper/scientific/original/performance calls. StaticSDKlibs/extracteddependencies protected.",
+  "waste_review": "All24dependencies/56raw/4metadata reused; initial duplicate-dependency omission corrected before allocation. Root first path-only map reader selected a later artifact alias and stopped before mutation; corrected triple artifact/member/path matching, no data/science rerun.",
+  "next_owner": "/root/mark_source_reviewer",
+  "next_gate": "One exact nativePowerShell7newregularZIP removal attempt; rejectionmanualonly/noalternative."
+}

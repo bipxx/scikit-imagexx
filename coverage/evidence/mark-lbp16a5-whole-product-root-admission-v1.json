@@ -1,0 +1,223 @@
+{
+  "schema": "exact281-whole-product-root-admission-v1",
+  "status": "PASS_SCOPED_EXACT_SOURCE_FOUR_PROFILE_PRODUCT_SDK_AND_THREE_STAGERS",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "run": 43706703018,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43706703018",
+  "passed": true,
+  "root_accepted": true,
+  "profiles": 4,
+  "expected_scope": {
+    "partial_image_paths": 281,
+    "registered_functions": 284,
+    "product_files": 228,
+    "SDK_files": 108,
+    "SDK_families": 38,
+    "SDK_checks_per_profile": 76
+  },
+  "aggregate": {
+    "public_XML": 963560,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "SDK_checks": 304,
+    "corpora": 48,
+    "archives": 7,
+    "archive_bytes": 6663954885,
+    "sealed_records_once": 156759,
+    "stager_files_once": 9187
+  },
+  "complete_source_readiness": {
+    "path": "coverage/evidence/mark-lbp16a5-complete-source-readiness-v1.json",
+    "sha256": "457345ba0d87d1b722b90e961e11d2369c92e48a17e8870d5c740c75bb42616f"
+  },
+  "root_reader_admission": {
+    "path": "coverage/evidence/mark-lbp16a5-profiles-root-admission-v1.json",
+    "sha256": "988183895779253a56d2fced550096e34bd46872b089aa89edaf33b6ccc6095d"
+  },
+  "profile_results": [
+    {
+      "profile": "minimum",
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd"
+      },
+      "XML": {
+        "tests": 241670,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "raw_review": "build\\mark-lbp16a5-qualification-readers-v1\\minimum-raw-review.json",
+      "raw_review_sha256": "6beaca83bc1c3dcadc00b92737fda6aa1af90a7d406f70ee7bd4f85b13683f8e"
+    },
+    {
+      "profile": "modern",
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "72c84b8e87f45f6fc5c60ba71abc9454b5c76da15b286f6b3c8e39278c96d9d6"
+      },
+      "XML": {
+        "tests": 241670,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "raw_review": "build\\mark-lbp16a5-qualification-readers-v1\\modern-raw-review.json",
+      "raw_review_sha256": "bde843eb8ede570ea0c38cf27c498fc0453c103c6cde187b32bb8268964b33d5"
+    },
+    {
+      "profile": "debug",
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "254e162a57ec98ef4e8b4956b2e84201628468818df2f3d40c937623477ffeae"
+      },
+      "XML": {
+        "tests": 241670,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "raw_review": "build\\mark-lbp16a5-qualification-readers-v1\\debug-raw-review.json",
+      "raw_review_sha256": "afd78880897496610af7547fa750f0229c2ca14da2693934b35d11491741bde7"
+    },
+    {
+      "profile": "windows",
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "55ef3e0cf628153d469b5831e2a2b247e3d80290ae3b99346c34fc70ab368828"
+      },
+      "XML": {
+        "tests": 238550,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "raw_review": "build\\mark-lbp16a5-qualification-readers-v1\\windows-raw-review.json",
+      "raw_review_sha256": "fe597057d56f742aaa9306a9d57e57f98c04c96db9e4ce01697ce08ed60cdcfd"
+    }
+  ],
+  "qualified_profiles": [
+    "windows",
+    "minimum",
+    "modern",
+    "debug"
+  ],
+  "stager_results": [
+    {
+      "profile": "minimum",
+      "actual_exit": 0,
+      "receipt": "coverage\\evidence\\mark-lbp16a5-minimum-stager-admission-v1.json",
+      "sha256": "6c97da8c848fb25e5d8d3a5306e39c98753485125513d8e4162f3ee667653fbd",
+      "stage_files": 3073,
+      "stage_bytes": 912281380,
+      "artifact": 14160352344,
+      "artifact_sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec"
+    },
+    {
+      "profile": "modern",
+      "actual_exit": 0,
+      "receipt": "coverage\\evidence\\mark-lbp16a5-modern-stager-admission-v1.json",
+      "sha256": "14591eb67247d7493313f6aecbad15f194a4221b153f5ebf96d0759289838702",
+      "stage_files": 3073,
+      "stage_bytes": 909329323,
+      "artifact": 14159657099,
+      "artifact_sha256": "7ea8c24da99125d7f83a8a835c8d1b8047cd45391c385a2fe064b4d66ddf599a"
+    },
+    {
+      "profile": "windows",
+      "actual_exit": 0,
+      "receipt": "coverage\\evidence\\mark-lbp16a5-windows-stager-admission-v1.json",
+      "sha256": "ba933bca2fb93e6dda619224dc950fc0d84e4881bd6bad9a267af4f33df87925",
+      "stage_files": 3041,
+      "stage_bytes": 912709501,
+      "artifact": 14159969944,
+      "artifact_sha256": "8caac0d30b2895765e5e03c6e7fc2169efc240fbc938f22fe1c84abbefb5e1fa"
+    }
+  ],
+  "stagers": 3,
+  "small_proofs": [
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\minimum-stager-review.json",
+      "sha256": "6c97da8c848fb25e5d8d3a5306e39c98753485125513d8e4162f3ee667653fbd"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\minimum-stage-seal-once.json",
+      "sha256": "b7e94cec0bd920f20b3f88ad4e41c54a1e084831111f772b61ab4df9563b8ac4"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-stager-minimum-terminal-v1.json",
+      "sha256": "4556be19525256f9eb286d1417142cff3bf632e7f5ac3bcc3901effc7071113e"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\modern-stager-review.json",
+      "sha256": "14591eb67247d7493313f6aecbad15f194a4221b153f5ebf96d0759289838702"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\modern-stage-seal-once.json",
+      "sha256": "0016af02e496960a7400ac0fe34a21a2a2454b7230ca6cd24a09fcedfecef1ab"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-stager-modern-terminal-v1.json",
+      "sha256": "e525a9d298648503dc22e2f36cad8cf48432a5190ab6989727e215f3da045d7c"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\windows-stager-review.json",
+      "sha256": "ba933bca2fb93e6dda619224dc950fc0d84e4881bd6bad9a267af4f33df87925"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\windows-stage-seal-once.json",
+      "sha256": "4f22a5af5dd1f7ae7328cfd594b0f34911c8cb8bcca340e82c1912a94e8bfa57"
+    },
+    {
+      "path": "build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-stager-windows-terminal-v1.json",
+      "sha256": "9697d8359496071dfd3e6a326038f8a8ef3e7f2b5d7dbfbc3872d27d02e2feb4"
+    }
+  ],
+  "product_kind": "exact_source_281_partial_image_paths_candidate",
+  "SDK_members": 108,
+  "production_source_sha256": "2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090",
+  "production_fingerprint": {
+    "source_sha256": "2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+  },
+  "authority": {
+    "meaning": "Scoped actual four-profile product/installedSDK plus3stagers admission only. No privatecompiler-scalar/sanitizer or performance/shipping waiver.",
+    "local_native_helper_scientific_calls": 0,
+    "timing": 0
+  },
+  "transport_policy": "All7ZIPs authenticated once and read only as required. Transient, awaiting required selective product/raw/dependency extraction and stopped readers; then discard once with precise checked paths. If policyblocked recordmanualonly. Digests/seals remain historical receipts after bytes discarded, not a claim of future local availability.",
+  "shipping": {
+    "merged": false,
+    "source_projection": "pending",
+    "main_paths": 271
+  },
+  "pending": [
+    "Selective extraction of required products/raw/runtime identity/dependencies then transport discard",
+    "Private applicable SDKmode/full201MARK correction and wholeFP results root admission",
+    "One-thread MARK8/LBP4/VI4 performance; priorVI failurecause unresolved",
+    "Final shippingprojection/affectedguards/main delivery and boundedcloseout"
+  ],
+  "failure_history": [
+    "9e15 genuine43702559008 all4tooling guards failed author-machine absolute baseline; retained, portable2file16a5successor validated bothcomplete169 and actualgenuine all4.",
+    "PrivateSDK earlier fullMARK spline exclusion superseded;201rows include22subpixel, narrow same-mode seventhTU correction underway."
+  ],
+  "waste_review": "Reused once-only profile seals and no archive digest/qualificationseal replay in stagers. Root inspected all7actualreader terminals and exact rawbinding/counts. Sourcefingerprint uses existing pure stdlibprovenance source, not target execution. Keep oldfailedcampaign; no scientific or performance reruns for bookkeeping."
+}

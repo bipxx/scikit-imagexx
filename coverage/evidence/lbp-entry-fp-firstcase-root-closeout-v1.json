@@ -1,0 +1,18 @@
+{
+  "schema": "lbp-entry-fp-firstcase-root-closeout-v1",
+  "status": "PASS_MINIMUM_REAL_FIRSTCASE_AND_MODERN_CANDIDATE_CONTROL_NOT_GENUINE",
+  "source": "d4bddfcb32397184b47a2cfeb0a976de93015e0a",
+  "input_sha256": "0a433a873f0216fe8cc1d2a101bb2ef96f11727aae654da4dcb9fcfbfe3ba9f1",
+  "output_sha256": "1a9438cbccd809fe7c2419d1aa106f813a4925fd97d7a48f60169b81b124daa5",
+  "target_before_after": {
+    "control": 895,
+    "status": 1058,
+    "mxcsr": 8098
+  },
+  "public_calls": 2,
+  "builtin_entries": 66,
+  "original_calls": 0,
+  "root_review": "BothactualoneXML/exit0/8smallproof sets match; sameinput/outputoriginal82ec hashes, strictincoming/outgoingsemanticFP andrawtarget32 unchanged, NPstate/warnings/input/ownership/callerwholeprocess32/default1 pass. Correctedactuald4leaf/current12dcrop andsource-matched converter/99dbinder mapped.",
+  "limits": "Minimumlargecase expectation isactualhostoriginal; modernlargecase issource/candidate-equivalence only, notnewmodernoriginalobservation. Full94/modes/owningSDK/onecoreinstallednamespace/genuine/currentcontexts/performance/release remainopen.",
+  "waste_review": "Only2relinks usingalreadycompiledcurrentleaf/binders/inits/currentcopier/converter, no normalTU/SDK/env rebuild. Oldproposalcopiermismatch caughtbeforelinks, correctedversionedv3; unchangedconverterclosureprovedfromactualGit+oldstrictcompilecommand, no needlesscompile. EarlierhostFPfailure retained."
+}

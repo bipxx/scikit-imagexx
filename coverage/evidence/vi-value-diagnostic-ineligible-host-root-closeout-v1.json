@@ -1,0 +1,150 @@
+{
+  "schema": "vi-value-conditional-host-terminal-root-closeout-v1",
+  "status": "TERMINAL_INELIGIBLE_HOST_ZERO_TARGETS_NOT_A_PARITY_OR_CAUSAL_PASS",
+  "owner": "/root",
+  "controller": "fc9449afc0f7212d4fbbf94b6f17bb2053e8bd5e",
+  "run": 43716767195,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43716767195",
+  "actual_job_conclusion": "success",
+  "actual_host": {
+    "vendor": "GenuineIntel",
+    "model": "Intel(R) Xeon(R) 6975P-C",
+    "family": "6",
+    "model_id": "173",
+    "stepping": "1"
+  },
+  "required_host": {
+    "vendor": "AuthenticAMD",
+    "model": "AMD EPYC 9V45 96-Core Processor",
+    "family": 26,
+    "model_id": 2,
+    "stepping": 1
+  },
+  "host_feature_scope": "Intelrunner has AVX512flags but wrong vendor/model/family/modelid; exactfailed9V45gate correctly refused eligibility before transport/helper/targets.",
+  "counts": {
+    "original_calls": 0,
+    "native_calls": 0,
+    "sampler_body_calls": 0,
+    "timed_batches": 0,
+    "automatic_host_search": 0,
+    "automatic_retry": 0
+  },
+  "skipped_conditional_steps": [
+    "Run actions/checkout@v4",
+    "Install the authenticated product offline",
+    "Prepare the authenticated small F1 helper once on this measurement host",
+    "Run one root-authorized VI value diagnostic and never timing"
+  ],
+  "downloaded_diagnostic_artifact": {
+    "id": 14162003452,
+    "bytes": 6419,
+    "sha256": "5e3d3ecf92b68eaf29e9aa6d93481da6278f96cbad39167f9735a55896793815",
+    "authentications": 1,
+    "raw_files": 7
+  },
+  "actual_producer_scope": "Successful DDA42347579925/source/artifact metadata authenticated by workflow; selectedproduct was not downloaded/installed on ineligiblehost. No new actual runtime/core/SDK/F1helper or postbatch identity execution is claimed.",
+  "gates": {
+    "source_and_bothPython_inert_controls": "passed",
+    "actual_remote_workflow_and_dispatch_binding": "passed",
+    "actual_host_gate_and_zero_target_behavior": "passed_ineligible_terminal",
+    "real_original_native_pair": "pending_eligiblehost",
+    "raw_value_FP_pair_admission_and_postbatch": "pending_no_batch",
+    "priorVI_failure_cause": "unresolved",
+    "VI4performance": "held",
+    "shipping": "not_authorized_by_this_diagnostic"
+  },
+  "cleanup": {
+    "target": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-transient-v1.zip",
+    "logical_bytes": 6419,
+    "attempt": "One exact nativePowerShell regularfile removal after rawextraction/readers stopped, workspacepath/type/size checks included.",
+    "actual_result": "Automaticapprovalreview rejected CreateProcess beforeexecution: blocked by policy. ZIPstillpresent; extracted7rawfiles retained.",
+    "status": "pending_manual_only_never_retry_alternative",
+    "removed_logical_bytes": 0,
+    "physical_allocation_change": "not_measured"
+  },
+  "retained_evidence": [
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-raw-v1\\cpu.txt",
+      "bytes": 3427,
+      "sha256": "3d9601a374bc3faf0c92865c7dfdd07f45e654ae6742304cea818ce3e5a7bdb4"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-raw-v1\\execution-clock.json",
+      "bytes": 90,
+      "sha256": "7507856062c8cffe58518dc595deae64edc008deeb391bbc01036967709233b0"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-raw-v1\\host-eligibility.json",
+      "bytes": 2610,
+      "sha256": "db901e792d2f50a560a446f5cf08abe4bba8dea362b815001626325e053dd18a"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-raw-v1\\platform.txt",
+      "bytes": 128,
+      "sha256": "5847c3fa17117b1bd44648b88b29ec648ee174582f20d075bf1dc6fb8025e36f"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-raw-v1\\producer-artifacts.json",
+      "bytes": 5150,
+      "sha256": "5581e964f40167e31ce355b17c00ad3ce6e8c60cc8948cf2df5df639f42503c3"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-raw-v1\\producer-run.json",
+      "bytes": 12195,
+      "sha256": "5d6425c0e1e0ceb95a840c9a38c31e68005f15e81ca610c646d9fdc6782aa78d"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-raw-v1\\selection.json",
+      "bytes": 815,
+      "sha256": "6d4119fa31a4673602b5f51f2ce5bf06622f1a66df7888f7718797c056d00a46"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\dispatch-body-v1.json",
+      "bytes": 472,
+      "sha256": "5326f585a7239f7e8f1689f267746a0920431768c57427e6b88d4f195daa261e"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\dispatch-terminal-v1.json",
+      "bytes": 376,
+      "sha256": "947ac8f72340000dc3f0e83420eaca7136fb599886839f1a44f3d1db7210e987"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\root-conditional-one-pair-GO-v1.json",
+      "bytes": 6314,
+      "sha256": "8f20fa71ce631518f291b9ec703fd7f79c8699c42e06fdb4234eb1787e1bb34d"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-terminal-run-v1.json",
+      "bytes": 12198,
+      "sha256": "77f7c3117ada03ee3c34ce64e229e4c09aa90c50681cb3de2a2bb9d66d2394fd"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-terminal-jobs-v1.json",
+      "bytes": 3043,
+      "sha256": "68a9912b7d20886c2bf7727a127385eefd62f91aa6b789778d1351fced77204a"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-terminal-artifacts-v1.json",
+      "bytes": 752,
+      "sha256": "b35e585f1c10b216fe8128115cb2b8fbacf7e67301968d25ed989cdaeb07782f"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-download-receipt-v1.json",
+      "bytes": 406,
+      "sha256": "bc3114284d45e85a6c39c96dec6e7159845d85affcbdfcd979e5228b506ce32a"
+    },
+    {
+      "path": "build\\vi-value-diagnostic-workflow-v2\\run43716767195-extraction-receipt-v1.json",
+      "bytes": 2115,
+      "sha256": "ce61da40fa576eaa0c9323492160a5db88b9899c379c52bf365a39aa879d528d"
+    }
+  ],
+  "waste_review": {
+    "result": "Useful zero-target terminal verifies exactfailed-host gate and avoids irrelevant newcohort. Priorfailedassertion/nonreproduction retained and no favorable retry.",
+    "observed_job_created_utc": "2026-11-15T13:00:59Z",
+    "observed_job_updated_utc": "2026-11-15T13:01:26Z",
+    "CPU_or_billing_cost": "unknown; notmeasured/replayed",
+    "reuse": "Exactsource14+26inertcontrols/oldprobe/setup/rootadmittedDDAdependencies; no product/wheel transport or helper build on wronghost.",
+    "next_plan_correction": "Retire this one-way dispatch authority and terminal watcher. VI4 remains held until concrete eligiblefailed-host access or separately authorized material diagnosis change; no automaticrunnersearch/retry. Root continues independentMARK/LBP closure."
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "status": "PASS_FOUR_PRIVATE_MODE_FIRSTCASES",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "firstcases": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\firstcases-closeout-v1.json",
+    "sha256": "3f53b5bfd434f49f99078bc42640856ebc1f6b022a910dcf75b0c3057708df02"
+  },
+  "root_actual_review": "Verified all39 frozen proof hashes, actual four raw command/terminal/result/XML documents, four exit0 and one passing node per cell. Each1publiccall/33builtin phases, exact input/outputSHA, full targetbefore=after32 and strict semanticFP, full caller/process32 and default1 restored; no warnings/original imports or sanitizer diagnostics.",
+  "actual": {
+    "public_calls": 4,
+    "XML_nodes": 4,
+    "native_phase_entries": 132,
+    "full32_caller_restorations": 4,
+    "full32_process_restorations": 4,
+    "default1_restorations": 4,
+    "exact_output_matches": 4,
+    "original_calls": 0,
+    "saved_suites": 0,
+    "saved_nodes": 0,
+    "SDK_calls": 0,
+    "builds": 0,
+    "timing": 0,
+    "sanitizer_diagnostics": 0,
+    "benchmark_measurements": 0,
+    "observed_pytest_seconds": 2.320568222999995
+  },
+  "source_runtime_scope": {
+    "source_revision": "9e15e99158e4ce5200000b47cf674b6123203111",
+    "source_pins": {
+      "src/draw_multiblock_lbp.cpp": "612bb40cf65b6a66f71b2257468531774e8674c8c85a4b725081996e6275f13e",
+      "src/bind_draw_multiblock_lbp.cpp": "6d8458f793b98d8ad928121702d44507d5b85d7fe5d0bfcc530a25f3ff85cf2f",
+      "include/skimagexx/draw_multiblock_lbp.hpp": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e",
+      "python/skimagexx/_draw_multiblock_lbp.py": "296beb2c1c96aa3fd0112b205466eab945ebd6750db8fe99c74c2ef330acb0a1",
+      "tests/test_draw_multiblock_lbp_public.py": "93ca954966695fdcc15ddfa50caedd2285c0500840147765c04260eeffd63502",
+      "tests/draw_multiblock_lbp_observer_v2.py": "ab86cf3f61efee0039750616715e82d362ad4152b422513a8bf0569d30c30b2d",
+      "tests/draw_multiblock_lbp_saved_parity.py": "6d2d6867048eddc3f6ab29e7d536f08e7d3fce5e6da2e32b09db0ee725377f40",
+      "tests/fixtures/draw_multiblock_lbp_originals_v1.json": "2338d228661268df0ccd1f5005a05fb023915397229e505c65b1ac69e166020f",
+      "coverage/contracts/draw-multiblock-lbp-observer-phase-scope-v1.json": "4c21baa192a904a957435cb2178f361cffb36d74a84399912daa98e5ef5a26e7",
+      "benchmarks/draw_multiblock_lbp_execution.py": "1b8a643f32a3ca04311aca6e334781ad73e43ab2af54324620a581e6378b94d6",
+      "src/crop.cpp": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+      "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+      "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+      "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+      "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+      "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+      "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+      "tests/mark_boundaries_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+      "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+      "src/simd.hpp": "848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141",
+      "include/skimagexx/local_threshold.hpp": "019bbd11d69237e54f314bdc3c702f7ddc838970937bf09040f029a74d52e378",
+      "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+      "include/skimagexx/distance.hpp": "3a2733715aa86a371831a494f9af94399442234b510bb41909c7d0c1b0c893f5",
+      "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+      "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f"
+    },
+    "profiles": {
+      "minimum": {
+        "python": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "version": [
+          3,
+          11
+        ],
+        "numpy": "1.24.4"
+      },
+      "modern": {
+        "python": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "version": [
+          3,
+          13
+        ],
+        "numpy": "2.5.4"
+      }
+    },
+    "helper_sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+    "root_link_scope": "Exact current mode LBP/crop/converter objects; ordinary image.cpp.o/simd_avx2.cpp.o/binder/init excluded from mode credit.",
+    "test_and_observer_bodies": "Exact previously admitted staged firstcase/saved consumer, observer/helper closure and normal config/plugins; no expectation or math edits.",
+    "modern_original_reference": false,
+    "whole_core_or_genuine_installed_SDK_credit": false,
+    "sourceguard_reuse": "Evidence is pinned to the frozen9e15 numerical/frontend/header/helper/observer/fixture/fixture-factory/runtime projection. Root may reuse it for a metadata-only sourceguard successor after checking the actual dependency projection, literal pins, selectors and test configuration. This does not pass the separate hosted sourceguard barrier or extend unsupported domains. No unchanged numerical replay is requested."
+  },
+  "gates": {
+    "firstcases": "passed",
+    "four188_saved": "authorized_not_executed",
+    "SDK": "pending_separate",
+    "genuine_release_and_performance": "pending"
+  },
+  "cleanup": {
+    "raw_evidence_retained_outside_disposable": true,
+    "cleanup": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\firstcases-fixture-cleanup-v1.json",
+      "bytes": 1870,
+      "sha256": "9fdc3745ad549003b8a3572cad89518407a3bcca1ab204aea848050a25fd18b9"
+    },
+    "pending_disposable_logical_bytes": 2588,
+    "physical_allocation_bytes": null,
+    "observed_free_after_bytes": 273648652288,
+    "retention_owner": "root",
+    "release_trigger": "Mode saved/SDK dependency closure complete; preserve copied C: raw/XML/commands before any later product retirement."
+  },
+  "policy_boundary": "Empty tmp and4firstcase caches rejected by automatic policy; manual-only, never retry. tmp/pytest remains absent; saved fixture/test closure requests no tmp_path and no cleanup/reuse of blocked caches is authorized. New saved-result/cache paths are distinct.",
+  "next_owner_trigger": "C exact four saved argv,188 nodes each, max752 publiccalls; root admit actual full raw results/strict differences and XML before API gate promotion."
+}

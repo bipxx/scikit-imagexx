@@ -1,0 +1,80 @@
+{
+  "schema": "glcm-large-count-corrected-prefix-intake-v3",
+  "status": "PASS_ROOT_ACTUAL_INTAKE_PENDING_NONAUTHOR_READINESS_REVIEW",
+  "source": "0b6faf4f95d1a1c58e93cb39b48e1bb7b1079560",
+  "binding_sha256": "20d356b8e45d67767f1818fd8dba3bc168fa9d983aadcea25961c4b3b83b760c",
+  "rows": [
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/minimum-graycomatrix-cached/terminal.json",
+      "sha256": "f89429fb406115de1012fb7d013f83881078f1bb782cb1a3964014c751b58d72",
+      "profile": "minimum",
+      "api": "graycomatrix",
+      "cache": "cached",
+      "factories": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/minimum-graycomatrix-cold/terminal.json",
+      "sha256": "e4216a65323913ab6459013e436382ef9d90655dc9b8c5288efa2dc246237355",
+      "profile": "minimum",
+      "api": "graycomatrix",
+      "cache": "cold",
+      "factories": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/minimum-graycoprops-cached/terminal.json",
+      "sha256": "2739fac28d9641f723a1ecb5937055f3fc099ae7e8f8b2393be0ebf2999b22d5",
+      "profile": "minimum",
+      "api": "graycoprops",
+      "cache": "cached",
+      "factories": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/minimum-graycoprops-cold/terminal.json",
+      "sha256": "c36ed14f2e8df55038819649b3b10e16dceb29f8ff325c90c21c3857c9c37601",
+      "profile": "minimum",
+      "api": "graycoprops",
+      "cache": "cold",
+      "factories": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/modern-graycomatrix-cached/terminal.json",
+      "sha256": "ce4e14688fc6470dc642844e2b30cd0bad87859079511351e32572bf5f0c1b68",
+      "profile": "modern",
+      "api": "graycomatrix",
+      "cache": "cached",
+      "factories": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/modern-graycomatrix-cold/terminal.json",
+      "sha256": "4edd78cff198ba6887b44730bca5f4fcf508288ee6d439dd0d7180321315ebaf",
+      "profile": "modern",
+      "api": "graycomatrix",
+      "cache": "cold",
+      "factories": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/modern-graycoprops-cached/terminal.json",
+      "sha256": "7f76e3b0a835ee45019650381b2f3164551d747a56ee95a381b48bd2de232198",
+      "profile": "modern",
+      "api": "graycoprops",
+      "cache": "cached",
+      "factories": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/prefixes/modern-graycoprops-cold/terminal.json",
+      "sha256": "e5334285b3f47e39b5a855982c564081d8278a4ab7a420131c26b95d274ba69f",
+      "profile": "modern",
+      "api": "graycoprops",
+      "cache": "cold",
+      "factories": 8
+    }
+  ],
+  "total_factories": 64,
+  "target_first_frame_refusals": 16,
+  "original_calls": 0,
+  "native_calls": 0,
+  "sampler_calls": 0,
+  "root_review": "All8actualterminals current0b6/pinnedsource/helper/runtime match; each8setups/4descriptorvalidations/2firstframerefusals/Pythonprovider+compiledREQUESTrefusals/full32callerprocess exact. Actual8count nowmatchescorrectedcaptureconsumerrequirement8. Olddfd8results/failurefinding retained; no originalcaptureGOyet.",
+  "next_owner_trigger": "Non-author actualprefix/readiness delta review then rootseparate minimum8originalGO/rawadmission beforemodern8. No native/performance/releasecredit.",
+  "waste_review": "Onlychangedcountsourceprefixes rerun; no original/helperbuild/fullproduct/archive/core replay. Sourceguard69each reusedmatching scope, no newreuseprotocol."
+}

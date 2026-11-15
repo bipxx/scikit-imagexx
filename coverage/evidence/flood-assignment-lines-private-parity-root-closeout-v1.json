@@ -1,0 +1,17 @@
+{
+  "schema": "flood-assignment-lines-private-parity-root-closeout-v1",
+  "status": "PASS_636_PRIVATE_SAVED_PROTOCOL_NODES_NOT_GENUINE_OR_PERFORMANCE",
+  "source": "e96c28bc31dbe382ba26dadf8e26fb62f0cbbace",
+  "worker_closeout": {
+    "path": "build/flood-assignment-lines-execution-v1/runtime-closeout-v1.json",
+    "sha256": "5e4b4d2ccc17d21e480c70a53f6b166de5d9d8c5b8823e54daf5c38060a83c33"
+  },
+  "actual_nodes": 636,
+  "actual_saved_comparisons": 384,
+  "new_protocol_checks": 236,
+  "old_controls": 16,
+  "root_review": "Authenticated39smallproofs and4complete159node XML/uniqueIDs/0failure-error-skip, normalconftest/plugins, originaldenial0, targetsemanticFP/input/output/typederrors/warnings/softwarestate andcallerprocess32 pass. Samee96binder/new2ABI/privatecores withcurrent12dcopier; noaftercallnormalization.",
+  "limits": "Privatebridgehasnoglobalgetter; genuine1/4matrix/defaultgetter notclaimed. BFS/assignment/cropcopier orderedserial source. Additionalmodes/SDK/currentcontexts/genuine4profiles/fullAPI/original-public1threadperformance remainopen.",
+  "next_owner_trigger": "C owns existingfixture8case controlledpriorCPP/newCPPword/FP/storagechecks plus one fixedprivateperformanceproposal only; rootGO foractualcontrols/timing afterinspect. No originalrecapture or unchangedtiming.",
+  "waste_review": "Only2newbinders+2necessaryinitializers+2links; no leaf/SDK/fullcore/env rebuild. Changedbinder justifiesexact384saved+236newprotocol reruns; no original/helperexperiment/corpus/archive/core replay."
+}

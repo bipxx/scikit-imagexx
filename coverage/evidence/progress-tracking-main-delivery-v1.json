@@ -1,0 +1,14 @@
+{
+  "status": "DELIVERED_SCOPED_TRACKING_REPAIR_MAIN_PUSH_VERIFIED",
+  "source": "1cd85168416635de5784efd61f1bb890d4c94bda",
+  "source_admission": "coverage/evidence/progress-tracking-root-source-admission-v1.json",
+  "post_integration": "build/progress-tracking-main-delivery-v1/post-integration-v1.json",
+  "source_files": 6,
+  "metadata_tests_each_python": 30,
+  "actual_main_CLI_checks": 8,
+  "preexisting_dirty_untracked_files_preserved": 16,
+  "software_API_image_count": 271,
+  "CI": "Commit [skip ci]; no duplicate automatic science campaign.",
+  "pending": "281 scientific delivery and root operational WIP remain separate; blocked5.76MB scratch manual-only.",
+  "waste_review": "Verified6canonicaltestedfiles/16WIPpins; reused30metadata tests eachPython and ran8CLI checks only foractualmain/workingledger integration scope. No scientific rerun."
+}

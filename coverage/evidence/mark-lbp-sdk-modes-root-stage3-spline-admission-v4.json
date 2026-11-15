@@ -1,0 +1,134 @@
+{
+  "status": "PASS_ROOT_STAGE3_SIX_UNAFFECTED_PRODUCTS_AND_SPLINE_PROPOSAL_ADMISSION",
+  "owner": "/root",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "independent_review": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp9e15-sdk-independent-review-v4\\review-v4.json",
+    "sha256": "0da8bfb14da6ab7f2b61f262e6d50920396aa2f53f5ffacaf1aba4fadce61c06"
+  },
+  "actual_commands": {
+    "configure_build": 4,
+    "metadata": 48,
+    "all_exits": 0
+  },
+  "proof_hashes": 172,
+  "six_unaffected_products": [
+    {
+      "mode": "scalar",
+      "target": "mark_wide_fp_unit",
+      "recorded_sha256": "5a9af6b7a70d9ab1268ad3afe6b1bcd2a5f836552860e32c89682cb882e6f0be",
+      "actual_stat_matches": true,
+      "selected_members": [
+        "find_boundaries.cpp.o",
+        "image.cpp.o"
+      ],
+      "map": "build\\mark-lbp9e15-sdk-modes-v1\\stage3-metadata-v3\\scalar-mark_wide_fp_unit-map.txt"
+    },
+    {
+      "mode": "scalar",
+      "target": "draw_multiblock_lbp_consumer",
+      "recorded_sha256": "4094c9a9341b7138a7517dec1a6b0f5331f94dfc8f176e2d9d2200a4fb69c284",
+      "actual_stat_matches": true,
+      "selected_members": [
+        "convert.cpp.o",
+        "crop.cpp.o",
+        "draw_multiblock_lbp.cpp.o",
+        "image.cpp.o"
+      ],
+      "map": "build\\mark-lbp9e15-sdk-modes-v1\\stage3-metadata-v3\\scalar-draw_multiblock_lbp_consumer-map.txt"
+    },
+    {
+      "mode": "scalar",
+      "target": "lbp_firstcase_fp_consumer",
+      "recorded_sha256": "9ad73a584e794e5070160d1dbaeee173368b3f77d09b6e474403c9e26d96daba",
+      "actual_stat_matches": true,
+      "selected_members": [
+        "convert.cpp.o",
+        "crop.cpp.o",
+        "draw_multiblock_lbp.cpp.o",
+        "image.cpp.o"
+      ],
+      "map": "build\\mark-lbp9e15-sdk-modes-v1\\stage3-metadata-v3\\scalar-lbp_firstcase_fp_consumer-map.txt"
+    },
+    {
+      "mode": "sanitize",
+      "target": "mark_wide_fp_unit",
+      "recorded_sha256": "c90268de7d348a103528143cc60c031ebbf143d076d19477bd9900146061b152",
+      "actual_stat_matches": true,
+      "selected_members": [
+        "find_boundaries.cpp.o",
+        "image.cpp.o"
+      ],
+      "map": "build\\mark-lbp9e15-sdk-modes-v1\\stage3-metadata-v3\\sanitize-mark_wide_fp_unit-map.txt"
+    },
+    {
+      "mode": "sanitize",
+      "target": "draw_multiblock_lbp_consumer",
+      "recorded_sha256": "23164ed9e958e71129b5ced7498a8ae012f96bc1ad694f80f5cbb70b9e00b737",
+      "actual_stat_matches": true,
+      "selected_members": [
+        "convert.cpp.o",
+        "crop.cpp.o",
+        "draw_multiblock_lbp.cpp.o",
+        "image.cpp.o"
+      ],
+      "map": "build\\mark-lbp9e15-sdk-modes-v1\\stage3-metadata-v3\\sanitize-draw_multiblock_lbp_consumer-map.txt"
+    },
+    {
+      "mode": "sanitize",
+      "target": "lbp_firstcase_fp_consumer",
+      "recorded_sha256": "66cc4da829da5afc628fc149ee253d96da2bb7e7f6c69d4390a5862a2a93d235",
+      "actual_stat_matches": true,
+      "selected_members": [
+        "convert.cpp.o",
+        "crop.cpp.o",
+        "draw_multiblock_lbp.cpp.o",
+        "image.cpp.o"
+      ],
+      "map": "build\\mark-lbp9e15-sdk-modes-v1\\stage3-metadata-v3\\sanitize-lbp_firstcase_fp_consumer-map.txt"
+    }
+  ],
+  "scope": "Six unchanged LBP/wide SDK binaries current closure and mode/runtime metadata admitted. Full MARK201 readiness remains failed_superseded until fresh seventh spline numerical TU and actual corrected archive/map/runtime admission. No wholeSDK current-source strictmode claim.",
+  "mtime_identity": "Root compared current native exact integer size/mtime to original stage3 JSON; independent review printed some ns values rounded, not used for exact matching. No archive/core/product hash replay.",
+  "correction": {
+    "readiness": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\readiness-v4.json",
+    "sha256": "bd0f917d9b5a3a9cd53cab86bcd3aadd672bdf7c7ab9c25fa69875bc7e96bea8",
+    "fixture_modes": {
+      "full_rows": 201,
+      "modes": {
+        "outer": 147,
+        "thick": 26,
+        "inner": 6,
+        "subpixel": 22
+      },
+      "workers": [
+        1,
+        4
+      ],
+      "full_prospective_complete_calls": 402,
+      "subpixel_rows": 22,
+      "subpixel_prospective_complete_calls": 44,
+      "additional_wide_rows": 8,
+      "additional_wide_prospective_calls": 24,
+      "expected_words": "All unchanged saved output bytes and profile expectations retained; no dropped subpixel rows, tolerance changes, replacement fixtures or upstream observations."
+    },
+    "first_three_exact_commands_only": [
+      "stage-spline-corrected-prefixes-v4",
+      "compile-current-spline-scalar-v4",
+      "compile-current-spline-sanitize-v4"
+    ],
+    "new_root_absent": true,
+    "free_bytes": 252691963904,
+    "concurrent_capacity_threshold_bytes": 120528561249,
+    "estimated_correction_extra_bytes": 1073741824
+  },
+  "gates": {
+    "four_builds48metadata_six_unaffected_link_closures": "passed",
+    "spline_source_flag_and_command_proposal": "passed",
+    "fresh_copied_prefix_objects": "pending",
+    "corrected_inventory_and_relink_maps": "pending",
+    "actual14unaffected_runtime_comparisons": "pending",
+    "actual_corrected_full201SDK_modes": "pending"
+  },
+  "waste_review": "Preserved initial all-outer scope mistake and actual201row/22subpixel correction. Reuse six prior objects, unchanged client objects and normalworker1 witness; compile spline only, no math/tolerance edits or repeated numerical evidence."
+}

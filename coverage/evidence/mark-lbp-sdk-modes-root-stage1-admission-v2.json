@@ -1,0 +1,172 @@
+{
+  "status": "PASS_ACTUAL_STAGE1_OBJECTS_HEADERS_INVENTORIES_NORMAL_CLIENT_LINK",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp9e15-sdk-modes-v1\\stage1-handoff-v2.json",
+    "sha256": "3c9f6f9a65801082d6f0788b29bd14bf4f3864947e726301821d243cacfa4abb"
+  },
+  "actual_root_review": "Authenticated123proofs (891406B), read actual12terminal exits0 and30metadata command exits0. Six current strict-GCC13.3 object source/flags/ELF/ASanUBSan metadata,20current source pins/10installedheaders each and exactunique52/102 base members pass. Normal newFPclient resolvedtarget/4installedheaders/sixmember source projections/full map/ELF/needed/runtime/helper source identity pass. No executable or ar mutation previously occurred.",
+  "objects": [
+    {
+      "mode": "scalar",
+      "family": "find_boundaries",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/scalar/objects/find_boundaries.cpp.o",
+      "bytes": 137640,
+      "mtime_ns": 1794739923425767800,
+      "sha256": "f98ec54456833ac5f2588af2ee162673fe415d0ade2e4a2bef09ec9099d8cb7c",
+      "command_id": "compile-scalar-find_boundaries",
+      "ASan_references": false,
+      "UBSan_references": false,
+      "project_undefined": [
+        "U skimagexx::get_num_threads()"
+      ]
+    },
+    {
+      "mode": "scalar",
+      "family": "mark_boundaries",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/scalar/objects/mark_boundaries.cpp.o",
+      "bytes": 59936,
+      "mtime_ns": 1794739950207826400,
+      "sha256": "4616c4c216f33379518fe511d90725d1b6059776e0d80a11a601a23a70b508a4",
+      "command_id": "compile-scalar-mark_boundaries",
+      "ASan_references": false,
+      "UBSan_references": false,
+      "project_undefined": [
+        "U skimagexx::pixel_size(skimagexx::PixelType)",
+        "U skimagexx::convert_into(void const*, void*, unsigned long, skimagexx::PixelType, skimagexx::PixelType)",
+        "U skimagexx::get_num_threads()",
+        "U skimagexx::detail::spline_weights(double, int)",
+        "U skimagexx::detail::find_boundaries_into(skimagexx::ComponentsView const&, skimagexx::detail::FindBoundaryParameters const&, unsigned char*, std::vector<long, std::allocator<long> > const&, int)",
+        "U skimagexx::detail::find_boundaries_shape(skimagexx::ComponentsView const&, skimagexx::detail::FindBoundaryMode, std::vector<unsigned long, std::allocator<unsigned long> >&)"
+      ]
+    },
+    {
+      "mode": "scalar",
+      "family": "image",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/scalar/objects/image.cpp.o",
+      "bytes": 117176,
+      "mtime_ns": 1794740022256684800,
+      "sha256": "3b3aaea5606bb203f6f01ad928128bb8ce3b5096c37f728eb862e905f6904d1d",
+      "command_id": "compile-scalar-image",
+      "ASan_references": false,
+      "UBSan_references": false,
+      "project_undefined": []
+    },
+    {
+      "mode": "sanitize",
+      "family": "find_boundaries",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/sanitize/objects/find_boundaries.cpp.o",
+      "bytes": 8929032,
+      "mtime_ns": 1794739932934557600,
+      "sha256": "f0793b409c3cc2e21943d4f9d87548a9ab6f84c3e30463b6954df3ed92556197",
+      "command_id": "compile-sanitize-find_boundaries",
+      "ASan_references": true,
+      "UBSan_references": true,
+      "project_undefined": [
+        "U skimagexx::get_num_threads()"
+      ]
+    },
+    {
+      "mode": "sanitize",
+      "family": "mark_boundaries",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/sanitize/objects/mark_boundaries.cpp.o",
+      "bytes": 3520736,
+      "mtime_ns": 1794740025395419800,
+      "sha256": "df46cda6c9cf143fc7bb200476f8f4ea1b5b964ab7fe4474ae942cfc6f6dcd40",
+      "command_id": "compile-sanitize-mark_boundaries",
+      "ASan_references": true,
+      "UBSan_references": true,
+      "project_undefined": [
+        "U skimagexx::pixel_size(skimagexx::PixelType)",
+        "U skimagexx::convert_into(void const*, void*, unsigned long, skimagexx::PixelType, skimagexx::PixelType)",
+        "U skimagexx::get_num_threads()",
+        "U skimagexx::detail::spline_weights(double, int)",
+        "U skimagexx::detail::find_boundaries_into(skimagexx::ComponentsView const&, skimagexx::detail::FindBoundaryParameters const&, unsigned char*, std::vector<long, std::allocator<long> > const&, int)",
+        "U skimagexx::detail::find_boundaries_shape(skimagexx::ComponentsView const&, skimagexx::detail::FindBoundaryMode, std::vector<unsigned long, std::allocator<unsigned long> >&)"
+      ]
+    },
+    {
+      "mode": "sanitize",
+      "family": "image",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/sanitize/objects/image.cpp.o",
+      "bytes": 2561248,
+      "mtime_ns": 1794740035803782600,
+      "sha256": "2a6de28cce4ee4e933209db6beeb6abb00e0059853ba125fc2ba87e2d0b3c256",
+      "command_id": "compile-sanitize-image",
+      "ASan_references": true,
+      "UBSan_references": true,
+      "project_undefined": []
+    }
+  ],
+  "normal_client": {
+    "binary_path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/normal/clients/lbp_firstcase_fp_consumer",
+    "bytes": 533800,
+    "sha256": "7767eee4407e5da501a845e2c0c0f3d0a431f26551547dbce7fbac85b4c38619",
+    "build_id": "2fd83a1e1c60f3ef82447e6c248c70b03c441703",
+    "source_path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/mark-lbp9e15-sdk-modes-v1/prepared-source-v2/lbp_firstcase_fp_consumer_v1.cpp",
+    "source_sha256": "a731b19a9abebede19083241bf1a2587b5d074379fdf0b66942a0e29abc67c78",
+    "actual_target": "skimagexx::skimagexx -> /mnt/d/Scratch/mark-lbp93f-private-sdk-v1/SDK-current/lib/libskimagexx.a",
+    "selected_normal_SDK_members": [
+      "convert.cpp.o",
+      "crop.cpp.o",
+      "draw_multiblock_lbp.cpp.o",
+      "image.cpp.o",
+      "simd_avx2.cpp.o",
+      "simd_convert_avx2.cpp.o"
+    ],
+    "source_projection": "stage1-normal-source-projection-v2.json",
+    "source_projection_sha256": "1d3b7a9013b0c8305a19d7b93a8f375562a1740102beb5f844f6866b56bd7c22",
+    "actual_installed_header_count": 4,
+    "all_installed_headers_match_current": true,
+    "actual_NEEDED": [
+      "libreference_fenv_restore.so",
+      "libgomp.so.1",
+      "libstdc++.so.6",
+      "libm.so.6",
+      "libgcc_s.so.1",
+      "libc.so.6"
+    ],
+    "actual_linked_runtime": [
+      {
+        "name": "libstdc++",
+        "path": "/lib/x86_64-linux-gnu/libstdc++.so.6",
+        "realpath": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+        "bytes": 2592224,
+        "mtime_ns": 1766093810000000000,
+        "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11",
+        "identity": "Actual ldd resolution/current stat matches admitted metadata identity; library not rehashed."
+      },
+      {
+        "name": "libgomp",
+        "path": "/lib/x86_64-linux-gnu/libgomp.so.1",
+        "realpath": "/usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0",
+        "bytes": 352304,
+        "mtime_ns": 1766093810000000000,
+        "sha256": "135f3c8f006d2fe5e68e51281c7974cb991a03de3bfb3593d68d174dfcf854d1",
+        "identity": "Actual ldd resolution/current stat matches admitted metadata identity; library not rehashed."
+      },
+      {
+        "name": "helper",
+        "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+        "realpath": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+        "bytes": 15632,
+        "mtime_ns": 1793956716322648300,
+        "sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+        "identity": "Actual ldd resolution/current stat matches admitted metadata identity; library not rehashed."
+      }
+    ],
+    "source_flags": "-UNDEBUG follows -DNDEBUG; -fno-lto/-ffp-contract=off/-fno-fast-math/-frounding-math; exact wrapper linker option and helper supplied.",
+    "files": "Resolved target, CMakeCache, flags, link.txt, compiler dependency file and full map copied under stage1-metadata-v2 outside disposable roots.",
+    "scope": "Normal actual compile/link/ELF/source ownership only; SIMD support members are normal-only and do not establish scalar/sanitizer closure or any target FP/runtime result."
+  },
+  "gates": {
+    "stage1": "passed",
+    "normal_owning_FP_worker1": "authorized_once_pending_actual_call",
+    "mode_ar_assembly": "authorized_after_normal1_and_comparison_exit0",
+    "mode_configuration_and_clients": "pending_root_after_assembly",
+    "later_runtime": "pending_separate_GO",
+    "genuine_current_SDK": "pending43706703018"
+  },
+  "limits": "Only current6TU two-family mode closure in older genuinebases. Normal selectedAVX2members are explicitlynormal, never scalar/sanitizer credit; fullcurrentSDK separate.",
+  "next_owner_trigger": "B normalwholeFPworker1 once and strictsavedcomparison; stoponfailure. Ifboth0,2ar r then2ar t on ownedcopiedprefixes only, stopforrootadmission before modeconfigure/build or anyotherSDKcall."
+}

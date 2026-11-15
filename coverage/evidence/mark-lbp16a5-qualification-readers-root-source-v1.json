@@ -1,0 +1,52 @@
+{
+  "status": "PASS_SOURCE_ONLY_UNBOUND_READERS",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\handoff-v1.json",
+    "sha256": "7ca30b34e51e522380f164f20f8cd4a0c3eccf1056a0fabf4147c1c45a2aea64"
+  },
+  "root_actual_review": "Authenticated22proofs and actual2metadata+9source assertion controls perversion. Independently reviewed all3 one-line assertion diffs, changing sourceSHA and its exactsource errorlabel only; every other reader byte unchanged. Unchanged35pins/bodies retained,2guardfixturepins extend37. All actualrun/artifact/core/digest/clocksNULL and numericactualauthority0; no artifact/scientific credit.",
+  "counts": {
+    "images": 281,
+    "functions": 284,
+    "product": 228,
+    "SDK": 108,
+    "families": 38,
+    "SDKchecks": 76,
+    "corpora": 12
+  },
+  "scope": "Existing root-v3 fields; four later373 consumer files remain separate and absent from16a5.",
+  "remaining_gates": [
+    {
+      "owner": "root",
+      "status": "PENDING_READER_PREPARATION_INSPECTION",
+      "gate": "Inspect this compact packet and actual retained results before accepting/using its readers."
+    },
+    {
+      "owner": "root",
+      "status": "NOT_ASSESSED_HERE",
+      "gate": "Complete169 actual terminal receipts on both retainedPythons with normalconftest/plugins and no fail-fast. Root handles21694/26891 were live when assigned, not accepted as PASS by this packet."
+    },
+    {
+      "owner": "root",
+      "status": "UNBOUND",
+      "gate": "Eligible exact-source hosted dispatch only after required readiness; source preparation must not delay dispatch once those gates pass."
+    },
+    {
+      "owner": "root",
+      "status": "UNBOUND_ACTUAL_TERMINALS_REQUIRED",
+      "gate": "Version actual successful campaign/run/API artifact/core/digest/clock bindings; four genuine profile and three stager reviews, all rawXML/runtime/source/SDK/FENV failures retained. No old failed campaign binding reused."
+    },
+    {
+      "owner": "root",
+      "status": "PENDING",
+      "gate": "Independent whole-product aggregate admission, actual rootv3 consumer field population, existing plan/ledger/checklist reconciliation and main delivery."
+    },
+    {
+      "owner": "root",
+      "status": "PENDING_IF_TRANSPORT_EXISTS",
+      "gate": "FutureZIPs transient only; extract needed products/rawdiagnostics/log/XML/source dependencies and concise receipts, stop readers, then release transports and record archive evidence unavailable. No recreation or blocked deletion retry."
+    }
+  ],
+  "archive_policy": "Transport archives transient only; retain required extracted dependencies/raw/log/XML. Never retry earlier policy-blocked targets. No16a5 artifact downloaded."
+}

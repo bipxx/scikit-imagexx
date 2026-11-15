@@ -1,0 +1,43 @@
+{
+  "status": "PASS_THREE_FILE_SUCCESS_FAILURE_CAPTURE_SOURCE_ONLY",
+  "source": "0a9e6102dc051c119f77c259a9d988733f23180d",
+  "parent": "78deb6169d2b87f4d3a6325a9e65f495bae4ed47",
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-cohort-value-diagnostic-v2\\handoff-v1.json",
+    "sha256": "e3149741dbcd6a8584175f8c10724d58a60fd966dd1a38da276bcf378bcc8f87"
+  },
+  "root_actual_review": "Authenticated71proofs, current3raw source hashes/clean direct78deb parent and both actual26node terminal/XMLs, no failures/errors/skips/scientific imports or real calls. Read wrapper diff and actual protected DDA execute source: stricttrace fields are dict/list as copied, source FP/count/values retained before codecs, validator return identity and original primary/finally preserved. Only already validated locals are observed; no second target/factory/sampler. Protected probe/math/workloads remain unchanged.",
+  "source_files": [
+    {
+      "path": "coverage/contracts/vi-cohort-value-diagnostic-v2.json",
+      "bytes": 6180,
+      "raw_sha256": "dfb02dd1825476bf2c1c90fa6e55ded1585771f448e5e4cab2cc0426bf550fc8",
+      "canonical_LF_sha256": "dfb02dd1825476bf2c1c90fa6e55ded1585771f448e5e4cab2cc0426bf550fc8",
+      "retained": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-cohort-value-diagnostic-v2\\source\\coverage\\contracts\\vi-cohort-value-diagnostic-v2.json"
+    },
+    {
+      "path": "tests/test_vi_cohort_value_diagnostic.py",
+      "bytes": 17631,
+      "raw_sha256": "63625121db871c04571eb4308d64b15e5c6ac8da2ddde510360cb9e7ea378e51",
+      "canonical_LF_sha256": "63625121db871c04571eb4308d64b15e5c6ac8da2ddde510360cb9e7ea378e51",
+      "retained": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-cohort-value-diagnostic-v2\\source\\tests\\test_vi_cohort_value_diagnostic.py"
+    },
+    {
+      "path": "tools/vi_cohort_value_diagnostic.py",
+      "bytes": 15521,
+      "raw_sha256": "ff7a2a9f99aa87c639e61a6be0558ecfc80668d819b0a2b2d6e564794eec6f3a",
+      "canonical_LF_sha256": "ff7a2a9f99aa87c639e61a6be0558ecfc80668d819b0a2b2d6e564794eec6f3a",
+      "retained": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-cohort-value-diagnostic-v2\\source\\tools\\vi_cohort_value_diagnostic.py"
+    }
+  ],
+  "gates": {
+    "wrapper_source": "passed",
+    "complete26_inert_each": "passed",
+    "workflow_context_hash_CPU_guard_postbatch": "pending_root_twofile_integration",
+    "actual_host_product_binding_clock": "pending",
+    "actual_pair_and_raw_witness": "pending",
+    "once_afterbatch_offline_and_VI_timing": "pending"
+  },
+  "limits": "CPU capability metadata is not selected per-call kernel identity or proof of old cause. Keep old failure/probe outcomes; changed16a5 product cannot explain DDA failure. No calls are authorized by this source admission.",
+  "next_owner_trigger": "Root sole source author for workflow and its test only, on a successor branch in existing protected worktree; preserve3frozen source files, v1context and all predecessor refs. BothPython affected workflow guards and independent review before any conditional actualcall GO."
+}

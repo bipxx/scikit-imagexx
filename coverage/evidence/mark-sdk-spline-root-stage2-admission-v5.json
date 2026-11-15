@@ -1,0 +1,24 @@
+{
+  "status": "PASS_ROOT_ACTUAL_FOUR_AR_INVENTORIES_AND_SEVEN_CURRENT_MEMBER_PAYLOAD_BINDINGS",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "assembly_receipt": {
+    "path": "build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\assembly-result-v5.json",
+    "sha256": "63a084fcf8c6b17d74cf5d18916b8061d182b04064be16adb751cc0d8d32f5c6"
+  },
+  "actual_command_exits": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "inventories": {
+    "scalar": 56,
+    "sanitize": 106
+  },
+  "current_payloads_each": 7,
+  "exact_prior_order_and_uniqueness": true,
+  "actual_link_delta": "Only4approvedtokens perlink: new map/output/archive and absolute spelling of same admitted clientobject; flags/helper/OMP/libraries unchanged.",
+  "verification": "Root inspected all21 actualterminals and137proofhashes; actual prior/new inventory logs equal, all7fresharchive recorded payloadpins independently match corresponding objectfile hashes. This new corrected-archive/object binding required small object reads; no protected original archive/core/binary hash replay.",
+  "scope": "New copied privatearchives only; existing exact clientobject stats verified. Actual relink/full201SDK pending; no wholeSDK current-source or CMake/client rebuild claim.",
+  "waste_review": "Root metadata readers failed before mutation on else106 syntax and a retained converter record without sha256. Corrected readers to direct small-object binding; no source/product changes or numerical rerun. Prior failed toolresults retained; costs unknown."
+}

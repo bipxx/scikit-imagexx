@@ -1,0 +1,61 @@
+{
+  "status": "PASS_ROOT_UNAFFECTED14_RUNTIME_COMPARISONS_PRIVATE_SDK_SCOPE",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "closeout": {
+    "path": "build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\execution-closeout-v5.json",
+    "sha256": "d616f1fa15a833feef8648642c0eb9fe5ba65606de133691c4bdc064ca27ce2f"
+  },
+  "runtime_receipt": {
+    "path": "build\\mark-lbp9e15-sdk-modes-v1\\unaffected-runtime-result-v4.json",
+    "sha256": "12f062943c42769322a7fe3723b8a9a5fdd8c6ecd93949c8106d7bb059aeb9e0"
+  },
+  "verified_proofs": 137,
+  "actual14_exits": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "new_whole_owning_cells": [
+    [
+      "normal",
+      4
+    ],
+    [
+      "scalar",
+      1
+    ],
+    [
+      "scalar",
+      4
+    ],
+    [
+      "sanitize",
+      1
+    ],
+    [
+      "sanitize",
+      4
+    ]
+  ],
+  "whole_owning_witness_scope": "Five new gray-u8-C witnesses, each exact197376 output values/1579008 bytes and65792 input bytes match frozen existing payload hashes. Not94case SDK parity or modern-original observations.",
+  "target_FP_scope": "Incoming/expected target CW895/SW1058/MXCSR8098 match saved minimum82ec expectations. Full target raw32 retained and equal before/after in all five observed cells; comparator acceptance is semantic CW/SW/MXCSR, not a full target32 equality assertion. Full caller and process32 restoration is required and passed.",
+  "default1_scope": "Each whole-FP executable checks startup default1 in executed reviewed source, records one target getter snapshot/capturedworkers1or4, and source resets workers1. Raw JSON does not separately record startup getter nor extra post-reset getter; no such observation is claimed.",
+  "wide_find_calls": 16,
+  "invariant_consumers": 2,
+  "normal_worker1": "Prior rootadmission reused without replay.",
+  "full201_MARK_mode_SDK": "pending correctedactualrelinkmaps then separateGO",
+  "original_calls": 0,
+  "timing": 0,
+  "waste_review": "No normalworker1/original/numerical-profile replay; only exact5new SDKfirstcases and savedbytecomparisons. Existing scalar/sanitizer LBP/crop/convert and currentfind/image ownership reused. reviewed, no change."
+}

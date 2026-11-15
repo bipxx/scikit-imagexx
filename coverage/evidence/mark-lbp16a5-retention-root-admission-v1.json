@@ -1,0 +1,98 @@
+{
+  "status": "PASS_SEVEN_ONCE_ONLY_TRANSFER_RECEIPTS",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "run": 43706703018,
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-retention-handoff-v1.json",
+    "sha256": "378e2100aeafd62701f95416b49e023e9fc679bd5b50fe2b90422f1450de8916"
+  },
+  "root_actual_review": "Inspected actual retainer terminal0 and all16smallproof hashes; all7transfer receipts exactly match frozenAPI IDs/source/bytes/digests, downloadpasses1 and current stat/path. No wholearchive hash replay. Sealed-file/XML/package/SDK/source/core/helper fields still require profile/stager readers.",
+  "artifacts": [
+    {
+      "id": 14160523393,
+      "name": "public-qualification-debug",
+      "run": 43706703018,
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "path": "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160523393.zip",
+      "bytes": 1842513607,
+      "sha256": "a50b0f4748b3d59eea53da751721c344a876c314c08cf6df833b6ea66e315f0e",
+      "seconds": 119.2536557999556,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 14160352344,
+      "name": "rank-statistics-product-minimum",
+      "run": 43706703018,
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "path": "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160352344.zip",
+      "bytes": 227598086,
+      "sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec",
+      "seconds": 80.3894883999601,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 14160264116,
+      "name": "public-qualification-windows",
+      "run": 43706703018,
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "path": "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160264116.zip",
+      "bytes": 1336889371,
+      "sha256": "64e172091aaa060268b2b81953d82fad6109f3e6ef92834147a0012983ba25d4",
+      "seconds": 80.67390600004,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 14160200020,
+      "name": "public-qualification-modern",
+      "run": 43706703018,
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "path": "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160200020.zip",
+      "bytes": 1385000478,
+      "sha256": "f65dccbc7a0b0a6afc6606afe5e4f83b9dfbf3f1872d78c42fd3d0da4b5f2d18",
+      "seconds": 161.74589830002515,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 14160003660,
+      "name": "public-qualification-minimum",
+      "run": 43706703018,
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "path": "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160003660.zip",
+      "bytes": 1423404006,
+      "sha256": "9441f55a0d10301f64a2be9f729535454944d041709e48dc4cb4d6364cf5ad99",
+      "seconds": 106.72577550000278,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 14159969944,
+      "name": "rank-statistics-product-windows",
+      "run": 43706703018,
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "path": "D:\\Scratch\\skimage281-43706703018-transport-v1\\14159969944.zip",
+      "bytes": 223777738,
+      "sha256": "8caac0d30b2895765e5e03c6e7fc2169efc240fbc938f22fe1c84abbefb5e1fa",
+      "seconds": 19.513465899974108,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    },
+    {
+      "id": 14159657099,
+      "name": "rank-statistics-product-modern",
+      "run": 43706703018,
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "path": "D:\\Scratch\\skimage281-43706703018-transport-v1\\14159657099.zip",
+      "bytes": 224771599,
+      "sha256": "7ea8c24da99125d7f83a8a835c8d1b8047cd45391c385a2fe064b4d66ddf599a",
+      "seconds": 16.992372299951967,
+      "actual_API_digest_exact": true,
+      "download_passes": 1
+    }
+  ],
+  "product_accepted": false,
+  "next": "Authorize4unchanged profile readers maximum2 concurrent, then rootactual profile intake before3stagers/extraction. No transportrelease before readers/requiredextraction stop; no oldblockedtarget touched."
+}

@@ -1,0 +1,25 @@
+{
+  "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+  "run": 43706703018,
+  "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "profile": "minimum",
+  "artifact": 14160352344,
+  "artifact_sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec",
+  "product_json_sha256": "2ede3cbc5a451f088c2889646adadd64f51e5cd896f121c0e9477e2e97d0ec91",
+  "qualification_raw_review_sha256": "6beaca83bc1c3dcadc00b92737fda6aa1af90a7d406f70ee7bd4f85b13683f8e",
+  "qualification_manifest_sha256": "c8866918d31421b9163c9ea5467c4482e2ac932093bbeb1f020a57e08a2a6cca",
+  "verified_stage_files": 3073,
+  "verified_stage_bytes": 912281380,
+  "stage_files_rehashed_this_invocation": 3073,
+  "source_derived_closure": {
+    "product_members": 228,
+    "SDK_members": 108
+  },
+  "SDK_checks": 76,
+  "whole_qualification_sealed_records_rehashed_again": 0,
+  "closeout": {
+    "result": "Stager bytes/source/seal/SDK binding authenticated, prior accepted-in-isolation qualification receipt reused.",
+    "waste_and_reuse": "Same root-retained ZIP, one stage-file pass; no qualification-seal replay, ZIPdigest replay, download, science or build. No avoidable waste observed; cost unknown.",
+    "next_plan_change": "Authenticates only this actual source/profile stager. Overallfour-profile release and measurement binding require root independent aggregate admission; no future-source reuse inferred."
+  }
+}

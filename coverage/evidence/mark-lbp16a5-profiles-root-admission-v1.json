@@ -1,0 +1,131 @@
+{
+  "status": "PASS_ROOT_FOUR_ISOLATED_PROFILE_ADMISSION_STAGERS_PENDING",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "run": 43706703018,
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-profile-outcomes-handoff-v1.json",
+    "sha256": "497384450eab45dfc2a88ffbba60022d98c4f7fc0f1d8f053d88906fcf236908"
+  },
+  "actual_profiles": [
+    {
+      "profile": "minimum",
+      "actual_exit": 0,
+      "XML": {
+        "tests": 241670,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "groups": 62,
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd"
+      },
+      "seal_records": 40996,
+      "seal_once": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\minimum-seal-once.json",
+        "exists": true,
+        "sha256": "aaf9f6b7cba3b73bc6260bcc463c6abf6c2e9ddd84a96899e8c2ce2a4b78a92b"
+      },
+      "stager_required": true
+    },
+    {
+      "profile": "modern",
+      "actual_exit": 0,
+      "XML": {
+        "tests": 241670,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "groups": 62,
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "72c84b8e87f45f6fc5c60ba71abc9454b5c76da15b286f6b3c8e39278c96d9d6"
+      },
+      "seal_records": 38921,
+      "seal_once": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\modern-seal-once.json",
+        "exists": true,
+        "sha256": "719417b1971298e91f1b858ebb19d7196758d82a7bb88019a773702fe01e43e4"
+      },
+      "stager_required": true
+    },
+    {
+      "profile": "debug",
+      "actual_exit": 0,
+      "XML": {
+        "tests": 241670,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "groups": 62,
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "254e162a57ec98ef4e8b4956b2e84201628468818df2f3d40c937623477ffeae"
+      },
+      "seal_records": 38830,
+      "seal_once": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\debug-seal-once.json",
+        "exists": true,
+        "sha256": "255ec84c09411e9db9624bd513b150c2c12b2be65830b99f1e672f6220e22e7b"
+      },
+      "stager_required": false
+    },
+    {
+      "profile": "windows",
+      "actual_exit": 0,
+      "XML": {
+        "tests": 238550,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "groups": 38,
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "source_files": 2988,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "55ef3e0cf628153d469b5831e2a2b247e3d80290ae3b99346c34fc70ab368828"
+      },
+      "seal_records": 38012,
+      "seal_once": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\windows-seal-once.json",
+        "exists": true,
+        "sha256": "7a16866086145a797a86dea3a027642d3f6e51201ae18948a043a917f6a0b77f"
+      },
+      "stager_required": true
+    }
+  ],
+  "proof_checks": {
+    "small_hashes": 32,
+    "all88_sizes": 88,
+    "large_sealed_raw_files_stat_only": 56,
+    "large_raw_identity_scope": "Authenticated once by unchanged source-pinned isolated reader and admitted seal receipts. No duplicate corpus parsing/hash replay or archive digest replay by root."
+  },
+  "whole_product_accepted": false,
+  "gates": {
+    "profiles": "passed",
+    "three_stagers": "pending",
+    "required_selective_extraction": "pending",
+    "transport_discard_after_readers_and_dependencies": "pending",
+    "private_mode_SDK_and_performance": "pending"
+  },
+  "calls": 0,
+  "waste_review": "Reused exact admitted readers and once-only seals; raw reports inspected without scientific replay. reviewed, no change. Root authorizes only three matching stager readers next."
+}

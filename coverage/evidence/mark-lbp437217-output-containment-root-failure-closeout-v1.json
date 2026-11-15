@@ -1,0 +1,121 @@
+{
+  "status": "PASS_ROOT_FAILED_CAMPAIGN_CAUSE_AND_BOUNDED_FIRST_COHORT_ADMISSION_NO_TIMING",
+  "source": "c25ee4592a8166e0fdb72475cab5a6e6aeec52c6",
+  "producer_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "run": 43721720516,
+  "intake": {
+    "path": "build\\mark-lbp16a5-controller-v1\\run43721720516-failure-v1\\intake-v1.json",
+    "sha256": "1b0b12984b23905839624b0d5e4c7263e79b9a5b5e58288437dc5a35a238caad"
+  },
+  "verified_small_proofs": 79,
+  "actual_failure": {
+    "phase": "MARK measurement child setup/output authorization",
+    "path": "snapshot/benchmarks/mark_boundaries_execution.py",
+    "line": 164,
+    "expression": "Path(b['output_root']).is_absolute() and cli.output.resolve().is_relative_to(output_root)",
+    "raw_trace": "raw/mark.log",
+    "actual_child_exit": 1,
+    "actual_output": "/home/runner/work/scikit-imagexx/scikit-imagexx/results/mark.json",
+    "actual_binding_output_root": "/home/runner/work/scikit-imagexx/scikit-imagexx/results/first-cohort",
+    "actual_output_absolute": true,
+    "binding_root_absolute": true,
+    "within_bound_root": false,
+    "outer_propagation": {
+      "path": "controller/tools/mark_lbp_first_cohort_probe.py",
+      "line": 317,
+      "assertion": "Measurement failed; no automatic retry: mark",
+      "job_step_exit": 1
+    },
+    "classification": "Concrete controller/driver output-contract setup defect. No math/FP/parity failure or performance result was demonstrated."
+  },
+  "observed_cohort_topcalls": {
+    "original_public_topcalls": 2,
+    "native_public_topcalls": 2,
+    "sampler_body_calls": 0,
+    "timed_batches": 0
+  },
+  "C1_FP_scope": {
+    "mark": {
+      "caller_full32_restored": true,
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true
+    },
+    "lbp": {
+      "caller_full32_restored": true,
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true
+    },
+    "raw_word_limit": "The firstcase terminal records booleans and accepted strict checks, not before/after32-byte target FP payloads. Helper-control FP data are retained separately and are not those public-call payloads."
+  },
+  "postbatch_identity": {
+    "exit": 0,
+    "log": {
+      "status": "verify",
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "wheel_count": 14,
+      "artifact_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d"
+    },
+    "summary_flag": true
+  },
+  "measurement_counters": {
+    "direct_original_topcalls": null,
+    "direct_native_topcalls": null,
+    "direct_sampler_body_calls": null,
+    "direct_timed_batches": null,
+    "unavailable_reason": "Failed measurement child emitted no call-counter/batch/report record; do not invent a recorded measurement counter.",
+    "source_order_inference": {
+      "additional_original_topcalls": 0,
+      "additional_native_topcalls": 0,
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "basis": "Exact source-pinned traceback fails at output assertion164 before claim166-168/import NumPy173/public target acquisition180/sampler path. This is control-flow inference, distinct from raw counters."
+    }
+  },
+  "partial_timings": {
+    "accepted_timing_rows": 0,
+    "partial_timing_records_retained": [],
+    "inventory_absent": [
+      "mark.json",
+      "lbp.json",
+      "mark.batches.jsonl",
+      "lbp.batches.jsonl",
+      "summary.json",
+      "lbp-command.json",
+      "lbp-exit.json",
+      "mark-identity-after.log"
+    ],
+    "prepared_envelopes_only": [
+      "authority-mark/measurement.json",
+      "authority-lbp/measurement.json"
+    ],
+    "prepared_scope": "Both timing envelopes exist because run_measurements writes both before its child loop; this is not evidence LBP timing ran.",
+    "statement": "Direct failed-child public-call/sample counters are unavailable. Exact traceback/source order places failure before claim creation, numerical imports/target acquisition and sampler; zero additional measurement work is a separate source-order inference. No partial timing/report/journal is present in all65artifact entries."
+  },
+  "root_source_order_check": "NativeGit source16a5 actualline164 containment precedes NumPy import173/target acquisition/sampler; no additional measurement work is a source-order inference, not an emitted rawcounter. Two observed first cohorts are accepted only in their first-case scope; their booleans are not raw hardware32payloads.",
+  "cause": "The controller bound results/first-cohort but requested results/mark.json. Containment correctly refused it before target acquisition. No math/FP/parity failure is demonstrated. Source-only91controls passed yet execution-readiness missed this actual collector/output boundary; preserve failedcampaign and supersede its readiness for timing.",
+  "next_correction": {
+    "authority": 0,
+    "preferred": "Bind the intended absolute task results root in prepare_cohorts before either cohort; explicitly keep main cohort folder under output_root/first-cohort/route. Preserve old measurement_commands, run_measurements and validate_reports/report collector paths.",
+    "exact_current_expressions": [
+      "output_root=str((results/'first-cohort').resolve())",
+      "folder=Path(binding['output_root'])/args.route"
+    ],
+    "prospective_expressions": [
+      "output_root=str(results.resolve())",
+      "folder=Path(binding['output_root'])/'first-cohort'/args.route"
+    ],
+    "dependent_scope": "Version new context/probe hash/current source pins and approved narrow test delta. Driver containment, math/FP/C1/sampler/case/method assertions remain unchanged; no new dispatcher/framework.",
+    "guards": "Model actual prepared bindings and measurement command output containment for both routes, preserve cohort terminal collector locations, and exercise actual driver setup until scientific-import refusal with a passing scoped output and an outside-root rejection. Run complete affected module both retainedPythons after final bytes, normal conftest/plugins.",
+    "next": "Root independently admits this raw cause, then separately authorizes source correction/guards and any subsequent changed-input dispatch. No unchanged retry."
+  },
+  "waste_review": "Useful actualbinding boundary failure, preventable by exercising prepared bindings against generated measurement outputs during sourcecontrols. Reuse old source/driver/frame/FP/C1/sampler/report logic; fix only two aligned output-root/path expressions plus versioned source authority and meaningful containment regression. No completed timing experiment is repeated; all79raw/source proofs retained.",
+  "gates": {
+    "actual_failed_cause_source_and_rawbinding": "passed",
+    "observed_two_firstcohorts_and_postbatch": "passed_scoped",
+    "12case_timing": "not_started_by_source_inference_no_reports",
+    "corrected_source_guard_and_freshdispatch": "pending",
+    "VI4and_main": "held_separate"
+  },
+  "next_owner": "/root/mark_release_readiness",
+  "next_gate": "Minimal versioned controller path successor, both retained completeguards and root independent source admission before any new prep/calls/timing."
+}

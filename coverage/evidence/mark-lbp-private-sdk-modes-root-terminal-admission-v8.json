@@ -1,0 +1,52 @@
+{
+  "status": "PASS_ROOT_PRIVATE_INSTALLED_MARK_LBP_NAMED_FAMILY_MODE_SCOPE",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "qualified16_native_bytes": "Unchanged by two test-only16a5sourceguard files; exact16a5 genuine4profiles separately admitted.",
+  "closeout": {
+    "path": "build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\full201-sdk-closeout-v8.json",
+    "sha256": "63ae042f50d48441f5577a1114f084369f7161e1cf9c76b4ccedd8ad75a6ac58"
+  },
+  "actual_two_process_results": [
+    {
+      "mode": "scalar",
+      "actual_exit": 0,
+      "raw_stdout": "build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\logs\\run-corrected-full201-MARK-SDK-scalar-v7.stdout",
+      "stderr_bytes": 0,
+      "legacy_calls": 402,
+      "wide_calls": 24,
+      "expected_refusals": 4,
+      "binary_recorded_sha256": "6902030c66fc2ad7d8973ffd1e9ae644ea8cd165672e31324155f346be3df9df"
+    },
+    {
+      "mode": "sanitize",
+      "actual_exit": 0,
+      "raw_stdout": "build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\logs\\run-corrected-full201-MARK-SDK-sanitize-v7.stdout",
+      "stderr_bytes": 0,
+      "legacy_calls": 402,
+      "wide_calls": 24,
+      "expected_refusals": 4,
+      "binary_recorded_sha256": "89669bc930372e0901dde2f9f2146a3ae120f1726aef49875b43da0443debe96"
+    }
+  ],
+  "verified_small_proofs": 12,
+  "MARK_value_scope": "All201savedrows workers1/4 in truecompiler-scalar and ASanUBSan, incl22subpixel44calls perprocess. Additional8widecases24calls plus4expectedfrontierrefusals each;852successfulnamedcalls/8refusals total. Exactsource/UNDEBUG/sourcefixture/map/ABI/runtime ownership independently admitted before calls.",
+  "MARK_FP_scope": {
+    "legacy201": "Saved output words/layout/input invariants across201rows atworkers1/4; no per-legacy-call FP/caller32 instrumentation claim.",
+    "wide24": "Executed source checks trusted incoming and expected target semantic CW/SW/MXCSR for each wide target, restores caller full32 exactly, verifies one target getter snapshot for defaultworkers0 and zero for explicitworkers4, checks owning/output/canaries, and restores process32 on exit. Four refusal paths also check caller32.",
+    "raw_scope": "Consumer emits only2PASS summary lines perprocess. Per-case hardware32 words, getter counts and IDs are not emitted; source assertions plus actual0/summary are the evidence. Prior independent wide-unit raw FP rows remain separately admitted and are not replayed or relabeled as MARK raw bytes.",
+    "default1": "Outer main checks startupdefault1; after legacy loop resets1, wide main checks1 again at entry. Each wide budget context verifies global getter unchanged after every call. Final reset to1 is source execution; no extra final post-reset getter observation is recorded.",
+    "source": "tests/cmake_consumer/mark_boundaries_consumer.cpp, mark_boundaries_consumer.hpp, mark_wide_outer_consumer.cpp and their two fixtures; current5-file closure/UNDEBUG/strictFP ownership admitted in root link24415."
+  },
+  "LBP_find_scope": "Root-admitted14unaffectedcommands with5new owningfirstcaseFPsavedwitnesses,2invariantconsumers,2wideunits plus priornormal1 reuse; original94case perprofile saved Pythonmode evidence remains separately scoped. No wholeSDK/allAPI/original-public/performance claim.",
+  "diagnostics": "Scalar and SAN eachactual0, complete2PASSsource-summarylines retained, stderr0; no ASanUBSan diagnostic. No perlegacycall hardware32 instrumentation or rawpercaseFPwords claimed.",
+  "gates": {
+    "private_named_family_modes_ownership_savedvalues_workers": "passed_scoped",
+    "wide_FP_caller32_and_getter_compiledassertions": "passed_scoped",
+    "genuine_installed4profile_release": "passed_separate16a5receipt",
+    "MARK8_LBP4_original_performance": "pending_sourcecontroller_then_actualcohorts_timing",
+    "main_delivery": "pending_VI4and_finalshippinggates"
+  },
+  "waste_review": "Missed legacySpline dependency caught beforeruntime, currentstrictSpline built oncepermode and relinkedexistingobjects once; full201processes eachonce. Metadata setup errors retained/narrowcorrected, no oldscientific/performance replay. Reused14unaffected/normal1/source/object/helper/runtime evidence; no additionalchange required.",
+  "next_owner": "/root",
+  "next_gate": "Admit versioned actual16a5 MARK12controller and bothPythoncompleteguards, publishprivate source/actualproducerbinding/freshUTC/cohortthenmeasurementGO. VI4cause/host gate remains separate; main271."
+}

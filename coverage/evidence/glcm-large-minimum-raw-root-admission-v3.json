@@ -1,0 +1,46 @@
+{
+  "schema": "glcm-large-minimum-raw-root-admission-v3",
+  "passed": true,
+  "status": "PASS_EIGHT_MINIMUM_REFERENCE_ROWS_ONLY_NO_NATIVE_PARITY",
+  "source": "0b6faf4f95d1a1c58e93cb39b48e1bb7b1079560",
+  "profile": "minimum",
+  "public_topcalls": 8,
+  "completed_rows": 8,
+  "binding_sha256": "20d356b8e45d67767f1818fd8dba3bc168fa9d983aadcea25961c4b3b83b760c",
+  "execution": {
+    "exit_code": 0,
+    "seconds": 7.326704400125891
+  },
+  "proofs": [
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/minimum-v1/terminal.json",
+      "sha256": "618d340e99b2419c13f9eb9163c37a1dca4e16e4da416f731a27f214a704d7ee",
+      "bytes": 12947
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/minimum-v1/observations.json",
+      "sha256": "3daf5687f7dbe396451141cd8577b223bdd52eab32d9405b1db9249b2c25cb69",
+      "bytes": 104997
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/minimum-v1/journal.jsonl",
+      "sha256": "bcc8b9f3b017040b4ff3cc797987f39d7f523539f855a54e8ff8b3ebad89b35e",
+      "bytes": 61826
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v3/minimum-v1/precall-freeze.json",
+      "sha256": "3625610ed7d63402b334583a0882a143756c926127ffc3a3d823b338379fd8ae",
+      "bytes": 8554
+    }
+  ],
+  "typed_payloads": 72,
+  "decoded_logical_bytes": 2130576,
+  "root_review": "Actual8returnedrows/8sourcecalls,16alternatingjournal events,caseIDs/order/pointers/inputbefore-after/NPstate/handler/noerrors-warning andcallerprocess32 pass. Every72typedpayload base64/zlib/hash/shape\u00d7itemsize decodedonce andmatches. Currentbinding/source/helper/runtime andprecallfreeze match; no repeatcapture. Newreferenceonly, no CPP/genuine/speedcredit.",
+  "original_remaining": {
+    "minimum": 0,
+    "modern": 8,
+    "old188": 0
+  },
+  "next_owner_trigger": "Root separatelybinds modern8GO matchingmodern4prefixruntime, existingminimumadmission; modern8rawreview before nativeaccuracy.",
+  "waste_review": "Once8neworiginals only, source69/prefix64/readiness reused. No old188capture/native/helperbuild/sampler/measurement replay. Failedcount9scope retained."
+}

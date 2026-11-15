@@ -1,0 +1,34 @@
+{
+  "status": "PASS_ACTUAL_TERMINAL_METADATA_AUTHORIZE_ONE_RETENTION_ONLY",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "run": 43706703018,
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-terminal-preparation-handoff-v1.json",
+    "sha256": "377fa7f13dc4e16a2741d7fea7b5dfdc9ba93db862550a2c4d8c468ddd926f05"
+  },
+  "root_actual_review": "Authenticated all32 metadata/proof hashes and distinguished initial in-progress snapshots from exact terminal API records. Directly inspected final run/workflow/attempt/head,4actualsuccess jobs and7API artifacts/source/IDs/digests/expiry/6663954885B. Exact3reader hashes/37current source pins match. Nested binding bytes match intendedSHA; no core/helper/seal or product accepted yet.",
+  "binding": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\freeze-contract-run43706703018-root-v1.json",
+    "sha256": "654aeee16e219becf9ba8a0f6dbcccc98d22c951a0a0d6ba595ef706568dd6c3"
+  },
+  "command": [
+    "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\retain_failed_campaign_v1.py",
+    "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\freeze-contract-run43706703018-root-v1.json"
+  ],
+  "capacity": {
+    "observed_D_free_bytes": 259356221440,
+    "required_free_bytes": 120528561249,
+    "estimated_peak_bytes": 34629215329,
+    "concurrent_allocation_bytes": 64424509440
+  },
+  "archive_policy": "TransientZIP only. After needed products, raw diagnostics, logs/XML and concise results are extracted and readers have stopped, root removes transports; never recreate missing archives for bookkeeping or retry policy-blocked cleanup.",
+  "gates": {
+    "terminal_metadata": "passed",
+    "seven_download_digest_receipts": "authorized_pending",
+    "four_profile_seals_XML_SDK": "pending_root_GO_after_retention",
+    "three_stagers": "pending",
+    "whole_product": "pending"
+  },
+  "next_owner_trigger": "A execute exact once-only retainer, max2writers. Keep per-artifact outcome/partial failures. Stop after actual7retention receipts and process exit; root inspects before any profile/stager reader. No automatic restart or partialoverwrite, no science/import/build/timing. Required products/raw evidence to separate retained root after reader/extraction GO; oldblockedtargets untouched."
+}

@@ -1,0 +1,45 @@
+{
+  "status": "PASS_ROOT_THREE_ACTUAL_PREFIX_COMPILE_COMMANDS_AND_SIX_METADATA",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "receipt": {
+    "path": "build\\mark-lbp9e15-sdk-modes-v1\\spline-correction-v4\\stage1-metadata-v5\\receipt.json",
+    "sha256": "4df65e4e9638fcf468c68e5b6c1db46182acc7302b2fa0e66195d632f7d9b40d"
+  },
+  "actual_command_exits": [
+    0,
+    0,
+    0
+  ],
+  "actual_metadata_exits": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "new_spline_objects": [
+    {
+      "mode": "scalar",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/scalar/objects/spline.cpp.o",
+      "bytes": 20296,
+      "recorded_sha256": "4d5f04bd2b55179cf6956a46db80f4366ce69949edecb6e4f02e49234c228187",
+      "exact_flags_and6project_dependencies": true
+    },
+    {
+      "mode": "sanitize",
+      "path": "/mnt/d/Scratch/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/sanitize/objects/spline.cpp.o",
+      "bytes": 673688,
+      "recorded_sha256": "3cb1739fcb03b2f0b39c5295cd7ef6b8b9299892400c48af129c69b68be9d4bf",
+      "exact_flags_and6project_dependencies": true
+    }
+  ],
+  "copied_prefixes": "Eight config and20currentheader actual pins match. Original protected archives exact stats unchanged. New copied archives have new identity; truncated copy timestamps are recorded, not required to equal source. Copycommand actual0 provenance; no archive/core hash replay.",
+  "retained_failure": "v4 metadata reader stopped before metadata commands on unsupported copied-mtime equality assertion. v5 narrow reader correction only; no source/object rebuild, no ar/relink/runtime invalidated.",
+  "gates": {
+    "actual_fresh_prefix_and_two_objects": "passed",
+    "corrected_ar_and_inventory": "pending",
+    "actual_relink_map_and_full201SDK": "pending"
+  },
+  "waste_review": "Reuse6existing modeobjects and2clientobjects. Corrected copied-file-identity assertion without product edits/rebuild/rerun; original failure retained."
+}

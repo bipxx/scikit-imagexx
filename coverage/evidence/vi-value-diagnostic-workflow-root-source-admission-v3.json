@@ -1,0 +1,42 @@
+{
+  "status": "PASS_ROOT_TWO_FILE_WORKFLOW_SOURCE_AND_INDEPENDENT_REVIEW",
+  "source": "fc9449afc0f7212d4fbbf94b6f17bb2053e8bd5e",
+  "parent": "0a9e6102dc051c119f77c259a9d988733f23180d",
+  "source_handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-value-diagnostic-workflow-v2\\handoff-v1.json",
+    "sha256": "b68f7c8221851fb15a7030384ba2fd44e9740685b043417ef673462cab8904bc"
+  },
+  "independent_review": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-value-diagnostic-workflow-v2\\independent-review-v1.json",
+    "sha256": "3955876ae5576a6013cb8b8791b532200680675adaf200aace88066d3f830eed"
+  },
+  "actual_control_counts": {
+    "Windows3.11.11": 14,
+    "Windows3.13.14": 14
+  },
+  "source_files": {
+    ".github/workflows/vi-value-diagnostic.yml": "fb1a229900a19e3f1b18791dfa00a88fb4dcc81d874fa1c94a209b9825a3522c",
+    "tests/test_vi_value_diagnostic_workflow.py": "74d91796d9616d96d70105e7a1df530d802ab02d29c3c5f5a8775f2f7d12cfbf"
+  },
+  "protected_wrapper_context_test": {
+    "tools/vi_cohort_value_diagnostic.py": "ff7a2a9f99aa87c639e61a6be0558ecfc80668d819b0a2b2d6e564794eec6f3a",
+    "coverage/contracts/vi-cohort-value-diagnostic-v2.json": "dfb02dd1825476bf2c1c90fa6e55ded1585771f448e5e4cab2cc0426bf550fc8",
+    "tests/test_vi_cohort_value_diagnostic.py": "63625121db871c04571eb4308d64b15e5c6ac8da2ddde510360cb9e7ea378e51"
+  },
+  "root_review": "Actual clean source and exact2file diff inspected, frozen14smallproofs verified, actual14terminal/XML each checked. ExactCPU/features gate precedes product transport/helper/targets; four conditionalsteps and second host assertion. Existing producer/runtime/source/helper identity setup preserved. After completed child the existing verifier runs once, primary diagnostic failure preserved; verifier failure cannot mask success.",
+  "scope": "Source admission permits privatebranch publication. Actual diagnostic dispatch requires fresh successful producer/artifact/remote/workflow/UTC bindings and oneconditionalpair GO. Ineligiblehost0targets and no automatic search/retry; no timing.",
+  "remaining_gates": [
+    "Actual remote source/workflow and successful DDA producer artifact/runtime bindings",
+    "Fresh rootconditionalonepair authority/clock; actualhosteligibility before targets",
+    "Actual rawvalues/counts/FP/identity/postbatch admission; earlier failure cause remains unresolved even if a new pass"
+  ],
+  "limitations": "Actual pytest command/XML/terminal/IDs/plugins are retained. Stdout was tool output only; no raw stdout log is claimed and passing tests were not repeated for bookkeeping. Observed prior root tool exit0: existing WSL /usr/bin/python3 PyYAML parsed manual-only/read permissions/four host conditionals/no matrix/always upload. No raw parser stdout file was captured; not represented as one.",
+  "waste_review": "Reused source/tests/old probe/setup/verifier; no repeated passing check or scientific experiment. Reviewed, no further change.",
+  "actual_dispatch_authority": 0,
+  "predecessor": {
+    "path": "coverage\\evidence\\vi-value-diagnostic-workflow-root-source-admission-v2.json",
+    "sha256": "9950aef1f13218038d85f37b00914bb71e33ee3ff7723de990e6f8b0522bf6ef",
+    "metadata_correction": "Root prose said16smallproofs; actual verified handoff has14. Correct count only, no source/runtime/result change or rerun."
+  },
+  "proof_count": 14
+}

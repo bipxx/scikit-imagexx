@@ -1,0 +1,102 @@
+{
+  "status": "PASS_COMPLETE169_BOTH_RETAINED_PYTHONS",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "workflow_sha256": "35bd082ccb33365723c855efe025e2124035a83d1e769fd9054d9251dfaddc18",
+  "source_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\coverage\\evidence\\mark-lbp-portable-sourceguard-root-admission-v1.json",
+    "sha256": "85e92f81efb399ea5b8441df93991bcf07e51be26baa2261ca77b7a6cefa96d0"
+  },
+  "authority": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\execution-authority-root-v1.json",
+    "sha256": "41da1ad83f9a0a6444d0bf16181b197d32c4c894d8e19eb89977059002ff584d"
+  },
+  "actual": [
+    {
+      "profile": "windows311",
+      "exit_code": 0,
+      "ordinary_tests": 4134,
+      "subtests": 8,
+      "suite_checks": 4142,
+      "seconds": 405.68700000003446,
+      "XML": {
+        "tests": 4142,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "normal_conftest_plugins": true,
+      "original_native_timing": 0,
+      "files": [
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows311-v1\\command.json",
+          "sha256": "e6743ca55327a1131bb19f26c8ba1958d0f8b46681411b022f72049d44714516"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows311-v1\\terminal.json",
+          "sha256": "c87e575dddb0daf412e4ead217c69cb46abd3f95b6d8390f444ed1fbaf6cf6e0"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows311-v1\\testIDs.json",
+          "sha256": "0e269d54436f7790cfb495efc78df00310799c37390a9893a427997d56919e92"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows311-v1\\plugins.json",
+          "sha256": "9f23f08dc18f0239ae1122587870c863ed75621a2205a0d4dabc13e9a3d445dd"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows311-v1\\results.xml",
+          "sha256": "6fc262ba122ac0cf701dfe7396b03389496e116fe88b0fe30f092113f956af3d"
+        }
+      ]
+    },
+    {
+      "profile": "windows313",
+      "exit_code": 0,
+      "ordinary_tests": 4134,
+      "subtests": 8,
+      "suite_checks": 4142,
+      "seconds": 385.2136584999971,
+      "XML": {
+        "tests": 4142,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "normal_conftest_plugins": true,
+      "original_native_timing": 0,
+      "files": [
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows313-v1\\command.json",
+          "sha256": "bd808050b4a5d9f8c274c51be9b0d3b035bf4ce5e2b2f47538d455c74fa61708"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows313-v1\\terminal.json",
+          "sha256": "18b0b8f80ee66f4ecd4cd2b065a0ef00d6aeb593b26d483d25e2fb224a02f87f"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows313-v1\\testIDs.json",
+          "sha256": "0e269d54436f7790cfb495efc78df00310799c37390a9893a427997d56919e92"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows313-v1\\plugins.json",
+          "sha256": "56c95d654a3fcc7eb2f9138bccee51fc60b775f52fc71fa35814bd293fbec42f"
+        },
+        {
+          "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-complete-source-v1\\sourcebarrier-windows313-v1\\results.xml",
+          "sha256": "b6bd7a45e0fdf4cf582da042828be59d8da5da2893954b29fe2a59d293b5eade"
+        }
+      ]
+    }
+  ],
+  "identical4134_ids": true,
+  "root_actual_review": "Both exec handles21694/26891 completed0. Parsed actual complete169 argv, normalconftest/plugins, XML/IDs/logs/terminal/currentcleanHEAD. Each4134ordinary+8subtests=4142suitechecks, no errors/failures/skips or scientific imports/attempts. No partial union or failfast substituted.",
+  "changed_input": "Portable two-file sourceguard successor16a5, after freshhost43702559008failed9e15; predecessor failures remainfailed.",
+  "gates": {
+    "complete169": "passed",
+    "hosted_preparation": "eligible_exact16a5_after_actual_remote/workflow/plan/capacity_gates",
+    "genuine_product_SDK_and_readers": "pending_actual_campaign",
+    "performance_and_main": "pending"
+  },
+  "cleanup": "Prior m9e15 fixtures policyblocked. Newm16a5 terminalfixtures require reader/dependency/path closure before a first cleanup attempt; never reuse/retry oldblocked targets.",
+  "next_owner_trigger": "Root publish exactprivate16a5ref/actualfourprofile sourceplans and dispatch once promptly; no benchmark/original capture granted."
+}

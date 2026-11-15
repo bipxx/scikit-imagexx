@@ -1,0 +1,160 @@
+{
+  "status": "PASS_BOUNDED_LBP_NUMERICAL_MODE_LINKS",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "build_closeout": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\build-closeout-v1.json",
+    "sha256": "7c58fbfbb4b22759e7b459e6cf8603041f48e88680f38510edf95da929b2e952"
+  },
+  "actual_root_review": "Inspected all6 actual terminal exit0 and zero stderr, authenticated91 new metadata/log/map proofs; all32 actual metadata commands exit0. Four raw maps exclude archived draw_multiblock_lbp/crop/convert and assign all5 relevant symbols to the explicit current matched-mode objects. Read ELF/nm/ABI/dependency records and actual runtime realpath/stat matches. Reused new core hashes from compile/link terminals, no retained core/archive digest replay.",
+  "leaves": [
+    {
+      "mode": "scalar",
+      "path": "/mnt/d/Scratch/lbp-entry-fp-private-modes-9e15-v1/scalar/draw_multiblock_lbp.cpp.o",
+      "compiler": "\nString dump of section '.comment':\n  [     1]  GCC: (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n\n",
+      "owning_definitions": [
+        "0000000000000120 t skimagexx::(anonymous namespace)::byte_index(unsigned long, std::vector<long, std::allocator<long> > const&, skimagexx::CropView const&) [clone .isra.0]",
+        "0000000000000173 t skimagexx::(anonymous namespace)::byte_index(unsigned long, std::vector<long, std::allocator<long> > const&, skimagexx::CropView const&) [clone .isra.0] [clone .cold]",
+        "0000000000000400 t skimagexx::(anonymous namespace)::write_word(skimagexx::MultiblockLbpFloatView const&, long, double)",
+        "000000000000030a t skimagexx::(anonymous namespace)::write_word(skimagexx::MultiblockLbpFloatView const&, long, double) [clone .cold]",
+        "00000000000001d0 t skimagexx::(anonymous namespace)::color_index(unsigned long, std::vector<long, std::allocator<long> > const&, skimagexx::MultiblockLbpColor const&) [clone .isra.0]",
+        "0000000000000205 t skimagexx::(anonymous namespace)::color_index(unsigned long, std::vector<long, std::allocator<long> > const&, skimagexx::MultiblockLbpColor const&) [clone .isra.0] [clone .cold]",
+        "00000000000000f0 t skimagexx::(anonymous namespace)::validate_color(skimagexx::MultiblockLbpColor const&)",
+        "000000000000012a t skimagexx::(anonymous namespace)::validate_color(skimagexx::MultiblockLbpColor const&) [clone .cold]",
+        "0000000000000030 t skimagexx::(anonymous namespace)::add(long, long)",
+        "000000000000004c t skimagexx::(anonymous namespace)::add(long, long) [clone .cold]",
+        "00000000000012e0 t std::vector<signed char, std::allocator<signed char> > skimagexx::(anonymous namespace)::pack<signed char>(skimagexx::MultiblockLbpInput const&)",
+        "00000000000006ce t std::vector<signed char, std::allocator<signed char> > skimagexx::(anonymous namespace)::pack<signed char>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "0000000000000f30 t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::pack<double>(skimagexx::MultiblockLbpInput const&)",
+        "00000000000005b3 t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::pack<double>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "0000000000002460 t std::vector<float, std::allocator<float> > skimagexx::(anonymous namespace)::pack<float>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000000c5b t std::vector<float, std::allocator<float> > skimagexx::(anonymous namespace)::pack<float>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "0000000000001640 t std::vector<unsigned char, std::allocator<unsigned char> > skimagexx::(anonymous namespace)::pack<unsigned char>(skimagexx::MultiblockLbpInput const&)",
+        "00000000000007ec t std::vector<unsigned char, std::allocator<unsigned char> > skimagexx::(anonymous namespace)::pack<unsigned char>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "00000000000027f0 t std::vector<int, std::allocator<int> > skimagexx::(anonymous namespace)::pack<int>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000000d76 t std::vector<int, std::allocator<int> > skimagexx::(anonymous namespace)::pack<int>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "00000000000019a0 t std::vector<unsigned int, std::allocator<unsigned int> > skimagexx::(anonymous namespace)::pack<unsigned int>(skimagexx::MultiblockLbpInput const&)",
+        "000000000000090a t std::vector<unsigned int, std::allocator<unsigned int> > skimagexx::(anonymous namespace)::pack<unsigned int>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "0000000000000b80 t std::vector<long, std::allocator<long> > skimagexx::(anonymous namespace)::pack<long>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000000498 t std::vector<long, std::allocator<long> > skimagexx::(anonymous namespace)::pack<long>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "0000000000001d30 t std::vector<unsigned long, std::allocator<unsigned long> > skimagexx::(anonymous namespace)::pack<unsigned long>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000000a25 t std::vector<unsigned long, std::allocator<unsigned long> > skimagexx::(anonymous namespace)::pack<unsigned long>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "0000000000000800 t std::vector<short, std::allocator<short> > skimagexx::(anonymous namespace)::pack<short>(skimagexx::MultiblockLbpInput const&)",
+        "000000000000037d t std::vector<short, std::allocator<short> > skimagexx::(anonymous namespace)::pack<short>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "00000000000020e0 t std::vector<unsigned short, std::allocator<unsigned short> > skimagexx::(anonymous namespace)::pack<unsigned short>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000000b40 t std::vector<unsigned short, std::allocator<unsigned short> > skimagexx::(anonymous namespace)::pack<unsigned short>(skimagexx::MultiblockLbpInput const&) [clone .cold]",
+        "0000000000000080 t skimagexx::(anonymous namespace)::count(std::vector<long, std::allocator<long> > const&)",
+        "0000000000000098 t skimagexx::(anonymous namespace)::count(std::vector<long, std::allocator<long> > const&) [clone .cold]",
+        "0000000000000000 t skimagexx::(anonymous namespace)::offset(long, int)",
+        "0000000000000000 t skimagexx::(anonymous namespace)::offset(long, int) [clone .cold]",
+        "0000000000000290 t skimagexx::(anonymous namespace)::read_word(skimagexx::MultiblockLbpFloatView const&, long)",
+        "0000000000000297 t skimagexx::(anonymous namespace)::read_word(skimagexx::MultiblockLbpFloatView const&, long) [clone .cold]",
+        "0000000000000000 W skimagexx::MultiblockLbpImage::~MultiblockLbpImage()",
+        "0000000000000000 W skimagexx::MultiblockLbpImage::~MultiblockLbpImage()",
+        "0000000000000000 n skimagexx::MultiblockLbpImage::~MultiblockLbpImage()",
+        "0000000000002b80 T skimagexx::draw_multiblock_lbp(skimagexx::MultiblockLbpInput const&, skimagexx::MultiblockLbpParameters const&)",
+        "0000000000000e91 t skimagexx::draw_multiblock_lbp(skimagexx::MultiblockLbpInput const&, skimagexx::MultiblockLbpParameters const&) [clone .cold]",
+        "0000000000000770 T skimagexx::multiblock_lbp_assign(skimagexx::MultiblockLbpFloatView const&, skimagexx::MultiblockLbpFloatView const&)",
+        "00000000000005b0 T skimagexx::multiblock_lbp_binary(skimagexx::MultiblockLbpFloatView const&, skimagexx::MultiblockLbpFloatView const&, skimagexx::MultiblockLbpFloatView const&, bool)",
+        "0000000000000000 W void std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::_M_realloc_insert<skimagexx::CropSlice>(__gnu_cxx::__normal_iterator<skimagexx::CropSlice*, std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> > >, skimagexx::CropSlice&&)",
+        "0000000000000000 W std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::~vector()",
+        "0000000000000000 W std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::~vector()",
+        "0000000000000000 n std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::~vector()"
+      ],
+      "project_undefined": [
+        "U skimagexx::convert_into(void const*, void*, unsigned long, skimagexx::PixelType, skimagexx::PixelType)",
+        "U skimagexx::crop_copy_into(skimagexx::CropView const&, std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> > const&, void*, std::vector<long, std::allocator<long> > const&)",
+        "U skimagexx::get_num_threads()"
+      ],
+      "ASan_references": false,
+      "UBSan_references": false,
+      "scope": "Compiler-mode operation leaf only; no numerical execution."
+    },
+    {
+      "mode": "sanitize",
+      "path": "/mnt/d/Scratch/lbp-entry-fp-private-modes-9e15-v1/sanitize/draw_multiblock_lbp.cpp.o",
+      "compiler": "\nString dump of section '.comment':\n  [     1]  GCC: (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n\n",
+      "owning_definitions": [
+        "0000000000001d0d t skimagexx::(anonymous namespace)::byte_index(unsigned long, std::vector<long, std::allocator<long> > const&, skimagexx::CropView const&)",
+        "0000000000010e02 t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<signed char>(skimagexx::MultiblockLbpInput const&)",
+        "000000000001060e t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<unsigned char>(skimagexx::MultiblockLbpInput const&)",
+        "000000000001630a t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<int>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000014574 t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<unsigned int>(skimagexx::MultiblockLbpInput const&)",
+        "000000000000d504 t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<long>(skimagexx::MultiblockLbpInput const&)",
+        "00000000000180a0 t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<unsigned long>(skimagexx::MultiblockLbpInput const&)",
+        "00000000000127e6 t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<short>(skimagexx::MultiblockLbpInput const&)",
+        "00000000000090ac t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::normalized<unsigned short>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000003267 t skimagexx::(anonymous namespace)::write_word(skimagexx::MultiblockLbpFloatView const&, long, double)",
+        "00000000000012fc t skimagexx::(anonymous namespace)::color_index(unsigned long, std::vector<long, std::allocator<long> > const&, skimagexx::MultiblockLbpColor const&)",
+        "00000000000010bc t skimagexx::(anonymous namespace)::validate_color(skimagexx::MultiblockLbpColor const&)",
+        "000000000000009a t skimagexx::(anonymous namespace)::add(long, long)",
+        "000000000000086d t skimagexx::(anonymous namespace)::clip(long, long)",
+        "000000000000bc6e t std::vector<double, std::allocator<double> > skimagexx::(anonymous namespace)::pack<double>(skimagexx::MultiblockLbpInput const&)",
+        "00000000000098d0 t std::vector<float, std::allocator<float> > skimagexx::(anonymous namespace)::pack<float>(skimagexx::MultiblockLbpInput const&)",
+        "000000000000f299 t std::vector<unsigned char, std::allocator<unsigned char> > skimagexx::(anonymous namespace)::pack<unsigned char>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000006d1f t std::vector<unsigned short, std::allocator<unsigned short> > skimagexx::(anonymous namespace)::pack<unsigned short>(skimagexx::MultiblockLbpInput const&)",
+        "0000000000000a6c t skimagexx::(anonymous namespace)::count(std::vector<long, std::allocator<long> > const&)",
+        "000000000000047e t skimagexx::(anonymous namespace)::sum64(double const*, double const*, double*, unsigned long, bool)",
+        "0000000000000000 t skimagexx::(anonymous namespace)::offset(long, int)",
+        "000000000000019e t skimagexx::(anonymous namespace)::scale64(double const*, double, double*, unsigned long, bool)",
+        "0000000000002c1a t skimagexx::(anonymous namespace)::read_word(skimagexx::MultiblockLbpFloatView const&, long)",
+        "0000000000000000 W skimagexx::MultiblockLbpImage::~MultiblockLbpImage()",
+        "0000000000000000 W skimagexx::MultiblockLbpImage::~MultiblockLbpImage()",
+        "0000000000000000 n skimagexx::MultiblockLbpImage::~MultiblockLbpImage()",
+        "0000000000019e35 T skimagexx::draw_multiblock_lbp(skimagexx::MultiblockLbpInput const&, skimagexx::MultiblockLbpParameters const&)",
+        "0000000000003736 T skimagexx::multiblock_lbp_assign(skimagexx::MultiblockLbpFloatView const&, skimagexx::MultiblockLbpFloatView const&)",
+        "0000000000003998 T skimagexx::multiblock_lbp_binary(skimagexx::MultiblockLbpFloatView const&, skimagexx::MultiblockLbpFloatView const&, skimagexx::MultiblockLbpFloatView const&, bool)",
+        "0000000000000000 W skimagexx::detail::encode_half(float)",
+        "0000000000000000 W skimagexx::CropSlice& std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::emplace_back<skimagexx::CropSlice>(skimagexx::CropSlice&&)",
+        "0000000000000000 W void std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::_M_realloc_insert<skimagexx::CropSlice>(__gnu_cxx::__normal_iterator<skimagexx::CropSlice*, std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> > >, skimagexx::CropSlice&&)",
+        "0000000000000000 W std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::~vector()",
+        "0000000000000000 W std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::~vector()",
+        "0000000000000000 n std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> >::~vector()"
+      ],
+      "project_undefined": [
+        "U skimagexx::convert_into(void const*, void*, unsigned long, skimagexx::PixelType, skimagexx::PixelType)",
+        "U skimagexx::crop_copy_into(skimagexx::CropView const&, std::vector<skimagexx::CropSlice, std::allocator<skimagexx::CropSlice> > const&, void*, std::vector<long, std::allocator<long> > const&)",
+        "U skimagexx::get_num_threads()"
+      ],
+      "ASan_references": true,
+      "UBSan_references": true,
+      "scope": "Compiler-mode operation leaf only; no numerical execution."
+    }
+  ],
+  "mode_scope": {
+    "numerical_source_closure": [
+      "src/draw_multiblock_lbp.cpp",
+      "src/crop.cpp",
+      "src/convert.cpp"
+    ],
+    "current_crop_sha256": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+    "all4maps_prove_explicit_current_mode_owners": true,
+    "archived_LBP_crop_convert_members_selected": false,
+    "selected_ordinary_project_archive_members": [
+      "image.cpp.o",
+      "simd_avx2.cpp.o"
+    ],
+    "compiler_support_archive_members": [
+      "libgcc.a(cpuinfo.o)"
+    ],
+    "ordinary_support": "Normal image.cpp.o is pulled for thread-control functions and brings unrelated normal numerical exports. Its unrelated gamma references pull normal simd_avx2.cpp.o. LBP leaf project undefined calls are only crop_copy_into, convert_into and get_num_threads. Converter additionally references has_avx2; its scalar/sanitizer object has no numerical SIMD call references. Retained binder/initializer remain ordinary strict-FP ABI glue. These normal members are present and are excluded from mode-instrumentation credit.",
+    "sanitizer": "New LBP object plus retained current crop/converter objects have ASan/UBSan instrumentation. Both sanitizer cores DT_NEEDED libasan.so.8/libubsan.so.1 resolve to the exact entry-pinned GCC13 runtimes by realpath/stat. Proposed LD_PRELOAD is /usr/lib/gcc/x86_64-linux-gnu/13/libasan.so. No loader import or sanitizer numerical execution has happened.",
+    "scalar": "New LBP leaf uses SKIMAGEXX_LBP_SCALAR and disables compiler vectorization/OpenMP; current crop/converter scalar compile records also disable vectorization/OpenMP. Scalar cores contain ordinary global/dispatch support and libgomp dependencies; not a whole scalar core.",
+    "whole_instrumented_core_credit": false,
+    "genuine_installed_SDK_credit": false,
+    "default1_builtin_FP_claim": "Pending actual separate-GO execution"
+  },
+  "scope_limits": [
+    "Ordinary image.cpp.o/simd_avx2.cpp.o and ABI glue present, outside numerical compiler-mode credit.",
+    "This is private LBP/crop/converter mode closure; no whole scalar/instrumented core or genuine SDK qualification.",
+    "Minimum firstcase is retained original observation; modern is candidate equivalence against it, not a modern original capture."
+  ],
+  "gates": {
+    "six_builds": "passed",
+    "four_maps_ELF_runtime_dependencies": "passed",
+    "firstcase_controls": "pending_four_calls",
+    "full188_nodes_each_cell": "pending_actual_firstcase_admission",
+    "SDK": "pending_separate_packet",
+    "four_profile_release": "pending_corrected_source_successor"
+  },
+  "next_owner_trigger": "C may execute only four separately pinned one-call firstcases below. Root actual firstcase admission required before any188 saved step."
+}

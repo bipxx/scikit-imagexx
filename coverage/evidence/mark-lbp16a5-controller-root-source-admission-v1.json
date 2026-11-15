@@ -1,0 +1,160 @@
+{
+  "status": "PASS_ROOT_SEVEN_FILE_ACTUAL16_MARK12_CONTROLLER_SOURCE_ADMISSION",
+  "source": "c25ee4592a8166e0fdb72475cab5a6e6aeec52c6",
+  "parent": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "branch": "performance/mark-lbp16a5-controller-v1",
+  "worktree": "D:/Scratch/scikit-imagexx-active-worktrees/mark-lbp16a5-controller-v1",
+  "handoff": {
+    "path": "build\\mark-lbp16a5-controller-v1\\handoff-v1.json",
+    "sha256": "8f21b23e9905f26e282dd820bc2ae30486e336b658ee6125687737edb6acacd5"
+  },
+  "source_checks": {
+    "clean_nativeGit": true,
+    "exact7files": [
+      ".github/workflows/mark-lbp-initial.yml",
+      "coverage/contracts/mark-lbp-measurement-v5.json",
+      "coverage/contracts/mark-lbp-measurement-v6.json",
+      "coverage/evidence/mark-lbp16a5-minimum-stager-admission-v1.json",
+      "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
+      "tests/test_mark_lbp_controller.py",
+      "tools/mark_lbp_first_cohort_probe.py"
+    ],
+    "worktree_Git_blob_pins": true,
+    "diff_check_exit": 0,
+    "prepared_source_files": 2988,
+    "actualsource_dependencies": 89,
+    "SDK_members": 108,
+    "production_fingerprint": {
+      "source_sha256": "2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    }
+  },
+  "full_byte_review": "Relative reviewed373, probe exactly3literal changes: v6manifest/MARKv7/LBPv7. Workflow exactly2contextselector replacements; frozenv5context exact. No execution/FP/C1/clock/helper/postbatch/sampler/report/loss body change.",
+  "actual_controls": {
+    "Windows3.11.11": 91,
+    "Windows3.13.14": 91,
+    "complete_normal_conftest_plugins": true,
+    "fail_fast": false,
+    "failures_errors_skips": 0,
+    "scientific_imports_calls": 0,
+    "proof_hashes": 36
+  },
+  "fixed_scope": {
+    "APIs": [
+      "segmentation.mark_boundaries",
+      "feature.draw_multiblock_lbp"
+    ],
+    "MARK8": [
+      "gray-u8-outer",
+      "RGB-f32-thick",
+      "gray-u16-F-inner",
+      "RGB-f64-reverse-outline",
+      "gray-f64-subpixel",
+      "RGB-f32-subpixel-outline",
+      "singleton-subpixel-version",
+      "half-promotion-provider"
+    ],
+    "LBP4": [
+      "gray-u8-C",
+      "RGB-f32-F",
+      "RGB-f64-reverse-wrap",
+      "RGB-f64-C-large"
+    ],
+    "cases": 12,
+    "canonical_raw_samples": 168,
+    "warmup_groups": 24,
+    "workers": 1,
+    "repeat_per_arm": 7,
+    "target_ms": 100,
+    "warmup_min_ms_per_arm": 250,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "first_cohorts": "Two distinct real CLI routes, at most one original and one native call each, strict output/input/software/FP/native ownership/default1 checks, mandatory stop before sampler body, C1 and once-postbatch installed identity before any separately authorized timing envelope.",
+    "provider_and_serial_scope": "Current v7 provider/ordered recurrence and live patch disclosure is retained through the unchanged route contexts and drivers; this source packet does not establish new provider, scalar/SIMD, platform or domain closure.",
+    "historical64": "Historical unchanged-API evidence retains its DDA source/runtime/host labels and all losses. No old result is rebound to16a5; no unchanged favorable or bookkeeping retiming and no80-case single-product/host table.",
+    "LBP_double_measurement": false,
+    "VI4": "held; diagnostic/cause/actual-host gates remain separately root-owned. No VI controller/source/workload changed."
+  },
+  "binding": {
+    "producer": {
+      "run": "43706703018",
+      "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "artifact": "14160352344",
+      "sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec"
+    },
+    "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+    "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd",
+    "first_cohort_root_admission": "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
+    "root_admission_sha256": "640a40fce735beea143a9f417d85d3f10cf68baa9a6c7fd6de69712d45853698",
+    "first_cohort_stager": "coverage/evidence/mark-lbp16a5-minimum-stager-admission-v1.json",
+    "stager_sha256": "6c97da8c848fb25e5d8d3a5306e39c98753485125513d8e4162f3ee667653fbd"
+  },
+  "retained_failures": {
+    "product_kind": {
+      "discovered": "Actual MARKv7 binding validator requires root admission product_kind=='GENUINE_INSTALLED_WHOLE_PRODUCT'; frozen v1 root receipt2fec used exact_source_281_partial_image_paths_candidate.",
+      "effect": "Caught before any tests/preparation/targets. Did not weaken adapter/probe or mutate v1.",
+      "correction": "Root authored immutable v2 metadata successor640a with compatible genuine installed product kind and separate281-partial/main271 scope. Scientific/products/runtime/results remain unchanged and v1 is preserved."
+    },
+    "source_controls": {
+      "receipt": "build/mark-lbp16a5-controller-v1/control-failure-v1.json",
+      "first_runs": [
+        {
+          "profile": "windows311-v1",
+          "exit": 1,
+          "tests": 91,
+          "failures": 5,
+          "seconds": 7.186999999976251
+        },
+        {
+          "profile": "windows313-v1",
+          "exit": 1,
+          "tests": 91,
+          "failures": 5,
+          "seconds": 7.233235199993942
+        }
+      ],
+      "cause": "Missed lower synthetic postbatch fixture literal still created v5 after actual probe selector correctly changed to v6. All five failures were FileNotFoundError before mocked children/verifier; no science attempted.",
+      "correction": "One fixture path now derives from active CONTRACT; update only its current test pin. No execution/assertion/production change. Reran the entire affected91 on both interpreters; all passed.",
+      "exact_failed_source": {
+        "test": "build/mark-lbp16a5-controller-v1/failed-source-v1/test_mark_lbp_controller.py.txt",
+        "test_sha256": "e7a57f88518eb2433685d782e1c0683e06d821f5bea7c67436eb5a88ff2cef9c",
+        "context": "build/mark-lbp16a5-controller-v1/failed-source-v1/mark-lbp-measurement-v6.json",
+        "context_sha256": "4f2f12bbc3aced1ebe4db31bee83f58c183b9f5752b4c5e70ca8c33385e824f9",
+        "authentication": "Both exact failed source snapshots match v1 actual command pins; source-only reverse reconstruction checked those hashes, without rerunning tests or targets."
+      }
+    },
+    "reader_and_newline": {
+      "failure": "A read-only PowerShell metadata query had a duplicate source key and was corrected. A too-broad LF check initially rejected copied immutable CRLF stager receipt.",
+      "correction": "Preserve frozen receipt raw bytes, verify6c97 and native Git -text; require LF only for authored source/context. No passing gate was inferred from either failed query, and no normalization or scientific replay occurred."
+    },
+    "cleanup": {
+      "receipt": "build/mark-lbp16a5-controller-v1/fixture-cleanup-v1.json",
+      "status": "PENDING_MANUAL_AUTOMATIC_APPROVAL_BLOCKED",
+      "exact_target": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-controller-v1\\fixture-tmp",
+      "logical_bytes": 199260562,
+      "files": 4102,
+      "directories": 1526,
+      "action": "One native PowerShell Remove-Item -LiteralPath <owned fixture-tmp> -Recurse -Force command was rejected at CreateProcess before invocation: blocked by policy.",
+      "attempts": 1,
+      "retries": 0,
+      "removed_paths": [],
+      "deletion_executed": false,
+      "physical_allocation_measured": false,
+      "attributed_free_space_change": null,
+      "owner": "/root/manual",
+      "trigger": "Manual action only; do not retry via another mechanism. All control jobs/readers are terminal; logs/XML/source/IDs/plugins/failure reproducers are outside this disposable root. Previously blocked paths and protected products/environments were untouched."
+    }
+  },
+  "gates": {
+    "source_bothPython_completeguards": "passed",
+    "remote_workflow_producer_binding": "pending",
+    "freshUTC_two_cohorts_separate_measurementenvelope": "pending",
+    "actual12original_public_results": "pending",
+    "VI4cause_and_mainshipping": "held_separate"
+  },
+  "actual_dispatch_authority": 0,
+  "waste_review": "Initial5syntheticfixture failures eachPython preserved; activeCONTRACTfixture/selfpin corrected then complete91each passed. Root proofreader first usedrepo instead ofhandoffbase for relativepaths, stoppedbeforemutation; corrected without source/science replay. Reused drivers/products/old64evidence, no build/numerical/oldperformance rerun.",
+  "cleanup": "Ccontroller fixture-tmp199260562B automaticpolicyblocked; manualonly/noalternative; rawlogs/XML/source outside it.",
+  "next_owner": "/root",
+  "next_gate": "Publishexactprivatec25source, verifyactualremote/workflow/producerartifact/no priorselectedrun, freshonewaytwo-cohort then12case measurementGO; noautomaticretry."
+}

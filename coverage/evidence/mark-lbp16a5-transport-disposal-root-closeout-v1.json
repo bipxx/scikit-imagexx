@@ -1,0 +1,35 @@
+{
+  "status": "PASS_ROOT_EXACT7_TRANSPORT_DISCARD_AND_RETENTION_CLOSEOUT",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "run": 43706703018,
+  "handoff": {
+    "path": "build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-exact7-disposal-handoff-v1.json",
+    "sha256": "cd8c322ccde7a474c4f971a137e60cc63305df823f917c9d7592076302102b84"
+  },
+  "actual_outcome": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp16a5-qualification-readers-v1\\run43706703018-exact7-disposal-actual-v2.json",
+    "sha256": "d2e8f45dbe424a483b329058ad45cb8d8ed9728662df4ec235dd416c343178ad"
+  },
+  "actual_exit_code": 0,
+  "proof_hashes": 11,
+  "removed_exact_paths": [
+    "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160523393.zip",
+    "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160352344.zip",
+    "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160264116.zip",
+    "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160200020.zip",
+    "D:\\Scratch\\skimage281-43706703018-transport-v1\\14160003660.zip",
+    "D:\\Scratch\\skimage281-43706703018-transport-v1\\14159969944.zip",
+    "D:\\Scratch\\skimage281-43706703018-transport-v1\\14159657099.zip"
+  ],
+  "removed_logical_bytes": 6663954885,
+  "volume_free": {
+    "before_bytes": 251055484928,
+    "after_bytes": 257719451648,
+    "observed_change_bytes": 6663966720,
+    "physical_allocation": "Not independently measured; volume observations may include concurrent work."
+  },
+  "archive_evidence": "Seven original downloaded ZIP byte streams are UNAVAILABLE after actual removal. Historical digest/transfer/seal/reader receipts retained; no claim of continuing local archiveverification, no bookkeeping recreation/redownload.",
+  "protected_retention": "Rootadmitted5407products/raw/source/helper682576295B and24preexisting dependencies/56raw+4metadata remain at frozenmaterialization map. All4SDK108staticlibraries retained. No olderblockedtarget/VI6419BZIP/parent/recursive deletion.",
+  "gate_status": "Storageboundedtaskcomplete, dispatchretired; API/performance/main remainseparate.",
+  "waste_review": "V1precheck Measure-Object dictionarysum0 stoppedbefore deletion; preserved, fixedexplicitInt64sumv2before oneactualattempt. All7removedonce, no retries/alternatemechanism. Reusedsame raw/dependency scopes and avoided661147257B duplicates; physicalallocation unknown."
+}

@@ -1,0 +1,173 @@
+{
+  "status": "PASS_SCOPED_SDK_SOURCE_AND_METADATA_ENTRY",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp9e15-sdk-modes-v1\\readiness-v2.json",
+    "sha256": "987b27f23961158b939c7008f8c98e1004843abe305a64553eec8a541a86b731"
+  },
+  "root_actual_review": "Inspected strict whole-owning LBP client/CMake/source/comparator, all38 frozen v2 proofs, v2 diff/four actual /mnt/c ar corrections, adjacent exact firstcase fixture and identical comparator assertion body. Actual10entrycommands exit0, nofailures; current20source raw/canonical hashes root verified. ExplicitGCC13.3/libstdc++/OpenMP/ASan/UBSan/helper/CMake/ar identities and C admitted leaf receipts inspected. No retained core/archive digest replay.",
+  "source_pins": [
+    {
+      "path": "include/skimagexx/components.hpp",
+      "raw_sha256": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+      "canonical_sha256": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7"
+    },
+    {
+      "path": "include/skimagexx/convert.hpp",
+      "raw_sha256": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+      "canonical_sha256": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016"
+    },
+    {
+      "path": "include/skimagexx/crop.hpp",
+      "raw_sha256": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+      "canonical_sha256": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988"
+    },
+    {
+      "path": "include/skimagexx/distance.hpp",
+      "raw_sha256": "3a2733715aa86a371831a494f9af94399442234b510bb41909c7d0c1b0c893f5",
+      "canonical_sha256": "3a2733715aa86a371831a494f9af94399442234b510bb41909c7d0c1b0c893f5"
+    },
+    {
+      "path": "include/skimagexx/draw_multiblock_lbp.hpp",
+      "raw_sha256": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e",
+      "canonical_sha256": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e"
+    },
+    {
+      "path": "include/skimagexx/find_boundaries.hpp",
+      "raw_sha256": "a7f991dd6916cb8166182e2cd5e2eb0ef6bf62ce98ced3b960ae75ec39a544eb",
+      "canonical_sha256": "a7f991dd6916cb8166182e2cd5e2eb0ef6bf62ce98ced3b960ae75ec39a544eb"
+    },
+    {
+      "path": "include/skimagexx/gaussian_nd.hpp",
+      "raw_sha256": "2340621b5fe5e4de0b534a5ec394fd6856b734ffe99bca217c0e1f8c1eb59396",
+      "canonical_sha256": "2340621b5fe5e4de0b534a5ec394fd6856b734ffe99bca217c0e1f8c1eb59396"
+    },
+    {
+      "path": "include/skimagexx/image.hpp",
+      "raw_sha256": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+      "canonical_sha256": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093"
+    },
+    {
+      "path": "include/skimagexx/local_threshold.hpp",
+      "raw_sha256": "019bbd11d69237e54f314bdc3c702f7ddc838970937bf09040f029a74d52e378",
+      "canonical_sha256": "019bbd11d69237e54f314bdc3c702f7ddc838970937bf09040f029a74d52e378"
+    },
+    {
+      "path": "include/skimagexx/mark_boundaries.hpp",
+      "raw_sha256": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71",
+      "canonical_sha256": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71"
+    },
+    {
+      "path": "src/convert.cpp",
+      "raw_sha256": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+      "canonical_sha256": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4"
+    },
+    {
+      "path": "src/crop.cpp",
+      "raw_sha256": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+      "canonical_sha256": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407"
+    },
+    {
+      "path": "src/draw_multiblock_lbp.cpp",
+      "raw_sha256": "612bb40cf65b6a66f71b2257468531774e8674c8c85a4b725081996e6275f13e",
+      "canonical_sha256": "612bb40cf65b6a66f71b2257468531774e8674c8c85a4b725081996e6275f13e"
+    },
+    {
+      "path": "src/execution.hpp",
+      "raw_sha256": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "canonical_sha256": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d"
+    },
+    {
+      "path": "src/find_boundaries.cpp",
+      "raw_sha256": "ac905f5c8679d2c2e9b9c24a1c732807c36ec4ca681c519c88bf1d03a468e0e4",
+      "canonical_sha256": "ac905f5c8679d2c2e9b9c24a1c732807c36ec4ca681c519c88bf1d03a468e0e4"
+    },
+    {
+      "path": "src/half.hpp",
+      "raw_sha256": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+      "canonical_sha256": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f"
+    },
+    {
+      "path": "src/image.cpp",
+      "raw_sha256": "17a224f0aa15be6591867d1a07b5b957ffdcec1983d072f19e48277eafec3452",
+      "canonical_sha256": "17a224f0aa15be6591867d1a07b5b957ffdcec1983d072f19e48277eafec3452"
+    },
+    {
+      "path": "src/mark_boundaries.cpp",
+      "raw_sha256": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb",
+      "canonical_sha256": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb"
+    },
+    {
+      "path": "src/simd.hpp",
+      "raw_sha256": "848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141",
+      "canonical_sha256": "848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141"
+    },
+    {
+      "path": "src/spline_detail.hpp",
+      "raw_sha256": "314d0c12e5b3b3fc3e45da4a5ea043293ef961a06a254af44f8e05c6feed67ce",
+      "canonical_sha256": "314d0c12e5b3b3fc3e45da4a5ea043293ef961a06a254af44f8e05c6feed67ce"
+    }
+  ],
+  "entry": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp9e15-sdk-modes-v1\\entry-v2\\receipt.json",
+    "sha256": "37232c94af428f16d101fceae5b61d50596091bebe1bfd4b3d5929e2a7740ca2"
+  },
+  "C_dependencies": {
+    "root_admission": {
+      "path": "coverage\\evidence\\lbp-entry-fp-private-modes-root-link-admission-v1.json",
+      "sha256": "57d877874061f0631b6f274ae05250c35188ef2abe95bcfd3dc225a114b07faf",
+      "status": "PASS_BOUNDED_LBP_NUMERICAL_MODE_LINKS"
+    },
+    "build_closeout": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\build-closeout-v1.json",
+      "sha256": "7c58fbfbb4b22759e7b459e6cf8603041f48e88680f38510edf95da929b2e952"
+    },
+    "leaves": [
+      {
+        "mode": "scalar",
+        "path": "D:/Scratch/lbp-entry-fp-private-modes-9e15-v1/scalar/draw_multiblock_lbp.cpp.o",
+        "bytes": 70032,
+        "recorded_sha256": "5d6bc06b67d605e5b03fcbb2382b9cf0a383ff8369ff965eea72c4d6e58be728"
+      },
+      {
+        "mode": "sanitize",
+        "path": "D:/Scratch/lbp-entry-fp-private-modes-9e15-v1/sanitize/draw_multiblock_lbp.cpp.o",
+        "bytes": 2903008,
+        "recorded_sha256": "725189bc56417087a8547c2a248e68063e5ebc3f29ea20251f61a30925e095e5"
+      }
+    ],
+    "reuse": "Actual root-admitted current leaves; no duplicate compile or binary rehash by this worker. Entry captured them before root admission; this later root receipt closes that external prerequisite.",
+    "limit": "C normal support image/simd paths do not supply a full mode claim. This SDK proposal still requires its own six-TU whole applicable closure."
+  },
+  "allowed_first_commands": [
+    "stage-scalar",
+    "stage-sanitize",
+    "compile-scalar-find_boundaries",
+    "compile-scalar-mark_boundaries",
+    "compile-scalar-image",
+    "compile-sanitize-find_boundaries",
+    "compile-sanitize-mark_boundaries",
+    "compile-sanitize-image",
+    "inventory-before-scalar",
+    "inventory-before-sanitize",
+    "configure-normal-new-FP-client",
+    "build-normal-new-FP-client"
+  ],
+  "scope": "Two-family6TU/current10header closure rebuilt/reused within genuine historical mode SDK bases; AVX2-off base is not alone true scalar, and unrelated historical members/headers remain outside currentSDK claim. Full genuinecurrent SDK/fourprofiles separate.",
+  "gates": {
+    "source_entry": "passed",
+    "first12_nonruntime": "authorized_not_executed",
+    "ar_assembly": "pending_root_actual_objects_and_unique_inventory",
+    "mode_target_config_build": "pending_root_assembly_header_inventory",
+    "runtime": "pending_root_actual_maps_ELF_identity_and_separate_GO",
+    "genuine_release": "pending_source_successor"
+  },
+  "capacity": {
+    "actual_D_free_bytes": 270078406656,
+    "SDK_peak_bytes": 3221225472,
+    "concurrent_root_source_peak_bytes": 15032385536,
+    "concurrent_C_bytes": 536870912,
+    "required_free_bytes": 40265318400
+  },
+  "next_owner_trigger": "B stage2prefixes+compile6TUs+inventory2+normalFPclientconfigure/build only. Inspect actual each exit; root must inspect objects and unique members before ar, and actual normal map/ELF before any runtime."
+}

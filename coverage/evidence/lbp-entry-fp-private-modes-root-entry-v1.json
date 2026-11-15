@@ -1,0 +1,78 @@
+{
+  "schema": "lbp-private-modes-root-entry-admission-v1",
+  "status": "PASS_ENTRY_SOURCE_DONORS_AND_EXACT_BUILD_ONLY",
+  "owner": "root",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\handoff-v1.json",
+    "sha256": "65be28e37100ff025dddb0e84d52762e4fccbda95de9c81224b878c91a93e25e",
+    "files_verified": 140
+  },
+  "proposal": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\execution-proposal-v1.json",
+    "sha256": "8ffc0aff856f4a59cc6724d6da48ece50b779c77782cc4b35793f7bde29e821b"
+  },
+  "actual_entry": {
+    "profiles": [
+      "minimum",
+      "modern"
+    ],
+    "commands": 30,
+    "all_exit0": true,
+    "failures": []
+  },
+  "root_inspection": "Inspected actual compiler/Git/ABI/environment/capacity/entry results, raw current source and donor header closure, retained compiler commands and GCC13.3 stamps; verified all140 frozen proof hashes. Read six exact argv and GO-only runner. No retained archive/core rehash.",
+  "scope": {
+    "current_source_tree": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-lbp-linux-group-fix-v1",
+    "numerical_TUs": [
+      "src/draw_multiblock_lbp.cpp",
+      "src/crop.cpp",
+      "src/convert.cpp"
+    ],
+    "current_crop": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+    "ABI_glue": "Exact current binder/header source, retained minimum/modern strict-FP ordinary objects; not instrumented.",
+    "archive": "Mixed normal-base support. New map must exclude archived LBP/crop/convert definitions and enumerate actual remaining normal members. Only unchanged thread/global/CPU-dispatch support may be accepted outside numerical instrumentation claim.",
+    "scalar": "LBP explicit SSE2 excluded by SKIMAGEXX_LBP_SCALAR; LBP/crop/converter disable compiler vectorization/OpenMP. Converter has no SKIMAGEXX_AVX2 definition or SIMD call references; ordinary runtime-disable is unset. Reused global thread control still accepts1/4 for the public tests; leaf phases retain their ordered serial semantics.",
+    "sanitizer": "Address/undefined checks on changed LBP/crop/converter numerical TUs. Reused ordinary ABI glue and mixed-base global/dispatch support are outside instrumentation claim. Leak detection disabled for the host CPython/NumPy process; no leak-clean claim.",
+    "genuine_installed_SDK_credit": false,
+    "whole_instrumented_core_credit": false
+  },
+  "allowed_commands": [
+    "compile-current-LBP-scalar",
+    "link-LBP-scalar-minimum",
+    "link-LBP-scalar-modern",
+    "compile-current-LBP-sanitize",
+    "link-LBP-sanitize-minimum",
+    "link-LBP-sanitize-modern"
+  ],
+  "allocation": {
+    "estimated_peak_bytes": 536870912,
+    "reserve_bytes": 21474836480,
+    "free_floor_bytes": 32212254720,
+    "observed_free_bytes": 274644418560,
+    "concurrent_allocation_bytes": 0,
+    "measured_retained_saved_cell_seconds": [
+      2.216111167,
+      2.273167183,
+      2.443080839,
+      2.55727562
+    ],
+    "estimated_build_link_seconds": "60 conservative, serialize commands; actual cost not yet observed",
+    "estimated_runtime_seconds": "At most60 conservative for4firstcases+4saved cells, sanitizer overhead unmeasured",
+    "fixture_root": "/mnt/d/Scratch/lbp-entry-fp-private-modes-9e15-v1/tmp",
+    "keep_logs_XML_raw_outside_fixture": true
+  },
+  "gates": {
+    "entry": "passed",
+    "two_compiles_four_links": "pending_actual_exit_receipts",
+    "maps_ELF_runtime_load": "pending_root_actual_products",
+    "firstcase_and_saved_numerical": "pending_separate_GO",
+    "installed_SDK": "pending_separate_packet",
+    "genuine_qualification": "failed43702559008_tooling_before_product_prep"
+  },
+  "waste_review": {
+    "reuse": "Retained ABI environments, matching donor numerical objects and saved observations; no duplicate normal work.",
+    "avoidable": "Root reader initially exceeded output budget and assumed a proof dictionary; corrected typed compact readers, no affected source or dispatch.",
+    "next_owner_trigger": "C executes only six compile/link commands, inspecting each actual exit before dependents; root inspects maps/ELF before any import."
+  }
+}

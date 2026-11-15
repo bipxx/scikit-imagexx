@@ -1,0 +1,55 @@
+{
+  "status": "PASS_ROOT_READONLY_153_RETIREMENT_READINESS_USER_EXCEPTION_PENDING_NO_REMOVAL",
+  "handoff": {
+    "path": "build\\cleanup\\storage-20261115\\clean-worktree-retirement-readiness-handoff-v1.json",
+    "sha256": "486689c36f0ca592e0f3d1e90b88582908a547fa12bdb06a105c0b81c88bd522"
+  },
+  "actual_receipt": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\cleanup\\storage-20261115\\clean-worktree-retirement-readiness-actual-v1.json",
+    "sha256": "7b30938a65e9add07ebe3f89a9a7b4386c360236c783b03661dcd10358a844d8"
+  },
+  "metadata_proof_hashes": 9,
+  "actual_controller_exit": 0,
+  "checked_rows": 154,
+  "eligible_read_only": 153,
+  "cached_logical_committed_source_bytes": 105084395313,
+  "protected": [
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-lbp-linux-group-fix-v1",
+      "head": "9e15e99158e4ce5200000b47cf674b6123203111",
+      "branch": "refs/heads/fix/mark-lbp-linux-groups-v1",
+      "cached_committed_source_bytes": 718555441,
+      "ancestor_of_main": false,
+      "source_clean": true,
+      "ignored_generated_caches": [
+        "benchmarks/__pycache__/",
+        "python/skimagexx/__pycache__/",
+        "tests/__pycache__/",
+        "tools/__pycache__/"
+      ],
+      "branch_refs_commits_retained": true,
+      "future_retirement_authorized": false,
+      "reasons": [
+        "Protected current source/runtime/dependency or blocked-target overlap"
+      ],
+      "protected_overlaps": [
+        "D:/Scratch/scikit-imagexx-active-worktrees/mark-lbp-linux-group-fix-v1"
+      ]
+    }
+  ],
+  "main_ancestry_target": "1cd85168416635de5784efd61f1bb890d4c94bda",
+  "all154_nonancestors": true,
+  "source_refs": "All154current registered identity/HEAD/branchref/sourceclean and nativeGitterminals inspected; merge-base exit1 correctly denotes nonancestry, othercommands0. Allbranches/commits stayretained. Sizescachedlogical, no physicalreclamation guarantee.",
+  "user_exception": "PENDING: asyncquestionrequested154preparedcopies but currentactive9e15source is excluded; only153eligible subset, no retirementauthorization or implicitapproval from elapsedtime.",
+  "future_retirement_authorized": false,
+  "gates": {
+    "exactreadonlypath_source_cache_ref_consumer_checks": "passed153",
+    "activeSDKsource": "protected",
+    "user_AGENTS_ancestry_exception": "pending",
+    "nativeGitworktree_remove_execution": "not_authorized",
+    "postremoval_refs_free_space_closeout": "pending_if_authorized"
+  },
+  "waste_review": "Reused retained exactplan/sizeprojection; max4nativeWindowsGitreadonly processes,8007named cachemetadatachecks, no broadtree scan/contenthash/science. Correct nextscope154to153, keep718555441B9e15source.",
+  "next_owner": "/root",
+  "next_gate": "Awaitactualuseranswer then checkchangedsource/liveconsumers/previousblockedexclusions and provideconcrete exact153nativeGitretirementGO; no retrypreviouspolicyblockedcleanup."
+}

@@ -1,0 +1,141 @@
+{
+  "status": "PASS_ONE_NORMAL_WHOLE_OWNING_FP_AND_MODE_ASSEMBLIES",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp9e15-sdk-modes-v1\\stage2-handoff-v2.json",
+    "sha256": "491235bbcac2fc02aebe6998f1083a0f71fab7f3f005adaa72e7997db5c82659"
+  },
+  "root_actual_review": "Authenticated31 raw/proofs, inspected actual6 ordered exits0, strict saved-only comparison, raw input/output hashes, full target/caller/process32, one getter snapshot and capturedworker1. Startupdefault1 asserted by executed client; reviewed source resets budget1 afterward (no additional post-reset getter observation claimed). Conditional2ar mutations/2unique inventories pass, current10headers each unchanged; originalbases statunchanged.",
+  "normal_one": {
+    "binary_recorded_sha256": "7767eee4407e5da501a845e2c0c0f3d0a431f26551547dbce7fbac85b4c38619",
+    "SDK_calls": 1,
+    "workers": 1,
+    "default1_checked": true,
+    "target_getter_snapshots": 1,
+    "captured_workers": 1,
+    "input_unchanged": true,
+    "owning": true,
+    "output_metadata_valid": true,
+    "target_before": {
+      "control": 895,
+      "status": 1058,
+      "mxcsr": 8098
+    },
+    "target_after": {
+      "control": 895,
+      "status": 1058,
+      "mxcsr": 8098
+    },
+    "before_after_raw32_equal": true,
+    "caller32_exact": true,
+    "process32_exact": true,
+    "payloads": [
+      {
+        "path": "results-v2/normal/workers-1/input.bin",
+        "bytes": 65792,
+        "sha256": "0a433a873f0216fe8cc1d2a101bb2ef96f11727aae654da4dcb9fcfbfe3ba9f1"
+      },
+      {
+        "path": "results-v2/normal/workers-1/output.bin",
+        "bytes": 1579008,
+        "sha256": "1a9438cbccd809fe7c2419d1aa106f813a4925fd97d7a48f60169b81b124daa5"
+      },
+      {
+        "path": "results-v2/normal/workers-1/result.json",
+        "bytes": 888,
+        "sha256": "20d4a038e2ca75d2a3ddcad299c4708c7d7478dcfa031830adca21c6f0ae3e87"
+      }
+    ],
+    "comparison": {
+      "status": "PASS_SAVED_MINIMUM_FIRSTCASE_WHOLE_OWNING_SDK_WITNESS",
+      "workers": 1,
+      "target_calls": 1,
+      "original_calls": 0,
+      "timing": 0,
+      "scope": "One existing minimum actual82ec witness; not94 SDK parity or a modern original observation."
+    },
+    "comparison_actual_exit": 0,
+    "raw_record": "results-v2/normal/workers-1/result.json",
+    "scope": "Existing actual82ec minimum firstcase, one complete owning SDK call. Not94 SDK parity, not a modern original observation, not genuine namespace/hot-swap or performance."
+  },
+  "assemblies": [
+    {
+      "mode": "scalar",
+      "ar_exit": 0,
+      "inventory_exit": 0,
+      "counts": {
+        "before": 52,
+        "after": 56
+      },
+      "unique": true,
+      "added": [
+        "crop.cpp.o",
+        "draw_multiblock_lbp.cpp.o",
+        "find_boundaries.cpp.o",
+        "mark_boundaries.cpp.o"
+      ],
+      "replaced": [
+        "image.cpp.o",
+        "convert.cpp.o"
+      ],
+      "current_headers_unchanged": 10,
+      "archive_stat": {
+        "path": "D:\\Scratch\\mark-lbp9e15-sdk-modes-v1\\scalar\\SDK\\lib\\libskimagexx.a",
+        "bytes": 4334000,
+        "mtime_ns": 1794741508049962300
+      },
+      "archive_rehashed": false
+    },
+    {
+      "mode": "sanitize",
+      "ar_exit": 0,
+      "inventory_exit": 0,
+      "counts": {
+        "before": 102,
+        "after": 106
+      },
+      "unique": true,
+      "added": [
+        "crop.cpp.o",
+        "draw_multiblock_lbp.cpp.o",
+        "find_boundaries.cpp.o",
+        "mark_boundaries.cpp.o"
+      ],
+      "replaced": [
+        "image.cpp.o",
+        "convert.cpp.o"
+      ],
+      "current_headers_unchanged": 10,
+      "archive_stat": {
+        "path": "D:\\Scratch\\mark-lbp9e15-sdk-modes-v1\\sanitize\\SDK\\lib\\libskimagexx.a",
+        "bytes": 187488580,
+        "mtime_ns": 1794741568494365400
+      },
+      "archive_rehashed": false
+    }
+  ],
+  "gates": {
+    "normal_firstcase_worker1": "passed_scoped",
+    "mode_assembly": "passed_scoped",
+    "mode_target_config_build": "authorized_four_commands_pending",
+    "mode_maps_ELF_and_remaining_calls": "pending_root_admission",
+    "genuine_wholeSDK": "pending_hosted"
+  },
+  "scope": {
+    "executed_command_count": 6,
+    "SDK_calls": 1,
+    "workers": 1,
+    "original_calls": 0,
+    "timed_batches": 0,
+    "new_builds": 0,
+    "mode_CMake_configures": 0,
+    "mode_client_builds": 0,
+    "additional_executable_calls": 0,
+    "comparators": 1,
+    "ar_mutations": 2,
+    "archive_inventories": 2,
+    "old_archive_or_core_hash_replays": 0,
+    "cleanup_attempts": 0
+  },
+  "next_owner_trigger": "B exactly two mode CMakeconfigure and two build commands, then actualresolvedtargets/headers/maps/ELF/runtime and source ownership admission before any further SDK call."
+}

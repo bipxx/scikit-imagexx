@@ -1,0 +1,138 @@
+{
+  "status": "PASS_PRIVATE_COMPILER_SCALAR_AND_ASAN_UBSAN_LBP_SAVED_DOMAIN",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "metadata_only_successor": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "saved_closeout": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\saved-closeout-v1.json",
+    "sha256": "2cd46c10ebc80f27a2d5067eb16e00b504db7ddfec8fd53eff219272ff510038"
+  },
+  "raw_manifest": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\saved-raw-records-manifest-v1.json",
+    "bytes": 573296,
+    "sha256": "da0a78ce205a4fc56209f89a3ab0b1df24573eb2412191e59e9c2e2681ed2c99"
+  },
+  "root_actual_review": "Verified all42 frozen small proofs and all752 retained raw-record sizes/SHA256, exact94xworkers1/4 grid in4cells. Read actual4 terminal/commands/XML188each exit0 with0errors/failures/skips, exactprocess32/default1/no originalimports. All752 raw records show strictfullportablematch/no formatter paths, checks true, one supplied call and full rawcaller32 restoration. Reused actual passing source-checked gold comparisons, did not rerun numerical tests or core/archive authentication.",
+  "actual": {
+    "suites": 4,
+    "XML_nodes": 752,
+    "raw_records": 752,
+    "public_calls": 752,
+    "strict_target_rows": 752,
+    "strict_full_portable_records": 752,
+    "only_after_observer_formatter_MXCSR_diagnostic_rows": 0,
+    "caller32_exact_rows": 752,
+    "outer_process32_restorations": 4,
+    "default1_cell_restorations": 4,
+    "original_calls": 0,
+    "new_original_observations": 0,
+    "firstcase_calls": 0,
+    "SDK_calls": 0,
+    "builds": 0,
+    "timing": 0,
+    "sanitizer_diagnostics": 0,
+    "benchmark_measurements": 0,
+    "observed_pytest_seconds": 11.575660499000037
+  },
+  "scope": {
+    "source_revision": "9e15e99158e4ce5200000b47cf674b6123203111",
+    "source_pins": {
+      "src/draw_multiblock_lbp.cpp": "612bb40cf65b6a66f71b2257468531774e8674c8c85a4b725081996e6275f13e",
+      "src/bind_draw_multiblock_lbp.cpp": "6d8458f793b98d8ad928121702d44507d5b85d7fe5d0bfcc530a25f3ff85cf2f",
+      "include/skimagexx/draw_multiblock_lbp.hpp": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e",
+      "python/skimagexx/_draw_multiblock_lbp.py": "296beb2c1c96aa3fd0112b205466eab945ebd6750db8fe99c74c2ef330acb0a1",
+      "tests/test_draw_multiblock_lbp_public.py": "93ca954966695fdcc15ddfa50caedd2285c0500840147765c04260eeffd63502",
+      "tests/draw_multiblock_lbp_observer_v2.py": "ab86cf3f61efee0039750616715e82d362ad4152b422513a8bf0569d30c30b2d",
+      "tests/draw_multiblock_lbp_saved_parity.py": "6d2d6867048eddc3f6ab29e7d536f08e7d3fce5e6da2e32b09db0ee725377f40",
+      "tests/fixtures/draw_multiblock_lbp_originals_v1.json": "2338d228661268df0ccd1f5005a05fb023915397229e505c65b1ac69e166020f",
+      "coverage/contracts/draw-multiblock-lbp-observer-phase-scope-v1.json": "4c21baa192a904a957435cb2178f361cffb36d74a84399912daa98e5ef5a26e7",
+      "benchmarks/draw_multiblock_lbp_execution.py": "1b8a643f32a3ca04311aca6e334781ad73e43ab2af54324620a581e6378b94d6",
+      "src/crop.cpp": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+      "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+      "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+      "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+      "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+      "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+      "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+      "tests/mark_boundaries_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+      "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+      "src/simd.hpp": "848be89cc6dcfd0965dc9f18f905404ac8671fa4e33fb51b50372f07fde22141",
+      "include/skimagexx/local_threshold.hpp": "019bbd11d69237e54f314bdc3c702f7ddc838970937bf09040f029a74d52e378",
+      "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+      "include/skimagexx/distance.hpp": "3a2733715aa86a371831a494f9af94399442234b510bb41909c7d0c1b0c893f5",
+      "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+      "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f"
+    },
+    "profiles": {
+      "minimum": {
+        "python": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "version": [
+          3,
+          11
+        ],
+        "numpy": "1.24.4"
+      },
+      "modern": {
+        "python": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "version": [
+          3,
+          13
+        ],
+        "numpy": "2.5.4"
+      }
+    },
+    "observer_and_comparator": "Exact admitted source bodies and per-profile original fixture records, normal conftest/plugins, strict portable comparison and target boundary software/FP checks. No expectation/source changes.",
+    "current_crop_sha256": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+    "compiler_scalar": "LBP scalar macro plus LBP/crop/converter no-vectorization/no-OpenMP compilation; ordinary support remains outside credit.",
+    "sanitizer": "Address/undefined checks on LBP/crop/converter numerical closure with pinned GCC13 ASan/UBSan and accepted preload/options, leak checks disabled. Ordinary binder/init/image/AVX2 code is outside sanitizer credit.",
+    "phase_boundary": "Only /after_observer_fenv/mxcsr is an admitted outside-API formatter diagnostic. Counted separately and never promoted to full records; actual diagnostic rows=0",
+    "whole_scalar_or_instrumented_core_credit": false,
+    "genuine_installed_SDK_or_release_credit": false,
+    "domain": "Exactly94retained recipes per profile, each at requested workers1/4. No full-domain or library-wide closure.",
+    "sourceguard_reuse": "Root may reuse these results for a metadata-only sourceguard successor only after confirming the unchanged numerical/frontend/header/helper/observer/fixture/runtime dependency projection and applicable literal pins/config. Separate sourceguard/qualification gates remain independent."
+  },
+  "limits": [
+    "Only3 current numerical TUs LBP/crop/converter receive current scalar/sanitizer mode credit; ABI/thread/CPU/normalAVX2support excluded.",
+    "Private ordinary frontend and saved94recipes perprofile; no genuine installed namespace/hot-swap, wholecurrentSDK, fullAPI/platform or speed credit.",
+    "16a5 differs only2test inputs from9e15, so unchanged numerical byte/runtime closure can reuse these private results; exactsource complete169/genuinequalification still required."
+  ],
+  "gates": {
+    "private_compiler_modes": "passed_scoped",
+    "existing_normal752": "reused_separate_root_admission",
+    "whole_owning_SDK_FP": "pending_B",
+    "genuine_fourprofiles": "pending16a5_complete169",
+    "remaining_original_public_performance": "pending_MARK8_LBP4_VI4",
+    "main_delivery": "pending"
+  },
+  "storage": {
+    "raw_records_retained": 752,
+    "raw_copy_root": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\lbp-entry-fp-private-modes-9e15-v1\\saved-evidence-v1",
+    "raw_copied_logical_bytes": 6919790,
+    "logical_D_owned_bytes": 30874357,
+    "physical_allocation_bytes": null,
+    "free_before_each_cell_bytes": [
+      273872130048,
+      273900716032,
+      273898328064,
+      273895931904
+    ],
+    "observed_free_after_bytes": 263551062016,
+    "removed_paths": [],
+    "cleanup_attempts": 0,
+    "pytest_basetemp_exists": false,
+    "previous_blocked_paths": "Preserved without deletion or retry; exact5targets in firstcases-fixture-cleanup-v1.json.",
+    "retention_owner": "root",
+    "release_trigger": "After independent saved/SDK dependency admission, retain C: raw/XML/commands/manifests and retire only explicitly authorized obsolete products/bookkeeping subject to policy."
+  },
+  "waste_review": {
+    "result": "All4authorized saved commands and all4retained JSON/XML cell checks passed once. No numerical retries.",
+    "useful_work": "Closed missing bounded scalar/sanitizer public saved protocol evidence with752actual records; no formatter diagnostics used.",
+    "reuse": "Retained environments, current mode objects, helper, exact observer/config/gold and existing cell checker reused. No original recapture, normal752 or SDK426+4 replay, compilation, archive/core hashing or benchmark.",
+    "avoidable": "One inline checker-preparation command failed PowerShell quote parsing before Python/file creation. File-based locator-only preparation corrected it; no scientific step was repeated or source expectation changed.",
+    "cleanup": "No deletion command or implicit basetemp deletion occurred. tmp/pytest absent before/after all4steps. Previously policy-blocked paths remain pending manual action.",
+    "next_owner_trigger": "Root independently inspect/admit saved records, update shared plan/ledger/checklist and proceed with separately authorized compatible release gates. Child stops here.",
+    "shared_tracking": "Root owns shared tracking and source; child made no source/plan/ledger/checklist edits."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "status": "PASS_FAILURE_DIAGNOSIS_RELEASE_READINESS_SUPERSEDED",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "run": 43702559008,
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp9e15-hosted-failure-v1\\handoff-v1.json",
+    "sha256": "898066928ae03078ad510ba5fe17562a465090dc3ff2ce4db3a55a90bc34c599"
+  },
+  "proofs_verified": 15,
+  "actual_root_inspection": "Actual GH terminal all4jobs, raw failed-step FileNotFoundError/test/source line199-205, command exits0, all15 hashes and both local actual terminal/XML scope reviewed. Missing author path is an unmet fresh-host prerequisite, not numerical failure.",
+  "failure": "Unconditional AST provenance check reads author-machine absolute IGG worktree path. Its local presence made both complete169 Windows runs pass. Fresh Linux and Windows fail before AST comparison; this is a source-test dependency defect, not a numerical or Python-version failure.",
+  "gates": {
+    "local_complete169": "passed_unchanged_scope_only",
+    "fresh_host_tooling": "failed_all4_no_product_preparation",
+    "genuine_product_SDK_and_readers": "pending_unbound",
+    "successor": "one_narrow_portable_sourceguard_authorized_A",
+    "hosted_successor": "pending_independent_source_and_complete169_both_versions"
+  },
+  "closeout": {
+    "result": "Exact single source dependency failure diagnosed across all four fresh hosts.",
+    "useful_failure": "Stopped before product preparation; exposed local external-path dependency that real Windows source passes could not prove absent.",
+    "avoidable": "Author-machine path in collected source guard and no fresh-checkout dependency audit before dispatch. One diagnostic rg search named an absent IGG test file, returned exit2 and was narrowed to actual tracked names. diagnose_v1.py stopped with duplicate workflow keyword SyntaxError/exit1 before reading or writing evidence; v2 only renames the metadata field. Failure preserved; no dependent action used either failure.",
+    "observed_cost": {
+      "aggregate_hosted_pytest_wall_seconds": 655.17,
+      "jobs": 4,
+      "scientific_work": 0,
+      "other_costs": "Unknown; aggregate wall seconds are not CPU or billing. No rerun to measure cost."
+    },
+    "reuse": "Actual retained Windows command/XML and reader-preparation receipt reused; no unchanged source tests or numerical evidence replay.",
+    "cleanup": "No disposable fixtures/checkouts/archives allocated; no paths removed; physical allocation/free-space change not attributed. Old policy-blocked targets untouched.",
+    "next_owner": "root + specifically authorized narrow integration author",
+    "next_trigger": "After root inspects this immutable failure receipt, implement portable source provenance in isolated successor; no hosted retry until affected complete barriers pass."
+  }
+}

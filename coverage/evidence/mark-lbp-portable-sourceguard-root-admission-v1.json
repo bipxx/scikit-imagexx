@@ -1,0 +1,82 @@
+{
+  "status": "PASS_NARROW_PORTABLE_SOURCE_GUARD_SUCCESSOR",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "base": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp-portable-sourceguard-v1\\handoff-v1.json",
+    "sha256": "1264020465960f944e00db5cdf90ef028d7978d4bab182f7cc86e97ae398ceac"
+  },
+  "root_review": "Inspected exact+41/-3 two-file delta, clean direct-parent source/current2file hashes and all30 frozenproofs. Native Git originalca6 source canonical hash and all5 exact source segments independently match pinned1504B baseline. Tests retain same-interpreter AST equality and add meaningful absent-author-path and tamper regressions; canonicalLF handles fresh Windows checkout. Actual two green terminal/XMLs54each, normalplugins/conftest/no science inspected; initial37setup errors retained, no smaller proxy accepted.",
+  "source_files": [
+    {
+      "path": "tests/fixtures/mark_wide_outer_igg_functions_v1.json",
+      "bytes": 1504,
+      "raw_sha256": "9498db3a25d2d54ccf79ce211e413b258469675694d9a8ea507a8345fd7dc450",
+      "canonical_LF_sha256": "9498db3a25d2d54ccf79ce211e413b258469675694d9a8ea507a8345fd7dc450",
+      "Git_blob_sha256": "9498db3a25d2d54ccf79ce211e413b258469675694d9a8ea507a8345fd7dc450"
+    },
+    {
+      "path": "tests/test_mark_wide_outer_capture.py",
+      "bytes": 31387,
+      "raw_sha256": "eab6e1ec97c96d4a784f72d4d08cb25cc0d12ad759a84ba481c14e98cdca16d7",
+      "canonical_LF_sha256": "eab6e1ec97c96d4a784f72d4d08cb25cc0d12ad759a84ba481c14e98cdca16d7",
+      "Git_blob_sha256": "eab6e1ec97c96d4a784f72d4d08cb25cc0d12ad759a84ba481c14e98cdca16d7"
+    }
+  ],
+  "source_audit": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\mark-lbp-portable-sourceguard-v1\\source-audit-v2.json",
+    "sha256": "e7aba6d71da6f52d517513589bb9d110bd4ed78171a466d74be6e5e09c8aa50c",
+    "selectors": 169,
+    "modules": 120,
+    "local_source_closure": 656
+  },
+  "unchanged": "Only2 test inputs changed; production/native/frontends/headers/CMake/workflow/context/registry/SDKsource collector unchanged. Existing9e15 source/runtime proof scope retained where literal dependency matches; full169 successor required.",
+  "gates": {
+    "independent_twofile_source": "passed",
+    "affected54_both": "passed",
+    "whole_complete169_both": "pending_actual_runs",
+    "hosted_successor": "pending_source_barriers",
+    "genuine_runtime_and_performance": "pending"
+  },
+  "failures_preserved": [
+    "43702559008_all4_missing_author_path",
+    "initial_windows311_metadata_runner37setup_errors"
+  ],
+  "cleanup": {
+    "status": "BLOCKED_BY_AUTOMATIC_APPROVAL_REVIEW_PENDING_MANUAL",
+    "requested_action": "Native PowerShell Remove-Item of only the four resolved inspected disposable fixture/cache directories after jobs stopped",
+    "reason_returned": "blocked by policy",
+    "command_started": false,
+    "retry_or_alternate_mechanism": false,
+    "targets": [
+      {
+        "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/mark-lbp-portable-sourceguard-v1/fixture-tmp",
+        "files": 382,
+        "logical_bytes": 485472
+      },
+      {
+        "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/mark-lbp-portable-sourceguard-v1/windows311-v1/cache",
+        "files": 5,
+        "logical_bytes": 11087
+      },
+      {
+        "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/mark-lbp-portable-sourceguard-v1/windows311-v2/cache",
+        "files": 4,
+        "logical_bytes": 6582
+      },
+      {
+        "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/mark-lbp-portable-sourceguard-v1/windows313-v2/cache",
+        "files": 4,
+        "logical_bytes": 6582
+      }
+    ],
+    "logical_bytes_retained": 509723,
+    "physical_allocation": "not measured",
+    "removed_paths": [],
+    "free_space_change_from_removal": "none; blocked command never started",
+    "source_candidate": "Retained active, under1GiB tracked source; root owns release after reviewed delivery and ancestry verification",
+    "old_blocked_targets_touched": false,
+    "next_owner": "manual user cleanup of blocked targets; root owns active source delivery"
+  },
+  "next_owner_trigger": "Root complete169 both retainedPythons now; A may version source-only UNBOUND reader metadata, no actual bindings until new campaign."
+}

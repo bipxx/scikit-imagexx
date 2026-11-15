@@ -39098,9 +39098,9 @@
   },
   "execution_policy": {
     "active_workers": [
-      "metrics_integrator",
-      "boundary_worker",
-      "readiness_reviewer"
+      "mark_source_reviewer",
+      "tracking_repair",
+      "mark_release_readiness"
     ],
     "controller": "integrator",
     "check": "python tools/work_queue.py --check",
@@ -39108,8 +39108,8 @@
     "handoff": "python tools/work_queue.py --packet <id>",
     "launch_rule": "Before dispatch reconcile live roster and exact receipts; bind exclusive files, changed contract and smallest affected commands. Use followup_task to resume completed agents. After every terminal task root reviews result/waste/reuse and updates affected next_gate/action before dependent work; no change means reviewed,no change, not a new audit or scientific replay. Once mandatory readiness closes, update only the dependent gate and dispatch eligible hosted work promptly; do broad publication while it runs. Assign one isolated shared integration owner; root retains independent admission/main delivery. Before hosted releasequalification, execute the complete actual workflow source-check command on both retained supportedPythonversions with normalconftest/plugins, real selectors and nofailfast; afterfixes reruncompleteaffectedbarrier. Partialunions/collection/alteredconfiguration cannot satisfy thisgate.",
     "completion_rule": "Only accepted advertised contracts with exact public parity and original-library performance evidence count; native-partial inventory status alone does not.",
-    "implementation_goal_status": "Active full477 goal; main271 partial. QualifiedDDA281 candidate has64 original-public cases38wins26losses;16cases pending. MARK eb46private8 strict wholeAPI passes plus8workers1/4units; LBPd4private8binaryFPunits pass, fullpublic/genuine/performance stillpending. Three actual lanes reconciled below; no fullAPI/libraryspeed claim.",
-    "mode": "executing-updated-plan",
+    "implementation_goal_status": "active",
+    "mode": "resuming_one_qualified_increment",
     "reserved_worker_lanes": [
       "grayco_texture_native",
       "golden_native_and_independent_IGG_review",
@@ -39122,17 +39122,13 @@
         "draw-multiblock-lbp-source-first-v1"
       ],
       "metrics_integrator": [
-        "mark-lbp-enabled-integration-v1"
+        "flood-fill-source-first-v1"
       ],
       "readiness_reviewer": [
-        "flood-fill-source-first-v1"
+        "mark-lbp-enabled-integration-v1"
       ]
     },
-    "current_three_agent_packets": {
-      "boundary_worker": "draw-multiblock-lbp-source-first-v1",
-      "metrics_integrator": "mark-lbp-enabled-integration-v1",
-      "readiness_reviewer": "flood-fill-source-first-v1"
-    },
+    "current_three_agent_packets": {},
     "current_source_staging": {
       "path": "coverage/evidence/rank-decisions-source-staging.json",
       "sha256": "daabd5419ae8470bbbdbef21cd4b90cf94cd8a31ddd3912c65ab8a8243497336",
@@ -39472,40 +39468,20 @@
     },
     "resume_checkpoint": "2026-10-25: explicit updated-plan implementation resume; old network-revoked turns ended. Same three workers restarted through followup_task; no hosted campaign redispatched.",
     "latest_hosted_status": {
-      "run": 42356138491,
-      "source": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
-      "status": "in_progress",
-      "conclusion": null,
-      "watcher_session": 24460,
-      "jobs": [
-        {
-          "id": 128354529308,
-          "name": "qualify (ubuntu-24.04, modern, 3.13.16)",
-          "status": "in_progress",
-          "conclusion": null
-        },
-        {
-          "id": 128354529378,
-          "name": "qualify (ubuntu-24.04, minimum, 3.11.17)",
-          "status": "in_progress",
-          "conclusion": null
-        },
-        {
-          "id": 128354529418,
-          "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
-          "status": "in_progress",
-          "conclusion": null
-        },
-        {
-          "id": 128354529476,
-          "name": "qualify (windows-latest, windows, 3.13.16)",
-          "status": "in_progress",
-          "conclusion": null
-        }
-      ],
-      "next": "Follow same24460/42356138491, no redispatch. R prepares minimal exact852 readers; actual terminal artifacts retained once then independent profile/SDK/stager admission. Current281 qualified; B bound-controller source gates before public timing."
+      "run": 43706703018,
+      "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "status": "completed",
+      "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43706703018",
+      "qualification": "root_admitted_exact16a5_four_profiles_three_stagers",
+      "failure_predecessor": 43702559008,
+      "conclusion": "success",
+      "product_accepted": true,
+      "root_admission": "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
+      "shipping": false,
+      "newer_performance_run": 43721720516,
+      "newer_performance_status": "terminal_setup_failure_cause_admitted_two_first_cohorts_passed_no_timing"
     },
-    "assignment_note": "Live collaboration.list_agents confirmed all three resumed handles; followup_task dispatches authorize the explicitly scoped tasks above. CLI assignments are responsibility metadata, not process evidence.",
+    "assignment_note": "Historical packet assignments are not live dispatch orders. Storage, source and SDK packets are terminal. C owns failure intake only; root owns admission and any successor dispatch. No unrelated implementation lane was resumed.",
     "latest_completed_references": {
       "footprints": {
         "source": "b3c61fcc565c15860465eb374b395cd143d84414",
@@ -39518,14 +39494,589 @@
       }
     },
     "current_review_assignments": {
-      "boundary_worker": "Current LBPd4 strictwhole-public/privatecomponent readiness only; rootcompileGO after actualdonor/ABI/94golds/benchmarkfirstcase/selector mapping. Independentcrop9e rawreviewf356closed6/2 UNACCEPTED.",
-      "metrics_integrator": "Active sole shared author DDA-based mark-wide-enabled-v1, compose MARKeb46+compat2e97+SDK8537 and ROOTsource/native-unit-admitted LBPd4. Sourcepreparation only; rootauthorizes completechecks/private/genuine/perf independently.",
-      "readiness_reviewer": "Current flood e96 source/rootreviewpassed; donor/source/ABI/sparsefixture readiness before rootcompileGO. Future changedbinder full100old+59preparedprotocol/FP/modes/performance remainunexecuted.",
-      "root": "Actualflood8profile attribution admitted/16Centries; actualMARK8strict comparisons+8units andLBP8binaryunits pass. Own independentadmission/currentreceipts/main, next actualcropterminals/sharedcandidate source review; no scientificreplay."
+      "boundary_worker": "Actualmin+modern1firstcase controlsPASS, source-matched2ABIlinks12dcurrentcopier; full4x188saved94worker1/4 normal-disabled authorized752, no scalar/san/performance/extraorig yet.",
+      "metrics_integrator": "Frozen93fC91bb candidate immutable; currentflood8case controlledpriorCPP/performance proposal. Explicitmodern13565133874 ownwheel-onlyrestore metadata allowed; no actualnewcontrols/timing/import untilROOTGO.",
+      "readiness_reviewer": "Nonauthorreview C93f64source/72proof/823affectedchecks; focussharedSDK/wiring/contexts/workflow169, importedRkernels onlypinsagainstoldB/rootadmissions. No self-admission or checks/science reruns.",
+      "root": "ActualLBP2firstcase strict controls+flood636 admitted. OwnGLCM0b6 countfix69each+Breview/fresh8prefix64; nextnonauthoractualprefix readiness beforemin8neworiginal. Rootsharedcandidateadmission/full169/rootnativeSDK+release/genuine/perf/main."
     },
-    "next_action": "Root admits exact B LBPwholepublic and R floodchangedbinder preparation, authorizesboundedcompiles onlyafter actualprereqs; C earliestcompatibleMARK/LBP sharedsourcefreeze/affectedguards. Completeactualsourcebarriers/genuine/installedSDK/original1-thread qualification beforemainnativechanges. Crop9e6/2 remainsUNACCEPTED independentrawPASS; no unchangedretime/thirdlowyieldvariant untiljustified.",
+    "next_action": "C monitors actual run43727894422 at17a and retains terminal/rawresults only; root independently admits the result. VI4 and retirement153 remain held; no automaticretry or additional source work.",
     "current_checkpoint": {
       "main_image_names": 271,
+      "resume_20261115": {
+        "owner": "root",
+        "status": "qualification_and_private_SDK_passed_corrected_MARK12_running_VI_and_retirement_held",
+        "complete169_result": "PASS exact9e15: both actual exec terminals0; each4132 ordinary tests+8subtests/4140suitechecks, identical4132 collected IDs, normalconftest/plugins/no-failfast, sourceclean, scienceattempts/imports0. Root inspected all actual command/XML/plugin/ID/log/terminal receipts. coverage/evidence/mark-lbp9e15-complete-source-readiness-v1.json SHA bc0ee39b9493250aeef73506b0c3781c6ae364c8c7aa584ad13198ac4a72d8aa; elapsed475.17/450.93s. Old93f failures remain failed.",
+        "runtime_readiness_handoff": "build/mark-lbp9e15-release-readiness-v1/readiness-v1.json SHA c1ee1db96f001722c4da453b51cd9b575b8e4dfc3d52f113edf3f65fb291a815: 882 actual files bind private normal752 saved/SDK426+4/controls to9e15 unchanged dependencies. True compiler-scalar and ASan/UBSan remain unexecuted; runtime-disable/Debug genuine modes do not establish them. Source-matched proposed commands use current12d crop; root inspection/entry prerequisites and GO pending.",
+        "complete169_live_handles": {
+          "windows311": 43372,
+          "windows313": 1066
+        },
+        "complete169_launch_evidence": "Both actual launcher processes returned live exec session handles with exact9e15 source messages. These are in-progress source runs, not passing gates. Command/XML/terminal/plugin/test-ID files stay in build/mark-lbp9e15-complete-source-v1; disposable fixtures in fresh D:/Scratch/m9e15-v1/{a,b}.",
+        "source_admission": "coverage/evidence/mark-lbp-linux-group-root-source-admission-v1.json; independent source review f30453e8 and verification9d6356 authenticated, five actual source hashes/clean9e15 and root delta inspection passed. Retained105 checks perPython/20proofs/33DDA inverse rows reused, not complete169 evidence.",
+        "complete169_authority": "build/mark-lbp9e15-complete-source-v1/execution-authority-root-v1.json; exact unchanged workflow169, locator-only faithful runner compiled on retained311/313. Fresh D:/Scratch/m9e15-v1 verified absent; actual free capacity exceeds conservative22GiB combined peak+20GiB reserve and30GiB floor. Authorized source-only runs, not hosted release or original/performance computation.",
+        "live_handles": [
+          "/root/mark_source_reviewer",
+          "/root/tracking_repair",
+          "/root/mark_release_readiness"
+        ],
+        "live_evidence": "Actual16a5full169 handles21694/26891 terminal0. ActualGHrun43706703018source16a5 in_progress; A livefollowup monitoring/source-prep-root-admitted, B live12SDKnonruntime actual0 awaitingrootobject/maps, C liveperformance source readiness. No prior queued assignment substituted for these live handles.",
+        "authorization": "User replied sure to the recommendation to resume with the frozen MARK/LBP correction, complete source/SDK/release/performance gates and one compatible delivered increment. This resumes implementation only; no approval of the separate 154-worktree ancestry exception and no permission to retry policy-blocked deletions.",
+        "acceptance": "Independent exact9e15 five-file source admission before root complete169 commands on both retained Pythons with normal conftest/plugins/no fail-fast. Reuse unchanged math/native/SDK/performance only within actual dependency scope; finish affected public/modes/installed SDK, exact-source four-profile qualification, remaining bound original-public performance and final shipping projection before merge/push. Root owns independent admission, main and shared integration; no unvalidated implementation ancestry imported.",
+        "worker_ownership": {
+          "mark_source_reviewer": "Terminal storage/disposal/read-only153 readiness; user exception pending, no retirement authority.",
+          "tracking_repair": "Terminal private SDK scope and read-only current-state QA.",
+          "mark_release_readiness": "Actual43727894422 monitor/raw intake only; source packet terminal, no new execution authority.",
+          "root": "Independent admission, actual dispatch, state reconciliation, main delivery and cleanup approval gates."
+        },
+        "capacity": "Actual entry C free396955144192B, D free288221495296B. Conservative combined next peak: 20GiB full source-barrier scratch plus 1GiB tracking worktree and 1GiB worker guards; destination exceeds peak plus20GiB and30GiB floor. Reuse retained Windows311 executable and project Windows313 environment; no environment/download rebuild. Keep raw command/XML/evidence outside disposable roots; release terminal scratch after excluding protected dependencies; previously denied targets untouched.",
+        "next_gate": "C monitors actual run43727894422 at17a and retains terminal/rawresults only; root independently admits the result. VI4 and retirement153 remain held; no automaticretry or additional source work.",
+        "tracking_delivery": {
+          "source": "1cd85168416635de5784efd61f1bb890d4c94bda",
+          "main": "pushed_and_remote_verified",
+          "receipt": "coverage/evidence/progress-tracking-main-delivery-v1.json",
+          "coverage_change": 0,
+          "retired_worktree": {
+            "path": "D:/Scratch/scikit-imagexx-active-worktrees/progress-tracking-resume-v1",
+            "status": "PASS_native_git_worktree_remove_exit0",
+            "logical_bytes": 3883001,
+            "observed_free_change_bytes": 3899392,
+            "receipt": "build/progress-tracking-main-delivery-v1/worktree-retirement-terminal-v1.json",
+            "physical_allocation": "not measured; observed free delta includes concurrent activity"
+          }
+        },
+        "complete169_live_handles_terminal": "Both43372/1066 completed exit0; launch entries above are historical, terminal result supersedes them.",
+        "hosted_qualification": {
+          "run": 43702559008,
+          "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43702559008",
+          "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+          "status": "completed",
+          "conclusion": "failure",
+          "jobs": [
+            132776647373,
+            132776647580,
+            132776647606,
+            132776647729
+          ],
+          "failed_gate": "Tooling guards before preparation, all four; terminal seal also fails because no product prepared",
+          "receipt": "build/mark-lbp9e15-qualification-dispatch-v1/actual-terminal-v1.json",
+          "product_preparation": "skipped_all_profiles",
+          "retry": "No unchanged redispatch authorized. A diagnoses actual logs; all performance/product bindings remain unbound.",
+          "failure_root_closeout": "coverage/evidence/mark-lbp9e15-hosted-source-failure-root-closeout-v1.json",
+          "cause": "Unconditional AST provenance check reads author-machine absolute IGG worktree path. Its local presence made both complete169 Windows runs pass. Fresh Linux and Windows fail before AST comparison; this is a source-test dependency defect, not a numerical or Python-version failure.",
+          "readiness_superseded": "Local complete169 remains true for local environment, does not establish fresh-host independence. New portable guard and fresh checkout dependency audit required; all old failures retained."
+        },
+        "private_mode_build": {
+          "entry_receipt": "coverage/evidence/lbp-entry-fp-private-modes-root-entry-v1.json",
+          "GO": "build/lbp-entry-fp-private-modes-9e15-v1/root-build-GO-v1.json",
+          "commands": 6,
+          "scope": "LBP numerical leaf plus current crop/converter modes; mixed support archive, no whole-mode core/SDK credit",
+          "status": "passed6_actual_compiles_links_root_maps_ELF_admitted",
+          "terminal": "build/lbp-entry-fp-private-modes-9e15-v1/build-closeout-v1.json SHA7c58fbfbb4b22759e7b459e6cf8603041f48e88680f38510edf95da929b2e952",
+          "root_link_admission": "coverage/evidence/lbp-entry-fp-private-modes-root-link-admission-v1.json"
+        },
+        "source_fixture_cleanup": {
+          "path": "D:/Scratch/m9e15-v1",
+          "status": "blocked_by_policy_before_execution",
+          "logical_bytes": 13308156547,
+          "files": 165958,
+          "precondition": "build/mark-lbp9e15-complete-source-v1/fixture-removal-precondition-v1.json",
+          "reason": "Automatic approval review rejected native PowerShell recursive removal as blocked by policy",
+          "next": "Pending manual action. No retry through another mechanism; evidence and source outside fixture root retained."
+        },
+        "source_successor_author": "Root sole author for the VI workflow/test successor after frozen0a9e source admission. C independently reviews B SDK metadata only; A retention and B spline proposal own output only.",
+        "waste_review_resume": "Tracking delivered reuse valid30 regressions/8CLI perversion and real main projection. One hosted pre-build campaign exposed overlooked author absolute path (aggregate655.17 hosted pytest wallseconds; CPU/billing unknown); preserve failure, narrow portable correction and all169 dependency audit. Root broad reader/type/output, relative proof base and one Unicode-default read failed with no mutations, corrected compact typed UTF8/base-relative reads; context execution request formalized using followup before reliance; pre-dispatch writer SyntaxError corrected before any dispatch. No unchanged scientific/performance replay. Closeout QA found stale current fields beneath newer receipts; existing fields reconciled and old GOs/assignments consumed. Root first state writer assumed this string was a dict and stopped before writes; corrected the string update. No source generation or science repeated.",
+        "private_mode_firstcases": {
+          "status": "passed_actual4_root_admitted",
+          "GO_files": [
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-minimum-scalar-firstcase-v1.json",
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-modern-scalar-firstcase-v1.json",
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-minimum-sanitize-firstcase-v1.json",
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-modern-sanitize-firstcase-v1.json"
+          ],
+          "maximum_native_public_calls": 4,
+          "original_calls": 0,
+          "timing": 0,
+          "next": "Root inspect actual firstcase controls/process32/default1/builtin ownership/strict output before any saved suite GO.",
+          "receipt": "coverage/evidence/lbp-entry-fp-private-modes-root-firstcase-admission-v1.json",
+          "public_calls": 4,
+          "phase_entries": 132
+        },
+        "private_mode_saved": {
+          "status": "passed_actual4x188_root_admitted",
+          "GO_files": [
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-minimum-scalar-saved-v1.json",
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-modern-scalar-saved-v1.json",
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-minimum-sanitize-saved-v1.json",
+            "build/lbp-entry-fp-private-modes-9e15-v1/root-GO-modern-sanitize-saved-v1.json"
+          ],
+          "cells": 4,
+          "nodes_per_cell": 188,
+          "maximum_public_calls": 752,
+          "original_calls": 0,
+          "timing": 0,
+          "root_gate": "Actual full XML/raw records/differences/builtin/default1/FP/caller32 admission pending",
+          "root_admission": "coverage/evidence/lbp-entry-fp-private-modes-root-saved-admission-v1.json",
+          "actual_public_calls": 752,
+          "strict_full_portable_matches": 752,
+          "formatter_diagnostics": 0,
+          "sanitizer_diagnostics": 0,
+          "actual_pytest_seconds": 11.575660499000037,
+          "next": "Matchingmode SDK and wholeowningFP/genuineinstalled namespace/performance/main remainpending; no numerical mode replay for test-only16a5."
+        },
+        "mode_cleanup_pending": {
+          "status": "blocked_by_policy_before_execution",
+          "logical_bytes": 2588,
+          "targets": "D:/Scratch/lbp-entry-fp-private-modes-9e15-v1/tmp and four {scalar,sanitize}/{minimum,modern}/firstcase-v1/cache",
+          "receipt": "build/lbp-entry-fp-private-modes-9e15-v1/firstcases-fixture-cleanup-v1.json",
+          "next": "Manual-only; no retry/alternate mechanism or implicit pytest deletion of blocked paths."
+        },
+        "portable_source_successor": {
+          "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+          "handoff": "build/mark-lbp-portable-sourceguard-v1/handoff-v1.json",
+          "root_admission": "coverage/evidence/mark-lbp-portable-sourceguard-root-admission-v1.json",
+          "status": "passed2file_source_54both_full169pending",
+          "cleanup": "509723B fixture/cache removal blocked beforeexecution; no retry/manualonly",
+          "failure": "initial311 runner37setup errors retained; correctedparent54/54both"
+        },
+        "complete169_successor": {
+          "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+          "status": "passed_both_actual_exit0",
+          "authority": "build/mark-lbp16a5-complete-source-v1/execution-authority-root-v1.json",
+          "scratch": "D:/Scratch/m16a5-v1",
+          "capacity": {
+            "actual_D_free_bytes": 273893543936,
+            "concurrent_B_bytes": 3221225472,
+            "concurrent_C_bytes": 536870912,
+            "reserve_bytes": 21474836480,
+            "free_floor_bytes": 32212254720
+          },
+          "footprint_exception": "Old13.308GB m9e15 terminal fixtures remain policyblocked/manual-only. Current root14GiB allocation plus retired blocked12.4GiB exceeds20GiB target; root owns exception, release trigger manual policy-permitted removal after readers stopped. No blocked path will be retried or reused for implicit deletion.",
+          "handles": {
+            "windows311": 21694,
+            "windows313": 26891
+          },
+          "evidence": "Both actualexec calls printed exact16a5 source and returned livehandles; no pass claimed.",
+          "receipt": "coverage/evidence/mark-lbp16a5-complete-source-readiness-v1.json",
+          "ordinary_tests_each": 4134,
+          "subtests_each": 8,
+          "suitechecks_each": 4142,
+          "seconds_each": [
+            405.69,
+            385.21
+          ]
+        },
+        "SDK_private_modes": {
+          "status": "terminal_root_admitted_private_named_family_modes_scoped",
+          "handoff": "build/mark-lbp9e15-sdk-modes-v1/readiness-v2.json",
+          "root_entry": "coverage/evidence/mark-lbp-sdk-modes-root-entry-admission-v2.json",
+          "GO": "build/mark-lbp9e15-sdk-modes-v1/root-nonruntime-stage1-GO-v2.json",
+          "calls": null,
+          "next": "No SDK dispatch remains; root advances only failed controller setup and remaining performance/shipping gates.",
+          "stage1_receipt": "coverage/evidence/mark-lbp-sdk-modes-root-stage1-admission-v2.json",
+          "stage2_GO": "build/mark-lbp9e15-sdk-modes-v1/root-stage2-normal1-and-assembly-GO-v2.json",
+          "actual_stage1_exits": 12,
+          "actual_metadata_exits": 30,
+          "stage2_receipt": "coverage/evidence/mark-lbp-sdk-modes-root-stage2-admission-v3.json",
+          "stage3_GO": "build/mark-lbp9e15-sdk-modes-v1/root-stage3-mode-client-build-GO-v2.json",
+          "normal_whole_FP_calls": 2,
+          "mode_archive_unique_members": {
+            "scalar": 56,
+            "sanitize": 106
+          },
+          "gate_correction": {
+            "missed": "Root verified raw/results/inventories but omitted direct inspection of six actual_commands exit fields before stage3 GO.",
+            "correction": "Held dependent configure/build dispatch; inspected all6 underlying stage2 command exits directly, all0. B confirmed no stage3 command had started.",
+            "evidence": "build/mark-lbp9e15-sdk-modes-v1/stage2-receipt-v2.json actual_commands, root exec1bcbe8; B livehold confirmed.",
+            "effect": "No source/numerical/build result invalidated; no command/check rerun. Original stage3 four-command GO remains valid after this prerequisite closure."
+          },
+          "spline_closure_correction": {
+            "missed_requirement": "Six-TU mode closure wrongly excluded spline on the premise that MARK SDK rows were all outer. Full actual header contains201rows:147outer/26thick/6inner/22subpixel; named consumer calls all201 for workers1/4.",
+            "actual_source": "tests/cmake_consumer/mark_boundaries_consumer.cpp -> mark_boundaries_consumer.hpp -> tests/fixtures/mark_boundaries_native_saved_v1.hpp; src/mark_boundaries.cpp subpixel zoom calls detail::spline_weights in src/spline.cpp.",
+            "effect": "Stage3 MARK whole-mode readiness is superseded/pending a matching current spline dependency. No mode runtime was dispatched, so no numerical result is invalidated; LBP/wide-unit binary scopes remain independently usable after root map admission.",
+            "next_owner_trigger": "B inspect retained current spline source/header/compiler/mode evidence; reuse exact matching objects where proven or propose smallest current spline mode compile/versioned corrected MARK prefix/link. Preserve all stage3 predecessors and hold MARK runtime; do not drop the22cases or relabel spline as outside their execution."
+          },
+          "stage3_root_admission": {
+            "status": "passed_4builds48metadata_six_unaffected_products_scope_only",
+            "receipt": "coverage/evidence/mark-lbp-sdk-modes-root-stage3-spline-admission-v4.json",
+            "sha256": "f9bea666b0063850db8d403bcfedf7e4108e2febd4c3aa84e3b80add158ba3b4",
+            "actual201_MARK_fullmode_gate": "pending_seventh_spline_TU_correction_includes22subpixel",
+            "GO": "build/mark-lbp9e15-sdk-modes-v1/root-spline-stage1-and-unaffected-runtime-GO-v4.json",
+            "authorized_next": "First3 freshprefix/splinecompiles and independently14unaffected runtime/comparison IDs serialized; no later ar/relink/fullMARK/no normal1 replay",
+            "owner": "/root/tracking_repair"
+          },
+          "spline_correction_stage1": {
+            "status": "passed_actual3plus6metadata",
+            "receipt": "coverage/evidence/mark-sdk-spline-root-stage1-admission-v5.json",
+            "next_gate": "Exact4ar/inventories authorized; no relinks until root actualinventory admission",
+            "GO": "build/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/root-stage2-assembly-GO-v5.json",
+            "owner": "/root/tracking_repair",
+            "mtime_failure_correction": "Retained v4 unsupported new-copy/source timestamp equality; v5 actualnewidentity recorded without source/product changes or reruns"
+          },
+          "spline_correction_stage2": {
+            "status": "passed_actual4ar_inventory_unique56_106_sevenpayloads_each",
+            "receipt": "coverage/evidence/mark-sdk-spline-root-stage2-admission-v5.json",
+            "GO": "build/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/root-stage3-relink-GO-v5.json",
+            "next_gate": "Only2exactrelinks plus actualmap/runtime metadata then rootadmission before full201runtime",
+            "owner": "/root/tracking_repair"
+          },
+          "unaffected_runtime_root_admission": {
+            "status": "passed14actualexits137proofs",
+            "receipt": "coverage/evidence/mark-lbp-sdk-unaffected-runtime-root-admission-v4.json",
+            "scope": "5newwholeSDKfirstcases +2invariant +2wideunits, no full201MARK/wholeSDK/currentoriginalperformance claim"
+          },
+          "spline_correction_link": {
+            "status": "passed_2actuallinks12metadata51proofs",
+            "receipt": "coverage/evidence/mark-sdk-spline-root-link-admission-v7.json",
+            "GO": "build/mark-lbp9e15-sdk-modes-v1/spline-correction-v4/root-full201-runtime-GO-v7.json",
+            "owner": "/root/tracking_repair",
+            "next_gate": "Twoexactcorrected full201+wide8 runtimeprocesses then actualrootadmission; no originals/timing"
+          },
+          "terminal_root_admission": {
+            "status": "passed_private_named_family_modes_scoped",
+            "receipt": "coverage/evidence/mark-lbp-private-sdk-modes-root-terminal-admission-v8.json",
+            "actual2process_exits": [
+              0,
+              0
+            ],
+            "full201_savedvalues": "passed402calls_eachmode_incl22subpixel_rows",
+            "wide_FP_getter_scope": "Sourceassertions/actual0; rawpercaseFPwordsnotemitted, legacy201notFPinstrumented",
+            "next_gate": "MARK12actualcohorts/performance and remainingVI4/finalshipping; no SDKworkerdispatch pending",
+            "owner": "/root"
+          },
+          "calls_note": "No single exact total: invariant consumers do not emit target counts. The preexecution zero is historical.",
+          "runtime_scope_counts": {
+            "normal_whole_FP_witnesses": 2,
+            "scalar_whole_FP_witnesses": 2,
+            "sanitize_whole_FP_witnesses": 2,
+            "full201_mode_processes": 2,
+            "legacy_saved_complete_calls": 804,
+            "additional_wide_named_calls": 48,
+            "wide_find_unit_calls": 16,
+            "expected_frontier_refusals": 8,
+            "LBP_invariant_consumers": 2,
+            "LBP_invariant_target_calls": null,
+            "exact_total_target_calls": null,
+            "original_calls": 0,
+            "timing": 0
+          },
+          "GO_state": "All retained SDK stage GOs are consumed historical evidence.",
+          "root_terminal_receipt": "coverage/evidence/mark-lbp-private-sdk-modes-root-terminal-admission-v8.json"
+        },
+        "private_runtime_closed_scope": "Retained normal/runtime-disabled752 plus current compiler-scalar/ASanUBSan752 for94recipes×2profiles×workers1/4;1504entries across8cells, no fullAPI/wholemodecore/SDK/speed claim.",
+        "qualification_successor": {
+          "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+          "branch": "fix/mark-lbp-portable-sourceguard-v1",
+          "status": "terminal_root_admitted_four_profiles_three_stagers_retention_and_disposal_complete",
+          "authority": "build/mark-lbp16a5-qualification-dispatch-v1/root-dispatch-authority-v1.json",
+          "readers_source_admitted": "coverage/evidence/mark-lbp16a5-qualification-readers-root-source-v1.json",
+          "actual_run": 43706703018,
+          "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43706703018",
+          "created_at": "2026-11-15T10:59:30Z",
+          "receipt": "build/mark-lbp16a5-qualification-dispatch-v1/actual-run-binding-v1.json",
+          "root_dispatch_exit_code": 0,
+          "actual_7_artifact_bytes": 6663954885,
+          "terminal_handoff": "build/mark-lbp16a5-qualification-readers-v1/run43706703018-terminal-preparation-handoff-v1.json",
+          "root_retention_GO": "coverage/evidence/mark-lbp16a5-terminal-metadata-root-retention-GO-v1.json",
+          "binding": "build/mark-lbp16a5-qualification-readers-v1/freeze-contract-run43706703018-root-v1.json",
+          "transport_root": "D:\\Scratch\\skimage281-43706703018-transport-v1",
+          "products_root": "D:\\Scratch\\skimage281-43706703018-products-v1",
+          "product_accepted": true,
+          "retention_session": 70165,
+          "retention_actual_exit": 0,
+          "retention_receipt": "coverage/evidence/mark-lbp16a5-retention-root-admission-v1.json",
+          "profile_readers_GO": "build/mark-lbp16a5-qualification-readers-v1/root-profile-readers-GO-run43706703018-v1.json",
+          "profile_reader_root_admission": {
+            "status": "passed_four_isolated_profiles",
+            "receipt": "coverage/evidence/mark-lbp16a5-profiles-root-admission-v1.json",
+            "sha256": "988183895779253a56d2fced550096e34bd46872b089aa89edaf33b6ccc6095d",
+            "actual_exits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+            "run": 43706703018,
+            "next_owner": "/root/mark_source_reviewer",
+            "next_gate": "Execute exact3stager readers once/max2, no extraction before root actual-outcome admission",
+            "GO": "build/mark-lbp16a5-qualification-readers-v1/root-stager-readers-GO-run43706703018-v1.json",
+            "whole_product_accepted": false
+          },
+          "whole_product_root_admission": {
+            "status": "passed_exact16a5_four_profiles_three_stagers",
+            "receipt": "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
+            "sha256": "640a40fce735beea143a9f417d85d3f10cf68baa9a6c7fd6de69712d45853698",
+            "public_XML": 963560,
+            "SDK_checks": 304,
+            "corpora": 48,
+            "shipping": false,
+            "next_owner": "/root/mark_source_reviewer",
+            "next_gate": "Concrete selective extraction proposal/rootGO, required products/raw/deps retained, allreaders stopped, transport discard once",
+            "predecessor_v1": "retained; onlyproduct_kindlabel corrected, partialcandidate281 scope separate",
+            "science_reruns": 0
+          },
+          "selective_extraction": {
+            "status": "terminal_rootadmitted_requiredretention_and_exact7transportremoval",
+            "GO": "build/mark-lbp16a5-qualification-readers-v1/root-selective-extraction-GO-v2.json",
+            "owner": "/root/mark_source_reviewer",
+            "new_selected_bytes": 682576295,
+            "avoided_duplicate_dependency_bytes": 661147257,
+            "reused_existing_dependency_files": 10341,
+            "next_gate": "reviewed_nochange_storage_taskclosed_no_dispatch_pending",
+            "root_receipt": "coverage/evidence/mark-lbp16a5-materialization-root-admission-v1.json",
+            "disposal_GO": "build/mark-lbp16a5-qualification-readers-v1/root-exact7-transport-disposal-GO-v1.json",
+            "pending_transport_logical_bytes": 0,
+            "disposal_root_receipt": "coverage/evidence/mark-lbp16a5-transport-disposal-root-closeout-v1.json",
+            "removed_transports": 7,
+            "removed_logical_bytes": 6663954885,
+            "D_free_observed_change_bytes": 6663966720,
+            "archive_byte_evidence": "UNAVAILABLE_discarded"
+          },
+          "current_root_admission": "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
+          "dispatch_state": "consumed_terminal_no_reader_or_retention_dispatch_pending",
+          "archive_byte_evidence": "unavailable_after_exact7_disposal",
+          "next_gate": "Use retained products, metadata, raw results and protected dependencies. No archive recreation for bookkeeping."
+        },
+        "source_fixture_successor_cleanup": {
+          "path": "D:/Scratch/m16a5-v1",
+          "status": "blocked_by_policy_before_execution",
+          "logical_bytes": 13306969175,
+          "files": 165918,
+          "reparse": 0,
+          "active_git_worktrees_inside": 0,
+          "precondition": "build/mark-lbp16a5-complete-source-v1/fixture-removal-precondition-v1.json",
+          "reason": "Automaticapprovalrejected nativePowerShell recursive removal as blockedbypolicy",
+          "next": "Manualonly; noretry/nomechanismchange. Rawlogs/XML/source/runtime outside target preserved."
+        },
+        "performance_successor_readiness": {
+          "receipt": "build/current281-performance-successor-readiness-16a5-v1/readiness-v1.json",
+          "sha256": "be1c86f2f76910735abbfc14f6513065f06893b38e17d1a288abff411624d443",
+          "root_decision": "Retain64 as DDA historical one-worker same-API evidence,38wins26losses896samples128warmups; no relabeling as16a5/oneproduct/onehost and no unchanged favorable/bookkeeping retiming. New16 gate needs actual source-matched MARKv7/LBPv7/VIv6 controllers, exact product/host bindings and real first-cohort/FP acceptance. Full exact16 product80table is not newly requested.",
+          "missing_cases": {
+            "MARK": 8,
+            "LBP": 4,
+            "VI": 4
+          },
+          "VI_cause": "unproved; earlier9V45AVX512vs7763 difference is only lead; no VI timing before actual-value diagnostic/causal gate",
+          "next_owner_trigger": "C monitors actual run43727894422 at17a and retains terminal/rawresults only; root independently admits the result. VI4 and retirement153 remain held; no automaticretry or additional source work.",
+          "next_controller_author": {
+            "owner": "/root/mark_release_readiness",
+            "scope": "Active two-path output-root source correction only, direct c25 child on fix/mark-lbp-measurement-output-root-v1; four owned files, preserved driver/method/FP/collectors, no real-call authority.",
+            "producer": 43706703018,
+            "root_product_admission": "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
+            "minimum_stager_admission": "coverage/evidence/mark-lbp16a5-minimum-stager-admission-v1.json",
+            "VI4": "held causal gate; old64notretimed"
+          },
+          "controller_source_terminal": {
+            "status": "passed_root_independent7file_source_admission91eachPython",
+            "source": "c25ee4592a8166e0fdb72475cab5a6e6aeec52c6",
+            "receipt": "coverage/evidence/mark-lbp16a5-controller-root-source-admission-v1.json",
+            "sha256": "edc6261393d8db0bfef2b4902edd073a62cfb1fbe03c604e412e6917b2215cff",
+            "next_owner": "/root",
+            "next_gate": "C25 source and first-cohort scope are admitted; its measurement setup failed. The exact two-path v7 successor is authorized under root-output-root-source-successor-GO-v1; both complete source guard runs and root admission remain required before new execution.",
+            "actual_calls_timing": 0
+          },
+          "controller_cleanup_manual": {
+            "path": "build/mark-lbp16a5-controller-v1/fixture-tmp",
+            "logical_bytes": 199260562,
+            "reason": "Automaticapprovalreview blocked nativePowerShell removal beforeexecution",
+            "retry_allowed": false
+          },
+          "actual_MARK12_dispatch": {
+            "status": "terminal_setup_failure_root_admitted_two_cohorts_passed_no_timing",
+            "GO": "build/mark-lbp16a5-controller-v1/live-dispatch-v1/root-two-cohort-twelve-case-GO-v1.json",
+            "controller": "c25ee4592a8166e0fdb72475cab5a6e6aeec52c6",
+            "producer": {
+              "run": "43706703018",
+              "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+              "artifact": "14160352344",
+              "sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec"
+            },
+            "created_utc": "2026-11-15T13:57:25+00:00",
+            "deadline_utc": "2026-11-15T14:57:25+00:00",
+            "actual_run": 43721720516,
+            "next_owner": "/root",
+            "next_gate": "Authorizedminimal2path source successor/completebothPythoncontrols, rootsourceadmission then newfreshdispatch; no unchangedretry",
+            "old64": "historical_only_notretimed",
+            "VI4": "held",
+            "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43721720516",
+            "created_at": "2026-11-15T13:57:37Z",
+            "first_failed_step": "#9 Measure only the root-bound fixed cases with one worker and retain every loss",
+            "first_failed_step_utc": [
+              "2026-11-15T13:58:39Z",
+              "2026-11-15T13:58:41Z"
+            ],
+            "preparation_and_two_CLI_cohorts_steps": "jobAPI_success_raw_admission_pending",
+            "raw_target_counts": null,
+            "raw_timing_counts": null,
+            "raw_result_artifact": 14164792793,
+            "raw_intake_owner": "/root/mark_release_readiness",
+            "authority_retired_after_terminal": true,
+            "raw_failure_root_admission": "coverage/evidence/mark-lbp437217-output-containment-root-failure-closeout-v1.json",
+            "observed_original_topcalls": 2,
+            "observed_native_topcalls": 2,
+            "observed_cohort_sampler_timing": [
+              0,
+              0
+            ],
+            "additional_measurement_work": "zero_by_source_order_inference_no_direct_failedchild_counter"
+          },
+          "controller_output_fix": {
+            "owner": "/root/mark_release_readiness",
+            "status": "root_source_admitted_four_files_99eachPython",
+            "GO": "build/mark-lbp16a5-controller-v1/root-output-root-source-successor-GO-v1.json",
+            "parent": "c25ee4592a8166e0fdb72475cab5a6e6aeec52c6",
+            "branch": "fix/mark-lbp-measurement-output-root-v1",
+            "scope": "Twoaligned output-root/path expressions +v7authority/meaningfulboundaryguards; no math/case/method/FP change",
+            "actual_runtime_authority": 0,
+            "source": "17a35a313877409c6c1e719b70a9c4d977b533db",
+            "root_admission": "coverage/evidence/mark-lbp-output-root-successor-root-source-admission-v1.json",
+            "sha256": "40c6cf6157445a2706f5aa6ed6e40e289b05919a466186ceb39ca325df85f406",
+            "complete_controls_eachPython": 99,
+            "next_owner": "/root",
+            "next_gate": "Publishexactprivate17a, actualremote/workflow/producer/freshclock binding then changed-input2cohorts+12caseGO"
+          },
+          "failed_result_transport": {
+            "path": "D:/Scratch/mark-lbp43721720516-failure-v1/result-artifact14164792793.zip",
+            "bytes": 2924080,
+            "removal_dispatch_attempts": 1,
+            "outcome": "unavailable_prior_tool_response_lost_to_truncation",
+            "current_file": "present_read_only_check",
+            "removed_bytes_claimed": 0,
+            "next": "manual pending; no retry or alternative mechanism; frozen extracted evidence retained"
+          },
+          "output_fix_fixture_manual": {
+            "path": "D:/Scratch/mark-lbp-output-root-controls-v1",
+            "logical_bytes": 339637668,
+            "files": 6634,
+            "reason": "Automaticapprovalreview rejected nativePowerShell beforeexecutor: blocked by policy",
+            "retry_allowed": false
+          },
+          "output_fix_dispatch": {
+            "status": "actual43727894422_in_progress_raw_admission_pending",
+            "controller": "17a35a313877409c6c1e719b70a9c4d977b533db",
+            "GO": "build/mark-lbp16a5-controller-v1/output-root-successor-v1/live-dispatch-v1/root-two-cohort-twelve-case-GO-v2.json",
+            "created_utc": "2026-11-15T15:05:03+00:00",
+            "deadline_utc": "2026-11-15T16:05:03+00:00",
+            "producer": {
+              "run": "43706703018",
+              "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+              "artifact": "14160352344",
+              "sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec"
+            },
+            "actual_run": 43727894422,
+            "changed_input": "Twoalignedpaths/v7scopeguards99each; not anunchangedtimingretry",
+            "next_owner": "/root",
+            "next_gate": "Actualterminal/source/rawC1/postbatch/12reports/168samples/24warmups and losses before root performanceadmission; noautomaticretry",
+            "created_at": "2026-11-15T15:05:17Z",
+            "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43727894422",
+            "intake_owner": "/root/mark_release_readiness"
+          }
+        },
+        "VI_workflow_successor": {
+          "source_parent": "0a9e6102dc051c119f77c259a9d988733f23180d",
+          "source_admission": "coverage/evidence/vi-cohort-value-diagnostic-root-source-admission-v2.json",
+          "owner": "root",
+          "write_scope": [
+            ".github/workflows/vi-value-diagnostic.yml",
+            "tests/test_vi_value_diagnostic_workflow.py"
+          ],
+          "next_gate": "Terminal run43716767195 was ineligible Intel6975P-C with zero original/native calls. No automatic host search/retry. Actual failed AMD9V45 host/value diagnosis remains required; VI4 timing/shipping held.",
+          "real_calls": 0,
+          "root_workflow_source": {
+            "source": "fc9449afc0f7212d4fbbf94b6f17bb2053e8bd5e",
+            "parent": "0a9e6102dc051c119f77c259a9d988733f23180d",
+            "changed_files": 2,
+            "complete_controls_each_retained_Python": 14,
+            "source_handoff": "build/vi-value-diagnostic-workflow-v2/handoff-v1.json",
+            "independent_peer_review": "passed_3955876ae5576a6013cb8b8791b532200680675adaf200aace88066d3f830eed",
+            "actual_authority": 0,
+            "root_admission": "coverage/evidence/vi-value-diagnostic-workflow-root-source-admission-v3.json",
+            "next_gate": "Terminal run43716767195 was ineligible Intel6975P-C with zero original/native calls. No automatic host search/retry. Actual failed AMD9V45 host/value diagnosis remains required; VI4 timing/shipping held.",
+            "remote_exact_source_verified": "fc9449afc0f7212d4fbbf94b6f17bb2053e8bd5e"
+          },
+          "conditional_dispatch": {
+            "status": "terminal_ineligible_host_zero_targets_no_retry",
+            "GO": "build/vi-value-diagnostic-workflow-v2/root-conditional-one-pair-GO-v1.json",
+            "controller": "fc9449afc0f7212d4fbbf94b6f17bb2053e8bd5e",
+            "producer": {
+              "run": "42347579925",
+              "revision": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+              "artifact": "13565257857",
+              "sha256": "5868729f1d010e56d66a23e50880a5f32d3a5c11b3d0b1ae4620d5b7394116c1"
+            },
+            "created_utc": "2026-11-15T13:00:46+00:00",
+            "deadline_utc": "2026-11-15T14:00:46+00:00",
+            "actual_host": {
+              "vendor": "GenuineIntel",
+              "model": "Intel(R) Xeon(R) 6975P-C",
+              "family": "6",
+              "model_id": "173",
+              "stepping": "1"
+            },
+            "actual_run": 43716767195,
+            "timing": 0,
+            "cause": "unresolved",
+            "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43716767195",
+            "created_at": "2026-11-15T13:00:59Z",
+            "actual_controller": "fc9449afc0f7212d4fbbf94b6f17bb2053e8bd5e",
+            "original_native_host_gate": "terminal_ineligible_zero_original_zero_native_no_pair_or_postbatch_credit",
+            "terminal_root_closeout": "coverage/evidence/vi-value-diagnostic-ineligible-host-root-closeout-v1.json",
+            "original_calls": 0,
+            "native_calls": 0,
+            "authority_retired": true,
+            "next_gate": "Concreteeligiblefailed9V45host or separatelyauthorizedmaterialdiagnosischange; preserveVIcausalgate/VI4timinghold"
+          },
+          "cleanup_pending_manual": {
+            "path": "build/vi-value-diagnostic-workflow-v2/run43716767195-transient-v1.zip",
+            "bytes": 6419,
+            "reason": "Automaticapprovalreview blocked precise nativePowerShell removal beforeexecution",
+            "retry_allowed": false
+          }
+        },
+        "retirement_readiness": {
+          "status": "rootreadonly153passed_oneactiveSDKsourceprotected",
+          "root_receipt": "coverage/evidence/clean-worktree-retirement-readiness-root-admission-v1.json",
+          "eligible": 153,
+          "cached_logical_source_bytes": 105084395313,
+          "user_exception": "pending_asyncanswer",
+          "removal_authorized": false,
+          "owner": "/root",
+          "next_gate": "Actualuserexception then currentchangedinput/source/liveconsumer/nativeGitretirement gates"
+        },
+        "superseded_packet_assignments": {
+          "boundary_worker": "draw-multiblock-lbp-source-first-v1",
+          "metrics_integrator": "flood-fill-source-first-v1",
+          "readiness_reviewer": "mark-lbp-enabled-integration-v1"
+        }
+      },
+      "progress_review_20261115": {
+        "owner": "root",
+        "status": "PROGRESS_REVIEW_COMPLETE_TWO_DOCUMENT_STATE_GATES_FAILED_IMPLEMENTATION_PAUSED",
+        "acceptance": "Reconcile current inventory, actual main/remote ancestry and production paths, retained release/failure/performance receipts, frozen successor state, local processes and hosted jobs. Preserve pending cleanup approval and every source/implementation pause. Document/ledger checks only; no builds, scientific tests, benchmarks or dispatch.",
+        "source_identity": "Local HEAD and actual origin/main are 4f28df7db7d3e991984519c630d802cf2c8bf0e3. Delivered ef465027 is an ancestor; git diff reports no src/include/python/cmake/CMakeLists production path changes since that shipping increment. Current working changes are documentation/metadata plus the existing manual cleanup script, not another delivered implementation.",
+        "inventory": {
+          "public_keys": 477,
+          "callables": 448,
+          "classes": 29,
+          "native_partial_images": 271,
+          "native_class_partial": 5,
+          "upstream_only_entries": 197,
+          "metadata_entries": 3,
+          "exception_metadata_provider": 1,
+          "static_member_paths": 284
+        },
+        "shipping": "Exact a6bae9/42262940227 four-profile 271-path admission and main delivery ef465027 remain the shipping baseline. Retained admission matches the ledger SHA-256 pin. These are partial image contracts, not 271 full API closures or an overall completion percentage.",
+        "release_blocker": "93f MARK/LBP candidate complete169 commands failed on both retained Pythons: three stale Linux-group metadata assertions each. Root rechecked all 10 command/XML/terminal/plugin/test-ID proof hashes in coverage/evidence/mark-lbp93f-complete-source-failure-v1.json. Affected823 passes do not replace complete-barrier failure. Clean five-file correction 9e15e99158e4ce5200000b47cf674b6123203111 is frozen at build/mark-lbp-linux-group-fix-v1/handoff-v1.json; its author reports 105 source checks each Python. Independent root/non-author admission and complete169 reruns remain pending, followed by mandatory affected SDK/public/mode/genuine/performance gates. No shipping promotion.",
+        "performance": "Shipped-product latest 68-case original-public one-thread cohort remains 34 wins/34 losses. Qualified dda9 candidate has two admitted scoped cohorts: 24 cases/20 wins/4 losses plus 40 cases/18 wins/22 losses = 64 cases/896 samples/38 wins/26 losses; MARK8/LBP4/VI4 remain outside that candidate cohort. New crop view-only comparison is independently reviewed raw evidence, 6 faster/2 slower versus prior C++, unaccepted and not original-library performance. Cohorts are source/runtime scoped, not library-wide superiority.",
+        "private_progress": "MARK corrected eight-case strict public comparisons and LBP minimum-firstcase/modern-candidate controls are retained private scope; flood assignment has 636 passing private saved/protocol nodes with owning SDK/mode/genuine/performance still open. GLCM larger minimum8 reference rows are admitted but modern-v1/terminal.json is absent, so broader native accuracy remains pending. IGG/golden-angle future work retains bounded source/native/reference evidence without successor release acceptance. No additional API or full-contract gate closed in this review.",
+        "runtime_observation": "Read-only GitHub CLI check at 2026-11-15T03:46:12-05:00 returned no in-progress or queued runs; latest hosted results are terminal November7 diagnostics. No matching local project build/test/compiler/WSL reader was found. Historical assignments remain preserved but inactive; active_workers cleared and stale mode/next_action corrected.",
+        "cleanup": "67,189,758,281 logical bytes previously removed; 5,316,903,559 logical bytes of required archive outputs retained. Retirement of 154 clean/cache-only worktrees / 105,802,950,754 committed source bytes remains prepared but awaiting the explicit ancestor-of-main exception; this review request is not approval. Fifteen D archives and twelve additional passing fixture roots remain policy-blocked, with no alternate retry. Source, branches, environments, failed reproducers and unique artifacts remain preserved.",
+        "validation": "PASS: UTF-8 ledger/inventory and 27 added local links, conflict markers and CRLF-aware git diff --check. Existing work_queue --check passes368 and --ready reports0 with paused status. FAILED: --agents exit1 Invalid work ledger: 'branch'; all three recorded packet mappings lack branch fields, including in committed HEAD. FAILED: generate_api_implementation_paths.py --check exit1, both generated planning artifacts stale. These failed checks remain failed; no complete readiness claim, source/science rerun or local-proof archive replay.",
+        "tracking_failures": "The roadmap still classifies268 native-partial/200 upstream-only instead of current271/197; three utility routes are outdated. Read-only in-memory regeneration finds28 changed fields and would also overwrite four reviewed IGG route/method/safety fields with generic guidance mentioning unsupported mask/channel/output domains. No artifacts were regenerated and no reviewed IGG data was overwritten. Root must align the generator with retained reviewed IGG guidance before regeneration, and resolve exact branch locators or retire inactive worker mappings before relying on worker-status output; do not simply weaken checks or substitute guessed branches.",
+        "waste_review": "Reused existing inventory and receipts; checked only main/remote identity, unchanged production projection, admission pin and 10 failed-barrier proof files. A narrow diagnostic reader initially assumed every historical checkpoint was a dictionary; corrected that reader only and retained the failed result. No expensive experiment, download, full census or source-barrier replay. Current mode/worker/next-action fields no longer advertise historical live work. Review caught two real document-state failures and an unsafe blind-regeneration delta; next metadata repair is explicit rather than another broad audit. Root next trigger is explicit implementation resume or an answer to the separate cleanup exception.",
+        "next_owner_trigger": "Root owns the two bounded tracking repairs before those views can establish dispatch readiness; preserve reviewed IGG route fields, exact branch evidence and failures. After explicit implementation resume, prioritize the smallest 9e15 independent source admission and complete169 readiness gate, then finish and deliver one compatible 281-path increment before opening more families. Unrelated publication/ledger refresh must not delay genuinely eligible release work. Until then review/storage only. Cleanup retirement still depends on the user's actual exception answer; blocked deletion remains manual-only."
+      },
       "qualified_image_names": 271,
       "prepared_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
       "prepared_run": 42262940227,
@@ -39640,16 +40191,41 @@
         "result": "1024privatechecks+32controlledcallsPASS; changed8privatecomparisons6faster2slower UNACCEPTED. Originalpublic/genuine open.",
         "next_owner_trigger": "Root prioritizes readyMARK/LBPfullpublic/mode/SDK/sharedsource/genuine and demonstratedfloodassignment optimization. Crop remainsboundedexperiment, no thirdvariation until currentresultreview identifies useful justified action; neverwaitunfinishedcrop before earliestcompatiblebundle.",
         "waste_review": "Onechangedsource comparison24.77s; oldf0207/1preserved. Initialrootjournal reader assumedonlybefore/afterpairs, correctedtoinspect8measure_returned events; zero timingreplay. Unchangedmeasure/fixtures/reusablebaseline/helper used; no newengine/fullbuild/env/archiveauth."
+      },
+      "GLCM_large_prefix_count_correction": {
+        "old_source": "dfd535e8c281118d54a436c06a917fb6dcc8f9d9",
+        "old_result": "8prefixsetupPASS butcaptureconsumerwrong9/actual8;original0/blocked",
+        "source": "0b6faf4f95d1a1c58e93cb39b48e1bb7b1079560",
+        "actual_intake": "coverage/evidence/glcm-large-count-corrected-prefix-intake-v3.json",
+        "actual_prefixes": 8,
+        "actual_factories": 64,
+        "original_calls": 8,
+        "next_owner_trigger": "Rootactualmin8exit/typedraw/journal/full32admission thenseparatemodern8; no native/perf credit.",
+        "independent_readiness": "build/glcm-prefix-factory-count-independent-review-v3/readiness-v3.json",
+        "minimum_GO": "build/glcm-prefix-factory-count-v3/minimum-original-GO-ACTUAL-v3.json",
+        "minimum_GO_sha256": "02614acbfa2f09f6d6b5b66611c18a6b380667d23e353db3a02518d18ce9176c",
+        "minimum_state": "Actual8references PASS:72payloads2130576logicalB/16journal/callerprocess32; minimumremaining0",
+        "minimum_raw_admission": "coverage/evidence/glcm-large-minimum-raw-root-admission-v3.json",
+        "modern_GO": "build/glcm-prefix-factory-count-v3/modern-original-GO-ACTUAL-v3.json",
+        "modern_state": "Separatelyauthorized8next/actualexecutionpending; old1880/native0/timing0"
+      },
+      "source_capacity_block": {
+        "cleanup_receipt": "build/mark-lbp93f-complete-source-v1/scratch-cleanup-v1.json",
+        "attempt": "AutomaticreviewrejectednativePSRemove-Item twoverifiedm93ftempchildren;0deleted/noalternate retry. Usermanualcleanuprequestedpending.",
+        "free_D_last_observed": 3419848704,
+        "reclaimable_logical_bytes": 13308146801,
+        "allowed": "Onlybounded5Csourceguards~12MB,newGLCMraw<38.5MB,existingcurrentobjects/localmodes; nofull169/genuineuntilcapacity.",
+        "preserved": "Allbaselinepackages/raw/proofs/activeworktrees, olddeniedtargets unchanged."
       }
     },
     "shared_integration_author": {
       "owner": "metrics_integrator",
-      "state": "LIVE_SOURCE_PREPARATION_ONLY",
+      "state": "PAUSED_93F_SOURCE_ADMITTED_COMPLETE169_FAILED_9E15_SUCCESSOR_PENDING",
       "base": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
       "scope": "Single compatible MARK/LBP correction candidate; sharedCMake/sourcecontexts/readers/SDK/selectors exclusivelyC. Root independentadmission/main. Other families stayisolated.",
       "prerequisites": "Roota17ABI crossruntimepolicy component, root11af/596774VI currentcount and bdd3benchmark admitted; minimumfailedsource root71f5 preserved. Numericalmath/data/reference unchangedforRadon. BboundedWindowsVI ownunitdiag closesknownnonGNU frontier, no originalWindowsclaim.",
       "required_evidence": "Actualsource-derived counts/selectors/SDKfamilies; realmetrics__all__/starimport/namespace ownership/defaultdtypefactory/hotswap/defaultgenuine/sdk client wiring, currentcontext successor/inverses, LinuxVI40 andRadon18policy selectors withunchanged224Radonseal and LinuxF1transport. AffectedbothPython sourceguards normalplugins0science; affectedlocalcompile orsaved checks onlywherecurrentprojectioninvalidatespriorproof. Freezeonecoherenthandoff, rootindependentadmission thencompleteactualworkflowbarriers beforegenuine.",
-      "next_gate": "Freeze earliest coherent source after required affectedsourcechecks; root fullpublic/mode/SDK/actualsourcebarriers/genuine/performance gates pending. Prior source/handoff/count records in this object are historical until replaced by exact newcandidate receipt; no oldpending gate is waived.",
+      "next_gate": "PAUSED: 93f independent/root shared-source admission passed but both complete169 barriers failed three metadata checks. Frozen 9e15 successor requires independent five-file admission, then actual full169 commands both retained Pythons with normal plugins/no fail-fast before any hosted release. Affected SDK/public/mode/genuine-four-profile/original-public-performance/main delivery remain mandatory. Preserve 93f handoff/failures; no resumed author or dispatch from this state update.",
       "actual_staging_counts": {
         "image_paths": 280,
         "registered_functions": 283,
@@ -39660,9 +40236,9 @@
         "scope": "Frozen a5 staging only; complete source, genuine and delivery pending."
       },
       "ready_flood_cost_admission": "coverage/evidence/flood-fill-cost-root-admission-v1.json",
-      "source": "UNFROZEN_CURRENT_DDA_CHILD",
-      "handoff": "build/vi-reduction-controller-integration-v2/handoff-v1.json",
-      "handoff_sha256": "8abb884a12c6393d06977df8f672e008641a7870d0b431584d3292af552cbb14",
+      "source": "93f67dd8737ed5223ac1d785f6c2d145a9177257",
+      "handoff": "build/mark-wide-enabled-integration-v1/handoff-v1.json",
+      "handoff_sha256": "91bb5f49f4e570e1760231a4748bb3be55dfc1f031afe89eae59feb39e28aa77",
       "root_admission": "coverage/evidence/vi-reduction-controller-successor-source-admission-v1.json",
       "complete_barrier_handles": {},
       "complete_readiness": {
@@ -39727,6 +40303,130 @@
       "next": "Root retain/review actual failed3e campaign once: modern+minimum receipts reused, onlyWindows/debug downloading root6275. No unchangedretry. Corrected dda9 complete162 barriers live26132/63499; no sourcepass or genuine authority yet.",
       "conclusion": "failure",
       "watcher_session_terminal_exit": 1
+    },
+    "storage_maintenance": {
+      "cleanup_20261115": {
+        "status": "terminal_partial_cleanup_archive_discard_policy_blocked",
+        "final_cleanup_request": {
+          "owner": "root",
+          "status": "awaiting_user_exception_for_prepared_clean_worktree_retirement",
+          "scope": "User requests cleanup and closeout. Preserve all source changes, branches, environments, raw evidence and pending baseline dependencies. Implementation remains paused; no policy-blocked deletion retry.",
+          "worktree_catalogue": "build/cleanup/storage-20261115/final-worktree-catalogue-v1.json: native Git source/ignored-status catalogue passed in 23.22s. 154 clean cache-only copies / 105,802,950,754 committed blob bytes (126 C / 85,865,474,796; 28 D / 19,937,475,958) are ready for retirement review; 93 copies with edits or other assets remain protected. User exception to ancestor-of-main rule requested for the exact 154 only; no retirement before an actual answer.",
+          "additional_fixture_gate": "PASS: build/cleanup/storage-20261115/final-fixtures-review-v1.json identifies 12 passing tmp roots / 956,759,333 logical bytes in JOIN density and rolling integration; 11 failed-run roots preserved. Exact command/XML/terminal/source hashes retained outside targets. Candidate255 tmp excluded after its retained-temporary-data.json revealed a previous automatic-review policy block; no deletion attempted there.",
+          "additional_fixture_execution": "BLOCKED BEFORE EXECUTION: automatic approval review rejected the exact twelve-folder native PowerShell action with reason blocked by policy. No executor started, zero removed, no alternate attempt. Read-only follow-up confirms all 12 folders still exist; final-fixtures-removal-v1.json is absent and must not be claimed as evidence.",
+          "worktree_retirement_plan": "build/cleanup/storage-20261115/clean-worktree-retirement-plan-v1.json contains the exact 154 clean/cache-only paths, HEADs and branch refs. Source/branches remain untouched while the explicit user ancestry exception is pending. No source retirement is authorized merely by elapsed time or this prepared plan.",
+          "acceptance": "Reuse current source/size inventories. Inspect worktree source changes and unique ignored assets before any retirement; existing ancestor-of-main requirement remains applicable. For additional fixtures, require exact retained terminal/command/XML/source evidence and exclude failed reproducers/protected dependencies. Inspect actual exits/receipts, update existing plan/ledger/checklist and run document/state checks only.",
+          "validation": "Prepared catalogue/plan and source/ignored-asset evidence inspected; 154 clean/cache-only candidates and 93 protected other worktrees. Twelve approved-by-evidence fixture roots remain physically present after automatic review rejected execution; no removal receipt claimed. Document/JSON/link/CRLF-aware whitespace checks only; no implementation, science or build.",
+          "waste_review": "Reused source sizes and census; one native Git status/ignored catalogue took 23.22s. A 3.31GB candidate was correctly excluded on reading its historical policy rejection before action. Twelve other passing fixture roots were reviewed once, then execution rejected before start; no duplicate or alternate deletion attempt. No expensive tests or benchmarks. Next plan now waits on the exact prepared worktree exception rather than repeatedly revisiting blocked fixtures.",
+          "next_gate": "Current root-admitted subset:153 clean/cache-only copies,105084395313 cached logical source bytes; active9e15 SDK source protected. Await actual user ancestry exception; no deletion authorized. Prior policy-blocked targets remain manual-only.",
+          "current_readiness_receipt": "coverage/evidence/clean-worktree-retirement-readiness-root-admission-v1.json",
+          "current_eligible_copies": 153,
+          "current_cached_logical_source_bytes": 105084395313,
+          "original154_plan_scope": "Historical prepared plan preserved; one current SDK source excluded.",
+          "user_exception": "pending_async_answer",
+          "future_retirement_authorized": false
+        },
+        "remaining_space_followup": {
+          "owner": "root",
+          "status": "terminal_read_only_breakdown_scoped_not_complete_census",
+          "request": "User asks about the remaining 200+ GB. Assess remaining storage; implementation stays paused and no blocked deletion may be retried.",
+          "changed_input": "Prior cleanup removed nine worktrees and 8,205 fixture roots; earlier C archives are absent. Old directory totals no longer describe the current footprint.",
+          "acceptance": "Reuse the retained inventory to select large remaining roots; measure source trees from native Git without scanning their ignored outputs, and stat only selected remaining roots. Label source-tree/logical/physical scope distinctly. Root reports protected dependencies, blocked cleanup and unreviewed candidates from actual results; document/state checks only.",
+          "source_projection_receipt": "build/cleanup/storage-20261115/remaining-source-trees-v1.json; native Git exit 0, 12.01 seconds. C: 219 worktrees / 141,053,918,890 committed blob bytes; D: 28 / 19,937,475,958 bytes. These are Git source-tree sizes, not current filesystem logical or physical allocation. C ancestry: 218 branches not merged into main; the sole merged worktree is the previously preserved perimeter source with untracked files. Uncommitted source/ignored assets excluded from the Git totals.",
+          "large_roots_receipt": "build/cleanup/storage-20261115/remaining-large-roots-v1.json; 63 roots selected from retained inventory, metadata-only stat review 21.18 seconds, 68,290,360,607 readable logical bytes. Worktrees and previously blocked source-guard/s2 excluded. Not a full workspace total. Fifty WinError3 paths and 1,987 retired-artifact reparse entries remain unmeasured; errors retained, no fallback scan or deletion.",
+          "major_buckets": "34 qualification/reference output folders: 33,683,627,266 current readable logical bytes, including the known blocked 1.59GB partial file; retired-worktree-artifacts: at least 17,891,590,715 bytes, with 48 scan errors; other selected roots: 16,715,142,626 bytes, including candidate255 setup 3.31GB and JOIN density integration 1.73GB. Previously blocked C source-guard/s2: retained 2026-11-07 measurement 26,137,868,875 bytes, paths still present; not rescanned or retried. These buckets use explicitly different source/current-stat/historical-stat scopes and are not an attributed physical-space total.",
+          "outcome": "The 18.59GB D archive block does not account for the remaining C footprint. Most known C content is duplicated checkout source; retained output/proof/cache groups are substantial too. The first cleanup did not establish that every remaining artifact is necessary or eligible for removal. No additional deletion, implementation, build, test, benchmark or agent dispatch for this question.",
+          "waste_review": "Reused the retained census to select roots and Git trees to avoid walking ignored worktree outputs; two scoped reads took 12.01/21.18s. Preserved partial scan errors instead of claiming a complete census or rescanning through another runtime. No numerical replay or new cleanup framework. Reviewed, next target changes to source-copy/unique-artifact mapping rather than treating the leftover footprint as archives.",
+          "validation": "Document/JSON/local-link/whitespace checks only; source and output receipts inspected, source coverage unchanged.",
+          "next_gate": "Root maps unique ignored assets and pending source consumers before any worktree retirement; 218 unmerged C branches do not pass the existing ancestor-of-main cleanup gate. Preserve untracked source and branch refs. Raw output/products require selective evidence/dependency review, not wholesale deletion. Previously policy-blocked targets remain manual-only. Implementation remains paused."
+        },
+        "owner": "root",
+        "scope": "User-authorized project storage cleanup; implementation remains paused. Preserve unfinished source, installed environments, baseline products, raw results, and relevant failed reproducers. Do not retry previously policy-blocked deletion.",
+        "prerequisites": "Resolved workspace paths; no registered worktree/live reader/reparse point/protected dependency; retained command/XML/source identity and failure diagnostics outside removal roots. Inspect actual removal exits before dependent actions.",
+        "inventory_reused": "build/local-cleanup-inventory-v3.json",
+        "fixture_review": "build/cleanup/storage-20261115/review-v2.json; predecessor review.json retained. 8,205 eligible fixture roots, 61,076,198,094 logical bytes, 865,422 files; failed/unmatched fixtures preserved. Sixteen nested Git markers verified as the exact passing one-file synthetic source-seal fixture, not user source. 102 command/XML/terminal/source-identity files retained outside removal roots.",
+        "worktree_review": "build/cleanup/storage-20261115/worktrees-review.json; nine clean ancestor-of-main worktrees, 6,113,560,187 tracked logical bytes, only generated bytecode/cache ignored entries. Dirty perimeter-source-first-v1 and every unmerged worktree preserved.",
+        "fixture_result": "PASS: native PowerShell exit 0; all 8,205 paths verified absent and all 102 retained evidence hashes unchanged. Exact receipt: build/cleanup/storage-20261115/fixture-removal-receipt.json. Removed 61,076,198,094 logical bytes; observed C free-space increase 155,934,437,376 bytes includes concurrent activity and is not attributable physical reclamation.",
+        "worktree_result": "PASS: native git worktree remove exit 0 for all nine reviewed clean merged worktrees; branches retained. Exact receipt: build/cleanup/storage-20261115/worktree-removal-receipt.json.",
+        "archive_retention_result": "PASS: extraction exit 0 / 404.03 seconds; root independently checked existence/size of all 244,009 retained files / 5,316,903,559 logical bytes, 36 unpacked package products and 168 reused corpora. Raw XML/log/command/caller data, failure reproducers and baseline products retained. Receipts: build/cleanup/storage-20261115/archive-products-receipt.json and archive-discard-review.json. No archive digest/seal replay. Conservative extraction peak 10 GiB; D free 294,157,213,696 bytes passed peak plus 20 GiB and 30 GiB floor; observed after 288,401,870,848 bytes. Root owns these retained dependencies until their matching failed-family diagnosis or baseline consumer closes; exclude from disposable scratch limits.",
+        "archive_discard_result": "BLOCKED BEFORE EXECUTION: automatic approval review rejected the exact fifteen-file native PowerShell action with reason blocked by policy. No executor started, 0 archives/bytes removed, 0 alternative deletion attempts. Read-only follow-up confirms 4/7/4 ZIPs totaling 18,589,464,604 bytes still present in D:/Scratch/skimage281-42342525409-artifacts, skimage281-42347579925-artifacts and skimage282-42356138491-artifacts. Exact list remains in archive-discard-review.json. A subsequent metadata command to write a separate rejection receipt was also rejected before execution; archive-removal-receipt.json and archive-removal-rejected-v1.json are absent, not evidence. This existing ledger and plan are the rejection record.",
+        "logical_bytes_removed": 67189758281,
+        "new_retained_logical_bytes": 5316903559,
+        "net_logical_reduction_excluding_generated_cache_bytes": 61872854722,
+        "logical_reduction_scope": "Removed fixture/tracked worktree bytes minus newly extracted archive products; uncounted generated caches and cleanup receipt/script metadata are excluded. This is not an attributed physical free-space measurement.",
+        "observed_C_free_bytes_after_retirement": 379348250624,
+        "space_measurement_scope": "Logical file sizes and observed drive free-space changes are distinct. Concurrent activity prevents attributing the full drive change to this cleanup.",
+        "preserved": "154 failed/unmatched fixture roots; unfinished perimeter-source-first-v1 files; all unmerged worktrees and source changes; installed environments, baseline/runtime dependencies and raw evidence. Nine retired branch refs remain exact. Previously denied source-guard-scratch/s2, c281-dda9, abi-vi-cumulative-complete-v1 and boundary-bound-import-cache-barrier-v1 targets, plus the 1.59GB partial download, were not retried.",
+        "previous_cleanup_availability": "All six c_retired_review paths and D:/Scratch/c281-3e were already absent at entry. Checked immediate completed C build archives were also absent. Prior removal time/owner/free-space contribution is unknown; missing archives are unavailable local evidence. D fifteen ZIPs remain present with historical once-authenticated receipts, not newly reauthenticated archive digests.",
+        "waste_review": "Reused existing inventory, terminal/source evidence and products; scoped fixture review 89.19s, removal 244.60s, required archive extraction 404.03s. One default-encoding ledger read failed and was narrowly corrected with explicit UTF-8. Console dictionary projection hid fields; root inspected the actual JSON receipt before dependent work. No repeated deletion, scientific run, build, benchmark or unchanged archive authentication. Extracted raw evidence/products remain useful despite blocked discard. Reviewed, no implementation change.",
+        "next_gate": "Root verifies user-performed removal of the exact policy-blocked archives/scratch and current free capacity before allocation-heavy work resumes; do not retry through another method. Implementation remains paused. Documentation/state checks only for this closeout.",
+        "validation": "PASS: UTF-8 ledger JSON and current-state arithmetic; 12 added local links; inventory remains 477 and checklist 29 classes/284 member paths with no API gate edits; missing removal receipts explicitly not claimed; CRLF-aware git diff --check exit 0. Final source remains 4f28df7db7d3e991984519c630d802cf2c8bf0e3, no staged changes, 248 registered worktrees. Fixture/evidence and branch-head checks reused within unchanged scope. No science/build/benchmark reruns. Archive discard remains BLOCKED, not passed."
+      },
+      "status": "partial_cleanup_completed_remaining_archive_and_scratch_actions_policy_blocked",
+      "owner": "root",
+      "target": "D:/Scratch/c281-3e",
+      "logical_bytes": 13220958873,
+      "removed_bytes": 0,
+      "reason": "blocked by policy",
+      "next_gate": "Latest outcome is cleanup_20261115: eligible fixture/worktree removals passed; fifteen D archive removals and earlier denied scratch remain policy-blocked. D:/Scratch/c281-3e and six historical retired C fixture roots are now observed absent with removal attribution unknown. Root verifies manual outcomes/free capacity; implementation remains paused. Original target/reason/removed_bytes fields retain the historical blocked attempt.",
+      "waste_review": "Reused existing census and terminal receipts; no scientific replay. Retain outputs and relevant reproducers separately, release disposable fixtures at terminal closeout.",
+      "retained_evidence": "build/current281-sourcebarrier-preparation-v1/sourcebarrier-{windows311,windows313}-v3",
+      "manual_script_created": false,
+      "c_retired_review": {
+        "status": "six_completed_fixture_roots_reviewed_removal_pending",
+        "logical_bytes": 20889648830,
+        "paths": [
+          "build/retired-worktree-artifacts/public203-admitted-main/build/public203-composition-v1/pytest-temp",
+          "build/retired-worktree-artifacts/map-array-frontend-v1/build/map-array-public-v1/q-tmp",
+          "build/retired-worktree-artifacts/map-array-frontend-v1/build/map-array-public-v1/stager-tmp",
+          "build/retired-worktree-artifacts/label-points-shared-v1/build/q-tmp",
+          "build/retired-worktree-artifacts/label-points-shared-v1/build/stager-tmp",
+          "build/retired-worktree-artifacts/h-extrema-public203/build/public-plan-v1/pytest-final-windows"
+        ],
+        "evidence": "Sibling metadata.xml/validation-summary.json:1020 checks; both q.xml:583 and stager.xml:320; final-windows.xml:955; all zero failures/errors. No reparse points or scan errors in six fixture roots. Retain sibling results/logs/scripts and failed-run fixture roots.",
+        "deletion_attempt": "public203 pytest-temp removal rejected by automatic approval review: blocked by policy; zero deletion, no alternative retry",
+        "owner_trigger": "Root verifies user-performed removal and actual free-space change before next allocation-heavy work; implementation paused."
+      },
+      "remaining_c_build_review": {
+        "inventory": "build/local-cleanup-inventory-v3.json",
+        "logical_bytes_excluding_retired": 501759910309,
+        "unreadable_entries": 13,
+        "worktrees_bytes": 142149865901,
+        "zip_bytes_overlapping_directory_totals": 197716650317,
+        "five_integration_tmp_groups": {
+          "abi-vi-cumulative-v1": 23248184358,
+          "inverse-gaussian-gradient-enabled-integration-v1": 13407840306,
+          "mark-lbp-radon-util-integration-v1": 12818931971,
+          "mark-lbp-enabled-integration-v1": 12507032802,
+          "current281-shared-assertion-projection-v2": 10408846351
+        },
+        "source_guard_scratch_and_s2_bytes": 26137868875,
+        "status": "measured_candidates_not_deleted",
+        "next_gate": "Root review of failed-run relevant reproducers and live dependencies before exact manual cleanup list; source-guard/s2 deletions previously blocked, do not retry. Archives require retained-evidence policy and locator review before offload. Worktrees require clean ancestor and artifact dependency checks.",
+        "waste_review": "Remaining-build scope required current census; scoped child tmp measurements identify 72.39GB of retained copies, not new science. Reuse this inventory; implementation remains paused."
+      },
+      "archive_discard_authorization": {
+        "user_instruction": "2026-11-08: We do not need any archives; no permanent project archive retention, including current/historical qualification bundles.",
+        "status": "all_archive_retention_waived_existing_deletion_policy_block_still_pending_manual_action",
+        "reviewed_legacy_archive_batch": {
+          "folders": 14,
+          "zip_files": 78,
+          "logical_bytes": 70953466641,
+          "selection": "Immediate ZIP files only in legacy public qualification directories and regionprops-performance-v2-qualification-v1; no recursive worktree/source cleanup."
+        },
+        "attempt": "ZIP removal in public257-qualification-v1, public258-scalar-qualification-v1 and regionprops-performance-v2-qualification-v1 rejected before execution: blocked by policy",
+        "removed_files": 0,
+        "next_owner_trigger": "User manually removes reviewed obsolete archives; root verifies capacity and records unavailable local evidence. Current environments, source and pending runtime/baseline dependencies remain protected. Implementation paused.",
+        "waste_review": "Clarified existing rule and operational record only; no new scan, deletion retry, build or scientific rerun. Root checks actual manual outcome before claiming freed space.",
+        "retention_policy": "Archives are transient transport only; retain needed extracted products and concise results, then discard archives. Do not recreate/download historical archives for bookkeeping. Record missing archive evidence honestly."
+      },
+      "manual_cleanup_script": {
+        "path": "tools/cleanup-build.ps1",
+        "status": "PowerShell syntax validated; not executed",
+        "scope": "Untracked build archives under C checkout with environment/reparse exclusions; six reviewed C retired fixture roots and D:/Scratch/c281-3e, with sibling passing-result checks. No wholesale worktree or build deletion.",
+        "next_owner_trigger": "User runs script (optional -WhatIf preview); root records actual freed space and discarded archive availability afterward.",
+        "waste_review": "Single reusable manual script replaces scattered commands; existing reviewed paths/results reused. No deletion retry, scientific test or build."
+      }
     }
   },
   "parallel_review": {

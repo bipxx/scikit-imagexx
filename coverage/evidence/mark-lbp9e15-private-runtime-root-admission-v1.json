@@ -1,0 +1,131 @@
+{
+  "schema": "mark-lbp9e15-private-runtime-root-admission-v1",
+  "status": "PASS_REUSED_BOUNDED_NORMAL_PRIVATE_SCOPES_TRUE_MODES_GENUINE_PENDING",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "readiness": {
+    "path": "build\\mark-lbp9e15-release-readiness-v1\\readiness-v1.json",
+    "sha256": "c1ee1db96f001722c4da453b51cd9b575b8e4dfc3d52f113edf3f65fb291a815"
+  },
+  "root_review": "Inspected actual readiness/index schema and original runtime/SDK closeouts:4actual188-node normal/runtime-disabled cells, fullportable/caller32/default1/workers1-4 and2actualSDKclient exit0 records. C independently authenticated882files including752rawrows and unchanged source/runtime closure. No unchanged normal/native or core/archive replay.",
+  "passed_scope": {
+    "MARK_public_comparisons": {
+      "calls": 8,
+      "profiles": [
+        "minimum",
+        "modern"
+      ],
+      "scope": "Standalone corrected ordinary private frontend; strict retained output/input/software/semantic FP and caller/process32; not genuine namespace"
+    },
+    "native_FP_units": {
+      "MARK_find_calls": 8,
+      "LBP_binary_calls": 8,
+      "workers": [
+        1,
+        4
+      ],
+      "scope": "Bounded units; not whole public/SDK completion"
+    },
+    "LBP_firstcases": [
+      {
+        "profile": "minimum",
+        "public_calls": 1,
+        "builtin_entries": 33,
+        "scope": "Actual retained minimum original firstcase",
+        "before_after": {
+          "control": 895,
+          "status": 1058,
+          "mxcsr": 8098
+        }
+      },
+      {
+        "profile": "modern",
+        "public_calls": 1,
+        "builtin_entries": 33,
+        "scope": "Modern candidate-equivalence only; no modern original observation",
+        "before_after": {
+          "control": 895,
+          "status": 1058,
+          "mxcsr": 8098
+        }
+      }
+    ],
+    "LBP_saved_cells": [
+      {
+        "profile": "minimum",
+        "mode": "normal",
+        "nodes": 188,
+        "runtime_python": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "numpy": "1.24.4",
+        "core": "D:\\Scratch\\lbp-entry-fp-public-closure-v1\\normal\\minimum\\skimagexx\\_core.cpython-311-x86_64-linux-gnu.so",
+        "core_stat_bytes": 709936,
+        "runtime_scope": "Recorded actual execution identity; no current Linux environment or core rehash/probe.",
+        "strict_records": 188,
+        "caller_process32_exact": true,
+        "default_workers": 1
+      },
+      {
+        "profile": "minimum",
+        "mode": "disabled",
+        "nodes": 188,
+        "runtime_python": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+        "numpy": "1.24.4",
+        "core": "D:\\Scratch\\lbp-entry-fp-public-closure-v1\\normal\\minimum\\skimagexx\\_core.cpython-311-x86_64-linux-gnu.so",
+        "core_stat_bytes": 709936,
+        "runtime_scope": "Recorded actual execution identity; no current Linux environment or core rehash/probe.",
+        "strict_records": 188,
+        "caller_process32_exact": true,
+        "default_workers": 1
+      },
+      {
+        "profile": "modern",
+        "mode": "normal",
+        "nodes": 188,
+        "runtime_python": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "numpy": "2.5.4",
+        "core": "D:\\Scratch\\lbp-entry-fp-public-closure-v1\\normal\\modern\\skimagexx\\_core.cpython-313-x86_64-linux-gnu.so",
+        "core_stat_bytes": 719840,
+        "runtime_scope": "Recorded actual execution identity; no current Linux environment or core rehash/probe.",
+        "strict_records": 188,
+        "caller_process32_exact": true,
+        "default_workers": 1
+      },
+      {
+        "profile": "modern",
+        "mode": "disabled",
+        "nodes": 188,
+        "runtime_python": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python",
+        "numpy": "2.5.4",
+        "core": "D:\\Scratch\\lbp-entry-fp-public-closure-v1\\normal\\modern\\skimagexx\\_core.cpython-313-x86_64-linux-gnu.so",
+        "core_stat_bytes": 719840,
+        "runtime_scope": "Recorded actual execution identity; no current Linux environment or core rehash/probe.",
+        "strict_records": 188,
+        "caller_process32_exact": true,
+        "default_workers": 1
+      }
+    ],
+    "SDK_normal": {
+      "prefix": "D:/Scratch/mark-lbp93f-private-sdk-v1/SDK-current",
+      "client_runs": 2,
+      "source": "93f67dd8737ed5223ac1d785f6c2d145a9177257",
+      "successful_named_MARK_calls": 426,
+      "refusal_calls": 4,
+      "old402_scope": "Software owning saved rows; full FP not independently inferred for those old rows",
+      "new24_scope": "Eight authentic wide rows x default1/global4/explicit4; target semantic FP and caller/process32 asserted by source-matched normal client",
+      "LBP_scope": "Owning/gray/normalization/ordered physical overlap/scalar-vsSSE2/budget/byteswap/stride/broadcast/overflow invariants; not94 saved SDK parity or whole LBP FP",
+      "assertion_build": "-UNDEBUG retained in exact client flags; binaries match recorded identities",
+      "limits": "GNU13.3/glibc2.39 Linuxx64 private reconstructed SDK; not current whole genuine wheel/SDK qualification"
+    }
+  },
+  "pending": [
+    "Root independent admission of this retained private runtime/SDK scope; no numerical rerun needed for unchanged normal evidence.",
+    "True compiler-scalar and ASan/UBSan LBP firstcase+94xworkers1/4 modes; old proposal scalar/sanitize crop donor paths are obsolete, current12d counterparts are retained.",
+    "Applicable MARK wide/compiler-scalar/sanitizer operation/SDK scope; only normal28 new SDK calls ran, future84 was never evidence.",
+    "Whole owning LBP SDK target-FP/caller32 evidence remains unassessed by the existing invariant client.",
+    "Complete169 source barriers on exact9e15 both retained Windows Pythons (owned root/A source admission first).",
+    "Exact-source genuine four-profile one-core/public namespace/hotswap/default dtype/default1/workers/relocated full SDK108; private initializer does not supply this.",
+    "Current actual producer-bound MARK/LBP/VI cohorts and separately authorized original-public one-thread performance; benchmark driver context changed.",
+    "Main shipping projection and delivery; broader domains/nonGNU/Windows observed wide FP and modern original-large reference remain explicit frontiers."
+  ],
+  "limits": "Private normal/runtime-disabled scopes only. MARK426+4 mixes software/strict calls; LBP owning invariants are not whole FP proof. True modes/genuine namespace/hotswap/fullSDK and current-producer performance remain open.",
+  "waste_review": "Reused matched scopes. Root evidence reader corrected list-vs-dict assumption; preflight writer syntax error occurred before execution, no mutation or scientific replay."
+}

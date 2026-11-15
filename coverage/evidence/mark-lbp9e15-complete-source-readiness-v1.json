@@ -1,0 +1,128 @@
+{
+  "schema": "mark-lbp9e15-complete-source-readiness-v1",
+  "status": "PASS_COMPLETE169_BOTH_RETAINED_PYTHONS_NOT_GENUINE_RELEASE",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "selectors": 169,
+  "normal_conftest": true,
+  "normal_plugins": true,
+  "no_failfast": true,
+  "identical_unique_IDs_each": 4132,
+  "profiles": [
+    {
+      "profile": "windows311",
+      "ordinary_checks": 4132,
+      "subtests": 8,
+      "suite_checks": 4140,
+      "seconds": 475.1720000000205,
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 475.1720000000205,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 4140,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "proofs": [
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows311-v1\\command.json",
+          "bytes": 24858,
+          "sha256": "8771b8d59c1613c485eaae570327edead004d73f453c7a509d9fb24c3385fe81"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows311-v1\\terminal.json",
+          "bytes": 299,
+          "sha256": "d432bbd1ba504cb9f5cf5ee4f68a42cb33c92bec60ee0e2b5ffba161f76b204a"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows311-v1\\results.xml",
+          "bytes": 648489,
+          "sha256": "df6ba8cc3957d2099755577b0355768c261a6cdbbac0ce6a221db6158dfcedcb"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows311-v1\\plugins.json",
+          "bytes": 4697,
+          "sha256": "9330defdc66757a6969c205756f078b6434719830ec248ed8309a2d5835e40d9"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows311-v1\\testIDs.json",
+          "bytes": 507790,
+          "sha256": "55e0d05526c1061d22c7e895724a51492c4d7bff09c49004e4691236698c6425"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\windows311-v1.log",
+          "bytes": 4751,
+          "sha256": "49c832ad7c5716f437be38e7c29e0c441eafb20b8ece157a404489c92ae5944b"
+        }
+      ]
+    },
+    {
+      "profile": "windows313",
+      "ordinary_checks": 4132,
+      "subtests": 8,
+      "suite_checks": 4140,
+      "seconds": 450.92608249996556,
+      "terminal": {
+        "exit_code": 0,
+        "seconds": 450.92608249996556,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 4140,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "proofs": [
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows313-v1\\command.json",
+          "bytes": 24850,
+          "sha256": "cd573e6cd2e287c39ac206a6ffd1d10f646a1e8b9a795b0cd5d91cce40c428a5"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows313-v1\\terminal.json",
+          "bytes": 300,
+          "sha256": "18aa81d131fb1e832b9bd4d6466211bc03608eddf34f9c2279a678363e57a834"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows313-v1\\results.xml",
+          "bytes": 648489,
+          "sha256": "c9cce92c21fadf365f74bfce5e798dbca5cf2a327c430131f0fc7a66c4c99954"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows313-v1\\plugins.json",
+          "bytes": 4697,
+          "sha256": "86d7a878c7cf2f79cb0e92b589313639672bbb18b885413c26fd8449d0925d9d"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\sourcebarrier-windows313-v1\\testIDs.json",
+          "bytes": 507790,
+          "sha256": "55e0d05526c1061d22c7e895724a51492c4d7bff09c49004e4691236698c6425"
+        },
+        {
+          "path": "build\\mark-lbp9e15-complete-source-v1\\windows313-v1.log",
+          "bytes": 4751,
+          "sha256": "568750b041d0260d39ee80abad21ab5d513935ccfcb2db430bf860eee0e541ce"
+        }
+      ]
+    }
+  ],
+  "source_admission": "coverage/evidence/mark-lbp-linux-group-root-source-admission-v1.json",
+  "authority": "build/mark-lbp9e15-complete-source-v1/execution-authority-root-v1.json",
+  "parent_failure": "coverage/evidence/mark-lbp93f-complete-source-failure-v1.json",
+  "scope": "Actual full workflow command on exact9e15, not union of partial runs. Both actual terminal0/clean source/no scientific attempts/imports and command/XML/plugin/ID/log receipts inspected. No public/native computation or timing.",
+  "pending": "True compiler-scalar/sanitizer, affected installed public/SDK scope, exact-source four-profile genuine qualification, original-public performance and main delivery remain separate gates.",
+  "waste_review": "Changed input was demonstrated five-file group/CLI/source-context successor. Both complete barriers required and run once; all parent failures retained. Existing launcher/envs/selectors reused, no extra partial campaign or scientific replay. Root next inspects actual native-mode readiness, then eligible qualification."
+}

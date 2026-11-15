@@ -1,0 +1,18 @@
+{
+  "schema": "mark-lbp-linux-group-root-source-admission-v1",
+  "status": "PASS_NONAUTHOR_AND_ROOT_SOURCE_ONLY_COMPLETE169_PENDING",
+  "source": "9e15e99158e4ce5200000b47cf674b6123203111",
+  "base": "93f67dd8737ed5223ac1d785f6c2d145a9177257",
+  "independent_review": {
+    "path": "build\\mark-lbp9e15-independent-review-v1\\review-v1.json",
+    "sha256": "f30453e870bc8f079951a3e33f31eee3b92eeb3e7f2fa43c7e4a5a3ab74b3c37"
+  },
+  "root_review": "Inspected full independent review/verification and their pinned hashes; actual five current source files match handoff bytes and clean9e15 HEAD. Root read the util-map/CLI/source-context delta and verified workflow169 faithful runner/locator-only changes. All20 affected-proof hashes/33 actual DDA inverses and parent failure receipt scope independently admitted. No math/frontend/header/registry/CMake/workflow/data/SDK binary change from93f; no API gate promotion.",
+  "retained_checks_each_python": 105,
+  "source_files": 5,
+  "retained_proofs": 20,
+  "selectors": 169,
+  "parent_failure": "coverage/evidence/mark-lbp93f-complete-source-failure-v1.json",
+  "next": "Root actual complete169 commands both retainedPythons normalplugins/conftest/no-failfast; actual terminals must pass before hosted qualification. Native true-scalar/sanitizer/installed SDK and public performance remain separately scoped gates.",
+  "waste_review": "Reused retained source/SDK/math/105-proof scopes; no new science or archive authentication. Root read only affected source delta and admission hashes; no additional review layer after PASS."
+}

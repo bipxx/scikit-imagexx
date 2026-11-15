@@ -1,0 +1,139 @@
+{
+  "schema": "mark-lbp93f-complete-source-failure-v1",
+  "status": "FAILED_COMPLETE_SOURCE_BARRIERS_HOSTED_RELEASE_BLOCKED",
+  "source": "93f67dd8737ed5223ac1d785f6c2d145a9177257",
+  "selectors": 169,
+  "profiles": [
+    {
+      "profile": "windows311",
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 366.3900000001304,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 4138,
+          "failures": 3,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "testcase_nodes": 4130,
+      "failures": [
+        {
+          "classname": "tests.test_util_metadata_source",
+          "name": "test_regular_grid_full_saved_group_has_explicit_profile_scope[minimum]",
+          "message": "AssertionError: assert (('test_regula...d_public.py',) == ('test_regula...d_public.py',)\n  \n  Use -v to get more diff and 31 == (19 + 11))\n +  where 31 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})\n +  and   19 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})"
+        },
+        {
+          "classname": "tests.test_util_metadata_source",
+          "name": "test_regular_grid_full_saved_group_has_explicit_profile_scope[modern]",
+          "message": "AssertionError: assert (('test_regula...d_public.py',) == ('test_regula...d_public.py',)\n  \n  Use -v to get more diff and 31 == (19 + 11))\n +  where 31 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})\n +  and   19 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})"
+        },
+        {
+          "classname": "tests.test_util_metadata_source",
+          "name": "test_regular_grid_full_saved_group_has_explicit_profile_scope[debug]",
+          "message": "AssertionError: assert (('test_regula...d_public.py',) == ('test_regula...d_public.py',)\n  \n  Use -v to get more diff and 31 == (19 + 11))\n +  where 31 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})\n +  and   19 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})"
+        }
+      ],
+      "proofs": [
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows311-v1/command.json",
+          "bytes": 24856,
+          "sha256": "e127673c8ad29156836da30ff0908c0e87422283adacc9cb30205abb698c7882"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows311-v1/terminal.json",
+          "bytes": 299,
+          "sha256": "0c18838ce22aeede1815c470a6d767a53dae85c7034c8b2ebeb9f260b908e536"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows311-v1/results.xml",
+          "bytes": 654837,
+          "sha256": "43c9206b71f3ab90d39f51d449b3e88e220790e07d41a1c6975321448f6c2ed7"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows311-v1/testIDs.json",
+          "bytes": 507516,
+          "sha256": "a7dcacb8751c9a43cb2626d101075477dd051051ae6f0d39c0cfdd121d3de21e"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows311-v1/plugins.json",
+          "bytes": 4683,
+          "sha256": "0f5803b8b471f396c00e97f9e3b9a870c68c26200e7d99676db45aa9b86db97d"
+        }
+      ]
+    },
+    {
+      "profile": "windows313",
+      "terminal": {
+        "exit_code": 1,
+        "seconds": 335.44904370000586,
+        "attempts": [],
+        "scientific_origins": {},
+        "source_clean_after": true,
+        "original_calls": 0,
+        "native_calls": 0,
+        "timed_batches": 0,
+        "xml": {
+          "tests": 4138,
+          "failures": 3,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "testcase_nodes": 4130,
+      "failures": [
+        {
+          "classname": "tests.test_util_metadata_source",
+          "name": "test_regular_grid_full_saved_group_has_explicit_profile_scope[minimum]",
+          "message": "AssertionError: assert (('test_regula...d_public.py',) == ('test_regula...d_public.py',)\n  \n  Use -v to get more diff and 31 == (19 + 11))\n +  where 31 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})\n +  and   19 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})"
+        },
+        {
+          "classname": "tests.test_util_metadata_source",
+          "name": "test_regular_grid_full_saved_group_has_explicit_profile_scope[modern]",
+          "message": "AssertionError: assert (('test_regula...d_public.py',) == ('test_regula...d_public.py',)\n  \n  Use -v to get more diff and 31 == (19 + 11))\n +  where 31 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})\n +  and   19 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})"
+        },
+        {
+          "classname": "tests.test_util_metadata_source",
+          "name": "test_regular_grid_full_saved_group_has_explicit_profile_scope[debug]",
+          "message": "AssertionError: assert (('test_regula...d_public.py',) == ('test_regula...d_public.py',)\n  \n  Use -v to get more diff and 31 == (19 + 11))\n +  where 31 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})\n +  and   19 = len({'public-H-extrema': ('test_h_extrema_contracts.py::test_source_scope_and_signatures', 'test_h_extrema_contracts.py::t...warning.py', 'test_rank_intensity_public.py', 'test_rank_alias_public.py', 'test_rank_statistics_public.py', ...), ...})"
+        }
+      ],
+      "proofs": [
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows313-v1/command.json",
+          "bytes": 24848,
+          "sha256": "7de491f97fbcea808875d5e127b3cc845e16c545b4777e4b52de738ca39458aa"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows313-v1/terminal.json",
+          "bytes": 300,
+          "sha256": "17430b4d7261a3717cca78d085deac0d281ec28d92cfdf8a3ab39547547683e5"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows313-v1/results.xml",
+          "bytes": 654837,
+          "sha256": "7c6664e8debebe873cc984da5f510cad2707d7e82ba082278db22c5aaf1423db"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows313-v1/testIDs.json",
+          "bytes": 507516,
+          "sha256": "a7dcacb8751c9a43cb2626d101075477dd051051ae6f0d39c0cfdd121d3de21e"
+        },
+        {
+          "path": "build/mark-lbp93f-complete-source-v1/sourcebarrier-windows313-v1/plugins.json",
+          "bytes": 4683,
+          "sha256": "f2fec7f1f31b234045a6ae23e4dea379fcae6d2bc40627a1220e89b8d8e030a4"
+        }
+      ]
+    }
+  ],
+  "cause": "Crossfamily regular-grid source assertion expects11Linux-addedgroups; newMARKwidegroupcorrectlymakes12. Minimum/modern/debug3identicaltests/profilefail, Windows noadditionpasses. No algorithm/helper/original/native calls; no numericalreadinessinvalidatedbythismetadataassertion.",
+  "next_owner_trigger": "Cminimal93fsuccessor updatesexplicitexpectedgroupmapping/test only andaffectedsourcechecks bothWindows; nonauthorreview thenrootcomplete169commands bothagain beforehostedqualification. No source/context countwaiver or partialunion.",
+  "waste_review": "Requiredcompletebarrierfoundmissedliteraloutside823affectedclosure. Preventablecoverage/dependencymiss,366.390s+335.449s observedsourcecheckduration underparallelruns; no6GBhostedcampaign/scientificloss. Retainallfailures, inspectliteralconsumersofaddedgroups beforefuturefullbarrier; no newframework."
+}
