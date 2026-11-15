@@ -4,29 +4,43 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/mark-lbp-measurement-v4.json'
+CONTRACT=ROOT/'coverage/contracts/mark-lbp-measurement-v6.json'
 DATA=json.loads(CONTRACT.read_bytes());ROUTES=DATA['first_cohort']['routes']
+HISTORICAL_PATH='coverage/contracts/mark-lbp-measurement-v4.json'
+HISTORICAL=json.loads((ROOT/HISTORICAL_PATH).read_bytes())
+BOUND_PREDECESSOR_PATH='coverage/contracts/mark-lbp-measurement-v5.json'
+BOUND_PREDECESSOR=json.loads((ROOT/BOUND_PREDECESSOR_PATH).read_bytes())
 spec=importlib.util.spec_from_file_location('mark_lbp_outer',ROOT/'tools/mark_lbp_first_cohort_probe.py');PROBE=importlib.util.module_from_spec(spec);spec.loader.exec_module(PROBE)
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 
-def test_unbound_source_scope_and_exact_family_recipes():
-    assert DATA['schema']=='next-metrics-measurement-v1'and DATA['status']=='PROSPECTIVE_UNBOUND_NO_MEASUREMENT'
-    assert set(DATA['producer'].values())=={None}
-    assert all(DATA[k]is None for k in('prepared_source','SDK_members','core_sha256','runtime_sha256','benchmark_fingerprint','deadline_utc'))
-    assert all(DATA['first_cohort'][k]is None for k in('source_revision','probe_sha256','root_admission_path','root_admission_sha256','root_stager_path','root_stager_sha256','core_member'))
+def test_current16a5_bound_source_and_historical_scope():
+    assert DATA['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON'
+    assert DATA['producer']==dict(run='43706703018',revision='16a5b50193125199ad26cf5a89acec5babf5290c',artifact='14160352344',sha256='7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec')
+    assert DATA['prepared_source']['revision']==DATA['producer']['revision']and len(DATA['prepared_source']['files_sha256'])==2988
+    assert DATA['SDK_members']==108 and len(DATA['bound_SDK_sha256'])==108
+    assert DATA['core_sha256']=='fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd'
+    assert DATA['runtime_sha256']=='975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d'
+    assert DATA['deadline_utc']is DATA['execution_created_utc']is None
+    assert DATA['execution_clock']=='ROOT_DISPATCH_INPUT_BOUND'
     assert all(DATA['helper'][k]is None for k in('receipt_sha256','library_sha256','root_GO'))
-    assert set(ROUTES)=={'mark','lbp'}and DATA['prospective_source']['image_count']==280
-    assert(DATA['execution_scope']['canonical_cases'],DATA['execution_scope']['canonical_raw_samples'],DATA['execution_scope']['warmup_groups'])==(12,168,24)
-    assert DATA['execution_scope']['untimed_topcalls']==dict(original=2,native=2)
-    with pytest.raises(AssertionError,match='UNBOUND'):PROBE.read_manifest(ROOT)
+    assert all(DATA['execution_authority'][k]is None for k in('controller_root_admission','created_utc','deadline_utc','cohort_GO','measurement_GO'))
+    assert DATA['execution_scope']==HISTORICAL['execution_scope']
     for name,route in ROUTES.items():
-        c=json.loads((ROOT/route['contract']).read_bytes());assert route==c['route']and len(route['cases'])==(8 if name=='mark'else 4)
-        assert DATA['families'][c['report_family']]==dict(contract=route['contract'],cases=len(c['cases']),case_ids=[s['id']for s in c['cases']],untimed_calls_per_case=1)
-        a=PROBE.driver_argv(ROOT,route,'binding.json','never.json');assert '--deadline-utc'not in a and a[-2:]==['--root-binding','binding.json']
-    for name,pin in DATA['benchmark_source_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_bytes']).rolling_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
-    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
-    for name,pin in DATA['helper']['source_sha256'].items():assert H(__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
+        old=HISTORICAL['first_cohort']['routes'][name]
+        for key in('cases','argv','measurement_argv','api'):
+            if key in route:assert route[key]==old[key]
+    assert PROBE.read_manifest(ROOT)[1]==DATA
+    first=DATA['first_cohort']
+    assert first['source_revision']==DATA['producer']['revision']and first['probe_sha256']==H((ROOT/first['probe_path']).read_bytes())
+    assert first['root_admission_sha256']=='640a40fce735beea143a9f417d85d3f10cf68baa9a6c7fd6de69712d45853698'
+    assert first['root_stager_sha256']=='6c97da8c848fb25e5d8d3a5306e39c98753485125513d8e4162f3ee667653fbd'
+    assert H((ROOT/first['root_admission_path']).read_bytes())==first['root_admission_sha256']
+    assert H((ROOT/first['root_stager_path']).read_bytes())==first['root_stager_sha256']
+    for name,pin in DATA['benchmark_source_sha256'].items():
+        assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin==DATA['prepared_source']['files_sha256'][name]
+    for name,pin in first['source_files_raw_sha256'].items():assert H((ROOT/name).read_bytes())==pin
+    for name,pin in DATA['helper']['source_sha256'].items():assert H((ROOT/name).read_bytes())==pin
 
 
 def frame_fixture(name):
@@ -143,7 +157,7 @@ def test_actual_poststop_terminal_write_path_refuses_mutation(tmp_path,monkeypat
 @pytest.mark.parametrize('fault',('none','verifier','runtime','runtime-during-verifier','manifest'))
 def test_actual_batch_summary_requires_one_postbatch_verifier(tmp_path,monkeypatch,fault):
     # Synthetic completed child receipts; neither child probe nor verifier runs.
-    controller=tmp_path/'controller';manifest_path=controller/'coverage/contracts/mark-lbp-measurement-v4.json';manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
+    controller=tmp_path/'controller';manifest_path=controller/CONTRACT.relative_to(ROOT);manifest_path.parent.mkdir(parents=True);manifest_path.write_text('{}')
     stage=tmp_path/'stage';stage.mkdir();runtime=stage/'runtime.json';runtime.write_text('{"synthetic_only":true}')
     results=tmp_path/'results';results.mkdir();manifest=copy.deepcopy(DATA)
     manifest['runtime_sha256']=hashlib.sha256(runtime.read_bytes()).hexdigest()
@@ -268,6 +282,7 @@ def test_actual_report_validator_uses_admitted_pass0_and_retains_losses(tmp_path
 
 
 def test_current280_source_projection_preserves_prior_controller_and_cases():
+    DATA=HISTORICAL  # exact retained predecessor metadata, never actual current authority
     assert DATA['prospective_source']['revision']=='ab7872a5483a5d5e3660ba20fdd873d78463a1b5'
     assert tuple(DATA['prospective_source'][k]for k in('image_count','functions','product_members','SDK_members','SDK_families','SDK_checks'))==(280,283,226,107,37,74)
     predecessor=DATA['predecessor_controller'];raw=(ROOT/predecessor['contract_path']).read_bytes()
@@ -277,7 +292,7 @@ def test_current280_source_projection_preserves_prior_controller_and_cases():
         assert route['cases']==old['first_cohort']['routes'][name]['cases']
         assert route['argv']==old['first_cohort']['routes'][name]['argv']
     for name,row in DATA['controller_inverse'].items():
-        current=__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,(ROOT/name).read_bytes())
+        current=__import__('tools.join_source_context',fromlist=['rolling_predecessor_raw_bytes']).rolling_predecessor_raw_bytes(ROOT,name,binding_predecessor_bytes(name,(ROOT/name).read_bytes()))
         assert H(current)==row['current_raw_sha256']and current.decode()==row['current']
         assert H(row['predecessor'].encode())==row['predecessor_raw_sha256']
     assert all(DATA[k]is None for k in('prepared_source','SDK_members','core_sha256','runtime_sha256','deadline_utc','benchmark_fingerprint'))
@@ -293,3 +308,78 @@ def test_actual_current_driver_metadata_and_Montage_pass0_interfaces():
     assert DATA['current_interface']['report_source']=='metadata flattened fingerprint fields plus metadata.source_before'
     assert PROBE.sampler_order_scope(ROOT)==0
     assert ROUTES['mark']['sampler_caller']==ROUTES['lbp']['sampler_caller']=='sample_entry'
+
+
+def binding_predecessor_bytes(name,raw):
+    row=BOUND_PREDECESSOR['binding_successor']['controller_source_inverse'].get(name)
+    if row is None:return raw
+    assert H(raw)==DATA['binding_successor']['controller_source_pins'][name]
+    assert H(row['current'].encode())==row['current_raw_sha256']
+    previous=row['predecessor'].encode();assert H(previous)==row['predecessor_raw_sha256']
+    return previous
+
+
+def test_current_controller_inverse_keeps_critical_guards_byte_source_bound():
+    assert H((ROOT/BOUND_PREDECESSOR_PATH).read_bytes())==DATA['binding_successor']['predecessor_raw_sha256']
+    assert H((ROOT/HISTORICAL_PATH).read_bytes())==BOUND_PREDECESSOR['binding_successor']['predecessor_raw_sha256']
+    name=DATA['first_cohort']['probe_path'];current=(ROOT/name).read_bytes();old=binding_predecessor_bytes(name,current)
+    a={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(current).body if isinstance(n,ast.FunctionDef)}
+    b={n.name:ast.dump(n,include_attributes=False)for n in ast.parse(old).body if isinstance(n,ast.FunctionDef)}
+    for function in('main','validate_native_entry','finish_probe','verify_helper_state','verify_source_state','driver_adapter','driver_argv','validate_reports','sampler_order_scope','prepare_host_helper'):
+        if function in a:assert a[function]==b[function],function
+
+
+def test_dispatch_clock_expiry_refuses_before_process_or_source_import(monkeypatch,tmp_path):
+    calls=[]
+    monkeypatch.setattr(PROBE.subprocess,'run',lambda *a,**k:calls.append(a))
+    with pytest.raises(AssertionError):
+        PROBE.prepare_cohorts(ROOT,ROOT,tmp_path,DATA,'python',tmp_path,'2000-01-01T00:00:00+00:00')
+    with pytest.raises(AssertionError):
+        PROBE.run_measurements(ROOT,tmp_path,DATA,'python',{},'2000-01-01T00:00:00+00:00')
+    assert not calls
+
+
+def test_current16a5_preserves_frozen_DDA_scope_and_exact_runtime_binding():
+    assert DATA['execution_scope']==BOUND_PREDECESSOR['execution_scope']
+    assert BOUND_PREDECESSOR['producer']['revision']=='dda9cc83d9434a10616f84cf1e1125d93f5f36fd'
+    assert DATA['benchmark_fingerprint']['source_sha256']=='2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090'
+    assert DATA['actual_bound_source']['source_files']==2988
+    admission=json.loads((ROOT/DATA['first_cohort']['root_admission_path']).read_bytes())
+    assert admission['product_kind']=='GENUINE_INSTALLED_WHOLE_PRODUCT'
+    assert admission['source']==DATA['producer']['revision'] and admission['profiles']==4
+    assert admission['passed'] is admission['root_accepted'] is True
+    for name,route in ROUTES.items():
+        prior=BOUND_PREDECESSOR['first_cohort']['routes'][name]
+        current=json.loads((ROOT/route['contract']).read_bytes())
+        previous=json.loads((ROOT/prior['contract']).read_bytes())
+        assert route==current['route'] and route['cases']==prior['cases']
+        assert current['cases']==previous['cases'] and current['method']==previous['method']
+        assert route['contract'].endswith('-v7.json')
+    assert DATA['scope_limits']['historical64_retiming'] is False
+    assert DATA['scope_limits']['VI4']=='held'
+    assert DATA['scope_limits']['LBP_double_measurement'] is False
+
+
+@pytest.mark.parametrize('name',('tools/mark_lbp_first_cohort_probe.py','.github/workflows/mark-lbp-initial.yml'))
+def test_controller_successor_changes_only_contract_and_route_literals(name):
+    row=BOUND_PREDECESSOR['binding_successor']['controller_source_inverse'][name]
+    previous=row['current'].encode()
+    assert H(previous)==row['current_raw_sha256']
+    expected=previous.replace(BOUND_PREDECESSOR_PATH.encode(),CONTRACT.relative_to(ROOT).as_posix().encode())
+    if name.endswith('.py'):
+        expected=expected.replace(
+            b"('mark','mark-boundaries-benchmark-execution-v6.json'),('lbp','draw-multiblock-lbp-benchmark-execution-v5.json')",
+            b"('mark','mark-boundaries-benchmark-execution-v7.json'),('lbp','draw-multiblock-lbp-benchmark-execution-v7.json')")
+    assert (ROOT/name).read_bytes()==expected
+
+
+@pytest.mark.parametrize('name',('mark','lbp'))
+def test_current_exact_route_guard_refuses_predecessor_context(tmp_path,name):
+    changed=copy.deepcopy(DATA)
+    changed['first_cohort']['routes'][name]['contract']=BOUND_PREDECESSOR['first_cohort']['routes'][name]['contract']
+    for route in ROUTES.values():
+        target=tmp_path/route['contract'];target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes((ROOT/route['contract']).read_bytes())
+    target=tmp_path/CONTRACT.relative_to(ROOT);target.write_text(json.dumps(changed),encoding='utf-8')
+    with pytest.raises(AssertionError):
+        PROBE.read_manifest(tmp_path)
