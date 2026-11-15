@@ -2983,12 +2983,12 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 <a id="api-metrics-variation-of-information"></a>
 - [ ] **`metrics.variation_of_information`** — full contract closed.
   - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
-  - Current failed gate: hosted373 cohort returned before the sampler but failed strict float64 dtype/result-word comparison. Actual words were not retained, so dtype versus numerical cause is unresolved; no timing or B credit. [Retained intake](evidence/current281-initial-comparisons-root-intake-v1.json).
+  - Current failed gate: [current16 default public witness43765280748](evidence/vi-avx512-default-public-word-root-failure-admission-v1.json), controllerbbe, fails exact execute136 float64 words on genuine minimum1.24.4/Python3.11.17/Intel6975P-C/SKX. First output differs1ULP, second matches; exactly1original+1native. Inputs/targetFP/native phases/caller restoration/source/postidentity pass. Later137-139 remain unverified; no control/timing/B credit. Earlier373 missing words stay unavailable and its cause is not relabeled.
   - Signature: `(image0=None, image1=None, *, table=None, ignore_labels=())`.
-  - Required focus: image versus table input, ignore_labels, zeros and result order. Cases to close: merge/split partitions with known conditional entropies.
+  - Required focus: image versus table input, ignore_labels, zeros and result order. Cases to close: merge/split partitions with known conditional entropies. The NumPy CPU-provider axis now has a demonstrated AVX512 exact-word gap; pre-cleanup software/worker/alias capture and controlled public intervention remain pending.
   - Easiest remaining route: Reuse normalized contingency counts and conditional entropy reductions.
   - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
-  - Current scoped progress: Private `b331a559`/current-count `1a060891` and the `9ecdda4e` reduction correction have scoped root admission. The failed64-label experiment and corrected8/8 strict results are retained above. Shared successor352 is frozen; complete source/release, broad domains, genuine installed SDK/hot swap and bound one-thread original benchmarks remain pending.
+  - Current scoped progress: [qualified16a5 candidate](evidence/mark-lbp16a5-whole-product-root-admission-v2.json) passes its four-profile product/SDK scope; shipping remains271/upstream-only for this API. Earlier component/reduction evidence and failures retain their scopes. [bbe diagnostic source](evidence/vi-avx512-public-default-root-source-admission-v1.json) passed255complete source checks perPython; [Correctedcb863019 late-metadata source](evidence/vi-avx512-public-v2-root-source-admission-v1.json) now passes281complete controls perPython/97rootverifiedproofs. Any freshconditionalGO still requires publication/liveidentity and exact precleanuplatepredicates. VI4 exact public parity/performance, full domains/backend axes, final169 and main delivery remain pending; no full-contract checkbox closes.
 
 </details>
 
