@@ -35,7 +35,7 @@ def test_actual_inline_Python_compiles_and_setup_is_preserved():
     assert len(new)==4 and len(old)==5
     for index,text in enumerate(new):compile(text,'<new actual workflow block '+str(index)+'>','exec')
     assert new[1:3]==old[1:3]  # exact offline14wheel/stager+F1 helper steps
-    first=new[0].replace('import hashlib, json, os, re, subprocess','import json, os, re, subprocess')
+    first=new[0].split('# ROOT_FAILED_HOST_GATE_BEGIN\n',1)[0].replace('import hashlib, json, os, re, subprocess','import json, os, re, subprocess')
     guards=[line for line in first.splitlines(True)if line.startswith("assert os.environ['DIAGNOSTIC_AUTHORITY']")or line.startswith("assert hashlib.sha256(Path('controller/")]
     assert len(guards)==3
     for line in guards:first=first.replace(line,'',1)
@@ -46,10 +46,12 @@ def test_actual_inline_Python_compiles_and_setup_is_preserved():
     assert 'name: vi-value-diagnostic-minimum'in source and '          path: results/\n'in source
     assert '        if: always()\n'in source and 'continue-on-error'not in source
     assert 'run_measurements'not in source and 'validate_reports'not in source and "probe['run_cohorts']"not in source
-    assert 'raise SystemExit(done.returncode)'in new[3]
+    assert 'raise SystemExit(done.returncode if done.returncode else verified.returncode)'in new[3]
+    assert new[3].count("verified=subprocess.run(")==1
+    assert source.count("        if: env.VI_HOST_ELIGIBLE == '1'\n")==4
     assert new[3].count("probe['prepare_cohorts'](")==1
     tree=ast.parse(new[3]);runs=[n for n in ast.walk(tree)if isinstance(n,ast.Call)and isinstance(n.func,ast.Attribute)and n.func.attr=='run']
-    assert len(runs)==1
+    assert len(runs)==2
 
 
 def test_default_UNBOUND_real_first_block_refuses_before_source_API_or_helpers(monkeypatch):
@@ -59,11 +61,11 @@ def test_default_UNBOUND_real_first_block_refuses_before_source_API_or_helpers(m
         exec(compile(python_blocks(WORKFLOW)[0],'<actual first workflow block>','exec'),{})
 
 
-@pytest.mark.parametrize('mode',('failure-exit','success-stop','success-Z','expired','UNBOUND'))
+@pytest.mark.parametrize('mode',('failure-exit','success-stop','success-Z','expired','UNBOUND','ineligible-host','verify-failure','primary-and-verify-failure'))
 def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_path,monkeypatch,mode):
     workspace=tmp_path/'workspace';controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
     for directory in (controller,snapshot,results):directory.mkdir(parents=True)
-    context_path='coverage/contracts/vi-cohort-value-diagnostic-v1.json'
+    context_path='coverage/contracts/vi-cohort-value-diagnostic-v2.json'
     context=json.loads((ROOT/context_path).read_bytes())
     for name in [*context['controller_dependencies'],'tools/vi_cohort_value_diagnostic.py',context_path]:
         destination=controller/name;destination.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,destination)
@@ -74,6 +76,7 @@ def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_
     if mode=='expired':created=datetime.now(timezone.utc)-timedelta(minutes=31);deadline=datetime.now(timezone.utc)-timedelta(minutes=1)
     clock=dict(created_utc=created.isoformat(),deadline_utc=deadline.isoformat())
     (results/'execution-clock.json').write_text(json.dumps(clock))
+    (results/'host-eligibility.json').write_text(json.dumps(dict(eligible=mode!='ineligible-host')))
     monkeypatch.setenv('GITHUB_WORKSPACE',str(workspace));monkeypatch.setenv('GITHUB_SHA','a'*40)
     monkeypatch.setenv('EXECUTION_CREATED_UTC',clock['created_utc'].replace('+00:00','Z')if mode=='success-Z'else clock['created_utc']);monkeypatch.setenv('DEADLINE_UTC',clock['deadline_utc'].replace('+00:00','Z')if mode=='success-Z'else clock['deadline_utc'])
     monkeypatch.setenv('DIAGNOSTIC_AUTHORITY','UNBOUND'if mode=='UNBOUND'else'ROOT_AUTHORIZED_ONE_VI_VALUE_DIAGNOSTIC')
@@ -91,8 +94,13 @@ def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_
     monkeypatch.setattr(runpy,'run_path',old_namespace)
     spec=importlib.util.spec_from_file_location('_unchanged_wrapper_interface',ROOT/'tools/vi_cohort_value_diagnostic.py')
     wrapper=importlib.util.module_from_spec(spec);spec.loader.exec_module(wrapper)
-    calls=[]
+    calls=[];verifiers=[]
     def inert_child(command,**kwargs):
+        if command[1]==str(snapshot/'tools/ci_measurement_artifacts.py'):
+            assert command==[__import__('sys').executable,str(snapshot/'tools/ci_measurement_artifacts.py'),'verify',
+                             '--wheel-dir',str(workspace/'stage/wheels'),'--artifact',str(workspace/'stage/runtime.json')]
+            verifiers.append(command)
+            return SimpleNamespace(returncode=7 if mode in('verify-failure','primary-and-verify-failure')else 0)
         calls.append(command)
         pairs=dict(zip(command[2::2],command[3::2]))
         args=argparse.Namespace(binding=Path(pairs['--binding']),root_go=Path(pairs['--root-go']),
@@ -104,16 +112,49 @@ def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_
         assert decision['sampler_body_calls']==decision['timed_batches']==0
         assert 'diagnostic_go_sha256'not in json.loads(args.binding.read_bytes())
         args.output.write_text('{"inert_only":true,"actual_target_calls":0}')
-        return SimpleNamespace(returncode=1 if mode=='failure-exit'else 0)
+        return SimpleNamespace(returncode=1 if mode in('failure-exit','primary-and-verify-failure')else 0)
     monkeypatch.setattr(subprocess,'run',inert_child)
-    if mode in('expired','UNBOUND'):
+    if mode in('expired','UNBOUND','ineligible-host'):
         with pytest.raises(AssertionError):exec(compile(python_blocks(WORKFLOW)[3],'<actual diagnostic workflow block>','exec'),{})
-        assert not setup and not calls and not(results/'vi-value-diagnostic-exit.json').exists()
+        assert not setup and not calls and not verifiers and not(results/'vi-value-diagnostic-exit.json').exists()
     else:
         with pytest.raises(SystemExit)as exit_status:exec(compile(python_blocks(WORKFLOW)[3],'<actual diagnostic workflow block>','exec'),{})
-        expected=1 if mode=='failure-exit'else 0
-        assert exit_status.value.code==expected
-        assert json.loads((results/'vi-value-diagnostic-exit.json').read_bytes())==dict(exit=expected)
-        assert setup==['metadata-setup-only']and len(calls)==1
+        expected_diagnostic=1 if mode in('failure-exit','primary-and-verify-failure')else 0
+        expected_verifier=7 if mode in('verify-failure','primary-and-verify-failure')else 0
+        assert exit_status.value.code==(expected_diagnostic or expected_verifier)
+        assert json.loads((results/'vi-value-diagnostic-exit.json').read_bytes())==dict(exit=expected_diagnostic)
+        assert json.loads((results/'vi-postbatch-identity-exit.json').read_bytes())==dict(exit=expected_verifier)
+        assert setup==['metadata-setup-only']and len(calls)==len(verifiers)==1
         assert (results/'vi-value-diagnostic-command.json').is_file()
         assert not(results/'summary.json').exists()and not list(results.rglob('*.batches.jsonl'))
+
+
+@pytest.mark.parametrize('variant',('eligible','other-model','missing-feature','other-stepping'))
+def test_actual_failed_host_gate_is_metadata_only_and_zero_target(tmp_path,monkeypatch,variant):
+    monkeypatch.chdir(tmp_path)
+    (tmp_path/'results').mkdir()
+    context=tmp_path/'controller/coverage/contracts/vi-cohort-value-diagnostic-v2.json'
+    context.parent.mkdir(parents=True)
+    shutil.copyfile(ROOT/'coverage/contracts/vi-cohort-value-diagnostic-v2.json',context)
+    policy=json.loads(context.read_bytes())['host_eligibility_proposal']
+    required=policy['failed_CPU'];features=list(policy['required_features'])
+    model=required['model'] if variant!='other-model'else'AMD EPYC 7763 64-Core Processor'
+    stepping=required['stepping'] if variant!='other-stepping'else 99
+    if variant=='missing-feature':features.pop()
+    cpu='\n'.join(('vendor_id : '+required['vendor'],'model name : '+model,
+        'cpu family : '+str(required['family']),'model : '+str(required['model_id']),
+        'stepping : '+str(stepping),'flags : '+' '.join(features)))
+    read_text=Path.read_text
+    def read(path,*args,**kwargs):
+        return cpu if path==Path('/proc/cpuinfo')else read_text(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',read)
+    monkeypatch.setenv('GITHUB_ENV',str(tmp_path/'github-env'))
+    monkeypatch.setattr(subprocess,'run',lambda *a,**k:pytest.fail('target/verifier/process reached'))
+    monkeypatch.setattr(subprocess,'check_output',lambda *a,**k:pytest.fail('API/process reached'))
+    block=python_blocks(WORKFLOW)[0].split('# ROOT_FAILED_HOST_GATE_BEGIN\n',1)[1]
+    exec(compile(block,'<actual metadata-only host gate>','exec'),dict(Path=Path,json=json,os=__import__('os')))
+    record=json.loads((tmp_path/'results/host-eligibility.json').read_bytes())
+    assert record['eligible']is(variant=='eligible')
+    assert record['original_calls']==record['native_calls']==record['sampler_body_calls']==record['timed_batches']==0
+    assert (tmp_path/'github-env').read_text()=='VI_HOST_ELIGIBLE='+('1'if variant=='eligible'else'0')+'\n'
+    assert not(tmp_path/'stage').exists()and not(tmp_path/'results/authority-vi').exists()
