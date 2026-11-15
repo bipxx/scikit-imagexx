@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.work_queue import ready_packets, validate, verify_local_proofs
+from tools.work_queue import main, ready_packets, validate, verify_local_proofs
 
 
 def packet(name, state='queued', owner=None, owns=(), depends=()):
@@ -195,6 +195,51 @@ def test_inspection_never_mutates_the_ledger():
     before = deepcopy(doc)
     ready_packets(doc)
     assert doc == before
+
+
+@pytest.mark.parametrize('branch', [None, 'fix/recorded-source'])
+def test_agents_reports_recorded_branch_or_explicit_unknown(tmp_path, capsys, branch):
+    row = packet('legacy', 'preparing', 'worker')
+    if branch is not None:
+        row['branch'] = branch
+    document = ledger(row)
+    document['execution_policy'] = dict(
+        implementation_goal_status='paused',
+        current_three_agent_packets={'worker': 'legacy'},
+    )
+    path = tmp_path / 'ledger.json'
+    path.write_text(json.dumps(document), encoding='utf-8')
+    before = path.read_bytes()
+
+    assert main(['--ledger', str(path), '--agents']) == 0
+
+    report = json.loads(capsys.readouterr().out)
+    assert report['live_process_query'] is False
+    assert report['implementation_goal_status'] == 'paused'
+    assert report['agents'] == [dict(agent='worker', packet='legacy',
+                                    state='preparing', branch=branch,
+                                    queue=['legacy'])]
+    assert path.read_bytes() == before
+    assert not ready_packets(document)
+
+
+def test_actual_recorded_agents_match_optional_metadata_without_mutation(capsys):
+    path = Path(__file__).resolve().parents[1] / 'coverage/work_items.json'
+    before = path.read_bytes()
+    document = json.loads(before)
+    packets = {row['id']: row for row in document['packets']}
+
+    assert main(['--ledger', str(path), '--agents']) == 0
+
+    report = json.loads(capsys.readouterr().out)
+    assignments = document['execution_policy']['current_three_agent_packets']
+    assert {row['agent']: row['packet'] for row in report['agents']} == assignments
+    for row in report['agents']:
+        recorded = packets[row['packet']]
+        assert row['branch'] == recorded.get('branch')
+        assert row['state'] == recorded['state']
+    assert report['live_process_query'] is False
+    assert path.read_bytes() == before
 
 
 def test_actual_superseded_matrix_binding_is_not_ready_and_evidence_is_unchanged():

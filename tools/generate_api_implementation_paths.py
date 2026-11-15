@@ -738,6 +738,11 @@ watershed | Stable priority flood from markers with optional compactness/line ru
 add("segmentation", "stencil", """
 inverse_gaussian_gradient | Reuse Gaussian gradient magnitude and inverse square-root edge-stop formula | alpha, sigma, dtype and boundaries | smooth/step edges and constant images
 """, effort="S")
+override("segmentation.inverse_gaussian_gradient",
+         algorithm="Reuse the reviewed private Hessian first-derivative correlation pattern, preserving input-dtype separable passes, square/sum/sqrt and inverse edge-stop arithmetic; ordinary symmetric Gaussian filtering is insufficient.",
+         hazards="Input-dtype intermediate derivatives/square/axis sum/sqrt; nearest boundary; sigma>1e-15 and radius0; alpha broadcasting/output expansion; nonfinite/overflow/warnings/FP and source errors. Public signature has no mask, channel_axis or out keyword.",
+         benchmark="2D/3D smooth/step/constant images, narrow/wide active sigma, alpha scalar/array broadcasting, dtype-specific intermediates and strided inputs. Do not invent mask, channel_axis or out kwargs.",
+         next_action="Source/test/safety packet34d0855a freezes79 prospective recipes and88pure guards perPython. Independently admit actual SciPy derivative/dtype/border/sigma policy and bounds, then source-bound runtime/factory/compiled/full32/controller readiness before separate original GOs. Reuse existing primitives only within their scope; no numerical execution authorized by this route.")
 add("segmentation", "draw", """
 mark_boundaries | Reuse find_boundaries and color overlay with optional outline | mode, background_label, subpixel upsampling, image dtype and color | inner/outer/subpixel boundaries and grayscale/RGB images
 """, effort="S")
@@ -1043,6 +1048,8 @@ def next_action(entry, spec, canonical):
         return f"Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered {spec['hazards']}. Select optimization from retained measured regressions; do not reimplement the accepted core."
     if status in ("metadata", "exception-metadata-provider"):
         return f"Audit the owned metadata contract for {spec['hazards']}; add missing identity/state/error cases, without image-kernel completion credit."
+    if status == "upstream-only" and "next_action" in spec:
+        return spec["next_action"]
     if spec["family"] == "asset":
         return f"Create the pinned resource/license/hash/cache fixture for {spec['algorithm']}; verify {spec['hazards']} before selecting or replacing a codec."
     if spec["family"] in {"io", "ui", "learn", "metadata"}:

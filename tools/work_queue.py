@@ -193,7 +193,7 @@ def main(argv=None):
                 integrator='root',
                 implementation_goal_status=policy.get('implementation_goal_status', 'unspecified'),
                 agents=[dict(agent=owner, packet=name, state=by_id[name]['state'],
-                             branch=by_id[name]['branch'],
+                             branch=by_id[name].get('branch'),
                              queue=policy.get('worker_queues', {}).get(owner, [name]))
                         for owner, name in assignments.items()],
                 historical_review_completed_at=document.get('parallel_review', {}).get('completed_at_utc'),
