@@ -17,7 +17,7 @@ def test_crop_benchmark_frozen_cases_sampler_and_source():
     assert contract['sampler']==dict(module='tools/montage_sustained.py',function='measure',threads=1,repeat=7,target_ms=100,warmup_min_ms=250,raw_samples=112,warmup_groups=16)
     projection=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['historical_bytes']
     for name,pin in contract['source_pins'].items():
-        raw=projection(ROOT,name)if name=='benchmarks/crop.py'else(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        raw=projection(ROOT,name)if name in json.loads((ROOT/'coverage/contracts/next-util-benchmark-execution-v3.json').read_bytes())['sources']else(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
         assert hashlib.sha256(raw).hexdigest()==pin,name
     text=(ROOT/'tools/montage_sustained.py').read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='measure')
     assert hashlib.sha256(''.join(text.splitlines(True)[node.lineno-1:node.end_lineno]).encode()).hexdigest()==contract['method_sha256']

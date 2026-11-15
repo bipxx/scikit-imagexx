@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.18)
+project(rolling_ball_complete_client LANGUAGES CXX)
+find_package(skimagexx CONFIG REQUIRED)
+add_executable(rolling_ball_complete_client ../../test_rolling_ball_sdk.cpp)
+target_compile_features(rolling_ball_complete_client PRIVATE cxx_std_17)
+target_link_libraries(rolling_ball_complete_client PRIVATE skimagexx::skimagexx)

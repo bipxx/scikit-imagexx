@@ -1,0 +1,77 @@
+{
+  "schema": "mark-wide-compatibility-v1",
+  "status": "SOURCE_ONLY_PENDING_ACTUAL_NATIVE_FP_AND_GENUINE",
+  "base": "3fd05ef7d56fcf731b349943e503249014062618",
+  "native_source": "3106c063a0d34af0af48a2f2f3928fade46c322d",
+  "sources": {
+    "CMakeLists.txt": {
+      "current_raw_sha256": "06ead19d2848e3d83fd3041a03cdb7ea6600abaf82faa8112497487ec3535fcc",
+      "predecessor_raw_sha256": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+      "current_canonical_lf_sha256": "06ead19d2848e3d83fd3041a03cdb7ea6600abaf82faa8112497487ec3535fcc",
+      "predecessor_canonical_lf_sha256": "537c49a9fa16c69e9868982c077a6f43dc8a1479bba6499737dded09c93308a1",
+      "inverse": [
+        {
+          "current": "    set_source_files_properties(src/compare_images.cpp src/bind_compare_images.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")\n    set_source_files_properties(src/find_boundaries.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")\n",
+          "predecessor": "    set_source_files_properties(src/compare_images.cpp src/bind_compare_images.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")\n"
+        },
+        {
+          "current": "    set_source_files_properties(src/compare_images.cpp src/bind_compare_images.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")\n    set_source_files_properties(src/find_boundaries.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")\n",
+          "predecessor": "    set_source_files_properties(src/compare_images.cpp src/bind_compare_images.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")\n"
+        }
+      ]
+    },
+    "tests/test_find_boundaries_native.cpp": {
+      "current_raw_sha256": "bdcedbb50a0a0eabc45c3da18bbfa1fc34a543bf2c8778e5ea179a9dfa69a5ad",
+      "predecessor_raw_sha256": "d32690d8768d54be4238c47d51e74d7fc05aed941fa384d3b976467431241e56",
+      "current_canonical_lf_sha256": "bdcedbb50a0a0eabc45c3da18bbfa1fc34a543bf2c8778e5ea179a9dfa69a5ad",
+      "predecessor_canonical_lf_sha256": "d32690d8768d54be4238c47d51e74d7fc05aed941fa384d3b976467431241e56",
+      "inverse": [
+        {
+          "current": " refuse();a[1]=1;p.mode=FindBoundaryMode::outer;\n // Wide OUTER has a GNUx64 nearest/masked frontier; lost background metadata\n // still refuses before writing on every platform. The new four-case/profile\n // originals are admitted; separate native/FP bridge parity remains required.\n p.background_representable=false;refuse();p.background_representable=true;\n",
+          "predecessor": " refuse();a[1]=1;p.mode=FindBoundaryMode::outer;refuse();\n"
+        }
+      ]
+    },
+    "tests/test_find_boundaries_public.py": {
+      "current_raw_sha256": "cd0f6069c1005a91f0545dae557f998ff9c84fc716c80c58751bea8db26f082a",
+      "predecessor_raw_sha256": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+      "current_canonical_lf_sha256": "cd0f6069c1005a91f0545dae557f998ff9c84fc716c80c58751bea8db26f082a",
+      "predecessor_canonical_lf_sha256": "10b35996e74f7fed3aaec65dc6545b2cdbb4fe7931a5a65a7336189184e50dd3",
+      "inverse": [
+        {
+          "current": "'nonexact64','outer64-unrepresentable-background']",
+          "predecessor": "'nonexact64','outer64']"
+        },
+        {
+          "current": "out=np.zeros(a.shape,dtype=bool);mode=0;background_representable=True\n",
+          "predecessor": "out=np.zeros(a.shape,dtype=bool);mode=0\n"
+        },
+        {
+          "current": "    elif kind=='outer64-unrepresentable-background':a=a.astype(np.int64);mode=2;background_representable=False\n",
+          "predecessor": "    elif kind=='outer64':a=a.astype(np.int64);mode=2\n"
+        },
+        {
+          "current": "before=out.tobytes();assert owned._core.find_boundaries_into(a,out,1,mode,0,background_representable,1)is None\n",
+          "predecessor": "before=out.tobytes();assert owned._core.find_boundaries_into(a,out,1,mode,0,True,1)is None\n"
+        }
+      ]
+    }
+  },
+  "scope": "Two per-source strictFP CMake lines and stale wideOUTER refusal metadata only. Kernels/headers/frontends/golds/benchmarks unchanged. Historical contexts stay immutable and must refuse these raw bytes until explicit later integration successor.",
+  "actual_execution": {
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "FP": 0,
+    "compile": 0,
+    "timing": 0
+  },
+  "remaining_frontier": "GNUx86_64 only, FE_TONEAREST x87/SSE and all SSE exceptions masked, representable background. Other platforms/rounding/masks/lost background refuse; nonexact wideTHICK/INNER remain unsupported. New eight MARK observations do not themselves establish native parity.",
+  "dependencies": {
+    "src/find_boundaries.cpp": "98ce6c997763b4f396c03c9664b76469cac18615122918a92b469c815d1f46de",
+    "include/skimagexx/find_boundaries.hpp": "a7f991dd6916cb8166182e2cd5e2eb0ef6bf62ce98ced3b960ae75ec39a544eb",
+    "src/bind_find_boundaries.cpp": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+    "python/skimagexx/_find_boundaries.py": "9ec45da0da874e3bbc61dd0543e033588bc2eed51feeb447ffedff4ba30aefdc",
+    "coverage/contracts/mark-wide-outer-source-v1.json": "cee26a591885a35b5c8c4f0a5bd6a0b02b924a78a32c7e31dc0de57e937e82dd"
+  }
+}

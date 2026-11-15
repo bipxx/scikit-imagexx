@@ -244,7 +244,7 @@ def test_actual_recorded_agents_match_optional_metadata_without_mutation(capsys)
 
 def test_actual_superseded_matrix_binding_is_not_ready_and_evidence_is_unchanged():
     root = Path(__file__).resolve().parents[1]
-    document = json.loads((root / 'coverage/work_items.json').read_text())
+    document = json.loads((root / 'coverage/work_items.json').read_text(encoding='utf-8'))
     before = deepcopy(document)
     by_id = validate(document)
     stale = by_id['matrix-transform-general-binding']

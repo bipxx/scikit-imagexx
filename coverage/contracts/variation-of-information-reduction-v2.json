@@ -1,0 +1,261 @@
+{
+  "schema": "variation-of-information-reduction-v2",
+  "status": "PRIVATE_SAVED_SCOPE_NOT_GENUINE",
+  "predecessor": "1a060891f33ea058d671491957ebfaec0044bb5e",
+  "baseline_source_sha256": "966f48ec3ce563548aaa23d4f3ede7ac69354d91bab3b2fd4ffef7d2c2e35955",
+  "source_sha256": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+  "source_inverse": [
+    {
+      "start": 2962,
+      "end": 4056,
+      "current": "template<class T,class F> T pairwise(std::size_t n,const F& get) {\n    if(n<8){T sum=-T(0);for(std::size_t i=0;i<n;++i)sum=T(sum+T(get(i)));return sum;}\n    T lanes[8];for(std::size_t i=0;i<8;++i)lanes[i]=T(get(i));std::size_t i=8;\n    for(;i+8<=n;i+=8)for(std::size_t j=0;j<8;++j)lanes[j]=T(lanes[j]+T(get(i+j)));\n    T sum=T(T(T(lanes[0]+lanes[1])+T(lanes[2]+lanes[3]))+T(T(lanes[4]+lanes[5])+T(lanes[6]+lanes[7])));\n    for(;i<n;++i)sum=T(sum+T(get(i)));\n    return sum;\n}\n// Same 128-element tree boundary as metrics.cpp; local to the VI operation.\ntemplate<class F> double reduction_tree(std::size_t n,const F& get,std::size_t begin=0) {\n    if(n<=128)return pairwise<double>(n,[&](auto i){return get(begin+i);});\n    auto half=n/2;half-=half%8;\n    return reduction_tree(half,get,begin)+reduction_tree(n-half,get,begin+half);\n}\n// ufunc.reduceat seeds from the first stored item, then reduces the tail.\ntemplate<class F> double minor_sum(std::size_t n,const F& get) {\n    if(!n)return 0.;\n    if(n==1)return get(0);\n    return get(0)+reduction_tree(n-1,[&](auto i){return get(i+1);});\n}\n\n",
+      "baseline": ""
+    },
+    {
+      "start": 4889,
+      "end": 5302,
+      "current": "// Contiguous retained DDOT: four four-lane accumulators with fused products,\n// high+low halves, grouped horizontal sum, then the scalar remainder. Keeping\n// the arithmetic graph in scalar C++ also preserves it with SIMD disabled.\ntemplate<class L,class R> double source_dot(std::size_t n,const L& left,const R& right) {\n    const auto packet=n-n%16;double result=0.;\n    if(packet) {\n        double lanes[16]={",
+      "baseline": ""
+    },
+    {
+      "start": 5303,
+      "end": 6037,
+      "current": ";\n        for(std::size_t i=0;i<packet;i+=16)\n            for(std::size_t j=0;j<16;++j)\n                lanes[j]=std::fma(left(i+j),right(i+j),lanes[j]);\n        double halves[8];\n        for(std::size_t g=0;g<4;++g)\n            for(std::size_t j=0;j<2;++j)halves[2*g+j]=lanes[4*g+2+j]+lanes[4*g+j];\n        const double low=(halves[6]+halves[4])+(halves[2]+halves[0]);\n        const double high=(halves[7]+halves[5])+(halves[3]+halves[1]);\n        result=low+high;\n    }\n    // Retain the established small/tail multiplication operand semantics,\n    // including opposite-signed quiet NaNs from all-ignored inputs.\n    for(std::size_t i=packet;i<n;++i)result+=source_dot_product(left(i),right(i));\n    return result;\n}\n} // namespace",
+      "baseline": ""
+    },
+    {
+      "start": 6587,
+      "end": 6587,
+      "current": "",
+      "baseline": "if(first<last){"
+    },
+    {
+      "start": 6593,
+      "end": 6646,
+      "current": "minor_sum(std::size_t(last-first),[&](auto i){return ",
+      "baseline": ""
+    },
+    {
+      "start": 6658,
+      "end": 6659,
+      "current": "+",
+      "baseline": "];for(auto j=f"
+    },
+    {
+      "start": 6660,
+      "end": 6660,
+      "current": "",
+      "baseline": "rst+1;j<last;++j)px[r]+=a.data[j"
+    },
+    {
+      "start": 6663,
+      "end": 6665,
+      "current": ");",
+      "baseline": ""
+    },
+    {
+      "start": 7122,
+      "end": 7122,
+      "current": "",
+      "baseline": "bool fir"
+    },
+    {
+      "start": 7124,
+      "end": 7130,
+      "current": "d::vec",
+      "baseline": "="
+    },
+    {
+      "start": 7131,
+      "end": 7132,
+      "current": "o",
+      "baseline": ""
+    },
+    {
+      "start": 7133,
+      "end": 7136,
+      "current": "<do",
+      "baseline": ""
+    },
+    {
+      "start": 7137,
+      "end": 7139,
+      "current": "bl",
+      "baseline": ""
+    },
+    {
+      "start": 7140,
+      "end": 7175,
+      "current": "> terms;terms.reserve(order.size())",
+      "baseline": ""
+    },
+    {
+      "start": 7298,
+      "end": 7298,
+      "current": "",
+      "baseline": "if(first){row_entropy[r]="
+    },
+    {
+      "start": 7302,
+      "end": 7302,
+      "current": "",
+      "baseline": ";fir"
+    },
+    {
+      "start": 7303,
+      "end": 7310,
+      "current": ".push_b",
+      "baseline": "t=f"
+    },
+    {
+      "start": 7311,
+      "end": 7314,
+      "current": "ck(",
+      "baseline": "lse;}else row_entropy[r]+="
+    },
+    {
+      "start": 7318,
+      "end": 7319,
+      "current": ")",
+      "baseline": ""
+    },
+    {
+      "start": 7354,
+      "end": 7432,
+      "current": "\n        row_entropy[r]=minor_sum(terms.size(),[&](auto i){return terms[i];});",
+      "baseline": ""
+    },
+    {
+      "start": 7670,
+      "end": 7670,
+      "current": "",
+      "baseline": "for(std::size_t r=0;r<a.rows;++r)"
+    },
+    {
+      "start": 7686,
+      "end": 7686,
+      "current": "",
+      "baseline": "+"
+    },
+    {
+      "start": 7697,
+      "end": 7700,
+      "current": "(a.",
+      "baseline": "_p"
+    },
+    {
+      "start": 7702,
+      "end": 7710,
+      "current": "ws,[&](a",
+      "baseline": "d"
+    },
+    {
+      "start": 7711,
+      "end": 7711,
+      "current": "",
+      "baseline": "c"
+    },
+    {
+      "start": 7712,
+      "end": 7724,
+      "current": "o r){return ",
+      "baseline": "("
+    },
+    {
+      "start": 7730,
+      "end": 7732,
+      "current": ";}",
+      "baseline": ""
+    },
+    {
+      "start": 7733,
+      "end": 7752,
+      "current": "[&](auto r){return ",
+      "baseline": ""
+    },
+    {
+      "start": 7766,
+      "end": 7768,
+      "current": ";}",
+      "baseline": ""
+    },
+    {
+      "start": 7775,
+      "end": 7775,
+      "current": "",
+      "baseline": "for(std::size_t c=0;c<a.columns;++c)"
+    },
+    {
+      "start": 7791,
+      "end": 7791,
+      "current": "",
+      "baseline": "+"
+    },
+    {
+      "start": 7802,
+      "end": 7825,
+      "current": "(a.columns,[&](auto c){",
+      "baseline": "_p"
+    },
+    {
+      "start": 7826,
+      "end": 7828,
+      "current": "et",
+      "baseline": "od"
+    },
+    {
+      "start": 7829,
+      "end": 7832,
+      "current": "rn ",
+      "baseline": "ct("
+    },
+    {
+      "start": 7850,
+      "end": 7852,
+      "current": ";}",
+      "baseline": ""
+    },
+    {
+      "start": 7853,
+      "end": 7872,
+      "current": "[&](auto c){return ",
+      "baseline": ""
+    },
+    {
+      "start": 7877,
+      "end": 7879,
+      "current": ";}",
+      "baseline": ""
+    }
+  ],
+  "pins": {
+    "src/variation_of_information.cpp": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+    "tests/test_variation_of_information_large_saved.py": "b3043bacd0d7830ae4c2bbffa41f6f12145bd9ab5fefd47745858a39932a9d2b",
+    "tests/data/variation_of_information_large_saved_v1.json": "0c59120f511ef5b2368c01b3b6d010e45bc233deacd52f5c630d568141ec2f55",
+    "tests/variation_of_information_large_controls.hpp": "12e8b75e8d01e7c1d04b826e94ea67533ae5966ae3796f319d114f432ced6407",
+    "tests/test_variation_of_information_large_native.cpp": "4e7b46d5fce93a84890a093ee8969f0f27953b0d35a8419e2b10f82f9eeb4560",
+    "tests/test_variation_of_information_reduction_native.cpp": "2da565bd5d9d42e8e77ec7bceb69c74b55e62267a085ed11e662ff50a67f7b13",
+    "tests/cmake_consumer/variation_of_information_reduction_consumer.cpp": "0d61d5d6682ee361155b126648a38e531ac31faaa62a79954491963bb9188b44",
+    "tests/variation_of_information_reduction_contract.py": "059fdbe2dc03a545ab61f70ac8ffa54b60a2c68293cff818affe4976216572fe",
+    "tests/test_variation_of_information_reduction_source.py": "5212fb7457b7b1be9f24c246056a1230cb47e4f7a5452fa03ce662f71f1ed31e"
+  },
+  "metrics_cpp_unchanged_raw_sha256": "662180e91a6aefe0e39f849a377e5005569c1022406d9552b1ee0d92ba7cb888",
+  "current_counts_required": {
+    "src/label_pair_metrics.cpp": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079"
+  },
+  "backend_scope": "Retained x86_64 contiguous DDOT arithmetic graph; matches admitted min/modern words, not all BLAS dispatch/platforms",
+  "limits": [
+    "No new originals or tolerance",
+    "No whole107SDK/genuine/public one-thread timing",
+    "Broad table/protocol/input FP/libm/platform frontiers pending",
+    "Existing two public phase worker snapshots unchanged"
+  ],
+  "root_failure_admission": "build/vi-large-native-failure-root-admission-v1/admission-v1.json",
+  "integration_requirements": [
+    "Root selectively imports family files only from private1a child",
+    "Existing test_variation_of_information_source.py and current_counts_source.py have strict old VI pins: route ONLY changed VI source through tests.variation_of_information_reduction_contract.historical_vi_source; frozen old contracts remain byte exact",
+    "Update active VI benchmark/current-source context literal/inverse to new leaf; no actual prepared-source/genuine/performance authority from this packet",
+    "Retain current e8 counts and F1 source-built transport on genuine host",
+    "Root complete actual source barriers both retained Windows Python versions after shared integration"
+  ]
+}

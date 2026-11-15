@@ -1,0 +1,40 @@
+{
+  "schema": "draw-multiblock-lbp-capture-contract-v1",
+  "status": "SOURCE_ONLY_UNBOUND_CAPTURE_CAPABLE_BUDGET0",
+  "source_case_predecessor": "bd845fa8602c750e80f9335411d2c02c786c7522",
+  "original_budget": 0,
+  "root_GO": null,
+  "case_count": 94,
+  "legacy_count": 93,
+  "added_count": 1,
+  "prospective_two_profile_pool": 188,
+  "source_raw_pins": {
+    "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+    "coverage/contracts/draw-multiblock-lbp-v1.json": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+    "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+    "tests/test_draw_multiblock_lbp_intake.py": "23d8e425eeadd7a0c75bc50bdc5391012caeab467572689d8386c2e0e94fa97a",
+    "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+    "coverage/contracts/draw-multiblock-lbp-v2.json": "fe338701f23583cfa7f772f29ecc5b7f8e5b9df5d660193d7a539089e4bf4f78",
+    "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+    "tests/test_draw_multiblock_lbp_overlap_intake.py": "0468bb6b4fbf0bb71d5c31b3fe4c6471ce9d936071c471fcf043b5950f67e91d",
+    "tests/test_draw_multiblock_lbp_overlap_reference.py": "664beda7d7981c6effa08c4f78ca6214c4a351a3ad7e5906558ed242386dffc6",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/draw_multiblock_lbp_observer.py": "0e3c53817afd319bb7d83eb79b1c331fc45a2d69a4e57baecdb93a8d74fc7307"
+  },
+  "controller": {
+    "path": "build/draw-multiblock-lbp-capture-controller-v1/controller_v1.py",
+    "raw_sha256": "0948f8d1a762c009e25ecb3e418383016c3aa904eec00b6179e58160886dc274"
+  },
+  "dispatch": "Exact old93specs uselegacy.fixture; onlyoverlap.added_case usesoverlap.fixture. Both originalfactory sourcebytes unchanged.",
+  "observation": "Typed rawcodec/protocol/error/warnings/NumPy policies/targetimmediatefull32 andcallerrestore, aliases/objectpayload/inputmutation. No blend ororiginal/native computation insetup.",
+  "public_attempts": "One supplied wrapper attempt consumesbudget even when Python arity/unknownkeyword errors precedeCALL body entry. Targetbodyentries0or1 countedseparately; no retry.",
+  "provider": "Complete visualizer ordered8read-modify-write float32stage/profilepromotion/graycopy/conversion/error/FP/alias closure remainsfuturecapture/nativegate. No compiledLBPdescriptor algorithm is required or permitted.",
+  "source_boundaries": "Frozenfamily/codecsourcepins checkedgenuineentry andpostbatch; no percasecompiled/source rehashloops. Budget/deadline/FP percase boundaries andexclusivefsyncedjournal still enforced.",
+  "pending": [
+    "Root independentcontroller readiness andexactactualGO; no188authority",
+    "Exactly-oncecapture/independentrawadmission thencompleteowningnative/public/SDK/one-threadoriginalperformance/fullqualification gates"
+  ]
+}

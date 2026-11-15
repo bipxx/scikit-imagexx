@@ -18,7 +18,7 @@ def test_current_native_closure_and_historical_pins():
     data=json.loads(CONTRACT.read_bytes())
     assert data['original_budget']==data['timed_batches']==0
     assert data['raw_admission_sha256']=='63bb915f2a1e5b395594347560a2e2177470a6d5ce783b3e7e3d2e140d590678'
-    context=json.loads((ROOT/'coverage/contracts/next-util-benchmark-execution-v2.json').read_bytes())
+    context=json.loads((ROOT/'coverage/contracts/next-util-benchmark-execution-v3.json').read_bytes())
     projection=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['historical_bytes']
     for name,pin in data['source_pins_raw_sha256'].items():
         raw=projection(ROOT,name)if name in context['sources']else(ROOT/name).read_bytes()

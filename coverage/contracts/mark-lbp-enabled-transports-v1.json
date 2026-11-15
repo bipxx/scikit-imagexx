@@ -1,0 +1,27 @@
+{
+  "schema": "mark-lbp-enabled-source-transport-v1",
+  "LBP_raw_source_admission": "1bcfff2be1b241b989a6142a756131474e89e756dd30047b0e653dde3d822726",
+  "source_transports": {
+    "tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp": {
+      "retained_generated_path": "build/draw-multiblock-lbp-native-v2/modes-v4/minimum-saved.cpp",
+      "retained_raw_sha256": "1303570a16697249d48fd06afe6a211fa899495230f4da015e0678dad06a7c8f",
+      "published_raw_sha256": "d472a7c0fc462df9a697ab344012c78cb0f4f0ca457bbd55c953e88b37687374",
+      "inverse_prefix": "#pragma once\n",
+      "inverse_current": "inline void lbp_saved_minimum()",
+      "inverse_predecessor": "int main()",
+      "scope": "All numericinput/output words,71returncases and completeoperation body byte-exact after function-signature-only inverse; generated admitted source retained unchanged."
+    },
+    "tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp": {
+      "retained_generated_path": "build/draw-multiblock-lbp-native-v2/modes-v4/modern-saved.cpp",
+      "retained_raw_sha256": "d7f4035265102b5033c9db4dd9d1d357f03c005907d75f14170e625c6f0c8e93",
+      "published_raw_sha256": "b629cdfbc53c86bd4031ae2d831ab6b7de080a04c1f5d9a7f62bbe6a362ea8a3",
+      "inverse_prefix": "#pragma once\n",
+      "inverse_current": "inline void lbp_saved_modern()",
+      "inverse_predecessor": "int main()",
+      "scope": "All numericinput/output words,71returncases and completeoperation body byte-exact after function-signature-only inverse; generated admitted source retained unchanged."
+    }
+  },
+  "LBP_transport_raw_sha256": "2338d228661268df0ccd1f5005a05fb023915397229e505c65b1ac69e166020f",
+  "original_budget": 0,
+  "phase_authority_raw_sha256": "4c21baa192a904a957435cb2178f361cffb36d74a84399912daa98e5ef5a26e7"
+}

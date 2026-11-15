@@ -1,0 +1,48 @@
+{
+  "schema": "draw-multiblock-lbp-observer-phase-scope-v1",
+  "status": "PUBLIC_API_FP_BOUNDARY_STRICT_POST_OBSERVER_FORMATTER_DIAGNOSTIC",
+  "source_python_sha256": "20d33d05f932b8e8391e5a7bfb3b15bc221b5f8fe908294e0fc490df451d7b57",
+  "basis": "Frozen observer calls candidate, records result/error/state, and only then json.dumps(row) before returning. after_observer_fenv is sampled by the external collector after this formatting. It is outside the advertised public API call; no public contract promises JSON formatter hardware flags.",
+  "observed": {
+    "modern_api_rows": 94,
+    "minimum_api_rows": 94,
+    "minimum_strict_raw_record_matches": 81,
+    "post_observer_only_differences": 13,
+    "only_difference_path": "/after_observer_fenv/mxcsr",
+    "transparent_JSON_wrapper_same_case_changes_diagnostic": true
+  },
+  "mandatory_unchanged": [
+    "All public values/rawwords/dtypes/layouts/errors+args/qualname/warnings/FPcallbacks/protocol/event/alias/ownership and softwareNP state.",
+    "Target-immediate before/after control/status/MXCSR under exact admitted incoming context.",
+    "Exact32 caller/process restoration and all applicable native/SDK/scalarSIMD/globalworker/public hot-swap/genuine/performance gates."
+  ],
+  "diagnostic_policy": "Keep actual after_observer_fenv fields and original13strict failures immutable. A versioned assessment partitions collector-phase differences from API failures; report both counts. Do not mask/clear hardware, change product behavior, rewrite oldraw or call old strict runs passed. No blanket exclusion of target/currentcaller fields.",
+  "evidence": {
+    "build/draw-multiblock-lbp-native-v2/saved-minimum-v4/comparison.json": {
+      "sha256": "6f3f07c854113a93e10b273e88f46856f8b7d16ab8435548a4d51dff5ee1edc3",
+      "bytes": 23727
+    },
+    "build/draw-multiblock-lbp-native-v2/saved-minimum-v4/terminal.json": {
+      "sha256": "429a325f6632dde6f31a28eba4eaec3de8b237558752f291deb9bb31147ffa81",
+      "bytes": 336
+    },
+    "build/draw-multiblock-lbp-native-v2/saved-modern-v4/terminal.json": {
+      "sha256": "82c2d99936b248ee150dfdfccf3599d2790591504617631fd99e9c77bfd3877b",
+      "bytes": 333
+    },
+    "build/draw-multiblock-lbp-native-v2/diagnostic-minimum-v5/json-audit.json": {
+      "sha256": "706b814b8d2cf46a925b5f62366963576946460f8e8346cf4dd46bcdb88cb70d",
+      "bytes": 524
+    },
+    "build/draw-multiblock-lbp-native-v2/diagnostic-minimum-v5/comparison.json": {
+      "sha256": "b5082e361c69e4e356acf15863e806a11dd2bbd1a3c96e7dd3718a80dd3a5463",
+      "bytes": 119
+    },
+    "build/worktrees/draw-multiblock-lbp-v1/tests/draw_multiblock_lbp_observer_v2.py": {
+      "sha256": "ab86cf3f61efee0039750616715e82d362ad4152b422513a8bf0569d30c30b2d",
+      "bytes": 3558
+    }
+  },
+  "next_action": "R re-evaluates retained actualv4observations under explicit API/collector phase roles if code/runtime/component scope unchanged; no original/native rerun solely to refresh labels. Continue affectedSDK/nativeclosure; root independent wholefamily/genuine admission remains pending.",
+  "waste_review": "Stop out-of-scope JSON bookkeeping investigation instead of adding productFP guards. Root verifiedactual13paths/diagnostic and source call boundary; first reader incorrectly treated comparison.error as harnessfailure (it is legitimate APIerror), corrected metadata reader only. No numerical/scientific/native/largehash replay."
+}

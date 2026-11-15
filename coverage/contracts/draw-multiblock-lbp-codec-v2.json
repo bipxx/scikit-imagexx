@@ -1,0 +1,101 @@
+{
+  "schema": "draw-multiblock-lbp-codec-source-v2",
+  "source_only": true,
+  "original_budget": 0,
+  "root_GO": null,
+  "observer": "tests/draw_multiblock_lbp_observer_v2.py",
+  "observer_inverse": [
+    {
+      "current": "from crop_observer import retain_object_payloads,object_payload_relations\nfrom mark_boundaries_exception_codec import encode_exception_args\n",
+      "predecessor": "from crop_observer import retain_object_payloads,object_payload_relations\n"
+    },
+    {
+      "current": "error=dict(module=type(exc).__module__,type=type(exc).__name__,qualname=type(exc).__qualname__,message=str(exc),args=encode_exception_args(exc.args,np))",
+      "predecessor": "error=dict(module=type(exc).__module__,type=type(exc).__name__,message=str(exc),args=encode(exc.args,np))"
+    }
+  ],
+  "old_source_raw_pins": {
+    "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+    "coverage/contracts/draw-multiblock-lbp-v1.json": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+    "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+    "tests/test_draw_multiblock_lbp_intake.py": "23d8e425eeadd7a0c75bc50bdc5391012caeab467572689d8386c2e0e94fa97a",
+    "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+    "coverage/contracts/draw-multiblock-lbp-v2.json": "fe338701f23583cfa7f772f29ecc5b7f8e5b9df5d660193d7a539089e4bf4f78",
+    "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+    "tests/test_draw_multiblock_lbp_overlap_intake.py": "0468bb6b4fbf0bb71d5c31b3fe4c6471ce9d936071c471fcf043b5950f67e91d",
+    "tests/test_draw_multiblock_lbp_overlap_reference.py": "664beda7d7981c6effa08c4f78ca6214c4a351a3ad7e5906558ed242386dffc6",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/draw_multiblock_lbp_observer.py": "0e3c53817afd319bb7d83eb79b1c331fc45a2d69a4e57baecdb93a8d74fc7307",
+    "coverage/contracts/draw-multiblock-lbp-capture-v1.json": "a50ded1daf383734a4dea60ea69b8c8dbe0859fb825807ef85cbafcb49651ea8",
+    "tests/test_draw_multiblock_lbp_observer.py": "a24a7e5ecdab8189be070a383cd786bb515aa363bf48fc5d9c9011c13c995fb1"
+  },
+  "source_raw_pins": {
+    "tests/mark_boundaries_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/draw_multiblock_lbp_observer_v2.py": "ab86cf3f61efee0039750616715e82d362ad4152b422513a8bf0569d30c30b2d",
+    "tests/test_draw_multiblock_lbp_codec.py": "86230e6b6ead82dda70c42a01756f45146191454ad6b4417b625cbfd346b141e",
+    "tests/test_draw_multiblock_lbp_codec_intake.py": "cedb58b386401d1b797e65cd4479ab395a8b8983ad4ca49b7342da5213f8e13d"
+  },
+  "codec_component": {
+    "source": "288244ca6e4b31685285d543b1ee49831ba566fe",
+    "path": "tests/mark_boundaries_exception_codec.py",
+    "raw_sha256": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "review_sha256": "0dbdf86486b1235e8ea39a04186a259213a06a7a415af811763cc37a7ea230f1",
+    "byte_exact_reuse": true
+  },
+  "numpy_exception_sources": {
+    "minimum": {
+      "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/core/_exceptions.py",
+      "relative": "numpy/core/_exceptions.py",
+      "raw_sha256": "30357beedc94d23b138f30c2137bff607e94ce7a9f813c4612407407ce8c2402",
+      "numpy": "1.24.4",
+      "classes_source": {
+        "_display_as_base": "def _display_as_base(cls):\n    \"\"\"\n    A decorator that makes an exception class look like its base.\n\n    We use this to hide subclasses that are implementation details - the user\n    should catch the base type, which is what the traceback will show them.\n\n    Classes decorated with this decorator are subject to removal without a\n    deprecation warning.\n    \"\"\"\n    assert issubclass(cls, Exception)\n    cls.__name__ = cls.__base__.__name__\n    return cls",
+        "_UFuncNoLoopError": "class _UFuncNoLoopError(UFuncTypeError):\n    \"\"\" Thrown when a ufunc loop cannot be found \"\"\"\n    def __init__(self, ufunc, dtypes):\n        super().__init__(ufunc)\n        self.dtypes = tuple(dtypes)\n\n    def __str__(self):\n        return (\n            \"ufunc {!r} did not contain a loop with signature matching types \"\n            \"{!r} -> {!r}\"\n        ).format(\n            self.ufunc.__name__,\n            _unpack_tuple(self.dtypes[:self.ufunc.nin]),\n            _unpack_tuple(self.dtypes[self.ufunc.nin:])\n        )",
+        "_UFuncCastingError": "class _UFuncCastingError(UFuncTypeError):\n    def __init__(self, ufunc, casting, from_, to):\n        super().__init__(ufunc)\n        self.casting = casting\n        self.from_ = from_\n        self.to = to",
+        "_UFuncOutputCastingError": "class _UFuncOutputCastingError(_UFuncCastingError):\n    \"\"\" Thrown when a ufunc output cannot be casted \"\"\"\n    def __init__(self, ufunc, casting, from_, to, i):\n        super().__init__(ufunc, casting, from_, to)\n        self.out_i = i\n\n    def __str__(self):\n        # only show the number if more than one output exists\n        i_str = \"{} \".format(self.out_i) if self.ufunc.nout != 1 else \"\"\n        return (\n            \"Cannot cast ufunc {!r} output {}from {!r} to {!r} with casting \"\n            \"rule {!r}\"\n        ).format(\n            self.ufunc.__name__, i_str, self.from_, self.to, self.casting\n        )"
+      }
+    },
+    "modern": {
+      "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy/_core/_exceptions.py",
+      "relative": "numpy/_core/_exceptions.py",
+      "raw_sha256": "5fc120d61ab5b94f0bf7088ec05a368d1aba4b4be78c27606051e3de1016f42a",
+      "numpy": "2.5.4",
+      "classes_source": {
+        "_display_as_base": "def _display_as_base(cls):\n    \"\"\"\n    A decorator that makes an exception class look like its base.\n\n    We use this to hide subclasses that are implementation details - the user\n    should catch the base type, which is what the traceback will show them.\n\n    Classes decorated with this decorator are subject to removal without a\n    deprecation warning.\n    \"\"\"\n    assert issubclass(cls, Exception)\n    cls.__name__ = cls.__base__.__name__\n    return cls",
+        "_UFuncNoLoopError": "class _UFuncNoLoopError(UFuncTypeError):\n    \"\"\" Thrown when a ufunc loop cannot be found \"\"\"\n    def __init__(self, ufunc, dtypes):\n        super().__init__(ufunc)\n        self.dtypes = tuple(dtypes)\n\n    def __str__(self):\n        return (\n            f\"ufunc {self.ufunc.__name__!r} did not contain a loop with signature \"\n            f\"matching types {_unpack_tuple(self.dtypes[:self.ufunc.nin])!r} \"\n            f\"-> {_unpack_tuple(self.dtypes[self.ufunc.nin:])!r}\"\n        )",
+        "_UFuncCastingError": "class _UFuncCastingError(UFuncTypeError):\n    def __init__(self, ufunc, casting, from_, to):\n        super().__init__(ufunc)\n        self.casting = casting\n        self.from_ = from_\n        self.to = to",
+        "_UFuncOutputCastingError": "class _UFuncOutputCastingError(_UFuncCastingError):\n    \"\"\" Thrown when a ufunc output cannot be casted \"\"\"\n    def __init__(self, ufunc, casting, from_, to, i):\n        super().__init__(ufunc, casting, from_, to)\n        self.out_i = i\n\n    def __str__(self):\n        # only show the number if more than one output exists\n        i_str = f\"{self.out_i} \" if self.ufunc.nout != 1 else \"\"\n        return (\n            f\"Cannot cast ufunc {self.ufunc.__name__!r} output {i_str}from \"\n            f\"{self.from_!r} to {self.to!r} with casting rule {self.casting!r}\"\n        )"
+      }
+    }
+  },
+  "exception_domains": {
+    "casting": {
+      "arguments": [
+        "ufunc",
+        "casting",
+        "from_dtype",
+        "to_dtype",
+        "index"
+      ],
+      "source": "Pinned NumPy outputcasting constructor/decorator; LBP inplace int offset scaling by float width/height enters this source error domain. Shape-only descriptor metadata, no captured error/outcome asserted."
+    },
+    "no_loop": {
+      "arguments": [
+        "ufunc",
+        "tuple_of_dtypes"
+      ],
+      "source": "Pinned NumPy no-loop class descriptor shape; additional bounded serializer domain, not promised LBP original outcome."
+    },
+    "plain": "Existing builtin scalar/string/container args retain legacy codec; exact module/name/qualname/message remain observer output."
+  },
+  "unassessed": [
+    "structured/subarray/metadata dtypes",
+    "arbitrary custom descriptor classes/generalobjectgraphs/cycles",
+    "unbounded errors/protocols/customufunc identity objects",
+    "original platform/promotion/error/FP outcomes until exact authorizedcapture"
+  ],
+  "scope": "Only exceptionargs serializer+actualclassqualname successor. All93+1recipes/oldobserver/source/methods/primitives unchanged. No original/errorconstructor/ufunc application/provider/native execution in descriptor setup."
+}

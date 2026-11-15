@@ -387,6 +387,24 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
                 assert observation(expected, np) == expected_before
             assert observation(args, np) == before
             return
+        if api=='metrics.variation_of_information':
+            # Nominal float image descriptors select a valid captured integer
+            # label partition. Invalid floating-label errors are tested separately.
+            from label_pair_metrics_observer import observation
+            args,options=default_call(api,a);before=observation(args,np)
+            assert all(value.dtype.kind in 'iu' for value in args)
+            assert all(value.dtype==np.dtype('int16') for value in args)
+            expected=getattr(original,name)(*args,**options)
+            counts=xx._core.label_pair_counts_preweighted;calls=[]
+            assert inspect.isbuiltin(counts)
+            def owned_counts(*values,**kwargs):
+                calls.append(1);return counts(*values,**kwargs)
+            monkeypatch.setattr(xx._core,'label_pair_counts_preweighted',owned_counts)
+            actual=getattr(native,name)(*args,**options)
+            assert calls==[1]
+            assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
+            assert observation(args,np)==before
+            return
         if api=='draw.set_color':
             args,options=default_call(api,a)
             with pytest.raises(NotImplementedError):getattr(native,name)(*args,**options)
@@ -412,10 +430,27 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             with pytest.raises(TypeError) as actual:getattr(native,name)(a)
             assert str(actual.value)==str(expected.value)
             return
+        if api=='transform.ifrt2':
+            args,options=default_call(api,a)
+            with pytest.raises(TypeError)as expected:getattr(original,name)(*args,**options)
+            with pytest.raises(type(expected.value))as actual:getattr(native,name)(*args,**options)
+            assert actual.value.args==expected.value.args
+            return
+        if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):
+            args,options=default_call(api,a)
+            with pytest.raises((TypeError,ValueError))as expected:getattr(original,name)(*args,**options)
+            with pytest.raises(type(expected.value))as actual:getattr(native,name)(*args,**options)
+            assert str(actual.value)==str(expected.value)
+            return
         with pytest.raises(NotImplementedError):
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):
+        expected=getattr(original,name)(*args,**options)
+        actual=getattr(native,name)(*args,**options)
+        assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
+        return
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
         from util_views_reference import reference
         from crop_observer import encode

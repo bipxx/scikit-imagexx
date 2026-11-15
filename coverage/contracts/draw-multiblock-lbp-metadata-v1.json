@@ -1,0 +1,33 @@
+{
+  "schema": "draw-multiblock-lbp-metadata-v1",
+  "status": "FAMILY_FIX_PENDING_INDEPENDENT_AND_GENUINE",
+  "base": "2991881411972e6266f7e132c9dca8b7226a8567",
+  "original_budget": 0,
+  "API_completion": false,
+  "source": "src/bind_draw_multiblock_lbp.cpp",
+  "predecessor_sha256": "de80b58c5fa66e9715f884e1534d9fadd54294f1514ef85b2e1135b1a7cb2db5",
+  "current_sha256": "6d8458f793b98d8ad928121702d44507d5b85d7fe5d0bfcc530a25f3ff85cf2f",
+  "inverse": {
+    "current": "        // Source gray2rgb stacks three same-type planes before img_as_float:\n        // stacking resolves their canonical scalar dtype (metadata/byte order\n        // are not carried through). RGB's copied descriptor stays unchanged.\n        const auto dtype=k=='f'?(a.ndim()<3?py::dtype::from_args(a.dtype().attr(\"type\")):a.dtype()):py::dtype::of<double>();py::array result(dtype,out.shape);\n",
+    "predecessor": "        const auto dtype=k=='f'?a.dtype():py::dtype::of<double>();py::array result(dtype,out.shape);\n"
+  },
+  "unchanged_source_sha256": {
+    "python/skimagexx/_draw_multiblock_lbp.py": "296beb2c1c96aa3fd0112b205466eab945ebd6750db8fe99c74c2ef330acb0a1",
+    "src/draw_multiblock_lbp.cpp": "870eb16d16cfa8cfc6ff6ad9106873a1f6299c64dc80d6c0a0958a4891326c3a",
+    "include/skimagexx/draw_multiblock_lbp.hpp": "251a31cbb0e6b989ba6425ca6c782a2f2da9fb115292e1ddc75a41bfd1aec14e",
+    "tests/test_dtype_metadata.py": "a21586780b23b06cdc86c8af91c21a2861c6ee4afe46f1ee7575feb7fc588035",
+    "tests/fixtures/draw_multiblock_lbp_originals_v1.json": "2338d228661268df0ccd1f5005a05fb023915397229e505c65b1ac69e166020f",
+    "coverage/contracts/draw-multiblock-lbp-native-v2.json": "fa17ae603e150106771b9729835904394ba051a966115ad06d4a1e0d7bc8da80",
+    "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json": "c15f179737124cfddca89d777d819f333e2038e0326027c62a7e27eecaa9a539"
+  },
+  "observed_cause": "Retained42280271105 normal/scalar shared dtype metadata failures: grayfloat16/32/64\u00d7workers1/4 preserves input metadata instead of source gray2rgb stack canonical dtype.",
+  "fixed_scope": "Gray prepare resolves floating output descriptor from dtype.type (drops metadata and normalizes native byteorder); RGB preserves original copied descriptor. No arithmetic/FP/alias/control/protocol or public/private signature changes.",
+  "SDK": "NumPy descriptor fix in private Python binder only. Standalone C++ types/header/kernel/ABI unchanged; reuse prior installedSDK/component/scalar/sanitizer proof, no SDK rebuild or new SDK parity claim.",
+  "pending": [
+    "Root independent fix admission",
+    "Sole shared source/benchmark-context reader successor and complete source barriers",
+    "Exact-source genuine4profile rerun, all other failures independently reviewed",
+    "Root measurement bindings/GO/performance/main delivery",
+    "Full API/provider/platform domains remain open"
+  ]
+}

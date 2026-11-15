@@ -1,0 +1,178 @@
+{
+  "schema": "mark-wide-comparison-fp-v1",
+  "status": "SOURCE_CORRECTION_PENDING_INDEPENDENT_REVIEW_COMPILE_NATIVE_GO",
+  "base": "0df4c60cd0db45cbd4fdb88807a176d12a8a0eff",
+  "kernel_predecessor_raw_sha256": "98ce6c997763b4f396c03c9664b76469cac18615122918a92b469c815d1f46de",
+  "kernel_current_raw_sha256": "ac905f5c8679d2c2e9b9c24a1c732807c36ec4ca681c519c88bf1d03a468e0e4",
+  "inverse_fragments": [
+    {
+      "current": "    // do not modify caller controls or normalize output state.\n",
+      "predecessor": "    // do not modify caller controls, clear flags, or normalize output state.\n"
+    },
+    {
+      "current": "    // Source final != and Boolean ufuncs clear prior arithmetic error status\n    // before their integer loops. Preserve inexact and caller controls, and\n    // avoid a libc clear when NumPy's error-status check would do nothing.\n    constexpr int comparison_errors=FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID;\n    if(std::fetestexcept(comparison_errors))std::feclearexcept(comparison_errors);\n",
+      "predecessor": ""
+    }
+  ],
+  "primitive_calls": {
+    "minimum": 4,
+    "modern": 4
+  },
+  "new_original_calls": 0,
+  "raw_references": {
+    "minimum": {
+      "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\minimum-successor-v4\\observations.json",
+      "sha256": "d40af0687c591e978f2da628e8998f948b51b335e38cb6a89139af90c6cf47bc",
+      "scope": "Existing root-admitted8 originals exhausted; no new gold"
+    },
+    "modern": {
+      "path": "D:\\Scratch\\mark-wide-outer-reference-v3\\modern-v3\\observations.json",
+      "sha256": "469c9a3ce94b7d10745f37b9ab08b4fd8382f3bcabf2a145ea77117213af1e54",
+      "scope": "Existing root-admitted8 originals exhausted; no new gold"
+    }
+  },
+  "fixtures": [
+    {
+      "id": "wide-outer/find-int64-small-3x4",
+      "type": "<i8",
+      "words": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        0,
+        0,
+        1,
+        1
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "input_sha256": "02fb8708d5bb47e85bb00dca166763885f0c716cb7e7c2b29b7714bf8fa56c0a",
+      "mask_sha256": "3b74ae32a7c989a92ca2de853ce292c779e23c6c32404db8ef4e55c17a59e840",
+      "profiles": {
+        "minimum": {
+          "before": {
+            "raw": "7f03ffff2000ffffffffffffe93728b800000000000000000000ffffa31f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8099
+          },
+          "after": {
+            "raw": "7f03ffff2000ffffffffffffe93728b800000000000000000000ffffa21f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        "modern": {
+          "before": {
+            "raw": "7f03ffff0000ffffffffffff3cd8c32e00000000000000000000ffffa11f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8097
+          },
+          "after": {
+            "raw": "7f03ffff0000ffffffffffff3cd8c32e00000000000000000000ffffa01f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        }
+      }
+    },
+    {
+      "id": "wide-outer/find-uint64-fullwidth-3x4",
+      "type": "<u8",
+      "words": [
+        0,
+        18446744073709551615,
+        18446744073709551614,
+        1,
+        9223372036854775807,
+        9223372036854775808,
+        9223372036854775809,
+        0,
+        9007199254740992,
+        9007199254740993,
+        9007199254740994,
+        2
+      ],
+      "mask": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "input_sha256": "b471e9db685d9a4d61b2f7e78881e13835ddddde7ea5295356da57a6e3728761",
+      "mask_sha256": "7a0230ea2b3f68103a71383c3a83cf7e24fb7427ee960f1e7090ffad1a002db9",
+      "profiles": {
+        "minimum": {
+          "before": {
+            "raw": "7f03ffff2000ffffffffffffe93728b800000000000000000000ffffa31f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8099
+          },
+          "after": {
+            "raw": "7f03ffff2000ffffffffffffe93728b800000000000000000000ffffa21f0000",
+            "control": 895,
+            "status": 32,
+            "mxcsr": 8098
+          }
+        },
+        "modern": {
+          "before": {
+            "raw": "7f03ffff0000ffffffffffff3cd8c32e00000000000000000000ffffa11f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8097
+          },
+          "after": {
+            "raw": "7f03ffff0000ffffffffffff3cd8c32e00000000000000000000ffffa01f0000",
+            "control": 895,
+            "status": 0,
+            "mxcsr": 8096
+          }
+        }
+      }
+    }
+  ],
+  "native_test": {
+    "path": "tests/test_find_boundaries_wide_comparison_fp.cpp",
+    "raw_sha256": "c6ca09cd03e30eeaef2b63aef3852d798028b4502dd19ba1856a26e490281e11",
+    "execution": "PENDING_ROOT_COMPILE_NATIVE_GO",
+    "full_operation_calls_proposed": 8,
+    "workers": [
+      1,
+      4
+    ],
+    "scope": "Two authentic masks and both captured incoming semantic states; existing full32 Envelope reused exact. No native compilation/execution yet."
+  },
+  "source_phase": "NumPy ufunc integer comparison and Boolean composition clear previous INVALID/DIVBYZERO/OVERFLOW/UNDERFLOW conditional on present errors. New widebranch final adjacentcomparison/Booleanloop follows finalroundedextrema, so reproduce that conditional sourcephase once here; no floating computation follows in this loop. This is NOT afterreturn normalization; inexact and controls preserved.",
+  "frontier": "Existing GNUx86_64 RNE/masked representableintegerbackground only; otherrounding/platform/background metadata refusals and scalar/SIMD/globalworker/SDK/genuine/performance remain existing gates.",
+  "root_shared_CMake": "2e97 compatibility separate; required strict leaf FP flags remain external integration prerequisite."
+}

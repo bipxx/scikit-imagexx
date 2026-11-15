@@ -1,0 +1,293 @@
+{
+  "schema": "rolling-ball-benchmark-execution-v1",
+  "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "base_source": "dfebccfc171290280643c3b17a4809148a0bb49f",
+  "unbound": {
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "root_GO": null,
+    "measurement_GO": null,
+    "genuine_first_cohort": null
+  },
+  "signature": "(image, *, radius=100, kernel=None, nansafe=False, num_threads=<DEPRECATED>, workers=None)",
+  "original_source_canonical_sha256": "5572c656ad2a6e48518ee7188c4cea96e7817405a941fbf76932268ddd8540f6",
+  "supported_numpy": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "cases": [
+    {
+      "id": "small-u8",
+      "shape": [
+        17,
+        19
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "radius": 2,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 323,
+      "kernel_elements": 25,
+      "addition_upper": 8075
+    },
+    {
+      "id": "dense-f32",
+      "shape": [
+        129,
+        129
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 16641,
+      "kernel_elements": 81,
+      "addition_upper": 1347921
+    },
+    {
+      "id": "dense-f64",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float64",
+      "layout": "F",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "wide-f32",
+      "shape": [
+        65,
+        65
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 12,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4225,
+      "kernel_elements": 625,
+      "addition_upper": 2640625
+    },
+    {
+      "id": "stride-f32",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float32",
+      "layout": "stride2",
+      "radius": 4,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "3d-u16",
+      "shape": [
+        9,
+        11,
+        13
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "radius": 2,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 1287,
+      "kernel_elements": 125,
+      "addition_upper": 160875
+    },
+    {
+      "id": "nan-f32",
+      "shape": [
+        65,
+        67
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 4,
+      "nansafe": true,
+      "workers": 1,
+      "input_elements": 4355,
+      "kernel_elements": 81,
+      "addition_upper": 352755
+    },
+    {
+      "id": "border-tiny",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "radius": 8,
+      "nansafe": false,
+      "workers": 1,
+      "input_elements": 12,
+      "kernel_elements": 289,
+      "addition_upper": 3468
+    }
+  ],
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "allocation_inclusive": true,
+    "retain_all_losses": true,
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "root_GO": null
+  },
+  "source_files_canonical_sha256": {
+    "include/skimagexx/rolling_ball.hpp": "af84099647d5b89ad5c03bc9d000a86f58a52846b048d3b8dbfb1e19ca73b78f",
+    "python/skimagexx/_rolling_ball.py": "f5906766f4e89b7dcf9bc2660ba08ee52771bf67b6d9a4d3d9607bbb5a3c150e",
+    "src/bind_rolling_ball.cpp": "2a41e141375762c3cf3b426aff5752b3aa3c8e6d03c5f9165c54d9b048e8f098",
+    "src/rolling_ball.cpp": "54d1ace679ef0bcdfbad5b117aa3f21f3e4d8855a76ef2b6346bf6522c5a8401",
+    "tests/fixtures/rolling_ball_original_v1.json": "57263ebee170bfcb4a32fd40d609f0970551ff67bbe6230127cd00496d04e3fc",
+    "tests/fixtures/rolling_ball_sdk_v1.bin": "131e186c64e9a0f26701bddbe5bb35cf09161957526f6fd18ca670a63bb7780a",
+    "tests/sdk/rolling_ball/CMakeLists.txt": "41d298f638a3f34c4f934205636f55f5baf41032b194e772e11adbc761c33c57",
+    "tests/test_rolling_ball_native_source.py": "a9b12f4fa67ee660cd5598be6aebf608b45c44620a78fd8f789f9399c640a759",
+    "tests/test_rolling_ball_public.py": "603d5d067c40f01eb8f6d9f65854524ba8969b9ba159f281ef9bb0383074442f",
+    "tests/test_rolling_ball_sdk.cpp": "ca9e34ae8a84f2949928a5df685ead4015493fa6e134f1b1a8f7b98ce4220827",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "include/skimagexx/rolling_ball_kernels.hpp": "92e1372775ac57d5f47a0450808d1de072b89653619ced14311ed4cb0ca40aab",
+    "src/rolling_ball_kernels.cpp": "d00bf3afd60cd76ed380903448977916d8f683a53990d7c724431a5e7d11660f",
+    "src/bind_rolling_ball_kernels.cpp": "16d2c4b4ad2178cdf09e56a943ade918a89c5b72fb82eed557418df85c0210a3",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "src/bind_fft.cpp": "2be056b23cf8838aba0295c5b3688d4b2c4ee30a14d3ef6665b6dac0d03218fd",
+    "python/skimagexx/_rolling_ball_kernels.py": "894f237bebf7657fac351bc50897fa45274acc1906713e0c65c48792887a51fa",
+    "tests/rolling_ball_observer.py": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+    "tests/rolling_ball_contract.py": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+    "tests/rolling_ball_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "coverage/contracts/rolling-ball-native-v1.json": "842da71d894e9f7944fca92fe4f72115ee1e9e90e1af2a4a5796f7d46c89e76d",
+    "benchmarks/rolling_ball_native.py": "f6c38b42480c2959072ebd2877af4d5963dccd5c09a62616ed731bdb251c50ca",
+    "benchmarks/rolling_ball_execution.py": "c7df4437978b4d03ac554d1340e34cd8f3ba8b1bf9892255ee3da65b0df1d8df",
+    "tests/test_rolling_ball_benchmark.py": "440e5e9277e5e6cc7b14f0f76b9749eb0c53523b37fec50780038f206d42268f",
+    "benchmarks/rolling_ball.py": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+    "coverage/contracts/rolling-ball-v1.json": "6f4d505df80e095e604cedc4de6024bf73237ec68b6df14f086db0998c183bc0",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d"
+  },
+  "historical_sources": {
+    "benchmarks/rolling_ball.py": {
+      "current_canonical_sha256": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+      "predecessor_canonical_sha256": "8a056adec224634a34e6bf1ab6a47b35ba18e156f7473de12550793a3c6a4ce2",
+      "inverse_fragments": []
+    },
+    "coverage/contracts/rolling-ball-v1.json": {
+      "current_canonical_sha256": "6f4d505df80e095e604cedc4de6024bf73237ec68b6df14f086db0998c183bc0",
+      "predecessor_canonical_sha256": "6f4d505df80e095e604cedc4de6024bf73237ec68b6df14f086db0998c183bc0",
+      "inverse_fragments": []
+    },
+    "tests/fixtures/rolling_ball_sources_v1.json": {
+      "current_canonical_sha256": "9b58244123f42ebbece77e5c978469e39f7072517a99ee1a1f05afd0393d1340",
+      "predecessor_canonical_sha256": "9b58244123f42ebbece77e5c978469e39f7072517a99ee1a1f05afd0393d1340",
+      "inverse_fragments": []
+    },
+    "tests/rolling_ball_contract.py": {
+      "current_canonical_sha256": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+      "predecessor_canonical_sha256": "446936d9be4002a610ef890348757d46657f411445beceafb608c465c133bf5c",
+      "inverse_fragments": []
+    },
+    "tests/rolling_ball_exception_codec.py": {
+      "current_canonical_sha256": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+      "predecessor_canonical_sha256": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+      "inverse_fragments": []
+    },
+    "tests/rolling_ball_observer.py": {
+      "current_canonical_sha256": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+      "predecessor_canonical_sha256": "c9c25e831ced53e65233d748a5f178e7264087b9611177a8d2fcccca8c54bd9c",
+      "inverse_fragments": []
+    },
+    "tests/test_rolling_ball_source.py": {
+      "current_canonical_sha256": "c1ab14e6f1e0c7a84580b846c1592f9388b0223f48389929a7c74addc7a430f6",
+      "predecessor_canonical_sha256": "c1ab14e6f1e0c7a84580b846c1592f9388b0223f48389929a7c74addc7a430f6",
+      "inverse_fragments": []
+    }
+  },
+  "FENV_dependency": {
+    "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+    "source_files_raw_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "module": "tests/util_views_fenv.py",
+    "backend": "backend",
+    "mode": "source-built-v1",
+    "receipt_environment": "UTIL_VIEWS_FENV_RECEIPT",
+    "external_digest_environment": "UTIL_VIEWS_FENV_RECEIPT_SHA256",
+    "legacy": "F1 private-fixed-v1 scope retained; forbidden by this benchmark genuine consumer",
+    "collector": "C prepares current-source helper and exports MODE/RECEIPT/RECEIPT_SHA256, no HELPER. Retain entire emitted helper bundle recursively and7F1sourcefiles/context. Receipt/toolchain/source/current-library/control validation precedes target calls.",
+    "scope": "Reviewed empty-x87/masked exceptions/Linux x86_64 glibc32/MXCSR28; no Windows/general machine-state claim."
+  },
+  "reused_executor_canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+  "route": {
+    "driver": "benchmarks/rolling_ball_native.py",
+    "api": "restoration.rolling_ball",
+    "argv": [
+      "benchmarks/rolling_ball_native.py",
+      "--first-cohort",
+      "--api",
+      "restoration.rolling_ball",
+      "--case",
+      "small-u8"
+    ],
+    "native_entries": {
+      "get_num_threads": 1,
+      "ball_kernel_apply": 1,
+      "rolling_ball_apply": 1
+    },
+    "pass_index": 0,
+    "frames": [
+      "execute",
+      "sample_entry",
+      "measure"
+    ]
+  },
+  "providers": [
+    "NumPy boundary dtype/copy/metadata/custom-kernel subtraction/warnings; owned C++ padding/min-plus; default owned kernel arithmetic",
+    "No original/helper/fallback during candidate. All allocations and boundary calls included."
+  ],
+  "genuine_first_cohort_status": "PENDING_NO_ACTUAL_PRODUCT_BINDING",
+  "adapter_reuse": {
+    "source": "build\\worktrees\\mark-boundaries-benchmark-v1\\benchmarks\\mark_boundaries_execution.py",
+    "sha256": "253a99be3016d135547abdb7d5d1caf7fb1e5188c38814c2ef1be9cc428201ed",
+    "scope": "Admitted MARK family adapter/real Montage entry/F1/binding/SDK authority specialized to one-image rollingBall; no new measurement engine"
+  },
+  "pending": [
+    "Current whole genuine product/rootSDK/runtime/helper binding",
+    "Outer rolling-ball first-cohort frame/native acceptance/C1poststop/offline verifier admission before timing",
+    "Separate root original-public one-thread measurement GO; retain all8 cases/all losses; none currently"
+  ]
+}

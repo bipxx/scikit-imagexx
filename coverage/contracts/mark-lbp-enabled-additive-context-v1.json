@@ -1,0 +1,70 @@
+{
+  "schema": "mark-lbp-enabled-additive-context-v1",
+  "predecessor_source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+  "sources": {
+    "CMakeLists.txt": {
+      "current_canonical_lf_sha256": "5dd25952af7c1393ab18050930f3149381a42f8e6ab342876649cf6c7ef100bd",
+      "predecessor_canonical_lf_sha256": "281515299174bfc4aa76ead2da1b2bb3b7ed9cf5278a263ef036bedc0d31c347",
+      "inverse_fragments": [
+        {
+          "current": "    set_source_files_properties(src/util_views.cpp src/bind_util_views.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")\n    set_source_files_properties(src/mark_boundaries.cpp src/bind_mark_boundaries.cpp src/draw_multiblock_lbp.cpp src/bind_draw_multiblock_lbp.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")",
+          "predecessor": "    set_source_files_properties(src/util_views.cpp src/bind_util_views.cpp PROPERTIES COMPILE_OPTIONS \"-ffp-contract=off;-fno-fast-math;-frounding-math\")"
+        },
+        {
+          "current": "    set_source_files_properties(src/util_views.cpp src/bind_util_views.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")\n    set_source_files_properties(src/mark_boundaries.cpp src/bind_mark_boundaries.cpp src/draw_multiblock_lbp.cpp src/bind_draw_multiblock_lbp.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")",
+          "predecessor": "    set_source_files_properties(src/util_views.cpp src/bind_util_views.cpp PROPERTIES COMPILE_OPTIONS \"/fp:strict\")"
+        },
+        {
+          "current": "    target_sources(_core PRIVATE src/bind_join_segmentations.cpp src/bind_crop.cpp src/bind_regular_grid.cpp src/bind_util_views.cpp)\n    target_sources(_core PRIVATE src/bind_mark_boundaries.cpp src/bind_draw_multiblock_lbp.cpp)",
+          "predecessor": "    target_sources(_core PRIVATE src/bind_join_segmentations.cpp src/bind_crop.cpp src/bind_regular_grid.cpp src/bind_util_views.cpp)"
+        },
+        {
+          "current": "target_sources(skimagexx PRIVATE src/join_segmentations.cpp src/crop.cpp src/regular_grid.cpp src/util_views.cpp)\ntarget_sources(skimagexx PRIVATE src/mark_boundaries.cpp src/draw_multiblock_lbp.cpp)",
+          "predecessor": "target_sources(skimagexx PRIVATE src/join_segmentations.cpp src/crop.cpp src/regular_grid.cpp src/util_views.cpp)"
+        }
+      ]
+    },
+    "src/bindings.cpp": {
+      "current_canonical_lf_sha256": "80e60af701a911c650944ef243141fae91e860e46b44bc03d29de0454864275c",
+      "predecessor_canonical_lf_sha256": "29157db18c91086b063fc85fbf8a0a5de7ddac4bb17e0d72f42d4400850b0d11",
+      "inverse_fragments": [
+        {
+          "current": "    bind_util_views(m);\n    bind_mark_boundaries(m);\n    bind_draw_multiblock_lbp(m);",
+          "predecessor": "    bind_util_views(m);"
+        },
+        {
+          "current": "void bind_util_views(pybind11::module_&);\nvoid bind_mark_boundaries(pybind11::module_&);\nvoid bind_draw_multiblock_lbp(pybind11::module_&);",
+          "predecessor": "void bind_util_views(pybind11::module_&);"
+        }
+      ]
+    },
+    "python/skimagexx/coverage.py": {
+      "current_canonical_lf_sha256": "216d43d5a93aa591dd1453ad3edfb4deb028bcb364c5281afd3881d9113ec317",
+      "predecessor_canonical_lf_sha256": "8848de0268e1e719ca6386234f314b4608ee0d57dcd81574202a36ea4b382256",
+      "inverse_fragments": [
+        {
+          "current": "    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):\n        import numpy as np\n        assert type(actual)is type(expected)is np.ndarray\n        assert actual.shape==expected.shape and actual.dtype==expected.dtype\n        assert actual.strides==expected.strides and type(actual.base)is type(expected.base)\n        assert actual.flags.owndata==expected.flags.owndata and actual.flags.writeable==expected.flags.writeable\n        if image is not None:assert not np.shares_memory(actual,image)\n        assert actual.tobytes(order='C')==expected.tobytes(order='C')\n        return\n    if api=='segmentation.join_segmentations':\n        join_segmentations_default_error(actual,expected);return",
+          "predecessor": "    if api=='segmentation.join_segmentations':\n        join_segmentations_default_error(actual,expected);return"
+        },
+        {
+          "current": "    if api=='segmentation.mark_boundaries':\n        import numpy as np\n        labels=(np.arange(image.size,dtype=np.int64).reshape(image.shape)%3).astype(np.int16)\n        labels.flags.writeable=False\n        return (image,labels),{'mode':'thick'}\n    if api=='feature.draw_multiblock_lbp':\n        return (image,3,3,2,2),{'lbp_code':170,'alpha':0.5}\n    if api=='segmentation.join_segmentations':\n        import numpy as np",
+          "predecessor": "    if api=='segmentation.join_segmentations':\n        import numpy as np"
+        },
+        {
+          "current": "    if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')\n    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')",
+          "predecessor": "    if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')"
+        },
+        {
+          "current": "'shape_index','hessian_matrix_det','draw_multiblock_lbp'),",
+          "predecessor": "'shape_index','hessian_matrix_det'),"
+        },
+        {
+          "current": "'find_boundaries','join_segmentations','mark_boundaries'),",
+          "predecessor": "'find_boundaries','join_segmentations'),"
+        }
+      ]
+    }
+  },
+  "scope": "Onlyordinary2familybuild/binder/publicregistry/defaultchecker additions. Alloldcompiler/numerical/method/case policies restoredexactly; notruntimeproducer authority.",
+  "original_budget": 0
+}

@@ -1,0 +1,2246 @@
+{
+  "schema": "flood-fill-source-first-v1",
+  "state": "UNBOUND_SOURCE_ONLY",
+  "base": "3f5c6b1deba606b27bcc5fd0dca662f19166ac60",
+  "upstream": "scikit-image 0.26.0",
+  "canonical_apis": [
+    "morphology.flood",
+    "morphology.flood_fill"
+  ],
+  "identity_aliases": {
+    "segmentation.flood": "morphology.flood",
+    "segmentation.flood_fill": "morphology.flood_fill"
+  },
+  "canonical_operations": 2,
+  "public_names": 4,
+  "signatures": {
+    "flood": "(image, seed_point, *, footprint=None, connectivity=None, tolerance=None)",
+    "flood_fill": "(image, seed_point, new_value, *, footprint=None, connectivity=None, tolerance=None, in_place=False)"
+  },
+  "authority": {
+    "original_budget": 0,
+    "native_budget": 0,
+    "helper_budget": 0,
+    "runtime_tests": 0,
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "root_GO": null
+  },
+  "recipes": [
+    {
+      "api": "flood",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-uint8"
+    },
+    {
+      "api": "flood",
+      "dtype": "uint16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-uint16"
+    },
+    {
+      "api": "flood",
+      "dtype": "uint32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-uint32"
+    },
+    {
+      "api": "flood",
+      "dtype": "uint64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-uint64"
+    },
+    {
+      "api": "flood",
+      "dtype": "int8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-int8"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-int16"
+    },
+    {
+      "api": "flood",
+      "dtype": "int32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-int32"
+    },
+    {
+      "api": "flood",
+      "dtype": "int64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-int64"
+    },
+    {
+      "api": "flood",
+      "dtype": "float32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-float32"
+    },
+    {
+      "api": "flood",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:dtype-float64"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "F",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:layout-F"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "reverse",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:layout-reverse"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "step",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:layout-step"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "transpose",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:layout-transpose"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "readonly",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:layout-readonly"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "metadata",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:layout-metadata"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "swapped",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:layout-swapped"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        5
+      ],
+      "seed": [
+        2
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:one-dimensional"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "seed": [
+        0,
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:three-dimensional"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        1,
+        1
+      ],
+      "seed": [
+        0,
+        0
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:singleton"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        0,
+        3
+      ],
+      "seed": [
+        999,
+        999
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:empty"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        -1,
+        -1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:negative-seed"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        3,
+        0
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:bad-seed"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        5
+      ],
+      "seed": 2,
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:scalar-seed-1d"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": 1,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:connectivity-one"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": 0,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:connectivity-zero"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": 9,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:connectivity-high"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "cross",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:footprint-cross"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "no-center",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:footprint-no-center"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "center-only",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:footprint-center-only"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "large",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:footprint-large"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "empty",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:footprint-empty"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "even",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:footprint-even"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "rank",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:footprint-rank"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": 0,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:tolerance-zero"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": 1,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:tolerance-positive"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": -1,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:tolerance-negative"
+    },
+    {
+      "api": "flood",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": "np-int8-one",
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:tolerance-numpy"
+    },
+    {
+      "api": "flood",
+      "dtype": "float32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": 0.5,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:tolerance-float"
+    },
+    {
+      "api": "flood",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": "inf",
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:tolerance-inf"
+    },
+    {
+      "api": "flood",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "nan",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:seed-nan"
+    },
+    {
+      "api": "flood",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "inf",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:seed-inf"
+    },
+    {
+      "api": "flood",
+      "dtype": "float16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:float16"
+    },
+    {
+      "api": "flood",
+      "dtype": "bool",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:bool"
+    },
+    {
+      "api": "flood",
+      "dtype": "complex64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood:complex"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-uint8"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-uint16"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-uint32"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-uint64"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-int8"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-int16"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-int32"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-int64"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "float32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-float32"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:dtype-float64"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "F",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:layout-F"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "reverse",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:layout-reverse"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "step",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:layout-step"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "transpose",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:layout-transpose"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "readonly",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:layout-readonly"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "metadata",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:layout-metadata"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "swapped",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:layout-swapped"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        5
+      ],
+      "seed": [
+        2
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:one-dimensional"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        2,
+        3,
+        4
+      ],
+      "seed": [
+        0,
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:three-dimensional"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        1,
+        1
+      ],
+      "seed": [
+        0,
+        0
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:singleton"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        0,
+        3
+      ],
+      "seed": [
+        999,
+        999
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:empty"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        -1,
+        -1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:negative-seed"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        3,
+        0
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:bad-seed"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        5
+      ],
+      "seed": 2,
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:scalar-seed-1d"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": 1,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:connectivity-one"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": 0,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:connectivity-zero"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": 9,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:connectivity-high"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "cross",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:footprint-cross"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "no-center",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:footprint-no-center"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "center-only",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:footprint-center-only"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "large",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:footprint-large"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "empty",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:footprint-empty"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "even",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:footprint-even"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": "rank",
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:footprint-rank"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": 0,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:tolerance-zero"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": 1,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:tolerance-positive"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": -1,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:tolerance-negative"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "int16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": "np-int8-one",
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:tolerance-numpy"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "float32",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": 0.5,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:tolerance-float"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": "inf",
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:tolerance-inf"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "nan",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:seed-nan"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "float64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "inf",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:seed-inf"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "float16",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:float16"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "bool",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:bool"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "complex64",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 7,
+      "id": "flood_fill:complex"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": true,
+      "new_value": 7,
+      "id": "flood_fill:in-place"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "readonly",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": true,
+      "new_value": 7,
+      "id": "flood_fill:in-place-readonly"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 1.5,
+      "id": "flood_fill:new-value-fraction"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": 300,
+      "id": "flood_fill:new-value-out-of-range"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": "complex-one",
+      "id": "flood_fill:new-value-complex"
+    },
+    {
+      "api": "flood_fill",
+      "dtype": "uint8",
+      "shape": [
+        3,
+        4
+      ],
+      "seed": [
+        1,
+        1
+      ],
+      "layout": "C",
+      "pattern": "plateau",
+      "footprint": null,
+      "connectivity": null,
+      "tolerance": null,
+      "in_place": false,
+      "new_value": "array-two",
+      "id": "flood_fill:new-value-array"
+    }
+  ],
+  "recipe_counts": {
+    "flood": 45,
+    "flood_fill": 51
+  },
+  "caps": {
+    "logical": 24,
+    "physical_input": 48,
+    "padded": 120,
+    "queue_entries": 24,
+    "neighbor_checks": 648,
+    "storage_bytes": 4400
+  },
+  "source_snapshot": "tests/fixtures/flood_fill_sources_v1.json",
+  "source_snapshot_sha256": "46bee1c00d172276e3d35bd819f41793da09e959d59266d13a45767abf55a481",
+  "source_intakes": {
+    "local-source-intake-v1.json": {
+      "minimum": {
+        "site": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+        "files": {
+          "morphology/_flood_fill.py": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/_flood_fill.py",
+            "sha256": "df8f636957af1639ac40733a651451dd9f8e8b4fa07a55a3e963f93082d7ab09",
+            "bytes": 10733
+          },
+          "morphology/_util.py": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/_util.py",
+            "sha256": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7",
+            "bytes": 12019
+          },
+          "morphology/footprints.py": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/footprints.py",
+            "sha256": "7e5cf796fb6ad51276cff2311c30ae744ae26926e26ad4cde9dbba67d44b07d3",
+            "bytes": 42729
+          },
+          "morphology/__init__.py": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/__init__.py",
+            "sha256": "b9caa6ea8bec604defc3770ba595c7a43a1d9d968db47befb60843d29f7c5922",
+            "bytes": 2028
+          },
+          "segmentation/__init__.py": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.py",
+            "sha256": "635be67f8fc494ce763f44b57eb2b02938e126395f278bd22abb53d25324c119",
+            "bytes": 174
+          },
+          "segmentation/__init__.pyi": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/__init__.pyi",
+            "sha256": "9296e4d4fcaa29d16788fde5521885f28a5db893f35996a19e823d4db1ef3956",
+            "bytes": 1522
+          },
+          "_shared/utils.py": {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/utils.py",
+            "sha256": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1",
+            "bytes": 36621
+          }
+        },
+        "missing": [
+          "morphology/__init__.pyi"
+        ],
+        "compiled": [
+          {
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/morphology/_flood_fill_cy.cpython-311-x86_64-linux-gnu.so",
+            "bytes": 343736,
+            "sha256": "71962501722d7a0949afb2075026bdeba6916916d4aec18de055a54df5e8172e"
+          }
+        ],
+        "distributions": {
+          "scikit_image-": {
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scikit_image-0.26.0.dist-info",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "RECORD_sha256": "4bc5c2d5724ff86f0eca729df981f23b0a652070a75095e17789608f9f62fc4f"
+          },
+          "numpy-": {
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy-1.24.4.dist-info",
+            "METADATA_sha256": "901677b9c6e0973ed91ece5a79fad3c42dafd884e1d7299cf5c392a7e7c62398",
+            "RECORD_sha256": "3ae609e199f5973350a5ad70725f3bea1e3f4530f6b17efb07ba4baf8b092968"
+          },
+          "scipy-": {
+            "root": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy-1.15.3.dist-info",
+            "METADATA_sha256": "c75caf32b67a13a9fc16aacf993a8bb883b7a69744ffe77cbbd4f3bfbad28f3d",
+            "RECORD_sha256": "ca8835e1256f4ae80bb568b07aec2e0a8c168b325a30d0539be8e2d3b71bdcf2"
+          }
+        },
+        "science_imports": 0,
+        "API_calls": 0
+      },
+      "modern": {
+        "site": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+        "files": {
+          "morphology/_flood_fill.py": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/_flood_fill.py",
+            "sha256": "df8f636957af1639ac40733a651451dd9f8e8b4fa07a55a3e963f93082d7ab09",
+            "bytes": 10733
+          },
+          "morphology/_util.py": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/_util.py",
+            "sha256": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7",
+            "bytes": 12019
+          },
+          "morphology/footprints.py": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/footprints.py",
+            "sha256": "7e5cf796fb6ad51276cff2311c30ae744ae26926e26ad4cde9dbba67d44b07d3",
+            "bytes": 42729
+          },
+          "morphology/__init__.py": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/__init__.py",
+            "sha256": "b9caa6ea8bec604defc3770ba595c7a43a1d9d968db47befb60843d29f7c5922",
+            "bytes": 2028
+          },
+          "segmentation/__init__.py": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.py",
+            "sha256": "635be67f8fc494ce763f44b57eb2b02938e126395f278bd22abb53d25324c119",
+            "bytes": 174
+          },
+          "segmentation/__init__.pyi": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/__init__.pyi",
+            "sha256": "9296e4d4fcaa29d16788fde5521885f28a5db893f35996a19e823d4db1ef3956",
+            "bytes": 1522
+          },
+          "_shared/utils.py": {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/utils.py",
+            "sha256": "b0a232570c8e990ab76cd6fe6f54a67161a691214dbf6c529656e13a799eb1f1",
+            "bytes": 36621
+          }
+        },
+        "missing": [
+          "morphology/__init__.pyi"
+        ],
+        "compiled": [
+          {
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/morphology/_flood_fill_cy.cpython-313-x86_64-linux-gnu.so",
+            "bytes": 364296,
+            "sha256": "bf34525216ec51ee0b8e1f59d3cc88624aaac6ba31ab21178fa96262ed8d127c"
+          }
+        ],
+        "distributions": {
+          "scikit_image-": {
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scikit_image-0.26.0.dist-info",
+            "METADATA_sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571",
+            "RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5"
+          },
+          "numpy-": {
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy-2.5.4.dist-info",
+            "METADATA_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+            "RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d"
+          },
+          "scipy-": {
+            "root": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy-1.18.1.dist-info",
+            "METADATA_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+            "RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4"
+          }
+        },
+        "science_imports": 0,
+        "API_calls": 0
+      }
+    },
+    "extra-source-intake-v1.json": {
+      "minimum": {
+        "skimage/_shared/dtype.py": {
+          "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/_shared/dtype.py",
+          "sha256": "fba9770da45d1ea15107d127bcc539c6a1f1c0dedce75f52befe3bab2d51f929",
+          "bytes": 2397
+        },
+        "skimage/util/arraycrop.py": {
+          "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/util/arraycrop.py",
+          "sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+          "bytes": 2486
+        },
+        "skimage/segmentation/_watershed.py": {
+          "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/segmentation/_watershed.py",
+          "sha256": "8a34e4af9dfd96a40cd3fe583a38f194f3a495471dc626cb2df72311fb35c0d6",
+          "bytes": 9870
+        },
+        "scipy/ndimage/_morphology.py": {
+          "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/ndimage/_morphology.py",
+          "sha256": "2c5f7580a25c1c85a80fd6ad87ff7e63b1e053041b03410baa0558be6d580160",
+          "bytes": 100762
+        }
+      },
+      "modern": {
+        "skimage/_shared/dtype.py": {
+          "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/_shared/dtype.py",
+          "sha256": "fba9770da45d1ea15107d127bcc539c6a1f1c0dedce75f52befe3bab2d51f929",
+          "bytes": 2397
+        },
+        "skimage/util/arraycrop.py": {
+          "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/util/arraycrop.py",
+          "sha256": "558df9e59105586d0b0e374a33836bd447919e9e5d91f21586127b7cafabfbac",
+          "bytes": 2486
+        },
+        "skimage/segmentation/_watershed.py": {
+          "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/segmentation/_watershed.py",
+          "sha256": "8a34e4af9dfd96a40cd3fe583a38f194f3a495471dc626cb2df72311fb35c0d6",
+          "bytes": 9870
+        },
+        "scipy/ndimage/_morphology.py": {
+          "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy/ndimage/_morphology.py",
+          "sha256": "5361c28977347a3bc4ba1240aea0b341a72a803498a5600506c9964a61eeb9ad",
+          "bytes": 100962
+        }
+      },
+      "src/skimage/morphology/_flood_fill.py": {
+        "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/morphology/_flood_fill.py",
+        "sha256": "df8f636957af1639ac40733a651451dd9f8e8b4fa07a55a3e963f93082d7ab09",
+        "bytes": 10733,
+        "matches_installed_minimum": true
+      },
+      "src/skimage/morphology/_util.py": {
+        "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/morphology/_util.py",
+        "sha256": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7",
+        "bytes": 12019,
+        "matches_installed_minimum": true
+      }
+    },
+    "primary-source-intake-v1.json": {
+      "version": "0.26.0",
+      "files": {
+        "src/skimage/morphology/_flood_fill_cy.pyx": {
+          "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/morphology/_flood_fill_cy.pyx",
+          "bytes": 4866,
+          "sha256": "f92f506c70609a76d5f7374e465a16477c93e661a739cbb69812977756d32534",
+          "reason": "Missing from installed retained wheels; necessary Cython/type/queue source closure"
+        },
+        "src/skimage/morphology/_queue_with_history.pxi": {
+          "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/morphology/_queue_with_history.pxi",
+          "bytes": 4247,
+          "sha256": "e8ec7249d9c02bc4efc58c60bee1680fbe74ba6f2ec0471027f957c38dbaaa92",
+          "reason": "Missing from installed retained wheels; necessary Cython/type/queue source closure"
+        },
+        "src/skimage/_shared/fused_numerics.pxd": {
+          "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/_shared/fused_numerics.pxd",
+          "bytes": 533,
+          "sha256": "a0e05804f42685fd8e89943f6251e27e4e76f122be142b015a9ee25d5d6b89ba",
+          "reason": "Missing from installed retained wheels; necessary Cython/type/queue source closure"
+        }
+      },
+      "package_downloads": 0,
+      "API_calls": 0
+    }
+  },
+  "semantics": {
+    "order": [
+      "np.asarray(image)",
+      "F-contiguous first; otherwise C; otherwise ascontiguousarray",
+      "empty-axis bool zeros shortcut",
+      "iter(seed) or scalar tuple",
+      "seed_value=image[seed_point] BEFORE modulo",
+      "seed tuple np.asarray(seed)%shape",
+      "resolve footprint/connectivity",
+      "pad extents from actual nonzero footprint support",
+      "pad with image.min()",
+      "ravel seed/order and stable distance-sorted offsets",
+      "flags uint8 and border2",
+      "tolerance abs/clamp if not None",
+      "fused Cython FIFO",
+      "crop flags view(bool)"
+    ],
+    "seed": "Indexing exceptions precede normalization. Valid negative indices normalize; out-of-bounds seeds do not wrap. Seed always marked even for NaN/outside tolerance.",
+    "neighborhood": "Default scipy generate_binary_structure clamps connectivity<1 to1 and defaults to ndim. Explicit footprint bool conversion takes precedence over connectivity; rank and odd sizes checked; adjacency not enforced. Center need not be True. Stable distance sort removes first offset unconditionally, even if center False. No hidden symmetrization.",
+    "tolerance": "abs is Python dispatched; dtype min/max numpy scalars then item(); Python/NumPy arithmetic and max/min ordering preserved, followed by fused low/high cast. Equal kernel uses ==; tolerance kernel uses low<=pixel<=high; no approximate comparisons.",
+    "dtype": "Fused uint8/16/32/64, int8/16/32/64, float32/64. Actual dispatch rejects or handles bool/byteorder/profile scalar peculiarities only after observation. float16 TypeError translated only around kernel call. No advertised unsigned wrap tolerance reinterpretation.",
+    "mask": "Normal result crop(flags,pad,copy=False).view(bool), padded base owns storage; shape matches image, physical strides depend on chosen order/padding. Empty result zeros owns storage. Input never written by flood; mask does not alias image.",
+    "fill": "Call flood first with original image; only then truth-test in_place; false calls original image.copy() with no order keyword; image[mask]=new_value then return original or copy. Preserve original object/subclass/metadata/writeability/assignment callbacks/errors, partial mutation on failed assignment and alias identity; do not replace with normalized ndarray copy.",
+    "errors": "Observe exact type/module/qualname/typed args/message/traceback diagnostic, warnings and callback order, never synthesize outcomes. Unsupported dtype may fail before/fused-call; empty shortcut ignores malformed seed/footprint/tolerance. Fill assignment occurs after full mask and optional copy.",
+    "FP": "Strict target-immediate incoming/outgoing full control/status/MXCSR/NumPy state plus exact caller/process32 restore. np.min/pad/offset sqrt/sort/clamp/seed comparisons/assignment conversions are source phases. No after-call FP repair to manufacture parity.",
+    "protocol": "np.asarray coercion happens inside flood and may strip subclass/metadata; fill subsequently copies and assigns original object. Future observers record __array__/copy/__setitem__/truth/iter/index/numeric callbacks, inputs/backing/aliases, including exceptions. Protocol probes not implemented/authorized in this source-only checkpoint."
+  },
+  "safety": {
+    "derivation": "Tiny finite shapes. Padded box extends each axis by maximal active footprint displacement; border2 is never enqueued, offsets remain within allocated padded box. Queue marks before push, <=logical unique pushes. Center-only has zero offsets and zero padding: loop empty, seed-only safe. Empty/all-false footprint errors at max(empty) before Cython. Unsupported dtypes dispatch refused or non-computing error; actual errors unobserved.",
+    "scalar_0d": "QUARANTINED: no rank0 original recipe until complete helper/index proof",
+    "other_quarantine": [
+      "huge shapes/footprints/intp overflow",
+      "unbounded iterators/user reentrant callbacks",
+      "object/structured/string/datetime arrays",
+      "arbitrary ndarray subclasses/masked arrays",
+      "tolerance arrays/complex/NaN/custom arithmetic",
+      "large extrema and platform longdouble/Windows intp differences"
+    ]
+  },
+  "native_SDK_proposal": {
+    "operation": "Complete flood and flood_fill accepting typed strided borrowed image views, seed and explicit footprint/tolerance plan; return owning padded mask view descriptor or caller-owned typed copy/in-place result. Lifetime ownership and in-place alias contract explicit.",
+    "reuse": [
+      "POD strided views and safe offset/copy/crop primitives",
+      "typed input/exception transport and existing full32 observer/controller",
+      "optional process-global default1 worker setting; capture once at composition entry"
+    ],
+    "algorithm": "Source-compatible FIFO flags + once-marked visits; ordered frontier remains serial. SIMD/parallel only independent staging/copy if later justified. Reconstruction queue is priority-based distinct operation, not reusable wholesale.",
+    "frontiers": [
+      "full Python copy/assignment/provider protocol cannot be claimed from typed SDK alone",
+      "dtype promotion/byteorder/Windows/error/FP association require saved originals",
+      "no speculative general graph/type engine, no artificial SIMD/threads"
+    ]
+  },
+  "next_gates": [
+    "root independent source/storage safety admission",
+    "family actual same-code cold/cached zero-body prefixes/controller/runtime/source/helper binding and independent readiness",
+    "separate explicit root original budget and once-only journal before any original body",
+    "saved original admission and full native/public/SDK implementation and domain parity",
+    "genuine installed core/hot-swap/default1/optionalworkers/scalar/SIMD/platform and one-thread original benchmark",
+    "exact-source four-profile release qualification and independent admission"
+  ]
+}

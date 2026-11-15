@@ -1,0 +1,14 @@
+{
+  "schema": "mark-wide-outer-igg-source-baseline-v1",
+  "source_revision": "ca6c283ce7dea6a89b4bf6bf0e42c8ba65b880e4",
+  "source_path": "tests/inverse_gaussian_gradient_large_accuracy.py",
+  "source_canonical_LF_sha256": "b0c2d435005b08fd9a69f038c05d20bb82c57d5f93d6633f315b37086b8f5406",
+  "scope": "Exact original five source functions only; parsed for provenance, never imported or executed.",
+  "functions": {
+    "dump": "def dump(path,value):\n    raw=json.dumps(value,indent=2,allow_nan=False)+'\\n'\n    with path.open('x',encoding='utf-8',newline='\\n')as f:f.write(raw);f.flush();os.fsync(f.fileno())",
+    "append": "def append(path,value):\n    raw=json.dumps(value,allow_nan=False)+'\\n'\n    with path.open('a',encoding='utf-8',newline='\\n')as stream:\n        stream.write(raw);stream.flush();os.fsync(stream.fileno())",
+    "np_state": "def np_state(np):\n    return dict(policy=np.geterr(),handler_type=[type(np.geterrcall()).__module__,type(np.geterrcall()).__name__],handler_id=id(np.geterrcall()),buffer=np.getbufsize())",
+    "check_deadline": "def check_deadline(go):\n    now=datetime.now(timezone.utc);start=datetime.fromisoformat(go['not_before_utc']);end=datetime.fromisoformat(go['deadline_utc'])\n    assert start.utcoffset()is not None and end.utcoffset()is not None and start<=now<end,'GO_DEADLINE_EXPIRED_OR_NOT_ACTIVE'",
+    "_raw_fenv": "def _raw_fenv(value):\n    return dict(raw=bytes(value).hex(),control=value.control,status=value.status,mxcsr=value.mxcsr)"
+  }
+}

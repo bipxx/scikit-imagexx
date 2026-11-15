@@ -1,0 +1,22 @@
+{
+  "schema": "join-windows-fenv-fixture-v2",
+  "predecessor_source": "e4af88887ad74ab17f01b6055840df7ca98b843a",
+  "public_test": "tests/test_join_segmentations_public.py",
+  "current_raw_sha256": "61e39857131ac15513cf628d51f96658871f8ec30da571902ab785cd874cc30e",
+  "Windows_fixture_raw_sha256": "c3fbd2964118f35b09665cc727663432b5cd89970abb96835799e989ea1810a9",
+  "original_predecessor_raw_sha256": "c113a3dafb68a90bccc772d44af21fd0a4ed3f638dff534487d107cee854003c",
+  "captured_context": {
+    "path": "coverage/contracts/join-segmentations-captured-fenv-input-v1.json",
+    "sha256": "1af50e744744268b18baca3552d593970d43aa82536cb0db9e84e5ee48c3da18"
+  },
+  "Windows_context": {
+    "path": "coverage/contracts/join-windows-fenv-fixture-v1.json",
+    "sha256": "061a44276284722e0e30fd836ad5e2741faa374036ce2d5b5e5347bdb4787390"
+  },
+  "adapter": {
+    "path": "tests/join_windows_fenv.py",
+    "sha256": "947245fd2c6bbd6ba52bac062d40671eeae3c011b333b3be8cc6792f088452b0"
+  },
+  "scope": "Only compose authenticated e03current->Windowsfixture predecessor before unchanged Windows opaque-adapter inverse; no publicfixture/adapter/kernel/gold/asserttail mutation",
+  "original_budget": 0
+}

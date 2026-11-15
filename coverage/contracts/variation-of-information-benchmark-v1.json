@@ -1,0 +1,95 @@
+{
+  "schema": "variation-of-information-benchmark-v1",
+  "status": "PROSPECTIVE_UNBOUND_NO_TARGET_OR_TIMING",
+  "cases": [
+    {
+      "id": "metrics.variation_of_information/128x128/8/C",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        128,
+        128
+      ],
+      "labels": 8,
+      "dtype": "int64",
+      "layout": "C",
+      "ignore": [
+        0
+      ]
+    },
+    {
+      "id": "metrics.variation_of_information/128x128/64/F",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        128,
+        128
+      ],
+      "labels": 64,
+      "dtype": "int64",
+      "layout": "F",
+      "ignore": [
+        0
+      ]
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/8/F",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        256,
+        256
+      ],
+      "labels": 8,
+      "dtype": "int64",
+      "layout": "F",
+      "ignore": [
+        0
+      ]
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/64/C",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        256,
+        256
+      ],
+      "labels": 64,
+      "dtype": "int64",
+      "layout": "C",
+      "ignore": [
+        0
+      ]
+    }
+  ],
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "threads": 1,
+    "retain_all_losses": true,
+    "allocation_inclusive": true
+  },
+  "binding": {
+    "source": null,
+    "producer_run": null,
+    "artifact": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "root_admission": null,
+    "first_cohort_GO": null,
+    "measurement_GO": null
+  },
+  "shared_fixture": {
+    "path": "benchmarks/label_pair_metrics.py",
+    "canonical_sha256": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+    "reuse": "Source-safe labelpair factory; proxy supplies ARE metadata alpha only during factoryreuse and removesit before VI call. No reference/entropy computation insetup."
+  },
+  "provider_cost": "Full public call includes existingNumPy membership/weight normalization andSciPy CSRrepresentation; entropy/countcore ownedC++, providersnot nativecredit.",
+  "accuracy": "Exact0ULP pre-sampler original/candidate parity remainsmandatory for each actuallargecase. Retained8smallVI originals do not establish these4largecases.",
+  "counts_if_authorized": {
+    "cases": 4,
+    "raw_samples": 56,
+    "warm_groups": 8
+  },
+  "pending": "Executable bound consumer/sharedsource projection, genuine installedproduct+completeSDK/roothelper/firstcohort andseparateGO, largecase numerical reference/fullFP proof, one-thread originalperformance/alllosses. Planisnot readiness/authority."
+}

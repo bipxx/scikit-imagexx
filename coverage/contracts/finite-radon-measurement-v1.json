@@ -1,0 +1,351 @@
+{
+  "schema": "next-metrics-measurement-v1",
+  "status": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "producer": {
+    "run": null,
+    "revision": null,
+    "artifact": null,
+    "sha256": null
+  },
+  "prepared_source": null,
+  "SDK_members": null,
+  "core_sha256": null,
+  "benchmark_fingerprint": null,
+  "benchmark_source_sha256": {
+    "include/skimagexx/finite_radon.hpp": "a8cd344e47b7dc978c071c361f0c51625c2b3a8499369a2a141c15bed8e2c29b",
+    "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "benchmarks/next_util_execution.py": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "benchmarks/finite_radon_execution_v1.py": "3d266a6f73c4a8a2dae9863946745bdbdf20cf30964f8e2ce84de29e6c06d7cb",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "benchmarks/finite_radon_cases_v1.py": "600be9cc56eac13d2bb3fb316828e212b960bd0558d6f8baec2a0796f6d45cac",
+    "src/bind_finite_radon.cpp": "d2b727c445754d43e1fc71fe9450523f516f6477b0fe059e9198b68ead65079d",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "src/finite_radon.cpp": "e3e0c443ffdcff316d34ba97a0b1ea34d4bb5ec5ef8e1626dbdad1f00d6ef9d6",
+    "python/skimagexx/_finite_radon.py": "013ddb7bf8bb08b72ca40108ac199a3a28dee1323c346181e56acc79094d466c",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d",
+    "benchmarks/finite_radon_frt2_v1.py": "17efc2e11182a625ea5c3c856843beb924de9c6771bffc9c099e54ee47ac57b6",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "CMakeLists.txt": "281515299174bfc4aa76ead2da1b2bb3b7ed9cf5278a263ef036bedc0d31c347",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "include/skimagexx/crop.hpp": "a7ad2d25d627920463f02cdfc21793592c12ea38d60c9c5cbb2e15d900e8f988",
+    "coverage/contracts/finite-radon-benchmark-execution-v1.json": "a235facdf1d37adefeea500d6a8a6abc60909a9d2ea8cca2f90b54f7d43997be",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "benchmarks/finite_radon_ifrt2_v1.py": "efff7352491ca2966f10311d7cb2a4e0ecd7cc6bd4067645f4afab3e0fca06dc",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "families": {
+    "finite_radon_frt2_v1": {
+      "contract": "coverage/contracts/finite-radon-benchmark-execution-v1.json",
+      "cases": 8,
+      "case_ids": [
+        "transform.frt2/n7/uint8/C",
+        "transform.frt2/n31/uint16/C",
+        "transform.frt2/n127/uint32/C",
+        "transform.frt2/n127/uint32/F",
+        "transform.frt2/n127/uint32/reverse",
+        "transform.frt2/n257/uint16/C",
+        "transform.frt2/n257/uint16/F",
+        "transform.frt2/n257/uint16/step"
+      ],
+      "untimed_calls_per_case": 1
+    },
+    "finite_radon_ifrt2_v1": {
+      "contract": "coverage/contracts/finite-radon-benchmark-execution-v1.json",
+      "cases": 8,
+      "case_ids": [
+        "transform.ifrt2/n7/uint8/C",
+        "transform.ifrt2/n31/uint16/C",
+        "transform.ifrt2/n127/uint32/C",
+        "transform.ifrt2/n127/uint32/F",
+        "transform.ifrt2/n127/uint32/reverse",
+        "transform.ifrt2/n257/uint16/C",
+        "transform.ifrt2/n257/uint16/F",
+        "transform.ifrt2/n257/uint16/step"
+      ],
+      "untimed_calls_per_case": 1
+    }
+  },
+  "first_cohort": {
+    "status": "PROSPECTIVE_UNBOUND",
+    "source_revision": null,
+    "probe_path": "tools/finite_radon_first_cohort_probe.py",
+    "probe_sha256": "0b0650cba0a000256d82eeb65e06cafde783d272d9c7035560c55a8bb51c6cee",
+    "root_admission_path": null,
+    "root_admission_sha256": null,
+    "root_stager_path": null,
+    "root_stager_sha256": null,
+    "core_member": null,
+    "source_files_raw_sha256": null,
+    "routes": {
+      "frt2": {
+        "kind": "finite-radon-executor",
+        "route_id": "frt2",
+        "api": "transform.frt2",
+        "driver": "benchmarks/finite_radon_frt2_v1.py",
+        "contract": "coverage/contracts/finite-radon-benchmark-execution-v1.json",
+        "sampler": "tools/montage_sustained.py",
+        "owned_module": "skimagexx._finite_radon",
+        "first_case": {
+          "id": "transform.frt2/n7/uint8/C",
+          "api": "frt2",
+          "n": 7,
+          "dtype": "uint8",
+          "layout": "C",
+          "maximum_value": 7
+        },
+        "cases": [
+          {
+            "id": "transform.frt2/n7/uint8/C",
+            "api": "frt2",
+            "n": 7,
+            "dtype": "uint8",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.frt2/n31/uint16/C",
+            "api": "frt2",
+            "n": 31,
+            "dtype": "uint16",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.frt2/n127/uint32/C",
+            "api": "frt2",
+            "n": 127,
+            "dtype": "uint32",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.frt2/n127/uint32/F",
+            "api": "frt2",
+            "n": 127,
+            "dtype": "uint32",
+            "layout": "F",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.frt2/n127/uint32/reverse",
+            "api": "frt2",
+            "n": 127,
+            "dtype": "uint32",
+            "layout": "reverse",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.frt2/n257/uint16/C",
+            "api": "frt2",
+            "n": 257,
+            "dtype": "uint16",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.frt2/n257/uint16/F",
+            "api": "frt2",
+            "n": 257,
+            "dtype": "uint16",
+            "layout": "F",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.frt2/n257/uint16/step",
+            "api": "frt2",
+            "n": 257,
+            "dtype": "uint16",
+            "layout": "step",
+            "maximum_value": 7
+          }
+        ],
+        "argv": [
+          "--first-cohort",
+          "--pass-index",
+          "1",
+          "--case",
+          "transform.frt2/n7/uint8/C"
+        ],
+        "measurement_argv": [
+          "--pass-index",
+          "1"
+        ]
+      },
+      "ifrt2": {
+        "kind": "finite-radon-executor",
+        "route_id": "ifrt2",
+        "api": "transform.ifrt2",
+        "driver": "benchmarks/finite_radon_ifrt2_v1.py",
+        "contract": "coverage/contracts/finite-radon-benchmark-execution-v1.json",
+        "sampler": "tools/montage_sustained.py",
+        "owned_module": "skimagexx._finite_radon",
+        "first_case": {
+          "id": "transform.ifrt2/n7/uint8/C",
+          "api": "ifrt2",
+          "n": 7,
+          "dtype": "uint8",
+          "layout": "C",
+          "maximum_value": 7
+        },
+        "cases": [
+          {
+            "id": "transform.ifrt2/n7/uint8/C",
+            "api": "ifrt2",
+            "n": 7,
+            "dtype": "uint8",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.ifrt2/n31/uint16/C",
+            "api": "ifrt2",
+            "n": 31,
+            "dtype": "uint16",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.ifrt2/n127/uint32/C",
+            "api": "ifrt2",
+            "n": 127,
+            "dtype": "uint32",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.ifrt2/n127/uint32/F",
+            "api": "ifrt2",
+            "n": 127,
+            "dtype": "uint32",
+            "layout": "F",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.ifrt2/n127/uint32/reverse",
+            "api": "ifrt2",
+            "n": 127,
+            "dtype": "uint32",
+            "layout": "reverse",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.ifrt2/n257/uint16/C",
+            "api": "ifrt2",
+            "n": 257,
+            "dtype": "uint16",
+            "layout": "C",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.ifrt2/n257/uint16/F",
+            "api": "ifrt2",
+            "n": 257,
+            "dtype": "uint16",
+            "layout": "F",
+            "maximum_value": 7
+          },
+          {
+            "id": "transform.ifrt2/n257/uint16/step",
+            "api": "ifrt2",
+            "n": 257,
+            "dtype": "uint16",
+            "layout": "step",
+            "maximum_value": 7
+          }
+        ],
+        "argv": [
+          "--first-cohort",
+          "--pass-index",
+          "1",
+          "--case",
+          "transform.ifrt2/n7/uint8/C"
+        ],
+        "measurement_argv": [
+          "--pass-index",
+          "1"
+        ]
+      }
+    }
+  },
+  "execution_scope": {
+    "untimed_topcalls": {
+      "original": 2,
+      "native": 2
+    },
+    "canonical_cases": 16,
+    "canonical_raw_samples": 224,
+    "warmup_groups": 32,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "workers": 1,
+    "reference_threadpools": 1,
+    "single_host_same_installed_runtime": true,
+    "no_automatic_retry": true,
+    "retain_all_losses": true
+  },
+  "qualification": "Exact-source complete source barriers + four-profile whole-product/SDK/stager admission required; no source readiness inferred.",
+  "binding_gate": "All actual fields remain NULL/UNBOUND.16cases/224samples/32warmgroups/2cohorts are prospective only; genuine current-source admission, actual host helper and separate root timing GO required.",
+  "runtime_sha256": null,
+  "prospective_source": {
+    "revision": null,
+    "image_count": null,
+    "functions": null,
+    "product_members": null,
+    "SDK_members": null,
+    "SDK_families": null,
+    "SDK_checks": null,
+    "notice": "No prospective275 source is qualified or bound."
+  },
+  "helper": {
+    "mode": "source-built-v1",
+    "source_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "receipt_sha256": null,
+    "library_sha256": null,
+    "root_GO": null,
+    "prepare_once_on_actual_host": true,
+    "collect_recursive": true
+  },
+  "completed_first_cohort": {
+    "path": null,
+    "sha256": null,
+    "binding_sha256": null
+  },
+  "controller_reuse": {
+    "source": "3548cf16",
+    "scope": "Selectively adapted four-file MARK/LBP controller plus current271 source-derived report-order/loop validation; no shared source mutation or ancestry merge"
+  },
+  "native_marker_scope": {
+    "frt2": "One builtinfrt2 C-return and nativeaccepted at actual measure<-sample<-execute. Inner profile owns C-return capture; outer trace counts publiccalls. No independent workergetter count during inner profile.",
+    "ifrt2": "One builtinifrt2 C-return and nativeaccepted at actual measure<-sample<-execute. Inner profile owns C-return capture; outer trace counts publiccalls. No independent workergetter count during inner profile."
+  },
+  "pending": [
+    "Root independent unbound controller admission",
+    "1855377b/current shared driver/context successor and changed source guards, preserveee639/7fcee",
+    "Exactsource genuine product/core/SDK/runtime/root/stager binding and actualhost sourcebuilt helper controls",
+    "Two actual API realCLI cohorts/poststop/postbatch verification",
+    "Larger16case numerical/referenceparity on selectedruntime",
+    "Separate root16case timingGO,224rawsamples/32warmgroups/alllosses, then finalreportvalidation",
+    "FullAPI/platform/provider/native ownership/release/main gates"
+  ],
+  "deadline_utc": null,
+  "integration_status": null,
+  "driver_context": "coverage/contracts/finite-radon-benchmark-execution-v1.json",
+  "pending_current_source": "Frozen7fcee/ee639 context intentionally rejects1855377b. Future shared author versions driver/context/source guards before actual binding; prospective275 is not qualified.",
+  "scope": "Two unsigned finite Radon APIs/16fixed cases, no numerical/reference/performance or fullAPI closure from source guards. Larger inputs remainunobserved; inverse unsignedsubtraction intentional."
+}

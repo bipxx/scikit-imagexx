@@ -35,13 +35,13 @@ def test_compatible_shared_density_context_is_exact_and_tamper_refuses():
     context=json.loads((ROOT/'coverage/contracts/util-views-density-additive-context-v1.json').read_bytes())
     spec=importlib.util.spec_from_file_location('combined_current_source',ROOT/'tools/join_source_context.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
     for name,row in context['sources'].items():
-        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256']
+        actual=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');raw=m.enabled_predecessor_bytes(ROOT,name,actual);assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256']
         projected=raw
         for f in row['inverse_fragments']:
             assert projected.count(f['current'].encode())==1;projected=projected.replace(f['current'].encode(),f['predecessor'].encode(),1)
         assert hashlib.sha256(projected).hexdigest()==row['predecessor_canonical_lf_sha256']
-        m.predecessor_bytes(ROOT,name,raw)
-        with pytest.raises(AssertionError):m.predecessor_bytes(ROOT,name,raw+b'\n// UNADMITTED_CHANGE\n')
+        m.predecessor_bytes(ROOT,name,actual)
+        with pytest.raises(AssertionError):m.predecessor_bytes(ROOT,name,actual+b'\n// UNADMITTED_CHANGE\n')
     metric=runpy.run_path(str(ROOT/'tools/label_pair_benchmark_context.py'))
     metric['validate_source_closure'](ROOT,json.loads((ROOT/'coverage/contracts/label-pair-metrics-benchmark-v1.json').read_bytes()))
 
