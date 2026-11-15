@@ -1,0 +1,634 @@
+{
+  "status": "BOUNDED_RAW_RECONCILIATION_PASSED_ROOT_ADMISSION_PENDING",
+  "run": 43727894422,
+  "controller": "17a35a313877409c6c1e719b70a9c4d977b533db",
+  "product_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "producer": {
+    "run": "43706703018",
+    "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+    "artifact": "14160352344",
+    "sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec"
+  },
+  "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+  "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd",
+  "SDK_members": 108,
+  "source_mapping": {
+    "prepared_files": 2988,
+    "benchmark_pins": 89,
+    "production_fingerprint": {
+      "source_sha256": "2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090",
+      "source_hash_schema": "cpp-python-build-posix-lf-v2",
+      "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+    }
+  },
+  "host": {
+    "cpu": "Intel(R) Xeon(R) 6975P-C",
+    "AVX2_reported": true,
+    "AVX512F_reported": true,
+    "dispatch_limit": "CPU flags are observed; report has no per-call kernel/SIMD selection trace. No VI eligibility credit."
+  },
+  "clock": {
+    "created_utc": "2026-11-15T15:05:03+00:00",
+    "deadline_utc": "2026-11-15T16:05:03+00:00"
+  },
+  "identity": [
+    {
+      "path": "raw/original-identity.log",
+      "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82",
+      "value": {
+        "status": "verify",
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "wheel_count": 14,
+        "artifact_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d"
+      }
+    },
+    {
+      "path": "raw/first-cohort-identity-after.log",
+      "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82",
+      "value": {
+        "status": "verify",
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "wheel_count": 14,
+        "artifact_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d"
+      }
+    },
+    {
+      "path": "raw/mark-identity-before.log",
+      "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82",
+      "value": {
+        "status": "verify",
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "wheel_count": 14,
+        "artifact_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d"
+      }
+    },
+    {
+      "path": "raw/mark-identity-after.log",
+      "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82",
+      "value": {
+        "status": "verify",
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "wheel_count": 14,
+        "artifact_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d"
+      }
+    },
+    {
+      "path": "raw/lbp-identity-before.log",
+      "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82",
+      "value": {
+        "status": "verify",
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "wheel_count": 14,
+        "artifact_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d"
+      }
+    },
+    {
+      "path": "raw/lbp-identity-after.log",
+      "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82",
+      "value": {
+        "status": "verify",
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "wheel_count": 14,
+        "artifact_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d"
+      }
+    }
+  ],
+  "helper": {
+    "status": "PASS_SOURCE_BUILT_FENV32",
+    "library_sha256_from_actual_host_receipt": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+    "positive_full32": 32,
+    "negative_full32": 6,
+    "initial_final_exact": true,
+    "ABI": [
+      32,
+      0,
+      4,
+      8,
+      12,
+      20,
+      28,
+      8
+    ],
+    "binary_not_extracted_or_rehashed": true
+  },
+  "cohorts": [
+    {
+      "route": "mark",
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "direct_counts": {
+        "original": 1,
+        "native": 1
+      },
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "caller_full32_restored": true,
+      "outer_state_restored": true,
+      "C1": true,
+      "binding_sha256": "5c4654b0d5af15b334f2dc76da002d3d5a8580c7f369a6db57aa51ce3d53bd09",
+      "terminal_sha256": "9acf614ab882b61373a7cf04e32a5693c7216131c210066e6472a19640f30991",
+      "builtin_returns": {
+        "get_num_threads": 1,
+        "mark_boundaries_prepare": 1,
+        "mark_boundaries_mask": 1,
+        "mark_boundaries_color": 1,
+        "mark_boundaries_count": 1,
+        "mark_boundaries_paint": 1
+      }
+    },
+    {
+      "route": "lbp",
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "direct_counts": {
+        "original": 1,
+        "native": 1
+      },
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "caller_full32_restored": true,
+      "outer_state_restored": true,
+      "C1": true,
+      "binding_sha256": "5c259b4f1faebb4785689b62ec39717a71628783f2229d941849874dfcb62f94",
+      "terminal_sha256": "ebe108539f973b4be3c99f8a105cb8e87eaf414ee848b5a10f507e13e54fa5eb",
+      "builtin_returns": {
+        "_lbp_prepare": 1,
+        "_lbp_binary": 24,
+        "_lbp_assign": 8
+      }
+    }
+  ],
+  "families": {
+    "mark": {
+      "cases": [
+        {
+          "case_id": "gray-u8-outer",
+          "original_ms": 12.2671967,
+          "current_ms": 38.15518025,
+          "original_over_current": 0.3215080264232273,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            368720415,
+            271857068
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 7,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 100,
+            "native": 34
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_color": 1,
+            "mark_boundaries_count": 1,
+            "mark_boundaries_paint": 1
+          }
+        },
+        {
+          "case_id": "RGB-f32-thick",
+          "original_ms": 7.505081,
+          "current_ms": 17.30199771428571,
+          "original_over_current": 0.43376962151620746,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            361895421,
+            259493784
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 7,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 160,
+            "native": 64
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_color": 1,
+            "mark_boundaries_count": 1,
+            "mark_boundaries_paint": 1
+          }
+        },
+        {
+          "case_id": "gray-u16-F-inner",
+          "original_ms": 8.402320214285714,
+          "current_ms": 18.23041242857143,
+          "original_over_current": 0.4608957831978207,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            351321645,
+            273958377
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 7,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 140,
+            "native": 64
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_color": 1,
+            "mark_boundaries_count": 1,
+            "mark_boundaries_paint": 1
+          }
+        },
+        {
+          "case_id": "RGB-f64-reverse-outline",
+          "original_ms": 17.347328285714287,
+          "current_ms": 53.86796733333333,
+          "original_over_current": 0.3220342096513416,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            259756019,
+            377106665
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 6,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 64,
+            "native": 28
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_outline": 1,
+            "mark_boundaries_color": 2,
+            "mark_boundaries_count": 2,
+            "mark_boundaries_paint": 2
+          }
+        },
+        {
+          "case_id": "gray-f64-subpixel",
+          "original_ms": 59.808517,
+          "current_ms": 8.553003,
+          "original_over_current": 6.992692157362741,
+          "result": "win",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            297965481,
+            367330936
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 7,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 19,
+            "native": 141
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_color": 1,
+            "mark_boundaries_count": 1,
+            "mark_boundaries_paint": 1
+          }
+        },
+        {
+          "case_id": "RGB-f32-subpixel-outline",
+          "original_ms": 60.371943,
+          "current_ms": 9.192904615384617,
+          "original_over_current": 6.567232613179261,
+          "result": "win",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            300490961,
+            367678125
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 7,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 19,
+            "native": 131
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_outline": 1,
+            "mark_boundaries_color": 2,
+            "mark_boundaries_count": 2,
+            "mark_boundaries_paint": 2
+          }
+        },
+        {
+          "case_id": "singleton-subpixel-version",
+          "original_ms": 0.09323609730171709,
+          "current_ms": 0.01193509264417621,
+          "original_over_current": 7.811929080182894,
+          "result": "win",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            295777439,
+            359091626
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 9,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 11782,
+            "native": 97634
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_color": 1,
+            "mark_boundaries_count": 1,
+            "mark_boundaries_paint": 1
+          }
+        },
+        {
+          "case_id": "half-promotion-provider",
+          "original_ms": 11.8427719,
+          "current_ms": 37.8636725,
+          "original_over_current": 0.3127739893693619,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 16418,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            362494923,
+            343122269
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 7,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 100,
+            "native": 36
+          },
+          "native_returns": {
+            "get_num_threads": 1,
+            "mark_boundaries_prepare": 1,
+            "mark_boundaries_mask": 1,
+            "mark_boundaries_color": 1,
+            "mark_boundaries_count": 1,
+            "mark_boundaries_paint": 1
+          }
+        }
+      ],
+      "raw_samples": 112,
+      "warmup_groups": 16,
+      "phase_counts": {
+        "warmup": 57,
+        "sample": 112
+      },
+      "completed_loop_calls_source_reconstructed": {
+        "original": 12384,
+        "native": 98132
+      },
+      "wins": [
+        "gray-f64-subpixel",
+        "RGB-f32-subpixel-outline",
+        "singleton-subpixel-version"
+      ],
+      "losses": [
+        "gray-u8-outer",
+        "RGB-f32-thick",
+        "gray-u16-F-inner",
+        "RGB-f64-reverse-outline",
+        "half-promotion-provider"
+      ],
+      "ties": []
+    },
+    "lbp": {
+      "cases": [
+        {
+          "case_id": "gray-u8-C",
+          "original_ms": 0.21145583394833947,
+          "current_ms": 3.8760041666666667,
+          "original_over_current": 0.054555110071047686,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 1058,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            314163284,
+            344897168
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 8,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 5299,
+            "native": 299
+          },
+          "native_returns": {
+            "_lbp_prepare": 1,
+            "_lbp_binary": 24,
+            "_lbp_assign": 8
+          }
+        },
+        {
+          "case_id": "RGB-f32-F",
+          "original_ms": 0.05246705707762557,
+          "current_ms": 2.0453241228070174,
+          "original_over_current": 0.02565219687802802,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 1058,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            299320835,
+            345996085
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 8,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 20963,
+            "native": 567
+          },
+          "native_returns": {
+            "_lbp_prepare": 1,
+            "_lbp_assign": 9,
+            "_lbp_binary": 24
+          }
+        },
+        {
+          "case_id": "RGB-f64-reverse-wrap",
+          "original_ms": 0.11559545891783567,
+          "current_ms": 2.254754923076923,
+          "original_over_current": 0.051267416132343896,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 1058,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            314490697,
+            346486985
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 8,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 9683,
+            "native": 516
+          },
+          "native_returns": {
+            "_lbp_prepare": 1,
+            "_lbp_assign": 9,
+            "_lbp_binary": 24
+          }
+        },
+        {
+          "case_id": "RGB-f64-C-large",
+          "original_ms": 0.7527786862745097,
+          "current_ms": 36.4689155,
+          "original_over_current": 0.020641652650035883,
+          "result": "loss",
+          "FP": {
+            "control": 895,
+            "status": 1058,
+            "mxcsr": 8098
+          },
+          "warmup_elapsed_ns": [
+            322992046,
+            328287908
+          ],
+          "accepted_samples": 14,
+          "all_batch_phase_counts": {
+            "warmup": 7,
+            "sample": 14
+          },
+          "completed_loop_calls_source_reconstructed": {
+            "original": 1505,
+            "native": 37
+          },
+          "native_returns": {
+            "_lbp_prepare": 1,
+            "_lbp_assign": 9,
+            "_lbp_binary": 24
+          }
+        }
+      ],
+      "raw_samples": 56,
+      "warmup_groups": 8,
+      "phase_counts": {
+        "warmup": 31,
+        "sample": 56
+      },
+      "completed_loop_calls_source_reconstructed": {
+        "original": 37450,
+        "native": 1419
+      },
+      "wins": [],
+      "losses": [
+        "gray-u8-C",
+        "RGB-f32-F",
+        "RGB-f64-reverse-wrap",
+        "RGB-f64-C-large"
+      ],
+      "ties": []
+    }
+  },
+  "totals": {
+    "cases": 12,
+    "accepted_raw_samples": 168,
+    "warmup_groups": 24,
+    "phase_counts": {
+      "warmup": 88,
+      "sample": 168
+    },
+    "sampler_returns": 12,
+    "wins": 3,
+    "losses": 9,
+    "ties": 0,
+    "cohort_direct_calls": {
+      "original": 2,
+      "native": 2
+    },
+    "measurement_untimed_calls_source_inferred": {
+      "original": 12,
+      "native": 12
+    },
+    "completed_sampler_loop_calls_source_reconstructed": {
+      "original": 49834,
+      "native": 99551
+    }
+  },
+  "strict_scope": "Every completed report row passed the exact admitted driver before report write: output/input/alias/dtype/layout/raw-value/software policy/default1/native ownership/target FP equality and caller restoration assertions. Raw reports retain accepted markers, native returns and target FP control/status/MXCSR; cohort full32 restoration/C1 are booleans and source-enforced checks, not per-case raw32 payloads. Helper full32 positive/negative bytes are retained separately.",
+  "counter_limits": "Only cohort before/after counters are direct topcall counters. Measurement untimed count follows exact source one pair per case; timed/warmup/calibration callback counts reconstruct complete journal loops using admitted sampler source. They are not an independent profiler trace.",
+  "performance_scope": "One actual minimum Linux host/current16a5 product, one worker, allocation-inclusive original public calls.3wins/9losses retained; no uniform speed-superiority, historic64 relabeling, VI4 or whole-product coverage credit.",
+  "local_execution": {
+    "scientific_imports": 0,
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "SDK": 0,
+    "sampler": 0,
+    "timed": 0
+  },
+  "next_owner_trigger": "/root independently admits actual raw/source scope, then updates existing plan/ledger/checklist; no retry/favorable retiming. Root owns any transport release; no cleanup performed."
+}

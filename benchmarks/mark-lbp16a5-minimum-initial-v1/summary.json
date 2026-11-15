@@ -1,0 +1,32 @@
+{
+  "families": {
+    "mark": {
+      "raw_samples": 112,
+      "wins": [
+        "gray-f64-subpixel",
+        "RGB-f32-subpixel-outline",
+        "singleton-subpixel-version"
+      ],
+      "losses": [
+        "gray-u8-outer",
+        "RGB-f32-thick",
+        "gray-u16-F-inner",
+        "RGB-f64-reverse-outline",
+        "half-promotion-provider"
+      ],
+      "ties": []
+    },
+    "lbp": {
+      "raw_samples": 56,
+      "wins": [],
+      "losses": [
+        "gray-u8-C",
+        "RGB-f32-F",
+        "RGB-f64-reverse-wrap",
+        "RGB-f64-C-large"
+      ],
+      "ties": []
+    }
+  },
+  "scope": "Current one-thread public original comparison only; all losses retained; no whole-product qualification or prior-C++ speed claim."
+}

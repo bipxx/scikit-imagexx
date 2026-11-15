@@ -1,0 +1,21 @@
+{
+  "status": "MANUAL_PENDING_AUTOMATIC_APPROVAL_REJECTED_BEFORE_EXECUTION",
+  "owner": "/root",
+  "run": 43727894422,
+  "performance_root_receipt": "coverage/evidence/mark-lbp16a5-minimum-performance-root-admission-v1.json",
+  "performance_root_sha256": "854447bec74907e96457b27d1f8a5189d6252ab829ae4309f382de8830a2ebab",
+  "target": "D:/Scratch/mark-lbp43727894422-results-v1/result-artifact14166564795.zip",
+  "logical_bytes": 2956767,
+  "removal_attempts": 1,
+  "actual_process_started": false,
+  "command_exit_code": null,
+  "removed_bytes": 0,
+  "observed_free_change": null,
+  "physical_allocation": "not_measured",
+  "reason": "exec_command CreateProcess rejected: blocked by policy",
+  "current_observation": "Read-only stat after rejection confirms regular file size2956767; no second deletion attempt.",
+  "archive_byte_evidence": "PRESENT_MANUAL_PENDING; original digest authenticated by frozen intake, not rehashed here",
+  "retained": "65raw text files and20published files;101intake proof hashes and all job steps independently checked before cleanup.",
+  "retry_allowed": false,
+  "next_owner_trigger": "User manual cleanup only; no alternate mechanism or recreated archive."
+}

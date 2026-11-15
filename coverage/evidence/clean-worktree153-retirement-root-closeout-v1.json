@@ -1,0 +1,1627 @@
+{
+  "status": "PASS_ROOT_EXACT153_NATIVE_GIT_RETIREMENT_BRANCHES_COMMITS_RETAINED",
+  "owner": "/root",
+  "user_authorization": "Retire the clean copies; preserve branches and commits. User approved prepared154 ancestry exception; executed only153eligible subset, active9e15protected.",
+  "actual_controller": {
+    "PID": 53076,
+    "exec_session": 1883,
+    "tool_terminal_exit": 0,
+    "terminal": "build\\cleanup\\storage-20261115\\exact153-native-git-retirement-terminal-v1.json"
+  },
+  "proofs": [
+    {
+      "path": "build\\cleanup\\storage-20261115\\exact153-native-git-retirement-terminal-v1.json",
+      "bytes": 270287,
+      "sha256": "cf5cb95777164cee8bf0f4e3be73854be61cc1ec629389c0d9549d79cd5e5c8d"
+    },
+    {
+      "path": "build\\cleanup\\storage-20261115\\exact153-native-git-retirement-entry-v1.json",
+      "bytes": 45099,
+      "sha256": "77615009484c35c91f22b3c57c786026472e023c9695016e3e2e51cc074281e5"
+    },
+    {
+      "path": "build\\cleanup\\storage-20261115\\exact153-native-git-retirement-commands-v1.jsonl",
+      "bytes": 5366272,
+      "sha256": "5ba9b3e7f7b5f6a19e836bbdb676e342325d72607c1846e4ab68b076e03265bd"
+    },
+    {
+      "path": "build\\cleanup\\storage-20261115\\root153-native-git-retirement-GO-v1.json",
+      "bytes": 45953,
+      "sha256": "1dc9064c44ee49c1c6ad4671f951487f5c8e1950db98d355e8b859555e1dbd2d"
+    },
+    {
+      "path": "build\\cleanup\\storage-20261115\\root153-current-consumers-v1.json",
+      "bytes": 579,
+      "sha256": "4ce5fce48f602dbf401791401143cb6b37966f64f5c9c6cb2587e00ba0014e27"
+    },
+    {
+      "path": "build\\cleanup\\storage-20261115\\clean-worktree-retirement-readiness-actual-v2.json",
+      "bytes": 908412,
+      "sha256": "b094c5568efc3327e24e109ab466b94de8371270150020d9fb07a86289853b35"
+    }
+  ],
+  "actual_result": {
+    "removed": 153,
+    "remaining_in_authorized_scope": 0,
+    "native_Git_journal_commands": 462,
+    "all_journal_and_removal_exits": 0,
+    "all153_branch_heads_retained_exact": true,
+    "all_initial_branch_names_retained": true,
+    "root_independent_current_native_ref_registry_checks_exit": [
+      0,
+      0
+    ],
+    "all153_current_paths_and_registrations_absent": true,
+    "named_protected_source_environment_product_dependency_roots_retained": 30,
+    "cached_logical_committed_source_bytes_removed": 105084395313,
+    "free_before": {
+      "C:": 397823578112,
+      "D:": 257350881280
+    },
+    "free_after": {
+      "C:": 481260359680,
+      "D:": 275371589632
+    },
+    "observed_free_change": {
+      "C:": 83436781568,
+      "D:": 18020708352
+    },
+    "observed_free_change_total": 101457489920,
+    "physical_allocation": "Not independently measured. Free-space observations can include concurrent disk activity; cached logical source is not a physical allocation measure.",
+    "forced_removals": 0,
+    "alternate_mechanisms": 0,
+    "retries": 0,
+    "branch_delete_gc_prune": 0,
+    "scientific_build_tests": 0
+  },
+  "removed_path_branch_commit_mapping": [
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\abi-vi-cumulative-v1",
+      "head": "ab7872a5483a5d5e3660ba20fdd873d78463a1b5",
+      "branch": "refs/heads/integrate/abi-vi-cumulative-v1",
+      "cached_logical_source_bytes": 703044320,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\approximate-polygon-minimum-publication-v1",
+      "head": "62487d2339d2be6893e386df497c33fd4d424829",
+      "branch": "refs/heads/publish/approximate-polygon-minimum-initial",
+      "cached_logical_source_bytes": 64543,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\candidate255-context-fix-v1",
+      "head": "8c60955e6f7c8a71dec5633f28efca0d604fa2b5",
+      "branch": "refs/heads/fix/candidate255-context-v1",
+      "cached_logical_source_bytes": 657179893,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\candidate256-windows-eol-v1",
+      "head": "7ef422845b7ffea1e9c3336614d1c3965a9f8500",
+      "branch": "refs/heads/integrate/line-nd-windows-eol-v1",
+      "cached_logical_source_bytes": 658191868,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\circle-aa-sdk-v1",
+      "head": "da8930177ee8cfb4f70d33095c7f5ce870574583",
+      "branch": "refs/heads/integrate/circle-aa-sdk-v1",
+      "cached_logical_source_bytes": 656152755,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\colocalization-f64-performance-v1",
+      "head": "8aaf119f7b25af01747cf6ccbc7a3cc9f0e86209",
+      "branch": "refs/heads/plan/colocalization-f64-performance-v1",
+      "cached_logical_source_bytes": 636906209,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\coords-scaled-controller-integration-v1",
+      "head": "cf1222b2701968fff175e6098fb58bef08a33a86",
+      "branch": "refs/heads/compare/coords-scaled-active-v1",
+      "cached_logical_source_bytes": 671771450,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\coords-scaled-controller-v1",
+      "head": "ace5d99ea19c4030dfead23358590f97580c4526",
+      "branch": "refs/heads/compare/coords-scaled-v1",
+      "cached_logical_source_bytes": 671768167,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current275-family-measurement-v1",
+      "head": "95e64f135c7d3d8cbef7c8acb543ed31ea86c079",
+      "branch": "refs/heads/bench/current275-family-measurement-v1",
+      "cached_logical_source_bytes": 697861434,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current275-join-util-measurement-v1",
+      "head": "7b01014e5d407e67689eb22ef89c3682e56e27dc",
+      "branch": "refs/heads/bench/current275-join-util-v1",
+      "cached_logical_source_bytes": 697473252,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current280-measurement-controllers-v1",
+      "head": "e6ffa386205309ac84526f14b3403082380e280a",
+      "branch": "refs/heads/bench/current280-measurement-controllers-v1",
+      "cached_logical_source_bytes": 704811600,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current281-integration-fixes-v1",
+      "head": "cbb3d2cd993f71fff08bb4a548d9c456c7d2de60",
+      "branch": "refs/heads/fix/current281-integration-v1",
+      "cached_logical_source_bytes": 710737696,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current281-measurement-boundaries-v1",
+      "head": "8ed0e2d223719adb5512c3f1e037e90c9265695f",
+      "branch": "refs/heads/fix/current281-measurement-boundaries-v1",
+      "cached_logical_source_bytes": 715744075,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current281-measurement-v1",
+      "head": "373af1af261e5c6bc522f533f19036fc65603c81",
+      "branch": "refs/heads/bind/current281-measurement-v1",
+      "cached_logical_source_bytes": 714911676,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current281-projection-v2",
+      "head": "213b986504b6f62f79a98b21be0581f1bc9b3559",
+      "branch": "refs/heads/fix/current281-projection-v2",
+      "cached_logical_source_bytes": 710745871,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current281-rolling-sentinel-v1",
+      "head": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+      "branch": "refs/heads/fix/current281-rolling-sentinel-v1",
+      "cached_logical_source_bytes": 710861758,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current281-sdk-family-assertion-v1",
+      "head": "cd703fbda0442944b150c9529e09e0a40ab37c59",
+      "branch": "refs/heads/fix/current281-sdk-family-assertion-v1",
+      "cached_logical_source_bytes": 710748562,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\current281-shared-assertion-projection-v2",
+      "head": "3e2a0fd1a7112bed6171930f541eb5c93879c54e",
+      "branch": "refs/heads/fix/current281-shared-assertion-projection-v2",
+      "cached_logical_source_bytes": 710758442,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-bezier-v1",
+      "head": "55462f45517c953548c583aa8c17d033a795d28e",
+      "branch": "refs/heads/feature/draw-bezier-v1",
+      "cached_logical_source_bytes": 672047453,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-ellipsoid-benchmark-v1",
+      "head": "6596458fe280a86f857b1b0b6c7ca38c7ae2cfaa",
+      "branch": "refs/heads/feature/draw-ellipsoid-benchmark-v1",
+      "cached_logical_source_bytes": 659723522,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-line-nd-benchmark-v1",
+      "head": "bac686704608f20181c6beecd0dbd7edd2ff4d82",
+      "branch": "refs/heads/draw-line-nd-benchmark-v1",
+      "cached_logical_source_bytes": 657951463,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-multiblock-lbp-integration-v1",
+      "head": "5d74130e2e7e4500cc47d122078e32f19fe62d0d",
+      "branch": "refs/heads/integrate/draw-multiblock-lbp-private-v1",
+      "cached_logical_source_bytes": 692433415,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-multiblock-lbp-metadata-v1",
+      "head": "99d6c428e553154fd3e6bb7a82f7b53323b26d4b",
+      "branch": "refs/heads/fix/draw-multiblock-lbp-metadata-v1",
+      "cached_logical_source_bytes": 694610319,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-multiblock-lbp-native-v1",
+      "head": "0e51dbc1e2c4741e243a91652d8c0b9771c96363",
+      "branch": "refs/heads/feature/draw-multiblock-lbp-native-v1",
+      "cached_logical_source_bytes": 692388900,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-multiblock-lbp-v1",
+      "head": "339fe6812ec07997cb9861c7755378ea977fa1d4",
+      "branch": "refs/heads/reference/draw-multiblock-lbp-codec-capture-v1",
+      "cached_logical_source_bytes": 683613159,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-polygon-frontend-v1",
+      "head": "e25cae8b22997c4b2f36aef585bc4be8799de22b",
+      "branch": "refs/heads/feature/draw-polygon-frontend-v1",
+      "cached_logical_source_bytes": 666688339,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-set-color-integer-stage-v2",
+      "head": "2667158c7ecfdce8f950267807fabf885cdfbe8b",
+      "branch": "refs/heads/feature/draw-set-color-f32-v3",
+      "cached_logical_source_bytes": 672798849,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\draw-set-color-v1",
+      "head": "c9b30af663f906be6eaafae103343aa79d2127e9",
+      "branch": "refs/heads/feature/draw-set-color-v1",
+      "cached_logical_source_bytes": 672397529,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\find-boundaries-layout-v1",
+      "head": "98df47b6f9886329957935ca25e89cfaece7c5bb",
+      "branch": "refs/heads/opt/find-boundaries-f-row-v1",
+      "cached_logical_source_bytes": 683352866,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-benchmark-v1",
+      "head": "7fcee23ddcd6c965c1d56e58d87e1dadb7684479",
+      "branch": "refs/heads/bench/finite-radon-execution-v1",
+      "cached_logical_source_bytes": 692478681,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-capture-v1",
+      "head": "49a95896863b5aeb937e376f14f22e42083c49f0",
+      "branch": "refs/heads/reference/finite-radon-capture-v1",
+      "cached_logical_source_bytes": 692314365,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-controller-v1",
+      "head": "a74471f2b1ceac31983500cc71223c2093ee8ade",
+      "branch": "refs/heads/bench/finite-radon-controller-v1",
+      "cached_logical_source_bytes": 692560561,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-controller-v2",
+      "head": "f957f00225c862bed6792f6024c3dc19b4e0d0fc",
+      "branch": "refs/heads/bench/finite-radon-controller-path-v2",
+      "cached_logical_source_bytes": 692561583,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-exceptional-native-v1",
+      "head": "1855377b4baea97293bc7eeb5cb8e2236ac427fc",
+      "branch": "refs/heads/feature/finite-radon-exceptional-native-v1",
+      "cached_logical_source_bytes": 692485730,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-exceptional-v1",
+      "head": "460a776da912f6a1c89937a67284fef0ae500f10",
+      "branch": "refs/heads/reference/finite-radon-exceptional-v1",
+      "cached_logical_source_bytes": 692490821,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-export-reader-v2",
+      "head": "1fbff2af3f5f2f63674aef9ae5f0ae1298759300",
+      "branch": "refs/heads/fix/finite-radon-export-reader-v2",
+      "cached_logical_source_bytes": 721288567,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-numpy-abi-v1",
+      "head": "2bb365be0ee0717013becbaced4660056bd3004a",
+      "branch": "refs/heads/fix/finite-radon-numpy-abi-v1",
+      "cached_logical_source_bytes": 697520044,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-pair-v1",
+      "head": "d2109de2a0b7f07e27f0a892585cd7414e36bfbf",
+      "branch": "refs/heads/feature/finite-radon-pair-v1",
+      "cached_logical_source_bytes": 692263499,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\finite-radon-parity-v2",
+      "head": "ee639c0c19cc93be1a1751f7c6ac2c9b107bad4c",
+      "branch": "refs/heads/feature/finite-radon-parity-v2",
+      "cached_logical_source_bytes": 692441863,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\flood-fill-controller-v1",
+      "head": "30ce23ca1ada982ea508f22416142bfbf0883811",
+      "branch": "refs/heads/bench/flood-fill-controller-v1",
+      "cached_logical_source_bytes": 706486708,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\flood-fill-controller-v2",
+      "head": "b0385768d5ff4f99d7a3694f066537057bdc2dd7",
+      "branch": "refs/heads/bench/flood-fill-controller-v2",
+      "cached_logical_source_bytes": 710861281,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\flood-fill-cost-v1",
+      "head": "e3b899844f9ec652f94bab93a48c7dc7c489d326",
+      "branch": "refs/heads/perf/flood-fill-cost-v1",
+      "cached_logical_source_bytes": 697542806,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\flood-fill-native-v1",
+      "head": "dd1aebd5d8619e4f6d2ea3925bb3e3e62b728f4f",
+      "branch": "refs/heads/feature/flood-fill-native-v1",
+      "cached_logical_source_bytes": 697524038,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\flood-fill-readiness-v1",
+      "head": "7c14ee863934a2a6c5370d0ca699d3d299fba166",
+      "branch": "refs/heads/reference/flood-fill-readiness-v1",
+      "cached_logical_source_bytes": 695945754,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\flood-fill-source-first-v1",
+      "head": "5eb515a92cf37b905e2d469c8d24f1c0028959fc",
+      "branch": "refs/heads/reference/flood-fill-source-first-v1",
+      "cached_logical_source_bytes": 695898541,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\glcm-benchmark-execution-v1",
+      "head": "f0c91a7d0f04c2117cfd5553d4f63950176420ff",
+      "branch": "refs/heads/bench/glcm-execution-v1",
+      "cached_logical_source_bytes": 699635809,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\graycomatrix-graycoprops-controller-v1",
+      "head": "d26318674343c283c5d1de5bc9abe668be8c0d18",
+      "branch": "refs/heads/reference/graycomatrix-graycoprops-controller-v1",
+      "cached_logical_source_bytes": 696726651,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\graycomatrix-graycoprops-native-v1",
+      "head": "de6c329a43b4b5c90f54960a6ef10556d6c75940",
+      "branch": "refs/heads/feature/graycomatrix-graycoprops-native-v1",
+      "cached_logical_source_bytes": 699583894,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\graycomatrix-graycoprops-source-v1",
+      "head": "22873ac59edca67eb5af1b80b0f8959e5dd67111",
+      "branch": "refs/heads/feature/graycomatrix-graycoprops-source-v1",
+      "cached_logical_source_bytes": 696627341,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\graycomatrix-graycoprops-terminal-fix-v2",
+      "head": "56303cd06ab15b01ef914fdcd8e6cb58717086d7",
+      "branch": "refs/heads/reference/graycomatrix-graycoprops-terminal-fix-v2",
+      "cached_logical_source_bytes": 696791656,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\half-stain-f32-simd-v1",
+      "head": "a99f9c65952cf2abf4dba8073c176b3498dde2a3",
+      "branch": "refs/heads/optimize/half-stain-f32-simd-v1",
+      "cached_logical_source_bytes": 657199916,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\igg-half-error-parity-v1",
+      "head": "a70616192dcd31bda82e5d54255d6c606d842d9d",
+      "branch": "refs/heads/fix/igg-half-error-parity-v1",
+      "cached_logical_source_bytes": 718407242,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\igg-host-native-diagnostic-v1",
+      "head": "e392efbd9850954ff6a2f173c2c013dd684df3ba",
+      "branch": "refs/heads/prepare/igg-host-native-diagnostic-v1",
+      "cached_logical_source_bytes": 718433644,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\igg-large-accuracy-terminal-v2",
+      "head": "13d8a6b2c013921620d747f1706d5651653be40f",
+      "branch": "refs/heads/fix/igg-large-terminal-v2",
+      "cached_logical_source_bytes": 718522784,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\igg-large-accuracy-v1",
+      "head": "ca6c283ce7dea6a89b4bf6bf0e42c8ba65b880e4",
+      "branch": "refs/heads/prepare/igg-large-accuracy-v1",
+      "cached_logical_source_bytes": 718457076,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\inverse-gaussian-gradient-enabled-v1",
+      "head": "07b4200f1ca7cf564800e3189d1e3358981cc879",
+      "branch": "refs/heads/integrate/inverse-gaussian-gradient-enabled-v1",
+      "cached_logical_source_bytes": 715603226,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\inverse-gaussian-gradient-enabled-v2",
+      "head": "852cc1882fbd757f55bc9f92eb783282e2f5addb",
+      "branch": "refs/heads/integrate/inverse-gaussian-gradient-enabled-v2",
+      "cached_logical_source_bytes": 718397315,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\inverse-gaussian-gradient-native-v1",
+      "head": "9b8e870ecdeadf614b9e0a632598d39f518f8dcb",
+      "branch": "refs/heads/feature/inverse-gaussian-gradient-native-v1",
+      "cached_logical_source_bytes": 698181731,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\inverse-gaussian-gradient-policy-v1",
+      "head": "065cc3a79391e4c5343511b53bbbaac992a4c185",
+      "branch": "refs/heads/fix/inverse-gaussian-gradient-policy-v1",
+      "cached_logical_source_bytes": 698210689,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\inverse-gaussian-gradient-readiness-v1",
+      "head": "769811615ffb168f5c42bc15267026eba631fc4b",
+      "branch": "refs/heads/feature/inverse-gaussian-gradient-readiness-v1",
+      "cached_logical_source_bytes": 696922716,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\inverse-gaussian-gradient-v1",
+      "head": "34d0855a317e97f776001f87bf52e48a5755d3dd",
+      "branch": "refs/heads/feature/inverse-gaussian-gradient-v1",
+      "cached_logical_source_bytes": 696813630,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\join-segmentations-losses-v1",
+      "head": "e03a00633d7146b78391ad65833d3728eb7fd86e",
+      "branch": "refs/heads/optimize/join-segmentations-losses-v1",
+      "cached_logical_source_bytes": 692188782,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\join-util-views-bound-measurement-v3",
+      "head": "76c93138a62aaa7077e8f0d9b59ed10c4852efc0",
+      "branch": "refs/heads/bench/join-util-views-bound-measurement-v3",
+      "cached_logical_source_bytes": 692698612,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\join-util-views-bound-measurement-v4",
+      "head": "57072ba25f38785e79d930951a56ab4adfc0583f",
+      "branch": "refs/heads/bench/join-util-views-bound-measurement-v4",
+      "cached_logical_source_bytes": 693089845,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\join-util-views-measurement-controller-v1",
+      "head": "b36754dc9d5183edeabb867274a75d901d59b7e7",
+      "branch": "refs/heads/bench/join-util-views-measurement-v2",
+      "cached_logical_source_bytes": 692275210,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\join-util-views-report-order-v5",
+      "head": "c7cd06fc7bb7e6d05353b35463f020633c5589d4",
+      "branch": "refs/heads/fix/join-util-views-report-order-v5",
+      "cached_logical_source_bytes": 693114780,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\label-pair-density-v1",
+      "head": "b87a24e4b39578b26cf8a2f9d3324ca59b8be6b3",
+      "branch": "refs/heads/opt/label-pair-density-v1",
+      "cached_logical_source_bytes": 683343482,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\lbp-benchmark-execution-v1",
+      "head": "6cc0b78b335fa95636e344dd8d271dde451e735b",
+      "branch": "refs/heads/bench/lbp-execution-v1",
+      "cached_logical_source_bytes": 693249140,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\line-nd-rounding-reference-v1",
+      "head": "59e40b784e2574ad7264d7ea81e41d62da36e1e3",
+      "branch": "refs/heads/line-nd-rounding-reference-v1",
+      "cached_logical_source_bytes": 657957520,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\line-nd-sdk-v1",
+      "head": "ac159cbef6167400b53547d007b7fb7254ae3eaa",
+      "branch": "refs/heads/line-nd-sdk-v1",
+      "cached_logical_source_bytes": 658000465,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-boundaries-benchmark-v1",
+      "head": "446bde47e7462278389c0a87affb881ed775f1ec",
+      "branch": "refs/heads/bench/mark-boundaries-execution-v1",
+      "cached_logical_source_bytes": 692938592,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-boundaries-fp-fix-v1",
+      "head": "6d4373b5720b5ee959c1d313e14e3d8f754085e4",
+      "branch": "refs/heads/feature/mark-boundaries-fp-fix-v1",
+      "cached_logical_source_bytes": 692886906,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-boundaries-native-v1",
+      "head": "496df6a6c5d3361da9c430be734d84c12396ff39",
+      "branch": "refs/heads/feature/mark-boundaries-native-v1",
+      "cached_logical_source_bytes": 692870010,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-boundaries-source-first-v1",
+      "head": "288244ca6e4b31685285d543b1ee49831ba566fe",
+      "branch": "refs/heads/feature/mark-boundaries-source-first-v1",
+      "cached_logical_source_bytes": 683665824,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-lbp-enabled-integration-v1",
+      "head": "2991881411972e6266f7e132c9dca8b7226a8567",
+      "branch": "refs/heads/integrate/mark-lbp-enabled-v1",
+      "cached_logical_source_bytes": 694599810,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-lbp-measurement-v1",
+      "head": "3548cf16d474375f53068db295c99c1275173377",
+      "branch": "refs/heads/bench/mark-lbp-measurement-v1",
+      "cached_logical_source_bytes": 694696995,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-lbp-radon-util-integration-v1",
+      "head": "8c4fb4307746a0eb5fac5d125b6384fa80e88621",
+      "branch": "refs/heads/integrate/mark-lbp-radon-util-v1",
+      "cached_logical_source_bytes": 697341858,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\mark-wide-outer-source-v1",
+      "head": "3106c063a0d34af0af48a2f2f3928fade46c322d",
+      "branch": "refs/heads/fix/mark-wide-outer-source-v1",
+      "cached_logical_source_bytes": 710956684,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\matrix-numpy124-skylakex-v1",
+      "head": "aa0ecdff40587097832edb71c50b15ec76236af1",
+      "branch": "refs/heads/fix/matrix-numpy124-skylakex-v1",
+      "cached_logical_source_bytes": 659219175,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\matrix-prescott-v1",
+      "head": "906ba318d4222f0030c5fc164469786a1d56dfcc",
+      "branch": "refs/heads/fix/matrix-prescott-v1",
+      "cached_logical_source_bytes": 671895531,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\matrix-profile-tlog",
+      "head": "d8b4aa4dde0f6f405690116d3060f9d4f9ebdabb",
+      "branch": "refs/heads/feature/matrix-profile-tlog",
+      "cached_logical_source_bytes": 485226640,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\next-metrics-controller-v1",
+      "head": "20b9d4e70e091ab84f334bf5823d1d4242933b20",
+      "branch": "refs/heads/compare/next-metrics-initial-v1",
+      "cached_logical_source_bytes": 675808073,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\next-util-benchmark-execution-v1",
+      "head": "9e8b84d99f57d90d8a35d35cd56af7bc0a680962",
+      "branch": "refs/heads/bench/next-util-execution-v2",
+      "cached_logical_source_bytes": 691548689,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\order-angles-golden-ratio-capture-v2",
+      "head": "0d8499ac32e37e3f29e4ffe174109a08de1504e5",
+      "branch": "refs/heads/reference/order-angles-golden-ratio-capture-v2",
+      "cached_logical_source_bytes": 696576800,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\order-angles-golden-ratio-capture-v3",
+      "head": "ff9b0949ff91bbf50fb1eef0aef9b7686a7a568b",
+      "branch": "refs/heads/reference/order-angles-golden-ratio-capture-v3",
+      "cached_logical_source_bytes": 696594760,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\order-angles-golden-ratio-native-v1",
+      "head": "fb2a7c0ccf99f1ea27e6c31e212a608463831baf",
+      "branch": "refs/heads/feature/order-angles-golden-ratio-native-v1",
+      "cached_logical_source_bytes": 696699072,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\order-angles-golden-ratio-readiness-v1",
+      "head": "fb17c0cd9679a5c2b7b5f7e26082bbbc264d90b7",
+      "branch": "refs/heads/reference/order-angles-golden-ratio-readiness-v1",
+      "cached_logical_source_bytes": 696537504,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\order-angles-golden-ratio-v1",
+      "head": "33559e475b2ac82d0d59f423513bab60f16b132a",
+      "branch": "refs/heads/feature/order-angles-golden-ratio-v1",
+      "cached_logical_source_bytes": 696509281,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\region-stain-compare-v1",
+      "head": "119eb28b9fddd40b60af2669eeea3ce95e3beafc",
+      "branch": "refs/heads/ci/region-stain-compare-v1",
+      "cached_logical_source_bytes": 658239157,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-attribute-keys-v1",
+      "head": "20268c7e97233e159892c4798e6e960432ca862d",
+      "branch": "refs/heads/perf/regionprops-attribute-keys-v1",
+      "cached_logical_source_bytes": 668951029,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-coords-scaled-benchmark-v1",
+      "head": "033fd5b68d18bbf2cfc4597567ffffa9e55e3159",
+      "branch": "refs/heads/benchmark/regionprops-coords-scaled-v1",
+      "cached_logical_source_bytes": 671607884,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-coords-scaled-ci-v1",
+      "head": "58ba6feaad07261a1b4f9d1829c9d37a295d6dd8",
+      "branch": "refs/heads/ci/regionprops-coords-scaled-v1",
+      "cached_logical_source_bytes": 671571548,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-coords-scaled-context-v1",
+      "head": "4c3a71048b18fc243f0fbee5d8b975dd5370c247",
+      "branch": "refs/heads/context/regionprops-coords-scaled-v1",
+      "cached_logical_source_bytes": 671672190,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-coords-scaled-interface-v1",
+      "head": "29d86314601f2f479f71bb29d683c045b7c3c30c",
+      "branch": "refs/heads/design/regionprops-coords-scaled-v1",
+      "cached_logical_source_bytes": 669335151,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-coords-scaled-native-v1",
+      "head": "eafc253a5440df2e0ea0c46c9e7e84ef51209ff6",
+      "branch": "refs/heads/feature/regionprops-coords-scaled-native-v1",
+      "cached_logical_source_bytes": 667384779,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-coords-scaled-sdk-v1",
+      "head": "52a02aabfed16a4aa12367c9b9bdfd1616412dae",
+      "branch": "refs/heads/feature/regionprops-coords-scaled-sdk-v1",
+      "cached_logical_source_bytes": 667390931,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-dtype-metadata-fixture-v1",
+      "head": "f319b43d6a5f5fccb3298fe9f126b26881daaed3",
+      "branch": "refs/heads/regionprops-dtype-metadata-fixture-v1",
+      "cached_logical_source_bytes": 657187873,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-performance-v2",
+      "head": "cf0abd3f8dba9acbc988a59a53ae32cbcccfab4b",
+      "branch": "refs/heads/integrate/regionprops-performance-v2",
+      "cached_logical_source_bytes": 659965923,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-public-mutation-frontend-v1",
+      "head": "1bc278ba2aea6adb65316dd8ba31472aa3c55795",
+      "branch": "refs/heads/regionprops-public-mutation-frontend-v1",
+      "cached_logical_source_bytes": 656124097,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-scalar-boundary-v2",
+      "head": "07eb98653ba36cc237912a80535bf4e1ee390831",
+      "branch": "refs/heads/perf/regionprops-scalar-boundary-v2",
+      "cached_logical_source_bytes": 659835035,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-scalar-mxcsr-v1",
+      "head": "7adf0b7a0d94fa5041ecc12e75bd02645a160b46",
+      "branch": "refs/heads/fix/regionprops-scalar-mxcsr-v1",
+      "cached_logical_source_bytes": 668933173,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regionprops-warm-lookup-v1",
+      "head": "58b544569f47b6c3fd784068fbe873a4d4e6b093",
+      "branch": "refs/heads/fix/regionprops-warm-lookup-v1",
+      "cached_logical_source_bytes": 658317094,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\regular-grid-v1",
+      "head": "7dfa15d19bd64a2bf1692ea2ffbb3ab4521ac641",
+      "branch": "refs/heads/feature/regular-grid-v1",
+      "cached_logical_source_bytes": 675908076,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\rolling-ball-controller-v1",
+      "head": "b838f3d4ed316e2599c8083ccd0358e4811e2a30",
+      "branch": "refs/heads/bench/rolling-ball-controller-v1",
+      "cached_logical_source_bytes": 697300608,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\rolling-ball-enabled-integration-v1",
+      "head": "188a91ef31609c796d4d83e8957c772544f31428",
+      "branch": "refs/heads/integrate/rolling-ball-enabled-v1",
+      "cached_logical_source_bytes": 710674454,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\rolling-ball-native-v1",
+      "head": "c821f6532b3c429bf83357baf161adf711e2d0a1",
+      "branch": "refs/heads/feature/rolling-ball-native-v1",
+      "cached_logical_source_bytes": 697204370,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\rolling-ball-readiness-v1",
+      "head": "dfebccfc171290280643c3b17a4809148a0bb49f",
+      "branch": "refs/heads/reference/rolling-ball-readiness-v1",
+      "cached_logical_source_bytes": 696202943,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\rolling-ball-sdk-dtypes-v1",
+      "head": "42f08d83009621bcd958d2653920d228935f064e",
+      "branch": "refs/heads/feature/rolling-ball-sdk-dtypes-v1",
+      "cached_logical_source_bytes": 697245346,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\rolling-ball-v1",
+      "head": "2e99dd5c7b2d1b6a65906587f7352e3e54194255",
+      "branch": "refs/heads/feature/rolling-ball-v1",
+      "cached_logical_source_bytes": 696107334,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\slice-along-axes-v1",
+      "head": "b4e1d4e8525d76d39217135e0a1423e49509b3da",
+      "branch": "refs/heads/feature/slice-along-axes-v1",
+      "cached_logical_source_bytes": 680539324,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\tv-positive-zero-main-dependency-check",
+      "head": "c79eecbb3c0aaff2f72422aefcbafc1d52c8de85",
+      "branch": "refs/heads/review/tv-positive-zero-main-dependency",
+      "cached_logical_source_bytes": 572117467,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\util-array-views-v1",
+      "head": "ab88c7e1438014001338c78e5d38da6454eb6be4",
+      "branch": "refs/heads/feature/util-array-views-v1",
+      "cached_logical_source_bytes": 680488364,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\util-crop-v1",
+      "head": "abaf82f4f4579e1643df86fa17551ed832a82550",
+      "branch": "refs/heads/feature/util-crop-v1",
+      "cached_logical_source_bytes": 678140297,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\util-view-boundary-v1",
+      "head": "f48fe19edeb336163249383d61a51b186ca610fa",
+      "branch": "refs/heads/perf/util-view-boundary-v1",
+      "cached_logical_source_bytes": 692201646,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\util-view-fenv-portable-v1",
+      "head": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+      "branch": "refs/heads/fix/util-view-fenv-portable-v1",
+      "cached_logical_source_bytes": 691389694,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\util-view-operations-v1",
+      "head": "56ecd02e0b68d8f75051cca1fc2038d7300e6a48",
+      "branch": "refs/heads/feature/util-view-operations-v1",
+      "cached_logical_source_bytes": 691359939,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\variation-of-information-benchmark-v1",
+      "head": "bef85f73adff89930f933e27f4a5ed3783c7eae1",
+      "branch": "refs/heads/bench/variation-of-information-execution-v1",
+      "cached_logical_source_bytes": 695863659,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\variation-of-information-current-counts-v2",
+      "head": "1a060891f33ea058d671491957ebfaec0044bb5e",
+      "branch": "refs/heads/feature/variation-of-information-current-counts-v2",
+      "cached_logical_source_bytes": 695827478,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\variation-of-information-v1",
+      "head": "b331a559af038ef2231f5327b864627513bdc2d8",
+      "branch": "refs/heads/feature/variation-of-information-v1",
+      "cached_logical_source_bytes": 695812928,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\vi-cohort-value-diagnostic-v1",
+      "head": "518386ddedde0e5b3f3ebf2117d54b695645e7d9",
+      "branch": "refs/heads/diagnostic/vi-cohort-value-v1",
+      "cached_logical_source_bytes": 714935895,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\vi-large-reference-v1",
+      "head": "5255b3eb3dd5b75b7c75986b8caead6c1624bc34",
+      "branch": "refs/heads/reference/vi-large-workloads-v1",
+      "cached_logical_source_bytes": 695933733,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\vi-measurement-controller-v1",
+      "head": "fecd5d684ce8b9a326afc7a8181463574e78b401",
+      "branch": "refs/heads/bench/vi-measurement-controller-v1",
+      "cached_logical_source_bytes": 706488979,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\vi-measurement-current213-v2",
+      "head": "2c6e7057d809aa01e34ab94577cd5fc57c6aea70",
+      "branch": "refs/heads/bench/vi-measurement-current213-v2",
+      "cached_logical_source_bytes": 710851029,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\vi-reduction-controller-v1",
+      "head": "352dc55681b3774ae3f304ac4783757a9d911b52",
+      "branch": "refs/heads/integrate/vi-reduction-controller-v1",
+      "cached_logical_source_bytes": 706344797,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\vi-reduction-controller-v2",
+      "head": "a5e019c6a4b0fff3a18635ab0e2f552986abba3e",
+      "branch": "refs/heads/integrate/vi-reduction-controller-v2",
+      "cached_logical_source_bytes": 706394551,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\worktrees\\vi-reduction-order-v1",
+      "head": "9ecdda4edb82fd114370f0706bda54e5e1c17603",
+      "branch": "refs/heads/fix/vi-reduction-order-v1",
+      "cached_logical_source_bytes": 696216434,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\crop-copy-optimization-v1",
+      "head": "f02056536f879df477cf4c2aded5979379fcb339",
+      "branch": "refs/heads/opt/crop-copy-v1",
+      "cached_logical_source_bytes": 710870930,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\crop-view-only-variant-v1",
+      "head": "9e689ac283f15fec40eedb8cfefa8edf1144bc48",
+      "branch": "refs/heads/opt/crop-view-only-v1",
+      "cached_logical_source_bytes": 710883001,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\flood-assignment-lines-v1",
+      "head": "e96c28bc31dbe382ba26dadf8e26fb62f0cbbace",
+      "branch": "refs/heads/opt/flood-assignment-lines-v1",
+      "cached_logical_source_bytes": 710882766,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\flood-fill-stage-diagnostic-v1",
+      "head": "cbdbfe31a385d976809ada46b59a5239ed08ad05",
+      "branch": "refs/heads/perf/flood-fill-stage-diagnostic-v1",
+      "cached_logical_source_bytes": 710880307,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\flood-fill-stage-diagnostic-v2",
+      "head": "ac8b1e1681ea0e9f9833086dff30908391c5e866",
+      "branch": "refs/heads/diagnostic/flood-fill-stages-v2",
+      "cached_logical_source_bytes": 710895810,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\glcm-large-accuracy-v2",
+      "head": "dfd535e8c281118d54a436c06a917fb6dcc8f9d9",
+      "branch": "refs/heads/fix/glcm-large-accuracy-locator-entry-v2",
+      "cached_logical_source_bytes": 699820839,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\glcm-prefix-factory-count-v3",
+      "head": "0b6faf4f95d1a1c58e93cb39b48e1bb7b1079560",
+      "branch": "refs/heads/fix/glcm-prefix-factory-count-v3",
+      "cached_logical_source_bytes": 699823483,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\igg-host-diagnostic-enabled-v1",
+      "head": "eab131331f854647a1a3c19a86f8ab3ca59c8eac",
+      "branch": "refs/heads/prepare/igg-host-diagnostic-enabled-v1",
+      "cached_logical_source_bytes": 718454108,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\igg-paired-stage-diagnostic-v1",
+      "head": "05b78624384f7a6e0f73c83f35c45049257a34b4",
+      "branch": "refs/heads/diagnostic/igg-paired-stages-v1",
+      "cached_logical_source_bytes": 718501778,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\lbp-cohort-fp-diagnostic-v1",
+      "head": "f59b0e09dccd6f7a99730d4068b1534ded99a414",
+      "branch": "refs/heads/diagnostic/lbp-cohort-fp-v1",
+      "cached_logical_source_bytes": 715028994,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\lbp-cohort-fp-diagnostic-v2",
+      "head": "4e942cff94c72ed0c375164aac9b745318efce29",
+      "branch": "refs/heads/diagnostic/lbp-cohort-fp-v2",
+      "cached_logical_source_bytes": 715045616,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\lbp-diagnostic-gh-sha-fixture-v1",
+      "head": "82ec3ece0eedb48f796ab61911659791953d88dd",
+      "branch": "refs/heads/fix/lbp-diagnostic-gh-sha-fixture-v1",
+      "cached_logical_source_bytes": 715045854,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\lbp-entry-fp-v1",
+      "head": "d4bddfcb32397184b47a2cfeb0a976de93015e0a",
+      "branch": "refs/heads/fix/lbp-entry-fp-v1",
+      "cached_logical_source_bytes": 712063614,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\lbp-only-comparison-v1",
+      "head": "05875ff666853bac2119a12231b105a578c5995e",
+      "branch": "refs/heads/bench/lbp-only-comparison-v1",
+      "cached_logical_source_bytes": 714937468,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\lbp-only-enabled-v1",
+      "head": "49312f444078f3f7f3325d06880da32fbf061df5",
+      "branch": "refs/heads/bench/lbp-only-enabled-v1",
+      "cached_logical_source_bytes": 714967572,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-wide-comparison-fp-v1",
+      "head": "eb46aafa6b09f8425ad38246efb1564249a884bd",
+      "branch": "refs/heads/fix/mark-wide-comparison-fp-v1",
+      "cached_logical_source_bytes": 711104620,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-wide-compatibility-v1",
+      "head": "2e97b9365c18064bb664ce1256ddfcda7be4b61d",
+      "branch": "refs/heads/fix/mark-wide-compatibility-v1",
+      "cached_logical_source_bytes": 711046606,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-wide-enabled-v1",
+      "head": "93f67dd8737ed5223ac1d785f6c2d145a9177257",
+      "branch": "refs/heads/integrate/mark-wide-enabled-v1",
+      "cached_logical_source_bytes": 717273537,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-wide-outer-capture-v2",
+      "head": "d2bbbf46b3753d2621f3f0315f8bf64ba85dffd3",
+      "branch": "refs/heads/reference/mark-wide-outer-capture-v2",
+      "cached_logical_source_bytes": 711022338,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-wide-outer-capture-v3",
+      "head": "3fd05ef7d56fcf731b349943e503249014062618",
+      "branch": "refs/heads/reference/mark-wide-outer-capture-v3",
+      "cached_logical_source_bytes": 711034621,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-wide-outer-private-bridge-v1",
+      "head": "0df4c60cd0db45cbd4fdb88807a176d12a8a0eff",
+      "branch": "refs/heads/reference/mark-wide-outer-private-bridge-v1",
+      "cached_logical_source_bytes": 711090570,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\mark-wide-sdk-v1",
+      "head": "8537fc84b73a8f5975aaf64cd13d5890464652fc",
+      "branch": "refs/heads/prepare/mark-wide-sdk-v1",
+      "cached_logical_source_bytes": 711125339,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-value-diagnostic-enabled-v1",
+      "head": "78deb6169d2b87f4d3a6325a9e65f495bae4ed47",
+      "branch": "refs/heads/diagnostic/vi-value-enabled-v1",
+      "cached_logical_source_bytes": 714960049,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\glcm-benchmark-outer-v1",
+      "head": "05bddff4fa7ea0cc05551c1e8fc4d49ae87d2661",
+      "branch": "refs/heads/bench/glcm-outer-v1",
+      "cached_logical_source_bytes": 699673696,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\glcm-large-accuracy-v1",
+      "head": "2688ff893635cf8e68e1037d5e72474f9886a115",
+      "branch": "refs/heads/prepare/glcm-large-accuracy-v1",
+      "cached_logical_source_bytes": 699809253,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\golden-angle-benchmark-controller-v1",
+      "head": "b537384abe0a6878a25474c75678206061c568dd",
+      "branch": "refs/heads/feature/golden-angle-benchmark-controller-v1",
+      "cached_logical_source_bytes": 721395531,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-cold-worktrees\\golden-angle-enabled-v1",
+      "head": "e0e80b8383f343fe11fb0d1cb6c152075141596d",
+      "branch": "refs/heads/integrate/golden-angle-enabled-v1",
+      "cached_logical_source_bytes": 721282217,
+      "removal_exit_code": 0,
+      "path_absent": true,
+      "registration_absent": true,
+      "branch_retained_exact": true
+    }
+  ],
+  "protected": "Every other checkout and active9e15 SDK source; all source/environments/current products/SDK static libraries/raw evidence/baseline and24dependency payloads; all previously policy-blocked paths.",
+  "source_locator_limit": "Retired checkout paths are unavailable. Branch/commit history remains locally retained; recreate an exact pinned worktree before a future consumer uses a retired source path. Existing retained source identity receipts are historical evidence, not proof that removed checkout files remain present.",
+  "gates": {
+    "explicit_user_ancestry_exception": "passed153subset",
+    "source_paths_refs_clean_cache_exclusions": "passed_fresh153_nativeGit",
+    "current_consumers": "passed_root_current_snapshot_zerooverlap_supersedes_stale_binding",
+    "native_Git_removal_and_postchecks": "passed153",
+    "root_independent_admission": "passed_actualcommands_hashes_currentrefs_paths_and30protectedroots",
+    "previously_policyblocked_cleanup": "manual_pending_no_retry",
+    "VI_and_shipping281": "held_separate_scope"
+  },
+  "waste_review": "Reused exact cached105.08GB inventory and valid153Git/source/cache gate; no broad tree inventory or file-content/science replay. Pre-Git journal namespace setup failure retained and corrected before mutations. Fresh source receipt accidentally bound oldconsumer-v1; root stopped dependentremoval, preserved source gates and independently ran fresh153currentprocess snapshot before precise GO. No forced fallback or branch deletion.",
+  "next_plan_correction": {
+    "owner": "/root",
+    "trigger": "Future cleanup/source consumer dispatch",
+    "action": "Bind actual current consumer snapshot path/hash at entry. Restore retired source from its retained pinned branch/commit before use; reuse this terminal removal mapping and do not rescan absent trees."
+  },
+  "next_owner_trigger": "Root publishes this bounded progress/storage closeout. Remaining automatic-policyblocked cleanup is manual-only; VI4 causal/performance and final281shipping projection remain open."
+}

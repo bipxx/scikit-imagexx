@@ -1,0 +1,4 @@
+{"event": "before", "role": "original", "counts": {"original": 1, "native": 0}}
+{"event": "after", "role": "original", "counts": {"original": 1, "native": 0}}
+{"event": "before", "role": "native", "counts": {"original": 1, "native": 1}}
+{"event": "after", "role": "native", "counts": {"original": 1, "native": 1}}

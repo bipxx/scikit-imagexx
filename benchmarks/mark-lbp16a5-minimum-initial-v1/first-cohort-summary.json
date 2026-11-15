@@ -1,0 +1,115 @@
+{
+  "status": "PASS",
+  "original_public_topcalls": 2,
+  "native_public_topcalls": 2,
+  "timed_batches": 0,
+  "sampler_body_calls": 0,
+  "poststop_source_authority_unchanged": true,
+  "postbatch_offline_identity_verified": true,
+  "routes": [
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "route": "mark",
+      "api": "segmentation.mark_boundaries",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "native_returns": [
+        "get_num_threads",
+        "mark_boundaries_prepare",
+        "mark_boundaries_mask",
+        "mark_boundaries_color",
+        "mark_boundaries_count",
+        "mark_boundaries_paint"
+      ],
+      "native_requirements": {
+        "get_num_threads": 1,
+        "mark_boundaries_prepare": 1,
+        "mark_boundaries_mask": 1,
+        "mark_boundaries_outline": 0,
+        "mark_boundaries_color": 1,
+        "mark_boundaries_count": 1,
+        "mark_boundaries_paint": 1
+      },
+      "marker_evidence": "Actual admitted execute inner observer; outer profiler is paused during native. LBP internal worker snapshot is source-scope only.",
+      "root_binding_sha256": "5c4654b0d5af15b334f2dc76da002d3d5a8580c7f369a6db57aa51ce3d53bd09",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    },
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "route": "lbp",
+      "api": "feature.draw_multiblock_lbp",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "native_returns": [
+        "_lbp_prepare",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_binary",
+        "_lbp_assign"
+      ],
+      "native_requirements": {
+        "get_num_threads": 0,
+        "_lbp_prepare": 1,
+        "_lbp_binary": 24,
+        "_lbp_assign": 8
+      },
+      "marker_evidence": "Actual admitted execute inner observer; outer profiler is paused during native. LBP internal worker snapshot is source-scope only.",
+      "root_binding_sha256": "5c259b4f1faebb4785689b62ec39717a71628783f2229d941849874dfcb62f94",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    }
+  ]
+}

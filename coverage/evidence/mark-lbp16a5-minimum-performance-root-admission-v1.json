@@ -1,0 +1,398 @@
+{
+  "status": "PASS_ROOT_BOUNDED_MARK8_LBP4_ORIGINAL_PUBLIC_PERFORMANCE_ALL_LOSSES_RETAINED",
+  "run": 43727894422,
+  "controller": "17a35a313877409c6c1e719b70a9c4d977b533db",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "producer": {
+    "run": "43706703018",
+    "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+    "artifact": "14160352344",
+    "sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec"
+  },
+  "intake": {
+    "path": "build\\mark-lbp16a5-controller-v1\\output-root-successor-v1\\run43727894422-results-v1\\intake-v1.json",
+    "sha256": "2a7499c0d7775d3366eec2642cdeced611822e50a5d92bceb96185707bdeaf5f"
+  },
+  "proof_hashes": 101,
+  "actual_result": {
+    "cases": 12,
+    "accepted_samples": 168,
+    "warmup_groups": 24,
+    "warmup_batches": 88,
+    "wins": 3,
+    "losses": 9,
+    "ties": 0
+  },
+  "cases": [
+    {
+      "family": "mark",
+      "case_id": "gray-u8-outer",
+      "original_ms": 12.2671967,
+      "current_ms": 38.15518025,
+      "original_over_current": 0.3215080264232273,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "mark",
+      "case_id": "RGB-f32-thick",
+      "original_ms": 7.505081,
+      "current_ms": 17.30199771428571,
+      "original_over_current": 0.43376962151620746,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "mark",
+      "case_id": "gray-u16-F-inner",
+      "original_ms": 8.402320214285714,
+      "current_ms": 18.23041242857143,
+      "original_over_current": 0.4608957831978207,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "mark",
+      "case_id": "RGB-f64-reverse-outline",
+      "original_ms": 17.347328285714287,
+      "current_ms": 53.86796733333333,
+      "original_over_current": 0.3220342096513416,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "mark",
+      "case_id": "gray-f64-subpixel",
+      "original_ms": 59.808517,
+      "current_ms": 8.553003,
+      "original_over_current": 6.992692157362741,
+      "result": "win",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "mark",
+      "case_id": "RGB-f32-subpixel-outline",
+      "original_ms": 60.371943,
+      "current_ms": 9.192904615384617,
+      "original_over_current": 6.567232613179261,
+      "result": "win",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "mark",
+      "case_id": "singleton-subpixel-version",
+      "original_ms": 0.09323609730171709,
+      "current_ms": 0.01193509264417621,
+      "original_over_current": 7.811929080182894,
+      "result": "win",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "mark",
+      "case_id": "half-promotion-provider",
+      "original_ms": 11.8427719,
+      "current_ms": 37.8636725,
+      "original_over_current": 0.3127739893693619,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage metadata and real RHS palette transfer/allocation/copy are included in native public-call timing.",
+        "C++ owns image conversion/gray/cubic/boundary/dilation/image scatter; cubic recurrence remains ordered serial.",
+        "Historical half-promotion-provider case ID is unchanged; candidate half decode is C++, not an assertion that whole image conversion is delegated."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "lbp",
+      "case_id": "gray-u8-C",
+      "original_ms": 0.21145583394833947,
+      "current_ms": 3.8760041666666667,
+      "original_over_current": 0.054555110071047686,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage/protocol/palette metadata, palette allocation/copy and scalar alpha compatibility execute explicitly in public frontend and are included in timing.",
+        "C++ owns conversion/gray plus eight ordered live patch updates; independent elements may use SIMD/optional workers, public benchmark workers1.",
+        "Python-visible core getter count0 inside LBP; C++ prepare captures global workers once. Pre/post public global worker checks require1; inherited primitive/SDK scope does not establish genuine single-core ownership."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 1058,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "lbp",
+      "case_id": "RGB-f32-F",
+      "original_ms": 0.05246705707762557,
+      "current_ms": 2.0453241228070174,
+      "original_over_current": 0.02565219687802802,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage/protocol/palette metadata, palette allocation/copy and scalar alpha compatibility execute explicitly in public frontend and are included in timing.",
+        "C++ owns conversion/gray plus eight ordered live patch updates; independent elements may use SIMD/optional workers, public benchmark workers1.",
+        "Python-visible core getter count0 inside LBP; C++ prepare captures global workers once. Pre/post public global worker checks require1; inherited primitive/SDK scope does not establish genuine single-core ownership."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 1058,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "lbp",
+      "case_id": "RGB-f64-reverse-wrap",
+      "original_ms": 0.11559545891783567,
+      "current_ms": 2.254754923076923,
+      "original_over_current": 0.051267416132343896,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage/protocol/palette metadata, palette allocation/copy and scalar alpha compatibility execute explicitly in public frontend and are included in timing.",
+        "C++ owns conversion/gray plus eight ordered live patch updates; independent elements may use SIMD/optional workers, public benchmark workers1.",
+        "Python-visible core getter count0 inside LBP; C++ prepare captures global workers once. Pre/post public global worker checks require1; inherited primitive/SDK scope does not establish genuine single-core ownership."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 1058,
+        "mxcsr": 8098
+      }
+    },
+    {
+      "family": "lbp",
+      "case_id": "RGB-f64-C-large",
+      "original_ms": 0.7527786862745097,
+      "current_ms": 36.4689155,
+      "original_over_current": 0.020641652650035883,
+      "result": "loss",
+      "providers": [
+        "NumPy dtype/storage/protocol/palette metadata, palette allocation/copy and scalar alpha compatibility execute explicitly in public frontend and are included in timing.",
+        "C++ owns conversion/gray plus eight ordered live patch updates; independent elements may use SIMD/optional workers, public benchmark workers1.",
+        "Python-visible core getter count0 inside LBP; C++ prepare captures global workers once. Pre/post public global worker checks require1; inherited primitive/SDK scope does not establish genuine single-core ownership."
+      ],
+      "FP": {
+        "control": 895,
+        "status": 1058,
+        "mxcsr": 8098
+      }
+    }
+  ],
+  "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+  "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd",
+  "SDK_members": 108,
+  "host": {
+    "cpu": "Intel(R) Xeon(R) 6975P-C",
+    "AVX2_reported": true,
+    "AVX512F_reported": true,
+    "dispatch_limit": "CPU flags are observed; report has no per-call kernel/SIMD selection trace. No VI eligibility credit."
+  },
+  "FP_and_identity_scope": {
+    "source_enforced_strict_output_input_dtype_layout_native_default1_FP_checks": "passed_per_report",
+    "report_target_words": {
+      "MARK": {
+        "control": 895,
+        "status": 16418,
+        "mxcsr": 8098
+      },
+      "LBP": {
+        "control": 895,
+        "status": 1058,
+        "mxcsr": 8098
+      }
+    },
+    "per_case_raw32_payloads": "not_emitted",
+    "cohort_full32_C1": "actualterminalbooleans/sourceenforcement_passed",
+    "separate_helper_full32": "32positive_6negative_initial_final_exact",
+    "identity_checks": 6,
+    "direct_cohort_topcalls": {
+      "original": 2,
+      "native": 2
+    }
+  },
+  "counter_limits": "Only cohort before/after counters are direct topcall counters. Measurement untimed count follows exact source one pair per case; timed/warmup/calibration callback counts reconstruct complete journal loops using admitted sampler source. They are not an independent profiler trace.",
+  "source_reconstructed_counts": {
+    "untimed_pairs": 12,
+    "sampler_callbacks": {
+      "original": 49834,
+      "native": 99551
+    }
+  },
+  "publication": {
+    "directory": "benchmarks\\mark-lbp16a5-minimum-initial-v1",
+    "files": [
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\execution-clock.json",
+        "bytes": 90,
+        "sha256": "de9404d31e2ecd69e839d8129c8048003c84cfd9b76454ada2f9b4bf07de6e72"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\first-cohort\\lbp\\calls.jsonl",
+        "bytes": 314,
+        "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\first-cohort\\lbp\\terminal.json",
+        "bytes": 1689,
+        "sha256": "ebe108539f973b4be3c99f8a105cb8e87eaf414ee848b5a10f507e13e54fa5eb"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\first-cohort\\mark\\calls.jsonl",
+        "bytes": 314,
+        "sha256": "cd1402a6609e4a9e6eeed1bb31b5e783439deab84e823dc59b542a38d0c65073"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\first-cohort\\mark\\terminal.json",
+        "bytes": 1359,
+        "sha256": "9acf614ab882b61373a7cf04e32a5693c7216131c210066e6472a19640f30991"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\first-cohort-identity-after.log",
+        "bytes": 183,
+        "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\first-cohort-summary.json",
+        "bytes": 3714,
+        "sha256": "994647b52f7f65516ce1a69651cb9a0ec7f4101a72f69c9dcb1d82213bd8b0d3"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\lbp-identity-after.log",
+        "bytes": 183,
+        "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\lbp-identity-before.log",
+        "bytes": 183,
+        "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\lbp.batches.jsonl",
+        "bytes": 55312,
+        "sha256": "c2707ba462101f7d5e82ab3910f768cd4ad7f1f72651c29b1bde7253d5f2f06f"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\lbp.json",
+        "bytes": 57628,
+        "sha256": "291f4355baf971ce69c1d321abb4fdb524f6eed3280e7de101ccc16622ec16a1"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\mark-identity-after.log",
+        "bytes": 183,
+        "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\mark-identity-before.log",
+        "bytes": 183,
+        "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\mark.batches.jsonl",
+        "bytes": 110012,
+        "sha256": "6985a37cbb2fd0dfb8f9f4a0b5d076ce6b2ec0644fafc2e07d2cfd7492eb58e4"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\mark.json",
+        "bytes": 94232,
+        "sha256": "928746f2e1a295917ed9e80e9507549c0826c1f151452cb9b08802ba4d72f75a"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\original-identity.log",
+        "bytes": 183,
+        "sha256": "2d1df984a5ab75b5a7117238b24a05a440a5f6d6eb6949b77000a633f2e0fb82"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\raw-reconciliation-v1.json",
+        "bytes": 19597,
+        "sha256": "de064881105a8cf3d85f7cfd7450820bda4b22435c698c3a84c92241283e62ed"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\README.md",
+        "bytes": 3091,
+        "sha256": "854281685a46b97adcbb9c451cf9790ad8dde2714b44b7ac2bb8bf265929025d"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\runtime-lock.txt",
+        "bytes": 1338,
+        "sha256": "2b767a87b3b1b573e7e35c9fe7004eafbd79b983f67b6398f89aa260e6689e6a"
+      },
+      {
+        "path": "benchmarks\\mark-lbp16a5-minimum-initial-v1\\summary.json",
+        "bytes": 739,
+        "sha256": "2c29da21eb66fb79538875a7327a2b0088a40b50623256fb273924ba67cca998"
+      }
+    ]
+  },
+  "scope": "One minimumLinuxhost/current16a5product. Reviewed fixed12case benchmarkgate, not fullAPI/domain/platform closure, overall superiority, VI4or main shipping. Historical64 retainsDDA/source/runtime/host and26losses; no80caseonehosttable.",
+  "gates": {
+    "MARK8_LBP4_relevant1thread_publiccall_evidence": "passed_scoped_3wins9losses",
+    "VI4cause_performance": "held",
+    "final281shipping_projection_delivery": "pending"
+  },
+  "waste_review": "Existing16product/14wheel runtime/SDK108/sourcecontrols reused. FirstC25protocol failure happened before timing; exacttwo-pathfix preservedcollector/FP/method and passed99controls eachPython before oneactual17arun. Allslowcases retained; no favorable retime or unverifiedbottleneck claim.",
+  "next_owner": "/root",
+  "next_gate": "Close bounded progress record/publication and exactfreshresultZIPdisposal afterreadersstop. No further scientificwork authorized; VI4requiresactualeligiblehost/diagnosis or materialscope decision,153retirementuserexceptionpending."
+}
