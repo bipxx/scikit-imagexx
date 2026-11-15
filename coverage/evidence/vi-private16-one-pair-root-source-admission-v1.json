@@ -1,0 +1,40 @@
+{
+  "status": "PASS_ROOT_PRIVATE_CURRENT16_ONE_PAIR_SOURCE_BINDING_ADMISSION",
+  "owner": "/root",
+  "handoff": {
+    "path": "build\\vi-value-diagnostic-workflow-v2\\gap-closure-v1\\private16-source-handoff-v1.json",
+    "sha256": "10f3486ec81bcbb57ba38880d2f7246c53b0cf235ddae1ab66afb5a25ed0d99c"
+  },
+  "proof_hashes_verified": 43,
+  "actual_inert_controls_eachPython": 21,
+  "product_python_pins": 107,
+  "SDK_projection_metadata": 108,
+  "SDK_limit": "metadata projection only, no compile/loadedSDK or whole qualification credit",
+  "source_review": "Read full runner; exactonepubliccall each withdirectcounts, strictdtype/word/input/ownership/default1/FPandfullcaller32checks, afterrestorationvalue/CSR/xlogxreferenceencoding, noextranumericalcalls, preservedprimaryexception, actualCLIexit0afterfinalwriterrestore mandatory.",
+  "runtime": "ActuallocalPy3.11.14/NumPy1.24.4/SciPy1.15.3/skimage0.26.0/Intel12700KAVX2; distinctPRIVATE, not975/3.11.17, old9V45cause or timing",
+  "new_trust_boundary": "Runnerauthenticatesonecurrent16core8MBhashbeforeload,107Pythonfiles,8sourcehelpers/2upstreamfiles andsmallcodec/manifest; retainedqualifiedmetadata reused, noarchiveSDKrehash/build/envcopy.",
+  "limits": {
+    "original_topcalls": 1,
+    "native_topcalls": 1,
+    "fixture_constructions": 1,
+    "default_worker_checks_outside_pair": 3,
+    "reference_xlogx_observations": 2,
+    "reference_table_observations": 1,
+    "native_CSR_observations": 1,
+    "FP_save_max": 11,
+    "FP_restore_max": 5,
+    "F1_ABI_queries": 1,
+    "F1_glibc_queries": 1,
+    "sampler_body_calls": 0,
+    "timed_batches": 0,
+    "retries": 0
+  },
+  "capacity": "Existingruntimeimports +2x131072Binputs/tiny8x8tables; estimated<=0.25GiB; recentDfree381GB/concurrent2GBintegration+2GBcontroller inputs leaves>20GiBreserve/30GiBfloor. No fixturetree/env/build allocation.",
+  "gates": {
+    "source_binding_inertcontrols": "passed",
+    "actual_private_pair": "pending_exactGO",
+    "old9V45cause": "unresolved",
+    "genuineVI4_and_shipping": "held"
+  },
+  "next_owner_trigger": "RootcreatesandexecutesoneexactprivateGO; Aintakesactualterminal/values/FPonly, nofollowoncalluntilrootadmission."
+}

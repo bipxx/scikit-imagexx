@@ -1,0 +1,139 @@
+{
+  "status": "PASS_ROOT_CURRENT16_VI_CONTROLLER_SOURCE_ONLY",
+  "source": "2c089a8d8f139f87037362cec101480924f92b2e",
+  "parent": "17a35a313877409c6c1e719b70a9c4d977b533db",
+  "owner": "/root",
+  "handoff": {
+    "path": "build\\vi-gap-controller-v1\\handoff-v1.json",
+    "sha256": "fad95c4ec8389ff317cf42ff7914dc7ad5b782d1421762e475133dbdf4e61a0d"
+  },
+  "root_verified": {
+    "metadata_proof_hashes": 148,
+    "clean_exact_source_files": 12,
+    "authored_successors": 9,
+    "immutable_contexts": 3,
+    "probe_and_wrapper_exact_byte_inverse_to_fc9449": true,
+    "initial_workflow_two_selector_delta_only": true,
+    "diagnostic_workflow_scope": "Currentqualified16 Linux/x86_64/SSE2 eligibility; old9V45causalpolicy immutablev2, no causecredit. Strict numerical/FP/C1/runtime/oncepostbatch controls preserved.",
+    "prepared_source_files": 2988,
+    "matching_benchmark_source_pins": 35,
+    "matching_SDK_members": 108,
+    "actual_runtime_binding": {
+      "status": "PROSPECTIVE_GENUINE_HOST_GO_PENDING",
+      "measurement_context": "coverage\\contracts\\vi-measurement-v4.json",
+      "measurement_sha256": "f30fbc621a84e48da63108b78385cd4590c188e90b5537122bd6b247e1192f4a",
+      "value_context": "coverage\\contracts\\vi-cohort-value-diagnostic-v3.json",
+      "value_context_sha256": "fff37df1acbc8b683f2ca0e6610942cdafe0166d962f6f0a61d435fbe765abd1",
+      "producer": {
+        "run": "43706703018",
+        "revision": "16a5b50193125199ad26cf5a89acec5babf5290c",
+        "artifact": "14160352344",
+        "sha256": "7410ecd5d2a1cc828005db459865056c9e19f66f9f1595545a9ebd42e3a9f4ec"
+      },
+      "product_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+      "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd",
+      "SDK_members": 108,
+      "prepared_files": 2988,
+      "source_pins": 35,
+      "root_admission": {
+        "path": "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
+        "sha256": "640a40fce735beea143a9f417d85d3f10cf68baa9a6c7fd6de69712d45853698"
+      },
+      "minimum_stager": {
+        "path": "coverage/evidence/mark-lbp16a5-minimum-stager-admission-v1.json",
+        "sha256": "6c97da8c848fb25e5d8d3a5306e39c98753485125513d8e4162f3ee667653fbd"
+      },
+      "genuine_runtime": {
+        "status": "PROSPECTIVE_ACTUAL_HOST_AND_GO_PENDING",
+        "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+        "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+        "product_kind": "GENUINE_INSTALLED_WHOLE_PRODUCT",
+        "source_only_execution_authority": 0
+      },
+      "scope": {
+        "untimed_topcalls": {
+          "original": 1,
+          "native": 1
+        },
+        "canonical_cases": 4,
+        "canonical_raw_samples": 56,
+        "warmup_groups": 8,
+        "repeat": 7,
+        "target_ms": 100,
+        "warmup_min_ms": 250,
+        "workers": 1,
+        "reference_threadpools": 1,
+        "single_host_same_installed_runtime": true,
+        "no_automatic_retry": true,
+        "retain_all_losses": true
+      },
+      "clocks": "Null created/deadline and actual authority slots; fresh root-bound actual host/runtime/F1/UTC GO remains mandatory"
+    },
+    "complete_actual_controls": [
+      {
+        "profile": "windows311-v2",
+        "actual_exit": 0,
+        "tests": 128,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0,
+        "command": "build\\vi-gap-controller-v1\\windows311-v2\\command.json",
+        "terminal": "build\\vi-gap-controller-v1\\windows311-v2\\terminal.json",
+        "normal_conftest": true,
+        "plugin_autoload": true,
+        "scientific_calls": 0
+      },
+      {
+        "profile": "windows313-v2",
+        "actual_exit": 0,
+        "tests": 128,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0,
+        "command": "build\\vi-gap-controller-v1\\windows313-v2\\command.json",
+        "terminal": "build\\vi-gap-controller-v1\\windows313-v2\\terminal.json",
+        "normal_conftest": true,
+        "plugin_autoload": true,
+        "scientific_calls": 0
+      }
+    ]
+  },
+  "gates": {
+    "source_and_both128complete_controls": "passed",
+    "remote_source_workflow_actual_binding": "pending",
+    "actual_genuine_host_F1_clock_GO": "pending",
+    "actual_onepairvalues_FP_C1_postbatch": "pending",
+    "VI4timing": "held_separate_GO",
+    "old9V45cause": "unresolved",
+    "local3.11.14witness": "separate_PRIVATE_not975genuine",
+    "main281delivery": "pending"
+  },
+  "manual_cleanup": {
+    "fixture": "fixture-cleanup-v1.json",
+    "fixture_target": "D:/Scratch/vi-gap-controller-controls-v1",
+    "remaining_fixture_logical_bytes": 191340178,
+    "fixture_files": 7596,
+    "cleanup": "One nativePowerShell fresh-root attempt rejected before shell start: blocked by policy. Manual-only, no retry or old blocked path touched.",
+    "unique_small_synthetic_records": 54,
+    "small_synthetic_bytes": 477904,
+    "physical_allocation_bytes": null,
+    "D_free_before_checkout": 381354840064,
+    "D_free_before_fixtures": 380626792448,
+    "D_free_after": 379683807232,
+    "conservative_peak": 2147483648,
+    "reserve": 21474836480,
+    "floor": 32212254720,
+    "capacity_limit": "Global volume deltas include concurrent root activity, not attributable physical allocation",
+    "active_worktree_owner_trigger": "Root retains source worktree/commit until independent admission and integration; remove through nativeGit only after clean ancestry/source and main delivery requirements pass.",
+    "archives_environments": "No archive/core/SDK binary digest replay, downloads, environments or build/.git fixture copies; reviewedsource735182B projected via nativeGit blobs only"
+  },
+  "root_reader_correction": "Initialsuffixreader selected syntheticcohort terminal and next reader assumed inverse plugin key. Dependentadmission stopped; explicit actualpytestterminals exit0 and observed plugin_autoload=True verified beforeacceptance. XML128/sourceproofs remainedvalid, no replay.",
+  "waste_review": {
+    "avoidable": "One stale activeDDA source literal caused initial complete tests to fail1/128 each (26.796s/26.987s). Narrow exact16 correction was required and retained; no weakened guard. One metadata reader expectation mistake stopped commit, corrected after actual field inspection without source changes or scientific/source test replay.",
+    "reuse": "Existing fc controller, admitted v2 capture, currentVIv6 driver, sampler/factory/strict guards and retained environments/qualified16 metadata reused. No numerical rewrite or host-search framework.",
+    "next_correction": "Root independently inspects frozen source/actual controls promptly, then chooses separate genuine-host or private-local witness authority. Keep same existing plan/ledger/checklist; no new queue. Retain old9V45 failure and all losses."
+  },
+  "execution_authority": 0,
+  "next_owner_trigger": "Root publishes/verifies exactprivatecontroller and actualworkflow/producer binding before granting onecurrent16genuine-hostvaluepair only. No hostsearch/retry, measurementoroldcausecredit. B may integrate this admittedsourceonly on explicitrootinstruction; no numericalchange."
+}

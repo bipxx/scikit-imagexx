@@ -1,0 +1,207 @@
+{
+  "schema": "vi-log2-provider-private-root-source-admission-v1",
+  "status": "PASS_PRIVATE_BASELINE_SOURCE_ONLY_NO_RUNTIME_AUTHORITY",
+  "source": {
+    "head": "4421e216009961d0180136ba806ae78b3c0439a2",
+    "parent": "7dc2d054f14362c93427c3207d257435a6ec917f",
+    "branch": "diagnostic/vi-log2-provider-v1",
+    "worktree": "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+    "native_git": "C:/Program Files/Git/cmd/git.exe",
+    "clean": true,
+    "delta": [
+      "A\t.github/workflows/vi-log2-provider-diagnostic.yml",
+      "A\tcoverage/contracts/vi-log2-input-words-v1.json",
+      "A\tcoverage/contracts/vi-log2-provider-v1.json",
+      "A\ttests/test_vi_log2_provider_diagnostic.py",
+      "A\ttools/vi_log2_provider_diagnostic.py"
+    ],
+    "cached_committed_source_bytes": 721689485,
+    "cached_source_files": 3012,
+    "commands": [
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "rev-parse",
+          "HEAD"
+        ],
+        "exit_code": 0,
+        "stdout": "source-head-v1.stdout",
+        "stderr": "source-head-v1.stderr"
+      },
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "rev-parse",
+          "HEAD^"
+        ],
+        "exit_code": 0,
+        "stdout": "source-parent-v1.stdout",
+        "stderr": "source-parent-v1.stderr"
+      },
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "branch",
+          "--show-current"
+        ],
+        "exit_code": 0,
+        "stdout": "source-branch-v1.stdout",
+        "stderr": "source-branch-v1.stderr"
+      },
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "status",
+          "--porcelain",
+          "--untracked-files=all"
+        ],
+        "exit_code": 0,
+        "stdout": "source-status-v1.stdout",
+        "stderr": "source-status-v1.stderr"
+      },
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "diff",
+          "HEAD^",
+          "HEAD",
+          "--name-status"
+        ],
+        "exit_code": 0,
+        "stdout": "source-diff-v1.stdout",
+        "stderr": "source-diff-v1.stderr"
+      },
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "-c",
+          "core.whitespace=trailing-space,space-before-tab,cr-at-eol",
+          "diff",
+          "HEAD^",
+          "HEAD",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout": "source-whitespace-v1.stdout",
+        "stderr": "source-whitespace-v1.stderr"
+      },
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "ls-files",
+          "-u"
+        ],
+        "exit_code": 0,
+        "stdout": "source-index-v1.stdout",
+        "stderr": "source-index-v1.stderr"
+      },
+      {
+        "argv": [
+          "C:/Program Files/Git/cmd/git.exe",
+          "-C",
+          "D:\\Scratch\\scikit-imagexx-active-worktrees\\vi-log2-provider-v1",
+          "ls-tree",
+          "-r",
+          "-l",
+          "HEAD"
+        ],
+        "exit_code": 0,
+        "stdout": "source-cached-size-v1.stdout",
+        "stderr": "source-cached-size-v1.stderr"
+      }
+    ],
+    "files": {
+      ".github/workflows/vi-log2-provider-diagnostic.yml": {
+        "sha256": "edb80ca081641c6e55ea9177c863345647647a9ed4c7d8862746911a6e6b418e",
+        "bytes": 20884
+      },
+      "coverage/contracts/vi-log2-input-words-v1.json": {
+        "sha256": "144808de2c3dfb7c49eec0abcbed59a9783eeab20dfbfd359c0057a28e151bd6",
+        "bytes": 5354
+      },
+      "coverage/contracts/vi-log2-provider-v1.json": {
+        "sha256": "f78e32ffa0b79fcf6560002616a544c066da38ac56297e89636470d5b17b27cc",
+        "bytes": 5869
+      },
+      "tests/test_vi_log2_provider_diagnostic.py": {
+        "sha256": "5bd18bfb4cc514ae598007cb75e5ea6952657d8158e5f2e67bc9c9accbc4df81",
+        "bytes": 16314
+      },
+      "tools/vi_log2_provider_diagnostic.py": {
+        "sha256": "36338689dd64c2d62f49197d76863acdfad117ac53e74ccbfdcf5a445e15800f",
+        "bytes": 20644
+      }
+    },
+    "unchanged_scope": "Production/math/public/frontend/SDK/registry/shared build/source barriers and the original VI workflow untouched; exact five additions only"
+  },
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-value-diagnostic-workflow-v2\\log2-provider-v1\\source-handoff-v1.json",
+    "sha256": "062243af3fa56d56eda6e9bcc91fbbc59cb62e6763e887b464c2c7cb9b2518e4"
+  },
+  "proof_index": {
+    "sha256": "8234317160b1a751e607c730a06c1b5a8d17dcb9a460e4c23c186e54f3a0a746",
+    "verified_count": 84
+  },
+  "actual_checks": [
+    {
+      "profile": "windows311",
+      "tests": 27,
+      "exit": 0,
+      "normal_conftest_plugins": true,
+      "scientific_imports": 0,
+      "terminal_sha256": "c188fba4ca7857d409d565d5632c963c1277d8ac4da2c25c4454a60e8beaecf4",
+      "xml_sha256": "159307bd9303045df13ec2c6c5a30d466be9cd46653311e6cf0f790cee1ed2a2"
+    },
+    {
+      "profile": "windows313",
+      "tests": 27,
+      "exit": 0,
+      "normal_conftest_plugins": true,
+      "scientific_imports": 0,
+      "terminal_sha256": "88d3c50b2eda516c94f6dc8ab8103dbe634a2fbb1d11e77459a7dfd2d8e11860",
+      "xml_sha256": "b78e9466feb642c261f358a32fead7285775a314eccbee6cfa65b9bf56cb0051"
+    }
+  ],
+  "root_review": "Exact fixed112LEwords/positive normal domain; explicit GLIBC_2.29 dlvsym/dladdr, no default math provider; exact current semantics CW895/SW32/MXCSR8098 with caller32 restore before codecs/after writer; one private child2NumPy arrays/112scalar/15save10restore, noVI/timing/retry; fresh exclusive outputs/terminal count/authority checks preserve failures. Actual primitive/FP/ABI results still pending.",
+  "hosted_scope": "Workflow hashes verified only; detailed hosted runtime/feature/publication admission and distinctGO pending. No hosted authority from this private source admission.",
+  "preconditions_pending": [
+    "Actual local runtime/F1/NumPy/libm/source dependency entry binding",
+    "Distinct consumed-once privateGO",
+    "Actual raw words/FP/exits/counts and root runtime admission"
+  ],
+  "waste_review": {
+    "reused": "Existing protected112words/runtime/F1/installed core+SDK metadata, existing offline producer authentication/capacity/helper/verifier workflow bodies; no old archive hash/download or retired source reconstruction.",
+    "avoidable": "One pytest fixture-parent setup failure (~0.5s each) plus one dict-shape inspection error; useful source-only successive checks after changed child-control and terminal-count inputs. No scientific reruns.",
+    "observed_inert_costs": "Final pytest XML0.47s311/0.69s313; actual launch/exit timestamps in terminals. Prior versions retained; no extra measurement run."
+  },
+  "cleanup": {
+    "schema": "vi-log2-inert-fixture-disposal-v1",
+    "exact_target": "D:\\Scratch\\vi-log2-provider-fixture-v1",
+    "logical_bytes": 407290.0,
+    "files": 250,
+    "free_bytes_before": 365271121920,
+    "gate": "All retained Windows source-only guard processes terminated; only fresh fake-provider pytest outputs/caches, no scientific import or dependency root",
+    "previously_blocked_targets_excluded": true,
+    "started_utc": "2026-11-15T19:08:46.3553850Z",
+    "removed": true,
+    "exit_code": 0,
+    "free_bytes_after": 365271560192,
+    "observed_free_delta_bytes": 438272,
+    "physical_scope": "Volume free-space observation, concurrent writes possible; logical size is not an exclusive physical-allocation measurement",
+    "completed_utc": "2026-11-15T19:08:46.5514860Z"
+  }
+}

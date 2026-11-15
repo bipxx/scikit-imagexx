@@ -1,0 +1,125 @@
+{
+  "status": "PASS_ROOT_VERSIONED_VI_PREPARATION_CAPACITY_SOURCE",
+  "source": "7dc2d054f14362c93427c3207d257435a6ec917f",
+  "parent": "2c089a8d8f139f87037362cec101480924f92b2e",
+  "committed_source_receipt": {
+    "path": "build\\vi-gap-capacity-v1\\committed-source-admission-v1.json",
+    "sha256": "b5a515025e54ae0f1c578018327f0fb6e369144cc74d13f15aaf3edd05a1a608"
+  },
+  "files": [
+    {
+      "path": ".github/workflows/vi-initial.yml",
+      "sha256": "c7c817696c48919af12a8c4a1b194511d86ce035eab020ed5cbae08f1a7d5d46"
+    },
+    {
+      "path": ".github/workflows/vi-value-diagnostic.yml",
+      "sha256": "68befce0ce6e885f9b4a46f6413c85231087199233c3a3bfd1a1baacf340a7b8"
+    },
+    {
+      "path": "tools/vi_first_cohort_probe.py",
+      "sha256": "4346f3663fceced18c90167f2a37f3fbb76998baf31179c58bd8edc22bae5948"
+    },
+    {
+      "path": "tools/vi_cohort_value_diagnostic.py",
+      "sha256": "3f5c025b6d7d91b9b136c535f95e4f386f3fddfa0ae7791f7f5d746bb56d0c07"
+    },
+    {
+      "path": "tests/test_vi_controller.py",
+      "sha256": "231e5db18a8ecbb598979bdfca73133ad55060c1ae0599a08171470bce91992c"
+    },
+    {
+      "path": "tests/test_vi_cohort_value_diagnostic.py",
+      "sha256": "25109f5364530a74d10139b3d53c68c62514432790a02e1b1bf06ee8258e69d8"
+    },
+    {
+      "path": "tests/test_vi_value_diagnostic_workflow.py",
+      "sha256": "0c9c088fa4f92d334fcdc35c12fcf4829548362d3cd7358d2d77b9af71446711"
+    },
+    {
+      "path": "coverage/contracts/vi-measurement-v5.json",
+      "sha256": "4e9e913b8bf8be41b6a394303ee7161e968df0625638655aa2063c078f497a9a"
+    },
+    {
+      "path": "coverage/contracts/vi-cohort-value-diagnostic-v4.json",
+      "sha256": "80b0aad65ac4cd325f006509582fea30b12459eb5bc24b485d309a05736f4317"
+    }
+  ],
+  "actual_control_proofs": [
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows311-v2\\command.json",
+      "bytes": 3118,
+      "sha256": "0c224de6bbbea0f235ed5633881d06ea5287b54f8a477875cf6788fba0535834"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows311-v2\\terminal.json",
+      "bytes": 312,
+      "sha256": "dcb5c44537c2b99fc53a8d96e2eb8c51efdde0c93ddc22f214a488a9cf4c12d1"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows311-v2\\results.xml",
+      "bytes": 19275,
+      "sha256": "23b8d25a649a34fd5f65de10f12dfc0087073f68d32d63c58a2d9e1e8cd8875d"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows311-v2\\plugins.json",
+      "bytes": 4505,
+      "sha256": "d13761541c44db4cba7b62a445aaa8af00d327c5af30c91eb0681ab6393bc199"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows311-v2\\testIDs.json",
+      "bytes": 14414,
+      "sha256": "fb410e84daa2f55a62dd68964f863ae6535e954959349adb852b76808ab4d2b0"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows311-v2\\pytest.log",
+      "bytes": 181,
+      "sha256": "2a73302c4794388969156a1d281173070deb7e2bfa3a3f73580d37eb1d9d016a"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows313-v2\\command.json",
+      "bytes": 3085,
+      "sha256": "b75284a5966621f95f7f42b84ed83e8fd0ff20e52f7ff91b86e2ed7b6ddf4fe4"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows313-v2\\terminal.json",
+      "bytes": 312,
+      "sha256": "f5342b34b7d3b0f6c42c32f4fab4c6d6bc7e80484c4079c28241e20cc7e2d2ee"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows313-v2\\results.xml",
+      "bytes": 19275,
+      "sha256": "69cf4cd8a7c0c41fb55b92c74f4c8ec058321741d4bdf7b94a8e072d3c87ee0f"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows313-v2\\plugins.json",
+      "bytes": 4505,
+      "sha256": "04f8783549e8699b17c78dcc32cc861c3d09c2d4950550c869dfebb96f41f3fa"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows313-v2\\testIDs.json",
+      "bytes": 14414,
+      "sha256": "fb410e84daa2f55a62dd68964f863ae6535e954959349adb852b76808ab4d2b0"
+    },
+    {
+      "path": "build\\vi-gap-capacity-v1\\windows313-v2\\pytest.log",
+      "bytes": 181,
+      "sha256": "04f438973e5786560242703e5e184489b348e7519970b609d1390b8aaf3f2e1a"
+    }
+  ],
+  "complete_controls_eachPython": 132,
+  "scope": "Jobentryrequired4GiBpeak+20GiBreserve/30GiBminimumfree beforefirstcheckout or transport, bothworkspace/runtime destinations, retainedfailureJSON andidempotentresultsdir. Newmeasurementv5/valuev4retainfrozenv4/v3. Probe/capturelogicbyteinverseonlyversionselectors; contextpureprojection testkeepsallproduct/runtime/method/case/FP/authorityfields unchanged.",
+  "peer_review": "Independent /root/mark_release_readiness read-only reviewpassed actual9filediff and132XML each withnormal44plugins,0scientificcalls. Initialshellcollision correctedbeforetests; initial131fullrunsfailed3literalguarddeps andretained beforeversionedfix andfull132reruns.",
+  "production_changes": 0,
+  "gates": {
+    "source_index_commit_projection": "passed9files",
+    "complete_bothPython_changedsourceguards": "passed132each",
+    "independent_review": "passed",
+    "actual_privatebranch_workflow_producer_binding": "pending",
+    "actual_host_capacity_runtime_F1_clock_G0": "pending_conditionalworkflow_beforeallocationortargets",
+    "genuine_onepair_and_VI4": "pending",
+    "old9V45cause": "unresolved",
+    "final281shipping": "pending"
+  },
+  "runtime_authority": 0,
+  "next_owner_trigger": "Rootpublishesexact7dc2controllerandverifiesactualAPIbinding; thenonecurrent16genuine-hostvaluepaironlyunderfreshGO. Allsuccessfulpriorbenchmarktimingsretained; noauto retry/hostsearch oroldcauseclaim."
+}

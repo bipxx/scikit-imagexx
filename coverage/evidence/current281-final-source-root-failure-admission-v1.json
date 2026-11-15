@@ -1,0 +1,101 @@
+{
+  "schema": "current281-final-source-root-failure-admission-v1",
+  "status": "FAILED_BOTH_COMPLETE169_BARRIERS_PRESERVED_NO_SCIENCE",
+  "source": "aaa13487d273b2a895e102cbe815daf8e008098d",
+  "actual_root_inspected_command_XML_terminals_both": true,
+  "verified_proofs": 38,
+  "profiles": [
+    {
+      "profile": "windows311",
+      "python": "3.11.11 (main, Dec 19 2024, 14:36:07) [MSC v.1942 64 bit (AMD64)]",
+      "source": "aaa13487d273b2a895e102cbe815daf8e008098d",
+      "process_exit": 1,
+      "pytest_exit": 1,
+      "seconds": 447.5780000000377,
+      "selectors": 169,
+      "ordinary_tests": 4149,
+      "passed_ordinary_tests": 4148,
+      "failed_ordinary_tests": 1,
+      "passed_subtests": 8,
+      "XML": {
+        "tests": 4157,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [
+        {
+          "classname": "tests.test_rolling_ball_enabled_source",
+          "name": "test_exact_shared_and_controller_predecessors_and_unchanged_family",
+          "message": "AssertionError: tests/test_mark_lbp_controller.py",
+          "failure": "def test_exact_shared_and_controller_predecessors_and_unchanged_family():\n        assert H(CONTEXT.read_bytes())==EXPECTED_CONTEXT\n        c=json.loads(CONTEXT.read_bytes())\n        from tools.join_source_context import rolling_predecessor_bytes\n        for name,row in c['sources'].items():\n            raw=(ROOT/name).read_bytes()\n>           assert H(rolling_predecessor_bytes(ROOT,name,raw))==row['predecessor_canonical_lf_sha256'],name\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\test_rolling_ball_enabled_source.py:29: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntools\\join_source_context.py:60: in rolling_predecessor_bytes\n    return _rolling188_predecessor_bytes(root,name,integration_fix_predecessor_bytes(root,name,raw))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nroot = WindowsPath('D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1')\nname = 'tests/test_mark_lbp_controller.py'\nraw = b'\"\"\"Source/setup-only two-API authority, real CLI/frame and C1 terminal controls.\"\"\"\\nimport ast,copy,hashlib,importl...n.dumps(changed),encoding=\\'utf-8\\')\\n    with pytest.raises(AssertionError):\\n        PROBE.read_manifest(tmp_path)\\n'\n\n    def _rolling188_predecessor_bytes(root,name,raw):\n        raw=raw.replace(b'\\r\\n',b'\\n')\n        path=Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json'\n        if not path.is_file():return raw\n        context=json.loads(path.read_bytes())\n        assert context['predecessor_source']=='a5e019c6a4b0fff3a18635ab0e2f552986abba3e'\n        if name not in context['sources']:return raw\n        row=context['sources'][name]\n>       assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: tests/test_mark_lbp_controller.py\n\ntools\\join_source_context.py:71: AssertionError"
+        }
+      ],
+      "normal_conftest_plugins": true,
+      "no_failfast": true,
+      "source_clean": true,
+      "plugin_inventory": "windows311/plugins.json",
+      "plugin_records": 44,
+      "command": "windows311/command.json",
+      "terminal": "windows311/terminal.json",
+      "process_terminal": "windows311-process-terminal.json",
+      "log": "windows311.log",
+      "XML_path": "windows311/results.xml",
+      "testIDs": "windows311/testIDs.json",
+      "scientific_imports_and_calls": 0
+    },
+    {
+      "profile": "windows313",
+      "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+      "source": "aaa13487d273b2a895e102cbe815daf8e008098d",
+      "process_exit": 1,
+      "pytest_exit": 1,
+      "seconds": 397.7076098000398,
+      "selectors": 169,
+      "ordinary_tests": 4149,
+      "passed_ordinary_tests": 4148,
+      "failed_ordinary_tests": 1,
+      "passed_subtests": 8,
+      "XML": {
+        "tests": 4157,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [
+        {
+          "classname": "tests.test_rolling_ball_enabled_source",
+          "name": "test_exact_shared_and_controller_predecessors_and_unchanged_family",
+          "message": "AssertionError: tests/test_mark_lbp_controller.py",
+          "failure": "def test_exact_shared_and_controller_predecessors_and_unchanged_family():\n        assert H(CONTEXT.read_bytes())==EXPECTED_CONTEXT\n        c=json.loads(CONTEXT.read_bytes())\n        from tools.join_source_context import rolling_predecessor_bytes\n        for name,row in c['sources'].items():\n            raw=(ROOT/name).read_bytes()\n>           assert H(rolling_predecessor_bytes(ROOT,name,raw))==row['predecessor_canonical_lf_sha256'],name\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\test_rolling_ball_enabled_source.py:29: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntools\\join_source_context.py:60: in rolling_predecessor_bytes\n    return _rolling188_predecessor_bytes(root,name,integration_fix_predecessor_bytes(root,name,raw))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nroot = WindowsPath('D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1')\nname = 'tests/test_mark_lbp_controller.py'\nraw = b'\"\"\"Source/setup-only two-API authority, real CLI/frame and C1 terminal controls.\"\"\"\\nimport ast,copy,hashlib,importl...n.dumps(changed),encoding=\\'utf-8\\')\\n    with pytest.raises(AssertionError):\\n        PROBE.read_manifest(tmp_path)\\n'\n\n    def _rolling188_predecessor_bytes(root,name,raw):\n        raw=raw.replace(b'\\r\\n',b'\\n')\n        path=Path(root)/'coverage/contracts/rolling-ball-enabled-context-v1.json'\n        if not path.is_file():return raw\n        context=json.loads(path.read_bytes())\n        assert context['predecessor_source']=='a5e019c6a4b0fff3a18635ab0e2f552986abba3e'\n        if name not in context['sources']:return raw\n        row=context['sources'][name]\n>       assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256'],name\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: tests/test_mark_lbp_controller.py\n\ntools\\join_source_context.py:71: AssertionError"
+        }
+      ],
+      "normal_conftest_plugins": true,
+      "no_failfast": true,
+      "source_clean": true,
+      "plugin_inventory": "windows313/plugins.json",
+      "plugin_records": 44,
+      "command": "windows313/command.json",
+      "terminal": "windows313/terminal.json",
+      "process_terminal": "windows313-process-terminal.json",
+      "log": "windows313.log",
+      "XML_path": "windows313/results.xml",
+      "testIDs": "windows313/testIDs.json",
+      "scientific_imports_and_calls": 0
+    }
+  ],
+  "cause": "Current MARK controller test source3286e1f5 is not projected to immutable rolling-ball historical expected167edc6f before its old source guard. Same sole failure each; no algorithm/qualifier product failure.",
+  "effect": "Final source/delivery gate failed, qualified16 product/privateSDK/current7dc genuinewitness evidence remains valid within originalscope. Do not replace completebarriers with partialpass/union.",
+  "correction_owner": "/root/tracking_repair",
+  "correction_scope": "Minimal authenticated versioned predecessor closure at existing MARK/rolling boundary; frozen contexts immutable, no production/math/169selector change. Both complete affected169 barriers required after root exactsource admission.",
+  "handoff": {
+    "path": "build/current281-final-source-v1/handoff-v1.json",
+    "sha256": "f75326548fb4e34d89c30504cafa1e31aab6b9c2d00af957973ba72b51fbac1c"
+  },
+  "proof_index": {
+    "path": "build/current281-final-source-v1/proof-index-v1.json",
+    "sha256": "930a598a451fcfb2c461d6789b6d63b0b8e58427b9a1ce5ef06e54cb6c8f85bd"
+  },
+  "waste_review": "Complete campaigns exposed one missed literal controller dependency, not science. Reuse product/SDK/timing evidence; preserve actual447.578s/397.7076s failures and13.41GBlogicalfixtures, firstchildcleanupblocked/manualonly. No unchangedscientificretry.",
+  "next_owner_trigger": "B one source successor then root admission/full169both. No main281shippingcredit."
+}
