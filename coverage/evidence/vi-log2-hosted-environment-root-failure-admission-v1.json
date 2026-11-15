@@ -1,0 +1,63 @@
+{
+  "schema": "vi-log2-hosted-environment-root-failure-admission-v1",
+  "status": "FAILED_PRECHILD_ENVIRONMENT_GATE_ZERO_PROVIDER_CALLS_PRESERVED",
+  "run": 43752511132,
+  "source": "4421e216009961d0180136ba806ae78b3c0439a2",
+  "actual_root_inspection": "Providerlog check_go line108 before campaign mkdir/childdispatch; exact setup-pythonLD_LIBRARY_PATH observed inactualjoblog; actualproviderexit1/postidentity0 andno childdir; CPU9V74andNumPySKXeligible; all42retainedrawfiles+65totalproofs verified.",
+  "actual_provider_counts": {
+    "children": 0,
+    "numpy_log2_array_calls": 0,
+    "scalar_log2_values": 0,
+    "FP_saves": 0,
+    "FP_restores": 0,
+    "F1_ABI_queries": 0,
+    "F1_glibc_queries": 0,
+    "dlvsym": 0,
+    "dladdr": 0,
+    "VI_original_calls": 0,
+    "VI_native_calls": 0,
+    "timed_batches": 0
+  },
+  "F1_preparation_scope": "Separate source-built helper32positive/6negative controls passed beforeprovider campaign; not included inzero providercounts",
+  "artifact": {
+    "run": 43752511132,
+    "workflow": 419418711,
+    "head": "4421e216009961d0180136ba806ae78b3c0439a2",
+    "attempt": 1,
+    "artifact_id": 14176996235,
+    "name": "vi-log2-provider-diagnostic-minimum",
+    "bytes": 2336538,
+    "expected_digest": "sha256:dfd4ac4e13675e8b6442a9f1be771e468fec48bda2b45942e8b6f2ef86be0546",
+    "actual_sha256": "dfd4ac4e13675e8b6442a9f1be771e468fec48bda2b45942e8b6f2ef86be0546",
+    "digest_matches": true,
+    "download_passes": 1,
+    "archive_disk_paths": [],
+    "archive_bytes_locally_available": false,
+    "memory_buffer_release": "ZIP closed; buffer released at intake process exit; no persistent ZIP created",
+    "entry_count": 46,
+    "retained_text_files": 42,
+    "retained_text_bytes": 10208425
+  },
+  "handoff": {
+    "path": "build/vi-value-diagnostic-workflow-v2/log2-provider-v1/run43752511132-results-v1/terminal-handoff-v1.json",
+    "sha256": "ba46fcbd5ae109662c3283b2639b16637189e200015c9a3e149850f8bff84efe"
+  },
+  "proof_index": {
+    "path": "build/vi-value-diagnostic-workflow-v2/log2-provider-v1/run43752511132-results-v1/terminal-proof-index-v1.json",
+    "sha256": "49ee43505422dcdf34f56fa37aecdd77d661077fcbfd2b4df538287f2a91a6b4",
+    "verified_files": 65
+  },
+  "failure_effect": "Hosted readiness is superseded forinheritedloaderenvironment. No actualproviderwords/libmresolution/FPintervention/VI/performancecredit. Priorprivate112equal/providerlinkages andgenuine16evidence unaffected. Oldoneallocationauthorityconsumed; no unchangedretry.",
+  "source_correction_authorized": "A minimalversionedsuccessor permits only exact authenticated hostedPython baseprefix/lib knownfromactualsetup-python3.11.17, with matchinggenuine975runtime/prepostidentity and strict arbitrarypath/LD_PRELOAD/LD_AUDIT refusal. Privateblankrule unchanged. Oldv1contract/4421source/failureimmutable. Actualcheck_go setupenvironmentpositive+negative inertcontrols bothWindowsPython required; rootnewsourceadmission beforeanyseparateGO.",
+  "reuse_waste": {
+    "useful": "EligibleAVX5129V74 CPU/compiled+enabled maps, genuine975 offline identity and F1 controls authenticate setup; exact new failure proves an environment-binding mismatch, not numerical/CPU cause.",
+    "avoidable": "The hosted setup-python loader path was absent from inert positive-entry coverage. This consumed one eligible host preparation but0provider primitives; source/readiness boundary must be corrected before any new allocation.",
+    "observed_job_seconds": 53.0,
+    "result_memory_transport_bytes": 2336538,
+    "producer_transport_bytes": 227598086,
+    "unchanged_reuse": "Retained source, contract/input112words and prior private baseline result remain within their original scopes; no local numerical/ELF/guard replay.",
+    "intake_note": "First read-only inspection expected child paths before reconciling early check_go exit; absent provider directory was then used as corroborating source-order evidence, never a passing child record."
+  },
+  "root_reader_correction": "One assumedproof-index filename failedread; corrected to actual terminal-proof-index beforeproofadmission/no mutation orscientificreplay.",
+  "next_owner_trigger": "A source-onlyfix then rootactualadmission. No numerical/math/VI/localbaseline replay/newenvironment/download/dispatch fromthisadmission."
+}
